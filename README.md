@@ -1,10 +1,14 @@
 # It's hellfall
 Like scryfall but for Hellscube. Also other stuff.
 
+
+## [hellfall](./src/hellfall/)
+Core hellfall application.
+
 ## [hellscube](./src/hells-cubes/)
 This page contains random card selectors used for various cubes to make irl drafting smoother. currently only supports 1.
 
-## [hellscube](./data-transformers/)
+## [data-transformer](./data-transformers/)
 Scripts used for extracting and transforming data
 
 ## [deck-builder](./src/deck-builder/)
