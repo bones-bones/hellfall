@@ -1,0 +1,4 @@
+- Upgrade ESLINT version
+- Document design patterns with CKR and general best practices
+- Deck builder README
+- Hellscubes README
