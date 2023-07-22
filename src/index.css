@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* background-color: #221111; */
+  scroll-behavior: smooth;
+}
+
+/* @font-face {
+  font-family: 'enoch';
+  font-style: normal;
+  src: url('./resources/fonts/enoch.ttf');
+} */
