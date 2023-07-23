@@ -13,6 +13,7 @@
 ~~- Spring // Winter // Summer // Fall cap instant~~
 ~~- Wrenn and thirteen is a Planewalker~~
 ~~- Bad Land // Bad Land type~~
+- Update the Name section of the tokens database, it's kinda messey
 
 
 Think of a better way to store sides
@@ -32,7 +33,7 @@ Write a script to transform the database
 ~~- Enter key should submit search~~
 ~~- add guide for !~~
 - mobile support
-
+- Script to fetch and transform sheets directly from google doc
 
 # Mana symbols that need support
 - ?

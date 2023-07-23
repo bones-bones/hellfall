@@ -1,6 +1,24 @@
 import fs from "fs";
 import data from "../../src/data/Hellscube-Database.json";
-import { HCEntry } from "./types";
+import tokens from "../../src/data/tokens.json";
+
+import { HCEntry, Token, TokenForImport } from "./types";
+
+const tokenMap = (tokens.data as TokenForImport[]).reduce<
+  Record<string, Token>
+>((current, entry) => {
+  entry["Related Cards (Read Comment)"].split(";").forEach((cardEntry) => {
+    current[cardEntry.replace(/\*.*$/, "")] = {
+      Name: entry.Name.replace(/\d*$/, ""),
+      Power: entry.Power,
+      Toughness: entry.Toughness,
+      Type: entry.Type,
+      Image: entry.Image,
+      FIELD7: entry.FIELD7,
+    };
+  });
+  return current;
+}, {});
 
 const typeSet = new Set<string>();
 (data as { data: HCEntry[] }).data.forEach((entry) => {
@@ -17,8 +35,8 @@ const typeSet = new Set<string>();
     }
   });
 });
+
 const types = Array.from(typeSet);
-console.log(types);
 
 fs.writeFileSync(
   "./src/data/types.json",
@@ -34,12 +52,11 @@ fs.writeFileSync(
 
 const creatorSet = new Set<string>();
 
-(data as { data: HCEntry[] }).data.map((entry) => {
+(data as { data: HCEntry[] }).data.forEach((entry) => {
   creatorSet.add(entry.Creator);
 });
 
 const creators = Array.from(creatorSet);
-console.log(types);
 
 fs.writeFileSync(
   "./src/data/creators.json",

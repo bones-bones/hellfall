@@ -32,4 +32,16 @@ export type HCEntry = {
   FIELD54: string;
   FIELD55: string;
   FIELD56: string;
+  tokens?: Token[];
 };
+
+export type Token = {
+  Name: string;
+  Image: string;
+  Power: string;
+  Toughness: string;
+  Type: string;
+  FIELD7: string;
+};
+
+export type TokenForImport = Token & { "Related Cards (Read Comment)": string };
