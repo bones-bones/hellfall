@@ -2,12 +2,8 @@ import { Card } from "@workday/canvas-kit-react/card";
 import { HCEntry } from "../types";
 import styled from "@emotion/styled";
 import { Heading, Text } from "@workday/canvas-kit-react/text";
-import {
-  StatusIndicator,
-  StatusIndicatorType,
-} from "@workday/canvas-kit-react/status-indicator";
-import { colorToSvgMapping } from "./colorToSvgMapping";
-const manaMatchRegex = /({[WUBRGTCP0123456Y7X/Pickle]+})/; // /({[WUBRGTCP01234567X(2/W)]})/;
+import { SetLegality } from "./SetLegality";
+import { stringToMana } from "./stringToMana";
 export const HFCard = ({ data }: { data: HCEntry }) => {
   // wow what a weird ts bug
   const sideCount =
@@ -24,150 +20,64 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
         <Card.Body padding={"zero"}>
           <StyledHeading size="large">{data["Name"]} </StyledHeading>
 
-          {new Array(sideCount).fill("").map((_, i) => {
-            return (
-              <div key={"side-" + (i + 1)}>
-                {i > 0 && <Divider />}
-                <Text typeLevel="body.medium" key="cost">
-                  {data.Cost[i].split(manaMatchRegex).map((entry) => {
-                    if (entry.startsWith("{") && entry.endsWith("}")) {
-                      const icon = colorToSvgMapping(
-                        entry.replaceAll(/[{}]/g, "")
-                      );
-                      return icon ? (
-                        <ManaContainer>
-                          <ManaSymbol src={icon} />
-                        </ManaContainer>
-                      ) : (
-                        entry
-                      );
-                    }
-
-                    return entry;
-                  })}
-                </Text>
-                <br></br>
-                <Text typeLevel="body.medium" key="type">
-                  {`${data["Supertype(s)"][i]} ${data["Card Type(s)"][
-                    i
-                  ].replaceAll(";", " ")}${
-                    data["Subtype(s)"][i]
-                      ? " — " + data["Subtype(s)"][i]?.replaceAll(";", " ")
-                      : ""
-                  }`}
-                </Text>
-                <br />
-                <Text typeLevel="body.medium" key="rules">
-                  {data["Text Box"][i].split("\\n").map((entry) => {
-                    return (
-                      <>
-                        {entry
-                          .split(/(?=[()]+)/)
-                          .filter((chunk) => {
-                            return chunk != ")";
-                          })
-                          .map((chunk, ci) => {
-                            if (chunk.startsWith("(")) {
-                              return (
-                                <ItalicText key={ci}>
-                                  {chunk.split(manaMatchRegex).map((entry) => {
-                                    if (
-                                      entry.startsWith("{") &&
-                                      entry.endsWith("}")
-                                    ) {
-                                      const icon = colorToSvgMapping(
-                                        entry.replaceAll(/[{}]/g, "")
-                                      );
-
-                                      return icon ? (
-                                        <ManaContainer>
-                                          <ManaSymbol src={icon} />
-                                        </ManaContainer>
-                                      ) : (
-                                        entry
-                                      );
-                                    }
-
-                                    return entry;
-                                  })}
-                                  )
-                                </ItalicText>
-                              );
-                            }
-                            return chunk.split(manaMatchRegex).map((entry) => {
-                              if (
-                                entry.startsWith("{") &&
-                                entry.endsWith("}")
-                              ) {
-                                const icon = colorToSvgMapping(
-                                  entry.replaceAll(/[{}]/g, "")
-                                );
-
-                                return icon ? (
-                                  <ManaContainer>
-                                    <ManaSymbol src={icon} />
-                                  </ManaContainer>
-                                ) : (
-                                  entry
-                                );
-                              }
-
-                              return entry;
-                            });
-                          })}
-                        <br />
-                      </>
-                    );
-                  })}
-                </Text>
-                <br />
-                {data["Flavor Text"][i] && (
-                  <>
-                    <ItalicText typeLevel="body.medium" key="flavor">
-                      {data["Flavor Text"][i].split("\\n").map((entry) => {
-                        return (
-                          <>
-                            {entry
-                              .split(/({[WUBRGTCP01234567X]})/)
-                              .map((entry) => {
-                                if (
-                                  entry.startsWith("{") &&
-                                  entry.endsWith("}")
-                                ) {
-                                  const icon = colorToSvgMapping(
-                                    entry.replaceAll(/[{}]/g, "")
-                                  );
-
-                                  return icon ? (
-                                    <ManaContainer>
-                                      <ManaSymbol src={icon} />
-                                    </ManaContainer>
-                                  ) : (
-                                    entry
-                                  );
-                                }
-
-                                return entry;
-                              })}
-                            <br />
-                          </>
-                        );
-                      })}
-                    </ItalicText>
-                    <br />
-                  </>
-                )}
-                {data["power"][i] != null && (
-                  <>
-                    <Text typeLevel="body.medium" key="stats">
-                      {data["power"][i]}/{data["toughness"][i]}
-                    </Text>
-                    <br />
-                  </>
-                )}
-              </div>
-            );
-          })}
+          {new Array(sideCount).fill("").map((_, i) => (
+            <div key={"side-" + (i + 1)}>
+              {i > 0 && <Divider />}
+              <Text typeLevel="body.medium" key="cost">
+                {stringToMana(data.Cost[i])}
+              </Text>
+              <br />
+              <Text typeLevel="body.medium" key="type">
+                {`${data["Supertype(s)"][i]} ${data["Card Type(s)"][
+                  i
+                ].replaceAll(";", " ")}${
+                  data["Subtype(s)"][i]
+                    ? " — " + data["Subtype(s)"][i]?.replaceAll(";", " ")
+                    : ""
+                }`}
+              </Text>
+              <br />
+              <Text typeLevel="body.medium" key="rules">
+                {data["Text Box"][i].split("\\n").map((entry) => {
+                  return (
+                    <>
+                      {entry
+                        .split(/(?=[()]+)/)
+                        .filter((chunk) => chunk != ")")
+                        .map((chunk, ci) => {
+                          if (chunk.startsWith("(")) {
+                            return (
+                              <ItalicText key={ci}>
+                                {stringToMana(chunk)})
+                              </ItalicText>
+                            );
+                          }
+                          return stringToMana(chunk);
+                        })}
+                      <br />
+                    </>
+                  );
+                })}
+              </Text>
+              <br />
+              {data["Flavor Text"][i] && (
+                <>
+                  <ItalicText typeLevel="body.medium" key="flavor">
+                    {renderText(data["Flavor Text"][i].split("\\n"))}
+                  </ItalicText>
+                  <br />
+                </>
+              )}
+              {data["power"][i] != null && (
+                <>
+                  <Text typeLevel="body.medium" key="stats">
+                    {data["power"][i]}/{data["toughness"][i]}
+                  </Text>
+                  <br />
+                </>
+              )}
+            </div>
+          ))}
           {data["Set"] && (
             <>
               <Divider />
@@ -183,26 +93,27 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
           )}
           {
             <>
-              {data["Constructed"] == "Banned" ? (
-                <StatusIndicator
-                  label={"Banned"}
-                  type={StatusIndicatorType.Red}
-                />
-              ) : (
-                <StatusIndicator
-                  label={"Legal"}
-                  type={StatusIndicatorType.Green}
-                />
-              )}
+              <SetLegality banned={data["Constructed"] == "Banned"} />
               <br />
             </>
           }
           {data["Rulings"] != "" && (
             <>
-              <Divider></Divider>
+              <Divider />
               <div>
                 <StyledHeading size="small">Rulings</StyledHeading>
                 {data["Rulings"]}
+              </div>
+            </>
+          )}
+          {data["tokens"] && (
+            <>
+              <Divider />
+              <div>
+                <StyledHeading size="small">Related Tokens</StyledHeading>
+                {data["tokens"].map((entry) => (
+                  <img key={entry.Name} src={entry.Image} height="500px" />
+                ))}
               </div>
             </>
           )}
@@ -212,7 +123,16 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
   );
 };
 
-const ManaSymbol = styled("img")({ height: "16px" });
+const renderText = (text: string[]) => {
+  return text.map((entry) => {
+    return (
+      <>
+        {stringToMana(entry)}
+        <br />
+      </>
+    );
+  });
+};
 
 const Container = styled.div({
   display: "flex",
@@ -220,11 +140,6 @@ const Container = styled.div({
   fontSize: "16px",
 });
 
-const ManaContainer = styled("div")({
-  display: "inline-flex",
-  height: "1.75rem",
-  verticalAlign: "-webkit-baseline-middle",
-});
 const ItalicText = styled(Text)({ fontStyle: "italic" });
 
 const ImageContainer = styled.div({ overflowX: "auto" });

@@ -1273,7 +1273,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "\"who's joe\"",
@@ -7426,31 +7436,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Dog $1",
-					"Power": "1",
-					"Toughness": "1",
+					"Name": "Angel 1",
+					"Power": "4",
+					"Toughness": "4",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/727247863167582348/Dog.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/727247881475457054/Angel.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Dog $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/727247863167582348/Dog.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Dog",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/727247863167582348/Dog.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Dog",
+					"Name": "Dog 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -8360,31 +8354,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
+					"Name": "Weed 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -10494,31 +10464,23 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Arcbound Worker $1",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Artifact Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565490250416158/a8ab623d-25bc-4a28-a1fb-49e036a41e09.png",
+					"Name": "Welding Jar 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565287224999937/318aec91-c9ac-41e4-a899-1131ff13843b.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Arcbound Worker $1",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Artifact Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565490250416158/a8ab623d-25bc-4a28-a1fb-49e036a41e09.png",
+					"Name": "Lotus Petal 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565348352917504/b2279cb1-089f-4c41-ae96-41837ed57822.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Arcbound Worker",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Artifact Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565490250416158/a8ab623d-25bc-4a28-a1fb-49e036a41e09.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Arcbound Worker",
+					"Name": "Arcbound Worker 1",
 					"Power": "0",
 					"Toughness": "0",
 					"Type": "Artifact Creature",
@@ -13378,31 +13340,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Kangaroo $1",
-					"Power": "1",
-					"Toughness": "3",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/717483117535035482/Kangaroo.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Kangaroo $1",
-					"Power": "1",
-					"Toughness": "3",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/717483117535035482/Kangaroo.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Kangaroo",
-					"Power": "1",
-					"Toughness": "3",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/717483117535035482/Kangaroo.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Kangaroo",
+					"Name": "Kangaroo 1",
 					"Power": "1",
 					"Toughness": "3",
 					"Type": "Creature",
@@ -15212,31 +15150,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Skeleton $1",
-					"Power": "4",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1085872128525598740/IMG_8456.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Skeleton $1",
-					"Power": "4",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1085872128525598740/IMG_8456.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Skeleton",
-					"Power": "4",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1085872128525598740/IMG_8456.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Skeleton",
+					"Name": "Skeleton 1",
 					"Power": "4",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -15471,31 +15385,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
+					"Name": "Weed 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -15580,31 +15470,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
+					"Name": "Weed 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -15686,7 +15552,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Bald Freenix//\"They have nukes!\"",
@@ -17639,35 +17515,19 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
+					"Name": "Fish 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692919701495480400/Fish.jpg",
+					"FIELD7": "Dies->makeFood"
 				},
 				{
-					"Name": "Food $1",
+					"Name": "Fishing Equipment 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703707099862925342/Fishing_Equipment.png",
 					"FIELD7": ""
 				}
 			]
@@ -17823,31 +17683,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Battery $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117421853468794900/batterytoeat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Battery $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117421853468794900/batterytoeat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Battery",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117421853468794900/batterytoeat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Battery",
+					"Name": "Battery 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -18007,31 +17843,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Germ $1",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748064849782898778/Germ.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Germ $1",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748064849782898778/Germ.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Germ",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748064849782898778/Germ.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Germ",
+					"Name": "Germ 1",
 					"Power": "0",
 					"Toughness": "0",
 					"Type": "Creature",
@@ -18116,31 +17928,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Gay $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/727246207734513745/Gay2.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gay $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/727246207734513745/Gay2.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gay",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/727246207734513745/Gay2.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gay",
+					"Name": "Gay 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -18825,31 +18613,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Bear $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748085660337831938/Bear.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Bear $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748085660337831938/Bear.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Bear",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748085660337831938/Bear.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Bear",
+					"Name": "Bear 1",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Creature",
@@ -19534,31 +19298,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Large Richard $1",
-					"Power": "4",
-					"Toughness": "3",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692956511403638814/Large_Richard_-_150dpi.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Large Richard $1",
-					"Power": "4",
-					"Toughness": "3",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692956511403638814/Large_Richard_-_150dpi.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Large Richard",
-					"Power": "4",
-					"Toughness": "3",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692956511403638814/Large_Richard_-_150dpi.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Large Richard",
+					"Name": "Large Richard 1",
 					"Power": "4",
 					"Toughness": "3",
 					"Type": "Creature",
@@ -19793,31 +19533,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
+					"Name": "Treasure 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -21699,7 +21415,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Blind Atogatog",
@@ -24102,31 +23828,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Tarmogoyf $1",
-					"Power": "0",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124459291739435098/Tarmogoyf.PNG",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Tarmogoyf $1",
-					"Power": "0",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124459291739435098/Tarmogoyf.PNG",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Tarmogoyf",
-					"Power": "0",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124459291739435098/Tarmogoyf.PNG",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Tarmogoyf",
+					"Name": "Tarmogoyf 1",
 					"Power": "0",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -24586,31 +24288,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Bear $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748085660337831938/Bear.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Bear $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748085660337831938/Bear.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Bear",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748085660337831938/Bear.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Bear",
+					"Name": "Bear 1",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Creature",
@@ -25370,31 +25048,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -26304,31 +25958,71 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Wurm $1",
+					"Name": "Wurm 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Artifact;Creature",
-					"Image": "https://media.discordapp.net/attachments/692914661191974912/741915949090734140/image2.jpg",
-					"FIELD7": "Provoke"
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741915839951011840/image1.jpg",
+					"FIELD7": "Deathtouch"
 				},
 				{
-					"Name": "Wurm $1",
+					"Name": "Wurm 2",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Artifact;Creature",
-					"Image": "https://media.discordapp.net/attachments/692914661191974912/741915949090734140/image2.jpg",
-					"FIELD7": "Provoke"
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741915948432228392/image0.jpg",
+					"FIELD7": "Exalted"
 				},
 				{
-					"Name": "Wurm",
+					"Name": "Wurm 3",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Artifact;Creature",
-					"Image": "https://media.discordapp.net/attachments/692914661191974912/741915949090734140/image2.jpg",
-					"FIELD7": "Provoke"
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741916030091395072/image0.jpg",
+					"FIELD7": "Wither"
 				},
 				{
-					"Name": "Wurm",
+					"Name": "Wurm 4",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Artifact;Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741916030598643872/image1.jpg",
+					"FIELD7": "Mentor"
+				},
+				{
+					"Name": "Wurm 5",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Artifact;Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741916031127126056/image2.jpg",
+					"FIELD7": "Flanking"
+				},
+				{
+					"Name": "Wurm 6",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Artifact;Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741915839229460490/image0.jpg",
+					"FIELD7": "Vigilance"
+				},
+				{
+					"Name": "Wurm 7",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Artifact;Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741915840185761861/image2.jpg",
+					"FIELD7": "Lifelink"
+				},
+				{
+					"Name": "Wurm 8",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Artifact;Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741915948805652550/image1.jpg",
+					"FIELD7": "Reach"
+				},
+				{
+					"Name": "Wurm 9",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Artifact;Creature",
@@ -27838,31 +27532,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Storm Crow $1",
-					"Power": "1",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565209752928266/7f7aa8e1-ada6-491a-b96f-43e89dae7834.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Storm Crow $1",
-					"Power": "1",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565209752928266/7f7aa8e1-ada6-491a-b96f-43e89dae7834.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Storm Crow",
-					"Power": "1",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565209752928266/7f7aa8e1-ada6-491a-b96f-43e89dae7834.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Storm Crow",
+					"Name": "Storm Crow 1",
 					"Power": "1",
 					"Toughness": "2",
 					"Type": "Creature",
@@ -31694,7 +31364,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Chernobyl",
@@ -32822,31 +32502,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Goat $1",
-					"Power": "0",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117424618475630592/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Goat $1",
-					"Power": "0",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117424618475630592/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Goat",
-					"Power": "0",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117424618475630592/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Goat",
+					"Name": "Goat 2",
 					"Power": "0",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -33831,31 +33487,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Chicken $1",
-					"Power": "1",
-					"Toughness": "1",
+					"Name": "Ball 1",
+					"Power": "2",
+					"Toughness": "2",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918430495539230/Chicken.jpg",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748083062188802058/Ball.jpg",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Chicken $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918430495539230/Chicken.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Chicken",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918430495539230/Chicken.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Chicken",
+					"Name": "Chicken 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -34012,7 +33652,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Coconut Shells",
@@ -34840,31 +34490,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Dinosaur $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808564784709632011/unknown.png",
-					"FIELD7": "Trample"
-				},
-				{
-					"Name": "Dinosaur $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808564784709632011/unknown.png",
-					"FIELD7": "Trample"
-				},
-				{
-					"Name": "Dinosaur",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808564784709632011/unknown.png",
-					"FIELD7": "Trample"
-				},
-				{
-					"Name": "Dinosaur",
+					"Name": "Dinosaur 2",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -35174,31 +34800,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Colossal Dreadmaw $1",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw $1",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw",
+					"Name": "Colossal Dreadmaw 1",
 					"Power": "6",
 					"Toughness": "6",
 					"Type": "Creature",
@@ -36558,31 +36160,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
+					"Name": "Crusader 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692925367333158932/Crusader.jpg",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
+					"Name": "Treasure 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -39517,31 +39103,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -40748,7 +40310,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Cursed Sliver Burial Ground",
@@ -44726,31 +44298,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Devil $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807154900877443102/unknown.png",
-					"FIELD7": "Ping upon death, pseudo treasurelink"
+					"Name": "Treasure 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
+					"FIELD7": ""
 				},
 				{
-					"Name": "Devil $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807154900877443102/unknown.png",
-					"FIELD7": "Ping upon death, pseudo treasurelink"
-				},
-				{
-					"Name": "Devil",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807154900877443102/unknown.png",
-					"FIELD7": "Ping upon death, pseudo treasurelink"
-				},
-				{
-					"Name": "Devil",
+					"Name": "Devil 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -46935,31 +46491,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "JR $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748017081181798530/Jr..jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "JR $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748017081181798530/Jr..jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "JR",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748017081181798530/Jr..jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "JR",
+					"Name": "JR 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Creature",
@@ -48844,31 +48376,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Fungus Army $1",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807164348341420042/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Fungus Army $1",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807164348341420042/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Fungus Army",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807164348341420042/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Fungus Army",
+					"Name": "Fungus Army 1",
 					"Power": "0",
 					"Toughness": "0",
 					"Type": "Creature",
@@ -50300,7 +49808,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Echo Mage (Not the Rise of the Eldrazi One)",
@@ -51878,31 +51396,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Llanowar Elves $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117415893870313579/llelfs.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Llanowar Elves $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117415893870313579/llelfs.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Llanowar Elves",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117415893870313579/llelfs.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Llanowar Elves",
+					"Name": "Llanowar Elves 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -52512,31 +52006,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Vehicle $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/714794878336237639/Car.jpg",
-					"FIELD7": "Token is named Car, even though card says token is named Vehicle"
-				},
-				{
-					"Name": "Vehicle $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/714794878336237639/Car.jpg",
-					"FIELD7": "Token is named Car, even though card says token is named Vehicle"
-				},
-				{
-					"Name": "Vehicle",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/714794878336237639/Car.jpg",
-					"FIELD7": "Token is named Car, even though card says token is named Vehicle"
-				},
-				{
-					"Name": "Vehicle",
+					"Name": "Vehicle 2",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Artifact",
@@ -53296,31 +52766,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Zombie Army $1",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807159070242111508/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Zombie Army $1",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807159070242111508/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Zombie Army",
-					"Power": "0",
-					"Toughness": "0",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807159070242111508/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Zombie Army",
+					"Name": "Zombie Army 1",
 					"Power": "0",
 					"Toughness": "0",
 					"Type": "Creature",
@@ -54905,31 +54351,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Starvation $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/723658597757747330/Starvation.jpeg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Starvation $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/723658597757747330/Starvation.jpeg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Starvation",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/723658597757747330/Starvation.jpeg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Starvation",
+					"Name": "Starvation 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -55611,7 +55033,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Explore. Do it.",
@@ -57414,31 +56846,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
+					"Name": "Weed 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -57748,31 +57156,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Flblet Crusader $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692920445720330350/Flblet.jpg",
-					"FIELD7": "Token is named Flblet on the render, but Flblet Crusader on Fblthp, the Found. Due to capitalization and the fact it's the source card, I went with the name found on Fblthp, the Found.- Jdrawer"
-				},
-				{
-					"Name": "Flblet Crusader $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692920445720330350/Flblet.jpg",
-					"FIELD7": "Token is named Flblet on the render, but Flblet Crusader on Fblthp, the Found. Due to capitalization and the fact it's the source card, I went with the name found on Fblthp, the Found.- Jdrawer"
-				},
-				{
-					"Name": "Flblet Crusader",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692920445720330350/Flblet.jpg",
-					"FIELD7": "Token is named Flblet on the render, but Flblet Crusader on Fblthp, the Found. Due to capitalization and the fact it's the source card, I went with the name found on Fblthp, the Found.- Jdrawer"
-				},
-				{
-					"Name": "Flblet Crusader",
+					"Name": "Flblet Crusader 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -57932,31 +57316,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Whale $1",
-					"Power": "3",
-					"Toughness": "3",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748055945493479485/Whale.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Whale $1",
-					"Power": "3",
-					"Toughness": "3",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748055945493479485/Whale.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Whale",
-					"Power": "3",
-					"Toughness": "3",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748055945493479485/Whale.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Whale",
+					"Name": "Whale 2",
 					"Power": "3",
 					"Toughness": "3",
 					"Type": "Creature",
@@ -58416,31 +57776,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Dog $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808587840249921546/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Dog $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808587840249921546/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Dog",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808587840249921546/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Dog",
+					"Name": "Dog 2",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -59200,31 +58536,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Fish $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/719729952068730911/Fish.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Fish $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/719729952068730911/Fish.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Fish",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/719729952068730911/Fish.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Fish",
+					"Name": "Fish 2",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -59684,31 +58996,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -60318,31 +59606,39 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Mox Emerald $1",
+					"Name": "Mox Pearl 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808577452678447114/b0e1427c-05cd-465b-be59-97ed6e39f7ba.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808577250470658048/a7b3a48d-c555-4c42-8ce6-9b9b637251ca.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Mox Emerald $1",
+					"Name": "Mox Sapphire 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808577452678447114/b0e1427c-05cd-465b-be59-97ed6e39f7ba.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808577289314107422/8c4ab6f6-bcb1-4369-9d05-3582b2639eed.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Mox Emerald",
+					"Name": "Mox Jet 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808577452678447114/b0e1427c-05cd-465b-be59-97ed6e39f7ba.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808577329201676298/2b8285b7-bd88-4a6c-bd2e-9798a1c661f8.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Mox Emerald",
+					"Name": "Mox Ruby 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808577373481861170/d86490f7-8de4-4086-a1d1-cd543cbacd6a.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Mox Emerald 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -61252,31 +60548,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Force of Will $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Instant",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1087418954789687386/IMG_8379.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Force of Will $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Instant",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1087418954789687386/IMG_8379.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Force of Will",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Instant",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1087418954789687386/IMG_8379.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Force of Will",
+					"Name": "Force of Will 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Instant",
@@ -68708,7 +67980,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Skeleton 1",
+					"Power": "4",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1085872128525598740/IMG_8456.jpg",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Gobbling Guide",
@@ -68783,7 +68065,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Gobiln Mispeler",
@@ -70286,31 +69578,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Gold $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748057633042333726/Gold.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gold $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748057633042333726/Gold.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gold",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748057633042333726/Gold.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gold",
+					"Name": "Gold 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -73920,31 +73188,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -75079,31 +74323,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Zimbabwean Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692921100384075776/Zimbabwean_Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Zimbabwean Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692921100384075776/Zimbabwean_Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Zimbabwean Treasure",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692921100384075776/Zimbabwean_Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Zimbabwean Treasure",
+					"Name": "Zimbabwean Treasure 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -76838,31 +76058,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
+					"Name": "Clue 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703702114651734187/Clue.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -77022,31 +76226,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Hell's Cube $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/745488316299870278/Hells_Cube.jpg",
-					"FIELD7": "Stand-in for drafting purposes"
-				},
-				{
-					"Name": "Hell's Cube $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/745488316299870278/Hells_Cube.jpg",
-					"FIELD7": "Stand-in for drafting purposes"
-				},
-				{
-					"Name": "Hell's Cube",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/745488316299870278/Hells_Cube.jpg",
-					"FIELD7": "Stand-in for drafting purposes"
-				},
-				{
-					"Name": "Hell's Cube",
+					"Name": "Hell's Cube 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -78031,31 +77211,111 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Wendy $1",
+					"Name": "🐱 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1080899804021932143/Wendy_Token.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1079864807534116935/CatEmoteToken.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Wendy $1",
+					"Name": "The Creatures 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1080899804021932143/Wendy_Token.png",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865037503606824/The_creatures_Token.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Wendy",
+					"Name": "Sookie 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1080899804021932143/Wendy_Token.png",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865065651581049/Sookie_Token.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Wendy",
+					"Name": "Prince 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865117484777572/Prince_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Pawper, Car Dodger 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865134815653888/Pawper_Car_Dodger_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Moose and Muppet 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865166872723476/Moose_and_Muppet_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Margie 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865201735778394/Margie_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Kimchi 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865229279772725/Kimchi_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Ousier 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865254730797066/Ouiser_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Sparkle 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865275236765826/Sparkle_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Judith 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1080899765451100160/Judith_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Pawper 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865343897509978/Pawper_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Charmed Stray 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/1079864807991287948/1079865372926296144/Charmed_Stray_Token.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Wendy 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -78440,31 +77700,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Hidden Temple of Legends $1",
-					"Power": "4",
-					"Toughness": "4",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807156216920277012/unknown.png",
-					"FIELD7": "Eternalized version"
-				},
-				{
-					"Name": "Hidden Temple of Legends $1",
-					"Power": "4",
-					"Toughness": "4",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807156216920277012/unknown.png",
-					"FIELD7": "Eternalized version"
-				},
-				{
-					"Name": "Hidden Temple of Legends",
-					"Power": "4",
-					"Toughness": "4",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807156216920277012/unknown.png",
-					"FIELD7": "Eternalized version"
-				},
-				{
-					"Name": "Hidden Temple of Legends",
+					"Name": "Hidden Temple of Legends 1",
 					"Power": "4",
 					"Toughness": "4",
 					"Type": "Creature",
@@ -79149,31 +78385,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Spirit Vehicle $1",
-					"Power": "3",
-					"Toughness": "3",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/726950446958379018/Spirit_Vehicle.jpeg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Spirit Vehicle $1",
-					"Power": "3",
-					"Toughness": "3",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/726950446958379018/Spirit_Vehicle.jpeg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Spirit Vehicle",
-					"Power": "3",
-					"Toughness": "3",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/726950446958379018/Spirit_Vehicle.jpeg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Spirit Vehicle",
+					"Name": "Spirit Vehicle 1",
 					"Power": "3",
 					"Toughness": "3",
 					"Type": "Artifact",
@@ -79483,31 +78695,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124468850591793262/Treasure.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124468850591793262/Treasure.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124468850591793262/Treasure.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
+					"Name": "Treasure 3",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -79592,31 +78780,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Horse $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692927028097450014/Horse.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Horse $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692927028097450014/Horse.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Horse",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692927028097450014/Horse.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Horse",
+					"Name": "Horse 2",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -80226,31 +79390,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Hydra's Growth $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Enchantment",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808579504565780490/5112ee2a-a6f3-4280-a915-000a97a9cdef.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Hydra's Growth $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Enchantment",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808579504565780490/5112ee2a-a6f3-4280-a915-000a97a9cdef.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Hydra's Growth",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Enchantment",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808579504565780490/5112ee2a-a6f3-4280-a915-000a97a9cdef.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Hydra's Growth",
+					"Name": "Hydra's Growth 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Enchantment",
@@ -81385,31 +80525,23 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Gremlin $1",
-					"Power": "2",
-					"Toughness": "2",
+					"Name": "Elemental 5",
+					"Power": "1",
+					"Toughness": "1",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761380967633780776/Gremlin.jpg",
-					"FIELD7": ""
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761379364561747998/Elemental.jpg",
+					"FIELD7": "red"
 				},
 				{
-					"Name": "Gremlin $1",
-					"Power": "2",
-					"Toughness": "2",
+					"Name": "Elemental 6",
+					"Power": "3",
+					"Toughness": "1",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761380967633780776/Gremlin.jpg",
-					"FIELD7": ""
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761379764169605171/Elemental.jpg",
+					"FIELD7": "red; haste"
 				},
 				{
-					"Name": "Gremlin",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761380967633780776/Gremlin.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gremlin",
+					"Name": "Gremlin 1",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Creature",
@@ -82544,31 +81676,71 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Wurm $1",
-					"Power": "6",
-					"Toughness": "6",
+					"Name": "Beast 1",
+					"Power": "4",
+					"Toughness": "4",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693126556385542205/tgk2-8-wurm.jpg",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692949862827687966/Beast.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Wurm $1",
-					"Power": "6",
-					"Toughness": "6",
+					"Name": "Beast 2",
+					"Power": "8",
+					"Toughness": "8",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693126556385542205/tgk2-8-wurm.jpg",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693126819989291158/image.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Wurm",
-					"Power": "6",
-					"Toughness": "6",
+					"Name": "Dinosaur 1",
+					"Power": "9",
+					"Toughness": "9",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693126556385542205/tgk2-8-wurm.jpg",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693126301673848842/1585324545042845.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Wurm",
+					"Name": "Elemental 1",
+					"Power": "7",
+					"Toughness": "7",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741471853603717130/image0.jpg",
+					"FIELD7": "G"
+				},
+				{
+					"Name": "Elephant 1",
+					"Power": "3",
+					"Toughness": "3",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693126134757457981/2dbccfc7-427b-41e6-b770-92d73994bf3b.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Snake 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693125848965840976/2a452235-cebd-4e8f-b217-9b55fc1c3830.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Wolf 1",
+					"Power": "2",
+					"Toughness": "2",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693126092067962930/7bdb3368-fee3-4795-a23f-c97555ee7475.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Wurm 10",
+					"Power": "5",
+					"Toughness": "5",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693126507882872912/366c01a7-6399-496b-a5a3-8be45475ce33.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Wurm 11",
 					"Power": "6",
 					"Toughness": "6",
 					"Type": "Creature",
@@ -85203,31 +84375,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "basic Grass energy $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Undefined",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693176089018761346/41apTN5xkzL.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "basic Grass energy $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Undefined",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693176089018761346/41apTN5xkzL.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "basic Grass energy",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Undefined",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/693176089018761346/41apTN5xkzL.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "basic Grass energy",
+					"Name": "basic Grass energy 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Undefined",
@@ -85462,31 +84610,39 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Treasure $1",
+					"Name": "Clue 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703702114651734187/Clue.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Treasure $1",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Treasure",
+					"Name": "Katana 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692923445800861716/Katana.jpg",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Treasure",
+					"Name": "Land Mine 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748002991964946512/Land_Mine.jpg",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Treasure 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -86393,7 +85549,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Jailed in a Jail in a Jail in a Jail in a Jail in a Jail in",
@@ -87371,31 +86537,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -87477,7 +86619,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Judge of Voke",
@@ -93327,7 +92479,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Late Night Solo Queuer",
@@ -98205,31 +97367,23 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "GO TO JAIL $1",
+					"Name": "Council's Judgment 1",
 					"Power": "",
 					"Toughness": "",
-					"Type": "Enchantment",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761376083492732948/06b86826-307b-499b-92a4-a2de0839dc47.png",
+					"Type": "Sorcery",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761375987316555816/32301593-f16a-4a46-8a4e-eecedd2a9013.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "GO TO JAIL $1",
+					"Name": "Dovin's Veto 1",
 					"Power": "",
 					"Toughness": "",
-					"Type": "Enchantment",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761376083492732948/06b86826-307b-499b-92a4-a2de0839dc47.png",
+					"Type": "Instant",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761376025040650260/5d6b5054-2224-4f68-9d82-3ed17c5dacc4.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "GO TO JAIL",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Enchantment",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/761376083492732948/06b86826-307b-499b-92a4-a2de0839dc47.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "GO TO JAIL",
+					"Name": "GO TO JAIL 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Enchantment",
@@ -98989,31 +98143,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Vehicle $1",
-					"Power": "7",
-					"Toughness": "7",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124548019023532032/Vehicle.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Vehicle $1",
-					"Power": "7",
-					"Toughness": "7",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124548019023532032/Vehicle.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Vehicle",
-					"Power": "7",
-					"Toughness": "7",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124548019023532032/Vehicle.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Vehicle",
+					"Name": "Vehicle 3",
 					"Power": "7",
 					"Toughness": "7",
 					"Type": "Artifact",
@@ -100598,31 +99728,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Weed $1",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
+					"Name": "Weed 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -104607,31 +103721,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Colossal Dreadmaw $1",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw $1",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw",
+					"Name": "Colossal Dreadmaw 1",
 					"Power": "6",
 					"Toughness": "6",
 					"Type": "Creature",
@@ -107416,31 +106506,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Rhino $1",
-					"Power": "4",
-					"Toughness": "5",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1086739791619555389/IMG_8502.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Rhino $1",
-					"Power": "4",
-					"Toughness": "5",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1086739791619555389/IMG_8502.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Rhino",
-					"Power": "4",
-					"Toughness": "5",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1086739791619555389/IMG_8502.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Rhino",
+					"Name": "Rhino 1",
 					"Power": "4",
 					"Toughness": "5",
 					"Type": "Creature",
@@ -110450,31 +109516,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Mox Ruby $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1078920623125971004/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Mox Ruby $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1078920623125971004/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Mox Ruby",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1078920623125971004/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Mox Ruby",
+					"Name": "Mox Ruby 2",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -111156,7 +110198,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Storm Crow 1",
+					"Power": "1",
+					"Toughness": "2",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565209752928266/7f7aa8e1-ada6-491a-b96f-43e89dae7834.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Murder Detective Who Only Takes Easy Cases",
@@ -111234,31 +110286,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Clue $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703702114651734187/Clue.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Clue $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703702114651734187/Clue.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Clue",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703702114651734187/Clue.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Clue",
+					"Name": "Clue 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -112318,31 +111346,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Myr $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Artifact Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808579779224666112/187cf6d5-c352-48f2-b8bf-fe1bf946e2ac.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Myr $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Artifact Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808579779224666112/187cf6d5-c352-48f2-b8bf-fe1bf946e2ac.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Myr",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Artifact Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808579779224666112/187cf6d5-c352-48f2-b8bf-fe1bf946e2ac.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Myr",
+					"Name": "Myr 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Artifact Creature",
@@ -112427,31 +111431,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Whale $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692919078880542751/Whale.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Whale $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692919078880542751/Whale.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Whale",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692919078880542751/Whale.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Whale",
+					"Name": "Whale 1",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Creature",
@@ -116283,7 +115263,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Squirrel 1",
+					"Power": "1",
+					"Toughness": "1",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808595179237277746/unknown.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Nyxbloom Ancien't",
@@ -118758,7 +117748,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Storm Crow 1",
+					"Power": "1",
+					"Toughness": "2",
+					"Type": "Creature",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808565209752928266/7f7aa8e1-ada6-491a-b96f-43e89dae7834.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Oko, the Veilcursed",
@@ -118836,31 +117836,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Weed",
+					"Name": "Weed 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -119395,31 +118371,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Police Officer $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748848116727545896/Police_Officer.jpg",
+					"Name": "Clue 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703702114651734187/Clue.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Police Officer $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748848116727545896/Police_Officer.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Police Officer",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748848116727545896/Police_Officer.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Police Officer",
+					"Name": "Police Officer 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -119954,31 +118914,31 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Weed $1",
+					"Name": "Clue 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703702114651734187/Clue.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Weed $1",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Weed",
+					"Name": "Gold 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748057633042333726/Gold.jpg",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Weed",
+					"Name": "Weed 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -120585,7 +119545,25 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Opt 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Instant",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807162128158031882/958262ec-8e52-40cf-a9fd-a60e42643e15.png",
+					"FIELD7": ""
+				},
+				{
+					"Name": "Shock 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Instant",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807162186072850432/f9b2ff2a-6dfe-4635-8da2-22d525e82b94.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Opter of Ornith",
@@ -123213,31 +122191,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "1 Life $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Life",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1068038656767557683/1_Life.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "1 Life $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Life",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1068038656767557683/1_Life.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "1 Life",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Life",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1068038656767557683/1_Life.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "1 Life",
+					"Name": "1 Life 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Life",
@@ -123847,31 +122801,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Soldier $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://media.discordapp.net/attachments/692914661191974912/749061457227808948/image0.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Soldier $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://media.discordapp.net/attachments/692914661191974912/749061457227808948/image0.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Soldier",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://media.discordapp.net/attachments/692914661191974912/749061457227808948/image0.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Soldier",
+					"Name": "Soldier 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -124481,31 +123411,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Katana $1",
+					"Name": "Emblem 1",
 					"Power": "",
 					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692923445800861716/Katana.jpg",
+					"Type": "Emblem",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748023193109004359/Emblem.jpg",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Katana $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692923445800861716/Katana.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Katana",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692923445800861716/Katana.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Katana",
+					"Name": "Katana 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -124662,7 +123576,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Pathway to Interaction // Pathway to Isolation",
@@ -126465,31 +125389,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Oubliette $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Enchantment",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748894419301695638/30d1450f-2909-410e-9920-731278fa74de.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Oubliette $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Enchantment",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748894419301695638/30d1450f-2909-410e-9920-731278fa74de.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Oubliette",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Enchantment",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748894419301695638/30d1450f-2909-410e-9920-731278fa74de.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Oubliette",
+					"Name": "Oubliette 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Enchantment",
@@ -127099,31 +125999,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -127880,7 +126756,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Pizzagate",
@@ -128183,31 +127069,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Pot of Greed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Sorcery",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1076558867573518336/22310.webp",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Pot of Greed $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Sorcery",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1076558867573518336/22310.webp",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Pot of Greed",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Sorcery",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1076558867573518336/22310.webp",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Pot of Greed",
+					"Name": "Pot of Greed 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Sorcery",
@@ -131967,31 +130829,23 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Elemental $1",
-					"Power": "6",
-					"Toughness": "1",
+					"Name": "Elemental 2",
+					"Power": "2",
+					"Toughness": "3",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918762000613499/Elemental.jpg",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918637031456858/Elemental.1.jpg",
 					"FIELD7": "R"
 				},
 				{
-					"Name": "Elemental $1",
-					"Power": "6",
-					"Toughness": "1",
+					"Name": "Elemental 3",
+					"Power": "4",
+					"Toughness": "2",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918762000613499/Elemental.jpg",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918695009320995/Elemental.2.jpg",
 					"FIELD7": "R"
 				},
 				{
-					"Name": "Elemental",
-					"Power": "6",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918762000613499/Elemental.jpg",
-					"FIELD7": "R"
-				},
-				{
-					"Name": "Elemental",
+					"Name": "Elemental 4",
 					"Power": "6",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -132151,31 +131005,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -132410,31 +131240,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Beast $1",
-					"Power": "4",
-					"Toughness": "4",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692949862827687966/Beast.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Beast $1",
-					"Power": "4",
-					"Toughness": "4",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692949862827687966/Beast.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Beast",
-					"Power": "4",
-					"Toughness": "4",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692949862827687966/Beast.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Beast",
+					"Name": "Beast 1",
 					"Power": "4",
 					"Toughness": "4",
 					"Type": "Creature",
@@ -132816,7 +131622,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "RGB Cardsleeves",
@@ -134694,31 +133510,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Colossal Dreadmaw $1",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw $1",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw",
+					"Name": "Colossal Dreadmaw 1",
 					"Power": "6",
 					"Toughness": "6",
 					"Type": "Creature",
@@ -136903,31 +135695,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Goblin $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/734161019823456377/Goblin.png",
-					"FIELD7": "Token is missing P/T"
-				},
-				{
-					"Name": "Goblin $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/734161019823456377/Goblin.png",
-					"FIELD7": "Token is missing P/T"
-				},
-				{
-					"Name": "Goblin",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/734161019823456377/Goblin.png",
-					"FIELD7": "Token is missing P/T"
-				},
-				{
-					"Name": "Goblin",
+					"Name": "Goblin 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -137762,31 +136530,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -138171,31 +136915,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
+					"Name": "Treasure 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -139180,31 +137900,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Rock $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692966050257698826/rock.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Rock $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692966050257698826/rock.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Rock",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692966050257698826/rock.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Rock",
+					"Name": "Rock 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -139289,31 +137985,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Rock $1",
+					"Name": "Rock 2",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124542090714558494/Rock.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124528591233892493/Rock.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Rock $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124542090714558494/Rock.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Rock",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124542090714558494/Rock.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Rock",
+					"Name": "Rock 3",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -145173,31 +143853,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Battery $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117421853468794900/batterytoeat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Battery $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117421853468794900/batterytoeat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Battery",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117421853468794900/batterytoeat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Battery",
+					"Name": "Battery 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -145282,31 +143938,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Banana $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124537229675610132/Banana.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Banana $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124537229675610132/Banana.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Banana",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124537229675610132/Banana.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Banana",
+					"Name": "Banana 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -145391,31 +144023,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Goat $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692965174898065418/Goat_-_150dpi.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Goat $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692965174898065418/Goat_-_150dpi.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Goat",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692965174898065418/Goat_-_150dpi.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Goat",
+					"Name": "Goat 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -146925,31 +145533,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Porcelain Legionaire $1",
-					"Power": "3",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1091449320022220810/IMG_8722.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Porcelain Legionaire $1",
-					"Power": "3",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1091449320022220810/IMG_8722.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Porcelain Legionaire",
-					"Power": "3",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1091449320022220810/IMG_8722.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Porcelain Legionaire",
+					"Name": "Porcelain Legionaire 1",
 					"Power": "3",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -148159,31 +146743,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Phyrexian Mite $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1070200684730929283/Phyrexian_Mite_No_Testicles.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Phyrexian Mite $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1070200684730929283/Phyrexian_Mite_No_Testicles.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Phyrexian Mite",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1070200684730929283/Phyrexian_Mite_No_Testicles.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Phyrexian Mite",
+					"Name": "Phyrexian Mite 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -151565,7 +150125,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Spawn Camp",
@@ -153743,31 +152313,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Squirrel $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808595179237277746/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Squirrel $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808595179237277746/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Squirrel",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808595179237277746/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Squirrel",
+					"Name": "Squirrel 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -155802,31 +154348,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Kolaghan Stormsinger $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741893230043463810/image0.jpg",
+					"Name": "Brainstorm 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Instant",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741893230299447336/image1.jpg",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Kolaghan Stormsinger $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741893230043463810/image0.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Kolaghan Stormsinger",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/741893230043463810/image0.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Kolaghan Stormsinger",
+					"Name": "Kolaghan Stormsinger 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -159136,31 +157666,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Scuttlebug $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808575452703621140/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Scuttlebug $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808575452703621140/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Scuttlebug",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808575452703621140/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Scuttlebug",
+					"Name": "Scuttlebug 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -162695,31 +161201,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1076361635633041540/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1076361635633041540/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1076361635633041540/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
+					"Name": "Treasure 2",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -163479,31 +161961,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Colossal Dreadmaw $1",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw $1",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw",
-					"Power": "6",
-					"Toughness": "6",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808576722143281183/fe0f3faf-c011-49b8-b604-d68a87615737.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Colossal Dreadmaw",
+					"Name": "Colossal Dreadmaw 1",
 					"Power": "6",
 					"Toughness": "6",
 					"Type": "Creature",
@@ -168685,7 +167143,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Thraben Rejector",
@@ -169138,31 +167606,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Kobold $1",
-					"Power": "0",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808592634963820564/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Kobold $1",
-					"Power": "0",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808592634963820564/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Kobold",
-					"Power": "0",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808592634963820564/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Kobold",
+					"Name": "Kobold 1",
 					"Power": "0",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -169997,31 +168441,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Gut Shot $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Instant",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/719983806198579281/Gutshot.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gut Shot $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Instant",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/719983806198579281/Gutshot.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gut Shot",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Instant",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/719983806198579281/Gutshot.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Gut Shot",
+					"Name": "Gut Shot 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Instant",
@@ -171231,31 +169651,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -171415,31 +169811,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Bird $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748894259964411914/Bird.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Bird $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748894259964411914/Bird.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Bird",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748894259964411914/Bird.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Bird",
+					"Name": "Bird 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -171524,31 +169896,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Actor $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808594351282061362/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Actor $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808594351282061362/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Actor",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/808594351282061362/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Actor",
+					"Name": "Actor 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -173658,31 +172006,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
+					"Name": "Treasure 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -175264,7 +173588,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Tunak Tunak Tun",
@@ -175342,31 +173676,31 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Tunak Tunak TunG $1",
+					"Name": "Tunak Tunak TunW 1",
 					"Power": "2",
 					"Toughness": "3",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/714795265197998090/Tunak_Tunak_TunG.jpg",
-					"FIELD7": "G"
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/714795268796579860/Tunak_Tunak_TunW.jpg",
+					"FIELD7": "W"
 				},
 				{
-					"Name": "Tunak Tunak TunG $1",
+					"Name": "Tunak Tunak TunU 1",
 					"Power": "2",
 					"Toughness": "3",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/714795265197998090/Tunak_Tunak_TunG.jpg",
-					"FIELD7": "G"
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/714795267756523600/Tunak_Tunak_TunU.jpg",
+					"FIELD7": "U"
 				},
 				{
-					"Name": "Tunak Tunak TunG",
+					"Name": "Tunak Tunak TunR 1",
 					"Power": "2",
 					"Toughness": "3",
 					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/714795265197998090/Tunak_Tunak_TunG.jpg",
-					"FIELD7": "G"
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/714795266758279228/Tunak_Tunak_TunR.jpg",
+					"FIELD7": "R"
 				},
 				{
-					"Name": "Tunak Tunak TunG",
+					"Name": "Tunak Tunak TunG 1",
 					"Power": "2",
 					"Toughness": "3",
 					"Type": "Creature",
@@ -175676,31 +174010,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Orb $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/717445953392607322/Orb.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Orb $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/717445953392607322/Orb.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Orb",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/717445953392607322/Orb.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Orb",
+					"Name": "Orb 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -179007,7 +177317,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Weed 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Urzbekitron Passport Card",
@@ -180660,31 +178980,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748087290072399902/Treasure.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Treasure",
+					"Name": "Treasure 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -183241,7 +181537,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "Weird Elf",
@@ -183619,31 +181925,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Whale $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692919078880542751/Whale.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Whale $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692919078880542751/Whale.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Whale",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692919078880542751/Whale.jpg",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Whale",
+					"Name": "Whale 1",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Creature",
@@ -184103,31 +182385,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Food",
+					"Name": "Food 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -184437,31 +182695,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Vehicle $1",
-					"Power": "X",
-					"Toughness": "X",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/705877689994575892/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Vehicle $1",
-					"Power": "X",
-					"Toughness": "X",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/705877689994575892/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Vehicle",
-					"Power": "X",
-					"Toughness": "X",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/705877689994575892/unknown.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Vehicle",
+					"Name": "Vehicle 1",
 					"Power": "X",
 					"Toughness": "X",
 					"Type": "Artifact",
@@ -185971,31 +184205,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Battery $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117421853468794900/batterytoeat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Battery $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117421853468794900/batterytoeat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Battery",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117421853468794900/batterytoeat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Battery",
+					"Name": "Battery 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Artifact",
@@ -186155,31 +184365,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Nebula $1",
+					"Name": "Nebula 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Basic;Land",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748212423235731546/Nebula_.png",
-					"FIELD7": ""
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/747423781395497060/Nebula.png",
+					"FIELD7": "(extended art)"
 				},
 				{
-					"Name": "Nebula $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Basic;Land",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748212423235731546/Nebula_.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Nebula",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Basic;Land",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748212423235731546/Nebula_.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Nebula",
+					"Name": "Nebula 2",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Basic;Land",
@@ -186414,31 +184608,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Wolf $1",
+					"Name": "Wolf 2",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Creature",
 					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807161956771037204/unknown.png",
-					"FIELD7": "Black"
+					"FIELD7": "White"
 				},
 				{
-					"Name": "Wolf $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807161956771037204/unknown.png",
-					"FIELD7": "Black"
-				},
-				{
-					"Name": "Wolf",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/807161956771037204/unknown.png",
-					"FIELD7": "Black"
-				},
-				{
-					"Name": "Wolf",
+					"Name": "Wolf 3",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Creature",
@@ -188023,31 +186201,15 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Insect Horror $1",
-					"Power": "1",
-					"Toughness": "1",
+					"Name": "Insect Horror 1",
+					"Power": "Z",
+					"Toughness": "Z",
 					"Type": "Creature",
-					"Image": "https://media.discordapp.net/attachments/632749594585071637/749050224470655006/image0.png",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/723661839346696262/1592604803507.png",
 					"FIELD7": ""
 				},
 				{
-					"Name": "Insect Horror $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://media.discordapp.net/attachments/632749594585071637/749050224470655006/image0.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Insect Horror",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://media.discordapp.net/attachments/632749594585071637/749050224470655006/image0.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Insect Horror",
+					"Name": "Insect Horror 2",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -190157,31 +188319,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Noxious Groodion $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1069807437554655345/render.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Noxious Groodion $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1069807437554655345/render.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Noxious Groodion",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1069807437554655345/render.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Noxious Groodion",
+					"Name": "Noxious Groodion 1",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Creature",
@@ -190416,31 +188554,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Copy $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Copy",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117423520473952297/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Copy $1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Copy",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117423520473952297/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Copy",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Copy",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1117423520473952297/image.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Copy",
+					"Name": "Copy 1",
 					"Power": "",
 					"Toughness": "",
 					"Type": "Copy",
@@ -192700,31 +190814,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Cat $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124551269789470733/Cat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Cat $1",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124551269789470733/Cat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Cat",
-					"Power": "1",
-					"Toughness": "1",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/1124551269789470733/Cat.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Cat",
+					"Name": "Cat 1",
 					"Power": "1",
 					"Toughness": "1",
 					"Type": "Creature",
@@ -193256,7 +191346,17 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": ""
+			"FIELD55": "",
+			"tokens": [
+				{
+					"Name": "Food 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
+					"FIELD7": ""
+				}
+			]
 		},
 		{
 			"Name": "red Naturalize",
@@ -193409,31 +191509,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Elemental Dragon Devil $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Artifact;Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918553690636358/Elemental_Dragon_Devil.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Elemental Dragon Devil $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Artifact;Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918553690636358/Elemental_Dragon_Devil.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Elemental Dragon Devil",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Artifact;Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/692918553690636358/Elemental_Dragon_Devil.png",
-					"FIELD7": ""
-				},
-				{
-					"Name": "Elemental Dragon Devil",
+					"Name": "Elemental Dragon Devil 1",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Artifact;Creature",
@@ -194043,31 +192119,7 @@
 			"FIELD55": "",
 			"tokens": [
 				{
-					"Name": "Horse $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748021017447759892/Horsetoken.png",
-					"FIELD7": "GW"
-				},
-				{
-					"Name": "Horse $1",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748021017447759892/Horsetoken.png",
-					"FIELD7": "GW"
-				},
-				{
-					"Name": "Horse",
-					"Power": "2",
-					"Toughness": "2",
-					"Type": "Creature",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/748021017447759892/Horsetoken.png",
-					"FIELD7": "GW"
-				},
-				{
-					"Name": "Horse",
+					"Name": "Horse 1",
 					"Power": "2",
 					"Toughness": "2",
 					"Type": "Creature",

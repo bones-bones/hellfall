@@ -1,7 +1,7 @@
 import { styled } from "@workday/canvas-kit-react/common";
 
 import { CheckboxGroup } from "./inputs";
-import { PillSearch2 } from "./inputs/PillSearch2";
+import { PillSearch } from "./inputs";
 import { Checkbox } from "@workday/canvas-kit-react/checkbox";
 import { TextInput } from "@workday/canvas-kit-react/text-input";
 import { FormField } from "@workday/canvas-kit-react/form-field";
@@ -39,82 +39,80 @@ export const SearchControls = () => {
   );
 
   return (
-    <>
-      <SearchContainer>
-        <SearchCriteriaSection>
-          <FormField label="Name">
-            <TextInput
-              defaultValue={nameSearch}
-              onKeyDown={(event) => {
-                if (event.key == "Enter") {
-                  setNameSearch((event.target as any).value);
-                }
-              }}
-              onBlur={(event) => {
-                setNameSearch(event.target.value);
-              }}
-            />
-          </FormField>
-          <PillSearch2
-            label={"Text"}
-            possibleValues={[]}
-            defaultValues={rulesSearch}
-            onChange={setRulesSearch}
+    <SearchContainer>
+      <SearchCriteriaSection>
+        <FormField label="Name">
+          <TextInput
+            defaultValue={nameSearch}
+            onKeyDown={(event) => {
+              if (event.key == "Enter") {
+                setNameSearch((event.target as any).value);
+              }
+            }}
+            onBlur={(event) => {
+              setNameSearch(event.target.value);
+            }}
           />
-          <PillSearch2
-            label={"Type"}
-            possibleValues={cardTypes.data}
-            defaultValues={typeSearch}
-            onChange={setTypeSearch}
-          />
-          <FormField label={"Creator"}>
-            <Combobox
-              onChange={(event) => setCreator(event?.target.value)}
-              showClearButton={!!creator}
-              initialValue={creator}
-              autocompleteItems={creators.data.map((entry) => (
-                <DeprecatedMenuItem key={entry}>{entry}</DeprecatedMenuItem>
-              ))}
-            >
-              <TextInput />
-            </Combobox>
-          </FormField>
-        </SearchCriteriaSection>
-        <SearchCriteriaSection>
-          <CheckboxGroup
-            label="Colors (inclusive)"
-            values={colors}
-            initialValue={searchColors}
-            onChange={setSearchColors}
-          />
+        </FormField>
+        <PillSearch
+          label={"Text"}
+          possibleValues={[]}
+          defaultValues={rulesSearch}
+          onChange={setRulesSearch}
+        />
+        <PillSearch
+          label={"Type"}
+          possibleValues={cardTypes.data}
+          defaultValues={typeSearch}
+          onChange={setTypeSearch}
+        />
+        <FormField label={"Creator"}>
+          <Combobox
+            onChange={(event) => setCreator(event?.target.value)}
+            showClearButton={!!creator}
+            initialValue={creator}
+            autocompleteItems={creators.data.map((entry) => (
+              <DeprecatedMenuItem key={entry}>{entry}</DeprecatedMenuItem>
+            ))}
+          >
+            <TextInput />
+          </Combobox>
+        </FormField>
+      </SearchCriteriaSection>
+      <SearchCriteriaSection>
+        <CheckboxGroup
+          label="Colors (inclusive)"
+          values={colors}
+          initialValue={searchColors}
+          onChange={setSearchColors}
+        />
 
-          <CheckboxGroup
-            label="Within Color Identity"
-            values={colors}
-            initialValue={searchColorsIdentity}
-            onChange={setSearchColorsIdentityAtom}
+        <CheckboxGroup
+          label="Within Color Identity"
+          values={colors}
+          initialValue={searchColorsIdentity}
+          onChange={setSearchColorsIdentityAtom}
+        />
+      </SearchCriteriaSection>
+      <SearchCriteriaSection>
+        <CheckboxGroup
+          initialValue={set}
+          label={"Set"}
+          values={["HLC", "HC2", "HC3", "HC4"]}
+          onChange={setSet}
+        />
+        <FormField label={"Only Constructed Legal"}>
+          <Checkbox
+            type="checkbox"
+            checked={legality == "legal"}
+            onChange={(event) => {
+              setLegality(event.target.checked ? "legal" : "");
+            }}
           />
-        </SearchCriteriaSection>
-        <SearchCriteriaSection>
-          <CheckboxGroup
-            initialValue={set}
-            label={"Set"}
-            values={["HLC", "HC2", "HC3", "HC4"]}
-            onChange={setSet}
-          />
-          <FormField label={"Only Constructed Legal"}>
-            <Checkbox
-              type="checkbox"
-              checked={legality == "legal"}
-              onChange={(event) => {
-                setLegality(event.target.checked ? "legal" : "");
-              }}
-            />
-          </FormField>
-          <CmcSelector onChange={setSearchCmc} initialValue={searchCmc} />
-        </SearchCriteriaSection>
-      </SearchContainer>
-    </>
+        </FormField>
+        <CmcSelector onChange={setSearchCmc} initialValue={searchCmc} />
+      </SearchCriteriaSection>
+    </SearchContainer>
   );
 };
 const SearchCriteriaSection = styled("div")({

@@ -15,6 +15,9 @@
 ~~- Bad Land // Bad Land type~~
 - Update the Name section of the tokens database, it's kinda messey
 
+- token sheet: Opt needs Opter // Shocker
+- "Related Cards (Read Comment)": "Murder*3;CROW HURRICANE",
+
 
 Think of a better way to store sides
 
@@ -34,6 +37,7 @@ Write a script to transform the database
 ~~- add guide for !~~
 - mobile support
 - Script to fetch and transform sheets directly from google doc
+- sort by year/set
 
 # Mana symbols that need support
 - ?

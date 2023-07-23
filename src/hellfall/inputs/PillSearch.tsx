@@ -1,10 +1,13 @@
-import { SearchForm } from "@workday/canvas-kit-labs-react/search-form";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { DeprecatedMenuItem } from "@workday/canvas-kit-preview-react/menu";
 import { Pill } from "@workday/canvas-kit-preview-react/pill";
 import { FormField } from "@workday/canvas-kit-react/form-field";
 import { styled } from "@workday/canvas-kit-react/common";
-import { TertiaryButton } from "@workday/canvas-kit-react";
+import { TertiaryButton } from "@workday/canvas-kit-react/button";
+import { TextInput } from "@workday/canvas-kit-react/text-input";
+
+import { FixedSizeList } from "react-window";
+import { Menu, useMenuModel } from "@workday/canvas-kit-react/menu";
 
 type Props = {
   possibleValues: string[];
@@ -21,13 +24,32 @@ export const PillSearch = ({
 }: Props) => {
   const [menuItems, setMenuItems] = useState(possibleValues);
   const [selectedValues, setSelectedValues] = useState(defaultValues);
-  const searchRef = useRef(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const menuModel = useMenuModel({ returnFocusRef: searchRef });
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
+  const listRef = useRef(null);
+
+  const [searchValue, setSearchValue] = useState("");
+  if (selectedIndex && listRef.current) {
+    (listRef.current as any).scrollToItem(selectedIndex);
+  }
 
   useEffect(() => {
     onChange(selectedValues);
   }, [selectedValues]);
 
+  const addSelection = (value: string) => {
+    setSelectedValues([value, ...selectedValues].filter(Boolean));
+    setSearchValue("");
+    setMenuItems(possibleValues);
+
+    menuModel.events.hide();
+    searchRef.current?.blur();
+  };
+
   const filter = (event: ChangeEvent<HTMLInputElement>) => {
+    // Doing this here instead of in useEffect loop for performance reasons
+    setSearchValue(event.target.value);
     const filteredValues = [
       ...possibleValues
         .filter((entry) =>
@@ -35,69 +57,73 @@ export const PillSearch = ({
         )
         .filter((entry) => !selectedValues.includes(entry)),
     ].filter(Boolean);
+
     setMenuItems(
       filteredValues.length > 0 ? filteredValues : [event.target.value]
     );
   };
 
-  const setValue = (value: string) => {
-    setSelectedValues([value, ...selectedValues].filter(Boolean));
-    (searchRef as any).current.inputRef.current.parentNode.children[1].click();
-  };
-
-  // const entryMappings = useMemo(() => {
-  //   console.log("mem");
-  //   return menuItems.map((entry) => (
-  //     <DeprecatedMenuItem
-  //       value={entry}
-  //       key={entry}
-  //       onClick={() => {
-  //         setValue(entry);
-  //       }}
-  //     >
-  //       {entry}
-  //     </DeprecatedMenuItem>
-  //   ));
-  // }, [menuItems]);
-  const filteredItems = (
+  const filteredItems =
     selectedValues.length > 0
       ? menuItems.filter((entry) => !selectedValues.includes(entry))
-      : menuItems
-  )
-    .map((entry) => (
-      <DeprecatedMenuItem
-        value={entry}
-        key={entry}
-        onClick={() => {
-          setValue(entry);
-        }}
-      >
-        {entry}
-      </DeprecatedMenuItem>
-    ))
-    .slice(0, 200);
-
-  if (filteredItems.length > 1) {
-    filteredItems.push(
-      <DeprecatedMenuItem isDisabled key={"search to narrow results"}>
-        search to narrow results
-      </DeprecatedMenuItem>
-    );
-  }
+      : menuItems;
 
   return (
-    <>
+    <Menu model={menuModel}>
       <FormField label={label}>
-        <StyledSearchForm
+        <StyledTextInput
           ref={searchRef}
-          //          autocompleteItems={entryMappings}
-          autocompleteItems={filteredItems}
-          onInputChange={filter}
-          onSubmit={(e) => {
-            // holy crap what are you doing. This is so bad. It works though, which is nice.
-            setValue((e as any).currentTarget.elements["search"].value);
+          onFocus={() => {
+            setSelectedIndex(undefined);
+            menuModel.events.show();
+          }}
+          onChange={filter}
+          value={searchValue}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              if (selectedIndex) {
+                addSelection(filteredItems[selectedIndex]);
+              } else {
+                addSelection(searchValue);
+              }
+            } else if (e.key === "ArrowDown") {
+              setSelectedIndex(
+                selectedIndex != undefined ? selectedIndex + 1 : 0
+              );
+            } else if (e.key === "ArrowUp") {
+              setSelectedIndex(
+                selectedIndex && selectedIndex > 0
+                  ? selectedIndex - 1
+                  : undefined
+              );
+            }
           }}
         />
+        <Menu.Popper anchorElement={searchRef} placement="bottom">
+          <StyledCard>
+            <FixedSizeList
+              ref={listRef}
+              height={Math.min(200, filteredItems.length * 40)}
+              itemCount={filteredItems.length}
+              itemSize={35}
+              width={"275px"}
+              itemData={filteredItems}
+            >
+              {({ style, data, index }) => (
+                <DeprecatedMenuItem
+                  style={style}
+                  value={data[index]}
+                  isFocused={selectedIndex === index}
+                  key={data[index]}
+                  onClick={() => addSelection(data[index])}
+                >
+                  {data[index]}
+                </DeprecatedMenuItem>
+              )}
+            </FixedSizeList>
+          </StyledCard>
+        </Menu.Popper>
+
         {selectedValues.map((entry) => {
           return (
             <Pill key={entry} variant="removable">
@@ -105,11 +131,11 @@ export const PillSearch = ({
                 {entry}
               </Pill.Label>
               <Pill.IconButton
-                onClick={() => {
+                onClick={() =>
                   setSelectedValues(
                     selectedValues.filter((val) => val != entry)
-                  );
-                }}
+                  )
+                }
               />
             </Pill>
           );
@@ -118,16 +144,25 @@ export const PillSearch = ({
           <TertiaryButton
             onClick={() => {
               setSelectedValues([]);
+              setSearchValue("");
+              setMenuItems(possibleValues);
             }}
           >
-            Clear all
+            Clear selections
           </TertiaryButton>
         )}
       </FormField>
-    </>
+    </Menu>
   );
 };
 
-const StyledSearchForm = styled(SearchForm)({
+const StyledTextInput = styled(TextInput)({
   marginLeft: "0px",
+});
+
+const StyledCard = styled(Menu.Card)({
+  overflow: "hidden",
+  borderTopLeftRadius: "0px",
+  borderTopRightRadius: "0px",
+  top: "-1",
 });

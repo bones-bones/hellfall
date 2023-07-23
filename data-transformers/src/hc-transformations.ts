@@ -5,17 +5,30 @@ import tokens from "../../src/data/tokens.json";
 import { HCEntry, Token, TokenForImport } from "./types";
 
 const tokenMap = (tokens.data as TokenForImport[]).reduce<
-  Record<string, Token>
+  Record<string, Token[]>
 >((current, entry) => {
   entry["Related Cards (Read Comment)"].split(";").forEach((cardEntry) => {
-    current[cardEntry.replace(/\*.*$/, "")] = {
-      Name: entry.Name.replace(/\d*$/, " $1"),
-      Power: entry.Power,
-      Toughness: entry.Toughness,
-      Type: entry.Type,
-      Image: entry.Image,
-      FIELD7: entry.FIELD7,
-    };
+    if (current[cardEntry.replace(/\*\d*$/, "")]) {
+      current[cardEntry.replace(/\*\d*$/, "")].push({
+        Name: entry.Name.replace(/(\d*)$/, " $1"),
+        Power: entry.Power,
+        Toughness: entry.Toughness,
+        Type: entry.Type,
+        Image: entry.Image,
+        FIELD7: entry.FIELD7,
+      });
+    } else {
+      current[cardEntry.replace(/\*\d*$/, "")] = [
+        {
+          Name: entry.Name.replace(/(\d*)$/, " $1"),
+          Power: entry.Power,
+          Toughness: entry.Toughness,
+          Type: entry.Type,
+          Image: entry.Image,
+          FIELD7: entry.FIELD7,
+        },
+      ];
+    }
   });
   return current;
 }, {});
@@ -40,11 +53,22 @@ const creatorSet = new Set<string>();
   creatorSet.add(entry.Creator);
 
   if (tokenMap[entry.Name]) {
-    entry.tokens = entry.tokens
-      ? [tokenMap[entry.Name], ...entry.tokens]
-      : [tokenMap[entry.Name]];
+    // Debug unused tokens
+    // (tokenMap[entry.Name] as any).used = true;
+
+    entry.tokens = tokenMap[entry.Name];
   }
 });
+
+// Debug unused tokens
+// console.log(
+//   Object.values(tokenMap)
+//     .filter((a) => {
+//       return !(a as any).used;
+//     })
+//     .map((a) => a.map((e) => e.Name))
+//     .toString()
+// );
 
 const types = Array.from(typeSet);
 const creators = Array.from(creatorSet);
