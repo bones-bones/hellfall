@@ -8965,7 +8965,7 @@
 		},
 		{
 			"Name": "Ancestral Caller",
-			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/811458666589978626/klCxBqgM_tZh7Wzdc1tyWCCqEHQbUMtCGEz-ZNTldrwK3lAX_nsfpXMjFJAv90J2VfspbK8rTUVs4ByFHO2gTJoIaZehQY3_qqOi.png",
+			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/811335558075777074/ljsm3cp32le61.png",
 			"Creator": "u/ColdlifeOracle",
 			"Set": "HC2",
 			"Constructed": "Legal",
@@ -9340,7 +9340,7 @@
 		},
 		{
 			"Name": "Anchor",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1082860116392562738/Anchor.png",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1132752999555534848/Anchor.png",
 			"Creator": "Fallapede",
 			"Set": "HC4",
 			"Constructed": "Banned",
@@ -19073,6 +19073,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Best Whisperer",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1133493592976019547/image.png",
+			"Creator": "juanqu",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Green",
+			"Cost": [
+				"{2}{G}{G}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Elf;Druid",
+				"",
+				"",
+				""
+			],
+			"power": [
+				2,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				3,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Whenever you cast a spell, draw a card.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"No symphony can compare to the melody of the ferrox's crunch.\"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Beyblade",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/876567818605314078/unknown_37.png",
 			"Creator": "u/TemporalFuzz",
@@ -21251,6 +21326,81 @@
 			],
 			"Flavor Text": [
 				"Guys it's alright the blood's not real.",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Blastocragnotheriundroogodon",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1134314215604244590/Blastocragnotheriundroogodon.png",
+			"Creator": "gerbit.",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Green",
+			"Cost": [
+				"{G}{G}{G}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Beast;Beast;Beast;Beast;Beast",
+				"",
+				"",
+				""
+			],
+			"power": [
+				3,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				4,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Blastocragnotheriundroogodon can't be countered.\\nBlastocragnotheriundroogodon can't be the target of spells or abilities.\\nTrample, provoke, cycling {3}\\nWhenever Blastocragnotheriundroogodon deals combat damage to a player, you may draw a card.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
 				"",
 				"",
 				""
@@ -31378,81 +31528,6 @@
 		},
 		{
 			"Name": "Chernobyl",
-			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699988683058839603/Chernobyl.jpg",
-			"Creator": "u/cirion02",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Land",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Chernobyl enters the battlefield tapped.\\n{T}: Add {G} or {U}.\\n{G}{U}, {T}: Until end of turn, creatures you control enter the battlefieldwith an additional +1/+1 counter on them and as Mutants in addition to their other types.",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
-			"Name": "Chernobyl",
 			"Image": "https://media.discordapp.net/attachments/857117235376816139/858749511673315399/unknown.png",
 			"Creator": "BoganderGuy",
 			"Set": "HC2",
@@ -31510,6 +31585,81 @@
 			],
 			"Flavor Text": [
 				"\"Oh god oh fuck it comes to life fucking Chernobyl came to life fucking run.\"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Chernobyl",
+			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699988683058839603/Chernobyl.jpg",
+			"Creator": "u/cirion02",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Land",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Chernobyl enters the battlefield tapped.\\n{T}: Add {G} or {U}.\\n{G}{U}, {T}: Until end of turn, creatures you control enter the battlefieldwith an additional +1/+1 counter on them and as Mutants in addition to their other types.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
 				"",
 				"",
 				""
@@ -39100,17 +39250,7 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": "",
-			"tokens": [
-				{
-					"Name": "Food 1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				}
-			]
+			"FIELD55": ""
 		},
 		{
 			"Name": "Crop Rotation (Hellscube)",
@@ -43473,6 +43613,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Dense Foilage",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1134314344704913494/image.png",
+			"Creator": "JuanDM",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Green",
+			"Cost": [
+				"{1}{G}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Creatures cannot be the target of spells, unless the caster has you create two 1/1 Sparkle creature tokens that are all colors.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"Big plants not only good for hidin', but full o' tasty bugs, too.\"\\n—Squee, goblin cabin hand",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Denver of Secrets // Insectile Population",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1030936663544840292/unknown.png",
 			"Creator": "Rainbow_Plague",
@@ -45292,7 +45507,7 @@
 		},
 		{
 			"Name": "Dismember for Real",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1076316614519164948/Dismember_for_Real.jpg",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1132752486055288842/Dismember_for_Real.png",
 			"Creator": "upogsi",
 			"Set": "HC4",
 			"Constructed": "Banned",
@@ -58622,81 +58837,6 @@
 		},
 		{
 			"Name": "Fixer-Upper",
-			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/829146817512865812/72.png",
-			"Creator": "u/van-theman",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "",
-			"Cost": [
-				"{1}",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Artifact",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"Vehicle",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Whenever you cast an artifact spell, put a level counter on Fixer-Upper.\\nLEVEL 1-4\\nCrew 1\\n3/3\\nLEVEL 5+\\n{T}: Remove a counter from Fixer-Upper: Draw a card.\\n5/5",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
-			"Name": "Fixer-Upper",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1125249563444379730/Fixer-Upper-Sidegrade.png",
 			"Creator": "askedforit",
 			"Set": "HC4",
@@ -58754,6 +58894,81 @@
 			],
 			"Flavor Text": [
 				"Fun goodies hidden in the drywall!",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Fixer-Upper",
+			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/829146817512865812/72.png",
+			"Creator": "u/van-theman",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "",
+			"Cost": [
+				"{1}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Artifact",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Vehicle",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Whenever you cast an artifact spell, put a level counter on Fixer-Upper.\\nLEVEL 1-4\\nCrew 1\\n3/3\\nLEVEL 5+\\n{T}: Remove a counter from Fixer-Upper: Draw a card.\\n5/5",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
 				"",
 				"",
 				""
@@ -68528,81 +68743,6 @@
 			"FIELD55": ""
 		},
 		{
-			"Name": "Goblin Egg Raider",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1119012350364762154/image.png",
-			"Creator": "JuanDM",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "Red",
-			"Cost": [
-				"{R}",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Creature",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"Goblin;Egg;Berserker",
-				"",
-				"",
-				""
-			],
-			"power": [
-				2,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				1,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Multicycle {R} ({R}, Discard this card: Draw a card. You can immediately cycle the card as if it had this ability.)\\nHasty Escape — {R}, Exile 4 other cards from your graveyard. (You may cast this card attacking from your graveyard during your declare attackers step for its hasty escape cost.)",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
 			"Name": "Goblin Firefighters",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1035658310172561458/unknown.png",
 			"Creator": "Gerrit",
@@ -74498,7 +74638,7 @@
 				""
 			],
 			"Supertype(s)": [
-				"Legendary ",
+				"Legendary",
 				"",
 				"",
 				""
@@ -80075,6 +80215,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Ice and Fireblade Charger",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1134311989699690546/iceandfirebladecharger.png",
+			"Creator": "munkegutz",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Red",
+			"Cost": [
+				"{R}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Goblin;Warrior",
+				"",
+				"",
+				""
+			],
+			"power": [
+				1,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				1,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Ice and Fireblade Charger is equipped, it has haste.\\nWhen Ice and Fireblade Charger dies, it deals damage equal to its power to any target and you draw a card.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"Down in flames\" isn't a destination, but a journey.",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Ichtibaltyomorphosis",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866773448487206962/image0_6.jpg",
 			"Creator": "BoganderGuy",
@@ -83266,31 +83481,31 @@
 			],
 			"Supertype(s)": [
 				"Legendary",
-				"",
+				"Legendary",
 				"",
 				""
 			],
 			"Card Type(s)": [
 				"Creature",
-				"",
+				"Creature",
 				"",
 				""
 			],
 			"Subtype(s)": [
 				"Dog",
-				"",
+				"Dog;Spirit",
 				"",
 				""
 			],
 			"power": [
 				2,
-				null,
+				2,
 				null,
 				null
 			],
 			"toughness": [
 				2,
-				null,
+				2,
 				null,
 				null
 			],
@@ -83301,14 +83516,14 @@
 				""
 			],
 			"Text Box": [
-				"Disturb {B} /nIf Wasamaru would be put into a graveyard from anywhere, exile it instead.",
-				"",
+				"Disturb {B} \\nIf Wasamaru would be put into a graveyard from anywhere, exile it instead.",
+				"If Wasamaru would be put into a graveyard from anywhere, exile it instead.",
 				"",
 				""
 			],
 			"Flavor Text": [
-				"“Alert the guard. The kami are coming.”\n— General Takeno /n “Alert the guard. The kami are coming.”\n— General Takeno (Deceased)",
-				"",
+				"“Alert the guard. The kami are coming.”\n— General Takeno",
+				"“Alert the guard. The kami are coming.”\n— General Takeno (Deceased)",
 				"",
 				""
 			],
@@ -86162,7 +86377,7 @@
 			"FIELD55": ""
 		},
 		{
-			"Name": "Jin-Gitaxian, Frogress Tyrant",
+			"Name": "Jin-Gitaxias, Frogress Tyrant",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1119731046435536966/Jin-Gitaxias_Frogress_Tyrant_2.png",
 			"Creator": "gerbit.",
 			"Set": "HC4",
@@ -111981,7 +112196,7 @@
 				""
 			],
 			"Supertype(s)": [
-				"Legendary ",
+				"Legendary",
 				"",
 				"",
 				""
@@ -115131,7 +115346,7 @@
 				""
 			],
 			"Supertype(s)": [
-				"Legendeary",
+				"Legendary",
 				"",
 				"",
 				""
@@ -117833,17 +118048,7 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": "",
-			"tokens": [
-				{
-					"Name": "Weed 1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/703713114889125888/Weed.png",
-					"FIELD7": ""
-				}
-			]
+			"FIELD55": ""
 		},
 		{
 			"Name": "Old Dog",
@@ -121291,6 +121496,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Over Grown Tomb",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1133493573053075497/image.png",
+			"Creator": "baconbasedgod",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Land",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"{T}: Add {C}.\\n{T}: Add {G} or {B}. Activate this ability only if Over Grown Tomb is in your graveyard.\\nCycling {3}",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Overexpectant Professor",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/871050841954611210/render_10.png",
 			"Creator": "AceGamer",
@@ -123237,7 +123517,7 @@
 				""
 			],
 			"Text Box": [
-				"Draft Patchwork Bear face up.\\nTurn Patchwork Bear face down: Remove another target card in your draft pool from the game. That card becomes Patchwork Bear's second mode. Activate this ability only durring the draft.",
+				"Draft Patchwork Bear face up.\\nTurn Patchwork Bear face down: Remove another target card in your draft pool from the game. That card becomes Patchwork Bear's second mode. Activate this ability only during the draft.",
 				"This card is whatever card was removed from the draft using Patchwork Bear's effect.",
 				"",
 				""
@@ -124491,7 +124771,7 @@
 		{
 			"Name": "Pet Gravyard",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1131030295089528992/Pet_Gravyard.png",
-			"Creator": "llll",
+			"Creator": "llllll",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -125625,7 +125905,7 @@
 		},
 		{
 			"Name": "Phyrexian Toymaker // Wind-Up Dreadnought",
-			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/806256147819659342/o4gp9xx3lga61.png",
+			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/806275773999743006/New_Project_3.png",
 			"Creator": "u/0Gitaxian0",
 			"Set": "HC2",
 			"Constructed": "Legal",
@@ -132100,7 +132380,7 @@
 				""
 			],
 			"Supertype(s)": [
-				"Legendary ",
+				"Legendary",
 				"",
 				"",
 				""
@@ -135856,7 +136136,7 @@
 		},
 		{
 			"Name": "Redundant Sea",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1085672423275368478/image.png",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1133494775136399501/image.png",
 			"Creator": "BaconBasedGod",
 			"Set": "HC4",
 			"Constructed": "Banned",
@@ -135882,7 +136162,7 @@
 				""
 			],
 			"Subtype(s)": [
-				"Land",
+				"Island;Swamp",
 				"",
 				"",
 				""
@@ -135906,7 +136186,7 @@
 				""
 			],
 			"Text Box": [
-				"Redundant Sea enters the battlefield tapped. If it would enter the battlefield untapped, it doesn’t.\\n{T}: Add {U} or {U} or {B} or {B}.\\n{2}{U}{B}, {T}: Target player may put a card from their hand into the graveyard. If they don’t, they discard a card. Activate this ability only during your first or second main phase when the stack is empty and only as a sorcery.",
+				"Redundant Sea enters the battlefield untapped.\\n{T}: Add {U} or {B}.\\n{2}{U}{B}, {T}: Target player may put a card from their hand into the graveyard. If they don’t, they discard a card. Activate this ability only during your first or second main phase when the stack is empty and only as a sorcery.",
 				"",
 				"",
 				""
@@ -136527,17 +136807,7 @@
 			"FIELD52": "",
 			"FIELD53": "",
 			"FIELD54": "",
-			"FIELD55": "",
-			"tokens": [
-				{
-					"Name": "Food 1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://cdn.discordapp.com/attachments/692914661191974912/708867350145007705/1569732254948.png",
-					"FIELD7": ""
-				}
-			]
+			"FIELD55": ""
 		},
 		{
 			"Name": "Reprinting Rites of Dreadlimoc // Dreadlimoc Cradle of the Maw",
@@ -144934,7 +145204,7 @@
 		},
 		{
 			"Name": "Sideboard Hate Peace",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1128465117172998265/Sideboard_Hate_Peace.png",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1134314600351924414/Sideboard_Hate_Peace.png",
 			"Creator": "gorm9691",
 			"Set": "HC4",
 			"Constructed": "Banned",
@@ -150378,7 +150648,7 @@
 				""
 			],
 			"Supertype(s)": [
-				"Legendary ",
+				"Legendary",
 				"",
 				"",
 				""
@@ -154123,6 +154393,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Storm Coast",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1133493604355158138/image.png",
+			"Creator": "baconbasedgod",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Land",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"At the beginning of each end step, if Storm Coast is a token, sacrifice it.\\nStorm (It works)\\n{T}: Add {U} or {R}.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Storm Crown",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/722197065857237103/72ii79ehld451.jpg",
 			"Creator": "u/shadowqua",
@@ -157591,6 +157936,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "THE COOL EGG",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1134324320492060703/image.png",
+			"Creator": "askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"{0}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Artifact;Battle",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Siege",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"As you draft this card, reveal it and a nonland card the pack or draft pool. A copy of it becomes this card's back and its mana value becomes this card's defense.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "THE HELLSCUBE BLJ",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745477414448005183/image2.jpg",
 			"Creator": "u/Karif_Wins",
@@ -157902,81 +158322,6 @@
 		},
 		{
 			"Name": "TL;DR",
-			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699999615327404042/TLDR.jpg",
-			"Creator": "u/cirion02",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "White",
-			"Cost": [
-				"{W}{W}",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Enchantment",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Wordy creatures lose all non-keyword abilities",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"A picture is worth 1000 words, and that's about 994 too many.",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
-			"Name": "TL;DR",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/989656524311887952/IMG_4002.jpg",
 			"Creator": "Jumberlack",
 			"Set": "HC3",
@@ -158034,6 +158379,81 @@
 			],
 			"Flavor Text": [
 				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "TL;DR",
+			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699999615327404042/TLDR.jpg",
+			"Creator": "u/cirion02",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "White",
+			"Cost": [
+				"{W}{W}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Wordy creatures lose all non-keyword abilities",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"A picture is worth 1000 words, and that's about 994 too many.",
 				"",
 				"",
 				""
@@ -166748,6 +167168,81 @@
 			],
 			"Text Box": [
 				"When Thomas Edison GX enters the battlefield, create a token in your hand that's a copy of Blinding Light, except it costs {2}{U} and say \"nonblue\" instead of \"nonwhite.\"\\nLatest Invention GX — {4}{U}{U}: Gain control of target nonland permanent. (Activate only one GX ability each game.)",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Thoptimus Prime",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1134311910095994930/THOPSIMUS_PRIME.png",
+			"Creator": "moundsofmayhem",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 11,
+			"Color(s)": "",
+			"Cost": [
+				"{11}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Golem",
+				"",
+				"",
+				""
+			],
+			"power": [
+				11,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				11,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Trample, indestructible, flying\\nPrototype {0} — 0/2",
 				"",
 				"",
 				""
@@ -176360,7 +176855,7 @@
 				""
 			],
 			"Supertype(s)": [
-				"Legendary ",
+				"Legendary",
 				"",
 				"",
 				""
@@ -177254,7 +177749,7 @@
 			"CMC": 5,
 			"Color(s)": "Black;Green",
 			"Cost": [
-				"{3}{G/B}{G/B}",
+				"{3}{B/G}{B/G}",
 				"",
 				"",
 				""
@@ -188939,6 +189434,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Zur, an Orb",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1133493537384702032/IMG_9962.png",
+			"Creator": "jumberlack.",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"{0}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"Legendary",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Artifact",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Sacrifice a land: Search your library for an enchantment card with mana value 3 or less. Put that card onto the battlefield, then shuffle.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"Ponder me, Jodah.\"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "[Ember]cleave",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/920061115218677770/IMG_1587.jpg",
 			"Creator": "Jumberlack & Zaxer2",
@@ -190140,7 +190710,7 @@
 		},
 		{
 			"Name": "evolution of the dreadmaw",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1131811279586218025/image.png",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1114532228945412156/lineage_of_the_dreadmaw.png",
 			"Creator": "moundsofmayhem",
 			"Set": "HC4",
 			"Constructed": "Banned",
@@ -191520,7 +192090,7 @@
 		},
 		{
 			"Name": "remember",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1054578148576075786/remember.png",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1132752728746098698/Screenshot_20230720-172118.png",
 			"Creator": "Victor",
 			"Set": "HC4",
 			"Constructed": "Banned",
