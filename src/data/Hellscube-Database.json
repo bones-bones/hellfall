@@ -9639,6 +9639,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Ancient Timb",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1136189218096418847/Ancient_Timb.png",
+			"Creator": "chaisohex",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Human;Wizard",
+				"",
+				"",
+				""
+			],
+			"power": [
+				1,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				1,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"{T}: Ancient Timb deals 2 damage to any target. That target or target's controller adds {C}{C}.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"There is employment to be gained in the kingdom of the dead.\\n—Vec tomb inscription",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Angel Investor",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/844275759539159120/12_-_van-theman.png",
 			"Creator": "u/van-theman",
@@ -10923,6 +10998,81 @@
 			],
 			"Flavor Text": [
 				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Approach of the Second",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1136189186282639420/Approach_of_the_Second_card_2.png",
+			"Creator": "exalted.one",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "White",
+			"Cost": [
+				"{W}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Instant",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Pertually append \"II\" to the name of target creature or planeswalker. Put it into its owner's library seventh from the top. That player gains 7 life.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"Please join us for\\nbaby Bolas'\\nAGENDA  REVEAL PARTY\\nBetrayer, conquerer, or puppeteer?",
 				"",
 				"",
 				""
@@ -51622,7 +51772,7 @@
 		},
 		{
 			"Name": "Elfless Arbor",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1062909075249172570/image.png",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1136190234103656509/image.png",
 			"Creator": "BaconBasedGod",
 			"Set": "HC4",
 			"Constructed": "Banned",
@@ -51648,7 +51798,7 @@
 				""
 			],
 			"Subtype(s)": [
-				"",
+				"Forest;Island",
 				"",
 				"",
 				""
@@ -51672,7 +51822,7 @@
 				""
 			],
 			"Text Box": [
-				"Elfless Arbor enters the battlefield tapped. /nWhen Elfless Arbor enters the battlefield, untap target land. /n{T}: Add {G} or {U}.",
+				"Elfless Arbor enters the battlefield tapped. /nWhen Elfless Arbor enters the battlefield, untap target land. ",
 				"",
 				"",
 				""
@@ -74756,6 +74906,81 @@
 			],
 			"Flavor Text": [
 				"Coca-Cola - Syrup - And - Ext",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Hasbro Lawmage",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1137138900310163476/Hasbro_Lawmage1.png",
+			"Creator": "draner.",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "White",
+			"Cost": [
+				"{W}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Lawyer;Spellshaper",
+				"",
+				"",
+				""
+			],
+			"power": [
+				1,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				2,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"{W}, {T}, Discard a card: Cast a copy of GO TO JAIL.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"You are under arrest for leaking trade secret, proxying without a permit, three accounts of rolling doubles...\"",
 				"",
 				"",
 				""
@@ -100711,6 +100936,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Malikify",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1136189169685778522/Malikify_card.png",
+			"Creator": "gerbit.",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Black",
+			"Cost": [
+				"{B}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Human",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Target player reveals their hand. You choose a nonland card from it. That card becomes Pavel Maliki ({4}{B}{R} legendary 5/3 Human creature with \"{B}{R}: Pavel Maliki gets +1/+0 until end of turn.\")",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Mama Drain",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/1029922302848151683/unknown.png",
 			"Creator": "Plutoniarch",
@@ -105521,6 +105821,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Microsynth Lattice",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1136189228267618324/image.png",
+			"Creator": "guymcperson144",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Midnight aper",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1119012465796202579/image0.png",
 			"Creator": "Gerrit",
@@ -106023,6 +106398,81 @@
 			],
 			"Text Box": [
 				"Take an extra turn after this one. You can't cast spells or activate abilities during that turn.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Min-Gitinyass",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1137138774359420928/Min-Gitinyass.png",
+			"Creator": "draner.",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{1}{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"Legendary",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Phyrexian;Praetor",
+				"",
+				"",
+				""
+			],
+			"power": [
+				1,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				1,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Flash\\nAt the beginning of your end step, draw two cards, then discard two cards.\\nEach opponent's maximum hand size is reduced by two.",
 				"",
 				"",
 				""
@@ -106729,6 +107179,81 @@
 					"FIELD7": ""
 				}
 			]
+		},
+		{
+			"Name": "Mirror Mash",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1137138493815009290/image.png",
+			"Creator": "Askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Red",
+			"Cost": [
+				"{3}{R}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Whenever a nontoken creature enters the battlefield under your control, roll a d6 until you don't roll a 1. Create a number of token copies of that creature equal to the total result. Those tokens gain haste. Exile them at the beginning of the next end step.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
 		},
 		{
 			"Name": "Mirrorweaver",
@@ -127959,6 +128484,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Ponderfy",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1052796594187141210/tsr-79-pongify.jpg",
+			"Creator": "420Templar",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Instant",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Destroy target creature. It can't be regenerated. Its controller Look at the top three cards of their library, then put them back in any order. They may shuffle. They draw a card.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"banana belongs to me",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Pondering Ones",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1084632067435941999/Pondering_Ones_card.png",
 			"Creator": "Gerrit",
@@ -137772,6 +138372,81 @@
 			],
 			"Text Box": [
 				"Search your library for a card, put that card into your hand, then discard a card. Shuffle your library.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Ring",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1136189202707533986/image.png",
+			"Creator": "definitelywilbur",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "",
+			"Cost": [
+				"{2}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"{T}: Add {C}{C}.",
 				"",
 				"",
 				""
@@ -174815,6 +175490,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Twist of Fortune",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1137138633304973362/IMG_0028.jpg",
+			"Creator": "jumberlack.",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue;Red",
+			"Cost": [
+				"{2}{U/R}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Each player shuffles their hand and graveyard into their library. Then draws seven cards. Then discards seven cards. Then draws seven cards.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Twisty Nipple Charm",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1047231586652921906/TwistyNippleCharm_E.png",
 			"Creator": "Jumberlack",
@@ -191694,81 +192444,6 @@
 			"FIELD55": ""
 		},
 		{
-			"Name": "ponderfy",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1052796594187141210/tsr-79-pongify.jpg",
-			"Creator": "420Templar",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "Blue",
-			"Cost": [
-				"{U}",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Instant",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Destroy target creature. It can't be regenerated. Its controller Look at the top three cards of their library, then put them back in any order. They may shuffle. They draw a card.",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"banana belongs to me",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
 			"Name": "r/HellsCube Victory",
 			"Image": "https://cdn.discordapp.com/attachments/631569693437853729/741087581533634580/rHellscube_Victory.png",
 			"Creator": "u/ExaltedOne",
@@ -191987,6 +192662,81 @@
 			],
 			"Flavor Text": [
 				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "red Ultimatum",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1136189154305265674/IMG_3745.jpg",
+			"Creator": "vladicuss",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Red",
+			"Cost": [
+				"{R}{R}{R}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"red Ultimatum deals 5 damage to any target.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"Inner peace is worthless.\"\\n—Taelya, Lavabrink pyromage",
 				"",
 				"",
 				""
