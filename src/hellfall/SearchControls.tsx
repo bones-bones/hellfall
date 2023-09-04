@@ -6,7 +6,7 @@ import { Checkbox } from "@workday/canvas-kit-react/checkbox";
 import { TextInput } from "@workday/canvas-kit-react/text-input";
 import { FormField } from "@workday/canvas-kit-react/form-field";
 import cardTypes from "../data/types.json";
-import creators from "../data/creators.json";
+import creators_data from "../data/creators.json";
 import { CmcSelector } from "./inputs";
 
 import { useAtom } from "jotai";
@@ -17,13 +17,11 @@ import {
   searchCmcAtom,
   searchColorsAtom,
   searchSetAtom,
-  creatorAtom,
+  creatorsAtom,
   typeSearchAtom,
   searchColorsIdentityAtom,
 } from "./searchAtoms";
 import { colors } from "./constants";
-import { Combobox } from "@workday/canvas-kit-labs-react/combobox";
-import { DeprecatedMenuItem } from "@workday/canvas-kit-preview-react/menu";
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
@@ -33,7 +31,7 @@ export const SearchControls = () => {
   const [legality, setLegality] = useAtom(legalityAtom);
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
-  const [creator, setCreator] = useAtom(creatorAtom);
+  const [creators, setCreators] = useAtom(creatorsAtom);
   const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(
     searchColorsIdentityAtom
   );
@@ -66,18 +64,12 @@ export const SearchControls = () => {
           defaultValues={typeSearch}
           onChange={setTypeSearch}
         />
-        <FormField label={"Creator"}>
-          <Combobox
-            onChange={(event) => setCreator(event?.target.value)}
-            showClearButton={!!creator}
-            initialValue={creator}
-            autocompleteItems={creators.data.map((entry) => (
-              <DeprecatedMenuItem key={entry}>{entry}</DeprecatedMenuItem>
-            ))}
-          >
-            <TextInput />
-          </Combobox>
-        </FormField>
+        <PillSearch
+          label={"Creator"}
+          possibleValues={creators_data.data}
+          defaultValues={creators}
+          onChange={setCreators}
+        ></PillSearch>
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup

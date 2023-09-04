@@ -228,7 +228,7 @@
 		{
 			"Name": "!macro rat",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/868121077254090783/render_9.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -1438,7 +1438,7 @@
 		{
 			"Name": "(Vi)(gor M(o)rtus)",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1104147539667734669/IMG_9125.png",
-			"Creator": "Rodent, M4RC05, and Jumberlack",
+			"Creator": "Rodent, Vitral Serf, and Jumberlack",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -1663,7 +1663,7 @@
 		{
 			"Name": ".. But Fucked Up and Evil",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1006145452737048707/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -2762,7 +2762,7 @@
 				""
 			],
 			"Text Box": [
-				"42.3659 N, 101.0758 W enters the battlefield tapped. /n {T}: Add {W} or {B}. /n {1}{W}{B}, {T}, Sacrifice 42.3659 N, 101.0758 W: Create a 1/1 black skeleton creature token, a clue token, and a 1/1 purple clown creature token.",
+				"42.3659 N, 101.0758 W enters the battlefield tapped. \\n {T}: Add {W} or {B}. \\n {1}{W}{B}, {T}, Sacrifice 42.3659 N, 101.0758 W: Create a 1/1 black skeleton creature token, a clue token, and a 1/1 purple clown creature token.",
 				"",
 				"",
 				""
@@ -5488,7 +5488,7 @@
 		{
 			"Name": "Academy Hoarder",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/872205535343165510/render_11.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -5612,7 +5612,7 @@
 				""
 			],
 			"Text Box": [
-				"Venture into America. (If you haven’t started, start at a random mainland state other than Maine. Otherwise, move to an adjacent state if able. You can’t visit the same state twice.) /n Epic, but epic (You can still cast spells.)",
+				"Venture into America. (If you haven’t started, start at a random mainland state other than Maine. Otherwise, move to an adjacent state if able. You can’t visit the same state twice.) \\n Epic, but epic (You can still cast spells.)",
 				"",
 				"",
 				""
@@ -6463,7 +6463,7 @@
 		{
 			"Name": "Adventure",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/930563361773592586/poxw16.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -8030,7 +8030,7 @@
 				""
 			],
 			"Text Box": [
-				"Hideaway (This land enters the battlefield tapped. When it does, look at the top four cards of your library, exile one face down, then put the rest on the bottom of your library.) /n {T}: Add {G} or {U}. /n {G/U}, {T}: You may play the exiled card without paying its mana cost if your devotion to unique primes is four or more. (Negative numbers, zero, and one aren’t prime.)",
+				"Hideaway (This land enters the battlefield tapped. When it does, look at the top four cards of your library, exile one face down, then put the rest on the bottom of your library.) \\n {T}: Add {G} or {U}. \\n {G/U}, {T}: You may play the exiled card without paying its mana cost if your devotion to unique primes is four or more. (Negative numbers, zero, and one aren’t prime.)",
 				"",
 				"",
 				""
@@ -9116,7 +9116,7 @@
 		{
 			"Name": "Ancestral Product Recall",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1062909021406908478/IMG_4342.jpg",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -10371,7 +10371,7 @@
 				""
 			],
 			"Flavor Text": [
-				"\"I don't think I even read them as a kid, I just liked the flip book corner.\"\\n— BoganderGuy",
+				"\"I don't think I even read them as a kid, I just liked the flip book corner.\"\\n— Bogander_Guy",
 				"",
 				"",
 				""
@@ -11092,7 +11092,7 @@
 		{
 			"Name": "Approximately 3:45 Pm Reaper",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/902167765115347024/image0.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -11692,7 +11692,7 @@
 		{
 			"Name": "Arcanis the Impotent",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/986892724810694686/arcanis.png",
-			"Creator": "Lordburgerr",
+			"Creator": "lordburgerr",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -11816,7 +11816,7 @@
 				""
 			],
 			"Text Box": [
-				"Modular 1 /n at the beginning of your upkeep, put a +1/+1 counter on Arcbound Thallid. /n Remove two counters from Arcbound Thallid: Create a colorless 0/0 Scraproling artifact creature token with modular 1.",
+				"Modular 1 \\n at the beginning of your upkeep, put a +1/+1 counter on Arcbound Thallid. \\n Remove two counters from Arcbound Thallid: Create a colorless 0/0 Scraproling artifact creature token with modular 1.",
 				"",
 				"",
 				""
@@ -12667,7 +12667,7 @@
 		{
 			"Name": "Arvinox, the Mind Sculptor",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/1006493691545923586/slx-1-arvinox-the-mind-flail.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "Arvinox’s planeswalker type is Horror. The planeswalker type Horror is mechanically distinct from the creature type Horror. A planeswalker with the type Horror is still affected by cards that refer to Horrors in general (such as a card that said \"Destroy target Horror\".) but, in the case of cards that instruct you to \"choose a creature type\", choosing the creature type \"Horror\" will not affect Arvinox since it refers only to the creature type.",
@@ -12873,6 +12873,81 @@
 			],
 			"Flavor Text": [
 				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Ashod's Waltar",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1138757623383085147/image.png",
+			"Creator": "askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "",
+			"Cost": [
+				"{1}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Artifact",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Sacrifice a creature: Create two Shard tokens.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"If you work at cooking up crystal, you notice how the beakers fizz, how the magnets are arrayed, and how the chili powder feels wack, yo.\"\\n—Pinkman, to Finger",
 				"",
 				"",
 				""
@@ -13267,7 +13342,7 @@
 		{
 			"Name": "Atheist",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/982730000593748079/atheist.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -13316,7 +13391,7 @@
 				""
 			],
 			"Text Box": [
-				"Protection from Gods /n Science {1}{B} (You may cast this card for its science cost if it's the first card you drew this turn.)",
+				"Protection from Gods \\n Science {1}{B} (You may cast this card for its science cost if it's the first card you drew this turn.)",
 				"",
 				"",
 				""
@@ -13926,7 +14001,7 @@
 				""
 			],
 			"Text Box": [
-				"Affinity for graveyard types (This spell costs 1 less to cast for each card type in your graveyard.). /n Cascade /n Menace",
+				"Affinity for graveyard types (This spell costs 1 less to cast for each card type in your graveyard.). \\n Cascade \\n Menace",
 				"",
 				"",
 				""
@@ -14676,13 +14751,13 @@
 				""
 			],
 			"Text Box": [
-				"Azorius Guildfreight enters the battlefield tapped. /n {T}: Add {W} or {U}. /n If Azorius Guildfreight would be dealt combat damage, return all creatures crewing it to their owner’s hands instead. /n Crew 3",
+				"Azorius Guildfreight enters the battlefield tapped. \\n {T}: Add {W} or {U}. \\n If Azorius Guildfreight would be dealt combat damage, return all creatures crewing it to their owner’s hands instead. \\n Crew 3",
 				"",
 				"",
 				""
 			],
 			"Flavor Text": [
-				"Enter the drivers seat of justice /n Try the new safety eject feature.",
+				"Enter the drivers seat of justice \\n Try the new safety eject feature.",
 				"",
 				"",
 				""
@@ -15276,7 +15351,7 @@
 				""
 			],
 			"Text Box": [
-				"Destroy target creature. /nIts controller creates a 4/1 black Skeleton creature token with menace.",
+				"Destroy target creature. \\nIts controller creates a 4/1 black Skeleton creature token with menace.",
 				"",
 				"",
 				""
@@ -15387,7 +15462,7 @@
 		{
 			"Name": "Badbreaker Horror",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1072592466940792912/image.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -20220,7 +20295,7 @@
 		{
 			"Name": "Bin Diver",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/993056246737416333/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -21420,7 +21495,7 @@
 		{
 			"Name": "Blasphemous Actor",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1024853273800347708/unknown.png",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -22079,7 +22154,7 @@
 				""
 			],
 			"Text Box": [
-				"({T}: Add {B} or {R}.) /n Blood Crypt enters the battlefield tapped. /n {1}, {T}, Discard a card, Sacrifice Blood Crypt: Draw a card.",
+				"({T}: Add {B} or {R}.) \\n Blood Crypt enters the battlefield tapped. \\n {1}, {T}, Discard a card, Sacrifice Blood Crypt: Draw a card.",
 				"",
 				"",
 				""
@@ -22330,7 +22405,7 @@
 		{
 			"Name": "Blow",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/1032492037599150200/unknown.png",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -22930,7 +23005,7 @@
 		{
 			"Name": "Bobby Cheetofingers",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1075236860659515392/Bobby_Cheetofingers.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -23005,7 +23080,7 @@
 		{
 			"Name": "Bog",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/813916272156475442/68it34ojmug61.png",
-			"Creator": "u/Vitral_",
+			"Creator": "Vitral Serf",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -23080,7 +23155,7 @@
 		{
 			"Name": "Boiled Feet // Foiled Beet",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846594450980894/unknown_1.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -23204,7 +23279,7 @@
 				""
 			],
 			"Text Box": [
-				"~ enters the battlefield tapped./nWhen ~ enters the battlefield, exile target players graveyard./n{T}: Add {C}.",
+				"~ enters the battlefield tapped.\\nWhen ~ enters the battlefield, exile target players graveyard.\\n{T}: Add {C}.",
 				"",
 				"",
 				""
@@ -23654,7 +23729,7 @@
 				""
 			],
 			"Text Box": [
-				"{T}: Add {B} or {G}. Activate this ability only if you control a creature with power 4 or greater. /n Whenever you activate one of Bonergrown Tomb's abilities, if you control a creature with power 8 or greater, copy it.",
+				"{T}: Add {B} or {G}. Activate this ability only if you control a creature with power 4 or greater. \\n Whenever you activate one of Bonergrown Tomb's abilities, if you control a creature with power 8 or greater, copy it.",
 				"",
 				"",
 				""
@@ -24440,7 +24515,7 @@
 		{
 			"Name": "Born // Shit // Forced // Wipe",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846140825075712/cum.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -25510,7 +25585,7 @@
 		{
 			"Name": "Breaking News",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/843988384280215582/Breaking_news.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -27844,7 +27919,7 @@
 		{
 			"Name": "CSI One Liner",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/846880060408332378/render.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -29869,7 +29944,7 @@
 		{
 			"Name": "Cat",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/928483191159926844/IMG_0034.png",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -30318,15 +30393,15 @@
 		},
 		{
 			"Name": "Censorship",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1064725244104949810/render.png",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1140170794673119313/image-removebg-preview.png",
 			"Creator": "GlassBass",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
-			"CMC": 3,
+			"CMC": 2,
 			"Color(s)": "Blue",
 			"Cost": [
-				"{2}{U}",
+				"{1}{U}",
 				"",
 				"",
 				""
@@ -31678,81 +31753,6 @@
 		},
 		{
 			"Name": "Chernobyl",
-			"Image": "https://media.discordapp.net/attachments/857117235376816139/858749511673315399/unknown.png",
-			"Creator": "BoganderGuy",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Land",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"Power-Plant",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Chernobyl enters the battlefield tapped.\\n{T}: Add {U}, {R}, or {G}. Chernobyl deals 1 damage to you.\\n{1}{2}{U/R/G}, {T}: Mutate target creature you own under Chernobyl. If Chernobyl has seven or more abilities, you may instead mutate that creature on top of it.",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"\"Oh god oh fuck it comes to life fucking Chernobyl came to life fucking run.\"",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
-			"Name": "Chernobyl",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699988683058839603/Chernobyl.jpg",
 			"Creator": "u/cirion02",
 			"Set": "HLC",
@@ -31810,6 +31810,81 @@
 			],
 			"Flavor Text": [
 				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Chernobyl",
+			"Image": "https://media.discordapp.net/attachments/857117235376816139/858749511673315399/unknown.png",
+			"Creator": "Bogander_Guy",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Land",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Power-Plant",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Chernobyl enters the battlefield tapped.\\n{T}: Add {U}, {R}, or {G}. Chernobyl deals 1 damage to you.\\n{1}{2}{U/R/G}, {T}: Mutate target creature you own under Chernobyl. If Chernobyl has seven or more abilities, you may instead mutate that creature on top of it.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"Oh god oh fuck it comes to life fucking Chernobyl came to life fucking run.\"",
 				"",
 				"",
 				""
@@ -32863,7 +32938,7 @@
 				""
 			],
 			"Text Box": [
-				"(Gain the next level as a sorcery to add its ability.) /n Double strike /n {R/W}{R/W}: Level 2 /n Whenever Class Clown deals combat damage, draw a card, then exile a card from your hand. /n {2}{R/W}{R/W}: Level 3 /n Triple strike. /n {4}{R/W}{R/W}: Level 4 /n When this Clown becomes level 4, create Clown College Diploma, a legendary artifact token with the abilities of each permanent card exiled with Class Clown. (If it exiles more cards, they don't get added to the diploma. Sorry.)",
+				"(Gain the next level as a sorcery to add its ability.) \\n Double strike \\n {R/W}{R/W}: Level 2 \\n Whenever Class Clown deals combat damage, draw a card, then exile a card from your hand. \\n {2}{R/W}{R/W}: Level 3 \\n Triple strike. \\n {4}{R/W}{R/W}: Level 4 \\n When this Clown becomes level 4, create Clown College Diploma, a legendary artifact token with the abilities of each permanent card exiled with Class Clown. (If it exiles more cards, they don't get added to the diploma. Sorry.)",
 				"",
 				"",
 				""
@@ -35187,7 +35262,7 @@
 		{
 			"Name": "Comedi's Summoner",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/920062751395704832/Comedis_Summoner.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -35387,6 +35462,81 @@
 			],
 			"Text Box": [
 				"Roll a six-sided die.\n1 or 2 - Create two 1/1 green squirrel creature tokens. They gain haste until end of turn.\n3 - Return a card with mana value two or less from your graveyard to your hand.\n4 or 5 - Comet Storm deals 5 damage to a creature or player.\n6 - Roll two more times.\nStorm",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Commandeeeeeer",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1138757541891944539/image.png",
+			"Creator": "juanqu",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{3}{U}{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Instant",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"You may exile two blue cards from your hand rather than pay Commandeeeeeer's mana cost.\\nGain control of target creature spell. You may have it perpetually become all colors and your commander, and you may spend mana as if it were any type to cast it.",
 				"",
 				"",
 				""
@@ -38430,7 +38580,7 @@
 		{
 			"Name": "Crab Nebula",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/917171405643210772/Crab_Nebula.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -39480,7 +39630,7 @@
 		{
 			"Name": "Crow Miser",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/925238335167946782/Crow_Miser.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -40765,7 +40915,7 @@
 		{
 			"Name": "Cut // Commercials",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/920063663132528730/unknown_1.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -41290,7 +41440,7 @@
 		{
 			"Name": "DIY Dreadhorde",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866845922323595264/render_8.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -41440,7 +41590,7 @@
 		{
 			"Name": "DRUGS! DRUGS! DRUGS! DRUGS! DRUGS!",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1052796664697585694/263C2679-4057-4606-A5C3-5FBBAAE8B63F.jpg",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -41890,7 +42040,7 @@
 		{
 			"Name": "Darksteal Myr, Counter-Stealing Bastard",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/821545183274729502/0hrmvsxdepk61.png",
-			"Creator": "u/Vitral_",
+			"Creator": "Vitral Serf",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -41965,7 +42115,7 @@
 		{
 			"Name": "Darksteel Chad",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/911458727117344788/render_1.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -44365,7 +44515,7 @@
 		{
 			"Name": "Detention",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1025575780786376784/unknown.png",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -44414,7 +44564,7 @@
 				""
 			],
 			"Text Box": [
-				"Detention enters the battlefield tapped./nWhen Detention enters the battlefield, you may\npay {3}{W}{U}. When you do, exile target creature until its controller learns. /n{T}: Add {W} or {U}.",
+				"Detention enters the battlefield tapped.\\nWhen Detention enters the battlefield, you may\npay {3}{W}{U}. When you do, exile target creature until its controller learns. \\n{T}: Add {W} or {U}.",
 				"",
 				"",
 				""
@@ -44882,7 +45032,7 @@
 				""
 			],
 			"Text Box": [
-				"Flash /n Spells you cast have flash and stackscade. (As you cast a spell, reveal\nobjects from the top of the stack until you\nreveal a spell that costs less. You may copy\nit and you may choose new targets for the\ncopy. Put the revealed objects on the bottom\nof the stack in a random order.)",
+				"Flash \\n Spells you cast have flash and stackscade. (As you cast a spell, reveal\nobjects from the top of the stack until you\nreveal a spell that costs less. You may copy\nit and you may choose new targets for the\ncopy. Put the revealed objects on the bottom\nof the stack in a random order.)",
 				"",
 				"",
 				""
@@ -45958,7 +46108,7 @@
 		{
 			"Name": "Divine Gambit but It's Fucking Stupid",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/808800408163319828/image0.jpg",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -47168,7 +47318,7 @@
 		{
 			"Name": "Doremi, Living Anthem",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/848298420024246302/nsnd90.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -47918,7 +48068,7 @@
 		{
 			"Name": "Dracjack",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1078823368549203988/image.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -49102,7 +49252,7 @@
 				""
 			],
 			"Text Box": [
-				"Landfall — Whenever a land enters the battlefield under your control, put a drop counter on Dubsteppe Lynx /n DROP IT — When Dubsteppe Lynx dies, it deals damage equal to the number of drop counters on it to any target.",
+				"Landfall — Whenever a land enters the battlefield under your control, put a drop counter on Dubsteppe Lynx \\n DROP IT — When Dubsteppe Lynx dies, it deals damage equal to the number of drop counters on it to any target.",
 				"",
 				"",
 				""
@@ -49203,7 +49353,7 @@
 		{
 			"Name": "Duck on the Pizza",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1006145696069599282/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -49852,13 +50002,13 @@
 				""
 			],
 			"Text Box": [
-				"Creature cards in your hand have “Evoke—Exile a card from your hand that shares a color with this creature.” /n Whenever ERROR: CARD NOT FOUND or another nontoken creature leaves the battlefield, create a Bug Report. (It’s a 0/1 insect clue artifact creature token with “{4}, Sacrifice Bug Report: Draw a card.”)",
+				"Creature cards in your hand have “Evoke—Exile a card from your hand that shares a color with this creature.” \\n Whenever ERROR: CARD NOT FOUND or another nontoken creature leaves the battlefield, create a Bug Report. (It’s a 0/1 insect clue artifact creature token with “{4}, Sacrifice Bug Report: Draw a card.”)",
 				"",
 				"",
 				""
 			],
 			"Flavor Text": [
-				"Crash on startup /n My Thragtusk keeps crashing on startup /n Can I have a mana refund? /n thank you",
+				"Crash on startup \\n My Thragtusk keeps crashing on startup \\n Can I have a mana refund? \\n thank you",
 				"",
 				"",
 				""
@@ -50638,7 +50788,7 @@
 		{
 			"Name": "Eidolon of Insurance Fraud",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/845046865514856518/render.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -51137,7 +51287,7 @@
 				""
 			],
 			"Text Box": [
-				"Devoid /n {3}{W}: Exile another target creature,\nthen return a creature card owned by\nthat creature's owner in exile to the\nbattlefield under its owner's control.",
+				"Devoid \\n {3}{W}: Exile another target creature,\nthen return a creature card owned by\nthat creature's owner in exile to the\nbattlefield under its owner's control.",
 				"",
 				"",
 				""
@@ -51822,7 +51972,7 @@
 				""
 			],
 			"Text Box": [
-				"Elfless Arbor enters the battlefield tapped. /nWhen Elfless Arbor enters the battlefield, untap target land. ",
+				"Elfless Arbor enters the battlefield tapped. \\nWhen Elfless Arbor enters the battlefield, untap target land. ",
 				"",
 				"",
 				""
@@ -52073,7 +52223,7 @@
 		{
 			"Name": "Emerge     Zone",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/930562125104029816/unknown.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -53818,7 +53968,7 @@
 		{
 			"Name": "Essence Borrower",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/839286635799773194/unknown.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -55713,7 +55863,7 @@
 		{
 			"Name": "F*ckerwisp",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/993057356151787530/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -57037,7 +57187,7 @@
 				""
 			],
 			"Text Box": [
-				"Haste /n Whenever Fast Bond deals combat damage to a player, you may play an additional land this turn. When you do, Fast Bond deals 1 damage to you.",
+				"Haste \\n Whenever Fast Bond deals combat damage to a player, you may play an additional land this turn. When you do, Fast Bond deals 1 damage to you.",
 				"",
 				"",
 				""
@@ -57768,7 +57918,7 @@
 		{
 			"Name": "Feldon's Dead Wife",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/873623966386909264/unknown_35.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -57843,7 +57993,7 @@
 		{
 			"Name": "Felidar Sanctuary",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1028437515214004324/Felidar_Sanctuary.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -58987,81 +59137,6 @@
 		},
 		{
 			"Name": "Fixer-Upper",
-			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1125249563444379730/Fixer-Upper-Sidegrade.png",
-			"Creator": "askedforit",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "",
-			"Cost": [
-				"{2}",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Artifact",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Upkeep—Add {W}, {U}, {B}, {R}, {G}.\\nFixer-Upper enters the battlefield tapped unless you pay {2}.\\n{T}: Target player upkeeps right now.",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"Fun goodies hidden in the drywall!",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
-			"Name": "Fixer-Upper",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/829146817512865812/72.png",
 			"Creator": "u/van-theman",
 			"Set": "HC2",
@@ -59119,6 +59194,81 @@
 			],
 			"Flavor Text": [
 				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Fixer-Upper",
+			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1125249563444379730/Fixer-Upper-Sidegrade.png",
+			"Creator": "askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "",
+			"Cost": [
+				"{2}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Artifact",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Upkeep—Add {W}, {U}, {B}, {R}, {G}.\\nFixer-Upper enters the battlefield tapped unless you pay {2}.\\n{T}: Target player upkeeps right now.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"Fun goodies hidden in the drywall!",
 				"",
 				"",
 				""
@@ -59523,7 +59673,7 @@
 		{
 			"Name": "Flicker into Oblivion",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/872207390274121808/image0.jpg",
-			"Creator": "u/Vitral_",
+			"Creator": "Vitral Serf",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -60090,7 +60240,7 @@
 		{
 			"Name": "Flying Ace",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/920063187284553749/Flying_Ace_mk_4.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -60315,7 +60465,7 @@
 		{
 			"Name": "Flyschlorper",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/867100473231802368/Flyschlorper_mk_3.png",
-			"Creator": "Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -60465,7 +60615,7 @@
 		{
 			"Name": "Force Pike",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1052761159721304174/image.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -60925,7 +61075,7 @@
 		{
 			"Name": "Forced Shark Ignition",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1008930572120379412/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -61649,7 +61799,7 @@
 				""
 			],
 			"Text Box": [
-				"Fork Bolt deals 2 damage divided as you choose among one or two targets./nWhen you cast this spell, copy it, except that the copy is red. You may choose new targets for the copy.",
+				"Fork Bolt deals 2 damage divided as you choose among one or two targets.\\nWhen you cast this spell, copy it, except that the copy is red. You may choose new targets for the copy.",
 				"",
 				"",
 				""
@@ -63775,7 +63925,7 @@
 		{
 			"Name": "Future in Flames",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1073104842698018877/future.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -64375,7 +64525,7 @@
 		{
 			"Name": "Garfield Mystic",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/982731589882609724/Garfield_Mystic.jpg",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -66150,12 +66300,12 @@
 			],
 			"Text Box": [
 				"Gain control of target creature until\nend of turn. Untap that creature. It\ngains haste until end of turn.",
-				"Aftermath/nEach player sacrifices a creature.\\nScry 1.",
+				"Aftermath\\nEach player sacrifices a creature.\\nScry 1.",
 				"",
 				""
 			],
 			"Flavor Text": [
-				"\"Vraska sees the grandeur in death but //\nmisses the hilarity. /n — Judith",
+				"\"Vraska sees the grandeur in death but //\nmisses the hilarity. \\n — Judith",
 				"",
 				"",
 				""
@@ -67150,7 +67300,7 @@
 		{
 			"Name": "Gigachadosaurus",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/1006149368769957960/Gigachadosaurus.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "The text box of Gigachadosaurus is neither an ability nor flavor text.",
@@ -67375,7 +67525,7 @@
 		{
 			"Name": "Gin-Jitaxias",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/982731906049249311/gin-gitaxis.jpg",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -67506,6 +67656,81 @@
 			],
 			"Flavor Text": [
 				"mono g pauper ld",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Girl",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1138736308085338142/girl.png",
+			"Creator": "batterymilker",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{3}{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Instant",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Copy all Islands.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"It is a sea again.\"\\n—The Lord of Atlantis",
 				"",
 				"",
 				""
@@ -67675,7 +67900,7 @@
 		{
 			"Name": "Giver of Actual Runes",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/843986651440349184/image0.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -69044,8 +69269,8 @@
 		},
 		{
 			"Name": "Goblin Instigator Instigator",
-			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/841770745674989618/5_-_Minopug.png",
-			"Creator": "Minopug",
+			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/841770745674989618/5_-_Glassbass.png",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -69720,7 +69945,7 @@
 		{
 			"Name": "Going Bananas",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1090500214403641384/image.png",
-			"Creator": "Gerrit and Bogander Guy",
+			"Creator": "Gerrit and Bogander_Guy",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -70180,7 +70405,7 @@
 		{
 			"Name": "Gorilla Titan of Nature's Wrath",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1081423274443022426/ody-241-gorilla-titan.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -72104,7 +72329,7 @@
 				""
 			],
 			"Text Box": [
-				"({T}: Add {B} or {G}.) /n When Groff Bayou enters the battlefield, sacrifice it unless you sacrifice another creature or pay {3}.",
+				"({T}: Add {B} or {G}.) \\n When Groff Bayou enters the battlefield, sacrifice it unless you sacrifice another creature or pay {3}.",
 				"",
 				"",
 				""
@@ -72254,7 +72479,7 @@
 				""
 			],
 			"Text Box": [
-				"Cleave Land (You may play this as a land drop. If you do, remove the words in square brackets.) /n Grovergrown Tomb enters the battlefield tapped unless you pay 1885 life. [When it does, sacrifice if it wasn’t cast]",
+				"Cleave Land (You may play this as a land drop. If you do, remove the words in square brackets.) \\n Grovergrown Tomb enters the battlefield tapped unless you pay 1885 life. [When it does, sacrifice if it wasn’t cast]",
 				"",
 				"",
 				""
@@ -72955,7 +73180,7 @@
 		{
 			"Name": "Guide to Advantage City",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1100107310006816808/GuideToAdvantageCity.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -73764,7 +73989,7 @@
 				""
 			],
 			"Text Box": [
-				"HOA-Run Neighborhood enters the battlefield tapped. /n When HOA-Run Neighborhood enters the battlefield, target land an opponent controls becomes a copy of HOA-Run Neighborhood. /n {T}: Add one mana of any color.",
+				"HOA-Run Neighborhood enters the battlefield tapped. \\n When HOA-Run Neighborhood enters the battlefield, target land an opponent controls becomes a copy of HOA-Run Neighborhood. \\n {T}: Add one mana of any color.",
 				"",
 				"",
 				""
@@ -74165,7 +74390,7 @@
 		{
 			"Name": "Half Assed Automaton",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846179005825024/render_5.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -74625,7 +74850,7 @@
 		{
 			"Name": "Harder Evidence",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/1017238108510617630/unknown.png",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -75675,7 +75900,7 @@
 		{
 			"Name": "Hazezon Titan",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/913990882141831198/render.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -75750,7 +75975,7 @@
 		{
 			"Name": "He will never be ballin'",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1102708309984817212/image.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -77033,7 +77258,7 @@
 				""
 			],
 			"Flavor Text": [
-				"great value /n much flavor /n wow /n such design",
+				"great value \\n much flavor \\n wow \\n such design",
 				"",
 				"",
 				""
@@ -78501,7 +78726,7 @@
 				""
 			],
 			"Text Box": [
-				"Return target card from your graveyard to your hand. If it's historic, draw a card. /n Channel — {2}{G}{G}, Discard History:\nCreate a 2/2 green Alien creature token\nand an Ancient Ziggurat token. (It's a land\nwith \"P: Add one mana of any color. Spend\nthis mana only to cast a creature spell.\")",
+				"Return target card from your graveyard to your hand. If it's historic, draw a card. \\n Channel — {2}{G}{G}, Discard History:\nCreate a 2/2 green Alien creature token\nand an Ancient Ziggurat token. (It's a land\nwith \"P: Add one mana of any color. Spend\nthis mana only to cast a creature spell.\")",
 				"",
 				"",
 				""
@@ -78602,7 +78827,7 @@
 		{
 			"Name": "Holding Hands",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/879000573771386890/image0.jpg",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -78912,7 +79137,7 @@
 		{
 			"Name": "Horizon Orbs",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/925238602730979419/Horizon_Orbs.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -79382,7 +79607,7 @@
 		{
 			"Name": "Hullbleacher",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/916884629523427378/cmr-74-hullbreacher.png",
-			"Creator": "ThisGuyWithHisFish",
+			"Creator": "fishladdie",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -79966,7 +80191,7 @@
 				""
 			],
 			"Text Box": [
-				"Put a copy of target creature on the stack. /n Misread — {B}, Discard this card: Target creature gets -2/-2 until end of turn.",
+				"Put a copy of target creature on the stack. \\n Misread — {B}, Discard this card: Target creature gets -2/-2 until end of turn.",
 				"",
 				"",
 				""
@@ -80266,7 +80491,7 @@
 				""
 			],
 			"Text Box": [
-				"Iinstances of may are treated as though they were must. (When you must, but don't, you lose the game.) \\n Creatures may attack and block if able./n Sacrifice I Am No Longer Asking:",
+				"Iinstances of may are treated as though they were must. (When you must, but don't, you lose the game.) \\n Creatures may attack and block if able.\\n Sacrifice I Am No Longer Asking:",
 				"",
 				"",
 				""
@@ -80517,7 +80742,7 @@
 		{
 			"Name": "Ichtibaltyomorphosis",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866773448487206962/image0_6.jpg",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -82642,7 +82867,7 @@
 		{
 			"Name": "Inspectre",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/911458579532378152/Inspectre.png",
-			"Creator": "Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -83317,7 +83542,7 @@
 		{
 			"Name": "Invasion of the Body Snatchers // Skrull Invasion",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/888222872403849236/unknown_1.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -83392,7 +83617,7 @@
 		{
 			"Name": "Invoke MacGyver",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/821545252518756372/liyj0owhr0k61.png",
-			"Creator": "u/Vitral_",
+			"Creator": "Vitral Serf",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -85443,7 +85668,7 @@
 				""
 			],
 			"Text Box": [
-				"{+1}: Each player discards a card, then draws a card. /n {-1}: Target player returns a creature they control to their hand. /n {-6}: Separate all permanents target player controls into two piles. That player Bounces all permanents in the pile of their choice, then discards them.",
+				"{+1}: Each player discards a card, then draws a card. \\n {-1}: Target player returns a creature they control to their hand. \\n {-6}: Separate all permanents target player controls into two piles. That player Bounces all permanents in the pile of their choice, then discards them.",
 				"",
 				"",
 				""
@@ -85919,7 +86144,7 @@
 		{
 			"Name": "Jadar, Prank Caller of Nephalia",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/917548589926998026/IMG_9733.jpg",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -87749,7 +87974,7 @@
 		{
 			"Name": "Just a Normal Dude on Innistrad // Just the Same Dude but He's Trying to Sleep So Go Away",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/892968374110388264/unknown.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -90224,7 +90449,7 @@
 		{
 			"Name": "Kobolt, Excited Sparkmage",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/817830136963530782/14.png",
-			"Creator": "u/Vitral_",
+			"Creator": "Vitral Serf",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -90824,7 +91049,7 @@
 		{
 			"Name": "Koth of the Hammer Time",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/845046811278311424/koth.jpg",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -90899,7 +91124,7 @@
 		{
 			"Name": "Kozilek, Drawn From Memory",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/1000525376516259910/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -92774,7 +92999,7 @@
 		{
 			"Name": "Lasag and the Field",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/843681448652963890/unknown.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -93009,7 +93234,7 @@
 		{
 			"Name": "Lavahearth Burst",
 			"Image": "https://cdn.discordapp.com/attachments/765660673467351062/795833274311376936/43ssredycx761.png",
-			"Creator": "u/Vitral_",
+			"Creator": "Vitral Serf",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -94558,7 +94783,7 @@
 				""
 			],
 			"Text Box": [
-				"When Leveler enters the battlefield, exile your library. /n Level Up —{H/C}{H/C} Activate as an instant /n | Level 1-99 > When Leveler levels up, put a random card exiled with Leveler on the bottom of your library. /n |100*>",
+				"When Leveler enters the battlefield, exile your library. \\n Level Up —{H/C}{H/C} Activate as an instant \\n | Level 1-99 > When Leveler levels up, put a random card exiled with Leveler on the bottom of your library. \\n |100*>",
 				"",
 				"",
 				""
@@ -95533,13 +95758,13 @@
 				""
 			],
 			"Text Box": [
-				"Compleated (If {H/R} was paid for by losing 2 life, reduce all numbers on this card by 2) /nDeal 3 damage to any target.",
+				"Compleated (If {H/R} was paid for by losing 2 life, reduce all numbers on this card by 2) \\nDeal 3 damage to any target.",
 				"",
 				"",
 				""
 			],
 			"Flavor Text": [
-				"Urabrask the Chef called out, calling on the rage of the storms of his youth. /n\"Needs more Oil\" -",
+				"Urabrask the Chef called out, calling on the rage of the storms of his youth. \\n\"Needs more Oil\" -",
 				"",
 				"",
 				""
@@ -97509,7 +97734,7 @@
 		{
 			"Name": "Logical Conclusion to Emerald Medallion",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/919776725670436894/unknown_6.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "reducing a cost by {G} can reduce the amount of green *or* generic mana required to pay the cost. -Zaxer2 no citation",
@@ -102363,7 +102588,7 @@
 		{
 			"Name": "Mana Sink",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1124481618598449312/Mana_Sink1.png",
-			"Creator": "draner.",
+			"Creator": "Draner",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -103038,7 +103263,7 @@
 		{
 			"Name": "Maro's Gone Batshit Fucking Insane",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/910371061944700998/IMG_9474.jpg",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -103413,7 +103638,7 @@
 		{
 			"Name": "Marsh of Metallic Taste",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/848297961993142312/unknown.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -104088,7 +104313,7 @@
 		{
 			"Name": "Matter of Perspective",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/877536980416757761/render_14.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -105298,7 +105523,7 @@
 		{
 			"Name": "Mental Two-Step",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1053491999719829514/image.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -105353,7 +105578,7 @@
 				""
 			],
 			"Flavor Text": [
-				"That first there mistake of yours partner was assumptioning you'd live long enough for a second. /n Sarnvax, Gitaxian Sheriff",
+				"That first there mistake of yours partner was assumptioning you'd live long enough for a second. \\n Sarnvax, Gitaxian Sheriff",
 				"",
 				"",
 				""
@@ -105373,7 +105598,7 @@
 		{
 			"Name": "Mental step",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1006145393257611264/mental_step.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -107258,7 +107483,7 @@
 		{
 			"Name": "Mirrorweaver",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/871050792025608203/nzlh73.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -107633,7 +107858,7 @@
 		{
 			"Name": "Mizzium Cables",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846292017020958/render_4.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -108008,7 +108233,7 @@
 		{
 			"Name": "Moldspan Dragon",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1052796796876902450/image.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -108207,7 +108432,7 @@
 				""
 			],
 			"Text Box": [
-				"Monastery enters the battlefield tapped. /n Flying, prowess /n {U}{R}: Monastery becomes a creature until end of turn. It's still a land. /n {T}: {U} or {R}.",
+				"Monastery enters the battlefield tapped. \\n Flying, prowess \\n {U}{R}: Monastery becomes a creature until end of turn. It's still a land. \\n {T}: {U} or {R}.",
 				"",
 				"",
 				""
@@ -109133,7 +109358,7 @@
 		{
 			"Name": "Morbin Opportunist",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/989656720844419072/8D173FAB-0878-49A2-BC7F-7588A1CE3A41.jpg",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -109208,7 +109433,7 @@
 		{
 			"Name": "Morbius Strip // Morbius Strip",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/993057213654511636/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -109808,7 +110033,7 @@
 		{
 			"Name": "Mouth // Mouth",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/898963261637140490/unknown.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -110793,7 +111018,7 @@
 		{
 			"Name": "Muragandanize",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/867100365174472754/image0.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -111687,7 +111912,7 @@
 				""
 			],
 			"Text Box": [
-				"(As this saga enters, and after your draw step, add a lore counter.) /n I, II — Tap another creature. Throw away everything we had together, then ask for a second chance. (Discard your hand, then draw that many cards.) /n III — Exile this saga, then return it to the battlefield transformed under your control.",
+				"(As this saga enters, and after your draw step, add a lore counter.) \\n I, II — Tap another creature. Throw away everything we had together, then ask for a second chance. (Discard your hand, then draw that many cards.) \\n III — Exile this saga, then return it to the battlefield transformed under your control.",
 				"WHENEVER YOU LOOK AWAY FOR ONE GODDAMN SECOND AND DRAW A CARD, Portrait of My Ex taps a random untapped creature you don’t control.",
 				"",
 				""
@@ -111762,7 +111987,7 @@
 				""
 			],
 			"Text Box": [
-				"My Fridge with Number Magnets enters the battlefield tapped. /n {T}: Add {U} or {G}. /n {G}{G}{U}{U}, {T}: Roll a d6. Target number becomes the result until the end of your turn. Activate only as a sorcery.",
+				"My Fridge with Number Magnets enters the battlefield tapped. \\n {T}: Add {U} or {G}. \\n {G}{G}{U}{U}, {T}: Roll a d6. Target number becomes the result until the end of your turn. Activate only as a sorcery.",
 				"",
 				"",
 				""
@@ -113158,7 +113383,7 @@
 		{
 			"Name": "Nebula",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/917548975412895785/unknown.png",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -114283,7 +114508,7 @@
 		{
 			"Name": "Nikocado Devours Saturn's Son",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/922295157401993257/IMG_9835.jpg",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -115333,7 +115558,7 @@
 		{
 			"Name": "Not Just A Clown",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/920063084356321300/Not_Just_A_Clown.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "Not Just A Clown effectively \"removes\" target permanent, replacing it with five creature tokens on the battlefield under that permanent's controller's control. (This replacement does not trigger ETB or LTB effects.) The created tokens are summoning sick if and only if the \"removed\" permanent would be summoning sick. Due to Not Just A Clown's reminder text, the clowned permanent's card cannot come back into existence, even if all clown tokens have left the battlefield. For more information on \"Becoming Multiple Permanents\", see Yellowpie \"multiple permanents\" writeup in #rulings 03/26/2022. -Zaxer2 #rulings 03/26/2022",
@@ -117743,7 +117968,7 @@
 		{
 			"Name": "Oh God the Whales Learned Geomancy",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/843311839679873034/Oh_God_the_Whales_Learned_Geomancy_mk_9.png",
-			"Creator": "Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -118118,7 +118343,7 @@
 		{
 			"Name": "Oil",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1053143617625149470/image.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -118418,7 +118643,7 @@
 		{
 			"Name": "Oko, Thief of Crows",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1070000211520409641/Oko_Thief_of_Crows_2.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -118728,7 +118953,7 @@
 		{
 			"Name": "Old Man Touchy",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/986893003723534386/IMG_1392.jpg",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -119980,7 +120205,7 @@
 		{
 			"Name": "Opt // Opt 2",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/998707198727311440/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -121948,7 +122173,7 @@
 		{
 			"Name": "Outpact Tremors",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/982734385281372190/render_1.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC3",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -122522,7 +122747,7 @@
 				""
 			],
 			"Text Box": [
-				"Whenever you tap a nonland permanent for a single specific mana, instead conjure the corresponding basic land that could produce that color mana. (The purple basic land type is Nebula.) /n {T}: Add {G}.",
+				"Whenever you tap a nonland permanent for a single specific mana, instead conjure the corresponding basic land that could produce that color mana. (The purple basic land type is Nebula.) \\n {T}: Add {G}.",
 				"",
 				"",
 				""
@@ -122698,7 +122923,7 @@
 		{
 			"Name": "Pact of Memnite",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/998706728122200224/Pact_of_Memnite_1.png",
-			"Creator": "Poodle Noodle",
+			"Creator": "Poodle Noodles",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -122923,7 +123148,7 @@
 		{
 			"Name": "Painstorm",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1074865580449992764/image.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -124745,7 +124970,7 @@
 				""
 			],
 			"Text Box": [
-				"Sticky (Counters and objects remain on this card as it moves to any zone other than a player's hand or library.) /n Whenever a creature you control dies, it becomes a counter on Peanut Butter Jellymental. (It grants all its abilities.) /n Counter Scavenger {2}{P}{B} ({2}{P}{B}, Exile Peanut Butter Jellymental from your graveyard: Put its counters on a creature you control.)",
+				"Sticky (Counters and objects remain on this card as it moves to any zone other than a player's hand or library.) \\n Whenever a creature you control dies, it becomes a counter on Peanut Butter Jellymental. (It grants all its abilities.) \\n Counter Scavenger {2}{P}{B} ({2}{P}{B}, Exile Peanut Butter Jellymental from your graveyard: Put its counters on a creature you control.)",
 				"",
 				"",
 				""
@@ -125221,7 +125446,7 @@
 		{
 			"Name": "Perpetual Motion Rumbler",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846340661903430/jmbt63.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -125821,7 +126046,7 @@
 		{
 			"Name": "Phyrexian Dreadmaw",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/934489574464434196/mir-315-phyrexian-dreadmaw.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -127266,7 +127491,7 @@
 		{
 			"Name": "Pissmite",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/986892421755465768/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -128786,7 +129011,7 @@
 		{
 			"Name": "Portal Three Kingdoms",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846440798289951/Portal_Three_Kingdoms.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -131310,7 +131535,7 @@
 				""
 			],
 			"Text Box": [
-				"When Purple Removal Spell enters the battlefield or is turned face up, you may destroy target conspiracy, emblem, dungeon, counter, designation, perpetual effect, or link between two or more objects. (Designations include monsterous, renowned, goaded, city’s blessing, commander, day/night, monarch, and level. Links include attached cards, soulbound effects, oblivion ring effects, etc.)\\nMegamorph {P}\\nIf your playing an EDH variant, you can't destroy the commander designation.",
+				"When Purple Removal Spell enters the battlefield or is turned face up, you may destroy target conspiracy, emblem, dungeon, counter, designation, perpetual effect, or link between two or more objects. (Designations include monsterous, renowned, goaded, city’s blessing, commander, day\\night, monarch, and level. Links include attached cards, soulbound effects, oblivion ring effects, etc.)\\nMegamorph {P}\\nIf your playing an EDH variant, you can't destroy the commander designation.",
 				"",
 				"",
 				""
@@ -132331,7 +132556,7 @@
 				""
 			],
 			"Text Box": [
-				"{T}: Add {P}. (This is a metaphor.) /n {P}{P}, {T}: Create a copy of this card in exile with 2 time counters on it. It gains suspend. (This is a metaphor.) /n {1}, {T}, Sacrifice Quirky Earthbound Inspired Indie RPG: Draw a card. (This is also a metaphor.)",
+				"{T}: Add {P}. (This is a metaphor.) \\n {P}{P}, {T}: Create a copy of this card in exile with 2 time counters on it. It gains suspend. (This is a metaphor.) \\n {1}, {T}, Sacrifice Quirky Earthbound Inspired Indie RPG: Draw a card. (This is also a metaphor.)",
 				"",
 				"",
 				""
@@ -132641,7 +132866,7 @@
 				""
 			],
 			"Text Box": [
-				"{T}: Add {C}. /n {T}, Exile another land you control: Add {R}{W}.",
+				"{T}: Add {C}. \\n {T}, Exile another land you control: Add {R}{W}.",
 				"",
 				"",
 				""
@@ -132667,7 +132892,7 @@
 		{
 			"Name": "Race Horse",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/911458727457087488/render_16.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -134092,7 +134317,7 @@
 		{
 			"Name": "Ratatouille, the Rat",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1076316579442204762/image.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -134976,7 +135201,7 @@
 				""
 			],
 			"Text Box": [
-				"SOURCES DON'T DEAL DAMAGE \\nTHEIR CONTROLLERS DO. /nAND YOU HAVE DEATHTOUCH.",
+				"SOURCES DON'T DEAL DAMAGE \\nTHEIR CONTROLLERS DO. \\nAND YOU HAVE DEATHTOUCH.",
 				"",
 				"",
 				""
@@ -135527,7 +135752,7 @@
 		{
 			"Name": "Really Farseek",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/821545419300798514/Really_Farseek3.png",
-			"Creator": "u/Vitral_",
+			"Creator": "Vitral Serf",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -138146,13 +138371,13 @@
 				""
 			],
 			"Text Box": [
-				"Target spell becomes Rick Astley (Rick Astley is a 1/2 legendary blue Human creature.) /n Spellmorph {U} (You may cast this face down as a 2/2 creature for {3}.Turn it face up and put it onto the stack at any time for its spellmorph cost.)",
+				"Target spell becomes Rick Astley (Rick Astley is a 1/2 legendary blue Human creature.) \\n Spellmorph {U} (You may cast this face down as a 2/2 creature for {3}.Turn it face up and put it onto the stack at any time for its spellmorph cost.)",
 				"",
 				"",
 				""
 			],
 			"Flavor Text": [
-				"We're no strangers to love /n You know the rules and so do I...",
+				"We're no strangers to love \\n You know the rules and so do I...",
 				"",
 				"",
 				""
@@ -140075,7 +140300,7 @@
 		{
 			"Name": "Sal, Apex Loser",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846544002941008/unknown_2.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -141800,7 +142025,7 @@
 		{
 			"Name": "Sea Dasher Octopus",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/926205145346363492/isxi16.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -143150,7 +143375,7 @@
 		{
 			"Name": "Serum Powder Visions",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/877536986318110750/unknown.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -143274,7 +143499,7 @@
 				""
 			],
 			"Text Box": [
-				"Sesame Street enters the battlefield tapped. /n {T}: add {U} or {G}. /n {4}, {T}: Scry X, where X is the greatest number you can count to using numbers on permanents you control.",
+				"Sesame Street enters the battlefield tapped. \\n {T}: add {U} or {G}. \\n {4}, {T}: Scry X, where X is the greatest number you can count to using numbers on permanents you control.",
 				"",
 				"",
 				""
@@ -145655,7 +145880,7 @@
 		{
 			"Name": "Shut",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/920063365450186762/Shut.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -146865,7 +147090,7 @@
 		{
 			"Name": "Simicus, Mythical Legend",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/925240067868471296/Simicus_Mythical_Legend.jpg",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -147925,7 +148150,7 @@
 		{
 			"Name": "Slippery Bogander",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/1019774635287511040/381F84DE-A6E6-4E99-AE74-7F7CBAF7E926.jpg",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -148150,7 +148375,7 @@
 		{
 			"Name": "Slurped up by the Void",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866845965256622110/Slurped_up_by_the_Void_mk_3.png",
-			"Creator": "Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -148274,7 +148499,7 @@
 				""
 			],
 			"Text Box": [
-				"Slushy Sidewalk enters the battlefield tapped. /n {T}: Add {U} or {B}. /n {T}, Sacrifice Slushy Sidewalk: Remove target attacking creature from combat, it doesn’t untap during its controllers next untap step.",
+				"Slushy Sidewalk enters the battlefield tapped. \\n {T}: Add {U} or {B}. \\n {T}, Sacrifice Slushy Sidewalk: Remove target attacking creature from combat, it doesn’t untap during its controllers next untap step.",
 				"",
 				"",
 				""
@@ -149350,7 +149575,7 @@
 		{
 			"Name": "Sole Ring",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1078163444282429520/image.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -150250,7 +150475,7 @@
 		{
 			"Name": "Sourpremacy",
 			"Image": "https://media.discordapp.net/attachments/916884859107037215/941076466504966174/render.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -151134,7 +151359,7 @@
 				""
 			],
 			"Text Box": [
-				"Spawn Camp enters the battlefield tapped. /n At the beginning of each end step, destroy all spawns you control. /n {T}: Create a 0/1 colorless Eldrazi Spawn creature token. It has “Sacrifice this creature: Add {C}.” Activate only as a sorcery.",
+				"Spawn Camp enters the battlefield tapped. \\n At the beginning of each end step, destroy all spawns you control. \\n {T}: Create a 0/1 colorless Eldrazi Spawn creature token. It has “Sacrifice this creature: Add {C}.” Activate only as a sorcery.",
 				"",
 				"",
 				""
@@ -151359,7 +151584,7 @@
 				""
 			],
 			"Text Box": [
-				"Flash /n The first activated ability you activate each turn cost {T} less to activate.",
+				"Flash \\n The first activated ability you activate each turn cost {T} less to activate.",
 				"",
 				"",
 				""
@@ -151760,7 +151985,7 @@
 		{
 			"Name": "Spike",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1100107279061225482/image.png",
-			"Creator": "This Guy With His Fish",
+			"Creator": "fishladdie",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -151959,7 +152184,7 @@
 				""
 			],
 			"Text Box": [
-				"When Spirited Companharmonicon enters the battlefield, draw a card. /n If a creature entering the battlefield would cause an ability of a permanent you control to trigger, it may instead trigger a different \"enters the battlefield\" ability of a permanent you control.",
+				"When Spirited Companharmonicon enters the battlefield, draw a card. \\n If a creature entering the battlefield would cause an ability of a permanent you control to trigger, it may instead trigger a different \"enters the battlefield\" ability of a permanent you control.",
 				"",
 				"",
 				""
@@ -152334,7 +152559,7 @@
 				""
 			],
 			"Text Box": [
-				"Sponsored Land enters the battlefield tapped. /n {T}: Take a sip of New Mountain Dew Vanilla Twist®. (Its cool refreshing taste lets you add {W} or {B} or gain 1 life. Put an ad counter Sponsored Land.) /n {3}, Sacrifice Sponsored Land: Create a number of treasure tokens equal to the number of ad counters on it.",
+				"Sponsored Land enters the battlefield tapped. \\n {T}: Take a sip of New Mountain Dew Vanilla Twist®. (Its cool refreshing taste lets you add {W} or {B} or gain 1 life. Put an ad counter Sponsored Land.) \\n {3}, Sacrifice Sponsored Land: Create a number of treasure tokens equal to the number of ad counters on it.",
 				"",
 				"",
 				""
@@ -152510,7 +152735,7 @@
 		{
 			"Name": "Spork Elemental",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1024853375210242058/unknown.png",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -154318,6 +154543,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Stigma",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1138736661174419497/image.png",
+			"Creator": "aprilmai",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{R}{R}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Instant",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Wither\\nStigma deals 3 damage to any target. If a player was dealt damage this way, they can't gain life for the rest of the game.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"\"Who's Leve Jobs?\"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Stigmatize",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/982735479776616469/Stigmatize.png",
 			"Creator": "Dietrich",
@@ -154744,7 +155044,7 @@
 				""
 			],
 			"Text Box": [
-				"{T}: Add one mana of anv color that\nyou can't produce with lands you\ncontrol. /n {T}: Add {C}.",
+				"{T}: Add one mana of anv color that\nyou can't produce with lands you\ncontrol. \\n {T}: Add {C}.",
 				"",
 				"",
 				""
@@ -156138,7 +156438,7 @@
 		{
 			"Name": "Subverter of Expectations // Stick Bug",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/889179151901261934/unknown_41.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -156337,7 +156637,7 @@
 				""
 			],
 			"Text Box": [
-				"Suffer Falls enters the battlefield tapped unless you control another permanent that causes you physical (A permanent that can do damage to you) or mental (A permanent that can cause you to mill or discard) pain. /n {T}: Add {C}. Suffer Falls does 1 damage to you. /n {T}: Add {U} or {R}.",
+				"Suffer Falls enters the battlefield tapped unless you control another permanent that causes you physical (A permanent that can do damage to you) or mental (A permanent that can cause you to mill or discard) pain. \\n {T}: Add {C}. Suffer Falls does 1 damage to you. \\n {T}: Add {U} or {R}.",
 				"",
 				"",
 				""
@@ -157237,7 +157537,7 @@
 				""
 			],
 			"Text Box": [
-				"Amplify 1 (As this land enters the battlefield, put a +1/+1 counter on it for each Swamp card you reveal in your hand.) /n SwAmp enters the battlefield tapped unless it has a +1/+1 counter on it. /n {T}: Add {B} or {G}. /n {G}{G}, {T}: You may move any number of +1/+1 counters from SwAmp onto target creature. Activate only as a sorcery.",
+				"Amplify 1 (As this land enters the battlefield, put a +1/+1 counter on it for each Swamp card you reveal in your hand.) \\n SwAmp enters the battlefield tapped unless it has a +1/+1 counter on it. \\n {T}: Add {B} or {G}. \\n {G}{G}, {T}: You may move any number of +1/+1 counters from SwAmp onto target creature. Activate only as a sorcery.",
 				"",
 				"",
 				""
@@ -158088,7 +158388,7 @@
 		{
 			"Name": "Swords to Plowshares GX",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/982735669208158248/Swords_to_Plowshares_GX.png",
-			"Creator": "Lordburgerr",
+			"Creator": "lordburgerr",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -158538,7 +158838,7 @@
 		{
 			"Name": "T'was I Who Fucked the Dragon",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/872205538006548561/unknown_34.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -158997,81 +159297,6 @@
 		},
 		{
 			"Name": "TL;DR",
-			"Image": "https://media.discordapp.net/attachments/982729846503378964/989656524311887952/IMG_4002.jpg",
-			"Creator": "Jumberlack",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "Blue",
-			"Cost": [
-				"{U}",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Instant",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Summarize target spell with four or more lines of text. It probably just says \"Scry 2.\" (It keeps its card types.)",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
-			"Name": "TL;DR",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699999615327404042/TLDR.jpg",
 			"Creator": "u/cirion02",
 			"Set": "HLC",
@@ -159129,6 +159354,81 @@
 			],
 			"Flavor Text": [
 				"A picture is worth 1000 words, and that's about 994 too many.",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "TL;DR",
+			"Image": "https://media.discordapp.net/attachments/982729846503378964/989656524311887952/IMG_4002.jpg",
+			"Creator": "Jumberlack",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Instant",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Summarize target spell with four or more lines of text. It probably just says \"Scry 2.\" (It keeps its card types.)",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
 				"",
 				"",
 				""
@@ -159298,7 +159598,7 @@
 		{
 			"Name": "Talker of the Talk",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/844284058258898954/FinalTalkeroftheTalk.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -160697,7 +160997,7 @@
 				""
 			],
 			"Text Box": [
-				"At the beginning of your upkeep, if you control no Insects, you may pay {1}. If you do, you lose 1 life and create a 1/1 red and black Insect creature token. /n {T}: Add {C}. /n {T}, Sacrifice an Insect: Add {B} or {R}.",
+				"At the beginning of your upkeep, if you control no Insects, you may pay {1}. If you do, you lose 1 life and create a 1/1 red and black Insect creature token. \\n {T}: Add {C}. \\n {T}, Sacrifice an Insect: Add {B} or {R}.",
 				"",
 				"",
 				""
@@ -160847,7 +161147,7 @@
 				""
 			],
 			"Text Box": [
-				"Terracotta Army enters the battlefield tapped unless you tap an untapped nontoken creature you control. /n {T}: Add {G} or {W}. /n  Terracotta Army counts as a creature for spells and effects that count the number of creatures you control.",
+				"Terracotta Army enters the battlefield tapped unless you tap an untapped nontoken creature you control. \\n {T}: Add {G} or {W}. \\n  Terracotta Army counts as a creature for spells and effects that count the number of creatures you control.",
 				"",
 				"",
 				""
@@ -161548,7 +161848,7 @@
 		{
 			"Name": "Thallids",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/1029922294845407252/unknown.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -162272,7 +162572,7 @@
 				""
 			],
 			"Text Box": [
-				"If three or more creatures are attacking you, you may put this card from your hand onto the battlefield./nl{T}: Add {C}./nl{1}: The Biggest Ball of Twine in Minnesota becomes a 0/4 colorless Construct creature with defender and “Whenever this creature blocks a creature, create a Treasure token.” until end of turn. It’s still a land.",
+				"If three or more creatures are attacking you, you may put this card from your hand onto the battlefield.\\nl{T}: Add {C}.\\nl{1}: The Biggest Ball of Twine in Minnesota becomes a 0/4 colorless Construct creature with defender and “Whenever this creature blocks a creature, create a Treasure token.” until end of turn. It’s still a land.",
 				"",
 				"",
 				""
@@ -162458,7 +162758,7 @@
 		{
 			"Name": "The Crab Lab",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846145513521172/The_Crab_Lab_mk_2_1.png",
-			"Creator": "Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -162732,7 +163032,7 @@
 				""
 			],
 			"Text Box": [
-				"As The Divin Nation enters the battlefield you may pay {2}{U} and draw two cards. If you do, The Divin Nation enters the battlefield tapped. /n {T}: Add {U}.",
+				"As The Divin Nation enters the battlefield you may pay {2}{U} and draw two cards. If you do, The Divin Nation enters the battlefield tapped. \\n {T}: Add {U}.",
 				"",
 				"",
 				""
@@ -163143,7 +163443,7 @@
 		{
 			"Name": "The Friends We Made Along The Way",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/879000648534872085/render.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -163567,7 +163867,7 @@
 				""
 			],
 			"Text Box": [
-				"Tribute--Exalted, exalted, exalted /n When The Greatest And Best Card\nIn The World enters the battlefield,\nif its tribute wasn't paid, you may\ndraw a Black Lotus token.",
+				"Tribute--Exalted, exalted, exalted \\n When The Greatest And Best Card\nIn The World enters the battlefield,\nif its tribute wasn't paid, you may\ndraw a Black Lotus token.",
 				"",
 				"",
 				""
@@ -163743,7 +164043,7 @@
 		{
 			"Name": "The Haunt of Hightower but He's an English Professor Now",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/876861093824299028/unknown.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -163968,7 +164268,7 @@
 		{
 			"Name": "The Hills are Fucking Alive",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/873623942856835132/hills.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -165318,7 +165618,7 @@
 		{
 			"Name": "The Real Swim Shady",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/826892453923389450/image0.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -166366,6 +166666,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "The Three Weird Sisters // Compleated Conjurer",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1138736645051514922/theThreeWeirdSisters.png",
+			"Creator": "guymcperson144",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"Legendary",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"Creature",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Weird",
+				"Phyrexian;Weird",
+				"",
+				""
+			],
+			"power": [
+				1,
+				3,
+				null,
+				null
+			],
+			"toughness": [
+				3,
+				3,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Flying\\nAt the beginning of combat on your turn, choose one that hasn't been chosen —\\n• Return target instant or sorcery card from your graveyard to your hand.\\n• The Three Weird Sisters deals 2 damage to target creature or player.\\n• TransformThe Three Weird Sisters.",
+				"When this creature transforms into Compleated Conjurer, exile the top card of your library. Until the end of your next turn, you may play that card.",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"The Furnace Host saw no need for such caution.",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "The Tinker",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1082939374330724382/The_Tinker_card.png",
 			"Creator": "Gerrit",
@@ -166424,6 +166799,81 @@
 			],
 			"Flavor Text": [
 				"He tink therefore he am.",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "The Turn That Chronatog Ate",
+			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1138736632191787059/the_turn_that_chronatog_ate.png",
+			"Creator": "chaisohex",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{3}{U}{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Instant",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Target creature gets -3/-3 until end of turn.\\nTake an extra turn after this one.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
 				"",
 				"",
 				""
@@ -167167,7 +167617,7 @@
 				""
 			],
 			"Text Box": [
-				"{T}: Add {G}. /n {T}: Add {W}. This ability suffers from summoning sickness.",
+				"{T}: Add {G}. \\n {T}: Add {W}. This ability suffers from summoning sickness.",
 				"",
 				"",
 				""
@@ -168018,7 +168468,7 @@
 		{
 			"Name": "Thoughtseizure",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1106650173003800697/image.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -168863,7 +169313,7 @@
 		{
 			"Name": "Thresh''s hole",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/848299861827911720/render.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -170073,7 +170523,7 @@
 		{
 			"Name": "Time Wack",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/925802192542244945/IMG_9966.jpg",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -170833,7 +171283,7 @@
 		{
 			"Name": "Tism",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1090500191779561544/image.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -171127,7 +171577,7 @@
 				""
 			],
 			"Text Box": [
-				"Toggo's Mana Rock enters the battlefield tapped. /n {T}: Add {R}. \\n Equipped creature has \"{1}, {T}, Sacrifice Toggo's Mana Rock: This creature deals 2 damage to any target.\" \\n Equip {1}",
+				"Toggo's Mana Rock enters the battlefield tapped. \\n {T}: Add {R}. \\n Equipped creature has \"{1}, {T}, Sacrifice Toggo's Mana Rock: This creature deals 2 damage to any target.\" \\n Equip {1}",
 				"",
 				"",
 				""
@@ -171903,7 +172353,7 @@
 		{
 			"Name": "Toolbox",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/1019774818041741362/unknown.png",
-			"Creator": "Bogander Guy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -172128,7 +172578,7 @@
 		{
 			"Name": "Tormod's Crip",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846639519956992/image0_2.jpg",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -173713,7 +174163,7 @@
 		{
 			"Name": "Tree of Garbage",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/911458727817801758/render.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -173938,7 +174388,7 @@
 		{
 			"Name": "Trigger Elemental",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866845925002838016/render-1.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -175867,7 +176317,7 @@
 		{
 			"Name": "Two Trenchcoats in a Kid",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846199768023060/tyjr34.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -175942,7 +176392,7 @@
 		{
 			"Name": "Twoirophage",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/920063055252045924/Twoirophage_mk_3.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -176216,7 +176666,7 @@
 				""
 			],
 			"Text Box": [
-				"{T}: Add {C}. /n {1}, {T}, Sacrifice UB Land: You gain \"{T}: Add {U} or {B}.\"",
+				"{T}: Add {C}. \\n {1}, {T}, Sacrifice UB Land: You gain \"{T}: Add {U} or {B}.\"",
 				"",
 				"",
 				""
@@ -176917,7 +177367,7 @@
 		{
 			"Name": "Undies for Two",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/843987660296945664/image0.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -177191,7 +177641,7 @@
 				""
 			],
 			"Text Box": [
-				"You may reveal an instant or sorcery card from your hand and put it on top of your library rather than pay this spell's mana cost. /n Return target spell or creature to its owner's hand. Scry 1.",
+				"You may reveal an instant or sorcery card from your hand and put it on top of your library rather than pay this spell's mana cost. \\n Return target spell or creature to its owner's hand. Scry 1.",
 				"",
 				"",
 				""
@@ -177442,7 +177892,7 @@
 		{
 			"Name": "Unnecessary Cameo",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1065449812318756884/image.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -178580,7 +179030,7 @@
 			"Creator": "Jumberlack",
 			"Set": "HC4",
 			"Constructed": "Banned",
-			"Rulings": "",
+			"Rulings": "In Draft, you may put any number of copies of each Urza's land in your deck. In Constructed, you may use only four copies of each. —Askedforit, 8/17/23",
 			"CMC": 0,
 			"Color(s)": "",
 			"Cost": [
@@ -179927,7 +180377,7 @@
 		{
 			"Name": "Very Motivated Skeleton",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/817830087381614642/50.png",
-			"Creator": "u/Vitral_",
+			"Creator": "Vitral Serf",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -180237,7 +180687,7 @@
 		{
 			"Name": "Viashino Sanstalker",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/928482835189334056/unknown.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -180837,7 +181287,7 @@
 		{
 			"Name": "Vore-inclex, Voice of HUNGER",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/843984778985340948/image0.png",
-			"Creator": "BoganderGuy",
+			"Creator": "Bogander_Guy",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -181062,7 +181512,7 @@
 		{
 			"Name": "Waldo Confluence",
 			"Image": "https://cdn.discordapp.com/attachments/1102708195081850880/1104102423196336169/image.png",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -185227,7 +185677,7 @@
 		{
 			"Name": "Wind-Up Toy(ga)",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1006146461588795422/Wind-Up_Toyga.jpg",
-			"Creator": "M4RC05",
+			"Creator": "Vitral Serf",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -185922,7 +186372,7 @@
 				""
 			],
 			"Text Box": [
-				"Flying, Deathtouch /nInspired- Whenever this creature becomes untapped, venture into its Legend! /nLegend! /n Search your library for a creature card, reveal it, shuffle, then put it in your library second from the top. /nSurveil 2 /n Mutate a creature from your graveyard under Wolpertinger.",
+				"Flying, Deathtouch \\nInspired- Whenever this creature becomes untapped, venture into its Legend! \\nLegend! \\n Search your library for a creature card, reveal it, shuffle, then put it in your library second from the top. \\nSurveil 2 \\n Mutate a creature from your graveyard under Wolpertinger.",
 				"",
 				"",
 				""
@@ -188190,7 +188640,7 @@
 				""
 			],
 			"Text Box": [
-				"Will of the Council- Starting with you, each player votes for Yes or No /nDestroy target creature.",
+				"Will of the Council- Starting with you, each player votes for Yes or No \\nDestroy target creature.",
 				"",
 				"",
 				""
@@ -188591,7 +189041,7 @@
 		{
 			"Name": "You, the person looking at this card",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/887496491604795463/render_16.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -189546,7 +189996,7 @@
 				""
 			],
 			"Flavor Text": [
-				"Behold the groodion. Ichor-slurper, oozing fiend. Foulest wonder underground. Grandest vermin of them all!\\nRevere the groodion! Slime-sucker, gruesome mound. Sewer king and alley lord. Grandest vermin of them all!/n Fear the groodion! Goo-guzzler, grotesque visage. Shadow under bridges and champion of filth. Grandest vermin of them all!/nPraise be the groodion! Scum-eater, glorious putrescence. Grandest vermin of them all!/nBehold the groodion! Gore-eater, loathsome beast. Dream disturber and king of shadows! Behold, the Grandest vermin of them all!/n -The Ballad of the Groodion",
+				"Behold the groodion. Ichor-slurper, oozing fiend. Foulest wonder underground. Grandest vermin of them all!\\nRevere the groodion! Slime-sucker, gruesome mound. Sewer king and alley lord. Grandest vermin of them all!\\n Fear the groodion! Goo-guzzler, grotesque visage. Shadow under bridges and champion of filth. Grandest vermin of them all!\\nPraise be the groodion! Scum-eater, glorious putrescence. Grandest vermin of them all!\\nBehold the groodion! Gore-eater, loathsome beast. Dream disturber and king of shadows! Behold, the Grandest vermin of them all!\\n -The Ballad of the Groodion",
 				"",
 				"",
 				""
@@ -189651,7 +190101,7 @@
 		{
 			"Name": "Zegana Loses her Damn Mind",
 			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/848299088919396382/render.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -190685,7 +191135,7 @@
 				""
 			],
 			"Text Box": [
-				"Enchant creature/nAt the beginning of each combat, double enchanted creature's power and toughness until end of turn.",
+				"Enchant creature\\nAt the beginning of each combat, double enchanted creature's power and toughness until end of turn.",
 				"",
 				"",
 				""
@@ -192146,7 +192596,7 @@
 		{
 			"Name": "making 1 mana noncreature green cards is hard can't we just add prismatic vistas to fill the slots",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/888218061998542858/unknown.png",
-			"Creator": "Minopug",
+			"Creator": "Glassbass",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -192991,7 +193441,7 @@
 		{
 			"Name": "tunnel through the walls",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1080838888035188796/tunnel_through_the_walls.png",
-			"Creator": "Her Bugness the Arthropod Queen",
+			"Creator": "arthropod_queen",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",

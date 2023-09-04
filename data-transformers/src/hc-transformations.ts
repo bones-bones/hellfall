@@ -89,7 +89,7 @@ fs.writeFileSync(
   "./src/data/creators.json",
   JSON.stringify({
     data: creators.sort((a, b) => {
-      if (a > b) {
+      if (a.toLowerCase() > b.toLowerCase()) {
         return 1;
       }
       return -1;

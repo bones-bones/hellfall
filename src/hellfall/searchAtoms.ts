@@ -35,4 +35,6 @@ export const searchCmcAtom = atom<
 
 export const sortAtom = atom<"Alpha" | "CMC" | "Color">("Color");
 export const offsetAtom = atom(0);
-export const creatorAtom = atom(searchParams.get("creator") || "");
+export const creatorsAtom = atom(
+  searchParams.get("creator")?.split(",,") || []
+);

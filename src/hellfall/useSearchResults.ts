@@ -3,7 +3,7 @@ import { HCEntry } from "../types";
 import { useCards } from "./useCards";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
-  creatorAtom,
+  creatorsAtom,
   legalityAtom,
   nameSearchAtom,
   offsetAtom,
@@ -30,7 +30,7 @@ export const useSearchResults = () => {
   const searchColors = useAtomValue(searchColorsAtom);
   const setOffset = useSetAtom(offsetAtom);
   const sortRule = useAtomValue(sortAtom);
-  const creator = useAtomValue(creatorAtom);
+  const creators = useAtomValue(creatorsAtom);
   const colorIdentity = useAtomValue(searchColorsIdentityAtom);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export const useSearchResults = () => {
           if (legality == "legal" && entry.Constructed === "Banned") {
             return false;
           }
-          if (creator !== "" && entry.Creator !== creator) {
+          if (creators.length > 0 && !creators.includes(entry.Creator)) {
             return false;
           }
           if (
@@ -158,8 +158,8 @@ export const useSearchResults = () => {
     if (legality !== "") {
       searchToSet.append("legality", legality);
     }
-    if (creator !== "") {
-      searchToSet.append("creator", creator);
+    if (creators.length > 0) {
+      searchToSet.append("creator", creators.join(",,"));
     }
 
     history.pushState(
@@ -177,7 +177,7 @@ export const useSearchResults = () => {
     searchCmc,
     cards.length,
     legality,
-    creator,
+    creators,
     colorIdentity,
   ]);
 
