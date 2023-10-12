@@ -36,6 +36,75 @@ const tokenMap = (tokens.data as TokenForImport[]).reduce<
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 
+import client from "https";
+
+function downloadImage(url: string, filepath: string) {
+  return new Promise((resolve, reject) => {
+    client.get(url, (res) => {
+      if (res.statusCode === 200) {
+        res
+          .pipe(fs.createWriteStream(filepath))
+          .on("error", reject)
+          .once("close", () => resolve(filepath));
+      } else {
+        // Consume response data to free up memory
+        res.resume();
+        reject(
+          new Error(`Request Failed With a Status Code: ${res.statusCode}`)
+        );
+      }
+    });
+  });
+}
+const fileList = fs.readdirSync("./pics");
+
+(data as { data: HCEntry[] }).data
+  .filter((entry) => {
+    const parts = entry.Image.split(".");
+
+    return !fileList.includes(
+      `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
+    );
+  })
+  .forEach(async (entry, i) => {
+    const parts = entry.Image.split(".");
+
+    await new Promise<void>((resolve) =>
+      setTimeout(() => {
+        console.log(
+          `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
+        );
+        resolve();
+      }, i * 1000)
+    );
+    await downloadImage(
+      entry.Image,
+      `./pics/${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
+    );
+
+    [
+      ...entry["Supertype(s)"],
+      ...entry["Card Type(s)"],
+      ...entry["Subtype(s)"],
+    ].forEach((typeEntry) => {
+      if (typeEntry) {
+        const splitTypes = typeEntry.split(";");
+        splitTypes.forEach((splitEntry) => {
+          typeSet.add(splitEntry);
+        });
+      }
+    });
+
+    creatorSet.add(entry.Creator);
+
+    if (tokenMap[entry.Name]) {
+      // Debug unused tokens
+      // (tokenMap[entry.Name] as any).used = true;
+
+      entry.tokens = tokenMap[entry.Name];
+    }
+  });
+
 (data as { data: HCEntry[] }).data.forEach((entry) => {
   [
     ...entry["Supertype(s)"],
@@ -59,16 +128,6 @@ const creatorSet = new Set<string>();
     entry.tokens = tokenMap[entry.Name];
   }
 });
-
-// Debug unused tokens
-// console.log(
-//   Object.values(tokenMap)
-//     .filter((a) => {
-//       return !(a as any).used;
-//     })
-//     .map((a) => a.map((e) => e.Name))
-//     .toString()
-// );
 
 const types = Array.from(typeSet);
 const creators = Array.from(creatorSet);
