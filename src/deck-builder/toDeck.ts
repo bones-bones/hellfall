@@ -20,27 +20,28 @@ export const toDeck = (cards: HCEntry[]) => {
     };
     (baseDeck.ObjectStates[0].CustomDeck as any)[i + 1 + ""] = thing;
 
-    console.log(
-      entry["Card Type(s)"],
-      entry["Card Type(s)"].filter((textEntry) => textEntry !== "").length
-    );
+    // console.log(
+    //   entry["Card Type(s)"],
+    //   entry["Card Type(s)"].filter((textEntry) => textEntry !== "").length
+    // );
+    console.log(entry.Name);
 
     const mainCard = getCard({
       thing: { [i + 1 + ""]: thing },
       name: entry.Name,
       id: (i + 1) * 100,
-      description: entry["Text Box"][0],
+      description: entry["Text Box"]?.[0] || entry.Name,
     });
-    //
-    const sideCount = entry["Card Type(s)"].filter(
-      (textEntry) => textEntry !== ""
-    ).length;
-    if (sideCount > 1) {
-      (mainCard as any).States = {};
-      for (let i = 1; i < sideCount; i++) {
-        //
-      }
-    }
+    // TODO: don't break lands
+    // const sideCount = entry["Card Type(s)"].filter(
+    //   (textEntry) => textEntry !== ""
+    // ).length;
+    // if (sideCount > 1) {
+    //   (mainCard as any).States = {};
+    //   for (let i = 1; i < sideCount; i++) {
+    //     //
+    //   }
+    // }
     return mainCard;
   });
   (baseDeck.ObjectStates[0].ContainedObjects as any) = deckCards;

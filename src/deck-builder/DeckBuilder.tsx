@@ -152,9 +152,11 @@ export const DeckBuilder = () => {
       <button
         onClick={() => {
           const val = toDeck(images);
-          console.log(JSON.stringify(val));
+          // console.log(JSON.stringify(val));
 
-          const url = "data:text/plain;base64," + btoa(JSON.stringify(val));
+          const url =
+            "data:text/plain;base64," +
+            btoa(unescape(encodeURIComponent(JSON.stringify(val))));
           const a = document.createElement("a");
           a.style.display = "none";
           a.href = url;

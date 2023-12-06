@@ -453,7 +453,7 @@
 		{
 			"Name": "\"I Have Lethal\"",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699992843422269500/s1vtcqda7u741.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -528,7 +528,7 @@
 		{
 			"Name": "\"I Have Too Much Mana\"",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699998715238285323/I_Have_Too_Much_Mana.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -1053,7 +1053,7 @@
 		{
 			"Name": "\"We Need More White Cards\"",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699993525177286726/yaeumjrcrbg41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -1888,7 +1888,7 @@
 		{
 			"Name": "//ce of Will",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/764181761009123439/ce_of_will.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -2938,7 +2938,7 @@
 		{
 			"Name": "A Black 6 Drop Creature",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272518235127828/image7.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -3013,7 +3013,7 @@
 		{
 			"Name": "A Blue Card",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272518054641664/image6.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -3088,7 +3088,7 @@
 		{
 			"Name": "A Dire Situation",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272517706383450/image5.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -6311,9 +6311,84 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Ad Mouseam",
+			"Image": "https://media.discordapp.net/attachments/1102708195081850880/1163932689041195008/image.png?ex=655d0f49&is=654a9a49&hm=3e387ced39f05bd102a468633657c7eebb6899465f8d36b58a98cadea108a743&=&width=485&height=676",
+			"Creator": "Askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "White",
+			"Cost": [
+				"{3}{W}{W}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Reveal the top card of your library and put that card into your graveyard. You lose life equal to its mana value and conjure a Canyon Jerboa onto the battlefield. You may repeat this process any number of times.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Addicted Gambler",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272516888494230/image3.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -7138,7 +7213,7 @@
 		{
 			"Name": "Alexandria",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/720229412989304842/City1.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -7456,7 +7531,7 @@
 		{
 			"Name": "Almighty Brushwagg(hc)",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/703009017814974504/tm67gygnonr41.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -8281,7 +8356,7 @@
 		{
 			"Name": "Amsterdam",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699998708024213584/Amsterdam.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -8516,7 +8591,7 @@
 		{
 			"Name": "An Offer You Can Refuse",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1006145751426027591/An_Offer_You_Can_Refuse.png",
-			"Creator": "dRafter Demon",
+			"Creator": "dRafterdemon",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -10016,7 +10091,7 @@
 		{
 			"Name": "Angry Dude",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/703036041719971860/Angry_Dude.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -11842,7 +11917,7 @@
 		{
 			"Name": "Archangel's Light but It's Fucking Playable",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272517526159430/image4.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -13802,7 +13877,7 @@
 		{
 			"Name": "Avatar of Discord(hc)",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699998710368567336/Avatar_of_Discord.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -16992,7 +17067,7 @@
 		{
 			"Name": "Bargain Bin Lotus",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/703008963591012362/ee519ebiuvt41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -18165,7 +18240,7 @@
 		{
 			"Name": "Beads",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/711163299365912596/m0et5z2txyx41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -19225,7 +19300,7 @@
 		{
 			"Name": "Beijing",
 			"Image": "https://media.discordapp.net/attachments/846085710552498206/846454768457220106/Beijing.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -31444,7 +31519,7 @@
 		{
 			"Name": "Charming Leprechauns",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699988282225983598/a5g3a7tcald41.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -31753,81 +31828,6 @@
 		},
 		{
 			"Name": "Chernobyl",
-			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699988683058839603/Chernobyl.jpg",
-			"Creator": "u/cirion02",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Land",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Chernobyl enters the battlefield tapped.\\n{T}: Add {G} or {U}.\\n{G}{U}, {T}: Until end of turn, creatures you control enter the battlefieldwith an additional +1/+1 counter on them and as Mutants in addition to their other types.",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
-			"Name": "Chernobyl",
 			"Image": "https://media.discordapp.net/attachments/857117235376816139/858749511673315399/unknown.png",
 			"Creator": "Bogander_Guy",
 			"Set": "HC2",
@@ -31885,6 +31885,81 @@
 			],
 			"Flavor Text": [
 				"\"Oh god oh fuck it comes to life fucking Chernobyl came to life fucking run.\"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Chernobyl",
+			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699988683058839603/Chernobyl.jpg",
+			"Creator": "Cirion02",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Land",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Chernobyl enters the battlefield tapped.\\n{T}: Add {G} or {U}.\\n{G}{U}, {T}: Until end of turn, creatures you control enter the battlefieldwith an additional +1/+1 counter on them and as Mutants in addition to their other types.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
 				"",
 				"",
 				""
@@ -33789,7 +33864,7 @@
 		{
 			"Name": "Cock and Balls to Torture and Abuse",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/765533451331043338/CBTA.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -35935,6 +36010,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Compress",
+			"Image": "https://media.discordapp.net/attachments/1102708195081850880/1163932765205565450/image.png?ex=655d0f5c&is=654a9a5c&hm=34b027f4c0984e6abd254e336867ee425ae5877289e6a8e4df81296abe781d16&=&width=485&height=675",
+			"Creator": "Askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "White",
+			"Cost": [
+				"{1}{W}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Exile target creature. If you do, create a number of artifact tokens equal to its power or toughness. (They have no abilities.)",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!!!!!!!!",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Computer Search",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1081423103353180263/Computer_Search.jpg",
 			"Creator": "Fanharmonicon",
@@ -36012,7 +36162,7 @@
 		{
 			"Name": "Conceptualize",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699992353842266272/qyrb4l2ytea41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -36537,7 +36687,7 @@
 		{
 			"Name": "Constantinople",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699988548471750676/Constantinople.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -36630,7 +36780,7 @@
 		{
 			"Name": "Consulate Vault u/t4prus",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/762399018239918130/image0.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -39855,7 +40005,7 @@
 		{
 			"Name": "Crypt of u/Em9500",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/747189627697234050/Crypt_of_uEm9500.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -42940,7 +43090,7 @@
 		{
 			"Name": "Deathseeker",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272516402085918/image1.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -43690,7 +43840,7 @@
 		{
 			"Name": "Demonic Gambit",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272516096032818/image0.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -45283,7 +45433,7 @@
 		{
 			"Name": "Dilan the Dastardly",
 			"Image": "https://media.discordapp.net/attachments/417026780898263040/867433456346202143/Dilan_the_Dastardly.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -46483,7 +46633,7 @@
 		{
 			"Name": "Dockside Extortionist but it Actually Has Extort",
 			"Image": "https://media.discordapp.net/attachments/846085710552498206/846454771120341042/Dockside_Extortionist_but_it_Actually_has_Extort.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -46633,7 +46783,7 @@
 		{
 			"Name": "Doge",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699991280372940880/m0i86u7into41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -48668,7 +48818,7 @@
 		{
 			"Name": "Dreadmaw Draft Guide",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/749284979808272384/v2wv2nyswni51.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -54268,7 +54418,7 @@
 		{
 			"Name": "Evasive Rogue",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699988514858860595/blnqzkm2uea41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -55253,7 +55403,7 @@
 		{
 			"Name": "ExaltedOne's Eight Fucking Trees",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/747190078723457074/ExaltedOnes_Eight_Fucking_Trees_tenthed.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -55938,7 +56088,7 @@
 		{
 			"Name": "FUCKING GONE",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699987673099796570/9n3lf2fotap41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -56388,7 +56538,7 @@
 		{
 			"Name": "Fair Consecrated Sphinx",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272732094038076/image7.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -57683,7 +57833,7 @@
 		{
 			"Name": "Fblthp, the Very Lost",
 			"Image": "https://cdn.discordapp.com/attachments/765660673467351062/775838872696782878/vd2n6altb5u51.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -59137,81 +59287,6 @@
 		},
 		{
 			"Name": "Fixer-Upper",
-			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/829146817512865812/72.png",
-			"Creator": "u/van-theman",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "",
-			"Cost": [
-				"{1}",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Artifact",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"Vehicle",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Whenever you cast an artifact spell, put a level counter on Fixer-Upper.\\nLEVEL 1-4\\nCrew 1\\n3/3\\nLEVEL 5+\\n{T}: Remove a counter from Fixer-Upper: Draw a card.\\n5/5",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
-			"Name": "Fixer-Upper",
 			"Image": "https://cdn.discordapp.com/attachments/1044411915524391022/1125249563444379730/Fixer-Upper-Sidegrade.png",
 			"Creator": "Askedforit",
 			"Set": "HC4",
@@ -59269,6 +59344,81 @@
 			],
 			"Flavor Text": [
 				"Fun goodies hidden in the drywall!",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Fixer-Upper",
+			"Image": "https://cdn.discordapp.com/attachments/803709618885754900/829146817512865812/72.png",
+			"Creator": "u/van-theman",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "",
+			"Cost": [
+				"{1}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Artifact",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Vehicle",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Whenever you cast an artifact spell, put a level counter on Fixer-Upper.\\nLEVEL 1-4\\nCrew 1\\n3/3\\nLEVEL 5+\\n{T}: Remove a counter from Fixer-Upper: Draw a card.\\n5/5",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
 				"",
 				"",
 				""
@@ -68970,7 +69120,7 @@
 		{
 			"Name": "Goblin Draft Guide",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699992022651502682/nkk5gy9ez2641.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -69345,7 +69495,7 @@
 		{
 			"Name": "Goblin Spy 2.0",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/703035409617387571/Goblin_Spy_2.0.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -74765,7 +74915,7 @@
 		{
 			"Name": "Harare",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272730378567680/image1.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -81818,7 +81968,7 @@
 		{
 			"Name": "Increasingly Verbose",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/705851130067943524/3oilylkhgmv41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -82268,7 +82418,7 @@
 		{
 			"Name": "Inhuman Plague",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699989447869071360/ipovn58o63441.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -87674,7 +87824,7 @@
 		{
 			"Name": "Jungle C9Arcane",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/755610605519372469/Jungle_C9Arcane.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -87749,7 +87899,7 @@
 		{
 			"Name": "Jungle of u/OneBirdyBoi",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/758066539546017892/image0.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -91949,7 +92099,7 @@
 		{
 			"Name": "LEGOtm",
 			"Image": "https://media.discordapp.net/attachments/417026780898263040/867433641238724608/LEGO.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -93684,7 +93834,7 @@
 		{
 			"Name": "Learn from better Designers",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846583970594826/Learn_From_Better_Designers.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -97884,7 +98034,7 @@
 		{
 			"Name": "Look For Trouble",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846358840803328/render_3.png",
-			"Creator": "",
+			"Creator": "Vitral",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -100020,7 +100170,7 @@
 		{
 			"Name": "Magic Missile",
 			"Image": "https://media.discordapp.net/attachments/846085710552498206/846454775213064242/Magic_Missile.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -100994,6 +101144,81 @@
 			],
 			"Flavor Text": [
 				"\"Wow! I can't believe it, all my lands were actually Eldrazi this whole time!\"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Make Appear",
+			"Image": "https://media.discordapp.net/attachments/1102708195081850880/1161676213245456384/image.png?ex=655e1448&is=654b9f48&hm=9dc60294e50b7fd0d0aa32ae74dcb6bd0ffe66005b95909195dc0bcb95f955d6&=&width=485&height=676",
+			"Creator": "Askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Instant",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Causality 1 (As you cast this spell, you may put a creature with power 1 or less from your hand into play. When you do, copy this spell and you may choose a new target for the copy.)\\nCopy target spell if you pay {2}. (You may choose new targets for the copy.)",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
 				"",
 				"",
 				""
@@ -102513,7 +102738,7 @@
 		{
 			"Name": "Mana Orc",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/735182416695656448/Mana_Orc.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -106029,6 +106254,81 @@
 			],
 			"Flavor Text": [
 				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Michael",
+			"Image": "https://media.discordapp.net/attachments/1102708195081850880/1160496309158035527/image.png?ex=6559c969&is=65475469&hm=829959c5873f172fefb33080883aa0655721014d809c48a4056440ee4d2aeb77&=",
+			"Creator": "Askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{U}{U}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"Legendary",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Michael",
+				"",
+				"",
+				""
+			],
+			"power": [
+				2,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				4,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Flash\\n{1}{U}: Ponder. (To ponder, look at the top three cards of your library, then put them back in any order. You may shuffle. Draw a card.)",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"You're safe in your home.",
 				"",
 				"",
 				""
@@ -112558,7 +112858,7 @@
 		{
 			"Name": "NYOOOOOOOOOOM",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/703008918313369680/9qizdf38k9t41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -113083,7 +113383,7 @@
 		{
 			"Name": "Natural Remedies",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699988986965393428/dernxdswkqi41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -114583,7 +114883,7 @@
 		{
 			"Name": "Nikya's Old Way",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699998722733506580/Nikyas_Old_Way.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -115183,7 +115483,7 @@
 		{
 			"Name": "No More Wasted Time",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699993530227228692/yhx6enkr09841.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -117743,7 +118043,7 @@
 		{
 			"Name": "Odric, but with Every Ability",
 			"Image": "https://cdn.discordapp.com/attachments/765660673467351062/783408296932933635/cnqvx5v5guy51.jpg",
-			"Creator": "u/Jumberlakk",
+			"Creator": "Jumberlack",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -118493,7 +118793,7 @@
 		{
 			"Name": "Oko's Midwinter Festival",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699998727494041660/Okos_Midwinter_Festival.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -118728,7 +119028,7 @@
 		{
 			"Name": "Oko, the Veilcursed",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/736309636210098196/9lhxt7q4lob51.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -119721,7 +120021,7 @@
 		{
 			"Name": "One // One",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745608894587600896/image6.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -120823,7 +121123,7 @@
 		{
 			"Name": "Opting to be Pre-Pondering for Visions of Thoughts",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/703040981238546602/Opting_to_be_Pre-Pondering_for_Visions_of_Thoughts.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -123843,7 +124143,7 @@
 		{
 			"Name": "Paris",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272731171553402/image4.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -129686,7 +129986,7 @@
 		{
 			"Name": "Pregnant Sliver",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699992024216240197/nnfo4ot8lqi41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -129893,6 +130193,81 @@
 			"Flavor Text": [
 				"\"Nice\"— Ajani, probably",
 				"\"Not so nice\"— also Ajani, probably",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "Primal Storm",
+			"Image": "https://media.discordapp.net/attachments/1102708195081850880/1141378187012603984/image-55.png?ex=655e1045&is=654b9b45&hm=2a5e3586d7d51c1e924c555c846b44d54eb220df824c29e1ec26fe8a76c57127&=&width=485&height=676",
+			"Creator": "Askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Red",
+			"Cost": [
+				"{4}{R}{R}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				6,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				6,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Exile the top card of each player's library, then you may cast any number of spells from among those cards without paying their mana costs.\\nStorm",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"The storm rages and the enemy rages.",
+				"",
 				"",
 				""
 			],
@@ -130511,7 +130886,7 @@
 		{
 			"Name": "Priority Queuer",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272730978353202/image3.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -131561,7 +131936,7 @@
 		{
 			"Name": "Puzzle Box of Yogg-Saron",
 			"Image": "https://media.discordapp.net/attachments/846085710552498206/846454781026369616/Puzzle_Box_of_Yogg-Saron.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -140298,6 +140673,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Sakura-Tribe Welder",
+			"Image": "https://media.discordapp.net/attachments/1102708195081850880/1163932789930991686/image.png?ex=655d0f61&is=654a9a61&hm=fb6d8fd58f91159e70ed972e8f3d1bc2a9245c37b5650b96fa7f0aa2d4a9292d&=&width=485&height=676",
+			"Creator": "Askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Snake;Artificer",
+				"",
+				"",
+				""
+			],
+			"power": [
+				1,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				1,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"{T}, Sacrifice Sakura-Tribe Welder: Search target player's library. Choose target artifact card that player controls and an artifact card in their library. If both targets are still legal as this ability resolves, that player simultaneously sacrifices the artifact and puts the artifact card onto the battlefield tapped, then shuffle that library.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Sal, Apex Loser",
 			"Image": "https://cdn.discordapp.com/attachments/866714299685404742/866846544002941008/unknown_2.png",
 			"Creator": "Bogander_Guy",
@@ -144423,6 +144873,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Shards of Alara",
+			"Image": "https://media.discordapp.net/attachments/1102708195081850880/1172002909962121287/image.png?ex=655ebbc4&is=654c46c4&hm=d0f4672fde5efd3f3f0b922fd6cd1a441c236e7a8e421c00aafff6ffff693505&=&width=485&height=676",
+			"Creator": "Askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "White;Blue;Black;Red;Green",
+			"Cost": [
+				"{W/U/B/R/G}{W/U/B/R/G}{W/U/B/R/G}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Instant",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Create five Shard tokens.\\nCascade",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Sharing is Caring",
 			"Image": "https://cdn.discordapp.com/attachments/982729846503378964/1006145798431588352/Sharing_is_Caring.png",
 			"Creator": "420Templar",
@@ -145355,7 +145880,7 @@
 		{
 			"Name": "Shifting Tome",
 			"Image": "https://cdn.discordapp.com/attachments/765660673467351062/775838900857995297/grar6n1wfct51.jpg",
-			"Creator": "u/Jumberlakk",
+			"Creator": "Jumberlack",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -146480,7 +147005,7 @@
 		{
 			"Name": "Sidney",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745272730709917696/image2.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -154770,7 +155295,7 @@
 		{
 			"Name": "Stockholm",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699992885491138570/Stockholm.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -156363,7 +156888,7 @@
 		{
 			"Name": "Stunt Diversity",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699993085769416794/v9gn8u0q4rj41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -159297,81 +159822,6 @@
 		},
 		{
 			"Name": "TL;DR",
-			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699999615327404042/TLDR.jpg",
-			"Creator": "u/cirion02",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "White",
-			"Cost": [
-				"{W}{W}",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Enchantment",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"power": [
-				null,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				null,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"Wordy creatures lose all non-keyword abilities",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"A picture is worth 1000 words, and that's about 994 too many.",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": ""
-		},
-		{
-			"Name": "TL;DR",
 			"Image": "https://media.discordapp.net/attachments/982729846503378964/989656524311887952/IMG_4002.jpg",
 			"Creator": "Jumberlack",
 			"Set": "HC3",
@@ -159429,6 +159879,81 @@
 			],
 			"Flavor Text": [
 				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
+			"Name": "TL;DR",
+			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699999615327404042/TLDR.jpg",
+			"Creator": "Cirion02",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "White",
+			"Cost": [
+				"{W}{W}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Wordy creatures lose all non-keyword abilities",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"A picture is worth 1000 words, and that's about 994 too many.",
 				"",
 				"",
 				""
@@ -161021,6 +161546,81 @@
 			"FIELD55": ""
 		},
 		{
+			"Name": "Temptation // Debauchery",
+			"Image": "https://media.discordapp.net/attachments/1102708195081850880/1172002854421135360/image-91.png?ex=655ebbb7&is=654c46b7&hm=15919383abffa01079f985ae9a6cbd097b568bb4473eb3cbfcccac9864baa552&=&width=473&height=676",
+			"Creator": "Askedforit",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Black",
+			"Cost": [
+				"{B}",
+				"{3}{B}",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				"Sorcery",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				null,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				null,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"Create a Shard token.",
+				"Draw two cards. Create a Treasure token. Roll a six-sided die. Sacrifice all of your Treasure. Gain control of a Vehicle. Sacrifice a Vehicle. Each player sacrifices a creature. Create a Blood token for each creature sacrificed this way. You lose four life. Create four Treasure tokens.\\nAftermath",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": ""
+		},
+		{
 			"Name": "Tendies of Agony",
 			"Image": "https://cdn.discordapp.com/attachments/916884859107037215/932338949425364992/Tendies_of_Agony_Revised.png",
 			"Creator": "Askedforit",
@@ -161248,7 +161848,7 @@
 		{
 			"Name": "Tezzeret, Part of the Machine",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699987329955266620/6tie4sz8rnw31.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -162683,7 +163283,7 @@
 		{
 			"Name": "The Council's Chambers",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/755600678608568490/unknown_1.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -169388,7 +169988,7 @@
 		{
 			"Name": "Thriving Portal",
 			"Image": "https://cdn.discordapp.com/attachments/765660673467351062/783408552403271740/0w84f9ufoay51.jpg",
-			"Creator": "u/Jumberlakk",
+			"Creator": "Jumberlack",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -169463,7 +170063,7 @@
 		{
 			"Name": "Throne of u/fredfloof",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/747206234142146660/Throne_of_ufredfloof.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -170223,7 +170823,7 @@
 		{
 			"Name": "Time // Waste",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699998778937311282/Time.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -172803,7 +173403,7 @@
 		{
 			"Name": "Totally Just a Cantrip I Swear",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/745608894373429288/image5.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -173478,7 +174078,7 @@
 		{
 			"Name": "Trading Post for Stolen Goods",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/755591412174815232/Trading_Outpost_for_Stolen_Goods.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -175223,7 +175823,7 @@
 		{
 			"Name": "Tunak Tunak Tun",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/711162972248080444/fjmquizxc6y41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -177067,7 +177667,7 @@
 		{
 			"Name": "Ultimate Ultimatum",
 			"Image": "https://media.discordapp.net/attachments/846085710552498206/846454816343326740/Ultimate_Ultimatum.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -178417,7 +179017,7 @@
 		{
 			"Name": "Urgent Care Docter",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699992314742964345/qd4btmf7zrg41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -187673,7 +188273,7 @@
 		{
 			"Name": "Wuhan",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699993292380700733/Wuhan.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -190561,7 +191161,7 @@
 		{
 			"Name": "Zoomer Blue // Boomer White",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/703008906166927480/0aa9rwaloys41.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -191686,7 +192286,7 @@
 		{
 			"Name": "dRafter Demon's Used Car Lot",
 			"Image": "https://cdn.discordapp.com/attachments/738874231038672959/758066543434268822/image0.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -192746,7 +193346,7 @@
 		{
 			"Name": "no-name",
 			"Image": "https://media.discordapp.net/attachments/846085710552498206/846454777259884564/no-name2.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -193516,7 +194116,7 @@
 		{
 			"Name": "u/CoolDownGuy's Masterpiece",
 			"Image": "https://cdn.discordapp.com/attachments/699985664992739409/699998795315806268/uCoolDownGuys_Masterpiece.jpg",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -193591,7 +194191,7 @@
 		{
 			"Name": "u/cirion02's Art Folder",
 			"Image": "https://i.ibb.co/84D82JJ/Cirion02-s-Art-Folder.png",
-			"Creator": "u/cirion02",
+			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
