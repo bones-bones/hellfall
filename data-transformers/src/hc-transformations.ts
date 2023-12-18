@@ -3,6 +3,8 @@ import data from "../../src/data/Hellscube-Database.json";
 import tokens from "../../src/data/tokens.json";
 
 import { HCEntry, Token, TokenForImport } from "./types";
+import { downloadImage } from "./downloadImage";
+import { tokenToCard } from "./tokenToCard";
 
 const tokenMap = (tokens.data as TokenForImport[]).reduce<
   Record<string, Token[]>
@@ -36,26 +38,6 @@ const tokenMap = (tokens.data as TokenForImport[]).reduce<
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 
-import client from "https";
-
-function downloadImage(url: string, filepath: string) {
-  return new Promise((resolve, reject) => {
-    client.get(url, (res) => {
-      if (res.statusCode === 200) {
-        res
-          .pipe(fs.createWriteStream(filepath))
-          .on("error", reject)
-          .once("close", () => resolve(filepath));
-      } else {
-        // Consume response data to free up memory
-        res.resume();
-        reject(
-          new Error(`Request Failed With a Status Code: ${res.statusCode}`)
-        );
-      }
-    });
-  });
-}
 const fileList = fs.readdirSync("./pics");
 
 (data as { data: HCEntry[] }).data
@@ -146,26 +128,32 @@ fs.writeFileSync(
 
 fs.writeFileSync(
   "./src/data/creators.json",
-  JSON.stringify({
-    data: creators.sort((a, b) => {
-      if (a.toLowerCase() > b.toLowerCase()) {
-        return 1;
-      }
-      return -1;
-    }),
-  })
+  JSON.stringify(
+    {
+      data: creators.sort((a, b) => {
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+        return -1;
+      }),
+    },
+    null,
+    "\t"
+  )
 );
 
 fs.writeFileSync(
   "./src/data/Hellscube-Database.json",
   JSON.stringify(
     {
-      data: (data as { data: HCEntry[] }).data.sort((a, b) => {
-        if (a.Name > b.Name) {
-          return 1;
-        }
-        return -1;
-      }),
+      data: (data as { data: HCEntry[] }).data
+        .concat(tokens.data.map(tokenToCard))
+        .sort((a, b) => {
+          if (a.Name > b.Name) {
+            return 1;
+          }
+          return -1;
+        }),
     },
     null,
     "\t"
