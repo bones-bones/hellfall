@@ -3,6 +3,10 @@ const searchParams = new URLSearchParams(document.location.search);
 
 export const nameSearchAtom = atom<string>(searchParams.get("name") || "");
 
+export const activeCardAtom = atom<string>(
+  searchParams.get("activeCard") || ""
+);
+
 export const rulesSearchAtom = atom<string[]>(
   searchParams.get("rules")?.split(",") || []
 );

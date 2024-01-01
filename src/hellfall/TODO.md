@@ -23,7 +23,6 @@ Think of a better way to store sides
 
 Write a script to transform the database
 - Wrap in data, delete 54 53
-- ; into spaces
 
 
 # UI
@@ -35,7 +34,7 @@ Write a script to transform the database
 ~~- Support B/W hybrid~~
 ~~- Enter key should submit search~~
 ~~- add guide for !~~
-- mobile support
+~~- mobile support~~
 - Script to fetch and transform sheets directly from google doc
 - sort by year/set
 

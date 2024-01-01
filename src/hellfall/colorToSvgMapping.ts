@@ -37,6 +37,7 @@ import WP from "../assets/WP.svg";
 import UP from "../assets/UP.svg";
 import BP from "../assets/BP.svg";
 import RP from "../assets/RP.svg";
+import S from "../assets/S.svg";
 
 export const colorToSvgMapping = (value: string) => {
   switch (value) {
@@ -157,6 +158,9 @@ export const colorToSvgMapping = (value: string) => {
     }
     case "H/U": {
       return UP;
+    }
+    case "S": {
+      return S;
     }
   }
 };

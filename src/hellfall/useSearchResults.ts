@@ -3,6 +3,7 @@ import { HCEntry } from "../types";
 import { useCards } from "./useCards";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
+  activeCardAtom,
   creatorsAtom,
   legalityAtom,
   nameSearchAtom,
@@ -32,6 +33,7 @@ export const useSearchResults = () => {
   const sortRule = useAtomValue(sortAtom);
   const creators = useAtomValue(creatorsAtom);
   const colorIdentity = useAtomValue(searchColorsIdentityAtom);
+  const activeCard = useAtomValue(activeCardAtom);
 
   useEffect(() => {
     setResultSet(
@@ -161,6 +163,9 @@ export const useSearchResults = () => {
     if (creators.length > 0) {
       searchToSet.append("creator", creators.join(",,"));
     }
+    if (activeCard !== "") {
+      searchToSet.append("activeCard", activeCard);
+    }
 
     history.pushState(
       undefined,
@@ -179,6 +184,7 @@ export const useSearchResults = () => {
     legality,
     creators,
     colorIdentity,
+    activeCard,
   ]);
 
   return resultSet;

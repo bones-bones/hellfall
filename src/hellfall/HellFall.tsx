@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { HellfallEntry } from "./HellfallEntry";
 import { xIcon } from "@workday/canvas-system-icons-web";
 
@@ -8,26 +8,33 @@ import {
   SidePanelOpenDirection,
 } from "@workday/canvas-kit-react/side-panel";
 import { PaginationComponent } from "./inputs";
-import { HCEntry } from "../types";
 import { Heading } from "@workday/canvas-kit-react/text";
 import { HFCard } from "./HFCard";
 import { Card } from "@workday/canvas-kit-react/card";
 import { ToolbarIconButton } from "@workday/canvas-kit-react/button";
 import { useAtom } from "jotai";
-import { offsetAtom } from "./searchAtoms";
+import { activeCardAtom, offsetAtom } from "./searchAtoms";
 import { useSearchResults } from "./useSearchResults";
 import { SearchControls } from "./SearchControls";
 import { SortComponent } from "./SortComponent";
 import { CHUNK_SIZE } from "./constants";
 import { useKeyPress } from "../hooks";
+import { useCards } from "./useCards";
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const cards = useCards();
   const escape = useKeyPress("Escape");
-  const [activeCard, setActiveCard] = useState<HCEntry | undefined>();
+
+  const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
+
+  const activeCard = cards.find((entry) => {
+    return entry.Name === activeCardFromAtom;
+  });
+
   useEffect(() => {
     if (escape) {
-      setActiveCard(undefined);
+      setActiveCardFromAtom("");
     }
   }, [escape]);
   const [offset, setOffset] = useAtom(offsetAtom);
@@ -46,7 +53,7 @@ export const HellFall = () => {
               <SPContainer>
                 <ToolbarIconButton
                   icon={xIcon}
-                  onClick={() => setActiveCard(undefined)}
+                  onClick={() => setActiveCardFromAtom("")}
                 />
                 {activeCard && <HFCard data={activeCard}></HFCard>}
               </SPContainer>
@@ -63,7 +70,7 @@ export const HellFall = () => {
         {resultSet.slice(offset, offset + CHUNK_SIZE).map((entry, i) => (
           <HellfallEntry
             onClick={() => {
-              setActiveCard(entry);
+              setActiveCardFromAtom(entry.Name);
             }}
             key={"" + entry.Name + i}
             name={entry.Name}
