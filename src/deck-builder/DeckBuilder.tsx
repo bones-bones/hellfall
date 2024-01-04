@@ -6,6 +6,8 @@ import back from "../assets/Custom Back.png";
 import { toDeck } from "./toDeck";
 import { FormField } from "@workday/canvas-kit-react/form-field";
 import { TextInput } from "@workday/canvas-kit-react";
+import { ImportInstructions } from "./ImportInstructions";
+import { PlaytestArea } from "./playtest/PlaytestArea";
 const basics: Record<string, string> = {
   //"https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/p/4/v/fp4vq/Final-Kraject.png",
   forest:
@@ -30,7 +32,9 @@ export const DeckBuilder = () => {
   );
   const [cards, setCards] = useState<HCEntry[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
-  const [deckName, setNameOfDeck] = useState("your deck name goes here");
+  const [deckName, setNameOfDeck] = useState(searchparms.get("name") || "");
+  const [renderCards, setRenderCards] = useState<HCEntry[]>([]);
+  const [playtesting, setPlaytesthing] = useState(false);
 
   useEffect(() => {
     import("../data/Hellscube-Database.json").then(({ data }: any) => {
@@ -38,65 +42,17 @@ export const DeckBuilder = () => {
     });
   }, []);
 
-  const images: HCEntry[] = (toRender || [])
-    .filter((entry) => entry != "" && !entry.startsWith("# "))
-    .flatMap((name) => {
-      const countTest = /(\d+) (.*)/.exec(name);
-      const responseObject = [];
-
-      if (countTest) {
-        const count = parseInt(countTest[1]);
-        const foundName = countTest[2];
-
-        for (let i = 0; i < count; i++) {
-          if (basics[foundName.toLowerCase()]) {
-            responseObject.push({
-              Image: basics[foundName.toLowerCase()],
-              Name: foundName,
-            } as HCEntry);
-          } else {
-            const foundCard = cards.find(
-              (entry) => entry["Name"].toLowerCase() === foundName.toLowerCase()
-            );
-            if (foundCard) {
-              responseObject.push(foundCard);
-            }
-          }
-        }
-      } else {
-        if (basics[name.toLowerCase()]) {
-          responseObject.push({
-            Image: basics[name.toLowerCase()],
-            Name: name,
-          } as HCEntry);
-        } else {
-          const foundCard = cards.find(
-            (entry) => entry["Name"].toLowerCase() === name.toLowerCase()
-          );
-          if (foundCard) {
-            responseObject.push(foundCard);
-          }
-        }
-      }
-      if (responseObject.length == 0) {
-        responseObject.push({
-          Name: name + " - not found",
-          Image: back,
-        } as HCEntry);
-      }
-
-      return responseObject;
-    });
-
   useEffect(() => {
     if (textAreaRef.current) {
       setToRender(textAreaRef.current.value.split("\n"));
 
       const searchToSet = new URLSearchParams();
+      searchToSet.append("name", deckName);
       searchToSet.append(
         "list",
         textAreaRef.current.value.replaceAll("\n", "∆")
       );
+
       if ((searchToSet as any).size > 0) {
         history.pushState(
           undefined,
@@ -105,21 +61,79 @@ export const DeckBuilder = () => {
         );
       }
     }
-  }, [textAreaValue]);
+  }, [textAreaValue, deckName]);
+
+  useEffect(() => {
+    if (cards.length === 0) {
+      return;
+    }
+    const images: HCEntry[] = (toRender || [])
+      .filter((entry) => entry != "" && !entry.startsWith("# "))
+      .flatMap((name) => {
+        const countTest = /(\d+) (.*)/.exec(name);
+        const responseObject = [];
+
+        if (countTest) {
+          const count = parseInt(countTest[1]);
+          const foundName = countTest[2];
+
+          for (let i = 0; i < count; i++) {
+            if (basics[foundName.toLowerCase()]) {
+              responseObject.push({
+                Image: basics[foundName.toLowerCase()],
+                Name: foundName,
+              } as HCEntry);
+            } else {
+              const foundCard = cards.find(
+                (entry) =>
+                  entry["Name"].toLowerCase() === foundName.toLowerCase()
+              );
+              if (foundCard) {
+                responseObject.push(foundCard);
+              }
+            }
+          }
+        } else {
+          if (basics[name.toLowerCase()]) {
+            responseObject.push({
+              Image: basics[name.toLowerCase()],
+              Name: name,
+            } as HCEntry);
+          } else {
+            const foundCard = cards.find(
+              (entry) => entry["Name"].toLowerCase() === name.toLowerCase()
+            );
+            if (foundCard) {
+              responseObject.push(foundCard);
+            }
+          }
+        }
+        if (responseObject.length == 0) {
+          responseObject.push({
+            Name: name + " - not found",
+            Image: back,
+          } as HCEntry);
+        }
+        return responseObject;
+      });
+    setRenderCards(images);
+  }, [toRender, cards]);
+
   return (
     <div>
-      To import your deck
-      <ol>
-        <li>Enter a deck name</li>
-        <li>Fill out the box below</li>
-        <li>Click Generate Deck Image</li>
-        <li>Click Download for TTS</li>
-        <li>
-          Move the json file to the TTS Saved Objects directory. (Somewhere like{" "}
-          {"Tabletop Simulator>Saves>Saved Objects"}){" "}
-        </li>
-        <li>{"In TTS: Objects > Saved Objects > your file"}</li>
-      </ol>
+      <ImportInstructions />
+      {renderCards.length > 0 &&
+        (playtesting ? (
+          <PlaytestArea cards={renderCards}></PlaytestArea>
+        ) : (
+          <button
+            onClick={() => {
+              setPlaytesthing(true);
+            }}
+          >
+            Click here to playtest
+          </button>
+        ))}
       <FormField label="Deck Name">
         <TextInput
           defaultValue={deckName}
@@ -151,9 +165,7 @@ export const DeckBuilder = () => {
       </button>{" "}
       <button
         onClick={() => {
-          const val = toDeck(images);
-          // console.log(JSON.stringify(val));
-
+          const val = toDeck(renderCards);
           const url =
             "data:text/plain;base64," +
             btoa(unescape(encodeURIComponent(JSON.stringify(val))));
@@ -168,10 +180,10 @@ export const DeckBuilder = () => {
       >
         Download for TTS
       </button>{" "}
-      Cards in deck {images.length}
+      Cards in deck {renderCards.length}
       <br></br>
       <DeckContainer ref={ref}>
-        {images?.map((entry, i) => {
+        {renderCards?.map((entry, i) => {
           return (
             <Card
               width="250px"

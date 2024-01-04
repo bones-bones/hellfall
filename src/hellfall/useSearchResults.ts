@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { HCEntry } from "../types";
 import { useCards } from "./useCards";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import {
   activeCardAtom,
   creatorsAtom,
@@ -29,112 +29,107 @@ export const useSearchResults = () => {
   const legality = useAtomValue(legalityAtom);
   const typeSearch = useAtomValue(typeSearchAtom);
   const searchColors = useAtomValue(searchColorsAtom);
-  const setOffset = useSetAtom(offsetAtom);
   const sortRule = useAtomValue(sortAtom);
   const creators = useAtomValue(creatorsAtom);
   const colorIdentity = useAtomValue(searchColorsIdentityAtom);
   const activeCard = useAtomValue(activeCardAtom);
+  const page = useAtomValue(offsetAtom);
 
   useEffect(() => {
-    setResultSet(
-      cards
-        .filter((entry) => {
-          if (set.length > 0 && !set.includes(entry.Set)) {
-            return false;
-          }
+    const tempResults = cards
+      .filter((entry) => {
+        if (set.length > 0 && !set.includes(entry.Set)) {
+          return false;
+        }
 
-          if (
-            rulesSearch.length > 0 &&
-            !rulesSearch.every((searchTerm) => {
-              const combined = entry["Text Box"].join(",").toLowerCase();
-              if (searchTerm.startsWith("!")) {
-                return !combined.includes(
-                  searchTerm.substring(1).toLowerCase()
-                );
-              } else {
-                return combined.includes(searchTerm.toLowerCase());
-              }
-            })
-          ) {
-            return false;
-          }
+        if (
+          rulesSearch.length > 0 &&
+          !rulesSearch.every((searchTerm) => {
+            const combined = entry["Text Box"].join(",").toLowerCase();
+            if (searchTerm.startsWith("!")) {
+              return !combined.includes(searchTerm.substring(1).toLowerCase());
+            } else {
+              return combined.includes(searchTerm.toLowerCase());
+            }
+          })
+        ) {
+          return false;
+        }
 
-          if (
-            nameSearch != "" &&
-            !entry["Name"].toLowerCase().includes(nameSearch.toLowerCase())
-          ) {
-            return false;
-          }
+        if (
+          nameSearch != "" &&
+          !entry["Name"].toLowerCase().includes(nameSearch.toLowerCase())
+        ) {
+          return false;
+        }
 
-          if (searchCmc != undefined) {
-            if (searchCmc.operator == "<" && !(entry.CMC < searchCmc.value)) {
-              return false;
+        if (searchCmc != undefined) {
+          if (searchCmc.operator == "<" && !(entry.CMC < searchCmc.value)) {
+            return false;
+          }
+          if (searchCmc.operator == ">" && !(entry.CMC > searchCmc.value)) {
+            return false;
+          }
+          if (searchCmc.operator == "=" && !(entry.CMC == searchCmc.value)) {
+            return false;
+          }
+        }
+        if (legality == "legal" && entry.Constructed === "Banned") {
+          return false;
+        }
+        if (creators.length > 0 && !creators.includes(entry.Creator)) {
+          return false;
+        }
+        if (
+          colorIdentity.length > 0 &&
+          !getColorIdentity(entry).every((colorEntry) =>
+            colorIdentity.includes(colorEntry)
+          )
+        ) {
+          return false;
+        }
+        if (
+          typeSearch.length > 0 &&
+          !typeSearch.every((searchTerm) => {
+            const combined = [
+              ...entry["Supertype(s)"],
+              ...entry["Card Type(s)"],
+              ...entry["Subtype(s)"],
+            ]
+              .join(",")
+              .toLowerCase();
+            if (searchTerm.startsWith("!")) {
+              return !combined.includes(searchTerm.substring(1).toLowerCase());
+            } else {
+              return combined.includes(searchTerm.toLowerCase());
             }
-            if (searchCmc.operator == ">" && !(entry.CMC > searchCmc.value)) {
-              return false;
-            }
-            if (searchCmc.operator == "=" && !(entry.CMC == searchCmc.value)) {
-              return false;
-            }
-          }
-          if (legality == "legal" && entry.Constructed === "Banned") {
-            return false;
-          }
-          if (creators.length > 0 && !creators.includes(entry.Creator)) {
-            return false;
-          }
-          if (
-            colorIdentity.length > 0 &&
-            !getColorIdentity(entry).every((colorEntry) =>
-              colorIdentity.includes(colorEntry)
-            )
-          ) {
-            return false;
-          }
-          if (
-            typeSearch.length > 0 &&
-            !typeSearch.every((searchTerm) => {
-              const combined = [
-                ...entry["Supertype(s)"],
-                ...entry["Card Type(s)"],
-                ...entry["Subtype(s)"],
-              ]
-                .join(",")
-                .toLowerCase();
-              if (searchTerm.startsWith("!")) {
-                return !combined.includes(
-                  searchTerm.substring(1).toLowerCase()
-                );
-              } else {
-                return combined.includes(searchTerm.toLowerCase());
-              }
-            })
-          ) {
-            return false;
-          }
-          if (
-            searchColors.length > 0 &&
-            !(
-              entry["Color(s)"]
-                .split(";")
-                .every((colorEntry) =>
-                  (searchColors.includes("Misc bullshit")
-                    ? [...searchColors, "Piss", "Pickle"]
-                    : searchColors
-                  ).includes(colorEntry)
-                ) ||
-              (searchColors.includes("Colorless") && entry["Color(s)"] == "")
-            )
-          ) {
-            return false;
-          }
-          return true;
-        })
-        .sort(sortFunction(sortRule))
-    );
-    setOffset(0);
+          })
+        ) {
+          return false;
+        }
+        if (
+          searchColors.length > 0 &&
+          !(
+            entry["Color(s)"]
+              .split(";")
+              .every((colorEntry) =>
+                (searchColors.includes("Misc bullshit")
+                  ? [...searchColors, "Piss", "Pickle"]
+                  : searchColors
+                ).includes(colorEntry)
+              ) ||
+            (searchColors.includes("Colorless") && entry["Color(s)"] == "")
+          )
+        ) {
+          return false;
+        }
+        return true;
+      })
+      .sort(sortFunction(sortRule));
+    setResultSet(tempResults);
 
     const searchToSet = new URLSearchParams();
+
     if (nameSearch != "") {
       searchToSet.append("name", nameSearch);
     }
@@ -167,6 +162,13 @@ export const useSearchResults = () => {
       searchToSet.append("activeCard", activeCard);
     }
 
+    console.log(tempResults.length);
+    if (tempResults.length < page) {
+      searchToSet.append("page", "0");
+    } else if (page > 0) {
+      searchToSet.append("page", page.toString());
+    }
+
     history.pushState(
       undefined,
       "",
@@ -185,6 +187,7 @@ export const useSearchResults = () => {
     creators,
     colorIdentity,
     activeCard,
+    page,
   ]);
 
   return resultSet;

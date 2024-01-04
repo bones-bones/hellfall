@@ -5,13 +5,20 @@ type Props = {
   chunkSize: number;
   total: number;
   onChange: (value: number) => void;
+  initialCurrentPage: number;
 };
-export const PaginationComponent = ({ chunkSize, total, onChange }: Props) => {
+export const PaginationComponent = ({
+  chunkSize,
+  total,
+  onChange,
+  initialCurrentPage,
+}: Props) => {
   return (
     <PaginationContainer>
       <Pagination
         aria-label="pagination"
         lastPage={getLastPage(chunkSize, total)}
+        initialCurrentPage={initialCurrentPage / chunkSize + 1}
         onPageChange={(pageNumber) => {
           onChange((pageNumber - 1) * chunkSize);
         }}

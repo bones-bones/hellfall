@@ -83,6 +83,7 @@ export const HellFall = () => {
           setOffset(val);
           containerRef.current?.scrollIntoView({ behavior: "smooth" });
         }}
+        initialCurrentPage={offset}
         chunkSize={CHUNK_SIZE}
         total={resultSet.length}
       />
