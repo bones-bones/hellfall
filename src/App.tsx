@@ -2,6 +2,7 @@ import { BrowserRouter, useRoutes } from "react-router-dom";
 import { HellFall } from "./hellfall";
 import { Hellscubes } from "./hells-cubes";
 import { DeckBuilder } from "./deck-builder";
+import { Draft } from "./draft";
 
 export const App = () => {
   return (
@@ -15,8 +16,9 @@ export const App = () => {
 
 const ApplicationRoutes = () => {
   return useRoutes([
-    { path: "/", element: <HellFall /> },
     { path: "/hellscubes/*", element: <Hellscubes /> },
     { path: "/deck-builder/*", element: <DeckBuilder /> },
+    { path: "/draft", element: <Draft></Draft> },
+    { path: "/", element: <HellFall /> },
   ]);
 };

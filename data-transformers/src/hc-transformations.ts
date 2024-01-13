@@ -40,7 +40,7 @@ const creatorSet = new Set<string>();
 
 const fileList = fs.readdirSync("./pics");
 
-(data as { data: HCEntry[] }).data
+(data as any as { data: HCEntry[] }).data
   .filter((entry) => {
     const parts = entry.Image.split(".");
 
@@ -87,7 +87,7 @@ const fileList = fs.readdirSync("./pics");
     }
   });
 
-(data as { data: HCEntry[] }).data.forEach((entry) => {
+(data as any as { data: HCEntry[] }).data.forEach((entry) => {
   [
     ...entry["Supertype(s)"],
     ...entry["Card Type(s)"],
@@ -146,7 +146,7 @@ fs.writeFileSync(
   "./src/data/Hellscube-Database.json",
   JSON.stringify(
     {
-      data: (data as { data: HCEntry[] }).data
+      data: (data as any as { data: HCEntry[] }).data
         .concat(tokens.data.map(tokenToCard))
         .sort((a, b) => {
           if (a.Name > b.Name) {
