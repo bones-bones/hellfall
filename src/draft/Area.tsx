@@ -1,23 +1,27 @@
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 
-import { draftAtom } from "./draftAtom";
+import { deckAtom, draftAtom } from "./draftAtom";
 import { useState } from "react";
 import { HCEntry } from "../types";
 import styled from "@emotion/styled";
 import { TheDraft } from "./types";
+import { CARDS_PER_PACK } from "./constants";
 
 export const Area = () => {
   const [draft, setDraft] = useAtom(draftAtom);
 
   const [draftedCards, setDraftedCards] = useState<HCEntry[]>([]);
+  const setDeck = useSetAtom(deckAtom);
 
-  const activePack = (draftedCards.length % 15) % 8;
+  const activePack = (draftedCards.length % CARDS_PER_PACK) % 8;
+
   return (
     <>
       {draft && (
         <>
           <h3>
-            Pack {4 - draft.length}, Pick {(draftedCards.length % 15) + 1}
+            Pack {4 - draft.length}, Pick{" "}
+            {(draftedCards.length % CARDS_PER_PACK) + 1}
           </h3>
 
           <Container>
@@ -33,29 +37,36 @@ export const Area = () => {
                       src={entry.Image}
                       crossOrigin="anonymous"
                       onClick={() => {
+                        if (
+                          [...draftedCards, entry].length ===
+                          3 * CARDS_PER_PACK
+                        ) {
+                          setDeck([...draftedCards, entry]);
+                        }
                         setDraftedCards([...draftedCards, entry]);
-
-                        setDraft(
-                          (
-                            [
-                              draft[0].map((packEntry, index) => {
-                                if (index === activePack) {
-                                  return packEntry.filter(
-                                    (packCard) => packCard.Name !== entry.Name
-                                  );
-                                }
-                                const randomPick = Math.floor(
-                                  Math.random() * packEntry.length
-                                );
-                                console.log(randomPick);
+                        const toSet = (
+                          [
+                            draft[0].map((packEntry, index) => {
+                              if (index === activePack) {
                                 return packEntry.filter(
-                                  (_, i) => i !== randomPick
+                                  (packCard) => packCard.Name !== entry.Name
                                 );
-                              }),
-                              ...draft.slice(1),
-                            ] as TheDraft
-                          ).filter((draftEntry) => draftEntry[0].length > 0)
-                        );
+                              }
+                              const randomPick = Math.floor(
+                                Math.random() * packEntry.length
+                              );
+
+                              return packEntry.filter(
+                                (_, i) => i !== randomPick
+                              );
+                            }),
+                            ...draft.slice(1),
+                          ] as TheDraft
+                        ).filter((draftEntry) => {
+                          return draftEntry[0].length > 0;
+                        });
+
+                        setDraft(toSet);
                       }}
                     />
                   );
@@ -87,13 +98,13 @@ export const Area = () => {
   );
 };
 
-const CardContainer = styled.div({
-  height: "40px",
-  ":hover": { width: "260px", zIndex: 2, height: "auto" },
-});
-
 const Container = styled.div({ display: "flex", flexDirection: "row" });
 const DraftedContainer = styled.div({ width: "20vw" });
 const PackContainer = styled.div({ width: "80vw" });
 
 const Card = styled.img({ width: "260px" });
+
+const CardContainer = styled.div({
+  height: "40px",
+  ":hover": { width: "260px", zIndex: 2, height: "auto" },
+});
