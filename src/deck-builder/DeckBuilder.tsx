@@ -8,6 +8,7 @@ import { FormField } from "@workday/canvas-kit-react/form-field";
 import { TextInput } from "@workday/canvas-kit-react";
 import { ImportInstructions } from "./ImportInstructions";
 import { PlaytestArea } from "./playtest/PlaytestArea";
+import { Header } from "../header";
 const basics: Record<string, string> = {
   //"https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/p/4/v/fp4vq/Final-Kraject.png",
   forest:
@@ -121,6 +122,7 @@ export const DeckBuilder = () => {
 
   return (
     <div>
+      <Header></Header>
       <ImportInstructions />
       {renderCards.length > 0 &&
         (playtesting ? (
@@ -142,7 +144,13 @@ export const DeckBuilder = () => {
           }}
         ></TextInput>
       </FormField>
-      <StyledTextArea ref={textAreaRef} defaultValue={textAreaValue} />
+      <StyledTextArea
+        ref={textAreaRef}
+        defaultValue={textAreaValue}
+        placeholder="4 Strict Improvement
+Swamp
+Cock and Balls to Torture and Abuse"
+      />
       <br></br>
       <button
         onClick={() => {
@@ -198,9 +206,7 @@ export const DeckBuilder = () => {
     </div>
   );
 };
-const DeckContainer = styled.div({
-  backgroundColor: "black",
-});
+const DeckContainer = styled.div({});
 const Card = styled.img({ width: "250px" });
 
 //245 × 341 px

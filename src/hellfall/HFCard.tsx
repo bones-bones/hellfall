@@ -68,14 +68,16 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
                   <br />
                 </>
               )}
-              {data["power"][i] != null && (
-                <>
-                  <Text typeLevel="body.medium" key="stats">
-                    {data["power"][i]}/{data["toughness"][i]}
-                  </Text>
-                  <br />
-                </>
-              )}
+              {data["power"][i] !== "" &&
+                data["power"] != null &&
+                data["power"] != undefined && (
+                  <>
+                    <Text typeLevel="body.medium" key="stats">
+                      {data["power"][i]}/{data["toughness"][i]}
+                    </Text>
+                    <br />
+                  </>
+                )}
             </div>
           ))}
           {data["Set"] && (

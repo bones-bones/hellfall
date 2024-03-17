@@ -49,20 +49,20 @@ const fileList = fs.readdirSync("./pics");
     );
   })
   .forEach(async (entry, i) => {
-    const parts = entry.Image.split(".");
+    // const parts = entry.Image.split(".");
 
-    await new Promise<void>((resolve) =>
-      setTimeout(() => {
-        console.log(
-          `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
-        );
-        resolve();
-      }, i * 1000)
-    );
-    await downloadImage(
-      entry.Image,
-      `./pics/${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
-    );
+    // await new Promise<void>((resolve) =>
+    //   setTimeout(() => {
+    //     console.log(
+    //       `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
+    //     );
+    //     resolve();
+    //   }, i * 1000)
+    // );
+    // await downloadImage(
+    //   entry.Image,
+    //   `./pics/${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
+    // );
 
     [
       ...entry["Supertype(s)"],

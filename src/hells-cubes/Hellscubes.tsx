@@ -2,10 +2,12 @@ import { Routes, Route } from "react-router";
 import { HellsCube } from "./one";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
+import { Header } from "../header";
 
 export const Hellscubes = () => {
   return (
     <>
+      <Header></Header>
       <Routes>
         <Route
           path="/"

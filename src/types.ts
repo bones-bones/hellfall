@@ -13,7 +13,7 @@ export type HCEntry = {
   "Supertype(s)": [string, string, string, string];
   "Card Type(s)": [string, string, string, string];
   "Subtype(s)": [string, string, string, string];
-  power: [number | null, null, null, null];
+  power: [number | null | "", null, null, null];
   toughness: [number | null, null, null, null];
   Loyalty: [any, null, "", ""];
   "Text Box": [string, string, string, string];

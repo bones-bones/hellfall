@@ -8,7 +8,7 @@ import {
   SidePanelOpenDirection,
 } from "@workday/canvas-kit-react/side-panel";
 import { PaginationComponent } from "./inputs";
-import { Heading } from "@workday/canvas-kit-react/text";
+
 import { HFCard } from "./HFCard";
 import { Card } from "@workday/canvas-kit-react/card";
 import { ToolbarIconButton } from "@workday/canvas-kit-react/button";
@@ -20,6 +20,8 @@ import { SortComponent } from "./SortComponent";
 import { CHUNK_SIZE } from "./constants";
 import { useKeyPress } from "../hooks";
 import { useCards } from "./useCards";
+
+import { Header } from "../header";
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,7 +43,7 @@ export const HellFall = () => {
   const resultSet = useSearchResults();
   return (
     <div>
-      <StyledHeading size="medium"> {" > it's hellfall"}</StyledHeading>
+      <Header></Header>
       <StyledSidePanel
         openWidth={window.screen.width > 450 ? 810 : 400}
         openDirection={SidePanelOpenDirection.Right}
@@ -108,10 +110,4 @@ const SPContainer = styled("div")({
   overflowY: "scroll",
   height: "90vh",
   overflowX: "hidden",
-});
-
-const StyledHeading = styled(Heading)({
-  backgroundColor: "#C690FF",
-  borderBottom: "2px solid lightgray",
-  marginTop: "0px",
 });
