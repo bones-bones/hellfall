@@ -3,7 +3,7 @@ import data from "../../src/data/Hellscube-Database.json";
 import tokens from "../../src/data/tokens.json";
 
 import { HCEntry, Token, TokenForImport } from "./types";
-import { downloadImage } from "./downloadImage";
+// import { downloadImage } from "./downloadImage";
 import { tokenToCard } from "./tokenToCard";
 
 const tokenMap = (tokens.data as TokenForImport[]).reduce<

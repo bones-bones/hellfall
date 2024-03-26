@@ -10,7 +10,9 @@ export const Header = () => {
         <Navigation>
           <Link to={"/"}>search</Link>, <Link to={"/draft"}>draft</Link>,{" "}
           <Link to={"/deck-builder"}>constructed</Link>,{" "}
-          <Link to={"/hellscubes"}>cube</Link>
+          <Link to={"/hellscubes"}>cube</Link>,{" "}
+          <Link to={"https://discord.gg/EWFcAnVdkX"}>discord</Link>,{" "}
+          <Link to={"https://www.reddit.com/r/HellsCube/"}>reddit</Link>
         </Navigation>
       </StyledHeader>
     </>
