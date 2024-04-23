@@ -20,8 +20,10 @@ import {
   creatorsAtom,
   typeSearchAtom,
   searchColorsIdentityAtom,
+  searchColorComparisonAtom,
 } from "./searchAtoms";
 import { colors } from "./constants";
+import { Select } from "@workday/canvas-kit-preview-react/select";
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
@@ -34,6 +36,9 @@ export const SearchControls = () => {
   const [creators, setCreators] = useAtom(creatorsAtom);
   const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(
     searchColorsIdentityAtom
+  );
+  const [colorComparison, setColorComparison] = useAtom(
+    searchColorComparisonAtom
   );
 
   return (
@@ -73,11 +78,21 @@ export const SearchControls = () => {
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup
-          label="Colors (inclusive)"
+          label="Colors"
           values={colors}
           initialValue={searchColors}
           onChange={setSearchColors}
         />
+        <FormField label="Color Comparison">
+          <StyledManaSelect
+            options={[{ value: "<=" }, { value: "=" }, { value: ">=" }]}
+            defaultValue={colorComparison}
+            value={colorComparison}
+            onChange={(event) => {
+              setColorComparison(event.target.value as any);
+            }}
+          ></StyledManaSelect>
+        </FormField>
 
         <CheckboxGroup
           label="Within Color Identity"
@@ -112,3 +127,4 @@ const SearchCriteriaSection = styled("div")({
   paddingLeft: "30px",
 });
 const SearchContainer = styled("div")({ display: "flex", flexWrap: "wrap" });
+const StyledManaSelect = styled(Select)({ width: "100px" });

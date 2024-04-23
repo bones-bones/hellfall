@@ -15,7 +15,7 @@ export const specialCards: Card[] = [
   {
     path: "/hugh-man",
     name: "Hugh Man, Human",
-    component: <HellsCard queryString="oracle:Human" />,
+    component: <HellsCard queryString="t:Human" />,
   },
   {
     path: "/regal-karakas",

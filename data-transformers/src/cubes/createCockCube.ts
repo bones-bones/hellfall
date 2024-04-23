@@ -62,6 +62,7 @@ const toCard = ({
           .replace("Green", "G")
           .replace("Black", "B")
           .replace("White", "W")
+          .replace("Purple", "P")
           .replace(/;/g, ""),
       },
       manacost: { "#text": Cost[0].replace(/[{}]/g, "") },

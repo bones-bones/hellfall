@@ -25,6 +25,11 @@ export const searchColorsAtom = atom(
 export const searchColorsIdentityAtom = atom(
   searchParams.get("colorIdentity")?.split(",") || []
 );
+
+export const searchColorComparisonAtom = atom(
+  (searchParams.get("colorComparison") || "<=") as "<=" | ">=" | "="
+);
+
 export const searchCmcAtom = atom<
   | {
       operator: ">" | "<" | "=" | "";

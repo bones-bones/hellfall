@@ -41,6 +41,7 @@ export const HellFall = () => {
   }, [escape]);
   const [offset, setOffset] = useAtom(offsetAtom);
   const resultSet = useSearchResults();
+  console.log(resultSet, offset);
   return (
     <div>
       <Header></Header>

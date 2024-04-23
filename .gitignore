@@ -1,4 +1,7 @@
-
+HLCxml.xml
+HC2xml.xml
+HC3xml.xml
+HC4xml.xml
 
 /fetcher/src/secrets/omdbapiKey.ts
 public/movieData.json

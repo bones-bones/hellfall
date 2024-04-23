@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { HCEntry } from "../types";
 import { useCards } from "./useCards";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import {
   activeCardAtom,
   creatorsAtom,
@@ -10,6 +10,7 @@ import {
   offsetAtom,
   rulesSearchAtom,
   searchCmcAtom,
+  searchColorComparisonAtom,
   searchColorsAtom,
   searchColorsIdentityAtom,
   searchSetAtom,
@@ -33,7 +34,8 @@ export const useSearchResults = () => {
   const creators = useAtomValue(creatorsAtom);
   const colorIdentity = useAtomValue(searchColorsIdentityAtom);
   const activeCard = useAtomValue(activeCardAtom);
-  const page = useAtomValue(offsetAtom);
+  const colorComparison = useAtomValue(searchColorComparisonAtom);
+  const [page, setPageAtom] = useAtom(offsetAtom);
 
   useEffect(() => {
     const tempResults = cards
@@ -74,7 +76,7 @@ export const useSearchResults = () => {
             return false;
           }
         }
-        if (legality == "legal" && entry.Constructed === "Banned") {
+        if (legality === "legal" && entry.Constructed === "Banned") {
           return false;
         }
         if (creators.length > 0 && !creators.includes(entry.Creator)) {
@@ -107,25 +109,58 @@ export const useSearchResults = () => {
         ) {
           return false;
         }
-        if (
-          searchColors.length > 0 &&
-          !(
-            entry["Color(s)"]
-              .split(";")
-              .every((colorEntry) =>
-                (searchColors.includes("Misc bullshit")
-                  ? [...searchColors, "Piss", "Pickle"]
-                  : searchColors
-                ).includes(colorEntry)
-              ) ||
-            (searchColors.includes("Colorless") && entry["Color(s)"] == "")
-          )
-        ) {
-          return false;
+
+        if (searchColors.length > 0) {
+          if (
+            !(searchColors.includes("Colorless") && entry["Color(s)"] == "")
+          ) {
+            const newSearchColors = searchColors.includes("Misc bullshit")
+              ? [...searchColors, "Piss", "Pickle"]
+              : searchColors;
+
+            switch (colorComparison) {
+              case "<=": {
+                if (
+                  !entry["Color(s)"].split(";").every((colorEntry) => {
+                    return newSearchColors.includes(colorEntry);
+                  })
+                ) {
+                  return false;
+                }
+                break;
+              }
+              case "=": {
+                if (
+                  !(
+                    entry["Color(s)"].split(";").every((colorEntry) => {
+                      return newSearchColors.includes(colorEntry);
+                    }) &&
+                    entry["Color(s)"].split(";").length ==
+                      newSearchColors.length
+                  )
+                ) {
+                  return false;
+                }
+                break;
+              }
+              case ">=": {
+                if (
+                  !entry["Color(s)"].split(";").find((colorEntry) => {
+                    return newSearchColors.includes(colorEntry);
+                  })
+                ) {
+                  return false;
+                }
+
+                break;
+              }
+            }
+          }
         }
         return true;
       })
       .sort(sortFunction(sortRule));
+
     setResultSet(tempResults);
 
     const searchToSet = new URLSearchParams();
@@ -148,7 +183,6 @@ export const useSearchResults = () => {
     if (colorIdentity.length > 0) {
       searchToSet.append("colorIdentity", colorIdentity.join(","));
     }
-
     if (searchCmc !== undefined) {
       searchToSet.append("manaValue", JSON.stringify(searchCmc));
     }
@@ -161,10 +195,13 @@ export const useSearchResults = () => {
     if (activeCard !== "") {
       searchToSet.append("activeCard", activeCard);
     }
+    if (colorComparison !== "<=") {
+      searchToSet.append("colorComparison", colorComparison);
+    }
 
-    console.log(tempResults.length);
-    if (tempResults.length < page) {
+    if (tempResults.length < page && tempResults.length > 0) {
       searchToSet.append("page", "0");
+      setPageAtom(0);
     } else if (page > 0) {
       searchToSet.append("page", page.toString());
     }
@@ -188,6 +225,7 @@ export const useSearchResults = () => {
     colorIdentity,
     activeCard,
     page,
+    colorComparison,
   ]);
 
   return resultSet;
