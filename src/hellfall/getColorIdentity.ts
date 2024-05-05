@@ -8,7 +8,7 @@ export const getColorIdentity = (card: HCEntry) => {
     .forEach((entry) => colorIdentity.add(entry));
 
   card["Text Box"].forEach((entry) => {
-    const minusReminderText = entry.replaceAll(/\(.*?\)/g, "");
+    const minusReminderText = (entry || "").replaceAll(/\(.*?\)/g, "");
     const icons = minusReminderText.match(/\{.\}/g);
     icons?.forEach((icon) => {
       const colorIcon = manaSymbolColorMatching[icon];
@@ -18,8 +18,8 @@ export const getColorIdentity = (card: HCEntry) => {
     });
   });
 
-  card["Subtype(s)"].forEach((entry) => {
-    const splitSubtypes = entry.split(";");
+  card["Subtype(s)"]?.forEach((entry) => {
+    const splitSubtypes = (entry || "").split(";");
     splitSubtypes.forEach((typeEntry) => {
       const mappedColor = landToColorMapping[typeEntry];
       if (mappedColor) {

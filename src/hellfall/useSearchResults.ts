@@ -94,9 +94,9 @@ export const useSearchResults = () => {
           typeSearch.length > 0 &&
           !typeSearch.every((searchTerm) => {
             const combined = [
-              ...entry["Supertype(s)"],
-              ...entry["Card Type(s)"],
-              ...entry["Subtype(s)"],
+              ...(entry["Supertype(s)"] || []),
+              ...(entry["Card Type(s)"] || []),
+              ...(entry["Subtype(s)"] || []),
             ]
               .join(",")
               .toLowerCase();

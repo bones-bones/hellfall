@@ -41,7 +41,7 @@ export const HellFall = () => {
   }, [escape]);
   const [offset, setOffset] = useAtom(offsetAtom);
   const resultSet = useSearchResults();
-  console.log(resultSet, offset);
+
   return (
     <div>
       <Header></Header>
@@ -68,8 +68,10 @@ export const HellFall = () => {
       <SearchControls />
       <br />
       <SortComponent />
-      <ResultCount>{`${resultSet.length} card(s)`}</ResultCount>
-      <Container ref={containerRef}>
+      <ResultCount
+        ref={containerRef}
+      >{`${resultSet.length} card(s)`}</ResultCount>
+      <Container>
         {resultSet.slice(offset, offset + CHUNK_SIZE).map((entry, i) => (
           <HellfallEntry
             onClick={() => {

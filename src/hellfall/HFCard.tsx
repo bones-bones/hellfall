@@ -8,7 +8,7 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
   // wow what a weird ts bug
   const sideCount =
     (data["Card Type(s)"] as any).findLastIndex(
-      (entry: string) => entry != ""
+      (entry: string) => entry !== null
     ) + 1;
 
   return (
@@ -24,21 +24,21 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
             <div key={"side-" + (i + 1)}>
               {i > 0 && <Divider />}
               <Text typeLevel="body.medium" key="cost">
-                {stringToMana(data.Cost[i])}
+                {stringToMana(data.Cost?.[i] || "")}
               </Text>
               <br />
               <Text typeLevel="body.medium" key="type">
-                {`${data["Supertype(s)"][i]} ${data["Card Type(s)"][
-                  i
-                ].replaceAll(";", " ")}${
-                  data["Subtype(s)"][i]
+                {`${(data["Supertype(s)"] || [])[i] ?? ""} ${(
+                  data["Card Type(s)"]?.[i] || ""
+                ).replaceAll(";", " ")}${
+                  data["Subtype(s)"]?.[i]
                     ? " — " + data["Subtype(s)"][i]?.replaceAll(";", " ")
                     : ""
                 }`}
               </Text>
               <br />
               <Text typeLevel="body.medium" key="rules">
-                {data["Text Box"][i].split("\\n").map((entry) => {
+                {(data["Text Box"][i] || "").split("\\n").map((entry) => {
                   return (
                     <>
                       {entry
@@ -60,20 +60,20 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
                 })}
               </Text>
               <br />
-              {data["Flavor Text"][i] && (
+              {data["Flavor Text"] && data["Flavor Text"][i] !== null && (
                 <>
                   <ItalicText typeLevel="body.medium" key="flavor">
-                    {renderText(data["Flavor Text"][i].split("\\n"))}
+                    {renderText((data["Flavor Text"]?.[i] || "").split("\\n"))}
                   </ItalicText>
                   <br />
                 </>
               )}
-              {data["power"][i] !== "" &&
-                data["power"] != null &&
-                data["power"] != undefined && (
+              {data["power"]?.[i] &&
+                data["power"][i] !== "" &&
+                data["power"] != null && (
                   <>
                     <Text typeLevel="body.medium" key="stats">
-                      {data["power"][i]}/{data["toughness"][i]}
+                      {data["power"][i]}/{data["toughness"]![i]}
                     </Text>
                     <br />
                   </>

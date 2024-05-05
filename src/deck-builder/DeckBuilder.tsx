@@ -112,7 +112,8 @@ export const DeckBuilder = () => {
         if (responseObject.length == 0) {
           responseObject.push({
             Name: name + " - not found",
-            Image: back,
+            Image:
+              "https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/x/K/D/fxKDU/Custom-Back_l.jpg",
           } as HCEntry);
         }
         return responseObject;

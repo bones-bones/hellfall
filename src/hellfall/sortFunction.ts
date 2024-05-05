@@ -31,7 +31,7 @@ export const sortFunction =
   };
 
 const getSortString = (card: HCEntry) => {
-  const cardColors = card["Color(s)"].split(";") as Colors[];
+  const cardColors = (card["Color(s)"] || "").split(";") as Colors[];
 
   return (
     cardColors
