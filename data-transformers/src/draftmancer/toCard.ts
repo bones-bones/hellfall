@@ -1,0 +1,122 @@
+import fs from "fs";
+import { HCEntry } from "../types";
+import data from "../../../src/data/Hellscube-Database.json";
+const getDraftmancerCube = () => {
+  for (const set of [
+    { id: "HLC", name: "Hellscube" },
+    { id: "HC2", name: "Hellscube 2" },
+    { id: "HC3", name: "Hellscube 3" },
+    { id: "HC4", name: "Hellscube 4" },
+    { id: "HC6", name: "Hellscube 6" },
+  ]) {
+    const filteredToSet = data.data.filter((e) => {
+      return e.Set == set.id;
+    });
+    const cardsToWrite: DraftmancerCard[] =
+      filteredToSet.map(getDraftMancerCard);
+
+    const formatted = `[CustomCards]\n${JSON.stringify(
+      cardsToWrite,
+      null,
+      "\t"
+    )}\n[MainSlot]\n${cardsToWrite
+      .map((e) => {
+        return `1 ${e.name}`;
+      })
+      .join("\n")}`;
+
+    fs.writeFileSync(`./${set.id}Cube.txt`, formatted);
+  }
+};
+
+type DraftmancerCard = {
+  id: string; //"Discount Sol Ring_custom_",
+  oracle_id: string; // "Discount Sol Ring",
+  name: string; // "Discount Sol Ring",
+  mana_cost: string; //"{1}",
+
+  colors: string[]; // [],
+  set: string; //"custom",
+  collector_number: string; //"",
+  rarity: string; //"rare",
+  type: string; //"Artifact",
+  subtypes: string[];
+  rating: number; //0,
+  in_booster: boolean; // true,
+  printed_names: {
+    en: string; //"Discount Sol Ring"
+  };
+  image_uris: {
+    en: string; //"https://lh3.googleusercontent.com/d/1PNd-reLsF8mypuQW9oiLu1N2GDuPCv7B"
+  };
+  is_custom: boolean; // true
+  draft_effects?: string[];
+};
+
+const getDraftMancerCard = (card: HCEntry) => {
+  const cardToReturn: DraftmancerCard = {
+    id: card.Name + "_custom_",
+    oracle_id: card.Name.trim(),
+    name: card.Name.trim(),
+    mana_cost: (card.Cost?.[0] || "")
+      .replace(/\{\?\}/g, "{0}")
+      .replace("?", "{0")
+      .replace(/\{H\/.\}/g, "")
+      .replace(/\{(.)\/(.)(\/(.))+\}/g, "{$1/$2}")
+      .replace("{9/3}", "{3}")
+      .replace("{-1}", "{0}")
+      .replace(/\{.\/(.)\}/g, "{$1}")
+      .replace(/\{Pickle\}/g, "{G}")
+      .replace(/\{U\/BB\}/g, "{U/B}")
+      .replace("{Brown}", "{1}")
+      .replace("{2/Brown}", "{2}")
+      .replace("Sacrifice a creature:", "{0}")
+      .replace("{Discard your hand/RR}", "{R}{R}")
+      .replace("{BB/P}", "{B}"),
+
+    // @ts-ignore
+    colors: card["Color(s)"]?.split(";").map(colorToDraftMancerColor),
+    set: "custom",
+    collector_number: "",
+    rarity: "rare",
+    type: `${card["Supertype(s)"]?.[0]?.replace(/;/g, " ")} ${card[
+      "Card Type(s)"
+    ]?.[0]?.replace(/;/g, " ")}`.trim(),
+    subtypes: card["Subtype(s)"]?.[0].split(";").filter((e) => e != ""),
+    rating: 0,
+    in_booster: true,
+    printed_names: { en: card.Name },
+    image_uris: { en: card.Image },
+    is_custom: true,
+    ...(shouldReveal(card) && {
+      draft_effects: ["FaceUp"],
+    }),
+  };
+  return cardToReturn;
+};
+
+const shouldReveal = (card: HCEntry) => {
+  return (
+    card["Text Box"]?.[0].includes("hen you draft") ||
+    card["Text Box"]?.[0].includes("raftpartner") ||
+    card["Text Box"]?.[0].toLowerCase().includes("as you draft")
+  );
+};
+
+const colorToDraftMancerColor = (color: string) => {
+  switch (color) {
+    case "Red":
+      return "R";
+    case "White":
+      return "W";
+    case "Blue":
+      return "U";
+    case "Black":
+      return "B";
+    case "Green":
+      return "G";
+    default:
+      return "";
+  }
+};
+getDraftmancerCube();

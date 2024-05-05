@@ -7,13 +7,18 @@ export const HellfallEntry = ({
 }: {
   url: string;
   name: string;
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   return (
     <Container key={name} role="button">
       <span>{name}</span>
       <br></br>
-      <StyledImage key={name} src={url} onClick={onClick} />
+      <StyledImage
+        key={name}
+        src={url}
+        onClick={onClick}
+        referrerPolicy="no-referrer"
+      />
     </Container>
   );
 };

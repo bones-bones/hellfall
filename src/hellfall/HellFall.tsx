@@ -12,20 +12,18 @@ import { PaginationComponent } from "./inputs";
 import { HFCard } from "./HFCard";
 import { Card } from "@workday/canvas-kit-react/card";
 import { ToolbarIconButton } from "@workday/canvas-kit-react/button";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { activeCardAtom, offsetAtom } from "./searchAtoms";
 import { useSearchResults } from "./useSearchResults";
 import { SearchControls } from "./SearchControls";
 import { SortComponent } from "./SortComponent";
 import { CHUNK_SIZE } from "./constants";
 import { useKeyPress } from "../hooks";
-import { useCards } from "./useCards";
-
-import { Header } from "../header";
+import { cardsAtom } from "./cardsAtom";
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cards = useCards();
+  const cards = useAtomValue(cardsAtom);
   const escape = useKeyPress("Escape");
 
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
@@ -41,10 +39,9 @@ export const HellFall = () => {
   }, [escape]);
   const [offset, setOffset] = useAtom(offsetAtom);
   const resultSet = useSearchResults();
-  console.log(resultSet, offset);
+
   return (
     <div>
-      <Header></Header>
       <StyledSidePanel
         openWidth={window.screen.width > 450 ? 810 : 400}
         openDirection={SidePanelOpenDirection.Right}
@@ -68,12 +65,18 @@ export const HellFall = () => {
       <SearchControls />
       <br />
       <SortComponent />
-      <ResultCount>{`${resultSet.length} card(s)`}</ResultCount>
-      <Container ref={containerRef}>
+      <ResultCount
+        ref={containerRef}
+      >{`${resultSet.length} card(s)`}</ResultCount>
+      <Container>
         {resultSet.slice(offset, offset + CHUNK_SIZE).map((entry, i) => (
           <HellfallEntry
-            onClick={() => {
-              setActiveCardFromAtom(entry.Name);
+            onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+              if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                window.open("/hellfall/card/" + entry.Name, "_blank");
+              } else {
+                setActiveCardFromAtom(entry.Name);
+              }
             }}
             key={"" + entry.Name + i}
             name={entry.Name}

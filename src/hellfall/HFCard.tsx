@@ -4,17 +4,19 @@ import styled from "@emotion/styled";
 import { Heading, Text } from "@workday/canvas-kit-react/text";
 import { SetLegality } from "./SetLegality";
 import { stringToMana } from "./stringToMana";
+
+import { Link } from "react-router-dom";
 export const HFCard = ({ data }: { data: HCEntry }) => {
   // wow what a weird ts bug
   const sideCount =
     (data["Card Type(s)"] as any).findLastIndex(
-      (entry: string) => entry != ""
+      (entry: string) => entry !== null && entry != ""
     ) + 1;
 
   return (
     <Container key={data["Name"]}>
       <ImageContainer key="image-container">
-        <img src={data["Image"]} height="500px" />
+        <img src={data["Image"]} height="500px" referrerPolicy="no-referrer" />
       </ImageContainer>
       <Card>
         <Card.Body padding={"zero"}>
@@ -24,21 +26,21 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
             <div key={"side-" + (i + 1)}>
               {i > 0 && <Divider />}
               <Text typeLevel="body.medium" key="cost">
-                {stringToMana(data.Cost[i])}
+                {stringToMana(data.Cost?.[i] || "")}
               </Text>
               <br />
               <Text typeLevel="body.medium" key="type">
-                {`${data["Supertype(s)"][i]} ${data["Card Type(s)"][
-                  i
-                ].replaceAll(";", " ")}${
-                  data["Subtype(s)"][i]
+                {`${(data["Supertype(s)"] || [])[i] ?? ""} ${(
+                  data["Card Type(s)"]?.[i] || ""
+                ).replaceAll(";", " ")}${
+                  data["Subtype(s)"]?.[i]
                     ? " — " + data["Subtype(s)"][i]?.replaceAll(";", " ")
                     : ""
                 }`}
               </Text>
               <br />
               <Text typeLevel="body.medium" key="rules">
-                {data["Text Box"][i].split("\\n").map((entry) => {
+                {(data["Text Box"]?.[i] || "").split("\\n").map((entry) => {
                   return (
                     <>
                       {entry
@@ -60,20 +62,20 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
                 })}
               </Text>
               <br />
-              {data["Flavor Text"][i] && (
+              {data["Flavor Text"] && data["Flavor Text"][i] !== null && (
                 <>
                   <ItalicText typeLevel="body.medium" key="flavor">
-                    {renderText(data["Flavor Text"][i].split("\\n"))}
+                    {renderText((data["Flavor Text"]?.[i] || "").split("\\n"))}
                   </ItalicText>
                   <br />
                 </>
               )}
-              {data["power"][i] !== "" &&
-                data["power"] != null &&
-                data["power"] != undefined && (
+              {data["power"]?.[i] &&
+                data["power"][i] !== "" &&
+                data["power"] != null && (
                   <>
                     <Text typeLevel="body.medium" key="stats">
-                      {data["power"][i]}/{data["toughness"][i]}
+                      {data["power"][i]}/{data["toughness"]![i]}
                     </Text>
                     <br />
                   </>
@@ -108,6 +110,19 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
               </div>
             </>
           )}
+          {data.Tags && data.Tags !== "" && (
+            <>
+              <Text key="Tags">
+                Tags:{" "}
+                {data["Tags"].split(";").map((tagEntry) => (
+                  <Link key={tagEntry} to={"?tags=" + tagEntry} target="_blank">
+                    {tagEntry}
+                  </Link>
+                ))}
+              </Text>
+              <br />
+            </>
+          )}
           {data["tokens"] && (
             <>
               <Divider />
@@ -140,11 +155,15 @@ const Container = styled.div({
   display: "flex",
   flexDirection: "column",
   fontSize: "16px",
+  justifyContent: "center",
 });
 
 const ItalicText = styled(Text)({ fontStyle: "italic" });
 
-const ImageContainer = styled.div({ overflowX: "auto" });
+const ImageContainer = styled.div({
+  overflowX: "auto",
+  width: "fit-content",
+});
 const StyledHeading = styled(Heading)({
   marginTop: "0px",
   marginBottom: "10px",

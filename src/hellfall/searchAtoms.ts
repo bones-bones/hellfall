@@ -19,15 +19,55 @@ export const typeSearchAtom = atom<string[]>(
 );
 export const searchSetAtom = atom(searchParams.get("set")?.split(",") || []);
 
+export const isCommanderAtom = atom(searchParams.get("isCommander") == "true");
+
 export const searchColorsAtom = atom(
   searchParams.get("colors")?.split(",") || []
 );
+
 export const searchColorsIdentityAtom = atom(
   searchParams.get("colorIdentity")?.split(",") || []
 );
 
 export const searchColorComparisonAtom = atom(
-  (searchParams.get("colorComparison") || "<=") as "<=" | ">=" | "="
+  (searchParams.get("colorComparison") || "=") as "<=" | ">=" | "="
+);
+
+export const powerAtom = atom<
+  { value: number; operator: "<" | "=" | ">" } | undefined
+>(
+  (() => {
+    const parms = searchParams.get("p");
+
+    const extracted = parms?.match(/([<=>])(\d)/);
+    if (extracted) {
+      return {
+        value: parseInt(extracted[2]),
+        operator: extracted[1] as "<" | "=" | ">",
+      };
+    }
+    return undefined;
+  })()
+);
+
+export const toughnessAtom = atom<
+  { value: number; operator: "<" | "=" | ">" } | undefined
+>(
+  (() => {
+    const parms = searchParams.get("t");
+    const extracted = parms?.match(/([<=>])(\d)/);
+    if (extracted) {
+      return {
+        value: parseInt(extracted[2]),
+        operator: extracted[1] as "<" | "=" | ">",
+      };
+    }
+    return undefined;
+  })()
+);
+
+export const basedHybridRule = atom(
+  (searchParams.get("hybridRule") || "") as "based"
 );
 
 export const searchCmcAtom = atom<
@@ -47,3 +87,4 @@ export const offsetAtom = atom(parseInt(searchParams.get("page") || "0") || 0);
 export const creatorsAtom = atom(
   searchParams.get("creator")?.split(",,") || []
 );
+export const tagsAtom = atom(searchParams.get("tags")?.split(",") || []);

@@ -2,11 +2,16 @@ HLCxml.xml
 HC2xml.xml
 HC3xml.xml
 HC4xml.xml
+HC6xml.xml
+HLCCube.txt
+HC2Cube.txt
+HC3Cube.txt
+HC4Cube.txt
+HC6Cube.txt
 
-/fetcher/src/secrets/omdbapiKey.ts
-public/movieData.json
+dist
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
@@ -29,3 +34,4 @@ yarn-error.log*
 
 pics/
 pics.zip
+keys.ts

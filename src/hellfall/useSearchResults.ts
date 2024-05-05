@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { HCEntry } from "../types";
-import { useCards } from "./useCards";
+import { cardsAtom } from "./cardsAtom";
 import { useAtom, useAtomValue } from "jotai";
 import {
   activeCardAtom,
@@ -16,13 +16,18 @@ import {
   searchSetAtom,
   sortAtom,
   typeSearchAtom,
+  isCommanderAtom,
+  powerAtom,
+  toughnessAtom,
+  tagsAtom,
 } from "./searchAtoms";
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
+import { canBeACommander } from "./canBeACommander";
 
 export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCEntry[]>([]);
-  const cards = useCards();
+  const cards = useAtomValue(cardsAtom);
   const set = useAtomValue(searchSetAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const nameSearch = useAtomValue(nameSearchAtom);
@@ -32,10 +37,14 @@ export const useSearchResults = () => {
   const searchColors = useAtomValue(searchColorsAtom);
   const sortRule = useAtomValue(sortAtom);
   const creators = useAtomValue(creatorsAtom);
-  const colorIdentity = useAtomValue(searchColorsIdentityAtom);
+  const colorIdentityCriteria = useAtomValue(searchColorsIdentityAtom);
   const activeCard = useAtomValue(activeCardAtom);
   const colorComparison = useAtomValue(searchColorComparisonAtom);
+  const isCommander = useAtomValue(isCommanderAtom);
   const [page, setPageAtom] = useAtom(offsetAtom);
+  const power = useAtomValue(powerAtom);
+  const toughness = useAtomValue(toughnessAtom);
+  const tags = useAtomValue(tagsAtom);
 
   useEffect(() => {
     const tempResults = cards
@@ -43,16 +52,28 @@ export const useSearchResults = () => {
         if (set.length > 0 && !set.includes(entry.Set)) {
           return false;
         }
+        if (entry.isActualToken) {
+          return false;
+        }
 
         if (
           rulesSearch.length > 0 &&
           !rulesSearch.every((searchTerm) => {
-            const combined = entry["Text Box"].join(",").toLowerCase();
+            const combined = (entry["Text Box"] || []).join(",").toLowerCase();
             if (searchTerm.startsWith("!")) {
               return !combined.includes(searchTerm.substring(1).toLowerCase());
             } else {
               return combined.includes(searchTerm.toLowerCase());
             }
+          })
+        ) {
+          return false;
+        }
+
+        if (
+          tags.length > 0 &&
+          !tags.every((tag) => {
+            return entry.Tags?.includes(tag);
           })
         ) {
           return false;
@@ -66,13 +87,30 @@ export const useSearchResults = () => {
         }
 
         if (searchCmc != undefined) {
-          if (searchCmc.operator == "<" && !(entry.CMC < searchCmc.value)) {
-            return false;
+          switch (searchCmc.operator) {
+            case "<": {
+              if (!(entry.CMC < searchCmc.value)) {
+                return false;
+              }
+              break;
+            }
+            case ">": {
+              if (!(entry.CMC > searchCmc.value)) {
+                return false;
+              }
+              break;
+            }
+            case "=": {
+              if (!(entry.CMC === searchCmc.value)) {
+                return false;
+              }
+              break;
+            }
           }
-          if (searchCmc.operator == ">" && !(entry.CMC > searchCmc.value)) {
-            return false;
-          }
-          if (searchCmc.operator == "=" && !(entry.CMC == searchCmc.value)) {
+        }
+
+        if (isCommander === true) {
+          if (!canBeACommander(entry)) {
             return false;
           }
         }
@@ -83,10 +121,18 @@ export const useSearchResults = () => {
           return false;
         }
         if (
-          colorIdentity.length > 0 &&
-          !getColorIdentity(entry).every((colorEntry) =>
-            colorIdentity.includes(colorEntry)
-          )
+          colorIdentityCriteria.length > 0 &&
+          !getColorIdentity(entry).every((cardColorIdentityComponent) => {
+            if (Array.isArray(cardColorIdentityComponent)) {
+              return (
+                cardColorIdentityComponent.filter((e) => {
+                  return colorIdentityCriteria.includes(e) || e === undefined;
+                }).length === 1
+              );
+            } else {
+              return colorIdentityCriteria.includes(cardColorIdentityComponent);
+            }
+          })
         ) {
           return false;
         }
@@ -94,9 +140,9 @@ export const useSearchResults = () => {
           typeSearch.length > 0 &&
           !typeSearch.every((searchTerm) => {
             const combined = [
-              ...entry["Supertype(s)"],
-              ...entry["Card Type(s)"],
-              ...entry["Subtype(s)"],
+              ...(entry["Supertype(s)"] || []),
+              ...(entry["Card Type(s)"] || []),
+              ...(entry["Subtype(s)"] || []),
             ]
               .join(",")
               .toLowerCase();
@@ -108,6 +154,78 @@ export const useSearchResults = () => {
           })
         ) {
           return false;
+        }
+        if (power) {
+          switch (power.operator) {
+            case "=": {
+              if (parseInt(entry.power?.[0] + "") !== power.value) {
+                return false;
+              }
+              break;
+            }
+            case "<": {
+              if (
+                !entry.power?.[0] ||
+                !(
+                  (Number.isNaN(parseInt(entry.power[0] + ""))
+                    ? 0
+                    : parseInt(entry.power[0] + "")) < power.value
+                )
+              ) {
+                return false;
+              }
+              break;
+            }
+            case ">": {
+              if (
+                !entry.power?.[0] ||
+                !(
+                  (Number.isNaN(parseInt(entry.power[0] + ""))
+                    ? 0
+                    : parseInt(entry.power[0] + "")) > power.value
+                )
+              ) {
+                return false;
+              }
+              break;
+            }
+          }
+        }
+        if (toughness) {
+          switch (toughness.operator) {
+            case "=": {
+              if (parseInt(entry.toughness?.[0] + "") !== toughness.value) {
+                return false;
+              }
+              break;
+            }
+            case "<": {
+              if (
+                !entry.toughness?.[0] ||
+                !(
+                  (Number.isNaN(parseInt(entry.toughness[0] + ""))
+                    ? 0
+                    : parseInt(entry.toughness[0] + "")) < toughness.value
+                )
+              ) {
+                return false;
+              }
+              break;
+            }
+            case ">": {
+              if (
+                !entry.toughness?.[0] ||
+                !(
+                  (Number.isNaN(parseInt(entry.toughness[0] + ""))
+                    ? 0
+                    : parseInt(entry.toughness[0] + "")) > toughness.value
+                )
+              ) {
+                return false;
+              }
+              break;
+            }
+          }
         }
 
         if (searchColors.length > 0) {
@@ -121,9 +239,9 @@ export const useSearchResults = () => {
             switch (colorComparison) {
               case "<=": {
                 if (
-                  !entry["Color(s)"].split(";").every((colorEntry) => {
-                    return newSearchColors.includes(colorEntry);
-                  })
+                  !(entry["Color(s)"] || "")
+                    .split(";")
+                    .every((colorEntry) => newSearchColors.includes(colorEntry))
                 ) {
                   return false;
                 }
@@ -132,10 +250,12 @@ export const useSearchResults = () => {
               case "=": {
                 if (
                   !(
-                    entry["Color(s)"].split(";").every((colorEntry) => {
-                      return newSearchColors.includes(colorEntry);
-                    }) &&
-                    entry["Color(s)"].split(";").length ==
+                    (entry["Color(s)"] || "")
+                      .split(";")
+                      .every((colorEntry) =>
+                        newSearchColors.includes(colorEntry)
+                      ) &&
+                    (entry["Color(s)"] || "").split(";").length ==
                       newSearchColors.length
                   )
                 ) {
@@ -145,9 +265,9 @@ export const useSearchResults = () => {
               }
               case ">=": {
                 if (
-                  !entry["Color(s)"].split(";").find((colorEntry) => {
-                    return newSearchColors.includes(colorEntry);
-                  })
+                  !(entry["Color(s)"] || "")
+                    .split(";")
+                    .find((colorEntry) => newSearchColors.includes(colorEntry))
                 ) {
                   return false;
                 }
@@ -180,8 +300,8 @@ export const useSearchResults = () => {
     if (searchColors.length > 0) {
       searchToSet.append("colors", searchColors.join(","));
     }
-    if (colorIdentity.length > 0) {
-      searchToSet.append("colorIdentity", colorIdentity.join(","));
+    if (colorIdentityCriteria.length > 0) {
+      searchToSet.append("colorIdentity", colorIdentityCriteria.join(","));
     }
     if (searchCmc !== undefined) {
       searchToSet.append("manaValue", JSON.stringify(searchCmc));
@@ -192,11 +312,23 @@ export const useSearchResults = () => {
     if (creators.length > 0) {
       searchToSet.append("creator", creators.join(",,"));
     }
+    if (isCommander) {
+      searchToSet.append("isCommander", "true");
+    }
     if (activeCard !== "") {
       searchToSet.append("activeCard", activeCard);
     }
     if (colorComparison !== "<=") {
       searchToSet.append("colorComparison", colorComparison);
+    }
+    if (power) {
+      searchToSet.append("p", `${power.operator}${power.value}`);
+    }
+    if (toughness) {
+      searchToSet.append("t", `${toughness.operator}${toughness.value}`);
+    }
+    if (tags.length > 0) {
+      searchToSet.append("tags", tags.join(","));
     }
 
     if (tempResults.length < page && tempResults.length > 0) {
@@ -219,13 +351,17 @@ export const useSearchResults = () => {
     sortRule,
     typeSearch,
     searchCmc,
+    tags,
     cards.length,
     legality,
     creators,
-    colorIdentity,
+    colorIdentityCriteria,
     activeCard,
     page,
     colorComparison,
+    isCommander,
+    power,
+    toughness,
   ]);
 
   return resultSet;

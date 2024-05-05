@@ -7,6 +7,7 @@ import { TextInput } from "@workday/canvas-kit-react/text-input";
 import { FormField } from "@workday/canvas-kit-react/form-field";
 import cardTypes from "../data/types.json";
 import creators_data from "../data/creators.json";
+import tags_data from "../data/tags.json";
 import { CmcSelector } from "./inputs";
 
 import { useAtom } from "jotai";
@@ -21,6 +22,10 @@ import {
   typeSearchAtom,
   searchColorsIdentityAtom,
   searchColorComparisonAtom,
+  isCommanderAtom,
+  powerAtom,
+  toughnessAtom,
+  tagsAtom,
 } from "./searchAtoms";
 import { colors } from "./constants";
 import { Select } from "@workday/canvas-kit-preview-react/select";
@@ -30,10 +35,15 @@ export const SearchControls = () => {
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [searchCmc, setSearchCmc] = useAtom(searchCmcAtom);
+  const [power, setPower] = useAtom(powerAtom);
+  const [toughness, setToughness] = useAtom(toughnessAtom);
+
   const [legality, setLegality] = useAtom(legalityAtom);
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
+  const [tags, setTags] = useAtom(tagsAtom);
+  const [isCommander, setIsCommander] = useAtom(isCommanderAtom);
   const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(
     searchColorsIdentityAtom
   );
@@ -75,6 +85,12 @@ export const SearchControls = () => {
           defaultValues={creators}
           onChange={setCreators}
         ></PillSearch>
+        <PillSearch
+          label={"Tags"}
+          possibleValues={tags_data.data}
+          defaultValues={tags}
+          onChange={setTags}
+        ></PillSearch>
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup
@@ -91,11 +107,10 @@ export const SearchControls = () => {
             onChange={(event) => {
               setColorComparison(event.target.value as any);
             }}
-          ></StyledManaSelect>
+          />
         </FormField>
-
         <CheckboxGroup
-          label="Within Color Identity"
+          label="Color Identity (Commander)"
           values={colors}
           initialValue={searchColorsIdentity}
           onChange={setSearchColorsIdentityAtom}
@@ -105,7 +120,7 @@ export const SearchControls = () => {
         <CheckboxGroup
           initialValue={set}
           label={"Set"}
-          values={["HLC", "HC2", "HC3", "HC4"]}
+          values={["HLC", "HC2", "HC3", "HC4", "HC6"]}
           onChange={setSet}
         />
         <FormField label={"Only Constructed Legal"}>
@@ -117,7 +132,29 @@ export const SearchControls = () => {
             }}
           />
         </FormField>
-        <CmcSelector onChange={setSearchCmc} initialValue={searchCmc} />
+        <FormField
+          key={"Can Be Your Commander"}
+          label={"Can Be Your Commander"}
+        >
+          <Checkbox
+            type="checkbox"
+            checked={isCommander === true}
+            onChange={(event) => {
+              setIsCommander(event.target.checked ? true : false);
+            }}
+          />
+        </FormField>
+        <CmcSelector
+          label={"Mana value"}
+          onChange={setSearchCmc}
+          initialValue={searchCmc}
+        />
+        <CmcSelector label={"Power"} onChange={setPower} initialValue={power} />
+        <CmcSelector
+          label={"Toughness"}
+          onChange={setToughness}
+          initialValue={toughness}
+        />
       </SearchCriteriaSection>
     </SearchContainer>
   );

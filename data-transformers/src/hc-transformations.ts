@@ -1,73 +1,64 @@
 import fs from "fs";
-import data from "../../src/data/Hellscube-Database.json";
-import tokens from "../../src/data/tokens.json";
 
-import { HCEntry, Token, TokenForImport } from "./types";
+import { Token, TokenForImport } from "./types";
 // import { downloadImage } from "./downloadImage";
 import { tokenToCard } from "./tokenToCard";
-
-const tokenMap = (tokens.data as TokenForImport[]).reduce<
-  Record<string, Token[]>
->((current, entry) => {
-  entry["Related Cards (Read Comment)"].split(";").forEach((cardEntry) => {
-    if (current[cardEntry.replace(/\*\d*$/, "")]) {
-      current[cardEntry.replace(/\*\d*$/, "")].push({
-        Name: entry.Name.replace(/(\d*)$/, " $1"),
-        Power: entry.Power,
-        Toughness: entry.Toughness,
-        Type: entry.Type,
-        Image: entry.Image,
-        FIELD7: entry.FIELD7,
-      });
-    } else {
-      current[cardEntry.replace(/\*\d*$/, "")] = [
-        {
-          Name: entry.Name.replace(/(\d*)$/, " $1"),
-          Power: entry.Power,
-          Toughness: entry.Toughness,
-          Type: entry.Type,
-          Image: entry.Image,
-          FIELD7: entry.FIELD7,
-        },
-      ];
-    }
-  });
-  return current;
-}, {});
+import { fetchTokens } from "./fetchTokens";
+import { fetchDatabase } from "./fetchdatabase";
 
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
+const tagSet = new Set<string>();
 
-const fileList = fs.readdirSync("./pics");
+const main = async () => {
+  const { data } = { data: await fetchDatabase() };
 
-(data as any as { data: HCEntry[] }).data
-  .filter((entry) => {
-    const parts = entry.Image.split(".");
+  const tokens = await fetchTokens();
+  const tokensWithBetterName = tokens.map((e) => {
+    const {
+      //@ts-ignore
+      ["Name (number tokens with the same name, if only one token has that name still add a 1.)"]:
+        Name,
+      ...rest
+    } = e;
+    return { Name, ...rest };
+  });
+  const tokenMap = (tokensWithBetterName as TokenForImport[]).reduce<
+    Record<string, Token[]>
+  >((current, entry) => {
+    (entry["Related Cards (Read Comment)"] || "")
+      .split(";")
+      .forEach((cardEntry) => {
+        if (current[cardEntry.replace(/\*\d*$/, "")]) {
+          current[cardEntry.replace(/\*\d*$/, "")].push({
+            Name: entry.Name.replace(/(\d*)$/, " $1"),
+            Power: entry.Power,
+            Toughness: entry.Toughness,
+            Type: entry.Type,
+            Image: entry.Image,
+            FIELD7: entry.FIELD7,
+          });
+        } else {
+          current[cardEntry.replace(/\*\d*$/, "")] = [
+            {
+              Name: entry.Name.replace(/(\d*)$/, " $1"),
+              Power: entry.Power,
+              Toughness: entry.Toughness,
+              Type: entry.Type,
+              Image: entry.Image,
+              FIELD7: entry.FIELD7,
+            },
+          ];
+        }
+      });
+    return current;
+  }, {});
 
-    return !fileList.includes(
-      `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
-    );
-  })
-  .forEach(async (entry, i) => {
-    // const parts = entry.Image.split(".");
-
-    // await new Promise<void>((resolve) =>
-    //   setTimeout(() => {
-    //     console.log(
-    //       `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
-    //     );
-    //     resolve();
-    //   }, i * 1000)
-    // );
-    // await downloadImage(
-    //   entry.Image,
-    //   `./pics/${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
-    // );
-
+  data.forEach((entry) => {
     [
-      ...entry["Supertype(s)"],
-      ...entry["Card Type(s)"],
-      ...entry["Subtype(s)"],
+      ...(entry["Supertype(s)"] || []),
+      ...(entry["Card Type(s)"] || []),
+      ...(entry["Subtype(s)"] || []),
     ].forEach((typeEntry) => {
       if (typeEntry) {
         const splitTypes = typeEntry.split(";");
@@ -78,6 +69,9 @@ const fileList = fs.readdirSync("./pics");
     });
 
     creatorSet.add(entry.Creator);
+    if (entry.Tags && entry.Tags !== "") {
+      entry.Tags.split(";").forEach((e) => tagSet.add(e));
+    }
 
     if (tokenMap[entry.Name]) {
       // Debug unused tokens
@@ -87,75 +81,84 @@ const fileList = fs.readdirSync("./pics");
     }
   });
 
-(data as any as { data: HCEntry[] }).data.forEach((entry) => {
-  [
-    ...entry["Supertype(s)"],
-    ...entry["Card Type(s)"],
-    ...entry["Subtype(s)"],
-  ].forEach((typeEntry) => {
-    if (typeEntry) {
-      const splitTypes = typeEntry.split(";");
-      splitTypes.forEach((splitEntry) => {
-        typeSet.add(splitEntry);
-      });
-    }
-  });
+  const types = Array.from(typeSet);
+  const creators = Array.from(creatorSet);
+  const tags = Array.from(tagSet);
 
-  creatorSet.add(entry.Creator);
-
-  if (tokenMap[entry.Name]) {
-    // Debug unused tokens
-    // (tokenMap[entry.Name] as any).used = true;
-
-    entry.tokens = tokenMap[entry.Name];
-  }
-});
-
-const types = Array.from(typeSet);
-const creators = Array.from(creatorSet);
-
-fs.writeFileSync(
-  "./src/data/types.json",
-  JSON.stringify({
-    data: types.sort((a, b) => {
-      if (a > b) {
-        return 1;
-      }
-      return -1;
-    }),
-  })
-);
-
-fs.writeFileSync(
-  "./src/data/creators.json",
-  JSON.stringify(
-    {
-      data: creators.sort((a, b) => {
-        if (a.toLowerCase() > b.toLowerCase()) {
-          return 1;
-        }
-        return -1;
-      }),
-    },
-    null,
-    "\t"
-  )
-);
-
-fs.writeFileSync(
-  "./src/data/Hellscube-Database.json",
-  JSON.stringify(
-    {
-      data: (data as any as { data: HCEntry[] }).data
-        .concat(tokens.data.map(tokenToCard))
-        .sort((a, b) => {
-          if (a.Name > b.Name) {
+  fs.writeFileSync(
+    "./src/data/types.json",
+    JSON.stringify(
+      {
+        data: types.sort((a, b) => {
+          if (a > b) {
             return 1;
           }
           return -1;
         }),
-    },
-    null,
-    "\t"
-  )
-);
+      },
+      null,
+      "\t"
+    )
+  );
+  fs.writeFileSync(
+    "./src/data/tokens.json",
+    JSON.stringify(
+      {
+        data: tokensWithBetterName.sort((a, b) => {
+          if (a > b) {
+            return -1;
+          }
+          return 1;
+        }),
+      },
+      null,
+      "\t"
+    )
+  );
+  fs.writeFileSync(
+    "./src/data/tags.json",
+    JSON.stringify(
+      {
+        data: tags.sort((a, b) => {
+          if (a > b) {
+            return 1;
+          }
+          return -1;
+        }),
+      },
+      null,
+      "\t"
+    )
+  );
+
+  fs.writeFileSync(
+    "./src/data/creators.json",
+    JSON.stringify(
+      {
+        data: creators.sort((a, b) => {
+          if (a.toLowerCase() > b.toLowerCase()) {
+            return 1;
+          }
+          return -1;
+        }),
+      },
+      null,
+      "\t"
+    )
+  );
+
+  fs.writeFileSync(
+    "./src/data/Hellscube-Database.json",
+    JSON.stringify(
+      {
+        data: data
+          //@ts-ignore
+          .concat({ data: tokensWithBetterName }.data.map(tokenToCard)),
+      },
+      null,
+      "\t"
+    )
+  );
+};
+
+main();

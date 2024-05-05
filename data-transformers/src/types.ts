@@ -4,6 +4,7 @@ export type HCEntry = {
   Name: string; //"Whale Visions",
   Image: string; //"https://cdn.discordapp.com/attachments/699985664992739409/699992833645346816/ri2sj4suvzb31.png",
   Creator: string;
+  isActualToken?: boolean;
   Set: string; // "HLC",
   Rulings: string; //"See Magic Comprehensive Rules 894.1c Deez",
   CMC: number; //3,
@@ -19,6 +20,7 @@ export type HCEntry = {
   "Text Box": [string, string, string, string];
   "Flavor Text": [string, string, string, string];
   "small alt image": string;
+  Tags?: string;
   FIELD44: string;
   FIELD45: string;
   FIELD46: string;
@@ -44,4 +46,6 @@ export type Token = {
   FIELD7: string;
 };
 
-export type TokenForImport = Token & { "Related Cards (Read Comment)": string };
+export type TokenForImport = Token & {
+  "Related Cards (Read Comment)"?: string;
+};
