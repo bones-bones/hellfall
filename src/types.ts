@@ -9,7 +9,7 @@ export type HCEntry = {
   Set: string; // "HLC",
   Rulings: string; //"See Magic Comprehensive Rules 894.1c Deez",
   CMC: number; //3,
-  "Color(s)": string; // "Blue",
+  "Color(s)"?: string; // "Blue",
   Constructed?: "Legal" | "Banned";
   Cost: SideArray<string>;
   "Supertype(s)"?: SideArray<string>;
@@ -18,7 +18,7 @@ export type HCEntry = {
   power?: [number | null | "", null, null, null];
   toughness?: [number | null, null, null, null];
   Loyalty: [any, null, "", ""];
-  "Text Box": SideArray<string>;
+  "Text Box"?: SideArray<string>;
   "Flavor Text"?: SideArray<string>;
   "small alt image": string;
   FIELD44: string;

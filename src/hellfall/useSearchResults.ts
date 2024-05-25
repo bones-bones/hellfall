@@ -47,7 +47,7 @@ export const useSearchResults = () => {
         if (
           rulesSearch.length > 0 &&
           !rulesSearch.every((searchTerm) => {
-            const combined = entry["Text Box"].join(",").toLowerCase();
+            const combined = (entry["Text Box"] || []).join(",").toLowerCase();
             if (searchTerm.startsWith("!")) {
               return !combined.includes(searchTerm.substring(1).toLowerCase());
             } else {
@@ -121,7 +121,7 @@ export const useSearchResults = () => {
             switch (colorComparison) {
               case "<=": {
                 if (
-                  !entry["Color(s)"].split(";").every((colorEntry) => {
+                  !(entry["Color(s)"] || "").split(";").every((colorEntry) => {
                     return newSearchColors.includes(colorEntry);
                   })
                 ) {
@@ -132,10 +132,10 @@ export const useSearchResults = () => {
               case "=": {
                 if (
                   !(
-                    entry["Color(s)"].split(";").every((colorEntry) => {
+                    (entry["Color(s)"] || "").split(";").every((colorEntry) => {
                       return newSearchColors.includes(colorEntry);
                     }) &&
-                    entry["Color(s)"].split(";").length ==
+                    (entry["Color(s)"] || "").split(";").length ==
                       newSearchColors.length
                   )
                 ) {
@@ -145,7 +145,7 @@ export const useSearchResults = () => {
               }
               case ">=": {
                 if (
-                  !entry["Color(s)"].split(";").find((colorEntry) => {
+                  !(entry["Color(s)"] || "").split(";").find((colorEntry) => {
                     return newSearchColors.includes(colorEntry);
                   })
                 ) {

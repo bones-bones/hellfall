@@ -10,7 +10,6 @@ export const createCockCube = () => {
     { id: "HC3", name: "Hellscube 3" },
     { id: "HC4", name: "Hellscube 4" },
   ]) {
-    console.log("!");
     const cardsForSet = data.data.filter((entry) => entry.Set === set.id);
     //@ts-ignore
     const cards = cardsForSet.map(toCard);
@@ -91,18 +90,5 @@ const toCard = ({
       },
     },
   };
-
-  //   `\t<card>
-  //             <name>${Name}</name>
-  //             <set rarity="common"
-  //             picURL="${Image}">${Set}</set>
-  //             <color>${Color}</color>
-  //             <manacost>${Cost[0]}</manacost>
-  //             <cmc>${CMC}</cmc>
-  //             <type>${(Types[0] ?? "").replace(/;/g, " ")}</type>
-  //             <text>${Text.filter(Boolean)
-  //               .join("\n//\n")
-  //               .replace(/\\n/g, "\n")}</text>
-  //     </card>`;
 };
 createCockCube();

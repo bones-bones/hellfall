@@ -12,7 +12,8 @@ export const Header = () => {
           <Link to={"/deck-builder"}>constructed</Link>,{" "}
           <Link to={"/hellscubes"}>cube</Link>,{" "}
           <Link to={"https://discord.gg/EWFcAnVdkX"}>discord</Link>,{" "}
-          <Link to={"https://www.reddit.com/r/HellsCube/"}>reddit</Link>
+          <Link to={"https://www.reddit.com/r/HellsCube/"}>reddit</Link>,{" "}
+          <Link to={"/land-box"}>land box</Link>
         </Navigation>
       </StyledHeader>
     </>

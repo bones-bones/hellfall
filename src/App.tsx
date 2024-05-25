@@ -3,6 +3,7 @@ import { HellFall } from "./hellfall";
 import { Hellscubes } from "./hells-cubes";
 import { DeckBuilder } from "./deck-builder";
 import { Draft } from "./draft";
+import { LandBox } from "./land-box";
 
 export const App = () => {
   return (
@@ -19,6 +20,7 @@ const ApplicationRoutes = () => {
     { path: "/hellscubes/*", element: <Hellscubes /> },
     { path: "/deck-builder/*", element: <DeckBuilder /> },
     { path: "/draft", element: <Draft></Draft> },
+    { path: "/land-box", element: <LandBox></LandBox> },
     { path: "/", element: <HellFall /> },
   ]);
 };

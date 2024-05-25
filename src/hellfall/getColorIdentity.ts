@@ -2,12 +2,12 @@ import { HCEntry } from "../types";
 
 export const getColorIdentity = (card: HCEntry) => {
   const colorIdentity = new Set<string>();
-  const obviousColors = card["Color(s)"].split(";");
+  const obviousColors = (card["Color(s)"] || "").split(";");
   obviousColors
     .filter((entry) => entry !== "")
     .forEach((entry) => colorIdentity.add(entry));
 
-  card["Text Box"].forEach((entry) => {
+  (card["Text Box"] || []).forEach((entry) => {
     const minusReminderText = (entry || "").replaceAll(/\(.*?\)/g, "");
     const icons = minusReminderText.match(/\{.\}/g);
     icons?.forEach((icon) => {
