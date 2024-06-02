@@ -105,7 +105,7 @@ export const SearchControls = () => {
         <CheckboxGroup
           initialValue={set}
           label={"Set"}
-          values={["HLC", "HC2", "HC3", "HC4"]}
+          values={["HLC", "HC2", "HC3", "HC4", "HC6"]}
           onChange={setSet}
         />
         <FormField label={"Only Constructed Legal"}>
