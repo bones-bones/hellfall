@@ -36,5 +36,5 @@ export const SingleCard = () => {
   );
 };
 
-const CardContainer = styled.div({ width: "60vw", paddingTop: "50px" });
+const CardContainer = styled.div({ minWidth: "60vw", paddingTop: "50px" });
 const Container = styled.div({ display: "flex", justifyContent: "center" });

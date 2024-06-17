@@ -72,7 +72,7 @@ export const HellFall = () => {
         {resultSet.slice(offset, offset + CHUNK_SIZE).map((entry, i) => (
           <HellfallEntry
             onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-              if (event.button === 1 || event.metaKey) {
+              if (event.button === 1 || event.metaKey || event.ctrlKey) {
                 window.open("/hellfall/card/" + entry.Name, "_blank");
               } else {
                 setActiveCardFromAtom(entry.Name);
