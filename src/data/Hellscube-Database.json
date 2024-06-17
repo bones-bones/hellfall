@@ -1228,7 +1228,7 @@
 		{
 			"Name": "(Vi)(gor M(o)rtus)",
 			"Image": "https://lh3.googleusercontent.com/d/1rIqD426sxwBEj91QtSO62wEOtAd-w1gs",
-			"Creator": "Rodent, Vitral, and Jumberlack",
+			"Creator": "Rodent, Vitral, and jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -7433,7 +7433,7 @@
 		{
 			"Name": "Aluminum Foil",
 			"Image": "https://lh3.googleusercontent.com/d/1bHYJ6TtI__BjDlVMov8hFYQtiSU3xNGH",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -9872,7 +9872,7 @@
 		{
 			"Name": "Animorph",
 			"Image": "https://lh3.googleusercontent.com/d/18ngPKo-ons0mtAB6UR9cmjOi9Pwch8mo",
-			"Creator": "Shblov",
+			"Creator": "shblov",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -11850,7 +11850,7 @@
 		{
 			"Name": "Arid Mesa Pegasus",
 			"Image": "https://lh3.googleusercontent.com/d/1f7npRrW0OfBn0Wo68n3B-F2YLO-HIXjZ",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -12614,6 +12614,64 @@
 			],
 			"Text Box": [
 				"Court documents reveal Lil Uzi Vert is in posession of a rare and mystical sorcery that threatens to destroy all nongreen creatures.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Assassin’s Participation Trophy",
+			"Image": "https://lh3.googleusercontent.com/d/1BnWpDkSFl14MtbINpPSkIhgYRRiqJYCj",
+			"Creator": "jumberlack.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Black;Green",
+			"Cost": [
+				"{3/B}{3/G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Assist\\nDestroy target permanet. Its controller may search their library for a basic land card, put it onto the battlefield, then shuffle. Each other player creates a tapped Wastes.",
 				null,
 				null,
 				null
@@ -15432,7 +15490,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 2,
-			"Color(s)": "Red",
+			"Color(s)": "Red;Green",
 			"Cost": [
 				"{R}{R}",
 				null,
@@ -16017,7 +16075,7 @@
 		{
 			"Name": "Bananamorphose",
 			"Image": "https://lh3.googleusercontent.com/d/1fpg9iUTulLhW4FTLjiQ04goQcbL26W0q",
-			"Creator": "Jumberlack and Fallapede",
+			"Creator": "jumberlack. and Fallapede",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -16133,7 +16191,7 @@
 		{
 			"Name": "Banding Unexplained",
 			"Image": "https://lh3.googleusercontent.com/d/1RzlVJjNzHCx_fNnm2BSFwzSZ4iT_Dtpb",
-			"Creator": "Jumberlack, Zaxer, Draner",
+			"Creator": "jumberlack., Zaxer, Draner",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -18401,7 +18459,7 @@
 		{
 			"Name": "Bear",
 			"Image": "https://lh3.googleusercontent.com/d/1m-qwSzkZmYphacJEX3nKEgqFxI20w3Wf",
-			"Creator": "platyposeidon",
+			"Creator": "Platyposeidon",
 			"Set": "HC6",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -22024,7 +22082,7 @@
 		{
 			"Name": "Blinkhole",
 			"Image": "https://lh3.googleusercontent.com/d/1B0FkiDc_VXcBkJXv4AoW8HwiIrLPUyiU",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -24407,7 +24465,7 @@
 		{
 			"Name": "Booster Tutor but Funnier",
 			"Image": "https://lh3.googleusercontent.com/d/1I-H6RNIjmEZUsBi2g92nQzwXs4ApWTLV",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -27002,54 +27060,54 @@
 			"Cost": [
 				"{1}{G}",
 				"",
-				null,
+				"",
 				null
 			],
 			"Supertype(s)": [
 				"",
 				"",
-				null,
+				"",
 				null
 			],
 			"Card Type(s)": [
 				"Creature",
 				"Creature",
-				null,
+				"Creature",
 				null
 			],
 			"Subtype(s)": [
 				"Dinosaur;Plant",
 				"Dinosaur;Plant",
-				null,
+				"Dinosaur;Plant",
 				null
 			],
 			"power": [
 				"2",
 				"4",
-				null,
+				"6",
 				null
 			],
 			"toughness": [
 				"2",
 				"4",
-				null,
+				"6",
 				null
 			],
 			"Loyalty": [
 				"",
 				"",
-				null,
+				"",
 				null
 			],
 			"Text Box": [
 				"Trample\\nWhen you cast a spell with mana value 3 or greater, flip Bulbasaur.",
 				"Vigilance, trample\\nWhen you cast a spell with mana value 5 or greater, transform Ivysaur.",
-				null,
+				"Vigilance, trample, hexproof\\nWhenever you cast a spell with mana value 7 or greater, put three +1/+1 counters on Venusaur.",
 				null
 			],
 			"Flavor Text": [
 				"",
-				null,
+				"",
 				null,
 				null
 			],
@@ -30750,7 +30808,7 @@
 		{
 			"Name": "Chad",
 			"Image": "https://lh3.googleusercontent.com/d/1zz55-vy94jHOyf9UAxi2kjkwyXRQc2zv",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -31342,7 +31400,7 @@
 		{
 			"Name": "Charmageddon",
 			"Image": "https://lh3.googleusercontent.com/d/1b-3o3JAun9M_f12vTdomeUvtoFNDh4b8",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -34539,7 +34597,7 @@
 		{
 			"Name": "Colorblind Mountain",
 			"Image": "https://lh3.googleusercontent.com/d/1GqascS-TJs7fTM7WKUh5fQIoP5nB6-TO",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -35572,6 +35630,70 @@
 			],
 			"Text Box": [
 				"Roll a six-sided die.\n1 or 2 - Create two 1/1 green squirrel creature tokens. They gain haste until end of turn.\n3 - Return a card with mana value two or less from your graveyard to your hand.\n4 or 5 - Comet Storm deals 5 damage to a creature or player.\n6 - Roll two more times.\nStorm",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Command Phyrexian Tower",
+			"Image": "https://lh3.googleusercontent.com/d/1s2taxl9IxYjV-Y0QlP0KE3MkT1GurdYx",
+			"Creator": "drafterdemon",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": null,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: Add {C}.\\n{T}, Sacrifice a creature: Add two mana of any one color in your commander's color identity.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"Look mom, I'm a commander now\"\\n—Urabrask, probably",
 				null,
 				null,
 				null
@@ -40099,7 +40221,7 @@
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
-			"CMC": 5,
+			"CMC": null,
 			"Color(s)": "Black;Blue;Green",
 			"Cost": [
 				"{2}{B}{G}{U}",
@@ -48696,6 +48818,71 @@
 			]
 		},
 		{
+			"Name": "Draw the Out // Be Consistent // Draw the Out",
+			"Image": "https://lh3.googleusercontent.com/d/13VQkm6dV_2W64aL3UM_REq7iMI9ji5pF",
+			"Creator": "logan5123",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 8,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{1}{U}",
+				"{2}{U}{U}",
+				"{1}{U}",
+				null
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				"Sorcery",
+				"Instant",
+				null
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				null
+			],
+			"power": [
+				"",
+				"",
+				"",
+				null
+			],
+			"toughness": [
+				"",
+				"",
+				"",
+				null
+			],
+			"Loyalty": [
+				"",
+				"",
+				"",
+				null
+			],
+			"Text Box": [
+				"Draw a card.\\yeah (You may cast any amount of halves of this card from your hand. Or something.)",
+				"Search your library for a card, reveal it, add it to your hand, then shuffle.",
+				"Draw a card.",
+				null
+			],
+			"Flavor Text": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Tags": ""
+		},
+		{
 			"Name": "Dread Returf",
 			"Image": "https://lh3.googleusercontent.com/d/1bfa4v1ZKku_saFSgR16EWquatBC836Rk",
 			"Creator": "Plutoniarch",
@@ -49794,7 +49981,7 @@
 		{
 			"Name": "Duolingo Bird // Spanish // Vanish",
 			"Image": "https://lh3.googleusercontent.com/d/1Gs4Nr6eeKguUw96YMmKxDOKVTYZi4KQy",
-			"Creator": "platyposeidon",
+			"Creator": "Platyposeidon",
 			"Set": "HC6",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -56207,6 +56394,70 @@
 			]
 		},
 		{
+			"Name": "Exceptionally Heavy Bird",
+			"Image": "https://lh3.googleusercontent.com/d/1C6jauIGjZDXa-WMszk247DOtEAUcyin9",
+			"Creator": "Askedforit",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "Red;White",
+			"Cost": [
+				"{3}{R/W}{R/W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Bird;Giant;Bird",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"5",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flying\\nIf Exceptionally Heavy Bird would leave the battlefield, it becomes a Star of Extinction. (For the rest of the game. Put it on the stack.)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"h u g e.\"\\n—Shaper Pashona",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Exclue",
 			"Image": "https://lh3.googleusercontent.com/d/1JDKl8_-JnQz3XQOrn4wVwmVL6Zbdqv4A",
 			"Creator": "juanqu",
@@ -58881,6 +59132,70 @@
 			]
 		},
 		{
+			"Name": "Festivities",
+			"Image": "https://lh3.googleusercontent.com/d/1mcBTnX-q0ZOwsZDVI2D5heGyvWoUHf-h",
+			"Creator": "exalted.one",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Celebration — At the begnning of combat on your turn, if two or more nonland permanents entered the battlefield under your control this turn, Festivities deals 1 damage to each opponent and each creature and planeswalker they control.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"Furcon",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Fetch shock bolt go",
 			"Image": "https://lh3.googleusercontent.com/d/1Mi4FuhdztR_TQybdHxKsrGSFPXivmpww",
 			"Creator": "localrodent",
@@ -60043,7 +60358,7 @@
 			"FIELD56": ""
 		},
 		{
-			"Name": "Fixer-Upper (HC4)",
+			"Name": "Fixer-Upper (hc4)",
 			"Image": "https://lh3.googleusercontent.com/d/1i8dqwYJemJXxwnucrI_3F-9Yy_Vv3qNq",
 			"Creator": "Askedforit",
 			"Set": "HC4",
@@ -61909,7 +62224,7 @@
 		{
 			"Name": "Force of Rowan",
 			"Image": "https://lh3.googleusercontent.com/d/1Y6e5fAuqCpqW_gpfZZJ6neE5kF6sHpEG",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -63398,7 +63713,7 @@
 		{
 			"Name": "Free Bird // Guitar Solo",
 			"Image": "https://lh3.googleusercontent.com/d/1f7M01mRY80hB33R43_JEcAyFsYr-I1ma",
-			"Creator": "Baconbasedgod",
+			"Creator": "baconbasedgod",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -66157,7 +66472,7 @@
 		{
 			"Name": "Gatekeeper",
 			"Image": "https://lh3.googleusercontent.com/d/1-MpYxYQPQrUUJTRdQfpQ8_9DieCGOIUf",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -74361,6 +74676,64 @@
 			]
 		},
 		{
+			"Name": "Guff, Group Project Partner",
+			"Image": "https://lh3.googleusercontent.com/d/1RARQEAx836gm5ruzfoI0MCfBWLtjoeYI",
+			"Creator": "jumberlack.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;Rogue",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"All commander damage dealt is also dealt by Guff. (He doesn't do additional damage. He just takees credit for it.)\\nWhenever Guff deals damage to a player, you may goad target creature that player controls.\\nPartner",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Guide to Advantage City",
 			"Image": "https://lh3.googleusercontent.com/d/1funzyKz5Nrn5EjnbO3k323CcLhGVE7_I",
 			"Creator": "Vitral",
@@ -74421,7 +74794,7 @@
 		{
 			"Name": "Gun Titan",
 			"Image": "https://lh3.googleusercontent.com/d/12d7FNnpNjWlhCJcnC3h80kk-vaJbvp7r",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -87282,7 +87655,7 @@
 		{
 			"Name": "Izzet Guildgate?",
 			"Image": "https://lh3.googleusercontent.com/d/1ONpDux6mTHeDUuCr1rZrcKyYHTFk8MOo",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -91955,6 +92328,70 @@
 			"FIELD54": "",
 			"FIELD55": "",
 			"FIELD56": ""
+		},
+		{
+			"Name": "Kindred Flames",
+			"Image": "https://lh3.googleusercontent.com/d/1_zh5IYA3vwP881A4iGGL0MLvQLXY0w4K",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Do man — Kindred Flames deals X damage to target creature or player, where X is the number of creature types among non-Brushwaggs you control.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"Fire is the universal language.\"\\n—Hunters' expression meaning \"died unexpectedly\"",
+				null,
+				null,
+				null
+			]
 		},
 		{
 			"Name": "King Big Slug the Biggest Slug",
@@ -97961,7 +98398,7 @@
 		{
 			"Name": "Limerick",
 			"Image": "https://lh3.googleusercontent.com/d/11Nca6Nw7QWXXnWriIGoJrWYt9Ii7ZggB",
-			"Creator": "benana",
+			"Creator": "benana2222",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -99137,7 +99574,7 @@
 		{
 			"Name": "Lodestone Gottem (OG)",
 			"Image": "https://lh3.googleusercontent.com/d/10ZV4X4TWXRR23JKSTSkFwzASEqyWLh6n",
-			"Creator": "Van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -108140,7 +108577,7 @@
 		{
 			"Name": "Mining",
 			"Image": "https://lh3.googleusercontent.com/d/1QImVx7OEP6cftdB4IQo0jBMPAOIrrUzB",
-			"Creator": "Askedforit",
+			"Creator": "askedforit",
 			"Set": "HC4",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -108567,7 +109004,7 @@
 		{
 			"Name": "Mistmoon Griffin and Misthollow Griffin",
 			"Image": "https://lh3.googleusercontent.com/d/1FFDsmm5IFN4Nxml-MUf1X0vMnl9xhnk7",
-			"Creator": "Benana",
+			"Creator": "benana2222",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -112109,7 +112546,7 @@
 		{
 			"Name": "Mr. Domino",
 			"Image": "https://lh3.googleusercontent.com/d/1Uc328BtoR9KS0yQivFlemtDzhjna_SE3",
-			"Creator": "Askedforit",
+			"Creator": "askedforit",
 			"Set": "HC6",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -113160,6 +113597,70 @@
 			],
 			"Text Box": [
 				"If you cast this spell for {1}{B}{B}, destroy target creature.\\nIf you cast this spell for {1}{U}, create a 1/2 blue Bird creature token with flying.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Muscle Roller Formation",
+			"Image": "https://lh3.googleusercontent.com/d/1ZGCKmRuPJe3C_0g04V-R0_V70voFeTtd",
+			"Creator": "missingnerd",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Red",
+			"Cost": [
+				"{2}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Creatures you control are Vehicles in addition to their other types and have Crew 1.\\nCrewed Vehicles you control have +2/+2, haste, and first strike.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"https://www.youtube.com/watch?v=nk2wViKSh_M",
 				null,
 				null,
 				null
@@ -115561,7 +116062,7 @@
 		{
 			"Name": "Netdecker",
 			"Image": "https://lh3.googleusercontent.com/d/1g8Y0A0suEDxDxsr4IwryCQVRoiDGON4D",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -119237,7 +119738,7 @@
 		{
 			"Name": "Odric, Lunatic",
 			"Image": "https://lh3.googleusercontent.com/d/1ejN4jMmB2RDlKWad88Mgj9mjCwXEhABo",
-			"Creator": "platyposeidon",
+			"Creator": "Platyposeidon",
 			"Set": "HC6",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -130034,7 +130535,7 @@
 		{
 			"Name": "Pocket Sand",
 			"Image": "https://lh3.googleusercontent.com/d/15JgqSTaBDhhXZB6hUp-To6VykZ1NWmDA",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -130343,7 +130844,7 @@
 		{
 			"Name": "Poker Player",
 			"Image": "https://lh3.googleusercontent.com/d/1Nzso4KaigkwC1YAcKob5a9pIUGCzRfFc",
-			"Creator": "vantheman",
+			"Creator": "vantheman_",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -131699,13 +132200,13 @@
 				null
 			],
 			"Supertype(s)": [
-				"Lampart",
+				"Legendary",
 				null,
 				null,
 				null
 			],
 			"Card Type(s)": [
-				"Crampart",
+				"Creature",
 				null,
 				null,
 				null
@@ -133235,7 +133736,7 @@
 		{
 			"Name": "Psionic Bolt",
 			"Image": "https://lh3.googleusercontent.com/d/1F9tGFsmsfKDxCdUHA3b6xggDIvnc5LnF",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -142613,7 +143114,7 @@
 		{
 			"Name": "Savannah Lions (hc)",
 			"Image": "https://lh3.googleusercontent.com/d/1UWNO3yUxN78G_5c3e7bTw86wLrmONneu",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -148198,7 +148699,7 @@
 		{
 			"Name": "Sigil of the Porcelain Throne",
 			"Image": "https://lh3.googleusercontent.com/d/1Rlowjue3P16fxrKmPvtYZyMxWpp5FY3c",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -148323,7 +148824,7 @@
 		{
 			"Name": "Silver Sable",
 			"Image": "https://lh3.googleusercontent.com/d/16UsPqpvDrdcv_xfmTlxzYQdVKhcivh-o",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -150255,7 +150756,7 @@
 		{
 			"Name": "Smallpox But You Got The Vaccine",
 			"Image": "https://lh3.googleusercontent.com/d/1Ku8t_tWQuZRMPl5Le2s3xYVAOyjXub7c",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -151879,7 +152380,7 @@
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
-			"CMC": 6,
+			"CMC": 4,
 			"Color(s)": "White;Black",
 			"Cost": [
 				"{2}{W}{B}",
@@ -157832,7 +158333,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 5,
-			"Color(s)": "Red",
+			"Color(s)": "Red;Green",
 			"Cost": [
 				"{3}{R}{R}",
 				null,
@@ -162388,7 +162889,7 @@
 		{
 			"Name": "Tendrils of",
 			"Image": "https://lh3.googleusercontent.com/d/1kXISpSFCRXQ81vX4Emd-bnK2zG36t0Xh",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -168077,6 +168578,64 @@
 			"Tags": ""
 		},
 		{
+			"Name": "The Squadron Hawk",
+			"Image": "https://lh3.googleusercontent.com/d/1P3hE6Ik8caj3nd6_WNEg68dvKO63FxSl",
+			"Creator": "gormtg",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "White",
+			"Cost": [
+				"{1}[W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Bird",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flying\\nPartner and Draftpartner with three copies of The Squadron Hawk. The legend rule doesn't apply to them. (When this enters, target player may put the copies into their harnd from their library, the shuffle.)\\nYou may have five commanders if one has partner and four are copies of this.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "The Tasty Cards",
 			"Image": "https://lh3.googleusercontent.com/d/1rHIJTww4UxfrIl7_P4XiuGjeJ3QPmmlr",
 			"Creator": "u/C9_Arcane",
@@ -168392,7 +168951,7 @@
 			],
 			"Flavor Text": [
 				"",
-				null,
+				"\"We got a number one victory royale, yeah Fortnite we boutta get down.\"\\n— Timmy, Power Gamer\"",
 				null,
 				null
 			],
@@ -171178,7 +171737,7 @@
 		{
 			"Name": "Tibalt’s Sex Dungeon",
 			"Image": "https://lh3.googleusercontent.com/d/1pj_bEGFDBIULWESCc-EGbfX4AYxKs0V_",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -174396,7 +174955,7 @@
 		{
 			"Name": "Town That Isn’t Big Enough",
 			"Image": "https://lh3.googleusercontent.com/d/1Q1Nkw7jmjq7M-BDxUW3U8IdpLe32RLHo",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -177293,7 +177852,7 @@
 		{
 			"Name": "Twist of Fortune",
 			"Image": "https://lh3.googleusercontent.com/d/1pZwjy-Xw_21FrU9hJaCouNNj7gCIhqY6",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -180213,7 +180772,7 @@
 		{
 			"Name": "Urzbekitron Passport Card",
 			"Image": "https://lh3.googleusercontent.com/d/1t_1he8_uUWqnN3t0ZLBKmVZIzwlH_g7K",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "In Draft, you may put any number of copies of each Urza's land in your deck. In Constructed, you may use only four copies of each. —Askedforit, 8/17/23",
@@ -183235,6 +183794,64 @@
 			]
 		},
 		{
+			"Name": "Wan",
+			"Image": "https://lh3.googleusercontent.com/d/14_xT55LE30eFf2mht_lYg9J3VfQkIq6a",
+			"Creator": "upogsi",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Green",
+			"Cost": [
+				"{2}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;Avatar",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Mentor, Training\\n+1/+1 counters on other creatures you control give +Wan/+Wan instead. (They add Wan's P/T.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Warehouse // Werehouse",
 			"Image": "https://lh3.googleusercontent.com/d/1vVAuTjxLEdeGNx-rtOsaQsndEvNCUnmF",
 			"Creator": "u/NautilusMain",
@@ -184177,7 +184794,7 @@
 		{
 			"Name": "Web M.D.",
 			"Image": "https://lh3.googleusercontent.com/d/1bf0mMHP5myxAkJKhcgZTl1FaNFWySYYZ",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -185417,6 +186034,64 @@
 			]
 		},
 		{
+			"Name": "Whats in Grenzos Bottom",
+			"Image": "https://lh3.googleusercontent.com/d/1cJzWkJvuewAYW_C1I7q1zQ6stEVM5RpT",
+			"Creator": "jumberlack.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Black",
+			"Cost": [
+				"{2}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Minigame",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"At the beginning of your end step, name a color, a card type, and a mana value. Then mill a card from the bottom. Do the following for each of the characteristics you got right —\\nColor | Create a Treasure token.\\nCard Type | Put a +1/+1 counter on a creature you control.\\nMana Value | Put that card into your hand.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Wheel // Deal",
 			"Image": "https://lh3.googleusercontent.com/d/1pUdEa5GoLb3VKi8LvNhRCtE3zBnHh87X",
 			"Creator": "MrMirari",
@@ -185553,6 +186228,70 @@
 					"Type": "Artifact",
 					"Image": "https://lh3.googleusercontent.com/d/1oShOn7l99tnTvy6EqCUeNGgF91lzKfkI"
 				}
+			]
+		},
+		{
+			"Name": "Where joke",
+			"Image": "https://lh3.googleusercontent.com/d/1CfLFpRaBswW0Id44mt-mZBjAeNmN6sC_",
+			"Creator": "lettuce_turtle",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Black",
+			"Cost": [
+				"{1}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Destroy target creature if it isn't funny. (No creatures are funny.)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"Pictured: Hellscube users after being forced to look at a Magic: The Gathering card without a funny",
+				null,
+				null,
+				null
 			]
 		},
 		{
@@ -192368,7 +193107,7 @@
 		{
 			"Name": "Zonatog",
 			"Image": "https://lh3.googleusercontent.com/d/1DbgHDst2Hue5R0D5OG8Gj9bTlCA-HZEU",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -192549,7 +193288,7 @@
 		{
 			"Name": "Zur, an Orb",
 			"Image": "https://lh3.googleusercontent.com/d/1FVoMZoJRCTpHSNwe1Kh4LXU5xpnraK66",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -193044,7 +193783,7 @@
 		{
 			"Name": "ant Cat",
 			"Image": "https://lh3.googleusercontent.com/d/1DPB462hi1mZbECuRhXGOh_q3X6-fjfL2",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -195095,7 +195834,7 @@
 		{
 			"Name": "re d Cabin",
 			"Image": "https://lh3.googleusercontent.com/d/1GfsLvYPYEbzvoozSvrMZxd3wHvjTSS_o",
-			"Creator": "Benana",
+			"Creator": "benana2222",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
