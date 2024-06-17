@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 
 import { FormField } from "@workday/canvas-kit-react/form-field";
 import { Select } from "@workday/canvas-kit-preview-react/select";
-import { useCards } from "../hellfall/useCards";
+import { cardsAtom } from "../hellfall/cardsAtom";
 import { Area } from "./Area";
 import { useAtom, useAtomValue } from "jotai";
 import { deckAtom, draftAtom } from "./draftAtom";
 import { DeckConstruction } from "./DeckConstruction";
 import { CARDS_PER_PACK } from "./constants";
-import { Header } from "../header";
 
 export const Draft = () => {
   const [set, setSet] = useState<"HLC" | "HC2" | "HC3" | "H4" | undefined>(
@@ -17,7 +16,7 @@ export const Draft = () => {
 
   const [draft, setDraft] = useAtom(draftAtom);
 
-  const cards = useCards();
+  const cards = useAtomValue(cardsAtom);
 
   const deckToBuild = useAtomValue(deckAtom);
 
@@ -43,7 +42,6 @@ export const Draft = () => {
 
   return (
     <>
-      <Header></Header>
       <h2>Hellscube draft simulator (the bots are dumb)</h2>
       {cards && !set && (
         <FormField label="Select your set">

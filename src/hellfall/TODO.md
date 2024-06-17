@@ -35,11 +35,12 @@ Write a script to transform the database
 ~~- Enter key should submit search~~
 ~~- add guide for !~~
 ~~- mobile support~~
-- Script to fetch and transform sheets directly from google doc
+~~- Script to fetch and transform sheets directly from google doc~~
 - sort by year/set
 
 # Mana symbols that need support
 - ?
 - 2/P
 - 3/P
-- {M} 
+- {M}
+- {BB/P}

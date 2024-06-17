@@ -91,11 +91,11 @@ export const SearchControls = () => {
             onChange={(event) => {
               setColorComparison(event.target.value as any);
             }}
-          ></StyledManaSelect>
+          />
         </FormField>
 
         <CheckboxGroup
-          label="Within Color Identity"
+          label="Colors (Commander)"
           values={colors}
           initialValue={searchColorsIdentity}
           onChange={setSearchColorsIdentityAtom}

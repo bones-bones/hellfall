@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Header } from "../header";
 import { useLands } from "./useLands";
 import { Land } from "./types";
 import { useState } from "react";
@@ -17,10 +16,9 @@ export const LandBox = () => {
 
     return curr;
   }, {} as any);
-  console.log(grouped);
+
   return (
     <>
-      <Header></Header>
       <h1>Need some lands? grab some from the land box</h1>
       {active && (
         <BigView clear={() => setActive(undefined)} land={active}></BigView>

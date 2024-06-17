@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { HCEntry } from "../types";
-import { useCards } from "./useCards";
+import { cardsAtom } from "./cardsAtom";
 import { useAtom, useAtomValue } from "jotai";
 import {
   activeCardAtom,
@@ -22,7 +22,7 @@ import { getColorIdentity } from "./getColorIdentity";
 
 export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCEntry[]>([]);
-  const cards = useCards();
+  const cards = useAtomValue(cardsAtom);
   const set = useAtomValue(searchSetAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const nameSearch = useAtomValue(nameSearchAtom);

@@ -4,11 +4,14 @@ import { Hellscubes } from "./hells-cubes";
 import { DeckBuilder } from "./deck-builder";
 import { Draft } from "./draft";
 import { LandBox } from "./land-box";
+import { SingleCard } from "./hellfall/SingleCard";
+import { Header } from "./header";
 
 export const App = () => {
   return (
     <div>
       <BrowserRouter basename="hellfall">
+        <Header />
         <ApplicationRoutes />
       </BrowserRouter>
     </div>
@@ -22,5 +25,6 @@ const ApplicationRoutes = () => {
     { path: "/draft", element: <Draft></Draft> },
     { path: "/land-box", element: <LandBox></LandBox> },
     { path: "/", element: <HellFall /> },
+    { path: "/card/*", element: <SingleCard /> },
   ]);
 };

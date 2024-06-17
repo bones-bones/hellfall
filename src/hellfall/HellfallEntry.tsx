@@ -7,7 +7,7 @@ export const HellfallEntry = ({
 }: {
   url: string;
   name: string;
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   return (
     <Container key={name} role="button">

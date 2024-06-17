@@ -8,7 +8,6 @@ import { FormField } from "@workday/canvas-kit-react/form-field";
 import { TextInput } from "@workday/canvas-kit-react";
 import { ImportInstructions } from "./ImportInstructions";
 import { PlaytestArea } from "./playtest/PlaytestArea";
-import { Header } from "../header";
 const basics: Record<string, string> = {
   //"https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/p/4/v/fp4vq/Final-Kraject.png",
   forest:
@@ -123,7 +122,6 @@ export const DeckBuilder = () => {
 
   return (
     <div>
-      <Header></Header>
       <ImportInstructions />
       {renderCards.length > 0 &&
         (playtesting ? (

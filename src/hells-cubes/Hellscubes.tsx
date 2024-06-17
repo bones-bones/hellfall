@@ -1,17 +1,16 @@
 import { Routes, Route } from "react-router";
 import { HellsCube } from "./one";
 
-import { Header } from "../header";
-
 import { CubeResources } from "./CubeResources";
+import { AvatarOfBalls } from "./AvatarOfBalls";
 
 export const Hellscubes = () => {
   return (
     <>
-      <Header />
       <Routes>
         <Route path="/" element={<CubeResources />} />
         <Route path="/one/*" element={<HellsCube />} />
+        <Route path="/ballsjr" element={<AvatarOfBalls />} />
       </Routes>
     </>
   );

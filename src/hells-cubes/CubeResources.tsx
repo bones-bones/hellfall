@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { toDeck } from "../deck-builder/toDeck";
-import { useCards } from "../hellfall/useCards";
+import { cardsAtom } from "../hellfall/cardsAtom";
 import { toCockCube } from "./toCockCube";
+import { useAtomValue } from "jotai";
 
 export const CubeResources = () => {
-  const cards = useCards();
+  const cards = useAtomValue(cardsAtom);
 
   return (
     <Container>
