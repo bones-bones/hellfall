@@ -181,7 +181,7 @@ const main = async () => {
           //@ts-ignore
           .concat({ data: tokensWithBetterName }.data.map(tokenToCard))
           .sort((a, b) => {
-            if (a.Name > b.Name) {
+            if (a.Name + a["Text Box"] > b.Name + b["Text Box"]) {
               return 1;
             }
             return -1;

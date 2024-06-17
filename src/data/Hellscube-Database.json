@@ -423,7 +423,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1e2eg67AxMI98f4YZGmeHcuSIojLKVQ8r",
 			"Creator": "Cirion02",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 3,
 			"Color(s)": "Blue",
@@ -912,7 +912,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1C8f8Lmt-qs_Bo3nHfr45ZJim8jgh_6Gs",
 			"Creator": "Cirion02",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 3,
 			"Color(s)": "White",
@@ -1172,8 +1172,8 @@
 			"Image": "https://lh3.googleusercontent.com/d/1j27P1U2HGRkw2gphpPOIO6HtdayAhuY1",
 			"Creator": "Askedforit",
 			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "Penny may only be exchanged once, but you may exchange it any time between or before matches. -Jumberlack #rulings 8/16/2022 \\n If you reduce a card’s value on the secondary market via Jace the Signed Sculptor, you may choose to reduce it to $0.01. If you haven’t yet exchanged Penny, you may exchange it for that card before a future match. - Jumberlack #rulings 8/16/2022",
+			"Constructed": "Banned",
+			"Rulings": "Penny may only be exchanged once, but you may exchange it any time between or before matches. -jumberlack. #rulings 8/16/2022 \\n If you reduce a card’s value on the secondary market via Jace the Signed Sculptor, you may choose to reduce it to $0.01. If you haven’t yet exchanged Penny, you may exchange it for that card before a future match. - jumberlack. #rulings 8/16/2022",
 			"CMC": 0,
 			"Color(s)": "",
 			"Cost": [
@@ -2096,64 +2096,6 @@
 			]
 		},
 		{
-			"Name": "3",
-			"Image": "https://lh3.googleusercontent.com/d/1sefCcJzrvEypjHtEpA7Ow01TOvuPU8t2",
-			"Creator": "u/Canned-Meats",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 5,
-			"Color(s)": "White;Blue",
-			"Cost": [
-				"{3}{W}{U}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Sorcery",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"You gain 3 life and draw three cards.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "3 Mana Green Creature",
 			"Image": "https://lh3.googleusercontent.com/d/1IV8f7UnemErFf-pxtF--TR_8WQZ9iUxA",
 			"Creator": "u/YellowPie84",
@@ -2334,6 +2276,64 @@
 			],
 			"Text Box": [
 				"{T}: Reveal a nonland card from your hand. Create a suspended copy of that card in exile, with a nuber of time counters on it equal to its mana value. 3D Printer doesn't untap for as long as that card remains suspended.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "3",
+			"Image": "https://lh3.googleusercontent.com/d/1sefCcJzrvEypjHtEpA7Ow01TOvuPU8t2",
+			"Creator": "u/Canned-Meats",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "White;Blue",
+			"Cost": [
+				"{3}{W}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"You gain 3 life and draw three cards.",
 				null,
 				null,
 				null
@@ -3916,7 +3916,7 @@
 		{
 			"Name": "ABCs",
 			"Image": "https://lh3.googleusercontent.com/d/1Ue4wDymxGl_Rq5BKzsICBD0rCNVl2V1U",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -4270,7 +4270,7 @@
 		{
 			"Name": "Ability Bingo",
 			"Image": "https://lh3.googleusercontent.com/d/11vjdfPWHOIPQ92_ESzZivAhan8ydXUPR",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -4519,6 +4519,64 @@
 			]
 		},
 		{
+			"Name": "Absolute Unit.",
+			"Image": "https://lh3.googleusercontent.com/d/1TgDA3AYkXgGZlUiqqolHzziMIU8J7QnT",
+			"Creator": "jumberlack.",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "Green",
+			"Cost": [
+				"{3}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature;Creature;Creature;Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"(~ counts as four creatures when counting creatures. It behaves like one creature.) \\n ~ can block up to 4 creatures and can’t be blocked except by 4 or more creatures. ",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Absolute Unit",
 			"Image": "https://lh3.googleusercontent.com/d/1O-MFI5ZH4HQFN9BQWRDaFbmnu9nkXeRM",
 			"Creator": "u/ExaltedOne",
@@ -4571,64 +4629,6 @@
 			],
 			"Text Box": [
 				"Absolute Unit’s power is equal to the absolute value of its power. The same it true for its toughness. This ability applies in layer 7f.\\nAbsolute Unit enters the battlefield with two -1/-1 counters on it.\\n{B}: Move a -1/-1 counter from target creature to another target creature.\n",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "Absolute Unit.",
-			"Image": "https://lh3.googleusercontent.com/d/1TgDA3AYkXgGZlUiqqolHzziMIU8J7QnT",
-			"Creator": "Jumberlack",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 5,
-			"Color(s)": "Green",
-			"Cost": [
-				"{3}{G}{G}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature;Creature;Creature;Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"4",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"4",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"(~ counts as four creatures when counting creatures. It behaves like one creature.) \\n ~ can block up to 4 creatures and can’t be blocked except by 4 or more creatures. ",
 				null,
 				null,
 				null
@@ -4829,7 +4829,7 @@
 		{
 			"Name": "Abzan Counters",
 			"Image": "https://lh3.googleusercontent.com/d/1lNSvZIVgi7zZWyEC_BwiQB7_3MOOpJSv",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -4887,7 +4887,7 @@
 		{
 			"Name": "Abzan Heirarch",
 			"Image": "https://lh3.googleusercontent.com/d/1BGN6qcL5ng6lUVDq8wIBALSM8QSEozjB",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -5075,7 +5075,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Jb-OwTtE5ZwMDlPr9Se2woTFO1x3u6l4",
 			"Creator": "daze",
 			"Set": "HC3",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 6,
 			"Color(s)": "White;Blue;Black;Red;Green;Purple",
@@ -5400,7 +5400,7 @@
 		{
 			"Name": "Actual Cascade Bluffs",
 			"Image": "https://lh3.googleusercontent.com/d/1K3HQ4JjPrYkLj0vgG3CnYBX1vEeYlray",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -6365,7 +6365,7 @@
 		{
 			"Name": "Ajani's Pride Mate",
 			"Image": "https://lh3.googleusercontent.com/d/12XInBwed9gUb4xV6e0FB_fgwWSAnYSAM",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -8980,7 +8980,7 @@
 		{
 			"Name": "Ancient Den Protector",
 			"Image": "https://lh3.googleusercontent.com/d/1g2c9hWMiwFoY0bff1NohrjZAUOpzcPZL",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -9384,7 +9384,7 @@
 		{
 			"Name": "Angel Investor",
 			"Image": "https://lh3.googleusercontent.com/d/1aW-bOLbzhtIhFrUKbVbQuOUQZKmsYTiE",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -10262,7 +10262,7 @@
 		{
 			"Name": "Antimatterologist",
 			"Image": "https://lh3.googleusercontent.com/d/1j0v87TGqpLWZmtAzu43f7qM9gGFiRFE4",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -13365,7 +13365,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1_9JiFj7vbfN70xIhpLFSkBkPQNydVwtj",
 			"Creator": "Cirion02",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 4,
 			"Color(s)": "Red",
@@ -14108,7 +14108,7 @@
 		{
 			"Name": "Awoken Rotation",
 			"Image": "https://lh3.googleusercontent.com/d/1bnnO0ijIGpu3DYgKiJznq2svgpL3lvgW",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -14695,7 +14695,7 @@
 		{
 			"Name": "Backfired Clone",
 			"Image": "https://lh3.googleusercontent.com/d/14STdDUMHH8Xw2PCgHcWtwWsW05H5lYhz",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -15289,7 +15289,7 @@
 		{
 			"Name": "Baker",
 			"Image": "https://lh3.googleusercontent.com/d/1B52-sCbwFknog6StKxn_1LddkLMhBvu3",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -16429,7 +16429,7 @@
 		{
 			"Name": "Ban’t",
 			"Image": "https://lh3.googleusercontent.com/d/1KliudqstvaPkV7e3im_odS-ziIwYFome",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -17884,70 +17884,6 @@
 			]
 		},
 		{
-			"Name": "Bear",
-			"Image": "https://lh3.googleusercontent.com/d/1m-qwSzkZmYphacJEX3nKEgqFxI20w3Wf",
-			"Creator": "platyposeidon",
-			"Set": "HC6",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "",
-			"Cost": [
-				"{2}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Bear be a 4/4 Bear creature.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"a beast",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Bear // Hate",
 			"Image": "https://lh3.googleusercontent.com/d/1aC3HJt-b5OChtNgkB74HuIJeP90v8C1z",
 			"Creator": "u/coincidentalacci",
@@ -18457,6 +18393,70 @@
 			],
 			"Text Box": [
 				"As long as Bear with Set's Mechanics is on the battlefield, it has all keyword abilities of all creature cards in graveyards.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Bear",
+			"Image": "https://lh3.googleusercontent.com/d/1m-qwSzkZmYphacJEX3nKEgqFxI20w3Wf",
+			"Creator": "platyposeidon",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "",
+			"Cost": [
+				"{2}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Bear be a 4/4 Bear creature.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"a beast",
 				null,
 				null,
 				null
@@ -19506,6 +19506,64 @@
 			]
 		},
 		{
+			"Name": "Bicycle (hc4)",
+			"Image": "https://lh3.googleusercontent.com/d/1eny6my6ytWFDCEYjT5zKvmms8GBNqkTx",
+			"Creator": "juanqu",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"{0}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Vehicle",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Crew 1\\nBicycling {1}, Discard another card. ({1}, Discard this card and another card: Draw two cards.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Bicycle",
 			"Image": "https://lh3.googleusercontent.com/d/11Q7xUob9ZPv8mmajCPlQXkgpIRWqC47m",
 			"Creator": "dRafterDemon",
@@ -19564,64 +19622,6 @@
 			],
 			"Flavor Text": [
 				"Insert Queen lyrics here",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "Bicycle (hc4)",
-			"Image": "https://lh3.googleusercontent.com/d/1eny6my6ytWFDCEYjT5zKvmms8GBNqkTx",
-			"Creator": "juanqu",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"{0}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Artifact",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Vehicle",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Crew 1\\nBicycling {1}, Discard another card. ({1}, Discard this card and another card: Draw two cards.)",
 				null,
 				null,
 				null
@@ -20136,7 +20136,7 @@
 		{
 			"Name": "Bility Bolt",
 			"Image": "https://lh3.googleusercontent.com/d/1avreUEkKO4pO1BwtoO3Hvcq7-BTUdBnN",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -20186,64 +20186,6 @@
 			],
 			"Text Box": [
 				"Bility Bolt deals 3 damage to any target.\\nBility Bolt has trample if you control a creature with trample. The same is true for deathtouch, lifelink, and hexproof.",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "Bill",
-			"Image": "https://lh3.googleusercontent.com/d/1FHsXx2jkkKjFG-E2BnxIB0Xb3JjoIv3i",
-			"Creator": "u/YellowPie84",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "White",
-			"Cost": [
-				"{1}{W}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Human",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Cipher",
 				null,
 				null,
 				null
@@ -20367,6 +20309,64 @@
 			],
 			"Text Box": [
 				"{2}{U/R}, {T}: Add two 1/1 Bill's Wiener creature tokens to your hand. They cost {U/R} and have cycling {2}.\\nYou have no maximum hand size.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Bill",
+			"Image": "https://lh3.googleusercontent.com/d/1FHsXx2jkkKjFG-E2BnxIB0Xb3JjoIv3i",
+			"Creator": "u/YellowPie84",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "White",
+			"Cost": [
+				"{1}{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Cipher",
 				null,
 				null,
 				null
@@ -20497,7 +20497,7 @@
 		{
 			"Name": "Biomancer of Strictly Better",
 			"Image": "https://lh3.googleusercontent.com/d/1xam4vJz27j6NSavDItQbdMC5jBTWDlCO",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -25401,7 +25401,7 @@
 		{
 			"Name": "Braise Dead",
 			"Image": "https://lh3.googleusercontent.com/d/1UvVyFZII1pQmU7y0_f8i8zrLRkGc2UWI",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -26284,7 +26284,7 @@
 		{
 			"Name": "Bringer of the Purple Dawn",
 			"Image": "https://lh3.googleusercontent.com/d/1iBHYJSL8BeTfnCZmRbYy24M01HmceHkI",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -26589,7 +26589,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1kWHnH4jJ17Ni0wPzSpKxZxCYl-vpTIRz",
 			"Creator": "u/coincidentalacci",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
 			"Color(s)": "",
@@ -26761,7 +26761,7 @@
 		{
 			"Name": "Build Your Own Mind Sculptor",
 			"Image": "https://lh3.googleusercontent.com/d/1LYgWBjInDxmVylrWEs3gn9RUtdn9JOSg",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -27296,7 +27296,7 @@
 		{
 			"Name": "Burny Sanders",
 			"Image": "https://lh3.googleusercontent.com/d/1aizN3R1FjuSqz4hmNXYI6Q8RVj-xg64f",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -27419,7 +27419,7 @@
 		{
 			"Name": "Butt Inspection",
 			"Image": "https://lh3.googleusercontent.com/d/1u5AtXadIIipoiwXEiA2APrY-s0XiGqrZ",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -28596,64 +28596,6 @@
 			]
 		},
 		{
-			"Name": "Canyon",
-			"Image": "https://lh3.googleusercontent.com/d/1Lh93dzYq0yDi6069xb-xcgoQoMUKb9vZ",
-			"Creator": "AceGamer",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Land",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Canyon enters the battlefield tapped unless you pay {3}{R} as it enters. When Canyon enters the battlefield untapped, add a copy of it to your hand except it loses all card types. \\n {T}: Add {R} or {W} to your mana pool. \\n Grandeur — , Discard another card named Canyon: Create a 3/3 Minotaur token.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Canyon Mintotaur",
 			"Image": "https://lh3.googleusercontent.com/d/1D6uG0M8ed_AwFanIPbyqu9CHIAVidBv9",
 			"Creator": "u/Fishladdie",
@@ -28712,6 +28654,64 @@
 			],
 			"Flavor Text": [
 				"“We’ll scale these cliffs, traverse Brittle Bridge, and then fight our way down the volcanic slopes on the other side.” \\n “Isn’t the shortest route through the canyon?” \\n “Yes.” \\n “So shouldn’t we—” \\n “No.”",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Canyon",
+			"Image": "https://lh3.googleusercontent.com/d/1Lh93dzYq0yDi6069xb-xcgoQoMUKb9vZ",
+			"Creator": "AceGamer",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Canyon enters the battlefield tapped unless you pay {3}{R} as it enters. When Canyon enters the battlefield untapped, add a copy of it to your hand except it loses all card types. \\n {T}: Add {R} or {W} to your mana pool. \\n Grandeur — , Discard another card named Canyon: Create a 3/3 Minotaur token.",
 				null,
 				null,
 				null
@@ -29028,7 +29028,7 @@
 		{
 			"Name": "Card Draw Cruise",
 			"Image": "https://lh3.googleusercontent.com/d/1kNFXeY8WoldiRneX3aelbiCMh4PPu-h_",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -29639,7 +29639,7 @@
 		{
 			"Name": "Carseek",
 			"Image": "https://lh3.googleusercontent.com/d/174eRQAP7udA9oNxolX_riGSwI1Nff5BD",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -29939,64 +29939,6 @@
 			]
 		},
 		{
-			"Name": "Cat",
-			"Image": "https://lh3.googleusercontent.com/d/1roNaoCnbPtoTbUhMDEZtrSaZnW1gqLbT",
-			"Creator": "Bogander_Guy",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"Sacrifice a creature:",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Cat",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"0",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Once per turn, whenever you sacrifice Cat, it remains on the battlefield instead of going to your graveyard.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Cat 1",
 			"Image": "https://lh3.googleusercontent.com/d/1ucOfgeIL3ULrvoPTvrcnFuc7rpdMvk3Y",
 			"Creator": "",
@@ -30076,7 +30018,7 @@
 		{
 			"Name": "Cat Bus",
 			"Image": "https://lh3.googleusercontent.com/d/1f8TtZd6qA9WGBUUPifdPGRiqTkdffvlB",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -30126,6 +30068,64 @@
 			],
 			"Text Box": [
 				"When Cat Bus becomes crewed for the first time each turn, Cat Bus gains all abilities of up to one creature that crewed it until end of turn.\\nCreatures you control have Ward {1}.\\nCrew 3",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Cat",
+			"Image": "https://lh3.googleusercontent.com/d/1roNaoCnbPtoTbUhMDEZtrSaZnW1gqLbT",
+			"Creator": "Bogander_Guy",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"Sacrifice a creature:",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Cat",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Once per turn, whenever you sacrifice Cat, it remains on the battlefield instead of going to your graveyard.",
 				null,
 				null,
 				null
@@ -30808,7 +30808,7 @@
 		{
 			"Name": "Chain Golem",
 			"Image": "https://lh3.googleusercontent.com/d/1OmqFlPANLJDT5pGLP6quzYBBPMGGAfhh",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -31787,8 +31787,66 @@
 			]
 		},
 		{
+			"Name": "Chernobyl Hierarch",
+			"Image": "https://lh3.googleusercontent.com/d/1B4ZgPz3yQUjBGH913G36hb3LZkqGOWOd",
+			"Creator": "Gerbit.",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Green",
+			"Cost": [
+				"{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Elf;Mutant",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever a creature you control attacks alone, mutate a copy of Chernobyl Hierarch underneath it but it loses this ability. \\n {T}: Add {P}, {P}, or {P}.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Chernobyl",
-			"Image": "https://lh3.googleusercontent.com/d/1LEzUFhfRXvzJgeFbtdn2hqfQsbBJOI_h",
+			"Image": "https://lh3.googleusercontent.com/d/128lWdppVynK91Hh92rB6Zbnx2fPd1r39",
 			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
@@ -31845,7 +31903,7 @@
 			]
 		},
 		{
-			"Name": "Chernobyl (hc2)",
+			"Name": "Chernobyl",
 			"Image": "https://lh3.googleusercontent.com/d/128lWdppVynK91Hh92rB6Zbnx2fPd1r39",
 			"Creator": "Bogander_Guy",
 			"Set": "HC2",
@@ -31903,64 +31961,6 @@
 			],
 			"Flavor Text": [
 				"\"Oh god oh fuck it comes to life fucking Chernobyl came to life fucking run.\"",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "Chernobyl Hierarch",
-			"Image": "https://lh3.googleusercontent.com/d/1B4ZgPz3yQUjBGH913G36hb3LZkqGOWOd",
-			"Creator": "Gerbit.",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "Green",
-			"Cost": [
-				"{G}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Elf;Mutant",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"0",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Whenever a creature you control attacks alone, mutate a copy of Chernobyl Hierarch underneath it but it loses this ability. \\n {T}: Add {P}, {P}, or {P}.",
 				null,
 				null,
 				null
@@ -34417,7 +34417,7 @@
 		{
 			"Name": "Color Copier",
 			"Image": "https://lh3.googleusercontent.com/d/1B2RrY3Nj6TBMewuuoFZT0LIFOQHP4omj",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -35702,7 +35702,7 @@
 		{
 			"Name": "Commanding Prince",
 			"Image": "https://lh3.googleusercontent.com/d/17BL2g9totv5E6Fl0uRQwoTpK-EzjlgbO",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -35946,7 +35946,7 @@
 		{
 			"Name": "Compost(hc)",
 			"Image": "https://lh3.googleusercontent.com/d/14_5R9k-fqoS6X2-IdHx_DiJY4qjI9Z-o",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -36882,7 +36882,7 @@
 		{
 			"Name": "Convergent Evolution",
 			"Image": "https://lh3.googleusercontent.com/d/1pt-m8srV39LFSf0IL1GD3bsv70m2PFr5",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -37389,7 +37389,7 @@
 		{
 			"Name": "Copycat",
 			"Image": "https://lh3.googleusercontent.com/d/1zm4DUr2VL-LgrC8ct9fOZB5FX82ysWub",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -37703,7 +37703,7 @@
 		{
 			"Name": "Costly Bribe",
 			"Image": "https://lh3.googleusercontent.com/d/1kmkuL09LkO6FoOGDfj-sEQuXOSwQkSl5",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -37958,70 +37958,6 @@
 			]
 		},
 		{
-			"Name": "Counter Counter",
-			"Image": "https://lh3.googleusercontent.com/d/1iMvUSe9spOwmLoRNTN5QHY4EZ5dHMLyw",
-			"Creator": "u/TemporalFuzz",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Green",
-			"Cost": [
-				"{1}{G}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Lhurgoyf",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"0",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Counter Counter enters the battlefield with a blank counter on it.\\nCounter Counter's power is equal to the number of types of counters on permanents and its toughness is equal to that number plus one.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"What counts, counters. And what counters feeds the counter counter.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Counter Counter // Counter Counter",
 			"Image": "https://lh3.googleusercontent.com/d/1IpYUU9-Hla6iAAxpsSxgfOpOm-F6WgZU",
 			"Creator": "u/duskulldoll",
@@ -38087,9 +38023,73 @@
 			"Tags": ""
 		},
 		{
+			"Name": "Counter Counter",
+			"Image": "https://lh3.googleusercontent.com/d/1iMvUSe9spOwmLoRNTN5QHY4EZ5dHMLyw",
+			"Creator": "u/TemporalFuzz",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Green",
+			"Cost": [
+				"{1}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Lhurgoyf",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Counter Counter enters the battlefield with a blank counter on it.\\nCounter Counter's power is equal to the number of types of counters on permanents and its toughness is equal to that number plus one.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"What counts, counters. And what counters feeds the counter counter.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Counter Crusher",
 			"Image": "https://lh3.googleusercontent.com/d/1o1ePqMSaDV2l1smqr6LXNhvmpMd2cClJ",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -40037,7 +40037,7 @@
 		{
 			"Name": "Crypticspire Mantis",
 			"Image": "https://lh3.googleusercontent.com/d/1s4Y3l6SbM396zi59UNGakzf10FexKiF_",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -41102,7 +41102,7 @@
 		{
 			"Name": "Cute Duck",
 			"Image": "https://lh3.googleusercontent.com/d/18dkMJTqreF8Qfg-j7jb-smhNcgYSyXSB",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -42548,70 +42548,6 @@
 			]
 		},
 		{
-			"Name": "Dead on Arrival",
-			"Image": "https://lh3.googleusercontent.com/d/14bnnqbFW_PhRkOtQvXjT1ymm4Gm_zqdh",
-			"Creator": "u/C9_Arcane",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Black",
-			"Cost": [
-				"{1}{B}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Instant",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Counter target non-Zombie creature spell.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"\"He's Dead, Jim.\"",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Dead on Arrival // Naturalize Magic",
 			"Image": "https://lh3.googleusercontent.com/d/1CVtBweSxr6bpyg434522P7KLiRvhuUky",
 			"Creator": "u/SirQuixano",
@@ -42675,6 +42611,70 @@
 				null
 			],
 			"Tags": ""
+		},
+		{
+			"Name": "Dead on Arrival",
+			"Image": "https://lh3.googleusercontent.com/d/14bnnqbFW_PhRkOtQvXjT1ymm4Gm_zqdh",
+			"Creator": "u/C9_Arcane",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Black",
+			"Cost": [
+				"{1}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Counter target non-Zombie creature spell.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"He's Dead, Jim.\"",
+				null,
+				null,
+				null
+			]
 		},
 		{
 			"Name": "Dead on Board",
@@ -43232,7 +43232,7 @@
 		{
 			"Name": "Deep Fry",
 			"Image": "https://lh3.googleusercontent.com/d/18nXPqAJNOcnu6KaEL-OfCVywtkAHciY9",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -43290,7 +43290,7 @@
 		{
 			"Name": "Delayed Reunion",
 			"Image": "https://lh3.googleusercontent.com/d/1hci2lrZNnrQdMoeYERknW8dSV6cOdtlk",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -44323,64 +44323,6 @@
 			]
 		},
 		{
-			"Name": "Detroit",
-			"Image": "https://lh3.googleusercontent.com/d/1NIfUXEpBJw20qBfVlGkgWi4QpD4g6bVK",
-			"Creator": "Aquonn",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Land",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Detroit enters the battlefield tapped unless you control 3 or more lands.\\n{T}: Add {W}, {B}, {G}.\\n{W/B/G}{W/B/G}, {T}: Put a Human counter on target creature. (It's a type counter.)",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Detroit Becomes Human (idk i never played the game)",
 			"Image": "https://lh3.googleusercontent.com/d/1xI7KGQAMzsCKuees9PnkZEUthrzvExc1",
 			"Creator": "u/Bolt_Fried_Bird",
@@ -44433,6 +44375,64 @@
 			],
 			"Text Box": [
 				"I — Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.\\nII — Put two +1/+1 counters on target basic land you contol. It becomes a 0/0 creature in addition to its other types.\\nIII — Put a vigilance counter on target land creature you control. It becomes a Human in addition to its other types.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Detroit",
+			"Image": "https://lh3.googleusercontent.com/d/1NIfUXEpBJw20qBfVlGkgWi4QpD4g6bVK",
+			"Creator": "Aquonn",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Detroit enters the battlefield tapped unless you control 3 or more lands.\\n{T}: Add {W}, {B}, {G}.\\n{W/B/G}{W/B/G}, {T}: Put a Human counter on target creature. (It's a type counter.)",
 				null,
 				null,
 				null
@@ -44953,7 +44953,7 @@
 		{
 			"Name": "Die by Pi",
 			"Image": "https://lh3.googleusercontent.com/d/1Pf8nCB4x9tHd9d9Vkeor311VZ3bEAARN",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -46679,7 +46679,7 @@
 		{
 			"Name": "Dog Wit Da Knife",
 			"Image": "https://lh3.googleusercontent.com/d/1yMcpLKm08aUuwgEKeH9MaYQPDG1R2F7N",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -48454,7 +48454,7 @@
 		{
 			"Name": "Draft Dodger",
 			"Image": "https://lh3.googleusercontent.com/d/1Pq4UDnptLF5NDx1JG0jlSi_WsiKgCJSy",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -49859,7 +49859,7 @@
 		{
 			"Name": "Dward if Kil",
 			"Image": "https://lh3.googleusercontent.com/d/1lL4FWv-1_rWbJqQE5hNQa7PpYUZk9NX5",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -50540,64 +50540,6 @@
 			]
 		},
 		{
-			"Name": "Edgy",
-			"Image": "https://lh3.googleusercontent.com/d/1UOefFSHeVmFzBMBF54_-QxUw12NZjO_d",
-			"Creator": "Jumberlack",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 4,
-			"Color(s)": "Black;Red",
-			"Cost": [
-				"{2}{B/R}{B/R}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Elemental;Incarnation",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"5",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Menace, Deathtouch\\nPay 1 life, sacrfice a creature: Creatures you control gain menace and deathtouch until end of turn. Activate this ability onlu from your graveyard and only if you control a mountain and a swamp.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Edgy Teen Dreadmaw",
 			"Image": "https://lh3.googleusercontent.com/d/1ny7ZT9LWvGY0msfVlJomlGa2BrJcLQre",
 			"Creator": "u/C9_Arcane",
@@ -50656,6 +50598,64 @@
 			],
 			"Flavor Text": [
 				"If you feel the ground quake, you would never understand. If you hear its bellow, it's not just a phase, Mom. If you see its teeth, cringe.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Edgy",
+			"Image": "https://lh3.googleusercontent.com/d/1UOefFSHeVmFzBMBF54_-QxUw12NZjO_d",
+			"Creator": "jumberlack.",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Black;Red",
+			"Cost": [
+				"{2}{B/R}{B/R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Elemental;Incarnation",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"5",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Menace, Deathtouch\\nPay 1 life, sacrfice a creature: Creatures you control gain menace and deathtouch until end of turn. Activate this ability onlu from your graveyard and only if you control a mountain and a swamp.",
 				null,
 				null,
 				null
@@ -54204,7 +54204,7 @@
 		{
 			"Name": "Epic Prankster",
 			"Image": "https://lh3.googleusercontent.com/d/1YN2fAqOx9WwHZIg92UdhIA93KdEoU9Tr",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -54558,7 +54558,7 @@
 		{
 			"Name": "Escape Room",
 			"Image": "https://lh3.googleusercontent.com/d/1QwkM9c5TvdCXB4ffoSOo-WdTCA8nSuTO",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -54976,7 +54976,7 @@
 		{
 			"Name": "Evader Raider",
 			"Image": "https://lh3.googleusercontent.com/d/12tXNo9IgYm0dXIRKdsZpjDhOVYspcaN1",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -55290,7 +55290,7 @@
 		{
 			"Name": "Everything is a Mimic",
 			"Image": "https://lh3.googleusercontent.com/d/1GZceFFybKo89CzEtNeoRmxEDSURHUUiE",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -55855,7 +55855,7 @@
 		{
 			"Name": "Evolving Fabled Terramorphic Vista",
 			"Image": "https://lh3.googleusercontent.com/d/1dU1xXCN3pYUyoAHHE-Hh7piAJvHkPODP",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -57363,7 +57363,7 @@
 		{
 			"Name": "Fair Mana Geode",
 			"Image": "https://lh3.googleusercontent.com/d/1KATpmC2HBAqqzi1Bi52fMr_9H4z05kvs",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -57493,7 +57493,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Gn8ZSOMMHoBsQkKxNeHR559w1xQ9wrLH",
 			"Creator": "u/C9_Arcane",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 1,
 			"Color(s)": "White",
@@ -57858,7 +57858,7 @@
 		{
 			"Name": "Farming Prince",
 			"Image": "https://lh3.googleusercontent.com/d/17LxK17aMsMwYgWrwk49mw9q6wDMb-Ptt",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -59542,7 +59542,7 @@
 		{
 			"Name": "Firefist",
 			"Image": "https://lh3.googleusercontent.com/d/1wqklD5d1izaWSXf_RAGXWJaEHJp9Isib",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -60043,64 +60043,6 @@
 			"FIELD56": ""
 		},
 		{
-			"Name": "Fixer-Upper",
-			"Image": "https://lh3.googleusercontent.com/d/17i8rCWuMrIsgG5x6kr0byk1MzPR1PlpT",
-			"Creator": "u/van-theman",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "",
-			"Cost": [
-				"{1}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Artifact",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Vehicle",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Whenever you cast an artifact spell, put a level counter on Fixer-Upper.\\nLEVEL 1-4\\nCrew 1\\n3/3\\nLEVEL 5+\\n{T}: Remove a counter from Fixer-Upper: Draw a card.\\n5/5",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Fixer-Upper (HC4)",
 			"Image": "https://lh3.googleusercontent.com/d/1i8dqwYJemJXxwnucrI_3F-9Yy_Vv3qNq",
 			"Creator": "Askedforit",
@@ -60159,6 +60101,64 @@
 			],
 			"Flavor Text": [
 				"Fun goodies hidden in the drywall!",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Fixer-Upper",
+			"Image": "https://lh3.googleusercontent.com/d/17i8rCWuMrIsgG5x6kr0byk1MzPR1PlpT",
+			"Creator": "vantheman_",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "",
+			"Cost": [
+				"{1}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Vehicle",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever you cast an artifact spell, put a level counter on Fixer-Upper.\\nLEVEL 1-4\\nCrew 1\\n3/3\\nLEVEL 5+\\n{T}: Remove a counter from Fixer-Upper: Draw a card.\\n5/5",
 				null,
 				null,
 				null
@@ -60625,7 +60625,7 @@
 		{
 			"Name": "Flight School",
 			"Image": "https://lh3.googleusercontent.com/d/1_8Mkvu4nDrExHXz863zbj58Ufya3-UfH",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -62555,7 +62555,7 @@
 		{
 			"Name": "Foreteller of the Four Foretells",
 			"Image": "https://lh3.googleusercontent.com/d/1zM-AxosJs3uNyQUTtdyO15s75mRbU8Vm",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -63096,7 +63096,7 @@
 		{
 			"Name": "Frail Snail",
 			"Image": "https://lh3.googleusercontent.com/d/16JrrpSrX2Ad3yf3NSfwYOxutpD-qo2z7",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -63882,7 +63882,7 @@
 		{
 			"Name": "Fuck Marry Kill",
 			"Image": "https://lh3.googleusercontent.com/d/1zBSg6j3tomr2rothBQJjsblLUwkZijzc",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -64750,7 +64750,7 @@
 		{
 			"Name": "GG",
 			"Image": "https://lh3.googleusercontent.com/d/16mLP2hNX7BaDO7qrateAzv6Xuma1kGOY",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -65905,70 +65905,6 @@
 			]
 		},
 		{
-			"Name": "Gary Clone",
-			"Image": "https://lh3.googleusercontent.com/d/1hwELSa8pOmjfrwqz1U7rgF9XR_rhuB8I",
-			"Creator": "Askedforit",
-			"Set": "HC6",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 5,
-			"Color(s)": "Black",
-			"Cost": [
-				"{3}{B}{B}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Zombie;Citizen",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"3",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Squad {2} (As an additional cost to cast this spell, you may pay {2} any number of times. When this creature enters the battlefield, create that many tokens that are copies of it.)\\nWhen Gary enters the battlefield, each opponent loses X life, where X is your devotion to black. You gain life equal to the life lost this way.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"\"Gary!\"",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Gary Clone (hc)",
 			"Image": "https://lh3.googleusercontent.com/d/1X0wdI_z9-_KvG-c0d-jEjL348hg2ns1w",
 			"Creator": "Askedforit",
@@ -66021,6 +65957,70 @@
 			],
 			"Text Box": [
 				"Squad {2}\\nWhen Gary enters the battlefield, each opponent loses X life, where X is your devotion to black. You gain life equal to the life lost this way.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"Gary!\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Gary Clone",
+			"Image": "https://lh3.googleusercontent.com/d/1hwELSa8pOmjfrwqz1U7rgF9XR_rhuB8I",
+			"Creator": "Askedforit",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "Black",
+			"Cost": [
+				"{3}{B}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Zombie;Citizen",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Squad {2} (As an additional cost to cast this spell, you may pay {2} any number of times. When this creature enters the battlefield, create that many tokens that are copies of it.)\\nWhen Gary enters the battlefield, each opponent loses X life, where X is your devotion to black. You gain life equal to the life lost this way.",
 				null,
 				null,
 				null
@@ -66979,70 +66979,6 @@
 			]
 		},
 		{
-			"Name": "George",
-			"Image": "https://lh3.googleusercontent.com/d/1zhozuc_wtIjDvoxZhfavg-bH6ivi5B_1",
-			"Creator": "u/Canned-Meats",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Blue",
-			"Cost": [
-				"{U}{U}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"Legendary",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Monkey",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Whenever George deals damage to an opponent, draw a card.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"\"ooo oo aa aa what's this?\"",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "George Harrison",
 			"Image": "https://lh3.googleusercontent.com/d/1zeCoQTu2NYjh26e_RZC3vKXRHCR8wr1C",
 			"Creator": "notbroam",
@@ -67106,6 +67042,70 @@
 				null
 			],
 			"Tags": ""
+		},
+		{
+			"Name": "George",
+			"Image": "https://lh3.googleusercontent.com/d/1zhozuc_wtIjDvoxZhfavg-bH6ivi5B_1",
+			"Creator": "u/Canned-Meats",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{U}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Monkey",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever George deals damage to an opponent, draw a card.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"ooo oo aa aa what's this?\"",
+				null,
+				null,
+				null
+			]
 		},
 		{
 			"Name": "Germ 1",
@@ -67920,7 +67920,7 @@
 		{
 			"Name": "Gianter Growth",
 			"Image": "https://lh3.googleusercontent.com/d/1jJitWeqZ0fY40AcrQJ99EC9mYGznh5xQ",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -70539,7 +70539,7 @@
 		{
 			"Name": "God Almost Commits Genocide But Decides to Murder Someone Instead",
 			"Image": "https://lh3.googleusercontent.com/d/1tTwW_a6r1G3b2CEmwKmBYeVf7nvePjyR",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -70661,7 +70661,7 @@
 		{
 			"Name": "God-Eternal Witness",
 			"Image": "https://lh3.googleusercontent.com/d/1RhNBQXEwgoQ5AJCoT5Ew_CMRosmoiUXi",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -71829,7 +71829,7 @@
 		{
 			"Name": "Goyfgate",
 			"Image": "https://lh3.googleusercontent.com/d/1pN8drkJ3H3j-G7UCp5HlDovevOn4TVjN",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -72068,7 +72068,7 @@
 		{
 			"Name": "Grandmalith",
 			"Image": "https://lh3.googleusercontent.com/d/14aGLSrjXARzBWPEaZf8Pq-O_sUcbcvX9",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -72676,64 +72676,6 @@
 			]
 		},
 		{
-			"Name": "Greenland",
-			"Image": "https://lh3.googleusercontent.com/d/1Wf2xpd59CTN_P9kFTd4HcyG4wO2_s1B0",
-			"Creator": "bogander_guy",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": null,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"Snow",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Land",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Greenland enters the battlefield tapped.\\n{T}: Add one mana of any color other than green.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Greenland // Iceland",
 			"Image": "https://lh3.googleusercontent.com/d/15CCMNs4U35Yjsg1dNtqXXpQ7mTocmSsF",
 			"Creator": "Daze",
@@ -72797,6 +72739,64 @@
 				null
 			],
 			"Tags": ""
+		},
+		{
+			"Name": "Greenland",
+			"Image": "https://lh3.googleusercontent.com/d/1Wf2xpd59CTN_P9kFTd4HcyG4wO2_s1B0",
+			"Creator": "bogander_guy",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": null,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Snow",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Greenland enters the battlefield tapped.\\n{T}: Add one mana of any color other than green.",
+				null,
+				null,
+				null
+			]
 		},
 		{
 			"Name": "Gremlin 1",
@@ -74943,7 +74943,7 @@
 		{
 			"Name": "Guy Who's New To The Game",
 			"Image": "https://lh3.googleusercontent.com/d/15R1uZutWYSUNONLiCN8qo_k4acHvvE0Z",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -75869,7 +75869,7 @@
 		{
 			"Name": "Haiku Mine",
 			"Image": "https://lh3.googleusercontent.com/d/1dWPf6yLxy2Fbya6zkz366Z5PU-o7hdH3",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -77248,7 +77248,7 @@
 		{
 			"Name": "Hazezon Jadar",
 			"Image": "https://lh3.googleusercontent.com/d/1CXAxrXejOpYvH7V1Pz4SgMNafikpvOOL",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -78111,81 +78111,6 @@
 			]
 		},
 		{
-			"Name": "Hell's Cube",
-			"Image": "https://lh3.googleusercontent.com/d/1vPjxSV-UFJMSuIS2PptbjcJEIOSH9PzS",
-			"Creator": "u/taprus",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 4,
-			"Color(s)": "",
-			"Cost": [
-				"{4}",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Artifact;Creature",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"Cube;Equipment",
-				"",
-				"",
-				""
-			],
-			"power": [
-				"0",
-				"",
-				"",
-				""
-			],
-			"toughness": [
-				"0",
-				"",
-				"",
-				""
-			],
-			"Loyalty": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Text Box": [
-				"At the beginning of your upkeep, rotate Hell's Cube to any of its adjacent faces.\\nAt the beginning of each player's end step, that player draws a card.\\n{2}, {T}: Put a card from your hand in exile, a card you own in exile into your graveyard and a card from your graveyard into your hand.\\n{T}: Add {C}{C}.\\nEquipped creature gets +4/+0 and has vigilance and trample.\\nEquip {3}\\nHell's Cube's power and toughness are equal to the number of cards in your hand.\\nSacrifice Hell's Cube: Destroy target creature.",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Tags": "",
-			"small alt image": "https://cdn.discordapp.com/attachments/692914661191974912/745488316299870278/Hells_Cube.jpg",
-			"tokens": [
-				{
-					"Name": "Hell's Cube 1",
-					"Power": "",
-					"Toughness": "",
-					"Type": "Artifact",
-					"Image": "https://lh3.googleusercontent.com/d/1kEfrWFZnSVHVPs6SBLWv78xEagoubj44"
-				}
-			]
-		},
-		{
 			"Name": "Hell's Cube 1",
 			"Image": "https://lh3.googleusercontent.com/d/1kEfrWFZnSVHVPs6SBLWv78xEagoubj44",
 			"Creator": "",
@@ -78261,6 +78186,81 @@
 			"FIELD54": "",
 			"FIELD55": "",
 			"FIELD56": ""
+		},
+		{
+			"Name": "Hell's Cube",
+			"Image": "https://lh3.googleusercontent.com/d/1vPjxSV-UFJMSuIS2PptbjcJEIOSH9PzS",
+			"Creator": "u/taprus",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "",
+			"Cost": [
+				"{4}",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"Cube;Equipment",
+				"",
+				"",
+				""
+			],
+			"power": [
+				"0",
+				"",
+				"",
+				""
+			],
+			"toughness": [
+				"0",
+				"",
+				"",
+				""
+			],
+			"Loyalty": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Text Box": [
+				"At the beginning of your upkeep, rotate Hell's Cube to any of its adjacent faces.\\nAt the beginning of each player's end step, that player draws a card.\\n{2}, {T}: Put a card from your hand in exile, a card you own in exile into your graveyard and a card from your graveyard into your hand.\\n{T}: Add {C}{C}.\\nEquipped creature gets +4/+0 and has vigilance and trample.\\nEquip {3}\\nHell's Cube's power and toughness are equal to the number of cards in your hand.\\nSacrifice Hell's Cube: Destroy target creature.",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Tags": "",
+			"small alt image": "https://cdn.discordapp.com/attachments/692914661191974912/745488316299870278/Hells_Cube.jpg",
+			"tokens": [
+				{
+					"Name": "Hell's Cube 1",
+					"Power": "",
+					"Toughness": "",
+					"Type": "Artifact",
+					"Image": "https://lh3.googleusercontent.com/d/1kEfrWFZnSVHVPs6SBLWv78xEagoubj44"
+				}
+			]
 		},
 		{
 			"Name": "Hell's Triome",
@@ -78583,7 +78583,7 @@
 		{
 			"Name": "Hellscube Signet",
 			"Image": "https://lh3.googleusercontent.com/d/1VGcb23B6A35oAkAWGe9uG_GRIRBhpqJu",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -79524,73 +79524,6 @@
 			]
 		},
 		{
-			"Name": "Hidden Temple of Legends",
-			"Image": "https://lh3.googleusercontent.com/d/1ZgwcztgJSjbs8gi-pa-hoBUqfa95-Csu",
-			"Creator": "u/NautilusMain",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Land",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"{T}, Pay 1 life: Add {W} or {B}.\\nCycling {1}{W/B}\\nEternalize {4}{W/B}{W/B}",
-				null,
-				null,
-				null
-			],
-			"tokens": [
-				{
-					"Name": "Hidden Temple of Legends 1",
-					"Power": "4",
-					"Toughness": "4",
-					"Type": "Creature",
-					"Image": "https://lh3.googleusercontent.com/d/17Oq2-yH6ie88pJ-0GId-tM9-E0bcDgG3"
-				}
-			]
-		},
-		{
 			"Name": "Hidden Temple of Legends 1",
 			"Image": "https://lh3.googleusercontent.com/d/17Oq2-yH6ie88pJ-0GId-tM9-E0bcDgG3",
 			"Creator": "",
@@ -79666,6 +79599,73 @@
 			"FIELD54": "",
 			"FIELD55": "",
 			"FIELD56": ""
+		},
+		{
+			"Name": "Hidden Temple of Legends",
+			"Image": "https://lh3.googleusercontent.com/d/1ZgwcztgJSjbs8gi-pa-hoBUqfa95-Csu",
+			"Creator": "u/NautilusMain",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}, Pay 1 life: Add {W} or {B}.\\nCycling {1}{W/B}\\nEternalize {4}{W/B}{W/B}",
+				null,
+				null,
+				null
+			],
+			"tokens": [
+				{
+					"Name": "Hidden Temple of Legends 1",
+					"Power": "4",
+					"Toughness": "4",
+					"Type": "Creature",
+					"Image": "https://lh3.googleusercontent.com/d/17Oq2-yH6ie88pJ-0GId-tM9-E0bcDgG3"
+				}
+			]
 		},
 		{
 			"Name": "Hidetsugu's First Rite",
@@ -79902,7 +79902,7 @@
 		{
 			"Name": "Historian",
 			"Image": "https://lh3.googleusercontent.com/d/1jm8T89dCiscNQbYxzY5fd8ayu-BVfitu",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -80820,64 +80820,6 @@
 			]
 		},
 		{
-			"Name": "Hot",
-			"Image": "https://lh3.googleusercontent.com/d/1kRW5-EgKR6hJykzXJZkv3rhha4t04w1u",
-			"Creator": "juanqu",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "",
-			"Cost": [
-				"{2}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Artifact",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Equipment",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Whenever a creature is dealt damage, destroy it.\\nYour red spells cost {1} less to play.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Hot Chip Give Me Stomachache",
 			"Image": "https://lh3.googleusercontent.com/d/1LAXW1kBy1wHeskgPGK1i-hpUkoqDxM2J",
 			"Creator": "u/GaysForTheGayGod",
@@ -80936,6 +80878,64 @@
 			],
 			"Flavor Text": [
 				"\"I Fling it as you.\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Hot",
+			"Image": "https://lh3.googleusercontent.com/d/1kRW5-EgKR6hJykzXJZkv3rhha4t04w1u",
+			"Creator": "juanqu",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "",
+			"Cost": [
+				"{2}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Equipment",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever a creature is dealt damage, destroy it.\\nYour red spells cost {1} less to play.",
 				null,
 				null,
 				null
@@ -81120,7 +81120,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1R2gTQaBTB5gYZFztUcj6N2WybSawBzUV",
 			"Creator": "u/taprus",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 3,
 			"Color(s)": "White",
@@ -82199,7 +82199,7 @@
 		{
 			"Name": "I like big butts // I cannot lie",
 			"Image": "https://lh3.googleusercontent.com/d/1bF1dJ-KQrRClqHRpUr4WYPPlXwisQK1G",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -82572,7 +82572,7 @@
 		{
 			"Name": "If Me and My Bros Became Cards",
 			"Image": "https://lh3.googleusercontent.com/d/1oX2cuXquaqz8LnpIUKo33Xp_vqrCm976",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -83636,7 +83636,7 @@
 		{
 			"Name": "Indatha Land Kathril Approves Of",
 			"Image": "https://lh3.googleusercontent.com/d/1NM-6KP_uQ15SAzoGFgU38O3G0xukT--5",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -83822,7 +83822,7 @@
 		{
 			"Name": "Infectious Zombies",
 			"Image": "https://lh3.googleusercontent.com/d/1sKbQrQS3GpaQwhAsTc6P43AQ0sfYCUvR",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -84901,7 +84901,7 @@
 		{
 			"Name": "Insulter of Intelligence",
 			"Image": "https://lh3.googleusercontent.com/d/135-0kxMOWEXVQSSCaPsewIH3M0TdFFon",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -86024,7 +86024,7 @@
 		{
 			"Name": "Islandmaru, Hound of Konda",
 			"Image": "https://lh3.googleusercontent.com/d/13H3E6Tn_sjBA_shjwHYOqjtCd2p6Oq1g",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -86312,64 +86312,6 @@
 			],
 			"Flavor Text": [
 				"The car let out a low rumble. General Takeno looked down and started the car with a touch. \"Alert the guard. The broog is coming.\"",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "It",
-			"Image": "https://lh3.googleusercontent.com/d/1z5jJaKPal2IFQr3QRd5R-4Q2Ox-AvlxX",
-			"Creator": "Daze",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Black",
-			"Cost": [
-				"{1}{B}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"Legendary",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Clown;Horror",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"{T}: Create a treasure token. (It works.)",
 				null,
 				null,
 				null
@@ -87149,6 +87091,64 @@
 			],
 			"Flavor Text": [
 				"\"Baste on what, exactly?\" -Ith, Flavor Judge",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "It",
+			"Image": "https://lh3.googleusercontent.com/d/1z5jJaKPal2IFQr3QRd5R-4Q2Ox-AvlxX",
+			"Creator": "Daze",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Black",
+			"Cost": [
+				"{1}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Clown;Horror",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: Create a treasure token. (It works.)",
 				null,
 				null,
 				null
@@ -88570,7 +88570,7 @@
 		{
 			"Name": "Jeskaibrary ",
 			"Image": "https://lh3.googleusercontent.com/d/1QyCKieaOEDgjFpISUE4AK0qBK9t8T4RP",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -89406,7 +89406,7 @@
 		{
 			"Name": "Jumpscare Monster",
 			"Image": "https://lh3.googleusercontent.com/d/13PVwAzPO0X1wwmR7vFfaiM0h0wHmplH7",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -92079,64 +92079,6 @@
 			]
 		},
 		{
-			"Name": "Kitchen Sphinx",
-			"Image": "https://lh3.googleusercontent.com/d/1CVmy0Z2gO7ZfVdNvmsn5OCWBoAD-3JTV",
-			"Creator": "u/SirQuixano",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "White;Blue",
-			"Cost": [
-				"{1}{W/U}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Sphinx",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Flying\\n{2}: Scry 1.\\n{W}{W}{U}{U}: Educate target creature you control. (If the creature isn't educated, it becomes educated and you draw a card.)",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Kitchen Sphinx (hc4)",
 			"Image": "https://lh3.googleusercontent.com/d/1RHoeeyIb7Qu4Agmf7TsRJFc7cuUJp76R",
 			"Creator": "Moundsofmayhem",
@@ -92189,6 +92131,64 @@
 			],
 			"Text Box": [
 				"Flying\\nWhen Kitchen Sphinx enters the battlefield, scry 2.\\nPersist (When this creature dies, if it had no -1/-1 counters on it, return it to the battlefield under its owner's control with a -1/-1 counter on it.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Kitchen Sphinx",
+			"Image": "https://lh3.googleusercontent.com/d/1CVmy0Z2gO7ZfVdNvmsn5OCWBoAD-3JTV",
+			"Creator": "u/SirQuixano",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "White;Blue",
+			"Cost": [
+				"{1}{W/U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Sphinx",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flying\\n{2}: Scry 1.\\n{W}{W}{U}{U}: Educate target creature you control. (If the creature isn't educated, it becomes educated and you draw a card.)",
 				null,
 				null,
 				null
@@ -92827,7 +92827,7 @@
 		{
 			"Name": "Kongming's Contraptions",
 			"Image": "https://lh3.googleusercontent.com/d/1WyBqvbHXJV7qCR8uwvU_XDB29aA7DZrt",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -93683,7 +93683,7 @@
 		{
 			"Name": "Kruphix, But He Took An Online Arithmetic Course At Quandrix And Is Now The God Of Math",
 			"Image": "https://lh3.googleusercontent.com/d/1V4z54zzXpyCBLKeHc6SBU6H8nPeKPo6M",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "Numbers mods occur on layer 3. Kruphix checks for numbers before layer 4. So +X/+X effects do not change the number on a card as seen by Kruphix. -Zaxer2 #rulings 02/04/2022, 02/08/2022, 02/22/2022",
@@ -93979,7 +93979,7 @@
 		{
 			"Name": "LL Ouphe J",
 			"Image": "https://lh3.googleusercontent.com/d/1sRRKuKvBbaCmBvyfOHAS1KwFQ_i_gM4x",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -94211,7 +94211,7 @@
 		{
 			"Name": "Lamp Oil, Rope, Bombs // Morshu, Beatbox Lord",
 			"Image": "https://lh3.googleusercontent.com/d/1XhFWuFqcz9nBdsgsKqAseAIPBU--8uxE",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -94719,7 +94719,7 @@
 		{
 			"Name": "Landzav",
 			"Image": "https://lh3.googleusercontent.com/d/1hVoN80pfZ0gM0xseglmO3RAJTfTmW_yy",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -95910,7 +95910,7 @@
 		{
 			"Name": "Legally Not a Magic Card",
 			"Image": "https://lh3.googleusercontent.com/d/1xxgDE-T_3fOX87eKWJ3oqSHaJrwo9ltt",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -95974,7 +95974,7 @@
 		{
 			"Name": "Legend Designed for Commander",
 			"Image": "https://lh3.googleusercontent.com/d/1RT2XK6smq-4n5NFPsiHALB8Frd5cfyNO",
-			"Creator": "VanTheMan",
+			"Creator": "vantheman_",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -96148,7 +96148,7 @@
 		{
 			"Name": "Lego Slimefoot",
 			"Image": "https://lh3.googleusercontent.com/d/1mqKhSbf5ky6CGW2VDWB5lYr9rbSujwAI",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -96450,7 +96450,7 @@
 		{
 			"Name": "Leveled Land",
 			"Image": "https://lh3.googleusercontent.com/d/13XywPvMovVGDY9KI2w74DrBXQDa05Nus",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -96508,7 +96508,7 @@
 		{
 			"Name": "Leveler (HC3)",
 			"Image": "https://lh3.googleusercontent.com/d/1b55d7sP2vPjv81ARFBb_SaVDbuENnCOV",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "When I find who made this card I'm going to kick their ass.",
@@ -96869,7 +96869,7 @@
 		{
 			"Name": "Lieutenant Yar-Kul, The Cabal Cleric That Was Turned Into A Maggot By Belzenlok And Then Eaten By The Frog That Turned Into Yargle",
 			"Image": "https://lh3.googleusercontent.com/d/1NpLFXvhBW-_ay8eoM0fEf5Vup8H6QA2U",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -97049,7 +97049,7 @@
 		{
 			"Name": "Lifecycle of a Saproling",
 			"Image": "https://lh3.googleusercontent.com/d/1Z8AnbbGsjqwpFBmV3-9ds-hOsX_VgBkW",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -98211,7 +98211,7 @@
 		{
 			"Name": "Literal Brainstorm",
 			"Image": "https://lh3.googleusercontent.com/d/14o-l_de-nQuBMbrGKq_AgE3DxpzUecLz",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -98327,7 +98327,7 @@
 		{
 			"Name": "Living Ability",
 			"Image": "https://lh3.googleusercontent.com/d/1w4s-nfMwBhRuOaNUkh_D4O2sIEFJItNP",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -99015,7 +99015,7 @@
 		{
 			"Name": "Local Phyrexian Pharmacists",
 			"Image": "https://lh3.googleusercontent.com/d/1Gv1OwS1VFRgqnfiOJlAFvXvX-v-31BB_",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -99135,70 +99135,6 @@
 			]
 		},
 		{
-			"Name": "Lodestone Gottem",
-			"Image": "https://lh3.googleusercontent.com/d/1XsRhh2_jRjhBdbYYovlvds0kfGm5rn_O",
-			"Creator": "u/van-theman",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 4,
-			"Color(s)": "",
-			"Cost": [
-				"{4}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Artifact;Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Arcane;Golem",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"5",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"3",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Flash\\nWhen Lodestone Gottem enters the battlefield, counter target nonartifact spell unless its controller pays {1}.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"Thought you were safe to tap out against the red deck, huh?",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Lodestone Gottem (OG)",
 			"Image": "https://lh3.googleusercontent.com/d/10ZV4X4TWXRR23JKSTSkFwzASEqyWLh6n",
 			"Creator": "Van-theman",
@@ -99251,6 +99187,70 @@
 			],
 			"Text Box": [
 				"Counter target nonartifact spell unless its controller pays {1}.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"Thought you were safe to tap out against the red deck, huh?",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Lodestone Gottem",
+			"Image": "https://lh3.googleusercontent.com/d/1XsRhh2_jRjhBdbYYovlvds0kfGm5rn_O",
+			"Creator": "vantheman_",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "",
+			"Cost": [
+				"{4}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Arcane;Golem",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"5",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flash\\nWhen Lodestone Gottem enters the battlefield, counter target nonartifact spell unless its controller pays {1}.",
 				null,
 				null,
 				null
@@ -101456,7 +101456,7 @@
 		{
 			"Name": "Magic Set Editor",
 			"Image": "https://lh3.googleusercontent.com/d/185VjoqWR8uOJuAPdSQu8SXizq6y-o4Bg",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -101514,7 +101514,7 @@
 		{
 			"Name": "Magician's Tutor",
 			"Image": "https://lh3.googleusercontent.com/d/1QrlgzMCxs12mQWMsRLCqEeYtrTRdogsC",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -101768,7 +101768,7 @@
 		{
 			"Name": "Magus of the Greaves",
 			"Image": "https://lh3.googleusercontent.com/d/1_h5oLCzs-6BODeVC1N5qCusKCInx9zDH",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -104463,7 +104463,7 @@
 		{
 			"Name": "Marosticore",
 			"Image": "https://lh3.googleusercontent.com/d/16UuYiUOzRM_-WnrNyclHOzp8YbvLeS2A",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -105196,7 +105196,7 @@
 		{
 			"Name": "Math Tutor",
 			"Image": "https://lh3.googleusercontent.com/d/1IAh9AOXkBpWGpxDF7ymqX5C_8e7xn7oF",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -106241,7 +106241,7 @@
 		{
 			"Name": "Memnite Exhibition",
 			"Image": "https://lh3.googleusercontent.com/d/1MbLsdTVXUThfW3RNtZwOl3yaY5h4KLFM",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -106914,7 +106914,7 @@
 			]
 		},
 		{
-			"Name": "Miasa // My Asthma",
+			"Name": "Miasma // My Asthma",
 			"Image": "https://lh3.googleusercontent.com/d/1lDAaNvTP2vi1FCwZWBeNk_yfYyFnICft",
 			"Creator": "u/TemporalFuzz",
 			"Set": "HC2",
@@ -108799,7 +108799,7 @@
 		{
 			"Name": "Modal Hierarch",
 			"Image": "https://lh3.googleusercontent.com/d/1l_l3YCfffNVLAd_Z_3jBzMc-dchu849v",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -108921,7 +108921,7 @@
 		{
 			"Name": "Modern Command",
 			"Image": "https://lh3.googleusercontent.com/d/1J9ACw1-Du8KR5rKvXZYCky8PSMC4tiXG",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -109151,64 +109151,6 @@
 			]
 		},
 		{
-			"Name": "Monastery",
-			"Image": "https://lh3.googleusercontent.com/d/1H9Hcx7vm3LyY8mSb4ptG2PHbA-rv5KjA",
-			"Creator": "TacoFarmer",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Land",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"0",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"0",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Monastery enters the battlefield tapped. \\n Flying, prowess \\n {U}{R}: Monastery becomes a creature until end of turn. It's still a land. \\n {T}: {U} or {R}.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Monastery Mentor but he Ate All His Students",
 			"Image": "https://lh3.googleusercontent.com/d/1bWalpOaCePfmj-7vRNSrFXKpJ1HQrm7p",
 			"Creator": "u/Therealredguy",
@@ -109331,6 +109273,64 @@
 			]
 		},
 		{
+			"Name": "Monastery",
+			"Image": "https://lh3.googleusercontent.com/d/1H9Hcx7vm3LyY8mSb4ptG2PHbA-rv5KjA",
+			"Creator": "TacoFarmer",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Monastery enters the battlefield tapped. \\n Flying, prowess \\n {U}{R}: Monastery becomes a creature until end of turn. It's still a land. \\n {T}: {U} or {R}.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Monetary Mentor",
 			"Image": "https://lh3.googleusercontent.com/d/1KgUQDah7YIQh4Mm4tA8w6_1lkvLROIGI",
 			"Creator": "llllll",
@@ -109383,70 +109383,6 @@
 			],
 			"Text Box": [
 				"Prowess\\nWhenever you cast a noncreature spell, put a 1/1 white Monk creature token with prowess onto the battlefield.\\nCashback—{2}{W} (You may cast this card from your graveyard for its Cashback cost. When you do, it creates Treasure tokens instead of its other tokens and has \"If this permanent would leave the battlefield, exile it instead.\")",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "Monkey",
-			"Image": "https://lh3.googleusercontent.com/d/1n2SmPzbQQmnc0Na0wjBq20oUKyU3iWZj",
-			"Creator": "u/van-theman",
-			"Set": "HC2",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "Red",
-			"Cost": [
-				"{R}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Monkey",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"When Monkey enters the battlefield, you may discard a card. If you do, add a token copy of Monkey to your hand.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"\"United we stand, divided we fall\"",
 				null,
 				null,
 				null
@@ -109588,6 +109524,70 @@
 			],
 			"Flavor Text": [
 				"\"I want a lightning bolt this big!\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Monkey",
+			"Image": "https://lh3.googleusercontent.com/d/1n2SmPzbQQmnc0Na0wjBq20oUKyU3iWZj",
+			"Creator": "vantheman_",
+			"Set": "HC2",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Red",
+			"Cost": [
+				"{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Monkey",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"When Monkey enters the battlefield, you may discard a card. If you do, add a token copy of Monkey to your hand.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"United we stand, divided we fall\"",
 				null,
 				null,
 				null
@@ -110408,64 +110408,6 @@
 			"Tags": ""
 		},
 		{
-			"Name": "Morph",
-			"Image": "https://lh3.googleusercontent.com/d/1qEMyrXzXaujuYFEB9NoKlIXEZ8QMovpz",
-			"Creator": "enragedmukamuka1",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 3,
-			"Color(s)": "",
-			"Cost": [
-				"{3}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Instant",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Turn target spell or permanent face down. (It becomes a 2/2 creature.)",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Morph Fling",
 			"Image": "https://lh3.googleusercontent.com/d/1rkcOZGCXXW8PI7Ugagqmh46DGH_ZyP8N",
 			"Creator": "u/highTrolla",
@@ -110518,6 +110460,64 @@
 			],
 			"Text Box": [
 				"Morph {1}{U}{U} (You may cast this card face down as a 2/2 creature for {3}. Turn it face up any time for its morph cost.)\\n{1}{R}, Sacrfice Morph Fling: Morph Fling deals damage equal to its power to any target.\\n{U}: Morph Fling gains hexproof until end of turn.\\n{U} Morph Fling gains flying until end of turn.\\n{1}: Morph Fling gets +1/-1 until end of turn.\\n{1}: Morph Fling gets -1/+1 until end of turn.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Morph",
+			"Image": "https://lh3.googleusercontent.com/d/1qEMyrXzXaujuYFEB9NoKlIXEZ8QMovpz",
+			"Creator": "enragedmukamuka1",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "",
+			"Cost": [
+				"{3}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Turn target spell or permanent face down. (It becomes a 2/2 creature.)",
 				null,
 				null,
 				null
@@ -110764,7 +110764,7 @@
 		{
 			"Name": "Motion Thief",
 			"Image": "https://lh3.googleusercontent.com/d/1Xz7QgKO2jEqxP59fXhFtNZYubY7mxkE8",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -110899,7 +110899,7 @@
 		{
 			"Name": "Mountain Pass",
 			"Image": "https://lh3.googleusercontent.com/d/1xZ99T_TsN1OPg3DHxajbDui2pJtiy_vn",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -113355,7 +113355,7 @@
 		{
 			"Name": "My Dad",
 			"Image": "https://lh3.googleusercontent.com/d/10lsiMy9AJ0Fe9P3DftMWq4JpUFMc56K2",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -113536,7 +113536,7 @@
 		{
 			"Name": "My Most Favoritest Goat",
 			"Image": "https://lh3.googleusercontent.com/d/1v7iNslCBdOGAU3iOA3miwqkH7NLvRcb6",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -114532,7 +114532,7 @@
 		{
 			"Name": "Narset of 1993 Way",
 			"Image": "https://lh3.googleusercontent.com/d/1vcIOsOq0tQJ9UbtbJCQtdtluKR8ebDKs",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -114719,7 +114719,7 @@
 		{
 			"Name": "Nature's Escalator",
 			"Image": "https://lh3.googleusercontent.com/d/1wws_ghwgD44gDGmkHjEJwsGM-wyBVNpn",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -114915,70 +114915,6 @@
 			"FIELD54": "",
 			"FIELD55": "",
 			"FIELD56": ""
-		},
-		{
-			"Name": "Nebula",
-			"Image": "https://lh3.googleusercontent.com/d/1rek-TZaJp4ngyNHnkTlIg09vrQFzKa3f",
-			"Creator": "Bogander_Guy",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Blue",
-			"Cost": [
-				"{2}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"Legendary",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Artifact;Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"\"Luphomoid\"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Nebula is Blue. (Dabba dee dabba da.) \\n {T}: Add {P}.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"\"Screaming noises\"",
-				null,
-				null,
-				null
-			]
 		},
 		{
 			"Name": "Nebula 1",
@@ -115245,6 +115181,70 @@
 			],
 			"Text Box": [
 				"The owner of target permanent puts it into their sideboard, then reveals a nonbasic card at random from their sideboard. If it's a permanent card, they put it onto the battlefield.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Nebula",
+			"Image": "https://lh3.googleusercontent.com/d/1rek-TZaJp4ngyNHnkTlIg09vrQFzKa3f",
+			"Creator": "Bogander_Guy",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"\"Luphomoid\"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Nebula is Blue. (Dabba dee dabba da.) \\n {T}: Add {P}.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"Screaming noises\"",
 				null,
 				null,
 				null
@@ -115677,7 +115677,7 @@
 		{
 			"Name": "Nettle Field",
 			"Image": "https://lh3.googleusercontent.com/d/1gxvMUDO3HPiAStS9faf5RDTMzJ5KOn2_",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -115793,7 +115793,7 @@
 		{
 			"Name": "New Benalish Hero // New New Benalia",
 			"Image": "https://lh3.googleusercontent.com/d/1eXbFmgw5SBmBdQVzwxXO6nBFvdJo0eqf",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -115922,7 +115922,7 @@
 		{
 			"Name": "New Year's Resolution",
 			"Image": "https://lh3.googleusercontent.com/d/16cyAVkKm_fnT4eApmY4Z3bF85TrU7v6G",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -116360,7 +116360,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1pKJgTFFoLuEkKh3LeUtKKoKcd0gWj1N3",
 			"Creator": "Cirion02",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
 			"Color(s)": "",
@@ -118209,7 +118209,7 @@
 		{
 			"Name": "Oathbound Knight",
 			"Image": "https://lh3.googleusercontent.com/d/1dSkTwQgNEzwSu4PsXY13g5aRjyAzf8bc",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -119179,7 +119179,7 @@
 		{
 			"Name": "Odric, But He's Dead Now",
 			"Image": "https://lh3.googleusercontent.com/d/1esZODvca8FwDhotTN0lPPS0ToWc5GFxD",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -119353,7 +119353,7 @@
 		{
 			"Name": "Odric, but with Every Ability",
 			"Image": "https://lh3.googleusercontent.com/d/1yeIH-aS1XflXSNnIEP1gMNfpOmWnh6Ew",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -119661,7 +119661,7 @@
 		{
 			"Name": "Oh No Drogoskol Reaver Got Out of its Frame",
 			"Image": "https://lh3.googleusercontent.com/d/1GY6cLrVp-jPkVGRMrn_tk_UiZ_OsHXXe",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -121011,7 +121011,7 @@
 		{
 			"Name": "On Tilt",
 			"Image": "https://lh3.googleusercontent.com/d/1mpWKth8eDVxUmarkzkQNW3wSRHSY9hFB",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -121479,7 +121479,7 @@
 		{
 			"Name": "One with Two Things",
 			"Image": "https://lh3.googleusercontent.com/d/1SbcSHWmFvXP2E-Np_52fG6IkMpf5fv8y",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -122184,7 +122184,7 @@
 		{
 			"Name": "Optic Mirror",
 			"Image": "https://lh3.googleusercontent.com/d/1I6UUBWrY0KrV62kEcEmCiw_F9LfgRBbq",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -125755,64 +125755,6 @@
 			"Tags": ""
 		},
 		{
-			"Name": "Path",
-			"Image": "https://lh3.googleusercontent.com/d/1VIhzNWv2emtfqw81e_-UbMK1y_dtiVmm",
-			"Creator": "vladicuss",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "White",
-			"Cost": [
-				"{W}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Instant",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"target creature. Its controller may search their library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Path Directly To Exile",
 			"Image": "https://lh3.googleusercontent.com/d/18VYdUuUbXTuSYbBgQKQerCiSSBXE96Mm",
 			"Creator": "u/XSCONE",
@@ -126137,6 +126079,64 @@
 					"Type": "Artifact",
 					"Image": "https://lh3.googleusercontent.com/d/1oShOn7l99tnTvy6EqCUeNGgF91lzKfkI"
 				}
+			]
+		},
+		{
+			"Name": "Path",
+			"Image": "https://lh3.googleusercontent.com/d/1VIhzNWv2emtfqw81e_-UbMK1y_dtiVmm",
+			"Creator": "vladicuss",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "White",
+			"Cost": [
+				"{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"target creature. Its controller may search their library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+				null,
+				null,
+				null
 			]
 		},
 		{
@@ -128741,7 +128741,7 @@
 		{
 			"Name": "Pie Rat",
 			"Image": "https://lh3.googleusercontent.com/d/1PhUCiK1wm5xD8sTkvauc0p1EAxjR52HO",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -129364,7 +129364,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1EkWzQoBIGsiHlQw2crL2s7EkTYcurBCl",
 			"Creator": "Nobroam",
 			"Set": "HC3",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
 			"Color(s)": "",
@@ -132315,7 +132315,7 @@
 		{
 			"Name": "Prime's Evil Titan",
 			"Image": "https://lh3.googleusercontent.com/d/10i3BCAUoMH07iSf7ywY25mCcsHvpKMpI",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -132435,64 +132435,6 @@
 			]
 		},
 		{
-			"Name": "Prince",
-			"Image": "https://lh3.googleusercontent.com/d/1_t_A3VWumrqnZt5Ogbi9f5Liq46opqQs",
-			"Creator": "u/ExaltedOne",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Red",
-			"Cost": [
-				"{1}{R}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"Legendary",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Human;Musician",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"3",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"When Prince enters the battlefield, target land becomes a Nebula in addition to its other types until Prince leaves the battlefield. (That land has {T}: Add {P}.)",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Prince 1",
 			"Image": "https://lh3.googleusercontent.com/d/1Nr_tHI7156fs11S99gfRl-o6WLXmJJrq",
 			"Creator": "",
@@ -132570,9 +132512,67 @@
 			"FIELD56": ""
 		},
 		{
+			"Name": "Prince",
+			"Image": "https://lh3.googleusercontent.com/d/1_t_A3VWumrqnZt5Ogbi9f5Liq46opqQs",
+			"Creator": "u/ExaltedOne",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;Musician",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"When Prince enters the battlefield, target land becomes a Nebula in addition to its other types until Prince leaves the battlefield. (That land has {T}: Add {P}.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Print Malfunction",
 			"Image": "https://lh3.googleusercontent.com/d/1JL7JvGwf3NpnLo6G3-0_M9aD0GreC-b4",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -133054,7 +133054,7 @@
 		{
 			"Name": "Proxy",
 			"Image": "https://lh3.googleusercontent.com/d/1NbZZldp7FwysJ9Cp5F7ooau4GmUpeilk",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -133479,9 +133479,9 @@
 		{
 			"Name": "Purple Removal Spell",
 			"Image": "https://lh3.googleusercontent.com/d/1G_RiujcVwlvfW4KeCkukDScBfuY9OPPb",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 3,
 			"Color(s)": "Purple",
@@ -133601,7 +133601,7 @@
 		{
 			"Name": "Pyramid Man",
 			"Image": "https://lh3.googleusercontent.com/d/1GQiC1pWQ5QzF3zTE3LIT48WqqS1W2zbm",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -133715,64 +133715,6 @@
 			]
 		},
 		{
-			"Name": "Pyroduct",
-			"Image": "https://lh3.googleusercontent.com/d/1tY7aA71S2uAPAbEU_PB1ndj_T0LQza5O",
-			"Creator": "u/ExaltedOne",
-			"Set": "HLC",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Land",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"{T}, Pay 1 life: Add {B} or {R}.\\nCycling {1}{B/R}\\nUnearth—Pay 1 life (Pay 1 life: Return this card from your graveyard to the battlefield. It gains haste. Exile it at the beginning of the next end step or if it would leave the battlefield. Unearth only as a sorcery.)",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Pyroduct 2",
 			"Image": "https://lh3.googleusercontent.com/d/1a4xVfb5OBmab04R-zAY9KF0oRPOOdJPd",
 			"Creator": "Lettuce Turtle",
@@ -133825,6 +133767,64 @@
 			],
 			"Text Box": [
 				"{T}, Pay 1 life: Add {G} or {R}.\\nCycling {1}{G/R}\\nUnearth—Pay 1 life (Pay 1 life: Return this card from your graveyard to the battlefield. It gains haste. Exile it at the beginning of the next end step or if it would leave the battlefield. Unearth only as a sorcery.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Pyroduct",
+			"Image": "https://lh3.googleusercontent.com/d/1tY7aA71S2uAPAbEU_PB1ndj_T0LQza5O",
+			"Creator": "u/ExaltedOne",
+			"Set": "HLC",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}, Pay 1 life: Add {B} or {R}.\\nCycling {1}{B/R}\\nUnearth—Pay 1 life (Pay 1 life: Return this card from your graveyard to the battlefield. It gains haste. Exile it at the beginning of the next end step or if it would leave the battlefield. Unearth only as a sorcery.)",
 				null,
 				null,
 				null
@@ -135386,64 +135386,6 @@
 			]
 		},
 		{
-			"Name": "Ramp",
-			"Image": "https://lh3.googleusercontent.com/d/1pQrqnO2vPDQMWn1s1b_bOvDDvCqH0pzk",
-			"Creator": "Nobroam",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 3,
-			"Color(s)": "Red;Green",
-			"Cost": [
-				"{1}{R}{G}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Artifact",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Fortification",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"When Ramp enters the battlefield, create a Mountain token and attach Ramp to it.\\nWhenever you cast a creature spell using mana from fortified land, that creature enters the battlefield tapped and attacking and gains flying until end of turn. (Start an extra combat without a declare attackers step as it enters.)\\nFortify {2}",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Ramp in Red",
 			"Image": "https://lh3.googleusercontent.com/d/1AWrBddNYDZSHIsfZ7uyfAOYuKKu3eQwu",
 			"Creator": "u/EpicnessBrian",
@@ -135502,16 +135444,16 @@
 			]
 		},
 		{
-			"Name": "Rampant",
-			"Image": "https://lh3.googleusercontent.com/d/19R0fcTXa4LGtK6zfQVrSHCWn4xW-06qO",
-			"Creator": "Rainbow_Plague",
+			"Name": "Ramp",
+			"Image": "https://lh3.googleusercontent.com/d/1pQrqnO2vPDQMWn1s1b_bOvDDvCqH0pzk",
+			"Creator": "Nobroam",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
+			"CMC": 3,
+			"Color(s)": "Red;Green",
 			"Cost": [
-				"",
+				"{1}{R}{G}",
 				null,
 				null,
 				null
@@ -135523,25 +135465,25 @@
 				null
 			],
 			"Card Type(s)": [
-				"Creature",
+				"Artifact",
 				null,
 				null,
 				null
 			],
 			"Subtype(s)": [
-				"Elemental",
+				"Fortification",
 				null,
 				null,
 				null
 			],
 			"power": [
-				"2",
+				"",
 				null,
 				null,
 				null
 			],
 			"toughness": [
-				"2",
+				"",
 				null,
 				null,
 				null
@@ -135553,7 +135495,7 @@
 				null
 			],
 			"Text Box": [
-				"Jumblemorph's Ingenuity (This creature can augment with non-host creatures. When you do, replace a trigger condition on the host's triggered abilities with this augment's trigger. The \"host\" creature keeps its non-creature types)\\nLandfall — Whenever a land enters the battlefield under your control,\\nAugment{R}{G}",
+				"When Ramp enters the battlefield, create a Mountain token and attach Ramp to it.\\nWhenever you cast a creature spell using mana from fortified land, that creature enters the battlefield tapped and attacking and gains flying until end of turn. (Start an extra combat without a declare attackers step as it enters.)\\nFortify {2}",
 				null,
 				null,
 				null
@@ -135618,6 +135560,64 @@
 			],
 			"Flavor Text": [
 				"Nature grows Counterspell to it's problems.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Rampant",
+			"Image": "https://lh3.googleusercontent.com/d/19R0fcTXa4LGtK6zfQVrSHCWn4xW-06qO",
+			"Creator": "Rainbow_Plague",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Elemental",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Jumblemorph's Ingenuity (This creature can augment with non-host creatures. When you do, replace a trigger condition on the host's triggered abilities with this augment's trigger. The \"host\" creature keeps its non-creature types)\\nLandfall — Whenever a land enters the battlefield under your control,\\nAugment{R}{G}",
 				null,
 				null,
 				null
@@ -136062,7 +136062,7 @@
 		{
 			"Name": "Rapheap Scrounger",
 			"Image": "https://lh3.googleusercontent.com/d/17ZhFyAWRl3Tj-YxjaN1pVlqevrtvjCN4",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -137569,7 +137569,7 @@
 		{
 			"Name": "Reassembling Gelatin",
 			"Image": "https://lh3.googleusercontent.com/d/1CzLqfJlZvHIPEgfr5B9yAdOnTo_2_ktt",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -138793,7 +138793,7 @@
 		{
 			"Name": "Reject You Reality // Substitute My Own",
 			"Image": "https://lh3.googleusercontent.com/d/1KrTuyR13iSySzUEk6-VI1Tb_lJ98-UfT",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -140079,7 +140079,7 @@
 		{
 			"Name": "Rickrolled",
 			"Image": "https://lh3.googleusercontent.com/d/1mABAfZTrEEfnnhG2Tp5h_DcCC58sshX7",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -140321,64 +140321,6 @@
 			]
 		},
 		{
-			"Name": "Ring",
-			"Image": "https://lh3.googleusercontent.com/d/1qhf5l6Pe6bzbHxh9GsU9EHQ64jy4_PIJ",
-			"Creator": "definitelywilbur",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "",
-			"Cost": [
-				"{2}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Enchantment",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"{T}: Add {C}{C}.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Ring Bear",
 			"Image": "https://lh3.googleusercontent.com/d/1jOau8LiS_dBDgdja2z9fu1v_UCjogLRN",
 			"Creator": "glassbass",
@@ -140500,6 +140442,64 @@
 				null
 			],
 			"Tags": ""
+		},
+		{
+			"Name": "Ring",
+			"Image": "https://lh3.googleusercontent.com/d/1qhf5l6Pe6bzbHxh9GsU9EHQ64jy4_PIJ",
+			"Creator": "definitelywilbur",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "",
+			"Cost": [
+				"{2}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: Add {C}{C}.",
+				null,
+				null,
+				null
+			]
 		},
 		{
 			"Name": "Rise of the Krark Realms",
@@ -140921,7 +140921,7 @@
 		{
 			"Name": "Rock Bottom",
 			"Image": "https://lh3.googleusercontent.com/d/1yHDax9nh8QaR6Nie2TcNBNws1v3gcUg5",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -141423,7 +141423,7 @@
 		{
 			"Name": "Romantic Lantern",
 			"Image": "https://lh3.googleusercontent.com/d/1X2AJ8fy4wpmnjteu8a98Cohmn982NEjI",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -141603,7 +141603,7 @@
 		{
 			"Name": "Royal Recruits",
 			"Image": "https://lh3.googleusercontent.com/d/1OhKz3vc5opzqWD686KUbaKaEmEQjB1sA",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -142439,7 +142439,7 @@
 		{
 			"Name": "Samurai Pikachu",
 			"Image": "https://lh3.googleusercontent.com/d/11fPIK0TwWXj0C3bpzRorkYpVVuGnu-s7",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -142557,7 +142557,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1lfGJTzKznBnRFIJjA1nmVbG8-yJZXTFQ",
 			"Creator": "Rainbow_Plague",
 			"Set": "HC3",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
 			"Color(s)": "Colorless",
@@ -142974,7 +142974,7 @@
 		{
 			"Name": "Scared Turtle // Snappy Turtle",
 			"Image": "https://lh3.googleusercontent.com/d/1F0lyU_xfNNE91ffZV4mPQ8P9irwE09PK",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -143387,7 +143387,7 @@
 		{
 			"Name": "Scratched Knight",
 			"Image": "https://lh3.googleusercontent.com/d/1TiIBTNcDQm4pYoaK_sU5_fTH3acopQ3s",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -144249,7 +144249,7 @@
 		{
 			"Name": "Secret Lair",
 			"Image": "https://lh3.googleusercontent.com/d/1aR56CAE_O_Ht4YzmCXhVaWPFmhlWIEz-",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -144975,7 +144975,7 @@
 		{
 			"Name": "Serf // Turf",
 			"Image": "https://lh3.googleusercontent.com/d/19oG2ECJMwK2bpMGoU7jX2P-vBL6iZOgN",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -145469,64 +145469,6 @@
 			"Tags": ""
 		},
 		{
-			"Name": "Seven",
-			"Image": "https://lh3.googleusercontent.com/d/1DlRPN7U6yVNgrh3h1XvWfzUFXrEtJ5dV",
-			"Creator": "Skydroid",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 7,
-			"Color(s)": "Green",
-			"Cost": [
-				"{4}{G}{G}{G}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Phyrexian;Number;Horror",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"7",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"7",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Sacrifice a 9 on a permanent you control: Draw 3 cards and gain 6 life. (Sacrificed numbers cease to exist.) \\n Annihilator 1",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Seven, Prime Number Captain",
 			"Image": "https://lh3.googleusercontent.com/d/1VWdWX2B0fVy9m_SY2MpdmOJQ4VQCLqcH",
 			"Creator": "Yeti",
@@ -145585,16 +145527,16 @@
 			]
 		},
 		{
-			"Name": "Sex",
-			"Image": "https://lh3.googleusercontent.com/d/1GdDIT4lPQQiJzPuEwDGBc7weIX0lx_pd",
-			"Creator": "u/therealredguy",
-			"Set": "HC2",
+			"Name": "Seven",
+			"Image": "https://lh3.googleusercontent.com/d/1DlRPN7U6yVNgrh3h1XvWfzUFXrEtJ5dV",
+			"Creator": "Skydroid",
+			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Blue",
+			"CMC": 7,
+			"Color(s)": "Green",
 			"Cost": [
-				"{U}{U}",
+				"{4}{G}{G}{G}",
 				null,
 				null,
 				null
@@ -145606,25 +145548,25 @@
 				null
 			],
 			"Card Type(s)": [
-				"Instant",
+				"Creature",
 				null,
 				null,
 				null
 			],
 			"Subtype(s)": [
-				"",
+				"Phyrexian;Number;Horror",
 				null,
 				null,
 				null
 			],
 			"power": [
-				"",
+				"7",
 				null,
 				null,
 				null
 			],
 			"toughness": [
-				"",
+				"7",
 				null,
 				null,
 				null
@@ -145636,7 +145578,7 @@
 				null
 			],
 			"Text Box": [
-				"Tap six target creatures.",
+				"Sacrifice a 9 on a permanent you control: Draw 3 cards and gain 6 life. (Sacrificed numbers cease to exist.) \\n Annihilator 1",
 				null,
 				null,
 				null
@@ -145706,6 +145648,64 @@
 				null
 			],
 			"Tags": ""
+		},
+		{
+			"Name": "Sex",
+			"Image": "https://lh3.googleusercontent.com/d/1GdDIT4lPQQiJzPuEwDGBc7weIX0lx_pd",
+			"Creator": "u/therealredguy",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{U}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Tap six target creatures.",
+				null,
+				null,
+				null
+			]
 		},
 		{
 			"Name": "Sex^2",
@@ -146126,64 +146126,6 @@
 			]
 		},
 		{
-			"Name": "Shark",
-			"Image": "https://lh3.googleusercontent.com/d/1mxlanSP-qT6rbPDfrfkh6PT8gKn1JDbf",
-			"Creator": "Gerbit.",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Blue",
-			"Cost": [
-				"{X}{1}{U}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"Token",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Shark",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"0",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"0",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Flash\\nFlying\\nWhen Shark enters the battlefield, draw a card.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Shark Confidant",
 			"Image": "https://lh3.googleusercontent.com/d/1PwUiI6jvaQsG6VkRpvX4ZJAQIyGIZe56",
 			"Creator": "Gerbit.",
@@ -146300,6 +146242,64 @@
 			],
 			"Text Box": [
 				"Bloodthirst 2\\nWhen Shark Ritual enters the battefield, add {U} equal to its power.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Shark",
+			"Image": "https://lh3.googleusercontent.com/d/1mxlanSP-qT6rbPDfrfkh6PT8gKn1JDbf",
+			"Creator": "Gerbit.",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{X}{1}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Token",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Shark",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flash\\nFlying\\nWhen Shark enters the battlefield, draw a card.",
 				null,
 				null,
 				null
@@ -146900,9 +146900,9 @@
 		{
 			"Name": "Shifting Tome",
 			"Image": "https://lh3.googleusercontent.com/d/1p4rMiCoT0VF0PbIcymBXdwVfotb9P-wP",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
 			"Color(s)": "",
@@ -149766,7 +149766,7 @@
 		{
 			"Name": "Slime",
 			"Image": "https://lh3.googleusercontent.com/d/1FCFRx852lTQKY0gNBXpfmwzX3zclh2Ac",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -150686,7 +150686,7 @@
 		{
 			"Name": "Snapcasterer Mage",
 			"Image": "https://lh3.googleusercontent.com/d/1xSMhfys-UQrCo2MVCvOsRR1SWTwhli4W",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -151040,7 +151040,7 @@
 		{
 			"Name": "Snow Pile",
 			"Image": "https://lh3.googleusercontent.com/d/1qjV93xzyFQbFvBuahx7PoRua6kB3zxh_",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -152068,7 +152068,7 @@
 		{
 			"Name": "Soulmate Diviner",
 			"Image": "https://lh3.googleusercontent.com/d/1wC1zk_wtlm9tnhcYvcuX-YnBmZOJ691a",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -152260,7 +152260,7 @@
 		{
 			"Name": "Soviet Anthem",
 			"Image": "https://lh3.googleusercontent.com/d/1fV069xalzogHInADANTqieFXiZjY40lo",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -152556,7 +152556,7 @@
 		{
 			"Name": "Spark Queller",
 			"Image": "https://lh3.googleusercontent.com/d/1Bs5w8QoepNLIpiZPOKk4MjFnWIzzEF10",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -153432,7 +153432,7 @@
 		{
 			"Name": "Sphinx of Hindsight",
 			"Image": "https://lh3.googleusercontent.com/d/1G6Ezak_u0cilmNmsRK5OV3nW6XaBPCen",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -153554,7 +153554,7 @@
 		{
 			"Name": "Spire of Spindustry",
 			"Image": "https://lh3.googleusercontent.com/d/1eZ1j6zGpziiAH-IJxOPPbNTd7WI-RPwi",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -154310,64 +154310,6 @@
 			]
 		},
 		{
-			"Name": "Spork",
-			"Image": "https://lh3.googleusercontent.com/d/1y9YTuFpsxrUovTzSqJtjI5le_kGXYCWI",
-			"Creator": "juanqu",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Red",
-			"Cost": [
-				"{R}{R}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Instant",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Copy target instant or sorcery spell, except that the copy is a red 3/3 Toy creature token. It gains \"Whenever this creature attacks\" before its text.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Spork Elemental",
 			"Image": "https://lh3.googleusercontent.com/d/1zWNh7v9rexQdZBRj7tihKe-gneGUO4IH",
 			"Creator": "Bogander_Guy",
@@ -154426,6 +154368,64 @@
 			],
 			"Flavor Text": [
 				"Eat the spork coward.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Spork",
+			"Image": "https://lh3.googleusercontent.com/d/1y9YTuFpsxrUovTzSqJtjI5le_kGXYCWI",
+			"Creator": "juanqu",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{R}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Copy target instant or sorcery spell, except that the copy is a red 3/3 Toy creature token. It gains \"Whenever this creature attacks\" before its text.",
 				null,
 				null,
 				null
@@ -155502,64 +155502,6 @@
 			]
 		},
 		{
-			"Name": "Star Pupil",
-			"Image": "https://lh3.googleusercontent.com/d/1Ucx_LlPgBruCtz_6Gv8KKPLAoVVHOmoI",
-			"Creator": "u/TemporalFuzz",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 3,
-			"Color(s)": "White",
-			"Cost": [
-				"{2}{W}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Eye",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"3",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"3",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Trample\\nNon-eye creatures you control can't attack.\\nWhenever Star Pupil attacks, you may tap any number of untapped creatures you control. Put hald that many +1/+1 counters on Star Pupil, rounded up.\\nWhen Star Pupil dies, you may put its counters on target creature.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Star Pupil Kathril",
 			"Image": "https://lh3.googleusercontent.com/d/1nJkPDLRn9AsmEDfiWmfALC-23I8Lq2kb",
 			"Creator": "u/SingSixPence",
@@ -155676,6 +155618,64 @@
 			],
 			"Flavor Text": [
 				"\"When I'm entire buildings, they'll name done here after me.\"-Star Pupil",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Star Pupil",
+			"Image": "https://lh3.googleusercontent.com/d/1Ucx_LlPgBruCtz_6Gv8KKPLAoVVHOmoI",
+			"Creator": "u/TemporalFuzz",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "White",
+			"Cost": [
+				"{2}{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Eye",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Trample\\nNon-eye creatures you control can't attack.\\nWhenever Star Pupil attacks, you may tap any number of untapped creatures you control. Put hald that many +1/+1 counters on Star Pupil, rounded up.\\nWhen Star Pupil dies, you may put its counters on target creature.",
 				null,
 				null,
 				null
@@ -155826,7 +155826,7 @@
 		{
 			"Name": "Staunch Swordmate",
 			"Image": "https://lh3.googleusercontent.com/d/1RCbiqPxDB26qeQdEudsHlkhqqab0pFQB",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -156010,64 +156010,6 @@
 			]
 		},
 		{
-			"Name": "Steve",
-			"Image": "https://lh3.googleusercontent.com/d/1VgGZHHPAeVkIY_4rAscLcRY22X7Fd626",
-			"Creator": "u/Canned-Meats",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "",
-			"Cost": [
-				"{1}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Steve",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"You may cast nonland cards as if they were copies of Steve.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Steve, Striving Deducer",
 			"Image": "https://lh3.googleusercontent.com/d/1V7vjzw519I_lYjvz_a0N7_GB7QTgPWoB",
 			"Creator": "u/frezzzo",
@@ -156131,6 +156073,64 @@
 				null
 			],
 			"Tags": ""
+		},
+		{
+			"Name": "Steve",
+			"Image": "https://lh3.googleusercontent.com/d/1VgGZHHPAeVkIY_4rAscLcRY22X7Fd626",
+			"Creator": "u/Canned-Meats",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "",
+			"Cost": [
+				"{1}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Steve",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"You may cast nonland cards as if they were copies of Steve.",
+				null,
+				null,
+				null
+			]
 		},
 		{
 			"Name": "Steven",
@@ -157389,70 +157389,6 @@
 			]
 		},
 		{
-			"Name": "Strictly Better",
-			"Image": "https://lh3.googleusercontent.com/d/1Fnow0Nh0xsMjp_euj7UunjDgaz3j1DfQ",
-			"Creator": "Lardbucket",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 4,
-			"Color(s)": "Blue",
-			"Cost": [
-				"{2}{U}{U}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Instant",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Copy target spell not named strictly better, except each number on the copy is increased by 1.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"\"Alloy Myr, Boil, Control Magic, Dead Weight, Elvish Archers, Goblin Tunneler, Howl from Beyond, Inner Struggle, Jace's Struggle, Kabira Evangel, Lighting Bolt...\"",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Strictly Better Plateau",
 			"Image": "https://lh3.googleusercontent.com/d/1CfSwbuAKJB7Qa8Q34grokDsCGWZE59Ju",
 			"Creator": "vladicuss",
@@ -157511,6 +157447,70 @@
 			],
 			"Flavor Text": [
 				"\"So there I was: a Stifle in hand, a Witherbloom Apprentice in play, and my opponent at 1...\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Strictly Better",
+			"Image": "https://lh3.googleusercontent.com/d/1Fnow0Nh0xsMjp_euj7UunjDgaz3j1DfQ",
+			"Creator": "Lardbucket",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{U}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Copy target spell not named strictly better, except each number on the copy is increased by 1.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"Alloy Myr, Boil, Control Magic, Dead Weight, Elvish Archers, Goblin Tunneler, Howl from Beyond, Inner Struggle, Jace's Struggle, Kabira Evangel, Lighting Bolt...\"",
 				null,
 				null,
 				null
@@ -158618,7 +158618,7 @@
 		{
 			"Name": "Super Evolver",
 			"Image": "https://lh3.googleusercontent.com/d/1IlyW43TgbUGODvjGsDSKvsHJwWN8u9i3",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -158798,7 +158798,7 @@
 		{
 			"Name": "Superman",
 			"Image": "https://lh3.googleusercontent.com/d/1bogos6A7VuNOfRZP-2m77SFJKu37vdjU",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -160556,7 +160556,7 @@
 			"CMC": 3,
 			"Color(s)": "Black;Purple",
 			"Cost": [
-				"{B}{B}{B/P}",
+				"{B}{B}{BB/P}",
 				null,
 				null,
 				null
@@ -160612,7 +160612,7 @@
 		},
 		{
 			"Name": "THUNDER FURY LIGHTNING POWER STRIKE",
-			"Image": "https://lh3.googleusercontent.com/d/1QCZOz-8Yss2p2DsuM_NFNmziZvr_pK5E",
+			"Image": "https://lh3.googleusercontent.com/d/1QCZOz-8Yss2p2DsuM_NFNmziZvr_pK5E ",
 			"Creator": "u/TemporalFuzz",
 			"Set": "HLC",
 			"Constructed": "Legal",
@@ -160671,7 +160671,7 @@
 		{
 			"Name": "TL;DR",
 			"Image": "https://lh3.googleusercontent.com/d/1w12dvw9-6vMlLpuz7nHdkGCoNuX_EcXT",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -160728,7 +160728,7 @@
 		},
 		{
 			"Name": "TL;DR",
-			"Image": "https://lh3.googleusercontent.com/d/1sjKGci715QAPaIB2Mu5y19RxRqT3AGLW",
+			"Image": "https://lh3.googleusercontent.com/d/1w12dvw9-6vMlLpuz7nHdkGCoNuX_EcXT",
 			"Creator": "Cirion02",
 			"Set": "HLC",
 			"Constructed": "Legal",
@@ -163158,64 +163158,6 @@
 			]
 		},
 		{
-			"Name": "Thallids",
-			"Image": "https://lh3.googleusercontent.com/d/1se6M7kOcuHxSIoTD7uYWx2d6SBDabAGT",
-			"Creator": "arthropod_queen",
-			"Set": "HC3",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Green",
-			"Cost": [
-				"{G}{G}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Fungus;Fungus",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"At the beginning of your upkeep, put a spore counter on Thallids.\\nAt the beginning of your upkeep, put a spore counter on Thallids.\\nremove three spore counters from Thallids: Create a 1/1 green Saproling creature token.\\nremove three spore counters from Thallids: Create a 1/1 green Saproling creature token.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Thallids's Frightful Return",
 			"Image": "https://lh3.googleusercontent.com/d/1LmghAfgEGucq32dMsE7dZOen8Xuk9Xaq",
 			"Creator": "nobroam",
@@ -163280,12 +163222,70 @@
 			]
 		},
 		{
-			"Name": "Thanos",
-			"Image": "https://lh3.googleusercontent.com/d/1wZrlxaWlvpNQ5In58YfhAZ_RtKCRO_Qv",
-			"Creator": "Jumberlack",
+			"Name": "Thallids",
+			"Image": "https://lh3.googleusercontent.com/d/1se6M7kOcuHxSIoTD7uYWx2d6SBDabAGT",
+			"Creator": "arthropod_queen",
 			"Set": "HC3",
 			"Constructed": "Legal",
-			"Rulings": "A mox is any card that refers to itself as a mox. For example Mox Lotus is a mox but Magus of the Mox Pearl is not. - Jumberlack #rulings 02/23/2022",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Green",
+			"Cost": [
+				"{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Fungus;Fungus",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"At the beginning of your upkeep, put a spore counter on Thallids.\\nAt the beginning of your upkeep, put a spore counter on Thallids.\\nremove three spore counters from Thallids: Create a 1/1 green Saproling creature token.\\nremove three spore counters from Thallids: Create a 1/1 green Saproling creature token.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Thanos",
+			"Image": "https://lh3.googleusercontent.com/d/1wZrlxaWlvpNQ5In58YfhAZ_RtKCRO_Qv",
+			"Creator": "jumberlack.",
+			"Set": "HC3",
+			"Constructed": "Legal",
+			"Rulings": "A mox is any card that refers to itself as a mox. For example Mox Lotus is a mox but Magus of the Mox Pearl is not. - jumberlack. #rulings 02/23/2022",
 			"CMC": 4,
 			"Color(s)": "Purple",
 			"Cost": [
@@ -164704,7 +164704,7 @@
 		{
 			"Name": "The Eldrazi Are On Strixhaven! // Kozilek, Professor of Eldrology",
 			"Image": "https://lh3.googleusercontent.com/d/1oXjLG23DKNlN4ZVJRnChMItdENxVMB9W",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -165068,7 +165068,7 @@
 		{
 			"Name": "The Gatewatch",
 			"Image": "https://lh3.googleusercontent.com/d/1ew98lFkvj6Zr8wMXNhmUVeygI4YiZf6B",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -166920,7 +166920,7 @@
 		{
 			"Name": "The Prismatic Piper",
 			"Image": "https://lh3.googleusercontent.com/d/1O_QvLbmJivP0eshIPAM2uTQ0JtPXinDv",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -166978,7 +166978,7 @@
 		{
 			"Name": "The Prophecy Club",
 			"Image": "https://lh3.googleusercontent.com/d/1JNBx5-7LgKO1KbojxwE5HgM-7_rDnddT",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -168081,7 +168081,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1rHIJTww4UxfrIl7_P4XiuGjeJ3QPmmlr",
 			"Creator": "u/C9_Arcane",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 2,
 			"Color(s)": "Black;Green",
@@ -169029,7 +169029,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1OnuEUQNghfAsW60A9iDVU_DoINERRRLK",
 			"Creator": "u/Em9500",
 			"Set": "HLC",
-			"Constructed": "Legal",
+			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
 			"Color(s)": "",
@@ -170431,7 +170431,7 @@
 		{
 			"Name": "Three Goblins in a Hazezon Tamar Costume",
 			"Image": "https://lh3.googleusercontent.com/d/1JJLD6nUftYFguekyjit2pXZPe6IbRskp",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -170754,7 +170754,7 @@
 		{
 			"Name": "Thriving Portal",
 			"Image": "https://lh3.googleusercontent.com/d/1J2shY7vnqQlQCHTu2zbPY9ROkF86kSki",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HLC",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -173053,7 +173053,7 @@
 		{
 			"Name": "Tolarian Adjunct Professor // Tolarian Community College",
 			"Image": "https://lh3.googleusercontent.com/d/1pjUXuFhydZR47RddnG0R7Dw9KPbTfgH2",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -173482,6 +173482,64 @@
 			]
 		},
 		{
+			"Name": "Toolbox \"Toolbox\" Toolbox",
+			"Image": "https://lh3.googleusercontent.com/d/1JzlMjAl1XX0WlPbR8Yr4UyMU6Ew9J1f4",
+			"Creator": "trulysagemuse",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Toolbox",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Each artifact spell you cast has blitz. The blitz cost is equal to its mana cost. (You may choose to cast that spell for its blitz cost. If you do, it gains haste and \"When this artifact dies, draw a card.\" Sacrifice it at the beginning of the next end step.)\\nIf Toolbox \"Toolbox\" Toolbox is your commander, artifact cards in your deck have veDoid. (They have no color identity.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Toolbox",
 			"Image": "https://lh3.googleusercontent.com/d/156jwatPHr8hvUEbzBKa21UpW89t2Vhod",
 			"Creator": "Bogander_Guy",
@@ -173540,64 +173598,6 @@
 			],
 			"Flavor Text": [
 				"The tools in this case being a knife and some bath salts.",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "Toolbox \"Toolbox\" Toolbox",
-			"Image": "https://lh3.googleusercontent.com/d/1JzlMjAl1XX0WlPbR8Yr4UyMU6Ew9J1f4",
-			"Creator": "trulysagemuse",
-			"Set": "HC6",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Red",
-			"Cost": [
-				"{1}{R}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"Legendary",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Artifact;Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Toolbox",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"2",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Each artifact spell you cast has blitz. The blitz cost is equal to its mana cost. (You may choose to cast that spell for its blitz cost. If you do, it gains haste and \"When this artifact dies, draw a card.\" Sacrifice it at the beginning of the next end step.)\\nIf Toolbox \"Toolbox\" Toolbox is your commander, artifact cards in your deck have veDoid. (They have no color identity.)",
 				null,
 				null,
 				null
@@ -174274,7 +174274,7 @@
 		{
 			"Name": "Tough Love",
 			"Image": "https://lh3.googleusercontent.com/d/1w-TEMj2uR223l5-mlHBnblKHyP_6M9_z",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -175292,7 +175292,7 @@
 		{
 			"Name": "Treasured Miscut",
 			"Image": "https://lh3.googleusercontent.com/d/1FdlqYPlz7McL2XDQRJjfttp1y9_sveWo",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -175722,7 +175722,7 @@
 		{
 			"Name": "Triumph of the Dwards",
 			"Image": "https://lh3.googleusercontent.com/d/1doYdJQXjhr3FGGYVNDN8QIPx0KCuwGTy",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -176268,7 +176268,7 @@
 		{
 			"Name": "Trufflesnout and Toad GX",
 			"Image": "https://lh3.googleusercontent.com/d/1X3XBEU7bqei7sHbBW66mXXt019pXkYWe",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -176337,6 +176337,83 @@
 					"Image": "https://lh3.googleusercontent.com/d/1oShOn7l99tnTvy6EqCUeNGgF91lzKfkI"
 				}
 			]
+		},
+		{
+			"Name": "Tunak Tunak TunG 1",
+			"Image": "https://lh3.googleusercontent.com/d/1EHnygEBMMXRzk77bUdrWCgNng8VchTsG",
+			"Creator": "",
+			"Set": "",
+			"Rulings": "Related cards: Tunak Tunak Tun",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Supertype(s)": [
+				"Token",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Creature",
+				"",
+				"",
+				""
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				2,
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				3,
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				null,
+				null,
+				"",
+				""
+			],
+			"Text Box": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				""
+			],
+			"small alt image": "",
+			"FIELD44": "",
+			"FIELD45": "",
+			"FIELD46": "",
+			"FIELD47": "",
+			"FIELD48": "",
+			"FIELD49": "",
+			"FIELD50": "",
+			"FIELD51": "",
+			"FIELD52": "",
+			"FIELD53": "",
+			"FIELD54": "",
+			"FIELD55": "",
+			"FIELD56": ""
 		},
 		{
 			"Name": "Tunak Tunak Tun",
@@ -176425,83 +176502,6 @@
 					"Image": "https://lh3.googleusercontent.com/d/1EHnygEBMMXRzk77bUdrWCgNng8VchTsG"
 				}
 			]
-		},
-		{
-			"Name": "Tunak Tunak TunG 1",
-			"Image": "https://lh3.googleusercontent.com/d/1EHnygEBMMXRzk77bUdrWCgNng8VchTsG",
-			"Creator": "",
-			"Set": "",
-			"Rulings": "Related cards: Tunak Tunak Tun",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Supertype(s)": [
-				"Token",
-				"",
-				"",
-				""
-			],
-			"Card Type(s)": [
-				"Creature",
-				"",
-				"",
-				""
-			],
-			"Subtype(s)": [
-				"",
-				"",
-				"",
-				""
-			],
-			"power": [
-				2,
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				3,
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				null,
-				null,
-				"",
-				""
-			],
-			"Text Box": [
-				"",
-				"",
-				"",
-				""
-			],
-			"Flavor Text": [
-				"",
-				"",
-				"",
-				""
-			],
-			"small alt image": "",
-			"FIELD44": "",
-			"FIELD45": "",
-			"FIELD46": "",
-			"FIELD47": "",
-			"FIELD48": "",
-			"FIELD49": "",
-			"FIELD50": "",
-			"FIELD51": "",
-			"FIELD52": "",
-			"FIELD53": "",
-			"FIELD54": "",
-			"FIELD55": "",
-			"FIELD56": ""
 		},
 		{
 			"Name": "Tunak Tunak TunR 1",
@@ -177351,7 +177351,7 @@
 		{
 			"Name": "Twisty Nipple Charm",
 			"Image": "https://lh3.googleusercontent.com/d/1gBJsDK5cZFUk9XybcvEjtU81ahagqREW",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -178828,7 +178828,7 @@
 		{
 			"Name": "Unexpected Inquisitor",
 			"Image": "https://lh3.googleusercontent.com/d/1ikyUtwrM_rlcF16UtKeZr55byfEhV1-6",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -179972,7 +179972,7 @@
 		{
 			"Name": "Urza's Power Plants",
 			"Image": "https://lh3.googleusercontent.com/d/1Lb3QKSBVm4eAor_tnmApbeIzidl4Q-IB",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -180567,7 +180567,7 @@
 		{
 			"Name": "Vaevictis Miller // Elder Dragon Highland",
 			"Image": "https://lh3.googleusercontent.com/d/13yaTxl-Xg1C5cldg25a-JYMUerjBfFv4",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -181403,7 +181403,7 @@
 		{
 			"Name": "Very Anger",
 			"Image": "https://lh3.googleusercontent.com/d/1UtYiovGLGgSrPQNIePwpDmQo6sMMFQVL",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -181839,7 +181839,7 @@
 		{
 			"Name": "Vetoken Sorcery",
 			"Image": "https://lh3.googleusercontent.com/d/1DqIhre25rXuZf2cm5xoCG9eEvt9uj_rJ",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -183051,7 +183051,7 @@
 		{
 			"Name": "Walldo",
 			"Image": "https://lh3.googleusercontent.com/d/19KR0zd3iKmKIvxbPKchJXILPkLrpxLC8",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -183101,70 +183101,6 @@
 			],
 			"Text Box": [
 				"Defender\\nWalldo can block all creatures. (This ability prioritizes over other abilities)\\n{2/W}: Walldo gets +0/+1 and can block an additional creature this turn.",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "Walmart",
-			"Image": "https://lh3.googleusercontent.com/d/1wIZNt4MUpuYJ0Pd0tm5HCMcDJsy7iYuy",
-			"Creator": "u/van-theman",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 0,
-			"Color(s)": "",
-			"Cost": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Land",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Walmart enters the battlefield tapped.\\n{T}: Add {C}.\\n{T}: The next spell you cast this turn costs {W}{U} less to cast. This effect reduces only the amount of colored mana you pay.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"Everyday low prices.",
 				null,
 				null,
 				null
@@ -183229,6 +183165,70 @@
 			],
 			"Flavor Text": [
 				"Every day, the hardened discipline of the associate is tested by the bestial rage of the couponer. Such is the will of nature.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Walmart",
+			"Image": "https://lh3.googleusercontent.com/d/1wIZNt4MUpuYJ0Pd0tm5HCMcDJsy7iYuy",
+			"Creator": "vantheman_",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Walmart enters the battlefield tapped.\\n{T}: Add {C}.\\n{T}: The next spell you cast this turn costs {W}{U} less to cast. This effect reduces only the amount of colored mana you pay.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"Everyday low prices.",
 				null,
 				null,
 				null
@@ -183679,64 +183679,6 @@
 			]
 		},
 		{
-			"Name": "Water",
-			"Image": "https://lh3.googleusercontent.com/d/1d6nkuZFesRexr3MEFYLpFIvXQLt8Xbe_",
-			"Creator": "u/C9_Arcane",
-			"Set": "HLC",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 2,
-			"Color(s)": "Blue",
-			"Cost": [
-				"{1}{U}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Instant",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Need {U}. yell \"I need it!\" (Pay {U} and yell \"I need it!\": put Water from your sideboard on top of your library).\\nChoose one -\\n• Counter target red spell.\\n• Destroy target red permanent.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Water Bottle Gnomes",
 			"Image": "https://lh3.googleusercontent.com/d/12PiP3Mj0bghQQOXfmJlvbVEYVQHBE3UW",
 			"Creator": "u/MTG_Sappy",
@@ -183801,8 +183743,66 @@
 			]
 		},
 		{
+			"Name": "Water",
+			"Image": "https://lh3.googleusercontent.com/d/1d6nkuZFesRexr3MEFYLpFIvXQLt8Xbe_",
+			"Creator": "u/C9_Arcane",
+			"Set": "HLC",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{1}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Need {U}. yell \"I need it!\" (Pay {U} and yell \"I need it!\": put Water from your sideboard on top of your library).\\nChoose one -\\n• Counter target red spell.\\n• Destroy target red permanent.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Watergate",
-			"Image": "https://lh3.googleusercontent.com/d/14EeOVHPzc9Mm4F2oOfN7dPM2MbgyMYWb",
+			"Image": "https://lh3.googleusercontent.com/d/1xIe6wK_nUjp9WCQTkvlg4aEbT-FByy0_",
 			"Creator": "Victor",
 			"Set": "HC3",
 			"Constructed": "Legal",
@@ -184053,6 +184053,64 @@
 			]
 		},
 		{
+			"Name": "Weatherman's Wrath",
+			"Image": "https://lh3.googleusercontent.com/d/1lq-K9U7qkXn6RjoXJ_YhCPqmz_jXumQc",
+			"Creator": "llllll",
+			"Set": "HC4",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Red",
+			"Cost": [
+				"{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Ripple 4\\nLightning Bolt deals 3 damage to any target.\\nForecast — {1}, Reveal Weatherman's Wrath from your hand: Shuffle a copy of Weatherman's Wrath into your library. (Activate this ability only during your upkeep and only once each turn.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Weatherman",
 			"Image": "https://lh3.googleusercontent.com/d/16_M3mv2JfxrNfn4FFet_Bh40QPgskBx7",
 			"Creator": "Badknight13",
@@ -184111,64 +184169,6 @@
 			],
 			"Flavor Text": [
 				"\"Well Tom, the weather looks like shit.\"",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "Weatherman's Wrath",
-			"Image": "https://lh3.googleusercontent.com/d/1lq-K9U7qkXn6RjoXJ_YhCPqmz_jXumQc",
-			"Creator": "llllll",
-			"Set": "HC4",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 1,
-			"Color(s)": "Red",
-			"Cost": [
-				"{R}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Instant",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Ripple 4\\nLightning Bolt deals 3 damage to any target.\\nForecast — {1}, Reveal Weatherman's Wrath from your hand: Shuffle a copy of Weatherman's Wrath into your library. (Activate this ability only during your upkeep and only once each turn.)",
 				null,
 				null,
 				null
@@ -184834,64 +184834,6 @@
 			"FIELD56": ""
 		},
 		{
-			"Name": "Whale",
-			"Image": "https://lh3.googleusercontent.com/d/13Koi3wlHhwhbiZ1ivfAYE9NN_TIYonBn",
-			"Creator": "u/van-theman",
-			"Set": "HC2",
-			"Constructed": "Legal",
-			"Rulings": "",
-			"CMC": 5,
-			"Color(s)": "Blue",
-			"Cost": [
-				"{3}{U}{U}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Whale",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"4",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"4",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Whenever Whale enters the battlefield or attacks, venture into its belly.",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Whale 1",
 			"Image": "https://lh3.googleusercontent.com/d/1FBrJPcTmIbmCe1Hs9Ee6eMBi3MmppmlD",
 			"Creator": "",
@@ -185173,6 +185115,64 @@
 			],
 			"Text Box": [
 				"Krill target creature. (Its base power and toughness become 1/1. This effect lasts indefinitely.)\\nDraw a card.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Whale",
+			"Image": "https://lh3.googleusercontent.com/d/13Koi3wlHhwhbiZ1ivfAYE9NN_TIYonBn",
+			"Creator": "vantheman_",
+			"Set": "HC2",
+			"Constructed": "Legal",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{3}{U}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Whale",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever Whale enters the battlefield or attacks, venture into its belly.",
 				null,
 				null,
 				null
@@ -188216,7 +188216,7 @@
 		{
 			"Name": "WotC Spy",
 			"Image": "https://lh3.googleusercontent.com/d/1WM1rNWylCvgCtBUKYdFgSX78AA2faZ_O",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -190299,7 +190299,7 @@
 		{
 			"Name": "Yawgmoth's Math",
 			"Image": "https://lh3.googleusercontent.com/d/1yK-_lFW0fvcKYCL6xwK-yN-_ieW6j1S3",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -190962,7 +190962,7 @@
 		{
 			"Name": "Young Biomancer",
 			"Image": "https://lh3.googleusercontent.com/d/1Wd1Ejj7uOZreri4A-k0Yt9bXqSBTlLwK",
-			"Creator": "u/van-theman",
+			"Creator": "vantheman_",
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -191139,7 +191139,7 @@
 				null
 			],
 			"Text Box": [
-				"Exile target spell with a time counter on it. It gains forced suspend (you have to cast it)  and \"Whenever you cast this spell, suspend it with a time counter and this ability on it. You get a poison counter.\"",
+				"Exile target spell with a time counter on it. It gains forced suspend (you have to cast it) and \"Whenever you cast this spell, suspend it with a time counter and this ability on it. You get a poison counter.\"",
 				null,
 				null,
 				null
@@ -191154,7 +191154,7 @@
 		{
 			"Name": "Your Cards Aren't Very Funny",
 			"Image": "https://lh3.googleusercontent.com/d/1mfQifmD2MJ_yazUk9v3bjZ158wzSJv7u",
-			"Creator": "Jumberlack",
+			"Creator": "jumberlack.",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
@@ -192613,7 +192613,7 @@
 		{
 			"Name": "[Ember]cleave",
 			"Image": "https://lh3.googleusercontent.com/d/1rPMm_iq2jKiu1dorJcYAPUu7onKoDMwH",
-			"Creator": "Jumberlack & Zaxer2",
+			"Creator": "jumberlack. & Zaxer2",
 			"Set": "HC3",
 			"Constructed": "Legal",
 			"Rulings": "",
