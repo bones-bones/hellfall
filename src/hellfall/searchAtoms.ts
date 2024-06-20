@@ -30,6 +30,10 @@ export const searchColorComparisonAtom = atom(
   (searchParams.get("colorComparison") || "<=") as "<=" | ">=" | "="
 );
 
+export const basedHybridRule = atom(
+  (searchParams.get("hybridRule") || "") as "based"
+);
+
 export const searchCmcAtom = atom<
   | {
       operator: ">" | "<" | "=" | "";

@@ -1943,7 +1943,7 @@
 			"CMC": 6,
 			"Color(s)": "White;Green",
 			"Cost": [
-				"{1/G}{1/G}G{1/W}{1/W}{1/W}",
+				"{1/G}{1/G}{G}{1/W}{1/W}{1/W}",
 				null,
 				null,
 				null
@@ -1974,6 +1974,64 @@
 			],
 			"toughness": [
 				"9",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "1d6",
+			"Image": "https://lh3.googleusercontent.com/d/1SQuCqAdVjYm0I8yH2X32Z2v5OKcHSStK",
+			"Creator": "upogsi",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "",
+			"Cost": [
+				"{2}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Die",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"When 1d6 enters or becomes tapped, Role it. \\n 1 | Cursed \\n 2 | Monster \\n 3 | Royal \\n 4 | Sorcerer \\n 5 | Wicked \\n 6 | Young Hero",
 				null,
 				null,
 				null
@@ -13231,6 +13289,64 @@
 			]
 		},
 		{
+			"Name": "Asymmetry Sage",
+			"Image": "https://lh3.googleusercontent.com/d/1haRbV5aOP2B5EEgV-6aLIMc9Bc6Nys4a",
+			"Creator": "jumberlack.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;Vizard",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flying \\n Magecraft — Whenever you cast or copy an instant or sorcery spell,  target creature has base power equal to its toughness plus or minus 1 until end of turn.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Atheist",
 			"Image": "https://lh3.googleusercontent.com/d/1LfE5K1So8Oz4uD7-hiPwa2pTFwn7G6Aa",
 			"Creator": "Glassbass",
@@ -14455,6 +14571,70 @@
 			],
 			"Flavor Text": [
 				"If we can't learn from our past... yadda yadda yadda. Know what I mean?",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Average MH3 Leak",
+			"Image": "https://lh3.googleusercontent.com/d/1u2oni-GX4xl3JPYqzKmAQ8pS5iWfMZUE",
+			"Creator": "lettuce_turtle",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue;Red",
+			"Cost": [
+				"{1}{U}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Seal",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"At the beginning of your upkeep, \\n Note from the leaker: \\n ETB you may pay X to theorize about a reasonable effect for the upkeep trigger. \\n (A reasonable effect can be any instant / sorcery in your GY with MV less than or equal to X plus two.)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"and i fucking HATE women",
 				null,
 				null,
 				null
@@ -17096,6 +17276,71 @@
 			]
 		},
 		{
+			"Name": "Barbie // Oppenheimer",
+			"Image": "https://lh3.googleusercontent.com/d/1CfoQY58nvnyOlPZF4JHfPYxi-dVdX-9c",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 8,
+			"Color(s)": "White",
+			"Cost": [
+				"{2}{W}",
+				"{3}{W}{W}",
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				"Sorcery",
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				null,
+				null
+			],
+			"power": [
+				"",
+				"",
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Text Box": [
+				"Up to two target creatures become artifacts until end of turn. (They're not creatures.) \\n Flash fuse (You may cast both halves of this card fused at instant speed.)",
+				"Destroy all creatures and nonbasic lands. \\n Flash fuse (You may cast both halves of this card fused at instant speed.)",
+				null,
+				null
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": ""
+		},
+		{
 			"Name": "Bargain Bin Lotus",
 			"Image": "https://lh3.googleusercontent.com/d/1SUnpn0K86dDOzfsXIvluOjlJ0yH67N0X",
 			"Creator": "Cirion02",
@@ -17212,6 +17457,70 @@
 			],
 			"Text Box": [
 				"When Barrel of Dwarves enters the battlefield, put it onto one of your sprokets.\\nWhenever Barrel of Dwarves becomes cranked, add a generic copy of Seven Dwarves to your hand.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Basal Thrull rod",
+			"Image": "https://lh3.googleusercontent.com/d/1T-53KhBAvOPzj6L5ZRBq41xT6etTq1io",
+			"Creator": "moundsofmayhem",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "",
+			"Cost": [
+				"{2}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}, Sacrifice artifact: Add {B}{B} to your mana pool.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"Gerrard: \"But it doesn't do anything!\" \\n Hanna: \"\"",
 				null,
 				null,
 				null
@@ -17699,7 +18008,7 @@
 				null
 			],
 			"Text Box": [
-				"Madness {0}\\n Forecast — {R}, Reveale Basking Tuatara from your hand: Draw two cards, then discard three cards. (Activate only during your upkeep and only once each turn.)",
+				"Madness {0}\\n Forecast — {R}, Reveal Basking Tuatara from your hand: Draw two cards, then discard three cards. (Activate only during your upkeep and only once each turn.)",
 				null,
 				null,
 				null
@@ -19696,7 +20005,7 @@
 			"CMC": 2,
 			"Color(s)": "Black",
 			"Cost": [
-				"{1}",
+				"{1}{B}",
 				null,
 				null,
 				null
@@ -23180,6 +23489,135 @@
 			]
 		},
 		{
+			"Name": "Blood Tomb",
+			"Image": "https://lh3.googleusercontent.com/d/12HDOgTtV55JYRzWSSYMknsgS4jvDnh-C",
+			"Creator": "fanharmonicon",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": null,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: Add {C}{C}. A nonbasic land you control becomes a basic Mountain.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"There is mountain to be gained in the kingdom of the dead. \\n —Vec tomb inscription",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Blood ghast // Crip Ghast",
+			"Image": "https://lh3.googleusercontent.com/d/1ael8rjlojQXvIqIihKemLHGU5gCGQeBQ",
+			"Creator": "nobroam",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Red",
+			"Cost": [
+				"{R}{R}",
+				"{3}{U}",
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				"Creature",
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Gangster;Spirit",
+				"Spirit;Gangster",
+				null,
+				null
+			],
+			"power": [
+				"2",
+				"2",
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				"2",
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Text Box": [
+				"Bloodghast can’t block. \\n Bloodghast has haste as long as an opponent has 10 or less life. \\n Landfall — Whenever a Mountain enters the battlefield under your control, you may return Bloodghast from your graveyard to the battlefield. \\n Pick a side (You may pick a side before the game begins, If you do, treat the other side as though it doesn't exist.)",
+				"Cripxtort (Whenever you cast a spell, you may pay {U/U}. If you do, each opponent mills 1 card and you scry that much cards.) \\n Whenever you tap an Island for mana, add {U} to your mana pool. (In addition to the mana that land produced.) \\n Pick a side (You may pick a side before the game begins, If you do, treat the other side as though it doesn't exist.)",
+				null,
+				null
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": ""
+		},
+		{
 			"Name": "Bloodfhast",
 			"Image": "https://lh3.googleusercontent.com/d/1NRmDTzZW8htdcMs6Nqft-HdzHKh4V-ym",
 			"Creator": "u/ExaltedOne",
@@ -23964,6 +24402,70 @@
 			],
 			"Flavor Text": [
 				"\"Come on, I just want to read it!\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Bodystorm",
+			"Image": "https://lh3.googleusercontent.com/d/1192FwRCIA8RkNUlejpOS23K1DXQTq1Z4",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Green",
+			"Cost": [
+				"{2}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Manifest the top three cards of your library and look at them, then put two creatures you control on top of your library in any order.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"The mizzium-sphere weights drove her body deep into the workout field, where only the rarest motes of buffness may be plucked.",
 				null,
 				null,
 				null
@@ -40704,6 +41206,64 @@
 			]
 		},
 		{
+			"Name": "Crypt Ghast Goes Hawaiian",
+			"Image": "https://lh3.googleusercontent.com/d/19iMkk3zb8zGhieXWe9VrmnrVz6zHADd6",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Green",
+			"Cost": [
+				"{3}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Spirit",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Explort (Whenever you cast a spell, you may pay {G/U}. If you do, this creature explores.)\\nWhenever you tap a Forest for mana, add an additional {G}.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Crypt of u/Em9500",
 			"Image": "https://lh3.googleusercontent.com/d/1bWOgwFiI2JQ0dV1hU3HA4i9XpJIy69au",
 			"Creator": "Cirion02",
@@ -48747,7 +49307,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 4,
-			"Color(s)": "Black;Green;White",
+			"Color(s)": "White;Black;Green",
 			"Cost": [
 				"{1}{B}{G}{W}",
 				null,
@@ -51460,7 +52020,7 @@
 			"CMC": 4,
 			"Color(s)": "White",
 			"Cost": [
-				"{3}[W}",
+				"{3}{W}",
 				null,
 				null,
 				null
@@ -52732,6 +53292,64 @@
 			],
 			"Text Box": [
 				"Devoid \\n {3}{W}: Exile another target creature,\nthen return a creature card owned by\nthat creature's owner in exile to the\nbattlefield under its owner's control.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Eldrazi Spawner",
+			"Image": "https://lh3.googleusercontent.com/d/1Ei0leJntAhLasa3r4G9HisadRY6vYgKw",
+			"Creator": "luckynot.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "",
+			"Cost": [
+				"{5}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Kindred",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Eldrazi",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"At the beginning of each opponent's upkeep, if you control fewer than 6 Eldrazi Spawn, create a 0/1 colorless Eldrazi Spawn creature token with \"Sacrifice this creature: Add {C}.\"",
 				null,
 				null,
 				null
@@ -55861,7 +56479,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 2,
-			"Color(s)": "Blue;Black",
+			"Color(s)": "White;Blue;Black",
 			"Cost": [
 				"{U}{B}",
 				null,
@@ -56449,7 +57067,7 @@
 			"CMC": 2,
 			"Color(s)": "Green",
 			"Cost": [
-				"{2}",
+				"{1}{G}",
 				null,
 				null,
 				null
@@ -57802,7 +58420,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 5,
-			"Color(s)": "Red;White",
+			"Color(s)": "White;Red",
 			"Cost": [
 				"{3}{R/W}{R/W}",
 				null,
@@ -58234,6 +58852,64 @@
 			]
 		},
 		{
+			"Name": "Explored Spires",
+			"Image": "https://lh3.googleusercontent.com/d/1lbSIWOMr7Ur7kRzW8D5gB_VSDbBrTUbK",
+			"Creator": "loins",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": null,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: Add one mana of any color. \\n Forecast — Reveal Explored Spires and a creature that's one or more colors from your hand: Circle one of the creature's colors below. (Activate this ability only during your upkeep and only once each turn.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Extraordinarily Lost",
 			"Image": "https://lh3.googleusercontent.com/d/1EFArXoxQQolMlnPyrOMJ_B3_FIwHNiAx",
 			"Creator": "u/Whatyesoh",
@@ -58655,7 +59331,7 @@
 			"CMC": 4,
 			"Color(s)": "Blue",
 			"Cost": [
-				"{3}",
+				"{3}{U}",
 				null,
 				null,
 				null
@@ -59810,6 +60486,70 @@
 					"Type": "Artifact",
 					"Image": "https://lh3.googleusercontent.com/d/1OE2FgHEJjfh2F3XfgRAIh-WTFWnYP1YG"
 				}
+			]
+		},
+		{
+			"Name": "Father of Runes",
+			"Image": "https://lh3.googleusercontent.com/d/11hLodwnZ9_uBXyToNl51TT3JFcjyQAyr",
+			"Creator": "moundsofmayhem",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "White",
+			"Cost": [
+				"{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Cleric",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: a color of your choice gains protection from Target creature until end of turn.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"My family protects My family.\"",
+				null,
+				null,
+				null
 			]
 		},
 		{
@@ -62932,7 +63672,7 @@
 			"CMC": 1,
 			"Color(s)": "Blue",
 			"Cost": [
-				"U",
+				"{U}",
 				null,
 				null,
 				null
@@ -67377,6 +68117,70 @@
 			]
 		},
 		{
+			"Name": "Garfield Eats Lasagna",
+			"Image": "https://lh3.googleusercontent.com/d/1wGz9XxgeZdEwiexeGTCfrQCVrQbTv1Q9",
+			"Creator": "missingnerd",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Green",
+			"Cost": [
+				"{1}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Saga",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"I — Create a 1/1 orange Cat creature token with Devour Food 2\\nII — Create a 1/1 white Human Coward token with Defender\\nIII — Create a food token, then exile this saga and return it to the batlefield.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"YET ANOTHER MONDAY...\"\\n\"I'M HUNGRY\" \"ME, TOO\"\\n\"I LOVE LASAGNA!\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Garfield Mystic",
 			"Image": "https://lh3.googleusercontent.com/d/1nHdLUYH3sWsM1mNTgj9spA4XDNKN05FD",
 			"Creator": "fishladdie",
@@ -69326,6 +70130,64 @@
 			]
 		},
 		{
+			"Name": "Getting the Band [Back] Together",
+			"Image": "https://lh3.googleusercontent.com/d/1MN-N-Y4EbqQbCwwmrN7mq1tD_81NNfdw",
+			"Creator": "jumberlack.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Black",
+			"Cost": [
+				"{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Cleave {5}{B}{B}, [Aftermath] \\n Return up to one target creature [with banding] from each player's graveyard to the battlefield under your control. Put a banding sticker ok each of them.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Geven",
 			"Image": "https://lh3.googleusercontent.com/d/16URkr7qoV-7hGjtD-jL_bK3CYtG9gjw9",
 			"Creator": "Daze",
@@ -70476,6 +71338,64 @@
 			],
 			"Flavor Text": [
 				"mono g pauper ld",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Giraffe",
+			"Image": "https://lh3.googleusercontent.com/d/1vZvEsO49lDR0sh-uX2b9RqcjlI8lmHkM",
+			"Creator": "munkegutz",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Green",
+			"Cost": [
+				"{3}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Beast",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Reach, Reach, Reach,Reach\\n{T}, Tap an untapped Forest you control: You gain 3 life. Put a +1/+1 counter on Giraffe.",
 				null,
 				null,
 				null
@@ -77570,6 +78490,64 @@
 			]
 		},
 		{
+			"Name": "HC6: Banish to Minimum Wage",
+			"Image": "https://lh3.googleusercontent.com/d/1wzqC52RsVf5pfVGecoZb-2IECTeBtplk",
+			"Creator": "draner.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 0,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Suspend X—{X}{W}. X can’t be 0. \\n When you suspend Banish to Minimum Wage, exile target creature until you cast this spell. \\n At the beggining of your turn, if Banish to Minimum Wage is in exile, create a treasure token.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "HC6: Dreadthallid",
 			"Image": "https://lh3.googleusercontent.com/d/1d0hlRIl6ll6w7yh74sYySYmsHc29gMvD",
 			"Creator": "lettuce_turtle",
@@ -77820,6 +78798,64 @@
 			]
 		},
 		{
+			"Name": "HC6: Jesus Christ GX",
+			"Image": "https://lh3.googleusercontent.com/d/1iAElfQUWAIVFaDApk5XEAOWkpTZdXzSj",
+			"Creator": "logan5123",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "White",
+			"Cost": [
+				"{2}{W}{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;God",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Vigilance, lifelink\\nRoll Away the Stone GX — WWW: Return Jesus Christ GX from your graveyard to the battlefield. (Activate only one GX ability each game.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "HC6: Layer Understander",
 			"Image": "https://lh3.googleusercontent.com/d/1Tk4eREbPQ9Zsnh13AMKECFwyi2yGC_Jl",
 			"Creator": "liuliuluv",
@@ -77947,6 +78983,251 @@
 				null
 			],
 			"Tags": ""
+		},
+		{
+			"Name": "HC6: MrMirari, Mod of Lies // Van, Hellscube Impostor",
+			"Image": "https://lh3.googleusercontent.com/d/1IA6LVtNmiJm06XFII43yw2y0XKpP-Vqc",
+			"Creator": "liuliuluv",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "White;Blue",
+			"Cost": [
+				"{1}{W}",
+				"{2}{W}{U}",
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				"Legendary",
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				"Planeswalker",
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Illusion;God",
+				"Van",
+				null,
+				null
+			],
+			"power": [
+				"2",
+				"",
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				"",
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				"4",
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever MrMirari attacks, you may rename it. If you do, MrMirari gains hexproof until end of turn. \\n When MrMirari dies, exile all nonland permanents with its name.",
+				" +1: Van becomes a copy of target permanent until end of turn. \\n -2: Create a token that's a copy of target creature, then sacrifice it. \\n -8: You get an emblem with \"Spells you cast have storm.\"",
+				null,
+				null
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": ""
+		},
+		{
+			"Name": "HC6: Pot of Greend",
+			"Image": "https://lh3.googleusercontent.com/d/1fj-Twoa9tW0LMW-LyGic8EPFt_8eScbN",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Green",
+			"Cost": [
+				"{2}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Draw 2 cards.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "HC6: Purple Pip Picker",
+			"Image": "https://lh3.googleusercontent.com/d/1AsjMR1pWt-YGZGE2UpUEq3Vs1-8Ig6So",
+			"Creator": "jumberlack.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "",
+			"Cost": [
+				"{5}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Pincher;Pirate",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Prior to play, publicly pick a pair of playing pieces you possess. Pick a purple monocolor pip per playing piece. Put each pip in place of it’s partner provided neither playing piece profits in particularly pigmented pips. \\n Partiality for purple unique pips (affinity) \\n Prowess, persist, poisonous 1, protection from planes",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "HC6: Yahenni, Dying Partisan",
+			"Image": "https://lh3.googleusercontent.com/d/1dn5PMaBNQ1tVngRpAWcC3_xzVfpPmUSu",
+			"Creator": "draner.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Black",
+			"Cost": [
+				"{1}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Aetherborn;Vampire",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Vanishing 1 \\n Whenever a creature an opponent controls dies, put a time counter on Yahenni, Dying Partisan. \\n Sacrifice a creature without vanishing: Create two token copies of the sacrificed creature, except they have Vanishing 1.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"They also have cancer.",
+				null,
+				null,
+				null
+			]
 		},
 		{
 			"Name": "HC6: goblin skeleton",
@@ -78381,7 +79662,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 6,
-			"Color(s)": "Green;Blue;Red",
+			"Color(s)": "Blue;Red;Green",
 			"Cost": [
 				"{3}{G}{U}{R}",
 				null,
@@ -78542,6 +79823,64 @@
 			],
 			"Text Box": [
 				"Token spells you cast cost {2} less.\\nWhenever you cast a nontoken instant or sorcery, you may pay {U}{R}. If you do, create a token copy of it in your hand.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Half-Commander, Half-",
+			"Image": "https://lh3.googleusercontent.com/d/1L_RyO-P8MKNI2BDrjLwvyaF6TpV9CIxZ",
+			"Creator": "llllll",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": null,
+			"Color(s)": "Red;Green",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Half;Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Ooze",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"+2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"+2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Sticky (Counters and objects remain attached to this card as it moves to any public zone, and it remains combined with other cards.)\\nHalf-Commander, Half- can augment non-host creatures you own.\\nCommander Augment {1}{R}{G} ({1}{R}{G}, Reveal this card from your hand or command zone: Combine it with target host. Augment only as a sorcery. If this card already had a host, it is detached.)",
 				null,
 				null,
 				null
@@ -92284,6 +93623,64 @@
 			]
 		},
 		{
+			"Name": "Junior Gargaroth",
+			"Image": "https://lh3.googleusercontent.com/d/1HJq3kK_loAOHbuELcyrTolMSr3AyO-yo",
+			"Creator": "daydreamingdeity",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Green",
+			"Cost": [
+				"{1}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Beast",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Trample, reach, vigilance \\n Whenever Junior Gargaroth attacks or blocks, choose one — \\n • Create a 1/1 green beast creature token. \\n • You gain 1 life. \\n • Draw one third of a card. (Whenever you've drawn a full card, draw a card.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Just Keep Digging",
 			"Image": "https://lh3.googleusercontent.com/d/1Pt0zuo9eV8N2uCrKkliNicwa8YexcvG4",
 			"Creator": "Victor",
@@ -93530,6 +94927,64 @@
 			]
 		},
 		{
+			"Name": "Karona Outbreak",
+			"Image": "https://lh3.googleusercontent.com/d/1Na5Lpyh8Ghe804e_DeDv7P8YTOQnPFa7",
+			"Creator": "missingnerd",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Black",
+			"Cost": [
+				"{2}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Kindred;Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Aura;Virus",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flash, Enchant Creature \\n If enchanted creature would deal damage to another creature, instead the controller of Karona Outbreak attaches a copy of it to that creature. Regenerate that creature and enchanted creature. \\n Enchanted creature is a 1/1 Germ creature with \"At the beginning of each player's upkeep, that player untaps this creature and gains control of it.\" and loses all other abilities.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Karzilek, Butcher of Pavement",
 			"Image": "https://lh3.googleusercontent.com/d/1ZLqtgaxFu2SuTf8T4Lt8fwgKitfEWKp3",
 			"Creator": "dRafterDemon",
@@ -94142,6 +95597,70 @@
 			],
 			"Text Box": [
 				"Target creature loses all keywords, then gains a keyword at random for each keyword lost this way. If that keyword would have a number value, it's 1.\\nDraw a card.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Khalni Hydra 2: Take the Crown",
+			"Image": "https://lh3.googleusercontent.com/d/1LspA0q6FVKmDaYlDZSPkVkf4hmEPXSK-",
+			"Creator": "exalted.one",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 20,
+			"Color(s)": "Green",
+			"Cost": [
+				"{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Hydra",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"8",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"8",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Khalni Hydra costs {G} less to cast for each green creature you drafted. (20 {G}. Reveal your draft pool on cast.) \\n Trample",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"In ages past, bargains were struck and promises were made. Now we mist collect the monarchy. Begin the hymns.\" \\n —Moruul, Khalni Druid",
 				null,
 				null,
 				null
@@ -96976,7 +98495,7 @@
 			"CMC": 3,
 			"Color(s)": "White;Blue",
 			"Cost": [
-				"{3}",
+				"{1}{U}{W}",
 				null,
 				null,
 				null
@@ -110042,6 +111561,64 @@
 			]
 		},
 		{
+			"Name": "Middle Management",
+			"Image": "https://lh3.googleusercontent.com/d/1e8rZ5ewZf5XtaUH7VXfd2mwWxiUTmfVv",
+			"Creator": "jakenbakery",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "White;Blue",
+			"Cost": [
+				"{3}{W/U}{W/U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;Employee",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Affinity for commanders \\n As long as your control no other commanders, Middle Management is your commander. \\n Commanders you control get +2/+3 and have vigilance.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Midnight aper",
 			"Image": "https://lh3.googleusercontent.com/d/1FvphAjnPKqlWblk5BU7OseGeLpGjaBsy",
 			"Creator": "Gerbit.",
@@ -121319,6 +122896,64 @@
 			],
 			"Flavor Text": [
 				"オラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラオラ",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Oakish Boarmasters",
+			"Image": "https://lh3.googleusercontent.com/d/1yjzAbXvYvW4jnOgoT8cymG5UEV0UQb27",
+			"Creator": "niche_quiche",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Green",
+			"Cost": [
+				"{1}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Treefolk;Druid",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flash \\n When Oakish Boarmasters enters the battlefield and whenever an opponent draws a card except the forst one they draw in each of their draw steps, put a +1/+1 counter on target creature you control. Then amass Boars 1.",
 				null,
 				null,
 				null
@@ -135116,6 +136751,64 @@
 			]
 		},
 		{
+			"Name": "Power Word Slur",
+			"Image": "https://lh3.googleusercontent.com/d/1oaSZhFqHmWcmk4DqEMLLKdpM4bIWY3DN",
+			"Creator": "upogsi",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Black",
+			"Cost": [
+				"{B}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Destroy target creature. Creatures that share a type with it untap and attack you immediately.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Power Word Testicular Torsion",
 			"Image": "https://lh3.googleusercontent.com/d/1Wr5mR_A7bGBtTYgny3sewRO4Rd5zybnd",
 			"Creator": "liuliuluv",
@@ -138018,7 +139711,7 @@
 				null
 			],
 			"Text Box": [
-				"At the begining of your upkeep, search your library for a 1/1 black Faerie Rogue creature token with flying, reveale it, then shuffle. You lose 1 life.\\nWhenever you fail to find, draw a card.",
+				"At the begining of your upkeep, search your library for a 1/1 black Faerie Rogue creature token with flying, reveal it, then shuffle. You lose 1 life.\\nWhenever you fail to find, draw a card.",
 				null,
 				null,
 				null
@@ -147415,7 +149108,7 @@
 				null
 			],
 			"Text Box": [
-				"When Scrollport Merchant enters the battlefield, search your library for a blue instant card, reveal that card, and put it into your hand. Then shuffle.\\n{1}{U}, Sacrifice another creature or a Treasure: Search your library for a blue instant card, reveale that card, and put it into your hand. Then shuffle.",
+				"When Scrollport Merchant enters the battlefield, search your library for a blue instant card, reveal that card, and put it into your hand. Then shuffle.\\n{1}{U}, Sacrifice another creature or a Treasure: Search your library for a blue instant card, reveal that card, and put it into your hand. Then shuffle.",
 				null,
 				null,
 				null
@@ -152416,6 +154109,64 @@
 			]
 		},
 		{
+			"Name": "Sike-lonic Rift",
+			"Image": "https://lh3.googleusercontent.com/d/1rPJdltgqNRTxjc31KtEMeWze1HJm-P7C",
+			"Creator": "gramofone",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Exile target nonland permanent you don't control. For each card exiled this way, it's control exiles the top card of their library and puts it onto the battlefield if it's a permanent card. Then they shuffle all cards exiled with Sike-lonic Rift into their library. \\n Overload {6}{R}",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Silver Sable",
 			"Image": "https://lh3.googleusercontent.com/d/16UsPqpvDrdcv_xfmTlxzYQdVKhcivh-o",
 			"Creator": "jumberlack.",
@@ -152731,7 +154482,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 4,
-			"Color(s)": "Green;Blue",
+			"Color(s)": "Blue;Green",
 			"Cost": [
 				"{2}{G/U}{G/U}",
 				null,
@@ -158234,7 +159985,7 @@
 			"CMC": 3,
 			"Color(s)": "Blue",
 			"Cost": [
-				"{2}",
+				"{2}{U}",
 				null,
 				null,
 				null
@@ -162100,6 +163851,70 @@
 			]
 		},
 		{
+			"Name": "Studio Gangster",
+			"Image": "https://lh3.googleusercontent.com/d/1IF6DCM3S542v6qPNX0EuOvC6y2Pwtzjk",
+			"Creator": "exalted.one",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Goblin;Bard",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever you commit a rhyme, create a tapped Treasure token. ( A rhyme is a spell that shares a color, card type, or mana value, with the last spell you cast this turn.)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"Bout to drop a K and a power word: ill / Feds seize up, ain't got force of will / I got 'em on that trigger routine / All day shooting angel and fiend",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Studio Trigger",
 			"Image": "https://lh3.googleusercontent.com/d/17mxLOBbm5mqTPc_7yeLzjk8WYU_PfuSD",
 			"Creator": "aprilmai",
@@ -164951,7 +166766,7 @@
 		},
 		{
 			"Name": "THUNDER FURY LIGHTNING POWER STRIKE",
-			"Image": "https://lh3.googleusercontent.com/d/1QCZOz-8Yss2p2DsuM_NFNmziZvr_pK5E ",
+			"Image": "https://lh3.googleusercontent.com/d/1QCZOz-8Yss2p2DsuM_NFNmziZvr_pK5E",
 			"Creator": "u/TemporalFuzz",
 			"Set": "HLC",
 			"Constructed": "Legal",
@@ -165124,6 +166939,64 @@
 			],
 			"Flavor Text": [
 				"A picture is worth 1000 words, and that's about 994 too many.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "TRIUMPH OF THE PROLETARIAT",
+			"Image": "https://lh3.googleusercontent.com/d/1W5aQheAw9oe3kDbw5IO3bGyNHhrDXrFs",
+			"Creator": "juanqu",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": null,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Conspiracy",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"AT THE START OF THE GAME, SHUFFLE YOUR COMMANDERS INTO LIBRARY. INSTEAD, EACH CREATURE YOU CONTROL IS COMMANDER! THEY EACH GET +0/+1 AND SHARE COMMANDER DAMAGE AND YOU CAN'T PUT THEM IN THE COMMAND ZONE ANYMORE.",
 				null,
 				null,
 				null
@@ -166596,6 +168469,70 @@
 			],
 			"Text Box": [
 				"At the beginning of your upkeep, if you control no Insects, you may pay {1}. If you do, you lose 1 life and create a 1/1 red and black Insect creature token. \\n {T}: Add {C}. \\n {T}, Sacrifice an Insect: Add {B} or {R}.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Temple of the False Gods",
+			"Image": "https://lh3.googleusercontent.com/d/1r8P705oRgNoN561cGu5SDP50gJ5GzbGv",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": null,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: Add {C}{C}{C}. Activate only if you control five or more lands.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"they came as three.\"\\n—Ugin, talking about something else",
 				null,
 				null,
 				null
@@ -168483,6 +170420,64 @@
 			]
 		},
 		{
+			"Name": "The Cafeteria",
+			"Image": "https://lh3.googleusercontent.com/d/11T_UHH9Vezj-7itB3f53Plr6eqEBTp29",
+			"Creator": "askedforit",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": null,
+			"Color(s)": "",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: Add {C}.\\n{R}, {T}: Suspect target creature.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "The Classic \"Two Riptide Crabs\" Bargain",
 			"Image": "https://lh3.googleusercontent.com/d/1ZKLlvQcXVJTlwaL9Sq0qR3ty_cWPSNvx",
 			"Creator": "gerbit.",
@@ -168541,6 +170536,70 @@
 			],
 			"Flavor Text": [
 				"What a deal!",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "The Claw",
+			"Image": "https://lh3.googleusercontent.com/d/1qGpSfEm3gLC3DFonu0AupEZMcAdL2usE",
+			"Creator": "MagicTheCasual",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{1}{U}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Target noncommander creature becomes your commander. Exile it. (In addition to your other commanders.)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"THE CLAAAW",
 				null,
 				null,
 				null
@@ -169772,6 +171831,64 @@
 			]
 		},
 		{
+			"Name": "The Giantest Badger",
+			"Image": "https://lh3.googleusercontent.com/d/1OjwsToGkjWZOs_zHy2Cv26d99MNq2Ykt",
+			"Creator": "draner.",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "Green",
+			"Cost": [
+				"{3}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Badger;God",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Indestructible, trample\\nAs long as you control five or fewer Badgers, The Giantest Badger isn't a creature.\\nWhenever you cast a creature spell, create a Giant Badger token.\\nAbilites that affect Badgers you control lose \"until end of turn.\" (This includes spell abilities. Use markers.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "The Giga-Dervish",
 			"Image": "https://lh3.googleusercontent.com/d/19Q39_733ri2krX9hUrXDp62XksearKVP",
 			"Creator": "Baryshnikov",
@@ -169901,7 +172018,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 4,
-			"Color(s)": "Red;White",
+			"Color(s)": "White;Red",
 			"Cost": [
 				"{2}{R}{W}",
 				null,
@@ -172793,7 +174910,7 @@
 			"CMC": 2,
 			"Color(s)": "White",
 			"Cost": [
-				"{1}[W}",
+				"{1}{W}",
 				null,
 				null,
 				null
@@ -173904,6 +176021,71 @@
 				null,
 				null
 			]
+		},
+		{
+			"Name": "They Don't Stop Coming // They Don't Stop Coming // They Don't Stop Coming // ...",
+			"Image": "https://lh3.googleusercontent.com/d/1cwjf9r9o4r7S8X9omiuwIkfHuYZ4AoRX",
+			"Creator": "gramofone",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "Black;Green",
+			"Cost": [
+				"{B/G}",
+				"{B/G}",
+				"{B/G}",
+				"{B/G}"
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				"Sorcery",
+				"Sorcery",
+				"Sorcery"
+			],
+			"Subtype(s)": [
+				"",
+				"",
+				"",
+				""
+			],
+			"power": [
+				"",
+				"",
+				"",
+				""
+			],
+			"toughness": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Loyalty": [
+				"",
+				"",
+				"",
+				""
+			],
+			"Text Box": [
+				"Return target creature from yoru graveyard to your hand.\\nFuse (You may cast any parts of this card from your hand.)",
+				"Return target creature from yoru graveyard to your hand.\\nFuse (You may cast any parts of this card from your hand.)",
+				"Return target creature from yoru graveyard to your hand.\\nFuse (You may cast any parts of this card from your hand.)",
+				"Return target creature from yoru graveyard to your hand.\\nFuse (You may cast any parts of this card from your hand.)"
+			],
+			"Flavor Text": [
+				"",
+				"",
+				"",
+				null
+			],
+			"Tags": ""
 		},
 		{
 			"Name": "They",
@@ -180780,7 +182962,7 @@
 				null
 			],
 			"Text Box": [
-				"At the beginning of your upkeep, look at the top card of your library. You may reveale a card this way. If the revealed card is an instant or sorcery, put an oil counter on Troller of Physics.\\nTroller of Physics gets +2/+1 and flying for each oil counter on it.",
+				"At the beginning of your upkeep, look at the top card of your library. You may reveal a card this way. If the revealed card is an instant or sorcery, put an oil counter on Troller of Physics.\\nTroller of Physics gets +2/+1 and flying for each oil counter on it.",
 				null,
 				null,
 				null
@@ -187166,7 +189348,7 @@
 				null
 			],
 			"Supertype(s)": [
-				"Legendary ",
+				"Legendary",
 				"",
 				null,
 				null
@@ -189114,6 +191296,64 @@
 			],
 			"Text Box": [
 				"Enchant creature\\nWhen Wear as a Hat enters the battlefield, exile target artifact or enchantment.\\nEnchanted creature gets +X/+X, where X is the exiled card's converted mana cost, and has all text of the exiled card.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Weather Boy",
+			"Image": "https://lh3.googleusercontent.com/d/13EsNYoLhamy1B4LPL3cjZVlUZ3EG1SNE",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Elemental",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{W} Sunny weather gives all creatures +1/+0. \\n {U} Rainy weather gives all creatures ward {1}. \\n {B} Overcast weather gives all makes all spells cost an additional 2 life. \\n {R} Thunder deals 2 damage to each creature that blocks. \\n {G} Sandstorm makes all lands Deserts that tap for any color. \\n As weather boy enters the battlefield, choose a weather from among your commanders' colors. (The weather ability is an ability of this creature.) \\n Cards in your hand have \"Forecast—{1}, Reveal this card from your hand: Change Weather Boy's weather to match one of this card's colors.\"",
 				null,
 				null,
 				null
@@ -191609,6 +193849,64 @@
 			],
 			"Text Box": [
 				"Trample, haste\\n{T}: Wife I Box fights target creature.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Wiimote",
+			"Image": "https://lh3.googleusercontent.com/d/1wMmaLhRwXXoU22AluETIshLZHqvspxxB",
+			"Creator": "exalted.one",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "White",
+			"Cost": [
+				"{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flash\\nAs Wiimote enters a public zone, choose another permanent or card in that zone.\\nWhen you move Wiimote, the chosen card moves with it. (It goes to the same zone.)\\nEvoke {3}{W}",
 				null,
 				null,
 				null
@@ -195757,7 +198055,7 @@
 				null
 			],
 			"Card Type(s)": [
-				"Sorcery",
+				"Instant",
 				null,
 				null,
 				null
@@ -200417,7 +202715,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 4,
-			"Color(s)": "Red;White",
+			"Color(s)": "White;Red",
 			"Cost": [
 				"{2}{R}{W}",
 				null,
@@ -201890,7 +204188,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 8,
-			"Color(s)": "Black;Green;White",
+			"Color(s)": "White;Black;Green",
 			"Cost": [
 				"{1}{B}{B}",
 				"",

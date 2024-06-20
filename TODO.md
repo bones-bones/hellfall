@@ -2,3 +2,5 @@
 - Document design patterns with CKR and general best practices
 - Deck builder README
 - Hellscubes README
+- Include Tokens checkbox
+- unbased color identity

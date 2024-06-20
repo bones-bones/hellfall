@@ -6,6 +6,7 @@ import { Draft } from "./draft";
 import { LandBox } from "./land-box";
 import { SingleCard } from "./hellfall/SingleCard";
 import { Header } from "./header";
+import { Breakdown } from "./breakdown/Breakdown";
 
 export const App = () => {
   return (
@@ -26,5 +27,6 @@ const ApplicationRoutes = () => {
     { path: "/land-box", element: <LandBox></LandBox> },
     { path: "/", element: <HellFall /> },
     { path: "/card/*", element: <SingleCard /> },
+    { path: "/breakdown", element: <Breakdown /> },
   ]);
 };

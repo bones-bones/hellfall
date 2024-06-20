@@ -1,19 +1,37 @@
 import { HCEntry } from "../types";
 
 export const getColorIdentity = (card: HCEntry) => {
-  const colorIdentity = new Set<string>();
-  const obviousColors = (card["Color(s)"] || "").split(";");
-  obviousColors
-    .filter((entry) => entry !== "")
-    .forEach((entry) => colorIdentity.add(entry));
+  const colorIdentity = new Set<string | string[]>();
 
-  (card["Text Box"] || []).forEach((entry) => {
-    const minusReminderText = (entry || "").replaceAll(/\(.*?\)/g, "");
-    const icons = minusReminderText.match(/\{.\}/g);
+  card.Cost?.forEach((entry) => {
+    const icons = (entry || "").match(/\{.+?\}/g);
+    if (card.Name.includes("The Squadron Hawk")) {
+      console.log({
+        icons,
+      });
+    }
     icons?.forEach((icon) => {
-      const colorIcon = manaSymbolColorMatching[icon];
-      if (colorIcon) {
-        colorIdentity.add(colorIcon);
+      const iconArray = icon.replaceAll(/[{}]/g, "").split("/");
+      const nResp = iconArray.map((e) => manaSymbolColorMatching[e[0]]); // TODO: the first char cause skeleton
+
+      if (nResp) {
+        //@ts-ignore
+        colorIdentity.add(nResp);
+      }
+    });
+  });
+
+  card["Text Box"]?.forEach((entry) => {
+    const minusReminderText = (entry || "").replaceAll(/\(.*?\)/g, "");
+    const icons = minusReminderText.match(/\{.+?\}/g);
+
+    icons?.forEach((icon) => {
+      const iconArray = icon.replaceAll(/[{}]/g, "").split("/");
+      const nResp = iconArray.map((e) => manaSymbolColorMatching[e[0]]); // TODO: the first char cause skeleton
+
+      if (nResp) {
+        //@ts-ignore
+        colorIdentity.add(nResp);
       }
     });
   });
@@ -43,12 +61,13 @@ const manaSymbolColorMatching: Record<
   | undefined
   | "Purple"
 > = {
-  "{W}": "White",
-  "{B}": "Black",
-  "{U}": "Blue",
-  "{R}": "Red",
-  "{G}": "Green",
-  "{P}": "Purple",
+  W: "White",
+  B: "Black",
+  U: "Blue",
+  R: "Red",
+  G: "Green",
+  P: "Purple",
+  Piss: "Piss",
 };
 
 const landToColorMapping: Record<

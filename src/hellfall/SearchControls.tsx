@@ -95,7 +95,7 @@ export const SearchControls = () => {
         </FormField>
 
         <CheckboxGroup
-          label="Colors (Commander)"
+          label="Color Identity (Commander)"
           values={colors}
           initialValue={searchColorsIdentity}
           onChange={setSearchColorsIdentityAtom}
