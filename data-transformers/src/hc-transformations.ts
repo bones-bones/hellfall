@@ -179,13 +179,13 @@ const main = async () => {
       {
         data: (data as any as { data: HCEntry[] }).data
           //@ts-ignore
-          .concat({ data: tokensWithBetterName }.data.map(tokenToCard))
-          .sort((a, b) => {
-            if (a.Name + a["Text Box"] > b.Name + b["Text Box"]) {
-              return 1;
-            }
-            return -1;
-          }),
+          .concat({ data: tokensWithBetterName }.data.map(tokenToCard)),
+        // .sort((a, b) => {
+        //   if (a.Name + a["Text Box"] > b.Name + b["Text Box"]) {
+        //     return 1;
+        //   }
+        //   return -1;
+        // }),
       },
       null,
       "\t"
