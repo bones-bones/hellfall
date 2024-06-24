@@ -1,10 +1,27 @@
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { cardsAtom } from "../hellfall/cardsAtom";
 import { HCEntry } from "../types";
 import styled from "@emotion/styled";
+import { xIcon } from "@workday/canvas-system-icons-web";
 
+import {
+  SidePanel,
+  SidePanelOpenDirection,
+} from "@workday/canvas-kit-react/side-panel";
+import {
+  Card,
+  TertiaryButton,
+  ToolbarIconButton,
+} from "@workday/canvas-kit-react";
+import { HFCard } from "../hellfall/HFCard";
+import { activeCardAtom } from "../hellfall/searchAtoms";
+import { getColorIdentity } from "../hellfall/getColorIdentity";
 export const Breakdown = () => {
   const cards = useAtomValue(cardsAtom).filter((e) => e.Set === "HC6");
+  const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
+  const activeCard = cards.find((entry) => {
+    return entry.Name === activeCardFromAtom;
+  });
 
   const sorted = cards.reduce<Record<string, HCEntry[]>>((curr, next) => {
     if (curr[next["Color(s)"] || "undefined"]) {
@@ -25,6 +42,10 @@ export const Breakdown = () => {
     )
     .reduce<Record<string, HCEntry[]>>(
       (curr, next) => {
+        const colorSet = Array.from(
+          new Set(getColorIdentity(next).flat().filter(Boolean))
+        ).sort();
+        console.log(colorSet);
         if (curr[next["Color(s)"] || "undefined"]) {
           curr[next["Color(s)"] || "undefined"].push(next);
         } else {
@@ -61,6 +82,25 @@ export const Breakdown = () => {
   return (
     <>
       {cards.length}
+      <StyledSidePanel
+        openWidth={window.screen.width > 450 ? 810 : 400}
+        openDirection={SidePanelOpenDirection.Right}
+        open={!!activeCard}
+      >
+        {!!activeCard && (
+          <Card>
+            <Card.Body padding={"zero"}>
+              <SPContainer>
+                <ToolbarIconButton
+                  icon={xIcon}
+                  onClick={() => setActiveCardFromAtom("")}
+                />
+                {activeCard && <HFCard data={activeCard}></HFCard>}
+              </SPContainer>
+            </Card.Body>
+          </Card>
+        )}
+      </StyledSidePanel>
 
       <ColorTracker cards={sorted} color={"White"} />
       <ColorTracker cards={sorted} color={"Black"} />
@@ -85,7 +125,12 @@ export const Breakdown = () => {
 const CardColumn = styled.div({ display: "flex", flexDirection: "column" });
 const CMCColumn = styled.div({ width: "14vw" });
 const Container = styled.div({ display: "flex" });
-const CardEntry = styled.div({ paddingTop: "10px" });
+const CardEntry = styled.div({
+  height: "40px",
+  border: "1px solid black",
+  overflow: "hidden",
+  boxSizing: "border-box",
+});
 
 const ColorTracker = ({
   cards,
@@ -94,6 +139,8 @@ const ColorTracker = ({
   cards: Record<string, HCEntry[]>;
   color: string;
 }) => {
+  const [_activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
+
   return (
     <div style={{ border: `2px solid ${color}` }}>
       <h2>
@@ -123,7 +170,15 @@ const ColorTracker = ({
               </h4>
               <CardColumn>
                 {uhh.map((e) => (
-                  <CardEntry key={e.Name}>{e.Name}</CardEntry>
+                  <CardEntry key={e.Name}>
+                    <TertiaryButton
+                      onClick={() => {
+                        setActiveCardFromAtom(e.Name);
+                      }}
+                    >
+                      {e.Name}
+                    </TertiaryButton>
+                  </CardEntry>
                 ))}
               </CardColumn>
             </CMCColumn>
@@ -154,7 +209,15 @@ const ColorTracker = ({
               </h4>
               <CardColumn>
                 {uhh2.map((e) => (
-                  <CardEntry key={e.Name}>{e.Name}</CardEntry>
+                  <CardEntry key={e.Name}>
+                    <TertiaryButton
+                      onClick={() => {
+                        setActiveCardFromAtom(e.Name);
+                      }}
+                    >
+                      {e.Name}
+                    </TertiaryButton>
+                  </CardEntry>
                 ))}
               </CardColumn>
             </CMCColumn>
@@ -164,3 +227,15 @@ const ColorTracker = ({
     </div>
   );
 };
+const StyledSidePanel = styled(SidePanel)({
+  zIndex: 40,
+  height: "100%",
+  position: "fixed",
+  backgroundColor: "transparent",
+  top: "10px",
+});
+const SPContainer = styled("div")({
+  overflowY: "scroll",
+  height: "90vh",
+  overflowX: "hidden",
+});
