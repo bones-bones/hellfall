@@ -53,29 +53,14 @@ const main = async () => {
   }, {});
 
   (data as any as { data: HCEntry[] }).data
-    .filter((entry) => {
-      const parts = entry.Image.split(".");
+    // .filter((entry) => {
+    //   const parts = entry.Image.split(".");
 
-      return !fileList.includes(
-        `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
-      );
-    })
+    //   return !fileList.includes(
+    //     `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
+    //   );
+    // })
     .forEach(async (entry) => {
-      // const parts = entry.Image.split(".");
-
-      // await new Promise<void>((resolve) =>
-      //   setTimeout(() => {
-      //     console.log(
-      //       `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
-      //     );
-      //     resolve();
-      //   }, i * 1000)
-      // );
-      // await downloadImage(
-      //   entry.Image,
-      //   `./pics/${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
-      // );
-
       [
         ...(entry["Supertype(s)"] || []),
         ...(entry["Card Type(s)"] || []),

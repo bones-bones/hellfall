@@ -11,10 +11,6 @@ export const fetchDatabase = async () => {
   const theThing = rest.map((entry) => {
     const ob: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
-      if (entry.join(",").includes("Brazil")) {
-        console.log(keys[i], ob[keys[i]]);
-      }
-
       if (ob[keys[i]] !== undefined) {
         if (!Array.isArray(ob[keys[i]])) {
           ob[keys[i]] = [ob[keys[i]]];
@@ -31,6 +27,6 @@ export const fetchDatabase = async () => {
     return ob;
   });
 
-  console.log(keys);
+  console.log(theThing[2]);
   return theThing;
 };

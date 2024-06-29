@@ -16,11 +16,11 @@ import {
   searchSetAtom,
   sortAtom,
   typeSearchAtom,
+  isCommanderAtom,
 } from "./searchAtoms";
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
 
-const useBased = true;
 export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCEntry[]>([]);
   const cards = useAtomValue(cardsAtom);
@@ -36,6 +36,7 @@ export const useSearchResults = () => {
   const colorIdentityCriteria = useAtomValue(searchColorsIdentityAtom);
   const activeCard = useAtomValue(activeCardAtom);
   const colorComparison = useAtomValue(searchColorComparisonAtom);
+  const isCommander = useAtomValue(isCommanderAtom);
   const [page, setPageAtom] = useAtom(offsetAtom);
 
   useEffect(() => {
@@ -86,6 +87,16 @@ export const useSearchResults = () => {
               }
               break;
             }
+          }
+        }
+
+        if (isCommander === true) {
+          if (
+            (!entry["Supertype(s)"]?.includes("Legendary") ||
+              !entry["Card Type(s)"].includes("Creature")) &&
+            !entry["Text Box"]?.includes("can be your commander")
+          ) {
+            return false;
           }
         }
         if (legality === "legal" && entry.Constructed === "Banned") {
@@ -214,6 +225,9 @@ export const useSearchResults = () => {
     if (creators.length > 0) {
       searchToSet.append("creator", creators.join(",,"));
     }
+    if (isCommander) {
+      searchToSet.append("isCommander", "true");
+    }
     if (activeCard !== "") {
       searchToSet.append("activeCard", activeCard);
     }
@@ -248,6 +262,7 @@ export const useSearchResults = () => {
     activeCard,
     page,
     colorComparison,
+    isCommander,
   ]);
 
   return resultSet;

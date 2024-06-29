@@ -21,6 +21,7 @@ import {
   typeSearchAtom,
   searchColorsIdentityAtom,
   searchColorComparisonAtom,
+  isCommanderAtom,
 } from "./searchAtoms";
 import { colors } from "./constants";
 import { Select } from "@workday/canvas-kit-preview-react/select";
@@ -34,6 +35,7 @@ export const SearchControls = () => {
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
+  const [isCommander, setIsCommander] = useAtom(isCommanderAtom);
   const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(
     searchColorsIdentityAtom
   );
@@ -93,7 +95,6 @@ export const SearchControls = () => {
             }}
           />
         </FormField>
-
         <CheckboxGroup
           label="Color Identity (Commander)"
           values={colors}
@@ -114,6 +115,18 @@ export const SearchControls = () => {
             checked={legality == "legal"}
             onChange={(event) => {
               setLegality(event.target.checked ? "legal" : "");
+            }}
+          />
+        </FormField>
+        <FormField
+          key={"Can be your commander"}
+          label={"Can be your commander"}
+        >
+          <Checkbox
+            type="checkbox"
+            checked={isCommander === true}
+            onChange={(event) => {
+              setIsCommander(event.target.checked ? true : false);
             }}
           />
         </FormField>
