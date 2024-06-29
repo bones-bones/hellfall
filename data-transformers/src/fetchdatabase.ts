@@ -1,4 +1,6 @@
 import { sheetsKey } from "../../keys";
+import { HCEntry } from "./types";
+import fs from "fs";
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
@@ -27,6 +29,15 @@ export const fetchDatabase = async () => {
     return ob;
   });
 
-  console.log(theThing[2]);
-  return theThing;
+  // const requestedtext = await fetch(
+  //   `https://sheets.googleapis.com/v4/spreadsheets/1RY8yiuL2cZkQyMMjpGWZleoBs21_zrRbvWxxyMNplOA/values/Database?key=${sheetsKey}`
+  // );
+
+  // fs.writeFileSync(
+  //   "./src/data/Hellscube-Database.csv",
+
+  //   await requestedtext.text()
+  // );
+
+  return theThing as HCEntry[];
 };

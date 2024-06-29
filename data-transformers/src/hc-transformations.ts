@@ -9,10 +9,9 @@ import { fetchDatabase } from "./fetchdatabase";
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 
-const fileList = fs.readdirSync("./pics");
-
 const main = async () => {
-  const data = { data: await fetchDatabase() };
+  const { data } = { data: await fetchDatabase() };
+
   const tokens = await fetchTokens();
   const tokensWithBetterName = tokens.map((e) => {
     const {
@@ -52,39 +51,7 @@ const main = async () => {
     return current;
   }, {});
 
-  (data as any as { data: HCEntry[] }).data
-    // .filter((entry) => {
-    //   const parts = entry.Image.split(".");
-
-    //   return !fileList.includes(
-    //     `${entry.Name.replace(/\//g, "|")}.${parts[parts.length - 1]}`
-    //   );
-    // })
-    .forEach(async (entry) => {
-      [
-        ...(entry["Supertype(s)"] || []),
-        ...(entry["Card Type(s)"] || []),
-        ...(entry["Subtype(s)"] || []),
-      ].forEach((typeEntry) => {
-        if (typeEntry) {
-          const splitTypes = typeEntry.split(";");
-          splitTypes.forEach((splitEntry) => {
-            typeSet.add(splitEntry);
-          });
-        }
-      });
-
-      creatorSet.add(entry.Creator);
-
-      if (tokenMap[entry.Name]) {
-        // Debug unused tokens
-        // (tokenMap[entry.Name] as any).used = true;
-
-        entry.tokens = tokenMap[entry.Name];
-      }
-    });
-
-  (data as any as { data: HCEntry[] }).data.forEach((entry) => {
+  data.forEach((entry) => {
     [
       ...(entry["Supertype(s)"] || []),
       ...(entry["Card Type(s)"] || []),
@@ -162,7 +129,7 @@ const main = async () => {
     "./src/data/Hellscube-Database.json",
     JSON.stringify(
       {
-        data: (data as any as { data: HCEntry[] }).data
+        data: data
           //@ts-ignore
           .concat({ data: tokensWithBetterName }.data.map(tokenToCard)),
         // .sort((a, b) => {
