@@ -92,9 +92,9 @@ export const useSearchResults = () => {
 
         if (isCommander === true) {
           if (
-            (!entry["Supertype(s)"]?.includes("Legendary") ||
-              !entry["Card Type(s)"].includes("Creature")) &&
-            !entry["Text Box"]?.includes("can be your commander")
+            (!entry["Supertype(s)"]?.[0]?.includes("Legendary") ||
+              !entry["Card Type(s)"][0]?.includes("Creature")) &&
+            !entry["Text Box"]?.[0]?.includes("can be your commander")
           ) {
             return false;
           }
