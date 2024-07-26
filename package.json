@@ -29,7 +29,8 @@
     "pretty": "prettier --write .",
     "transform-hc": "ts-node data-transformers/src/hc-transformations",
     "land-box": "ts-node data-transformers/src/land-box",
-    "make-cubes": "ts-node data-transformers/src/cubes/createCockCube"
+    "make-cubes": "ts-node data-transformers/src/cubes/createCockCube",
+    "make-draftmancer": "ts-node data-transformers/src/draftmancer/toCard"
   },
   "browserslist": {
     "production": [

@@ -22,6 +22,8 @@ import {
   searchColorsIdentityAtom,
   searchColorComparisonAtom,
   isCommanderAtom,
+  powerAtom,
+  toughnessAtom,
 } from "./searchAtoms";
 import { colors } from "./constants";
 import { Select } from "@workday/canvas-kit-preview-react/select";
@@ -31,6 +33,9 @@ export const SearchControls = () => {
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [searchCmc, setSearchCmc] = useAtom(searchCmcAtom);
+  const [power, setPower] = useAtom(powerAtom);
+  const [toughness, setToughness] = useAtom(toughnessAtom);
+
   const [legality, setLegality] = useAtom(legalityAtom);
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
@@ -130,7 +135,17 @@ export const SearchControls = () => {
             }}
           />
         </FormField>
-        <CmcSelector onChange={setSearchCmc} initialValue={searchCmc} />
+        <CmcSelector
+          label={"Mana value"}
+          onChange={setSearchCmc}
+          initialValue={searchCmc}
+        />
+        <CmcSelector label={"Power"} onChange={setPower} initialValue={power} />
+        <CmcSelector
+          label={"Toughness"}
+          onChange={setToughness}
+          initialValue={toughness}
+        />
       </SearchCriteriaSection>
     </SearchContainer>
   );

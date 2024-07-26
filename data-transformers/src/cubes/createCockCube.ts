@@ -10,6 +10,7 @@ export const createCockCube = () => {
     { id: "HC2", name: "Hellscube 2" },
     { id: "HC3", name: "Hellscube 3" },
     { id: "HC4", name: "Hellscube 4" },
+    { id: "HC6", name: "Hellscube 6" },
   ]) {
     const cardsForSet = data.data.filter((entry) => entry.Set === set.id);
     //@ts-ignore

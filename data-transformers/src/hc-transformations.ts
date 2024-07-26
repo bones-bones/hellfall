@@ -1,6 +1,6 @@
 import fs from "fs";
 
-import { HCEntry, Token, TokenForImport } from "./types";
+import { Token, TokenForImport } from "./types";
 // import { downloadImage } from "./downloadImage";
 import { tokenToCard } from "./tokenToCard";
 import { fetchTokens } from "./fetchTokens";

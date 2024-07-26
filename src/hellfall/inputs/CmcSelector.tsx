@@ -5,10 +5,12 @@ import { TextInput } from "@workday/canvas-kit-react/text-input";
 
 import { useState, useEffect } from "react";
 
-export const CmcSelector = ({
+export const NumericComparatorSelector = ({
   onChange,
   initialValue,
+  label,
 }: {
+  label: string;
   onChange?: ConditionalChange;
   initialValue?: { value: number; operator: ">" | "<" | "=" | "" };
 }) => {
@@ -26,8 +28,8 @@ export const CmcSelector = ({
     }
   }, [value, operator]);
   return (
-    <FormField label={"Mana value"}>
-      <ManaValueContainer>
+    <FormField label={label}>
+      <Container>
         <StyledManaSelect
           defaultValue={operator}
           value={operator}
@@ -53,13 +55,13 @@ export const CmcSelector = ({
             }
           }}
         />{" "}
-      </ManaValueContainer>
+      </Container>
     </FormField>
   );
 };
 
 const StyledManaSelect = styled(Select)({ width: "40px" });
-const ManaValueContainer = styled("div")({ display: "flex" });
+const Container = styled("div")({ display: "flex" });
 
 type ConditionalChange = (
   value:

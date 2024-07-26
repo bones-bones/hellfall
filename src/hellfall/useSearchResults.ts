@@ -17,6 +17,8 @@ import {
   sortAtom,
   typeSearchAtom,
   isCommanderAtom,
+  powerAtom,
+  toughnessAtom,
 } from "./searchAtoms";
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
@@ -38,6 +40,8 @@ export const useSearchResults = () => {
   const colorComparison = useAtomValue(searchColorComparisonAtom);
   const isCommander = useAtomValue(isCommanderAtom);
   const [page, setPageAtom] = useAtom(offsetAtom);
+  const power = useAtomValue(powerAtom);
+  const toughness = useAtomValue(toughnessAtom);
 
   useEffect(() => {
     const tempResults = cards
@@ -140,6 +144,78 @@ export const useSearchResults = () => {
         ) {
           return false;
         }
+        if (power) {
+          switch (power.operator) {
+            case "=": {
+              if (parseInt(entry.power?.[0] + "") !== power.value) {
+                return false;
+              }
+              break;
+            }
+            case "<": {
+              if (
+                !entry.power?.[0] ||
+                !(
+                  (Number.isNaN(parseInt(entry.power[0] + ""))
+                    ? 0
+                    : parseInt(entry.power[0] + "")) < power.value
+                )
+              ) {
+                return false;
+              }
+              break;
+            }
+            case ">": {
+              if (
+                !entry.power?.[0] ||
+                !(
+                  (Number.isNaN(parseInt(entry.power[0] + ""))
+                    ? 0
+                    : parseInt(entry.power[0] + "")) > power.value
+                )
+              ) {
+                return false;
+              }
+              break;
+            }
+          }
+        }
+        if (toughness) {
+          switch (toughness.operator) {
+            case "=": {
+              if (parseInt(entry.toughness?.[0] + "") !== toughness.value) {
+                return false;
+              }
+              break;
+            }
+            case "<": {
+              if (
+                !entry.toughness?.[0] ||
+                !(
+                  (Number.isNaN(parseInt(entry.toughness[0] + ""))
+                    ? 0
+                    : parseInt(entry.toughness[0] + "")) < toughness.value
+                )
+              ) {
+                return false;
+              }
+              break;
+            }
+            case ">": {
+              if (
+                !entry.toughness?.[0] ||
+                !(
+                  (Number.isNaN(parseInt(entry.toughness[0] + ""))
+                    ? 0
+                    : parseInt(entry.toughness[0] + "")) > toughness.value
+                )
+              ) {
+                return false;
+              }
+              break;
+            }
+          }
+        }
 
         if (searchColors.length > 0) {
           if (
@@ -234,6 +310,12 @@ export const useSearchResults = () => {
     if (colorComparison !== "<=") {
       searchToSet.append("colorComparison", colorComparison);
     }
+    if (power) {
+      searchToSet.append("p", `${power.operator}${power.value}`);
+    }
+    if (toughness) {
+      searchToSet.append("t", `${toughness.operator}${toughness.value}`);
+    }
 
     if (tempResults.length < page && tempResults.length > 0) {
       searchToSet.append("page", "0");
@@ -263,6 +345,8 @@ export const useSearchResults = () => {
     page,
     colorComparison,
     isCommander,
+    power,
+    toughness,
   ]);
 
   return resultSet;
