@@ -38,6 +38,7 @@ export const powerAtom = atom<
 >(
   (() => {
     const parms = searchParams.get("p");
+
     const extracted = parms?.match(/([<=>])(\d)/);
     if (extracted) {
       return {

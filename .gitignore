@@ -9,9 +9,9 @@ HC3Cube.txt
 HC4Cube.txt
 HC6Cube.txt
 
-
+dist
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
