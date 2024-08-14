@@ -6,6 +6,7 @@ export const tokenToCard = (token: TokenForImport) => {
     Image: token.Image,
     Creator: "",
     Set: "",
+    isActualToken: true,
     Rulings: "Related cards: " + token["Related Cards (Read Comment)"],
     CMC: 0,
     "Color(s)": "",

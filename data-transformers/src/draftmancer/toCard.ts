@@ -69,6 +69,7 @@ const getDraftMancerCard = (card: HCEntry) => {
       .replace(/\{Pickle\}/g, "{G}")
       .replace(/\{U\/BB\}/g, "{U/B}")
       .replace("{Brown}", "{1}")
+      .replace("Sacrifice a creature:", "{0}")
       .replace("{BB/P}", "{B}"),
 
     // @ts-ignore

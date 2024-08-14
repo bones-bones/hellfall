@@ -8,13 +8,13 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
   // wow what a weird ts bug
   const sideCount =
     (data["Card Type(s)"] as any).findLastIndex(
-      (entry: string) => entry !== null
+      (entry: string) => entry !== null && entry != ""
     ) + 1;
 
   return (
     <Container key={data["Name"]}>
       <ImageContainer key="image-container">
-        <img src={data["Image"]} height="500px" />
+        <img src={data["Image"]} height="500px" referrerPolicy="no-referrer" />
       </ImageContainer>
       <Card>
         <Card.Body padding={"zero"}>

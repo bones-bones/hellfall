@@ -6,6 +6,7 @@ export type HCEntry = {
   Name: string; //"Whale Visions",
   Image: string; //"https://cdn.discordapp.com/attachments/699985664992739409/699992833645346816/ri2sj4suvzb31.png",
   Creator: string;
+  isActualToken?: boolean;
   Set: string; // "HLC",
   Rulings: string; //"See Magic Comprehensive Rules 894.1c Deez",
   CMC: number; //3,

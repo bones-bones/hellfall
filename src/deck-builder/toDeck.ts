@@ -11,7 +11,7 @@ export const toDeck = (cards: HCEntry[]) => {
     const thing = {
       FaceURL: entry.Image,
       BackURL:
-        "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/0/z/i/i0ziD/6.jpg",
+        "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg",
       NumWidth: 1,
       NumHeight: 1,
       BackIsHidden: true,

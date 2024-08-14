@@ -54,6 +54,7 @@ export const Draft = () => {
               { value: "HC2" },
               { value: "HC3" },
               { value: "HC4" },
+              { value: "HC6" },
             ]}
           ></Select>
         </FormField>

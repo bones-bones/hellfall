@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { downloadElementAsImage } from "./download-image";
 import { HCEntry } from "../types";
 import styled from "@emotion/styled";
-import back from "../assets/Custom Back.png";
 import { toDeck } from "./toDeck";
 import { FormField } from "@workday/canvas-kit-react/form-field";
 import { TextInput } from "@workday/canvas-kit-react";
@@ -112,7 +111,7 @@ export const DeckBuilder = () => {
           responseObject.push({
             Name: name + " - not found",
             Image:
-              "https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/x/K/D/fxKDU/Custom-Back_l.jpg",
+              "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg",
           } as HCEntry);
         }
         return responseObject;

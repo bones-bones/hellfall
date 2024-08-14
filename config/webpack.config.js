@@ -80,10 +80,17 @@ module.exports = function (webpackEnv) {
     // This means they will be the "root" imports that are included in JS bundle.
     entry: paths.appIndexJs,
     devServer: {
-      static : './build',
+      port:3000,
+    
+    
+     
+      static : './build',  
+      open: ['/hellfall'],  
+      historyApiFallback: true,
       devMiddleware: {
-
-        publicPath: '/hellfall'
+    
+        publicPath: '/hellfall',
+      
 
       },
   },

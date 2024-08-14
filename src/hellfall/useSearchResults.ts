@@ -49,6 +49,9 @@ export const useSearchResults = () => {
         if (set.length > 0 && !set.includes(entry.Set)) {
           return false;
         }
+        if (entry.isActualToken) {
+          return false;
+        }
 
         if (
           rulesSearch.length > 0 &&

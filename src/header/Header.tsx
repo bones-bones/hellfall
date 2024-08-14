@@ -10,9 +10,10 @@ export const Header = () => {
         <Navigation>
           <Link to={"/"}>search</Link>, <Link to={"/card/random"}>random</Link>,{" "}
           <Link to={"/draft"}>draft</Link>,{" "}
-          <Link to={"/deck-builder"}>constructed</Link>,{" "}
+          <Link to={"/deck-builder"}>deck builder</Link>,{" "}
           <Link to={"/hellscubes"}>cubes</Link>,{" "}
           <Link to={"/land-box"}>land box</Link>,{" "}
+          <Link to={"/decks"}>constructed</Link>,{" "}
           <Link to={"https://discord.gg/EWFcAnVdkX"}>discord</Link>,{" "}
           <Link to={"https://www.reddit.com/r/HellsCube/"}>reddit</Link>{" "}
         </Navigation>

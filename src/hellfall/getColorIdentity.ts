@@ -5,11 +5,7 @@ export const getColorIdentity = (card: HCEntry) => {
 
   card.Cost?.forEach((entry) => {
     const icons = (entry || "").match(/\{.+?\}/g);
-    if (card.Name.includes("The Squadron Hawk")) {
-      console.log({
-        icons,
-      });
-    }
+
     icons?.forEach((icon) => {
       const iconArray = icon.replaceAll(/[{}]/g, "").split("/");
       const nResp = iconArray.map((e) => manaSymbolColorMatching[e[0]]); // TODO: the first char cause skeleton

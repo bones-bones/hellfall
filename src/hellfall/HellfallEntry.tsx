@@ -13,7 +13,12 @@ export const HellfallEntry = ({
     <Container key={name} role="button">
       <span>{name}</span>
       <br></br>
-      <StyledImage key={name} src={url} onClick={onClick} />
+      <StyledImage
+        key={name}
+        src={url}
+        onClick={onClick}
+        referrerPolicy="no-referrer"
+      />
     </Container>
   );
 };

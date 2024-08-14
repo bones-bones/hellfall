@@ -125,12 +125,62 @@ export const Breakdown = () => {
 const CardColumn = styled.div({ display: "flex", flexDirection: "column" });
 const CMCColumn = styled.div({ width: "14vw" });
 const Container = styled.div({ display: "flex" });
-const CardEntry = styled.div({
-  height: "40px",
-  border: "1px solid black",
-  overflow: "hidden",
-  boxSizing: "border-box",
-});
+const CardEntry = styled.div(
+  ({
+    isCreature,
+    cardColor,
+  }: {
+    isCreature: boolean;
+    cardColor:
+      | "White"
+      | "Blue"
+      | "Black"
+      | "Red"
+      | "Green"
+      | "Colorless"
+      | "Multicolor";
+  }) => ({
+    height: "40px",
+    border: "1px solid black",
+    overflow: "hidden",
+    boxSizing: "border-box",
+    backgroundColor: cardColor + (isCreature ? "EE" : "99"),
+  })
+);
+
+const hexForColor = (
+  color:
+    | "White"
+    | "Blue"
+    | "Black"
+    | "Red"
+    | "Green"
+    | "Colorless"
+    | "Multicolor"
+) => {
+  switch (color) {
+    case "White": {
+      return "#f8e7b9";
+    }
+    case "Blue": {
+      return "#0e67ab";
+    }
+    case "Black": {
+      return "#a69f9d";
+    }
+    case "Red": {
+      return "#eba082";
+    }
+    case "Green": {
+      return "#00733d";
+    }
+    case "Colorless": {
+      return "#Colorless";
+    }
+    default:
+      return "#c2ae00";
+  }
+};
 
 const ColorTracker = ({
   cards,
@@ -146,71 +196,60 @@ const ColorTracker = ({
       <h2>
         {color} ({cards[color].length})
       </h2>
-      <h3>
-        Creatures (
-        {
-          cards[color].filter((e) => e["Card Type(s)"].includes("Creature"))
-            .length
-        }
-        )
-      </h3>
+
       <Container>
         {new Array(7).fill(1).map((_, index) => {
           const uhh = cards[color]
-            .filter((e) => e["Card Type(s)"].includes("Creature"))
-            .filter(
-              (entry) =>
+            .sort((a, b) => {
+              if (
+                a["Card Type(s)"][0]?.includes("Creature") &&
+                b["Card Type(s)"][0]?.includes("Creature")
+              ) {
+                return a["Name"][0] > b["Name"][0] ? 1 : -1;
+              }
+              if (
+                a["Card Type(s)"][0]?.includes("Creature") &&
+                !b["Card Type(s)"][0]?.includes("Creature")
+              ) {
+                return -1;
+              }
+
+              return 1;
+            })
+            .filter((entry) => {
+              if (!entry.CMC && index == 0) {
+                return true;
+              }
+
+              return (
                 entry.CMC === index + 1 || (index + 1 == 7 && entry.CMC >= 7)
-            );
+              );
+            });
           return (
             <CMCColumn key={index}>
               <h4>
-                {index + 1}
-                {index + 1 == 7 ? "+" : ""} ({uhh.length})
+                {index + 1 == 1 ? "0-1" : index + 1 == 7 ? "7+" : index + 1} (
+                {uhh.length})
               </h4>
               <CardColumn>
                 {uhh.map((e) => (
-                  <CardEntry key={e.Name}>
+                  <CardEntry
+                    key={e.Name}
+                    isCreature={Boolean(
+                      e["Card Type(s)"][0]?.includes("Creature")
+                    )}
+                    cardColor={
+                      hexForColor(
+                        (e["Color(s)"] == undefined
+                          ? "Colorless"
+                          : e["Color(s)"].split(";").length > 1
+                          ? "Multicolor"
+                          : e["Color(s)"]) as any
+                      ) as any
+                    }
+                  >
                     <TertiaryButton
-                      onClick={() => {
-                        setActiveCardFromAtom(e.Name);
-                      }}
-                    >
-                      {e.Name}
-                    </TertiaryButton>
-                  </CardEntry>
-                ))}
-              </CardColumn>
-            </CMCColumn>
-          );
-        })}
-      </Container>
-      <h3>
-        Non-creature (
-        {
-          cards[color].filter((e) => !e["Card Type(s)"].includes("Creature"))
-            .length
-        }
-        )
-      </h3>
-      <Container>
-        {new Array(7).fill(1).map((_, index) => {
-          const uhh2 = cards[color]
-            .filter((e) => !e["Card Type(s)"].includes("Creature"))
-            .filter(
-              (entry) =>
-                entry.CMC === index + 1 || (index + 1 == 7 && entry.CMC >= 7)
-            );
-          return (
-            <CMCColumn key={index}>
-              <h4>
-                {index + 1}
-                {index + 1 == 7 ? "+" : ""} ({uhh2.length})
-              </h4>
-              <CardColumn>
-                {uhh2.map((e) => (
-                  <CardEntry key={e.Name}>
-                    <TertiaryButton
+                      color="black"
                       onClick={() => {
                         setActiveCardFromAtom(e.Name);
                       }}

@@ -25,29 +25,31 @@ const main = async () => {
   const tokenMap = (tokensWithBetterName as TokenForImport[]).reduce<
     Record<string, Token[]>
   >((current, entry) => {
-    entry["Related Cards (Read Comment)"].split(";").forEach((cardEntry) => {
-      if (current[cardEntry.replace(/\*\d*$/, "")]) {
-        current[cardEntry.replace(/\*\d*$/, "")].push({
-          Name: entry.Name.replace(/(\d*)$/, " $1"),
-          Power: entry.Power,
-          Toughness: entry.Toughness,
-          Type: entry.Type,
-          Image: entry.Image,
-          FIELD7: entry.FIELD7,
-        });
-      } else {
-        current[cardEntry.replace(/\*\d*$/, "")] = [
-          {
+    (entry["Related Cards (Read Comment)"] || "")
+      .split(";")
+      .forEach((cardEntry) => {
+        if (current[cardEntry.replace(/\*\d*$/, "")]) {
+          current[cardEntry.replace(/\*\d*$/, "")].push({
             Name: entry.Name.replace(/(\d*)$/, " $1"),
             Power: entry.Power,
             Toughness: entry.Toughness,
             Type: entry.Type,
             Image: entry.Image,
             FIELD7: entry.FIELD7,
-          },
-        ];
-      }
-    });
+          });
+        } else {
+          current[cardEntry.replace(/\*\d*$/, "")] = [
+            {
+              Name: entry.Name.replace(/(\d*)$/, " $1"),
+              Power: entry.Power,
+              Toughness: entry.Toughness,
+              Type: entry.Type,
+              Image: entry.Image,
+              FIELD7: entry.FIELD7,
+            },
+          ];
+        }
+      });
     return current;
   }, {});
 
