@@ -20,6 +20,7 @@ export type HCEntry = {
   "Text Box": [string, string, string, string];
   "Flavor Text": [string, string, string, string];
   "small alt image": string;
+  Tags?: string;
   FIELD44: string;
   FIELD45: string;
   FIELD46: string;

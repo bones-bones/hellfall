@@ -19,6 +19,7 @@ import {
   isCommanderAtom,
   powerAtom,
   toughnessAtom,
+  tagsAtom,
 } from "./searchAtoms";
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
@@ -42,6 +43,7 @@ export const useSearchResults = () => {
   const [page, setPageAtom] = useAtom(offsetAtom);
   const power = useAtomValue(powerAtom);
   const toughness = useAtomValue(toughnessAtom);
+  const tags = useAtomValue(tagsAtom);
 
   useEffect(() => {
     const tempResults = cards
@@ -62,6 +64,15 @@ export const useSearchResults = () => {
             } else {
               return combined.includes(searchTerm.toLowerCase());
             }
+          })
+        ) {
+          return false;
+        }
+
+        if (
+          tags.length > 0 &&
+          !tags.every((tag) => {
+            return entry.Tags?.includes(tag);
           })
         ) {
           return false;
@@ -319,6 +330,9 @@ export const useSearchResults = () => {
     if (toughness) {
       searchToSet.append("t", `${toughness.operator}${toughness.value}`);
     }
+    if (tags.length > 0) {
+      searchToSet.append("tags", tags.join(","));
+    }
 
     if (tempResults.length < page && tempResults.length > 0) {
       searchToSet.append("page", "0");
@@ -340,6 +354,7 @@ export const useSearchResults = () => {
     sortRule,
     typeSearch,
     searchCmc,
+    tags,
     cards.length,
     legality,
     creators,

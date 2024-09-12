@@ -1335,7 +1335,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Bake into Brownie",
@@ -1913,7 +1920,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Graven Cairns but fuck you",
@@ -6264,6 +6278,7 @@
 				null,
 				null
 			],
+			"Tags": "5dreadmaw",
 			"tokens": [
 				{
 					"Name": "Dinosaur 2",
@@ -7399,7 +7414,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "7dreadmaw"
 		},
 		{
 			"Name": "Oko's Midwinter Festival",
@@ -8093,7 +8109,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Country Roads",
@@ -9198,7 +9215,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Sensory Overload",
@@ -12357,7 +12375,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "5dreadmaw"
 		},
 		{
 			"Name": "Big Dick Energy",
@@ -12489,7 +12508,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "7dreadmaw"
 		},
 		{
 			"Name": "Artist's Watchdog",
@@ -13036,7 +13055,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Ludicrously Fast Mongoose",
@@ -13799,7 +13825,7 @@
 				"",
 				null
 			],
-			"Tags": ""
+			"Tags": "1dreadmaw;5dreadmaw"
 		},
 		{
 			"Name": "Magus of the Warp",
@@ -14569,7 +14595,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Big Dick Rick",
@@ -14813,7 +14840,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "4dreadmaw"
 		},
 		{
 			"Name": "Another Thing in the Ice",
@@ -16439,7 +16467,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Spacegodzilla, Death Corona",
@@ -19169,7 +19204,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Abzanus, Siege Engine",
@@ -21769,7 +21811,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Autotog",
@@ -25973,7 +26016,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Evil Goose",
@@ -28407,6 +28451,7 @@
 				null,
 				null
 			],
+			"Tags": "1dreadmaw",
 			"tokens": [
 				{
 					"Name": "Treasure 1",
@@ -29874,6 +29919,13 @@
 				null,
 				null
 			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "cat",
 			"tokens": [
 				{
 					"Name": "Weed 1",
@@ -30592,7 +30644,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Bread Return",
@@ -31760,7 +31813,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Heart of the Cards",
@@ -34328,6 +34388,13 @@
 				null,
 				null
 			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "6dreadmaw;3dreadmaw",
 			"tokens": [
 				{
 					"Name": "Colossal Dreadmaw 1",
@@ -34522,7 +34589,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Collect Call",
@@ -36949,7 +37017,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Snapcorpser Mage",
@@ -38922,7 +38990,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "7dreadmaw"
 		},
 		{
 			"Name": "Tundra (under renovation)",
@@ -40020,7 +40088,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw;2dreadmaw;4dreadmaw"
 		},
 		{
 			"Name": "Thief of Kneecaps",
@@ -42356,7 +42425,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "6dreadmaw"
 		},
 		{
 			"Name": "Collosal Fredmaw",
@@ -42414,7 +42483,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "6dreadmaw"
 		},
 		{
 			"Name": "Bill Nye the Science Guy // Science Rules!",
@@ -43153,7 +43229,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Aluminium Myr",
@@ -45088,7 +45165,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Hidden Temple of Legends",
@@ -46121,7 +46205,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "5G Tower",
@@ -47998,7 +48083,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Obyramid Pulse",
@@ -48172,7 +48258,26 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Memnite with a Spark",
@@ -49468,7 +49573,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "5dreadmaws;2dreadmaws"
 		},
 		{
 			"Name": "Condemn to Grain",
@@ -51328,7 +51440,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "The Spy // Right Behind You",
@@ -51515,7 +51634,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Bill",
@@ -54605,7 +54731,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "sus"
 		},
 		{
 			"Name": "Pious Gravegoyf",
@@ -56797,7 +56930,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "6dreadmaw"
 		},
 		{
 			"Name": "Hedron Rootwalla // Basking Crab",
@@ -61138,7 +61278,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Essence Borrower",
@@ -61557,7 +61698,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Goblin Instigator Instigator",
@@ -61935,7 +62083,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Monastery Mentor but he Ate All His Students",
@@ -62795,7 +62944,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "5dreadmaw"
 		},
 		{
 			"Name": "C Gate Oracle // Java",
@@ -63593,7 +63743,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Angel of Keyword Soup",
@@ -67556,7 +67713,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Motion Thief",
@@ -68765,7 +68923,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Garbage Helix",
@@ -69661,7 +69826,7 @@
 				"",
 				""
 			],
-			"Tags": "",
+			"Tags": "1dreadmaw;2dreadmaw",
 			"small alt image": ""
 		},
 		{
@@ -70016,7 +70181,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "6dreadmaw"
 		},
 		{
 			"Name": "Memknight",
@@ -73193,7 +73365,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Token Free Counter",
@@ -75738,7 +75917,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Nutbuster Mage",
@@ -77029,7 +77209,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Vaevictis Miller // Elder Dragon Highland",
@@ -78292,7 +78479,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "5dreadmaw"
 		},
 		{
 			"Name": "A Pile of Phoenix Ash",
@@ -79668,7 +79862,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "It That Laughs Last",
@@ -82153,7 +82354,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Throw in the Trash",
@@ -83169,7 +83371,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Checklist",
@@ -83459,7 +83668,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Printer",
@@ -84524,6 +84740,7 @@
 				null,
 				null
 			],
+			"Tags": "1dreadmaw;2dreadmaw",
 			"tokens": [
 				{
 					"Name": "Food 1",
@@ -88119,7 +88336,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Foreman 4-77",
@@ -88480,7 +88698,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "4dreadmaw"
 		},
 		{
 			"Name": "Maro's Gone Batshit Fucking Insane",
@@ -88724,7 +88949,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Card Draw Cruise",
@@ -91375,7 +91607,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Me, an Empath",
@@ -93617,7 +93856,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "7dreadmaw"
 		},
 		{
 			"Name": "Large Golgari Creature",
@@ -93681,7 +93920,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Zombie of Theros",
@@ -94281,7 +94521,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "I Fucking Hate Secret Lairs",
@@ -94397,7 +94638,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Read the Module",
@@ -96557,7 +96805,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "5dreadmaw;6dreadmaw"
 		},
 		{
 			"Name": "Nature's Claim // Nature's Fame",
@@ -98237,7 +98486,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Mamba No. 5",
@@ -98533,7 +98783,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "7dreadmaw;7dreadmaw;4dreadmaw"
 		},
 		{
 			"Name": "Llanowar Visionary Tribe",
@@ -98597,7 +98854,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Seven",
@@ -98887,7 +99145,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "5dreadmaw"
 		},
 		{
 			"Name": "Arbor Dryad",
@@ -104984,7 +105249,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "[Ember]cleave",
@@ -106024,7 +106296,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Suspenseful Music",
@@ -107401,7 +107680,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Crow Miser",
@@ -110425,7 +110705,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Old Man Touchy",
@@ -112735,7 +113022,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Childhood Dog",
@@ -115184,6 +115478,13 @@
 				null,
 				null
 			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw",
 			"tokens": [
 				{
 					"Name": "Food 1",
@@ -124908,7 +125209,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Dork Ritual",
@@ -126923,7 +127231,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Psionic Blast Hazard // Psionic Blast Cave",
@@ -127241,7 +127556,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "4dreadmaw"
 		},
 		{
 			"Name": "Squadron Wastes",
@@ -128450,7 +128766,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "4dreadmaw"
 		},
 		{
 			"Name": "Harder Evidence",
@@ -129449,7 +129766,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Spork Elemental",
@@ -133282,7 +133600,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Elfball",
@@ -133341,6 +133666,13 @@
 				null,
 				null
 			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw",
 			"tokens": [
 				{
 					"Name": "Llanowar Elves 1",
@@ -137638,7 +137970,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Phyrexian Goblin Guide",
@@ -142298,7 +142631,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Moon Walk",
@@ -144146,7 +144486,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Sword of Warren Instigator",
@@ -144826,7 +145173,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "cat"
 		},
 		{
 			"Name": "Genie from Aladdin",
@@ -145253,7 +145607,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Antimar, Body of Elements",
@@ -152893,7 +153254,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Urabrask, Heretic Praetor and Drannith Magistrate",
@@ -152951,7 +153319,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Mistmoon Griffin and Misthollow Griffin",
@@ -153189,7 +153564,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Steven",
@@ -153564,7 +153940,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "cat"
 		},
 		{
 			"Name": "Tapped Dual w/ Upsides",
@@ -154493,7 +154876,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "7dreadmaw"
 		},
 		{
 			"Name": "Town That Isn’t Big Enough",
@@ -155220,7 +155604,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "cat"
 		},
 		{
 			"Name": "Trample Bell",
@@ -159778,7 +160162,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Quitterblossom",
@@ -161548,7 +161939,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "2dreadmaw;4dreadmaw"
 		},
 		{
 			"Name": "Goblin Artisan (it's different now)",
@@ -166644,7 +167035,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Two Two/Twos on Two",
@@ -168471,7 +168869,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "burn"
 		},
 		{
 			"Name": "Ultra Mega Anayalation BLAST!!!!!!!!!!!!!!!!!!!!!!",
@@ -168819,7 +169224,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "6dreadmaw"
 		},
 		{
 			"Name": "Nevinyrral’s Nuclear Testing Site",
@@ -171857,7 +172269,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "4dreadmaw"
 		},
 		{
 			"Name": "Hydraulic Press",
@@ -173004,7 +173417,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "storm-crow"
 		},
 		{
 			"Name": "Grand Theft Auto",
@@ -174891,7 +175311,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Aven Findcensor",
@@ -175078,7 +175505,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Fort gas!",
@@ -175194,7 +175628,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Dog Park",
@@ -179830,7 +180271,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Duolingo Bird // Spanish // Vanish",
@@ -180328,7 +180776,7 @@
 				null
 			],
 			"Flavor Text": [
-				"Take a trip into the world of Mr. Domino.\\no one can stop...",
+				"Take a trip into the world of Mr. Domino.\\nno one can stop...",
 				null,
 				null,
 				null
@@ -180759,70 +181207,6 @@
 			],
 			"Flavor Text": [
 				"\"Battles no longer served a purpose in Karakas.\" — Angus Mackenzie, Diary",
-				null,
-				null,
-				null
-			]
-		},
-		{
-			"Name": "Gary Clone",
-			"Image": "https://lh3.googleusercontent.com/d/1hwELSa8pOmjfrwqz1U7rgF9XR_rhuB8I",
-			"Creator": "Askedforit",
-			"Set": "HC6",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 5,
-			"Color(s)": "Black",
-			"Cost": [
-				"{3}{B}{B}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Zombie;Citizen",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"1",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"3",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Squad {2} (As an additional cost to cast this spell, you may pay {2} any number of times. When this creature enters the battlefield, create that many tokens that are copies of it.)\\nWhen Gary enters the battlefield, each opponent loses X life, where X is your devotion to black. You gain life equal to the life lost this way.",
-				null,
-				null,
-				null
-			],
-			"Flavor Text": [
-				"\"Gary!\"",
 				null,
 				null,
 				null
@@ -181326,7 +181710,7 @@
 			]
 		},
 		{
-			"Name": "Ischia “Island” Levanzo",
+			"Name": "Ischia \"Island\" Levanzo",
 			"Image": "https://lh3.googleusercontent.com/d/1PDpIU_0omsq98-sJYxwucB8QxRgHShUe",
 			"Creator": "llllll",
 			"Set": "HC6",
@@ -182249,7 +182633,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "commander tax matters;commander-tax-matters"
 		},
 		{
 			"Name": "Red Seal",
@@ -183687,7 +184072,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "ramp"
 		},
 		{
 			"Name": "HC6: goblin skeleton",
@@ -184184,7 +184570,7 @@
 				null,
 				null
 			],
-			"Tags": "board-wipe"
+			"Tags": "board-wipe;1dreadmaw"
 		},
 		{
 			"Name": "Kindred Flames",
@@ -184751,7 +185137,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Obelix of Jund",
@@ -185306,7 +185693,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "\"Run Away\" Together",
@@ -185675,7 +186069,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Yeast Within",
@@ -186781,10 +187182,17 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "commander-tax-matters"
 		},
 		{
-			"Name": "Hatsune Miku",
+			"Name": "Companion Body Pillow",
 			"Image": "https://lh3.googleusercontent.com/d/1D5AeZyZpexu4x7xjFTFfLRKwmTNaCcXh",
 			"Creator": "juanqu",
 			"Set": "HC6",
@@ -187456,7 +187864,7 @@
 			]
 		},
 		{
-			"Name": "Dora & the Siege Tower",
+			"Name": "Dora and the Siege Tower",
 			"Image": "https://lh3.googleusercontent.com/d/1LkrekTevDvmZTHGn1AtWm89TTzl09eMD",
 			"Creator": "juanqu",
 			"Set": "HC6",
@@ -187828,7 +188236,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Goblin Banker",
@@ -188020,7 +188435,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "7dreadmaw"
 		},
 		{
 			"Name": "Woah Lions, Out of A Job",
@@ -191738,7 +192154,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "5dreadmaw"
 		},
 		{
 			"Name": "Half-Commander, Half-",
@@ -191860,7 +192283,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Urza's Storage Units",
@@ -192398,7 +192822,7 @@
 		},
 		{
 			"Name": "Sisyphus and The Rock GX // Dwayne \"The Rock\" Johnson",
-			"Image": "https://lh3.googleusercontent.com/d/1j9nNn0HcyRm0tj4Z4p9Mxg-hQuKUDQIS",
+			"Image": "https://lh3.googleusercontent.com/d/1YqYfuMiXfvmBN4R5bTMUvOlRKtk68-y-",
 			"Creator": "6requiem",
 			"Set": "HC6",
 			"Constructed": "Banned",
@@ -194060,7 +194484,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "3dreadmaw"
 		},
 		{
 			"Name": "Loicense Inspector",
@@ -194484,7 +194909,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "7dreadmaw;4dreadmaw"
 		},
 		{
 			"Name": "Half-Thriving ____ Half-Thriving ____",
@@ -194972,7 +195404,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Evil Goblin",
@@ -197204,7 +197637,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "2dreadmaw"
 		},
 		{
 			"Name": "Curse of Unpaid Internship",
@@ -197585,7 +198019,7 @@
 			]
 		},
 		{
-			"Name": "MENACING & FEROCIOUS BEAST",
+			"Name": "MENACING AND FEROCIOUS BEAST",
 			"Image": "https://lh3.googleusercontent.com/d/1bn-gCJjVyE12MJewNLinccSBH_hIKrt4",
 			"Creator": "llllll",
 			"Set": "HC6",
@@ -197961,7 +198395,7 @@
 			"CMC": 4,
 			"Color(s)": "Green",
 			"Cost": [
-				"{3}{4}",
+				"{3}{G}",
 				null,
 				null,
 				null
@@ -200479,7 +200913,7 @@
 		},
 		{
 			"Name": "The Stitcher GX",
-			"Image": "https://lh3.googleusercontent.com/d/1OXtzoBKi8t51GFQJoj8eozh6uGaulX4Q",
+			"Image": "https://lh3.googleusercontent.com/d/1fFL5q15tCG7xfrUusYlWRq6luug4y7Pq",
 			"Creator": "6requiem",
 			"Set": "HC6",
 			"Constructed": "Banned",
@@ -201021,7 +201455,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "6dreadmaw"
 		},
 		{
 			"Name": "Elden Ring Boss // Elden Ring Boss, Phase Two // Cool Boss Weapon Token",
@@ -201086,7 +201521,7 @@
 				null,
 				null
 			],
-			"Tags": "",
+			"Tags": "1dreadmaw;2dreadmaw",
 			"tokens": [
 				{
 					"Name": "Blasphemous Relic Blade of Zanzibart ",
@@ -201638,7 +202073,7 @@
 			]
 		},
 		{
-			"Name": "Holy Fuck, There's A Hornet in My Car ?",
+			"Name": "Holy Fuck, There's A Hornet in My Car ?!",
 			"Image": "https://lh3.googleusercontent.com/d/1eObcRM7NxfOhOEyfKMREPxMJWPr3QfxA",
 			"Creator": "shblov",
 			"Set": "HC6",
@@ -201702,7 +202137,7 @@
 			]
 		},
 		{
-			"Name": "Shocker//Wheeler",
+			"Name": "Shocker // Wheeler",
 			"Image": "https://lh3.googleusercontent.com/d/1JYJsi15EwbRRJruIHMA7GBYKM8QOt6Id",
 			"Creator": "raccrow",
 			"Set": "HC6",
@@ -202488,7 +202923,7 @@
 		},
 		{
 			"Name": "NOW DRAW HER GIVING BIRTH",
-			"Image": "https://lh3.googleusercontent.com/d/1Tih8p7XnXJ1fYVGaVLfbBGOf2z5pTD9G",
+			"Image": "https://lh3.googleusercontent.com/d/1S-2V2WUEIn_MC0Jr-k2tjw1TehJphTLt",
 			"Creator": "enchantmen",
 			"Set": "HC6",
 			"Constructed": "Banned",
@@ -202674,7 +203109,7 @@
 		},
 		{
 			"Name": "Lockheed-Martin F-225 Predator Flagship",
-			"Image": "https://lh3.googleusercontent.com/d/1dRfzDVyQErzT13-YQXCUrmngRwpWh6NV",
+			"Image": "https://lh3.googleusercontent.com/d/1ErxDmaity8GeCoTjpCNyg2H7U3EmIJmI",
 			"Creator": "enchantmen",
 			"Set": "HC6",
 			"Constructed": "Banned",
@@ -202982,7 +203417,7 @@
 		},
 		{
 			"Name": "Parasitic Sliver",
-			"Image": "https://lh3.googleusercontent.com/d/1K952FI3FKGL92jKT7ZikBEzC9SCn2r_y",
+			"Image": "https://lh3.googleusercontent.com/d/1X0psbQxNv1tPn8qScasS_vBUAUgRG5mz",
 			"Creator": "doomclaw9",
 			"Set": "HC6",
 			"Constructed": "Banned",
@@ -203830,7 +204265,7 @@
 		},
 		{
 			"Name": "Ranger With the Big Iron on His Hip",
-			"Image": "https://lh3.googleusercontent.com/d/1dGO8pMw-7xscc8BgIOtJfcJ1hKJ2utPM",
+			"Image": "https://lh3.googleusercontent.com/d/1N4plk0xPNO-PwJRXAnUP5Wj4qVTyZjiq",
 			"Creator": "enemyofgeese",
 			"Set": "HC6",
 			"Constructed": "Banned",
@@ -203915,7 +204350,7 @@
 				null
 			],
 			"Card Type(s)": [
-				"Enchantmetn",
+				"Enchantment",
 				null,
 				null,
 				null
@@ -204019,11 +204454,12 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "1dreadmaw"
 		},
 		{
 			"Name": "Octodad",
-			"Image": "https://lh3.googleusercontent.com/d/1U949s5ApBifGPZaN47boLyWzSC2IAFyE",
+			"Image": "https://lh3.googleusercontent.com/d/1X6dTDZ_W96godlrVJ5BWIahRQRGHWSvT",
 			"Creator": "enchantmen",
 			"Set": "HC6",
 			"Constructed": "Banned",
@@ -204749,64 +205185,6 @@
 			"Tags": ""
 		},
 		{
-			"Name": "NASmoranomardicadaistinaculdaCAR",
-			"Image": "https://lh3.googleusercontent.com/d/1ifd9S_di0A3JTtYvue1adThuORIeuBI4",
-			"Creator": "enchantmen",
-			"Set": "HC6",
-			"Constructed": "Banned",
-			"Rulings": "",
-			"CMC": 3,
-			"Color(s)": "Red",
-			"Cost": [
-				"{2}{R}",
-				null,
-				null,
-				null
-			],
-			"Supertype(s)": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Card Type(s)": [
-				"Creature",
-				null,
-				null,
-				null
-			],
-			"Subtype(s)": [
-				"Human;Racist",
-				null,
-				null,
-				null
-			],
-			"power": [
-				"3",
-				null,
-				null,
-				null
-			],
-			"toughness": [
-				"3",
-				null,
-				null,
-				null
-			],
-			"Loyalty": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Text Box": [
-				"Vehicles you control have trample.\\n{2}, {T}: Create a red 1/1 Racecar Vehicle artifact with crew 1 and \"this gains the power and toughness of all creatures crewing it.\"\\nRed vehicles have haste.\\n(no, racecars can't drive other racecars what are you fucking stupid",
-				null,
-				null,
-				null
-			]
-		},
-		{
 			"Name": "Termite Infestation",
 			"Image": "https://lh3.googleusercontent.com/d/1whYg8AoVSxif8RdbOSdrJJ1FEhSCLTOJ",
 			"Creator": "klunkerpunker",
@@ -205104,7 +205482,7 @@
 		},
 		{
 			"Name": "Half-Centaur of Kruphix",
-			"Image": "https://lh3.googleusercontent.com/d/1igcfYapK_IjkxlBep6v9f12GhwfNYrdp",
+			"Image": "https://lh3.googleusercontent.com/d/1ICn8BljZeZh8EoeOcrHj5ULZ64K98UpW",
 			"Creator": "llllll",
 			"Set": "HC6",
 			"Constructed": "Banned",
@@ -205283,10 +205661,2989 @@
 			]
 		},
 		{
+			"Name": "The Thunderdome",
+			"Image": "https://lh3.googleusercontent.com/d/1BdH0XuVwOC00EAzNchvfVyW92IDhVqFX",
+			"Creator": "enchantmen",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Green",
+			"Cost": [
+				"{2}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Cage;Arena",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: Two creatures enter. One creature leaves. (You pick which of the two leave. This activates triggered abilities, but they don't change zones and are the same game objects.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Cleverer Impersonator",
+			"Image": "https://lh3.googleusercontent.com/d/1T5VxSA5Gdpxfh2I-Gby6J_YmebI2iznD",
+			"Creator": "gramofone",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{4}{U}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Shapeshifter",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"You may have Cleverer Impersonator enter as a mingled copy of any permanents on the battlefield. (Combined but copy stats from only one creature.)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"Oh great.\"\\n—Narset, khan of the Jeskai",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Magus of the Devastator",
+			"Image": "https://lh3.googleusercontent.com/d/1Kyh7RsH0L1fAzdGX1bK8y9JOeumXnEdM",
+			"Creator": "flatpacc",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Green",
+			"Cost": [
+				"{4}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;Druid",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}, Sacrifice Magus of the Devastator: The next spell you cast this turn gains \"Cascade, cascade, cascade, cascade.\"",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"The archmage had traveled to every corner, counted every grain of sand, and kissed every leaf. In the end, there was no meaning to life but life itself.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "i know a few people that would fall for this",
+			"Image": "https://lh3.googleusercontent.com/d/1TqKtZVSibSXBVzaIa49sMBPOT5yGNgXz",
+			"Creator": "laptopispy",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Green",
+			"Cost": [
+				"{2}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever a player receives a gift, they sacrifice a creature.\\n{G}{G}, {T}: Gift any number of players a Colossal Dreadmaw. (You may give yourself a gift.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Cycling Tutor",
+			"Image": "https://lh3.googleusercontent.com/d/1XwO0M_TTLOmXJB3UVVjp_1pw2BlaYCRe",
+			"Creator": "laptopispy",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Green",
+			"Cost": [
+				"{1}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Vehiclecycling {1}\\nLandcycling {2}\\nCreaturecycling {2}\\nArtifactcycling {3}",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Snapcrackle Mage",
+			"Image": "https://lh3.googleusercontent.com/d/1sCu6L3dFJdT3SFKoDttcevzKky6627_s",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{4}{U}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Faerie?;Elf?;Gnome?;Wizard",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flash\\nWhen Snapcrackle Mage enters, put target instant or sorcery card in your graveyard onto the battlefield. It's a Food artifact with the food ability, and its spell effects are also part of that ability.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Run of the Mill",
+			"Image": "https://lh3.googleusercontent.com/d/1WuAVeK10VnMOLrIoHDnfUzAiSSugm3Sp",
+			"Creator": "juanqu",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{3}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Saga",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"I, II, III, IV — Choose {Paw} worth up to the current chapter. You may choose the same mode more than once.\\n{Paw} — Create a 1/1 blue Fish creature token with \"Whenever this creature attacks, each opponent mills two cards.\"\\n{Paw}{Paw} — Surveil 2, then draw a card.\\n{Paw}{Paw}{Paw} — Put target tapped creature on top of its owner's library.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Tribute Artist",
+			"Image": "https://lh3.googleusercontent.com/d/1bvmDN59WhiT8GoyNvtC7cQGYwPi0eXS6",
+			"Creator": "enchantmen",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Wizard;Bard",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"When Tribute Artist enters, you may create a token copy of a legendary creature card in any graveyard or command zone. It enters with a -1/-1 counter.\\nBands with legends",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Home Raider",
+			"Image": "https://lh3.googleusercontent.com/d/1iH7Jr6v9NOvaygbf5AJOiShtA6x4qlwS",
+			"Creator": "enchantmen",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{1}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Faerie",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flying\\nWhen Home Raider deals damage to an opponent, draw a card from the Deck of Someone Else's Things. (The Deck of Someone Else's Things is their library.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "french vanilla green creature but I got it from starbucks and I kind of like it when they add the caramel and whip cream",
+			"Image": "https://lh3.googleusercontent.com/d/19lLzwiNWeLC2M2pJoQAJWPE0GE12pGsg",
+			"Creator": "localrodent",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Green",
+			"Cost": [
+				"{1}{G}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Beast",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Ward {2}, trample, myriad\\nEncore {3}{G}{G}{G}{G}{G}{G}",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "URZA // 'S HAND",
+			"Image": "https://lh3.googleusercontent.com/d/1JB0JPu_B6GtQ0SEcAAwTEIxNtpYvYG6S",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{U}",
+				"{1}{U}",
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Sorcery",
+				"Sorcery",
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				"Adventure",
+				null,
+				null
+			],
+			"power": [
+				"",
+				"",
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Text Box": [
+				"Affinity for Urza's\\nDraw two cards.",
+				"Target land becomes Urza's Mine.",
+				null,
+				null
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": ""
+		},
+		{
+			"Name": "Reducer of Quality",
+			"Image": "https://lh3.googleusercontent.com/d/1tB_3mX57zsEjML3FsxKQ5KcYFgrE6ejy",
+			"Creator": "daydreamingdeity",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Black",
+			"Cost": [
+				"{3}{B}{B}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Demon",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flying, trample\\nAt the beginning of your upkeep, choose one. Each other nonland permanent becomes shittier in that way.\\n• All non-cost numbers on it are reduced by one.\\n• All its costs are doubled. (A cost with multiple {T} costs multitaps permanents, which need to be untapped multiple times to actually untap.)\\n• It loses its first printed ability.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "It That Gazes Upon You",
+			"Image": "https://lh3.googleusercontent.com/d/1AUyX08erFBnvk9BCd-mD9KJoZEI-FMUl",
+			"Creator": "daydreamingdeity",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Green",
+			"Cost": [
+				"{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Horse",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Saddle 2\\nYou can't reveal cards fomr your hand whenever the fuck you want you need to have something reveal them specifically and shit.\\nRevealed spells you cost cast cost {4} less to cast. (A spell is revealed if your opponents can currently look at it.)\\nWheneever It That Gazes Upon You attacks while saddled, you may reveal card from your hand until end of turn.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Battery of Rabbits",
+			"Image": "https://lh3.googleusercontent.com/d/1nirvRxeTOZd7Ix45jjejnC1t8nF23yAb",
+			"Creator": "fishsubstance",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Red",
+			"Cost": [
+				"{2}{R}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Battery",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"When this artifact enters or leaves the battlefield, create two Rabbit Battery tokens. (They're {R} 1/1 Equipment Rabbit artifact creatures with haste and \"Equipped creature gets +1/+1 and has haste\" and reconfigure {R}.)\\n{2}, {T}, Sacrifice this artifact: You gain 3 life and draw a card.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"Pet the bunny",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Electrostate-Based Field",
+			"Image": "https://lh3.googleusercontent.com/d/12D_duVur5NEzb9OjSbzAR-QxcXy127Ax",
+			"Creator": "llllll",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Wall",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Defender\\n704.5l If a permanent controlled by an opponent is put into a graveyard during a check for state-based actions, reduce the life total of each of your opponents by 1.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"It's real!\"\\n— Daxiver, L999 Judge",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Ask Calmly",
+			"Image": "https://lh3.googleusercontent.com/d/1yE7URXDd7Y68nRs1UZ8TW5qwoAgHXpPw",
+			"Creator": "gramofone",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "White;Red",
+			"Cost": [
+				"{2}{R/W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Kindred;Instant",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Wizard",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Each opponent may have you draw a card. For each who didn't, pu two +1/+1 and a double strike counters on up to one creature.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"DID YOU PUT YOUR NAME IN THE GOBLET OF FIRE??",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Malicious Microtransactor",
+			"Image": "https://lh3.googleusercontent.com/d/19yTVug3DTePtDbPz_pZrScrdnlw_tmCp",
+			"Creator": "enchantmen",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Black",
+			"Cost": [
+				"{2}{B}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Demon;Lord;CEO",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever another nonland permanent enters, you may pay {1}. If you do, one of its abilities becomes \"{2}: Pruchase this DLC. (It reverts to the original ability.)\"",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"It's not about the money, it's about sending a message. And the message is go fuck yourself.\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Chancellor of the Moss",
+			"Image": "https://lh3.googleusercontent.com/d/1Y4qSUrvcX3fbzHnkL77X6HF7CX4E9mR4",
+			"Creator": "flamingseahorse",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 7,
+			"Color(s)": "Black;Green",
+			"Cost": [
+				"{4}{B}{B}{B/G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Vampire;Fungus",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"You may reveal this card from your opening hand. If you do, at the beginning of your first upkeep, create a Thallid token.\\nFlying, sporecounterlink (Damage dealt by this creature also causes its controller to put that many spore counters on it.)\\nRemove three spore counters from Chancellor of the Moss: Create a Thallid token.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Wile E Coyote and His Pups",
+			"Image": "https://lh3.googleusercontent.com/d/1tUXwLeC8Br-rA1vTojZbnwb34zjXBu5F",
+			"Creator": "klunkerpunker",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Red",
+			"Cost": [
+				"{1}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Coyote",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Haste, squadspring {2} (As an additional cost to cast this spell, you may pay {2} any number of times. When this creature enters the battlefield, create that many 1/1 tokens that are copies of it.)\\nWhen this creature enters, another target creature gets +1/+1 and gains haste until end of turn.\\nConception {1}{R} (It's plot)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "s // wich",
+			"Image": "https://lh3.googleusercontent.com/d/1MjWgli6flGq2apyFqDDSscmGUeyeyps9",
+			"Creator": "insertnamehere23",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{U}",
+				"{1}{U}{U}",
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				"Creature",
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Snake",
+				"Human;Shaman",
+				null,
+				null
+			],
+			"power": [
+				"2",
+				"4",
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				"2",
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Text Box": [
+				"Flash\\nSkulk, toxic 1",
+				"Flash\\nWhen this creature dies, counter up to one target spell.",
+				null,
+				null
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": ""
+		},
+		{
+			"Name": "Scubers when you tell them not to Offspring or Populate",
+			"Image": "https://lh3.googleusercontent.com/d/1IK1zW9ddfPGxt1n_3BJtih-NNgJpOAtG",
+			"Creator": "technoturnovers; liuliuluv",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Green",
+			"Cost": [
+				"{1}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Offspring {5}{G}{G}{G}\\nWhen this creature enters, you may tap it. If you do, populate.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "It That Outsources",
+			"Image": "https://lh3.googleusercontent.com/d/16gGiI8onhK5ChIjabML4Kf-t6Ld-nWaW",
+			"Creator": "laptopispy",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "White;Red",
+			"Cost": [
+				"{1}{R/W}{R/W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Horror",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"At the end of your first main phase, you may donate your next combat phase this turn to target opponent. They can't attack you or permanents you control/protect during that phase. Untap all creatures they control.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Urza's Desert // Urza's Dessert",
+			"Image": "https://lh3.googleusercontent.com/d/1MS1k42MHGb-RdQ26J1jSujswKnCzqKDE",
+			"Creator": "_somewhat",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "White",
+			"Cost": [
+				"",
+				"{W}",
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Land",
+				"Artifact",
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Urza's;Desert",
+				"Food",
+				null,
+				null
+			],
+			"power": [
+				"",
+				"",
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Text Box": [
+				"Urza'scycling {1}{C}\\n{T}: Add {W}.",
+				"When Urza's Dessert enters, you gain 1 life for each Urza's land you control.\\n{T}, Sacrifice Urza's Dessert: You gain 3 life and draw a card.",
+				null,
+				null
+			],
+			"Flavor Text": [
+				"Urza really liked building sandcastles out there. For some reason.",
+				"\"I believe you have made a typo.\"\\n—Karn, Scion of Urza",
+				null,
+				null
+			],
+			"Tags": ""
+		},
+		{
+			"Name": "Handyman",
+			"Image": "https://lh3.googleusercontent.com/d/1KpanFy-s_KovMQsm3iU0CIkqSVMjzF4p",
+			"Creator": "munkegutz",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Horror",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Whenever you draw a card, Handyman draws a card from your library.\\nHandyman gets +1/+1 for each card in it.\\n You may cast spells from Handyman by giving it -X/-X until end of turn, where X is the mana value of that spell. (You still have to pay any other costs.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "...if it was a GOOD card",
+			"Image": "https://lh3.googleusercontent.com/d/1MfP2w-lq8U5nicfs_emGEyeTYAxpgv58",
+			"Creator": "enchantmen",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Green",
+			"Cost": [
+				"{2}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Dinosaura",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Enchanted permament is a green Dinosaur creature in addition to its other types with trample and gets +6/+6. If it has no base power and toughness, they become 0/0.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"This joke only gets funnier each time.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Han Solo, Slabbed in PSA // Harrison Ford as Han Solo",
+			"Image": "https://lh3.googleusercontent.com/d/1PyB2QVEi8y3zYdyIza8ns9YBZOnqM4Zp",
+			"Creator": "technoturnovers",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{2}{U}",
+				"",
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				"Legendary",
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				"Creature",
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Rogue;Wall",
+				"Human;Rogue",
+				null,
+				null
+			],
+			"power": [
+				"0",
+				"5",
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				"3",
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				"",
+				null,
+				null
+			],
+			"Text Box": [
+				"Defender, cracks open if it dies",
+				"First strike, reach\\nHan Solo has an MV of 0 (you ruined his market value)\\n{2}, {T}: Target player reveals hand; deal 3 damage to target creature from it.",
+				null,
+				null
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": ""
+		},
+		{
+			"Name": "HC6: Bin Diver",
+			"Image": "https://lh3.googleusercontent.com/d/1yvRBnFAIOdqQZSPOjZKQxN8mL65rMs97",
+			"Creator": "klunkerpunker",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Black",
+			"Cost": [
+				"{3}{B}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Goblin",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flash\\nYou can draw cards from your graveyard (Just take one at random, graveyard order is stupid)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"I found the sketch frame",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "\"Goes Out For Milk\"",
+			"Image": "https://lh3.googleusercontent.com/d/1veeGZdneUFgNS8Wit-ehkJab5wL9fYCo",
+			"Creator": "liuliuluv",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{3}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Foreground",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Lore (A commander creature with Partner can have this as their second commander.)\\nWhen \"Goes Out For Milk\" enters the battlefield, create a 1/1 copy of target creature you control.\\nCommander creatures you own have Shroud.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Scubed Paleontologist",
+			"Image": "https://lh3.googleusercontent.com/d/1k3bfj0zfUETg9vTYMJbG6-mbll-C6Zpd",
+			"Creator": "gramofone",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Green",
+			"Cost": [
+				"{2}{G}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;Druid",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}: Add one mana of any color.\\nBirds are also Dinosaurs. (It's a fact.)\\nSpells you cast have affinity for permanents with one or more of: Dinousaur type, trample, 6 power, 6 toughness, mana value 6 or a colored mana cost of exactly {G}{G}.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Unctus, Won't Give Up His Toys",
+			"Image": "https://lh3.googleusercontent.com/d/15W3w16RfBeLjN0MAOC5KjBObgf1u2s_q",
+			"Creator": "hgbsun",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{1}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Phyrexian;Vedalken",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"When Unctus enters, create your choice of a Blood token, a Clue token, a Junk token or a Map token.\\nIf you would tap or sacrifice an artifact token as a part of paying a cost, you may pay {U} instead. (If it would be both tapped and sacrificed, you may pay {U}{U} to replace both costs.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Tamiyo, Orphanage Connoisseur",
+			"Image": "https://lh3.googleusercontent.com/d/1s4ep5LeMrk4xscwe1yIHAbq0b8fSP5Xs",
+			"Creator": "localrodent",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "White;Blue;Green",
+			"Cost": [
+				"{G}{W}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Moonfolk;Parent",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flying\\nAdoptspring {3}. (Whenever an opponent cast a creature spell, you may pay {3}. If you do, when that creature enters, create a 1/1 token copy of it.)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"I love kids Genku! I love kiiiiiids!\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Stangg Swarm",
+			"Image": "https://lh3.googleusercontent.com/d/1k0sLJC_hOLbAX33LmKJYD4VfYG0Yotam",
+			"Creator": "jablinx",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 5,
+			"Color(s)": "Red;Green",
+			"Cost": [
+				"{3}{R}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;Warrior",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"The \"legend rule\" doesn't apply to permanents you control named Stangg Swarm.\\nWhenever you attack, create a 3/4 red and green Human Warrior creature token. If you attack with four or more creatures, create a token that's a copy of this creature instead.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"Survival rule 420: There are always more Stanggs.\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Walter Wight",
+			"Image": "https://lh3.googleusercontent.com/d/1vd1jvEV2x_KbpEuuIU1KzokNQLtsUyuV",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "White",
+			"Cost": [
+				"{2}{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Zombie;Scientist",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Predefined tokens you control are Shard tokens in addition to their other tokens. (They're enchantments and have \"{2}, Sacrifice this token: Scry 1, then draw a card.\")\\nWhenever Walter Wight attacks, create a Walker token. (It's a 2/2 black Zombie.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Balan, Wandering Knight (but she's american)",
+			"Image": "https://lh3.googleusercontent.com/d/1WafjYi-6Ge7jRD6rhQ8fhiy5hystV7wW",
+			"Creator": "enchantmen",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "White",
+			"Cost": [
+				"{2}{W}{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Gat;Knight",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"0",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{W}: Create a Gun Equipment artifact token with equip {1} and \"Equipped creature gets +1/+1 and has reach.\"\\nYou don't have to pay taxes if you have a Gun.\\nThis has double strike as long as two or more Equipment are attached to it. This has triple strike as long as three or more Equipment are attached to it. This has quadruple strike as long as four or more Equipment are attached to it. This has quintuple strike as long as five or more Equipment are attached to it. This has hextuple strike as long as six or more Equipment are attached to it. This has septuple strike as long as seven or more Equipment are attached to it. (...)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Raised",
+			"Image": "https://lh3.googleusercontent.com/d/18nBkB2chMIxN1MvqVBAi2EBu4SK_IaTz",
+			"Creator": "Panglacial Wurmc4sdabomb",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Green",
+			"Cost": [
+				"{5}{G}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Background",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Lore (A commander creature with partner can have this as their second commander.)\\nCommander creatures you own have base power and toughness 9/5 and trample and are Wurms in addition to their other types.\\nWhile you are searching your library, you may cast a commander from the command zone Tax free.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"Your parents taught you to avoid Selvala, Explorer Returned no matter one's size.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "jin-gitaxias, gamblecore augur",
+			"Image": "https://lh3.googleusercontent.com/d/1A6z6KOsKHBLU-v4o-2x8pZ89JGnBoH5J",
+			"Creator": "insertnamehere23",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 7,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{5}{U}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Praetor",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"5",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Flash\\nAt the beginning of your end step, roll a six-sided die. If the result is seven, you win the game. Otherwise, draw a number of cards equal to the result and Each opponent's maximum hand size is reduced by the result until your next turn.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"aw dang it\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Pip Pin, Plucker of Pips",
+			"Image": "https://lh3.googleusercontent.com/d/1eM0sfshpU2o4-8176zyLSplchIyhIGE2",
+			"Creator": "gramofone",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Blue;Red;Green",
+			"Cost": [
+				"{G}{U}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Halfling",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{1}, {T}: Target player reveals a nonland card from their hand. Take a non-generic mana symbol off it and add it. You don't lose this mana as steps and phases end. (The last one becomes {0}.)\\nPipverge — At the beginning of your end step, this creature deals damage to any target equal to each mana type you spent this turn. ({W}, {U}, {R/G}, {B/P}, {C}, etc. are mana types.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Undercover Robot Cop from the Future",
+			"Image": "https://lh3.googleusercontent.com/d/1yhNawfSrC3-lHOtoohS7FO3qlgD34vR4",
+			"Creator": "jablinx",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": null,
+			"Color(s)": "Blue",
+			"Cost": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Robot",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"2",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"When this creature is turned face-up, detain each opponent. (Until your next turn, they can't attack, block, or activate abilities.)\\nDisguise {5}{U}{U} (You may cast this card face down for {3} as a 2/2 creature with ward {2}. Turn it face up any time for its disguise cost.)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"Greetings, fellow Gatherers.\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Takes a Semester Abroad in Spain",
+			"Image": "https://lh3.googleusercontent.com/d/1zzBzA98gFLamfK_MGsGnR6bNpnBTC5Wk",
+			"Creator": "jakenbakery",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "White",
+			"Cost": [
+				"{1}{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Foreground",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Lore\\nWhen this or another commander you control enters, you may pay {1}. If you do, educate target commander. (If it wasn't educated, draw a card.)\\nEducated creatures you control have \"Whenever la criatura you controlar enters el battlefield, put a contador +1/+1 on la it.\"",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"Arcavios counters? Ugh. Try contadores Españos.\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Wants Nothing of This Shit",
+			"Image": "https://lh3.googleusercontent.com/d/1WHPAv-NbviLg2OWMrUe65neGTBgcj5Kx",
+			"Creator": "gramofone",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 1,
+			"Color(s)": "White",
+			"Cost": [
+				"{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Background",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Lore (A commander creature with partner can have this as their second commander.)\\nCommander cards in your command zone have evoke {1}.\\nOther commanders you control have \"Whenever a creature you control dies, you may pay {2}. If you do, draw a card.\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "MC Bogardan Hammer",
+			"Image": "https://lh3.googleusercontent.com/d/1lP_wBfEBcgHF9LTnZgVNeF_wa-ovyuHb",
+			"Creator": "llllll______",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Red",
+			"Cost": [
+				"{2}{R}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Avatar",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Eminence — Instant and sorceries you control are named Hammer of Bogardan. The same is true for instant and sorcery cards you own.\\n{X}{X}{R}{R}{R}: Return X target Hammer of Bogardans from your graveyard to your hand. Activate only during your upkeep.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Says a Slur on Twitter",
+			"Image": "https://lh3.googleusercontent.com/d/1TXTO8iR_bSgJ_y5IutNc7Vv_0xPJCL1G",
+			"Creator": "klunkerpunker",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Red",
+			"Cost": [
+				"{2}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Foreground",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Lore (A commander creature with partner can have this as their second commander.)\\nWhen this enchantment enters, choose an opponent. Creatures the chosen opponent controls attack you during their next combat if able.\\nCommander creatures you control are a menace to society. (They can't be blocked except by four or more creatures.)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Gamer",
+			"Image": "https://lh3.googleusercontent.com/d/1IxpcQMx8u-561HcTLPLiAlF7THCBDZlD",
+			"Creator": "circusqueen",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 2,
+			"Color(s)": "White",
+			"Cost": [
+				"{1}{W}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Enchantment",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Background",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Lore (A commander creature with partner can have this as their second commander.)\\nCommander creatures you own are Gamers in addition to their other types and have \"When this creature enters, play Baldur's Gate 3\" (Its the initiative but you venture into Baldur's Gate Wilderness instead of the Undercity)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "NASmoranomardicadaistinaculdaCAR",
+			"Image": "https://lh3.googleusercontent.com/d/1Rs5v_7W_kXn-KUJX9AL6NDXLp_WPRZTS",
+			"Creator": "enchantmen",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 3,
+			"Color(s)": "Red",
+			"Cost": [
+				"{2}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Human;Racist",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{2}, {T}: Create a red 1/1 Racecar Vehicle artifact token with crew 1.\\nWhenever a creature crews a vehicle you control, that vehicle gets +X/+Y until end of turn, where X and Y are that creature's power and toughness.\\nVehicles you control are red.\\nRed Vehicles have trample and haste.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"(no, racecards can't drive other racecars what are you fucking stupid)",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "It That Cheats",
+			"Image": "https://lh3.googleusercontent.com/d/1b9c955jOJnA_cgAajV3QwMGMchqKNR5f",
+			"Creator": "aprilmai",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 7,
+			"Color(s)": "",
+			"Cost": [
+				"{7}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Eldrazi",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Convoke, improvise, ritual (Ritual is like convoke but with enchantments.)\\nYou can't spend mana to cast this spell.\\nThe first spell you cast each turn has convoke, improvise, and ritual.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Clockwolf, Compleated",
+			"Image": "https://lh3.googleusercontent.com/d/1M3Vhr1LYeNjzWGu7ZbgB_eHZDibNz7l_",
+			"Creator": "technoturnovers",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "White;Green",
+			"Cost": [
+				"{G/W}{G/P}{G/W}{W/P}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Phyrexian;Wolf",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"6",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"If a creature you control with no abilities would enter, you may pay {1/P} and it is a Clockwolf copy instead",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"/hu wɒtʃəz ðə wɒtʃwulf/",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Kharnage Tyrant",
+			"Image": "https://lh3.googleusercontent.com/d/199MpWUTYNe9IwfN67wGm1KZT32dTyc_q",
+			"Creator": "carnoraptorr",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 6,
+			"Color(s)": "Red;Green",
+			"Cost": [
+				"{4}{G}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Astartes;Dinosaur",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"5",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"1",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"BerzerKhârn— Carnage Tyrants attack or block each combat if able.\\nSigil of carnage — You have protection from Carnage Tyrant\\ngiant, implacable death lizard — If damage would be dealt to Khârn the Betrayer, prevent that damage and an opponent of your choice gains a Carnage Tyrant onto the battlefield.",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Solphim, Youtube Dominus",
+			"Image": "https://lh3.googleusercontent.com/d/1XmXv3EQbO4nUYS0WNHTzKMb3wdGbZhI2",
+			"Creator": "jakenbakery",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Red",
+			"Cost": [
+				"{2}{R}{R}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Phyrexian;Horror",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"5",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"4",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"Noncombat damage you control has Amass-Subscriber-link.\\n{T}: Solphim pranks target opponent. (It deals 1 damage to them.)",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"\"This arson is brought to you by BetterHelp!\"",
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"Name": "Hatsune Miku",
+			"Image": "https://lh3.googleusercontent.com/d/1nLjSDU1fstiUgG9u2An5wZzmXNTXSgFw",
+			"Creator": "march10",
+			"Set": "HC6",
+			"Constructed": "Banned",
+			"Rulings": "",
+			"CMC": 4,
+			"Color(s)": "Blue",
+			"Cost": [
+				"{3}{U}",
+				null,
+				null,
+				null
+			],
+			"Supertype(s)": [
+				"Legendary",
+				null,
+				null,
+				null
+			],
+			"Card Type(s)": [
+				"Artifact;Creature",
+				null,
+				null,
+				null
+			],
+			"Subtype(s)": [
+				"Construct",
+				null,
+				null,
+				null
+			],
+			"power": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"toughness": [
+				"3",
+				null,
+				null,
+				null
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"{T}, Discard a card: Gain control of target crime if it's source shares a type or color with the discarded card. You may choose new targets.",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"I love Harry Potter. Hatsune Miku is such a talented author.",
+				null,
+				null,
+				null
+			]
+		},
+		{
 			"Name": "Angel 1",
 			"Image": "https://lh3.googleusercontent.com/d/1--Z3UQiS4DECPnV-f9b3GFU0Qj1A2r3i",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: All Dogs Go to Heaven",
 			"CMC": 0,
@@ -205365,6 +208722,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/11zmr1OXxTRnEQkUAphUj8LSE6It1IP3X",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Cock and Balls to Torture and Abuse*2",
 			"CMC": 0,
@@ -205443,6 +208801,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/165QuPUMIkqkFHDoljBUkoUcAc2sqKiQm",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: It's Not Just Ramp",
 			"CMC": 0,
@@ -205521,6 +208880,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1NhHdGsVxAMeYQH9sUirpXXcJ3vwid0Kt",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bears Repeating;Borrowing 100,000 Bears",
 			"CMC": 0,
@@ -205599,6 +208959,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1mOVUdTQk-cigmSfZF9czxfLL6A8qe2B6",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Questing // Beast;Inhuman Plague",
 			"CMC": 0,
@@ -205677,6 +209038,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/18t6A2tlONrp7uPrpsqyXlB_1pSckF00e",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Inhuman Plague",
 			"CMC": 0,
@@ -205755,6 +209117,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1rhIOcXjDnfhfaMUegItoUF3FhJHPuBT3",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Tit // Tat",
 			"CMC": 0,
@@ -205833,6 +209196,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Y6wV8I22KvGsiM51WxxBDqq7FDYZZQo9",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Stormstorm",
 			"CMC": 0,
@@ -205911,6 +209275,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1IpF0DGolCKyTn1i4iuwnWY1nBbfB5wNP",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Cock and Balls to Torture and Abuse",
 			"CMC": 0,
@@ -205989,6 +209354,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1hMBqztK-r8qnR-z2JxoI-U_ZOvFzEHkv",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Hell Scoob;Item Block;Murder Detective Who Only Takes Easy Cases;Omen of the Gun;One with Everything",
 			"CMC": 0,
@@ -206067,6 +209433,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1x5Olx5d2YkzDZ0wz-Do6NArRUcXzgtQG",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Constantinople",
 			"CMC": 0,
@@ -206145,6 +209512,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1G_QVAGzYWTEKF-0OaCtRShucNIo3yBn_",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Dogeferi, Destroyer of Karen",
 			"CMC": 0,
@@ -206223,6 +209591,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1epz4n19YyhzNVDHW080eJV4EORV7h7iy",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Inhuman Plague",
 			"CMC": 0,
@@ -206301,6 +209670,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Odvd00UvWFQvF7ufFy2HoPe60bsj0FVP",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: All Dogs Go to Heaven*2",
 			"CMC": 0,
@@ -206379,6 +209749,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1_iltf34xL3Mx76KIRkfoxFI2Kymc7MgI",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Inhuman Plague",
 			"CMC": 0,
@@ -206457,6 +209828,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/15gIZDA2gqWAXc5UQPq5geTlgCDfJ74QE",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: red planeswalker",
 			"CMC": 0,
@@ -206535,6 +209907,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1nCkHZ8zOTT2ZUmRrLUDRn_iAWPBSm8Pm",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Pyrohyperspasm",
 			"CMC": 0,
@@ -206613,6 +209986,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1vPX1jvPtWGTz5iFoQuKHM6xsEX6pz1r4",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Pyrohyperspasm",
 			"CMC": 0,
@@ -206691,6 +210065,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1ja3fU9oVztG_KgRP08jGxfYQg10i9fNm",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Pyrohyperspasm",
 			"CMC": 0,
@@ -206769,6 +210144,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1o6fJTgVhtJkRQ-hOLnQTwG8_K0OLwvpg",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Inhuman Plague",
 			"CMC": 0,
@@ -206847,6 +210223,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1t5Wnw_C-8XFf4usbY930J6JC-G-WWlSs",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Path Towards Degeneracy",
 			"CMC": 0,
@@ -206925,6 +210302,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1xpwzHKkXDIuKNOP7pMksTrAfuh9XjDYz",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bass Pro Shops;Fishing Equipment",
 			"CMC": 0,
@@ -207003,6 +210381,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1wz3HY_cHzr80uNSl2cKidIXRAHWEteHc",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Fish School",
 			"CMC": 0,
@@ -207081,6 +210460,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1rLTS5LbcZw3WldhHKgWnMWS2nxcwz-2N",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bass Pro Shops",
 			"CMC": 0,
@@ -207159,6 +210539,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1BzLDb3yF2P516emD3dUVgvRvjl1dPhc3",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Fblthp, the Found",
 			"CMC": 0,
@@ -207237,6 +210618,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1oShOn7l99tnTvy6EqCUeNGgF91lzKfkI",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Curious Cob Session;Path to the Gift Shop;Thraben Health Inspector;\"ah my toaster has suffered a traumatic experience and has planeswalked to theros.\" // Toaster, on Theros;A Reassuring Garf;Last Minute Design;Tireless Snacker;Jon Arbuckle But He's Thick AF;Cheese Graetor;Expiry Date Checker; Remy, Hat Rat; Crippling Fear of Bread; Gordon, the Locator;Jadar, Prank Caller of Nephalia;Bread Return;Hell Scoob;One with Everything;Gobbling Guide;Magus of the Archetypes;Eat a Removal Spell;Quemsting Beast;Guy Fierious;Baker;Weiner Dog;Johnny Appleseed;Trufflesnout and Toad GX;When I Was a Lad I Ate // Dozen Eggs;Flavor Win; Bread Weight; Bass Pro Shops;Pizza Hut//Taco Bell//Combination Pizza Hut n Taco Bell;RB's;re d Cabin;Spatula;Item Block;Coconut Gun;Blightsteel Refrigerator;Pickle K'rrik!",
 			"CMC": 0,
@@ -207315,6 +210697,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1JwpltaqBi1ubvWDp9oI_yZ2nRkK2evJD",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Be Gay // Do Crime*2",
 			"CMC": 0,
@@ -207393,6 +210776,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/12FVJQPtAdlKub9P71XFTUU31Agi3xg-r",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Batterthrull",
 			"CMC": 0,
@@ -207471,6 +210855,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1CT2JLYZZKz42lrQThYQ3KghVbcM7QycS",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Shepard of the Stack",
 			"CMC": 0,
@@ -207549,6 +210934,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1F7Bg3OFf7DNMAcsKd6-aoCiAM7O6yhdz",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Red's Signature Creature Type*3",
 			"CMC": 0,
@@ -207627,6 +211013,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1F7Bg3OFf7DNMAcsKd6-aoCiAM7O6yhdz",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Gold Digger;One with Everything",
 			"CMC": 0,
@@ -207705,6 +211092,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1UuA5IObAtWflYk0X0sVlg4Z0Pu12OF4n",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Tim 2",
 			"CMC": 0,
@@ -207783,6 +211171,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1kEfrWFZnSVHVPs6SBLWv78xEagoubj44",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Hell's Cube",
 			"CMC": 0,
@@ -207861,6 +211250,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1o7jEFk3O1YRyAZw6eec03TZ6oRK_lyGp",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: whip // nae nae",
 			"CMC": 0,
@@ -207939,6 +211329,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/115dgdcYG4I6uTybRCcmoD-FDifxrDsRW",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Horse-Sized Duck // Duck-sized Horses*2",
 			"CMC": 0,
@@ -208017,6 +211408,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1QGHI3dAhsD70Kfj3NClq1D95_hj6BwB4",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Xanthra, of the Night-Swarm",
 			"CMC": 0,
@@ -208095,6 +211487,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/11NDU9Rxn03eCh7GH_EGMK1uLxxo5o_Mo",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Xanthra, of the Night-Swarm",
 			"CMC": 0,
@@ -208173,6 +211566,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1uiNNN21M4Ke3DEA9buhOahZ9dqO2mMJR",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Don't Talk to me or My Son Ever Again",
 			"CMC": 0,
@@ -208251,6 +211645,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1dJN6cqpNwvg_XDqiu8BT3glQWZZ5UtW5",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Australity Shift",
 			"CMC": 0,
@@ -208329,6 +211724,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1nLaM9dHQ287TV98g9ZbxwkMz2bubbd--",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Item Block;Path Towards Degeneracy",
 			"CMC": 0,
@@ -208407,6 +211803,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1AEboTaxpuAVOBYD9NprXSKZ0MS_ujDvE",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Stormstorm",
 			"CMC": 0,
@@ -208485,6 +211882,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1D4fPyEXvqGdgRk2Pat3NfQ1LviRV05ha",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Item Block",
 			"CMC": 0,
@@ -208563,6 +211961,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1gPw5NFuxo43WxTVM4NAVZhvls0lisICR",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Big Dick Energy",
 			"CMC": 0,
@@ -208641,6 +212040,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1gb0e59Y5H-cP8wO89eq2rElC6Kk9o2y2",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Woah Lions",
 			"CMC": 0,
@@ -208719,6 +212119,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1yonh0-ZPkkdVVVgvU0LQ5Dd7_vj4_c4j",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Woah Lions",
 			"CMC": 0,
@@ -208797,6 +212198,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Ap5hYDZJIwM9avmq9GdQC1FLzeT3iE7X",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Turn to Orbs",
 			"CMC": 0,
@@ -208875,6 +212277,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1kCpmnNtEdYYvYLQ7ibOgwm0nc7YzIPzU",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Phyrexian Oublietterator",
 			"CMC": 0,
@@ -208953,6 +212356,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1eN9EtZIGDWoy0-5dUhF29PtiX_KLx2J5",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Omen of the Gun*2",
 			"CMC": 0,
@@ -209031,6 +212435,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1YlkOjPf9ro8YM18bHDrEAsglfb8xZ9zQ",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Rock, Paper, Scissors",
 			"CMC": 0,
@@ -209109,6 +212514,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1hdhX1836ygRrndE0WPqaPnbGGojxPvVD",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Inhuman Plague",
 			"CMC": 0,
@@ -209187,6 +212593,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1TIqWrNd_zogCnuKFB76ivBldkMl0jcf1",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Parhelion I*2",
 			"CMC": 0,
@@ -209265,6 +212672,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1NaDjRkAbGqV5Z7Lez9AEp9I_KBU32QKw",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Honda Life of Life's Web",
 			"CMC": 0,
@@ -209343,6 +212751,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1nKPAmNmyx0mgllxkF-LSwptEm7CatHwc",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Spell Checker",
 			"CMC": 0,
@@ -209421,6 +212830,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1OSpHY6Z-j_nwBijHmPMsZamM7ag_W8oY",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Evil Goose",
 			"CMC": 0,
@@ -209499,6 +212909,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1XiGumHRh-DBAGSTBcmO--QGJ_um72uZ7",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Big Money;Constantinople;Devil Enriches;Item Block; One with Everything;Revelin' Rich*10;Traffic Court;Vhat, Sponsored Champion",
 			"CMC": 0,
@@ -209577,6 +212988,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1xHBrYVEzpn_zXNr8WDaZo30XL_Ia2TKf",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Tunak Tunak Tun",
 			"CMC": 0,
@@ -209655,6 +213067,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1TjENpz-SqDVv9ltSzaRIbAiPuESRVayQ",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Tunak Tunak Tun",
 			"CMC": 0,
@@ -209733,6 +213146,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/19VxQZBP6sbb9S-kqf4L2FEogqfWI3eyM",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Tunak Tunak Tun",
 			"CMC": 0,
@@ -209811,6 +213225,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1EHnygEBMMXRzk77bUdrWCgNng8VchTsG",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Tunak Tunak Tun",
 			"CMC": 0,
@@ -209889,6 +213304,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1UBipSGnwpLhlnSlkCahbdb0NTNUtHpRk",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: White Car Draw",
 			"CMC": 0,
@@ -209967,6 +213383,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/15UJzz4gyaRwAtaoo2oiOUSemjkCkKfhk",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Empty the Pit Stop",
 			"CMC": 0,
@@ -210045,6 +213462,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1OE2FgHEJjfh2F3XfgRAIh-WTFWnYP1YG",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Fatal Kush; Oko, the Veilcursed;Bake into Brownie;One with Everything;Baked Cat;Magus of the Archetypes*2;Urza, High Artificer;Amsterdam",
 			"CMC": 0,
@@ -210123,6 +213541,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1FBrJPcTmIbmCe1Hs9Ee6eMBi3MmppmlD",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Whale Visions;Mythos of Hellscube*2",
 			"CMC": 0,
@@ -210201,6 +213620,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1nh5CXPhGVv3qVz39OVuZBfOOfJZvMJi3",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Feasting Megalodon*2",
 			"CMC": 0,
@@ -210279,6 +213699,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1CccCrvh85tFngqzI5jZdltTfNDAzO-Rm",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Inhuman Plague",
 			"CMC": 0,
@@ -210357,6 +213778,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1N49ra5w7OcmVIDimDpOl6Db1IbmtgUg6",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bruhcoil Engine",
 			"CMC": 0,
@@ -210435,6 +213857,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1TZwVJ52MimTN1QJqf7oxoyh2frqakhkk",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bruhcoil Engine",
 			"CMC": 0,
@@ -210513,6 +213936,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1dFQ7mbOMvSyOqc8L33dfbVpzQ6Q4d7x-",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bruhcoil Engine",
 			"CMC": 0,
@@ -210591,6 +214015,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1yPuhs4jrXXvY_687URo6wphJ5xYyZjwI",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bruhcoil Engine",
 			"CMC": 0,
@@ -210669,6 +214094,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1632uSuASQRAZ3iLvVVhdaIXX5kqIwwKa",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bruhcoil Engine",
 			"CMC": 0,
@@ -210747,6 +214173,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/12fcMopzgMbRQbydU7j-mMmudGL46XCiA",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bruhcoil Engine",
 			"CMC": 0,
@@ -210825,6 +214252,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1XiklEacDr4sDb9DaZ9_jNCUHbfzbcvnY",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bruhcoil Engine",
 			"CMC": 0,
@@ -210903,6 +214331,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1vGS6hoQlhZsNRoTeMjBLiq5LPPrgiNe0",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bruhcoil Engine",
 			"CMC": 0,
@@ -210981,6 +214410,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/19zhp5igRIQwyi9uad5_VQneNUGDt2sqj",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Bruhcoil Engine",
 			"CMC": 0,
@@ -211059,6 +214489,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1-vim6H4AtF5kBk86KyPha9JCEMI-UTOf",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Inhuman Plague",
 			"CMC": 0,
@@ -211137,6 +214568,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/11KD9igIuFiKuHuB19gGi9My086KCuL5T",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Inhuman Plague",
 			"CMC": 0,
@@ -211215,6 +214647,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1TmgZbRUI_Ynaany3fa_CH4kFQZhmgTph",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Look at me, I'm a Hellscube Mod",
 			"CMC": 0,
@@ -211293,6 +214726,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1UM0ESCJzaUh46yhA3ohPajZkhN2cgJlQ",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Look at me, I'm a Hellscube Mod",
 			"CMC": 0,
@@ -211371,6 +214805,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1iTfzTVOKD3kjoSwy5xdDoVGqGiVKa1tR",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Look at me, I'm a Hellscube Mod",
 			"CMC": 0,
@@ -211449,6 +214884,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1usq83HT3utbF-y64-7NdqPgXFwGj3as9",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Illusionary GF",
 			"CMC": 0,
@@ -211527,6 +214963,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1I4gpq-ccUGh-W_E_r8iCC0mS6olwHs21",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Illusionary GF",
 			"CMC": 0,
@@ -211605,6 +215042,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1kLIk3E9HJRYODmyDiAeUev69Q2bRCrly",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Illusionary GF",
 			"CMC": 0,
@@ -211683,6 +215121,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1nJvZSrltdM75li-3Hl7TdqIpAfm9wI55",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Harare",
 			"CMC": 0,
@@ -211761,6 +215200,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1-5oVhoIFqhBhNn_1pFunlrXB016YO-GV",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Devil Enriches",
 			"CMC": 0,
@@ -211839,6 +215279,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/17Oq2-yH6ie88pJ-0GId-tM9-E0bcDgG3",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Hidden Temple of Legends",
 			"CMC": 0,
@@ -211917,6 +215358,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1BVzRIGUUaKQBwyDNHynOJ37NF_vcRwP9",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Enter the Mod-Eternals",
 			"CMC": 0,
@@ -211995,6 +215437,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1HAOROQXupr-oCctURPZalG3eOaNAVnlU",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Wolf Within",
 			"CMC": 0,
@@ -212073,6 +215516,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1HAOROQXupr-oCctURPZalG3eOaNAVnlU",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Wolf Within",
 			"CMC": 0,
@@ -212151,6 +215595,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1mh4RJ4rZsAAQvZnokeBR-B8WmqeqNLmc",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Opter // Shocker",
 			"CMC": 0,
@@ -212229,6 +215674,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1erDPt0rJdKLlFlC8kiTtNSw4_saObI-5",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Opter // Shocker",
 			"CMC": 0,
@@ -212307,6 +215753,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Q_26eR4Hr7XHFkHz9-bt3ihDYE5Mhya_",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Dreadthallid",
 			"CMC": 0,
@@ -212385,6 +215832,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1qsb6K_cHfMEtW0PtolF1ZuhUu7j82WUN",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Dockside Extortionist but it Actually has Extort",
 			"CMC": 0,
@@ -212463,6 +215911,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1W4jV4gDQnTveMxBjDx2JbzrLjorqZllx",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Colossal Dreadmom",
 			"CMC": 0,
@@ -212541,6 +215990,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1KjEeaj8mXTWF4NE42GDk523JxdmZXjBH",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Murder (not the M13 one)*3;CROW HURRICANE;Oko, Thief of Crows",
 			"CMC": 0,
@@ -212619,6 +216069,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1EJgAPL96yBfp9jQqwx4jBMuRSGEiMc0L",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Anprim Gang // Transhumanist Gang",
 			"CMC": 0,
@@ -212697,6 +216148,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1w3d_DhKqugeY3qZ4kiwSire6DS4CcjRe",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Anprim Gang // Transhumanist Gang",
 			"CMC": 0,
@@ -212775,6 +216227,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/15QaPUiTjz-YRH_Jzx6x8XpP4PEL8WHqI",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Anprim Gang // Transhumanist Gang",
 			"CMC": 0,
@@ -212853,6 +216306,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Mt4DdzFM4abK1ZhD0aZSFn4gIabaXEEB",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: THE HELLSCUBE BLJ",
 			"CMC": 0,
@@ -212931,6 +216385,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1aUOyc5eMWLMfilZI495aqyLWDqzUDqPc",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: The Essence of Dreadmaw;Maw Within;Rattlemaw Mystic;Colossal Time Warp",
 			"CMC": 0,
@@ -213009,6 +216464,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1CWnUyII-3uwsripeCr75MAButSx-hAoe",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Flummox",
 			"CMC": 0,
@@ -213087,6 +216543,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1HHw_A1ioO0o7geC6j4RPSGKyq6R3oePb",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Flummox",
 			"CMC": 0,
@@ -213165,6 +216622,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1L42BTGuxLNyP97bTMSFwDDo5Opi43GIm",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Flummox",
 			"CMC": 0,
@@ -213243,6 +216701,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1JvKJ1sVV9GrA3JCp7SwQSRgQkeLEZ_ch",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Flummox",
 			"CMC": 0,
@@ -213321,6 +216780,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1FBva4TNoeU4m0oTlR_hu69aOe_UZ65aL",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Flummox",
 			"CMC": 0,
@@ -213399,6 +216859,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1HeZE0R8hG19_Y072wwceS918gn8_81pT",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Hydra's Exponential Growth",
 			"CMC": 0,
@@ -213477,6 +216938,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1pEKkwgAGJtdXzFGTmVRgZwKXNh_qnv4T",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Myr in Misery",
 			"CMC": 0,
@@ -213555,6 +217017,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1DiUyNlPNKUjieSFBSBfetOiaqD8lnIyg",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Fetchland",
 			"CMC": 0,
@@ -213633,6 +217096,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1rtodejmJT4OilsWdG0kaQ0IstR36Hmap",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Three Kobolds in a Trenchcoat*3",
 			"CMC": 0,
@@ -213711,6 +217175,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1TV3ONb-tiP77bWlDkbg91M36bq_HsoFw",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: To Get Your Act Together",
 			"CMC": 0,
@@ -213789,6 +217254,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/19qFc0KEpY3vBZAIqa64DBMnlBWWmO_1z",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Squirrel Surger;Nuts // Bolts*3",
 			"CMC": 0,
@@ -213867,6 +217333,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/18h2MxyA2b-NT8ZTNYUpA9MSSRzK_mBIN",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Clackbridge Trollbooth*3",
 			"CMC": 0,
@@ -213945,6 +217412,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Hvn1pJsQYBNNCFEKzHc9xrEeRSurxgVe",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Sheoldred, Whispering One (hc);Wireless Snacker;Batterie Antoinette",
 			"CMC": 0,
@@ -214023,6 +217491,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1UAzkVWE-tZ1xE1_NGd_evwtlma2GCqJW",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Elfball",
 			"CMC": 0,
@@ -214101,6 +217570,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Dh3EbouAAy_wUy3mMk2bLGReaiRCTEVg",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Sigil of the Porcelain Throne",
 			"CMC": 0,
@@ -214179,6 +217649,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1aiG7QG12nsL0uc5tDum3ZRc0PF-dTG9T",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Force of Rowan",
 			"CMC": 0,
@@ -214257,6 +217728,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/14V_H5eCX08F20OE9HMVJMynlaFRRGQVA",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Mirrodin Besieged Rhino",
 			"CMC": 0,
@@ -214335,6 +217807,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/16eEJrwEB-N5ZnmtZu9mICUNGOkWscoJX",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Go for the `Gut`;Bad to the Bone",
 			"CMC": 0,
@@ -214413,6 +217886,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1GfvK_zov61RjpGwsr2jnrhWnmFW781SJ",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Boomer Pile*4",
 			"CMC": 0,
@@ -214491,6 +217965,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1BOhqfgNIzQT6D5D0Hi-mmgOK_1G8ovfA",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Skrelv's Dispatch",
 			"CMC": 0,
@@ -214569,6 +218044,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/16khrSeM5MGBizyYZKhR24YDE06wYhcqR",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Painstorm*2",
 			"CMC": 0,
@@ -214647,6 +218123,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Zf_R2B2GNaqiV9bgMUi1x4HxHC6CA8yL",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Zalin, Gutter Bard",
 			"CMC": 0,
@@ -214725,6 +218202,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1wmBrLR9BJokZjssqDid39ziY0VxNUavc",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: The Biggest Ball of Twine in Minnesota",
 			"CMC": 0,
@@ -214803,6 +218281,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1dWDiIouBtqcPvBpXJDAr-eLtyhEFGIHD",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Plot of Greed",
 			"CMC": 0,
@@ -214881,6 +218360,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1RtJ8THZNMDCRmBI40uawWvaQGmk-zjgy",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Moxide Extortionist",
 			"CMC": 0,
@@ -214959,6 +218439,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1eA_dPH2Hnxee5ZCydOXudhh-SP67tMZf",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Horizons Canopy",
 			"CMC": 0,
@@ -215037,6 +218518,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1YuuE95wHMhIF0O2hyz-Z6dalT6q4AU6H",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Zelda, Legend Of",
 			"CMC": 0,
@@ -215115,6 +218597,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/12KiFqCssOkSUu8jI8umYn0Xvxiy01fDC",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215193,6 +218676,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1yK_cT3WlQq9hkPpeNeYRgos7ofYxO5S6",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215271,6 +218755,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1M0hYxXcXgXYd8Xedy36yeU_-x9ENNTRd",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215349,6 +218834,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Nr_tHI7156fs11S99gfRl-o6WLXmJJrq",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215427,6 +218913,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1utt8QkpHTZ4f2hhQGTFKvoLAvjbTfmOl",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215505,6 +218992,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1P5E51LnqsIev8nhjeCLYhE6EMGx_B0_N",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215583,6 +219071,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1wDmMt9VpDVHwBOAxx-fxcO2imJHuoASN",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215661,6 +219150,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1PAkeWNARNZxiLYvYJOF0COzynZex6Tc_",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215739,6 +219229,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1O9GEDRYRB-eNR-L2QYI_8Z4YdBS6buG_",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215817,6 +219308,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1nputN3X5D5IUxsBoUXpDD4fv6ru76v2x",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215895,6 +219387,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1piylkbBw75q0C0TYDni5gj3Oz4f8YV-r",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -215973,6 +219466,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1nVHOJmkP8Lmu7a7ygEgeM_YQ4RTkv5wu",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -216051,6 +219545,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Ot9XD5MKNGIDplq136Xpz9Cjry-mbKor",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -216129,6 +219624,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1nDha5R64LUE4FUErG2ZYhcCKS3u1zyJR",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Here's the Advisor",
 			"CMC": 0,
@@ -216207,6 +219703,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1OrQoJY8i2g2oXVfccfcfpFoPD_Ulpksj",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Rockforge Mystic",
 			"CMC": 0,
@@ -216285,6 +219782,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1RD3M38B1WzvgqchjK0IQv_0V-dnTU2su",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Rockforge Mystic",
 			"CMC": 0,
@@ -216363,6 +219861,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/117cN-6YUtK0TO4WQREajGQnyjQMXo4GS",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Sheoldred, the Ap               e",
 			"CMC": 0,
@@ -216441,6 +219940,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1B4YSNrRjd_sdmexGOZQhId2Wvd3MVkiB",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Loves truck Beast",
 			"CMC": 0,
@@ -216519,6 +220019,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1ucOfgeIL3ULrvoPTvrcnFuc7rpdMvk3Y",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: lofiomancer",
 			"CMC": 0,
@@ -216597,6 +220098,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/18J0kePPARl_C7Fjj5b0D43ODfCDc0B2C",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Garruk, WildSticker",
 			"CMC": 0,
@@ -216675,6 +220177,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1iTpNhskAiZlwvwKJDvv8Nf52S4HiaCmg",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Notorious Wicker Picker",
 			"CMC": 0,
@@ -216753,6 +220256,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1rM_JpX5hGyMQNlH3Rs_d0o4t0yV47Izr",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Monkeystery Mentor",
 			"CMC": 0,
@@ -216831,6 +220335,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1s90mGzPpJ43qigZdzjCniSnjaVkd-5e6",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Swords to Luxurious Timeshares",
 			"CMC": 0,
@@ -216909,6 +220414,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1GnLNFCg0s4LcZKi1OHIj3zaCvinX3bKP",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Ancestr Call*3",
 			"CMC": 0,
@@ -216987,6 +220493,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1_Ek0h9yfF3M3P9vOOCAJ7DbWNj-cH4vY",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: The baby is involved",
 			"CMC": 0,
@@ -217065,6 +220572,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1TGVwND1uegVNHz3KHJ-t_u0sFaeJhS8E",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: The baby is involved",
 			"CMC": 0,
@@ -217143,6 +220651,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1qgPR9nJvWTHD_IXZT_hCETDLsNhJTTtx",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Stole Ring",
 			"CMC": 0,
@@ -217221,6 +220730,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1o92KeTp_DDm348sT59LDpjDRcj8Dm-cK",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Evil Fucking Wizard Spell",
 			"CMC": 0,
@@ -217299,6 +220809,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1sAwDOmsLaMVJyEr3mHdVjFO7EzXD1F-f",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Evil Fucking Wizard Spell",
 			"CMC": 0,
@@ -217377,6 +220888,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1RUmSqlk0FgGuzI4Nhd5fl-JQSCrkjAqF",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Ixalan Signet",
 			"CMC": 0,
@@ -217455,6 +220967,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1samcaTreoSJyaiZMP4Y9bF3gshtp4c8R",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis",
 			"CMC": 0,
@@ -217533,6 +221046,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1jojiF3NXL0vNyt0Ij5ykPpoKZh2iwdsV",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis",
 			"CMC": 0,
@@ -217611,6 +221125,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1m-X2rZLcdnNxKjIjHuXbWhO8-068piSi",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis*2",
 			"CMC": 0,
@@ -217689,6 +221204,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1EoL6hVUSPY_NRJllqbnIyhF7qlzNtv8r",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis*2",
 			"CMC": 0,
@@ -217767,6 +221283,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1LkGY7cGed09JM6rWM85o9uLOZ66JpzX_",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis",
 			"CMC": 0,
@@ -217845,6 +221362,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/16u09W3dUa6sFm8UFrZB_qD7tvVl3z-MV",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis",
 			"CMC": 0,
@@ -217923,6 +221441,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1wiSjmx4n-GzCaBBURAAcMKJf1mUjyLcA",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis",
 			"CMC": 0,
@@ -218001,6 +221520,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1NRG3qpHZtFqIEdp0QeXiQWYx6XTV-1kV",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis",
 			"CMC": 0,
@@ -218079,6 +221599,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1RKdUbXzaE6rEITm2d-eD4hyWLTLDwY5l",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis",
 			"CMC": 0,
@@ -218157,6 +221678,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1U2skSesYs_Q6X6yiXDCS81cUkPvhyZ7S",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Genesis Hydra // The Book of Genesis*2",
 			"CMC": 0,
@@ -218235,6 +221757,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1_5-Gp4nlR-jILXv182PXzPEWisQoh5Dw",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Revolving Wilds",
 			"CMC": 0,
@@ -218313,6 +221836,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1IwitSiOwpPw5MV0FZ06nxPAOfleBI0h7",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Revolving Wilds",
 			"CMC": 0,
@@ -218391,6 +221915,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1FNCub0eHiEMJdT3fxl7-ADrMd9FLufi_",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Revolving Wilds",
 			"CMC": 0,
@@ -218469,6 +221994,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Ea3a2JL7Ypem5v5js9axg_r6clD4wT-_",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Revolving Wilds",
 			"CMC": 0,
@@ -218547,6 +222073,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1mWPReAhwh2XPMIWFjG6F5awpSd2NBqFI",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Squirrel Surger;Nuts // Bolts*3",
 			"CMC": 0,
@@ -218625,6 +222152,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1OxgGKGhUUlrYIzML0CohKLpkfkAotp7g",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Squirrel Surger;Nuts // Bolts*3",
 			"CMC": 0,
@@ -218703,6 +222231,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1BB6lv-B53uoqD2bhetGpigo_dZ3cSY8E",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: undefined",
 			"CMC": 0,
@@ -218781,6 +222310,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1VqrEoDFy_aaY5E5OXBnSaB1kOfLDBiWx",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: ",
 			"CMC": 0,
@@ -218859,6 +222389,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1ZVS1JfXINTPl_sdS4A2i3__f4CPrZnp_",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Embellishing Angler",
 			"CMC": 0,
@@ -218937,6 +222468,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1Fzs3auAWiV32L2W097lENLMftTjArQ4L ",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Hellscube Rebalancing Team",
 			"CMC": 0,
@@ -219015,6 +222547,7 @@
 			"Image": "https://lh3.googleusercontent.com/d/1HCZ5qeLMUCTPZ_qcugbaJh3LwjSaqm0x",
 			"Creator": "",
 			"Set": "",
+			"Tags": "",
 			"isActualToken": true,
 			"Rulings": "Related cards: Elden Ring Boss // Elden Ring Boss, Phase Two // Cool Boss Weapon Token",
 			"CMC": 0,

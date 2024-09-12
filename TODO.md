@@ -6,19 +6,12 @@
 
 
 
-
-
 kongming's contraptions needs an HC appended to its name
 its contraptions are also not seperate cards in the XML
-
-{{phyrexian toymaker}}
 
 
 yellow sub
 
-
-
-Can't see the back side of {{bad cop}}
 
 
 loot hoarder

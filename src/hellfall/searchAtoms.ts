@@ -87,3 +87,4 @@ export const offsetAtom = atom(parseInt(searchParams.get("page") || "0") || 0);
 export const creatorsAtom = atom(
   searchParams.get("creator")?.split(",,") || []
 );
+export const tagsAtom = atom(searchParams.get("tags")?.split(",") || []);

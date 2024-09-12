@@ -4,6 +4,8 @@ import styled from "@emotion/styled";
 import { Heading, Text } from "@workday/canvas-kit-react/text";
 import { SetLegality } from "./SetLegality";
 import { stringToMana } from "./stringToMana";
+import { Pill } from "@workday/canvas-kit-preview-react/pill";
+import { Link } from "react-router-dom";
 export const HFCard = ({ data }: { data: HCEntry }) => {
   // wow what a weird ts bug
   const sideCount =
@@ -106,6 +108,19 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
                 <StyledHeading size="small">Rulings</StyledHeading>
                 {data["Rulings"]}
               </div>
+            </>
+          )}
+          {data.Tags && data.Tags !== "" && (
+            <>
+              <Text key="Tags">
+                Tags:{" "}
+                {data["Tags"].split(";").map((tagEntry) => (
+                  <Link key={tagEntry} to={"?tags=" + tagEntry} target="_blank">
+                    {tagEntry}
+                  </Link>
+                ))}
+              </Text>
+              <br />
             </>
           )}
           {data["tokens"] && (

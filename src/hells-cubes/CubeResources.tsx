@@ -16,11 +16,27 @@ export const CubeResources = () => {
       <h3>HC1/HLC</h3>
       <StyledLink to="one">Rules and quick links for weird cards</StyledLink>
 
-      <CubeResource key={"HLC"} cubeId={"HLC"} cards={cards}></CubeResource>
+      <CubeResource
+        key={"HLC"}
+        cubeId={"HLC"}
+        cards={cards}
+        tts={{
+          url: "https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113",
+          title: "TTS Plugin by Benana",
+        }}
+      ></CubeResource>
 
       <CubeResource key={"HC2"} cubeId={"HC2"} cards={cards}></CubeResource>
 
-      <CubeResource key={"HC3"} cubeId={"HC3"} cards={cards}></CubeResource>
+      <CubeResource
+        key={"HC3"}
+        cubeId={"HC3"}
+        cards={cards}
+        tts={{
+          url: "https://steamcommunity.com/sharedfiles/filedetails/?id=3309357076",
+          title: "TTS Plugin by Benana",
+        }}
+      ></CubeResource>
 
       <CubeResource key={"HC4"} cubeId={"HC4"} cards={cards}></CubeResource>
 
@@ -69,34 +85,40 @@ const Container = styled.div({ padding: "10px" });
 const CubeResource = ({
   cards,
   cubeId,
+  tts,
 }: {
   cubeId: string;
   cards: HCEntry[];
+  tts?: { url: string; title: string };
 }) => {
   const parsedCubeId =
     cubeId.replace("HC", "") === "HLC" ? 1 : parseInt(cubeId.replace("HC", ""));
   return (
     <div>
       <h3>{cubeId}</h3>
-      <button
-        onClick={() => {
-          const filtered = cards.filter((e) => e.Set === cubeId);
+      {tts ? (
+        <Link to={tts.url}>{tts.title}</Link>
+      ) : (
+        <button
+          onClick={() => {
+            const filtered = cards.filter((e) => e.Set === cubeId);
 
-          const val = toDeck(filtered);
-          const url =
-            "data:text/plain;base64," +
-            btoa(unescape(encodeURIComponent(JSON.stringify(val))));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          // the filename you want
-          a.download = `Hellscube ${parsedCubeId}.json`;
-          document.body.appendChild(a);
-          a.click();
-        }}
-      >
-        Download {cubeId} cube for TTS
-      </button>
+            const val = toDeck(filtered);
+            const url =
+              "data:text/plain;base64," +
+              btoa(unescape(encodeURIComponent(JSON.stringify(val))));
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            // the filename you want
+            a.download = `Hellscube ${parsedCubeId}.json`;
+            document.body.appendChild(a);
+            a.click();
+          }}
+        >
+          Download {cubeId} cube for TTS
+        </button>
+      )}
       <button
         onClick={() => {
           const val = toCockCube({

@@ -8,6 +8,7 @@ import { fetchDatabase } from "./fetchdatabase";
 
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
+const tagSet = new Set<string>();
 
 const main = async () => {
   const { data } = { data: await fetchDatabase() };
@@ -68,6 +69,9 @@ const main = async () => {
     });
 
     creatorSet.add(entry.Creator);
+    if (entry.Tags && entry.Tags !== "") {
+      entry.Tags.split(";").forEach((e) => tagSet.add(e));
+    }
 
     if (tokenMap[entry.Name]) {
       // Debug unused tokens
@@ -79,6 +83,7 @@ const main = async () => {
 
   const types = Array.from(typeSet);
   const creators = Array.from(creatorSet);
+  const tags = Array.from(tagSet);
 
   fs.writeFileSync(
     "./src/data/types.json",
@@ -104,6 +109,21 @@ const main = async () => {
             return -1;
           }
           return 1;
+        }),
+      },
+      null,
+      "\t"
+    )
+  );
+  fs.writeFileSync(
+    "./src/data/tags.json",
+    JSON.stringify(
+      {
+        data: tags.sort((a, b) => {
+          if (a > b) {
+            return 1;
+          }
+          return -1;
         }),
       },
       null,
