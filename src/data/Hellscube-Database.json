@@ -3569,7 +3569,7 @@
 			],
 			"Text Box": [
 				"Freeze the stack until the end of your next turn.",
-				"Afermath\\nCounter target spell.",
+				"Aftermath\\nCounter target spell.",
 				null,
 				null
 			],
@@ -5625,7 +5625,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "Blue",
+			"Color(s)": "",
 			"Cost": [
 				"",
 				null,
@@ -11955,7 +11955,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "Blue",
+			"Color(s)": "",
 			"Cost": [
 				"{0}",
 				null,
@@ -13269,7 +13269,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "White;Green",
+			"Color(s)": "",
 			"Cost": [
 				"",
 				null,
@@ -13654,7 +13654,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "White;Red",
+			"Color(s)": "",
 			"Cost": [
 				"",
 				null,
@@ -16590,7 +16590,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Riding the Dilu Horse Back the Other Way",
@@ -23486,7 +23493,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "mana-rock"
 		},
 		{
 			"Name": "Kyle from Grade 1",
@@ -23867,7 +23875,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "mana-rock"
 		},
 		{
 			"Name": "Mox Charger",
@@ -25066,7 +25075,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "mana-dork"
 		},
 		{
 			"Name": "Tire of Fortune",
@@ -28366,8 +28376,8 @@
 				null
 			],
 			"Text Box": [
-				"Create two 1/1 Gay creature tokens that are all colors.\\nSoulbond those tokens.",
-				"Destroy target creature.",
+				"Create two 1/1 Gay creature tokens that are all colors.\\nSoulbond those tokens.\\nFuse",
+				"Destroy target creature.\\nFuse",
 				null,
 				null
 			],
@@ -31474,7 +31484,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "mana-dork"
 		},
 		{
 			"Name": "Nether Portal",
@@ -38245,7 +38262,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "draw"
 		},
 		{
 			"Name": "Coconut Gun",
@@ -41435,7 +41459,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "mana-dork"
 		},
 		{
 			"Name": "Shiv Dragon",
@@ -44937,7 +44968,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "Red",
+			"Color(s)": "",
 			"Cost": [
 				"",
 				null,
@@ -45967,7 +45998,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "gx-ability"
 		},
 		{
 			"Name": "Ornithallid VMAX",
@@ -47085,7 +47117,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "gx-ability"
 		},
 		{
 			"Name": "Razaketh's Left",
@@ -48277,7 +48310,7 @@
 				null,
 				null
 			],
-			"Tags": "2dreadmaw"
+			"Tags": "2dreadmaw;clockwolf"
 		},
 		{
 			"Name": "Memnite with a Spark",
@@ -52133,7 +52166,7 @@
 			"Tags": ""
 		},
 		{
-			"Name": "Nearsight Adept // Farsight Adept // Whereever you Aresight Adept",
+			"Name": "Nearsight Adept // Farsight Adept // Wherever you Aresight Adept",
 			"Image": "https://lh3.googleusercontent.com/d/1-wuM2Ty2qZRtTgpZiSmkZUTgxtGpQUmV",
 			"Creator": "u/NautilusMain",
 			"Set": "HC2",
@@ -54738,7 +54771,7 @@
 				null,
 				null
 			],
-			"Tags": "sus"
+			"Tags": "sus;sus;sus"
 		},
 		{
 			"Name": "Pious Gravegoyf",
@@ -67160,7 +67193,7 @@
 			]
 		},
 		{
-			"Name": "Emperor Palapatine // The Senate",
+			"Name": "Emperor Palpatine // The Senate",
 			"Image": "https://lh3.googleusercontent.com/d/1JShH9dSf4XX_EeNqPliHVnfjGpG5go-9",
 			"Creator": "u/fishladdie",
 			"Set": "HC2",
@@ -70745,7 +70778,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 10,
-			"Color(s)": "Black",
+			"Color(s)": "White;Black",
 			"Cost": [
 				"{5}{B}",
 				"{3}{W}",
@@ -77901,7 +77934,7 @@
 			"Set": "HC2",
 			"Constructed": "Legal",
 			"Rulings": "",
-			"CMC": 2,
+			"CMC": 3,
 			"Color(s)": "Blue;Black",
 			"Cost": [
 				"{2}{U/B}",
@@ -80299,7 +80332,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Janky-Ass Hitbox",
@@ -82959,7 +82993,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "mana-rock"
 		},
 		{
 			"Name": "The Hills are Fucking Alive",
@@ -84489,7 +84524,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 5,
-			"Color(s)": "White; Blue",
+			"Color(s)": "White;Blue",
 			"Cost": [
 				"{3}{W}{U}",
 				null,
@@ -93921,7 +93956,7 @@
 				null,
 				null
 			],
-			"Tags": "2dreadmaw"
+			"Tags": "2dreadmaw;clockwolf"
 		},
 		{
 			"Name": "Zombie of Theros",
@@ -94829,7 +94864,7 @@
 			],
 			"Text Box": [
 				"Each player discards their hands then draws seven cards. \\n Fuse",
-				"Wheel costs {3} less to cast. \\n If it's your turn, end the turn.",
+				"Wheel costs {3} less to cast. \\n If it's your turn, end the turn.\\nFuse",
 				null,
 				null
 			],
@@ -106004,7 +106039,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "Red;Blue",
+			"Color(s)": "",
 			"Cost": [
 				"",
 				null,
@@ -109387,8 +109422,8 @@
 				null
 			],
 			"Text Box": [
-				"Scry 1. Draw a card.",
-				"Scry 1. Draw a card.",
+				"Scry 1. Draw a card.\\nFuse",
+				"Scry 1. Draw a card.\\nFuse",
 				null,
 				null
 			],
@@ -109690,8 +109725,8 @@
 				null
 			],
 			"Text Box": [
-				"Cards in your hand gain cycling {2} until end of turn.",
-				"Cards in your hand gain madness until end of turn. Their madness cost is equal to their mana cost reduced by {1}.",
+				"Cards in your hand gain cycling {2} until end of turn.\\nFuse",
+				"Cards in your hand gain madness until end of turn. Their madness cost is equal to their mana cost reduced by {1}.\\nFuse",
 				null,
 				null
 			],
@@ -114512,7 +114547,26 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Loyalty": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Text Box": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "clockwolf"
 		},
 		{
 			"Name": "Syr Honks-a-lot",
@@ -116544,7 +116598,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 2,
-			"Color(s)": "White",
+			"Color(s)": "",
 			"Cost": [
 				"{X}{W}{W}",
 				null,
@@ -116602,7 +116656,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "White",
+			"Color(s)": "",
 			"Cost": [
 				"",
 				null,
@@ -119514,7 +119568,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "mana-rock"
 		},
 		{
 			"Name": "Batterskull's Apartment",
@@ -120180,7 +120235,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 2,
-			"Color(s)": "",
+			"Color(s)": "White;Blue",
 			"Cost": [
 				"{W/U}{W/U}",
 				null,
@@ -122803,7 +122858,7 @@
 			"Creator": "Askedforit",
 			"Set": "HC3",
 			"Constructed": "Legal",
-			"Rulings": "Sparta's full madness text is \"If you discard this card, discard it into exile. When you do, you may pay [madness cost]. If you do, put it onto the battlefield. Otherwise, put it into your graveyard.\" Yes, you can stifle it. No, you cannot counterspell it. - raccrow",
+			"Rulings": "Sparta's full madness text is \"If you discard this card, discard it into exile. When you do, you may pay [madness cost]. If you do, put it onto the battlefield. Otherwise, put it into your graveyard.\" Yes, you can stifle it. No, you cannot counterspell it.- raccrow 2024-08-09",
 			"CMC": 0,
 			"Color(s)": "",
 			"Cost": [
@@ -127625,7 +127680,7 @@
 			"Constructed": "Legal",
 			"Rulings": "",
 			"CMC": 7,
-			"Color(s)": "Green",
+			"Color(s)": "Blue;Black;Red;Green",
 			"Cost": [
 				"{2}{G}",
 				"{1}{U}",
@@ -133542,7 +133597,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "mana-rock"
 		},
 		{
 			"Name": "The Entirety of Moby Dick",
@@ -134071,7 +134133,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Ball Torture",
@@ -145559,7 +145622,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "Black",
+			"Color(s)": "",
 			"Cost": [
 				"",
 				null,
@@ -148563,31 +148626,31 @@
 			],
 			"Subtype(s)": [
 				"",
-				null,
+				"",
 				null,
 				null
 			],
 			"power": [
 				"",
-				null,
+				"",
 				null,
 				null
 			],
 			"toughness": [
 				"",
-				null,
+				"",
 				null,
 				null
 			],
 			"Loyalty": [
 				"",
-				null,
+				"",
 				null,
 				null
 			],
 			"Text Box": [
 				"Creatures your opponents control get -2/-2 until end of turn.",
-				null,
+				"Aftermath (Cast this spell only from your graveyard. Then exile it.)\\nOther creatures you control get +2/+2.",
 				null,
 				null
 			],
@@ -150568,7 +150631,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "Blue",
+			"Color(s)": "",
 			"Cost": [
 				"",
 				null,
@@ -157305,7 +157368,7 @@
 			]
 		},
 		{
-			"Name": "Girl",
+			"Name": "Girll",
 			"Image": "https://lh3.googleusercontent.com/d/1nPMCxp-N9I7bKNSuVuUuPClX97q7ji0u",
 			"Creator": "batterymilker",
 			"Set": "HC4",
@@ -160169,7 +160232,7 @@
 				null,
 				null
 			],
-			"Tags": "2dreadmaw"
+			"Tags": "2dreadmaw;clockwolf"
 		},
 		{
 			"Name": "Quitterblossom",
@@ -161384,7 +161447,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "draw"
 		},
 		{
 			"Name": "Mox Scuby",
@@ -162928,7 +162998,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "board-wipe"
 		},
 		{
 			"Name": "Bald Horde",
@@ -164842,7 +164919,7 @@
 		{
 			"Name": "Skeleton Ship (hc)",
 			"Image": "https://lh3.googleusercontent.com/d/1VceQK9IJw6EA5YnBj_6O4Ib0CVfbPaTu",
-			"Creator": "munkegutz",
+			"Creator": "MunkeGutz",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -164906,7 +164983,7 @@
 		{
 			"Name": "Curse of Loaches // Loaching Lurker",
 			"Image": "https://lh3.googleusercontent.com/d/1fSy648DljHzn91MFWioAh3037o3ibAdg",
-			"Creator": "munkegutz",
+			"Creator": "MunkeGutz",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -166545,7 +166622,7 @@
 		{
 			"Name": "Land of ______ and ______",
 			"Image": "https://lh3.googleusercontent.com/d/1nDxy_08rcD9899FmsEdoQLL4O8N_IgAy",
-			"Creator": "munkegutz",
+			"Creator": "MunkeGutz",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -166791,7 +166868,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "mana-rock"
 		},
 		{
 			"Name": "Beach that Makes You Old",
@@ -168688,7 +168766,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Seal of Imperial",
@@ -168816,7 +168901,7 @@
 		{
 			"Name": "Gopper",
 			"Image": "https://lh3.googleusercontent.com/d/1WbFUOqpVebLcSrpoZKuvJPo-6xR1bTGE",
-			"Creator": "munkegutz",
+			"Creator": "MunkeGutz",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -168939,7 +169024,7 @@
 		{
 			"Name": "Jace, Delver of Secrets",
 			"Image": "https://lh3.googleusercontent.com/d/1G1EUnEQAoqdpqUWk3kgGtMu03JxVH7yB",
-			"Creator": "munkegutz",
+			"Creator": "MunkeGutz",
 			"Set": "HC4",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -172624,7 +172709,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "draw"
 		},
 		{
 			"Name": "Jace, the Body Sculptor",
@@ -178169,7 +178261,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "gx-ability"
 		},
 		{
 			"Name": "Suddenly Siege Warfare",
@@ -179493,7 +179592,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "draw"
 		},
 		{
 			"Name": "Izzet Lecture Hall",
@@ -180091,7 +180191,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "piper"
 		},
 		{
 			"Name": "Ms. Fizzle, Opportunistic Educator",
@@ -180343,7 +180450,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "modal"
 		},
 		{
 			"Name": "Prampart, Skampart Wampart",
@@ -180776,7 +180883,7 @@
 				null
 			],
 			"Flavor Text": [
-				"Take a trip into the world of Mr. Domino.\\nno one can stop...",
+				"Take a trip into the world of Mr. Domino.\\nNo one can stop...",
 				null,
 				null,
 				null
@@ -181200,7 +181307,7 @@
 				null
 			],
 			"Text Box": [
-				"{U}{B}{R}, {T}: Double all combat damage that would be delat this turn.",
+				"{U}{B}{R}, {T}: Double all combat damage that would be dealt this turn.",
 				null,
 				null,
 				null
@@ -182196,7 +182303,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "masterpiece"
 		},
 		{
 			"Name": "Dante Alighieri",
@@ -182574,7 +182682,7 @@
 		{
 			"Name": "Tribuvore",
 			"Image": "https://lh3.googleusercontent.com/d/1fJscr4ncYq8kuVtmdy2anl9DgCtVO7QM",
-			"Creator": "munkegutz",
+			"Creator": "MunkeGutz",
 			"Set": "HC6",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -182634,7 +182742,7 @@
 				null,
 				null
 			],
-			"Tags": "commander tax matters;commander-tax-matters"
+			"Tags": "commander-tax-matters"
 		},
 		{
 			"Name": "Red Seal",
@@ -182827,7 +182935,7 @@
 				null,
 				null
 			],
-			"Tags": "removal"
+			"Tags": "removal;board-wipe;masterpiece;masterpiece"
 		},
 		{
 			"Name": "HC6: Gas Lights",
@@ -183388,7 +183496,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "masterpiece"
 		},
 		{
 			"Name": "Utopia",
@@ -183692,7 +183807,7 @@
 				null,
 				null
 			],
-			"Tags": "draw"
+			"Tags": "draw;masterpiece"
 		},
 		{
 			"Name": "Squire",
@@ -184008,7 +184123,7 @@
 				null,
 				null
 			],
-			"Tags": "removal"
+			"Tags": "removal;modal"
 		},
 		{
 			"Name": "Fiish",
@@ -184196,7 +184311,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "The Squadron Hawk",
@@ -184505,7 +184627,7 @@
 				null,
 				null
 			],
-			"Tags": "draw"
+			"Tags": "draw;tutor"
 		},
 		{
 			"Name": "Exceptionally Heavy Bird",
@@ -184757,7 +184879,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "board-wipe"
 		},
 		{
 			"Name": "Where joke",
@@ -184876,7 +184999,7 @@
 				null
 			],
 			"Text Box": [
-				"Assist\\nDestroy target permanet. Its controller may search their library for a basic land card, put it onto the battlefield, then shuffle. Each other player creates a tapped Wastes.",
+				"Assist\\nDestroy target permanent. Its controller may search their library for a basic land card, put it onto the battlefield, then shuffle. Each other player creates a tapped Wastes.",
 				null,
 				null,
 				null
@@ -185631,11 +185754,18 @@
 				null
 			],
 			"Text Box": [
-				"While buildingy our deck, fill in up to three of the boxes on this card. You cannot change the drop-down lists this way. This spell costs {1} less to cast for each box filled this way.\\nSearch your library for a Type, Colors, and Mana Value card, reveal it, put it into yoru hand, then shuffle.",
+				"While building our deck, fill in up to three of the boxes on this card. You cannot change the drop-down lists this way. This spell costs {1} less to cast for each box filled this way.\\nSearch your library for a Type, Colors, and Mana Value card, reveal it, put it into yoru hand, then shuffle.",
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "tutor"
 		},
 		{
 			"Name": "Riot grrrl",
@@ -185888,7 +186018,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Handle Without Care",
@@ -186076,7 +186213,7 @@
 				null,
 				null
 			],
-			"Tags": "1dreadmaw"
+			"Tags": "1dreadmaw;tap-source"
 		},
 		{
 			"Name": "Yeast Within",
@@ -186199,14 +186336,7 @@
 				null,
 				null,
 				null
-			],
-			"Flavor Text": [
-				"",
-				null,
-				null,
-				null
-			],
-			"Tags": "removal"
+			]
 		},
 		{
 			"Name": "Animate Player",
@@ -186820,7 +186950,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "masterpiece"
 		},
 		{
 			"Name": "Error of the Peaks",
@@ -186888,7 +187025,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 2,
-			"Color(s)": "Black;Green",
+			"Color(s)": "Black",
 			"Cost": [
 				"{B}{B}",
 				null,
@@ -187243,7 +187380,7 @@
 				null
 			],
 			"Text Box": [
-				"Companion — Yoaur commander has partner but doesn't have a partner :(\\nIf this card is your companion, choose a color and add it to your commander's identity.\\nThis artifact enters the battlefield as a copy of any creatuer an opponent controls, except it's a noncreature artifact.",
+				"Companion — Your commander has partner but doesn't have a partner :(\\nIf this card is your companion, choose a color and add it to your commander's identity.\\nThis artifact enters the battlefield as a copy of any creature an opponent controls, except it's a noncreature artifact.",
 				null,
 				null,
 				null
@@ -187428,7 +187565,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "board-wipe;draw"
 		},
 		{
 			"Name": "The Splash Zone",
@@ -187674,7 +187818,7 @@
 				null,
 				null
 			],
-			"Tags": "removal"
+			"Tags": "removal;voting"
 		},
 		{
 			"Name": "Saint Traft // Geist of Saint Traft",
@@ -188622,7 +188766,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Pin Your Overdue Parking on Someone",
@@ -188686,7 +188837,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Shoot at the Sun",
@@ -188750,7 +188902,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Elder Highland Wurm",
@@ -188814,7 +188967,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Big Ass Fucking Myr Enforcer",
@@ -189000,7 +189154,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Chris Cocks, Hasbro CEO",
@@ -189366,7 +189521,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "board-wipe"
 		},
 		{
 			"Name": "Shock Value",
@@ -189780,11 +189942,18 @@
 				null
 			],
 			"Text Box": [
-				"Lore (A commander with Partner can have one Lore as their second commander.)\\nWhen Does Life For A Drunk Driving Incident enters the battlefield, destory up to 4 target creatures.\\nCommander creatures you own cannot attack or block.",
+				"Lore (A commander creature with Partner can have one Lore as their second commander.)\\nWhen Does Life For A Drunk Driving Incident enters the battlefield, destory up to 4 target creatures.\\nCommander creatures you own cannot attack or block.",
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal;removal"
 		},
 		{
 			"Name": "Honk Honk",
@@ -190222,7 +190391,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "1d6",
@@ -190280,7 +190456,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "modal"
 		},
 		{
 			"Name": "TRIUMPH OF THE PROLETARIAT",
@@ -190406,7 +190589,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 0,
-			"Color(s)": "",
+			"Color(s)": "White",
 			"Cost": [
 				"",
 				null,
@@ -190454,7 +190637,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal;masterpiece"
 		},
 		{
 			"Name": "Bodystorm",
@@ -190583,7 +190773,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "board-wipe"
 		},
 		{
 			"Name": "Asymmetry Sage",
@@ -191130,7 +191320,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "modal"
 		},
 		{
 			"Name": "Getting the Band [Back] Together",
@@ -191246,7 +191436,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "masterpiece"
 		},
 		{
 			"Name": "Basal Thrull rod",
@@ -191374,7 +191571,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Karona Outbreak",
@@ -191619,7 +191817,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "removal"
 		},
 		{
 			"Name": "HC6: Pot of Greend",
@@ -191677,7 +191875,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "masterpiece"
 		},
 		{
 			"Name": "The Cafeteria",
@@ -191740,7 +191945,7 @@
 		{
 			"Name": "Giraffe",
 			"Image": "https://lh3.googleusercontent.com/d/1vZvEsO49lDR0sh-uX2b9RqcjlI8lmHkM",
-			"Creator": "munkegutz",
+			"Creator": "MunkeGutz",
 			"Set": "HC6",
 			"Constructed": "Banned",
 			"Rulings": "",
@@ -191793,7 +191998,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "lifegain"
 		},
 		{
 			"Name": "Wiimote",
@@ -191851,7 +192063,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "HC6: Purple Pip Picker",
@@ -192574,7 +192793,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Stack Overflow",
@@ -192941,7 +193167,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal;removal"
 		},
 		{
 			"Name": "Dryad Tag-team",
@@ -193063,7 +193296,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Oops I dropped all my bones",
@@ -193185,7 +193419,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Germa, Germiest Germ",
@@ -193435,7 +193670,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal;removal"
 		},
 		{
 			"Name": "Watergate (hc6)",
@@ -193627,7 +193863,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "ramp"
 		},
 		{
 			"Name": "Mana Fixer-Upper",
@@ -194485,7 +194722,7 @@
 				null,
 				null
 			],
-			"Tags": "3dreadmaw"
+			"Tags": "3dreadmaw;removal"
 		},
 		{
 			"Name": "Loicense Inspector",
@@ -194793,7 +195030,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal;masterpiece"
 		},
 		{
 			"Name": "Sow Discord",
@@ -194847,7 +195085,7 @@
 				null
 			],
 			"Text Box": [
-				"Before the start of the game, for each opponent, you ma secretly mesasge them an opponent's name. If you only messaged a single player, they are your conspirator.\\n(Players may bluff, but can't screenshot secrets.)\\nWhen any opponent has 20 or less life for the first time, reveal your messages. If that player is the name you sent to your conspirator, you and your conspirator each draw a card.",
+				"Before the start of the game, for each opponent, you may secretly mesasge them an opponent's name. If you only messaged a single player, they are your conspirator.\\n(Players may bluff, but can't screenshot secrets.)\\nWhen any opponent has 20 or less life for the first time, reveal your messages. If that player is the name you sent to your conspirator, you and your conspirator each draw a card.",
 				null,
 				null,
 				null
@@ -194916,7 +195154,7 @@
 				null,
 				null
 			],
-			"Tags": "7dreadmaw;4dreadmaw"
+			"Tags": "7dreadmaw;4dreadmaw;masterpiece"
 		},
 		{
 			"Name": "Half-Thriving ____ Half-Thriving ____",
@@ -194974,7 +195212,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "thriving-land"
 		},
 		{
 			"Name": "Wormthing",
@@ -196127,7 +196372,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Memory Lapse (Not the Homelands One)",
@@ -196203,7 +196455,7 @@
 			"CMC": 2,
 			"Color(s)": "White",
 			"Cost": [
-				"{1}{U}",
+				"{1}{W}",
 				null,
 				null,
 				null
@@ -196255,7 +196507,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "I'll Make My Own Cube, with Blackjack and Henzie",
@@ -196371,7 +196624,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "The British Empire",
@@ -196865,7 +197125,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "The Mysterious Case of Who Shit My Pants",
@@ -197161,7 +197428,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "The MH3 Limited Experience",
@@ -197335,7 +197603,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Prismatic Pardner",
@@ -197896,7 +198171,7 @@
 			"Creator": "enchantmen",
 			"Set": "HC6",
 			"Constructed": "Banned",
-			"Rulings": "",
+			"Rulings": "Target opponent chooses whether to pay a mana (of any type and color) or 2 life. If they pay 2 life, you gain 2 life. If they pay a mana, you add a mana of that color and type to your mana pool- mweepigeon 2024-09-09\nFor the sake of pip picking, the phyrexian pip is a colorless phyrexian mana pip- mweepigeon 2024-09-09",
 			"CMC": null,
 			"Color(s)": "",
 			"Cost": [
@@ -198325,7 +198600,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "modal"
 		},
 		{
 			"Name": "Kenrith's Untransformation",
@@ -198383,7 +198658,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Perfectly Balanced for Commander",
@@ -198395,7 +198677,7 @@
 			"CMC": 4,
 			"Color(s)": "Green",
 			"Cost": [
-				"{3}{G}",
+				"{3}{4}",
 				null,
 				null,
 				null
@@ -198685,7 +198967,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "board-wipe"
 		},
 		{
 			"Name": "Involving Wilds",
@@ -198865,7 +199154,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Light Confidant",
@@ -198987,7 +199283,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Discount Mox Box",
@@ -199115,7 +199418,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Reef Ouroboros",
@@ -199285,7 +199589,7 @@
 				null
 			],
 			"Text Box": [
-				"Creatures that could destroy Tyler in a fight are Robots. Creatures he could destroy are Clowns. (They keep other types.)\\nWhen Tyler attacks, he gains toxic until end of turn for each clown attacking with him and each bot on the enemy team.\\n{R}: Sspect target Robot or goad target Clown.",
+				"Creatures that could destroy Tyler in a fight are Robots. Creatures he could destroy are Clowns. (They keep other types.)\\nWhen Tyler attacks, he gains toxic until end of turn for each clown attacking with him and each bot on the enemy team.\\n{R}: Suspect target Robot or goad target Clown.",
 				null,
 				null,
 				null
@@ -199649,7 +199953,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Tivadar, Enraged",
@@ -199713,7 +200018,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Gotta Catch 'Em All",
@@ -200249,7 +200555,7 @@
 				null
 			],
 			"Text Box": [
-				"You may draw from yoru Squirel deck. (Your Squirrel deck is a deck with an infinite amount of {0} 0/1 Squirrel creature tokens in it. Drawing from your Squirrel deck replaces your normal draw.)",
+				"You may draw from your Squirel deck. (Your Squirrel deck is a deck with an infinite amount of {0} 0/1 Squirrel creature tokens in it. Drawing from your Squirrel deck replaces your normal draw.)",
 				null,
 				null,
 				null
@@ -200667,11 +200973,18 @@
 				null
 			],
 			"Text Box": [
-				"Each creature'ss skeleton mutates on top of it. (Their skeletons are 0/1 black Skeleton creatures with fear and \"This creature can't attack or block.\")",
+				"Each creature's skeleton mutates on top of it. (Their skeletons are 0/1 black Skeleton creatures with fear and \"This creature can't attack or block.\")",
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "board-wipe"
 		},
 		{
 			"Name": "Hike to The Moon",
@@ -200787,7 +201100,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Azusa and Regal Bunnicorn",
@@ -201153,7 +201473,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "modal"
 		},
 		{
 			"Name": "Penisless Blunderer",
@@ -202369,7 +202696,7 @@
 				null
 			],
 			"Text Box": [
-				"Provoke\\nCreatures your opponents control have \"Enrage — Whenever this creatuer is dealt damage, it deals 1 damage to its controller\"\\nWhenever one or more creatures your opponents control become enraged, exile the top card of your library. Until the end of your next turn, you may play that card",
+				"Provoke\\nCreatures your opponents control have \"Enrage — Whenever this creature is dealt damage, it deals 1 damage to its controller\"\\nWhenever one or more creatures your opponents control become enraged, exile the top card of your library. Until the end of your next turn, you may play that card",
 				null,
 				null,
 				null
@@ -202675,7 +203002,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Alabastard Leech",
@@ -202791,7 +203125,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Ornithopt",
@@ -202919,7 +203260,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "NOW DRAW HER GIVING BIRTH",
@@ -203169,7 +203511,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Cubone",
@@ -203413,7 +203756,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Parasitic Sliver",
@@ -203901,7 +204245,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Cloudy With a Chance of Meatballs",
@@ -203911,7 +204256,7 @@
 			"Constructed": "Banned",
 			"Rulings": "",
 			"CMC": 1,
-			"Color(s)": "Blue:Green",
+			"Color(s)": "Blue;Green",
 			"Cost": [
 				"{G/U}",
 				null,
@@ -203973,7 +204318,7 @@
 			"Creator": "gramofone",
 			"Set": "HC6",
 			"Constructed": "Banned",
-			"Rulings": "Sparta's full madness text is \"If you discard this card, discard it into exile. When you do, you may pay [madness cost]. If you do, put it onto the battlefield. Otherwise, put it into your graveyard.\" Yes, you can stifle it. No, you cannot counterspell it. - raccrow",
+			"Rulings": "Sparta's full madness text is \"If you discard this card, discard it into exile. When you do, you may pay [madness cost]. If you do, put it onto the battlefield. Otherwise, put it into your graveyard.\" Yes, you can stifle it. No, you cannot counterspell it.- raccrow 2024-08-09",
 			"CMC": null,
 			"Color(s)": "",
 			"Cost": [
@@ -204326,7 +204671,7 @@
 				null,
 				null
 			],
-			"Tags": ""
+			"Tags": "removal"
 		},
 		{
 			"Name": "Give In",
@@ -204455,7 +204800,7 @@
 				null,
 				null
 			],
-			"Tags": "1dreadmaw"
+			"Tags": "1dreadmaw;removal"
 		},
 		{
 			"Name": "Octodad",
@@ -206076,7 +206421,14 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Flavor Text": [
+				"",
+				null,
+				null,
+				null
+			],
+			"Tags": "removal"
 		},
 		{
 			"Name": "Tribute Artist",
@@ -206559,7 +206911,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "burn"
 		},
 		{
 			"Name": "Ask Calmly",
@@ -206577,13 +206930,13 @@
 				null
 			],
 			"Supertype(s)": [
-				"",
+				"Kindred",
 				null,
 				null,
 				null
 			],
 			"Card Type(s)": [
-				"Kindred;Instant",
+				"Instant",
 				null,
 				null,
 				null
@@ -206613,7 +206966,7 @@
 				null
 			],
 			"Text Box": [
-				"Each opponent may have you draw a card. For each who didn't, pu two +1/+1 and a double strike counters on up to one creature.",
+				"Each opponent may have you draw a card. For each who didn't, put two +1/+1 and a double strike counters on up to one creature.",
 				null,
 				null,
 				null
@@ -206623,7 +206976,8 @@
 				null,
 				null,
 				null
-			]
+			],
+			"Tags": "voting"
 		},
 		{
 			"Name": "Malicious Microtransactor",
@@ -208095,7 +208449,7 @@
 		{
 			"Name": "MC Bogardan Hammer",
 			"Image": "https://lh3.googleusercontent.com/d/1lP_wBfEBcgHF9LTnZgVNeF_wa-ovyuHb",
-			"Creator": "llllll______",
+			"Creator": "llllll",
 			"Set": "HC6",
 			"Constructed": "Banned",
 			"Rulings": "",

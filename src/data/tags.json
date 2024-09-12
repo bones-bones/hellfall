@@ -14,12 +14,23 @@
 		"board-wipe",
 		"burn",
 		"cat",
-		"commander tax matters",
+		"clockwolf",
 		"commander-tax-matters",
 		"draw",
+		"gx-ability",
+		"lifegain",
+		"mana-dork",
+		"mana-rock",
+		"masterpiece",
+		"modal",
+		"piper",
 		"ramp",
 		"removal",
 		"storm-crow",
-		"sus"
+		"sus",
+		"tap-source",
+		"thriving-land",
+		"tutor",
+		"voting"
 	]
 }
