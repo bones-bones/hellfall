@@ -75,10 +75,10 @@ export const specialCards: Card[] = [
     path: "/death-seeker",
     name: "Deathseeker",
     component: (
-      <>
-        <HellsCard queryString={`oracle:"when+~+dies"`} key="1" />
-        <HellsCard queryString={`oracle:"when+~+dies"`} key="2" />
-      </>
+      <div key="deathseeker">
+        <HellsCard queryString={`oracle:"when+~+dies" t:creature`} key="1" />
+        <HellsCard queryString={`oracle:"when+~+dies" t:creature`} key="2" />
+      </div>
     ),
   },
   { path: "/storm-storm", name: "Stormstorm", component: <Stormstorm /> },

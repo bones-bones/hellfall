@@ -1,6 +1,6 @@
 import { sheetsKey } from "../../keys";
 import fs from "fs";
-export const fetchLandBox = async () => {
+const fetchLandBox = async () => {
   const requestedData = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/1SCimlp656sQeRXudjcbC6xlqyLQoZcPl0rZKJ9J_CZc/values/Lands?alt=json&key=${sheetsKey}`
   );

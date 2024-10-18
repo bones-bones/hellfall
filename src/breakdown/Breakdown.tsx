@@ -16,6 +16,7 @@ import {
 import { HFCard } from "../hellfall/HFCard";
 import { activeCardAtom } from "../hellfall/searchAtoms";
 import { getColorIdentity } from "../hellfall/getColorIdentity";
+import { canBeACommander } from "../hellfall/canBeACommander";
 export const Breakdown = () => {
   const cards = useAtomValue(cardsAtom).filter((e) => e.Set === "HC6");
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
@@ -34,12 +35,7 @@ export const Breakdown = () => {
   }, {});
 
   const canBeCommander = cards
-    .filter(
-      (e) =>
-        (e["Supertype(s)"]?.includes("Legendary") &&
-          e["Card Type(s)"].includes("Creature")) ||
-        e["Text Box"]?.includes("can be your commander")
-    )
+    .filter((e) => canBeACommander(e))
     .reduce<Record<string, HCEntry[]>>(
       (curr, next) => {
         const colorSet = Array.from(

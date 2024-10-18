@@ -11,12 +11,10 @@ import { Decks } from "./decks/Decks";
 
 export const App = () => {
   return (
-    <div>
-      <BrowserRouter basename="hellfall">
-        <Header />
-        <ApplicationRoutes />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter basename="hellfall">
+      <Header />
+      <ApplicationRoutes />
+    </BrowserRouter>
   );
 };
 

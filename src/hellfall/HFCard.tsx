@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { Heading, Text } from "@workday/canvas-kit-react/text";
 import { SetLegality } from "./SetLegality";
 import { stringToMana } from "./stringToMana";
-import { Pill } from "@workday/canvas-kit-preview-react/pill";
+
 import { Link } from "react-router-dom";
 export const HFCard = ({ data }: { data: HCEntry }) => {
   // wow what a weird ts bug
@@ -155,11 +155,15 @@ const Container = styled.div({
   display: "flex",
   flexDirection: "column",
   fontSize: "16px",
+  justifyContent: "center",
 });
 
 const ItalicText = styled(Text)({ fontStyle: "italic" });
 
-const ImageContainer = styled.div({ overflowX: "auto" });
+const ImageContainer = styled.div({
+  overflowX: "auto",
+  width: "fit-content",
+});
 const StyledHeading = styled(Heading)({
   marginTop: "0px",
   marginBottom: "10px",

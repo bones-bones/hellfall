@@ -33,18 +33,20 @@ export const HellsCube = () => {
             </>
           }
         />
-        {specialCards.map((entry) => (
-          <Route
-            key={entry.path}
-            path={entry.path}
-            element={
-              <>
-                <h3>{entry.name}</h3>
-                {entry.component}
-              </>
-            }
-          />
-        ))}
+        {specialCards.map((entry) => {
+          return (
+            <Route
+              key={entry.path}
+              path={entry.path}
+              element={
+                <>
+                  <h3>{entry.name}</h3>
+                  {entry.component}
+                </>
+              }
+            />
+          );
+        })}
       </Routes>
     </>
   );

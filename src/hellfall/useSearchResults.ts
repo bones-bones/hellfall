@@ -23,6 +23,7 @@ import {
 } from "./searchAtoms";
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
+import { canBeACommander } from "./canBeACommander";
 
 export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCEntry[]>([]);
@@ -109,11 +110,7 @@ export const useSearchResults = () => {
         }
 
         if (isCommander === true) {
-          if (
-            (!entry["Supertype(s)"]?.[0]?.includes("Legendary") ||
-              !entry["Card Type(s)"][0]?.includes("Creature")) &&
-            !entry["Text Box"]?.[0]?.includes("can be your commander")
-          ) {
+          if (!canBeACommander(entry)) {
             return false;
           }
         }
