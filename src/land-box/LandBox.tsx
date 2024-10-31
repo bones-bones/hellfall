@@ -6,50 +6,79 @@ import { useState } from "react";
 export const LandBox = () => {
   const lands = useLands();
   const [active, setActive] = useState<undefined | Land>();
+  const [activeSet, setActiveSet] = useState("HC4");
 
-  const grouped = lands.reduce<Record<Land["Type"], Land[]>>((curr, next) => {
-    if (curr[next.Type]) {
-      curr[next.Type] = [...curr[next.Type], next];
-    } else {
-      curr[next.Type] = [next];
-    }
+  const grouped = lands
+    .filter((e) => e.Set === activeSet)
+    .reduce<Record<Land["Type"], Land[]>>((curr, next) => {
+      if (curr[next.Type]) {
+        curr[next.Type] = [...curr[next.Type], next];
+      } else {
+        curr[next.Type] = [next];
+      }
 
-    return curr;
-  }, {} as any);
+      return curr;
+    }, {} as any);
 
   return (
     <>
       <h1>Need some lands? grab some from the land box</h1>
+      <div>
+        set:{" "}
+        <select
+          defaultValue={activeSet}
+          onChange={(e) => {
+            setActiveSet(e.target.value);
+          }}
+        >
+          <option>HC4</option>
+          <option>Old</option>
+        </select>
+      </div>
       {active && (
         <BigView clear={() => setActive(undefined)} land={active}></BigView>
       )}
       <Container>
-        {Object.entries(grouped).map(([type, values], j) => {
-          return (
-            <CardsContainer key={j}>
-              <StyledH2>{type}</StyledH2>
+        {Object.entries(grouped)
+          .sort((a, b) => {
+            let aVal = 0;
+            let bVal = 0;
+            if (a[0].includes("Snow")) {
+              aVal += 10;
+            }
+            if (b[0].includes("Snow")) {
+              bVal += 10;
+            }
+            const alphaSort = a[0] > b[0] ? 1 : -1;
 
-              {values
-                .sort((a, b) => {
-                  if (getRarityNumber(a.Rarity) < getRarityNumber(b.Rarity)) {
-                    return 1;
-                  }
-                  return -1;
-                })
-                .map((entry, i) => {
-                  return (
-                    <LandImageContainer
-                      land={entry}
-                      key={i}
-                      onClick={() => {
-                        setActive(entry);
-                      }}
-                    />
-                  );
-                })}
-            </CardsContainer>
-          );
-        })}
+            return aVal + alphaSort > bVal ? 1 : -1;
+          })
+          .map(([type, values], j) => {
+            return (
+              <CardsContainer key={j}>
+                <StyledH2>{type}</StyledH2>
+
+                {values
+                  .sort((a, b) => {
+                    if (getRarityNumber(a.Rarity) < getRarityNumber(b.Rarity)) {
+                      return 1;
+                    }
+                    return -1;
+                  })
+                  .map((entry, i) => {
+                    return (
+                      <LandImageContainer
+                        land={entry}
+                        key={i}
+                        onClick={() => {
+                          setActive(entry);
+                        }}
+                      />
+                    );
+                  })}
+              </CardsContainer>
+            );
+          })}
       </Container>
     </>
   );

@@ -12,17 +12,21 @@ export const createCockCube = () => {
     { id: "HC4", name: "Hellscube 4" },
     { id: "HC6", name: "Hellscube 6" },
   ]) {
+    //@ts-ignore
     const cardsForSet = data.data.filter((entry) => entry.Set === set.id);
     //@ts-ignore
     const cards = cardsForSet.map(toCard);
 
     const tokensForCube = tokens.data.filter(
       (entry) =>
+        //@ts-ignore
         !!data.data.find((card) => {
+          //@ts-ignore
           return entry["Related Cards (Read Comment)"].includes(card.Name);
         })
     );
     const combined = cards.concat(
+      //@ts-ignore
       tokensForCube.map((e) => tokenToCard(e, set.id))
     );
 
