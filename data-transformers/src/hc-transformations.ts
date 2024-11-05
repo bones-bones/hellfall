@@ -5,6 +5,7 @@ import { Token, TokenForImport } from "./types";
 import { tokenToCard } from "./tokenToCard";
 import { fetchTokens } from "./fetchTokens";
 import { fetchDatabase } from "./fetchdatabase";
+import { fetchUsernameMappings } from "./fetchUsernameMapping";
 
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
@@ -12,6 +13,9 @@ const tagSet = new Set<string>();
 
 const main = async () => {
   const { data } = { data: await fetchDatabase() };
+  const usernameMappings = await fetchUsernameMappings();
+
+  console.log(usernameMappings);
 
   const tokens = await fetchTokens();
   const tokensWithBetterName = tokens.map((e) => {
@@ -68,7 +72,22 @@ const main = async () => {
       }
     });
 
+    const usernameMappingEntries = Object.entries(usernameMappings);
+
+    replaceLoop: for (const [
+      replacementName,
+      oldNames,
+    ] of usernameMappingEntries) {
+      for (const oldName of oldNames) {
+        if (entry.Creator.split(";").includes(oldName)) {
+          entry.Creator = entry.Creator.replace(oldName, replacementName);
+          break replaceLoop;
+        }
+      }
+    }
+
     creatorSet.add(entry.Creator);
+
     if (entry.Tags && entry.Tags !== "") {
       entry.Tags.split(";").forEach((e) => tagSet.add(e));
     }
