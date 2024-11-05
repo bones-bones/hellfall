@@ -15,8 +15,6 @@ const main = async () => {
   const { data } = { data: await fetchDatabase() };
   const usernameMappings = await fetchUsernameMappings();
 
-  console.log(usernameMappings);
-
   const tokens = await fetchTokens();
   const tokensWithBetterName = tokens.map((e) => {
     const {
