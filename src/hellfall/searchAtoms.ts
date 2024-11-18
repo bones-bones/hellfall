@@ -88,3 +88,7 @@ export const creatorsAtom = atom(
   searchParams.get("creator")?.split(",,") || []
 );
 export const tagsAtom = atom(searchParams.get("tags")?.split(",") || []);
+
+export const extraFiltersAtom = atom(
+  searchParams.get("extraFilters")?.split(",") || []
+);

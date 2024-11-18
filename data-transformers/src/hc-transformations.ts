@@ -96,6 +96,14 @@ const main = async () => {
 
       entry.tokens = tokenMap[entry.Name];
     }
+
+    if (
+      entry["Text Box"]?.find((e) => e?.includes("token")) &&
+      !entry.tokens &&
+      entry.Set == "HLC"
+    ) {
+      console.log(entry.Name, entry["Text Box"]);
+    }
   });
 
   const types = Array.from(typeSet);

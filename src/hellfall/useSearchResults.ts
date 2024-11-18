@@ -20,6 +20,7 @@ import {
   powerAtom,
   toughnessAtom,
   tagsAtom,
+  extraFiltersAtom,
 } from "./searchAtoms";
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
@@ -45,6 +46,7 @@ export const useSearchResults = () => {
   const power = useAtomValue(powerAtom);
   const toughness = useAtomValue(toughnessAtom);
   const tags = useAtomValue(tagsAtom);
+  const extraFilters = useAtomValue(extraFiltersAtom);
 
   useEffect(() => {
     const tempResults = cards
@@ -52,7 +54,10 @@ export const useSearchResults = () => {
         if (set.length > 0 && !set.includes(entry.Set)) {
           return false;
         }
-        if (entry.isActualToken) {
+        if (!extraFilters.includes("isToken") && entry.isActualToken) {
+          return false;
+        }
+        if (extraFilters.includes("isToken") && !entry.isActualToken) {
           return false;
         }
 

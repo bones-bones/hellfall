@@ -32,7 +32,12 @@ export const Deck = () => {
 
   const reduddd = resolvedMainDeck.reduce<Record<string, CardEntry[]>>(
     (curr, next) => {
-      if (next.hcEntry?.["Card Type(s)"][0]?.includes("Creature")) {
+      if (
+        next.hcEntry?.["Card Type(s)"][0]?.includes("Land") ||
+        !next.hcEntry
+      ) {
+        curr["Land"] = (curr["Land"] ?? []).concat(next);
+      } else if (next.hcEntry?.["Card Type(s)"][0]?.includes("Creature")) {
         curr["Creature"] = (curr["Creature"] ?? []).concat(next);
       } else if (next.hcEntry?.["Card Type(s)"][0]?.includes("Planeswalker")) {
         curr["Planeswalker"] = (curr["Planeswalker"] ?? []).concat(next);
@@ -46,11 +51,6 @@ export const Deck = () => {
         curr["Enchantment"] = (curr["Enchantment"] ?? []).concat(next);
       } else if (next.hcEntry?.["Card Type(s)"][0]?.includes("Battle")) {
         curr["Battle"] = (curr["Battle"] ?? []).concat(next);
-      } else if (
-        next.hcEntry?.["Card Type(s)"][0]?.includes("Land") ||
-        !next.hcEntry
-      ) {
-        curr["Land"] = (curr["Land"] ?? []).concat(next);
       } else {
         curr[next.hcEntry["Card Type(s)"][0] || "????"] = (
           curr[next.hcEntry["Card Type(s)"][0] || "????"] ?? []

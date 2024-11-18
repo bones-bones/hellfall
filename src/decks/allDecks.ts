@@ -285,4 +285,57 @@ export const allDecks: DeckInfo[] = [
       ],
     },
   },
+  {
+    title: "Is this anything",
+    text: `Goyf stuff. Uses Mob Farming Tower + hand dumping effects like Dumpstergoyf and One with that thing to generate treasure and get Very Motivated Skeletons into yard.`,
+    author: "llllll",
+    cards: {
+      main: [
+        { name: "Dumpstergoyf", count: 4 },
+        { name: "Goyflebrand", count: 4 },
+        { name: "Avatar of Jund", count: 3 },
+        { name: "Very Motivated Skeleton", count: 3 },
+        { name: "Cathartic Cathar", count: 2 },
+        { name: "Wrenn and Six and Minsc and Boo", count: 2 },
+
+        { name: "Goyf's Best Friend", count: 4 },
+        { name: "SwAmp (Hellscube)", count: 4 },
+        { name: "Jund Supermarket", count: 4 },
+        { name: "Wasteland Oasis", count: 2 },
+        { name: "Elder Dragon Highland", count: 2 },
+        { name: "Grovergrown Tomb", count: 2 },
+        { name: "Blood Crypt (Hellscube)", count: 2 },
+        { name: "The Haunted Mansion", count: 2 },
+        { name: "Groff Bayou", count: 2 },
+        {
+          name: "Time-Worn Jund Deckbox // Time-Worn Bloodbraid Elf",
+          count: 2,
+        },
+        { name: "Assassin’s Participation Trophy", count: 3 },
+        { name: "One with That Thing", count: 2 },
+        { name: "Sponsored Expedite", count: 3 },
+        { name: "Mob Farming Tower", count: 4 },
+        { name: "Mining", count: 2 },
+        { name: "Bad Nauseum", count: 2 },
+      ],
+      sideboard: [
+        {
+          name: "Grounter Spell",
+          count: 4,
+        },
+        {
+          name: "Thrashing // Entering",
+          count: 4,
+        },
+        {
+          name: "Dead on Arrival // Naturalize Magic",
+          count: 3,
+        },
+        {
+          name: "Nosy Intruder",
+          count: 4,
+        },
+      ],
+    },
+  },
 ];
