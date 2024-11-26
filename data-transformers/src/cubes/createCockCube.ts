@@ -18,11 +18,12 @@ export const createCockCube = () => {
     const cards = cardsForSet.map(toCard);
 
     const tokensForCube = tokens.data.filter(
-      (entry) =>
+      (tokenEntry) =>
         //@ts-ignore
         !!data.data.find((card) => {
-          //@ts-ignore
-          return entry["Related Cards (Read Comment)"].includes(card.Name);
+          return tokenEntry["Related Cards (Read Comment)"]!.includes(
+            card.Name
+          );
         })
     );
     const combined = cards.concat(
@@ -53,6 +54,20 @@ export const createCockCube = () => {
   }
 };
 
+// <card>
+// <name>Treasure1</name>
+// <set picURL="https://lh3.googleusercontent.com/d/1XiGumHRh-DBAGSTBcmO--QGJ_um72uZ7">HLCT4</set>
+// <type>Artifact</type>
+// <reverse-related>Big Money</reverse-related>
+// <reverse-related>Constantinople</reverse-related>
+// <reverse-related>Devil Enriches</reverse-related>
+// <reverse-related>Item Block</reverse-related>
+// <reverse-related> One with Everything</reverse-related>
+// <reverse-related count="10">Revelin' Rich</reverse-related>
+// <reverse-related>Traffic Court</reverse-related>
+// <reverse-related>Vhat, Sponsored Champion</reverse-related>
+// </card>
+
 const tokenToCard = (token: TokenType, set: string) => {
   const cCard: CockCard = {
     card: {
@@ -63,6 +78,7 @@ const tokenToCard = (token: TokenType, set: string) => {
       type: {
         "#text": token.Type,
       },
+
       ...(token.Power &&
         token.Toughness && {
           pt: { "#text": `${token.Power}/${token.Toughness}` },
@@ -71,6 +87,9 @@ const tokenToCard = (token: TokenType, set: string) => {
       color: { "#text": "" },
       manacost: { "#text": "" },
       text: { "#text": "" },
+      "reverse-related": token["Related Cards (Read Comment)"]
+        .split(";")
+        .map((entry) => ({ "#text": entry })),
     },
   };
   return cCard;
@@ -151,6 +170,7 @@ type CockCard = {
     text: {
       "#text": string;
     };
+    "reverse-related"?: { "#text": string }[];
   };
 };
 

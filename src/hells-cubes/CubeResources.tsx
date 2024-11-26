@@ -86,16 +86,21 @@ const CubeResource = ({
   cards,
   cubeId,
   tts,
+  cubeResourceLink,
 }: {
   cubeId: string;
   cards: HCEntry[];
   tts?: { url: string; title: string };
+  cubeResourceLink?: string;
 }) => {
   const parsedCubeId =
     cubeId.replace("HC", "") === "HLC" ? 1 : parseInt(cubeId.replace("HC", ""));
   return (
     <div>
       <h3>{cubeId}</h3>
+      {cubeResourceLink && (
+        <StyledLink to={cubeResourceLink}>Specific cards</StyledLink>
+      )}
       {tts ? (
         <Link to={tts.url}>{tts.title}</Link>
       ) : (

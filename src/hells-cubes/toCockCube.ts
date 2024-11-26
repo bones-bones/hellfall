@@ -1,5 +1,5 @@
 import { HCEntry } from "../types";
-
+import tokens from "../data/tokens.json";
 export const toCockCube = ({
   name,
   set,
@@ -67,7 +67,7 @@ export const toCockCube = ({
     const cmc = xmlDoc.createElement("cmc");
     cmc.textContent = entry.CMC?.toString() || "";
     const type = xmlDoc.createElement("type");
-    (type.textContent = [
+    type.textContent = [
       (entry["Subtype(s)"]?.[0] ?? "").replace(/;/g, " "),
       [
         (entry["Card Type(s)"]?.[0] ?? "").replace(/;/g, " "),
@@ -77,8 +77,8 @@ export const toCockCube = ({
         .join(" — "),
     ]
       .filter(Boolean)
-      .join(" ")),
-      tempCard.appendChild(name);
+      .join(" ");
+    tempCard.appendChild(name);
     tempCard.appendChild(setElement);
     tempCard.appendChild(color);
     tempCard.appendChild(manacost);
@@ -90,14 +90,44 @@ export const toCockCube = ({
       tempCard.appendChild(pt);
     }
     const text = xmlDoc.createElement("text");
-    (text.textContent = (entry["Text Box"] || [])
+    text.textContent = (entry["Text Box"] || [])
       .filter(Boolean)
       .join("\n//\n")
       .replace(/\\n/g, "\n")
-      .replace(/[{}]/g, "")),
-      tempCard.appendChild(text);
+      .replace(/[{}]/g, "");
+    tempCard.appendChild(text);
 
     cardsElement.appendChild(tempCard);
+  });
+
+  tokens.data.forEach((tokenEntry) => {
+    const tokenCardEntry = xmlDoc.createElement("card");
+    const name = xmlDoc.createElement("name");
+    name.textContent = tokenEntry.Name.replace(/\*\d$/, "");
+
+    const setElement = xmlDoc.createElement("set");
+
+    setElement.setAttribute("picURL", tokenEntry.Image);
+
+    const type = xmlDoc.createElement("type");
+    type.textContent = tokenEntry.Type;
+    tokenCardEntry.appendChild(name);
+    tokenCardEntry.appendChild(setElement);
+    tokenCardEntry.appendChild(type);
+    tokenEntry["Related Cards (Read Comment)"]
+      ?.split(";")
+      .forEach((related) => {
+        const relatedEntry = xmlDoc.createElement("reverse-related");
+        relatedEntry.textContent = related;
+
+        const count = /(.*)(\*\d)$/.exec(related);
+        if (count) {
+          relatedEntry.setAttribute("count", "" + count);
+        }
+
+        tokenCardEntry.appendChild(relatedEntry);
+      });
+    cardsElement.appendChild(tokenCardEntry);
   });
 
   const formattedXmlDoc = document.implementation.createDocument(
