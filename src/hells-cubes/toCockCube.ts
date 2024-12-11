@@ -61,7 +61,7 @@ export const toCockCube = ({
       .replace("Purple", "P")
       .replace(/;/g, "");
     const manacost = xmlDoc.createElement("manacost");
-    manacost.textContent = entry.Cost.filter(Boolean)
+    manacost.textContent = entry.Cost?.filter(Boolean)
       .join(" // ")
       .replace(/\{(.)\}/g, "$1");
     const cmc = xmlDoc.createElement("cmc");

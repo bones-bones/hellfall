@@ -98,11 +98,11 @@ const main = async () => {
     }
 
     if (
-      entry["Text Box"]?.find((e) => e?.includes("token")) &&
+      entry["Text Box"]?.find((e) => e?.includes(" token")) &&
       !entry.tokens &&
-      entry.Set == "HLC"
+      entry.Set == "HC6"
     ) {
-      console.log(entry.Name, entry["Text Box"]);
+      console.log(/[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0]); //, entry["Text Box"]);
     }
   });
 

@@ -1,6 +1,15 @@
 import fs from "fs";
 import { HCEntry } from "../types";
 import data from "../../../src/data/Hellscube-Database.json";
+
+const canBeACommander = (card: HCEntry) => {
+  return (
+    (card["Supertype(s)"]?.[0]?.includes("Legendary") &&
+      card["Card Type(s)"][0]?.includes("Creature")) ||
+    card["Text Box"]?.[0]?.includes("can be your commander")
+  );
+};
+
 const getDraftmancerCube = () => {
   for (const set of [
     { id: "HLC", name: "Hellscube" },
@@ -12,20 +21,49 @@ const getDraftmancerCube = () => {
     const filteredToSet = data.data.filter((e) => {
       return e.Set == set.id;
     });
-    const cardsToWrite: DraftmancerCard[] =
-      filteredToSet.map(getDraftMancerCard);
+    if (set.id !== "HC6") {
+      const cardsToWrite: DraftmancerCard[] =
+        filteredToSet.map(getDraftMancerCard);
 
-    const formatted = `[CustomCards]\n${JSON.stringify(
-      cardsToWrite,
-      null,
-      "\t"
-    )}\n[MainSlot]\n${cardsToWrite
-      .map((e) => {
-        return `1 ${e.name}`;
-      })
-      .join("\n")}`;
+      const formatted = `[CustomCards]\n${JSON.stringify(
+        cardsToWrite,
+        null,
+        "\t"
+      )}\n[MainSlot]\n${cardsToWrite
+        .map((e) => {
+          return `1 ${e.name}`;
+        })
+        .join("\n")}`;
 
-    fs.writeFileSync(`./${set.id}Cube.txt`, formatted);
+      fs.writeFileSync(`./${set.id}Cube.txt`, formatted);
+    } else {
+      const filteredToCommander = filteredToSet.filter(canBeACommander);
+
+      const commanderCardsToWrite: DraftmancerCard[] =
+        filteredToCommander.map(getDraftMancerCard);
+
+      const canNotBeCommander = filteredToSet.filter((entry) => {
+        return !canBeACommander(entry);
+      });
+
+      const otherCardsToWrite: DraftmancerCard[] =
+        canNotBeCommander.map(getDraftMancerCard);
+
+      const formatted = `[CustomCards]\n${JSON.stringify(
+        [...commanderCardsToWrite, ...otherCardsToWrite],
+        null,
+        "\t"
+      )}\n[CommanderSlot(2)]\n${commanderCardsToWrite
+        .map((e) => {
+          return `1 ${e.name}`;
+        })
+        .join("\n")}\n[OtherSlot(18)]\n${otherCardsToWrite
+        .map((e) => {
+          return `1 ${e.name}`;
+        })
+        .join("\n")}`;
+      fs.writeFileSync(`./${set.id}Cube.txt`, formatted);
+    }
   }
 };
 
@@ -69,6 +107,7 @@ const getDraftMancerCard = (card: HCEntry) => {
       .replace(/\{Pickle\}/g, "{G}")
       .replace(/\{U\/BB\}/g, "{U/B}")
       .replace("{Brown}", "{1}")
+      .replace(/\{Blood\}/g, "{0}")
       .replace("{2/Brown}", "{2}")
       .replace("Sacrifice a creature:", "{0}")
       .replace("{Discard your hand/RR}", "{R}{R}")

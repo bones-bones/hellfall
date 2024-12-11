@@ -6,6 +6,7 @@ import { HFCard } from "../hellfall/HFCard";
 import { CardEntry } from "./types";
 import { useParams } from "react-router-dom";
 import { allDecks } from "./allDecks";
+import { SetLegality } from "../hellfall/SetLegality";
 
 const activeCardAtom = atom<HCEntry | undefined>(undefined);
 
@@ -201,7 +202,10 @@ const CategorySection = ({
                 {entry.count}{" "}
                 <BoldSpan href={"/hellfall/card/" + entry.hcEntry?.Name}>
                   {entry.name}
-                </BoldSpan>
+                </BoldSpan>{" "}
+                <SetLegality
+                  banned={entry.hcEntry?.Constructed === "Banned"}
+                ></SetLegality>
               </div>{" "}
               <div key={entry.name + "cash"}>
                 ${Math.floor(Math.random() * 100 * 100) / 100}

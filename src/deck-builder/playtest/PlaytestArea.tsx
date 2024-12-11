@@ -8,7 +8,7 @@ const PlayArea = styled.div({ border: "1px solid black" });
 
 type Props = { cards: HCEntry[] };
 export const PlaytestArea = ({ cards }: Props) => {
-  const { deck, hand, drawCards, ready, playCard, play } = useCardState(cards);
+  const { hand, drawCards, ready, playCard, play } = useCardState(cards);
   const [life, setLife] = useState(20);
 
   useEffect(() => {
@@ -35,12 +35,14 @@ export const PlaytestArea = ({ cards }: Props) => {
           -
         </button>
       </>
+      <h3>battlefield</h3>
       <PlayArea>
         {play.map((entry) => {
           return <PlayCard key={entry.id} image={entry.card.Image} />;
         })}
       </PlayArea>
       <div>
+        <h3>Hand</h3>
         {hand.map((entry) => {
           return (
             <HandCard

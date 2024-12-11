@@ -9,9 +9,10 @@ import { Link } from "react-router-dom";
 export const HFCard = ({ data }: { data: HCEntry }) => {
   // wow what a weird ts bug
   const sideCount =
-    (data["Card Type(s)"] as any).findLastIndex(
-      (entry: string) => entry !== null && entry != ""
-    ) + 1;
+    // @ts-ignore
+    data["Card Type(s)"]?.findLastIndex(
+      (entry: any) => entry !== null && entry != ""
+    ) + 1 || 0;
 
   return (
     <Container key={data["Name"]}>
@@ -71,7 +72,7 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
                 </>
               )}
               {data["power"]?.[i] &&
-                data["power"][i] !== "" &&
+                data["power"][i]!.toString() !== "" &&
                 data["power"] != null && (
                   <>
                     <Text typeLevel="body.medium" key="stats">
