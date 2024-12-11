@@ -89,6 +89,7 @@ export const DeckConstruction = ({ cards }: { cards: HCEntry[] }) => {
           );
         })}
       </DeckContainer>
+      <div>{deck.map((e) => e.Name).join("\n")}</div>
     </>
   );
 };

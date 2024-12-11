@@ -96,7 +96,7 @@ export const Deck = () => {
 
   return (
     <BiggestContainer>
-      <BigContainer>
+      <BigContainer showGutter={window.innerWidth > 800}>
         <h2>{deck.title}</h2>
         <h3>By: {deck.author}</h3>
         <TextContainer>{deck.text}</TextContainer>
@@ -133,14 +133,14 @@ export const Deck = () => {
 };
 
 const DeckHeading = styled.h3({ marginTop: "40px", marginBottom: "0px" });
-const BigContainer = styled.div({
-  width: "80vw",
+const BigContainer = styled.div(({ showGutter }: { showGutter: boolean }) => ({
+  width: showGutter ? "80vw" : "100%",
   maxWidth: "1600px",
   backgroundColor: "white",
-  marginLeft: "10vw",
-  marginRight: "10vw",
+
   height: "100vw",
-});
+  ...(showGutter && { marginLeft: "10vw", marginRight: "10vw" }),
+}));
 const BiggestContainer = styled.div({
   backgroundColor: "grey",
   display: "flex",
@@ -148,10 +148,11 @@ const BiggestContainer = styled.div({
   height: "100vw",
 });
 const TextContainer = styled.div({
-  marginLeft: "80px",
-  marginRight: "80px",
+  marginLeft: "40px",
+  marginRight: "40px",
   whiteSpace: "pre-wrap",
   marginTop: "40px",
+  fontSize: "18px",
 });
 const CardContainer = () => {
   const [activeCard] = useAtom(activeCardAtom);
@@ -159,7 +160,7 @@ const CardContainer = () => {
   return (
     <>
       {activeCard && (
-        <ActiveCardContainer>
+        <ActiveCardContainer showGutter={window.innerWidth > 800}>
           <HFCard data={activeCard}></HFCard>
         </ActiveCardContainer>
       )}
@@ -175,11 +176,15 @@ const DeckCon = styled.div({
   paddingLeft: "20px",
 });
 
-const ActiveCardContainer = styled.div({
-  width: "380px",
-  height: "600px",
-  overflowY: "scroll",
-});
+const ActiveCardContainer = styled.div(
+  ({ showGutter }: { showGutter: boolean }) => ({
+    width: "380px",
+    height: "900px",
+    overflowY: "scroll",
+    position: "fixed",
+    right: showGutter ? "10vw" : "0px",
+  })
+);
 const CategorySection = ({
   cards,
   title,
@@ -235,3 +240,20 @@ const CardLineContainer = styled.div({
 });
 
 type RenderEntry = { name: string; count: number; hcEntry?: HCEntry };
+
+// TODO: write a function that takes a hash of the name and use it to generate number of index spaces between 0.01 and 100.00
+// const getPrice = (name: string) => {
+//   const { length } = name;
+//   let nameV = 0;
+//   for (let i = 0; i < length; i++) {
+//     nameV += name.charCodeAt(i);
+//   }
+
+//   const now = new Date();
+//   //@ts-ignore
+//   const fullDaysSinceEpoch = Math.floor(now / 8.64e7);
+
+//   const str = (nameV * fullDaysSinceEpoch).toString();
+
+//   return str;
+// };
