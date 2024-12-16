@@ -23,12 +23,6 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
-const webpackDevClientEntry = require.resolve(
-  'react-dev-utils/webpackHotDevClient'
-);
-const reactRefreshOverlayEntry = require.resolve(
-  'react-dev-utils/refreshOverlayInterop'
-);
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
@@ -82,17 +76,18 @@ module.exports = function (webpackEnv) {
     entry: paths.appIndexJs,
     devServer: {
       port:3000,
-    
+   
     
      
-      static : './build',  
+     static : {
+        directory: path.join(__dirname, 'public'),
+     } , 
       open: ['/hellfall'],  
-      historyApiFallback: true,
-      devMiddleware: {
-    
-        publicPath: '/hellfall',
       
-
+      historyApiFallback: {   index: '/hellfall',},
+     
+      devMiddleware: {
+        publicPath: '/hellfall',
       },
   },
     output: {
@@ -155,6 +150,7 @@ module.exports = function (webpackEnv) {
             keep_classnames: isEnvProductionProfile,
             keep_fnames: isEnvProductionProfile,
             output: {
+     
               ecma: 5,
               comments: false,
               // Turned on because emoji and regex is not minified properly using default

@@ -3,7 +3,7 @@ import { DeckInfo } from "./types";
 export const allDecks: DeckInfo[] = [
   {
     author: "KillerE",
-    title: "2024 Constructed Tournament",
+    title: "2024 Constructed Tournament - Shark Cheese",
     text: "",
     cards: {
       sideboard: [
@@ -314,7 +314,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Benana",
-    title: "2024 Constructed Tournament - Swiss Waltar",
+    title: "2024 Constructed Tournament - UB Meth Control",
     text: "",
     cards: {
       main: [
@@ -451,7 +451,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 3, name: "It That Bears Gifts" },
         { count: 1, name: "Agent Fblthp" },
         { count: 1, name: "Siege Rhino EX" },
-        { count: 2, name: "The Prismatic Piper (HC3)" },
+        { count: 2, name: "The Prismatic Piper" },
         { count: 3, name: "Geistshot" },
         { count: 4, name: "Krenko's Remand" },
         { count: 3, name: "Permeating Pass" },

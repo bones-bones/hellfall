@@ -5,6 +5,7 @@ import { cardsAtom } from "../hellfall/cardsAtom";
 import { toCockCube } from "./toCockCube";
 import { useAtomValue } from "jotai";
 import { HCEntry } from "../types";
+import { PropsWithChildren } from "react";
 
 export const CubeResources = () => {
   const cards = useAtomValue(cardsAtom);
@@ -12,9 +13,6 @@ export const CubeResources = () => {
   return (
     <Container>
       <h2>This page contains resources to help you play the cubes</h2>
-
-      <h3>HC1/HLC</h3>
-      <StyledLink to="one">Rules and quick links for weird cards</StyledLink>
 
       <CubeResource
         key={"HLC"}
@@ -24,7 +22,9 @@ export const CubeResources = () => {
           url: "https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113",
           title: "TTS Plugin by Benana",
         }}
-      ></CubeResource>
+      >
+        <StyledLink to="one">Rules and quick links for weird cards</StyledLink>
+      </CubeResource>
 
       <CubeResource key={"HC2"} cubeId={"HC2"} cards={cards}></CubeResource>
 
@@ -82,22 +82,21 @@ const StyledLink = styled(Link)({
 });
 const Container = styled.div({ padding: "10px" });
 
-const CubeResource = ({
-  cards,
-  cubeId,
-  tts,
-  cubeResourceLink,
-}: {
-  cubeId: string;
-  cards: HCEntry[];
-  tts?: { url: string; title: string };
-  cubeResourceLink?: string;
-}) => {
+const CubeResource: React.FC<
+  PropsWithChildren<{
+    cubeId: string;
+    cards: HCEntry[];
+    tts?: { url: string; title: string };
+    cubeResourceLink?: string;
+  }>
+> = ({ cards, cubeId, tts, cubeResourceLink, children }) => {
   const parsedCubeId =
     cubeId.replace("HC", "") === "HLC" ? 1 : parseInt(cubeId.replace("HC", ""));
   return (
     <div>
       <h3>{cubeId}</h3>
+      {children}
+      <br />
       {cubeResourceLink && (
         <StyledLink to={cubeResourceLink}>Specific cards</StyledLink>
       )}

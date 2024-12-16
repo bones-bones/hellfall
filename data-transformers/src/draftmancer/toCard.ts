@@ -6,7 +6,8 @@ const canBeACommander = (card: HCEntry) => {
   return (
     (card["Supertype(s)"]?.[0]?.includes("Legendary") &&
       card["Card Type(s)"][0]?.includes("Creature")) ||
-    card["Text Box"]?.[0]?.includes("can be your commander")
+    (card["Text Box"]?.[0]?.includes("can be your commander") &&
+      !card["Text Box"]?.[0]?.includes("Irresponsible"))
   );
 };
 
@@ -21,6 +22,7 @@ const getDraftmancerCube = () => {
     const filteredToSet = data.data.filter((e) => {
       return e.Set == set.id;
     });
+
     if (set.id !== "HC6") {
       const cardsToWrite: DraftmancerCard[] =
         filteredToSet.map(getDraftMancerCard);
@@ -54,6 +56,7 @@ const getDraftmancerCube = () => {
         null,
         "\t"
       )}\n[CommanderSlot(2)]\n${commanderCardsToWrite
+        .filter((e) => e.name != "Prismatic Pardner")
         .map((e) => {
           return `1 ${e.name}`;
         })
@@ -93,9 +96,9 @@ type DraftmancerCard = {
 
 const getDraftMancerCard = (card: HCEntry) => {
   const cardToReturn: DraftmancerCard = {
-    id: card.Name + "_custom_",
-    oracle_id: card.Name.trim(),
-    name: card.Name.trim(),
+    id: card.Name.replace(" :]", "") + "_custom_",
+    oracle_id: card.Name.replace(" :]", "").trim(),
+    name: card.Name.replace(" :]", "").trim(),
     mana_cost: (card.Cost?.[0] || "")
       .replace(/\{\?\}/g, "{0}")
       .replace("?", "{0")
@@ -124,7 +127,7 @@ const getDraftMancerCard = (card: HCEntry) => {
     subtypes: card["Subtype(s)"]?.[0].split(";").filter((e) => e != ""),
     rating: 0,
     in_booster: true,
-    printed_names: { en: card.Name },
+    printed_names: { en: card.Name.replace(" :]", "") },
     image_uris: { en: card.Image },
     is_custom: true,
     ...(shouldReveal(card) && {

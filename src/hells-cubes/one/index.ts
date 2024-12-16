@@ -1,1 +1,1 @@
-export { HellsCube } from "./HellsCube";
+export { HellsCubeOne as HellsCube } from "./HellsCube";

@@ -2,7 +2,7 @@ import { Link, Route, Routes, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 import { specialCards } from "./specialCards";
 
-export const HellsCube = () => {
+export const HellsCubeOne = () => {
   const val = useLocation();
 
   return (
@@ -13,14 +13,15 @@ export const HellsCube = () => {
           element={
             <>
               Devotion to Dreadmaw:
-              <br />- 6 CMC
-              <br />- The art
-              <br />- Dinosaur
-              <br />- Trample
-              <br />- 6 Power
-              <br />- 6 Toughness
-              <br />- Has exactly {"{G}{G}"}
-              <br />
+              <ul>
+                <li>6 CMC</li>
+                <li>The art</li>
+                <li>Dinosaur</li>
+                <li>Trample</li>
+                <li>6 Power</li>
+                <li>6 Toughness</li>
+                <li>Has exactly {"{G}{G}"}</li>
+              </ul>
               <ul>
                 {specialCards.map((entry) => (
                   <StyledLi key={entry.name}>

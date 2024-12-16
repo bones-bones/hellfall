@@ -7,6 +7,7 @@ import { CardEntry } from "./types";
 import { useParams } from "react-router-dom";
 import { allDecks } from "./allDecks";
 import { SetLegality } from "../hellfall/SetLegality";
+import { stringToMana } from "../hellfall/stringToMana";
 
 const activeCardAtom = atom<HCEntry | undefined>(undefined);
 
@@ -196,38 +197,50 @@ const CategorySection = ({
 }) => {
   return (
     <CatCon key={title}>
-      <h4>{`${title} (${cards.reduce((curr, next) => {
+      <StyledH4>{`${title} (${cards.reduce((curr, next) => {
         return curr + next.count;
-      }, 0)})`}</h4>
+      }, 0)})`}</StyledH4>
       <CatSecCon>
-        {cards.map((entry) => {
-          return (
-            <CardLineContainer key={entry.name}>
-              <div onMouseOver={() => setActive(entry.hcEntry)}>
-                {entry.count}{" "}
-                <BoldSpan href={"/hellfall/card/" + entry.hcEntry?.Name}>
-                  {entry.name}
-                </BoldSpan>{" "}
-                <SetLegality
-                  banned={entry.hcEntry?.Constructed === "Banned"}
-                ></SetLegality>
-              </div>{" "}
-              <div key={entry.name + "cash"}>
-                ${Math.floor(Math.random() * 100 * 100) / 100}
-              </div>
-            </CardLineContainer>
-          );
-        })}
+        {cards
+          .sort((a, b) => {
+            return (a.hcEntry?.CMC || 0) > (b.hcEntry?.CMC || 0) ? 1 : -1;
+          })
+          .map((entry) => {
+            return (
+              <CardLineContainer key={entry.name}>
+                <CardColumn onMouseOver={() => setActive(entry.hcEntry)}>
+                  {entry.count}{" "}
+                  <BoldSpan href={"/hellfall/card/" + entry.hcEntry?.Name}>
+                    {entry.name}
+                  </BoldSpan>{" "}
+                </CardColumn>{" "}
+                <CostColumn>
+                  {stringToMana(entry.hcEntry?.Cost[0] || "")}
+                </CostColumn>
+                <MoneyColumn key={entry.name + "cash"}>
+                  {getPrice(entry.name)}
+                </MoneyColumn>
+              </CardLineContainer>
+            );
+          })}
       </CatSecCon>
     </CatCon>
   );
 };
+const StyledH4 = styled.h4({ marginBottom: "10px" });
+const CardColumn = styled.div({ flexBasis: "60%" });
+const CostColumn = styled.div({ flexBasis: "25%" });
+const MoneyColumn = styled.div({
+  flexBasis: "10%",
+  textAlign: "end",
+});
 const CatCon = styled.div({
   display: "flex",
   flexDirection: "column",
+
   width: "100%",
 });
-const CatSecCon = styled.div({ width: "40vw" });
+const CatSecCon = styled.div({ width: "35vw" });
 const BoldSpan = styled.a({
   fontWeight: "bold",
   color: "black",
@@ -237,23 +250,32 @@ const BoldSpan = styled.a({
 const CardLineContainer = styled.div({
   display: "flex",
   justifyContent: "space-between",
+  height: "35px",
 });
 
 type RenderEntry = { name: string; count: number; hcEntry?: HCEntry };
 
 // TODO: write a function that takes a hash of the name and use it to generate number of index spaces between 0.01 and 100.00
-// const getPrice = (name: string) => {
-//   const { length } = name;
-//   let nameV = 0;
-//   for (let i = 0; i < length; i++) {
-//     nameV += name.charCodeAt(i);
-//   }
+const getPrice = (name: string) => {
+  const { length } = name;
+  let nameV = 0;
+  for (let i = 0; i < length; i++) {
+    nameV += name.charCodeAt(i);
+  }
 
-//   const now = new Date();
-//   //@ts-ignore
-//   const fullDaysSinceEpoch = Math.floor(now / 8.64e7);
+  const now = new Date();
+  //@ts-ignore
+  const fullDaysSinceEpoch = Math.floor(now / 8.64e7);
 
-//   const str = (nameV * fullDaysSinceEpoch).toString();
+  const uhhh = (fullDaysSinceEpoch * nameV) % 10;
 
-//   return str;
-// };
+  const bigString = (nameV * fullDaysSinceEpoch).toString();
+  if (uhhh < 4) {
+    return `$0.${bigString.slice(0, 2)}`;
+  }
+  if (uhhh === 9) {
+    return `$${bigString.slice(0, 3)}.${bigString.slice(4, 6)}`;
+  }
+
+  return `$${bigString.slice(0, 2)}.${bigString.slice(3, 5)}`;
+};
