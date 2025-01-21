@@ -2,7 +2,7 @@ import { sheetsKey } from "../../keys";
 
 export const fetchUsernameMappings = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1RY8yiuL2cZkQyMMjpGWZleoBs21_zrRbvWxxyMNplOA/values/Username+Mappings?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Username+Mappings?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
 

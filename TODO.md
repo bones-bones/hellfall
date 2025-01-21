@@ -16,3 +16,9 @@ yellow sub
 
 loot hoarder
 Fae of snitches
+
+
+
+# Comments on hellfall cards like forum posts
+
+eh

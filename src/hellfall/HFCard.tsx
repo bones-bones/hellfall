@@ -31,9 +31,10 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
               </Text>
               <br />
               <Text typeLevel="body.medium" key="type">
-                {`${(data["Supertype(s)"] || [])[i] ?? ""} ${(
-                  data["Card Type(s)"]?.[i] || ""
-                ).replaceAll(";", " ")}${
+                {`${((data["Supertype(s)"] || [])[i] ?? "").replaceAll(
+                  ";",
+                  " "
+                )} ${(data["Card Type(s)"]?.[i] || "").replaceAll(";", " ")}${
                   data["Subtype(s)"]?.[i]
                     ? " — " + data["Subtype(s)"][i]?.replaceAll(";", " ")
                     : ""
