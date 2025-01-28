@@ -9,7 +9,7 @@ import {
 } from "@workday/canvas-kit-react/side-panel";
 import { PaginationComponent } from "./inputs";
 
-import { HFCard } from "./HFCard";
+import { HellfallCard } from "./HellfallCard";
 import { Card } from "@workday/canvas-kit-react/card";
 import { ToolbarIconButton } from "@workday/canvas-kit-react/button";
 import { useAtom, useAtomValue } from "jotai";
@@ -55,7 +55,7 @@ export const HellFall = () => {
                   icon={xIcon}
                   onClick={() => setActiveCardFromAtom("")}
                 />
-                {activeCard && <HFCard data={activeCard}></HFCard>}
+                {activeCard && <HellfallCard data={activeCard}></HellfallCard>}
               </SPContainer>
             </Card.Body>
           </Card>

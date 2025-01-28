@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { cardsAtom } from "./cardsAtom";
-import { HFCard } from "./HFCard";
+import { HellfallCard } from "./HellfallCard";
 import styled from "@emotion/styled";
 
 import { useEffect } from "react";
@@ -29,7 +29,7 @@ export const SingleCard = () => {
         <h2>Nothing was found...</h2>
       ) : (
         <CardContainer>
-          <HFCard data={entryToRender} />
+          <HellfallCard data={entryToRender} />
         </CardContainer>
       )}
     </Container>

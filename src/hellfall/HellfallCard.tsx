@@ -6,7 +6,7 @@ import { SetLegality } from "./SetLegality";
 import { stringToMana } from "./stringToMana";
 
 import { Link } from "react-router-dom";
-export const HFCard = ({ data }: { data: HCEntry }) => {
+export const HellfallCard = ({ data }: { data: HCEntry }) => {
   // wow what a weird ts bug
   const sideCount =
     // @ts-ignore
@@ -21,7 +21,7 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
       </ImageContainer>
       <Card>
         <Card.Body padding={"zero"}>
-          <StyledHeading size="large">{data["Name"]} </StyledHeading>
+          <StyledHeading size="large">{data["Name"]}</StyledHeading>
 
           {new Array(sideCount).fill("").map((_, i) => (
             <div key={"side-" + (i + 1)}>
@@ -43,7 +43,6 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
               <br />
               <Text typeLevel="body.medium" key="rules">
                 {(data["Text Box"]?.[i] || "").split("\\n").map((entry) => {
-                  console.log(entry);
                   return (
                     <>
                       {entry
@@ -131,8 +130,8 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
               <Divider />
               <div>
                 <StyledHeading size="small">Related Tokens</StyledHeading>
-                {data["tokens"].map((entry) => (
-                  <img key={entry.Name} src={entry.Image} height="500px" />
+                {data["tokens"].map((entry, i) => (
+                  <img key={entry.Name + i} src={entry.Image} height="500px" />
                 ))}
               </div>
             </>

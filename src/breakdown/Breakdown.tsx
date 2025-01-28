@@ -13,7 +13,7 @@ import {
   TertiaryButton,
   ToolbarIconButton,
 } from "@workday/canvas-kit-react";
-import { HFCard } from "../hellfall/HFCard";
+import { HellfallCard } from "../hellfall/HellfallCard";
 import { activeCardAtom } from "../hellfall/searchAtoms";
 import { getColorIdentity } from "../hellfall/getColorIdentity";
 import { canBeACommander } from "../hellfall/canBeACommander";
@@ -91,7 +91,7 @@ export const Breakdown = () => {
                   icon={xIcon}
                   onClick={() => setActiveCardFromAtom("")}
                 />
-                {activeCard && <HFCard data={activeCard}></HFCard>}
+                {activeCard && <HellfallCard data={activeCard}></HellfallCard>}
               </SPContainer>
             </Card.Body>
           </Card>

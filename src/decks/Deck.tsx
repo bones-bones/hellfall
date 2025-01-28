@@ -2,7 +2,7 @@ import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { cardsAtom } from "../hellfall/cardsAtom";
 import { HCEntry } from "../types";
 import styled from "@emotion/styled";
-import { HFCard } from "../hellfall/HFCard";
+import { HellfallCard } from "../hellfall/HellfallCard";
 import { CardEntry } from "./types";
 import { useParams } from "react-router-dom";
 import { allDecks } from "./allDecks";
@@ -162,7 +162,7 @@ const CardContainer = () => {
     <>
       {activeCard && (
         <ActiveCardContainer showGutter={window.innerWidth > 800}>
-          <HFCard data={activeCard}></HFCard>
+          <HellfallCard data={activeCard}></HellfallCard>
         </ActiveCardContainer>
       )}
     </>
