@@ -128,14 +128,28 @@ export const useSearchResults = () => {
         if (
           colorIdentityCriteria.length > 0 &&
           !getColorIdentity(entry).every((cardColorIdentityComponent) => {
+            // if (entry.Name.includes("The Big Banana")) {
+            //   console.log(colorIdentityCriteria);
+            // }
+            const miscBullshitColorIdentityCriteria =
+              colorIdentityCriteria.includes("Misc Bullshit")
+                ? [...colorIdentityCriteria, "Pickle", "Piss", "Brown"].filter(
+                    (e) => e != "Misc Bullshit"
+                  )
+                : colorIdentityCriteria;
             if (Array.isArray(cardColorIdentityComponent)) {
               return (
                 cardColorIdentityComponent.filter((e) => {
-                  return colorIdentityCriteria.includes(e) || e === undefined;
-                }).length === 1
+                  return (
+                    miscBullshitColorIdentityCriteria.includes(e) ||
+                    e === undefined
+                  );
+                }).length >= 1
               );
             } else {
-              return colorIdentityCriteria.includes(cardColorIdentityComponent);
+              return miscBullshitColorIdentityCriteria.includes(
+                cardColorIdentityComponent
+              );
             }
           })
         ) {

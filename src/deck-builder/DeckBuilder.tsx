@@ -69,9 +69,9 @@ export const DeckBuilder = () => {
     const images: HCEntry[] = (toRender || [])
       .filter((entry) => entry != "" && !entry.startsWith("# "))
       .flatMap((name) => {
-        const countTest = /(\d+) (.*)/.exec(name);
+        const countTest = /^(\d+) (.*)/.exec(name);
         const responseObject = [];
-
+        console.log(name, countTest);
         if (countTest) {
           const count = parseInt(countTest[1]);
           const foundName = countTest[2];
@@ -102,6 +102,7 @@ export const DeckBuilder = () => {
             const foundCard = cards.find(
               (entry) => entry["Name"].toLowerCase() === name.toLowerCase()
             );
+            console.log(foundCard, console.log(name));
             if (foundCard) {
               responseObject.push(foundCard);
             }

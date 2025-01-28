@@ -43,6 +43,7 @@ export const HFCard = ({ data }: { data: HCEntry }) => {
               <br />
               <Text typeLevel="body.medium" key="rules">
                 {(data["Text Box"]?.[i] || "").split("\\n").map((entry) => {
+                  console.log(entry);
                   return (
                     <>
                       {entry
