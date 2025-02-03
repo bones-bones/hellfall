@@ -1,9 +1,7 @@
-import { styled } from "@workday/canvas-kit-react/common";
-import { Select } from "@workday/canvas-kit-preview-react/select";
-import { FormField } from "@workday/canvas-kit-react/form-field";
-import { TextInput } from "@workday/canvas-kit-react/text-input";
+import styled from "@emotion/styled";
 
 import { useState, useEffect } from "react";
+import { StyledLegend } from "../StyledLabel";
 
 export const NumericComparatorSelector = ({
   onChange,
@@ -28,7 +26,8 @@ export const NumericComparatorSelector = ({
     }
   }, [value, operator]);
   return (
-    <FormField label={label}>
+    <fieldset>
+      <StyledLegend>{label}</StyledLegend>
       <Container>
         <StyledManaSelect
           defaultValue={operator}
@@ -36,16 +35,18 @@ export const NumericComparatorSelector = ({
           onChange={(event) => {
             setConditional(event.target.value as any);
           }}
-          options={[
+        >
+          {[
             { value: "", label: "--" },
             { value: ">" },
             { value: "=" },
             { value: "<" },
-          ]}
-        />
-        <TextInput
+          ].map((entry) => (
+            <option key={entry.value}>{entry.label || entry.value}</option>
+          ))}
+        </StyledManaSelect>{" "}
+        <StyledNumberInput
           type="number"
-          width={"60px"}
           defaultValue={initialValue?.value}
           onBlur={(event) => {
             if (event.target.value == "") {
@@ -54,13 +55,15 @@ export const NumericComparatorSelector = ({
               setValue(parseInt(event.target.value));
             }
           }}
-        />{" "}
+        />
       </Container>
-    </FormField>
+    </fieldset>
   );
 };
 
-const StyledManaSelect = styled(Select)({ width: "40px" });
+const StyledNumberInput = styled("input")({ width: "40px" });
+
+const StyledManaSelect = styled("select")({ width: "40px", height: "30px" });
 const Container = styled("div")({ display: "flex" });
 
 type ConditionalChange = (

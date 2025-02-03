@@ -1,8 +1,7 @@
-import { styled } from "@workday/canvas-kit-react/common";
+import styled from "@emotion/styled";
 
 import { CheckboxGroup } from "./inputs";
 import { PillSearch } from "./inputs";
-import { Checkbox } from "@workday/canvas-kit-react/checkbox";
 import { TextInput } from "@workday/canvas-kit-react/text-input";
 import { FormField } from "@workday/canvas-kit-react/form-field";
 import cardTypes from "../data/types.json";
@@ -28,7 +27,8 @@ import {
   tagsAtom,
 } from "./searchAtoms";
 import { colors } from "./constants";
-import { Select } from "@workday/canvas-kit-preview-react/select";
+import { SearchCheckbox } from "./SearchCheckbox";
+import { StyledLabel } from "./StyledLabel";
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
@@ -98,17 +98,25 @@ export const SearchControls = () => {
           values={colors}
           initialValue={searchColors}
           onChange={setSearchColors}
-        />
-        <FormField label="Color Comparison">
-          <StyledManaSelect
-            options={[{ value: "<=" }, { value: "=" }, { value: ">=" }]}
-            defaultValue={colorComparison}
-            value={colorComparison}
-            onChange={(event) => {
-              setColorComparison(event.target.value as any);
-            }}
-          />
-        </FormField>
+        >
+          <StyledComponentHolder>
+            <StyledLabel htmlFor="styledManaSelect">
+              {"Color Comparison"}
+            </StyledLabel>
+            <StyledManaSelect
+              id="styledManaSelect"
+              defaultValue={colorComparison}
+              value={colorComparison}
+              onChange={(event) => {
+                setColorComparison(event.target.value as any);
+              }}
+            >
+              {["<=", "=", ">="].map((entry) => {
+                return <option key={entry}>{entry}</option>;
+              })}
+            </StyledManaSelect>
+          </StyledComponentHolder>
+        </CheckboxGroup>
         <CheckboxGroup
           label="Color Identity (Commander)"
           values={colors}
@@ -123,27 +131,32 @@ export const SearchControls = () => {
           values={["HLC", "HC2", "HC3", "HC4", "HCV", "HC6", "HCP"]}
           onChange={setSet}
         />
-        <FormField label={"Only Constructed Legal"}>
-          <Checkbox
+        <StyledComponentHolder>
+          <StyledLabel htmlFor="constructedLegal">
+            Only Constructed Legal
+          </StyledLabel>
+          <SearchCheckbox
+            id="constructedLegal"
             type="checkbox"
             checked={legality == "legal"}
             onChange={(event) => {
               setLegality(event.target.checked ? "legal" : "");
             }}
           />
-        </FormField>
-        <FormField
-          key={"Can Be Your Commander"}
-          label={"Can Be Your Commander"}
-        >
-          <Checkbox
+        </StyledComponentHolder>
+        <StyledComponentHolder>
+          <StyledLabel htmlFor="canBeYourCommander">
+            {"Can Be Your Commander"}
+          </StyledLabel>
+          <SearchCheckbox
+            id="canBeYourCommander"
             type="checkbox"
             checked={isCommander === true}
             onChange={(event) => {
               setIsCommander(event.target.checked ? true : false);
             }}
           />
-        </FormField>
+        </StyledComponentHolder>
         <CmcSelector
           label={"Mana value"}
           onChange={setSearchCmc}
@@ -164,4 +177,10 @@ const SearchCriteriaSection = styled("div")({
   paddingLeft: "30px",
 });
 const SearchContainer = styled("div")({ display: "flex", flexWrap: "wrap" });
-const StyledManaSelect = styled(Select)({ width: "100px" });
+const StyledManaSelect = styled("select")({ width: "100px", height: "30px" });
+
+const StyledComponentHolder = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  marginTop: "10px",
+});

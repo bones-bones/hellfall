@@ -1,45 +1,59 @@
 import styled from "@emotion/styled";
-import { Checkbox, FormField } from "@workday/canvas-kit-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, PropsWithChildren, FC } from "react";
+import { SearchCheckbox } from "../SearchCheckbox";
+import { StyledLegend } from "../StyledLabel";
 
-export const CheckboxGroup = ({
-  values,
-  onChange,
-  initialValue,
-  label,
-}: {
-  values: string[];
-  initialValue?: string[];
-  onChange: (values: string[]) => void;
-  label: string;
-}) => {
+export const CheckboxGroup: FC<
+  PropsWithChildren<{
+    values: string[];
+    initialValue?: string[];
+    onChange: (values: string[]) => void;
+    label: string;
+  }>
+> = ({ values, onChange, initialValue, label, children }) => {
   const [selected, setSelected] = useState<string[]>(initialValue || []);
   useEffect(() => {
     onChange(selected);
   }, [selected]);
   return (
-    <FormField label={label}>
+    <fieldset>
+      <StyledLegend>{label}</StyledLegend>
       <Container>
         {values.map((entry) => {
           return (
-            <Checkbox
-              key={entry}
-              label={entry}
-              checked={selected.includes(entry)}
-              onChange={(event) => {
-                if (event.target.checked) {
-                  setSelected([entry, ...selected]);
-                } else {
-                  setSelected(
-                    selected.filter((selectedEntry) => selectedEntry != entry)
-                  );
-                }
-              }}
-            />
+            <CheckEntry key={entry}>
+              <SearchCheckbox
+                id={entry + "label" + "checkbox"}
+                type="checkbox"
+                checked={selected.includes(entry)}
+                onChange={(event) => {
+                  if (event.target.checked) {
+                    setSelected([entry, ...selected]);
+                  } else {
+                    setSelected(
+                      selected.filter((selectedEntry) => selectedEntry != entry)
+                    );
+                  }
+                }}
+              />
+              <StyledLabel htmlFor={entry + "label" + "checkbox"}>
+                {entry}
+              </StyledLabel>
+            </CheckEntry>
           );
         })}
       </Container>
-    </FormField>
+      {children}
+    </fieldset>
   );
 };
 const Container = styled.div({ display: "flex", flexDirection: "column" });
+
+const CheckEntry = styled.div({
+  display: "flex",
+  margin: "2px",
+  height: "25px",
+  alignItems: "center",
+});
+
+const StyledLabel = styled.label({ marginLeft: "2px" });

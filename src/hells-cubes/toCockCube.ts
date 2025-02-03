@@ -68,7 +68,7 @@ export const toCockCube = ({
     cmc.textContent = entry.CMC?.toString() || "";
     const type = xmlDoc.createElement("type");
     type.textContent = [
-      (entry["Subtype(s)"]?.[0] ?? "").replace(/;/g, " "),
+      (entry["Supertype(s)"]?.[0] ?? "").replace(/;/g, " "),
       [
         (entry["Card Type(s)"]?.[0] ?? "").replace(/;/g, " "),
         (entry["Subtype(s)"]?.[0] ?? "").replace(/;/g, " "),
