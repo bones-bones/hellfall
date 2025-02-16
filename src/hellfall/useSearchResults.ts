@@ -26,6 +26,10 @@ import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
 import { canBeACommander } from "./canBeACommander";
 
+const isSetInResults = (set: string, setOptions: string[]) => {
+  return Boolean(setOptions.find((e) => set.includes(e)));
+};
+
 export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCEntry[]>([]);
   const cards = useAtomValue(cardsAtom);
@@ -51,7 +55,7 @@ export const useSearchResults = () => {
   useEffect(() => {
     const tempResults = cards
       .filter((entry) => {
-        if (set.length > 0 && !set.includes(entry.Set)) {
+        if (set.length > 0 && !isSetInResults(entry.Set, set)) {
           return false;
         }
         if (!extraFilters.includes("isToken") && entry.isActualToken) {

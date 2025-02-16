@@ -20,6 +20,7 @@
 		"burn",
 		"cat",
 		"clockwolf",
+		"command",
 		"commander-tax-matters",
 		"cost-redicton",
 		"draw",
@@ -38,6 +39,8 @@
 		"pokemon",
 		"ramp",
 		"removal",
+		"silly-little-guy",
+		"snowball",
 		"split",
 		"storm-crow",
 		"sus",
@@ -46,6 +49,8 @@
 		"tap-source",
 		"thriving-land",
 		"tutor",
-		"voting"
+		"voting",
+		"your-dreadmaw",
+		"your-mom"
 	]
 }

@@ -23,7 +23,7 @@ export const CheckboxGroup: FC<
           return (
             <CheckEntry key={entry}>
               <SearchCheckbox
-                id={entry + "label" + "checkbox"}
+                id={label + entry + "label" + "checkbox"}
                 type="checkbox"
                 checked={selected.includes(entry)}
                 onChange={(event) => {
@@ -36,7 +36,7 @@ export const CheckboxGroup: FC<
                   }
                 }}
               />
-              <StyledLabel htmlFor={entry + "label" + "checkbox"}>
+              <StyledLabel htmlFor={label + entry + "label" + "checkbox"}>
                 {entry}
               </StyledLabel>
             </CheckEntry>

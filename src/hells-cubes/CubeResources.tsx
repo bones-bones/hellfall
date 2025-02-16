@@ -41,7 +41,7 @@ export const CubeResources = () => {
       <CubeResource key={"HC4"} cubeId={"HC4"} cards={cards}></CubeResource>
 
       <CubeResource
-        key={"HCV"}
+        key={"HC5"}
         cubeId={"HC5"}
         cards={new Array(720).fill({
           "Card Type(s)": ["◻︎◻︎◻︎◻︎◻︎", "", "", ""],

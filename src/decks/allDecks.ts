@@ -14,7 +14,7 @@ export const allDecks: DeckInfo[] = [
         { count: 2, name: "Thirst for Thirst" },
       ],
       main: [
-        { count: 2, name: "The Prismatic Piper" },
+        { count: 2, name: "The Prismatic Piper (hc)" },
         { count: 4, name: "Shark Ritual" },
         { count: 3, name: "Spooky Scary Spectre" },
         { count: 3, name: "Agent Fblthp" },
@@ -190,7 +190,7 @@ export const allDecks: DeckInfo[] = [
         { count: 4, name: "Wiimote" },
         { count: 3, name: "Marie Kondo" },
         { count: 2, name: "Vilefin Inquisitor" },
-        { count: 2, name: "The Prismatic Piper" },
+        { count: 2, name: "The Prismatic Piper (hc)" },
         { count: 4, name: "Flummox" },
         { count: 4, name: "Counterspell Balanced for EDH" },
         { count: 4, name: "enchant" },
@@ -341,7 +341,7 @@ export const allDecks: DeckInfo[] = [
         { count: 5, name: "Island" },
         { count: 3, name: "Swamp" },
         { count: 2, name: "Half-Thriving ____ Half-Thriving ____" },
-        { count: 2, name: "The Prismatic Piper" },
+        { count: 2, name: "The Prismatic Piper (hc)" },
       ],
       sideboard: [
         { count: 2, name: "Snapcorpser Mage" },
@@ -384,7 +384,7 @@ export const allDecks: DeckInfo[] = [
         { count: 4, name: "Indatha Land Kathril Approves Of" },
         { count: 4, name: "Inquisition of Haktos the Unscarred" },
         { count: 4, name: "Dis Enchant" },
-        { count: 2, name: "The Prismatic Piper" },
+        { count: 2, name: "The Prismatic Piper (hc)" },
       ],
     },
   },
@@ -451,7 +451,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 3, name: "It That Bears Gifts" },
         { count: 1, name: "Agent Fblthp" },
         { count: 1, name: "Siege Rhino EX" },
-        { count: 2, name: "The Prismatic Piper" },
+        { count: 2, name: "The Prismatic Piper (hc)" },
         { count: 3, name: "Geistshot" },
         { count: 4, name: "Krenko's Remand" },
         { count: 3, name: "Permeating Pass" },
@@ -515,7 +515,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       main: [
         { count: 4, name: "Knight of the Whiter Orchid" },
         { count: 1, name: "Mangara Condor" },
-        { count: 2, name: "The Prismatic Piper" },
+        { count: 2, name: "The Prismatic Piper (hc)" },
         { count: 4, name: "White Counterspell" },
         { count: 4, name: "whelming Splendor" },
         { count: 4, name: "Card Leak" },
@@ -732,7 +732,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       ],
       sideboard: [
         {
-          name: "The Prismatic Piper",
+          name: "The Prismatic Piper (hc)",
           count: 2,
         },
         {
@@ -777,7 +777,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       ],
       sideboard: [
         {
-          name: "The Prismatic Piper",
+          name: "The Prismatic Piper (hc)",
           count: 2,
         },
         {
