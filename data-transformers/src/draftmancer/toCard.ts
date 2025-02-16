@@ -19,7 +19,7 @@ const getDraftmancerCube = () => {
     { id: "HC4", name: "Hellscube 4" },
     { id: "HC6", name: "Hellscube 6" },
   ]) {
-    const filteredToSet = data.data.filter((e) => {
+    const filteredToSet = (data as { data: HCEntry[] }).data.filter((e) => {
       return e.Set == set.id;
     });
 
@@ -75,7 +75,6 @@ type DraftmancerCard = {
   oracle_id: string; // "Discount Sol Ring",
   name: string; // "Discount Sol Ring",
   mana_cost: string; //"{1}",
-
   colors: string[]; // [],
   set: string; //"custom",
   collector_number: string; //"",

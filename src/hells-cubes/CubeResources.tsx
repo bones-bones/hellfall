@@ -6,6 +6,7 @@ import { toCockCube } from "./toCockCube";
 import { useAtomValue } from "jotai";
 import { HCEntry } from "../types";
 import { PropsWithChildren } from "react";
+import { toDraftmancerCube } from "./toDraftmancer";
 
 export const CubeResources = () => {
   const cards = useAtomValue(cardsAtom);
@@ -95,7 +96,11 @@ const CubeResource: React.FC<
   }>
 > = ({ cards, cubeId, tts, cubeResourceLink, children }) => {
   const parsedCubeId =
-    cubeId.replace("HC", "") === "HLC" ? 1 : parseInt(cubeId.replace("HC", ""));
+    cubeId.replace("HC", "") === "HLC"
+      ? 1
+      : cubeId == "HCP" || cubeId == "HCV"
+      ? cubeId
+      : parseInt(cubeId.replace("HC", ""));
   return (
     <div>
       <h3>{cubeId}</h3>
@@ -126,7 +131,7 @@ const CubeResource: React.FC<
         >
           Download {cubeId} cube for TTS
         </button>
-      )}
+      )}{" "}
       <button
         onClick={() => {
           const val = toCockCube({
@@ -147,6 +152,27 @@ const CubeResource: React.FC<
         }}
       >
         Download {cubeId} cube for Cockatrice
+      </button>{" "}
+      <button
+        onClick={() => {
+          const val = toDraftmancerCube({
+            set: cubeId,
+
+            cards: cards.filter((e) => e.Set === cubeId),
+          });
+
+          const url =
+            "data:text/plain;base64," + btoa(unescape(encodeURIComponent(val)));
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          // the filename you want
+          a.download = "Hellscube " + parsedCubeId + " (Draftmancer).txt";
+          document.body.appendChild(a);
+          a.click();
+        }}
+      >
+        Download {cubeId} cube for Draftmancer
       </button>
     </div>
   );

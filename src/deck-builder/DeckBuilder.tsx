@@ -31,7 +31,9 @@ export const DeckBuilder = () => {
   );
   const [cards, setCards] = useState<HCEntry[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
-  const [deckName, setNameOfDeck] = useState(searchparms.get("name") || "");
+  const [deckName, setNameOfDeck] = useState(
+    searchparms.get("name") || "your deck name goes here"
+  );
   const [renderCards, setRenderCards] = useState<HCEntry[]>([]);
   const [playtesting, setPlaytesthing] = useState(false);
 
@@ -164,7 +166,7 @@ Cock and Balls to Torture and Abuse"
         disabled={!toRender}
         onClick={() => {
           if (ref.current) {
-            downloadElementAsImage(ref.current, "your deck");
+            downloadElementAsImage(ref.current, deckName);
           }
         }}
       >
