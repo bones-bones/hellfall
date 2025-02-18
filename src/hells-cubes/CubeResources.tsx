@@ -77,6 +77,8 @@ export const CubeResources = () => {
       <CubeResource key={"HC6"} cubeId={"HC6"} cards={cards}></CubeResource>
 
       <CubeResource key={"HCP"} cubeId={"HCP"} cards={cards}></CubeResource>
+
+      <CubeResource key={"HC7.0"} cubeId={"HC7.0"} cards={cards}></CubeResource>
     </Container>
   );
 };
