@@ -34,7 +34,7 @@ export const Area = () => {
                       width="200px"
                       title={entry.Name}
                       key={entry.Name + i}
-                      src={entry.Image}
+                      src={entry.Image[0]!}
                       crossOrigin="anonymous"
                       onClick={() => {
                         if (
@@ -83,7 +83,7 @@ export const Area = () => {
                         width="210px"
                         title={entry.Name}
                         key={entry.Name + i}
-                        src={entry.Image}
+                        src={entry.Image[0]!}
                         crossOrigin="anonymous"
                       />
                     </CardContainer>

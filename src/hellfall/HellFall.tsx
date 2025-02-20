@@ -83,7 +83,7 @@ export const HellFall = () => {
             }}
             key={"" + entry.Name + i}
             name={entry.Name}
-            url={entry.Image}
+            url={entry.Image[0]!}
           />
         ))}
       </Container>

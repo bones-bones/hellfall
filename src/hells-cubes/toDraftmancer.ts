@@ -12,7 +12,12 @@ export const toDraftmancerCube = ({
   if (set !== "HC6") {
     const cardsToWrite: DraftmancerCard[] = cards.map(getDraftMancerCard);
 
-    const formatted = `[CustomCards]\n${JSON.stringify(
+    const formatted = `[Settings]
+{
+    "colorBalance": false,
+    "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA"
+}
+[CustomCards]\n${JSON.stringify(
       cardsToWrite,
       null,
       "\t"
@@ -34,7 +39,23 @@ export const toDraftmancerCube = ({
 
     const otherCardsToWrite = canNotBeCommander.map(getDraftMancerCard);
 
-    const formatted = `[CustomCards]\n${JSON.stringify(
+    const formatted = `[Settings]
+{
+    "colorBalance": false,
+    "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA",
+    "boosterSettings": [
+        {
+            "picks": 2
+        },
+        {
+            "picks": 2
+        },
+        {
+            "picks": 2
+        }
+    ]
+}
+[CustomCards]\n${JSON.stringify(
       [...commanderCardsToWrite, ...otherCardsToWrite],
       null,
       "\t"
@@ -87,7 +108,7 @@ const getDraftMancerCard = (card: HCEntry) => {
     rating: 0,
     in_booster: true,
     printed_names: { en: card.Name.replace(" :]", "") },
-    image_uris: { en: card.Image },
+    image_uris: { en: card.Image[0]! },
     is_custom: true,
     ...(shouldReveal(card) && {
       draft_effects: ["FaceUp"],

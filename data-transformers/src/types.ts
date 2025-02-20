@@ -2,7 +2,13 @@
 
 export type HCEntry = {
   Name: string; //"Whale Visions",
-  Image: string; //"https://cdn.discordapp.com/attachments/699985664992739409/699992833645346816/ri2sj4suvzb31.png",
+  Image: [
+    string | null, // Here is the card as it was submitted
+    string | null, // Here is the card to use in drafting _if_ the previous one isn't usable
+    string | null, // Here is side 2
+    string | null, // Side 3
+    string | null // Side 4
+  ]; //"https://cdn.discordapp.com/attachments/699985664992739409/699992833645346816/ri2sj4suvzb31.png",
   Creator: string;
   isActualToken?: boolean;
   Set: string; // "HLC",

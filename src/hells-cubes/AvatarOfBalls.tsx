@@ -53,7 +53,7 @@ export const AvatarOfBalls = () => {
             <HellfallEntry
               key={e.Name + i}
               name={e.Name}
-              url={e.Image}
+              url={e.Image[0]!}
               onClick={() => {
                 // void
               }}

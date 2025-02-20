@@ -37,7 +37,7 @@ export const DeckConstruction = ({ cards }: { cards: HCEntry[] }) => {
                         width="210px"
                         title={entry.Name}
                         key={entry.Name + i}
-                        src={entry.Image}
+                        src={entry.Image[0]!}
                         crossOrigin="anonymous"
                         onClick={() => {
                           setLocalCards(
@@ -70,7 +70,7 @@ export const DeckConstruction = ({ cards }: { cards: HCEntry[] }) => {
                         width="210px"
                         title={entry.Name}
                         key={entry.Name + i}
-                        src={entry.Image}
+                        src={entry.Image[0]!}
                         crossOrigin="anonymous"
                         onClick={() => {
                           setDeck(

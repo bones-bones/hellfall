@@ -17,7 +17,11 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
   return (
     <Container key={data["Name"]}>
       <ImageContainer key="image-container">
-        <img src={data["Image"]} height="500px" referrerPolicy="no-referrer" />
+        <img
+          src={data["Image"][0]!}
+          height="500px"
+          referrerPolicy="no-referrer"
+        />
       </ImageContainer>
       <Card>
         <Card.Body padding={"zero"}>

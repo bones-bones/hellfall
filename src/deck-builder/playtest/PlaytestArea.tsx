@@ -38,7 +38,7 @@ export const PlaytestArea = ({ cards }: Props) => {
       <h3>battlefield</h3>
       <PlayArea>
         {play.map((entry) => {
-          return <PlayCard key={entry.id} image={entry.card.Image} />;
+          return <PlayCard key={entry.id} image={entry.card.Image[0]!} />;
         })}
       </PlayArea>
       <div>
@@ -47,7 +47,7 @@ export const PlaytestArea = ({ cards }: Props) => {
           return (
             <HandCard
               key={entry.id}
-              image={entry.card.Image}
+              image={entry.card.Image[0]!}
               onClick={() => {
                 playCard(entry.id);
               }}

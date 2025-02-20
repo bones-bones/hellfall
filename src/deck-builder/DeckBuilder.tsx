@@ -81,9 +81,9 @@ export const DeckBuilder = () => {
           for (let i = 0; i < count; i++) {
             if (basics[foundName.toLowerCase()]) {
               responseObject.push({
-                Image: basics[foundName.toLowerCase()],
+                Image: [basics[foundName.toLowerCase()]],
                 Name: foundName,
-              } as HCEntry);
+              } as unknown as HCEntry);
             } else {
               const foundCard = cards.find(
                 (entry) =>
@@ -97,9 +97,9 @@ export const DeckBuilder = () => {
         } else {
           if (basics[name.toLowerCase()]) {
             responseObject.push({
-              Image: basics[name.toLowerCase()],
+              Image: [basics[name.toLowerCase()]],
               Name: name,
-            } as HCEntry);
+            } as unknown as HCEntry);
           } else {
             const foundCard = cards.find(
               (entry) => entry["Name"].toLowerCase() === name.toLowerCase()
@@ -113,9 +113,10 @@ export const DeckBuilder = () => {
         if (responseObject.length == 0) {
           responseObject.push({
             Name: name + " - not found",
-            Image:
+            Image: [
               "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg",
-          } as HCEntry);
+            ],
+          } as unknown as HCEntry);
         }
         return responseObject;
       });
@@ -198,7 +199,7 @@ Cock and Balls to Torture and Abuse"
               width="250px"
               title={entry.Name}
               key={entry.Name + i}
-              src={entry.Image}
+              src={entry.Image[0]!}
               crossOrigin="anonymous"
             />
           );

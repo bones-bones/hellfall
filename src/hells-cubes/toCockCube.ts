@@ -49,7 +49,7 @@ export const toCockCube = ({
     name.textContent = entry.Name;
     const setElement = xmlDoc.createElement("set");
     setElement.setAttribute("rarity", "common");
-    setElement.setAttribute("picURL", entry.Image);
+    setElement.setAttribute("picURL", entry.Image[0]!);
     setElement.textContent = set;
     const color = xmlDoc.createElement("color");
     color.textContent = (entry["Color(s)"] || "")
