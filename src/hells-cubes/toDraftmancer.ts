@@ -1,3 +1,4 @@
+// https://draftmancer.com/cubeformat.html#cube
 import { canBeACommander } from "../hellfall/canBeACommander";
 import { HCEntry } from "../types";
 import { DraftmancerCard } from "./types";
@@ -9,8 +10,39 @@ export const toDraftmancerCube = ({
   set: string;
   cards: HCEntry[];
 }) => {
+  const componentCards = cards.filter((e) => {
+    if (e.Name.includes("Larry")) {
+      console.log(e);
+    }
+    return Boolean(e["Component of"]);
+  });
+  console.log(componentCards);
+
+  const componentCardsAsDraftmancer = componentCards.map(getDraftMancerCard);
+
+  const noComponentCards = cards.filter((e) => e["Component of"] === "");
+
   if (set !== "HC6") {
-    const cardsToWrite: DraftmancerCard[] = cards.map(getDraftMancerCard);
+    const cardsToWrite = noComponentCards.map(getDraftMancerCard);
+
+    cardsToWrite.forEach((dmCard) => {
+      const cardsThatBelongToThis = componentCards.filter((e) =>
+        e["Component of"]?.includes(dmCard.name)
+      );
+
+      if (cardsThatBelongToThis.length > 0) {
+        const matchingDmCards = componentCardsAsDraftmancer.filter((e) =>
+          cardsThatBelongToThis.find((secondE) => secondE.Name === e.name)
+        );
+        dmCard.related_cards = matchingDmCards.map((e) => e.name);
+        dmCard.draft_effects = [
+          //@ts-ignore
+          ...(dmCard.draft_effects || []),
+          //@ts-ignore
+          { type: "AddCards", cards: matchingDmCards.map((e) => e.name) },
+        ];
+      }
+    });
 
     const formatted = `[Settings]
 {
@@ -18,7 +50,7 @@ export const toDraftmancerCube = ({
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA"
 }
 [CustomCards]\n${JSON.stringify(
-      cardsToWrite,
+      [...cardsToWrite, ...componentCardsAsDraftmancer],
       null,
       "\t"
     )}\n[MainSlot]\n${cardsToWrite
@@ -29,15 +61,53 @@ export const toDraftmancerCube = ({
 
     return formatted;
   } else {
-    const filteredToCommander = cards.filter(canBeACommander);
+    const cardsToWrite = noComponentCards.filter(canBeACommander);
 
-    const commanderCardsToWrite = filteredToCommander.map(getDraftMancerCard);
+    const commanderCardsToWrite = cardsToWrite.map(getDraftMancerCard);
+    console.log(componentCards);
+    commanderCardsToWrite.forEach((dmCard) => {
+      const cardsThatBelongToThis = componentCards.filter((e) =>
+        e["Component of"]?.includes(dmCard.name)
+      );
 
-    const canNotBeCommander = cards.filter((entry) => {
-      return !canBeACommander(entry);
+      if (cardsThatBelongToThis.length > 0) {
+        const matchingDmCards = componentCardsAsDraftmancer.filter((e) =>
+          cardsThatBelongToThis.find((secondE) => secondE.Name === e.name)
+        );
+        dmCard.related_cards = matchingDmCards.map((e) => e.name);
+        dmCard.draft_effects = [
+          //@ts-ignore
+          ...(dmCard.draft_effects || []),
+          //@ts-ignore
+          { type: "AddCards", cards: matchingDmCards.map((e) => e.name) },
+        ];
+      }
     });
 
+    const canNotBeCommander = noComponentCards.filter(
+      (entry) => !canBeACommander(entry)
+    );
+
     const otherCardsToWrite = canNotBeCommander.map(getDraftMancerCard);
+
+    otherCardsToWrite.forEach((dmCard) => {
+      const cardsThatBelongToThis = componentCards.filter((e) =>
+        e["Component of"]?.includes(dmCard.name)
+      );
+
+      if (cardsThatBelongToThis.length > 0) {
+        const matchingDmCards = componentCardsAsDraftmancer.filter((e) =>
+          cardsThatBelongToThis.find((secondE) => secondE.Name === e.name)
+        );
+        dmCard.related_cards = matchingDmCards.map((e) => e.id);
+        dmCard.draft_effects = [
+          //@ts-ignore
+          ...(dmCard.draft_effects || []),
+          //@ts-ignore
+          { type: "AddCards", cards: matchingDmCards.map((e) => e.name) },
+        ];
+      }
+    });
 
     const formatted = `[Settings]
 {
@@ -56,14 +126,16 @@ export const toDraftmancerCube = ({
     ]
 }
 [CustomCards]\n${JSON.stringify(
-      [...commanderCardsToWrite, ...otherCardsToWrite],
+      [
+        ...commanderCardsToWrite,
+        ...otherCardsToWrite,
+        ...componentCardsAsDraftmancer,
+      ],
       null,
       "\t"
     )}\n[CommanderSlot(2)]\n${commanderCardsToWrite
       .filter((e) => e.name != "Prismatic Pardner")
-      .map((e) => {
-        return `1 ${e.name}`;
-      })
+      .map((e) => `1 ${e.name}`)
       .join("\n")}\n[OtherSlot(18)]\n${otherCardsToWrite
       .map((e) => {
         return `1 ${e.name}`;
@@ -107,12 +179,24 @@ const getDraftMancerCard = (card: HCEntry) => {
     subtypes: card["Subtype(s)"]?.[0]!.split(";").filter((e) => e != "") || [],
     rating: 0,
     in_booster: true,
+    oracle_text: card["Text Box"]?.filter(Boolean).join("\n"),
+
     printed_names: { en: card.Name.replace(" :]", "") },
     image_uris: { en: card.Image[0]! },
     is_custom: true,
     ...(shouldReveal(card) && {
       draft_effects: ["FaceUp"],
     }),
+    ...(card.Image[2] &&
+      !card.Image[3] && {
+        back: {
+          name: card.Name.split(" // ")[1] || "",
+          image_uris: { en: card.Image[2]! },
+          type: `${card["Supertype(s)"]?.[1]?.replace(/;/g, " ")} ${card[
+            "Card Type(s)"
+          ]?.[1]?.replace(/;/g, " ")}`.trim(),
+        },
+      }),
   };
   return cardToReturn;
 };

@@ -23,11 +23,17 @@ export const CubeResources = () => {
           url: "https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113",
           title: "TTS Plugin by Benana",
         }}
+        description={"A refined version of the cube that started it all"}
       >
         <StyledLink to="one">Rules and quick links for weird cards</StyledLink>
       </CubeResource>
 
-      <CubeResource key={"HC2"} cubeId={"HC2"} cards={cards}></CubeResource>
+      <CubeResource
+        key={"HC2"}
+        cubeId={"HC2"}
+        cards={cards}
+        description="The second cube, trades purple for clear archetypes."
+      ></CubeResource>
 
       <CubeResource
         key={"HC3"}
@@ -37,48 +43,57 @@ export const CubeResources = () => {
           url: "https://steamcommunity.com/sharedfiles/filedetails/?id=3309357076",
           title: "TTS Plugin by Benana",
         }}
+        description="At least it's not HC2"
       ></CubeResource>
 
-      <CubeResource key={"HC4"} cubeId={"HC4"} cards={cards}></CubeResource>
+      <CubeResource
+        key={"HC4"}
+        cubeId={"HC4"}
+        cards={cards}
+        description="A Vintage power cube. A rip-roaring good time."
+      ></CubeResource>
 
       <CubeResource
         key={"HC5"}
         cubeId={"HC5"}
-        cards={new Array(720).fill({
-          "Card Type(s)": ["◻︎◻︎◻︎◻︎◻︎", "", "", ""],
-          Name: "◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎",
-          Image:
-            "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/G/l/i/iGlik/images.png",
-          CMC: 0,
-          Creator: "◻︎◻︎◻︎◻︎",
-          Set: "HC5",
-          Rulings: "",
-          Cost: ["", "", "", ""],
-          Loyalty: ["", null, "", ""],
-          "small alt image": "",
-          FIELD44: "",
-          FIELD45: "",
-          FIELD46: "",
-          FIELD47: "",
-          FIELD48: "",
-          FIELD49: "",
-          FIELD50: "",
-          FIELD51: "",
-          FIELD52: "",
-          FIELD53: "",
-          FIELD54: "",
-          FIELD55: "",
-          FIELD56: "",
-        })}
+        cards={getHc5()}
+        description="L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ"
       ></CubeResource>
 
-      <CubeResource key={"HCV"} cubeId={"HCV"} cards={cards}></CubeResource>
+      <CubeResource
+        key={"HCV"}
+        cubeId={"HCV"}
+        cards={cards}
+        description="Here's where vetoed, slotsed, and seasonal cards go"
+      ></CubeResource>
 
-      <CubeResource key={"HC6"} cubeId={"HC6"} cards={cards}></CubeResource>
+      <CubeResource
+        key={"HC6"}
+        cubeId={"HC6"}
+        cards={cards}
+        description="The Commander Cube"
+      ></CubeResource>
 
-      <CubeResource key={"HCP"} cubeId={"HCP"} cards={cards}></CubeResource>
+      <CubeResource
+        key={"HCC"}
+        cubeId={"HCC"}
+        cards={cards}
+        description="Cards that are relevant for constructed, but not in any cube"
+      ></CubeResource>
 
-      <CubeResource key={"HC7.0"} cubeId={"HC7.0"} cards={cards}></CubeResource>
+      <CubeResource
+        key={"HCP"}
+        cubeId={"HCP"}
+        cards={cards}
+        description="HELLSCUBE PLANECHASE"
+      ></CubeResource>
+
+      <CubeResource
+        key={"HC7.0"}
+        cubeId={"HC7.0"}
+        cards={cards}
+        description="The 7th cube, purple abounds"
+      ></CubeResource>
     </Container>
   );
 };
@@ -95,17 +110,19 @@ const CubeResource: React.FC<
     cards: HCEntry[];
     tts?: { url: string; title: string };
     cubeResourceLink?: string;
+    description: string;
   }>
-> = ({ cards, cubeId, tts, cubeResourceLink, children }) => {
+> = ({ cards, cubeId, tts, cubeResourceLink, children, description }) => {
   const parsedCubeId =
     cubeId.replace("HC", "") === "HLC"
       ? 1
-      : cubeId == "HCP" || cubeId == "HCV"
+      : cubeId == "HCP" || cubeId == "HCV" || cubeId == "HCC"
       ? cubeId
       : parseInt(cubeId.replace("HC", ""));
   return (
     <div>
       <h3>{cubeId}</h3>
+      <div>{description}</div>
       {children}
       <br />
       {cubeResourceLink && (
@@ -179,3 +196,31 @@ const CubeResource: React.FC<
     </div>
   );
 };
+
+const getHc5 = () =>
+  new Array(720).fill({
+    "Card Type(s)": ["◻︎◻︎◻︎◻︎◻︎", "", "", ""],
+    Name: "◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎",
+    Image:
+      "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/G/l/i/iGlik/images.png",
+    CMC: 0,
+    Creator: "◻︎◻︎◻︎◻︎",
+    Set: "HC5",
+    Rulings: "",
+    Cost: ["", "", "", ""],
+    Loyalty: ["", null, "", ""],
+    "small alt image": "",
+    FIELD44: "",
+    FIELD45: "",
+    FIELD46: "",
+    FIELD47: "",
+    FIELD48: "",
+    FIELD49: "",
+    FIELD50: "",
+    FIELD51: "",
+    FIELD52: "",
+    FIELD53: "",
+    FIELD54: "",
+    FIELD55: "",
+    FIELD56: "",
+  });

@@ -20,10 +20,6 @@ export const toDeck = (cards: HCEntry[]) => {
     };
     (baseDeck.ObjectStates[0].CustomDeck as any)[i + 1 + ""] = thing;
 
-    // console.log(
-    //   entry["Card Type(s)"],
-    //   entry["Card Type(s)"].filter((textEntry) => textEntry !== "").length
-    // );
     console.log(entry.Name);
 
     const mainCard = getCard({

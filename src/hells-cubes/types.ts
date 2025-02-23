@@ -18,5 +18,14 @@ export type DraftmancerCard = {
     en: string; //"https://lh3.googleusercontent.com/d/1PNd-reLsF8mypuQW9oiLu1N2GDuPCv7B"
   };
   is_custom: boolean; // true
-  draft_effects?: string[];
+  draft_effects?: (
+    | string
+    | {
+        type: "string";
+        count?: number;
+        cards?: string[];
+        duplicateProtection?: boolean;
+      }
+  )[];
+  related_cards?: string[];
 };

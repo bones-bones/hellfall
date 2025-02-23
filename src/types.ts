@@ -30,6 +30,7 @@ export type HCEntry = {
   "Text Box"?: SideArray<string>;
   "Flavor Text"?: SideArray<string>;
   "small alt image": string;
+  "Component of"?: string;
   FIELD44: string;
   FIELD45: string;
   FIELD46: string;

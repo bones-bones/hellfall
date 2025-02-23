@@ -128,7 +128,17 @@ export const SearchControls = () => {
         <CheckboxGroup
           initialValue={set}
           label={"Set"}
-          values={["HLC", "HC2", "HC3", "HC4", "HCV", "HC6", "HCP", "HC7"]}
+          values={[
+            "HLC",
+            "HC2",
+            "HC3",
+            "HC4",
+            "HCV",
+            "HC6",
+            "HCC",
+            "HCP",
+            "HC7",
+          ]}
           onChange={setSet}
         />
         <StyledComponentHolder>

@@ -3,7 +3,7 @@ import { HCEntry, TokenForImport } from "./types";
 export const tokenToCard = (token: TokenForImport) => {
   const card: HCEntry = {
     Name: token.Name.replace(/(\d+)$/, " $1"),
-    Image: token.Image,
+    Image: [token.Image, null, null, null, null],
     Creator: "",
     Set: "",
     Tags: "",

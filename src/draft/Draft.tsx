@@ -27,7 +27,7 @@ export const Draft = () => {
     const draft = [];
     if (set) {
       if (set === "HC6") {
-        const filtered = cards.filter((e) => e.Set === set);
+        const filtered = cards.filter(({ Set }) => Set === set);
         const commanders = filtered.filter(canBeACommander);
         const nonManders = filtered.filter((e) => !canBeACommander(e));
         const shuffledManders = commanders.sort(() =>
