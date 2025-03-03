@@ -39,12 +39,7 @@ You want to contribute? Great!
 
 
 ## Updating the database
-1. Go to the Hellscube Database google sheet
-2. File > Download > CSV
-3. Open the csv in a text editor
-4. Delete the first two lines
-5. Convert it to json: probably via [this](https://www.convertcsv.com/csv-to-json.htm)
-6. Copy the output and place it in the data value of (./src/data/Hellscube-Database.json), save
+1. TODO: update the rest
 7. run `yarn transform-hc` (this extracts the type and creator datasets)
 
 ## Committing code
