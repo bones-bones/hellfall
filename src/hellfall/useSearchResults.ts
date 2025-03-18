@@ -25,6 +25,7 @@ import {
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
 import { canBeACommander } from "./canBeACommander";
+import { MISC_BULLSHIT_COLORS } from "./constants";
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find((e) => set.includes(e)));
@@ -137,7 +138,7 @@ export const useSearchResults = () => {
             // }
             const miscBullshitColorIdentityCriteria =
               colorIdentityCriteria.includes("Misc Bullshit")
-                ? [...colorIdentityCriteria, "Pickle", "Piss", "Brown"].filter(
+                ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(
                     (e) => e != "Misc Bullshit"
                   )
                 : colorIdentityCriteria;
@@ -256,7 +257,7 @@ export const useSearchResults = () => {
             !(searchColors.includes("Colorless") && entry["Color(s)"] == "")
           ) {
             const newSearchColors = searchColors.includes("Misc bullshit")
-              ? [...searchColors, "Piss", "Pickle"]
+              ? [...searchColors, ...MISC_BULLSHIT_COLORS]
               : searchColors;
 
             switch (colorComparison) {

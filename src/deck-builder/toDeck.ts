@@ -9,7 +9,7 @@ export const toDeck = (cards: HCEntry[]) => {
     (baseDeck.ObjectStates[0].DeckIDs as number[]).push((i + 1) * 100);
 
     const thing = {
-      FaceURL: entry.Image,
+      FaceURL: entry.Image[0],
       BackURL:
         "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg",
       NumWidth: 1,

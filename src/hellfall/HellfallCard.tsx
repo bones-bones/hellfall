@@ -120,10 +120,17 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
             <>
               <Text key="Tags">
                 Tags:{" "}
-                {data["Tags"].split(";").map((tagEntry) => (
-                  <Link key={tagEntry} to={"?tags=" + tagEntry} target="_blank">
-                    {tagEntry}
-                  </Link>
+                {data["Tags"].split(";").map((tagEntry, i, ar) => (
+                  <>
+                    <Link
+                      key={tagEntry}
+                      to={"?tags=" + tagEntry}
+                      target="_blank"
+                    >
+                      {tagEntry}
+                    </Link>
+                    {i < ar.length - 1 && ", "}
+                  </>
                 ))}
               </Text>
               <br />
