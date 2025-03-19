@@ -184,9 +184,7 @@ const getDraftMancerCard = (card: HCEntry) => {
     printed_names: { en: card.Name.replace(" :]", "") },
     image_uris: { en: card.Image[0]! },
     is_custom: true,
-    ...(shouldReveal(card) && {
-      draft_effects: ["FaceUp"],
-    }),
+    ...getDraftEffects(card),
     ...(card.Image[2] &&
       !card.Image[3] && {
         back: {
@@ -199,6 +197,23 @@ const getDraftMancerCard = (card: HCEntry) => {
       }),
   };
   return cardToReturn;
+};
+
+const getDraftEffects = (card: HCEntry) => {
+  const specificCard = cardSpecificControl(card);
+  if (specificCard) {
+    return { draft_effects: specificCard };
+  }
+  if (shouldReveal(card)) {
+    return { draft_effects: ["FaceUp"] };
+  }
+};
+
+const cardSpecificControl = (card: HCEntry) => {
+  switch (card.Name) {
+    case "Cheatyspace":
+      return ["CogworkLibrarian"];
+  }
 };
 
 const shouldReveal = (card: HCEntry) => {

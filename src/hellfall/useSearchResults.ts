@@ -139,7 +139,7 @@ export const useSearchResults = () => {
             const miscBullshitColorIdentityCriteria =
               colorIdentityCriteria.includes("Misc Bullshit")
                 ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(
-                    (e) => e != "Misc Bullshit"
+                    (e) => e !== "Misc Bullshit"
                   )
                 : colorIdentityCriteria;
             if (Array.isArray(cardColorIdentityComponent)) {
