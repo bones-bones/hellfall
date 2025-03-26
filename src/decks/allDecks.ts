@@ -3,7 +3,7 @@ import { DeckInfo } from "./types";
 export const allDecks: DeckInfo[] = [
   {
     author: "KillerE",
-    title: "2024 Constructed Tournament - Shark Cheese",
+    title: "2024 Constructed Tournament - 3rd - Shark Cheese",
     text: "",
     cards: {
       sideboard: [
@@ -39,7 +39,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Garf",
-    title: "2024 Constructed Tournament - Food Food Food",
+    title: "2024 Constructed Tournament - 8th - Food Food Food",
     text: "",
     cards: {
       sideboard: [
@@ -70,7 +70,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Chai",
-    title: "2024 Constructed Tournament - Autotog aggro",
+    title: "2024 Constructed Tournament - 12th - Autotog aggro",
     text: "",
     cards: {
       sideboard: [
@@ -101,7 +101,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Nobroam",
-    title: "2024 Constructed Tournament - Errata Control",
+    title: "2024 Constructed Tournament - 5th - Errata Control",
     text: "",
     cards: {
       sideboard: [
@@ -141,7 +141,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "colorsofthestorm",
-    title: "2024 Constructed Tournament - Dump-Walla",
+    title: "2024 Constructed Tournament - 15th - Dump-Walla",
     text: "",
     cards: {
       main: [
@@ -175,7 +175,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Leslie",
-    title: "2024 Constructed Tournament - UW Control",
+    title: "2024 Constructed Tournament - 14th - UW Control",
     text: "",
     cards: {
       sideboard: [
@@ -212,7 +212,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Target Idiot Mono Red Player",
-    title: "2024 Constructed Tournament - White Token Midrange",
+    title: "2024 Constructed Tournament - 4th - White Token Midrange",
     text: "",
     cards: {
       sideboard: [
@@ -246,7 +246,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Fiish",
-    title: "2024 Constructed Tournament - Naya Pride",
+    title: "2024 Constructed Tournament - 9th - Naya Pride",
     text: "",
     cards: {
       sideboard: [
@@ -281,7 +281,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "LegallyAbyssal",
-    title: "2024 Constructed Tournament - Sideboard Purple",
+    title: "2024 Constructed Tournament - 13th - Sideboard Purple",
     text: "",
     cards: {
       sideboard: [
@@ -314,7 +314,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Benana",
-    title: "2024 Constructed Tournament - UB Meth Control",
+    title: "2024 Constructed Tournament - 1st - UB Meth Control",
     text: "",
     cards: {
       main: [
@@ -357,7 +357,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Glassbass",
-    title: "2024 Constructed Tournament - Pyramid Tempo",
+    title: "2024 Constructed Tournament - 2nd - Pyramid Tempo",
     text: "",
     cards: {
       sideboard: [
@@ -390,7 +390,7 @@ export const allDecks: DeckInfo[] = [
   },
   {
     author: "Frognarch",
-    title: "2024 Constructed Tournament - WB Limitless Lasagna",
+    title: "2024 Constructed Tournament - 6th - WB Limitless Lasagna",
     text: `Garfield, you fat cat. Why are you so big and fat?
 Swiss Army Mänufactör and a Sac outlet that makes tokens is a notably strong and easily enableable combo in hellscube constructed, the two cards combine for infinite death triggers, infinite artifact leaving the battlefield triggers, and when combined with something like Paul Blartist, Mall Cop, wins the game outright. This combo can be easy to get to, pieces can be as easy to find as the land Harare, or can be tutored for with reliability like Make-A-Wish.
 This deck benefits from the card Garfield Mystic reducing the price of premier removal spells like Yeast Within and Wizard Spell to allow for cheap and quick responses. It also reduces the price of the Mänufactör, Kambar, and other token payoffs, making the endgame come much faster, and combos for an infinitely large creature with the final combo if a Paul Blartist cannot be easily found.
@@ -429,7 +429,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
   },
   {
     author: "Requiem",
-    title: "2024 Constructed Tournament - RDW",
+    title: "2024 Constructed Tournament - 7th - RDW",
     text: "",
     cards: {
       main: [
@@ -460,7 +460,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
   },
   {
     author: "klunkerpunker",
-    title: "2024 Constructed Tournament - Jund Lands",
+    title: "2024 Constructed Tournament - 16th - Jund Lands",
     text: "",
     cards: {
       sideboard: [
@@ -502,7 +502,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
   },
   {
     author: "Flamingseahorse",
-    title: "2024 Constructed Tournament - Monowhite Control",
+    title: "2024 Constructed Tournament - 10th - Monowhite Control",
     text: "",
     cards: {
       sideboard: [
@@ -531,7 +531,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
   },
   {
     author: "sixel",
-    title: "2024 Constructed Tournament: Goyf Stuff",
+    title: "2024 Constructed Tournament - 11th - Goyf Stuff",
     text: "",
     cards: {
       sideboard: [
