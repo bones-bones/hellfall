@@ -18,7 +18,7 @@ import { activeCardAtom } from "../hellfall/searchAtoms";
 import { getColorIdentity } from "../hellfall/getColorIdentity";
 import { canBeACommander } from "../hellfall/canBeACommander";
 export const Breakdown = () => {
-  const cards = useAtomValue(cardsAtom).filter((e) => e.Set === "HC6");
+  const cards = useAtomValue(cardsAtom).filter((e) => e.Set === "HC7.0");
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = cards.find((entry) => {
     return entry.Name === activeCardFromAtom;
@@ -103,8 +103,8 @@ export const Breakdown = () => {
       <ColorTracker cards={sorted} color={"Blue"} />
       <ColorTracker cards={sorted} color={"Red"} />
       <ColorTracker cards={sorted} color={"Green"} />
-
-      <h2>Commanders (not ready)</h2>
+      <ColorTracker cards={sorted} color={"Purple"} />
+      {/* <h2>Commanders (not ready)</h2>
       {Object.entries(canBeCommander)
         .sort((a, b) => {
           if (a[0].split(";").length > b[0].split(";").length) {
@@ -114,7 +114,7 @@ export const Breakdown = () => {
         })
         .map(([key, cards]) => {
           return <div key={key}>{`${key}: ${cards.length}`}</div>;
-        })}
+        })} */}
     </>
   );
 };
@@ -133,6 +133,7 @@ const CardEntry = styled.div(
       | "Black"
       | "Red"
       | "Green"
+      | "Purple"
       | "Colorless"
       | "Multicolor";
   }) => ({
@@ -152,6 +153,7 @@ const hexForColor = (
     | "Red"
     | "Green"
     | "Colorless"
+    | "Purple"
     | "Multicolor"
 ) => {
   switch (color) {
@@ -172,6 +174,9 @@ const hexForColor = (
     }
     case "Colorless": {
       return "#Colorless";
+    }
+    case "Purple": {
+      return "#702963";
     }
     default:
       return "#c2ae00";

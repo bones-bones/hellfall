@@ -25,7 +25,7 @@ import {
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
 import { canBeACommander } from "./canBeACommander";
-import { MISC_BULLSHIT_COLORS } from "./constants";
+import { MISC_BULLSHIT, MISC_BULLSHIT_COLORS } from "./constants";
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find((e) => set.includes(e)));
@@ -90,7 +90,7 @@ export const useSearchResults = () => {
         }
 
         if (
-          nameSearch != "" &&
+          nameSearch !== "" &&
           !entry["Name"].toLowerCase().includes(nameSearch.toLowerCase())
         ) {
           return false;
@@ -137,9 +137,9 @@ export const useSearchResults = () => {
             //   console.log(colorIdentityCriteria);
             // }
             const miscBullshitColorIdentityCriteria =
-              colorIdentityCriteria.includes("Misc Bullshit")
+              colorIdentityCriteria.includes(MISC_BULLSHIT)
                 ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(
-                    (e) => e !== "Misc Bullshit"
+                    (e) => e !== MISC_BULLSHIT
                   )
                 : colorIdentityCriteria;
             if (Array.isArray(cardColorIdentityComponent)) {
@@ -256,16 +256,35 @@ export const useSearchResults = () => {
           if (
             !(searchColors.includes("Colorless") && entry["Color(s)"] == "")
           ) {
-            const newSearchColors = searchColors.includes("Misc bullshit")
-              ? [...searchColors, ...MISC_BULLSHIT_COLORS]
+            const newSearchColors = searchColors.includes(MISC_BULLSHIT)
+              ? [...searchColors]
               : searchColors;
+
+            const entryColors = (entry["Color(s)"] || "")
+              .split(";")
+              .map((colorEntry) => {
+                if (
+                  ![
+                    "Red",
+                    "Green",
+                    "White",
+                    "Blue",
+                    "Black",
+                    "Purple",
+                    "",
+                  ].includes(colorEntry)
+                ) {
+                  return MISC_BULLSHIT;
+                }
+                return colorEntry;
+              });
 
             switch (colorComparison) {
               case "<=": {
                 if (
-                  !(entry["Color(s)"] || "")
-                    .split(";")
-                    .every((colorEntry) => newSearchColors.includes(colorEntry))
+                  !entryColors.every((colorEntry) =>
+                    newSearchColors.includes(colorEntry)
+                  )
                 ) {
                   return false;
                 }
@@ -274,13 +293,9 @@ export const useSearchResults = () => {
               case "=": {
                 if (
                   !(
-                    (entry["Color(s)"] || "")
-                      .split(";")
-                      .every((colorEntry) =>
-                        newSearchColors.includes(colorEntry)
-                      ) &&
-                    (entry["Color(s)"] || "").split(";").length ==
-                      newSearchColors.length
+                    entryColors.every((colorEntry) =>
+                      newSearchColors.includes(colorEntry)
+                    ) && entryColors.length == newSearchColors.length
                   )
                 ) {
                   return false;
@@ -289,9 +304,9 @@ export const useSearchResults = () => {
               }
               case ">=": {
                 if (
-                  !(entry["Color(s)"] || "")
-                    .split(";")
-                    .find((colorEntry) => newSearchColors.includes(colorEntry))
+                  !entryColors.find((colorEntry) =>
+                    newSearchColors.includes(colorEntry)
+                  )
                 ) {
                   return false;
                 }
@@ -301,6 +316,7 @@ export const useSearchResults = () => {
             }
           }
         }
+
         return true;
       })
       .sort(sortFunction(sortRule));

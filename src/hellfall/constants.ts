@@ -1,3 +1,5 @@
+export const MISC_BULLSHIT = "Misc bullshit";
+
 export const colors = [
   "White",
   "Blue",
@@ -6,7 +8,7 @@ export const colors = [
   "Green",
   "Purple",
   "Colorless",
-  "Misc bullshit",
+  MISC_BULLSHIT,
 ];
 
 export const CHUNK_SIZE = 50;
