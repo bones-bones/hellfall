@@ -86,6 +86,16 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
                     <br />
                   </>
                 )}
+              {data["Loyalty"]?.[i] &&
+                data["Loyalty"][i]!.toString() !== "" &&
+                data["Loyalty"][i] != null && (
+                  <>
+                    <Text typeLevel="body.medium" key="loyalty">
+                      {data["Loyalty"]?.[i]}
+                    </Text>
+                    <br />
+                  </>
+                )}
             </div>
           ))}
           {data["Set"] && (

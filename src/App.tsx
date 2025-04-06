@@ -21,6 +21,7 @@ export const App = () => {
 const ApplicationRoutes = () => {
   return useRoutes([
     { path: "/hellscubes/*", element: <Hellscubes /> },
+
     { path: "/deck-builder/*", element: <DeckBuilder /> },
     { path: "/draft", element: <Draft></Draft> },
     { path: "/land-box", element: <LandBox></LandBox> },

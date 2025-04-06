@@ -166,7 +166,8 @@ const getDraftMancerCard = (card: HCEntry) => {
       .replace("{2/Brown}", "{2}") // Blonk
       .replace("Sacrifice a creature:", "{0}")
       .replace("{Discard your hand/RR}", "{R}{R}") // Dumpstergoyf
-      .replace("{BB/P}", "{B}"), //THE SKELETON
+      .replace("{BB/P}", "{B}") //THE SKELETON
+      .replace("{UU/P}", "U"),
 
     // @ts-ignore
     colors: card["Color(s)"]?.split(";").map(colorToDraftMancerColor),
