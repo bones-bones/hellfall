@@ -26,5 +26,5 @@ export const fetchDatabase = async () => {
     return cardObject as HCEntry;
   });
 
-  return theThing;
+  return theThing.filter((e) => e.Set != "C");
 };
