@@ -7,9 +7,7 @@ import { stringToMana } from "./stringToMana";
 
 import { Link } from "react-router-dom";
 export const HellfallCard = ({ data }: { data: HCEntry }) => {
-  // wow what a weird ts bug
   const sideCount =
-    // @ts-ignore
     data["Card Type(s)"]?.findLastIndex(
       (entry: any) => entry !== null && entry != ""
     ) + 1 || 0;
@@ -113,7 +111,22 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
           )}
           {
             <>
-              <SetLegality banned={data["Constructed"] == "Banned"} />
+              Constructed{" "}
+              <SetLegality
+                banned={Boolean(data["Constructed"]?.includes("Banned"))}
+              />
+              <br />
+              4CB{" "}
+              <SetLegality
+                banned={Boolean(data["Constructed"]?.includes("Banned (4CB)"))}
+              />
+              <br />
+              Hellsmander{" "}
+              <SetLegality
+                banned={Boolean(
+                  data["Constructed"]?.includes("Banned (Commander)")
+                )}
+              />
               <br />
             </>
           }

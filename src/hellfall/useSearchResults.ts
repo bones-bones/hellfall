@@ -124,7 +124,7 @@ export const useSearchResults = () => {
             return false;
           }
         }
-        if (legality === "legal" && entry.Constructed === "Banned") {
+        if (legality === "legal" && entry.Constructed?.includes("Banned")) {
           return false;
         }
         if (creators.length > 0 && !creators.includes(entry.Creator)) {

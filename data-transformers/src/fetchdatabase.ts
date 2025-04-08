@@ -7,7 +7,7 @@ export const fetchDatabase = async () => {
   );
   const asJson = (await requestedData.json()) as any;
   const [_garbage, keys, ...rest] = asJson.values as any[];
-  console.log(keys);
+
   const theThing = rest.map((entry) => {
     const cardObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
