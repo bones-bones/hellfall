@@ -124,8 +124,26 @@ export const useSearchResults = () => {
             return false;
           }
         }
-        if (legality === "legal" && entry.Constructed?.includes("Banned")) {
-          return false;
+        if (legality.length > 0) {
+          if (
+            legality.includes("legal") &&
+            entry.Constructed?.includes("Banned")
+          ) {
+            return false;
+          }
+          if (
+            legality.includes("4cbLegal") &&
+            entry.Constructed?.includes("Banned (4CB)")
+          ) {
+            return false;
+          }
+
+          if (
+            legality.includes("hellsmanderLegal") &&
+            entry.Constructed?.includes("Banned (Commander)")
+          ) {
+            return false;
+          }
         }
         if (creators.length > 0 && !creators.includes(entry.Creator)) {
           return false;
@@ -346,8 +364,8 @@ export const useSearchResults = () => {
     if (searchCmc !== undefined) {
       searchToSet.append("manaValue", JSON.stringify(searchCmc));
     }
-    if (legality !== "") {
-      searchToSet.append("legality", legality);
+    if (legality.length > 0) {
+      searchToSet.append("legality", legality.join(","));
     }
     if (creators.length > 0) {
       searchToSet.append("creator", creators.join(",,"));

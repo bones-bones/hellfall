@@ -24,7 +24,6 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
       <Card>
         <Card.Body padding={"zero"}>
           <StyledHeading size="large">{data["Name"]}</StyledHeading>
-
           {new Array(sideCount).fill("").map((_, i) => (
             <div key={"side-" + (i + 1)}>
               {i > 0 && <Divider />}
@@ -49,7 +48,7 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
                     <>
                       {entry
                         .split(/(?=[()]+)/)
-                        .filter((chunk) => chunk != ")")
+                        .filter((chunk) => chunk !== ")")
                         .map((chunk, ci) => {
                           if (chunk.startsWith("(")) {
                             return (

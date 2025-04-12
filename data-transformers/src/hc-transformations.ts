@@ -105,7 +105,7 @@ const main = async () => {
     if (
       entry["Text Box"]?.find((e) => e?.includes(" token")) &&
       !entry.tokens &&
-      entry.Set == "HC6"
+      entry.Set === "HC6"
     ) {
       console.log(
         entry.Name +

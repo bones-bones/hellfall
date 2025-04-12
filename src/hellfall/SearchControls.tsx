@@ -39,6 +39,7 @@ export const SearchControls = () => {
   const [toughness, setToughness] = useAtom(toughnessAtom);
 
   const [legality, setLegality] = useAtom(legalityAtom);
+
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
@@ -148,9 +149,45 @@ export const SearchControls = () => {
           <SearchCheckbox
             id="constructedLegal"
             type="checkbox"
-            checked={legality == "legal"}
+            checked={legality.includes("legal")}
             onChange={(event) => {
-              setLegality(event.target.checked ? "legal" : "");
+              setLegality(
+                event.target.checked
+                  ? [...legality, "legal"]
+                  : legality.filter((e) => e != "legal")
+              );
+            }}
+          />
+        </StyledComponentHolder>
+        <StyledComponentHolder>
+          <StyledLabel htmlFor="4cbLegal">Only 4 Card Blind Legal</StyledLabel>
+          <SearchCheckbox
+            id="4cbLegal"
+            type="checkbox"
+            checked={legality.includes("4cbLegal")}
+            onChange={(event) => {
+              setLegality(
+                event.target.checked
+                  ? [...legality, "4cbLegal"]
+                  : legality.filter((e) => e != "4cbLegal")
+              );
+            }}
+          />
+        </StyledComponentHolder>
+        <StyledComponentHolder>
+          <StyledLabel htmlFor="hellsmanderLegal">
+            Only Hellsmander Legal
+          </StyledLabel>
+          <SearchCheckbox
+            id="hellsmanderLegal"
+            type="checkbox"
+            checked={legality.includes("hellsmanderLegal")}
+            onChange={(event) => {
+              setLegality(
+                event.target.checked
+                  ? [...legality, "hellsmanderLegal"]
+                  : legality.filter((e) => e != "hellsmanderLegal")
+              );
             }}
           />
         </StyledComponentHolder>
