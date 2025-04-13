@@ -26,16 +26,16 @@ export const HellsCard = ({ queryString }: { queryString: string }) => {
   }, []);
 
   if (!card) {
-    return <LoadingSkeleton></LoadingSkeleton>;
+    return <LoadingSkeleton />;
   }
 
-  return <StyledImage src={card}></StyledImage>;
+  return <StyledImage src={card} />;
 };
 
 const StyledImage = styled.img({ maxWidth: "300px", display: "inline-block" });
 
 const LoadingSkeleton = () => {
-  return <Frame></Frame>;
+  return <Frame />;
 };
 
 const bounce = keyframes({ "50%": { backgroundColor: "black" } });

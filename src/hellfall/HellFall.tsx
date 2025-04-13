@@ -55,7 +55,7 @@ export const HellFall = () => {
                   icon={xIcon}
                   onClick={() => setActiveCardFromAtom("")}
                 />
-                {activeCard && <HellfallCard data={activeCard}></HellfallCard>}
+                {activeCard && <HellfallCard data={activeCard} />}
               </SPContainer>
             </Card.Body>
           </Card>
@@ -83,7 +83,7 @@ export const HellFall = () => {
             }}
             key={"" + entry.Name + i}
             name={entry.Name}
-            url={entry.Image[0]!}
+            url={entry.Image[1] || entry.Image[0]!}
           />
         ))}
       </Container>

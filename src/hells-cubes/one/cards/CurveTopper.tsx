@@ -45,7 +45,7 @@ export const DruidicVow = () => {
         Set Mana value
       </button>
       <br />
-      {cost && <HellsCard key={cost} queryString={`mana=${cost}`}></HellsCard>}
+      {cost && <HellsCard key={cost} queryString={`mana=${cost}`} />}
     </>
   );
 };

@@ -85,13 +85,13 @@ export const SearchControls = () => {
           possibleValues={creators_data.data}
           defaultValues={creators}
           onChange={setCreators}
-        ></PillSearch>
+        />
         <PillSearch
           label={"Tags"}
           possibleValues={tags_data.data}
           defaultValues={tags}
           onChange={setTags}
-        ></PillSearch>
+        />
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup

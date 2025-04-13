@@ -13,7 +13,7 @@ export const PlayCard = ({ image }: Props) => {
         setTapped(!tapped);
       }}
       tapped={tapped}
-    ></StyledImage>
+     />
   );
 };
 

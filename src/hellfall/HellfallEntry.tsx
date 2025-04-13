@@ -12,7 +12,7 @@ export const HellfallEntry = ({
   return (
     <Container key={name} role="button">
       <span>{name}</span>
-      <br></br>
+      <br />
       <StyledImage
         key={name}
         src={url}

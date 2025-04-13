@@ -91,7 +91,7 @@ export const Breakdown = () => {
                   icon={xIcon}
                   onClick={() => setActiveCardFromAtom("")}
                 />
-                {activeCard && <HellfallCard data={activeCard}></HellfallCard>}
+                {activeCard && <HellfallCard data={activeCard} />}
               </SPContainer>
             </Card.Body>
           </Card>

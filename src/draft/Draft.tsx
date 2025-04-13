@@ -92,13 +92,13 @@ export const Draft = () => {
               { value: "HC5" },
               { value: "HC6" },
             ]}
-          ></Select>
+           />
         </FormField>
       )}
       {deckToBuild.length !== 0 && (
-        <DeckConstruction cards={deckToBuild}></DeckConstruction>
+        <DeckConstruction cards={deckToBuild} />
       )}
-      {draft && deckToBuild.length === 0 && <Area></Area>}
+      {draft && deckToBuild.length === 0 && <Area />}
     </>
   );
 };

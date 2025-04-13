@@ -23,8 +23,8 @@ const ApplicationRoutes = () => {
     { path: "/hellscubes/*", element: <Hellscubes /> },
 
     { path: "/deck-builder/*", element: <DeckBuilder /> },
-    { path: "/draft", element: <Draft></Draft> },
-    { path: "/land-box", element: <LandBox></LandBox> },
+    { path: "/draft", element: <Draft /> },
+    { path: "/land-box", element: <LandBox /> },
     { path: "/decks/*", element: <Decks /> },
     { path: "/", element: <HellFall /> },
     { path: "/card/*", element: <SingleCard /> },

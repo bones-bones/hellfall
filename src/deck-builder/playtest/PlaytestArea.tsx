@@ -51,7 +51,7 @@ export const PlaytestArea = ({ cards }: Props) => {
               onClick={() => {
                 playCard(entry.id);
               }}
-            ></HandCard>
+             />
           );
         })}
       </div>
