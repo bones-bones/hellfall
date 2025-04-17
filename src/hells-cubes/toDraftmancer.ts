@@ -162,6 +162,7 @@ const getDraftMancerCard = (card: HCEntry) => {
       .replace(/\{Pickle\}/g, "{G}") // Pickle Krrik
       .replace(/\{U\/BB\}/g, "{U/B}")
       .replace("{Brown}", "{1}")
+      .replace("{Piss}", "{1}")
       .replace(/\{Blood\}/g, "{0}")
       .replace("{2/Brown}", "{2}") // Blonk
       .replace("Sacrifice a creature:", "{0}")

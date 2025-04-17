@@ -96,7 +96,8 @@ export const toCockCube = ({
     }
 
     let legality = undefined;
-    if (entry.Constructed === "Legal") {
+    // TODO: support other types
+    if (entry.Constructed?.includes("Legal")) {
       legality = xmlDoc.createElement("format-standard");
       legality.textContent = "legal";
     }
