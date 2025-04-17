@@ -297,7 +297,7 @@ module.exports = function (webpackEnv) {
     
         { filename: 'index.html',
           inject: true,
-          template: '/public/index.html'}
+          template: 'public/index.html'}
       ),
       new CopyPlugin({
         patterns: [

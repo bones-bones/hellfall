@@ -8,6 +8,7 @@ import { SingleCard } from "./hellfall/SingleCard";
 import { Header } from "./header";
 import { Breakdown } from "./breakdown/Breakdown";
 import { Decks } from "./decks/Decks";
+import { Watchwolfwar } from "./Watchwolfwar";
 
 export const App = () => {
   return (
@@ -29,5 +30,6 @@ const ApplicationRoutes = () => {
     { path: "/", element: <HellFall /> },
     { path: "/card/*", element: <SingleCard /> },
     { path: "/breakdown", element: <Breakdown /> },
+    { path: "/Watchwolfwar", element: <Watchwolfwar /> },
   ]);
 };
