@@ -151,23 +151,25 @@ export const useSearchResults = () => {
         if (
           colorIdentityCriteria.length > 0 &&
           !getColorIdentity(entry).every((cardColorIdentityComponent) => {
-            // if (entry.Name.includes("The Big Banana")) {
-            //   console.log(colorIdentityCriteria);
-            // }
             const miscBullshitColorIdentityCriteria =
               colorIdentityCriteria.includes(MISC_BULLSHIT)
                 ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(
                     (e) => e !== MISC_BULLSHIT
                   )
                 : colorIdentityCriteria;
+
+            // if (entry.Name == "Pissmite") {
+            //   console.log(miscBullshitColorIdentityCriteria);
+            // }
+
             if (Array.isArray(cardColorIdentityComponent)) {
-              return (
-                cardColorIdentityComponent.filter((e) => {
-                  return (
-                    miscBullshitColorIdentityCriteria.includes(e) ||
-                    e === undefined
-                  );
-                }).length >= 1
+              // if (entry.Name == "Pissmite") {
+              //   console.log(cardColorIdentityComponent);
+              // }
+              return cardColorIdentityComponent.every(
+                (e) =>
+                  miscBullshitColorIdentityCriteria.includes(e) ||
+                  e === undefined
               );
             } else {
               return miscBullshitColorIdentityCriteria.includes(
