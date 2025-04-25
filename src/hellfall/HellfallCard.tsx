@@ -9,7 +9,11 @@ import { Link } from "react-router-dom";
 export const HellfallCard = ({ data }: { data: HCEntry }) => {
   // wow what a weird ts bug
   const sideCount =
+<<<<<<< Updated upstream
     // @ts-ignore
+=======
+  //@ts-ignore
+>>>>>>> Stashed changes
     data["Card Type(s)"]?.findLastIndex(
       (entry: any) => entry !== null && entry != ""
     ) + 1 || 0;

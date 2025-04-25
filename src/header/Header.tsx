@@ -14,6 +14,7 @@ export const Header = () => {
           <Link to={"/hellscubes"}>cubes</Link>,{" "}
           <Link to={"/land-box"}>land box</Link>,{" "}
           <Link to={"/decks"}>constructed</Link>,{" "}
+          <Link to={"/Watchwolfwar"}>WatchWolfWar</Link>,{" "}
           <Link to={"https://discord.gg/EWFcAnVdkX"}>discord</Link>,{" "}
           <Link to={"https://www.reddit.com/r/HellsCube/"}>reddit</Link>{" "}
         </Navigation>
