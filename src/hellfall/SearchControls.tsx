@@ -28,7 +28,7 @@ import {
 } from "./searchAtoms";
 import { colors } from "./constants";
 import { SearchCheckbox } from "./SearchCheckbox";
-import { StyledLabel } from "./StyledLabel";
+import { StyledLabel, StyledLegend } from "./StyledLabel";
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
@@ -39,6 +39,7 @@ export const SearchControls = () => {
   const [toughness, setToughness] = useAtom(toughnessAtom);
 
   const [legality, setLegality] = useAtom(legalityAtom);
+
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
@@ -84,13 +85,13 @@ export const SearchControls = () => {
           possibleValues={creators_data.data}
           defaultValues={creators}
           onChange={setCreators}
-        ></PillSearch>
+        />
         <PillSearch
           label={"Tags"}
           possibleValues={tags_data.data}
           defaultValues={tags}
           onChange={setTags}
-        ></PillSearch>
+        />
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup
@@ -141,32 +142,69 @@ export const SearchControls = () => {
           ]}
           onChange={setSet}
         />
-        <StyledComponentHolder>
-          <StyledLabel htmlFor="constructedLegal">
-            Only Constructed Legal
-          </StyledLabel>
-          <SearchCheckbox
-            id="constructedLegal"
-            type="checkbox"
-            checked={legality == "legal"}
-            onChange={(event) => {
-              setLegality(event.target.checked ? "legal" : "");
-            }}
-          />
-        </StyledComponentHolder>
-        <StyledComponentHolder>
-          <StyledLabel htmlFor="canBeYourCommander">
-            {"Can Be Your Commander"}
-          </StyledLabel>
-          <SearchCheckbox
-            id="canBeYourCommander"
-            type="checkbox"
-            checked={isCommander === true}
-            onChange={(event) => {
-              setIsCommander(event.target.checked ? true : false);
-            }}
-          />
-        </StyledComponentHolder>
+        <fieldset>
+          <StyledLegend>{"Constructed Legality"}</StyledLegend>
+          <StyledComponentHolder>
+            <StyledLabel htmlFor="constructedLegal">Standard Legal</StyledLabel>
+            <SearchCheckbox
+              id="constructedLegal"
+              type="checkbox"
+              checked={legality.includes("legal")}
+              onChange={(event) => {
+                setLegality(
+                  event.target.checked
+                    ? [...legality, "legal"]
+                    : legality.filter((e) => e != "legal")
+                );
+              }}
+            />
+          </StyledComponentHolder>
+          <StyledComponentHolder>
+            <StyledLabel htmlFor="4cbLegal">4 Card Blind Legal</StyledLabel>
+            <SearchCheckbox
+              id="4cbLegal"
+              type="checkbox"
+              checked={legality.includes("4cbLegal")}
+              onChange={(event) => {
+                setLegality(
+                  event.target.checked
+                    ? [...legality, "4cbLegal"]
+                    : legality.filter((e) => e != "4cbLegal")
+                );
+              }}
+            />
+          </StyledComponentHolder>
+          <StyledComponentHolder>
+            <StyledLabel htmlFor="hellsmanderLegal">
+              Hellsmander Legal
+            </StyledLabel>
+            <SearchCheckbox
+              id="hellsmanderLegal"
+              type="checkbox"
+              checked={legality.includes("hellsmanderLegal")}
+              onChange={(event) => {
+                setLegality(
+                  event.target.checked
+                    ? [...legality, "hellsmanderLegal"]
+                    : legality.filter((e) => e != "hellsmanderLegal")
+                );
+              }}
+            />
+          </StyledComponentHolder>
+          <StyledComponentHolder>
+            <StyledLabel htmlFor="canBeYourCommander">
+              {"Can Be Your Commander"}
+            </StyledLabel>
+            <SearchCheckbox
+              id="canBeYourCommander"
+              type="checkbox"
+              checked={isCommander === true}
+              onChange={(event) => {
+                setIsCommander(event.target.checked ? true : false);
+              }}
+            />
+          </StyledComponentHolder>
+        </fieldset>
         <CmcSelector
           label={"Mana value"}
           onChange={setSearchCmc}

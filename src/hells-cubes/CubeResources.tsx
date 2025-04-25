@@ -33,7 +33,7 @@ export const CubeResources = () => {
         cubeId={"HC2"}
         cards={cards}
         description="The second cube, trades purple for clear archetypes."
-      ></CubeResource>
+       />
 
       <CubeResource
         key={"HC3"}
@@ -44,56 +44,56 @@ export const CubeResources = () => {
           title: "TTS Plugin by Benana",
         }}
         description="At least it's not HC2"
-      ></CubeResource>
+       />
 
       <CubeResource
         key={"HC4"}
         cubeId={"HC4"}
         cards={cards}
         description="A Vintage power cube. A rip-roaring good time."
-      ></CubeResource>
+       />
 
       <CubeResource
         key={"HC5"}
         cubeId={"HC5"}
         cards={getHc5()}
         description="L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ"
-      ></CubeResource>
+       />
 
       <CubeResource
         key={"HCV"}
         cubeId={"HCV"}
         cards={cards}
         description="Here's where vetoed, slotsed, and seasonal cards go"
-      ></CubeResource>
+       />
 
       <CubeResource
         key={"HC6"}
         cubeId={"HC6"}
         cards={cards}
         description="The Commander Cube"
-      ></CubeResource>
+       />
 
       <CubeResource
         key={"HCC"}
         cubeId={"HCC"}
         cards={cards}
         description="Cards that are relevant for constructed, but not in any cube"
-      ></CubeResource>
+       />
 
       <CubeResource
         key={"HCP"}
         cubeId={"HCP"}
         cards={cards}
         description="HELLSCUBE PLANECHASE"
-      ></CubeResource>
+       />
 
       <CubeResource
         key={"HC7.0"}
         cubeId={"HC7.0"}
         cards={cards}
         description="The 7th cube, purple abounds"
-      ></CubeResource>
+       />
     </Container>
   );
 };

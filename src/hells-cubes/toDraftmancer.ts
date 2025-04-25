@@ -159,14 +159,16 @@ const getDraftMancerCard = (card: HCEntry) => {
       .replace("{9/3}", "{3}")
       .replace("{-1}", "{0}")
       .replace(/\{.\/(.)\}/g, "{$1}")
-      .replace(/\{Pickle\}/g, "{G}")
+      .replace(/\{Pickle\}/g, "{G}") // Pickle Krrik
       .replace(/\{U\/BB\}/g, "{U/B}")
       .replace("{Brown}", "{1}")
+      .replace("{Piss}", "{1}")
       .replace(/\{Blood\}/g, "{0}")
-      .replace("{2/Brown}", "{2}")
+      .replace("{2/Brown}", "{2}") // Blonk
       .replace("Sacrifice a creature:", "{0}")
-      .replace("{Discard your hand/RR}", "{R}{R}")
-      .replace("{BB/P}", "{B}"),
+      .replace("{Discard your hand/RR}", "{R}{R}") // Dumpstergoyf
+      .replace("{BB/P}", "{B}") //THE SKELETON
+      .replace("{UU/P}", "U"),
 
     // @ts-ignore
     colors: card["Color(s)"]?.split(";").map(colorToDraftMancerColor),
@@ -181,8 +183,10 @@ const getDraftMancerCard = (card: HCEntry) => {
     in_booster: true,
     oracle_text: card["Text Box"]?.filter(Boolean).join("\n"),
 
-    printed_names: { en: card.Name.replace(" :]", "") },
-    image_uris: { en: card.Image[0]! },
+    printed_names: {
+      en: card.Name.replace(" :]", ""), // Six Flags
+    },
+    image_uris: { en: card.Image[1] || card.Image[0]! },
     is_custom: true,
     ...getDraftEffects(card),
     ...(card.Image[2] &&
@@ -211,8 +215,21 @@ const getDraftEffects = (card: HCEntry) => {
 
 const cardSpecificControl = (card: HCEntry) => {
   switch (card.Name) {
-    case "Cheatyspace":
-      return ["CogworkLibrarian"];
+    case "Cheatyspace": {
+      return ["FaceUp", "CogworkLibrarian"];
+    }
+    case "Moe, Pursuant of Wisdom": {
+      return [
+        "FaceUp",
+        {
+          type: "AddCards",
+          cards: ["Larry, Pure of Action", "Curly, Focused of Mind"],
+        },
+      ];
+    }
+    case "Draft Horse": {
+      return ["FaceUp", "CogworkGrinder"];
+    }
   }
 };
 

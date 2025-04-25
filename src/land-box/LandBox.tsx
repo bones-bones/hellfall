@@ -36,7 +36,7 @@ export const LandBox = () => {
         </select>
       </div>
       {active && (
-        <BigView clear={() => setActive(undefined)} land={active}></BigView>
+        <BigView clear={() => setActive(undefined)} land={active} />
       )}
       <Container>
         {Object.entries(grouped)

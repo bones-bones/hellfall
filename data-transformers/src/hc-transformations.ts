@@ -16,13 +16,13 @@ const main = async () => {
   const usernameMappings = await fetchUsernameMappings();
 
   const tokens = await fetchTokens();
-  const tokensWithBetterName = tokens.map((e) => {
+  const tokensWithBetterName = tokens.map((entry) => {
     const {
       //@ts-ignore
       ["Name (number tokens with the same name, if only one token has that name still add a 1.)"]:
         Name,
       ...rest
-    } = e;
+    } = entry;
     return { Name, ...rest };
   });
   const tokenMap = (tokensWithBetterName as TokenForImport[]).reduce<
@@ -90,6 +90,11 @@ const main = async () => {
       entry.Tags.split(";").forEach((e) => tagSet.add(e));
     }
 
+    if (entry.Constructed) {
+      // @ts-expect-error not sure about this approach but hey.
+      entry.Constructed = entry.Constructed.split(",");
+    }
+
     if (tokenMap[entry.Name]) {
       // Debug unused tokens
       // (tokenMap[entry.Name] as any).used = true;
@@ -100,9 +105,13 @@ const main = async () => {
     if (
       entry["Text Box"]?.find((e) => e?.includes(" token")) &&
       !entry.tokens &&
-      entry.Set == "HC6"
+      entry.Set === "HC6"
     ) {
-      console.log(/[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0]); //, entry["Text Box"]);
+      console.log(
+        entry.Name +
+          "  " +
+          /[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0]
+      );
     }
   });
 

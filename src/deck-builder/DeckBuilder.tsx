@@ -128,7 +128,7 @@ export const DeckBuilder = () => {
       <ImportInstructions />
       {renderCards.length > 0 &&
         (playtesting ? (
-          <PlaytestArea cards={renderCards}></PlaytestArea>
+          <PlaytestArea cards={renderCards} />
         ) : (
           <button
             onClick={() => {
@@ -144,7 +144,7 @@ export const DeckBuilder = () => {
           onBlur={(event) => {
             setNameOfDeck(event.target.value);
           }}
-        ></TextInput>
+         />
       </FormField>
       <StyledTextArea
         ref={textAreaRef}
@@ -153,7 +153,7 @@ export const DeckBuilder = () => {
 Swamp
 Cock and Balls to Torture and Abuse"
       />
-      <br></br>
+      <br />
       <button
         onClick={() => {
           if (textAreaRef.current) {
@@ -191,7 +191,7 @@ Cock and Balls to Torture and Abuse"
         Download for TTS
       </button>{" "}
       Cards in deck {renderCards.length}
-      <br></br>
+      <br />
       <DeckContainer ref={ref}>
         {renderCards?.map((entry, i) => {
           return (

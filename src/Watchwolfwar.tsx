@@ -7,18 +7,21 @@ import { TeamWolf } from "./TeamWolf";
 import { stringify } from "querystring";
 
 export const Watchwolfwar = () => {
-  const RandyRandom = (useAtomValue(cardsAtom))
-  const FilterCard = RandyRandom.filter((entry)=>{return entry.isActualToken!=true})
-  const LeftCard = FilterCard[Math.floor(Math.random() * FilterCard.length)]
-  const RightCard = FilterCard[Math.floor(Math.random() * FilterCard.length)]
-  const [state, setstate]=useState("bingus")
-  const [highState, setHighState]=useState<any>()
-  useEffect(()=>{
-    if (state == "bingus"){
-    //Just trying to make sure everything doesn't break when the first state happens
-    }else{
-      TeamWolf(state).then(setHighState)}
-    }, [state])
+  const RandyRandom = useAtomValue(cardsAtom);
+  const FilterCard = RandyRandom.filter((entry) => {
+    return entry.isActualToken != true;
+  });
+  const LeftCard = FilterCard[Math.floor(Math.random() * FilterCard.length)];
+  const RightCard = FilterCard[Math.floor(Math.random() * FilterCard.length)];
+  const [state, setstate] = useState("bingus");
+  const [highState, setHighState] = useState<any>();
+  useEffect(() => {
+    if (state == "bingus") {
+      //Just trying to make sure everything doesn't break when the first state happens
+    } else {
+      TeamWolf(state).then(setHighState);
+    }
+  }, [state]);
   return (
     <PageContainer>
       <StyleComponent>
@@ -33,15 +36,25 @@ export const Watchwolfwar = () => {
         </Subtitle>
       </StyleComponent>
       <CardContainer>
-        <HellfallEntry name= {LeftCard.Name} url= {LeftCard.Image[0]!} onClick= {()=>{setstate(LeftCard.Name)}} />
-        <HellfallEntry name= {RightCard.Name} url= {RightCard.Image[0]!} onClick= {()=>{setstate(RightCard.Name)}} />
+        <HellfallEntry
+          name={LeftCard.Name}
+          url={LeftCard.Image[0]!}
+          onClick={() => {
+            setstate(LeftCard.Name);
+          }}
+        />
+        <HellfallEntry
+          name={RightCard.Name}
+          url={RightCard.Image[0]!}
+          onClick={() => {
+            setstate(RightCard.Name);
+          }}
+        />
       </CardContainer>
       <StyleComponent>
-        <ResultsReceptaclePlaceThing>
-        {state}
-        </ResultsReceptaclePlaceThing>
+        <ResultsReceptaclePlaceThing>{state}</ResultsReceptaclePlaceThing>
       </StyleComponent>
-      <div>{JSON.stringify(highState, null, '\t')}</div>
+      <div>{JSON.stringify(highState, null, "\t")}</div>
     </PageContainer>
   );
 };

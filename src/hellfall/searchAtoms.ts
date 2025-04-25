@@ -10,8 +10,11 @@ export const activeCardAtom = atom<string>(
 export const rulesSearchAtom = atom<string[]>(
   searchParams.get("rules")?.split(",") || []
 );
-export const legalityAtom = atom<"legal" | "banned" | "">(
-  (searchParams.get("legality") as "legal" | "banned" | "") || ""
+
+type LegalType = "legal" | "banned" | "4cbLegal" | "hellsmanderLegal";
+
+export const legalityAtom = atom<LegalType[]>(
+  (searchParams.get("legality")?.split(",") || []) as LegalType[]
 );
 
 export const typeSearchAtom = atom<string[]>(

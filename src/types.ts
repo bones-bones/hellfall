@@ -19,7 +19,8 @@ export type HCEntry = {
   Rulings: string; //"See Magic Comprehensive Rules 894.1c Deez",
   CMC: number; //3,
   "Color(s)"?: string; // "Blue",
-  Constructed?: "Legal" | "Banned";
+  Constructed?: ("Legal" | "Banned" | "Banned (4CB)" | "Banned (Commander)")[];
+
   Cost: SideArray<string>;
   "Supertype(s)"?: SideArray<string>;
   "Card Type(s)": SideArray<string>;

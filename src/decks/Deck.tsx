@@ -126,7 +126,7 @@ export const Deck = () => {
               );
             })}
           </div>
-          <CardContainer></CardContainer>
+          <CardContainer />
         </DeckCon>
       </BigContainer>
     </BiggestContainer>
@@ -162,7 +162,7 @@ const CardContainer = () => {
     <>
       {activeCard && (
         <ActiveCardContainer showGutter={window.innerWidth > 800}>
-          <HellfallCard data={activeCard}></HellfallCard>
+          <HellfallCard data={activeCard} />
         </ActiveCardContainer>
       )}
     </>

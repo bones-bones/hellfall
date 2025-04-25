@@ -104,9 +104,9 @@ export const specialCards: Card[] = [
     component: (
       <>
         <HellsCard queryString={`!"chandra,+novice+pyromancer"`} />
-        <br></br>
+        <br />
         <HellsCard queryString={`!"chandra,+acolyte+of+flame"`} />
-        <br></br>
+        <br />
         <HellsCard queryString={`!"chandra,+awakened+inferno"`} />
       </>
     ),
@@ -156,15 +156,15 @@ export const specialCards: Card[] = [
       <>
         <h2>Blarney&apos;s</h2>
         <HellsCard queryString={`!"rampant+growth"`} />
-        <br></br>
+        <br />
         <HellsCard queryString={`!"Naturalize"`} />
-        <br></br>
+        <br />
         <HellsCard queryString={`!"explore"`} />
         <h2>Stumpy&apos;s</h2>
         <HellsCard queryString={`!"fog"`} />
-        <br></br>
+        <br />
         <HellsCard queryString={`!"giant+growth"`} />
-        <br></br>
+        <br />
         <HellsCard queryString={`!"reclaim"`} />
       </>
     ),

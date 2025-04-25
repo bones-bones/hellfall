@@ -9,8 +9,11 @@ export const getColorIdentity = (card: HCEntry) => {
 
     icons?.forEach((icon) => {
       const iconArray = icon.replaceAll(/[{}]/g, "").split("/");
-      const nResp = iconArray.map((e) => manaSymbolColorMatching[e[0]]); // TODO: the first char cause skeleton
+      const nResp = iconArray.map((e) => manaSymbolColorMatching[e]); // TODO: the first char cause skeleton
 
+      // if (card.Name === "Blonk") {
+      //   console.log(nResp);
+      // }
       if (nResp) {
         //@ts-ignore
         colorIdentity.add(nResp);
@@ -21,12 +24,10 @@ export const getColorIdentity = (card: HCEntry) => {
   card["Text Box"]?.forEach((entry) => {
     const minusReminderText = (entry || "").replaceAll(/\(.*?\)/g, "");
     const icons = minusReminderText.match(/\{.+?\}/g);
-    // if (card.Name.includes("The Big Ban")) {
-    //   console.log(icons);
-    // }
+
     icons?.forEach((icon) => {
       const iconArray = icon.replaceAll(/[{}]/g, "").split("/");
-      const nResp = iconArray.map((e) => manaSymbolColorMatching[e[0]]); // TODO: the first char cause skeleton
+      const nResp = iconArray.map((e) => manaSymbolColorMatching[e]); // TODO: the first char cause skeleton
 
       if (nResp) {
         //@ts-ignore
@@ -59,6 +60,7 @@ const manaSymbolColorMatching: Record<
   | "Pickle"
   | undefined
   | "Purple"
+  | "Brown"
 > = {
   W: "White",
   B: "Black",
@@ -67,6 +69,7 @@ const manaSymbolColorMatching: Record<
   G: "Green",
   P: "Purple",
   Piss: "Piss",
+  Brown: "Brown",
 };
 
 const landToColorMapping: Record<
