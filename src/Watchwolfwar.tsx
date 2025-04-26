@@ -16,14 +16,15 @@ export const Watchwolfwar = () => {
   const RightCard = FilterCard[Math.floor(Math.random() * FilterCard.length)];
   const [state, setstate] = useState("bingus");
   const [highState, setHighState] = useState<any>();
-  const [scoreState, setScoreState] = useState<{Name:string, Number:number}[]>();
+  const [scoreState, setScoreState] =
+    useState<{ Name: string; Number: number }[]>();
   useEffect(() => {
     if (state == "bingus") {
       //Just trying to make sure everything doesn't break when the first state happens
     } else {
       TeamWolf().then(setScoreState);
     }
-      TeamClock(state).then(setHighState);
+    TeamClock(state).then(setHighState);
   }, [state]);
   return (
     <PageContainer>
@@ -55,10 +56,23 @@ export const Watchwolfwar = () => {
         />
       </CardContainer>
       <StyleComponent>
-        <ResultsReceptaclePlaceThing>{scoreState?.sort((a,b)=>{return(b.Number - a.Number)}).slice(0, RandyRandom.length).map(entry=>{
-          return <div key={entry.Name}><div key={entry.Name}>{entry.Name}</div><div key={entry.Number}>{entry.Number}</div></div>
-        })}</ResultsReceptaclePlaceThing>
+        <ResultsReceptaclePlaceThing>
+          {scoreState
+            ?.sort((a, b) => {
+              return b.Number - a.Number;
+            })
+            .slice(0, RandyRandom.length)
+            .map((entry) => {
+              return (
+                <div key={entry.Name}>
+                  <div key={entry.Name}>{entry.Name}</div>
+                  <div key={entry.Number}>{entry.Number}</div>
+                </div>
+              );
+            })}
+        </ResultsReceptaclePlaceThing>
       </StyleComponent>
+      <div>{JSON.stringify(highState, null, "\t")}</div>
     </PageContainer>
   );
 };
