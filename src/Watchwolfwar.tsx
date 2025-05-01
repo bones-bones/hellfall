@@ -2,10 +2,9 @@ import styled from "@emotion/styled";
 import { HellfallEntry } from "./hellfall/HellfallEntry";
 import { useAtomValue } from "jotai";
 import { cardsAtom } from "./hellfall/cardsAtom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TeamWolf } from "./TeamWolf";
 import { TeamClock } from "./TeamWolf";
-import { stringify } from "querystring";
 
 export const Watchwolfwar = () => {
   const RandyRandom = useAtomValue(cardsAtom);
@@ -14,18 +13,15 @@ export const Watchwolfwar = () => {
   });
   const LeftCard = FilterCard[Math.floor(Math.random() * FilterCard.length)];
   const RightCard = FilterCard[Math.floor(Math.random() * FilterCard.length)];
-  const [state, setstate] = useState("bingus");
-  const [highState, setHighState] = useState<any>();
-  const [scoreState, setScoreState] =
+
+  const [standings, setStandings] =
     useState<{ Name: string; Number: number }[]>();
-  useEffect(() => {
-    if (state == "bingus") {
-      //Just trying to make sure everything doesn't break when the first state happens
-    } else {
-      TeamWolf().then(setScoreState);
-    }
-    TeamClock(state).then(setHighState);
-  }, [state]);
+
+  const updateStandings = async (cardName: string) => {
+    await TeamClock(cardName);
+    setStandings(await TeamWolf());
+  };
+
   return (
     <PageContainer>
       <StyleComponent>
@@ -44,20 +40,20 @@ export const Watchwolfwar = () => {
           name={LeftCard.Name}
           url={LeftCard.Image[0]!}
           onClick={() => {
-            setstate(LeftCard.Name);
+            updateStandings(LeftCard.Name);
           }}
         />
         <HellfallEntry
           name={RightCard.Name}
           url={RightCard.Image[0]!}
           onClick={() => {
-            setstate(RightCard.Name);
+            updateStandings(RightCard.Name);
           }}
         />
       </CardContainer>
       <StyleComponent>
         <ResultsReceptaclePlaceThing>
-          {scoreState
+          {standings
             ?.sort((a, b) => {
               return b.Number - a.Number;
             })
@@ -72,7 +68,6 @@ export const Watchwolfwar = () => {
             })}
         </ResultsReceptaclePlaceThing>
       </StyleComponent>
-      <div>{JSON.stringify(highState, null, "\t")}</div>
     </PageContainer>
   );
 };
