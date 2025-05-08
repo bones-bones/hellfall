@@ -10,7 +10,7 @@ import { HCEntry } from "./types";
 export const Watchwolfwar = () => {
   const RandyRandom = useAtomValue(cardsAtom);
   const FilterCard = RandyRandom.filter((entry) => {
-    return entry.isActualToken != true;
+    return entry.isActualToken != true && entry.Set != "C";
   });
   const [TwoCardState, SetTwoCardState] = useState<{
     LeftCard: HCEntry;

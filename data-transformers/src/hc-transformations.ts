@@ -92,7 +92,7 @@ const main = async () => {
 
     if (entry.Constructed) {
       // @ts-expect-error not sure about this approach but hey.
-      entry.Constructed = entry.Constructed.split(",");
+      entry.Constructed = entry.Constructed.split(", ");
     }
 
     if (tokenMap[entry.Name]) {
