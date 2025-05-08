@@ -12,12 +12,20 @@ export const Watchwolfwar = () => {
   const FilterCard = RandyRandom.filter((entry) => {
     return entry.isActualToken != true;
   });
-  const [TwoCardState, SetTwoCardState] = 
-  useState<{LeftCard:HCEntry, RightCard:HCEntry}>({LeftCard:FilterCard[Math.floor(Math.random() * FilterCard.length)], RightCard:FilterCard[Math.floor(Math.random() * FilterCard.length)]})
+  const [TwoCardState, SetTwoCardState] = useState<{
+    LeftCard: HCEntry;
+    RightCard: HCEntry;
+  }>({
+    LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+    RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+  });
 
   const updateStandings = async (cardName: string) => {
     await TeamClock(cardName);
-    SetTwoCardState({LeftCard:FilterCard[Math.floor(Math.random() * FilterCard.length)], RightCard:FilterCard[Math.floor(Math.random() * FilterCard.length)]})
+    SetTwoCardState({
+      LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+      RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+    });
   };
 
   return (
@@ -51,7 +59,7 @@ export const Watchwolfwar = () => {
       </CardContainer>
       <StyleComponent>
         <ResultsReceptaclePlaceThing>
-         <Link to={"/Watchwolfresults"}>Results!</Link>{" "}
+          <Link to={"/Watchwolfresults"}>Results!</Link>{" "}
         </ResultsReceptaclePlaceThing>
       </StyleComponent>
     </PageContainer>
