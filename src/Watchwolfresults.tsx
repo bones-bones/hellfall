@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useAtom, useAtomValue } from "jotai";
 import { cardsAtom } from "./hellfall/cardsAtom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TeamWolf as GetCardVotes } from "./TeamWolf";
 import { SidePanelOpenDirection, Card, ToolbarIconButton, SidePanel } from "@workday/canvas-kit-react";
 import { HellfallCard } from "./hellfall/HellfallCard";
@@ -10,13 +10,13 @@ import { xIcon } from "@workday/canvas-system-icons-web";
 
 export const Watchwolfresults = () => {
   const RandyRandom = useAtomValue(cardsAtom);
+  const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = RandyRandom.find((entry) => {
     return entry.Name === activeCardFromAtom;
   });
-  const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const [standings, setStandings] =
     useState<{ Name: string; Number: number }[]>();
-    GetCardVotes().then(setStandings)
+    useEffect(()=>{ GetCardVotes().then(setStandings)},[])
   return (
     <PageContainer>
         <StyledSidePanel
@@ -46,7 +46,7 @@ export const Watchwolfresults = () => {
       </StyleComponent>
       <StyleComponent>
         <Subtitle>
-          Brought to you by goldcrackle, with odes of help from llllll.
+          Here are the results! Do not be too sad if you are at the bottom. It is okay. The Licensed Hellscube Therapist is always here to help.
         </Subtitle>
       </StyleComponent>
       <StyleComponent>
@@ -59,7 +59,7 @@ export const Watchwolfresults = () => {
             .map((entry) => {
               return (
                 <div key={entry.Name}>
-                  <div key={entry.Name}>{entry.Name} - {entry.Number}</div>
+                  <span key={entry.Name}onMouseEnter={()=>{setActiveCardFromAtom(entry.Name)}}>{entry.Name} - {entry.Number}</span>
                 </div>
               );
             })}
