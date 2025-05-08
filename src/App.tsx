@@ -9,6 +9,7 @@ import { Header } from "./header";
 import { Breakdown } from "./breakdown/Breakdown";
 import { Decks } from "./decks/Decks";
 import { Watchwolfwar } from "./Watchwolfwar";
+import { Watchwolfresults } from "./Watchwolfresults";
 
 export const App = () => {
   return (
@@ -31,5 +32,6 @@ const ApplicationRoutes = () => {
     { path: "/card/*", element: <SingleCard /> },
     { path: "/breakdown", element: <Breakdown /> },
     { path: "/Watchwolfwar", element: <Watchwolfwar /> },
+    { path: "/Watchwolfresults", element: <Watchwolfresults />}
   ]);
 };

@@ -3,23 +3,29 @@ import { HellfallEntry } from "./hellfall/HellfallEntry";
 import { useAtomValue } from "jotai";
 import { cardsAtom } from "./hellfall/cardsAtom";
 import { useState } from "react";
-import { TeamWolf } from "./TeamWolf";
 import { TeamClock } from "./TeamWolf";
+import { Link } from "react-router-dom";
+import { HCEntry } from "./types";
 
 export const Watchwolfwar = () => {
   const RandyRandom = useAtomValue(cardsAtom);
   const FilterCard = RandyRandom.filter((entry) => {
     return entry.isActualToken != true;
   });
-  const LeftCard = FilterCard[Math.floor(Math.random() * FilterCard.length)];
-  const RightCard = FilterCard[Math.floor(Math.random() * FilterCard.length)];
-
-  const [standings, setStandings] =
-    useState<{ Name: string; Number: number }[]>();
+  const [TwoCardState, SetTwoCardState] = useState<{
+    LeftCard: HCEntry;
+    RightCard: HCEntry;
+  }>({
+    LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+    RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+  });
 
   const updateStandings = async (cardName: string) => {
     await TeamClock(cardName);
-    setStandings(await TeamWolf());
+    SetTwoCardState({
+      LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+      RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+    });
   };
 
   return (
@@ -37,35 +43,23 @@ export const Watchwolfwar = () => {
       </StyleComponent>
       <CardContainer>
         <HellfallEntry
-          name={LeftCard.Name}
-          url={LeftCard.Image[0]!}
+          name={TwoCardState.LeftCard.Name}
+          url={TwoCardState.LeftCard.Image[0]!}
           onClick={() => {
-            updateStandings(LeftCard.Name);
+            updateStandings(TwoCardState.LeftCard.Name);
           }}
         />
         <HellfallEntry
-          name={RightCard.Name}
-          url={RightCard.Image[0]!}
+          name={TwoCardState.RightCard.Name}
+          url={TwoCardState.RightCard.Image[0]!}
           onClick={() => {
-            updateStandings(RightCard.Name);
+            updateStandings(TwoCardState.RightCard.Name);
           }}
         />
       </CardContainer>
       <StyleComponent>
         <ResultsReceptaclePlaceThing>
-          {standings
-            ?.sort((a, b) => {
-              return b.Number - a.Number;
-            })
-            .slice(0, RandyRandom.length)
-            .map((entry) => {
-              return (
-                <div key={entry.Name}>
-                  <div key={entry.Name}>{entry.Name}</div>
-                  <div key={entry.Number}>{entry.Number}</div>
-                </div>
-              );
-            })}
+          <Link to={"/Watchwolfresults"}>Results!</Link>{" "}
         </ResultsReceptaclePlaceThing>
       </StyleComponent>
     </PageContainer>
