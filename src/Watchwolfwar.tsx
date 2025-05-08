@@ -9,7 +9,7 @@ import { TeamClock } from "./TeamWolf";
 export const Watchwolfwar = () => {
   const RandyRandom = useAtomValue(cardsAtom);
   const FilterCard = RandyRandom.filter((entry) => {
-    return entry.isActualToken != true;
+    return entry.isActualToken != true && entry.Set != "C";
   });
   const LeftCard = FilterCard[Math.floor(Math.random() * FilterCard.length)];
   const RightCard = FilterCard[Math.floor(Math.random() * FilterCard.length)];

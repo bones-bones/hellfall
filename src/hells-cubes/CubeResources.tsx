@@ -5,95 +5,225 @@ import { cardsAtom } from "../hellfall/cardsAtom";
 import { toCockCube } from "./toCockCube";
 import { useAtomValue } from "jotai";
 import { HCEntry } from "../types";
-import { PropsWithChildren } from "react";
+import { ReactNode } from "react";
 import { toDraftmancerCube } from "./toDraftmancer";
+import { getHc5 } from "./getHc5";
+
+type CubeSetup = {
+  name: string;
+  id: string;
+  description: string;
+  cards: HCEntry[];
+  quickLink?: ReactNode;
+  tts?: ReactNode;
+  printLink?: ReactNode;
+};
 
 export const CubeResources = () => {
   const cards = useAtomValue(cardsAtom);
-
+  const cubeSetup: CubeSetup[] = [
+    {
+      name: "HellsCube",
+      id: "HLC",
+      description: "A refined version of the cube that started it all",
+      cards: cards.filter((e) => e.Set === "HLC"),
+      quickLink: <StyledLink to="one">Rules and macros</StyledLink>,
+      tts: (
+        <StyledLink
+          to={
+            "https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113"
+          }
+        >
+          Plugin by Benana
+        </StyledLink>
+      ),
+    },
+    {
+      name: "HellsCube 2",
+      id: "HC2",
+      description: "The second cube, trades purple for clear archetypes.",
+      cards: cards.filter((e) => e.Set === "HC2"),
+    },
+    {
+      name: "HellsCube 3",
+      id: "HC3",
+      description: "At least it's not HC2",
+      cards: cards.filter((e) => e.Set === "HC3"),
+      tts: (
+        <StyledLink
+          to={
+            "https://steamcommunity.com/sharedfiles/filedetails/?id=3309357076"
+          }
+        >
+          Plugin by Benana
+        </StyledLink>
+      ),
+    },
+    {
+      name: "HellsCube 4",
+      id: "HC4",
+      description: "A Vintage power cube. A rip-roaring good time",
+      cards: cards.filter((e) => e.Set === "HC4"),
+      printLink: (
+        <StyledLink
+          to={
+            "https://drive.google.com/file/d/1xURrTX8zbeLhQFhPqEsI3kHEPb-lLwpE/view"
+          }
+        >
+          PDF by killerfox3042
+        </StyledLink>
+      ),
+    },
+    {
+      name: "HellsCube 5",
+      id: "HC5",
+      description: "L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ",
+      cards: getHc5(),
+    },
+    {
+      name: "HellsCube V(eto)",
+      id: "HCV",
+      description: `Here's where vetoed, slotsed, and seasonal cards go. Not suitable for play.`,
+      cards: cards.filter((e) => e.Set === "HCV"),
+    },
+    {
+      name: "HellsCube 6",
+      id: "HC6",
+      description: "The Commander Cube",
+      cards: cards.filter((e) => e.Set === "HC6"),
+      printLink: (
+        <StyledLink
+          to={
+            "https://drive.google.com/file/d/1-kirKSuVUPrgRfMWYt3rhqDQlAbZhKws/view"
+          }
+        >
+          PDF by killerfox3042
+        </StyledLink>
+      ),
+    },
+    {
+      name: "HC Constructed",
+      id: "HCC",
+      description:
+        "Cards that are legal in constructed, but are not in any cube",
+      cards: cards.filter((e) => e.Set === "HCC"),
+    },
+    {
+      name: "Hells Chase Posse",
+      id: "HCP",
+      description: "Planes and Phenomena for some sick planechase action",
+      cards: cards.filter((e) => e.Set === "HCP"),
+    },
+    {
+      name: "HellsCube 7",
+      id: "HC7",
+      description: "The 7th cube, purple abounds.",
+      cards: cards.filter((e) => e.Set === "HC7.0" || e.Set === "HC7.1"),
+    },
+    {
+      name: "Normal Cube",
+      id: "C",
+      description: "How did that get in there?",
+      cards: cards.filter((e) => e.Set === "C"),
+    },
+  ];
   return (
     <Container>
-      <h2>This page contains resources to help you play the cubes</h2>
+      <StyledTable>
+        <caption>Cube Resources</caption>
+        <StyledRow>
+          <StyledTableHeader>Name</StyledTableHeader>
+          <StyledTableHeader>Id</StyledTableHeader>
+          <StyledTableHeader>Description</StyledTableHeader>
+          <StyledTableHeader>Quick links</StyledTableHeader>
+          <StyledTableHeader>TableTop Simulator</StyledTableHeader>
+          <StyledTableHeader>cockatrice</StyledTableHeader>
+          <StyledTableHeader>draftmancer</StyledTableHeader>
+          <StyledTableHeader>self print</StyledTableHeader>
+        </StyledRow>
+        {cubeSetup.map((e) => {
+          return (
+            <StyledRow key={e.id}>
+              <StyledTD>{e.name}</StyledTD>
+              <StyledTD>{e.id}</StyledTD>
+              <StyledTD>{e.description}</StyledTD>
+              <StyledTD>{e.quickLink || "None"}</StyledTD>
+              <StyledTD>
+                {e.tts || (
+                  <button
+                    onClick={() => {
+                      const filtered = e.cards;
 
-      <CubeResource
-        key={"HLC"}
-        cubeId={"HLC"}
-        cards={cards}
-        tts={{
-          url: "https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113",
-          title: "TTS Plugin by Benana",
-        }}
-        description={"A refined version of the cube that started it all"}
-      >
-        <StyledLink to="one">Rules and quick links for weird cards</StyledLink>
-      </CubeResource>
+                      const val = toDeck(filtered);
+                      const url =
+                        "data:text/plain;base64," +
+                        btoa(unescape(encodeURIComponent(JSON.stringify(val))));
+                      const a = document.createElement("a");
+                      a.style.display = "none";
+                      a.href = url;
+                      // the filename you want
+                      a.download = e.name + `.json`;
+                      document.body.appendChild(a);
+                      a.click();
+                    }}
+                  >
+                    download
+                  </button>
+                )}
+              </StyledTD>
+              <StyledTD>
+                <button
+                  onClick={() => {
+                    const val = toCockCube({
+                      set: e.id,
+                      name: e.name,
+                      cards: e.cards,
+                    });
 
-      <CubeResource
-        key={"HC2"}
-        cubeId={"HC2"}
-        cards={cards}
-        description="The second cube, trades purple for clear archetypes."
-       />
+                    const url =
+                      "data:text/plain;base64," +
+                      btoa(unescape(encodeURIComponent(val)));
+                    const a = document.createElement("a");
+                    a.style.display = "none";
+                    a.href = url;
+                    // the filename you want
+                    a.download = e.name + ".xml";
+                    document.body.appendChild(a);
+                    a.click();
+                  }}
+                >
+                  download
+                </button>
+              </StyledTD>
+              <StyledTD>
+                <button
+                  onClick={() => {
+                    const val = toDraftmancerCube({
+                      set: e.id,
 
-      <CubeResource
-        key={"HC3"}
-        cubeId={"HC3"}
-        cards={cards}
-        tts={{
-          url: "https://steamcommunity.com/sharedfiles/filedetails/?id=3309357076",
-          title: "TTS Plugin by Benana",
-        }}
-        description="At least it's not HC2"
-       />
+                      cards: e.cards,
+                    });
 
-      <CubeResource
-        key={"HC4"}
-        cubeId={"HC4"}
-        cards={cards}
-        description="A Vintage power cube. A rip-roaring good time."
-       />
-
-      <CubeResource
-        key={"HC5"}
-        cubeId={"HC5"}
-        cards={getHc5()}
-        description="L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ"
-       />
-
-      <CubeResource
-        key={"HCV"}
-        cubeId={"HCV"}
-        cards={cards}
-        description="Here's where vetoed, slotsed, and seasonal cards go"
-       />
-
-      <CubeResource
-        key={"HC6"}
-        cubeId={"HC6"}
-        cards={cards}
-        description="The Commander Cube"
-       />
-
-      <CubeResource
-        key={"HCC"}
-        cubeId={"HCC"}
-        cards={cards}
-        description="Cards that are relevant for constructed, but not in any cube"
-       />
-
-      <CubeResource
-        key={"HCP"}
-        cubeId={"HCP"}
-        cards={cards}
-        description="HELLSCUBE PLANECHASE"
-       />
-
-      <CubeResource
-        key={"HC7.0"}
-        cubeId={"HC7.0"}
-        cards={cards}
-        description="The 7th cube, purple abounds"
-       />
+                    const url =
+                      "data:text/plain;base64," +
+                      btoa(unescape(encodeURIComponent(val)));
+                    const a = document.createElement("a");
+                    a.style.display = "none";
+                    a.href = url;
+                    // the filename you want
+                    a.download = e.name + " (Draftmancer).txt";
+                    document.body.appendChild(a);
+                    a.click();
+                  }}
+                >
+                  download
+                </button>
+              </StyledTD>
+              <StyledTD>{e.printLink || "None"}</StyledTD>
+            </StyledRow>
+          );
+        })}
+      </StyledTable>
     </Container>
   );
 };
@@ -104,123 +234,12 @@ const StyledLink = styled(Link)({
 });
 const Container = styled.div({ padding: "10px" });
 
-const CubeResource: React.FC<
-  PropsWithChildren<{
-    cubeId: string;
-    cards: HCEntry[];
-    tts?: { url: string; title: string };
-    cubeResourceLink?: string;
-    description: string;
-  }>
-> = ({ cards, cubeId, tts, cubeResourceLink, children, description }) => {
-  const parsedCubeId =
-    cubeId.replace("HC", "") === "HLC"
-      ? 1
-      : cubeId == "HCP" || cubeId == "HCV" || cubeId == "HCC"
-      ? cubeId
-      : parseInt(cubeId.replace("HC", ""));
-  return (
-    <div>
-      <h3>{cubeId}</h3>
-      <div>{description}</div>
-      {children}
-      <br />
-      {cubeResourceLink && (
-        <StyledLink to={cubeResourceLink}>Specific cards</StyledLink>
-      )}
-      {tts ? (
-        <Link to={tts.url}>{tts.title}</Link>
-      ) : (
-        <button
-          onClick={() => {
-            const filtered = cards.filter((e) => e.Set === cubeId);
-
-            const val = toDeck(filtered);
-            const url =
-              "data:text/plain;base64," +
-              btoa(unescape(encodeURIComponent(JSON.stringify(val))));
-            const a = document.createElement("a");
-            a.style.display = "none";
-            a.href = url;
-            // the filename you want
-            a.download = `Hellscube ${parsedCubeId}.json`;
-            document.body.appendChild(a);
-            a.click();
-          }}
-        >
-          Download {cubeId} cube for TTS
-        </button>
-      )}{" "}
-      <button
-        onClick={() => {
-          const val = toCockCube({
-            set: cubeId,
-            name: "Hellscube " + parsedCubeId,
-            cards: cards.filter((e) => e.Set === cubeId),
-          });
-
-          const url =
-            "data:text/plain;base64," + btoa(unescape(encodeURIComponent(val)));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          // the filename you want
-          a.download = "Hellscube " + parsedCubeId + ".xml";
-          document.body.appendChild(a);
-          a.click();
-        }}
-      >
-        Download {cubeId} cube for Cockatrice
-      </button>{" "}
-      <button
-        onClick={() => {
-          const val = toDraftmancerCube({
-            set: cubeId,
-
-            cards: cards.filter((e) => e.Set === cubeId),
-          });
-
-          const url =
-            "data:text/plain;base64," + btoa(unescape(encodeURIComponent(val)));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          // the filename you want
-          a.download = "Hellscube " + parsedCubeId + " (Draftmancer).txt";
-          document.body.appendChild(a);
-          a.click();
-        }}
-      >
-        Download {cubeId} cube for Draftmancer
-      </button>
-    </div>
-  );
-};
-
-const getHc5 = () =>
-  new Array(720).fill({
-    "Card Type(s)": ["◻︎◻︎◻︎◻︎◻︎", "", "", ""],
-    Name: "◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎",
-    Image:
-      "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/G/l/i/iGlik/images.png",
-    CMC: 0,
-    Creator: "◻︎◻︎◻︎◻︎",
-    Set: "HC5",
-    Rulings: "",
-    Cost: ["", "", "", ""],
-    Loyalty: ["", null, "", ""],
-    "small alt image": "",
-    FIELD44: "",
-    FIELD45: "",
-    FIELD46: "",
-    FIELD47: "",
-    FIELD48: "",
-    FIELD49: "",
-    FIELD50: "",
-    FIELD51: "",
-    FIELD52: "",
-    FIELD53: "",
-    FIELD54: "",
-    FIELD55: "",
-    FIELD56: "",
-  });
+const StyledTable = styled("table")({
+  border: "1px solid black",
+  "tr:nth-child(even)": { backgroundColor: "#f2f2f2" },
+});
+const StyledRow = styled("tr")({
+  ":hover": { backgroundColor: "#C690FF !important" }, // The even selector is more specific than  this one. boo, hiss
+});
+const StyledTableHeader = styled("th")({ textAlign: "start" });
+const StyledTD = styled("td")({ overflowY: "hidden" });

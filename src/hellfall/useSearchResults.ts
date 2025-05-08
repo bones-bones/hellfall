@@ -33,7 +33,7 @@ const isSetInResults = (set: string, setOptions: string[]) => {
 
 export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCEntry[]>([]);
-  const cards = useAtomValue(cardsAtom);
+  const cards = useAtomValue(cardsAtom).filter((e) => e.Set != "C");
   const set = useAtomValue(searchSetAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const nameSearch = useAtomValue(nameSearchAtom);

@@ -23,7 +23,7 @@ import { cardsAtom } from "./cardsAtom";
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cards = useAtomValue(cardsAtom);
+  const cards = useAtomValue(cardsAtom).filter((e) => e.Set != "C");
   const escape = useKeyPress("Escape");
 
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);

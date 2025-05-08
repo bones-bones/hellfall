@@ -77,7 +77,10 @@ export const Draft = () => {
 
   return (
     <>
-      <h2>Hellscube draft simulator (the bots are dumb)</h2>
+      <h2>
+        Hellscube draft simulator (the bots are dumb) (if you are looking to
+        play afterwards, try draftmancer instead)
+      </h2>
       {cards && !set && (
         <FormField label="Select your set">
           <Select
@@ -91,13 +94,12 @@ export const Draft = () => {
               { value: "HC4" },
               { value: "HC5" },
               { value: "HC6" },
+              { value: "C" },
             ]}
-           />
+          />
         </FormField>
       )}
-      {deckToBuild.length !== 0 && (
-        <DeckConstruction cards={deckToBuild} />
-      )}
+      {deckToBuild.length !== 0 && <DeckConstruction cards={deckToBuild} />}
       {draft && deckToBuild.length === 0 && <Area />}
     </>
   );

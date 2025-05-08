@@ -1,0 +1,27 @@
+export const getHc5 = () =>
+  new Array(720).fill({
+    "Card Type(s)": ["◻︎◻︎◻︎◻︎◻︎", "", "", ""],
+    Name: "◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎",
+    Image:
+      "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/G/l/i/iGlik/images.png",
+    CMC: 0,
+    Creator: "◻︎◻︎◻︎◻︎",
+    Set: "HC5",
+    Rulings: "",
+    Cost: ["", "", "", ""],
+    Loyalty: ["", null, "", ""],
+    "small alt image": "",
+    FIELD44: "",
+    FIELD45: "",
+    FIELD46: "",
+    FIELD47: "",
+    FIELD48: "",
+    FIELD49: "",
+    FIELD50: "",
+    FIELD51: "",
+    FIELD52: "",
+    FIELD53: "",
+    FIELD54: "",
+    FIELD55: "",
+    FIELD56: "",
+  });
