@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 export const HellfallCard = ({ data }: { data: HCEntry }) => {
   const sideCount =
-  //@ts-ignore
+    //@ts-ignore
     data["Card Type(s)"]?.findLastIndex(
       (entry: any) => entry !== null && entry != ""
     ) + 1 || 0;
@@ -170,7 +170,9 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
               <Divider />
               <div>
                 <StyledHeading size="small">Rulings</StyledHeading>
-                {data["Rulings"]}
+                {data["Rulings"].split("\\n").map((e, i) => {
+                  return <Ruling key={i}>{e}</Ruling>;
+                })}
               </div>
             </>
           )}
@@ -210,6 +212,8 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
     </Container>
   );
 };
+
+const Ruling = styled.div({ paddingTop: "5px" });
 
 const renderText = (text: string[]) => {
   return text.map((entry) => {

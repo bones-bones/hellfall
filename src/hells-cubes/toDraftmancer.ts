@@ -149,8 +149,8 @@ export const toDraftmancerCube = ({
 const getDraftMancerCard = (card: HCEntry) => {
   const cardToReturn: DraftmancerCard = {
     id: card.Name.replace(" :]", "") + "_custom_",
-    oracle_id: card.Name.replace(" :]", "").trim(),
-    name: card.Name.replace(" :]", "").trim(),
+    oracle_id: card.Name.replace(":]", "").trim(),
+    name: card.Name.replace(":]", "").trim(),
     mana_cost: (card.Cost?.[0] || "")
       .replace(/\{\?\}/g, "{0}")
       .replace("?", "{0}")
@@ -158,6 +158,7 @@ const getDraftMancerCard = (card: HCEntry) => {
       .replace(/\{(.)\/(.)(\/(.))+\}/g, "{$1/$2}")
       .replace("{9/3}", "{3}")
       .replace("{-1}", "{0}")
+      .replace(/\{U\/O\}/g, "{U}") // Cat with homophobia
       .replace(/\{.\/(.)\}/g, "{$1}")
       .replace(/\{Pickle\}/g, "{G}") // Pickle Krrik
       .replace(/\{U\/BB\}/g, "{U/B}")
@@ -167,9 +168,12 @@ const getDraftMancerCard = (card: HCEntry) => {
       .replace("{2/Brown}", "{2}") // Blonk
       .replace("Sacrifice a creature:", "{0}")
       .replace("{Discard your hand/RR}", "{R}{R}") // Dumpstergoyf
-      .replace("{BB/P}", "{B}") //THE SKELETON
-      .replace("{UU/P}", "U")
-      .replace("{2/Piss}", "{2}"),
+      .replace("{BB/P}", "{B}{B}") //THE SKELETON
+      .replace("{UU/P}", "{U}{U}")
+      .replace("{2/Piss}", "{2}")
+      .replace(/\{3\/Pink\}/g, "{3}")
+      .replace(/\{H([^/])\}/g, "{$1}") // half mana
+      .replace(/\{TEMU\}/g, "{1}"),
 
     // @ts-ignore
     colors: card["Color(s)"]?.split(";").map(colorToDraftMancerColor),
@@ -182,7 +186,10 @@ const getDraftMancerCard = (card: HCEntry) => {
     subtypes: card["Subtype(s)"]?.[0]!.split(";").filter((e) => e != "") || [],
     rating: 0,
     in_booster: true,
-    oracle_text: card["Text Box"]?.filter(Boolean).join("\n"),
+    oracle_text: card["Text Box"]
+      ?.filter(Boolean)
+      .join("\n")
+      .replace(/:\[/g, ""),
 
     printed_names: {
       en: card.Name.replace(" :]", ""), // Six Flags

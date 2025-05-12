@@ -2,13 +2,14 @@ import styled from "@emotion/styled";
 import { HellfallEntry } from "./hellfall/HellfallEntry";
 import { useAtomValue } from "jotai";
 import { cardsAtom } from "./hellfall/cardsAtom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { TeamClock } from "./TeamWolf";
 import { Link } from "react-router-dom";
 import { HCEntry } from "./types";
 
 export const Watchwolfwar = () => {
   const RandyRandom = useAtomValue(cardsAtom);
+  const submitting = useRef(false);
   const FilterCard = RandyRandom.filter((entry) => {
     return entry.isActualToken != true && entry.Set != "C";
   });
@@ -21,11 +22,16 @@ export const Watchwolfwar = () => {
   });
 
   const updateStandings = async (cardName: string) => {
-    await TeamClock(cardName);
-    SetTwoCardState({
-      LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
-      RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
-    });
+    if (!submitting.current) {
+      submitting.current = true;
+
+      await TeamClock(cardName);
+      SetTwoCardState({
+        LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+        RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+      });
+      submitting.current = false;
+    }
   };
 
   return (
