@@ -68,6 +68,10 @@ export const toCockCube = ({
       .join(" // ")
       .replace(/\{(.)\}/g, "$1");
 
+    const maintype = xmlDoc.createElement("maintype");
+    maintype.textContent = entry["Card Type(s)"][0]?.includes("Creature")
+      ? "Creature"
+      : entry["Card Type(s)"][0]?.split(";").slice(-1)[0] || "";
     const cmc = xmlDoc.createElement("cmc");
     cmc.textContent = entry.CMC?.toString() || "";
     const type = xmlDoc.createElement("type");
@@ -117,9 +121,17 @@ export const toCockCube = ({
         text,
         prop,
         // @ts-ignore
-        [type, manaCost, cmc, color, layout, pt, loyalty, legality].filter(
-          (e) => e != undefined
-        ),
+        [
+          type,
+          maintype,
+          manaCost,
+          cmc,
+          color,
+          layout,
+          pt,
+          loyalty,
+          legality,
+        ].filter((e) => e != undefined),
         setElement,
         tablerow,
       ],

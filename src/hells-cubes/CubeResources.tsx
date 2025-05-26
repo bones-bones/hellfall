@@ -23,7 +23,7 @@ export const CubeResources = () => {
   const cards = useAtomValue(cardsAtom);
   const cubeSetup: CubeSetup[] = [
     {
-      name: "HellsCube",
+      name: "Hellscube",
       id: "HLC",
       description: "A refined version of the cube that started it all",
       cards: cards.filter((e) => e.Set === "HLC"),
@@ -39,13 +39,13 @@ export const CubeResources = () => {
       ),
     },
     {
-      name: "HellsCube 2",
+      name: "Hellscube 2",
       id: "HC2",
       description: "The second cube, trades purple for clear archetypes.",
       cards: cards.filter((e) => e.Set === "HC2"),
     },
     {
-      name: "HellsCube 3",
+      name: "Hellscube 3",
       id: "HC3",
       description: "At least it's not HC2",
       cards: cards.filter((e) => e.Set === "HC3"),
@@ -60,7 +60,7 @@ export const CubeResources = () => {
       ),
     },
     {
-      name: "HellsCube 4",
+      name: "Hellscube 4",
       id: "HC4",
       description: "A Vintage power cube. A rip-roaring good time",
       cards: cards.filter((e) => e.Set === "HC4"),
@@ -75,19 +75,19 @@ export const CubeResources = () => {
       ),
     },
     {
-      name: "HellsCube 5",
+      name: "Hellscube 5",
       id: "HC5",
       description: "L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ",
       cards: getHc5(),
     },
     {
-      name: "HellsCube V(eto)",
+      name: "Hellscube V(eto)",
       id: "HCV",
       description: `Here's where vetoed, slotsed, and seasonal cards go. Not suitable for play.`,
       cards: cards.filter((e) => e.Set === "HCV"),
     },
     {
-      name: "HellsCube 6",
+      name: "Hellscube 6",
       id: "HC6",
       description: "The Commander Cube",
       cards: cards.filter((e) => e.Set === "HC6"),
@@ -113,9 +113,18 @@ export const CubeResources = () => {
       id: "HCP",
       description: "Planes and Phenomena for some sick planechase action",
       cards: cards.filter((e) => e.Set === "HCP"),
+      printLink: (
+        <StyledLink
+          to={
+            "https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing"
+          }
+        >
+          PDF by hostus
+        </StyledLink>
+      ),
     },
     {
-      name: "HellsCube 7",
+      name: "Hellscube 7",
       id: "HC7",
       description: "The 7th cube, purple abounds.",
       cards: cards.filter((e) => e.Set === "HC7.0" || e.Set === "HC7.1"),
