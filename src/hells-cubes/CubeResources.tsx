@@ -135,6 +135,13 @@ export const CubeResources = () => {
       description: "How did that get in there?",
       cards: cards.filter((e) => e.Set === "C"),
     },
+    {
+      name: "Heckscube",
+      id: "HCK",
+      description:
+        "This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC's first forays into \"beginner-friendly\" Magic all the way back in '97.",
+      cards: cards.filter((e) => e.Set === "HCK"),
+    },
   ];
   return (
     <Container>
