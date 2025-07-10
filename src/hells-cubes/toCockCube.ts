@@ -10,7 +10,6 @@ export const toCockCube = ({
   set: string;
   cards: HCEntry[];
 }) => {
-  console.log(cards.length);
   const xmlDoc = document.implementation.createDocument(
     null,
     "cockatrice_carddatabase"
@@ -38,103 +37,9 @@ export const toCockCube = ({
     cardsElement,
   ]);
 
-  cards.map((entry) => {
-    const tempCard = xmlDoc.createElement("card");
-    const name = xmlDoc.createElement("name");
-    name.textContent = entry.Name;
-
-    const text = xmlDoc.createElement("text");
-    text.textContent = (entry["Text Box"] || [])
-      .filter(Boolean)
-      .join("\n//\n")
-      .replace(/\\n/g, "\n")
-      .replace(/[{}]/g, "");
-
-    const setElement = xmlDoc.createElement("set");
-    setElement.setAttribute("rarity", "common");
-    setElement.setAttribute("picURL", entry.Image[0]!);
-    setElement.textContent = set;
-    const color = xmlDoc.createElement("color");
-    color.textContent = (entry["Color(s)"] || "")
-      .replace("Blue", "U")
-      .replace("Red", "R")
-      .replace("Green", "G")
-      .replace("Black", "B")
-      .replace("White", "W")
-      .replace("Purple", "P")
-      .replace(/;/g, "");
-    const manaCost = xmlDoc.createElement("manacost");
-    manaCost.textContent = entry.Cost?.filter(Boolean)
-      .join(" // ")
-      .replace(/\{(.)\}/g, "$1");
-
-    const maintype = xmlDoc.createElement("maintype");
-    maintype.textContent = entry["Card Type(s)"][0]?.includes("Creature")
-      ? "Creature"
-      : entry["Card Type(s)"][0]?.split(";").slice(-1)[0] || "";
-    const cmc = xmlDoc.createElement("cmc");
-    cmc.textContent = entry.CMC?.toString() || "";
-    const type = xmlDoc.createElement("type");
-    type.textContent = [
-      (entry["Supertype(s)"]?.[0] ?? "").replace(/;/g, " "),
-      [
-        (entry["Card Type(s)"]?.[0] ?? "").replace(/;/g, " "),
-        (entry["Subtype(s)"]?.[0] ?? "").replace(/;/g, " "),
-      ]
-        .filter(Boolean)
-        .join(" — "),
-    ]
-      .filter(Boolean)
-      .join(" ");
-
-    let pt = undefined;
-    if ((entry["Card Type(s)"] || []).join("").includes("Creature")) {
-      pt = xmlDoc.createElement("pt");
-      pt.textContent = `${entry.power?.[0]}/${entry.toughness?.[0]}`;
-    }
-
-    let loyalty = undefined;
-    if (entry["Loyalty"]) {
-      loyalty = xmlDoc.createElement("loyalty");
-      loyalty.textContent = "4";
-    }
-
-    let legality = undefined;
-    // TODO: support other types
-    if (entry.Constructed?.includes("Legal")) {
-      legality = xmlDoc.createElement("format-standard");
-      legality.textContent = "legal";
-    }
-
-    const layout = xmlDoc.createElement("layout");
-    layout.textContent = getLayout(entry);
-
-    const tablerow = xmlDoc.createElement("tablerow");
-    tablerow.textContent = getTableRow(entry).toString();
-
-    const prop = xmlDoc.createElement("prop");
-
+  cards.forEach((entry) => {
     recursiveAdoption(cardsElement, [
-      tempCard,
-      [
-        name,
-        text,
-        prop,
-        // @ts-ignore
-        [
-          type,
-          maintype,
-          manaCost,
-          cmc,
-          color,
-          layout,
-          pt,
-          loyalty,
-          legality,
-        ].filter((e) => e != undefined),
-        setElement,
-        tablerow,
-      ],
+      hcCardToCockCard({ xmlDoc, set, entry, cardsElement, sideIndex: 0 }),
     ]);
   });
 
@@ -165,6 +70,13 @@ export const toCockCube = ({
       .forEach((related) => {
         const relatedEntry = xmlDoc.createElement("reverse-related");
         relatedEntry.textContent = related;
+        if (
+          cards
+            .find((entry) => related == entry.Name)
+            ?.Tags?.includes("persistent-tokens")
+        ) {
+          relatedEntry.setAttribute("persistent", "persistent");
+        }
 
         const count = /(.*)(\*\d)$/.exec(related);
         if (count) {
@@ -222,6 +134,124 @@ const prettifyXml = function (sourceXml: string) {
 };
 
 type RecursiveChild = (Node | RecursiveChild)[];
+
+const hcCardToCockCard = ({
+  xmlDoc,
+  set,
+  entry,
+  cardsElement,
+  sideIndex,
+}: {
+  xmlDoc: XMLDocument;
+  set: string;
+  entry: HCEntry;
+  cardsElement: HTMLElement;
+  sideIndex: number;
+}) => {
+  const tempCard = xmlDoc.createElement("card");
+  const name = xmlDoc.createElement("name");
+  name.textContent = entry.Name;
+
+  const text = xmlDoc.createElement("text");
+  text.textContent = (entry["Text Box"] || [])
+    .filter(Boolean)
+    .join("\n//\n")
+    .replace(/\\n/g, "\n")
+    .replace(/[{}]/g, "");
+
+  const setElement = xmlDoc.createElement("set");
+  setElement.setAttribute("rarity", "common");
+  setElement.setAttribute(
+    "picURL",
+    entry.Image[sideIndex + 1] || entry.Image[0]!
+  );
+  setElement.textContent = set;
+  const color = xmlDoc.createElement("color");
+  color.textContent = (entry["Color(s)"] || "")
+    .replace("Blue", "U")
+    .replace("Red", "R")
+    .replace("Green", "G")
+    .replace("Black", "B")
+    .replace("White", "W")
+    .replace("Purple", "P")
+    .replace(/;/g, "");
+  const manaCost = xmlDoc.createElement("manacost");
+  manaCost.textContent = entry.Cost?.filter(Boolean)
+    .join(" // ")
+    .replace(/\{(.)\}/g, "$1");
+
+  const maintype = xmlDoc.createElement("maintype");
+  maintype.textContent = entry["Card Type(s)"][1]?.includes("Creature")
+    ? "Creature"
+    : entry["Card Type(s)"][1]?.split(";").slice(-1)[0] || "";
+  const cmc = xmlDoc.createElement("cmc");
+  cmc.textContent = entry.CMC?.toString() || "";
+  const type = xmlDoc.createElement("type");
+  type.textContent = [
+    (entry["Supertype(s)"]?.[1] ?? "").replace(/;/g, " "),
+    [
+      (entry["Card Type(s)"]?.[1] ?? "").replace(/;/g, " "),
+      (entry["Subtype(s)"]?.[1] ?? "").replace(/;/g, " "),
+    ]
+      .filter(Boolean)
+      .join(" — "),
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  let pt = undefined;
+  if ((entry["Card Type(s)"] || []).join("").includes("Creature")) {
+    pt = xmlDoc.createElement("pt");
+    pt.textContent = `${entry.power?.[sideIndex]}/${entry.toughness?.[sideIndex]}`;
+  }
+
+  let loyalty = undefined;
+  if (entry["Loyalty"]) {
+    loyalty = xmlDoc.createElement("loyalty");
+    loyalty.textContent = entry.Loyalty?.[sideIndex];
+  }
+
+  let legality = undefined;
+  // TODO: support other types
+  if (entry.Constructed?.includes("Legal")) {
+    legality = xmlDoc.createElement("format-standard");
+    legality.textContent = "legal";
+  }
+
+  const layout = xmlDoc.createElement("layout");
+  layout.textContent = getLayout(entry);
+
+  const tablerow = xmlDoc.createElement("tablerow");
+  tablerow.textContent = getTableRow(entry).toString();
+
+  const prop = xmlDoc.createElement("prop");
+
+  recursiveAdoption(tempCard, [
+    name,
+    text,
+    prop,
+    // @ts-ignore
+    [
+      type,
+      maintype,
+      manaCost,
+      cmc,
+      color,
+      layout,
+      pt,
+      loyalty,
+      legality,
+    ].filter((e) => e !== undefined),
+    setElement,
+    tablerow,
+  ]);
+
+  if (sideIndex == 0 && entry["Card Type(s)"]?.[1]) {
+    //
+  }
+
+  return tempCard;
+};
 
 const recursiveAdoption = (parent: Node, children: RecursiveChild) => {
   for (let i = 0; i < children.length; i++) {
