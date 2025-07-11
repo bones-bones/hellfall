@@ -65,6 +65,7 @@ export const toCockCube = ({
       tablerow,
     ]);
 
+    let used = false;
     tokenEntry["Related Cards (Read Comment)"]
       ?.split(";")
       .forEach((related) => {
@@ -84,9 +85,12 @@ export const toCockCube = ({
         }
 
         tokenCardEntry.appendChild(relatedEntry);
+        used = true;
       });
 
-    cardsElement.appendChild(tokenCardEntry);
+    if (used) {
+      cardsElement.appendChild(tokenCardEntry);
+    }
   });
 
   const formattedXmlDoc = document.implementation.createDocument(
@@ -150,14 +154,22 @@ const hcCardToCockCard = ({
 }) => {
   const tempCard = xmlDoc.createElement("card");
   const name = xmlDoc.createElement("name");
-  name.textContent = entry.Name;
-
+  name.textContent = entry.Image[2]
+    ? entry.Name.split(" // ")[sideIndex]
+    : entry.Name;
+  if (entry.Name.includes("Fart")) {
+    console.log(name, "name", sideIndex);
+  }
   const text = xmlDoc.createElement("text");
-  text.textContent = (entry["Text Box"] || [])
-    .filter(Boolean)
-    .join("\n//\n")
-    .replace(/\\n/g, "\n")
-    .replace(/[{}]/g, "");
+  text.textContent = entry.Image[2]
+    ? entry["Text Box"]?.[sideIndex]
+        ?.replace(/\\n/g, "\n")
+        .replace(/[{}]/g, "") || ""
+    : (entry["Text Box"] || [])
+        .filter(Boolean)
+        .join("\n//\n")
+        .replace(/\\n/g, "\n")
+        .replace(/[{}]/g, "");
 
   const setElement = xmlDoc.createElement("set");
   setElement.setAttribute("rarity", "common");
@@ -176,22 +188,21 @@ const hcCardToCockCard = ({
     .replace("Purple", "P")
     .replace(/;/g, "");
   const manaCost = xmlDoc.createElement("manacost");
-  manaCost.textContent = entry.Cost?.filter(Boolean)
-    .join(" // ")
-    .replace(/\{(.)\}/g, "$1");
+  manaCost.textContent =
+    entry.Cost?.[sideIndex]?.replace(/\{(.)\}/g, "$1") || "";
 
   const maintype = xmlDoc.createElement("maintype");
-  maintype.textContent = entry["Card Type(s)"][1]?.includes("Creature")
+  maintype.textContent = entry["Card Type(s)"][sideIndex]?.includes("Creature")
     ? "Creature"
     : entry["Card Type(s)"][1]?.split(";").slice(-1)[0] || "";
   const cmc = xmlDoc.createElement("cmc");
   cmc.textContent = entry.CMC?.toString() || "";
   const type = xmlDoc.createElement("type");
   type.textContent = [
-    (entry["Supertype(s)"]?.[1] ?? "").replace(/;/g, " "),
+    (entry["Supertype(s)"]?.[sideIndex] ?? "").replace(/;/g, " "),
     [
-      (entry["Card Type(s)"]?.[1] ?? "").replace(/;/g, " "),
-      (entry["Subtype(s)"]?.[1] ?? "").replace(/;/g, " "),
+      (entry["Card Type(s)"]?.[sideIndex] ?? "").replace(/;/g, " "),
+      (entry["Subtype(s)"]?.[sideIndex] ?? "").replace(/;/g, " "),
     ]
       .filter(Boolean)
       .join(" — "),
@@ -200,7 +211,7 @@ const hcCardToCockCard = ({
     .join(" ");
 
   let pt = undefined;
-  if ((entry["Card Type(s)"] || []).join("").includes("Creature")) {
+  if ((entry["Card Type(s)"][sideIndex] || "").includes("Creature")) {
     pt = xmlDoc.createElement("pt");
     pt.textContent = `${entry.power?.[sideIndex]}/${entry.toughness?.[sideIndex]}`;
   }
@@ -218,36 +229,62 @@ const hcCardToCockCard = ({
     legality.textContent = "legal";
   }
 
+  const side = xmlDoc.createElement("side");
+  side.textContent = sideIndex === 0 ? "front" : "back";
+
+  let reverse;
+
+  // If we're not processing the first side, then we need to attach each side to the original
+  if (sideIndex !== 0) {
+    reverse = xmlDoc.createElement("reverse-related");
+    reverse.textContent = entry.Name.split(" // ")[0];
+    reverse.setAttribute("attach", "attach");
+  }
+
   const layout = xmlDoc.createElement("layout");
-  layout.textContent = getLayout(entry);
+  layout.textContent = sideIndex > 0 ? "transform" : getLayout(entry);
 
   const tablerow = xmlDoc.createElement("tablerow");
   tablerow.textContent = getTableRow(entry).toString();
 
   const prop = xmlDoc.createElement("prop");
 
-  recursiveAdoption(tempCard, [
-    name,
-    text,
-    prop,
-    // @ts-ignore
+  recursiveAdoption(
+    tempCard,
     [
-      type,
-      maintype,
-      manaCost,
-      cmc,
-      color,
-      layout,
-      pt,
-      loyalty,
-      legality,
-    ].filter((e) => e !== undefined),
-    setElement,
-    tablerow,
-  ]);
+      name,
+      text,
+      prop,
 
-  if (sideIndex == 0 && entry["Card Type(s)"]?.[1]) {
-    //
+      [
+        type,
+        maintype,
+        manaCost,
+        cmc,
+        color,
+        layout,
+        side,
+        pt,
+        loyalty,
+        legality,
+      ].filter((e) => e !== undefined),
+      setElement,
+      reverse,
+      tablerow,
+    ].filter((e) => e !== undefined)
+  );
+
+  if (
+    sideIndex == 0 &&
+    entry["Card Type(s)"]?.[1] &&
+    entry["Image"]?.[2] &&
+    !["MR. CRIME 1981 // Felony Theft"].includes(entry.Name)
+  ) {
+    for (let i = 1; i < entry["Image"].filter(Boolean).length - 1; i++) {
+      recursiveAdoption(cardsElement, [
+        hcCardToCockCard({ xmlDoc, set, entry, cardsElement, sideIndex: i }),
+      ]);
+    }
   }
 
   return tempCard;
