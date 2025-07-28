@@ -43,7 +43,7 @@ export const HellFall = () => {
   useEffect(() => {
     if (!activeCard) return;
 
-    function handleClickOutside(event: MouseEvent) {
+    function handleClickOutside(event: PointerEvent) {
       // Don't close if clicking a card entry
       if (
         (event.target as HTMLElement).closest(".hellfall-card-entry")
