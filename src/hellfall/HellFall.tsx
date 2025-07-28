@@ -23,6 +23,7 @@ import { cardsAtom } from "./cardsAtom";
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const sidePanelRef = useRef<HTMLDivElement>(null);
   const cards = useAtomValue(cardsAtom).filter((e) => e.Set != "C");
   const escape = useKeyPress("Escape");
 
@@ -37,6 +38,32 @@ export const HellFall = () => {
       setActiveCardFromAtom("");
     }
   }, [escape]);
+
+
+  useEffect(() => {
+    if (!activeCard) return;
+
+    function handleClickOutside(event: MouseEvent) {
+      // Don't close if clicking a card entry
+      if (
+        (event.target as HTMLElement).closest(".hellfall-card-entry")
+      ) {
+        return;
+      }
+      if (
+        sidePanelRef.current &&
+        !sidePanelRef.current.contains(event.target as Node)
+      ) {
+        setActiveCardFromAtom("");
+      }
+    }
+
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () => {
+      document.removeEventListener("pointerdown", handleClickOutside);
+    };
+  }, [activeCard, setActiveCardFromAtom]);
+
   const [offset, setOffset] = useAtom(offsetAtom);
   const resultSet = useSearchResults();
 
@@ -50,7 +77,7 @@ export const HellFall = () => {
         {!!activeCard && (
           <Card>
             <Card.Body padding={"zero"}>
-              <SPContainer>
+              <SPContainer ref={sidePanelRef}>
                 <ToolbarIconButton
                   icon={xIcon}
                   onClick={() => setActiveCardFromAtom("")}
@@ -70,6 +97,7 @@ export const HellFall = () => {
       >{`${resultSet.length} card(s)`}</ResultCount>
       <Container>
         {resultSet.slice(offset, offset + CHUNK_SIZE).map((entry, i) => (
+          <div className="hellfall-card-entry">
           <HellfallEntry
             onClick={(event: React.MouseEvent<HTMLImageElement>) => {
               if (event.button === 1 || event.metaKey || event.ctrlKey) {
@@ -85,6 +113,7 @@ export const HellFall = () => {
             name={entry.Name}
             url={entry.Image[1] || entry.Image[0]!}
           />
+          </div>
         ))}
       </Container>
       <PaginationComponent
