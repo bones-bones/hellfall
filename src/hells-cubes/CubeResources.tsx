@@ -8,6 +8,7 @@ import { HCEntry } from "../types";
 import { ReactNode } from "react";
 import { toDraftmancerCube } from "./toDraftmancer";
 import { getHc5 } from "./getHc5";
+import { toMPCAutofill } from "./toMPCAutofill";
 
 type CubeSetup = {
   name: string;
@@ -17,6 +18,7 @@ type CubeSetup = {
   quickLink?: ReactNode;
   tts?: ReactNode;
   printLink?: ReactNode;
+  readyForAutofill?: boolean;
 };
 
 export const CubeResources = () => {
@@ -91,6 +93,7 @@ export const CubeResources = () => {
       id: "HC6",
       description: "The Commander Cube",
       cards: cards.filter((e) => e.Set === "HC6"),
+      readyForAutofill: true,
       printLink: (
         <StyledLink
           to={
@@ -155,6 +158,7 @@ export const CubeResources = () => {
           <StyledTableHeader>TableTop Simulator</StyledTableHeader>
           <StyledTableHeader>cockatrice</StyledTableHeader>
           <StyledTableHeader>draftmancer</StyledTableHeader>
+          <StyledTableHeader>mpc autofill</StyledTableHeader>
           <StyledTableHeader>self print</StyledTableHeader>
         </StyledRow>
         {cubeSetup.map((e) => {
@@ -234,6 +238,105 @@ export const CubeResources = () => {
                 >
                   download
                 </button>
+              </StyledTD>
+              <StyledTD>
+                {e.readyForAutofill ? (
+                  <button
+                    onClick={async () => {
+                      const cardList = (
+                        await (
+                          await fetch(
+                            "https://hellfall-autofill-821285593003.europe-west1.run.app/"
+                          )
+                        ).json()
+                      ).values
+                        .map((entry: any, i: any) => {
+                          if (i !== 0) {
+                            return {
+                              Cardname: entry[0],
+                              Sidename: entry[1],
+                              Url: entry[2],
+                            };
+                          }
+                        })
+                        .filter(Boolean) as {
+                        Cardname: string;
+                        Sidename: string;
+                        Url: string;
+                      }[];
+
+                      const printableCards = e.cards.map((cardEntry) => {
+                        const matches = cardList.filter(
+                          (e) => e.Cardname == cardEntry.Name
+                        );
+
+                        // { cardName: string; sides: { id: string }[] };
+                        const returnEntry = {
+                          cardName: cardEntry.Name,
+                          sides: matches.map((matchEntry) => ({
+                            id: matchEntry.Url.replace(
+                              "https://lh3.googleusercontent.com/d/",
+                              ""
+                            ),
+                          })),
+                        };
+                        return returnEntry;
+                      });
+                      console.log("printableCards");
+                      toMPCAutofill(
+                        [
+                          ...printableCards,
+                          ...Array(40)
+                            .fill(undefined)
+                            .map(() => ({
+                              cardName: "Swamp",
+                              sides: [
+                                { id: "1RZtCEa2plk-4bVKBL1MdJEjJsRgI5Ht6" },
+                              ],
+                            })),
+                          ...Array(40)
+                            .fill(undefined)
+                            .map(() => ({
+                              cardName: "Plains",
+                              sides: [
+                                { id: "1YIIJG4MdOyP6v6LgeYTztMn_CFOD5e6t" },
+                              ],
+                            })),
+                          ...Array(40)
+                            .fill(undefined)
+                            .map(
+                              () => ({
+                                cardName: "Mountain",
+                                sides: [
+                                  { id: "1CdSPdzbINcylm8xNemUjFoCLauyAU14X" },
+                                ],
+                              }),
+                              ...Array(40)
+                                .fill(undefined)
+                                .map(() => ({
+                                  cardName: "Island",
+                                  sides: [
+                                    { id: "1gF3_D9K5D7GbmObO3K2PJz96hBnx-ukK" },
+                                  ],
+                                })),
+                              ...Array(40)
+                                .fill(undefined)
+                                .map(() => ({
+                                  cardName: "Forest",
+                                  sides: [
+                                    { id: "1kuDXNzDdjSGFhTQ8o53E_dVuVUFtvymg" },
+                                  ],
+                                }))
+                            ),
+                        ].filter(Boolean)
+                      );
+                    }}
+                  >
+                    download
+                  </button>
+                ) : (
+                  "None"
+                )}
               </StyledTD>
               <StyledTD>{e.printLink || "None"}</StyledTD>
             </StyledRow>

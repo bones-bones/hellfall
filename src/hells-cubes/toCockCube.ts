@@ -1,6 +1,7 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { HCEntry } from "../types";
 import tokens from "../data/tokens.json";
+import { recursiveAdoption } from "./recursiveAdoption";
 export const toCockCube = ({
   name,
   set,
@@ -136,8 +137,6 @@ const prettifyXml = function (sourceXml: string) {
   const resultXml = new XMLSerializer().serializeToString(resultDoc);
   return resultXml;
 };
-
-type RecursiveChild = (Node | RecursiveChild)[];
 
 const hcCardToCockCard = ({
   xmlDoc,
@@ -288,16 +287,6 @@ const hcCardToCockCard = ({
   }
 
   return tempCard;
-};
-
-const recursiveAdoption = (parent: Node, children: RecursiveChild) => {
-  for (let i = 0; i < children.length; i++) {
-    if (children[i] instanceof Array) {
-      recursiveAdoption(children[i - 1] as Node, children[i] as RecursiveChild);
-    } else {
-      parent.appendChild(children[i] as Node);
-    }
-  }
 };
 
 const getLayout = (card: HCEntry) => {

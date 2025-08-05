@@ -8,7 +8,6 @@ import { TextInput } from "@workday/canvas-kit-react";
 import { ImportInstructions } from "./ImportInstructions";
 import { PlaytestArea } from "./playtest/PlaytestArea";
 const basics: Record<string, string> = {
-  //"https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/p/4/v/fp4vq/Final-Kraject.png",
   forest:
     "https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg",
   swamp:
@@ -144,7 +143,7 @@ export const DeckBuilder = () => {
           onBlur={(event) => {
             setNameOfDeck(event.target.value);
           }}
-         />
+        />
       </FormField>
       <StyledTextArea
         ref={textAreaRef}
