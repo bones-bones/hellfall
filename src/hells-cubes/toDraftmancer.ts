@@ -10,11 +10,11 @@ export const toDraftmancerCube = ({
   set: string;
   cards: HCEntry[];
 }) => {
-  const componentCards = cards.filter((e) => {
-    if (e.Name.includes("Larry")) {
-      console.log(e);
+  const componentCards = cards.filter((card) => {
+    if (card.Name.includes("Larry")) {
+      console.log(card);
     }
-    return Boolean(e["Component of"]);
+    return Boolean(card["Component of"]);
   });
   console.log(componentCards);
 

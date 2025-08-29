@@ -23,7 +23,7 @@ type CubeSetup = {
 
 export const CubeResources = () => {
   const cards = useAtomValue(cardsAtom);
-  const cubeSetup: CubeSetup[] = [
+  const cubeSetups: CubeSetup[] = [
     {
       name: "Hellscube",
       id: "HLC",
@@ -141,6 +141,7 @@ export const CubeResources = () => {
     {
       name: "Heckscube",
       id: "HCK",
+      readyForAutofill: true,
       description:
         "This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC's first forays into \"beginner-friendly\" Magic all the way back in '97.",
       cards: cards.filter((e) => e.Set === "HCK"),
@@ -161,18 +162,18 @@ export const CubeResources = () => {
           <StyledTableHeader>mpc autofill</StyledTableHeader>
           <StyledTableHeader>self print</StyledTableHeader>
         </StyledRow>
-        {cubeSetup.map((e) => {
+        {cubeSetups.map((cubeSetup) => {
           return (
-            <StyledRow key={e.id}>
-              <StyledTD>{e.name}</StyledTD>
-              <StyledTD>{e.id}</StyledTD>
-              <StyledTD>{e.description}</StyledTD>
-              <StyledTD>{e.quickLink || "None"}</StyledTD>
+            <StyledRow key={cubeSetup.id}>
+              <StyledTD>{cubeSetup.name}</StyledTD>
+              <StyledTD>{cubeSetup.id}</StyledTD>
+              <StyledTD>{cubeSetup.description}</StyledTD>
+              <StyledTD>{cubeSetup.quickLink || "None"}</StyledTD>
               <StyledTD>
-                {e.tts || (
+                {cubeSetup.tts || (
                   <button
                     onClick={() => {
-                      const filtered = e.cards;
+                      const filtered = cubeSetup.cards;
 
                       const val = toDeck(filtered);
                       const url =
@@ -182,7 +183,7 @@ export const CubeResources = () => {
                       a.style.display = "none";
                       a.href = url;
                       // the filename you want
-                      a.download = e.name + `.json`;
+                      a.download = cubeSetup.name + `.json`;
                       document.body.appendChild(a);
                       a.click();
                     }}
@@ -195,9 +196,9 @@ export const CubeResources = () => {
                 <button
                   onClick={() => {
                     const val = toCockCube({
-                      set: e.id,
-                      name: e.name,
-                      cards: e.cards,
+                      set: cubeSetup.id,
+                      name: cubeSetup.name,
+                      cards: cubeSetup.cards,
                     });
 
                     const url =
@@ -207,7 +208,7 @@ export const CubeResources = () => {
                     a.style.display = "none";
                     a.href = url;
                     // the filename you want
-                    a.download = e.name + ".xml";
+                    a.download = cubeSetup.name + ".xml";
                     document.body.appendChild(a);
                     a.click();
                   }}
@@ -219,9 +220,8 @@ export const CubeResources = () => {
                 <button
                   onClick={() => {
                     const val = toDraftmancerCube({
-                      set: e.id,
-
-                      cards: e.cards,
+                      set: cubeSetup.id,
+                      cards: cubeSetup.cards,
                     });
 
                     const url =
@@ -231,7 +231,7 @@ export const CubeResources = () => {
                     a.style.display = "none";
                     a.href = url;
                     // the filename you want
-                    a.download = e.name + " (Draftmancer).txt";
+                    a.download = cubeSetup.name + " (Draftmancer).txt";
                     document.body.appendChild(a);
                     a.click();
                   }}
@@ -240,7 +240,7 @@ export const CubeResources = () => {
                 </button>
               </StyledTD>
               <StyledTD>
-                {e.readyForAutofill ? (
+                {cubeSetup.readyForAutofill ? (
                   <button
                     onClick={async () => {
                       const cardList = (
@@ -265,14 +265,24 @@ export const CubeResources = () => {
                         Url: string;
                       }[];
 
-                      const printableCards = e.cards.map((cardEntry) => {
-                        const matches = cardList.filter(
-                          (e) => e.Cardname == cardEntry.Name
+                      const tokenNames = cubeSetup.cards.flatMap((entry) => {
+                        // Dear sixel, pls finish
+                        // console.log(entry);
+                        return (entry.tokens || []).map((tokenEntry) =>
+                          tokenEntry.Name.replace(/ (\d+)$/g, "$1")
                         );
+                      });
+                      const printableTokens = tokenNames.map((tokenEntry) => {
+                        const matches = cardList.filter((e) => {
+                          // if (e.Cardname.includes("Food12")) {
+                          //   console.log(e);
+                          // }
+                          return e.Cardname == tokenEntry;
+                        });
 
                         // { cardName: string; sides: { id: string }[] };
                         const returnEntry = {
-                          cardName: cardEntry.Name,
+                          cardName: tokenEntry,
                           sides: matches.map((matchEntry) => ({
                             id: matchEntry.Url.replace(
                               "https://lh3.googleusercontent.com/d/",
@@ -280,54 +290,34 @@ export const CubeResources = () => {
                             ),
                           })),
                         };
+
                         return returnEntry;
                       });
-                      console.log("printableCards");
+
+                      const printableCards = cubeSetup.cards.map(
+                        (cardEntry) => {
+                          const matches = cardList.filter(
+                            (e) => e.Cardname == cardEntry.Name
+                          );
+
+                          // { cardName: string; sides: { id: string }[] };
+                          const returnEntry = {
+                            cardName: cardEntry.Name,
+                            sides: matches.map((matchEntry) => ({
+                              id: matchEntry.Url.replace(
+                                "https://lh3.googleusercontent.com/d/",
+                                ""
+                              ),
+                            })),
+                          };
+                          return returnEntry;
+                        }
+                      );
                       toMPCAutofill(
                         [
                           ...printableCards,
-                          ...Array(40)
-                            .fill(undefined)
-                            .map(() => ({
-                              cardName: "Swamp",
-                              sides: [
-                                { id: "1RZtCEa2plk-4bVKBL1MdJEjJsRgI5Ht6" },
-                              ],
-                            })),
-                          ...Array(40)
-                            .fill(undefined)
-                            .map(() => ({
-                              cardName: "Plains",
-                              sides: [
-                                { id: "1YIIJG4MdOyP6v6LgeYTztMn_CFOD5e6t" },
-                              ],
-                            })),
-                          ...Array(40)
-                            .fill(undefined)
-                            .map(
-                              () => ({
-                                cardName: "Mountain",
-                                sides: [
-                                  { id: "1CdSPdzbINcylm8xNemUjFoCLauyAU14X" },
-                                ],
-                              }),
-                              ...Array(40)
-                                .fill(undefined)
-                                .map(() => ({
-                                  cardName: "Island",
-                                  sides: [
-                                    { id: "1gF3_D9K5D7GbmObO3K2PJz96hBnx-ukK" },
-                                  ],
-                                })),
-                              ...Array(40)
-                                .fill(undefined)
-                                .map(() => ({
-                                  cardName: "Forest",
-                                  sides: [
-                                    { id: "1kuDXNzDdjSGFhTQ8o53E_dVuVUFtvymg" },
-                                  ],
-                                }))
-                            ),
+                          ...getLands(),
+                          ...printableTokens,
                         ].filter(Boolean)
                       );
                     }}
@@ -338,13 +328,50 @@ export const CubeResources = () => {
                   "None"
                 )}
               </StyledTD>
-              <StyledTD>{e.printLink || "None"}</StyledTD>
+              <StyledTD>{cubeSetup.printLink || "None"}</StyledTD>
             </StyledRow>
           );
         })}
       </StyledTable>
     </Container>
   );
+};
+
+const getLands = () => {
+  return [
+    ...Array(40)
+      .fill(undefined)
+      .map(() => ({
+        cardName: "Swamp",
+        sides: [{ id: "1RZtCEa2plk-4bVKBL1MdJEjJsRgI5Ht6" }],
+      })),
+    ...Array(40)
+      .fill(undefined)
+      .map(() => ({
+        cardName: "Plains",
+        sides: [{ id: "1YIIJG4MdOyP6v6LgeYTztMn_CFOD5e6t" }],
+      })),
+    ...Array(40)
+      .fill(undefined)
+      .map(
+        () => ({
+          cardName: "Mountain",
+          sides: [{ id: "1CdSPdzbINcylm8xNemUjFoCLauyAU14X" }],
+        }),
+        ...Array(40)
+          .fill(undefined)
+          .map(() => ({
+            cardName: "Island",
+            sides: [{ id: "1gF3_D9K5D7GbmObO3K2PJz96hBnx-ukK" }],
+          })),
+        ...Array(40)
+          .fill(undefined)
+          .map(() => ({
+            cardName: "Forest",
+            sides: [{ id: "1kuDXNzDdjSGFhTQ8o53E_dVuVUFtvymg" }],
+          }))
+      ),
+  ];
 };
 
 const StyledLink = styled(Link)({
