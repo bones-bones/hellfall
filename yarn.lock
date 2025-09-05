@@ -3279,9 +3279,9 @@ camelcase@^6.0.0, camelcase@^6.1.0, camelcase@^6.2.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001688:
-  version "1.0.30001699"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001699.tgz#a102cf330d153bf8c92bfb5be3cd44c0a89c8c12"
-  integrity sha512-b+uH5BakXZ9Do9iK+CkDmctUSEqZl+SP056vc5usa0PL+ev5OHw003rZXcnjNDv3L8P5j6rwT6C0BPKSikW08w==
+  version "1.0.30001739"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001739.tgz"
+  integrity sha512-y+j60d6ulelrNSwpPyrHdl+9mJnQzHBr08xm48Qno0nSk4h3Qojh+ziv2qE6rXf4k3tadF4o1J/1tAbVm1NtnA==
 
 capture-exit@^2.0.0:
   version "2.0.0"

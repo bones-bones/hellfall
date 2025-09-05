@@ -66,6 +66,7 @@ export const CubeResources = () => {
       id: "HC4",
       description: "A Vintage power cube. A rip-roaring good time",
       cards: cards.filter((e) => e.Set === "HC4"),
+      readyForAutofill: true,
       printLink: (
         <StyledLink
           to={

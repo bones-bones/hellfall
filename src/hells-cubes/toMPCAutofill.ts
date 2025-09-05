@@ -45,7 +45,7 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
     // Fronts block
     const fronts = xmlDoc.createElement("fronts");
     orderSegment.cards.forEach((card, index) => {
-      // console.log(card);
+      console.log(card);
       // @ts-ignore
       const existingCard = [...fronts.querySelectorAll("card")].find(
         (e) => e.querySelector("id").textContent == card.sides[0].id
