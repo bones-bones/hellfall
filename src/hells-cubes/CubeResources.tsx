@@ -19,6 +19,7 @@ type CubeSetup = {
   tts?: ReactNode;
   printLink?: ReactNode;
   readyForAutofill?: boolean;
+  includeLands?: boolean;
 };
 
 export const CubeResources = () => {
@@ -66,6 +67,7 @@ export const CubeResources = () => {
       id: "HC4",
       description: "A Vintage power cube. A rip-roaring good time",
       cards: cards.filter((e) => e.Set === "HC4"),
+      includeLands: true,
       readyForAutofill: true,
       printLink: (
         <StyledLink
@@ -95,6 +97,7 @@ export const CubeResources = () => {
       description: "The Commander Cube",
       cards: cards.filter((e) => e.Set === "HC6"),
       readyForAutofill: true,
+      includeLands: true,
       printLink: (
         <StyledLink
           to={
@@ -108,6 +111,8 @@ export const CubeResources = () => {
     {
       name: "HC Constructed",
       id: "HCC",
+      readyForAutofill: true,
+
       description:
         "Cards that are legal in constructed, but are not in any cube",
       cards: cards.filter((e) => e.Set === "HCC"),
@@ -115,6 +120,7 @@ export const CubeResources = () => {
     {
       name: "Hells Chase Posse",
       id: "HCP",
+      readyForAutofill: true,
       description: "Planes and Phenomena for some sick planechase action",
       cards: cards.filter((e) => e.Set === "HCP"),
       printLink: (
@@ -143,6 +149,7 @@ export const CubeResources = () => {
       name: "Heckscube",
       id: "HCK",
       readyForAutofill: true,
+      includeLands: true,
       description:
         "This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC's first forays into \"beginner-friendly\" Magic all the way back in '97.",
       cards: cards.filter((e) => e.Set === "HCK"),
@@ -317,7 +324,7 @@ export const CubeResources = () => {
                       toMPCAutofill(
                         [
                           ...printableCards,
-                          ...getLands(),
+                          ...(cubeSetup.includeLands ? getLands() : []),
                           ...printableTokens,
                         ].filter(Boolean)
                       );
