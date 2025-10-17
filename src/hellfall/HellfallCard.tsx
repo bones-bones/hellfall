@@ -78,7 +78,7 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
                 }`}
               </Text>
               <br />
-              <Text typeLevel="body.medium" key="rules">
+              <Text typeLevel="body.medium" key="rules" wordBreak="break-word">
                 {(data["Text Box"]?.[i] || "").split("\\n").map((entry) => {
                   return (
                     <>
@@ -165,7 +165,7 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
               <br />
             </>
           }
-          {data["Rulings"] != "" && (
+          {data["Rulings"] && data["Rulings"] != "" && (
             <>
               <Divider />
               <div>

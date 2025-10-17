@@ -45,7 +45,6 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
     // Fronts block
     const fronts = xmlDoc.createElement("fronts");
     orderSegment.cards.forEach((card, index) => {
-      console.log(card);
       // @ts-ignore
       const existingCard = [...fronts.querySelectorAll("card")].find(
         (e) => e.querySelector("id").textContent == card.sides[0].id
@@ -71,10 +70,11 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
 
     // backs
     const backs = xmlDoc.createElement("backs");
+
     orderSegment.cards.forEach((card, index) => {
-      // if (card.sides.length > 1) {
-      //   console.log("back");
-      // }
+      if (card.cardName.includes("// Elves")) {
+        console.log("back", card);
+      }
       if (card.sides.length == 1) {
         return;
       }

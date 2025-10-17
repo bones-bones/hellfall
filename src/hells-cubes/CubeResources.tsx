@@ -287,6 +287,7 @@ export const CubeResources = () => {
                           // }
                           return e.Cardname == tokenEntry;
                         });
+                        console.log(printableTokens);
 
                         // { cardName: string; sides: { id: string }[] };
                         const returnEntry = {
@@ -307,7 +308,9 @@ export const CubeResources = () => {
                           const matches = cardList.filter(
                             (e) => e.Cardname == cardEntry.Name
                           );
-
+                          if (cardEntry.Name.includes("// Elves")) {
+                            console.log(cardList, matches);
+                          }
                           // { cardName: string; sides: { id: string }[] };
                           const returnEntry = {
                             cardName: cardEntry.Name,
