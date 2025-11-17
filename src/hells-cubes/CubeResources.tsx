@@ -154,6 +154,12 @@ export const CubeResources = () => {
         "This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC's first forays into \"beginner-friendly\" Magic all the way back in '97.",
       cards: cards.filter((e) => e.Set === "HCK"),
     },
+    {
+      name: "Hellscube 8",
+      id: "HC8",
+      description: "The 8th cube, we've got archetypes",
+      cards: cards.filter((e) => e.Set === "HC8.0" || e.Set === "HC8.1"),
+    },
   ];
   return (
     <Container>

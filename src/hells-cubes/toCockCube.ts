@@ -156,9 +156,7 @@ const hcCardToCockCard = ({
   name.textContent = entry.Image[2]
     ? entry.Name.split(" // ")[sideIndex]
     : entry.Name;
-  if (entry.Name.includes("Fart")) {
-    console.log(name, "name", sideIndex);
-  }
+
   const text = xmlDoc.createElement("text");
   text.textContent = entry.Image[2]
     ? entry["Text Box"]?.[sideIndex]

@@ -24,7 +24,7 @@ You want to contribute? Great!
 1. Download [VS Code](https://code.visualstudio.com/download), it is a great dev environment
 2. Install [node/npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Pretty much any version should work
 3. Download [GitHub Desktop](https://desktop.github.com/), or not, it's just super easy to deal with
-4. Install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
+4. Install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
 5. Clone this repo. Github Desktop > File > Clone Repo > https://github.com/bones-bones/hellfall.git
 
 ## After pulling down the repo you should
