@@ -293,7 +293,6 @@ export const CubeResources = () => {
                           // }
                           return e.Cardname == tokenEntry;
                         });
-                        console.log(printableTokens);
 
                         // { cardName: string; sides: { id: string }[] };
                         const returnEntry = {
