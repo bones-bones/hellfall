@@ -160,6 +160,12 @@ export const CubeResources = () => {
       description: "The 8th cube, we've got archetypes",
       cards: cards.filter((e) => e.Set === "HC8.0" || e.Set === "HC8.1"),
     },
+    {
+      name: "Hellscube Jumpstart",
+      id: "HCJ",
+      description: "Jumpstart! (packs to come)",
+      cards: cards.filter((e) => e.Set === "HCJ"),
+    },
   ];
   return (
     <Container>

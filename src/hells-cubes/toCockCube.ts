@@ -154,7 +154,8 @@ const hcCardToCockCard = ({
   const tempCard = xmlDoc.createElement("card");
   const name = xmlDoc.createElement("name");
   name.textContent = entry.Image[2]
-    ? entry.Name.split(" // ")[sideIndex]
+    ? entry.Name.split(" // ")[sideIndex] ||
+      entry.Name + " " + entry["Card Type(s)"][1]
     : entry.Name;
 
   const text = xmlDoc.createElement("text");

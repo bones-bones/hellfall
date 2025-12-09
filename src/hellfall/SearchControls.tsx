@@ -11,7 +11,6 @@ import { CmcSelector } from "./inputs";
 
 import { useAtom } from "jotai";
 import {
-  legalityAtom,
   nameSearchAtom,
   rulesSearchAtom,
   searchCmcAtom,
@@ -21,14 +20,14 @@ import {
   typeSearchAtom,
   searchColorsIdentityAtom,
   searchColorComparisonAtom,
-  isCommanderAtom,
   powerAtom,
   toughnessAtom,
   tagsAtom,
 } from "./searchAtoms";
 import { colors } from "./constants";
-import { SearchCheckbox } from "./SearchCheckbox";
-import { StyledLabel, StyledLegend } from "./StyledLabel";
+import { StyledLabel } from "./StyledLabel";
+import { CardLegalityControls } from "./search-controls/CardLegalityControls";
+import { StyledComponentHolder } from "./StyledComponentHolder";
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
@@ -38,13 +37,10 @@ export const SearchControls = () => {
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
 
-  const [legality, setLegality] = useAtom(legalityAtom);
-
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
   const [tags, setTags] = useAtom(tagsAtom);
-  const [isCommander, setIsCommander] = useAtom(isCommanderAtom);
   const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(
     searchColorsIdentityAtom
   );
@@ -141,72 +137,11 @@ export const SearchControls = () => {
             "HC7",
             "HCK",
             "HC8",
+            "HCJ",
           ]}
           onChange={setSet}
         />
-        <fieldset>
-          <StyledLegend>{"Constructed Legality"}</StyledLegend>
-          <StyledComponentHolder>
-            <StyledLabel htmlFor="constructedLegal">Standard Legal</StyledLabel>
-            <SearchCheckbox
-              id="constructedLegal"
-              type="checkbox"
-              checked={legality.includes("legal")}
-              onChange={(event) => {
-                setLegality(
-                  event.target.checked
-                    ? [...legality, "legal"]
-                    : legality.filter((e) => e != "legal")
-                );
-              }}
-            />
-          </StyledComponentHolder>
-          <StyledComponentHolder>
-            <StyledLabel htmlFor="4cbLegal">4 Card Blind Legal</StyledLabel>
-            <SearchCheckbox
-              id="4cbLegal"
-              type="checkbox"
-              checked={legality.includes("4cbLegal")}
-              onChange={(event) => {
-                setLegality(
-                  event.target.checked
-                    ? [...legality, "4cbLegal"]
-                    : legality.filter((e) => e != "4cbLegal")
-                );
-              }}
-            />
-          </StyledComponentHolder>
-          <StyledComponentHolder>
-            <StyledLabel htmlFor="hellsmanderLegal">
-              Hellsmander Legal
-            </StyledLabel>
-            <SearchCheckbox
-              id="hellsmanderLegal"
-              type="checkbox"
-              checked={legality.includes("hellsmanderLegal")}
-              onChange={(event) => {
-                setLegality(
-                  event.target.checked
-                    ? [...legality, "hellsmanderLegal"]
-                    : legality.filter((e) => e != "hellsmanderLegal")
-                );
-              }}
-            />
-          </StyledComponentHolder>
-          <StyledComponentHolder>
-            <StyledLabel htmlFor="canBeYourCommander">
-              {"Can Be Your Commander"}
-            </StyledLabel>
-            <SearchCheckbox
-              id="canBeYourCommander"
-              type="checkbox"
-              checked={isCommander === true}
-              onChange={(event) => {
-                setIsCommander(event.target.checked ? true : false);
-              }}
-            />
-          </StyledComponentHolder>
-        </fieldset>
+        <CardLegalityControls />
         <CmcSelector
           label={"Mana value"}
           onChange={setSearchCmc}
@@ -228,9 +163,3 @@ const SearchCriteriaSection = styled("div")({
 });
 const SearchContainer = styled("div")({ display: "flex", flexWrap: "wrap" });
 const StyledManaSelect = styled("select")({ width: "100px", height: "30px" });
-
-const StyledComponentHolder = styled.div({
-  display: "flex",
-  flexDirection: "column",
-  marginTop: "10px",
-});

@@ -18,6 +18,7 @@ export const CheckboxGroup: FC<
   return (
     <fieldset>
       <StyledLegend>{label}</StyledLegend>
+
       <Container>
         {values.map((entry) => {
           return (

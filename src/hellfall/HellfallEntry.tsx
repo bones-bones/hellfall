@@ -24,11 +24,13 @@ export const HellfallEntry = ({
 };
 
 const StyledImage = styled.img({
-  width: "250px",
+  maxWidth: "250px",
+  maxHeight: "340px",
 });
 
 const Container = styled.div({
   width: "250px",
+
   display: "inline-block",
   padding: "5px",
   cursor: "pointer",
