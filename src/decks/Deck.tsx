@@ -6,7 +6,6 @@ import { HellfallCard } from "../hellfall/HellfallCard";
 import { CardEntry } from "./types";
 import { useParams } from "react-router-dom";
 import { allDecks } from "./allDecks";
-import { SetLegality } from "../hellfall/SetLegality";
 import { stringToMana } from "../hellfall/stringToMana";
 
 const activeCardAtom = atom<HCEntry | undefined>(undefined);
@@ -104,6 +103,7 @@ export const Deck = () => {
         <DeckCon>
           <div>
             <DeckHeading key="main">Maindeck</DeckHeading>
+            <CardContainer />
             {Object.entries(reduddd).map(([key, val]) => {
               return (
                 <CategorySection
@@ -126,7 +126,6 @@ export const Deck = () => {
               );
             })}
           </div>
-          <CardContainer />
         </DeckCon>
       </BigContainer>
     </BiggestContainer>
@@ -146,12 +145,13 @@ const BiggestContainer = styled.div({
   backgroundColor: "grey",
   display: "flex",
   justifyContent: "center",
-  height: "100vw",
+  height: "100%",
 });
 const TextContainer = styled.div({
   marginLeft: "40px",
   marginRight: "40px",
   whiteSpace: "pre-wrap",
+
   marginTop: "40px",
   fontSize: "18px",
 });
@@ -180,7 +180,8 @@ const DeckCon = styled.div({
 const ActiveCardContainer = styled.div(
   ({ showGutter }: { showGutter: boolean }) => ({
     width: "380px",
-    height: "900px",
+    maxHeight: "900px",
+    top: "50px",
     overflowY: "scroll",
     position: "fixed",
     right: showGutter ? "10vw" : "0px",
@@ -228,10 +229,9 @@ const CategorySection = ({
   );
 };
 const StyledH4 = styled.h4({ marginBottom: "10px" });
-const CardColumn = styled.div({ flexBasis: "60%" });
-const CostColumn = styled.div({ flexBasis: "25%" });
+const CardColumn = styled.div({});
+const CostColumn = styled.div({});
 const MoneyColumn = styled.div({
-  flexBasis: "10%",
   textAlign: "end",
 });
 const CatCon = styled.div({
@@ -240,7 +240,13 @@ const CatCon = styled.div({
 
   width: "100%",
 });
-const CatSecCon = styled.div({ width: "35vw" });
+const CatSecCon = styled.div({
+  width: "35vw",
+  display: "grid",
+  gridTemplateColumns: "3fr 1.25fr 0.5fr",
+  gap: "0",
+  rowGap: "2px",
+});
 const BoldSpan = styled.a({
   fontWeight: "bold",
   color: "black",
@@ -248,9 +254,7 @@ const BoldSpan = styled.a({
   ":visited": { color: "darkgrey" },
 });
 const CardLineContainer = styled.div({
-  display: "flex",
-  justifyContent: "space-between",
-  height: "35px",
+  display: "contents",
 });
 
 type RenderEntry = { name: string; count: number; hcEntry?: HCEntry };

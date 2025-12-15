@@ -16,20 +16,23 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
 
   const [activeImageSide, setActiveImageSide] = useState(0);
 
-  const imagesToShow = data.Image?.filter((e) => typeof e === "string").slice(
-    1
-  );
+  const imagesToShow = data.Image?.filter(
+    (e) => typeof e === "string" && e !== ""
+  ).slice(1);
+  console.log({ imagesToShow });
 
   return (
     <Container key={data["Name"]}>
       {imagesToShow.length === 0 ? (
-        <ImageContainer key="image-container">
-          <img
-            src={data["Image"][0]!}
-            height="500px"
-            referrerPolicy="no-referrer"
-          />
-        </ImageContainer>
+        <Test>
+          <ImageContainer key="image-container">
+            <img
+              src={data["Image"][0]!}
+              height="500px"
+              referrerPolicy="no-referrer"
+            />
+          </ImageContainer>
+        </Test>
       ) : (
         <>
           <ImageContainer
@@ -79,36 +82,39 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
               </Text>
               <br />
               <Text typeLevel="body.medium" key="rules" wordBreak="break-word">
-                {(data["Text Box"]?.[i] || "").split("\\n").map((entry) => {
-                  return (
-                    <>
-                      {entry
-                        .split(/(?=[()]+)/)
-                        .filter((chunk) => chunk !== ")")
-                        .map((chunk, ci) => {
-                          if (chunk.startsWith("(")) {
-                            return (
-                              <ItalicText key={ci}>
-                                {stringToMana(chunk)})
-                              </ItalicText>
-                            );
-                          }
-                          return stringToMana(chunk);
-                        })}
-                      <br />
-                    </>
-                  );
-                })}
+                {(data["Text Box"]?.[i] || "").split("\\n").map((entry) => (
+                  <>
+                    {entry
+                      .split(/(?=[()]+)/)
+                      .filter((chunk) => chunk !== ")")
+                      .map((chunk, ci) => {
+                        if (chunk.startsWith("(")) {
+                          return (
+                            <ItalicText key={ci}>
+                              {stringToMana(chunk)})
+                            </ItalicText>
+                          );
+                        }
+                        return stringToMana(chunk);
+                      })}
+                    <br />
+                  </>
+                ))}
               </Text>
               <br />
-              {data["Flavor Text"] && data["Flavor Text"][i] !== null && (
-                <>
-                  <ItalicText typeLevel="body.medium" key="flavor">
-                    {renderText((data["Flavor Text"]?.[i] || "").split("\\n"))}
-                  </ItalicText>
-                  <br />
-                </>
-              )}
+
+              {data["Flavor Text"] &&
+                data["Flavor Text"][i] !== null &&
+                data["Flavor Text"][i] !== "" && (
+                  <>
+                    <ItalicText typeLevel="body.medium" key="flavor">
+                      {renderText(
+                        (data["Flavor Text"]?.[i] || "").split("\\n")
+                      )}
+                    </ItalicText>
+                    <br />
+                  </>
+                )}
               {data["power"]?.[i] &&
                 data["power"][i]!.toString() !== "" &&
                 data["power"] != null && (
@@ -131,9 +137,9 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
                 )}
             </div>
           ))}
+          <Divider />
           {data["Set"] && (
             <>
-              <Divider />
               <Text typeLevel="body.medium">Set: {data["Set"]}</Text>
               <br />
             </>
@@ -236,9 +242,18 @@ const Container = styled.div({
 
 const ItalicText = styled(Text)({ fontStyle: "italic" });
 
+const Test = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  overflowX: "scroll",
+  width: "100%",
+});
 const ImageContainer = styled.div({
   overflowX: "auto",
-  width: "fit-content",
+
+  display: "flex",
+
+  width: "100%",
 });
 const StyledHeading = styled(Heading)({
   marginTop: "0px",
