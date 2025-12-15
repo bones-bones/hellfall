@@ -245,15 +245,12 @@ const ItalicText = styled(Text)({ fontStyle: "italic" });
 const Test = styled.div({
   display: "flex",
   justifyContent: "center",
-  overflowX: "scroll",
+  overflowX: "auto",
   width: "100%",
 });
 const ImageContainer = styled.div({
-  overflowX: "auto",
-
   display: "flex",
-
-  width: "100%",
+  overflow: "auto",
 });
 const StyledHeading = styled(Heading)({
   marginTop: "0px",
