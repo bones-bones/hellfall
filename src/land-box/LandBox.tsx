@@ -23,6 +23,14 @@ export const LandBox = () => {
   return (
     <>
       <h1>Need some lands? grab some from the land box</h1>
+      <pre>
+        {` How to change basic land art on Cockatrice:
+       
+- Download your preferred art. The name of the file should be the name of the land (e.g. Plains.png).
+- Put the file into Cockatrice's custom image folder (Card Database > Open custom image folder). Reload Cockatrice if you have it open.
+
+–exalted`}
+      </pre>
       <div>
         set:{" "}
         <select
@@ -35,9 +43,7 @@ export const LandBox = () => {
           <option>Old</option>
         </select>
       </div>
-      {active && (
-        <BigView clear={() => setActive(undefined)} land={active} />
-      )}
+      {active && <BigView clear={() => setActive(undefined)} land={active} />}
       <Container>
         {Object.entries(grouped)
           .sort((a, b) => {

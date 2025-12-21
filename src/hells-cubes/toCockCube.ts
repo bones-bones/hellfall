@@ -53,7 +53,7 @@ export const toCockCube = ({
     setElement.setAttribute("picURL", tokenEntry.Image);
 
     const type = xmlDoc.createElement("type");
-    type.textContent = tokenEntry.Type?.split(";").join(" ");
+    type.textContent = "Token " + tokenEntry.Type?.split(";").join(" ");
 
     const tablerow = xmlDoc.createElement("tablerow");
     tablerow.textContent = getTableRowForToken(tokenEntry.Type).toString();
@@ -189,10 +189,10 @@ const hcCardToCockCard = ({
   manaCost.textContent =
     entry.Cost?.[sideIndex]?.replace(/\{(.)\}/g, "$1") || "";
 
-  const maintype = xmlDoc.createElement("maintype");
-  maintype.textContent = entry["Card Type(s)"][sideIndex]?.includes("Creature")
+  const mainType = xmlDoc.createElement("maintype");
+  mainType.textContent = entry["Card Type(s)"][sideIndex]?.includes("Creature")
     ? "Creature"
-    : entry["Card Type(s)"][1]?.split(";").slice(-1)[0] || "";
+    : entry["Card Type(s)"][sideIndex]?.split(";").slice(-1)[0] || "";
   const cmc = xmlDoc.createElement("cmc");
   cmc.textContent = entry.CMC?.toString() || "";
   const type = xmlDoc.createElement("type");
@@ -236,7 +236,7 @@ const hcCardToCockCard = ({
   if (sideIndex !== 0) {
     reverse = xmlDoc.createElement("reverse-related");
     reverse.textContent = entry.Name.split(" // ")[0];
-    reverse.setAttribute("attach", "attach");
+    reverse.setAttribute("attach", "transform");
   }
 
   const layout = xmlDoc.createElement("layout");
@@ -256,7 +256,7 @@ const hcCardToCockCard = ({
 
       [
         type,
-        maintype,
+        mainType,
         manaCost,
         cmc,
         color,

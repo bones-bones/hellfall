@@ -31,6 +31,11 @@ export const CubeResources = () => {
       description: "A refined version of the cube that started it all",
       cards: cards.filter((e) => e.Set === "HLC"),
       quickLink: <StyledLink to="one">Rules and macros</StyledLink>,
+      printLink: (
+        <StyledLink to="https://drive.google.com/file/d/1U2Ww7WElGpA95BTOwb2E2sQ0bir4FJHt/view">
+          Hellscube 1.2 PDF by eminamitie0453
+        </StyledLink>
+      ),
       tts: (
         <StyledLink
           to={
@@ -52,6 +57,15 @@ export const CubeResources = () => {
       id: "HC3",
       description: "At least it's not HC2",
       cards: cards.filter((e) => e.Set === "HC3"),
+      printLink: (
+        <StyledLink
+          to={
+            "https://drive.google.com/file/d/1SuXpECOkcCpIcCD-KKGyNjkT9NfeLrEH/view"
+          }
+        >
+          PDF of 3.0 by Jumberlack
+        </StyledLink>
+      ),
       tts: (
         <StyledLink
           to={
@@ -170,7 +184,9 @@ export const CubeResources = () => {
   return (
     <Container>
       <StyledTable>
-        <caption>Cube Resources</caption>
+        <caption>
+          <h2>Cube Resources</h2>
+        </caption>
         <StyledRow>
           <StyledTableHeader>Name</StyledTableHeader>
           <StyledTableHeader>Id</StyledTableHeader>
