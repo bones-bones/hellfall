@@ -23,7 +23,6 @@ export const App = () => {
 const ApplicationRoutes = () => {
   return useRoutes([
     { path: "/hellscubes/*", element: <Hellscubes /> },
-
     { path: "/deck-builder/*", element: <DeckBuilder /> },
     { path: "/draft", element: <Draft /> },
     { path: "/land-box", element: <LandBox /> },
@@ -32,6 +31,6 @@ const ApplicationRoutes = () => {
     { path: "/card/*", element: <SingleCard /> },
     { path: "/breakdown", element: <Breakdown /> },
     { path: "/Watchwolfwar", element: <Watchwolfwar /> },
-    { path: "/Watchwolfresults", element: <Watchwolfresults />}
+    { path: "/Watchwolfresults", element: <Watchwolfresults /> },
   ]);
 };

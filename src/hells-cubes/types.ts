@@ -21,7 +21,7 @@ export type DraftmancerCard = {
   draft_effects?: (
     | string
     | {
-        type: "string";
+        type: string;
         count?: number;
         cards?: string[];
         duplicateProtection?: boolean;

@@ -27,6 +27,7 @@ export type HCEntry = {
   "Flavor Text": [string, string, string, string];
   "small alt image": string;
   Tags?: string;
+  CardId: string;
   FIELD44: string;
   FIELD45: string;
   FIELD46: string;

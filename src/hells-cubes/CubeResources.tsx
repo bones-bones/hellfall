@@ -6,9 +6,10 @@ import { toCockCube } from "./toCockCube";
 import { useAtomValue } from "jotai";
 import { HCEntry } from "../types";
 import { ReactNode } from "react";
-import { toDraftmancerCube } from "./toDraftmancer";
+import { getDraftmancerForCube } from "./draftmancer";
 import { getHc5 } from "./getHc5";
 import { toMPCAutofill } from "./toMPCAutofill";
+import { getLands } from "./getLands";
 
 type CubeSetup = {
   name: string;
@@ -20,6 +21,7 @@ type CubeSetup = {
   printLink?: ReactNode;
   readyForAutofill?: boolean;
   includeLands?: boolean;
+  draftmancerOverride?: ReactNode;
 };
 
 export const CubeResources = () => {
@@ -126,7 +128,6 @@ export const CubeResources = () => {
       name: "HC Constructed",
       id: "HCC",
       readyForAutofill: true,
-
       description:
         "Cards that are legal in constructed, but are not in any cube",
       cards: cards.filter((e) => e.Set === "HCC"),
@@ -171,13 +172,17 @@ export const CubeResources = () => {
     {
       name: "Hellscube 8",
       id: "HC8",
+      quickLink: (
+        <StyledLink to="/hellscubes/eight">Archetype documents</StyledLink>
+      ),
       description: "The 8th cube, we've got archetypes",
       cards: cards.filter((e) => e.Set === "HC8.0" || e.Set === "HC8.1"),
     },
     {
       name: "Hellscube Jumpstart",
       id: "HCJ",
-      description: "Jumpstart! (packs to come)",
+
+      description: "Jumpstart!",
       cards: cards.filter((e) => e.Set === "HCJ"),
     },
   ];
@@ -253,27 +258,21 @@ export const CubeResources = () => {
                 </button>
               </StyledTD>
               <StyledTD>
-                <button
-                  onClick={() => {
-                    const val = toDraftmancerCube({
-                      set: cubeSetup.id,
-                      cards: cubeSetup.cards,
-                    });
-
-                    const url =
-                      "data:text/plain;base64," +
-                      btoa(unescape(encodeURIComponent(val)));
-                    const a = document.createElement("a");
-                    a.style.display = "none";
-                    a.href = url;
-                    // the filename you want
-                    a.download = cubeSetup.name + " (Draftmancer).txt";
-                    document.body.appendChild(a);
-                    a.click();
-                  }}
-                >
-                  download
-                </button>
+                {cubeSetup.draftmancerOverride ? (
+                  <> {cubeSetup.draftmancerOverride}</>
+                ) : (
+                  <button
+                    onClick={() => {
+                      getDraftmancerForCube({
+                        id: cubeSetup.id,
+                        cards: cubeSetup.cards,
+                        name: cubeSetup.name,
+                      });
+                    }}
+                  >
+                    download
+                  </button>
+                )}
               </StyledTD>
               <StyledTD>
                 {cubeSetup.readyForAutofill ? (
@@ -303,20 +302,15 @@ export const CubeResources = () => {
 
                       const tokenNames = cubeSetup.cards.flatMap((entry) => {
                         // Dear sixel, pls finish
-                        // console.log(entry);
                         return (entry.tokens || []).map((tokenEntry) =>
                           tokenEntry.Name.replace(/ (\d+)$/g, "$1")
                         );
                       });
                       const printableTokens = tokenNames.map((tokenEntry) => {
                         const matches = cardList.filter((e) => {
-                          // if (e.Cardname.includes("Food12")) {
-                          //   console.log(e);
-                          // }
                           return e.Cardname == tokenEntry;
                         });
 
-                        // { cardName: string; sides: { id: string }[] };
                         const returnEntry = {
                           cardName: tokenEntry,
                           sides: matches.map((matchEntry) => ({
@@ -338,7 +332,7 @@ export const CubeResources = () => {
                           if (cardEntry.Name.includes("// Elves")) {
                             console.log(cardList, matches);
                           }
-                          // { cardName: string; sides: { id: string }[] };
+
                           const returnEntry = {
                             cardName: cardEntry.Name,
                             sides: matches.map((matchEntry) => ({
@@ -375,43 +369,6 @@ export const CubeResources = () => {
   );
 };
 
-const getLands = () => {
-  return [
-    ...Array(40)
-      .fill(undefined)
-      .map(() => ({
-        cardName: "Swamp",
-        sides: [{ id: "1RZtCEa2plk-4bVKBL1MdJEjJsRgI5Ht6" }],
-      })),
-    ...Array(40)
-      .fill(undefined)
-      .map(() => ({
-        cardName: "Plains",
-        sides: [{ id: "1YIIJG4MdOyP6v6LgeYTztMn_CFOD5e6t" }],
-      })),
-    ...Array(40)
-      .fill(undefined)
-      .map(
-        () => ({
-          cardName: "Mountain",
-          sides: [{ id: "1CdSPdzbINcylm8xNemUjFoCLauyAU14X" }],
-        }),
-        ...Array(40)
-          .fill(undefined)
-          .map(() => ({
-            cardName: "Island",
-            sides: [{ id: "1gF3_D9K5D7GbmObO3K2PJz96hBnx-ukK" }],
-          })),
-        ...Array(40)
-          .fill(undefined)
-          .map(() => ({
-            cardName: "Forest",
-            sides: [{ id: "1kuDXNzDdjSGFhTQ8o53E_dVuVUFtvymg" }],
-          }))
-      ),
-  ];
-};
-
 const StyledLink = styled(Link)({
   // textDecoration: "none",
   //color: "black",
@@ -427,3 +384,5 @@ const StyledRow = styled("tr")({
 });
 const StyledTableHeader = styled("th")({ textAlign: "start" });
 const StyledTD = styled("td")({ overflowY: "hidden" });
+
+// ...existing code...

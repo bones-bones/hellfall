@@ -237,6 +237,19 @@ const hcCardToCockCard = ({
     reverse = xmlDoc.createElement("reverse-related");
     reverse.textContent = entry.Name.split(" // ")[0];
     reverse.setAttribute("attach", "transform");
+  } else if (
+    // augh this sucks, printable image should have had a different name
+
+    [
+      entry["Image"][0],
+      entry["Image"][2],
+      entry["Image"][3],
+      entry["Image"][4],
+    ].filter(Boolean).length > 1
+  ) {
+    reverse = xmlDoc.createElement("reverse-related");
+    reverse.textContent = entry.Name.split(" // ")[1]; // RIP Farsight
+    reverse.setAttribute("attach", "transform");
   }
 
   const layout = xmlDoc.createElement("layout");

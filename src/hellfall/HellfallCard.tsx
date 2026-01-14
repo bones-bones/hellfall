@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 export const HellfallCard = ({ data }: { data: HCEntry }) => {
   const sideCount =
-    //@ts-ignore
     data["Card Type(s)"]?.findLastIndex(
       (entry: any) => entry !== null && entry != ""
     ) + 1 || 0;
@@ -19,7 +18,6 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
   const imagesToShow = data.Image?.filter(
     (e) => typeof e === "string" && e !== ""
   ).slice(1);
-  console.log({ imagesToShow });
 
   return (
     <Container key={data["Name"]}>

@@ -1,4 +1,5 @@
 type RecursiveChild = (Node | RecursiveChild)[];
+
 export const recursiveAdoption = (parent: Node, children: RecursiveChild) => {
   for (let i = 0; i < children.length; i++) {
     if (children[i] instanceof Array) {
