@@ -148,6 +148,12 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
               <br />
             </>
           )}
+          {data["Id"] && (
+            <>
+              <Text key="id">Id: {data["Id"]}</Text>
+              <br />
+            </>
+          )}
           {
             <>
               Constructed{" "}

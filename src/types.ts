@@ -3,6 +3,7 @@
 type SideArray<T> = [T | null, T | null, T | null, T | null];
 
 export type HCEntry = {
+  Id?: string;
   Name: string; //"Whale Visions",
 
   Image: [

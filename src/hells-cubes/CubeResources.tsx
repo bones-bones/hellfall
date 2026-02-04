@@ -84,7 +84,7 @@ export const CubeResources = () => {
       description: "A Vintage power cube. A rip-roaring good time",
       cards: cards.filter((e) => e.Set === "HC4"),
       includeLands: true,
-      readyForAutofill: true,
+      // readyForAutofill: true,
       printLink: (
         <StyledLink
           to={
@@ -112,7 +112,7 @@ export const CubeResources = () => {
       id: "HC6",
       description: "The Commander Cube",
       cards: cards.filter((e) => e.Set === "HC6"),
-      readyForAutofill: true,
+      // readyForAutofill: true,
       includeLands: true,
       printLink: (
         <StyledLink
@@ -127,7 +127,7 @@ export const CubeResources = () => {
     {
       name: "HC Constructed",
       id: "HCC",
-      readyForAutofill: true,
+      // readyForAutofill: true,
       description:
         "Cards that are legal in constructed, but are not in any cube",
       cards: cards.filter((e) => e.Set === "HCC"),
@@ -135,7 +135,7 @@ export const CubeResources = () => {
     {
       name: "Hells Chase Posse",
       id: "HCP",
-      readyForAutofill: true,
+      // readyForAutofill: true,
       description: "Planes and Phenomena for some sick planechase action",
       cards: cards.filter((e) => e.Set === "HCP"),
       printLink: (
@@ -163,7 +163,7 @@ export const CubeResources = () => {
     {
       name: "Heckscube",
       id: "HCK",
-      readyForAutofill: true,
+      // readyForAutofill: true,
       includeLands: true,
       description:
         "This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC's first forays into \"beginner-friendly\" Magic all the way back in '97.",
@@ -281,7 +281,7 @@ export const CubeResources = () => {
                       const cardList = (
                         await (
                           await fetch(
-                            "https://hellfall-autofill-821285593003.europe-west1.run.app/"
+                            "https://hellfall-autofill-821285593003.europe-west1.run.app/",
                           )
                         ).json()
                       ).values
@@ -303,7 +303,7 @@ export const CubeResources = () => {
                       const tokenNames = cubeSetup.cards.flatMap((entry) => {
                         // Dear sixel, pls finish
                         return (entry.tokens || []).map((tokenEntry) =>
-                          tokenEntry.Name.replace(/ (\d+)$/g, "$1")
+                          tokenEntry.Name.replace(/ (\d+)$/g, "$1"),
                         );
                       });
                       const printableTokens = tokenNames.map((tokenEntry) => {
@@ -316,7 +316,7 @@ export const CubeResources = () => {
                           sides: matches.map((matchEntry) => ({
                             id: matchEntry.Url.replace(
                               "https://lh3.googleusercontent.com/d/",
-                              ""
+                              "",
                             ),
                           })),
                         };
@@ -327,7 +327,7 @@ export const CubeResources = () => {
                       const printableCards = cubeSetup.cards.map(
                         (cardEntry) => {
                           const matches = cardList.filter(
-                            (e) => e.Cardname == cardEntry.Name
+                            (e) => e.Cardname == cardEntry.Name,
                           );
                           if (cardEntry.Name.includes("// Elves")) {
                             console.log(cardList, matches);
@@ -338,19 +338,19 @@ export const CubeResources = () => {
                             sides: matches.map((matchEntry) => ({
                               id: matchEntry.Url.replace(
                                 "https://lh3.googleusercontent.com/d/",
-                                ""
+                                "",
                               ),
                             })),
                           };
                           return returnEntry;
-                        }
+                        },
                       );
                       toMPCAutofill(
                         [
                           ...printableCards,
                           ...(cubeSetup.includeLands ? getLands() : []),
                           ...printableTokens,
-                        ].filter(Boolean)
+                        ].filter(Boolean),
                       );
                     }}
                   >
