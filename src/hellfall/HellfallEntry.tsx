@@ -2,19 +2,21 @@ import styled from "@emotion/styled";
 
 export const HellfallEntry = ({
   url,
+  id,
   name,
   onClick,
 }: {
   url: string;
+  id: string;
   name: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   return (
-    <Container key={name} role="button">
+    <Container key={id} role="button">
       <span>{name}</span>
       <br />
       <StyledImage
-        key={name}
+        key={id}
         src={url}
         onClick={onClick}
         referrerPolicy="no-referrer"

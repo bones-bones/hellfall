@@ -20,7 +20,7 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
   ).slice(1);
 
   return (
-    <Container key={data["Name"]}>
+    <Container key={data["Id"]}>
       {imagesToShow.length === 0 ? (
         <Test>
           <ImageContainer key="image-container">
@@ -145,6 +145,12 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
           {data["Creator"] && (
             <>
               <Text key="creator">Creator: {data["Creator"]}</Text>
+              <br />
+            </>
+          )}
+          {data["Id"] && (
+            <>
+              <Text key="id">Id: {data["Id"]}</Text>
               <br />
             </>
           )}

@@ -6,6 +6,7 @@ import {
   activeCardAtom,
   creatorsAtom,
   legalityAtom,
+  idSearchAtom,
   nameSearchAtom,
   offsetAtom,
   rulesSearchAtom,
@@ -36,6 +37,7 @@ export const useSearchResults = () => {
   const cards = useAtomValue(cardsAtom).filter((e) => e.Set != "C");
   const set = useAtomValue(searchSetAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
+  const idSearch = useAtomValue(idSearchAtom);
   const nameSearch = useAtomValue(nameSearchAtom);
   const searchCmc = useAtomValue(searchCmcAtom);
   const legality = useAtomValue(legalityAtom);

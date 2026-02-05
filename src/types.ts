@@ -3,8 +3,8 @@
 type SideArray<T> = [T | null, T | null, T | null, T | null];
 
 export type HCEntry = {
+  Id: string;
   Name: string; //"Whale Visions",
-
   Image: [
     string | null | undefined, // Here is the card as it was submitted
     string | null | undefined, // Here is the card to use in drafting _if_ the previous one isn't usable
@@ -14,13 +14,12 @@ export type HCEntry = {
   ];
   Creator: string;
   isActualToken?: boolean;
-  Tags?: string;
   Set: string; // "HLC",
+  Constructed?: ("Legal" | "Banned" | "Banned (4CB)" | "Banned (Commander)")[];
+  "Component of"?: string;
   Rulings: string; //"See Magic Comprehensive Rules 894.1c Deez",
   CMC: number; //3,
   "Color(s)"?: string; // "Blue",
-  Constructed?: ("Legal" | "Banned" | "Banned (4CB)" | "Banned (Commander)")[];
-
   Cost: SideArray<string>;
   "Supertype(s)"?: SideArray<string>;
   "Card Type(s)": SideArray<string>;
@@ -30,21 +29,21 @@ export type HCEntry = {
   Loyalty: [any, null, "", ""];
   "Text Box"?: SideArray<string>;
   "Flavor Text"?: SideArray<string>;
+  Tags?: string;
   "small alt image": string;
-  "Component of"?: string;
-  FIELD44: string;
-  FIELD45: string;
-  FIELD46: string;
-  FIELD47: string;
-  FIELD48: string;
-  FIELD49: string;
-  FIELD50: string;
-  FIELD51: string;
-  FIELD52: string;
-  FIELD53: string;
-  FIELD54: string;
-  FIELD55: string;
-  FIELD56: string;
+  // FIELD44: string;
+  // FIELD45: string;
+  // FIELD46: string;
+  // FIELD47: string;
+  // FIELD48: string;
+  // FIELD49: string;
+  // FIELD50: string;
+  // FIELD51: string;
+  // FIELD52: string;
+  // FIELD53: string;
+  // FIELD54: string;
+  // FIELD55: string;
+  // FIELD56: string;
   tokens?: Token[];
 };
 
@@ -54,5 +53,5 @@ export type Token = {
   Power: string;
   Toughness: string;
   Type: string;
-  FIELD7: string;
+  // FIELD7: string;
 };

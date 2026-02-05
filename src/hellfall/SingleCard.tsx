@@ -9,17 +9,17 @@ import { useAtomValue } from "jotai";
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
   const nav = useNavigate();
-  const { "*": cardName } = useParams();
+  const { "*": cardId } = useParams();
 
   useEffect(() => {
-    if (cards.length > 0 && cardName == "random") {
-      const theName = cards[Math.floor(Math.random() * cards.length)].Name;
+    if (cards.length > 0 && cardId == "random") {
+      const theId = cards[Math.floor(Math.random() * cards.length)].Id;
 
-      nav("/card/" + encodeURIComponent(theName));
+      nav("/card/" + encodeURIComponent(theId));
     }
-  }, [cards.length, cardName]);
+  }, [cards.length, cardId]);
 
-  const entryToRender = cards?.find((e) => e.Name === cardName);
+  const entryToRender = cards?.find((e) => e.Id === cardId);
 
   return (
     <Container>
