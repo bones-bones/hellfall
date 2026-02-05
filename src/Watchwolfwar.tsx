@@ -1,14 +1,37 @@
 import styled from "@emotion/styled";
 import { HellfallEntry } from "./hellfall/HellfallEntry";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { cardsAtom } from "./hellfall/cardsAtom";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { TeamClock } from "./TeamWolf";
+import {
+  SidePanelOpenDirection,
+  Card,
+  ToolbarIconButton,
+  SidePanel,
+} from "@workday/canvas-kit-react";
 import { Link } from "react-router-dom";
+import { HellfallCard } from "./hellfall/HellfallCard";
+import { activeCardAtom } from "./hellfall/searchAtoms";
+import { xIcon } from "@workday/canvas-system-icons-web";
 import { HCEntry } from "./types";
+import { useKeyPress } from "./hooks";
+
+//TODO: make results use Id natively on the backend
 
 export const Watchwolfwar = () => {
+  const escape = useKeyPress("Escape");
   const RandyRandom = useAtomValue(cardsAtom);
+  const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
+  const activeCard = RandyRandom.find((entry) => {
+    return entry.Id === activeCardFromAtom;
+  });
+  useEffect(() => {
+    if (escape) {
+      setActiveCardFromAtom("");
+    }
+  }, [escape]);
+
   const submitting = useRef(false);
   const FilterCard = RandyRandom.filter((entry) => {
     return entry.isActualToken != true && entry.Set != "C";
@@ -20,6 +43,7 @@ export const Watchwolfwar = () => {
     LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
     RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
   });
+  var activeIsRight = true;
 
   const updateStandings = async (cardName: string) => {
     if (!submitting.current) {
@@ -36,6 +60,29 @@ export const Watchwolfwar = () => {
 
   return (
     <PageContainer>
+      <StyledSidePanel
+        openWidth={window.screen.width > 450 ? 810 : 400}
+        openDirection={
+          activeIsRight
+            ? SidePanelOpenDirection.Right
+            : SidePanelOpenDirection.Left
+        }
+        open={!!activeCard}
+      >
+        {!!activeCard && (
+          <Card>
+            <Card.Body padding={"zero"}>
+              <SPContainer>
+                <ToolbarIconButton
+                  icon={xIcon}
+                  onClick={() => setActiveCardFromAtom("")}
+                />
+                {activeCard && <HellfallCard data={activeCard} />}
+              </SPContainer>
+            </Card.Body>
+          </Card>
+        )}
+      </StyledSidePanel>
       <StyleComponent>
         <Title>
           Welcome to the WatchWolfWar, the place to be to determine the
@@ -52,22 +99,58 @@ export const Watchwolfwar = () => {
           id={TwoCardState.LeftCard.Id}
           name={TwoCardState.LeftCard.Name}
           url={TwoCardState.LeftCard.Image[0]!}
-          onClick={() => {
-            updateStandings(TwoCardState.LeftCard.Name);
+          onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey) {
+              window.open(
+                "/hellfall/card/" +
+                  encodeURIComponent(TwoCardState.LeftCard.Id),
+                "_blank"
+              );
+            } else {
+              updateStandings(TwoCardState.LeftCard.Name);
+              activeIsRight = false;
+              setActiveCardFromAtom("");
+            }
           }}
-          onClickTitle={() => {
-            setActiveCardFromAtom(TwoCardState.LeftCard.Id);
+          onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey) {
+              window.open(
+                "/hellfall/card/" +
+                  encodeURIComponent(TwoCardState.LeftCard.Id),
+                "_blank"
+              );
+            } else {
+              setActiveCardFromAtom(TwoCardState.LeftCard.Id);
+            }
           }}
         />
         <HellfallEntry
           id={TwoCardState.RightCard.Id}
           name={TwoCardState.RightCard.Name}
           url={TwoCardState.RightCard.Image[0]!}
-          onClick={() => {
-            updateStandings(TwoCardState.RightCard.Name);
+          onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey) {
+              window.open(
+                "/hellfall/card/" +
+                  encodeURIComponent(TwoCardState.RightCard.Id),
+                "_blank"
+              );
+            } else {
+              updateStandings(TwoCardState.RightCard.Name);
+              activeIsRight = true;
+              setActiveCardFromAtom("");
+            }
           }}
-          onClickTitle={() => {
-            setActiveCardFromAtom(TwoCardState.RightCard.Id);
+          onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey) {
+              window.open(
+                "/hellfall/card/" +
+                  encodeURIComponent(TwoCardState.RightCard.Id),
+                "_blank"
+              );
+            } else {
+              setActiveCardFromAtom(TwoCardState.RightCard.Id);
+            }
           }}
         />
       </CardContainer>
@@ -110,3 +193,16 @@ const ResultsReceptaclePlaceThing = styled("div")({
 });
 
 const StyleComponent = styled("div")({ color: "purple", display: "flex" });
+
+const StyledSidePanel = styled(SidePanel)({
+  zIndex: 40,
+  height: "100%",
+  position: "fixed",
+  backgroundColor: "transparent",
+  top: "10px",
+});
+const SPContainer = styled("div")({
+  overflowY: "scroll",
+  height: "90vh",
+  overflowX: "hidden",
+});

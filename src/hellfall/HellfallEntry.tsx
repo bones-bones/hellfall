@@ -15,7 +15,9 @@ export const HellfallEntry = ({
 }) => {
   return (
     <Container key={id} role="button">
-      <span key={id} onClick={onClickTitle}>{name}</span>
+      <span key={id} onClick={onClickTitle}>
+        {name}
+      </span>
       <br />
       <StyledImage
         key={id}

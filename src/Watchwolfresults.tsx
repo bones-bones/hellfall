@@ -3,23 +3,39 @@ import { useAtom, useAtomValue } from "jotai";
 import { cardsAtom } from "./hellfall/cardsAtom";
 import { useEffect, useState } from "react";
 import { TeamWolf as GetCardVotes } from "./TeamWolf";
-import { SidePanelOpenDirection, Card, ToolbarIconButton, SidePanel } from "@workday/canvas-kit-react";
+import {
+  SidePanelOpenDirection,
+  Card,
+  ToolbarIconButton,
+  SidePanel,
+} from "@workday/canvas-kit-react";
 import { HellfallCard } from "./hellfall/HellfallCard";
 import { activeCardAtom } from "./hellfall/searchAtoms";
 import { xIcon } from "@workday/canvas-system-icons-web";
+import { useKeyPress } from "./hooks";
+
+//TODO: make results use Id natively on the backend
 
 export const Watchwolfresults = () => {
+  const escape = useKeyPress("Escape");
   const RandyRandom = useAtomValue(cardsAtom);
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = RandyRandom.find((entry) => {
     return entry.Name === activeCardFromAtom;
   });
+  useEffect(() => {
+    if (escape) {
+      setActiveCardFromAtom("");
+    }
+  }, [escape]);
   const [standings, setStandings] =
     useState<{ Name: string; Number: number }[]>();
-    useEffect(()=>{ GetCardVotes().then(setStandings)},[])
+  useEffect(() => {
+    GetCardVotes().then(setStandings);
+  }, []);
   return (
     <PageContainer>
-        <StyledSidePanel
+      <StyledSidePanel
         openWidth={window.screen.width > 450 ? 810 : 400}
         openDirection={SidePanelOpenDirection.Right}
         open={!!activeCard}
@@ -46,7 +62,8 @@ export const Watchwolfresults = () => {
       </StyleComponent>
       <StyleComponent>
         <Subtitle>
-          Here are the results! Do not be too sad if you are at the bottom. It is okay. The Licensed Hellscube Therapist is always here to help.
+          Here are the results! Do not be too sad if you are at the bottom. It
+          is okay. The Licensed Hellscube Therapist is always here to help.
         </Subtitle>
       </StyleComponent>
       <StyleComponent>
@@ -59,7 +76,14 @@ export const Watchwolfresults = () => {
             .map((entry) => {
               return (
                 <div key={entry.Name}>
-                  <span key={entry.Name}onMouseEnter={()=>{setActiveCardFromAtom(entry.Name)}}>{entry.Name} - {entry.Number}</span>
+                  <span
+                    key={entry.Name}
+                    onClick={() => {
+                      setActiveCardFromAtom(entry.Name);
+                    }}
+                  >
+                    {entry.Name} - {entry.Number}
+                  </span>
                 </div>
               );
             })}
@@ -93,14 +117,14 @@ const ResultsReceptaclePlaceThing = styled("div")({
 const StyleComponent = styled("div")({ color: "purple", display: "flex" });
 
 const StyledSidePanel = styled(SidePanel)({
-    zIndex: 40,
-    height: "100%",
-    position: "fixed",
-    backgroundColor: "transparent",
-    top: "10px",
-  });
-  const SPContainer = styled("div")({
-    overflowY: "scroll",
-    height: "90vh",
-    overflowX: "hidden",
-  });
+  zIndex: 40,
+  height: "100%",
+  position: "fixed",
+  backgroundColor: "transparent",
+  top: "10px",
+});
+const SPContainer = styled("div")({
+  overflowY: "scroll",
+  height: "90vh",
+  overflowX: "hidden",
+});
