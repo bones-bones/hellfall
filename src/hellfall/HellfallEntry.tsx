@@ -5,15 +5,17 @@ export const HellfallEntry = ({
   id,
   name,
   onClick,
+  onClickTitle,
 }: {
   url: string;
   id: string;
   name: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
+  onClickTitle: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
   return (
     <Container key={id} role="button">
-      <span>{name}</span>
+      <span key={id} onClick={onClickTitle}>{name}</span>
       <br />
       <StyledImage
         key={id}

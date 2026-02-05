@@ -43,7 +43,7 @@ Write a script to transform the database
 - sort by year/set (isn't this just id?)
 - sort by id
 - sort by color but not cmc
-- sort by 
+- sort by
 - use mv instead of cmc
 - add support for version of color identity with hybrids allowed
 

@@ -49,17 +49,25 @@ export const Watchwolfwar = () => {
       </StyleComponent>
       <CardContainer>
         <HellfallEntry
+          id={TwoCardState.LeftCard.Id}
           name={TwoCardState.LeftCard.Name}
           url={TwoCardState.LeftCard.Image[0]!}
           onClick={() => {
             updateStandings(TwoCardState.LeftCard.Name);
           }}
+          onClickTitle={() => {
+            setActiveCardFromAtom(TwoCardState.LeftCard.Id);
+          }}
         />
         <HellfallEntry
+          id={TwoCardState.RightCard.Id}
           name={TwoCardState.RightCard.Name}
           url={TwoCardState.RightCard.Image[0]!}
           onClick={() => {
             updateStandings(TwoCardState.RightCard.Name);
+          }}
+          onClickTitle={() => {
+            setActiveCardFromAtom(TwoCardState.RightCard.Id);
           }}
         />
       </CardContainer>
