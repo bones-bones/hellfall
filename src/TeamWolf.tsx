@@ -3,7 +3,13 @@ export const TeamWolf = async () => {
   const asJson = (await requestedData.json()) as {
     data: { Name: string; Number: number }[];
   };
-  return asJson.data;
+  return asJson.data.map((item) => ({
+    ...item,
+    Name:
+      item.Name == "SCP-●●|●●●●●|●●|●"
+        ? item.Name
+        : item.Name.replace(/\|/g, "/"),
+  }));
 };
 
 export const TeamClock = async (value: string) => {

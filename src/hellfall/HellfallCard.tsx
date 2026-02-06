@@ -9,14 +9,14 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 export const HellfallCard = ({ data }: { data: HCEntry }) => {
   const sideCount =
-    data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 0;
+    data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
 
   const [activeImageSide, setActiveImageSide] = useState(0);
 
   const imagesToShow = data.Image?.filter(e => typeof e === 'string' && e !== '').slice(1);
 
   return (
-    <Container key={data['Name']}>
+    <Container key={data['Id']}>
       {imagesToShow.length === 0 ? (
         <Test>
           <ImageContainer key="image-container">

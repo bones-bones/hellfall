@@ -3,6 +3,8 @@ const searchParams = new URLSearchParams(document.location.search);
 
 export const nameSearchAtom = atom<string>(searchParams.get('name') || '');
 
+export const idSearchAtom = atom<string>(searchParams.get('id') || '');
+
 export const activeCardAtom = atom<string>(searchParams.get('activeCard') || '');
 
 export const rulesSearchAtom = atom<string[]>(searchParams.get('rules')?.split(',') || []);
@@ -66,6 +68,8 @@ export const searchCmcAtom = atom<
 >(searchParams.get('manaValue') ? JSON.parse(searchParams.get('manaValue')!) : undefined);
 
 export const sortAtom = atom<'Alpha' | 'CMC' | 'Color'>('Color');
+// TODO: add desc sorting
+// TODO: make it possible to sort by color, then alpha, rather than color, then CMC
 export const offsetAtom = atom(parseInt(searchParams.get('page') || '0') || 0);
 export const creatorsAtom = atom(searchParams.get('creator')?.split(',,') || []);
 export const tagsAtom = atom(searchParams.get('tags')?.split(',') || []);

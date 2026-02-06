@@ -12,13 +12,22 @@ import {
 import { HellfallCard } from './hellfall/HellfallCard';
 import { activeCardAtom } from './hellfall/searchAtoms';
 import { xIcon } from '@workday/canvas-system-icons-web';
+import { useKeyPress } from './hooks';
+
+//TODO: make results use Id natively on the backend
 
 export const Watchwolfresults = () => {
+  const escape = useKeyPress('Escape');
   const RandyRandom = useAtomValue(cardsAtom);
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = RandyRandom.find(entry => {
     return entry.Name === activeCardFromAtom;
   });
+  useEffect(() => {
+    if (escape) {
+      setActiveCardFromAtom('');
+    }
+  }, [escape]);
   const [standings, setStandings] = useState<{ Name: string; Number: number }[]>();
   useEffect(() => {
     GetCardVotes().then(setStandings);
@@ -64,7 +73,7 @@ export const Watchwolfresults = () => {
                 <div key={entry.Name}>
                   <span
                     key={entry.Name}
-                    onMouseEnter={() => {
+                    onClick={() => {
                       setActiveCardFromAtom(entry.Name);
                     }}
                   >

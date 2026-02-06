@@ -7,6 +7,7 @@ import { FormField } from '@workday/canvas-kit-react/form-field';
 import { TextInput } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions';
 import { PlaytestArea } from './playtest/PlaytestArea';
+
 const basics: Record<string, string> = {
   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
   swamp: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmZ/swamp.jpeg',
@@ -53,6 +54,38 @@ export const DeckBuilder = () => {
     }
   }, [textAreaValue, deckName]);
 
+  const toCardArr = (value: string): [number, string] => {
+    if (/^(?!0+\s)\d+\s/.test(value)) {
+      // if string starts with digits followed by a space
+      const index = value.indexOf(' ');
+
+      const [count, rest] = [value.slice(0, index), value.slice(index + 1)];
+
+      // prettier-ignore
+      if ((rest == "%" && rest[1] && cards.find((entry) => entry.Id === rest.slice(1)) || rest.toLowerCase() in basics)) {
+        // if second part of string is % followed by digits or is basic name (have to put ignore or prettier moves parens)
+        return [parseInt(count), rest];
+      }
+      const foundCard = cards.find(entry => entry.Name.toLowerCase() === rest.toLowerCase());
+      if (foundCard) {
+        //if string is digits then a space then card name
+        return [parseInt(count), '%' + foundCard.Id];
+      }
+    }
+
+    // prettier-ignore
+    if ((value[0] == "%" && value[1] && cards.find((entry) => entry.Id === value.slice(1)) || value.toLowerCase() in basics)) {
+      // if second part of string is % followed by digits or is basic name (have to put ignore or prettier moves parens)
+      return [1, value];
+    }
+    const foundCard = cards.find(entry => entry['Name'].toLowerCase() === value.toLowerCase());
+    if (foundCard) {
+      //if string is digits then a space then card name
+      return [1, '%' + foundCard.Id];
+    }
+    return [1, ''];
+  };
+
   useEffect(() => {
     if (cards.length === 0) {
       return;
@@ -60,52 +93,38 @@ export const DeckBuilder = () => {
     const images: HCEntry[] = (toRender || [])
       .filter(entry => entry != '' && !entry.startsWith('# '))
       .flatMap(name => {
-        const countTest = /^(\d+) (.*)/.exec(name);
+        // debugger;
+        const [count, rest] = toCardArr(name);
         const responseObject = [];
-        console.log(name, countTest);
-        if (countTest) {
-          const count = parseInt(countTest[1]);
-          const foundName = countTest[2];
-
+        if (rest[0] == '%') {
           for (let i = 0; i < count; i++) {
-            if (basics[foundName.toLowerCase()]) {
-              responseObject.push({
-                Image: [basics[foundName.toLowerCase()]],
-                Name: foundName,
-              } as unknown as HCEntry);
-            } else {
-              const foundCard = cards.find(
-                entry => entry['Name'].toLowerCase() === foundName.toLowerCase()
-              );
-              if (foundCard) {
-                responseObject.push(foundCard);
-              }
-            }
+            const card = cards.find(entry => entry.Id == rest.slice(1))!;
+            responseObject.push(card);
           }
-        } else {
-          if (basics[name.toLowerCase()]) {
-            responseObject.push({
-              Image: [basics[name.toLowerCase()]],
-              Name: name,
-            } as unknown as HCEntry);
-          } else {
-            const foundCard = cards.find(
-              entry => entry['Name'].toLowerCase() === name.toLowerCase()
-            );
-            console.log(foundCard, console.log(name));
-            if (foundCard) {
-              responseObject.push(foundCard);
-            }
+        } else if (rest /*.toLowerCase() in basics*/) {
+          for (let i = 0; i < count; i++) {
+            const card = {
+              Image: [basics[rest.toLowerCase()]],
+              Name: rest,
+            } as unknown as HCEntry;
+            responseObject.push(card);
           }
+          // } else if (rest) {
+          //   for (let i = 0; i < count; i++) {
+          //     responseObject.push(cards.find((entry) => entry.Name.toLowerCase() == rest.toLowerCase())!);
+          //   }
         }
+        // debugger;
         if (responseObject.length == 0) {
-          responseObject.push({
-            Name: name + ' - not found',
+          const card = {
             Image: [
               'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
             ],
-          } as unknown as HCEntry);
+            Name: name + ' - not found',
+          } as unknown as HCEntry;
+          responseObject.push(card);
         }
+        // debugger;
         return responseObject;
       });
     setRenderCards(images);
@@ -181,6 +200,7 @@ Cock and Balls to Torture and Abuse"
       <br />
       <DeckContainer ref={ref}>
         {renderCards?.map((entry, i) => {
+          // debugger;
           return (
             <Card
               width="250px"

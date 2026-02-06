@@ -26,7 +26,7 @@ export const HellFall = () => {
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
 
   const activeCard = cards.find(entry => {
-    return entry.Name === activeCardFromAtom;
+    return entry.Id === activeCardFromAtom;
   });
 
   useEffect(() => {
@@ -65,12 +65,20 @@ export const HellFall = () => {
           <HellfallEntry
             onClick={(event: React.MouseEvent<HTMLImageElement>) => {
               if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                window.open('/hellfall/card/' + encodeURIComponent(entry.Name), '_blank');
+                window.open('/hellfall/card/' + encodeURIComponent(entry.Id), '_blank');
               } else {
-                setActiveCardFromAtom(entry.Name);
+                setActiveCardFromAtom(entry.Id);
               }
             }}
-            key={'' + entry.Name + i}
+            onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+              if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                window.open('/hellfall/card/' + encodeURIComponent(entry.Id), '_blank');
+              } else {
+                setActiveCardFromAtom(entry.Id);
+              }
+            }}
+            key={'' + entry.Id + '-' + i}
+            id={entry.Id}
             name={entry.Name}
             url={entry.Image[1] || entry.Image[0]!}
           />

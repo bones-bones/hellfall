@@ -39,12 +39,23 @@ Write a script to transform the database
   ~~- add guide for !~~
   ~~- mobile support~~
   ~~- Script to fetch and transform sheets directly from google doc~~
-- sort by year/set
+- add option for descending sort
+- sort by year/set (isn't this just id?)
+- sort by id
+- sort by color but not cmc
+- sort by
+- use mv instead of cmc
+- add support for version of color identity with hybrids allowed
+- make better search syntax (like allowing or)
+- add ability to search by symbols in mana cost
 
 # Mana symbols that need support
 
-- ?
-- 2/P
-- 3/P
+- {?}
+- {2/P}
+- {3/P}
 - {M}
 - {BB/P}
+- {0/U}
+- {9}, {10}, {11}
+- {HW}, {HU}, {HB}, {HR}, {HG}, {HP}

@@ -14,7 +14,7 @@ export const Breakdown = () => {
   const cards = useAtomValue(cardsAtom).filter(e => e.Set === 'HC7.0');
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = cards.find(entry => {
-    return entry.Name === activeCardFromAtom;
+    return entry.Id === activeCardFromAtom;
   });
 
   const sorted = cards.reduce<Record<string, HCEntry[]>>((curr, next) => {
@@ -213,7 +213,7 @@ const ColorTracker = ({ cards, color }: { cards: Record<string, HCEntry[]>; colo
                     <TertiaryButton
                       color="black"
                       onClick={() => {
-                        setActiveCardFromAtom(e.Name);
+                        setActiveCardFromAtom(e.Id);
                       }}
                     >
                       {e.Name}

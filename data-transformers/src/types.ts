@@ -1,7 +1,7 @@
 // The reason that there are 4 of Cost etc is because some cards have 4 sides. ooof
 
 export type HCEntry = {
-  Id?: number;
+  Id?: string;
   Name: string; //"Whale Visions",
   Image: [
     string | null, // Here is the card as it was submitted
@@ -13,10 +13,11 @@ export type HCEntry = {
   Creator: string;
   isActualToken?: boolean;
   Set: string; // "HLC",
+  Constructed?: ('Legal' | 'Banned' | 'Banned (4CB)' | 'Banned (Commander)')[];
+  'Component of'?: string;
   Rulings: string; //"See Magic Comprehensive Rules 894.1c Deez",
   CMC: number; //3,
   'Color(s)': string; // "Blue",
-  Constructed?: ('Legal' | 'Banned' | 'Banned (4CB)' | 'Banned (Commander)')[];
   Cost: [string, string, string, string];
   'Supertype(s)': [string, string, string, string];
   'Card Type(s)': [string, string, string, string];
@@ -26,21 +27,21 @@ export type HCEntry = {
   Loyalty: [any, null, '', ''];
   'Text Box': [string, string, string, string];
   'Flavor Text': [string, string, string, string];
-  'small alt image': string;
   Tags?: string;
-  FIELD44: string;
-  FIELD45: string;
-  FIELD46: string;
-  FIELD47: string;
-  FIELD48: string;
-  FIELD49: string;
-  FIELD50: string;
-  FIELD51: string;
-  FIELD52: string;
-  FIELD53: string;
-  FIELD54: string;
-  FIELD55: string;
-  FIELD56: string;
+  'small alt image': string;
+  // FIELD44: string;
+  // FIELD45: string;
+  // FIELD46: string;
+  // FIELD47: string;
+  // FIELD48: string;
+  // FIELD49: string;
+  // FIELD50: string;
+  // FIELD51: string;
+  // FIELD52: string;
+  // FIELD53: string;
+  // FIELD54: string;
+  // FIELD55: string;
+  // FIELD56: string;
   tokens?: Token[];
 };
 
@@ -50,7 +51,7 @@ export type Token = {
   Power: string;
   Toughness: string;
   Type: string;
-  FIELD7: string;
+  // FIELD7: string;
 };
 
 export type TokenForImport = Token & {

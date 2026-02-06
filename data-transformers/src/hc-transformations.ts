@@ -31,21 +31,21 @@ const main = async () => {
         if (current[cardEntry.replace(/\*\d*$/, '')]) {
           current[cardEntry.replace(/\*\d*$/, '')].push({
             Name: entry.Name.replace(/(\d*)$/, ' $1'),
+            Image: entry.Image,
             Power: entry.Power,
             Toughness: entry.Toughness,
             Type: entry.Type,
-            Image: entry.Image,
-            FIELD7: entry.FIELD7,
+            // FIELD7: entry.FIELD7,
           });
         } else {
           current[cardEntry.replace(/\*\d*$/, '')] = [
             {
               Name: entry.Name.replace(/(\d*)$/, ' $1'),
+              Image: entry.Image,
               Power: entry.Power,
               Toughness: entry.Toughness,
               Type: entry.Type,
-              Image: entry.Image,
-              FIELD7: entry.FIELD7,
+              // FIELD7: entry.FIELD7,
             },
           ];
         }
