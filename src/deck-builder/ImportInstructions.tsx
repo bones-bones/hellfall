@@ -4,7 +4,10 @@ export const ImportInstructions = () => {
       To import your deck
       <ol>
         <li>Enter a deck name</li>
-        <li>Fill out the box below</li>
+        <li>
+          Fill out the box below. Use # followed by a space to hide a card. Use
+          % followed by a card ID to specify the version.
+        </li>
         <li>Click Generate Deck Image</li>
         <li>Click Download for TTS</li>
         <li>
