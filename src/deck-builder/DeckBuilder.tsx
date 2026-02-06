@@ -1,23 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import { downloadElementAsImage } from "./download-image";
-import { HCEntry } from "../types";
-import styled from "@emotion/styled";
-import { toDeck } from "./toDeck";
-import { FormField } from "@workday/canvas-kit-react/form-field";
-import { TextInput } from "@workday/canvas-kit-react";
-import { ImportInstructions } from "./ImportInstructions";
-import { PlaytestArea } from "./playtest/PlaytestArea";
+import { useEffect, useRef, useState } from 'react';
+import { downloadElementAsImage } from './download-image';
+import { HCEntry } from '../types';
+import styled from '@emotion/styled';
+import { toDeck } from './toDeck';
+import { FormField } from '@workday/canvas-kit-react/form-field';
+import { TextInput } from '@workday/canvas-kit-react';
+import { ImportInstructions } from './ImportInstructions';
+import { PlaytestArea } from './playtest/PlaytestArea';
 const basics: Record<string, string> = {
-  forest:
-    "https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg",
-  swamp:
-    "https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmZ/swamp.jpeg",
-  island:
-    "https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn1/island.jpeg",
-  plains:
-    "https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmY/plains.jpeg",
-  mountain:
-    "https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmX/mountain.jpeg",
+  forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
+  swamp: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmZ/swamp.jpeg',
+  island: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn1/island.jpeg',
+  plains: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmY/plains.jpeg',
+  mountain: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmX/mountain.jpeg',
 };
 export const DeckBuilder = () => {
   const ref = useRef(null);
@@ -26,38 +21,33 @@ export const DeckBuilder = () => {
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [textAreaValue, setTextAreaValue] = useState<string>(
-    (searchparms.get("list") || "").replaceAll("∆", "\n")
+    (searchparms.get('list') || '').replaceAll('∆', '\n')
   );
   const [cards, setCards] = useState<HCEntry[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
-  const [deckName, setNameOfDeck] = useState(
-    searchparms.get("name") || "your deck name goes here"
-  );
+  const [deckName, setNameOfDeck] = useState(searchparms.get('name') || 'your deck name goes here');
   const [renderCards, setRenderCards] = useState<HCEntry[]>([]);
   const [playtesting, setPlaytesthing] = useState(false);
 
   useEffect(() => {
-    import("../data/Hellscube-Database.json").then(({ data }: any) => {
+    import('../data/Hellscube-Database.json').then(({ data }: any) => {
       setCards(data);
     });
   }, []);
 
   useEffect(() => {
     if (textAreaRef.current) {
-      setToRender(textAreaRef.current.value.split("\n"));
+      setToRender(textAreaRef.current.value.split('\n'));
 
       const searchToSet = new URLSearchParams();
-      searchToSet.append("name", deckName);
-      searchToSet.append(
-        "list",
-        textAreaRef.current.value.replaceAll("\n", "∆")
-      );
+      searchToSet.append('name', deckName);
+      searchToSet.append('list', textAreaRef.current.value.replaceAll('\n', '∆'));
 
       if ((searchToSet as any).size > 0) {
         history.pushState(
           undefined,
-          "",
-          location.origin + location.pathname + "?" + searchToSet.toString()
+          '',
+          location.origin + location.pathname + '?' + searchToSet.toString()
         );
       }
     }
@@ -68,8 +58,8 @@ export const DeckBuilder = () => {
       return;
     }
     const images: HCEntry[] = (toRender || [])
-      .filter((entry) => entry != "" && !entry.startsWith("# "))
-      .flatMap((name) => {
+      .filter(entry => entry != '' && !entry.startsWith('# '))
+      .flatMap(name => {
         const countTest = /^(\d+) (.*)/.exec(name);
         const responseObject = [];
         console.log(name, countTest);
@@ -85,8 +75,7 @@ export const DeckBuilder = () => {
               } as unknown as HCEntry);
             } else {
               const foundCard = cards.find(
-                (entry) =>
-                  entry["Name"].toLowerCase() === foundName.toLowerCase()
+                entry => entry['Name'].toLowerCase() === foundName.toLowerCase()
               );
               if (foundCard) {
                 responseObject.push(foundCard);
@@ -101,7 +90,7 @@ export const DeckBuilder = () => {
             } as unknown as HCEntry);
           } else {
             const foundCard = cards.find(
-              (entry) => entry["Name"].toLowerCase() === name.toLowerCase()
+              entry => entry['Name'].toLowerCase() === name.toLowerCase()
             );
             console.log(foundCard, console.log(name));
             if (foundCard) {
@@ -111,9 +100,9 @@ export const DeckBuilder = () => {
         }
         if (responseObject.length == 0) {
           responseObject.push({
-            Name: name + " - not found",
+            Name: name + ' - not found',
             Image: [
-              "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg",
+              'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
             ],
           } as unknown as HCEntry);
         }
@@ -140,7 +129,7 @@ export const DeckBuilder = () => {
       <FormField label="Deck Name">
         <TextInput
           defaultValue={deckName}
-          onBlur={(event) => {
+          onBlur={event => {
             setNameOfDeck(event.target.value);
           }}
         />
@@ -171,24 +160,23 @@ Cock and Balls to Torture and Abuse"
         }}
       >
         download deck as image sheet
-      </button>{" "}
+      </button>{' '}
       <button
         onClick={() => {
           const val = toDeck(renderCards);
           const url =
-            "data:text/plain;base64," +
-            btoa(unescape(encodeURIComponent(JSON.stringify(val))));
-          const a = document.createElement("a");
-          a.style.display = "none";
+            'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(val))));
+          const a = document.createElement('a');
+          a.style.display = 'none';
           a.href = url;
           // the filename you want
-          a.download = deckName + ".json";
+          a.download = deckName + '.json';
           document.body.appendChild(a);
           a.click();
         }}
       >
         Download for TTS
-      </button>{" "}
+      </button>{' '}
       Cards in deck {renderCards.length}
       <br />
       <DeckContainer ref={ref}>
@@ -208,10 +196,10 @@ Cock and Balls to Torture and Abuse"
   );
 };
 const DeckContainer = styled.div({});
-const Card = styled.img({ width: "250px" });
+const Card = styled.img({ width: '250px' });
 
 //245 × 341 px
 
 // const OtherContainer = styled.div({ display: "flex" });
 
-const StyledTextArea = styled.textarea({ width: "50%", minHeight: "400px" });
+const StyledTextArea = styled.textarea({ width: '50%', minHeight: '400px' });

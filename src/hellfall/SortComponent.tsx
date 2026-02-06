@@ -1,9 +1,9 @@
-import { FormField } from "@workday/canvas-kit-react/form-field";
-import { Select } from "@workday/canvas-kit-preview-react/select";
-import { useAtom } from "jotai";
-import { sortAtom } from "./searchAtoms";
-import styled from "@emotion/styled";
-import { space } from "@workday/canvas-kit-react/tokens";
+import { FormField } from '@workday/canvas-kit-react/form-field';
+import { Select } from '@workday/canvas-kit-preview-react/select';
+import { useAtom } from 'jotai';
+import { sortAtom } from './searchAtoms';
+import styled from '@emotion/styled';
+import { space } from '@workday/canvas-kit-react/tokens';
 
 export const SortComponent = () => {
   const [sortRule, setSortRule] = useAtom(sortAtom);
@@ -13,9 +13,9 @@ export const SortComponent = () => {
       <FormField label="Sort By">
         <Select
           value={sortRule}
-          options={[{ value: "Alpha" }, { value: "CMC" }, { value: "Color" }]}
-          onChange={(ev) => {
-            setSortRule((ev as any).target.value || "Color");
+          options={[{ value: 'Alpha' }, { value: 'CMC' }, { value: 'Color' }]}
+          onChange={ev => {
+            setSortRule((ev as any).target.value || 'Color');
           }}
         />
       </FormField>
@@ -23,4 +23,4 @@ export const SortComponent = () => {
   );
 };
 
-const Container = styled("div")({ paddingLeft: space.l });
+const Container = styled('div')({ paddingLeft: space.l });

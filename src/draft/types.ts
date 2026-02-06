@@ -1,4 +1,4 @@
-import { HCEntry } from "../types";
+import { HCEntry } from '../types';
 
 type Pack = HCEntry[];
 

@@ -1,9 +1,9 @@
-import { useAtom } from "jotai";
-import { isCommanderAtom, legalityAtom } from "../searchAtoms";
-import { SearchCheckbox } from "../SearchCheckbox";
-import { StyledLegend, StyledLabel } from "../StyledLabel";
-import { StyledComponentHolder } from "../StyledComponentHolder";
-import { useState } from "react";
+import { useAtom } from 'jotai';
+import { isCommanderAtom, legalityAtom } from '../searchAtoms';
+import { SearchCheckbox } from '../SearchCheckbox';
+import { StyledLegend, StyledLabel } from '../StyledLabel';
+import { StyledComponentHolder } from '../StyledComponentHolder';
+import { useState } from 'react';
 
 export const CardLegalityControls = () => {
   const [legality, setLegality] = useAtom(legalityAtom);
@@ -12,7 +12,7 @@ export const CardLegalityControls = () => {
 
   return (
     <fieldset>
-      <StyledLegend>{"Constructed Legality"}</StyledLegend>
+      <StyledLegend>{'Constructed Legality'}</StyledLegend>
       {open ? (
         <>
           <StyledComponentHolder>
@@ -20,12 +20,10 @@ export const CardLegalityControls = () => {
             <SearchCheckbox
               id="constructedLegal"
               type="checkbox"
-              checked={legality.includes("legal")}
-              onChange={(event) => {
+              checked={legality.includes('legal')}
+              onChange={event => {
                 setLegality(
-                  event.target.checked
-                    ? [...legality, "legal"]
-                    : legality.filter((e) => e != "legal")
+                  event.target.checked ? [...legality, 'legal'] : legality.filter(e => e != 'legal')
                 );
               }}
             />
@@ -35,42 +33,38 @@ export const CardLegalityControls = () => {
             <SearchCheckbox
               id="4cbLegal"
               type="checkbox"
-              checked={legality.includes("4cbLegal")}
-              onChange={(event) => {
+              checked={legality.includes('4cbLegal')}
+              onChange={event => {
                 setLegality(
                   event.target.checked
-                    ? [...legality, "4cbLegal"]
-                    : legality.filter((e) => e != "4cbLegal")
+                    ? [...legality, '4cbLegal']
+                    : legality.filter(e => e != '4cbLegal')
                 );
               }}
             />
           </StyledComponentHolder>
           <StyledComponentHolder>
-            <StyledLabel htmlFor="hellsmanderLegal">
-              Hellsmander Legal
-            </StyledLabel>
+            <StyledLabel htmlFor="hellsmanderLegal">Hellsmander Legal</StyledLabel>
             <SearchCheckbox
               id="hellsmanderLegal"
               type="checkbox"
-              checked={legality.includes("hellsmanderLegal")}
-              onChange={(event) => {
+              checked={legality.includes('hellsmanderLegal')}
+              onChange={event => {
                 setLegality(
                   event.target.checked
-                    ? [...legality, "hellsmanderLegal"]
-                    : legality.filter((e) => e != "hellsmanderLegal")
+                    ? [...legality, 'hellsmanderLegal']
+                    : legality.filter(e => e != 'hellsmanderLegal')
                 );
               }}
             />
           </StyledComponentHolder>
           <StyledComponentHolder>
-            <StyledLabel htmlFor="canBeYourCommander">
-              {"Can Be Your Commander"}
-            </StyledLabel>
+            <StyledLabel htmlFor="canBeYourCommander">{'Can Be Your Commander'}</StyledLabel>
             <SearchCheckbox
               id="canBeYourCommander"
               type="checkbox"
               checked={isCommander === true}
-              onChange={(event) => {
+              onChange={event => {
                 setIsCommander(event.target.checked);
               }}
             />

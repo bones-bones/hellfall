@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { Pagination, getLastPage } from "@workday/canvas-kit-react/pagination";
+import styled from '@emotion/styled';
+import { Pagination, getLastPage } from '@workday/canvas-kit-react/pagination';
 
 type Props = {
   chunkSize: number;
@@ -7,19 +7,14 @@ type Props = {
   onChange: (value: number) => void;
   initialCurrentPage: number;
 };
-export const PaginationComponent = ({
-  chunkSize,
-  total,
-  onChange,
-  initialCurrentPage,
-}: Props) => {
+export const PaginationComponent = ({ chunkSize, total, onChange, initialCurrentPage }: Props) => {
   return (
     <PaginationContainer>
       <Pagination
         aria-label="pagination"
         lastPage={getLastPage(chunkSize, total)}
         initialCurrentPage={initialCurrentPage / chunkSize + 1}
-        onPageChange={(pageNumber) => {
+        onPageChange={pageNumber => {
           onChange((pageNumber - 1) * chunkSize);
         }}
       >
@@ -28,7 +23,7 @@ export const PaginationComponent = ({
           <Pagination.StepToPreviousButton aria-label="Previous" />
           <Pagination.PageList>
             {({ state }) =>
-              state.range.map((pageNumber) => (
+              state.range.map(pageNumber => (
                 <Pagination.PageListItem key={pageNumber}>
                   <Pagination.PageButton
                     aria-label={`Page ${pageNumber}`}
@@ -46,8 +41,8 @@ export const PaginationComponent = ({
   );
 };
 
-const PaginationContainer = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  padding: "20px",
+const PaginationContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  padding: '20px',
 });

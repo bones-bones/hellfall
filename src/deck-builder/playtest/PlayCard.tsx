@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { useState } from "react";
+import styled from '@emotion/styled';
+import { useState } from 'react';
 
 type Props = { image: string };
 export const PlayCard = ({ image }: Props) => {
@@ -13,10 +13,10 @@ export const PlayCard = ({ image }: Props) => {
         setTapped(!tapped);
       }}
       tapped={tapped}
-     />
+    />
   );
 };
 
 const StyledImage = styled.img(({ tapped }: { tapped: boolean }) => ({
-  rotate: tapped ? "90deg" : "0deg",
+  rotate: tapped ? '90deg' : '0deg',
 }));

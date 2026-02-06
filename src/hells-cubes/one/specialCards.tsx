@@ -1,4 +1,4 @@
-import { HellsCard } from "./HellsCard";
+import { HellsCard } from './HellsCard';
 import {
   Stormstorm,
   ObscureCommand,
@@ -7,24 +7,24 @@ import {
   WildMagic,
   DruidicVow,
   CurveTopper,
-} from "./cards";
+} from './cards';
 
 type Card = { path: string; name: string; component: JSX.Element };
 
 export const specialCards: Card[] = [
   {
-    path: "/hugh-man",
-    name: "Hugh Man, Human",
+    path: '/hugh-man',
+    name: 'Hugh Man, Human',
     component: <HellsCard queryString="t:Human" />,
   },
   {
-    path: "/regal-karakas",
-    name: "Regal Karakas",
+    path: '/regal-karakas',
+    name: 'Regal Karakas',
     component: <HellsCard queryString="(type:creature+type:legendary)" />,
   },
   {
-    path: "/more-white-cards",
-    name: "We Need More White Cards",
+    path: '/more-white-cards',
+    name: 'We Need More White Cards',
     component: (
       <>
         <HellsCard queryString="color=w" key="1" />
@@ -34,13 +34,13 @@ export const specialCards: Card[] = [
     ),
   },
   {
-    path: "/illusionary-gf",
-    name: "Illusionary GF",
+    path: '/illusionary-gf',
+    name: 'Illusionary GF',
     component: <HellsCard queryString="type:chandra" />,
   },
   {
-    path: "/absurdly-cryptic",
-    name: "Absurdly Cryptic Command",
+    path: '/absurdly-cryptic',
+    name: 'Absurdly Cryptic Command',
     component: (
       <>
         <HellsCard queryString="type:instant+color=U" key="1" />
@@ -51,16 +51,16 @@ export const specialCards: Card[] = [
     ),
   },
   {
-    path: "/black-6-drop",
-    name: "A Black 6 Drop Creature",
+    path: '/black-6-drop',
+    name: 'A Black 6 Drop Creature',
     component: <HellsCard queryString="color=B+cmc=6" />,
   },
   {
-    path: "/puzzle-box",
-    name: "Puzzle Box of Yogg-Saron",
+    path: '/puzzle-box',
+    name: 'Puzzle Box of Yogg-Saron',
     component: (
       <>
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((entry) => {
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(entry => {
           return (
             <>
               <h3>{entry + 1}</h3>
@@ -72,8 +72,8 @@ export const specialCards: Card[] = [
     ),
   },
   {
-    path: "/death-seeker",
-    name: "Deathseeker",
+    path: '/death-seeker',
+    name: 'Deathseeker',
     component: (
       <div key="deathseeker">
         <HellsCard queryString={`oracle:"when+~+dies" t:creature`} key="1" />
@@ -81,26 +81,26 @@ export const specialCards: Card[] = [
       </div>
     ),
   },
-  { path: "/storm-storm", name: "Stormstorm", component: <Stormstorm /> },
+  { path: '/storm-storm', name: 'Stormstorm', component: <Stormstorm /> },
   {
-    path: "/ultimate-ultimatum",
-    name: "Ultimate Ultimatum",
+    path: '/ultimate-ultimatum',
+    name: 'Ultimate Ultimatum',
     component: <HellsCard queryString="ultimatum+-clarion" />,
   },
   {
-    path: "/obscure-command",
-    name: "Obscure Command",
+    path: '/obscure-command',
+    name: 'Obscure Command',
     component: <ObscureCommand />,
   },
   {
-    path: "/plumber-umbra",
-    name: "Plumber Umbra",
+    path: '/plumber-umbra',
+    name: 'Plumber Umbra',
     component: <PlumberUmbra />,
   },
-  { path: "/blue-card", name: "A Blue Card", component: <ABlueCard /> },
+  { path: '/blue-card', name: 'A Blue Card', component: <ABlueCard /> },
   {
-    path: "/chandra",
-    name: "Chandra, Throughout the Ages",
+    path: '/chandra',
+    name: 'Chandra, Throughout the Ages',
     component: (
       <>
         <HellsCard queryString={`!"chandra,+novice+pyromancer"`} />
@@ -111,36 +111,36 @@ export const specialCards: Card[] = [
       </>
     ),
   },
-  { path: "/wild-magic", name: "Wildmagic surge", component: <WildMagic /> },
+  { path: '/wild-magic', name: 'Wildmagic surge', component: <WildMagic /> },
   {
-    path: "/phyrexian-oublietterator",
-    name: "Phyrexian Oublietterator",
+    path: '/phyrexian-oublietterator',
+    name: 'Phyrexian Oublietterator',
     component: <HellsCard queryString={`!"Oubliette"`} />,
   },
   {
-    path: "/druidic-vow",
+    path: '/druidic-vow',
     name: "BallsJr123's Druidic vow",
     component: <DruidicVow />,
   },
   {
-    path: "/lazav-with-a-flamethrower",
-    name: "Lazav With a Flamethrower",
+    path: '/lazav-with-a-flamethrower',
+    name: 'Lazav With a Flamethrower',
     component: <HellsCard queryString={`!"chandra,+fire+of+kaladesh"`} />,
   },
   {
-    path: "/tit",
-    name: "Tit for Tat",
+    path: '/tit',
+    name: 'Tit for Tat',
     component: (
       <img
         src={
-          "https://cdn.discordapp.com/attachments/631289553415700492/685521203217170526/cwx75bn555k41.png"
+          'https://cdn.discordapp.com/attachments/631289553415700492/685521203217170526/cwx75bn555k41.png'
         }
       />
     ),
   },
   {
-    path: "/weed-token",
-    name: "Weed Token",
+    path: '/weed-token',
+    name: 'Weed Token',
     component: (
       <pre>{`Weed
   Artifact Token
@@ -150,8 +150,8 @@ export const specialCards: Card[] = [
     ),
   },
   {
-    path: "/lucky-charms",
-    name: "Charmping Leprechauns",
+    path: '/lucky-charms',
+    name: 'Charmping Leprechauns',
     component: (
       <>
         <h2>Blarney&apos;s</h2>
@@ -170,13 +170,13 @@ export const specialCards: Card[] = [
     ),
   },
   {
-    path: "/curvetopper",
+    path: '/curvetopper',
     name: "Ballsjr's Ultimate Curvetopper",
     component: <CurveTopper />,
   },
   {
-    path: "/random-growth",
-    name: "Random Growth",
+    path: '/random-growth',
+    name: 'Random Growth',
     component: <HellsCard queryString="type:land" />,
   },
 ].sort((a, b) => {

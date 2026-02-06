@@ -15,18 +15,18 @@ export type HCEntry = {
   Set: string; // "HLC",
   Rulings: string; //"See Magic Comprehensive Rules 894.1c Deez",
   CMC: number; //3,
-  "Color(s)": string; // "Blue",
-  Constructed?: ("Legal" | "Banned" | "Banned (4CB)" | "Banned (Commander)")[];
+  'Color(s)': string; // "Blue",
+  Constructed?: ('Legal' | 'Banned' | 'Banned (4CB)' | 'Banned (Commander)')[];
   Cost: [string, string, string, string];
-  "Supertype(s)": [string, string, string, string];
-  "Card Type(s)": [string, string, string, string];
-  "Subtype(s)": [string, string, string, string];
+  'Supertype(s)': [string, string, string, string];
+  'Card Type(s)': [string, string, string, string];
+  'Subtype(s)': [string, string, string, string];
   power: [number | null, null, null, null];
   toughness: [number | null, null, null, null];
-  Loyalty: [any, null, "", ""];
-  "Text Box": [string, string, string, string];
-  "Flavor Text": [string, string, string, string];
-  "small alt image": string;
+  Loyalty: [any, null, '', ''];
+  'Text Box': [string, string, string, string];
+  'Flavor Text': [string, string, string, string];
+  'small alt image': string;
   Tags?: string;
   FIELD44: string;
   FIELD45: string;
@@ -54,5 +54,5 @@ export type Token = {
 };
 
 export type TokenForImport = Token & {
-  "Related Cards (Read Comment)"?: string;
+  'Related Cards (Read Comment)'?: string;
 };
