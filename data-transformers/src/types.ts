@@ -1,7 +1,7 @@
 // The reason that there are 4 of Cost etc is because some cards have 4 sides. ooof
 
 export type HCEntry = {
-  Id: string;
+  Id?: string;
   Name: string; //"Whale Visions",
   Image: [
     string | null, // Here is the card as it was submitted

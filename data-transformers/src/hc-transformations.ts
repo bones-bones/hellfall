@@ -100,19 +100,23 @@ const main = async () => {
       // (tokenMap[entry.Name] as any).used = true;
 
       entry.tokens = tokenMap[entry.Name];
+
+      // if (["HC8.0", "HC8.1"].includes(entry.Set)) {
+      //   console.log(entry.Name);
+      // }
     }
 
-    if (
-      entry["Text Box"]?.find((e) => e?.includes(" token")) &&
-      !entry.tokens &&
-      entry.Set === "HC6"
-    ) {
-      console.log(
-        entry.Name +
-          "  " +
-          /[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0]
-      );
-    }
+    // if (
+    //   entry["Text Box"]?.find((e) => e?.includes(" token")) &&
+    //   !entry.tokens &&
+    //   entry.Set === "HC6"
+    // ) {
+    //   console.log(
+    //     entry.Name +
+    //       "  " +
+    //       /[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0],
+    //   );
+    // }
   });
 
   const types = Array.from(typeSet);
@@ -131,8 +135,8 @@ const main = async () => {
         }),
       },
       null,
-      "\t"
-    )
+      "\t",
+    ),
   );
   fs.writeFileSync(
     "./src/data/tokens.json",
@@ -146,8 +150,8 @@ const main = async () => {
         }),
       },
       null,
-      "\t"
-    )
+      "\t",
+    ),
   );
   fs.writeFileSync(
     "./src/data/tags.json",
@@ -161,8 +165,8 @@ const main = async () => {
         }),
       },
       null,
-      "\t"
-    )
+      "\t",
+    ),
   );
 
   fs.writeFileSync(
@@ -177,8 +181,8 @@ const main = async () => {
         }),
       },
       null,
-      "\t"
-    )
+      "\t",
+    ),
   );
 
   fs.writeFileSync(
@@ -190,8 +194,8 @@ const main = async () => {
           .concat({ data: tokensWithBetterName }.data.map(tokenToCard)),
       },
       null,
-      "\t"
-    )
+      "\t",
+    ),
   );
 };
 
