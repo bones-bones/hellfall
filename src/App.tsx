@@ -22,16 +22,6 @@ interface ValidatedCardRouteProps {
   element: React.ReactElement;
 }
 
-export const ValidatedCardRoute = ({ element }: ValidatedCardRouteProps) => {
-  const params = useParams<{ "*": string }>();
-  const cardIdentifier = params["*"];
-  if (cardIdentifier && !/^\d+$/.test(cardIdentifier)) {
-    const cardId = NameToId(cardIdentifier);
-    return <Navigate to={`/card/${cardId}`} replace />;
-  }
-  return element;
-};
-
 export const App = () => {
   return (
     <BrowserRouter basename="hellfall">
@@ -42,6 +32,15 @@ export const App = () => {
 };
 
 const ApplicationRoutes = () => {
+  const ValidatedCardRoute = ({ element }: ValidatedCardRouteProps) => {
+    const params = useParams<{ "*": string }>();
+    const cardIdentifier = params["*"];
+    if (cardIdentifier && !/^\d+$/.test(cardIdentifier)) {
+      const cardId = NameToId(cardIdentifier);
+      return <Navigate to={`/card/${cardId}`} replace />;
+    }
+    return element;
+  };
   return useRoutes([
     { path: "/hellscubes/*", element: <Hellscubes /> },
     { path: "/deck-builder/*", element: <DeckBuilder /> },
