@@ -43,7 +43,7 @@ export const Watchwolfwar = () => {
     LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
     RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
   });
-  var activeIsRight = true;
+  let activeIsRight = true;
 
   const updateStandings = async (cardName: string) => {
     if (!submitting.current) {

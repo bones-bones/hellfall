@@ -46,6 +46,7 @@ Write a script to transform the database
 - sort by
 - use mv instead of cmc
 - add support for version of color identity with hybrids allowed
+- make better search syntax (like allowing or)
 
 # Mana symbols that need support
 
