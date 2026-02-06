@@ -9,17 +9,8 @@ import { useAtomValue } from "jotai";
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
   const nav = useNavigate();
-  const { "*": cardName } = useParams();
-
-  useEffect(() => {
-    if (cards.length > 0 && cardName == "random") {
-      const theName = cards[Math.floor(Math.random() * cards.length)].Name;
-
-      nav("/card/" + encodeURIComponent(theName));
-    }
-  }, [cards.length, cardName]);
-
-  const entryToRender = cards?.find((e) => e.Name === cardName);
+  const { "*": cardId } = useParams();
+  const entryToRender = cards?.find((e) => e.Id === cardId);
 
   return (
     <Container>
