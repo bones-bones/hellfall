@@ -11,7 +11,7 @@ export const HellfallEntry = ({
   id: string;
   name: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
-  onClickTitle: React.MouseEventHandler<HTMLSpanElement>;
+  onClickTitle?: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
   return (
     <Container key={id} role="button">

@@ -81,16 +81,6 @@ export const HellFall = () => {
                 setActiveCardFromAtom(entry.Id);
               }
             }}
-            onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-              if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                window.open(
-                  "/hellfall/card/" + encodeURIComponent(entry.Id),
-                  "_blank"
-                );
-              } else {
-                setActiveCardFromAtom(entry.Id);
-              }
-            }}
             key={"" + entry.Id + "-" + i}
             id={entry.Id}
             name={entry.Name}
