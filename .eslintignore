@@ -1,0 +1,25 @@
+# Build files
+build/
+dist/
+node_modules/
+
+# Generated files
+*.chunk.js
+*.min.js
+
+# Config files
+config/webpack.config.js
+
+# Data files
+src/data/
+data-transformers/src/cubes/
+data-transformers/src/draftmancer/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Misc
+public/
+coverage/

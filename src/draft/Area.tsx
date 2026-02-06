@@ -1,11 +1,11 @@
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from 'jotai';
 
-import { deckAtom, draftAtom } from "./draftAtom";
-import { useState } from "react";
-import { HCEntry } from "../types";
-import styled from "@emotion/styled";
-import { TheDraft } from "./types";
-import { CARDS_PER_PACK } from "./constants";
+import { deckAtom, draftAtom } from './draftAtom';
+import { useState } from 'react';
+import { HCEntry } from '../types';
+import styled from '@emotion/styled';
+import { TheDraft } from './types';
+import { CARDS_PER_PACK } from './constants';
 
 export const Area = () => {
   const [draft, setDraft] = useAtom(draftAtom);
@@ -20,8 +20,7 @@ export const Area = () => {
       {draft && (
         <>
           <h3>
-            Pack {4 - draft.length}, Pick{" "}
-            {(draftedCards.length % CARDS_PER_PACK) + 1}
+            Pack {4 - draft.length}, Pick {(draftedCards.length % CARDS_PER_PACK) + 1}
           </h3>
 
           <Container>
@@ -37,10 +36,7 @@ export const Area = () => {
                       src={entry.Image[0]!}
                       crossOrigin="anonymous"
                       onClick={() => {
-                        if (
-                          [...draftedCards, entry].length ===
-                          3 * CARDS_PER_PACK
-                        ) {
+                        if ([...draftedCards, entry].length === 3 * CARDS_PER_PACK) {
                           setDeck([...draftedCards, entry]);
                         }
                         setDraftedCards([...draftedCards, entry]);
@@ -48,21 +44,15 @@ export const Area = () => {
                           [
                             draft[0].map((packEntry, index) => {
                               if (index === activePack) {
-                                return packEntry.filter(
-                                  (packCard) => packCard.Name !== entry.Name
-                                );
+                                return packEntry.filter(packCard => packCard.Name !== entry.Name);
                               }
-                              const randomPick = Math.floor(
-                                Math.random() * packEntry.length
-                              );
+                              const randomPick = Math.floor(Math.random() * packEntry.length);
 
-                              return packEntry.filter(
-                                (_, i) => i !== randomPick
-                              );
+                              return packEntry.filter((_, i) => i !== randomPick);
                             }),
                             ...draft.slice(1),
                           ] as TheDraft
-                        ).filter((draftEntry) => {
+                        ).filter(draftEntry => {
                           return draftEntry[0].length > 0;
                         });
 
@@ -98,13 +88,13 @@ export const Area = () => {
   );
 };
 
-const Container = styled.div({ display: "flex", flexDirection: "row" });
-const DraftedContainer = styled.div({ width: "20vw" });
-const PackContainer = styled.div({ width: "80vw" });
+const Container = styled.div({ display: 'flex', flexDirection: 'row' });
+const DraftedContainer = styled.div({ width: '20vw' });
+const PackContainer = styled.div({ width: '80vw' });
 
-const Card = styled.img({ width: "260px" });
+const Card = styled.img({ width: '260px' });
 
 const CardContainer = styled.div({
-  height: "40px",
-  ":hover": { width: "260px", zIndex: 2, height: "auto" },
+  height: '40px',
+  ':hover': { width: '260px', zIndex: 2, height: 'auto' },
 });

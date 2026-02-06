@@ -1,11 +1,11 @@
-import fs from "fs";
+import fs from 'fs';
 
-import { Token, TokenForImport } from "./types";
+import { Token, TokenForImport } from './types';
 // import { downloadImage } from "./downloadImage";
-import { tokenToCard } from "./tokenToCard";
-import { fetchTokens } from "./fetchTokens";
-import { fetchDatabase } from "./fetchdatabase";
-import { fetchUsernameMappings } from "./fetchUsernameMapping";
+import { tokenToCard } from './tokenToCard';
+import { fetchTokens } from './fetchTokens';
+import { fetchDatabase } from './fetchdatabase';
+import { fetchUsernameMappings } from './fetchUsernameMapping';
 
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
@@ -16,24 +16,21 @@ const main = async () => {
   const usernameMappings = await fetchUsernameMappings();
 
   const tokens = await fetchTokens();
-  const tokensWithBetterName = tokens.map((entry) => {
+  const tokensWithBetterName = tokens.map(entry => {
     const {
       //@ts-ignore
-      ["Name (number tokens with the same name, if only one token has that name still add a 1.)"]:
+      ['Name (number tokens with the same name, if only one token has that name still add a 1.)']:
         Name,
       ...rest
     } = entry;
     return { Name, ...rest };
   });
-  const tokenMap = (tokensWithBetterName as TokenForImport[]).reduce<
-    Record<string, Token[]>
-  >((current, entry) => {
-    (entry["Related Cards (Read Comment)"] || "")
-      .split(";")
-      .forEach((cardEntry) => {
-        if (current[cardEntry.replace(/\*\d*$/, "")]) {
-          current[cardEntry.replace(/\*\d*$/, "")].push({
-            Name: entry.Name.replace(/(\d*)$/, " $1"),
+  const tokenMap = (tokensWithBetterName as TokenForImport[]).reduce<Record<string, Token[]>>(
+    (current, entry) => {
+      (entry['Related Cards (Read Comment)'] || '').split(';').forEach(cardEntry => {
+        if (current[cardEntry.replace(/\*\d*$/, '')]) {
+          current[cardEntry.replace(/\*\d*$/, '')].push({
+            Name: entry.Name.replace(/(\d*)$/, ' $1'),
             Image: entry.Image,
             Power: entry.Power,
             Toughness: entry.Toughness,
@@ -41,9 +38,9 @@ const main = async () => {
             // FIELD7: entry.FIELD7,
           });
         } else {
-          current[cardEntry.replace(/\*\d*$/, "")] = [
+          current[cardEntry.replace(/\*\d*$/, '')] = [
             {
-              Name: entry.Name.replace(/(\d*)$/, " $1"),
+              Name: entry.Name.replace(/(\d*)$/, ' $1'),
               Image: entry.Image,
               Power: entry.Power,
               Toughness: entry.Toughness,
@@ -53,18 +50,20 @@ const main = async () => {
           ];
         }
       });
-    return current;
-  }, {});
+      return current;
+    },
+    {}
+  );
 
-  data.forEach((entry) => {
+  data.forEach(entry => {
     [
-      ...(entry["Supertype(s)"] || []),
-      ...(entry["Card Type(s)"] || []),
-      ...(entry["Subtype(s)"] || []),
-    ].forEach((typeEntry) => {
+      ...(entry['Supertype(s)'] || []),
+      ...(entry['Card Type(s)'] || []),
+      ...(entry['Subtype(s)'] || []),
+    ].forEach(typeEntry => {
       if (typeEntry) {
-        const splitTypes = typeEntry.split(";");
-        splitTypes.forEach((splitEntry) => {
+        const splitTypes = typeEntry.split(';');
+        splitTypes.forEach(splitEntry => {
           typeSet.add(splitEntry);
         });
       }
@@ -72,12 +71,9 @@ const main = async () => {
 
     const usernameMappingEntries = Object.entries(usernameMappings);
 
-    replaceLoop: for (const [
-      replacementName,
-      oldNames,
-    ] of usernameMappingEntries) {
+    replaceLoop: for (const [replacementName, oldNames] of usernameMappingEntries) {
       for (const oldName of oldNames) {
-        if (entry.Creator.split(";").includes(oldName)) {
+        if (entry.Creator.split(';').includes(oldName)) {
           entry.Creator = entry.Creator.replace(oldName, replacementName);
           break replaceLoop;
         }
@@ -86,13 +82,13 @@ const main = async () => {
 
     creatorSet.add(entry.Creator);
 
-    if (entry.Tags && entry.Tags !== "") {
-      entry.Tags.split(";").forEach((e) => tagSet.add(e));
+    if (entry.Tags && entry.Tags !== '') {
+      entry.Tags.split(';').forEach(e => tagSet.add(e));
     }
 
     if (entry.Constructed) {
       // @ts-expect-error not sure about this approach but hey.
-      entry.Constructed = entry.Constructed.split(", ");
+      entry.Constructed = entry.Constructed.split(', ');
     }
 
     if (tokenMap[entry.Name]) {
@@ -124,7 +120,7 @@ const main = async () => {
   const tags = Array.from(tagSet);
 
   fs.writeFileSync(
-    "./src/data/types.json",
+    './src/data/types.json',
     JSON.stringify(
       {
         data: types.sort((a, b) => {
@@ -135,11 +131,11 @@ const main = async () => {
         }),
       },
       null,
-      "\t",
-    ),
+      '\t'
+    )
   );
   fs.writeFileSync(
-    "./src/data/tokens.json",
+    './src/data/tokens.json',
     JSON.stringify(
       {
         data: tokensWithBetterName.sort((a, b) => {
@@ -150,11 +146,11 @@ const main = async () => {
         }),
       },
       null,
-      "\t",
-    ),
+      '\t'
+    )
   );
   fs.writeFileSync(
-    "./src/data/tags.json",
+    './src/data/tags.json',
     JSON.stringify(
       {
         data: tags.sort((a, b) => {
@@ -165,12 +161,12 @@ const main = async () => {
         }),
       },
       null,
-      "\t",
-    ),
+      '\t'
+    )
   );
 
   fs.writeFileSync(
-    "./src/data/creators.json",
+    './src/data/creators.json',
     JSON.stringify(
       {
         data: creators.sort((a, b) => {
@@ -181,12 +177,12 @@ const main = async () => {
         }),
       },
       null,
-      "\t",
-    ),
+      '\t'
+    )
   );
 
   fs.writeFileSync(
-    "./src/data/Hellscube-Database.json",
+    './src/data/Hellscube-Database.json',
     JSON.stringify(
       {
         data: data
@@ -194,8 +190,8 @@ const main = async () => {
           .concat({ data: tokensWithBetterName }.data.map(tokenToCard)),
       },
       null,
-      "\t",
-    ),
+      '\t'
+    )
   );
 };
 

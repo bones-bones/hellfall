@@ -1,5 +1,5 @@
-import { sheetsKey } from "../../keys";
-import { HCEntry } from "./types";
+import { sheetsKey } from '../../keys';
+import { HCEntry } from './types';
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
@@ -8,7 +8,7 @@ export const fetchDatabase = async () => {
   const asJson = (await requestedData.json()) as any;
   const [_garbage, keys, ...rest] = asJson.values as any[];
 
-  const theThing = rest.map((entry) => {
+  const theThing = rest.map(entry => {
     const cardObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
       if (cardObject[keys[i]] !== undefined) {
@@ -19,7 +19,7 @@ export const fetchDatabase = async () => {
       } else {
         cardObject[keys[i]] = entry[i];
       }
-      if (keys[i] == "CMC") {
+      if (keys[i] == 'CMC') {
         cardObject[keys[i]] = parseInt(cardObject[keys[i]]);
       }
     }

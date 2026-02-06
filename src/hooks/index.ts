@@ -1,1 +1,1 @@
-export { useKeyPress } from "./useKeyPress";
+export { useKeyPress } from './useKeyPress';

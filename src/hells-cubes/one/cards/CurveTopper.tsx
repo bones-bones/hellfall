@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { HellsCard } from "../HellsCard";
+import { useState } from 'react';
+import { HellsCard } from '../HellsCard';
 
 export const CurveTopper = () => {
   const [count, setCount] = useState(0);
@@ -7,7 +7,7 @@ export const CurveTopper = () => {
   const cardArray = [];
 
   for (let i = 0; i < count; i++) {
-    cardArray[i] = "mana:X";
+    cardArray[i] = 'mana:X';
   }
   //&
   return (
@@ -15,7 +15,7 @@ export const CurveTopper = () => {
       <h3>{`Ballsjr's Ultimate Curvetopper`}</h3>
       <button
         onClick={() => {
-          const value = prompt("what is x?") || "0";
+          const value = prompt('what is x?') || '0';
           setCount(parseInt(value));
         }}
       >
@@ -34,11 +34,10 @@ export const DruidicVow = () => {
 
   return (
     <>
-      {" "}
+      {' '}
       <button
         onClick={() => {
-          const value =
-            prompt("use b for black, w for white, etc") || undefined;
+          const value = prompt('use b for black, w for white, etc') || undefined;
           setCost(value);
         }}
       >

@@ -15,22 +15,22 @@ export type HCEntry = {
   Creator: string;
   isActualToken?: boolean;
   Set: string; // "HLC",
-  Constructed?: ("Legal" | "Banned" | "Banned (4CB)" | "Banned (Commander)")[];
-  "Component of"?: string;
+  Constructed?: ('Legal' | 'Banned' | 'Banned (4CB)' | 'Banned (Commander)')[];
+  'Component of'?: string;
   Rulings: string; //"See Magic Comprehensive Rules 894.1c Deez",
   CMC: number; //3,
-  "Color(s)"?: string; // "Blue",
+  'Color(s)'?: string; // "Blue",
   Cost: SideArray<string>;
-  "Supertype(s)"?: SideArray<string>;
-  "Card Type(s)": SideArray<string>;
-  "Subtype(s)"?: SideArray<string>;
-  power?: [number | null | "", null, null, null];
+  'Supertype(s)'?: SideArray<string>;
+  'Card Type(s)': SideArray<string>;
+  'Subtype(s)'?: SideArray<string>;
+  power?: [number | null | '', null, null, null];
   toughness?: [number | null, null, null, null];
-  Loyalty: [any, null, "", ""];
-  "Text Box"?: SideArray<string>;
-  "Flavor Text"?: SideArray<string>;
+  Loyalty: [any, null, '', ''];
+  'Text Box'?: SideArray<string>;
+  'Flavor Text'?: SideArray<string>;
   Tags?: string;
-  "small alt image": string;
+  'small alt image': string;
   // FIELD44: string;
   // FIELD45: string;
   // FIELD46: string;

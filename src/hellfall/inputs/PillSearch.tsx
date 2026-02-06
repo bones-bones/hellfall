@@ -1,13 +1,13 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { DeprecatedMenuItem } from "@workday/canvas-kit-preview-react/menu";
-import { Pill } from "@workday/canvas-kit-preview-react/pill";
-import { FormField } from "@workday/canvas-kit-react/form-field";
-import { styled } from "@workday/canvas-kit-react/common";
-import { TertiaryButton } from "@workday/canvas-kit-react/button";
-import { TextInput } from "@workday/canvas-kit-react/text-input";
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { DeprecatedMenuItem } from '@workday/canvas-kit-preview-react/menu';
+import { Pill } from '@workday/canvas-kit-preview-react/pill';
+import { FormField } from '@workday/canvas-kit-react/form-field';
+import { styled } from '@workday/canvas-kit-react/common';
+import { TertiaryButton } from '@workday/canvas-kit-react/button';
+import { TextInput } from '@workday/canvas-kit-react/text-input';
 
-import { FixedSizeList } from "react-window";
-import { Menu, useMenuModel } from "@workday/canvas-kit-react/menu";
+import { FixedSizeList } from 'react-window';
+import { Menu, useMenuModel } from '@workday/canvas-kit-react/menu';
 
 type Props = {
   possibleValues: string[];
@@ -16,12 +16,7 @@ type Props = {
   onChange: (value: string[]) => void;
 };
 
-export const PillSearch = ({
-  possibleValues,
-  defaultValues,
-  label,
-  onChange,
-}: Props) => {
+export const PillSearch = ({ possibleValues, defaultValues, label, onChange }: Props) => {
   const [menuItems, setMenuItems] = useState(possibleValues);
   const [selectedValues, setSelectedValues] = useState(defaultValues);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -29,7 +24,7 @@ export const PillSearch = ({
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
   const listRef = useRef(null);
 
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   if (selectedIndex && listRef.current) {
     (listRef.current as any).scrollToItem(selectedIndex);
   }
@@ -40,7 +35,7 @@ export const PillSearch = ({
 
   const addSelection = (value: string) => {
     setSelectedValues([value, ...selectedValues].filter(Boolean));
-    setSearchValue("");
+    setSearchValue('');
     setMenuItems(possibleValues);
 
     menuModel.events.hide();
@@ -52,20 +47,16 @@ export const PillSearch = ({
     setSearchValue(event.target.value);
     const filteredValues = [
       ...possibleValues
-        .filter((entry) =>
-          entry.toLowerCase().includes(event.target.value.toLowerCase())
-        )
-        .filter((entry) => !selectedValues.includes(entry)),
+        .filter(entry => entry.toLowerCase().includes(event.target.value.toLowerCase()))
+        .filter(entry => !selectedValues.includes(entry)),
     ].filter(Boolean);
 
-    setMenuItems(
-      filteredValues.length > 0 ? filteredValues : [event.target.value]
-    );
+    setMenuItems(filteredValues.length > 0 ? filteredValues : [event.target.value]);
   };
 
   const filteredItems =
     selectedValues.length > 0
-      ? menuItems.filter((entry) => !selectedValues.includes(entry))
+      ? menuItems.filter(entry => !selectedValues.includes(entry))
       : menuItems;
 
   return (
@@ -79,23 +70,17 @@ export const PillSearch = ({
           }}
           onChange={filter}
           value={searchValue}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
               if (selectedIndex) {
                 addSelection(filteredItems[selectedIndex]);
               } else {
                 addSelection(searchValue);
               }
-            } else if (e.key === "ArrowDown") {
-              setSelectedIndex(
-                selectedIndex != undefined ? selectedIndex + 1 : 0
-              );
-            } else if (e.key === "ArrowUp") {
-              setSelectedIndex(
-                selectedIndex && selectedIndex > 0
-                  ? selectedIndex - 1
-                  : undefined
-              );
+            } else if (e.key === 'ArrowDown') {
+              setSelectedIndex(selectedIndex != undefined ? selectedIndex + 1 : 0);
+            } else if (e.key === 'ArrowUp') {
+              setSelectedIndex(selectedIndex && selectedIndex > 0 ? selectedIndex - 1 : undefined);
             }
           }}
         />
@@ -106,7 +91,7 @@ export const PillSearch = ({
               height={Math.min(200, filteredItems.length * 40)}
               itemCount={filteredItems.length}
               itemSize={35}
-              width={"275px"}
+              width={'275px'}
               itemData={filteredItems}
             >
               {({ style, data, index }) => (
@@ -124,18 +109,12 @@ export const PillSearch = ({
           </StyledCard>
         </Menu.Popper>
 
-        {selectedValues.map((entry) => {
+        {selectedValues.map(entry => {
           return (
             <Pill key={entry} variant="removable">
-              <Pill.Label color={entry.startsWith("!") ? "RED" : "GREEN"}>
-                {entry}
-              </Pill.Label>
+              <Pill.Label color={entry.startsWith('!') ? 'RED' : 'GREEN'}>{entry}</Pill.Label>
               <Pill.IconButton
-                onClick={() =>
-                  setSelectedValues(
-                    selectedValues.filter((val) => val != entry)
-                  )
-                }
+                onClick={() => setSelectedValues(selectedValues.filter(val => val != entry))}
               />
             </Pill>
           );
@@ -144,7 +123,7 @@ export const PillSearch = ({
           <TertiaryButton
             onClick={() => {
               setSelectedValues([]);
-              setSearchValue("");
+              setSearchValue('');
               setMenuItems(possibleValues);
             }}
           >
@@ -157,12 +136,12 @@ export const PillSearch = ({
 };
 
 const StyledTextInput = styled(TextInput)({
-  marginLeft: "0px",
+  marginLeft: '0px',
 });
 
 const StyledCard = styled(Menu.Card)({
-  overflow: "hidden",
-  borderTopLeftRadius: "0px",
-  borderTopRightRadius: "0px",
-  top: "-1",
+  overflow: 'hidden',
+  borderTopLeftRadius: '0px',
+  borderTopRightRadius: '0px',
+  top: '-1',
 });

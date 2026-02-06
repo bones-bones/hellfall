@@ -1,6 +1,6 @@
 //https://usehooks.com/useKeyPress/
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useKeyPress = (targetCode: string) => {
   const [keyPressed, setKeyPressed] = useState<boolean>(false);
@@ -18,12 +18,12 @@ export const useKeyPress = (targetCode: string) => {
   }
   // Add event listeners
   useEffect(() => {
-    window.addEventListener("keydown", downHandler);
-    window.addEventListener("keyup", upHandler);
+    window.addEventListener('keydown', downHandler);
+    window.addEventListener('keyup', upHandler);
     // Remove event listeners on cleanup
     return () => {
-      window.removeEventListener("keydown", downHandler);
-      window.removeEventListener("keyup", upHandler);
+      window.removeEventListener('keydown', downHandler);
+      window.removeEventListener('keyup', upHandler);
     };
   }, []); // Empty array ensures that effect is only run on mount and unmount
   return keyPressed;

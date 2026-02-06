@@ -1,6 +1,6 @@
-import { keyframes } from "@emotion/react";
-import styled from "@emotion/styled";
-import { useState, useEffect } from "react";
+import { keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
+import { useState, useEffect } from 'react';
 
 export const HellsCard = ({ queryString }: { queryString: string }) => {
   const [card, setCard] = useState(undefined);
@@ -8,11 +8,9 @@ export const HellsCard = ({ queryString }: { queryString: string }) => {
   useEffect(() => {
     let ignore = false;
     (async () => {
-      console.log("oi", card);
+      console.log('oi', card);
 
-      const resp = await fetch(
-        `https://api.scryfall.com/cards/random?q=${queryString} game:paper`
-      );
+      const resp = await fetch(`https://api.scryfall.com/cards/random?q=${queryString} game:paper`);
       const {
         image_uris: { normal },
       } = await resp.json();
@@ -32,19 +30,19 @@ export const HellsCard = ({ queryString }: { queryString: string }) => {
   return <StyledImage src={card} />;
 };
 
-const StyledImage = styled.img({ maxWidth: "300px", display: "inline-block" });
+const StyledImage = styled.img({ maxWidth: '300px', display: 'inline-block' });
 
 const LoadingSkeleton = () => {
   return <Frame />;
 };
 
-const bounce = keyframes({ "50%": { backgroundColor: "black" } });
+const bounce = keyframes({ '50%': { backgroundColor: 'black' } });
 
 const Frame = styled.div({
-  width: "300px",
-  height: "411px",
-  display: "inline-block",
-  border: "3px solid black",
-  borderRadius: "10px",
+  width: '300px',
+  height: '411px',
+  display: 'inline-block',
+  border: '3px solid black',
+  borderRadius: '10px',
   animation: `${bounce} 1.5s ease infinite`,
 });

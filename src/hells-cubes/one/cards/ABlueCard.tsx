@@ -1,4 +1,4 @@
-import { HellsCard } from "../HellsCard";
+import { HellsCard } from '../HellsCard';
 
 export const ABlueCard = () => {
   const stormCards = [
@@ -23,9 +23,5 @@ export const ABlueCard = () => {
     `!"sudden+substitution"`,
     `!"snapcaster+mage"`,
   ];
-  return (
-    <HellsCard
-      queryString={stormCards[Math.floor(Math.random() * stormCards.length)]}
-    />
-  );
+  return <HellsCard queryString={stormCards[Math.floor(Math.random() * stormCards.length)]} />;
 };

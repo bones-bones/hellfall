@@ -1,4 +1,4 @@
-import { sheetsKey } from "../../keys";
+import { sheetsKey } from '../../keys';
 
 export const fetchUsernameMappings = async () => {
   const requestedData = await fetch(
@@ -8,7 +8,7 @@ export const fetchUsernameMappings = async () => {
 
   const [keys, ...rest] = asJson.values as any[];
 
-  const theThing = rest.map((entry) => {
+  const theThing = rest.map(entry => {
     const ob = {};
     for (let i = 0; i < keys.length; i++) {
       // @ts-ignore
@@ -18,7 +18,7 @@ export const fetchUsernameMappings = async () => {
   });
   return theThing.reduce<Record<string, string[]>>((curr, next) => {
     //@ts-ignore
-    curr[next["Chosen Name"]] = next["; seperated alts"].split(";");
+    curr[next['Chosen Name']] = next['; seperated alts'].split(';');
     return curr;
   }, {});
 };

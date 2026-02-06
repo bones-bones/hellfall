@@ -1,10 +1,10 @@
-import { Routes, Route, useLocation } from "react-router";
+import { Routes, Route, useLocation } from 'react-router';
 
-import { Deck } from "./Deck";
-import { allDecks } from "./allDecks";
-import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
-import { Suspense } from "react";
+import { Deck } from './Deck';
+import { allDecks } from './allDecks';
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
+import { Suspense } from 'react';
 
 //decks
 export const Decks = () => {
@@ -18,10 +18,10 @@ export const Decks = () => {
           <div>
             Look at all these decks
             <ul>
-              {allDecks.map((entry) => {
+              {allDecks.map(entry => {
                 return (
                   <StyledLi key={entry.title}>
-                    <StyledLink to={val.pathname + "/" + entry.title}>
+                    <StyledLink to={val.pathname + '/' + entry.title}>
                       {entry.title} — {entry.author}
                     </StyledLink>
                   </StyledLi>
@@ -45,7 +45,7 @@ export const Decks = () => {
 
 const StyledLink = styled(Link)({
   // textDecoration: "none",
-  color: "black",
+  color: 'black',
 });
 
-const StyledLi = styled.li({ marginTop: "15px" });
+const StyledLi = styled.li({ marginTop: '15px' });

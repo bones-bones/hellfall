@@ -1,1 +1,1 @@
-export { CardLegalityControls } from "./CardLegalityControls";
+export { CardLegalityControls } from './CardLegalityControls';

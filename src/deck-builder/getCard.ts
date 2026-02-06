@@ -10,7 +10,7 @@ export const getCard = ({
   description: string;
 }) => {
   return {
-    Name: "CardCustom",
+    Name: 'CardCustom',
     Transform: {
       posX: 0,
       posY: 0,
@@ -23,8 +23,8 @@ export const getCard = ({
       scaleZ: 1.11125,
     },
     Nickname: name,
-    Description: description || "",
-    GMNotes: "",
+    Description: description || '',
+    GMNotes: '',
     ColorDiffuse: {
       r: 0.713235259,
       g: 0.713235259,
@@ -45,9 +45,9 @@ export const getCard = ({
     CardID: id,
     SidewaysCard: false,
     CustomDeck: thing,
-    XmlUI: "",
-    LuaScript: "",
-    LuaScriptState: "",
-    GUID: "",
+    XmlUI: '',
+    LuaScript: '',
+    LuaScriptState: '',
+    GUID: '',
   };
 };

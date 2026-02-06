@@ -1,1 +1,1 @@
-export { Eight } from "./Eight";
+export { Eight } from './Eight';

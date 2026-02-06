@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
-import { toDeck } from "../deck-builder/toDeck";
-import { cardsAtom } from "../hellfall/cardsAtom";
-import { toCockCube } from "./toCockCube";
-import { useAtomValue } from "jotai";
-import { HCEntry } from "../types";
-import { ReactNode } from "react";
-import { getDraftmancerForCube } from "./draftmancer";
-import { getHc5 } from "./getHc5";
-import { toMPCAutofill } from "./toMPCAutofill";
-import { getLands } from "./getLands";
+import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
+import { toDeck } from '../deck-builder/toDeck';
+import { cardsAtom } from '../hellfall/cardsAtom';
+import { toCockCube } from './toCockCube';
+import { useAtomValue } from 'jotai';
+import { HCEntry } from '../types';
+import { ReactNode } from 'react';
+import { getDraftmancerForCube } from './draftmancer';
+import { getHc5 } from './getHc5';
+import { toMPCAutofill } from './toMPCAutofill';
+import { getLands } from './getLands';
 
 type CubeSetup = {
   name: string;
@@ -28,10 +28,10 @@ export const CubeResources = () => {
   const cards = useAtomValue(cardsAtom);
   const cubeSetups: CubeSetup[] = [
     {
-      name: "Hellscube",
-      id: "HLC",
-      description: "A refined version of the cube that started it all",
-      cards: cards.filter((e) => e.Set === "HLC"),
+      name: 'Hellscube',
+      id: 'HLC',
+      description: 'A refined version of the cube that started it all',
+      cards: cards.filter(e => e.Set === 'HLC'),
       quickLink: <StyledLink to="one">Rules and macros</StyledLink>,
       printLink: (
         <StyledLink to="https://drive.google.com/file/d/1U2Ww7WElGpA95BTOwb2E2sQ0bir4FJHt/view">
@@ -39,151 +39,126 @@ export const CubeResources = () => {
         </StyledLink>
       ),
       tts: (
-        <StyledLink
-          to={
-            "https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113"
-          }
-        >
+        <StyledLink to={'https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113'}>
           Plugin by Benana
         </StyledLink>
       ),
     },
     {
-      name: "Hellscube 2",
-      id: "HC2",
-      description: "The second cube, trades purple for clear archetypes.",
-      cards: cards.filter((e) => e.Set === "HC2"),
+      name: 'Hellscube 2',
+      id: 'HC2',
+      description: 'The second cube, trades purple for clear archetypes.',
+      cards: cards.filter(e => e.Set === 'HC2'),
     },
     {
-      name: "Hellscube 3",
-      id: "HC3",
+      name: 'Hellscube 3',
+      id: 'HC3',
       description: "At least it's not HC2",
-      cards: cards.filter((e) => e.Set === "HC3"),
+      cards: cards.filter(e => e.Set === 'HC3'),
       printLink: (
-        <StyledLink
-          to={
-            "https://drive.google.com/file/d/1SuXpECOkcCpIcCD-KKGyNjkT9NfeLrEH/view"
-          }
-        >
+        <StyledLink to={'https://drive.google.com/file/d/1SuXpECOkcCpIcCD-KKGyNjkT9NfeLrEH/view'}>
           PDF of 3.0 by Jumberlack
         </StyledLink>
       ),
       tts: (
-        <StyledLink
-          to={
-            "https://steamcommunity.com/sharedfiles/filedetails/?id=3309357076"
-          }
-        >
+        <StyledLink to={'https://steamcommunity.com/sharedfiles/filedetails/?id=3309357076'}>
           Plugin by Benana
         </StyledLink>
       ),
     },
     {
-      name: "Hellscube 4",
-      id: "HC4",
-      description: "A Vintage power cube. A rip-roaring good time",
-      cards: cards.filter((e) => e.Set === "HC4"),
+      name: 'Hellscube 4',
+      id: 'HC4',
+      description: 'A Vintage power cube. A rip-roaring good time',
+      cards: cards.filter(e => e.Set === 'HC4'),
       includeLands: true,
       // readyForAutofill: true,
       printLink: (
-        <StyledLink
-          to={
-            "https://drive.google.com/file/d/1xURrTX8zbeLhQFhPqEsI3kHEPb-lLwpE/view"
-          }
-        >
+        <StyledLink to={'https://drive.google.com/file/d/1xURrTX8zbeLhQFhPqEsI3kHEPb-lLwpE/view'}>
           PDF by killerfox3042
         </StyledLink>
       ),
     },
     {
-      name: "Hellscube 5",
-      id: "HC5",
-      description: "L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ",
+      name: 'Hellscube 5',
+      id: 'HC5',
+      description: 'L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ',
       cards: getHc5(),
     },
     {
-      name: "Hellscube V(eto)",
-      id: "HCV",
+      name: 'Hellscube V(eto)',
+      id: 'HCV',
       description: `Here's where vetoed, slotsed, and seasonal cards go. Not suitable for play.`,
-      cards: cards.filter((e) => e.Set === "HCV"),
+      cards: cards.filter(e => e.Set === 'HCV'),
     },
     {
-      name: "Hellscube 6",
-      id: "HC6",
-      description: "The Commander Cube",
-      cards: cards.filter((e) => e.Set === "HC6"),
+      name: 'Hellscube 6',
+      id: 'HC6',
+      description: 'The Commander Cube',
+      cards: cards.filter(e => e.Set === 'HC6'),
       // readyForAutofill: true,
       includeLands: true,
       printLink: (
-        <StyledLink
-          to={
-            "https://drive.google.com/file/d/1-kirKSuVUPrgRfMWYt3rhqDQlAbZhKws/view"
-          }
-        >
+        <StyledLink to={'https://drive.google.com/file/d/1-kirKSuVUPrgRfMWYt3rhqDQlAbZhKws/view'}>
           PDF by killerfox3042
         </StyledLink>
       ),
     },
     {
-      name: "HC Constructed",
-      id: "HCC",
+      name: 'HC Constructed',
+      id: 'HCC',
       // readyForAutofill: true,
-      description:
-        "Cards that are legal in constructed, but are not in any cube",
-      cards: cards.filter((e) => e.Set === "HCC"),
+      description: 'Cards that are legal in constructed, but are not in any cube',
+      cards: cards.filter(e => e.Set === 'HCC'),
     },
     {
-      name: "Hells Chase Posse",
-      id: "HCP",
+      name: 'Hells Chase Posse',
+      id: 'HCP',
       // readyForAutofill: true,
-      description: "Planes and Phenomena for some sick planechase action",
-      cards: cards.filter((e) => e.Set === "HCP"),
+      description: 'Planes and Phenomena for some sick planechase action',
+      cards: cards.filter(e => e.Set === 'HCP'),
       printLink: (
         <StyledLink
-          to={
-            "https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing"
-          }
+          to={'https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing'}
         >
           PDF by hostus
         </StyledLink>
       ),
     },
     {
-      name: "Hellscube 7",
-      id: "HC7",
-      description: "The 7th cube, purple abounds.",
-      cards: cards.filter((e) => e.Set === "HC7.0" || e.Set === "HC7.1"),
+      name: 'Hellscube 7',
+      id: 'HC7',
+      description: 'The 7th cube, purple abounds.',
+      cards: cards.filter(e => e.Set === 'HC7.0' || e.Set === 'HC7.1'),
     },
     {
-      name: "Normal Cube",
-      id: "C",
-      description: "How did that get in there?",
-      cards: cards.filter((e) => e.Set === "C"),
+      name: 'Normal Cube',
+      id: 'C',
+      description: 'How did that get in there?',
+      cards: cards.filter(e => e.Set === 'C'),
     },
     {
-      name: "Heckscube",
-      id: "HCK",
+      name: 'Heckscube',
+      id: 'HCK',
       // readyForAutofill: true,
       includeLands: true,
       description:
-        "This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC's first forays into \"beginner-friendly\" Magic all the way back in '97.",
-      cards: cards.filter((e) => e.Set === "HCK"),
+        'This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC\'s first forays into "beginner-friendly" Magic all the way back in \'97.',
+      cards: cards.filter(e => e.Set === 'HCK'),
     },
     {
-      name: "Hellscube 8",
-      id: "HC8",
-      quickLink: (
-        <StyledLink to="/hellscubes/eight">Archetype documents</StyledLink>
-      ),
+      name: 'Hellscube 8',
+      id: 'HC8',
+      quickLink: <StyledLink to="/hellscubes/eight">Archetype documents</StyledLink>,
       description: "The 8th cube, we've got archetypes",
-      cards: cards.filter((e) => e.Set === "HC8.0" || e.Set === "HC8.1"),
+      cards: cards.filter(e => e.Set === 'HC8.0' || e.Set === 'HC8.1'),
     },
     {
-      name: "Hellscube Jumpstart",
-      id: "HCJ",
+      name: 'Hellscube Jumpstart',
+      id: 'HCJ',
 
-      description: "Jumpstart!",
-      cards: cards.filter((e) => e.Set === "HCJ"),
+      description: 'Jumpstart!',
+      cards: cards.filter(e => e.Set === 'HCJ'),
     },
   ];
   return (
@@ -203,13 +178,13 @@ export const CubeResources = () => {
           <StyledTableHeader>mpc autofill</StyledTableHeader>
           <StyledTableHeader>self print</StyledTableHeader>
         </StyledRow>
-        {cubeSetups.map((cubeSetup) => {
+        {cubeSetups.map(cubeSetup => {
           return (
             <StyledRow key={cubeSetup.id}>
               <StyledTD>{cubeSetup.name}</StyledTD>
               <StyledTD>{cubeSetup.id}</StyledTD>
               <StyledTD>{cubeSetup.description}</StyledTD>
-              <StyledTD>{cubeSetup.quickLink || "None"}</StyledTD>
+              <StyledTD>{cubeSetup.quickLink || 'None'}</StyledTD>
               <StyledTD>
                 {cubeSetup.tts || (
                   <button
@@ -218,10 +193,10 @@ export const CubeResources = () => {
 
                       const val = toDeck(filtered);
                       const url =
-                        "data:text/plain;base64," +
+                        'data:text/plain;base64,' +
                         btoa(unescape(encodeURIComponent(JSON.stringify(val))));
-                      const a = document.createElement("a");
-                      a.style.display = "none";
+                      const a = document.createElement('a');
+                      a.style.display = 'none';
                       a.href = url;
                       // the filename you want
                       a.download = cubeSetup.name + `.json`;
@@ -242,14 +217,12 @@ export const CubeResources = () => {
                       cards: cubeSetup.cards,
                     });
 
-                    const url =
-                      "data:text/plain;base64," +
-                      btoa(unescape(encodeURIComponent(val)));
-                    const a = document.createElement("a");
-                    a.style.display = "none";
+                    const url = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(val)));
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
                     a.href = url;
                     // the filename you want
-                    a.download = cubeSetup.name + ".xml";
+                    a.download = cubeSetup.name + '.xml';
                     document.body.appendChild(a);
                     a.click();
                   }}
@@ -281,7 +254,7 @@ export const CubeResources = () => {
                       const cardList = (
                         await (
                           await fetch(
-                            "https://hellfall-autofill-821285593003.europe-west1.run.app/",
+                            'https://hellfall-autofill-821285593003.europe-west1.run.app/'
                           )
                         ).json()
                       ).values
@@ -300,67 +273,57 @@ export const CubeResources = () => {
                         Url: string;
                       }[];
 
-                      const tokenNames = cubeSetup.cards.flatMap((entry) => {
+                      const tokenNames = cubeSetup.cards.flatMap(entry => {
                         // Dear sixel, pls finish
-                        return (entry.tokens || []).map((tokenEntry) =>
-                          tokenEntry.Name.replace(/ (\d+)$/g, "$1"),
+                        return (entry.tokens || []).map(tokenEntry =>
+                          tokenEntry.Name.replace(/ (\d+)$/g, '$1')
                         );
                       });
-                      const printableTokens = tokenNames.map((tokenEntry) => {
-                        const matches = cardList.filter((e) => {
+                      const printableTokens = tokenNames.map(tokenEntry => {
+                        const matches = cardList.filter(e => {
                           return e.Cardname == tokenEntry;
                         });
 
                         const returnEntry = {
                           cardName: tokenEntry,
-                          sides: matches.map((matchEntry) => ({
-                            id: matchEntry.Url.replace(
-                              "https://lh3.googleusercontent.com/d/",
-                              "",
-                            ),
+                          sides: matches.map(matchEntry => ({
+                            id: matchEntry.Url.replace('https://lh3.googleusercontent.com/d/', ''),
                           })),
                         };
 
                         return returnEntry;
                       });
 
-                      const printableCards = cubeSetup.cards.map(
-                        (cardEntry) => {
-                          const matches = cardList.filter(
-                            (e) => e.Cardname == cardEntry.Name,
-                          );
-                          if (cardEntry.Name.includes("// Elves")) {
-                            console.log(cardList, matches);
-                          }
+                      const printableCards = cubeSetup.cards.map(cardEntry => {
+                        const matches = cardList.filter(e => e.Cardname == cardEntry.Name);
+                        if (cardEntry.Name.includes('// Elves')) {
+                          console.log(cardList, matches);
+                        }
 
-                          const returnEntry = {
-                            cardName: cardEntry.Name,
-                            sides: matches.map((matchEntry) => ({
-                              id: matchEntry.Url.replace(
-                                "https://lh3.googleusercontent.com/d/",
-                                "",
-                              ),
-                            })),
-                          };
-                          return returnEntry;
-                        },
-                      );
+                        const returnEntry = {
+                          cardName: cardEntry.Name,
+                          sides: matches.map(matchEntry => ({
+                            id: matchEntry.Url.replace('https://lh3.googleusercontent.com/d/', ''),
+                          })),
+                        };
+                        return returnEntry;
+                      });
                       toMPCAutofill(
                         [
                           ...printableCards,
                           ...(cubeSetup.includeLands ? getLands() : []),
                           ...printableTokens,
-                        ].filter(Boolean),
+                        ].filter(Boolean)
                       );
                     }}
                   >
                     download
                   </button>
                 ) : (
-                  "None"
+                  'None'
                 )}
               </StyledTD>
-              <StyledTD>{cubeSetup.printLink || "None"}</StyledTD>
+              <StyledTD>{cubeSetup.printLink || 'None'}</StyledTD>
             </StyledRow>
           );
         })}
@@ -373,16 +336,16 @@ const StyledLink = styled(Link)({
   // textDecoration: "none",
   //color: "black",
 });
-const Container = styled.div({ padding: "10px" });
+const Container = styled.div({ padding: '10px' });
 
-const StyledTable = styled("table")({
-  border: "1px solid black",
-  "tr:nth-child(even)": { backgroundColor: "#f2f2f2" },
+const StyledTable = styled('table')({
+  border: '1px solid black',
+  'tr:nth-child(even)': { backgroundColor: '#f2f2f2' },
 });
-const StyledRow = styled("tr")({
-  ":hover": { backgroundColor: "#C690FF !important" }, // The even selector is more specific than  this one. boo, hiss
+const StyledRow = styled('tr')({
+  ':hover': { backgroundColor: '#C690FF !important' }, // The even selector is more specific than  this one. boo, hiss
 });
-const StyledTableHeader = styled("th")({ textAlign: "start" });
-const StyledTD = styled("td")({ overflowY: "hidden" });
+const StyledTableHeader = styled('th')({ textAlign: 'start' });
+const StyledTD = styled('td')({ overflowY: 'hidden' });
 
 // ...existing code...

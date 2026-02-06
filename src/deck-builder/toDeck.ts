@@ -1,6 +1,6 @@
-import { HCEntry } from "../types";
-import { getBaseObject } from "./getBaseObject";
-import { getCard } from "./getCard";
+import { HCEntry } from '../types';
+import { getBaseObject } from './getBaseObject';
+import { getCard } from './getCard';
 
 export const toDeck = (cards: HCEntry[]) => {
   const baseDeck = getBaseObject();
@@ -11,22 +11,22 @@ export const toDeck = (cards: HCEntry[]) => {
     const thing = {
       FaceURL: entry.Image[0],
       BackURL:
-        "https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg",
+        'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
       NumWidth: 1,
       NumHeight: 1,
       BackIsHidden: true,
       UniqueBack: false,
       Type: 1,
     };
-    (baseDeck.ObjectStates[0].CustomDeck as any)[i + 1 + ""] = thing;
+    (baseDeck.ObjectStates[0].CustomDeck as any)[i + 1 + ''] = thing;
 
     console.log(entry.Name);
 
     const mainCard = getCard({
-      thing: { [i + 1 + ""]: thing },
+      thing: { [i + 1 + '']: thing },
       name: entry.Name,
       id: (i + 1) * 100,
-      description: entry["Text Box"]?.[0] || entry.Name,
+      description: entry['Text Box']?.[0] || entry.Name,
     });
     // TODO: don't break lands
     // const sideCount = entry["Card Type(s)"].filter(

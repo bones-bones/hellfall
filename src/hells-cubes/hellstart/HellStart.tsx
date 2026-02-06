@@ -1,7 +1,7 @@
-import { useAtomValue } from "jotai";
-import { cardsAtom } from "../../hellfall/cardsAtom";
-import styled from "@emotion/styled";
-import { hcjFrontCards, HCJPackInfo } from "./hcj";
+import { useAtomValue } from 'jotai';
+import { cardsAtom } from '../../hellfall/cardsAtom';
+import styled from '@emotion/styled';
+import { hcjFrontCards, HCJPackInfo } from './hcj';
 
 export const HellStart = () => {
   const cards = useAtomValue(cardsAtom);
@@ -9,15 +9,14 @@ export const HellStart = () => {
   return (
     <Container>
       <pre>
-        8 person &quot;draft&quot;format. each player receives four packs, and
-        drafts one. they are then passed three packs, and may pick one. the
-        remaining two packs are discarded/unused. each player now has two packs
-        that compose their jumpstart boosters. games are best of 1. pack page is
-        formated to copy/paste into cock easily.
+        8 person &quot;draft&quot;format. each player receives four packs, and drafts one. they are
+        then passed three packs, and may pick one. the remaining two packs are discarded/unused.
+        each player now has two packs that compose their jumpstart boosters. games are best of 1.
+        pack page is formated to copy/paste into cock easily.
       </pre>
       Packs
       <div>
-        {hcjFrontCards.map((entry) => (
+        {hcjFrontCards.map(entry => (
           <HCJPackDisplay key={entry.tag} entry={entry} />
         ))}
       </div>

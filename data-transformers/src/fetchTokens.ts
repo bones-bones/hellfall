@@ -1,4 +1,4 @@
-import { sheetsKey } from "../../keys";
+import { sheetsKey } from '../../keys';
 
 export const fetchTokens = async () => {
   const requestedData = await fetch(
@@ -8,7 +8,7 @@ export const fetchTokens = async () => {
 
   const [keys, ...rest] = asJson.values as any[];
 
-  const theThing = rest.map((entry) => {
+  const theThing = rest.map(entry => {
     const ob = {};
     for (let i = 0; i < keys.length; i++) {
       // @ts-ignore

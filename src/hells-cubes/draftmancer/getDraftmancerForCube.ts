@@ -1,5 +1,5 @@
-import { toDraftmancerCube } from "./toDraftmancer";
-import { HCEntry } from "../../types";
+import { toDraftmancerCube } from './toDraftmancer';
+import { HCEntry } from '../../types';
 
 export const getDraftmancerForCube = ({
   id,
@@ -15,13 +15,12 @@ export const getDraftmancerForCube = ({
     cards: cards,
   });
 
-  const url =
-    "data:text/plain;base64," + btoa(unescape(encodeURIComponent(val)));
-  const a = document.createElement("a");
-  a.style.display = "none";
+  const url = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(val)));
+  const a = document.createElement('a');
+  a.style.display = 'none';
   a.href = url;
   // the filename you want
-  a.download = name + " (Draftmancer).txt";
+  a.download = name + ' (Draftmancer).txt';
   document.body.appendChild(a);
   a.click();
 };
