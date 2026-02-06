@@ -8,6 +8,7 @@ import { Suspense } from "react";
 
 //decks
 export const Decks = () => {
+  debugger;
   const val = useLocation();
   return (
     <Routes>

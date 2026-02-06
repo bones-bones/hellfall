@@ -47,11 +47,15 @@ Write a script to transform the database
 - use mv instead of cmc
 - add support for version of color identity with hybrids allowed
 - make better search syntax (like allowing or)
+- add ability to search by symbols in mana cost
 
 # Mana symbols that need support
 
-- ?
-- 2/P
-- 3/P
+- {?}
+- {2/P}
+- {3/P}
 - {M}
 - {BB/P}
+- {0/U}
+- {9}, {10}, {11}
+- {HW}, {HU}, {HB}, {HR}, {HG}, {HP}
