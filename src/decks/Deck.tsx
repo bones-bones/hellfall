@@ -11,31 +11,35 @@ import { stringToMana } from "../hellfall/stringToMana";
 const activeCardAtom = atom<HCEntry | undefined>(undefined);
 
 export const Deck = () => {
-  debugger;
   const { "*": deckName } = useParams();
   const deck = allDecks.find((e) => e.title == deckName)!;
   const cards = useAtomValue(cardsAtom);
   const setActiveCard = useSetAtom(activeCardAtom);
-  const resolveCard = (entry:CardEntry):RenderEntry=>{
-    if (entry.name[0]=="%"){
+  const resolveCard = (entry: CardEntry): RenderEntry => {
+    if (entry.name[0] == "%") {
       return {
         count: entry.count,
         name: cards.find((e) => e.Id == entry.name.slice(1))!.Id,
         id: entry.name.slice(1),
         hcEntry: cards.find((e) => e.Id == entry.name.slice(1)),
       };
-    } else{
+    } else {
       return {
         count: entry.count,
         name: entry.name,
-        id:cards.find((e) => e.Name.toLowerCase() == entry.name.toLowerCase())?.Id,
-        hcEntry: cards.find((e) => e.Name.toLowerCase() == entry.name.toLowerCase()),
+        id: cards.find((e) => e.Name.toLowerCase() == entry.name.toLowerCase())
+          ?.Id,
+        hcEntry: cards.find(
+          (e) => e.Name.toLowerCase() == entry.name.toLowerCase()
+        ),
       };
     }
-  }
+  };
   const resolvedMainDeck = deck.cards.main.map(resolveCard) as RenderEntry[];
 
-  const resolvedSideBoard = deck.cards.sideboard.map(resolveCard) as RenderEntry[];
+  const resolvedSideBoard = deck.cards.sideboard.map(
+    resolveCard
+  ) as RenderEntry[];
 
   const reduddd = resolvedMainDeck.reduce<Record<string, RenderEntry[]>>(
     (curr, next) => {
@@ -263,7 +267,12 @@ const CardLineContainer = styled.div({
   display: "contents",
 });
 
-type RenderEntry = { name: string; id: string | undefined; count: number; hcEntry?: HCEntry };
+type RenderEntry = {
+  name: string;
+  id: string | undefined;
+  count: number;
+  hcEntry?: HCEntry;
+};
 
 // TODO: write a function that takes a hash of the name and use it to generate number of index spaces between 0.01 and 100.00
 const getPrice = (name: string) => {
