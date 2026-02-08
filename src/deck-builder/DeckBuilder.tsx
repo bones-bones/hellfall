@@ -107,7 +107,6 @@ export const DeckBuilder = () => {
     const images: HCEntry[] = (toRender || [])
       .filter((entry) => entry != "" && !entry.startsWith("# "))
       .flatMap((name) => {
-        // debugger;
         const [count, rest] = toCardArr(name);
         const responseObject = [];
         if (rest[0] == "%") {
@@ -115,7 +114,7 @@ export const DeckBuilder = () => {
             const card = cards.find((entry) => entry.Id == rest.slice(1))!;
             responseObject.push(card);
           }
-        } else if (rest /*.toLowerCase() in basics*/) {
+        } else if (rest) {
           for (let i = 0; i < count; i++) {
             const card = {
               Image: [basics[rest.toLowerCase()]],
@@ -123,12 +122,7 @@ export const DeckBuilder = () => {
             } as unknown as HCEntry;
             responseObject.push(card);
           }
-          // } else if (rest) {
-          //   for (let i = 0; i < count; i++) {
-          //     responseObject.push(cards.find((entry) => entry.Name.toLowerCase() == rest.toLowerCase())!);
-          //   }
         }
-        // debugger;
         if (responseObject.length == 0) {
           const card = {
             Image: [
@@ -138,7 +132,6 @@ export const DeckBuilder = () => {
           } as unknown as HCEntry;
           responseObject.push(card);
         }
-        // debugger;
         return responseObject;
       });
     setRenderCards(images);
@@ -215,7 +208,6 @@ Cock and Balls to Torture and Abuse"
       <br />
       <DeckContainer ref={ref}>
         {renderCards?.map((entry, i) => {
-          // debugger;
           return (
             <Card
               width="250px"

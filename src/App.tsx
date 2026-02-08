@@ -16,7 +16,7 @@ import { Breakdown } from "./breakdown/Breakdown";
 import { Decks } from "./decks/Decks";
 import { Watchwolfwar } from "./Watchwolfwar";
 import { Watchwolfresults } from "./Watchwolfresults";
-import { NameToId } from "./hellfall/backCompat";
+import { NameToId, IsNonTokenName } from "./hellfall/backCompat";
 
 interface ValidatedCardRouteProps {
   element: React.ReactElement;
@@ -31,16 +31,21 @@ export const App = () => {
   );
 };
 
+const ValidatedCardRoute = ({ element }: ValidatedCardRouteProps) => {
+  const params = useParams<{ "*": string }>();
+  const cardIdentifier = params["*"];
+  if (
+    cardIdentifier &&
+    !/^\d+$/.test(cardIdentifier) &&
+    IsNonTokenName(cardIdentifier)
+  ) {
+    const cardId = NameToId(cardIdentifier);
+    return <Navigate to={`/card/${cardId}`} replace />;
+  }
+  return element;
+};
+
 const ApplicationRoutes = () => {
-  const ValidatedCardRoute = ({ element }: ValidatedCardRouteProps) => {
-    const params = useParams<{ "*": string }>();
-    const cardIdentifier = params["*"];
-    if (cardIdentifier && !/^\d+$/.test(cardIdentifier)) {
-      const cardId = NameToId(cardIdentifier);
-      return <Navigate to={`/card/${cardId}`} replace />;
-    }
-    return element;
-  };
   return useRoutes([
     { path: "/hellscubes/*", element: <Hellscubes /> },
     { path: "/deck-builder/*", element: <DeckBuilder /> },
