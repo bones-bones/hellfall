@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { HellfallEntry } from "./hellfall/HellfallEntry";
+import { HellfallEntry } from "../hellfall/HellfallEntry";
 import { useAtom, useAtomValue } from "jotai";
-import { cardsAtom } from "./hellfall/cardsAtom";
+import { cardsAtom } from "../hellfall/cardsAtom";
 import { useRef, useState, useEffect } from "react";
 import { TeamClock } from "./TeamWolf";
 import {
@@ -11,21 +11,22 @@ import {
   SidePanel,
 } from "@workday/canvas-kit-react";
 import { Link } from "react-router-dom";
-import { HellfallCard } from "./hellfall/HellfallCard";
-import { activeCardAtom } from "./hellfall/searchAtoms";
+import { HellfallCard } from "../hellfall/HellfallCard";
+import { activeCardAtom } from "../hellfall/searchAtoms";
 import { xIcon } from "@workday/canvas-system-icons-web";
-import { HCEntry } from "./types";
-import { useKeyPress } from "./hooks";
+import { HCEntry } from "../types";
+import { useKeyPress } from "../hooks";
 
 //TODO: make results use Id natively on the backend
 
 export const Watchwolfwar = () => {
   const escape = useKeyPress("Escape");
+  const cards = useAtomValue(cardsAtom).filter(
+    (e) => e.isActualToken != true && e.Set != "C"
+  );
   const RandyRandom = useAtomValue(cardsAtom);
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const activeCard = RandyRandom.find((entry) => {
-    return entry.Id === activeCardFromAtom;
-  });
+  const activeCard = cards.find((entry) => entry.Id === activeCardFromAtom);
   useEffect(() => {
     if (escape) {
       setActiveCardFromAtom("");
@@ -33,26 +34,23 @@ export const Watchwolfwar = () => {
   }, [escape]);
 
   const submitting = useRef(false);
-  const FilterCard = RandyRandom.filter((entry) => {
-    return entry.isActualToken != true && entry.Set != "C";
-  });
   const [TwoCardState, SetTwoCardState] = useState<{
     LeftCard: HCEntry;
     RightCard: HCEntry;
   }>({
-    LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
-    RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+    LeftCard: cards[Math.floor(Math.random() * cards.length)],
+    RightCard: cards[Math.floor(Math.random() * cards.length)],
   });
   let activeIsRight = true;
 
-  const updateStandings = async (cardName: string) => {
+  const updateStandings = async (winId: string, loseId: string) => {
     if (!submitting.current) {
       submitting.current = true;
 
-      await TeamClock(cardName);
+      await TeamClock(winId, loseId);
       SetTwoCardState({
-        LeftCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
-        RightCard: FilterCard[Math.floor(Math.random() * FilterCard.length)],
+        LeftCard: cards[Math.floor(Math.random() * cards.length)],
+        RightCard: cards[Math.floor(Math.random() * cards.length)],
       });
       submitting.current = false;
     }
@@ -107,7 +105,10 @@ export const Watchwolfwar = () => {
                 "_blank"
               );
             } else {
-              updateStandings(TwoCardState.LeftCard.Name);
+              updateStandings(
+                TwoCardState.LeftCard.Id,
+                TwoCardState.RightCard.Id
+              );
               activeIsRight = false;
               setActiveCardFromAtom("");
             }
@@ -136,7 +137,10 @@ export const Watchwolfwar = () => {
                 "_blank"
               );
             } else {
-              updateStandings(TwoCardState.RightCard.Name);
+              updateStandings(
+                TwoCardState.RightCard.Id,
+                TwoCardState.LeftCard.Id
+              );
               activeIsRight = true;
               setActiveCardFromAtom("");
             }
