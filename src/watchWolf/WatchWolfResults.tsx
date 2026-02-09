@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useAtom, useAtomValue } from "jotai";
-import { cardsAtom } from "./hellfall/cardsAtom";
+import { cardsAtom } from "../hellfall/cardsAtom";
 import { useEffect, useState } from "react";
 import { TeamWolf as GetCardVotes } from "./TeamWolf";
 import {
@@ -9,27 +9,25 @@ import {
   ToolbarIconButton,
   SidePanel,
 } from "@workday/canvas-kit-react";
-import { HellfallCard } from "./hellfall/HellfallCard";
-import { activeCardAtom } from "./hellfall/searchAtoms";
+import { HellfallCard } from "../hellfall/HellfallCard";
+import { activeCardAtom } from "../hellfall/searchAtoms";
 import { xIcon } from "@workday/canvas-system-icons-web";
-import { useKeyPress } from "./hooks";
+import { useKeyPress } from "../hooks";
 
 //TODO: make results use Id natively on the backend
 
 export const Watchwolfresults = () => {
   const escape = useKeyPress("Escape");
-  const RandyRandom = useAtomValue(cardsAtom);
+  const cards = useAtomValue(cardsAtom).filter((e) => e.Set != "C");
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const activeCard = RandyRandom.find((entry) => {
-    return entry.Name === activeCardFromAtom;
-  });
+  const activeCard = cards.find((e) => e.Id === activeCardFromAtom);
   useEffect(() => {
     if (escape) {
       setActiveCardFromAtom("");
     }
   }, [escape]);
   const [standings, setStandings] =
-    useState<{ Name: string; Number: number }[]>();
+    useState<{ Id: string; Wins: number; Matches: number }[]>();
   useEffect(() => {
     GetCardVotes().then(setStandings);
   }, []);
@@ -70,19 +68,21 @@ export const Watchwolfresults = () => {
         <ResultsReceptaclePlaceThing>
           {standings
             ?.sort((a, b) => {
-              return b.Number - a.Number;
+              return b.Wins / b.Matches - a.Wins / a.Matches;
             })
-            .slice(0, RandyRandom.length)
+            .slice(0, cards.length)
             .map((entry) => {
+              const name = cards.find((e) => entry.Id === e.Id)?.Name;
               return (
-                <div key={entry.Name}>
+                <div key={entry.Id}>
                   <span
-                    key={entry.Name}
+                    key={entry.Id}
                     onClick={() => {
-                      setActiveCardFromAtom(entry.Name);
+                      setActiveCardFromAtom(entry.Id);
                     }}
                   >
-                    {entry.Name} - {entry.Number}
+                    {name} - {((entry.Wins / entry.Matches) * 100).toFixed(2)}%
+                    Win Rate ({entry.Wins}/{entry.Matches})
                   </span>
                 </div>
               );

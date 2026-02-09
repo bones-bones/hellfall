@@ -14,8 +14,8 @@ import { SingleCard } from "./hellfall/SingleCard";
 import { Header } from "./header";
 import { Breakdown } from "./breakdown/Breakdown";
 import { Decks } from "./decks/Decks";
-import { Watchwolfwar } from "./Watchwolfwar";
-import { Watchwolfresults } from "./Watchwolfresults";
+import { Watchwolfwar } from "./watchWolf/WatchWolfWar";
+import { Watchwolfresults } from "./watchWolf/WatchWolfResults";
 import { NameToId, IsNonTokenName } from "./hellfall/backCompat";
 
 interface ValidatedCardRouteProps {
