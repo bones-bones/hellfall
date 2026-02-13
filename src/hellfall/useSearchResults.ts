@@ -14,6 +14,7 @@ import {
   searchColorComparisonAtom,
   searchColorsAtom,
   searchColorsIdentityAtom,
+  useHybridIdentityAtom,
   searchSetAtom,
   sortAtom,
   typeSearchAtom,
@@ -46,6 +47,7 @@ export const useSearchResults = () => {
   const sortRule = useAtomValue(sortAtom);
   const creators = useAtomValue(creatorsAtom);
   const colorIdentityCriteria = useAtomValue(searchColorsIdentityAtom);
+  const useHybrid = useAtomValue(useHybridIdentityAtom);
   const activeCard = useAtomValue(activeCardAtom);
   const colorComparison = useAtomValue(searchColorComparisonAtom);
   const isCommander = useAtomValue(isCommanderAtom);
@@ -95,6 +97,10 @@ export const useSearchResults = () => {
           nameSearch !== "" &&
           !entry["Name"].toLowerCase().includes(nameSearch.toLowerCase())
         ) {
+          return false;
+        }
+
+        if (idSearch !== "" && entry["Id"] != idSearch) {
           return false;
         }
 
@@ -159,24 +165,16 @@ export const useSearchResults = () => {
                     (e) => e !== MISC_BULLSHIT
                   )
                 : colorIdentityCriteria;
-
-            // if (entry.Name == "Pissmite") {
-            //   console.log(miscBullshitColorIdentityCriteria);
-            // }
-
+            const colorTest = (e: string) =>
+              miscBullshitColorIdentityCriteria.includes(e) ||
+              e == "Colorless" ||
+              e == undefined;
             if (Array.isArray(cardColorIdentityComponent)) {
-              // if (entry.Name == "Pissmite") {
-              //   console.log(cardColorIdentityComponent);
-              // }
-              return cardColorIdentityComponent.every(
-                (e) =>
-                  miscBullshitColorIdentityCriteria.includes(e) ||
-                  e === undefined
-              );
+              return useHybrid
+                ? cardColorIdentityComponent.some(colorTest)
+                : cardColorIdentityComponent.every(colorTest);
             } else {
-              return miscBullshitColorIdentityCriteria.includes(
-                cardColorIdentityComponent
-              );
+              return colorTest(cardColorIdentityComponent);
             }
           })
         ) {
@@ -350,6 +348,9 @@ export const useSearchResults = () => {
     if (nameSearch != "") {
       searchToSet.append("name", nameSearch);
     }
+    if (idSearch != "") {
+      searchToSet.append("id", idSearch);
+    }
     if (typeSearch.length > 0) {
       searchToSet.append("type", typeSearch.join(","));
     }
@@ -364,6 +365,9 @@ export const useSearchResults = () => {
     }
     if (colorIdentityCriteria.length > 0) {
       searchToSet.append("colorIdentity", colorIdentityCriteria.join(","));
+    }
+    if (useHybrid) {
+      searchToSet.append("useHybrid", "true");
     }
     if (searchCmc !== undefined) {
       searchToSet.append("manaValue", JSON.stringify(searchCmc));
@@ -410,6 +414,7 @@ export const useSearchResults = () => {
     set,
     searchColors,
     nameSearch,
+    idSearch,
     sortRule,
     typeSearch,
     searchCmc,
@@ -418,6 +423,7 @@ export const useSearchResults = () => {
     legality,
     creators,
     colorIdentityCriteria,
+    useHybrid,
     activeCard,
     page,
     colorComparison,

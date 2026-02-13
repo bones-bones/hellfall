@@ -8,10 +8,12 @@ import cardTypes from "../data/types.json";
 import creators_data from "../data/creators.json";
 import tags_data from "../data/tags.json";
 import { CmcSelector } from "./inputs";
+import { SearchCheckbox } from "./SearchCheckbox";
 
 import { useAtom } from "jotai";
 import {
   nameSearchAtom,
+  idSearchAtom,
   rulesSearchAtom,
   searchCmcAtom,
   searchColorsAtom,
@@ -20,6 +22,7 @@ import {
   typeSearchAtom,
   searchColorsIdentityAtom,
   searchColorComparisonAtom,
+  useHybridIdentityAtom,
   powerAtom,
   toughnessAtom,
   tagsAtom,
@@ -33,6 +36,7 @@ export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
+  const [idSearch, setIdSearch] = useAtom(idSearchAtom);
   const [searchCmc, setSearchCmc] = useAtom(searchCmcAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -44,6 +48,7 @@ export const SearchControls = () => {
   const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(
     searchColorsIdentityAtom
   );
+  const [useHybrid, setUseHybrid] = useAtom(useHybridIdentityAtom);
   const [colorComparison, setColorComparison] = useAtom(
     searchColorComparisonAtom
   );
@@ -61,6 +66,19 @@ export const SearchControls = () => {
             }}
             onBlur={(event) => {
               setNameSearch(event.target.value);
+            }}
+          />
+        </FormField>
+        <FormField label="Id">
+          <TextInput
+            defaultValue={idSearch}
+            onKeyDown={(event) => {
+              if (event.key == "Enter") {
+                setIdSearch((event.target as any).value);
+              }
+            }}
+            onBlur={(event) => {
+              setIdSearch(event.target.value);
             }}
           />
         </FormField>
@@ -119,7 +137,21 @@ export const SearchControls = () => {
           values={colors}
           initialValue={searchColorsIdentity}
           onChange={setSearchColorsIdentityAtom}
-        />
+        >
+          <StyledComponentHolder>
+            <StyledLabel htmlFor="useHybrid">
+              {"Use Alternate Hybrid Rule"}
+            </StyledLabel>
+            <SearchCheckbox
+              id="useHybrid"
+              type="checkbox"
+              checked={useHybrid === true}
+              onChange={(event) => {
+                setUseHybrid(event.target.checked);
+              }}
+            />
+          </StyledComponentHolder>
+        </CheckboxGroup>
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup

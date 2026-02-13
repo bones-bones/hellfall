@@ -34,6 +34,10 @@ export const searchColorsIdentityAtom = atom(
   searchParams.get("colorIdentity")?.split(",") || []
 );
 
+export const useHybridIdentityAtom = atom(
+  searchParams.get("useHybrid") == "true"
+);
+
 export const searchColorComparisonAtom = atom(
   (searchParams.get("colorComparison") || "=") as "<=" | ">=" | "="
 );
