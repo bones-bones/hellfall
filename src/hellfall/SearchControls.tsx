@@ -1,20 +1,19 @@
 import styled from '@emotion/styled';
 
-import { CheckboxGroup } from './inputs';
-import { PillSearch } from './inputs';
-import { TextInput } from '@workday/canvas-kit-react/text-input';
-import { FormField } from '@workday/canvas-kit-react/form-field';
-import cardTypes from '../data/types.json';
-import creators_data from '../data/creators.json';
-import tags_data from '../data/tags.json';
-import { CmcSelector } from './inputs';
-import { SearchCheckbox } from './SearchCheckbox';
+import { CheckboxGroup } from "./inputs";
+import { PillSearch } from "./inputs";
+import { TextInput } from "@workday/canvas-kit-react/text-input";
+import { FormField } from "@workday/canvas-kit-react/form-field";
+import cardTypes from "../data/types.json";
+import creators_data from "../data/creators.json";
+import tags_data from "../data/tags.json";
+import { CmcSelector } from "./inputs";
+import { SearchCheckbox } from "./SearchCheckbox";
 
 import { useAtom } from 'jotai';
 import {
   nameSearchAtom,
   idSearchAtom,
-  costSearchAtom,
   rulesSearchAtom,
   searchCmcAtom,
   searchColorsAtom,
@@ -37,8 +36,6 @@ export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
   const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
-  const [costSearch, setCostSearch] = useAtom(costSearchAtom);
-  const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [searchCmc, setSearchCmc] = useAtom(searchCmcAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -47,9 +44,13 @@ export const SearchControls = () => {
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
   const [tags, setTags] = useAtom(tagsAtom);
-  const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(searchColorsIdentityAtom);
+  const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(
+    searchColorsIdentityAtom
+  );
   const [useHybrid, setUseHybrid] = useAtom(useHybridIdentityAtom);
-  const [colorComparison, setColorComparison] = useAtom(searchColorComparisonAtom);
+  const [colorComparison, setColorComparison] = useAtom(
+    searchColorComparisonAtom
+  );
 
   return (
     <SearchContainer>
@@ -70,12 +71,12 @@ export const SearchControls = () => {
         <FormField label="Id">
           <TextInput
             defaultValue={idSearch}
-            onKeyDown={event => {
-              if (event.key == 'Enter') {
+            onKeyDown={(event) => {
+              if (event.key == "Enter") {
                 setIdSearch((event.target as any).value);
               }
             }}
-            onBlur={event => {
+            onBlur={(event) => {
               setIdSearch(event.target.value);
             }}
           />
@@ -141,12 +142,14 @@ export const SearchControls = () => {
           onChange={setSearchColorsIdentityAtom}
         >
           <StyledComponentHolder>
-            <StyledLabel htmlFor="useHybrid">{'Use Alternate Hybrid Rule'}</StyledLabel>
+            <StyledLabel htmlFor="useHybrid">
+              {"Use Alternate Hybrid Rule"}
+            </StyledLabel>
             <SearchCheckbox
               id="useHybrid"
               type="checkbox"
               checked={useHybrid === true}
-              onChange={event => {
+              onChange={(event) => {
                 setUseHybrid(event.target.checked);
               }}
             />

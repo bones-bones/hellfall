@@ -119,6 +119,10 @@ export const useSearchResults = () => {
           return false;
         }
 
+        if (idSearch !== "" && entry["Id"] != idSearch) {
+          return false;
+        }
+
         if (searchCmc != undefined) {
           switch (searchCmc.operator) {
             case '<': {
@@ -167,12 +171,17 @@ export const useSearchResults = () => {
         }
         if (
           colorIdentityCriteria.length > 0 &&
-          !getColorIdentity(entry).every(cardColorIdentityComponent => {
-            const miscBullshitColorIdentityCriteria = colorIdentityCriteria.includes(MISC_BULLSHIT)
-              ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(e => e !== MISC_BULLSHIT)
-              : colorIdentityCriteria;
+          !getColorIdentity(entry).every((cardColorIdentityComponent) => {
+            const miscBullshitColorIdentityCriteria =
+              colorIdentityCriteria.includes(MISC_BULLSHIT)
+                ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(
+                    (e) => e !== MISC_BULLSHIT
+                  )
+                : colorIdentityCriteria;
             const colorTest = (e: string) =>
-              miscBullshitColorIdentityCriteria.includes(e) || e == 'Colorless' || e == undefined;
+              miscBullshitColorIdentityCriteria.includes(e) ||
+              e == "Colorless" ||
+              e == undefined;
             if (Array.isArray(cardColorIdentityComponent)) {
               return useHybrid
                 ? cardColorIdentityComponent.some(colorTest)
@@ -332,6 +341,9 @@ export const useSearchResults = () => {
     if (idSearch != '') {
       searchToSet.append('id', idSearch);
     }
+    if (idSearch != "") {
+      searchToSet.append("id", idSearch);
+    }
     if (typeSearch.length > 0) {
       searchToSet.append('type', typeSearch.join(','));
     }
@@ -352,6 +364,9 @@ export const useSearchResults = () => {
     }
     if (useHybrid) {
       searchToSet.append('useHybrid', 'true');
+    }
+    if (useHybrid) {
+      searchToSet.append("useHybrid", "true");
     }
     if (searchCmc !== undefined) {
       searchToSet.append('manaValue', JSON.stringify(searchCmc));
