@@ -89,6 +89,20 @@ export const useSearchResults = () => {
         }
 
         if (
+          costSearch.length > 0 &&
+          !costSearch.every((searchTerm) => {
+            const combined = (entry["Cost"] || []).join(",").toLowerCase();
+            if (searchTerm.startsWith("!")) {
+              return !combined.includes(searchTerm.substring(1).toLowerCase());
+            } else {
+              return combined.includes(searchTerm.toLowerCase());
+            }
+          })
+        ) {
+          return false;
+        }
+
+        if (
           rulesSearch.length > 0 &&
           !rulesSearch.every(searchTerm => {
             const combined = (entry['Text Box'] || []).join(',').toLowerCase();
@@ -349,6 +363,9 @@ export const useSearchResults = () => {
     }
     if (costSearch.length > 0) {
       searchToSet.append('cost', costSearch.join(','));
+    }
+    if (costSearch.length > 0) {
+      searchToSet.append("cost", costSearch.join(","));
     }
     if (rulesSearch.length > 0) {
       searchToSet.append('rules', rulesSearch.join(','));
