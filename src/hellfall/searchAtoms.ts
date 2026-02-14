@@ -75,10 +75,6 @@ export const toughnessAtom = atom<
   })()
 );
 
-export const basedHybridRule = atom(
-  (searchParams.get("hybridRule") || "") as "based"
-);
-
 export const searchCmcAtom = atom<
   | {
       operator: ">" | "<" | "=" | "";
@@ -91,8 +87,12 @@ export const searchCmcAtom = atom<
     : undefined
 );
 
-export const sortAtom = atom<"Alpha" | "CMC" | "Color">("Color");
-// TODO: add desc sorting
+export const sortAtom = atom(
+  (searchParams.get("order") || "Color") as "Alpha" | "CMC" | "Color"
+);
+export const dirAtom = atom(
+  (searchParams.get("dir") || "Asc") as "Asc" | "Desc"
+);
 // TODO: make it possible to sort by color, then alpha, rather than color, then CMC
 export const offsetAtom = atom(parseInt(searchParams.get("page") || "0") || 0);
 export const creatorsAtom = atom(

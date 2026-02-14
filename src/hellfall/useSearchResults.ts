@@ -23,6 +23,7 @@ import {
   toughnessAtom,
   tagsAtom,
   extraFiltersAtom,
+  dirAtom,
 } from "./searchAtoms";
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
@@ -45,6 +46,7 @@ export const useSearchResults = () => {
   const typeSearch = useAtomValue(typeSearchAtom);
   const searchColors = useAtomValue(searchColorsAtom);
   const sortRule = useAtomValue(sortAtom);
+  const dirRule = useAtomValue(dirAtom);
   const creators = useAtomValue(creatorsAtom);
   const colorIdentityCriteria = useAtomValue(searchColorsIdentityAtom);
   const useHybrid = useAtomValue(useHybridIdentityAtom);
@@ -339,7 +341,7 @@ export const useSearchResults = () => {
 
         return true;
       })
-      .sort(sortFunction(sortRule));
+      .sort(sortFunction(sortRule, dirRule));
 
     setResultSet(tempResults);
 
@@ -396,7 +398,12 @@ export const useSearchResults = () => {
     if (tags.length > 0) {
       searchToSet.append("tags", tags.join(","));
     }
-
+    if (sortRule != "Color") {
+      searchToSet.append("order", sortRule);
+    }
+    if (dirRule != "Asc") {
+      searchToSet.append("dir", dirRule);
+    }
     if (tempResults.length < page && tempResults.length > 0) {
       searchToSet.append("page", "0");
       setPageAtom(0);
@@ -416,6 +423,7 @@ export const useSearchResults = () => {
     nameSearch,
     idSearch,
     sortRule,
+    dirRule,
     typeSearch,
     searchCmc,
     tags,
