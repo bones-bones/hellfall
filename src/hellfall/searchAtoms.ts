@@ -74,9 +74,11 @@ export const searchCmcAtom = atom<
 >(searchParams.get('manaValue') ? JSON.parse(searchParams.get('manaValue')!) : undefined);
 
 export const sortAtom = atom(
-  (searchParams.get('order') || 'Color') as 'Alpha' | 'CMC' | 'Color' | 'Id'
+  (searchParams.get("order") || "Color") as "Alpha" | "CMC" | "Color"
 );
-export const dirAtom = atom((searchParams.get('dir') || 'Asc') as 'Asc' | 'Desc');
+export const dirAtom = atom(
+  (searchParams.get("dir") || "Asc") as "Asc" | "Desc"
+);
 // TODO: make it possible to sort by color, then alpha, rather than color, then CMC
 export const offsetAtom = atom(parseInt(searchParams.get('page') || '0') || 0);
 export const creatorsAtom = atom(searchParams.get('creator')?.split(',,') || []);

@@ -25,11 +25,11 @@ import {
   tagsAtom,
   extraFiltersAtom,
   dirAtom,
-} from './searchAtoms';
-import { sortFunction } from './sortFunction';
-import { getColorIdentity } from './getColorIdentity';
-import { canBeACommander } from './canBeACommander';
-import { MISC_BULLSHIT, MISC_BULLSHIT_COLORS } from './constants';
+} from "./searchAtoms";
+import { sortFunction } from "./sortFunction";
+import { getColorIdentity } from "./getColorIdentity";
+import { canBeACommander } from "./canBeACommander";
+import { MISC_BULLSHIT, MISC_BULLSHIT_COLORS } from "./constants";
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
@@ -400,6 +400,12 @@ export const useSearchResults = () => {
     }
     if (dirRule != 'Asc') {
       searchToSet.append('dir', dirRule);
+    }
+    if (sortRule != "Color") {
+      searchToSet.append("order", sortRule);
+    }
+    if (dirRule != "Asc") {
+      searchToSet.append("dir", dirRule);
     }
     if (tempResults.length < page && tempResults.length > 0) {
       searchToSet.append('page', '0');
