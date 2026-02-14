@@ -92,7 +92,7 @@ export const searchCmcAtom = atom<
 );
 
 export const sortAtom = atom(
-  (searchParams.get("order") || "Color") as "Alpha" | "CMC" | "Color"
+  (searchParams.get("order") || "Color") as "Alpha" | "CMC" | "Color" | "Id"
 );
 export const dirAtom = atom(
   (searchParams.get("dir") || "Asc") as "Asc" | "Desc"

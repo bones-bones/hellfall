@@ -1,7 +1,7 @@
 import { HCEntry } from "../types";
 
 export const sortFunction =
-  (sortRule: "Alpha" | "CMC" | "Color", dirRule: "Asc" | "Desc") =>
+  (sortRule: "Alpha" | "CMC" | "Color" | "Id", dirRule: "Asc" | "Desc") =>
   (a: HCEntry, b: HCEntry) => {
     switch (sortRule) {
       case "CMC": {
@@ -22,6 +22,13 @@ export const sortFunction =
 
       case "Alpha": {
         if (a.Name > b.Name) {
+          return dirRule == "Desc" ? -1 : 1;
+        }
+        break;
+      }
+
+      case "Id": {
+        if (parseInt(a.Id) > parseInt(b.Id)) {
           return dirRule == "Desc" ? -1 : 1;
         }
         break;
