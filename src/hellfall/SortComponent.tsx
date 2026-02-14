@@ -19,8 +19,8 @@ export const SortComponent = () => {
             ev.target.value;
             setSortRule((ev as any).target.value || "Color");
           }}
-        />
-        {" "}:{" "}
+        />{" "}
+        :{" "}
         <Select
           value={dirRule}
           options={[{ value: "Asc" }, { value: "Desc" }]}

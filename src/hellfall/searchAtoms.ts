@@ -9,6 +9,10 @@ export const activeCardAtom = atom<string>(
   searchParams.get("activeCard") || ""
 );
 
+export const costSearchAtom = atom<string[]>(
+  searchParams.get("cost")?.split(",") || []
+);
+
 export const rulesSearchAtom = atom<string[]>(
   searchParams.get("rules")?.split(",") || []
 );

@@ -14,6 +14,7 @@ import { useAtom } from "jotai";
 import {
   nameSearchAtom,
   idSearchAtom,
+  costSearchAtom,
   rulesSearchAtom,
   searchCmcAtom,
   searchColorsAtom,
@@ -34,9 +35,10 @@ import { StyledComponentHolder } from "./StyledComponentHolder";
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
-  const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
+  const [costSearch, setCostSearch] = useAtom(costSearchAtom);
+  const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [searchCmc, setSearchCmc] = useAtom(searchCmcAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -82,6 +84,12 @@ export const SearchControls = () => {
             }}
           />
         </FormField>
+        <PillSearch
+          label={"Cost"}
+          possibleValues={[]}
+          defaultValues={costSearch}
+          onChange={setCostSearch}
+        />
         <PillSearch
           label={"Text"}
           possibleValues={[]}

@@ -9,6 +9,7 @@ import {
   idSearchAtom,
   nameSearchAtom,
   offsetAtom,
+  costSearchAtom,
   rulesSearchAtom,
   searchCmcAtom,
   searchColorComparisonAtom,
@@ -38,6 +39,7 @@ export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCEntry[]>([]);
   const cards = useAtomValue(cardsAtom).filter((e) => e.Set != "C");
   const set = useAtomValue(searchSetAtom);
+  const costSearch = useAtomValue(costSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const idSearch = useAtomValue(idSearchAtom);
   const nameSearch = useAtomValue(nameSearchAtom);
@@ -69,6 +71,20 @@ export const useSearchResults = () => {
           return false;
         }
         if (extraFilters.includes("isToken") && !entry.isActualToken) {
+          return false;
+        }
+
+        if (
+          costSearch.length > 0 &&
+          !costSearch.every((searchTerm) => {
+            const combined = (entry["Cost"] || []).join(",").toLowerCase();
+            if (searchTerm.startsWith("!")) {
+              return !combined.includes(searchTerm.substring(1).toLowerCase());
+            } else {
+              return combined.includes(searchTerm.toLowerCase());
+            }
+          })
+        ) {
           return false;
         }
 
@@ -356,6 +372,9 @@ export const useSearchResults = () => {
     if (typeSearch.length > 0) {
       searchToSet.append("type", typeSearch.join(","));
     }
+    if (costSearch.length > 0) {
+      searchToSet.append("cost", costSearch.join(","));
+    }
     if (rulesSearch.length > 0) {
       searchToSet.append("rules", rulesSearch.join(","));
     }
@@ -417,6 +436,7 @@ export const useSearchResults = () => {
       location.origin + location.pathname + "?" + searchToSet.toString()
     );
   }, [
+    costSearch,
     rulesSearch,
     set,
     searchColors,
