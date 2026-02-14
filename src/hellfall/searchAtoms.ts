@@ -80,7 +80,7 @@ export const searchCmcAtom = atom<
 >(searchParams.get('manaValue') ? JSON.parse(searchParams.get('manaValue')!) : undefined);
 
 export const sortAtom = atom(
-  (searchParams.get("order") || "Color") as "Alpha" | "CMC" | "Color"
+  (searchParams.get("order") || "Color") as "Alpha" | "CMC" | "Color" | "Id"
 );
 export const dirAtom = atom(
   (searchParams.get("dir") || "Asc") as "Asc" | "Desc"

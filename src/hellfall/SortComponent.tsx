@@ -14,7 +14,12 @@ export const SortComponent = () => {
       <FormField label="Sort By">
         <Select
           value={sortRule}
-          options={[{ value: "Alpha" }, { value: "CMC" }, { value: "Color" }]}
+          options={[
+            { value: "Alpha" },
+            { value: "CMC" },
+            { value: "Color" },
+            { value: "Id" },
+          ]}
           onChange={(ev) => {
             ev.target.value;
             setSortRule((ev as any).target.value || "Color");
