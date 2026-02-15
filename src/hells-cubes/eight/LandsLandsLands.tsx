@@ -1,8 +1,8 @@
 import { BigContainer, InnerContainer, ManaSymbolSmall } from "./components";
-import GW from "../../assets/GW.svg";
-import BG from "../../assets/BG.svg";
+import GW from "../../assets/hybrid/GW.svg";
+import BG from "../../assets/hybrid/BG.svg";
 import { Link } from "react-router-dom";
-import UR from "../../assets/UR.svg";
+import UR from "../../assets/hybrid/UR.svg";
 export const LandsLandsLands = () => {
   return (
     <>

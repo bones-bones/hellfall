@@ -1,5 +1,5 @@
 import { BigContainer, InnerContainer, ManaSymbolSmall } from "./components";
-import RG from "../../assets/RG.svg";
+import RG from "../../assets/hybrid/RG.svg";
 import { Link } from "react-router-dom";
 export const GruulSelfDiscard = () => {
   return (

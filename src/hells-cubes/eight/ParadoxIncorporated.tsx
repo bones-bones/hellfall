@@ -4,8 +4,8 @@ import {
   ManaSymbol,
   ManaSymbolSmall,
 } from "./components";
-import UR from "../../assets/UR.svg";
-import RG from "../../assets/RG.svg";
+import UR from "../../assets/hybrid/UR.svg";
+import RG from "../../assets/hybrid/RG.svg";
 import { Link } from "react-router-dom";
 export const ParadoxIncorporated = () => {
   return (

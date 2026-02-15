@@ -4,8 +4,8 @@ import {
   ManaSymbolSmall,
   StyledH3,
 } from "./components";
-import WG from "../../assets/GW.svg";
-import BG from "../../assets/BG.svg";
+import WG from "../../assets/hybrid/GW.svg";
+import BG from "../../assets/hybrid/BG.svg";
 import { Link } from "react-router-dom";
 export const SimicAnimation = () => {
   return (
