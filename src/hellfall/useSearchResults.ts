@@ -9,11 +9,13 @@ import {
   idSearchAtom,
   nameSearchAtom,
   offsetAtom,
+  costSearchAtom,
   rulesSearchAtom,
   searchCmcAtom,
   searchColorComparisonAtom,
   searchColorsAtom,
   searchColorsIdentityAtom,
+  useHybridIdentityAtom,
   searchSetAtom,
   sortAtom,
   typeSearchAtom,
@@ -22,6 +24,7 @@ import {
   toughnessAtom,
   tagsAtom,
   extraFiltersAtom,
+  dirAtom,
 } from "./searchAtoms";
 import { sortFunction } from "./sortFunction";
 import { getColorIdentity } from "./getColorIdentity";
@@ -36,6 +39,7 @@ export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCEntry[]>([]);
   const cards = useAtomValue(cardsAtom).filter((e) => e.Set != "C");
   const set = useAtomValue(searchSetAtom);
+  const costSearch = useAtomValue(costSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const idSearch = useAtomValue(idSearchAtom);
   const nameSearch = useAtomValue(nameSearchAtom);
@@ -44,8 +48,10 @@ export const useSearchResults = () => {
   const typeSearch = useAtomValue(typeSearchAtom);
   const searchColors = useAtomValue(searchColorsAtom);
   const sortRule = useAtomValue(sortAtom);
+  const dirRule = useAtomValue(dirAtom);
   const creators = useAtomValue(creatorsAtom);
   const colorIdentityCriteria = useAtomValue(searchColorsIdentityAtom);
+  const useHybrid = useAtomValue(useHybridIdentityAtom);
   const activeCard = useAtomValue(activeCardAtom);
   const colorComparison = useAtomValue(searchColorComparisonAtom);
   const isCommander = useAtomValue(isCommanderAtom);
@@ -65,6 +71,20 @@ export const useSearchResults = () => {
           return false;
         }
         if (extraFilters.includes("isToken") && !entry.isActualToken) {
+          return false;
+        }
+
+        if (
+          costSearch.length > 0 &&
+          !costSearch.every((searchTerm) => {
+            const combined = (entry["Cost"] || []).join(",").toLowerCase();
+            if (searchTerm.startsWith("!")) {
+              return !combined.includes(searchTerm.substring(1).toLowerCase());
+            } else {
+              return combined.includes(searchTerm.toLowerCase());
+            }
+          })
+        ) {
           return false;
         }
 
@@ -95,6 +115,10 @@ export const useSearchResults = () => {
           nameSearch !== "" &&
           !entry["Name"].toLowerCase().includes(nameSearch.toLowerCase())
         ) {
+          return false;
+        }
+
+        if (idSearch !== "" && entry["Id"] != idSearch) {
           return false;
         }
 
@@ -159,24 +183,16 @@ export const useSearchResults = () => {
                     (e) => e !== MISC_BULLSHIT
                   )
                 : colorIdentityCriteria;
-
-            // if (entry.Name == "Pissmite") {
-            //   console.log(miscBullshitColorIdentityCriteria);
-            // }
-
+            const colorTest = (e: string) =>
+              miscBullshitColorIdentityCriteria.includes(e) ||
+              e == "Colorless" ||
+              e == undefined;
             if (Array.isArray(cardColorIdentityComponent)) {
-              // if (entry.Name == "Pissmite") {
-              //   console.log(cardColorIdentityComponent);
-              // }
-              return cardColorIdentityComponent.every(
-                (e) =>
-                  miscBullshitColorIdentityCriteria.includes(e) ||
-                  e === undefined
-              );
+              return useHybrid
+                ? cardColorIdentityComponent.some(colorTest)
+                : cardColorIdentityComponent.every(colorTest);
             } else {
-              return miscBullshitColorIdentityCriteria.includes(
-                cardColorIdentityComponent
-              );
+              return colorTest(cardColorIdentityComponent);
             }
           })
         ) {
@@ -341,7 +357,7 @@ export const useSearchResults = () => {
 
         return true;
       })
-      .sort(sortFunction(sortRule));
+      .sort(sortFunction(sortRule, dirRule));
 
     setResultSet(tempResults);
 
@@ -350,8 +366,14 @@ export const useSearchResults = () => {
     if (nameSearch != "") {
       searchToSet.append("name", nameSearch);
     }
+    if (idSearch != "") {
+      searchToSet.append("id", idSearch);
+    }
     if (typeSearch.length > 0) {
       searchToSet.append("type", typeSearch.join(","));
+    }
+    if (costSearch.length > 0) {
+      searchToSet.append("cost", costSearch.join(","));
     }
     if (rulesSearch.length > 0) {
       searchToSet.append("rules", rulesSearch.join(","));
@@ -364,6 +386,9 @@ export const useSearchResults = () => {
     }
     if (colorIdentityCriteria.length > 0) {
       searchToSet.append("colorIdentity", colorIdentityCriteria.join(","));
+    }
+    if (useHybrid) {
+      searchToSet.append("useHybrid", "true");
     }
     if (searchCmc !== undefined) {
       searchToSet.append("manaValue", JSON.stringify(searchCmc));
@@ -392,7 +417,12 @@ export const useSearchResults = () => {
     if (tags.length > 0) {
       searchToSet.append("tags", tags.join(","));
     }
-
+    if (sortRule != "Color") {
+      searchToSet.append("order", sortRule);
+    }
+    if (dirRule != "Asc") {
+      searchToSet.append("dir", dirRule);
+    }
     if (tempResults.length < page && tempResults.length > 0) {
       searchToSet.append("page", "0");
       setPageAtom(0);
@@ -406,11 +436,14 @@ export const useSearchResults = () => {
       location.origin + location.pathname + "?" + searchToSet.toString()
     );
   }, [
+    costSearch,
     rulesSearch,
     set,
     searchColors,
     nameSearch,
+    idSearch,
     sortRule,
+    dirRule,
     typeSearch,
     searchCmc,
     tags,
@@ -418,6 +451,7 @@ export const useSearchResults = () => {
     legality,
     creators,
     colorIdentityCriteria,
+    useHybrid,
     activeCard,
     page,
     colorComparison,

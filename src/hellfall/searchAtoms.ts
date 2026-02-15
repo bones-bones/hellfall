@@ -9,6 +9,10 @@ export const activeCardAtom = atom<string>(
   searchParams.get("activeCard") || ""
 );
 
+export const costSearchAtom = atom<string[]>(
+  searchParams.get("cost")?.split(",") || []
+);
+
 export const rulesSearchAtom = atom<string[]>(
   searchParams.get("rules")?.split(",") || []
 );
@@ -32,6 +36,10 @@ export const searchColorsAtom = atom(
 
 export const searchColorsIdentityAtom = atom(
   searchParams.get("colorIdentity")?.split(",") || []
+);
+
+export const useHybridIdentityAtom = atom(
+  searchParams.get("useHybrid") == "true"
 );
 
 export const searchColorComparisonAtom = atom(
@@ -71,10 +79,6 @@ export const toughnessAtom = atom<
   })()
 );
 
-export const basedHybridRule = atom(
-  (searchParams.get("hybridRule") || "") as "based"
-);
-
 export const searchCmcAtom = atom<
   | {
       operator: ">" | "<" | "=" | "";
@@ -87,8 +91,12 @@ export const searchCmcAtom = atom<
     : undefined
 );
 
-export const sortAtom = atom<"Alpha" | "CMC" | "Color">("Color");
-// TODO: add desc sorting
+export const sortAtom = atom(
+  (searchParams.get("order") || "Color") as "Alpha" | "CMC" | "Color" | "Id"
+);
+export const dirAtom = atom(
+  (searchParams.get("dir") || "Asc") as "Asc" | "Desc"
+);
 // TODO: make it possible to sort by color, then alpha, rather than color, then CMC
 export const offsetAtom = atom(parseInt(searchParams.get("page") || "0") || 0);
 export const creatorsAtom = atom(

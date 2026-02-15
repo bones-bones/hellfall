@@ -1,11 +1,12 @@
 import { HCEntry } from "../types";
 
 export const sortFunction =
-  (sortRule: "Alpha" | "CMC" | "Color") => (a: HCEntry, b: HCEntry) => {
+  (sortRule: "Alpha" | "CMC" | "Color" | "Id", dirRule: "Asc" | "Desc") =>
+  (a: HCEntry, b: HCEntry) => {
     switch (sortRule) {
       case "CMC": {
         if (a.CMC > b.CMC) {
-          return 1;
+          return dirRule == "Desc" ? -1 : 1;
         }
         break;
       }
@@ -14,20 +15,27 @@ export const sortFunction =
         const bString = getSortString(b);
 
         if (aString > bString) {
-          return 1;
+          return dirRule == "Desc" ? -1 : 1;
         }
         break;
       }
 
       case "Alpha": {
         if (a.Name > b.Name) {
-          return 1;
+          return dirRule == "Desc" ? -1 : 1;
+        }
+        break;
+      }
+
+      case "Id": {
+        if (parseInt(a.Id) > parseInt(b.Id)) {
+          return dirRule == "Desc" ? -1 : 1;
         }
         break;
       }
     }
 
-    return -1;
+    return dirRule == "Desc" ? 1 : -1;
   };
 
 const getSortString = (card: HCEntry) => {

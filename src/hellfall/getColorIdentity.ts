@@ -3,13 +3,16 @@ import { HCEntry } from "../types";
 export const getColorIdentity = (card: HCEntry) => {
   const colorIdentity = new Set<string | string[]>();
 
-  // TODO: Account for dumpstergoyf
+  // TODO: make color indicators work
+  // TODO: special cases for Crypticspire Mantis (must be at least 2), Draft Dodger (Canada = Red and White)
   card.Cost?.forEach((entry) => {
     const icons = (entry || "").match(/\{.+?\}/g);
 
     icons?.forEach((icon) => {
       const iconArray = icon.replaceAll(/[{}]/g, "").split("/");
-      const nResp = iconArray.map((e) => manaSymbolColorMatching[e]); // TODO: the first char cause skeleton
+      const nResp = iconArray.map(
+        (e) => manaSymbolColorMatching[e] ?? "Colorless"
+      ); // TODO: the first char cause skeleton
 
       // if (card.Name === "Blonk") {
       //   console.log(nResp);
@@ -27,7 +30,9 @@ export const getColorIdentity = (card: HCEntry) => {
 
     icons?.forEach((icon) => {
       const iconArray = icon.replaceAll(/[{}]/g, "").split("/");
-      const nResp = iconArray.map((e) => manaSymbolColorMatching[e]); // TODO: the first char cause skeleton
+      const nResp = iconArray.map(
+        (e) => manaSymbolColorMatching[e] ?? "Colorless"
+      ); // TODO: the first char cause skeleton
 
       if (nResp) {
         //@ts-ignore
@@ -45,7 +50,6 @@ export const getColorIdentity = (card: HCEntry) => {
       }
     });
   });
-
   return Array.from(colorIdentity);
 };
 
@@ -56,11 +60,14 @@ const manaSymbolColorMatching: Record<
   | "Red"
   | "Blue"
   | "Green"
-  | "Piss"
-  | "Pickle"
-  | undefined
   | "Purple"
+  | "Pickle"
+  | "Yellow"
   | "Brown"
+  | "Pink"
+  | "Teal"
+  | "Orange"
+  // | undefined
 > = {
   W: "White",
   B: "Black",
@@ -68,8 +75,30 @@ const manaSymbolColorMatching: Record<
   R: "Red",
   G: "Green",
   P: "Purple",
-  Piss: "Piss",
+  HW: "White",
+  HB: "Black",
+  HU: "Blue",
+  HR: "Red",
+  HG: "Green",
+  HP: "Purple",
+  UU: "Blue",
+  BB: "Black",
+  RR: "Red",
+  GE: "Green",
+  TG: "Green",
+  Pickle: "Pickle",
+  Yellow: "Yellow",
   Brown: "Brown",
+  Pink: "Pink",
+  Teal: "Teal",
+  Orange: "Orange",
+  TEMU: "Orange",
+  Ketchup: "Red",
+  Mustard: "Red",
+  Venezuela: "White",
+  Stab: "Red",
+  Microwave: "Red",
+  Bitcoin: "Black",
 };
 
 const landToColorMapping: Record<

@@ -31,7 +31,7 @@ import TwoU from "../assets/2U.svg";
 import TwoR from "../assets/2R.svg";
 import TwoG from "../assets/2G.svg";
 import P from "../assets/P.png";
-import Y from "../assets/Y.png";
+import Yellow from "../assets/Yellow.png";
 import GP from "../assets/GP.svg";
 import WP from "../assets/WP.svg";
 import UP from "../assets/UP.svg";
@@ -140,8 +140,8 @@ export const colorToSvgMapping = (value: string) => {
     case "P": {
       return P;
     }
-    case "Y": {
-      return Y;
+    case "Yellow": {
+      return Yellow;
     }
     case "H/G":
     case "Pickle": {
