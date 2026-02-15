@@ -1,20 +1,20 @@
-import styled from '@emotion/styled';
-import white from '../../assets/W.svg';
-import blue from '../../assets/U.svg';
-import red from '../../assets/R.svg';
-import black from '../../assets/B.svg';
-import green from '../../assets/G.svg';
-import { Routes, Route, Link } from 'react-router-dom';
-import { AzoriousHistoric } from './AzoriousHistoric';
-import { TargetingMatters } from './TargetingMatters';
-import { UBEvasion } from './UBEvasion';
-import { GolgariLandistocrats } from './GolgariLandistocrats';
-import { GruulSelfDiscard } from './GruulSelfDiscard';
-import { ParadoxIncorporated } from './ParadoxIncorporated';
-import { SmallReanimation } from './SmallReanimation';
-import { RakdosCrimes } from './RakdosCrimes';
-import { LandsLandsLands } from './LandsLandsLands';
-import { SimicAnimation } from './SimicAnimation';
+import styled from "@emotion/styled";
+import white from "../../assets/mono/W.svg";
+import blue from "../../assets/mono/U.svg";
+import red from "../../assets/mono/R.svg";
+import black from "../../assets/mono/B.svg";
+import green from "../../assets/mono/G.svg";
+import { Routes, Route, Link } from "react-router-dom";
+import { AzoriousHistoric } from "./AzoriousHistoric";
+import { TargetingMatters } from "./TargetingMatters";
+import { UBEvasion } from "./UBEvasion";
+import { GolgariLandistocrats } from "./GolgariLandistocrats";
+import { GruulSelfDiscard } from "./GruulSelfDiscard";
+import { ParadoxIncorporated } from "./ParadoxIncorporated";
+import { SmallReanimation } from "./SmallReanimation";
+import { RakdosCrimes } from "./RakdosCrimes";
+import { LandsLandsLands } from "./LandsLandsLands";
+import { SimicAnimation } from "./SimicAnimation";
 
 export const Eight = () => {
   return (

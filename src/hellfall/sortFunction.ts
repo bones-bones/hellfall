@@ -1,4 +1,6 @@
-import { HCEntry } from '../types';
+import { HCEntry } from "../types";
+// TODO: make it possible to sort by color, then alpha, rather than color, then CMC
+// how they can combine: Alpha and ID are
 
 export const sortFunction =
   (sortRule: "Alpha" | "CMC" | "Color" | "Id", dirRule: "Asc" | "Desc") =>

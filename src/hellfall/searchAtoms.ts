@@ -85,9 +85,10 @@ export const sortAtom = atom(
 export const dirAtom = atom(
   (searchParams.get("dir") || "Asc") as "Asc" | "Desc"
 );
-// TODO: make it possible to sort by color, then alpha, rather than color, then CMC
-export const offsetAtom = atom(parseInt(searchParams.get('page') || '0') || 0);
-export const creatorsAtom = atom(searchParams.get('creator')?.split(',,') || []);
-export const tagsAtom = atom(searchParams.get('tags')?.split(',') || []);
+export const offsetAtom = atom(parseInt(searchParams.get("page") || "0") || 0);
+export const creatorsAtom = atom(
+  searchParams.get("creator")?.split(",,") || []
+);
+export const tagsAtom = atom(searchParams.get("tags")?.split(",") || []);
 
 export const extraFiltersAtom = atom(searchParams.get('extraFilters')?.split(',') || []);

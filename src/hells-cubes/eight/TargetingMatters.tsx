@@ -1,10 +1,16 @@
-import rw from '../../assets/RW.svg';
-import br from '../../assets/BR.svg';
-import wb from '../../assets/WB.svg';
-import wu from '../../assets/WU.svg';
-import rg from '../../assets/RG.svg';
-import { BigContainer, Divider, InnerContainer, ManaSymbolSmall, StyledH3 } from './components';
-import { Link } from 'react-router-dom';
+import rw from "../../assets/hybrid/RW.svg";
+import br from "../../assets/hybrid/BR.svg";
+import wb from "../../assets/hybrid/WB.svg";
+import wu from "../../assets/hybrid/WU.svg";
+import rg from "../../assets/hybrid/RG.svg";
+import {
+  BigContainer,
+  Divider,
+  InnerContainer,
+  ManaSymbolSmall,
+  StyledH3,
+} from "./components";
+import { Link } from "react-router-dom";
 export const TargetingMatters = () => {
   return (
     <BigContainer>

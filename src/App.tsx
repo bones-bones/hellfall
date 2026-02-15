@@ -30,9 +30,10 @@ const ValidatedCardRoute = ({ element }: ValidatedCardRouteProps) => {
   const params = useParams<{ '*': string }>();
   const cardIdentifier = params['*'];
   if (
-    cardIdentifier &&
-    !/^\d+$/.test(cardIdentifier) &&
-    (IsNonTokenName(cardIdentifier) || cardIdentifier == 'random')
+    (cardIdentifier &&
+      !/^\d+$/.test(cardIdentifier) &&
+      IsNonTokenName(cardIdentifier)) ||
+    cardIdentifier == "random"
   ) {
     const cardId = NameToId(cardIdentifier);
     return <Navigate to={`/card/${cardId}`} replace />;

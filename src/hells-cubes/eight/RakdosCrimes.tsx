@@ -1,9 +1,15 @@
-import { BigContainer, Divider, InnerContainer, ManaSymbolSmall, StyledH3 } from './components';
-import RB from '../../assets/BR.svg';
-import RW from '../../assets/RW.svg';
-import RG from '../../assets/RG.svg';
-import UR from '../../assets/UR.svg';
-import { Link } from 'react-router-dom';
+import {
+  BigContainer,
+  Divider,
+  InnerContainer,
+  ManaSymbolSmall,
+  StyledH3,
+} from "./components";
+import RB from "../../assets/hybrid/BR.svg";
+import RW from "../../assets/hybrid/RW.svg";
+import RG from "../../assets/hybrid/RG.svg";
+import UR from "../../assets/hybrid/UR.svg";
+import { Link } from "react-router-dom";
 export const RakdosCrimes = () => {
   return (
     <>

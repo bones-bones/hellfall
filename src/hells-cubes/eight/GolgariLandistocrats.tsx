@@ -1,10 +1,15 @@
-import { BigContainer, ManaSymbol, ManaSymbolSmall, StyledH3 } from './components';
-import BG from '../../assets/BG.svg';
-import GW from '../../assets/GW.svg';
+import {
+  BigContainer,
+  ManaSymbol,
+  ManaSymbolSmall,
+  StyledH3,
+} from "./components";
+import BG from "../../assets/hybrid/BG.svg";
+import GW from "../../assets/hybrid/GW.svg";
 
-import GU from '../../assets/GU.svg';
-import RG from '../../assets/RG.svg';
-import { Link } from 'react-router-dom';
+import GU from "../../assets/hybrid/GU.svg";
+import RG from "../../assets/hybrid/RG.svg";
+import { Link } from "react-router-dom";
 export const GolgariLandistocrats = () => {
   return (
     <BigContainer>
