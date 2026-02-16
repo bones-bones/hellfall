@@ -1,52 +1,52 @@
-import { HCEntry } from "../types";
+import { HCEntry } from '../types';
 
 export const sortFunction =
-  (sortRule: "Alpha" | "CMC" | "Color" | "Id", dirRule: "Asc" | "Desc") =>
+  (sortRule: 'Alpha' | 'CMC' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>
   (a: HCEntry, b: HCEntry) => {
     switch (sortRule) {
-      case "CMC": {
+      case 'CMC': {
         if (a.CMC > b.CMC) {
-          return dirRule == "Desc" ? -1 : 1;
+          return dirRule == 'Desc' ? -1 : 1;
         }
         break;
       }
-      case "Color": {
+      case 'Color': {
         const aString = getSortString(a);
         const bString = getSortString(b);
 
         if (aString > bString) {
-          return dirRule == "Desc" ? -1 : 1;
+          return dirRule == 'Desc' ? -1 : 1;
         }
         break;
       }
 
-      case "Alpha": {
+      case 'Alpha': {
         if (a.Name > b.Name) {
-          return dirRule == "Desc" ? -1 : 1;
+          return dirRule == 'Desc' ? -1 : 1;
         }
         break;
       }
 
-      case "Id": {
+      case 'Id': {
         if (parseInt(a.Id) > parseInt(b.Id)) {
-          return dirRule == "Desc" ? -1 : 1;
+          return dirRule == 'Desc' ? -1 : 1;
         }
         break;
       }
     }
 
-    return dirRule == "Desc" ? 1 : -1;
+    return dirRule == 'Desc' ? 1 : -1;
   };
 
 const getSortString = (card: HCEntry) => {
-  const cardColors = (card["Color(s)"] || "").split(";") as Colors[];
+  const cardColors = (card['Color(s)'] || '').split(';') as Colors[];
 
   return (
     cardColors
       .reduce((curr, next) => curr + (colorSortValue[next] || 10_000_000), 0)
       .toString()
-      .padStart(8, "0") +
-    (card["CMC"] || 0).toString().padStart(3) +
+      .padStart(8, '0') +
+    (card['CMC'] || 0).toString().padStart(3) +
     card.Name
   );
 };
@@ -58,10 +58,10 @@ const colorSortValue: Record<Colors, number> = {
   Red: 1000,
   Green: 10_000,
   Purple: 100_000,
-  "": 1_000_000,
+  '': 1_000_000,
   //   Pickle: 7, // 1000000
   //   Piss: 8,
 };
 
 // No bullshit colors
-type Colors = "Red" | "Blue" | "White" | "" | "Green" | "Black" | "Purple";
+type Colors = 'Red' | 'Blue' | 'White' | '' | 'Green' | 'Black' | 'Purple';

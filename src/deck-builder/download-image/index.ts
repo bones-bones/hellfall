@@ -1,1 +1,1 @@
-export { downloadElementAsImage } from "./downloadElementAsImage";
+export { downloadElementAsImage } from './downloadElementAsImage';

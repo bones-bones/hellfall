@@ -1,35 +1,33 @@
-import styled from "@emotion/styled";
-import { HellfallEntry } from "../hellfall/HellfallEntry";
-import { useAtom, useAtomValue } from "jotai";
-import { cardsAtom } from "../hellfall/cardsAtom";
-import { useRef, useState, useEffect } from "react";
-import { TeamClock } from "./TeamWolf";
+import styled from '@emotion/styled';
+import { HellfallEntry } from '../hellfall/HellfallEntry';
+import { useAtom, useAtomValue } from 'jotai';
+import { cardsAtom } from '../hellfall/cardsAtom';
+import { useRef, useState, useEffect } from 'react';
+import { TeamClock } from './TeamWolf';
 import {
   SidePanelOpenDirection,
   Card,
   ToolbarIconButton,
   SidePanel,
-} from "@workday/canvas-kit-react";
-import { Link } from "react-router-dom";
-import { HellfallCard } from "../hellfall/HellfallCard";
-import { activeCardAtom } from "../hellfall/searchAtoms";
-import { xIcon } from "@workday/canvas-system-icons-web";
-import { HCEntry } from "../types";
-import { useKeyPress } from "../hooks";
+} from '@workday/canvas-kit-react';
+import { Link } from 'react-router-dom';
+import { HellfallCard } from '../hellfall/HellfallCard';
+import { activeCardAtom } from '../hellfall/searchAtoms';
+import { xIcon } from '@workday/canvas-system-icons-web';
+import { HCEntry } from '../types';
+import { useKeyPress } from '../hooks';
 
 //TODO: make results use Id natively on the backend
 
 export const Watchwolfwar = () => {
-  const escape = useKeyPress("Escape");
-  const cards = useAtomValue(cardsAtom).filter(
-    (e) => e.isActualToken != true && e.Set != "C"
-  );
+  const escape = useKeyPress('Escape');
+  const cards = useAtomValue(cardsAtom).filter(e => e.isActualToken != true && e.Set != 'C');
   const RandyRandom = useAtomValue(cardsAtom);
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const activeCard = cards.find((entry) => entry.Id === activeCardFromAtom);
+  const activeCard = cards.find(entry => entry.Id === activeCardFromAtom);
   useEffect(() => {
     if (escape) {
-      setActiveCardFromAtom("");
+      setActiveCardFromAtom('');
     }
   }, [escape]);
 
@@ -60,21 +58,14 @@ export const Watchwolfwar = () => {
     <PageContainer>
       <StyledSidePanel
         openWidth={window.screen.width > 450 ? 810 : 400}
-        openDirection={
-          activeIsRight
-            ? SidePanelOpenDirection.Right
-            : SidePanelOpenDirection.Left
-        }
+        openDirection={activeIsRight ? SidePanelOpenDirection.Right : SidePanelOpenDirection.Left}
         open={!!activeCard}
       >
         {!!activeCard && (
           <Card>
-            <Card.Body padding={"zero"}>
+            <Card.Body padding={'zero'}>
               <SPContainer>
-                <ToolbarIconButton
-                  icon={xIcon}
-                  onClick={() => setActiveCardFromAtom("")}
-                />
+                <ToolbarIconButton icon={xIcon} onClick={() => setActiveCardFromAtom('')} />
                 {activeCard && <HellfallCard data={activeCard} />}
               </SPContainer>
             </Card.Body>
@@ -83,14 +74,11 @@ export const Watchwolfwar = () => {
       </StyledSidePanel>
       <StyleComponent>
         <Title>
-          Welcome to the WatchWolfWar, the place to be to determine the
-          Hellsiest card of All!
+          Welcome to the WatchWolfWar, the place to be to determine the Hellsiest card of All!
         </Title>
       </StyleComponent>
       <StyleComponent>
-        <Subtitle>
-          Brought to you by goldcrackle, with odes of help from llllll.
-        </Subtitle>
+        <Subtitle>Brought to you by goldcrackle, with odes of help from llllll.</Subtitle>
       </StyleComponent>
       <CardContainer>
         <HellfallEntry
@@ -100,25 +88,20 @@ export const Watchwolfwar = () => {
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                "/hellfall/card/" +
-                  encodeURIComponent(TwoCardState.LeftCard.Id),
-                "_blank"
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.Id),
+                '_blank'
               );
             } else {
-              updateStandings(
-                TwoCardState.LeftCard.Id,
-                TwoCardState.RightCard.Id
-              );
+              updateStandings(TwoCardState.LeftCard.Id, TwoCardState.RightCard.Id);
               activeIsRight = false;
-              setActiveCardFromAtom("");
+              setActiveCardFromAtom('');
             }
           }}
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                "/hellfall/card/" +
-                  encodeURIComponent(TwoCardState.LeftCard.Id),
-                "_blank"
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.Id),
+                '_blank'
               );
             } else {
               setActiveCardFromAtom(TwoCardState.LeftCard.Id);
@@ -132,25 +115,20 @@ export const Watchwolfwar = () => {
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                "/hellfall/card/" +
-                  encodeURIComponent(TwoCardState.RightCard.Id),
-                "_blank"
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.Id),
+                '_blank'
               );
             } else {
-              updateStandings(
-                TwoCardState.RightCard.Id,
-                TwoCardState.LeftCard.Id
-              );
+              updateStandings(TwoCardState.RightCard.Id, TwoCardState.LeftCard.Id);
               activeIsRight = true;
-              setActiveCardFromAtom("");
+              setActiveCardFromAtom('');
             }
           }}
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                "/hellfall/card/" +
-                  encodeURIComponent(TwoCardState.RightCard.Id),
-                "_blank"
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.Id),
+                '_blank'
               );
             } else {
               setActiveCardFromAtom(TwoCardState.RightCard.Id);
@@ -160,53 +138,53 @@ export const Watchwolfwar = () => {
       </CardContainer>
       <StyleComponent>
         <ResultsReceptaclePlaceThing>
-          <Link to={"/Watchwolfresults"}>Results!</Link>{" "}
+          <Link to={'/Watchwolfresults'}>Results!</Link>{' '}
         </ResultsReceptaclePlaceThing>
       </StyleComponent>
     </PageContainer>
   );
 };
 
-const PageContainer = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  padding: "40px",
-  fontFamily: "Arial, sans-serif",
-  backgroundColor: "#f9f9f9",
-  minHeight: "100vh",
+const PageContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: '40px',
+  fontFamily: 'Arial, sans-serif',
+  backgroundColor: '#f9f9f9',
+  minHeight: '100vh',
 });
-const Title = styled("h1")({ textAlign: "center", marginBottom: "10px" });
-const Subtitle = styled("h3")({ textAlign: "center", marginBottom: "30px" });
-const CardContainer = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  gap: "40px",
-  marginBottom: "30px",
-  width: "100%",
-  maxWidth: "800px",
+const Title = styled('h1')({ textAlign: 'center', marginBottom: '10px' });
+const Subtitle = styled('h3')({ textAlign: 'center', marginBottom: '30px' });
+const CardContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  gap: '40px',
+  marginBottom: '30px',
+  width: '100%',
+  maxWidth: '800px',
 });
-const ResultsReceptaclePlaceThing = styled("div")({
-  width: "100%",
-  maxWidth: "600px",
-  padding: "20px",
-  backgroundColor: "grey",
-  border: "1px solid #ccc",
-  boxShadow: "0 2px 8px rgb(164, 45, 168)",
-  textAlign: "center",
+const ResultsReceptaclePlaceThing = styled('div')({
+  width: '100%',
+  maxWidth: '600px',
+  padding: '20px',
+  backgroundColor: 'grey',
+  border: '1px solid #ccc',
+  boxShadow: '0 2px 8px rgb(164, 45, 168)',
+  textAlign: 'center',
 });
 
-const StyleComponent = styled("div")({ color: "purple", display: "flex" });
+const StyleComponent = styled('div')({ color: 'purple', display: 'flex' });
 
 const StyledSidePanel = styled(SidePanel)({
   zIndex: 40,
-  height: "100%",
-  position: "fixed",
-  backgroundColor: "transparent",
-  top: "10px",
+  height: '100%',
+  position: 'fixed',
+  backgroundColor: 'transparent',
+  top: '10px',
 });
-const SPContainer = styled("div")({
-  overflowY: "scroll",
-  height: "90vh",
-  overflowX: "hidden",
+const SPContainer = styled('div')({
+  overflowY: 'scroll',
+  height: '90vh',
+  overflowX: 'hidden',
 });

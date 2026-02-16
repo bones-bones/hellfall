@@ -1,5 +1,5 @@
-import { sheetsKey } from "../../keys";
-import fs from "fs";
+import { sheetsKey } from '../../keys';
+import fs from 'fs';
 const fetchLandBox = async () => {
   const requestedData = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/1SCimlp656sQeRXudjcbC6xlqyLQoZcPl0rZKJ9J_CZc/values/Lands?alt=json&key=${sheetsKey}`
@@ -9,7 +9,7 @@ const fetchLandBox = async () => {
   const [keys, ...rest] = asJson.values as any[];
 
   console.log(rest);
-  const theThing = rest.map((entry) => {
+  const theThing = rest.map(entry => {
     const ob: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
       if (ob[keys[i]] !== undefined) {
@@ -29,9 +29,9 @@ const fetchLandBox = async () => {
   return theThing;
 };
 
-fetchLandBox().then((lands) => {
+fetchLandBox().then(lands => {
   fs.writeFileSync(
-    "./src/data/lands.json",
+    './src/data/lands.json',
     JSON.stringify(
       {
         data: lands.sort((a, b) => {
@@ -45,7 +45,7 @@ fetchLandBox().then((lands) => {
         }),
       },
       null,
-      "\t"
+      '\t'
     )
   );
 });

@@ -1,2 +1,2 @@
-export { toDraftmancerCube } from "./toDraftmancer";
-export { getDraftmancerForCube } from "./getDraftmancerForCube";
+export { toDraftmancerCube } from './toDraftmancer';
+export { getDraftmancerForCube } from './getDraftmancerForCube';

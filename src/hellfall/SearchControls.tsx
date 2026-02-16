@@ -1,16 +1,16 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-import { CheckboxGroup } from "./inputs";
-import { PillSearch } from "./inputs";
-import { TextInput } from "@workday/canvas-kit-react/text-input";
-import { FormField } from "@workday/canvas-kit-react/form-field";
-import cardTypes from "../data/types.json";
-import creators_data from "../data/creators.json";
-import tags_data from "../data/tags.json";
-import { CmcSelector } from "./inputs";
-import { SearchCheckbox } from "./SearchCheckbox";
+import { CheckboxGroup } from './inputs';
+import { PillSearch } from './inputs';
+import { TextInput } from '@workday/canvas-kit-react/text-input';
+import { FormField } from '@workday/canvas-kit-react/form-field';
+import cardTypes from '../data/types.json';
+import creators_data from '../data/creators.json';
+import tags_data from '../data/tags.json';
+import { CmcSelector } from './inputs';
+import { SearchCheckbox } from './SearchCheckbox';
 
-import { useAtom } from "jotai";
+import { useAtom } from 'jotai';
 import {
   nameSearchAtom,
   idSearchAtom,
@@ -27,11 +27,11 @@ import {
   powerAtom,
   toughnessAtom,
   tagsAtom,
-} from "./searchAtoms";
-import { colors } from "./constants";
-import { StyledLabel } from "./StyledLabel";
-import { CardLegalityControls } from "./search-controls/CardLegalityControls";
-import { StyledComponentHolder } from "./StyledComponentHolder";
+} from './searchAtoms';
+import { colors } from './constants';
+import { StyledLabel } from './StyledLabel';
+import { CardLegalityControls } from './search-controls/CardLegalityControls';
+import { StyledComponentHolder } from './StyledComponentHolder';
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
@@ -47,13 +47,9 @@ export const SearchControls = () => {
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
   const [tags, setTags] = useAtom(tagsAtom);
-  const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(
-    searchColorsIdentityAtom
-  );
+  const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(searchColorsIdentityAtom);
   const [useHybrid, setUseHybrid] = useAtom(useHybridIdentityAtom);
-  const [colorComparison, setColorComparison] = useAtom(
-    searchColorComparisonAtom
-  );
+  const [colorComparison, setColorComparison] = useAtom(searchColorComparisonAtom);
 
   return (
     <SearchContainer>
@@ -61,12 +57,12 @@ export const SearchControls = () => {
         <FormField label="Name">
           <TextInput
             defaultValue={nameSearch}
-            onKeyDown={(event) => {
-              if (event.key == "Enter") {
+            onKeyDown={event => {
+              if (event.key == 'Enter') {
                 setNameSearch((event.target as any).value);
               }
             }}
-            onBlur={(event) => {
+            onBlur={event => {
               setNameSearch(event.target.value);
             }}
           />
@@ -74,42 +70,42 @@ export const SearchControls = () => {
         <FormField label="Id">
           <TextInput
             defaultValue={idSearch}
-            onKeyDown={(event) => {
-              if (event.key == "Enter") {
+            onKeyDown={event => {
+              if (event.key == 'Enter') {
                 setIdSearch((event.target as any).value);
               }
             }}
-            onBlur={(event) => {
+            onBlur={event => {
               setIdSearch(event.target.value);
             }}
           />
         </FormField>
         <PillSearch
-          label={"Cost"}
+          label={'Cost'}
           possibleValues={[]}
           defaultValues={costSearch}
           onChange={setCostSearch}
         />
         <PillSearch
-          label={"Text"}
+          label={'Text'}
           possibleValues={[]}
           defaultValues={rulesSearch}
           onChange={setRulesSearch}
         />
         <PillSearch
-          label={"Type"}
+          label={'Type'}
           possibleValues={cardTypes.data}
           defaultValues={typeSearch}
           onChange={setTypeSearch}
         />
         <PillSearch
-          label={"Creator"}
+          label={'Creator'}
           possibleValues={creators_data.data}
           defaultValues={creators}
           onChange={setCreators}
         />
         <PillSearch
-          label={"Tags"}
+          label={'Tags'}
           possibleValues={tags_data.data}
           defaultValues={tags}
           onChange={setTags}
@@ -123,18 +119,16 @@ export const SearchControls = () => {
           onChange={setSearchColors}
         >
           <StyledComponentHolder>
-            <StyledLabel htmlFor="styledManaSelect">
-              {"Color Comparison"}
-            </StyledLabel>
+            <StyledLabel htmlFor="styledManaSelect">{'Color Comparison'}</StyledLabel>
             <StyledManaSelect
               id="styledManaSelect"
               defaultValue={colorComparison}
               value={colorComparison}
-              onChange={(event) => {
+              onChange={event => {
                 setColorComparison(event.target.value as any);
               }}
             >
-              {["<=", "=", ">="].map((entry) => {
+              {['<=', '=', '>='].map(entry => {
                 return <option key={entry}>{entry}</option>;
               })}
             </StyledManaSelect>
@@ -147,14 +141,12 @@ export const SearchControls = () => {
           onChange={setSearchColorsIdentityAtom}
         >
           <StyledComponentHolder>
-            <StyledLabel htmlFor="useHybrid">
-              {"Use Alternate Hybrid Rule"}
-            </StyledLabel>
+            <StyledLabel htmlFor="useHybrid">{'Use Alternate Hybrid Rule'}</StyledLabel>
             <SearchCheckbox
               id="useHybrid"
               type="checkbox"
               checked={useHybrid === true}
-              onChange={(event) => {
+              onChange={event => {
                 setUseHybrid(event.target.checked);
               }}
             />
@@ -164,42 +156,34 @@ export const SearchControls = () => {
       <SearchCriteriaSection>
         <CheckboxGroup
           initialValue={set}
-          label={"Set"}
+          label={'Set'}
           values={[
-            "HLC",
-            "HC2",
-            "HC3",
-            "HC4",
-            "HCV",
-            "HC6",
-            "HCC",
-            "HCP",
-            "HC7",
-            "HCK",
-            "HC8",
-            "HCJ",
+            'HLC',
+            'HC2',
+            'HC3',
+            'HC4',
+            'HCV',
+            'HC6',
+            'HCC',
+            'HCP',
+            'HC7',
+            'HCK',
+            'HC8',
+            'HCJ',
           ]}
           onChange={setSet}
         />
         <CardLegalityControls />
-        <CmcSelector
-          label={"Mana value"}
-          onChange={setSearchCmc}
-          initialValue={searchCmc}
-        />
-        <CmcSelector label={"Power"} onChange={setPower} initialValue={power} />
-        <CmcSelector
-          label={"Toughness"}
-          onChange={setToughness}
-          initialValue={toughness}
-        />
+        <CmcSelector label={'Mana value'} onChange={setSearchCmc} initialValue={searchCmc} />
+        <CmcSelector label={'Power'} onChange={setPower} initialValue={power} />
+        <CmcSelector label={'Toughness'} onChange={setToughness} initialValue={toughness} />
       </SearchCriteriaSection>
     </SearchContainer>
   );
 };
-const SearchCriteriaSection = styled("div")({
-  justifyContent: "space-evenly",
-  paddingLeft: "30px",
+const SearchCriteriaSection = styled('div')({
+  justifyContent: 'space-evenly',
+  paddingLeft: '30px',
 });
-const SearchContainer = styled("div")({ display: "flex", flexWrap: "wrap" });
-const StyledManaSelect = styled("select")({ width: "100px", height: "30px" });
+const SearchContainer = styled('div')({ display: 'flex', flexWrap: 'wrap' });
+const StyledManaSelect = styled('select')({ width: '100px', height: '30px' });

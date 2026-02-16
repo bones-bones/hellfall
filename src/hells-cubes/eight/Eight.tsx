@@ -1,20 +1,20 @@
-import styled from "@emotion/styled";
-import white from "../../assets/W.svg";
-import blue from "../../assets/U.svg";
-import red from "../../assets/R.svg";
-import black from "../../assets/B.svg";
-import green from "../../assets/G.svg";
-import { Routes, Route, Link } from "react-router-dom";
-import { AzoriousHistoric } from "./AzoriousHistoric";
-import { TargetingMatters } from "./TargetingMatters";
-import { UBEvasion } from "./UBEvasion";
-import { GolgariLandistocrats } from "./GolgariLandistocrats";
-import { GruulSelfDiscard } from "./GruulSelfDiscard";
-import { ParadoxIncorporated } from "./ParadoxIncorporated";
-import { SmallReanimation } from "./SmallReanimation";
-import { RakdosCrimes } from "./RakdosCrimes";
-import { LandsLandsLands } from "./LandsLandsLands";
-import { SimicAnimation } from "./SimicAnimation";
+import styled from '@emotion/styled';
+import white from '../../assets/W.svg';
+import blue from '../../assets/U.svg';
+import red from '../../assets/R.svg';
+import black from '../../assets/B.svg';
+import green from '../../assets/G.svg';
+import { Routes, Route, Link } from 'react-router-dom';
+import { AzoriousHistoric } from './AzoriousHistoric';
+import { TargetingMatters } from './TargetingMatters';
+import { UBEvasion } from './UBEvasion';
+import { GolgariLandistocrats } from './GolgariLandistocrats';
+import { GruulSelfDiscard } from './GruulSelfDiscard';
+import { ParadoxIncorporated } from './ParadoxIncorporated';
+import { SmallReanimation } from './SmallReanimation';
+import { RakdosCrimes } from './RakdosCrimes';
+import { LandsLandsLands } from './LandsLandsLands';
+import { SimicAnimation } from './SimicAnimation';
 
 export const Eight = () => {
   return (
@@ -22,10 +22,10 @@ export const Eight = () => {
       <Route
         path="/"
         element={
-          <div style={{ paddingLeft: "20px" }}>
+          <div style={{ paddingLeft: '20px' }}>
             <h1>Hells 8 Archetype Guide</h1>
             <div>
-              <Link to={"/hellscubes/eight/azorious-historic"}>
+              <Link to={'/hellscubes/eight/azorious-historic'}>
                 <h2>
                   <ManaSymbol src={white} />
                   <ManaSymbol src={blue} /> Azorious Historic
@@ -33,7 +33,7 @@ export const Eight = () => {
               </Link>
             </div>
             <div>
-              <Link to={"/hellscubes/eight/targeting-matters"}>
+              <Link to={'/hellscubes/eight/targeting-matters'}>
                 <h2>
                   <ManaSymbol src={red} />
                   <ManaSymbol src={white} /> RW Targeting Matters
@@ -41,7 +41,7 @@ export const Eight = () => {
               </Link>
             </div>
             <div>
-              <Link to={"/hellscubes/eight/ub-evasion"}>
+              <Link to={'/hellscubes/eight/ub-evasion'}>
                 <h2>
                   <ManaSymbol src={blue} />
                   <ManaSymbol src={black} /> UB Evasion
@@ -49,7 +49,7 @@ export const Eight = () => {
               </Link>
             </div>
             <div>
-              <Link to={"/hellscubes/eight/golgari-landistocrats"}>
+              <Link to={'/hellscubes/eight/golgari-landistocrats'}>
                 <h2>
                   <ManaSymbol src={black} />
                   <ManaSymbol src={green} /> Golgari Landistrocrats
@@ -57,7 +57,7 @@ export const Eight = () => {
               </Link>
             </div>
             <div>
-              <Link to={"/hellscubes/eight/gruul-self-discard"}>
+              <Link to={'/hellscubes/eight/gruul-self-discard'}>
                 <h2>
                   <ManaSymbol src={red} />
                   <ManaSymbol src={green} /> Gruul Self-Discard
@@ -65,7 +65,7 @@ export const Eight = () => {
               </Link>
             </div>
             <div>
-              <Link to={"/hellscubes/eight/paradox-incorporated"}>
+              <Link to={'/hellscubes/eight/paradox-incorporated'}>
                 <h2>
                   <ManaSymbol src={blue} />
                   <ManaSymbol src={red} /> Paradox Incorporated
@@ -73,7 +73,7 @@ export const Eight = () => {
               </Link>
             </div>
             <div>
-              <Link to={"/hellscubes/eight/small-reanimator"}>
+              <Link to={'/hellscubes/eight/small-reanimator'}>
                 <h4>
                   <ManaSymbol src={white} />
                   <ManaSymbol src={black} /> small reanimation
@@ -81,7 +81,7 @@ export const Eight = () => {
               </Link>
             </div>
             <div>
-              <Link to={"/hellscubes/eight/rakdos-crimes"}>
+              <Link to={'/hellscubes/eight/rakdos-crimes'}>
                 <h2>
                   <ManaSymbol src={black} />
                   <ManaSymbol src={red} /> Rakdos Crimes
@@ -89,7 +89,7 @@ export const Eight = () => {
               </Link>
             </div>
             <div>
-              <Link to={"/hellscubes/eight/lands-lands-lands"}>
+              <Link to={'/hellscubes/eight/lands-lands-lands'}>
                 <h2>
                   <ManaSymbol src={white} />
                   <ManaSymbol src={green} /> WG LANDS LANDS LANDS
@@ -97,7 +97,7 @@ export const Eight = () => {
               </Link>
             </div>
             <div>
-              <Link to={"/hellscubes/eight/simic-animation"}>
+              <Link to={'/hellscubes/eight/simic-animation'}>
                 <h2>
                   <ManaSymbol src={blue} />
                   <ManaSymbol src={green} /> Simic Animation
@@ -121,4 +121,4 @@ export const Eight = () => {
   );
 };
 
-const ManaSymbol = styled("img")({ height: "20px" });
+const ManaSymbol = styled('img')({ height: '20px' });
