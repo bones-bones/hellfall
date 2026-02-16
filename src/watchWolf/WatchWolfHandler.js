@@ -1,20 +1,20 @@
-const functions = require("@google-cloud/functions-framework");
+const functions = require('@google-cloud/functions-framework');
 
 // Creates a client
-const { Firestore } = require("@google-cloud/firestore");
-const db = new Firestore({ databaseId: "watch-wolf-war" });
+const { Firestore } = require('@google-cloud/firestore');
+const db = new Firestore({ databaseId: 'watch-wolf-war' });
 
-const docRef = db.collection("cards");
+const docRef = db.collection('cards');
 
-functions.http("watchWolfWar", async (req, res) => {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set("Cache-Control", "public, max-age=86400");
-  if (req.method == "GET") {
+functions.http('watchWolfWar', async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Cache-Control', 'public, max-age=86400');
+  if (req.method == 'GET') {
     const responseArray = [];
     const thing = await docRef.get();
-    thing.forEach((e) => responseArray.push(e.data()));
+    thing.forEach(e => responseArray.push(e.data()));
     res.send({ data: responseArray });
-  } else if (req.method == "POST") {
+  } else if (req.method == 'POST') {
     const winId = JSON.parse(req.body).WinId;
     const loseId = JSON.parse(req.body).LoseId;
 

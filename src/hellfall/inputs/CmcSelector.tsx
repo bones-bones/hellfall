@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-import { useState, useEffect } from "react";
-import { StyledLegend } from "../StyledLabel";
+import { useState, useEffect } from 'react';
+import { StyledLegend } from '../StyledLabel';
 
 export const NumericComparatorSelector = ({
   onChange,
@@ -10,13 +10,11 @@ export const NumericComparatorSelector = ({
 }: {
   label: string;
   onChange?: ConditionalChange;
-  initialValue?: { value: number; operator: ">" | "<" | "=" | "" };
+  initialValue?: { value: number; operator: '>' | '<' | '=' | '' };
 }) => {
   const [value, setValue] = useState<undefined | number>(initialValue?.value);
 
-  const [operator, setConditional] = useState<">" | "<" | "=">(
-    initialValue?.operator || "="
-  );
+  const [operator, setConditional] = useState<'>' | '<' | '='>(initialValue?.operator || '=');
 
   useEffect(() => {
     if (value != undefined) {
@@ -32,24 +30,21 @@ export const NumericComparatorSelector = ({
         <StyledManaSelect
           defaultValue={operator}
           value={operator}
-          onChange={(event) => {
+          onChange={event => {
             setConditional(event.target.value as any);
           }}
         >
-          {[
-            { value: "", label: "--" },
-            { value: ">" },
-            { value: "=" },
-            { value: "<" },
-          ].map((entry) => (
-            <option key={entry.value}>{entry.label || entry.value}</option>
-          ))}
-        </StyledManaSelect>{" "}
+          {[{ value: '', label: '--' }, { value: '>' }, { value: '=' }, { value: '<' }].map(
+            entry => (
+              <option key={entry.value}>{entry.label || entry.value}</option>
+            )
+          )}
+        </StyledManaSelect>{' '}
         <StyledNumberInput
           type="number"
           defaultValue={initialValue?.value}
-          onBlur={(event) => {
-            if (event.target.value == "") {
+          onBlur={event => {
+            if (event.target.value == '') {
               setValue(undefined);
             } else {
               setValue(parseInt(event.target.value));
@@ -61,15 +56,15 @@ export const NumericComparatorSelector = ({
   );
 };
 
-const StyledNumberInput = styled("input")({ width: "40px" });
+const StyledNumberInput = styled('input')({ width: '40px' });
 
-const StyledManaSelect = styled("select")({ width: "40px", height: "30px" });
-const Container = styled("div")({ display: "flex" });
+const StyledManaSelect = styled('select')({ width: '40px', height: '30px' });
+const Container = styled('div')({ display: 'flex' });
 
 type ConditionalChange = (
   value:
     | {
-        operator: ">" | "<" | "=";
+        operator: '>' | '<' | '=';
         value: number;
       }
     | undefined
