@@ -4,7 +4,6 @@ import {
   useParams,
   Navigate,
 } from "react-router-dom";
-import { useEffect } from "react";
 import { HellFall } from "./hellfall";
 import { Hellscubes } from "./hells-cubes";
 import { DeckBuilder } from "./deck-builder";
@@ -37,7 +36,7 @@ const ValidatedCardRoute = ({ element }: ValidatedCardRouteProps) => {
   if (
     cardIdentifier &&
     !/^\d+$/.test(cardIdentifier) &&
-    IsNonTokenName(cardIdentifier)
+    (IsNonTokenName(cardIdentifier) || cardIdentifier == "random")
   ) {
     const cardId = NameToId(cardIdentifier);
     return <Navigate to={`/card/${cardId}`} replace />;

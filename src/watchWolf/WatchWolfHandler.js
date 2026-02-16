@@ -15,8 +15,9 @@ functions.http("watchWolfWar", async (req, res) => {
     thing.forEach((e) => responseArray.push(e.data()));
     res.send({ data: responseArray });
   } else if (req.method == "POST") {
-    const winId = JSON.parse(req.body).winId;
-    const loseId = JSON.parse(req.body).loseId;
+    const winId = JSON.parse(req.body).WinId;
+    const loseId = JSON.parse(req.body).LoseId;
+
     const winResult = (await docRef.doc(winId).get()).data();
     const loseResult = (await docRef.doc(loseId).get()).data();
 
