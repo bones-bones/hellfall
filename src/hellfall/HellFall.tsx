@@ -1,40 +1,37 @@
-import { useEffect, useRef } from "react";
-import { HellfallEntry } from "./HellfallEntry";
-import { xIcon } from "@workday/canvas-system-icons-web";
+import { useEffect, useRef } from 'react';
+import { HellfallEntry } from './HellfallEntry';
+import { xIcon } from '@workday/canvas-system-icons-web';
 
-import { styled } from "@workday/canvas-kit-react/common";
-import {
-  SidePanel,
-  SidePanelOpenDirection,
-} from "@workday/canvas-kit-react/side-panel";
-import { PaginationComponent } from "./inputs";
+import { styled } from '@workday/canvas-kit-react/common';
+import { SidePanel, SidePanelOpenDirection } from '@workday/canvas-kit-react/side-panel';
+import { PaginationComponent } from './inputs';
 
-import { HellfallCard } from "./HellfallCard";
-import { Card } from "@workday/canvas-kit-react/card";
-import { ToolbarIconButton } from "@workday/canvas-kit-react/button";
-import { useAtom, useAtomValue } from "jotai";
-import { activeCardAtom, offsetAtom } from "./searchAtoms";
-import { useSearchResults } from "./useSearchResults";
-import { SearchControls } from "./SearchControls";
-import { SortComponent } from "./SortComponent";
-import { CHUNK_SIZE } from "./constants";
-import { useKeyPress } from "../hooks";
-import { cardsAtom } from "./cardsAtom";
+import { HellfallCard } from './HellfallCard';
+import { Card } from '@workday/canvas-kit-react/card';
+import { ToolbarIconButton } from '@workday/canvas-kit-react/button';
+import { useAtom, useAtomValue } from 'jotai';
+import { activeCardAtom, offsetAtom } from './searchAtoms';
+import { useSearchResults } from './useSearchResults';
+import { SearchControls } from './SearchControls';
+import { SortComponent } from './SortComponent';
+import { CHUNK_SIZE } from './constants';
+import { useKeyPress } from '../hooks';
+import { cardsAtom } from './cardsAtom';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cards = useAtomValue(cardsAtom).filter((e) => e.Set != "C");
-  const escape = useKeyPress("Escape");
+  const cards = useAtomValue(cardsAtom).filter(e => e.Set != 'C');
+  const escape = useKeyPress('Escape');
 
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
 
-  const activeCard = cards.find((entry) => {
+  const activeCard = cards.find(entry => {
     return entry.Id === activeCardFromAtom;
   });
 
   useEffect(() => {
     if (escape) {
-      setActiveCardFromAtom("");
+      setActiveCardFromAtom('');
     }
   }, [escape]);
   const [offset, setOffset] = useAtom(offsetAtom);
@@ -49,12 +46,9 @@ export const HellFall = () => {
       >
         {!!activeCard && (
           <Card>
-            <Card.Body padding={"zero"}>
+            <Card.Body padding={'zero'}>
               <SPContainer>
-                <ToolbarIconButton
-                  icon={xIcon}
-                  onClick={() => setActiveCardFromAtom("")}
-                />
+                <ToolbarIconButton icon={xIcon} onClick={() => setActiveCardFromAtom('')} />
                 {activeCard && <HellfallCard data={activeCard} />}
               </SPContainer>
             </Card.Body>
@@ -65,33 +59,25 @@ export const HellFall = () => {
       <SearchControls />
       <br />
       <SortComponent />
-      <ResultCount
-        ref={containerRef}
-      >{`${resultSet.length} card(s)`}</ResultCount>
+      <ResultCount ref={containerRef}>{`${resultSet.length} card(s)`}</ResultCount>
       <Container>
         {resultSet.slice(offset, offset + CHUNK_SIZE).map((entry, i) => (
           <HellfallEntry
             onClick={(event: React.MouseEvent<HTMLImageElement>) => {
               if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                window.open(
-                  "/hellfall/card/" + encodeURIComponent(entry.Id),
-                  "_blank"
-                );
+                window.open('/hellfall/card/' + encodeURIComponent(entry.Id), '_blank');
               } else {
                 setActiveCardFromAtom(entry.Id);
               }
             }}
             onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
               if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                window.open(
-                  "/hellfall/card/" + encodeURIComponent(entry.Id),
-                  "_blank"
-                );
+                window.open('/hellfall/card/' + encodeURIComponent(entry.Id), '_blank');
               } else {
                 setActiveCardFromAtom(entry.Id);
               }
             }}
-            key={"" + entry.Id + "-" + i}
+            key={'' + entry.Id + '-' + i}
             id={entry.Id}
             name={entry.Name}
             url={entry.Image[1] || entry.Image[0]!}
@@ -99,9 +85,9 @@ export const HellFall = () => {
         ))}
       </Container>
       <PaginationComponent
-        onChange={(val) => {
+        onChange={val => {
           setOffset(val);
-          containerRef.current?.scrollIntoView({ behavior: "smooth" });
+          containerRef.current?.scrollIntoView({ behavior: 'smooth' });
         }}
         initialCurrentPage={offset}
         chunkSize={CHUNK_SIZE}
@@ -110,22 +96,22 @@ export const HellFall = () => {
     </div>
   );
 };
-const ResultCount = styled("h5")({ display: "flex", justifyContent: "center" });
-const Container = styled("div")({
-  display: "flex",
-  flexWrap: "wrap",
-  justifyContent: "center",
+const ResultCount = styled('h5')({ display: 'flex', justifyContent: 'center' });
+const Container = styled('div')({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
 });
 
 const StyledSidePanel = styled(SidePanel)({
   zIndex: 40,
-  height: "100%",
-  position: "fixed",
-  backgroundColor: "transparent",
-  top: "10px",
+  height: '100%',
+  position: 'fixed',
+  backgroundColor: 'transparent',
+  top: '10px',
 });
-const SPContainer = styled("div")({
-  overflowY: "scroll",
-  height: "90vh",
-  overflowX: "hidden",
+const SPContainer = styled('div')({
+  overflowY: 'scroll',
+  height: '90vh',
+  overflowX: 'hidden',
 });
