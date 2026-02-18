@@ -1077,11 +1077,11 @@
       "colors": ["Orange", "Colorless"]
     },
     {
-      "filename": "hybrid/misc/UOrange.svg",
-      "name": "U/Orange",
+      "filename": "hybrid/misc/OrangeU.svg",
+      "name": "Orange/U",
       "isMana": true,
       "mv": 1,
-      "colors": ["Blue", "Orange"]
+      "colors": ["Orange","Blue"]
     },
     {
       "filename": "hybrid/misc/2Pink.svg",

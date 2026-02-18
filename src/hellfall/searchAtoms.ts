@@ -15,8 +15,6 @@ export const rulesSearchAtom = atom<string[]>(
   searchParams.get("rules")?.split(",") || []
 );
 
-export const rulesSearchAtom = atom<string[]>(searchParams.get('rules')?.split(',') || []);
-
 type LegalType = 'legal' | 'banned' | '4cbLegal' | 'hellsmanderLegal';
 
 export const legalityAtom = atom<LegalType[]>(
@@ -31,8 +29,6 @@ export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
 export const searchColorsAtom = atom(searchParams.get('colors')?.split(',') || []);
 
 export const searchColorsIdentityAtom = atom(searchParams.get('colorIdentity')?.split(',') || []);
-
-export const useHybridIdentityAtom = atom(searchParams.get('useHybrid') == 'true');
 
 export const useHybridIdentityAtom = atom(
   searchParams.get("useHybrid") == "true"
