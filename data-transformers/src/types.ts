@@ -13,22 +13,22 @@ export type HCEntry = {
   Creator: string;
   isActualToken?: boolean;
   Set: string; // "HLC",
-  Constructed?: ("Legal" | "Banned" | "Banned (4CB)" | "Banned (Commander)")[];
-  "Component of"?: string;
+  Constructed?: ('Legal' | 'Banned' | 'Banned (4CB)' | 'Banned (Commander)')[];
+  'Component of'?: string;
   Rulings: string; //"See Magic Comprehensive Rules 894.1c Deez",
   CMC: number; //3,
-  "Color(s)": string; // "Blue",
+  'Color(s)': string; // "Blue",
   Cost: [string, string, string, string];
-  "Supertype(s)": [string, string, string, string];
-  "Card Type(s)": [string, string, string, string];
-  "Subtype(s)": [string, string, string, string];
+  'Supertype(s)': [string, string, string, string];
+  'Card Type(s)': [string, string, string, string];
+  'Subtype(s)': [string, string, string, string];
   power: [number | null, null, null, null];
   toughness: [number | null, null, null, null];
-  Loyalty: [any, null, "", ""];
-  "Text Box": [string, string, string, string];
-  "Flavor Text": [string, string, string, string];
+  Loyalty: [any, null, '', ''];
+  'Text Box': [string, string, string, string];
+  'Flavor Text': [string, string, string, string];
   Tags?: string;
-  "small alt image": string;
+  'small alt image': string;
   // FIELD44: string;
   // FIELD45: string;
   // FIELD46: string;
@@ -55,5 +55,5 @@ export type Token = {
 };
 
 export type TokenForImport = Token & {
-  "Related Cards (Read Comment)"?: string;
+  'Related Cards (Read Comment)'?: string;
 };

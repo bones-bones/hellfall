@@ -1,6 +1,6 @@
-import { Link, Route, Routes, useLocation } from "react-router-dom";
-import styled from "@emotion/styled";
-import { specialCards } from "./specialCards";
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import styled from '@emotion/styled';
+import { specialCards } from './specialCards';
 
 export const HellsCubeOne = () => {
   const val = useLocation();
@@ -20,21 +20,19 @@ export const HellsCubeOne = () => {
                 <li>Trample</li>
                 <li>6 Power</li>
                 <li>6 Toughness</li>
-                <li>Has exactly {"{G}{G}"}</li>
+                <li>Has exactly {'{G}{G}'}</li>
               </ul>
               <ul>
-                {specialCards.map((entry) => (
+                {specialCards.map(entry => (
                   <StyledLi key={entry.name}>
-                    <StyledLink to={val.pathname + entry.path}>
-                      {entry.name}
-                    </StyledLink>
+                    <StyledLink to={val.pathname + entry.path}>{entry.name}</StyledLink>
                   </StyledLi>
                 ))}
               </ul>
             </>
           }
         />
-        {specialCards.map((entry) => {
+        {specialCards.map(entry => {
           return (
             <Route
               key={entry.path}
@@ -57,7 +55,7 @@ export const HellsCubeOne = () => {
 
 const StyledLink = styled(Link)({
   // textDecoration: "none",
-  color: "black",
+  color: 'black',
 });
 
-const StyledLi = styled.li({ marginTop: "15px" });
+const StyledLi = styled.li({ marginTop: '15px' });

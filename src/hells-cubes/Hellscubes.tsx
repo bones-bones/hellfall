@@ -1,11 +1,11 @@
-import { Routes, Route } from "react-router";
-import { HellsCube } from "./one";
+import { Routes, Route } from 'react-router';
+import { HellsCube } from './one';
 
-import { CubeResources } from "./CubeResources";
-import { AvatarOfBalls } from "./AvatarOfBalls";
-import { Suspense } from "react";
-import { Eight } from "./eight";
-import { HellStart } from "./hellstart/HellStart";
+import { CubeResources } from './CubeResources';
+import { AvatarOfBalls } from './AvatarOfBalls';
+import { Suspense } from 'react';
+import { Eight } from './eight';
+import { HellStart } from './hellstart/HellStart';
 
 export const Hellscubes = () => {
   return (
