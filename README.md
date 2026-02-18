@@ -31,24 +31,24 @@ You want to contribute? Great!
 1. Download [VS Code](https://code.visualstudio.com/download), it is a great dev environment
 2. Install [node/npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Pretty much any version should work
 3. Download [GitHub Desktop](https://desktop.github.com/), or not, it's just super easy to deal with
-4. Install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+4. Install [yarn](https://yarnpkg.com/getting-started/install)
 5. Clone this repo. Github Desktop > File > Clone Repo > https://github.com/bones-bones/hellfall.git
 
 ## After pulling down the repo you should
 
 1. Open a terminal, cd into the repo
-2. run `yarn clean` (this deletes old version dependencies and old build output)
+2. run `yarn run clean` (this deletes old version dependencies and old build output)
 3. run `yarn` (this installs new tools and dependencies)
 
 ## To develop
 
-1. Run `yarn start`
+1. Run `yarn run start`
 2. Write code
 
 ## Updating the database
 
 1. TODO: update the rest
-2. run `yarn transform-hc` (this extracts the type and creator datasets)
+2. run `yarn run transform-hc` (this extracts the type and creator datasets)
 
 ## Committing code
 

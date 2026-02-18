@@ -1,12 +1,14 @@
-import { HCEntry } from '../types';
+import { HCEntry } from "../types";
+// TODO: make it possible to sort by color, then alpha, rather than color, then CMC
+// how they can combine: Alpha and ID are
 
 export const sortFunction =
-  (sortRule: 'Alpha' | 'CMC' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>
+  (sortRule: "Alpha" | "CMC" | "Color" | "Id", dirRule: "Asc" | "Desc") =>
   (a: HCEntry, b: HCEntry) => {
     switch (sortRule) {
       case 'CMC': {
         if (a.CMC > b.CMC) {
-          return dirRule == 'Desc' ? -1 : 1;
+          return dirRule == "Desc" ? -1 : 1;
         }
         break;
       }
@@ -15,27 +17,27 @@ export const sortFunction =
         const bString = getSortString(b);
 
         if (aString > bString) {
-          return dirRule == 'Desc' ? -1 : 1;
+          return dirRule == "Desc" ? -1 : 1;
         }
         break;
       }
 
       case 'Alpha': {
         if (a.Name > b.Name) {
-          return dirRule == 'Desc' ? -1 : 1;
+          return dirRule == "Desc" ? -1 : 1;
         }
         break;
       }
 
-      case 'Id': {
+      case "Id": {
         if (parseInt(a.Id) > parseInt(b.Id)) {
-          return dirRule == 'Desc' ? -1 : 1;
+          return dirRule == "Desc" ? -1 : 1;
         }
         break;
       }
     }
 
-    return dirRule == 'Desc' ? 1 : -1;
+    return dirRule == "Desc" ? 1 : -1;
   };
 
 const getSortString = (card: HCEntry) => {

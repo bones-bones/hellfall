@@ -6,17 +6,18 @@ import { styled } from '@workday/canvas-kit-react/common';
 import { SidePanel, SidePanelOpenDirection } from '@workday/canvas-kit-react/side-panel';
 import { PaginationComponent } from './inputs';
 
-import { HellfallCard } from './HellfallCard';
-import { Card } from '@workday/canvas-kit-react/card';
-import { ToolbarIconButton } from '@workday/canvas-kit-react/button';
-import { useAtom, useAtomValue } from 'jotai';
-import { activeCardAtom, offsetAtom } from './searchAtoms';
-import { useSearchResults } from './useSearchResults';
-import { SearchControls } from './SearchControls';
-import { SortComponent } from './SortComponent';
-import { CHUNK_SIZE } from './constants';
-import { useKeyPress } from '../hooks';
-import { cardsAtom } from './cardsAtom';
+import { HellfallCard } from "./HellfallCard";
+import { Card } from "@workday/canvas-kit-react/card";
+import { ToolbarIconButton } from "@workday/canvas-kit-react/button";
+import { useAtom, useAtomValue } from "jotai";
+import { activeCardAtom, offsetAtom } from "./searchAtoms";
+import { useSearchResults } from "./useSearchResults";
+import { SearchControls } from "./SearchControls";
+import { SortComponent } from "./SortComponent";
+import { CHUNK_SIZE } from "./constants";
+import { useKeyPress } from "../hooks";
+import { cardsAtom } from "./cardsAtom";
+import { startTransition } from "react";
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -67,14 +68,18 @@ export const HellFall = () => {
               if (event.button === 1 || event.metaKey || event.ctrlKey) {
                 window.open('/hellfall/card/' + encodeURIComponent(entry.Id), '_blank');
               } else {
-                setActiveCardFromAtom(entry.Id);
+                startTransition(() => {
+                  setActiveCardFromAtom(entry.Id);
+                });
               }
             }}
             onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
               if (event.button === 1 || event.metaKey || event.ctrlKey) {
                 window.open('/hellfall/card/' + encodeURIComponent(entry.Id), '_blank');
               } else {
-                setActiveCardFromAtom(entry.Id);
+                startTransition(() => {
+                  setActiveCardFromAtom(entry.Id);
+                });
               }
             }}
             key={'' + entry.Id + '-' + i}

@@ -1,12 +1,16 @@
-import { BigContainer, InnerContainer, ManaSymbol, ManaSymbolSmall } from './components';
-import UR from '../../assets/UR.svg';
-import RG from '../../assets/RG.svg';
-import { Link } from 'react-router-dom';
+import {
+  BigContainer,
+  InnerContainer,
+  ManaSymbol,
+  ManaSymbolSmall,
+} from "./components";
+import { getPipSrc } from "../../hellfall/stringToMana";
+import { Link } from "react-router-dom";
 export const ParadoxIncorporated = () => {
   return (
     <BigContainer>
       <h1>
-        Paradox Incorporated <ManaSymbol src={UR} />
+        Paradox Incorporated <ManaSymbol src={getPipSrc("U/R")} />
       </h1>
       <div>
         Welcome to the Paradox Employee Handbook! We at Paradox Incorporated are committed to
@@ -78,7 +82,7 @@ export const ParadoxIncorporated = () => {
       </div>
       <h3>
         <Link to="/hellscubes/eight/gruul-self-discard">
-          <ManaSymbolSmall src={RG} /> RG Discard
+          <ManaSymbolSmall src={getPipSrc("R/G")} /> RG Discard
         </Link>
       </h3>
       <div>

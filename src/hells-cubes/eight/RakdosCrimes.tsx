@@ -1,9 +1,12 @@
-import { BigContainer, Divider, InnerContainer, ManaSymbolSmall, StyledH3 } from './components';
-import RB from '../../assets/BR.svg';
-import RW from '../../assets/RW.svg';
-import RG from '../../assets/RG.svg';
-import UR from '../../assets/UR.svg';
-import { Link } from 'react-router-dom';
+import {
+  BigContainer,
+  Divider,
+  InnerContainer,
+  ManaSymbolSmall,
+  StyledH3,
+} from "./components";
+import { getPipSrc } from "../../hellfall/stringToMana";
+import { Link } from "react-router-dom";
 export const RakdosCrimes = () => {
   return (
     <>
@@ -20,7 +23,7 @@ export const RakdosCrimes = () => {
           .
         </div>
         <br />
-        <Divider color={RB} />
+        <Divider color={getPipSrc("B/R")!} />
         <h2>The Crimes Themselves</h2>
         <div>
           A lot of accidental crimes tend to creep into card design. Targeted removal, targeted
@@ -32,7 +35,7 @@ export const RakdosCrimes = () => {
           fun.
         </div>
         <br />
-        <Divider color={RB} />
+        <Divider color={getPipSrc("B/R")!} />
         <h2>Crime Payoffs</h2>
         <div>
           Now this is where I have a bit of concern. Making the crimes themselves is easy enough,
@@ -42,11 +45,11 @@ export const RakdosCrimes = () => {
           alright? I don&apos;t have much else to say in this category.
         </div>
         <br />
-        <Divider color={RB} />
+        <Divider color={getPipSrc("B/R")!} />
         <h2>Our Partners in Crime</h2>
         <StyledH3>
           <Link to="/hellscubes/eight/targeting-matters">
-            <ManaSymbolSmall src={RW} />
+            <ManaSymbolSmall src={getPipSrc("R/W")} />
             Boros Targeting
           </Link>
         </StyledH3>
@@ -62,7 +65,7 @@ export const RakdosCrimes = () => {
         </div>
         <StyledH3>
           <Link to="/hellscubes/eight/gruul-self-discard">
-            <ManaSymbolSmall src={RG} />
+            <ManaSymbolSmall src={getPipSrc("R/G")} />
             Gruul Everythingslinger
           </Link>
         </StyledH3>
@@ -74,7 +77,7 @@ export const RakdosCrimes = () => {
         </div>
         <StyledH3>
           <Link to="/hellscubes/eight/paradox-incorporated">
-            <ManaSymbolSmall src={UR} />
+            <ManaSymbolSmall src={getPipSrc("U/R")} />
             Izzet Paradox
           </Link>
         </StyledH3>

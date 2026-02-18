@@ -1,43 +1,69 @@
-import { BrowserRouter, useRoutes, useParams, Navigate } from 'react-router-dom';
-import { HellFall } from './hellfall';
-import { Hellscubes } from './hells-cubes';
-import { DeckBuilder } from './deck-builder';
-import { Draft } from './draft';
-import { LandBox } from './land-box';
-import { SingleCard } from './hellfall/SingleCard';
-import { Header } from './header';
-import { Breakdown } from './breakdown/Breakdown';
-import { Decks } from './decks/Decks';
+import {
+  BrowserRouter,
+  useRoutes,
+  useParams,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
+import { useSetAtom } from "jotai";
+import { pipsAtom, loadPips } from "./hellfall/pipsAtom";
+import { useEffect, useState } from "react";
+import { HellFall } from "./hellfall";
+import { Hellscubes } from "./hells-cubes";
+import { DeckBuilder } from "./deck-builder";
+import { Draft } from "./draft";
+import { LandBox } from "./land-box";
+import { SingleCard } from "./hellfall/SingleCard";
+import { Header } from "./header";
+import { Breakdown } from "./breakdown/Breakdown";
+import { Decks } from "./decks/Decks";
+import { Watchwolfwar } from "./watchWolf/WatchWolfWar";
+import { Watchwolfresults } from "./watchWolf/WatchWolfResults";
+import { useNameToId, useIsNonTokenName } from "./hellfall/backCompat";
 
-import { NameToId, IsNonTokenName } from './hellfall/backCompat';
-import { Watchwolfwar } from './watchWolf/WatchWolfWar';
-import { Watchwolfresults } from './watchWolf/WatchWolfResults';
+const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
+  const setPips = useSetAtom(pipsAtom);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-interface ValidatedCardRouteProps {
-  element: React.ReactElement;
-}
+  useEffect(() => {
+    loadPips().then((data) => {
+      setPips(data);
+      setIsLoaded(true);
+    });
+  }, [setPips]);
 
-export const App = () => {
-  return (
-    <BrowserRouter basename="hellfall">
-      <Header />
-      <ApplicationRoutes />
-    </BrowserRouter>
-  );
-};
-
-const ValidatedCardRoute = ({ element }: ValidatedCardRouteProps) => {
-  const params = useParams<{ '*': string }>();
-  const cardIdentifier = params['*'];
-  if (
-    cardIdentifier &&
-    !/^\d+$/.test(cardIdentifier) &&
-    (IsNonTokenName(cardIdentifier) || cardIdentifier == 'random')
-  ) {
-    const cardId = NameToId(cardIdentifier);
-    return <Navigate to={`/card/${cardId}`} replace />;
+  if (!isLoaded) {
+    return <div></div>;
   }
-  return element;
+
+  return <>{children}</>;
+};
+const CardRoute = () => {
+  const params = useParams<{ "*": string }>();
+  const navigate = useNavigate();
+  const cardIdentifier = params["*"];
+  const IsNonTokenName = useIsNonTokenName(cardIdentifier || "");
+  const cardId = useNameToId(cardIdentifier || "");
+  const [shouldRender, setShouldRender] = useState(false);
+  useEffect(() => {
+    const handleRedirect = async () => {
+      if (
+        cardIdentifier == "random" ||
+        (cardIdentifier && !/^\d+$/.test(cardIdentifier) && IsNonTokenName)
+      ) {
+        navigate(`/card/${cardId}`, { replace: true });
+        return;
+      }
+      setShouldRender(true);
+    };
+
+    handleRedirect();
+  }, [cardIdentifier, cardId, IsNonTokenName, navigate]);
+
+  if (!shouldRender) {
+    return <div></div>;
+  }
+  return <SingleCard />;
 };
 
 const ApplicationRoutes = () => {
@@ -49,11 +75,21 @@ const ApplicationRoutes = () => {
     { path: '/decks/*', element: <Decks /> },
     { path: '/', element: <HellFall /> },
     {
-      path: '/card/*',
-      element: <ValidatedCardRoute element={<SingleCard />} />,
+      path: "/card/*",
+      element: <CardRoute />,
     },
     { path: '/breakdown', element: <Breakdown /> },
     { path: '/Watchwolfwar', element: <Watchwolfwar /> },
     { path: '/Watchwolfresults', element: <Watchwolfresults /> },
   ]);
+};
+export const App = () => {
+  return (
+    <BrowserRouter basename="hellfall">
+      <Header />
+      <PipsInitializer>
+        <ApplicationRoutes />
+      </PipsInitializer>
+    </BrowserRouter>
+  );
 };
