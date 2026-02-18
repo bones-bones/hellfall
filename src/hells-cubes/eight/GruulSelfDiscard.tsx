@@ -1,5 +1,5 @@
 import { BigContainer, InnerContainer, ManaSymbolSmall } from "./components";
-import RG from "../../assets/hybrid/RG.svg";
+import { getPipSrc } from "../../hellfall/stringToMana";
 import { Link } from "react-router-dom";
 export const GruulSelfDiscard = () => {
   return (
@@ -7,10 +7,10 @@ export const GruulSelfDiscard = () => {
       <BigContainer>
         <h1>Gruul Self-Discard</h1>
         <h2>
-          Hey guys. It&apos;s me, <ManaSymbolSmall src={RG} />
+          Hey guys. It&apos;s me, <ManaSymbolSmall src={getPipSrc("R/G")} />
           Red/Green
-          <ManaSymbolSmall src={RG} /> I will be your steward to Gruul
-          self-discard. Everyone know Gruul dumb, so I keep short:
+          <ManaSymbolSmall src={getPipSrc("R/G")} /> I will be your steward to
+          Gruul self-discard. Everyone know Gruul dumb, so I keep short:
         </h2>
         <h2>
           I want cards that use discarding and the graveyard to build advantage

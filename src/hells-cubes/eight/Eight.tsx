@@ -1,9 +1,5 @@
 import styled from "@emotion/styled";
-import white from "../../assets/mono/W.svg";
-import blue from "../../assets/mono/U.svg";
-import red from "../../assets/mono/R.svg";
-import black from "../../assets/mono/B.svg";
-import green from "../../assets/mono/G.svg";
+import { getPipSrc } from "../../hellfall/stringToMana";
 import { Routes, Route, Link } from "react-router-dom";
 import { AzoriousHistoric } from "./AzoriousHistoric";
 import { TargetingMatters } from "./TargetingMatters";
@@ -27,80 +23,80 @@ export const Eight = () => {
             <div>
               <Link to={"/hellscubes/eight/azorious-historic"}>
                 <h2>
-                  <ManaSymbol src={white} />
-                  <ManaSymbol src={blue} /> Azorious Historic
+                  <ManaSymbol src={getPipSrc("W")} />
+                  <ManaSymbol src={getPipSrc("U")} /> Azorious Historic
                 </h2>
               </Link>
             </div>
             <div>
               <Link to={"/hellscubes/eight/targeting-matters"}>
                 <h2>
-                  <ManaSymbol src={red} />
-                  <ManaSymbol src={white} /> RW Targeting Matters
+                  <ManaSymbol src={getPipSrc("R")} />
+                  <ManaSymbol src={getPipSrc("W")} /> RW Targeting Matters
                 </h2>
               </Link>
             </div>
             <div>
               <Link to={"/hellscubes/eight/ub-evasion"}>
                 <h2>
-                  <ManaSymbol src={blue} />
-                  <ManaSymbol src={black} /> UB Evasion
+                  <ManaSymbol src={getPipSrc("U")} />
+                  <ManaSymbol src={getPipSrc("B")} /> UB Evasion
                 </h2>
               </Link>
             </div>
             <div>
               <Link to={"/hellscubes/eight/golgari-landistocrats"}>
                 <h2>
-                  <ManaSymbol src={black} />
-                  <ManaSymbol src={green} /> Golgari Landistrocrats
+                  <ManaSymbol src={getPipSrc("B")} />
+                  <ManaSymbol src={getPipSrc("G")} /> Golgari Landistrocrats
                 </h2>
               </Link>
             </div>
             <div>
               <Link to={"/hellscubes/eight/gruul-self-discard"}>
                 <h2>
-                  <ManaSymbol src={red} />
-                  <ManaSymbol src={green} /> Gruul Self-Discard
+                  <ManaSymbol src={getPipSrc("R")} />
+                  <ManaSymbol src={getPipSrc("G")} /> Gruul Self-Discard
                 </h2>
               </Link>
             </div>
             <div>
               <Link to={"/hellscubes/eight/paradox-incorporated"}>
                 <h2>
-                  <ManaSymbol src={blue} />
-                  <ManaSymbol src={red} /> Paradox Incorporated
+                  <ManaSymbol src={getPipSrc("U")} />
+                  <ManaSymbol src={getPipSrc("R")} /> Paradox Incorporated
                 </h2>
               </Link>
             </div>
             <div>
               <Link to={"/hellscubes/eight/small-reanimator"}>
                 <h4>
-                  <ManaSymbol src={white} />
-                  <ManaSymbol src={black} /> small reanimation
+                  <ManaSymbol src={getPipSrc("W")} />
+                  <ManaSymbol src={getPipSrc("B")} /> small reanimation
                 </h4>
               </Link>
             </div>
             <div>
               <Link to={"/hellscubes/eight/rakdos-crimes"}>
                 <h2>
-                  <ManaSymbol src={black} />
-                  <ManaSymbol src={red} /> Rakdos Crimes
+                  <ManaSymbol src={getPipSrc("B")} />
+                  <ManaSymbol src={getPipSrc("R")} /> Rakdos Crimes
                 </h2>
               </Link>
             </div>
             <div>
               <Link to={"/hellscubes/eight/lands-lands-lands"}>
                 <h2>
-                  <ManaSymbol src={white} />
-                  <ManaSymbol src={green} /> WG LANDS LANDS LANDS
+                  <ManaSymbol src={getPipSrc("W")} />
+                  <ManaSymbol src={getPipSrc("G")} /> WG LANDS LANDS LANDS
                 </h2>
               </Link>
             </div>
             <div>
               <Link to={"/hellscubes/eight/simic-animation"}>
                 <h2>
-                  <ManaSymbol src={blue} />
-                  <ManaSymbol src={green} /> Simic Animation
+                  <ManaSymbol src={getPipSrc("U")} />
+                  <ManaSymbol src={getPipSrc("G")} /> Simic Animation
                 </h2>
               </Link>
             </div>

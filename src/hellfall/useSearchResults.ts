@@ -187,13 +187,9 @@ export const useSearchResults = () => {
               miscBullshitColorIdentityCriteria.includes(e) ||
               e == "Colorless" ||
               e == undefined;
-            if (Array.isArray(cardColorIdentityComponent)) {
-              return useHybrid
-                ? cardColorIdentityComponent.some(colorTest)
-                : cardColorIdentityComponent.every(colorTest);
-            } else {
-              return colorTest(cardColorIdentityComponent);
-            }
+            return useHybrid
+              ? cardColorIdentityComponent.some(colorTest)
+              : cardColorIdentityComponent.every(colorTest);
           })
         ) {
           return false;

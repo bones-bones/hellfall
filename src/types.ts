@@ -2,6 +2,7 @@
 
 type SideArray<T> = [T | null, T | null, T | null, T | null];
 
+// TODO: add color indicator property
 export type HCEntry = {
   Id: string;
   Name: string; //"Whale Visions",
@@ -31,19 +32,6 @@ export type HCEntry = {
   "Flavor Text"?: SideArray<string>;
   Tags?: string;
   "small alt image": string;
-  // FIELD44: string;
-  // FIELD45: string;
-  // FIELD46: string;
-  // FIELD47: string;
-  // FIELD48: string;
-  // FIELD49: string;
-  // FIELD50: string;
-  // FIELD51: string;
-  // FIELD52: string;
-  // FIELD53: string;
-  // FIELD54: string;
-  // FIELD55: string;
-  // FIELD56: string;
   tokens?: Token[];
 };
 
@@ -53,5 +41,13 @@ export type Token = {
   Power: string;
   Toughness: string;
   Type: string;
-  // FIELD7: string;
+};
+
+export type Pip = {
+  filename: string;
+  name: string; // This is what is between the braces
+  isMana: boolean;
+  mv?: number | string; // make sure infinity works
+  colors?: string[];
+  // hybridColors:string[];
 };

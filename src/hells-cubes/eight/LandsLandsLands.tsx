@@ -1,8 +1,6 @@
 import { BigContainer, InnerContainer, ManaSymbolSmall } from "./components";
-import GW from "../../assets/hybrid/GW.svg";
-import BG from "../../assets/hybrid/BG.svg";
+import { getPipSrc } from "../../hellfall/stringToMana";
 import { Link } from "react-router-dom";
-import UR from "../../assets/hybrid/UR.svg";
 export const LandsLandsLands = () => {
   return (
     <>
@@ -12,7 +10,8 @@ export const LandsLandsLands = () => {
         <h1>Lands.</h1>
         <div>
           We love &apos;em. We need &apos;em. But none of the other folks
-          undertand &apos;em like we do. <ManaSymbolSmall src={GW} />
+          undertand &apos;em like we do.{" "}
+          <ManaSymbolSmall src={getPipSrc("G/W")} />
           gamers- the God-fearing folk who live off the lands, who feel them
           underneath our toes and who connect with their utility.
         </div>
@@ -40,7 +39,7 @@ export const LandsLandsLands = () => {
         <div>
           But we&apos;re not just activating our lands. Our sisters over in{" "}
           <Link to="/hellscubes/eight/golgari-landistocrats">
-            <img height="12px" src={BG} /> Lands
+            <img height="12px" src={getPipSrc("B/G")} /> Lands
           </Link>{" "}
           have the right of it that lands should go in the graveyard- but why
           stop there? Why not lands with suspend hopping into exile? Lands in
@@ -74,7 +73,7 @@ export const LandsLandsLands = () => {
             Don&apos;t make all the lands colorless. The lands are ours. If I
             see one filthy{" "}
             <Link to="/hellscubes/eight/paradox-incorporated">
-              Paradox <img height="12px" src={UR} /> gamer
+              Paradox <img height="12px" src={getPipSrc("U/R")} /> gamer
             </Link>{" "}
             playing with our utillity lands, I&apos;m going to be knocking in
             skulls.

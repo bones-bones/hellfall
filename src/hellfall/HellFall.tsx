@@ -20,6 +20,7 @@ import { SortComponent } from "./SortComponent";
 import { CHUNK_SIZE } from "./constants";
 import { useKeyPress } from "../hooks";
 import { cardsAtom } from "./cardsAtom";
+import { startTransition } from "react";
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -78,7 +79,9 @@ export const HellFall = () => {
                   "_blank"
                 );
               } else {
-                setActiveCardFromAtom(entry.Id);
+                startTransition(() => {
+                  setActiveCardFromAtom(entry.Id);
+                });
               }
             }}
             onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
@@ -88,7 +91,9 @@ export const HellFall = () => {
                   "_blank"
                 );
               } else {
-                setActiveCardFromAtom(entry.Id);
+                startTransition(() => {
+                  setActiveCardFromAtom(entry.Id);
+                });
               }
             }}
             key={"" + entry.Id + "-" + i}
