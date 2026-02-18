@@ -4,17 +4,13 @@ import {
   ManaSymbolSmall,
   StyledH3,
 } from "./components";
-import BG from "../../assets/hybrid/BG.svg";
-import GW from "../../assets/hybrid/GW.svg";
-
-import GU from "../../assets/hybrid/GU.svg";
-import RG from "../../assets/hybrid/RG.svg";
+import { getPipSrc } from "../../hellfall/stringToMana";
 import { Link } from "react-router-dom";
 export const GolgariLandistocrats = () => {
   return (
     <BigContainer>
       <h1>
-        <ManaSymbol src={BG} /> Golgari Landistocrats
+        <ManaSymbol src={getPipSrc("B/G")} /> Golgari Landistocrats
       </h1>
       <div>
         Green loves lands and the graveyard, and black loves… the graveyard (Isn’t the color pie{' '}
@@ -71,7 +67,7 @@ export const GolgariLandistocrats = () => {
       <h2>💡 Archetype Synergy</h2>
       <StyledH3>
         <Link to="/hellscubes/eight/lands-lands-lands">
-          <ManaSymbolSmall src={GW} />
+          <ManaSymbolSmall src={getPipSrc("G/W")} />
           GW Lands
         </Link>
       </StyledH3>
@@ -82,7 +78,7 @@ export const GolgariLandistocrats = () => {
       </div>
       <StyledH3>
         <Link to="/hellscubes/eight/simic-animation">
-          <ManaSymbolSmall src={GU} />
+          <ManaSymbolSmall src={getPipSrc("G/U")} />
           GU Animate Everything
         </Link>
       </StyledH3>
@@ -92,7 +88,7 @@ export const GolgariLandistocrats = () => {
       </div>
       <StyledH3>
         <Link to="/hellscubes/eight/gruul-self-discard">
-          <ManaSymbolSmall src={RG} />
+          <ManaSymbolSmall src={getPipSrc("R/G")} />
           RG Self Discard
         </Link>
       </StyledH3>

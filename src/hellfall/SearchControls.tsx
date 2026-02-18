@@ -33,6 +33,8 @@ import { StyledLabel } from './StyledLabel';
 import { CardLegalityControls } from './search-controls/CardLegalityControls';
 import { StyledComponentHolder } from './StyledComponentHolder';
 
+// TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
+
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
   const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);

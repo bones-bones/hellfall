@@ -1,8 +1,3 @@
-import rw from "../../assets/hybrid/RW.svg";
-import br from "../../assets/hybrid/BR.svg";
-import wb from "../../assets/hybrid/WB.svg";
-import wu from "../../assets/hybrid/WU.svg";
-import rg from "../../assets/hybrid/RG.svg";
 import {
   BigContainer,
   Divider,
@@ -10,6 +5,7 @@ import {
   ManaSymbolSmall,
   StyledH3,
 } from "./components";
+import { getPipSrc } from "../../hellfall/stringToMana";
 import { Link } from "react-router-dom";
 export const TargetingMatters = () => {
   return (
@@ -22,7 +18,7 @@ export const TargetingMatters = () => {
         Nadu Was Doing For A While).
       </div>
       <br />
-      <Divider color={rw} />
+      <Divider color={getPipSrc("R/W")!} />
       <h2>Things That Target</h2>
       <div>
         This happens a lot anyway. Equipments, Auras, Dilu Horses and Giant Growths just to name a
@@ -32,7 +28,7 @@ export const TargetingMatters = () => {
         Overload spells. Just some food for thought.
       </div>
       <br />
-      <Divider color={rw} />
+      <Divider color={getPipSrc("R/W")!} />
       <h2>Things That Get Targetted</h2>
       <div>
         This is the part that is less automatic. You gotta include payoffs for being targetted. This
@@ -42,11 +38,11 @@ export const TargetingMatters = () => {
         even make Indicate hand tokens. Please do that. Please make Indicate hand tokens.
       </div>
       <br />
-      <Divider color={rw} />
+      <Divider color={getPipSrc("R/W")!} />
       <h2>Brothers In Arms</h2>
       <Link to="/hellscubes/eight/rakdos-crimes">
         <StyledH3>
-          <ManaSymbolSmall src={br} /> {'Rakdos Crimes'}
+          <ManaSymbolSmall src={getPipSrc("B/R")} /> {"Rakdos Crimes"}
         </StyledH3>
       </Link>
       <div>
@@ -57,7 +53,7 @@ export const TargetingMatters = () => {
       </div>
       <Link to="/hellscubes/eight/small-reanimator">
         <StyledH3>
-          <ManaSymbolSmall src={wb} /> Orzhov Small Reanimator
+          <ManaSymbolSmall src={getPipSrc("W/B")} /> Orzhov Small Reanimator
         </StyledH3>
       </Link>
       <div>
@@ -67,13 +63,13 @@ export const TargetingMatters = () => {
       </div>
       <Link to="/hellscubes/eight/azorious-historic">
         <StyledH3>
-          <ManaSymbolSmall src={wu} /> Azorius Historic
+          <ManaSymbolSmall src={getPipSrc("W/U")} /> Azorius Historic
         </StyledH3>
       </Link>
       <div>Equipments are historic. Little bit thin, but it&apos;s something.</div>
       <Link to="/hellscubes/eight/gruul-self-discard">
         <StyledH3>
-          <ManaSymbolSmall src={rg} /> Gruul Self-Discard
+          <ManaSymbolSmall src={getPipSrc("R/G")} /> Gruul Self-Discard
         </StyledH3>
       </Link>
       <div>

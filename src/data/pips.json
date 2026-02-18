@@ -1,0 +1,1450 @@
+{
+  "data": [
+    {
+      "filename": "WUBRG.svg",
+      "name": "W/U/B/R/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Blue", "Black", "Red", "Green"]
+    },
+    {
+      "filename": "mono/colors/W.svg",
+      "name": "W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White"]
+    },
+    {
+      "filename": "mono/colors/U.svg",
+      "name": "U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue"]
+    },
+    {
+      "filename": "mono/colors/B.svg",
+      "name": "B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black"]
+    },
+    {
+      "filename": "mono/colors/R.svg",
+      "name": "R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red"]
+    },
+    {
+      "filename": "mono/colors/G.svg",
+      "name": "G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green"]
+    },
+    {
+      "filename": "mono/colors/P.svg",
+      "name": "P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple"]
+    },
+    {
+      "filename": "mono/colors/C.svg",
+      "name": "C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/colors/S.svg",
+      "name": "S",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/misc/Yellow.svg",
+      "name": "Yellow",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Yellow"]
+    },
+    {
+      "filename": "mono/misc/Brown.svg",
+      "name": "Brown",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Brown"]
+    },
+    {
+      "filename": "mono/misc/Orange.svg",
+      "name": "Orange",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Orange"]
+    },
+    {
+      "filename": "mono/misc/Pink.svg",
+      "name": "Pink",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Pink"]
+    },
+    {
+      "filename": "mono/misc/Teal.webp",
+      "name": "Teal",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Teal"]
+    },
+    {
+      "filename": "mono/misc/Ultraviolet.svg",
+      "name": "Ultraviolet",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Ultraviolet"]
+    },
+
+    {
+      "filename": "mono/nums/0.svg",
+      "name": "0",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/1.svg",
+      "name": "1",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/2.svg",
+      "name": "2",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/3.svg",
+      "name": "3",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/4.svg",
+      "name": "4",
+      "isMana": true,
+      "mv": 4,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/5.svg",
+      "name": "5",
+      "isMana": true,
+      "mv": 5,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/6.svg",
+      "name": "6",
+      "isMana": true,
+      "mv": 6,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/7.svg",
+      "name": "7",
+      "isMana": true,
+      "mv": 7,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/8.svg",
+      "name": "8",
+      "isMana": true,
+      "mv": 8,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/9.svg",
+      "name": "9",
+      "isMana": true,
+      "mv": 9,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/10.svg",
+      "name": "10",
+      "isMana": true,
+      "mv": 10,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/11.svg",
+      "name": "11",
+      "isMana": true,
+      "mv": 11,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/12.svg",
+      "name": "12",
+      "isMana": true,
+      "mv": 12,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/13.svg",
+      "name": "13",
+      "isMana": true,
+      "mv": 13,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/14.svg",
+      "name": "14",
+      "isMana": true,
+      "mv": 14,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/15.svg",
+      "name": "15",
+      "isMana": true,
+      "mv": 15,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/16.svg",
+      "name": "16",
+      "isMana": true,
+      "mv": 16,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/17.svg",
+      "name": "17",
+      "isMana": true,
+      "mv": 17,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/18.svg",
+      "name": "18",
+      "isMana": true,
+      "mv": 18,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/19.svg",
+      "name": "19",
+      "isMana": true,
+      "mv": 19,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/20.svg",
+      "name": "20",
+      "isMana": true,
+      "mv": 20,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/nums/27.svg",
+      "name": "27",
+      "isMana": true,
+      "mv": 27,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/weirdNums/100.svg",
+      "name": "100",
+      "isMana": true,
+      "mv": 100,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/weirdNums/1000000.svg",
+      "name": "1000000",
+      "isMana": true,
+      "mv": 1000000,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/weirdNums/HALF.svg",
+      "name": "1/2",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/weirdNums/INFINITY.svg",
+      "name": "∞",
+      "isMana": true,
+      "mv": "∞",
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/weirdNums/Question.svg",
+      "name": "?",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/variables/X.svg",
+      "name": "X",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/variables/Y.svg",
+      "name": "Y",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/variables/Z.svg",
+      "name": "Z",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/fractional/HW.svg",
+      "name": "HW",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["White"]
+    },
+    {
+      "filename": "mono/fractional/HU.svg",
+      "name": "HU",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["Blue"]
+    },
+    {
+      "filename": "mono/fractional/HB.svg",
+      "name": "HB",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["Black"]
+    },
+    {
+      "filename": "mono/fractional/HR.svg",
+      "name": "HR",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["Red"]
+    },
+    {
+      "filename": "mono/fractional/HG.svg",
+      "name": "HG",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["Green"]
+    },
+    {
+      "filename": "mono/fractional/HP.svg",
+      "name": "HP",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["Purple"]
+    },
+    {
+      "filename": "mono/fractional/HC.svg",
+      "name": "HC",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/fractional/Doge.svg",
+      "name": "Doge",
+      "isMana": true,
+      "mv": "1/10",
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/fractional/JU.webp",
+      "name": "JU",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["Blue"]
+    },
+    {
+      "filename": "mono/fractional/JP.webp",
+      "name": "JP",
+      "isMana": true,
+      "mv": 0.5,
+      "colors": ["Purple"]
+    },
+    {
+      "filename": "mono/fractional/JUP.webp",
+      "name": "JUP",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Purple"]
+    },
+    {
+      "filename": "mono/fractional/Venezuela.webp",
+      "name": "Venezuela",
+      "isMana": true,
+      "mv": "1/15000000",
+      "colors": ["White"]
+    },
+    {
+      "filename": "mono/fractional/TG1.svg",
+      "name": "TG",
+      "isMana": true,
+      "mv": "1/3",
+      "colors": ["Green"]
+    },
+    {
+      "filename": "mono/fractional/TG2.svg",
+      "name": "TG",
+      "isMana": true,
+      "mv": "1/3",
+      "colors": ["Green"]
+    },
+    {
+      "filename": "mono/fractional/TG3.svg",
+      "name": "TG",
+      "isMana": true,
+      "mv": "1/3",
+      "colors": ["Green"]
+    },
+    {
+      "filename": "mono/effects/ant.webp",
+      "name": "ant",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/effects/GE.svg",
+      "name": "GE",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green"]
+    },
+    {
+      "filename": "mono/effects/Milk.webp",
+      "name": "Milk",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/effects/RadW.svg",
+      "name": "Rad/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White"]
+    },
+    {
+      "filename": "mono/effects/RadU.svg",
+      "name": "Rad/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue"]
+    },
+    {
+      "filename": "mono/effects/RadB.svg",
+      "name": "Rad/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black"]
+    },
+    {
+      "filename": "mono/effects/RadR.svg",
+      "name": "Rad/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red"]
+    },
+    {
+      "filename": "mono/effects/RadG.svg",
+      "name": "Rad/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green"]
+    },
+    {
+      "filename": "mono/effects/RadP.svg",
+      "name": "Rad/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple"]
+    },
+    {
+      "filename": "mono/effects/RadC.svg",
+      "name": "Rad/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/effects/Bitcoin.svg",
+      "name": "Bitcoin",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black"]
+    },
+    {
+      "filename": "mono/effects/Bamana.webp",
+      "name": "Bamana",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+
+    {
+      "filename": "hybrid/colors/WU.svg",
+      "name": "W/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Blue"]
+    },
+    {
+      "filename": "hybrid/colors/WB.svg",
+      "name": "W/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Black"]
+    },
+    {
+      "filename": "hybrid/colors/WR.svg",
+      "name": "W/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Red"]
+    },
+    {
+      "filename": "hybrid/colors/WG.svg",
+      "name": "W/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Green"]
+    },
+    {
+      "filename": "hybrid/colors/WP.svg",
+      "name": "W/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Purple"]
+    },
+    {
+      "filename": "hybrid/colors/WC.svg",
+      "name": "W/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Colorless"]
+    },
+    {
+      "filename": "hybrid/colors/UW.svg",
+      "name": "U/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "White"]
+    },
+    {
+      "filename": "hybrid/colors/UB.svg",
+      "name": "U/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Black"]
+    },
+    {
+      "filename": "hybrid/colors/UR.svg",
+      "name": "U/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Red"]
+    },
+    {
+      "filename": "hybrid/colors/UG.svg",
+      "name": "U/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Green"]
+    },
+    {
+      "filename": "hybrid/colors/UP.svg",
+      "name": "U/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Purple"]
+    },
+    {
+      "filename": "hybrid/colors/UC.svg",
+      "name": "U/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Colorless"]
+    },
+    {
+      "filename": "hybrid/colors/BW.svg",
+      "name": "B/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "White"]
+    },
+    {
+      "filename": "hybrid/colors/BU.svg",
+      "name": "B/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Blue"]
+    },
+    {
+      "filename": "hybrid/colors/BR.svg",
+      "name": "B/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Red"]
+    },
+    {
+      "filename": "hybrid/colors/BG.svg",
+      "name": "B/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Green"]
+    },
+    {
+      "filename": "hybrid/colors/BP.svg",
+      "name": "B/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Purple"]
+    },
+    {
+      "filename": "hybrid/colors/BC.svg",
+      "name": "B/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Colorless"]
+    },
+    {
+      "filename": "hybrid/colors/RW.svg",
+      "name": "R/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "White"]
+    },
+    {
+      "filename": "hybrid/colors/RU.svg",
+      "name": "R/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "Blue"]
+    },
+    {
+      "filename": "hybrid/colors/RB.svg",
+      "name": "R/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "Black"]
+    },
+    {
+      "filename": "hybrid/colors/RG.svg",
+      "name": "R/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "Green"]
+    },
+    {
+      "filename": "hybrid/colors/RP.svg",
+      "name": "R/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "Purple"]
+    },
+    {
+      "filename": "hybrid/colors/RC.svg",
+      "name": "R/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "Colorless"]
+    },
+    {
+      "filename": "hybrid/colors/GW.svg",
+      "name": "G/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "White"]
+    },
+    {
+      "filename": "hybrid/colors/GU.svg",
+      "name": "G/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Blue"]
+    },
+    {
+      "filename": "hybrid/colors/GB.svg",
+      "name": "G/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Black"]
+    },
+    {
+      "filename": "hybrid/colors/GR.svg",
+      "name": "G/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Red"]
+    },
+    {
+      "filename": "hybrid/colors/GP.svg",
+      "name": "G/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Purple"]
+    },
+    {
+      "filename": "hybrid/colors/GC.svg",
+      "name": "G/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Colorless"]
+    },
+    {
+      "filename": "hybrid/colors/PW.svg",
+      "name": "P/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple", "White"]
+    },
+    {
+      "filename": "hybrid/colors/PU.svg",
+      "name": "P/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple", "Blue"]
+    },
+    {
+      "filename": "hybrid/colors/PB.svg",
+      "name": "P/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple", "Black"]
+    },
+    {
+      "filename": "hybrid/colors/PR.svg",
+      "name": "P/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple", "Red"]
+    },
+    {
+      "filename": "hybrid/colors/PG.svg",
+      "name": "P/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple", "Green"]
+    },
+    {
+      "filename": "hybrid/colors/PC.svg",
+      "name": "P/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple", "Colorless"]
+    },
+    {
+      "filename": "hybrid/colors/CW.svg",
+      "name": "C/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless", "White"]
+    },
+    {
+      "filename": "hybrid/colors/CU.svg",
+      "name": "C/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless", "Blue"]
+    },
+    {
+      "filename": "hybrid/colors/CB.svg",
+      "name": "C/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless", "Black"]
+    },
+    {
+      "filename": "hybrid/colors/CR.svg",
+      "name": "C/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless", "Red"]
+    },
+    {
+      "filename": "hybrid/colors/CG.svg",
+      "name": "C/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless", "Green"]
+    },
+    {
+      "filename": "hybrid/colors/CP.svg",
+      "name": "C/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless", "Purple"]
+    },
+    {
+      "filename": "hybrid/double/WW.svg",
+      "name": "W/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White"]
+    },
+    {
+      "filename": "hybrid/double/UU.svg",
+      "name": "U/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue"]
+    },
+    {
+      "filename": "hybrid/double/BB.svg",
+      "name": "B/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black"]
+    },
+    {
+      "filename": "hybrid/double/RR.svg",
+      "name": "R/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red"]
+    },
+    {
+      "filename": "hybrid/double/GG.svg",
+      "name": "G/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green"]
+    },
+    {
+      "filename": "hybrid/double/PP.svg",
+      "name": "P/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple"]
+    },
+    {
+      "filename": "hybrid/double/CC.svg",
+      "name": "C/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+
+    {
+      "filename": "hybrid/nums/0U.svg",
+      "name": "0/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/0G.svg",
+      "name": "0/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/1W.svg",
+      "name": "1/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/1U.svg",
+      "name": "1/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/1B.svg",
+      "name": "1/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/1R.svg",
+      "name": "1/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/1G.svg",
+      "name": "1/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/1P.svg",
+      "name": "1/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/1C.svg",
+      "name": "1/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/1T.svg",
+      "name": "1/T",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+
+    {
+      "filename": "hybrid/nums/2W.svg",
+      "name": "2/W",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["White", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/2U.svg",
+      "name": "2/U",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Blue", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/2B.svg",
+      "name": "2/B",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Black", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/2R.svg",
+      "name": "2/R",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Red", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/2G.svg",
+      "name": "2/G",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Green", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/2P.svg",
+      "name": "2/P",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Purple", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/2C.svg",
+      "name": "2/C",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/3W.svg",
+      "name": "3/W",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["White", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/3U.svg",
+      "name": "3/U",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["Blue", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/3B.svg",
+      "name": "3/B",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["Black", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/3R.svg",
+      "name": "3/R",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["Red", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/3G.svg",
+      "name": "3/G",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["Green", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/3P.svg",
+      "name": "3/P",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["Purple", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/3C.svg",
+      "name": "3/C",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/4U.svg",
+      "name": "4/U",
+      "isMana": true,
+      "mv": 4,
+      "colors": ["Blue", "Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/5INFINITY.svg",
+      "name": "5/∞",
+      "isMana": true,
+      "mv": "∞",
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/93.svg",
+      "name": "9/3",
+      "isMana": true,
+      "mv": 9,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "hybrid/nums/INFINITYU.svg",
+      "name": "∞/U",
+      "isMana": true,
+      "mv": "∞",
+      "colors": ["Colorless", "Blue"]
+    },
+
+    {
+      "filename": "hybrid/misc/2Yellow.svg",
+      "name": "2/Yellow",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Yellow", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/3Yellow.svg",
+      "name": "3/Yellow",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["Yellow", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/2Brown.svg",
+      "name": "2/Brown",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Brown", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/2Orange.svg",
+      "name": "2/Orange",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Orange", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/UOrange.svg",
+      "name": "U/Orange",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Orange"]
+    },
+    {
+      "filename": "hybrid/misc/2Pink.svg",
+      "name": "2/Pink",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Pink", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/3Pink.svg",
+      "name": "3/Pink",
+      "isMana": true,
+      "mv": 3,
+      "colors": ["Pink", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/UE.svg",
+      "name": "U/E",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Colorless"]
+    },
+
+    {
+      "filename": "hybrid/misc/BDoge.svg",
+      "name": "B/Doge",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/KetchupMustard.svg",
+      "name": "Ketchup/Mustard",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red"]
+    },
+    {
+      "filename": "tribrid/colors/GWU.svg",
+      "name": "G/W/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "White", "Blue"]
+    },
+    {
+      "filename": "tribrid/colors/WUB.svg",
+      "name": "W/U/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Blue", "Black"]
+    },
+    {
+      "filename": "tribrid/colors/UBR.svg",
+      "name": "U/B/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Black", "Red"]
+    },
+    {
+      "filename": "tribrid/colors/BRG.svg",
+      "name": "B/R/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Red", "Green"]
+    },
+    {
+      "filename": "tribrid/colors/RGW.svg",
+      "name": "R/G/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "Green", "White"]
+    },
+    {
+      "filename": "tribrid/colors/WBG.svg",
+      "name": "W/B/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Black", "Green"]
+    },
+    {
+      "filename": "tribrid/colors/BGU.svg",
+      "name": "B/G/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Green", "Blue"]
+    },
+    {
+      "filename": "tribrid/colors/GUR.svg",
+      "name": "G/U/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Blue", "Red"]
+    },
+    {
+      "filename": "tribrid/colors/URW.svg",
+      "name": "U/R/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Red", "White"]
+    },
+    {
+      "filename": "tribrid/colors/RWB.svg",
+      "name": "R/W/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "White", "Black"]
+    },
+    {
+      "filename": "tribrid/colors/CGW.svg",
+      "name": "C/G/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless", "Green", "White"]
+    },
+    {
+      "filename": "tribrid/misc/GYellowP.svg",
+      "name": "G/Yellow/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Yellow", "Purple"]
+    },
+
+    {
+      "filename": "phyrexian/mono/PhW.svg",
+      "name": "H/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/mono/PhU.svg",
+      "name": "H/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/mono/PhB.svg",
+      "name": "H/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/mono/PhR.svg",
+      "name": "H/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/mono/PhG.svg",
+      "name": "H/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/mono/PhG.svg",
+      "name": "Pickle",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["Pickle", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/mono/PhP.svg",
+      "name": "H/P",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Purple", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/mono/PhC.svg",
+      "name": "H/C",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhWU.svg",
+      "name": "H/W/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Blue", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhUB.svg",
+      "name": "H/U/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Black", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhBR.svg",
+      "name": "H/B/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Red", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhRG.svg",
+      "name": "H/R/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "Green", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhGW.svg",
+      "name": "H/G/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "White", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhWB.svg",
+      "name": "H/W/B",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White", "Black", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhBG.svg",
+      "name": "H/B/G",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black", "Green", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhGU.svg",
+      "name": "H/G/U",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green", "Blue", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhUR.svg",
+      "name": "H/U/R",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Blue", "Red", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/hybrid/PhRW.svg",
+      "name": "H/R/W",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red", "White", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/misc/PhBrown.svg",
+      "name": "H/Brown",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Brown", "Colorless"]
+    },
+    {
+      "filename": "phyrexian/misc/PhYellow.svg",
+      "name": "H/Yellow",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Yellow", "Colorless"]
+    },
+    {
+      "filename": "symbols/base/T.svg",
+      "name": "T",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/base/Q.svg",
+      "name": "Q",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/base/A.svg",
+      "name": "A",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/base/E.svg",
+      "name": "E",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/base/Paw.svg",
+      "name": "Paw",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/base/TK.svg",
+      "name": "TK",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/base/CHAOS.svg",
+      "name": "CHAOS",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Bell.webp",
+      "name": "Bell",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/upright.webp",
+      "name": "upright",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/downleft.webp",
+      "name": "downleft",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/flying.webp",
+      "name": "flying",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Gem.png",
+      "name": "Gem",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/HT.svg",
+      "name": "HT",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Dreadmaw.webp",
+      "name": "Dreadmaw",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/shadow.svg",
+      "name": "shadow",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Rock Mushroom.webp",
+      "name": "Rock Mushroom",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Spore.png",
+      "name": "Spore",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Blood.webp",
+      "name": "Blood",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/PhT.svg",
+      "name": "H/T",
+      "isMana": false
+    },
+    {
+      "filename": ".svg",
+      "name": "null",
+      "isMana": false,
+      "mv": 1,
+      "colors": [""]
+    }
+  ]
+}
