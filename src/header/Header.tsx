@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Heading } from '@workday/canvas-kit-react/text';
 import { styled } from '@workday/canvas-kit-react/common';
+import { useAuth } from '../auth';
 
 export const Header = () => {
+  const { user, loading, loginUrl, logoutUrl } = useAuth();
+
   return (
     <>
       <StyledHeader>
@@ -13,7 +16,21 @@ export const Header = () => {
           <Link to={'/hellscubes'}>cube resources</Link>, <Link to={'/land-box'}>land box</Link>,{' '}
           <Link to={'/decks'}>constructed</Link>, <Link to={'/Watchwolfwar'}>WatchWolfWar</Link>,{' '}
           <Link to={'https://discord.gg/EWFcAnVdkX'}>discord</Link>,{' '}
-          <Link to={'https://www.reddit.com/r/HellsCube/'}>reddit</Link>{' '}
+          <Link to={'https://www.reddit.com/r/HellsCube/'}>reddit</Link>
+          {loginUrl && (
+            <>
+              {' '}
+              |{' '}
+              {user ? (
+                <>
+                  <span title={user.email ?? undefined}>{user.username}</span>,{' '}
+                  <a href={logoutUrl}>logout</a>
+                </>
+              ) : (
+                <a href={loginUrl}>{loading ? '…' : 'login'}</a>
+              )}
+            </>
+          )}
         </Navigation>
       </StyledHeader>
     </>

@@ -1,0 +1,20 @@
+{
+  "name": "hellfall-auth-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch server.ts",
+    "start": "tsx server.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "jose": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.8",
+    "tsx": "^4.7.0",
+    "typescript": "^5"
+  }
+}

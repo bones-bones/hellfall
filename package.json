@@ -2,6 +2,9 @@
   "name": "hellfall",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "auth-server"
+  ],
   "homepage": "/hellfall",
   "dependencies": {
     "@emotion/react": "^11.1.5",
@@ -57,7 +60,9 @@
     "land-box": "ts-node data-transformers/src/land-box",
     "make-cubes": "ts-node data-transformers/src/cubes/createCockCube",
     "start:windows": "yarn webpack serve --config=config/webpack.config.js",
-    "make-draftmancer": "ts-node data-transformers/src/draftmancer/toCard"
+    "make-draftmancer": "ts-node data-transformers/src/draftmancer/toCard",
+    "auth-server:dev": "yarn workspace hellfall-auth-server dev",
+    "auth-server:start": "yarn workspace hellfall-auth-server start"
   },
   "devDependencies": {
     "@babel/core": "^7",
