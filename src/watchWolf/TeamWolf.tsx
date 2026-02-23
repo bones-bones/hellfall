@@ -1,5 +1,14 @@
+import { getAuthApiUrl } from '../auth/getAuthApiUrl';
+
+function getWatchwolfUrl(): string {
+  const base = getAuthApiUrl();
+  return base ? `${base}/api/watchwolf` : '';
+}
+
 export const TeamWolf = async () => {
-  const requestedData = await fetch('https://get-watch-wolf-war-821285593003.us-central1.run.app/');
+  const url = getWatchwolfUrl();
+  if (!url) return [];
+  const requestedData = await fetch(url);
   const asJson = (await requestedData.json()) as {
     data: { Id: string; Wins: number; Matches: number }[];
   };
@@ -7,12 +16,12 @@ export const TeamWolf = async () => {
 };
 
 export const TeamClock = async (winId: string, loseId: string) => {
-  const requestedData = await fetch(
-    'https://get-watch-wolf-war-821285593003.us-central1.run.app/',
-    { method: 'POST', body: JSON.stringify({ WinId: winId, LoseId: loseId }) }
-  );
-  const asJson = (await requestedData.json()) as {
-    data: { Id: string; Wins: number; Matches: number }[];
-  };
-  return asJson;
+  const url = getWatchwolfUrl();
+  if (!url) return { winId, loseId };
+  const requestedData = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ WinId: winId, LoseId: loseId }),
+  });
+  return (await requestedData.json()) as { winId: string; loseId: string };
 };

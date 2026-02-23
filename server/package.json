@@ -1,5 +1,5 @@
 {
-  "name": "hellfall-auth-server",
+  "name": "hellfall-server",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,6 +9,7 @@
     "start": "tsx server.ts"
   },
   "dependencies": {
+    "@google-cloud/firestore": "^7.1.0",
     "dotenv": "^16.4.5",
     "jose": "^5.2.0"
   },

@@ -5,6 +5,7 @@ import type { HandlerRequest, HandlerResponse } from "./api/lib/types.js";
 import { meHandler } from "./api/me.js";
 import { logoutHandler } from "./api/logout.js";
 import { tagHandler } from "./api/tag.js";
+import { watchwolfHandler } from "./api/watchwolf.js";
 import { loginHandler } from "./api/discord/login.js";
 import { callbackHandler } from "./api/discord/callback.js";
 
@@ -14,6 +15,7 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
   "/api/me": meHandler,
   "/api/logout": logoutHandler,
   "/api/tag": tagHandler,
+  "/api/watchwolf": watchwolfHandler,
   "/api/discord/login": loginHandler,
   "/api/discord/callback": callbackHandler
 };
@@ -46,5 +48,5 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
   (req as HandlerRequest).query = parseQuery(search);
   await loader(req as HandlerRequest, res as HandlerResponse);
 }).listen(PORT, () => {
-  console.log(`Auth server at http://localhost:${PORT}`);
+  console.log(`Server at http://localhost:${PORT}`);
 });

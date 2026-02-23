@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "auth-server"
+    "server"
   ],
   "homepage": "/hellfall",
   "dependencies": {
@@ -61,8 +61,8 @@
     "make-cubes": "ts-node data-transformers/src/cubes/createCockCube",
     "start:windows": "yarn webpack serve --config=config/webpack.config.js",
     "make-draftmancer": "ts-node data-transformers/src/draftmancer/toCard",
-    "auth-server:dev": "yarn workspace hellfall-auth-server dev",
-    "auth-server:start": "yarn workspace hellfall-auth-server start"
+    "server:dev": "yarn workspace hellfall-server dev",
+    "server:start": "yarn workspace hellfall-server start"
   },
   "devDependencies": {
     "@babel/core": "^7",
