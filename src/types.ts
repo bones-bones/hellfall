@@ -31,7 +31,7 @@ export type HCEntry = {
   'Text Box'?: SideArray<string>;
   'Flavor Text'?: SideArray<string>;
   Tags?: string;
-  "small alt image": string;
+  'small alt image': string;
   tokens?: Token[];
 };
 

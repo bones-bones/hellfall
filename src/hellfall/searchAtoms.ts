@@ -7,13 +7,9 @@ export const idSearchAtom = atom<string>(searchParams.get('id') || '');
 
 export const activeCardAtom = atom<string>(searchParams.get('activeCard') || '');
 
-export const costSearchAtom = atom<string[]>(
-  searchParams.get("cost")?.split(",") || []
-);
+export const costSearchAtom = atom<string[]>(searchParams.get('cost')?.split(',') || []);
 
-export const rulesSearchAtom = atom<string[]>(
-  searchParams.get("rules")?.split(",") || []
-);
+export const rulesSearchAtom = atom<string[]>(searchParams.get('rules')?.split(',') || []);
 
 type LegalType = 'legal' | 'banned' | '4cbLegal' | 'hellsmanderLegal';
 
@@ -30,9 +26,7 @@ export const searchColorsAtom = atom(searchParams.get('colors')?.split(',') || [
 
 export const searchColorsIdentityAtom = atom(searchParams.get('colorIdentity')?.split(',') || []);
 
-export const useHybridIdentityAtom = atom(
-  searchParams.get("useHybrid") == "true"
-);
+export const useHybridIdentityAtom = atom(searchParams.get('useHybrid') == 'true');
 
 export const searchColorComparisonAtom = atom(
   (searchParams.get('colorComparison') || '=') as '<=' | '>=' | '='
@@ -76,15 +70,11 @@ export const searchCmcAtom = atom<
 >(searchParams.get('manaValue') ? JSON.parse(searchParams.get('manaValue')!) : undefined);
 
 export const sortAtom = atom(
-  (searchParams.get("order") || "Color") as "Alpha" | "CMC" | "Color" | "Id"
+  (searchParams.get('order') || 'Color') as 'Alpha' | 'CMC' | 'Color' | 'Id'
 );
-export const dirAtom = atom(
-  (searchParams.get("dir") || "Asc") as "Asc" | "Desc"
-);
-export const offsetAtom = atom(parseInt(searchParams.get("page") || "0") || 0);
-export const creatorsAtom = atom(
-  searchParams.get("creator")?.split(",,") || []
-);
-export const tagsAtom = atom(searchParams.get("tags")?.split(",") || []);
+export const dirAtom = atom((searchParams.get('dir') || 'Asc') as 'Asc' | 'Desc');
+export const offsetAtom = atom(parseInt(searchParams.get('page') || '0') || 0);
+export const creatorsAtom = atom(searchParams.get('creator')?.split(',,') || []);
+export const tagsAtom = atom(searchParams.get('tags')?.split(',') || []);
 
 export const extraFiltersAtom = atom(searchParams.get('extraFilters')?.split(',') || []);

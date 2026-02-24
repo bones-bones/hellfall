@@ -25,11 +25,11 @@ import {
   tagsAtom,
   extraFiltersAtom,
   dirAtom,
-} from "./searchAtoms";
-import { sortFunction } from "./sortFunction";
-import { getColorIdentity } from "./getColorIdentity";
-import { canBeACommander } from "./canBeACommander";
-import { MISC_BULLSHIT, MISC_BULLSHIT_COLORS } from "./constants";
+} from './searchAtoms';
+import { sortFunction } from './sortFunction';
+import { getColorIdentity } from './getColorIdentity';
+import { canBeACommander } from './canBeACommander';
+import { MISC_BULLSHIT, MISC_BULLSHIT_COLORS } from './constants';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
@@ -90,9 +90,9 @@ export const useSearchResults = () => {
 
         if (
           costSearch.length > 0 &&
-          !costSearch.every((searchTerm) => {
-            const combined = (entry["Cost"] || []).join(",").toLowerCase();
-            if (searchTerm.startsWith("!")) {
+          !costSearch.every(searchTerm => {
+            const combined = (entry['Cost'] || []).join(',').toLowerCase();
+            if (searchTerm.startsWith('!')) {
               return !combined.includes(searchTerm.substring(1).toLowerCase());
             } else {
               return combined.includes(searchTerm.toLowerCase());
@@ -133,7 +133,7 @@ export const useSearchResults = () => {
           return false;
         }
 
-        if (idSearch !== "" && entry["Id"] != idSearch) {
+        if (idSearch !== '' && entry['Id'] != idSearch) {
           return false;
         }
 
@@ -185,17 +185,12 @@ export const useSearchResults = () => {
         }
         if (
           colorIdentityCriteria.length > 0 &&
-          !getColorIdentity(entry).every((cardColorIdentityComponent) => {
-            const miscBullshitColorIdentityCriteria =
-              colorIdentityCriteria.includes(MISC_BULLSHIT)
-                ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(
-                    (e) => e !== MISC_BULLSHIT
-                  )
-                : colorIdentityCriteria;
+          !getColorIdentity(entry).every(cardColorIdentityComponent => {
+            const miscBullshitColorIdentityCriteria = colorIdentityCriteria.includes(MISC_BULLSHIT)
+              ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(e => e !== MISC_BULLSHIT)
+              : colorIdentityCriteria;
             const colorTest = (e: string) =>
-              miscBullshitColorIdentityCriteria.includes(e) ||
-              e == "Colorless" ||
-              e == undefined;
+              miscBullshitColorIdentityCriteria.includes(e) || e == 'Colorless' || e == undefined;
             return useHybrid
               ? cardColorIdentityComponent.some(colorTest)
               : cardColorIdentityComponent.every(colorTest);
@@ -351,8 +346,8 @@ export const useSearchResults = () => {
     if (idSearch != '') {
       searchToSet.append('id', idSearch);
     }
-    if (idSearch != "") {
-      searchToSet.append("id", idSearch);
+    if (idSearch != '') {
+      searchToSet.append('id', idSearch);
     }
     if (typeSearch.length > 0) {
       searchToSet.append('type', typeSearch.join(','));
@@ -361,7 +356,7 @@ export const useSearchResults = () => {
       searchToSet.append('cost', costSearch.join(','));
     }
     if (costSearch.length > 0) {
-      searchToSet.append("cost", costSearch.join(","));
+      searchToSet.append('cost', costSearch.join(','));
     }
     if (rulesSearch.length > 0) {
       searchToSet.append('rules', rulesSearch.join(','));
@@ -379,7 +374,7 @@ export const useSearchResults = () => {
       searchToSet.append('useHybrid', 'true');
     }
     if (useHybrid) {
-      searchToSet.append("useHybrid", "true");
+      searchToSet.append('useHybrid', 'true');
     }
     if (searchCmc !== undefined) {
       searchToSet.append('manaValue', JSON.stringify(searchCmc));
@@ -414,11 +409,11 @@ export const useSearchResults = () => {
     if (dirRule != 'Asc') {
       searchToSet.append('dir', dirRule);
     }
-    if (sortRule != "Color") {
-      searchToSet.append("order", sortRule);
+    if (sortRule != 'Color') {
+      searchToSet.append('order', sortRule);
     }
-    if (dirRule != "Asc") {
-      searchToSet.append("dir", dirRule);
+    if (dirRule != 'Asc') {
+      searchToSet.append('dir', dirRule);
     }
     if (tempResults.length < page && tempResults.length > 0) {
       searchToSet.append('page', '0');

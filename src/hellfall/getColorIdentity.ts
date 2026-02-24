@@ -1,19 +1,17 @@
-import { HCEntry } from "../types";
-import { pipsAtom } from "./pipsAtom";
-import { useAtomValue } from "jotai";
+import { HCEntry } from '../types';
+import { pipsAtom } from './pipsAtom';
+import { useAtomValue } from 'jotai';
 
 export const getColorIdentity = (card: HCEntry) => {
   const colorIdentity = new Set<string[]>();
   const pips = useAtomValue(pipsAtom);
   // TODO: make color indicators work
   // TODO: special cases for Crypticspire Mantis (must be at least 2), Draft Dodger (Canada = Red and White)
-  card.Cost?.forEach((entry) => {
-    const names = (entry || "")
-      .match(/{([^}]+)}/g)
-      ?.map((match) => match.slice(1, -1));
+  card.Cost?.forEach(entry => {
+    const names = (entry || '').match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
-    names?.forEach((name) => {
-      const pip = pips?.find((e) => e.name.toLowerCase() === name.toLowerCase());
+    names?.forEach(name => {
+      const pip = pips?.find(e => e.name.toLowerCase() === name.toLowerCase());
       if (pip && pip?.isMana) {
         colorIdentity.add(pip.colors as string[]);
       } /*else {
@@ -25,14 +23,12 @@ export const getColorIdentity = (card: HCEntry) => {
     });
   });
 
-  card["Text Box"]?.forEach((entry) => {
-    const minusReminderText = (entry || "").replaceAll(/\(.*?\)/g, "");
-    const names = (minusReminderText || "")
-      .match(/{([^}]+)}/g)
-      ?.map((match) => match.slice(1, -1));
+  card['Text Box']?.forEach(entry => {
+    const minusReminderText = (entry || '').replaceAll(/\(.*?\)/g, '');
+    const names = (minusReminderText || '').match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
-    names?.forEach((name) => {
-      const pip = pips?.find((e) => e.name.toLowerCase() === name.toLowerCase());
+    names?.forEach(name => {
+      const pip = pips?.find(e => e.name.toLowerCase() === name.toLowerCase());
       if (pip && pip?.isMana) {
         colorIdentity.add(pip.colors as string[]);
       } /*else {
@@ -58,20 +54,19 @@ export const getColorIdentity = (card: HCEntry) => {
 
 const manaSymbolColorMatching: Record<
   string,
-  | "White"
-  | "Black"
-  | "Red"
-  | "Blue"
-  | "Green"
-  | "Purple"
-  | "Pickle"
-  | "Yellow"
-  | "Brown"
-  | "Pink"
-  | "Teal"
-  | "Orange"
-> = {
-};
+  | 'White'
+  | 'Black'
+  | 'Red'
+  | 'Blue'
+  | 'Green'
+  | 'Purple'
+  | 'Pickle'
+  | 'Yellow'
+  | 'Brown'
+  | 'Pink'
+  | 'Teal'
+  | 'Orange'
+> = {};
 
 const landToColorMapping: Record<
   string,

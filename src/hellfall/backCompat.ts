@@ -4,10 +4,9 @@ import { cardsAtom } from './cardsAtom';
 
 export const useNameToId = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);
-  const filteredCards = cards.filter((e) => e.Set != "C");
-  if (name == "random" && filteredCards.length > 0) {
-    const theId =
-      filteredCards[Math.floor(Math.random() * filteredCards.length)].Id;
+  const filteredCards = cards.filter(e => e.Set != 'C');
+  if (name == 'random' && filteredCards.length > 0) {
+    const theId = filteredCards[Math.floor(Math.random() * filteredCards.length)].Id;
     return theId;
   }
   return cards.find(card => card.Name === name)?.Id;
