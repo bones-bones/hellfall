@@ -1,10 +1,12 @@
 import { HCEntry } from "../types";
 import { pipsAtom } from "./pipsAtom";
 import { useAtomValue } from "jotai";
+import { getDefaultStore } from "jotai";
+const store = getDefaultStore();
 
 export const getColorIdentity = (card: HCEntry) => {
   const colorIdentity = new Set<string[]>();
-  const pips = useAtomValue(pipsAtom);
+  const pips = store.get(pipsAtom);
   // TODO: make color indicators work
   // TODO: special cases for Crypticspire Mantis (must be at least 2), Draft Dodger (Canada = Red and White)
   card.Cost?.forEach((entry) => {
