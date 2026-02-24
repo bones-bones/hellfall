@@ -192,7 +192,7 @@ export const useSearchResults = () => {
               ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(e => e !== MISC_BULLSHIT)
               : colorIdentityCriteria;
             const colorTest = (e: string) =>
-              miscBullshitColorIdentityCriteria.includes(e) || e == 'Colorless' || e == undefined;
+              miscBullshitColorIdentityCriteria.includes(e) || e == 'C' || e == undefined;
             return useHybrid
               ? cardColorIdentityComponent.some(colorTest)
               : cardColorIdentityComponent.every(colorTest);
