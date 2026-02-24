@@ -22,4 +22,8 @@ export const MISC_BULLSHIT_COLORS = [
   "Pink",
   "Teal",
   "Orange",
+  "TEMU",
+  "Gold",
+  "Beige",
+  "Grey"
 ];

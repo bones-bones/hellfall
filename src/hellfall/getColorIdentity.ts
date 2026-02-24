@@ -13,15 +13,15 @@ export const getColorIdentity = (card: HCEntry) => {
       ?.map((match) => match.slice(1, -1));
 
     names?.forEach((name) => {
-      const pip = pips?.find((e) => e.name === name);
+      const pip = pips?.find((e) => e.name.toLowerCase() === name.toLowerCase());
       if (pip && pip?.isMana) {
         colorIdentity.add(pip.colors as string[]);
-      } else {
+      } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
           colorIdentity.add([mappedColor]);
         }
-      }
+      }*/
     });
   });
 
@@ -32,15 +32,15 @@ export const getColorIdentity = (card: HCEntry) => {
       ?.map((match) => match.slice(1, -1));
 
     names?.forEach((name) => {
-      const pip = pips?.find((e) => e.name === name);
+      const pip = pips?.find((e) => e.name.toLowerCase() === name.toLowerCase());
       if (pip && pip?.isMana) {
         colorIdentity.add(pip.colors as string[]);
-      } else {
+      } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
           colorIdentity.add([mappedColor]);
         }
-      }
+      }*/
     });
   });
 
@@ -71,9 +71,6 @@ const manaSymbolColorMatching: Record<
   | "Teal"
   | "Orange"
 > = {
-  TEMU: "Orange",
-  Stab: "Red",
-  Microwave: "Red",
 };
 
 const landToColorMapping: Record<
@@ -81,10 +78,12 @@ const landToColorMapping: Record<
   'White' | 'Black' | 'Red' | 'Blue' | 'Green' | 'Piss' | 'Pickle' | undefined | 'Purple'
 > = {
   Plains: 'White',
+  Ploons: 'White',
   Swamp: 'Black',
   Island: 'Blue',
-  IslandGX: 'Blue', // TODO: I have sinned
+  // IslandGX: 'Blue', // TODO: I have sinned
   Mountain: 'Red',
+  Moontain: 'Red',
   Forest: 'Green',
   Nebula: 'Purple',
 };
