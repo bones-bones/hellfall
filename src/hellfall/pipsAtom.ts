@@ -5,6 +5,7 @@ import { atom } from 'jotai';
 export const pipsAtom = atom<HCCardSymbol[]>([]);
 
 export const loadPips = async () => {
+  debugger;
   const { data } = await import('../data/pips.json');
   const transformedData = (data).map(item => {
     let manaValue: number;
@@ -35,6 +36,7 @@ export const loadPips = async () => {
       mana_value: 0
     };
   });
+  debugger;
 
   return transformedData as HCCardSymbol[];
   // return data ;

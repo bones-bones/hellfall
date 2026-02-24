@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { CheckboxGroup } from './inputs';
+import { CheckboxGroup, NamedCheckboxGroup } from './inputs';
 import { PillSearch } from './inputs';
 import { TextInput } from '@workday/canvas-kit-react/text-input';
 import { FormField } from '@workday/canvas-kit-react/form-field';
@@ -28,7 +28,7 @@ import {
   toughnessAtom,
   tagsAtom,
 } from './searchAtoms';
-import { colors } from './constants';
+import { colors, colorValues} from './constants';
 import { StyledLabel } from './StyledLabel';
 import { CardLegalityControls } from './search-controls/CardLegalityControls';
 import { StyledComponentHolder } from './StyledComponentHolder';
@@ -136,9 +136,10 @@ export const SearchControls = () => {
             </StyledManaSelect>
           </StyledComponentHolder>
         </CheckboxGroup>
-        <CheckboxGroup
+        <NamedCheckboxGroup
           label="Color Identity (Commander)"
-          values={colors}
+          values={colorValues}
+          names={colors}
           initialValue={searchColorsIdentity}
           onChange={setSearchColorsIdentityAtom}
         >
@@ -153,7 +154,7 @@ export const SearchControls = () => {
               }}
             />
           </StyledComponentHolder>
-        </CheckboxGroup>
+        </NamedCheckboxGroup>
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup

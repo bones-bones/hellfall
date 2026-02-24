@@ -1,4 +1,5 @@
 import { HCEntry } from "../types";
+import { HCColor,HCColors } from "../types/Card";
 import { pipsAtom } from "./pipsAtom";
 import { useAtomValue } from "jotai";
 import { getDefaultStore } from "jotai";
@@ -15,8 +16,8 @@ export const getColorIdentity = (card: HCEntry) => {
       ?.map((match) => match.slice(1, -1));
 
     names?.forEach((name) => {
-      const pip = pips?.find((e) => e.name.toLowerCase() === name.toLowerCase());
-      if (pip && pip?.isMana) {
+      const pip = pips?.find((e) => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
         colorIdentity.add(pip.colors as string[]);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
@@ -34,8 +35,8 @@ export const getColorIdentity = (card: HCEntry) => {
       ?.map((match) => match.slice(1, -1));
 
     names?.forEach((name) => {
-      const pip = pips?.find((e) => e.name.toLowerCase() === name.toLowerCase());
-      if (pip && pip?.isMana) {
+      const pip = pips?.find((e) => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
         colorIdentity.add(pip.colors as string[]);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
@@ -51,7 +52,7 @@ export const getColorIdentity = (card: HCEntry) => {
     splitSubtypes.forEach(typeEntry => {
       const mappedColor = landToColorMapping[typeEntry];
       if (mappedColor) {
-        colorIdentity.add([mappedColor]);
+        colorIdentity.add([mappedColor] as HCColors);
       }
     });
   });
@@ -75,18 +76,15 @@ const manaSymbolColorMatching: Record<
 > = {
 };
 
-const landToColorMapping: Record<
-  string,
-  'White' | 'Black' | 'Red' | 'Blue' | 'Green' | 'Piss' | 'Pickle' | undefined | 'Purple'
-> = {
-  Plains: 'White',
-  Ploons: 'White',
-  Swamp: 'Black',
-  Island: 'Blue',
+const landToColorMapping = {
+  Plains: 'W',
+  Ploons: 'W',
+  Swamp: 'B',
+  Island: 'U',
   // IslandGX: 'Blue', // TODO: I have sinned
-  Mountain: 'Red',
-  Moontain: 'Red',
-  Forest: 'Green',
-  Nebula: 'Purple',
-};
+  Mountain: 'R',
+  Moontain: 'R',
+  Forest: 'G',
+  Nebula: 'P',
+} as Record<string, HCColor>;
 //"{3/P}{U}",

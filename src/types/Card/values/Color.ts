@@ -19,6 +19,8 @@ export enum HCMiscColor {
   Beige = 'Beige',
   Grey = 'Grey',
 }
+export type HCColor = HCCoreColor | HCMiscColor;
+
 
 export type HCCoreColors = `${HCCoreColor}`[];
 

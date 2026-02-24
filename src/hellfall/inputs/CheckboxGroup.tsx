@@ -44,6 +44,49 @@ export const CheckboxGroup: FC<
     </fieldset>
   );
 };
+export const NamedCheckboxGroup: FC<
+  PropsWithChildren<{
+    names: string[];
+    values: string[];
+    initialValue?: string[];
+    onChange: (values: string[]) => void;
+    label: string;
+  }>
+> = ({ names, values, onChange, initialValue, label, children }) => {
+  const [selected, setSelected] = useState<string[]>(initialValue || []);
+  useEffect(() => {
+    onChange(selected);
+  }, [selected]);
+  return (
+    <fieldset>
+      <StyledLegend>{label}</StyledLegend>
+
+      <Container>
+        { values.map((entry,index) => {
+          const name = names[index];
+          return (
+            <CheckEntry key={entry}>
+              <SearchCheckbox
+                id={label + entry + 'label' + 'checkbox'}
+                type="checkbox"
+                checked={selected.includes(entry)}
+                onChange={event => {
+                  if (event.target.checked) {
+                    setSelected([entry, ...selected]);
+                  } else {
+                    setSelected(selected.filter(selectedEntry => selectedEntry != entry));
+                  }
+                }}
+              />
+              <StyledLabel htmlFor={label + entry + 'label' + 'checkbox'}>{name}</StyledLabel>
+            </CheckEntry>
+          );
+        })}
+      </Container>
+      {children}
+    </fieldset>
+  );
+};
 const Container = styled.div({ display: 'flex', flexDirection: 'column' });
 
 const CheckEntry = styled.div({

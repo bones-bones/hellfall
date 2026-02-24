@@ -10,6 +10,16 @@ export const colors = [
   'Colorless',
   MISC_BULLSHIT,
 ];
+export const colorValues= [
+  'W',
+  'U',
+  'B',
+  'R',
+  'G',
+  'P',
+  'C',
+  MISC_BULLSHIT,
+];
 
 export const CHUNK_SIZE = 50;
 

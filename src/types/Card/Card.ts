@@ -12,7 +12,7 @@ type Layout<T extends `${HCLayout}`> = Pick<HCCardFields.Core.HCReferences, 'lay
  *
  * This collection is focused around two core varieties of cards:
  * - {@link HCCard.AnySingleFaced} describes any card with one face and no `card_faces` property, e.g. {@link HCCard.Normal Normal} or {@link HCCard.Saga Saga}.
- * - {@link HCCard.AnySingleFaced} describes any card with multiple faces.
+ * - {@link HCCard.AnyMultiFaced} describes any card with multiple faces.
 //  * - {@link HCCard.AnySingleSidedSplit} describes any card with multiple faces where both faces are on the front, e.g. {@link HCCard.Adventure Adventure}, {@link HCCard.Flip Flip}, or {@link HCCard.Split Split}.
 //  * - {@link HCCard.AnyDoubleSidedSplit} describes any card with multiple faces where the faces are on the front and back of the card, e.g.  {@link HCCard.Transform Transform},  {@link HCCard.ModalDfc ModalDfc}, or  {@link HCCard.ReversibleCard ReversibleCard}.
 //  * - {@link HCCard.ReversibleCard} describes solely reversible cards.

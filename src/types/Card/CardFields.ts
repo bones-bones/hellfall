@@ -31,6 +31,9 @@ import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType
 export namespace HCCardFields {}
 
 export namespace HCCardFields.Core {
+  /**
+   * These fields are always at the root level for every layout.
+   */
   export type HCReferences = {
     /**
      * A unique ID for this card in HC’s database.

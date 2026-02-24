@@ -183,9 +183,11 @@ export const useSearchResults = () => {
         if (creators.length > 0 && !creators.includes(entry.Creator)) {
           return false;
         }
+        // debugger;
         if (
           colorIdentityCriteria.length > 0 &&
           !getColorIdentity(entry).every(cardColorIdentityComponent => {
+            debugger;
             const miscBullshitColorIdentityCriteria = colorIdentityCriteria.includes(MISC_BULLSHIT)
               ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(e => e !== MISC_BULLSHIT)
               : colorIdentityCriteria;
