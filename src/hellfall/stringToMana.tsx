@@ -7,7 +7,7 @@ const store = getDefaultStore();
 
 export const getPipSrc = (name: string) => {
   const pips = store.get(pipsAtom);
-  const icon = pips?.find(e => e.name.toLowerCase() === name.toLowerCase());
+  const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
   return icon ? '/pips/' + icon.filename : undefined;
 };
 

@@ -11,8 +11,8 @@ export const getColorIdentity = (card: HCEntry) => {
     const names = (entry || '').match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
     names?.forEach(name => {
-      const pip = pips?.find(e => e.name.toLowerCase() === name.toLowerCase());
-      if (pip && pip?.isMana) {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
         colorIdentity.add(pip.colors as string[]);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
@@ -28,8 +28,8 @@ export const getColorIdentity = (card: HCEntry) => {
     const names = (minusReminderText || '').match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
     names?.forEach(name => {
-      const pip = pips?.find(e => e.name.toLowerCase() === name.toLowerCase());
-      if (pip && pip?.isMana) {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
         colorIdentity.add(pip.colors as string[]);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
