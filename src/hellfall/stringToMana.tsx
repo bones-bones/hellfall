@@ -3,12 +3,11 @@ import { pipsAtom } from "./pipsAtom";
 import { useAtomValue } from "jotai";
 import { getDefaultStore } from "jotai";
 const store = getDefaultStore();
-// TODO: make sure TGs render correctly
-// TODO: add native svgs for other colors and symbols
+// TODO: add better alt text handling (do it like scryfall does)
 
 export const getPipSrc = (name: string) => {
   const pips = store.get(pipsAtom);
-  const icon = pips?.find((e) => e.name === name);
+  const icon = pips?.find((e) => e.name.toLowerCase() === name.toLowerCase());
   return icon ? "/pips/" + icon.filename : undefined;
 };
 
@@ -21,7 +20,7 @@ export const stringToMana = (text: string) => {
         const loc = getPipSrc(entry.slice(1, -1));
         return loc ? (
           <PipContainer>
-            <PipSymbol src={loc} />
+            <PipSymbol src={loc} alt={entry}/>
           </PipContainer>
         ) : (
           entry

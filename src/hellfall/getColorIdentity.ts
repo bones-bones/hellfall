@@ -1,10 +1,12 @@
 import { HCEntry } from "../types";
 import { pipsAtom } from "./pipsAtom";
 import { useAtomValue } from "jotai";
+import { getDefaultStore } from "jotai";
+const store = getDefaultStore();
 
 export const getColorIdentity = (card: HCEntry) => {
   const colorIdentity = new Set<string[]>();
-  const pips = useAtomValue(pipsAtom);
+  const pips = store.get(pipsAtom);
   // TODO: make color indicators work
   // TODO: special cases for Crypticspire Mantis (must be at least 2), Draft Dodger (Canada = Red and White)
   card.Cost?.forEach((entry) => {
@@ -13,15 +15,15 @@ export const getColorIdentity = (card: HCEntry) => {
       ?.map((match) => match.slice(1, -1));
 
     names?.forEach((name) => {
-      const pip = pips?.find((e) => e.name === name);
+      const pip = pips?.find((e) => e.name.toLowerCase() === name.toLowerCase());
       if (pip && pip?.isMana) {
         colorIdentity.add(pip.colors as string[]);
-      } else {
+      } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
           colorIdentity.add([mappedColor]);
         }
-      }
+      }*/
     });
   });
 
@@ -32,15 +34,15 @@ export const getColorIdentity = (card: HCEntry) => {
       ?.map((match) => match.slice(1, -1));
 
     names?.forEach((name) => {
-      const pip = pips?.find((e) => e.name === name);
+      const pip = pips?.find((e) => e.name.toLowerCase() === name.toLowerCase());
       if (pip && pip?.isMana) {
         colorIdentity.add(pip.colors as string[]);
-      } else {
+      } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
           colorIdentity.add([mappedColor]);
         }
-      }
+      }*/
     });
   });
 
@@ -71,9 +73,6 @@ const manaSymbolColorMatching: Record<
   | "Teal"
   | "Orange"
 > = {
-  TEMU: "Orange",
-  Stab: "Red",
-  Microwave: "Red",
 };
 
 const landToColorMapping: Record<
@@ -81,10 +80,12 @@ const landToColorMapping: Record<
   'White' | 'Black' | 'Red' | 'Blue' | 'Green' | 'Piss' | 'Pickle' | undefined | 'Purple'
 > = {
   Plains: 'White',
+  Ploons: 'White',
   Swamp: 'Black',
   Island: 'Blue',
-  IslandGX: 'Blue', // TODO: I have sinned
+  // IslandGX: 'Blue', // TODO: I have sinned
   Mountain: 'Red',
+  Moontain: 'Red',
   Forest: 'Green',
   Nebula: 'Purple',
 };

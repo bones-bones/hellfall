@@ -92,7 +92,7 @@
       "colors": ["Pink"]
     },
     {
-      "filename": "mono/misc/Teal.webp",
+      "filename": "mono/misc/Teal.png",
       "name": "Teal",
       "isMana": true,
       "mv": 1,
@@ -317,6 +317,27 @@
       "colors": ["Colorless"]
     },
     {
+      "filename": "mono/variables/GX.svg",
+      "name": "G/X",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["Green"]
+    },
+    {
+      "filename": "mono/variables/WY.svg",
+      "name": "W/Y",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["White"]
+    },
+    {
+      "filename": "mono/variables/UZ.svg",
+      "name": "U/Z",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["Blue"]
+    },
+    {
       "filename": "mono/fractional/HW.svg",
       "name": "HW",
       "isMana": true,
@@ -373,28 +394,28 @@
       "colors": ["Colorless"]
     },
     {
-      "filename": "mono/fractional/JU.webp",
+      "filename": "mono/fractional/JU.png",
       "name": "JU",
       "isMana": true,
       "mv": 0.5,
       "colors": ["Blue"]
     },
     {
-      "filename": "mono/fractional/JP.webp",
+      "filename": "mono/fractional/JP.png",
       "name": "JP",
       "isMana": true,
       "mv": 0.5,
       "colors": ["Purple"]
     },
     {
-      "filename": "mono/fractional/JUP.webp",
+      "filename": "mono/fractional/JUP.png",
       "name": "JUP",
       "isMana": true,
       "mv": 1,
       "colors": ["Blue", "Purple"]
     },
     {
-      "filename": "mono/fractional/Venezuela.webp",
+      "filename": "mono/fractional/Venezuela.png",
       "name": "Venezuela",
       "isMana": true,
       "mv": "1/15000000",
@@ -402,27 +423,27 @@
     },
     {
       "filename": "mono/fractional/TG1.svg",
-      "name": "TG",
+      "name": "TG1",
       "isMana": true,
       "mv": "1/3",
       "colors": ["Green"]
     },
     {
       "filename": "mono/fractional/TG2.svg",
-      "name": "TG",
+      "name": "TG2",
       "isMana": true,
       "mv": "1/3",
       "colors": ["Green"]
     },
     {
       "filename": "mono/fractional/TG3.svg",
-      "name": "TG",
+      "name": "TG3",
       "isMana": true,
       "mv": "1/3",
       "colors": ["Green"]
     },
     {
-      "filename": "mono/effects/ant.webp",
+      "filename": "mono/effects/ant.png",
       "name": "ant",
       "isMana": true,
       "mv": 1,
@@ -436,7 +457,7 @@
       "colors": ["Green"]
     },
     {
-      "filename": "mono/effects/Milk.webp",
+      "filename": "mono/effects/Milk.svg",
       "name": "Milk",
       "isMana": true,
       "mv": 1,
@@ -499,7 +520,7 @@
       "colors": ["Black"]
     },
     {
-      "filename": "mono/effects/Bamana.webp",
+      "filename": "mono/effects/Bamana.png",
       "name": "Bamana",
       "isMana": true,
       "mv": 1,
@@ -1098,6 +1119,27 @@
       "colors": ["Pink", "Colorless"]
     },
     {
+      "filename": "hybrid/misc/2Gold.svg",
+      "name": "2/Gold",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Gold", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/2Beige.svg",
+      "name": "2/Beige",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Beige", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/2Grey.svg",
+      "name": "2/Grey",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Grey", "Colorless"]
+    },
+    {
       "filename": "hybrid/misc/UE.svg",
       "name": "U/E",
       "isMana": true,
@@ -1385,12 +1427,12 @@
       "isMana": false
     },
     {
-      "filename": "symbols/additional/upright.webp",
+      "filename": "symbols/additional/UpRight.png",
       "name": "upright",
       "isMana": false
     },
     {
-      "filename": "symbols/additional/downleft.webp",
+      "filename": "symbols/additional/DownLeft.png",
       "name": "downleft",
       "isMana": false
     },
@@ -1420,7 +1462,7 @@
       "isMana": false
     },
     {
-      "filename": "symbols/additional/Rock Mushroom.webp",
+      "filename": "symbols/additional/Rock Mushroom.png",
       "name": "Rock Mushroom",
       "isMana": false
     },
@@ -1430,13 +1472,183 @@
       "isMana": false
     },
     {
-      "filename": "symbols/additional/Blood.webp",
+      "filename": "symbols/additional/Blood.png",
       "name": "Blood",
       "isMana": false
     },
     {
       "filename": "symbols/additional/PhT.svg",
       "name": "H/T",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Brick.svg",
+      "name": "Brick",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Moona.svg",
+      "name": "Moona",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/TRIANGLE.svg",
+      "name": "TRIANGLE",
+      "isMana": false
+    },
+    {
+      "filename": "hybrid/misc/UBB.svg",
+      "name": "U/BB",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Blue","Black"]
+    },
+    {
+      "filename": "hybrid/misc/BBP.svg",
+      "name": "BB/P",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Black","Purple"]
+    },
+    {
+      "filename": "hybrid/misc/UUP.svg",
+      "name": "UU/P",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Blue","Purple"]
+    },
+    {
+      "filename": "mono/weirdNums/100000.svg",
+      "name": "100000",
+      "isMana": true,
+      "mv": 100000,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/weirdNums/600000.svg",
+      "name": "600000",
+      "isMana": true,
+      "mv": 600000,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "symbols/additional/sun.png",
+      "name": "sun",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Coin.png",
+      "name": "Coin",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/temporary-currency.svg",
+      "name": "temporary-currency",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/SouljaGame.png",
+      "name": "SouljaGame",
+      "isMana": false
+    },
+    {
+      "filename": "mono/effects/TEMU.svg",
+      "name": "TEMU",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["TEMU"]
+    },
+    {
+      "filename": "mono/weirdNums/199.svg",
+      "name": "1.99",
+      "isMana": true,
+      "mv": 1.99,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/Canada.svg",
+      "name": "Canada",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["White","Red","Colorless"]
+    },
+    {
+      "filename": "mono/effects/Microwave.png",
+      "name": "Microwave",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Red","Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/DiscardRR.svg",
+      "name": "Discard your hand/RR",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Red","Colorless"]
+    },
+    {
+      "filename": "mono/effects/UFO.svg",
+      "name": "UFO",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/effects/Stab.png",
+      "name": "Stab",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Red"]
+    },
+    {
+      "filename": "mono/weirdNums/-1.svg",
+      "name": "-1",
+      "isMana": true,
+      "mv": -1,
+      "colors": ["Colorless"]
+    },
+    {
+      "filename": "mono/misc/Camel.svg",
+      "name": "Camel",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Orange"]
+    },
+    {
+      "filename": "mono/misc/upsidedownG.svg",
+      "name": "upsidedownG",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Green"]
+    },
+    {
+      "filename": "symbols/additional/Chris.png",
+      "name": "Chris",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Lois.png",
+      "name": "Lois",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Stewie.png",
+      "name": "Stewie",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Meg.png",
+      "name": "Meg",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Peter.png",
+      "name": "Peter",
+      "isMana": false
+    },
+    {
+      "filename": "symbols/additional/Deadeye.png",
+      "name": "Deadeye",
       "isMana": false
     },
     {
