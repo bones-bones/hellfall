@@ -15,6 +15,31 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
 
   const imagesToShow = data.Image?.filter(e => typeof e === 'string' && e !== '').slice(1);
 
+  const splitParens = (text: string) => {
+    const chunks: string[] = [];
+    let parenLevel = 0;
+    let chunkStart = 0;
+    for (let i = 0; i < text.length; i++) {
+      if (text[i] == '(') {
+        if (parenLevel == 0 && i > 0) {
+          chunks.push(text.slice(chunkStart, i));
+          chunkStart = i;
+        }
+        parenLevel++;
+      } else if (text[i] == ')' && parenLevel > 0) {
+        parenLevel--;
+        if (parenLevel == 0) {
+          chunks.push(text.slice(chunkStart, i + 1));
+          chunkStart = i + 1;
+        }
+      }
+    }
+    if (chunkStart < text.length) {
+      chunks.push(text.slice(chunkStart));
+    }
+    return chunks;
+  };
+
   return (
     <Container key={data['Id']}>
       {imagesToShow.length === 0 ? (
@@ -69,15 +94,14 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
               <Text typeLevel="body.medium" key="rules" wordBreak="break-word">
                 {(data['Text Box']?.[i] || '').split('\\n').map(entry => (
                   <>
-                    {entry
-                      .split(/(?=[()]+)/)
-                      .filter(chunk => chunk !== ')')
-                      .map((chunk, ci) => {
-                        if (chunk.startsWith('(')) {
-                          return <ItalicText key={ci}>{stringToMana(chunk)})</ItalicText>;
-                        }
-                        return stringToMana(chunk);
-                      })}
+                    {' '}
+                    {}
+                    {splitParens(entry).map((chunk, ci) => {
+                      if (chunk.startsWith('(')) {
+                        return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
+                      }
+                      return stringToMana(chunk);
+                    })}
                     <br />
                   </>
                 ))}

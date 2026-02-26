@@ -29,14 +29,12 @@ export const stringToMana = (text: string) => {
     });
 };
 
-const PipSymbol = styled('img')({ height: '18px',
-  marginTop: "10px"
-});
+const PipSymbol = styled('img')({ height: '18px', marginTop: '10px' });
 const PipContainer = styled('div')({
   display: 'inline-flex',
   lineHeight: '1.25rem',
   alignItems: 'top',
   padding: '0 1px',
   verticalAlign: 'top',
-  marginTop: '-0.25rem'
+  marginTop: '-0.25rem',
 });
