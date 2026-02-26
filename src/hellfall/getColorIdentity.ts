@@ -2,7 +2,7 @@ import { HCEntry } from '../types';
 import { pipsAtom } from './pipsAtom';
 import { useAtomValue } from 'jotai';
 import { getDefaultStore } from 'jotai';
-import { HCColor, HCColors } from '../types/Card';
+import { HCColor, HCColors } from '../api-types/Card';
 const store = getDefaultStore();
 
 export const getColorIdentity = (card: HCEntry) => {

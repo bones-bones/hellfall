@@ -1,4 +1,4 @@
-import { HCCardSymbol } from '../types/Symbology';
+import { HCCardSymbol } from '../api-types/Symbology';
 // import { Pip } from '../types';
 import { atom } from 'jotai';
 

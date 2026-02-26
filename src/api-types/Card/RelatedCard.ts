@@ -23,6 +23,10 @@ export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
    */
   type_line: string;
   /**
+   * An string with the image for this card.
+   */
+  image?: string;
+  /**
    * A URI where you can retrieve a full object describing this card on HC’s API.
    *
    * @type URI

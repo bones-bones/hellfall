@@ -115,6 +115,8 @@ export namespace HCCardFields.Gameplay {
 
   /**
    * Combat stats: power, toughness, loyalty, and defense.
+   * - Root level for a single-face card.
+   * - Card face level for a multi-face card.
    */
   export type CombatStats = {
     /**
@@ -136,11 +138,14 @@ export namespace HCCardFields.Gameplay {
   };
 
   /**
-   * On multi-face cards, these fields are duplicated at the card and print level.
+   * On multi-face cards, these fields are duplicated at the card and face level.
    */
   type AllFacesAndSides = {
     name: string;
     type_line: string;
+    supertypes?:string[];
+    types?:string[];
+    subtypes?:string[];
     mana_cost?: string;
   };
 
@@ -167,6 +172,18 @@ export namespace HCCardFields.Gameplay {
      * The type line of this card.
      */
     type_line: string;
+    /**
+     * The supertypes of the card.
+     */
+    supertypes?:string[];
+    /**
+     * The types of the card.
+     */
+    types?:string[];
+    /**
+     * The subtypes of the card.
+     */
+    subtypes?:string[];
     /**
      * The Oracle text for this card, if any.
      */
@@ -224,6 +241,18 @@ export namespace HCCardFields.Gameplay {
      * The type line of this card.
      */
     type_line: string;
+    /**
+     * The supertypes of the card.
+     */
+    supertypes?:string[];
+    /**
+     * The types of the card.
+     */
+    types?:string[];
+    /**
+     * The subtypes of the card.
+     */
+    subtypes?:string[];
   };
 }
 
@@ -264,6 +293,10 @@ export namespace HCCardFields.Print {
      */
     image_status: `${HCImageStatus}`;
     /**
+     * An string with the image for this side.
+     */
+    image?: string;
+    /**
      * This card’s set code.
      */
     set: string;
@@ -289,9 +322,9 @@ export namespace HCCardFields.Print {
    */
   export type CardSideSpecific = {
     /**
-     * An object listing available imagery for this card. See the Card Imagery article for more information.
+     * An string with the image for this side.
      */
-    image_uris?: HCImageUris;
+    image?: string;
   };
 
   /**
