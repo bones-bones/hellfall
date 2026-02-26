@@ -27,7 +27,7 @@ const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
   }, [setPips]);
 
   if (!isLoaded) {
-    return <div></div>;
+    return <div />;
   }
 
   return <>{children}</>;
@@ -55,7 +55,7 @@ const CardRoute = () => {
   }, [cardIdentifier, cardId, IsNonTokenName, navigate]);
 
   if (!shouldRender) {
-    return <div></div>;
+    return <div />;
   }
   return <SingleCard />;
 };
