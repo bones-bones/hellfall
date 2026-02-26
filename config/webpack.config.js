@@ -276,6 +276,10 @@ module.exports = function (webpackEnv) {
             from: "src/data/Hellscube-Database.json",
             to: "Hellscube-Database.json",
           },
+          {
+            from: "public/pips",
+            to: "pips",
+          },
         ],
       }),
 

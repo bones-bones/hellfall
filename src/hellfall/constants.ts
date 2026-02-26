@@ -16,14 +16,14 @@ export const CHUNK_SIZE = 50;
 export const MANA_REGEX = /({[WUBRGTCPHS0123456Y7X/Pickle]+})/; // /({[WUBRGTCP01234567X(2/W)]})/;
 
 export const MISC_BULLSHIT_COLORS = [
-  "Pickle",
-  "Yellow",
-  "Brown",
-  "Pink",
-  "Teal",
-  "Orange",
-  "TEMU",
-  "Gold",
-  "Beige",
-  "Grey"
+  'Pickle',
+  'Yellow',
+  'Brown',
+  'Pink',
+  'Teal',
+  'Orange',
+  'TEMU',
+  'Gold',
+  'Beige',
+  'Grey',
 ];
