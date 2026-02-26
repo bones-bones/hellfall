@@ -8,7 +8,7 @@ const store = getDefaultStore();
 export const getPipSrc = (name: string) => {
   const pips = store.get(pipsAtom);
   const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-  return icon ? '/pips/' + icon.filename : undefined;
+  return icon ? '/hellfall/pips/' + icon.filename : undefined;
 };
 
 export const stringToMana = (text: string) => {

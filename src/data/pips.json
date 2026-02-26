@@ -434,6 +434,27 @@
       "colors": ["U"]
     },
     {
+      "filename": "mono/variables/GX.svg",
+      "name": "G/X",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["Green"]
+    },
+    {
+      "filename": "mono/variables/WY.svg",
+      "name": "W/Y",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["White"]
+    },
+    {
+      "filename": "mono/variables/UZ.svg",
+      "name": "U/Z",
+      "isMana": true,
+      "mv": 0,
+      "colors": ["Blue"]
+    },
+    {
       "filename": "mono/fractional/HW.svg",
       "symbol": "HW",
       "english": "one-half white mana",
@@ -1376,6 +1397,27 @@
       "represents_mana": true,
       "mana_value": 2,
       "colors": ["Grey", "C"]
+    },
+    {
+      "filename": "hybrid/misc/2Gold.svg",
+      "name": "2/Gold",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Gold", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/2Beige.svg",
+      "name": "2/Beige",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Beige", "Colorless"]
+    },
+    {
+      "filename": "hybrid/misc/2Grey.svg",
+      "name": "2/Grey",
+      "isMana": true,
+      "mv": 2,
+      "colors": ["Grey", "Colorless"]
     },
     {
       "filename": "hybrid/misc/UE.svg",
