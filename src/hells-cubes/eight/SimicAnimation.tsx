@@ -1,11 +1,6 @@
-import {
-  BigContainer,
-  InnerContainer,
-  ManaSymbolSmall,
-  StyledH3,
-} from "./components";
-import { getPipSrc } from "../../hellfall/stringToMana";
-import { Link } from "react-router-dom";
+import { BigContainer, InnerContainer, ManaSymbolSmall, StyledH3 } from './components';
+import { getPipSrc } from '../../hellfall/stringToMana';
+import { Link } from 'react-router-dom';
 export const SimicAnimation = () => {
   return (
     <>
@@ -61,7 +56,7 @@ export const SimicAnimation = () => {
         <h2>Easy Archetype Pairings</h2>
         <Link to={'/hellscubes/eight/lands-lands-lands'}>
           <StyledH3>
-            <ManaSymbolSmall src={getPipSrc("G/W")} />
+            <ManaSymbolSmall src={getPipSrc('G/W')} />
             WG Lands
           </StyledH3>
         </Link>
@@ -76,7 +71,7 @@ export const SimicAnimation = () => {
 
         <Link to={'/hellscubes/eight/golgari-landistocrats'}>
           <StyledH3>
-            <ManaSymbolSmall src={getPipSrc("B/G")} />
+            <ManaSymbolSmall src={getPipSrc('B/G')} />
             BG Landristocrats
           </StyledH3>
         </Link>
