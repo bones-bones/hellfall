@@ -1,15 +1,16 @@
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 import { getBaseObject } from './getBaseObject';
 import { getCard } from './getCard';
+// TODO: make dfcs work
 
-export const toDeck = (cards: HCEntry[]) => {
+export const toDeck = (cards: HCCard.Any[]) => {
   const baseDeck = getBaseObject();
 
   const deckCards = cards.map((entry, i) => {
     (baseDeck.ObjectStates[0].DeckIDs as number[]).push((i + 1) * 100);
 
     const thing = {
-      FaceURL: entry.Image[0],
+      FaceURL: entry.toFaces()[0].image,
       BackURL:
         'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
       NumWidth: 1,
@@ -20,13 +21,13 @@ export const toDeck = (cards: HCEntry[]) => {
     };
     (baseDeck.ObjectStates[0].CustomDeck as any)[i + 1 + ''] = thing;
 
-    console.log(entry.Name);
+    console.log(entry.name);
 
     const mainCard = getCard({
       thing: { [i + 1 + '']: thing },
-      name: entry.Name,
+      name: entry.name,
       id: (i + 1) * 100,
-      description: entry['Text Box']?.[0] || entry.Name,
+      description: entry.toFaces()[0].oracle_text || entry.name,
     });
     // TODO: don't break lands
     // const sideCount = entry["Card Type(s)"].filter(
