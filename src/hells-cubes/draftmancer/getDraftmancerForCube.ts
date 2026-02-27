@@ -1,5 +1,6 @@
 import { toDraftmancerCube } from './toDraftmancer';
 import { HCEntry } from '../../types';
+import { HCCard } from '../../api-types';
 
 export const getDraftmancerForCube = ({
   id,
@@ -8,7 +9,7 @@ export const getDraftmancerForCube = ({
 }: {
   id: string;
   name: string;
-  cards: HCEntry[];
+  cards: HCCard.Any[];
 }) => {
   const val = toDraftmancerCube({
     set: id,

@@ -1,13 +1,14 @@
 import { HCEntry } from '../../types';
+import { HCCard } from '../../api-types';
 import { DraftmancerCard } from '../types';
 
-export const getDraftMancerCard = (card: HCEntry) => {
+export const getDraftMancerCard = (card: HCCard.Any) => {
   const cardToReturn: DraftmancerCard = {
-    id: card.Name.replace(' :]', '') + '_custom_',
-    oracle_id: card.Name.replace(':]', '').trim(),
-    name: card.Name.replace(':]', '').trim(),
+    id: card.name.replace(' :]', '') + '_custom_',
+    oracle_id: card.name.replace(':]', '').trim(),
+    name: card.name.replace(':]', '').trim(),
     // This prefers replaceAll for static strings
-    mana_cost: (card.Cost?.[0] || '')
+    mana_cost: (card.toFaces()[0].mana_cost || '')
       .replace(/\{\?\}/g, '{0}')
       .replace('?', '{0}')
       .replace(/\{H\/.\}/g, '') // TODO do the stringreplace and try ta actually set the number
@@ -33,41 +34,36 @@ export const getDraftMancerCard = (card: HCEntry) => {
       .replaceAll('{H/Brown}', '{1}') // It that Goes in the Green Slot
       .replaceAll('{G/Yellow/P}', '{G}'), // It that Goes in the Green Slot
 
-    // @ts-ignore
-    colors: card['Color(s)']?.split(';').map(colorToDraftMancerColor),
+    colors: card.toFaces()[0].colors,
     set: 'custom',
     collector_number: '',
     rarity: 'rare',
-    type: `${card['Supertype(s)']?.[0]?.replace(/;/g, ' ')} ${card['Card Type(s)']?.[0]?.replace(
-      /;/g,
-      ' '
-    )}`.trim(),
-    subtypes: card['Subtype(s)']?.[0]!.split(';').filter(e => e != '') || [],
+    type: `${card.toFaces()[0].supertypes?.join(" ")} ${card.toFaces()[0].types?.join(" ")}`.trim(),
+    subtypes: card.toFaces()[0].subtypes?.filter(e => e != '') || [],
     rating: 0,
     in_booster: true,
-    oracle_text: card['Text Box']?.filter(Boolean).join('\n').replace(/:\[/g, ''),
+    oracle_text: card.toFaces().map(e=>e.oracle_text).filter(Boolean).join('\n').replace(/:\[/g, ''),
 
     printed_names: {
-      en: card.Name.replace(' :]', ''), // Six Flags
+      en: card.name.replace(' :]', ''), // Six Flags
     },
-    image_uris: { en: card.Image[1] || card.Image[0]! },
+    image_uris: { en:  'card_faces' in card && card.card_faces[0].image
+                ? card.card_faces[0].image
+                : card.image! },
     is_custom: true,
     ...getDraftEffects(card),
-    ...(card.Image[2] &&
-      !card.Image[3] && {
-        back: {
-          name: card.Name.split(' // ')[1] || '',
-          image_uris: { en: card.Image[2]! },
-          type: `${card['Supertype(s)']?.[1]?.replace(/;/g, ' ')} ${card[
-            'Card Type(s)'
-          ]?.[1]?.replace(/;/g, ' ')}`.trim(),
-        },
-      }),
+    ...(card.toFaces().length > 1 && {
+      backs: card.toFaces().slice(1).map(e=>({
+        name: e.name,
+        image_uris: {en:e.image!},
+        type: e.type_line,
+      }))
+    }),
   };
   return cardToReturn;
 };
 
-const getDraftEffects = (card: HCEntry) => {
+const getDraftEffects = (card: HCCard.Any) => {
   const specificCard = cardSpecificControl(card);
   if (specificCard) {
     return { draft_effects: specificCard };
@@ -77,8 +73,8 @@ const getDraftEffects = (card: HCEntry) => {
   }
 };
 
-const cardSpecificControl = (card: HCEntry) => {
-  switch (card.Name) {
+const cardSpecificControl = (card: HCCard.Any) => {
+  switch (card.name) {
     case 'Cheatyspace': {
       return ['FaceUp', 'CogworkLibrarian'];
     }
@@ -97,27 +93,10 @@ const cardSpecificControl = (card: HCEntry) => {
   }
 };
 
-const shouldReveal = (card: HCEntry) => {
+const shouldReveal = (card: HCCard.Any) => {
   return (
-    card['Text Box']?.[0]?.includes('hen you draft') ||
-    card['Text Box']?.[0]?.includes('raftpartner') ||
-    card['Text Box']?.[0]?.toLowerCase().includes('as you draft')
+    card.toFaces()[0].oracle_text.includes('hen you draft') ||
+    card.toFaces()[0].oracle_text.includes('raftpartner') ||
+    card.toFaces()[0].oracle_text.toLowerCase().includes('as you draft')
   );
-};
-
-const colorToDraftMancerColor = (color: string) => {
-  switch (color) {
-    case 'Red':
-      return 'R';
-    case 'White':
-      return 'W';
-    case 'Blue':
-      return 'U';
-    case 'Black':
-      return 'B';
-    case 'Green':
-      return 'G';
-    default:
-      return '';
-  }
 };
