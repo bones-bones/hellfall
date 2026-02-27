@@ -2,6 +2,7 @@ import { HCCard } from '../api-types';
 import { HCColor, HCColors } from '../api-types';
 // TODO: make it possible to sort by color, then alpha, rather than color, then CMC
 // how they can combine: Alpha and ID are mutually exclusive, but none of the others are
+// TODO: make sure that parts of ids work
 
 export const sortFunction =
   (sortRule: 'Alpha' | 'CMC' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>

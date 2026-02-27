@@ -1,4 +1,4 @@
-export enum HCCoreColor {
+export enum HCColor {
   White = 'W',
   Blue = 'U',
   Black = 'B',
@@ -6,18 +6,6 @@ export enum HCCoreColor {
   Green = 'G',
   Purple = 'P',
   Colorless = 'C',
-}
-export enum HCSearchColor {
-  White = 'W',
-  Blue = 'U',
-  Black = 'B',
-  Red = 'R',
-  Green = 'G',
-  Purple = 'P',
-  Colorless = 'C',
-  MISC_BULLSHIT = 'Misc bullshit',
-}
-export enum HCMiscColor {
   Pickle = 'Pickle',
   Yellow = 'Yellow',
   Brown = 'Brown',
@@ -29,10 +17,51 @@ export enum HCMiscColor {
   Beige = 'Beige',
   Grey = 'Grey',
 }
-export type HCColor = HCCoreColor | HCMiscColor;
+enum HCCoreColor {
+  White = 'W',
+  Blue = 'U',
+  Black = 'B',
+  Red = 'R',
+  Green = 'G',
+  Purple = 'P',
+  Colorless = 'C',
+}
 
-export type HCCoreColors = `${HCCoreColor}`[];
+enum HCMiscColor {
+  Pickle = 'Pickle',
+  Yellow = 'Yellow',
+  Brown = 'Brown',
+  Pink = 'Pink',
+  Teal = 'Teal',
+  Orange = 'Orange',
+  TEMU = 'TEMU',
+  Gold = 'Gold',
+  Beige = 'Beige',
+  Grey = 'Grey',
+}
+export enum HCSearchColor {
+  White = 'W',
+  Blue = 'U',
+  Black = 'B',
+  Red = 'R',
+  Green = 'G',
+  Purple = 'P',
+  Colorless = 'C',
+  MISC_BULLSHIT = 'Misc bullshit',
+}
 
-export type HCMiscColors = `${HCMiscColor}`[];
+// export type HCColor = HCCoreColor | HCMiscColor;
 
-export type HCColors = `${HCCoreColor | HCMiscColor}`[];
+// export type HCCoreColors = `${HCCoreColor}`[];
+
+// export type HCMiscColors = `${HCMiscColor}`[];
+
+export type HCColors = `${HCColor}`[];
+export const isCoreColor = (color: HCColor): boolean => {
+  return Object.values(HCCoreColor).includes(color as unknown as HCCoreColor);
+};
+
+export const isMiscColor = (color: HCColor): boolean => {
+  return Object.values(HCMiscColor).includes(color as unknown as HCMiscColor);
+};
+export const allMiscColors = Object.values(HCColor) as HCColors;

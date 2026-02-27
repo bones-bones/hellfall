@@ -34,10 +34,10 @@ export const Breakdown = () => {
       (curr, next) => {
         const colorSet = Array.from(new Set(getColorIdentity(next).flat().filter(Boolean))).sort();
         console.log(colorSet);
-        if (curr[next.toFaces()[0]?.colors.join("") || 'undefined']) {
-          curr[next.toFaces()[0]?.colors.join("") || 'undefined'].push(next);
+        if (curr[next.toFaces()[0]?.colors.join('') || 'undefined']) {
+          curr[next.toFaces()[0]?.colors.join('') || 'undefined'].push(next);
         } else {
-          curr[next.toFaces()[0]?.colors.join("") || 'undefined'] = [next];
+          curr[next.toFaces()[0]?.colors.join('') || 'undefined'] = [next];
         }
 
         return curr;

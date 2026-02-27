@@ -275,8 +275,8 @@ export const CubeResources = () => {
 
                       const tokenNames = cubeSetup.cards.flatMap(entry => {
                         // Dear sixel, pls finish
-                        return (entry.all_parts?.filter(e=>e.component=='token') || []).map(tokenEntry =>
-                          tokenEntry.name.replace(/ (\d+)$/g, '$1')
+                        return (entry.all_parts?.filter(e => e.component == 'token') || []).map(
+                          tokenEntry => tokenEntry.name.replace(/ (\d+)$/g, '$1')
                         );
                       });
                       const printableTokens = tokenNames.map(tokenEntry => {

@@ -1,4 +1,5 @@
 // note: this implementation maintains links and references for all cards except "3" (Id: 819) and "1984" (Id: 5353)
+// TODO: add compatibility for subids
 import { useAtom, useAtomValue } from 'jotai';
 import { cardsAtom } from './cardsAtom';
 

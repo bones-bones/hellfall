@@ -128,7 +128,7 @@ const hcCardToCockCard = ({
   cardsElement: HTMLElement;
   sideIndex: number;
 }) => {
-  const face = entry.toFaces()[sideIndex]
+  const face = entry.toFaces()[sideIndex];
   const tempCard = xmlDoc.createElement('card');
   const name = xmlDoc.createElement('name');
   name.textContent = face.name;
@@ -141,7 +141,7 @@ const hcCardToCockCard = ({
   setElement.setAttribute('picURL', face.image!);
   setElement.textContent = set;
   const color = xmlDoc.createElement('color');
-  color.textContent = face.colors.join("");
+  color.textContent = face.colors.join('');
 
   const manaCost = xmlDoc.createElement('manacost');
   manaCost.textContent = face.mana_cost?.replace(/\{(.)\}/g, '$1') || '';
@@ -180,12 +180,12 @@ const hcCardToCockCard = ({
   let reverse;
 
   // If we're not processing the first side, then we need to attach each side to the original
-    // augh this sucks, printable image should have had a different name
-  if (sideIndex !== 0 || entry.toFaces().filter(e=>e.image).length>1) {
+  // augh this sucks, printable image should have had a different name
+  if (sideIndex !== 0 || entry.toFaces().filter(e => e.image).length > 1) {
     reverse = xmlDoc.createElement('reverse-related');
     reverse.textContent = entry.toFaces()[0].name; // RIP Farsight
     reverse.setAttribute('attach', 'transform');
-  } 
+  }
 
   const layout = xmlDoc.createElement('layout');
   layout.textContent = sideIndex > 0 ? 'transform' : getLayout(entry);
@@ -212,7 +212,8 @@ const hcCardToCockCard = ({
   );
 
   if (
-    sideIndex == 0 && entry.toFaces().filter(e=>e.image).length>1 &&
+    sideIndex == 0 &&
+    entry.toFaces().filter(e => e.image).length > 1 &&
     !['MR. CRIME 1981 // Felony Theft'].includes(entry.name)
   ) {
     // TODO: make sure this works
@@ -227,8 +228,9 @@ const hcCardToCockCard = ({
 };
 
 const getLayout = (card: HCCard.Any) => {
-  if ( (card.toFaces().filter(e=>e.image).length<=1 && card.toFaces().length>1) ||
-    card.toFaces()[0].types?.some(e=>['Battle', 'Plane', 'Phenomenon'].includes(e))
+  if (
+    (card.toFaces().filter(e => e.image).length <= 1 && card.toFaces().length > 1) ||
+    card.toFaces()[0].types?.some(e => ['Battle', 'Plane', 'Phenomenon'].includes(e))
   ) {
     return 'split';
   }
@@ -238,16 +240,33 @@ const getLayout = (card: HCCard.Any) => {
 
 // TODO: Should these use only the first face?
 const getTableRow = (card: HCCard.Any) => {
-  if (card.toFaces().map(e=>e.types).flat().some(e=>['Instant','Sorcery'].includes(e!))
+  if (
+    card
+      .toFaces()
+      .map(e => e.types)
+      .flat()
+      .some(e => ['Instant', 'Sorcery'].includes(e!))
   ) {
     return 3;
   }
 
-  if (card.toFaces().map(e=>e.types).flat().includes('Creature')) {
+  if (
+    card
+      .toFaces()
+      .map(e => e.types)
+      .flat()
+      .includes('Creature')
+  ) {
     return 2;
   }
 
-  if (card.toFaces().map(e=>e.types).flat().includes('Land')) {
+  if (
+    card
+      .toFaces()
+      .map(e => e.types)
+      .flat()
+      .includes('Land')
+  ) {
     return 0;
   }
   return 1;

@@ -6,11 +6,15 @@ import { getDraftMancerCard } from './getDraftMancerCard';
 
 export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.Any[] }) => {
   // TODO: make sure this works
-  const componentCards = cards.filter(card => Boolean(card.all_parts?.find(e=>e.name==card.name && e.component != 'token_maker')));
+  const componentCards = cards.filter(card =>
+    Boolean(card.all_parts?.find(e => e.name == card.name && e.component != 'token_maker'))
+  );
 
   const componentCardsAsDraftmancer = componentCards.map(getDraftMancerCard);
 
-  const noComponentCards = cards.filter(card => !card.all_parts?.find(e=>e.name==card.name && e.component != 'token_maker'));
+  const noComponentCards = cards.filter(
+    card => !card.all_parts?.find(e => e.name == card.name && e.component != 'token_maker')
+  );
 
   if (set === 'HC6') {
     const cardsToWrite = noComponentCards.filter(canBeACommander);
@@ -19,7 +23,7 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
     console.log(componentCards);
     commanderCardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
-        e.all_parts?.find(entry=>entry.name == dmCard.name)
+        e.all_parts?.find(entry => entry.name == dmCard.name)
       );
 
       if (cardsThatBelongToThis.length > 0) {
@@ -40,7 +44,7 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
 
     otherCardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
-        e.all_parts?.find(entry=>entry.name == dmCard.name)
+        e.all_parts?.find(entry => entry.name == dmCard.name)
       );
 
       if (cardsThatBelongToThis.length > 0) {
@@ -143,7 +147,7 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
 
     cardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
-        e.all_parts?.find(entry=>entry.name == dmCard.name)
+        e.all_parts?.find(entry => entry.name == dmCard.name)
       );
 
       if (cardsThatBelongToThis.length > 0) {

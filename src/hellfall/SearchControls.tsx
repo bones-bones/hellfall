@@ -31,9 +31,10 @@ import {
 import { StyledLabel } from './StyledLabel';
 import { CardLegalityControls } from './search-controls/CardLegalityControls';
 import { StyledComponentHolder } from './StyledComponentHolder';
-import { HCCoreColor, HCMiscColor, HCSearchColor } from '../api-types';
+import { HCSearchColor } from '../api-types';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
+// TODO: figure out type inference issue for cmc
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);

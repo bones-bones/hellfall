@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { HCCard, HCCoreColor } from '../api-types';
+import { HCCard } from '../api-types';
 import {
   HCColor,
   HCSearchColor,
-  HCMiscColor,
   HCColors,
-  HCCoreColors,
-  HCMiscColors,
+  allMiscColors, 
 } from '../api-types';
 import { cardsAtom } from './cardsAtom';
 import { useAtom, useAtomValue } from 'jotai';
@@ -192,13 +190,13 @@ export const useSearchResults = () => {
           !getColorIdentity(entry).every(cardColorIdentityComponent => {
             const miscBullshitColorIdentityCriteria = (
               colorIdentityCriteria.includes(HCSearchColor.MISC_BULLSHIT)
-                ? [...colorIdentityCriteria, ...Object.values(HCMiscColor)].filter(
+                ? [...colorIdentityCriteria, ...allMiscColors].filter(
                     e => e != HCSearchColor.MISC_BULLSHIT
                   )
                 : colorIdentityCriteria
             ) as HCColors;
             const colorTest = (e: HCColor) =>
-              miscBullshitColorIdentityCriteria.includes(e) || e == HCCoreColor.Colorless;
+              miscBullshitColorIdentityCriteria.includes(e) || e == HCColor.Colorless;
             return useHybrid
               ? cardColorIdentityComponent.some(e => colorTest)
               : cardColorIdentityComponent.every(e => colorTest);
@@ -306,13 +304,13 @@ export const useSearchResults = () => {
           !getColorIdentity(entry).every(cardColorIdentityComponent => {
             const miscBullshitColorIdentityCriteria = (
               colorIdentityCriteria.includes(HCSearchColor.MISC_BULLSHIT)
-                ? [...colorIdentityCriteria, ...Object.values(HCMiscColor)].filter(
+                ? [...colorIdentityCriteria, ...allMiscColors].filter(
                     e => e != HCSearchColor.MISC_BULLSHIT
                   )
                 : colorIdentityCriteria
             ) as HCColors;
             const colorTest = (e: HCColor) =>
-              miscBullshitColorIdentityCriteria.includes(e) || e == HCCoreColor.Colorless;
+              miscBullshitColorIdentityCriteria.includes(e) || e == HCColor.Colorless;
             return useHybrid
               ? cardColorIdentityComponent.some(e => colorTest)
               : cardColorIdentityComponent.every(e => colorTest);
@@ -326,12 +324,12 @@ export const useSearchResults = () => {
           if (
             !(
               searchColors.includes(HCSearchColor.Colorless) &&
-              entry.toFaces()[0].colors == ([HCCoreColor.Colorless] as HCColors)
+              entry.toFaces()[0].colors == ([HCColor.Colorless] as HCColors)
             )
           ) {
             const newSearchColors = (
               searchColors.includes(HCSearchColor.MISC_BULLSHIT)
-                ? [...searchColors, ...Object.values(HCMiscColor)].filter(e => e != MISC_BULLSHIT)
+                ? [...searchColors, ...allMiscColors].filter(e => e != MISC_BULLSHIT)
                 : searchColors
             ) as HCColors;
 

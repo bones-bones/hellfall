@@ -1,5 +1,4 @@
 import { toDraftmancerCube } from './toDraftmancer';
-import { HCEntry } from '../../types';
 import { HCCard } from '../../api-types';
 
 export const getDraftmancerForCube = ({

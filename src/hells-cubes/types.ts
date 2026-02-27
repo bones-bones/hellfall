@@ -11,7 +11,7 @@ export type DraftmancerCard = {
   subtypes: string[];
   rating: number; //0,
   in_booster: boolean; // true,
-  oracle_text:string;
+  oracle_text: string;
   printed_names: {
     en: string; //"Discount Sol Ring"
   };

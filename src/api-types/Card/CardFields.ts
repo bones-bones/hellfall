@@ -1,8 +1,8 @@
 import {
   // HCBorderColor,
   HCColors,
-  HCCoreColors,
-  HCMiscColors,
+  // HCCoreColors,
+  // HCMiscColors,
   // HCFinish,
   // HCFrame,
   // HCFrameEffect,

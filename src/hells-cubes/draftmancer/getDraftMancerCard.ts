@@ -1,4 +1,3 @@
-import { HCEntry } from '../../types';
 import { HCCard } from '../../api-types';
 import { DraftmancerCard } from '../types';
 
@@ -38,26 +37,34 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
     set: 'custom',
     collector_number: '',
     rarity: 'rare',
-    type: `${card.toFaces()[0].supertypes?.join(" ")} ${card.toFaces()[0].types?.join(" ")}`.trim(),
+    type: `${card.toFaces()[0].supertypes?.join(' ')} ${card.toFaces()[0].types?.join(' ')}`.trim(),
     subtypes: card.toFaces()[0].subtypes?.filter(e => e != '') || [],
     rating: 0,
     in_booster: true,
-    oracle_text: card.toFaces().map(e=>e.oracle_text).filter(Boolean).join('\n').replace(/:\[/g, ''),
+    oracle_text: card
+      .toFaces()
+      .map(e => e.oracle_text)
+      .filter(Boolean)
+      .join('\n')
+      .replace(/:\[/g, ''),
 
     printed_names: {
       en: card.name.replace(' :]', ''), // Six Flags
     },
-    image_uris: { en:  'card_faces' in card && card.card_faces[0].image
-                ? card.card_faces[0].image
-                : card.image! },
+    image_uris: {
+      en: 'card_faces' in card && card.card_faces[0].image ? card.card_faces[0].image : card.image!,
+    },
     is_custom: true,
     ...getDraftEffects(card),
-    ...("card_faces" in card && {
-      backs: card.toFaces().slice(1).map(e=>({
-        name: e.name,
-        image_uris: {en:e.image!},
-        type: e.type_line,
-      }))
+    ...('card_faces' in card && {
+      backs: card
+        .toFaces()
+        .slice(1)
+        .map(e => ({
+          name: e.name,
+          image_uris: { en: e.image! },
+          type: e.type_line,
+        })),
     }),
   };
   return cardToReturn;
