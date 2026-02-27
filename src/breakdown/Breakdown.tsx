@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { cardsAtom } from '../hellfall/cardsAtom';
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 import styled from '@emotion/styled';
 import { xIcon } from '@workday/canvas-system-icons-web';
 
@@ -10,18 +10,19 @@ import { HellfallCard } from '../hellfall/HellfallCard';
 import { activeCardAtom } from '../hellfall/searchAtoms';
 import { getColorIdentity } from '../hellfall/getColorIdentity';
 import { canBeACommander } from '../hellfall/canBeACommander';
+// TODO: make sure this still works
 export const Breakdown = () => {
-  const cards = useAtomValue(cardsAtom).filter(e => e.Set === 'HC7.0');
+  const cards = useAtomValue(cardsAtom).filter(e => e.set === 'HC7.0');
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = cards.find(entry => {
-    return entry.Id === activeCardFromAtom;
+    return entry.id === activeCardFromAtom;
   });
 
-  const sorted = cards.reduce<Record<string, HCEntry[]>>((curr, next) => {
-    if (curr[next['Color(s)'] || 'undefined']) {
-      curr[next['Color(s)'] || 'undefined'].push(next);
+  const sorted = cards.reduce<Record<string, HCCard.Any[]>>((curr, next) => {
+    if (curr[next.toFaces()[0]?.colors.join() || 'undefined']) {
+      curr[next.toFaces()[0]?.colors.join() || 'undefined'].push(next);
     } else {
-      curr[next['Color(s)'] || 'undefined'] = [next];
+      curr[next.toFaces()[0]?.colors.join() || 'undefined'] = [next];
     }
 
     return curr;
@@ -29,40 +30,40 @@ export const Breakdown = () => {
 
   const canBeCommander = cards
     .filter(e => canBeACommander(e))
-    .reduce<Record<string, HCEntry[]>>(
+    .reduce<Record<string, HCCard.Any[]>>(
       (curr, next) => {
         const colorSet = Array.from(new Set(getColorIdentity(next).flat().filter(Boolean))).sort();
         console.log(colorSet);
-        if (curr[next['Color(s)'] || 'undefined']) {
-          curr[next['Color(s)'] || 'undefined'].push(next);
+        if (curr[next.toFaces()[0]?.colors.join("") || 'undefined']) {
+          curr[next.toFaces()[0]?.colors.join("") || 'undefined'].push(next);
         } else {
-          curr[next['Color(s)'] || 'undefined'] = [next];
+          curr[next.toFaces()[0]?.colors.join("") || 'undefined'] = [next];
         }
 
         return curr;
       },
       {
-        Black: [],
-        Red: [],
-        Blue: [],
-        White: [],
-        Green: [],
-        'White;Blue': [],
-        'White;Black': [],
-        'White;Red': [],
-        'White;Green': [],
-        'Blue;Black': [],
-        'Blue;Red': [],
-        'Blue;Green': [],
-        'Black;Red': [],
-        'Black;Green': [],
-        'Red;Green': [],
-        'White;Blue;Black': [],
-        'White;Blue;Red': [],
-        'White;Blue;Green': [],
-        'White;Black;Red': [],
-        'White;Black;Green': [],
-        'White;Red;Green': [],
+        W: [],
+        U: [],
+        B: [],
+        R: [],
+        G: [],
+        WU: [],
+        WB: [],
+        WR: [],
+        WG: [],
+        UB: [],
+        UR: [],
+        UG: [],
+        BR: [],
+        BG: [],
+        RG: [],
+        // WUB: [],
+        // WUR: [],
+        // WUG: [],
+        // WBR: [],
+        // WBG: [],
+        // WRG: [],
       }
     );
 
@@ -155,7 +156,7 @@ const hexForColor = (
   }
 };
 
-const ColorTracker = ({ cards, color }: { cards: Record<string, HCEntry[]>; color: string }) => {
+const ColorTracker = ({ cards, color }: { cards: Record<string, HCCard.Any[]>; color: string }) => {
   const [_activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
 
   return (
@@ -169,14 +170,14 @@ const ColorTracker = ({ cards, color }: { cards: Record<string, HCEntry[]>; colo
           const uhh = cards[color]
             .sort((a, b) => {
               if (
-                a['Card Type(s)'][0]?.includes('Creature') &&
-                b['Card Type(s)'][0]?.includes('Creature')
+                a.toFaces()[0].types?.includes('Creature') &&
+                b.toFaces()[0].types?.includes('Creature')
               ) {
-                return a['Name'][0] > b['Name'][0] ? 1 : -1;
+                return a.toFaces()[0].name > b.toFaces()[0].name ? 1 : -1;
               }
               if (
-                a['Card Type(s)'][0]?.includes('Creature') &&
-                !b['Card Type(s)'][0]?.includes('Creature')
+                a.toFaces()[0].types?.includes('Creature') &&
+                !b.toFaces()[0].types?.includes('Creature')
               ) {
                 return -1;
               }
@@ -184,11 +185,11 @@ const ColorTracker = ({ cards, color }: { cards: Record<string, HCEntry[]>; colo
               return 1;
             })
             .filter(entry => {
-              if (!entry.CMC && index == 0) {
+              if (!entry.cmc && index == 0) {
                 return true;
               }
 
-              return entry.CMC === index + 1 || (index + 1 == 7 && entry.CMC >= 7);
+              return entry.cmc === index + 1 || (index + 1 == 7 && entry.cmc >= 7);
             });
           return (
             <CMCColumn key={index}>
@@ -198,25 +199,25 @@ const ColorTracker = ({ cards, color }: { cards: Record<string, HCEntry[]>; colo
               <CardColumn>
                 {uhh.map(e => (
                   <CardEntry
-                    key={e.Name}
-                    isCreature={Boolean(e['Card Type(s)'][0]?.includes('Creature'))}
+                    key={e.name}
+                    isCreature={Boolean(e.toFaces()[0].types?.includes('Creature'))}
                     cardColor={
                       hexForColor(
-                        (e['Color(s)'] == undefined
+                        (e.toFaces()[0].colors == undefined
                           ? 'Colorless'
-                          : e['Color(s)'].split(';').length > 1
+                          : e.toFaces()[0].colors.length > 1
                           ? 'Multicolor'
-                          : e['Color(s)']) as any
+                          : e.toFaces()[0].colors) as any
                       ) as any
                     }
                   >
                     <TertiaryButton
                       color="black"
                       onClick={() => {
-                        setActiveCardFromAtom(e.Id);
+                        setActiveCardFromAtom(e.id);
                       }}
                     >
-                      {e.Name}
+                      {e.name}
                     </TertiaryButton>
                   </CardEntry>
                 ))}

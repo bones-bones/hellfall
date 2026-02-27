@@ -14,9 +14,8 @@ import { Link } from 'react-router-dom';
 import { HellfallCard } from '../hellfall/HellfallCard';
 import { activeCardAtom } from '../hellfall/searchAtoms';
 import { xIcon } from '@workday/canvas-system-icons-web';
-import { HCEntry } from '../types';
-import { useKeyPress } from '../hooks';
 import { HCCard } from '../api-types';
+import { useKeyPress } from '../hooks';
 
 //TODO: make results use Id natively on the backend
 
