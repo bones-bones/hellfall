@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
-import { HCEntry } from '../types';
 import { useState } from 'react';
+import { HCCard } from '../api-types';
 
-export const DeckConstruction = ({ cards }: { cards: HCEntry[] }) => {
+export const DeckConstruction = ({ cards }: { cards: HCCard.Any[] }) => {
   const [localCards, setLocalCards] = useState([...cards]);
-  const [deck, setDeck] = useState<HCEntry[]>([]);
-  const draftedCmcColumns = localCards.reduce<Record<number, HCEntry[]>>((curr, next) => {
-    curr[next.CMC] = curr[next.CMC] ? [...curr[next.CMC], next] : [next];
+  const [deck, setDeck] = useState<HCCard.Any[]>([]);
+  const draftedCmcColumns = localCards.reduce<Record<number, HCCard.Any[]>>((curr, next) => {
+    curr[next.cmc] = curr[next.cmc] ? [...curr[next.cmc], next] : [next];
     return curr;
   }, []);
 
-  const deckCmcColumns = deck.reduce<Record<number, HCEntry[]>>((curr, next) => {
-    curr[next.CMC] = curr[next.CMC] ? [...curr[next.CMC], next] : [next];
+  const deckCmcColumns = deck.reduce<Record<number, HCCard.Any[]>>((curr, next) => {
+    curr[next.cmc] = curr[next.cmc] ? [...curr[next.cmc], next] : [next];
     return curr;
   }, []);
 
@@ -26,16 +26,16 @@ export const DeckConstruction = ({ cards }: { cards: HCEntry[] }) => {
               <div>
                 {entry[1].map((entry, i) => {
                   return (
-                    <CardContainer key={entry.Name + i}>
+                    <CardContainer key={entry.name + i}>
                       <Card
                         width="210px"
-                        title={entry.Name}
-                        key={entry.Name + i}
-                        src={entry.Image[0]!}
+                        title={entry.name}
+                        key={entry.name + i}
+                        src={entry.image!}
                         crossOrigin="anonymous"
                         onClick={() => {
                           setLocalCards(
-                            localCards.filter(localEntry => localEntry.Name !== entry.Name)
+                            localCards.filter(localEntry => localEntry.name !== entry.name)
                           );
                           setDeck([entry, ...deck]);
                         }}
@@ -57,15 +57,15 @@ export const DeckConstruction = ({ cards }: { cards: HCEntry[] }) => {
               <div>
                 {cmcCards.map((entry, i) => {
                   return (
-                    <CardContainer key={entry.Name + i}>
+                    <CardContainer key={entry.name + i}>
                       <Card
                         width="210px"
-                        title={entry.Name}
-                        key={entry.Name + i}
-                        src={entry.Image[0]!}
+                        title={entry.name}
+                        key={entry.name + i}
+                        src={entry.image!}
                         crossOrigin="anonymous"
                         onClick={() => {
-                          setDeck(deck.filter(localEntry => localEntry.Name !== entry.Name));
+                          setDeck(deck.filter(localEntry => localEntry.name !== entry.name));
                           setLocalCards([entry, ...localCards]);
                         }}
                       />
@@ -77,7 +77,7 @@ export const DeckConstruction = ({ cards }: { cards: HCEntry[] }) => {
           );
         })}
       </DeckContainer>
-      <div>{deck.map(e => e.Name).join('\n')}</div>
+      <div>{deck.map(e => e.name).join('\n')}</div>
     </>
   );
 };
