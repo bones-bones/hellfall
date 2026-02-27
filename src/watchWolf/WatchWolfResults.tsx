@@ -18,9 +18,9 @@ import { useKeyPress } from '../hooks';
 
 export const Watchwolfresults = () => {
   const escape = useKeyPress('Escape');
-  const cards = useAtomValue(cardsAtom).filter(e => e.Set != 'C');
+  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const activeCard = cards.find(e => e.Id === activeCardFromAtom);
+  const activeCard = cards.find(e => e.id === activeCardFromAtom);
   useEffect(() => {
     if (escape) {
       setActiveCardFromAtom('');
@@ -67,7 +67,7 @@ export const Watchwolfresults = () => {
             })
             .slice(0, cards.length)
             .map(entry => {
-              const name = cards.find(e => entry.Id === e.Id)?.Name;
+              const name = cards.find(e => entry.Id === e.id)?.name;
               return (
                 <div key={entry.Id}>
                   <span
