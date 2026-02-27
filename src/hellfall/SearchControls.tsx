@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { CheckboxGroup, NamedCheckboxGroup } from './inputs';
+import { CheckboxGroup, NamedCheckboxGroup, ColorCheckboxGroup } from './inputs';
 import { PillSearch } from './inputs';
 import { TextInput } from '@workday/canvas-kit-react/text-input';
 import { FormField } from '@workday/canvas-kit-react/form-field';
@@ -28,10 +28,10 @@ import {
   toughnessAtom,
   tagsAtom,
 } from './searchAtoms';
-import { colors, colorValues} from './constants';
 import { StyledLabel } from './StyledLabel';
 import { CardLegalityControls } from './search-controls/CardLegalityControls';
 import { StyledComponentHolder } from './StyledComponentHolder';
+import { HCCoreColor, HCMiscColor, HCSearchColor } from '../api-types';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -114,9 +114,10 @@ export const SearchControls = () => {
         />
       </SearchCriteriaSection>
       <SearchCriteriaSection>
-        <CheckboxGroup
+        <ColorCheckboxGroup
           label="Colors"
-          values={colors}
+          values={Object.values(HCSearchColor)}
+          names={Object.keys(HCSearchColor)}
           initialValue={searchColors}
           onChange={setSearchColors}
         >
@@ -135,11 +136,11 @@ export const SearchControls = () => {
               })}
             </StyledManaSelect>
           </StyledComponentHolder>
-        </CheckboxGroup>
-        <NamedCheckboxGroup
+        </ColorCheckboxGroup>
+        <ColorCheckboxGroup
           label="Color Identity (Commander)"
-          values={colorValues}
-          names={colors}
+          values={Object.values(HCSearchColor)}
+          names={Object.keys(HCSearchColor)}
           initialValue={searchColorsIdentity}
           onChange={setSearchColorsIdentityAtom}
         >
@@ -154,7 +155,7 @@ export const SearchControls = () => {
               }}
             />
           </StyledComponentHolder>
-        </NamedCheckboxGroup>
+        </ColorCheckboxGroup>
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup

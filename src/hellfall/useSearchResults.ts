@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react';
-import { HCEntry } from '../types';
+import { HCCard, HCCoreColor } from '../api-types';
+import {
+  HCColor,
+  HCSearchColor,
+  HCMiscColor,
+  HCColors,
+  HCCoreColors,
+  HCMiscColors,
+} from '../api-types';
 import { cardsAtom } from './cardsAtom';
 import { useAtom, useAtomValue } from 'jotai';
 import {
@@ -29,15 +37,14 @@ import {
 import { sortFunction } from './sortFunction';
 import { getColorIdentity } from './getColorIdentity';
 import { canBeACommander } from './canBeACommander';
-import { MISC_BULLSHIT, MISC_BULLSHIT_COLORS } from './constants';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
 };
 
 export const useSearchResults = () => {
-  const [resultSet, setResultSet] = useState<HCEntry[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(e => e.Set != 'C');
+  const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
+  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
   const set = useAtomValue(searchSetAtom);
   const costSearch = useAtomValue(costSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
@@ -60,11 +67,12 @@ export const useSearchResults = () => {
   const toughness = useAtomValue(toughnessAtom);
   const tags = useAtomValue(tagsAtom);
   const extraFilters = useAtomValue(extraFiltersAtom);
+  const MISC_BULLSHIT = 'Misc bullshit';
 
   useEffect(() => {
     const tempResults = cards
       .filter(entry => {
-        if (set.length > 0 && !isSetInResults(entry.Set, set)) {
+        if (set.length > 0 && !isSetInResults(entry.set, set)) {
           return false;
         }
         if (!extraFilters.includes('isToken') && entry.isActualToken) {
@@ -77,21 +85,11 @@ export const useSearchResults = () => {
         if (
           costSearch.length > 0 &&
           !costSearch.every(searchTerm => {
-            const combined = (entry['Cost'] || []).join(',').toLowerCase();
-            if (searchTerm.startsWith('!')) {
-              return !combined.includes(searchTerm.substring(1).toLowerCase());
-            } else {
-              return combined.includes(searchTerm.toLowerCase());
-            }
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          costSearch.length > 0 &&
-          !costSearch.every(searchTerm => {
-            const combined = (entry['Cost'] || []).join(',').toLowerCase();
+            const combined = entry
+              .toFaces()
+              .map(e => e.mana_cost || '')
+              .join()
+              .toLowerCase();
             if (searchTerm.startsWith('!')) {
               return !combined.includes(searchTerm.substring(1).toLowerCase());
             } else {
@@ -105,7 +103,11 @@ export const useSearchResults = () => {
         if (
           rulesSearch.length > 0 &&
           !rulesSearch.every(searchTerm => {
-            const combined = (entry['Text Box'] || []).join(',').toLowerCase();
+            const combined = entry
+              .toFaces()
+              .map(e => e.oracle_text || '')
+              .join()
+              .toLowerCase();
             if (searchTerm.startsWith('!')) {
               return !combined.includes(searchTerm.substring(1).toLowerCase());
             } else {
@@ -119,40 +121,45 @@ export const useSearchResults = () => {
         if (
           tags.length > 0 &&
           !tags.every(tag => {
-            return entry.Tags?.includes(tag);
+            return entry.tags?.includes(tag);
           })
         ) {
           return false;
         }
 
-        if (nameSearch !== '' && !entry['Name'].toLowerCase().includes(nameSearch.toLowerCase())) {
+        if (
+          (nameSearch !== '' &&
+            !entry
+              .toFaces()
+              .map(e => e.name || '')
+              .join(' // ')
+              .toLowerCase()
+              .includes(nameSearch.toLowerCase())) ||
+          entry.name.toLowerCase().includes(nameSearch.toLowerCase())
+        ) {
           return false;
         }
 
-        if (idSearch !== '' && entry['Id'] != idSearch) {
-          return false;
-        }
-
-        if (idSearch !== '' && entry['Id'] != idSearch) {
+        if (idSearch !== '' && entry.id.toLowerCase() != idSearch.toLowerCase()) {
           return false;
         }
 
         if (searchCmc != undefined) {
           switch (searchCmc.operator) {
             case '<': {
-              if (!(entry.CMC < searchCmc.value)) {
+              if (!(entry.cmc < searchCmc.value)) {
                 return false;
               }
               break;
             }
             case '>': {
-              if (!(entry.CMC > searchCmc.value)) {
+              if (!(entry.cmc > searchCmc.value)) {
                 return false;
               }
               break;
             }
             case '=': {
-              if (!(entry.CMC === searchCmc.value)) {
+              if (!(entry.cmc === searchCmc.value)) {
                 return false;
               }
               break;
@@ -166,35 +173,36 @@ export const useSearchResults = () => {
           }
         }
         if (legality.length > 0) {
-          if (legality.includes('legal') && entry.Constructed?.includes('Banned')) {
+          if (legality.includes('legal') && entry.legalities.standard != 'legal') {
             return false;
           }
-          if (legality.includes('4cbLegal') && entry.Constructed?.includes('Banned (4CB)')) {
+          if (legality.includes('4cbLegal') && entry.legalities['4cb'] != 'legal') {
             return false;
           }
 
-          if (
-            legality.includes('hellsmanderLegal') &&
-            entry.Constructed?.includes('Banned (Commander)')
-          ) {
+          if (legality.includes('hellsmanderLegal') && entry.legalities.commander != 'legal') {
             return false;
           }
         }
-        if (creators.length > 0 && !creators.includes(entry.Creator)) {
+        if (creators.length > 0 && !creators.includes(entry.creator)) {
           return false;
         }
-        // debugger;
         if (
           colorIdentityCriteria.length > 0 &&
           !getColorIdentity(entry).every(cardColorIdentityComponent => {
-            const miscBullshitColorIdentityCriteria = colorIdentityCriteria.includes(MISC_BULLSHIT)
-              ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(e => e !== MISC_BULLSHIT)
-              : colorIdentityCriteria;
-            const colorTest = (e: string) =>
-              miscBullshitColorIdentityCriteria.includes(e) || e == 'C' || e == undefined;
+            const miscBullshitColorIdentityCriteria = (
+              colorIdentityCriteria.includes(HCSearchColor.MISC_BULLSHIT)
+                ? [...colorIdentityCriteria, ...Object.values(HCMiscColor)].filter(
+                    e => e != HCSearchColor.MISC_BULLSHIT
+                  )
+                : colorIdentityCriteria
+            ) as HCColors;
+            const colorTest = (e: HCColor) =>
+              miscBullshitColorIdentityCriteria.includes(e) || e == HCCoreColor.Colorless;
             return useHybrid
-              ? cardColorIdentityComponent.some(colorTest)
-              : cardColorIdentityComponent.every(colorTest);
+              ? cardColorIdentityComponent.some(e => colorTest)
+              : cardColorIdentityComponent.every(e => colorTest);
+            // TODO: make sure this works (see colorTest)
           })
         ) {
           return false;
@@ -203,9 +211,12 @@ export const useSearchResults = () => {
           typeSearch.length > 0 &&
           !typeSearch.every(searchTerm => {
             const combined = [
-              ...(entry['Supertype(s)'] || []),
-              ...(entry['Card Type(s)'] || []),
-              ...(entry['Subtype(s)'] || []),
+              // ...(entry.supertypes || []),
+              ...entry.toFaces().map(e => e.supertypes || ''),
+              // ...(entry.types || []),
+              ...entry.toFaces().map(e => e.types || ''),
+              // ...(entry.subtypes || []),
+              ...entry.toFaces().map(e => e.subtypes || ''),
             ]
               .join(',')
               .toLowerCase();
@@ -221,18 +232,18 @@ export const useSearchResults = () => {
         if (power) {
           switch (power.operator) {
             case '=': {
-              if (parseInt(entry.power?.[0] + '') !== power.value) {
+              if (parseInt(entry.toFaces()[0].power + '') !== power.value) {
                 return false;
               }
               break;
             }
             case '<': {
               if (
-                !entry.power?.[0] ||
+                !entry.toFaces()[0].power ||
                 !(
-                  (Number.isNaN(parseInt(entry.power[0] + ''))
+                  (Number.isNaN(parseInt(entry.toFaces()[0].power + ''))
                     ? 0
-                    : parseInt(entry.power[0] + '')) < power.value
+                    : parseInt(entry.toFaces()[0].power + '')) < power.value
                 )
               ) {
                 return false;
@@ -241,11 +252,11 @@ export const useSearchResults = () => {
             }
             case '>': {
               if (
-                !entry.power?.[0] ||
+                !entry.toFaces()[0].power ||
                 !(
-                  (Number.isNaN(parseInt(entry.power[0] + ''))
+                  (Number.isNaN(parseInt(entry.toFaces()[0].power + ''))
                     ? 0
-                    : parseInt(entry.power[0] + '')) > power.value
+                    : parseInt(entry.toFaces()[0].power + '')) > power.value
                 )
               ) {
                 return false;
@@ -257,18 +268,18 @@ export const useSearchResults = () => {
         if (toughness) {
           switch (toughness.operator) {
             case '=': {
-              if (parseInt(entry.toughness?.[0] + '') !== toughness.value) {
+              if (parseInt(entry.toFaces()[0].toughness + '') !== toughness.value) {
                 return false;
               }
               break;
             }
             case '<': {
               if (
-                !entry.toughness?.[0] ||
+                !entry.toFaces()[0].toughness ||
                 !(
-                  (Number.isNaN(parseInt(entry.toughness[0] + ''))
+                  (Number.isNaN(parseInt(entry.toFaces()[0].toughness + ''))
                     ? 0
-                    : parseInt(entry.toughness[0] + '')) < toughness.value
+                    : parseInt(entry.toFaces()[0].toughness + '')) < toughness.value
                 )
               ) {
                 return false;
@@ -277,11 +288,11 @@ export const useSearchResults = () => {
             }
             case '>': {
               if (
-                !entry.toughness?.[0] ||
+                !entry.toFaces()[0].toughness ||
                 !(
-                  (Number.isNaN(parseInt(entry.toughness[0] + ''))
+                  (Number.isNaN(parseInt(entry.toFaces()[0].toughness + ''))
                     ? 0
-                    : parseInt(entry.toughness[0] + '')) > toughness.value
+                    : parseInt(entry.toFaces()[0].toughness + '')) > toughness.value
                 )
               ) {
                 return false;
@@ -290,19 +301,41 @@ export const useSearchResults = () => {
             }
           }
         }
+        if (
+          colorIdentityCriteria.length > 0 &&
+          !getColorIdentity(entry).every(cardColorIdentityComponent => {
+            const miscBullshitColorIdentityCriteria = (
+              colorIdentityCriteria.includes(HCSearchColor.MISC_BULLSHIT)
+                ? [...colorIdentityCriteria, ...Object.values(HCMiscColor)].filter(
+                    e => e != HCSearchColor.MISC_BULLSHIT
+                  )
+                : colorIdentityCriteria
+            ) as HCColors;
+            const colorTest = (e: HCColor) =>
+              miscBullshitColorIdentityCriteria.includes(e) || e == HCCoreColor.Colorless;
+            return useHybrid
+              ? cardColorIdentityComponent.some(e => colorTest)
+              : cardColorIdentityComponent.every(e => colorTest);
+            // TODO: make sure this works (see colorTest)
+          })
+        ) {
+          return false;
+        }
 
         if (searchColors.length > 0) {
-          if (!(searchColors.includes('Colorless') && entry['Color(s)'] == '')) {
-            const newSearchColors = searchColors.includes(MISC_BULLSHIT)
-              ? [...searchColors]
-              : searchColors;
+          if (
+            !(
+              searchColors.includes(HCSearchColor.Colorless) &&
+              entry.toFaces()[0].colors == ([HCCoreColor.Colorless] as HCColors)
+            )
+          ) {
+            const newSearchColors = (
+              searchColors.includes(HCSearchColor.MISC_BULLSHIT)
+                ? [...searchColors, ...Object.values(HCMiscColor)].filter(e => e != MISC_BULLSHIT)
+                : searchColors
+            ) as HCColors;
 
-            const entryColors = (entry['Color(s)'] || '').split(';').map(colorEntry => {
-              if (!['Red', 'Green', 'White', 'Blue', 'Black', 'Purple', ''].includes(colorEntry)) {
-                return MISC_BULLSHIT;
-              }
-              return colorEntry;
-            });
+            const entryColors = entry.toFaces()[0].colors;
 
             switch (colorComparison) {
               case '<=': {
@@ -347,14 +380,8 @@ export const useSearchResults = () => {
     if (idSearch != '') {
       searchToSet.append('id', idSearch);
     }
-    if (idSearch != '') {
-      searchToSet.append('id', idSearch);
-    }
     if (typeSearch.length > 0) {
       searchToSet.append('type', typeSearch.join(','));
-    }
-    if (costSearch.length > 0) {
-      searchToSet.append('cost', costSearch.join(','));
     }
     if (costSearch.length > 0) {
       searchToSet.append('cost', costSearch.join(','));
@@ -370,9 +397,6 @@ export const useSearchResults = () => {
     }
     if (colorIdentityCriteria.length > 0) {
       searchToSet.append('colorIdentity', colorIdentityCriteria.join(','));
-    }
-    if (useHybrid) {
-      searchToSet.append('useHybrid', 'true');
     }
     if (useHybrid) {
       searchToSet.append('useHybrid', 'true');

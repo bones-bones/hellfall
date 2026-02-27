@@ -1,10 +1,13 @@
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 
-export const canBeACommander = (card: HCEntry) => {
+export const canBeACommander = (card: HCCard.Any) => {
+  const faces = card.toFaces();
   return (
-    ((card['Supertype(s)']?.[0]?.includes('Legendary') &&
-      card['Card Type(s)'][0]?.includes('Creature')) ||
-      card['Text Box']?.[0]?.includes('can be your commander')) &&
-    !card['Text Box']?.[0]?.includes('Irresponsible')
+    ((faces[0]?.supertypes?.includes('Legendary') &&
+      (faces[0]?.types?.includes('Creature') ||
+        faces[0]?.subtypes?.includes('Vehicle') ||
+        faces[0]?.subtypes?.includes('Spacecraft'))) ||
+      faces[0]?.oracle_text.includes('can be your commander')) &&
+    !faces[0]?.oracle_text.includes('Irresponsible')
   );
 };

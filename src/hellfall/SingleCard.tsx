@@ -9,7 +9,7 @@ import { useAtomValue } from 'jotai';
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
   const { '*': cardId } = useParams();
-  const entryToRender = cards?.find(e => e.Id === cardId);
+  const entryToRender = cards?.find(e => e.id === cardId);
 
   return (
     <Container>

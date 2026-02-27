@@ -1,22 +1,23 @@
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types/Card';
 import { pipsAtom } from './pipsAtom';
 import { useAtomValue } from 'jotai';
 import { getDefaultStore } from 'jotai';
 import { HCColor, HCColors } from '../api-types/Card';
+import { splitParens } from './splitParens';
 const store = getDefaultStore();
 
-export const getColorIdentity = (card: HCEntry) => {
-  const colorIdentity = new Set<string[]>();
+export const getColorIdentity = (card: HCCard.Any) => {
+  const colorIdentity = new Set<HCColors>();
   const pips = store.get(pipsAtom);
   // TODO: make color indicators work
   // TODO: special cases for Crypticspire Mantis (must be at least 2), Draft Dodger (Canada = Red and White)
-  card.Cost?.forEach(entry => {
-    const names = (entry || '').match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
+  card.toFaces().forEach(entry => {
+    const costNames = (entry.mana_cost || '').match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
-    names?.forEach((name) => {
-      const pip = pips?.find((e) => e.symbol.toLowerCase() === name.toLowerCase());
+    costNames?.forEach(name => {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
       if (pip && pip?.represents_mana) {
-        colorIdentity.add(pip.colors as string[]);
+        colorIdentity.add(pip.colors!);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
@@ -24,16 +25,18 @@ export const getColorIdentity = (card: HCEntry) => {
         }
       }*/
     });
-  });
 
-  card['Text Box']?.forEach(entry => {
-    const minusReminderText = (entry || '').replaceAll(/\(.*?\)/g, '');
-    const names = (minusReminderText || '').match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
+    const minusReminderText = splitParens(entry.oracle_text)
+      .filter(e => e[0] && e[0] != '(')
+      .join('');
+    const textNames = (minusReminderText || '')
+      .match(/{([^}]+)}/g)
+      ?.map(match => match.slice(1, -1));
 
-    names?.forEach((name) => {
-      const pip = pips?.find((e) => e.symbol.toLowerCase() === name.toLowerCase());
+    textNames?.forEach(name => {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
       if (pip && pip?.represents_mana) {
-        colorIdentity.add(pip.colors as string[]);
+        colorIdentity.add(pip.colors!);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
@@ -41,36 +44,40 @@ export const getColorIdentity = (card: HCEntry) => {
         }
       }*/
     });
-  });
 
-  card['Subtype(s)']?.forEach(entry => {
-    const splitSubtypes = (entry || '').split(';');
+    const splitSubtypes = entry.subtypes || [];
     splitSubtypes.forEach(typeEntry => {
       const mappedColor = landToColorMapping[typeEntry];
       if (mappedColor) {
-        colorIdentity.add([mappedColor] as HCColors);
+        colorIdentity.add([mappedColor]);
       }
     });
+
+    if ('color_indicator' in entry) {
+      entry.color_indicator?.forEach(color => {
+        colorIdentity.add([color]);
+      });
+    }
   });
+
   return Array.from(colorIdentity);
 };
 
 const manaSymbolColorMatching: Record<
   string,
-  | "White"
-  | "Black"
-  | "Red"
-  | "Blue"
-  | "Green"
-  | "Purple"
-  | "Pickle"
-  | "Yellow"
-  | "Brown"
-  | "Pink"
-  | "Teal"
-  | "Orange"
-> = {
-};
+  | 'White'
+  | 'Black'
+  | 'Red'
+  | 'Blue'
+  | 'Green'
+  | 'Purple'
+  | 'Pickle'
+  | 'Yellow'
+  | 'Brown'
+  | 'Pink'
+  | 'Teal'
+  | 'Orange'
+> = {};
 
 const landToColorMapping = {
   Plains: 'W',

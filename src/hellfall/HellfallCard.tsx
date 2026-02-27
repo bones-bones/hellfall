@@ -1,46 +1,23 @@
 import { Card } from '@workday/canvas-kit-react/card';
-import { HCEntry } from '../types';
 import styled from '@emotion/styled';
 import { Heading, Text } from '@workday/canvas-kit-react/text';
 import { SetLegality } from './SetLegality';
 import { stringToMana } from './stringToMana';
-
+import { splitParens } from './splitParens';
 import { HCCard } from '../api-types/Card/Card';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   // const faceCount = data.
-    // data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
+  // data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
 
   const [activeImageSide, setActiveImageSide] = useState(0);
 
-  const imagesToShow = "card_faces" in data ? data.card_faces.filter((e)=>e.image).map((e)=> e.image): [];
-
-  const splitParens = (text: string) => {
-    const chunks: string[] = [];
-    let parenLevel = 0;
-    let chunkStart = 0;
-    for (let i = 0; i < text.length; i++) {
-      if (text[i] == '(') {
-        if (parenLevel == 0 && i > 0) {
-          chunks.push(text.slice(chunkStart, i));
-          chunkStart = i;
-        }
-        parenLevel++;
-      } else if (text[i] == ')' && parenLevel > 0) {
-        parenLevel--;
-        if (parenLevel == 0) {
-          chunks.push(text.slice(chunkStart, i + 1));
-          chunkStart = i + 1;
-        }
-      }
-    }
-    if (chunkStart < text.length) {
-      chunks.push(text.slice(chunkStart));
-    }
-    return chunks;
-  };
+  const imagesToShow = data
+    .toFaces()
+    .filter(e => e.image)
+    .map(e => e.image);
 
   return (
     <Container key={data.id}>
@@ -77,13 +54,13 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
       )}
       <Card>
         <Card.Body padding={'zero'}>
-          {"card_faces" in data ?
-          data.card_faces.map((face, i) => (
+          {/* <StyledHeading size="large">{data.name}</StyledHeading> */}
+          {data.toFaces().map((face, i) => (
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               <Text typeLevel="body.medium" key="name">
                 {stringToMana(face.name)}
-              </Text> 
+              </Text>
               {/* do I need a space here? */}
               <Text typeLevel="body.medium" key="cost">
                 {stringToMana(face.mana_cost || '')}
@@ -94,7 +71,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               </Text>
               <br />
               <Text typeLevel="body.medium" key="rules" wordBreak="break-word">
-                {(face.oracle_text).split('\\n').map(entry => (
+                {face.oracle_text.split('\\n').map(entry => (
                   <>
                     {' '}
                     {}
@@ -111,136 +88,55 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <br />
 
               {face.flavor_text && (
-                  <>
-                    <ItalicText typeLevel="body.medium" key="flavor">
-                      {renderText((face.flavor_text || '').split('\\n'))}
-                    </ItalicText>
-                    <br />
-                  </>
-                )}
+                <>
+                  <ItalicText typeLevel="body.medium" key="flavor">
+                    {renderText((face.flavor_text || '').split('\\n'))}
+                  </ItalicText>
+                  <br />
+                </>
+              )}
               {face.power && (
-                  <>
-                    <Text typeLevel="body.medium" key="stats">
-                      {face.power}/{face.toughness}
-                    </Text>
-                    <br />
-                  </>
-                )}
+                <>
+                  <Text typeLevel="body.medium" key="stats">
+                    {face.power}/{face.toughness}
+                  </Text>
+                  <br />
+                </>
+              )}
               {face.loyalty && (
-                  <>
-                    <Text typeLevel="body.medium" key="loyalty">
-                      Loyalty: {face.loyalty}
-                    </Text>
-                    <br />
-                  </>
-                )}
+                <>
+                  <Text typeLevel="body.medium" key="loyalty">
+                    Loyalty: {face.loyalty}
+                  </Text>
+                  <br />
+                </>
+              )}
               {face.defense && (
-                  <>
-                    <Text typeLevel="body.medium" key="defense">
-                      Defense: {face.defense}
-                    </Text>
-                    <br />
-                  </>
-                )}
+                <>
+                  <Text typeLevel="body.medium" key="defense">
+                    Defense: {face.defense}
+                  </Text>
+                  <br />
+                </>
+              )}
               {face.hand_modifier && (
-                  <>
-                    <Text typeLevel="body.medium" key="hand_modifier">
-                      Hand Size: {face.hand_modifier}
-                    </Text>
-                    <br />
-                  </>
-                )}
+                <>
+                  <Text typeLevel="body.medium" key="hand_modifier">
+                    Hand Size: {face.hand_modifier}
+                  </Text>
+                  <br />
+                </>
+              )}
               {face.life_modifier && (
-                  <>
-                    <Text typeLevel="body.medium" key="life_modifier">
-                      Starting Life: {face.life_modifier}
-                    </Text>
-                    <br />
-                  </>
-                )}
+                <>
+                  <Text typeLevel="body.medium" key="life_modifier">
+                    Starting Life: {face.life_modifier}
+                  </Text>
+                  <br />
+                </>
+              )}
             </div>
-          ))
-          :
-          <div key={'face'}>
-              {/* <StyledHeading size="large">{data.name}</StyledHeading> */}
-              <Text typeLevel="body.medium" key="name">
-                {stringToMana(data.name)}
-              </Text> 
-              {/* do I need a space here? */}
-              <Text typeLevel="body.medium" key="cost">
-                {stringToMana(data.mana_cost || '')}
-              </Text>
-              <br />
-              <Text typeLevel="body.medium" key="type">
-                {data.type_line}
-              </Text>
-              <br />
-              <Text typeLevel="body.medium" key="rules" wordBreak="break-word">
-                {(data.oracle_text).split('\\n').map(entry => (
-                  <>
-                    {' '}
-                    {}
-                    {splitParens(entry).map((chunk, ci) => {
-                      if (chunk.startsWith('(')) {
-                        return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
-                      }
-                      return stringToMana(chunk);
-                    })}
-                    <br />
-                  </>
-                ))}
-              </Text>
-              <br />
-
-              {data.flavor_text && (
-                  <>
-                    <ItalicText typeLevel="body.medium" key="flavor">
-                      {renderText((data.flavor_text || '').split('\\n'))}
-                    </ItalicText>
-                    <br />
-                  </>
-                )}
-              {data.power && (
-                  <>
-                    <Text typeLevel="body.medium" key="stats">
-                      {data.power}/{data.toughness}
-                    </Text>
-                    <br />
-                  </>
-                )}
-              {data.loyalty && (
-                  <>
-                    <Text typeLevel="body.medium" key="loyalty">
-                      Loyalty: {data.loyalty}
-                    </Text>
-                    <br />
-                  </>
-                )}
-              {data.defense && (
-                  <>
-                    <Text typeLevel="body.medium" key="defense">
-                      Defense: {data.defense}
-                    </Text>
-                    <br />
-                  </>
-                )}
-              {data.hand_modifier && (
-                  <>
-                    <Text typeLevel="body.medium" key="hand_modifier">
-                      Hand Size: {data.hand_modifier}
-                    </Text>
-                    <br />
-                  </>
-                )}
-              {data.life_modifier && (
-                  <>
-                    <Text typeLevel="body.medium" key="life_modifier">
-                      Starting Life: {data.life_modifier}
-                    </Text>
-                    <br />
-                  </>
-                )}
-            </div>}
+          ))}
           <Divider />
           {data.set && (
             <>
@@ -262,12 +158,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           )}
           {
             <>
-            Constructed <SetLegality banned={Boolean(data.legalities.standard != "banned")} />
+              Constructed <SetLegality banned={Boolean(data.legalities.standard != 'banned')} />
               <br />
-              4CB <SetLegality banned={Boolean(data.legalities['4cb'] != "banned")} />
+              4CB <SetLegality banned={Boolean(data.legalities['4cb'] != 'banned')} />
               <br />
-              Hellsmander{' '}
-              <SetLegality banned={Boolean(data.legalities.commander != "banned")} />
+              Hellsmander <SetLegality banned={Boolean(data.legalities.commander != 'banned')} />
               <br />
             </>
           }
@@ -303,9 +198,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <Divider />
               <div>
                 <StyledHeading size="small">Related Tokens</StyledHeading>
-                {data.all_parts.filter((e)=>e.component=="token").map((entry, i) => (
-                  <img key={entry.name + i} src={entry.image} height="500px" />
-                ))}
+                {data.all_parts
+                  .filter(e => e.component == 'token')
+                  .map((entry, i) => (
+                    <img key={entry.name + i} src={entry.image} height="500px" />
+                  ))}
               </div>
             </>
           )}

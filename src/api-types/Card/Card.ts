@@ -49,7 +49,38 @@ type Layout<T extends `${HCLayout}`> = Pick<HCCardFields.Core.HCReferences, 'lay
 export namespace HCCard {
   /** The abstract root implementation of cards. */
   export type AbstractCard = HCObject.Object<HCObject.ObjectType.Card> &
-    HCCardFields.Core.HCReferences;
+    HCCardFields.Core.HCReferences & {
+      /**
+       * Converts the card to an array of its faces.
+       * For single-faced cards, returns an array with the card itself.
+       * For multi-faced cards, returns the card_faces array.
+       *
+       * @returns An array of card faces
+       *
+       * @example
+       * const card: HCCard.Any = getCard();
+       * const faces = card.toFaces(); // Always returns an array
+       */
+      toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced];
+      // TODO: make these work
+      /**
+       * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
+       *
+       * @returns An array of values for the prop
+       * For single-faced cards, returns an array with the prop itself.
+       * For multi-faced cards, returns the prop from each member of the card_faces array.
+       *
+       */
+      // getPropFromAllFaces(prop:string):any[];
+      /**
+       * Gets the value of a prop from each face of a card (including the main part for multiface cards)
+       *
+       * @returns An array of values for the prop
+       * For single-faced cards, returns an array with the prop itself.
+       * For multi-faced cards, returns the prop from each member of the card_faces array and from the card itself.
+       */
+      // getPropFromAllFacesInclusive(prop:string):any[];
+    };
 }
 
 export namespace HCCard {
@@ -200,7 +231,6 @@ export namespace HCCard {
   export type Any =
     | AnySingleFaced
     | AnyMultiFaced /**| AnySingleSidedSplit | AnyDoubleSidedSplit | ReversibleCard*/;
-
   /**
    * Any card that is multifaced: either a single or double sided split layout, or a reversible card.
    */

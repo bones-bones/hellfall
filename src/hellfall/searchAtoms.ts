@@ -1,4 +1,5 @@
 import { atom } from 'jotai';
+import { HCColor, HCSearchColor, HCColors } from '../api-types';
 const searchParams = new URLSearchParams(document.location.search);
 
 export const nameSearchAtom = atom<string>(searchParams.get('name') || '');
@@ -22,9 +23,13 @@ export const searchSetAtom = atom(searchParams.get('set')?.split(',') || []);
 
 export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
 
-export const searchColorsAtom = atom(searchParams.get('colors')?.split(',') || []);
+export const searchColorsAtom = atom(
+  (searchParams.get('colors')?.split(',') || []) as HCSearchColor[]
+);
 
-export const searchColorsIdentityAtom = atom(searchParams.get('colorIdentity')?.split(',') || []);
+export const searchColorsIdentityAtom = atom(
+  (searchParams.get('colorIdentity')?.split(',') || []) as HCSearchColor[]
+);
 
 export const useHybridIdentityAtom = atom(searchParams.get('useHybrid') == 'true');
 

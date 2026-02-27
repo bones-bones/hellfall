@@ -7,6 +7,16 @@ export enum HCCoreColor {
   Purple = 'P',
   Colorless = 'C',
 }
+export enum HCSearchColor {
+  White = 'W',
+  Blue = 'U',
+  Black = 'B',
+  Red = 'R',
+  Green = 'G',
+  Purple = 'P',
+  Colorless = 'C',
+  MISC_BULLSHIT = 'Misc bullshit',
+}
 export enum HCMiscColor {
   Pickle = 'Pickle',
   Yellow = 'Yellow',
@@ -20,7 +30,6 @@ export enum HCMiscColor {
   Grey = 'Grey',
 }
 export type HCColor = HCCoreColor | HCMiscColor;
-
 
 export type HCCoreColors = `${HCCoreColor}`[];
 

@@ -71,6 +71,10 @@ export namespace HCCardFields.Core {
      * All tags of this card.
      */
     tags?: string[];
+    /**
+     * Whether this card is an actual token (TODO: replace with type-based checks)
+     */
+    isActualToken?: boolean;
   };
 }
 
@@ -143,9 +147,9 @@ export namespace HCCardFields.Gameplay {
   type AllFacesAndSides = {
     name: string;
     type_line: string;
-    supertypes?:string[];
-    types?:string[];
-    subtypes?:string[];
+    supertypes?: string[];
+    types?: string[];
+    subtypes?: string[];
     mana_cost?: string;
   };
 
@@ -175,15 +179,15 @@ export namespace HCCardFields.Gameplay {
     /**
      * The supertypes of the card.
      */
-    supertypes?:string[];
+    supertypes?: string[];
     /**
      * The types of the card.
      */
-    types?:string[];
+    types?: string[];
     /**
      * The subtypes of the card.
      */
-    subtypes?:string[];
+    subtypes?: string[];
     /**
      * The Oracle text for this card, if any.
      */
@@ -244,15 +248,15 @@ export namespace HCCardFields.Gameplay {
     /**
      * The supertypes of the card.
      */
-    supertypes?:string[];
+    supertypes?: string[];
     /**
      * The types of the card.
      */
-    types?:string[];
+    types?: string[];
     /**
      * The subtypes of the card.
      */
-    subtypes?:string[];
+    subtypes?: string[];
   };
 }
 
