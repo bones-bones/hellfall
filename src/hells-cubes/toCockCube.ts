@@ -1,5 +1,5 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 import tokens from '../data/tokens.json';
 import { recursiveAdoption } from './recursiveAdoption';
 export const toCockCube = ({
@@ -9,7 +9,7 @@ export const toCockCube = ({
 }: {
   name: string;
   set: string;
-  cards: HCEntry[];
+  cards: HCCard.Any[];
 }) => {
   const xmlDoc = document.implementation.createDocument(null, 'cockatrice_carddatabase');
   xmlDoc.documentElement.setAttribute('version', '4');
@@ -61,7 +61,7 @@ export const toCockCube = ({
     tokenEntry['Related Cards (Read Comment)']?.split(';').forEach(related => {
       const relatedEntry = xmlDoc.createElement('reverse-related');
       relatedEntry.textContent = related;
-      if (cards.find(entry => related == entry.Name)?.Tags?.includes('persistent-tokens')) {
+      if (cards.find(entry => related == entry.name)?.tags?.includes('persistent-tokens')) {
         relatedEntry.setAttribute('persistent', 'persistent');
       }
 
@@ -124,75 +124,52 @@ const hcCardToCockCard = ({
 }: {
   xmlDoc: XMLDocument;
   set: string;
-  entry: HCEntry;
+  entry: HCCard.Any;
   cardsElement: HTMLElement;
   sideIndex: number;
 }) => {
+  const face = entry.toFaces()[sideIndex]
   const tempCard = xmlDoc.createElement('card');
   const name = xmlDoc.createElement('name');
-  name.textContent = entry.Image[2]
-    ? entry.Name.split(' // ')[sideIndex] || entry.Name + ' ' + entry['Card Type(s)'][1]
-    : entry.Name;
+  name.textContent = face.name;
 
   const text = xmlDoc.createElement('text');
-  text.textContent = entry.Image[2]
-    ? entry['Text Box']?.[sideIndex]?.replace(/\\n/g, '\n').replace(/[{}]/g, '') || ''
-    : (entry['Text Box'] || [])
-        .filter(Boolean)
-        .join('\n//\n')
-        .replace(/\\n/g, '\n')
-        .replace(/[{}]/g, '');
+  text.textContent = face.oracle_text.replace(/\\n/g, '\n').replace(/[{}]/g, '');
 
   const setElement = xmlDoc.createElement('set');
   setElement.setAttribute('rarity', 'common');
-  setElement.setAttribute('picURL', entry.Image[sideIndex + 1] || entry.Image[0]!);
+  setElement.setAttribute('picURL', face.image!);
   setElement.textContent = set;
   const color = xmlDoc.createElement('color');
-  color.textContent = (entry['Color(s)'] || '')
-    .replace('Blue', 'U')
-    .replace('Red', 'R')
-    .replace('Green', 'G')
-    .replace('Black', 'B')
-    .replace('White', 'W')
-    .replace('Purple', 'P')
-    .replace(/;/g, '');
+  color.textContent = face.colors.join("");
+
   const manaCost = xmlDoc.createElement('manacost');
-  manaCost.textContent = entry.Cost?.[sideIndex]?.replace(/\{(.)\}/g, '$1') || '';
+  manaCost.textContent = face.mana_cost?.replace(/\{(.)\}/g, '$1') || '';
 
   const mainType = xmlDoc.createElement('maintype');
-  mainType.textContent = entry['Card Type(s)'][sideIndex]?.includes('Creature')
+  mainType.textContent = face.types?.includes('Creature')
     ? 'Creature'
-    : entry['Card Type(s)'][sideIndex]?.split(';').slice(-1)[0] || '';
+    : face.types?.slice(-1)[0] || '';
   const cmc = xmlDoc.createElement('cmc');
-  cmc.textContent = entry.CMC?.toString() || '';
+  cmc.textContent = entry.cmc.toString() || '';
   const type = xmlDoc.createElement('type');
-  type.textContent = [
-    (entry['Supertype(s)']?.[sideIndex] ?? '').replace(/;/g, ' '),
-    [
-      (entry['Card Type(s)']?.[sideIndex] ?? '').replace(/;/g, ' '),
-      (entry['Subtype(s)']?.[sideIndex] ?? '').replace(/;/g, ' '),
-    ]
-      .filter(Boolean)
-      .join(' — '),
-  ]
-    .filter(Boolean)
-    .join(' ');
+  type.textContent = face.type_line;
 
   let pt = undefined;
-  if ((entry['Card Type(s)'][sideIndex] || '').includes('Creature')) {
+  if (face.types?.includes('Creature')) {
     pt = xmlDoc.createElement('pt');
-    pt.textContent = `${entry.power?.[sideIndex]}/${entry.toughness?.[sideIndex]}`;
+    pt.textContent = `${face.power}/${face.toughness}`;
   }
 
   let loyalty = undefined;
-  if (entry['Loyalty']) {
+  if (face.loyalty) {
     loyalty = xmlDoc.createElement('loyalty');
-    loyalty.textContent = entry.Loyalty?.[sideIndex];
+    loyalty.textContent = face.loyalty;
   }
 
   let legality = undefined;
   // TODO: support other types
-  if (entry.Constructed?.includes('Legal')) {
+  if (entry.legalities.standard == 'legal') {
     legality = xmlDoc.createElement('format-standard');
     legality.textContent = 'legal';
   }
@@ -203,20 +180,12 @@ const hcCardToCockCard = ({
   let reverse;
 
   // If we're not processing the first side, then we need to attach each side to the original
-  if (sideIndex !== 0) {
-    reverse = xmlDoc.createElement('reverse-related');
-    reverse.textContent = entry.Name.split(' // ')[0];
-    reverse.setAttribute('attach', 'transform');
-  } else if (
     // augh this sucks, printable image should have had a different name
-
-    [entry['Image'][0], entry['Image'][2], entry['Image'][3], entry['Image'][4]].filter(Boolean)
-      .length > 1
-  ) {
+  if (sideIndex !== 0 || entry.toFaces().filter(e=>e.image).length>1) {
     reverse = xmlDoc.createElement('reverse-related');
-    reverse.textContent = entry.Name.split(' // ')[1]; // RIP Farsight
+    reverse.textContent = entry.toFaces()[0].name; // RIP Farsight
     reverse.setAttribute('attach', 'transform');
-  }
+  } 
 
   const layout = xmlDoc.createElement('layout');
   layout.textContent = sideIndex > 0 ? 'transform' : getLayout(entry);
@@ -243,12 +212,11 @@ const hcCardToCockCard = ({
   );
 
   if (
-    sideIndex == 0 &&
-    entry['Card Type(s)']?.[1] &&
-    entry['Image']?.[2] &&
-    !['MR. CRIME 1981 // Felony Theft'].includes(entry.Name)
+    sideIndex == 0 && entry.toFaces().filter(e=>e.image).length>1 &&
+    !['MR. CRIME 1981 // Felony Theft'].includes(entry.name)
   ) {
-    for (let i = 1; i < entry['Image'].filter(Boolean).length - 1; i++) {
+    // TODO: make sure this works
+    for (let i = 1; i < entry.toFaces().length - 1; i++) {
       recursiveAdoption(cardsElement, [
         hcCardToCockCard({ xmlDoc, set, entry, cardsElement, sideIndex: i }),
       ]);
@@ -258,10 +226,9 @@ const hcCardToCockCard = ({
   return tempCard;
 };
 
-const getLayout = (card: HCEntry) => {
-  if (
-    (!card.Image[1] && card['Card Type(s)']?.[1]) ||
-    ['Battle', 'Plane', 'Phenomenon'].find(e => card['Card Type(s)']?.[0]?.split(';').includes(e))
+const getLayout = (card: HCCard.Any) => {
+  if ( (card.toFaces().filter(e=>e.image).length<=1 && card.toFaces().length>1) ||
+    card.toFaces()[0].types?.some(e=>['Battle', 'Plane', 'Phenomenon'].includes(e))
   ) {
     return 'split';
   }
@@ -269,20 +236,18 @@ const getLayout = (card: HCEntry) => {
   return 'normal';
 };
 
-const getTableRow = (card: HCEntry) => {
-  if (
-    card['Card Type(s)']?.find(
-      entry => entry?.split(';').includes('Instant') || entry?.split(';').includes('Sorcery')
-    )
+// TODO: Should these use only the first face?
+const getTableRow = (card: HCCard.Any) => {
+  if (card.toFaces().map(e=>e.types).flat().some(e=>['Instant','Sorcery'].includes(e!))
   ) {
     return 3;
   }
 
-  if (card['Card Type(s)']?.find(entry => entry?.split(';').includes('Creature'))) {
+  if (card.toFaces().map(e=>e.types).flat().includes('Creature')) {
     return 2;
   }
 
-  if (card['Card Type(s)']?.find(entry => entry?.split(';').includes('Land'))) {
+  if (card.toFaces().map(e=>e.types).flat().includes('Land')) {
     return 0;
   }
   return 1;

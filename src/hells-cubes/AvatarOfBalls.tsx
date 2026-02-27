@@ -1,7 +1,7 @@
 import { FormField, PrimaryButton, TextInput } from '@workday/canvas-kit-react';
 import { useRef, useState } from 'react';
 import { cardsAtom } from '../hellfall/cardsAtom';
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 import { HellfallEntry } from '../hellfall/HellfallEntry';
 import { useAtomValue } from 'jotai';
 
@@ -11,7 +11,7 @@ export const AvatarOfBalls = () => {
 
   const numRef = useRef<HTMLInputElement>(null);
 
-  const [cardsToRender, setCardsToRender] = useState<HCEntry[]>([]);
+  const [cardsToRender, setCardsToRender] = useState<HCCard.Any[]>([]);
   console.log(cardsToRender);
 
   return (
@@ -27,10 +27,10 @@ export const AvatarOfBalls = () => {
         onClick={() => {
           const filtered = cards.filter(entry => {
             return (
-              entry['Card Type(s)']?.includes('Creature') &&
-              ((entry.Name.includes('Negative') &&
+              entry.types?.includes('Creature') &&
+              ((entry.name.includes('Negative') &&
                 parseInt(powerRef.current?.value || '3') == -1) ||
-                entry.CMC == parseInt(powerRef.current?.value || '3') ||
+                entry.cmc == parseInt(powerRef.current?.value || '3') ||
                 0)
             );
           });
@@ -51,10 +51,10 @@ export const AvatarOfBalls = () => {
         {cardsToRender.map((e, i) =>
           e !== undefined ? (
             <HellfallEntry
-              key={e.Name + i}
-              id={e.Id}
-              name={e.Name}
-              url={e.Image[0]!}
+              key={e.name + i}
+              id={e.id}
+              name={e.name}
+              url={e.image!}
               onClick={() => {
                 // void
               }}

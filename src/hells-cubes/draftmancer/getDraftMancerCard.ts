@@ -52,7 +52,7 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
                 : card.image! },
     is_custom: true,
     ...getDraftEffects(card),
-    ...(card.toFaces().length > 1 && {
+    ...("card_faces" in card && {
       backs: card.toFaces().slice(1).map(e=>({
         name: e.name,
         image_uris: {en:e.image!},
