@@ -223,9 +223,9 @@ export namespace HCCardFields.Gameplay {
      */
     cmc: number;
     /**
-     * This card’s color identity.
+     * This card’s color identity. It is a list of HCColors in order to handle the hybrid rules.
      */
-    color_identity: HCColors;
+    color_identity: HCColors[];
     /**
      * An array of keywords that this card uses, such as 'Flying' and 'Cumulative upkeep'.
      */

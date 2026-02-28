@@ -18,15 +18,15 @@ export const fetchDatabase = async () => {
     'image',
     'creator',
     'set',
-    'legalities', // done
-    'related', // done
+    'legalities',
+    'related',
     'rulings',
-    'cmc', // done
-    '0colors', // done
+    'cmc',
+    '0colors',
     '0mana_cost',
-    '0supertypes', // done
-    '0types', // done
-    '0subtypes', // done
+    '0supertypes',
+    '0types',
+    '0subtypes',
     '0power',
     '0toughness',
     '0loyalty',
@@ -118,7 +118,7 @@ export const fetchDatabase = async () => {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',
                 component: 'combo_piece',
-                name: entry[1],
+                name: entry[i],
                 type_line: '',
               },
             ];
@@ -142,8 +142,7 @@ export const fetchDatabase = async () => {
       // }
     }
     cardObject.color_identity = getColorIdentityProp(cardObject as HCCard.AnyMultiFaced);
-    const keywordList: string[] = [];
-    cardObject.keywords = keywordList;
+    cardObject.keywords = [];
     cardObject.variation = false;
 
     const name = entry[1].split(' // ');
@@ -182,7 +181,7 @@ export const fetchDatabase = async () => {
 
     if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
-        ([key, value]) => !['type_line', 'mana_cost', 'image_status'].includes(key)
+        ([key, value]) => !['name', 'type_line', 'mana_cost', 'image_status'].includes(key)
       )) {
         cardObject[key] = value;
       }
