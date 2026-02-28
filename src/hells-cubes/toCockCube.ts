@@ -138,10 +138,10 @@ const hcCardToCockCard = ({
   text.textContent = entry.Image[2]
     ? entry['Text Box']?.[sideIndex]?.replace(/\\n/g, '\n').replace(/[{}]/g, '') || ''
     : (entry['Text Box'] || [])
-        .filter(Boolean)
-        .join('\n//\n')
-        .replace(/\\n/g, '\n')
-        .replace(/[{}]/g, '');
+      .filter(Boolean)
+      .join('\n//\n')
+      .replace(/\\n/g, '\n')
+      .replace(/[{}]/g, '');
 
   const setElement = xmlDoc.createElement('set');
   setElement.setAttribute('rarity', 'common');
@@ -181,7 +181,7 @@ const hcCardToCockCard = ({
   let pt = undefined;
   if ((entry['Card Type(s)'][sideIndex] || '').includes('Creature')) {
     pt = xmlDoc.createElement('pt');
-    pt.textContent = `${entry.power?.[sideIndex]}/${entry.toughness?.[sideIndex]}`;
+    pt.textContent = `${entry.Power?.[sideIndex]}/${entry.Toughness?.[sideIndex]}`;
   }
 
   let loyalty = undefined;

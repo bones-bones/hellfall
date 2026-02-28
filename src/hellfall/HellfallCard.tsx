@@ -118,12 +118,12 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
                     <br />
                   </>
                 )}
-              {data['power']?.[i] &&
-                data['power'][i]!.toString() !== '' &&
-                data['power'] != null && (
+              {data['Power']?.[i] &&
+                data['Power'][i]!.toString() !== '' &&
+                data['Power'] != null && (
                   <>
                     <Text typeLevel="body.medium" key="stats">
-                      {data['power'][i]}/{data['toughness']![i]}
+                      {data['Power'][i]}/{data['Toughness']![i]}
                     </Text>
                     <br />
                   </>
