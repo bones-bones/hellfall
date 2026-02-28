@@ -95,13 +95,13 @@ export const fetchDatabase = async () => {
             cardObject.card_faces[face][key] = entry[i];
           }
           if (key == 'image') {
-            cardObject.card_faces[face].image_status = entry[20].includes('low-quality')
+            cardObject.card_faces[face].image_status = entry[20] && entry[20].includes('low-quality')
               ? HCImageStatus.LowRes
               : HCImageStatus.HighResScan;
           }
         } else {
           if (keys[i] == 'cmc') {
-            cardObject[keys[i]] = parseInt(cardObject[keys[i]]);
+            cardObject[keys[i]] = parseInt(entry[i]);
           } else if (keys[i] == 'legalities') {
             const formats = entry[i].split(', ');
             const legalities: HCLegalitiesField = {
@@ -129,19 +129,10 @@ export const fetchDatabase = async () => {
           }
         }
       }
-      // if (cardObject[keys[i]] !== undefined) {
-      //   if (!Array.isArray(cardObject[keys[i]])) {
-      //     cardObject[keys[i]] = [cardObject[keys[i]]];
-      //   }
-      //   cardObject[keys[i]].push(entry[i]);
-      // } else {
-      //   cardObject[keys[i]] = entry[i];
-      // }
-      // if (keys[i] == 'CMC') {
-      //   cardObject[keys[i]] = parseInt(cardObject[keys[i]]);
-      // }
     }
-    cardObject.color_identity = getColorIdentityProp(cardObject as HCCard.AnyMultiFaced);
+    if (cardObject.card_faces.length == 0){
+      cardObject.card_faces.push({} as Record<string, any>);
+    }
     cardObject.keywords = [];
     cardObject.variation = false;
 
@@ -174,6 +165,7 @@ export const fetchDatabase = async () => {
     if (mana_cost_list.join('') != '') {
       cardObject.mana_cost = mana_cost_list.join(' // ');
     }
+    cardObject.color_identity = getColorIdentityProp(cardObject as HCCard.AnyMultiFaced);
     const mandatoryProps = ['rulings', 'creator', 'cmc'];
     mandatoryProps
       .filter(prop => !(prop in cardObject))

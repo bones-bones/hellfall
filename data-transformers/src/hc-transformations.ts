@@ -4,14 +4,28 @@ import fs from 'fs';
 import { fetchTokens } from './fetchTokens';
 import { fetchDatabase } from './fetchdatabase';
 import { fetchUsernameMappings } from './fetchUsernameMapping';
-import { HCRelatedCard } from '../../src/api-types/Card';
+import { HCCard, HCRelatedCard } from '../../src/api-types/Card';
 import { HCObject } from '../../src/api-types/Object';
+import { getDefaultStore } from 'jotai';
+import { loadPips, pipsAtom } from '../../src/hellfall/pipsAtom';
 
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
-
+const moveCardFacesToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
+  return cards.map(card=>{
+    if ('card_faces' in card){
+      const { card_faces, ...rest } = card;
+      return { ...rest,card_faces } as HCCard.AnyMultiFaced;
+    }
+    return card;
+  });
+};
 const main = async () => {
+  const store = getDefaultStore();
+  const pips = await loadPips();
+  store.set(pipsAtom, pips);
+
   const { data } = { data: await fetchDatabase() };
   const usernameMappings = await fetchUsernameMappings();
 
@@ -198,7 +212,7 @@ const main = async () => {
     './src/data/Hellscube-Database.json',
     JSON.stringify(
       {
-        data: data
+        data: moveCardFacesToBottom(data)
           //@ts-ignore
           .concat({ data: tokens }),
       },
