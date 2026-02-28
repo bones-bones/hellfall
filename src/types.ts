@@ -1,4 +1,6 @@
 // The reason that there are 4 of Cost etc is because some cards have 4 sides. ooof
+// TODO: Remove
+
 
 type SideArray<T> = [T | null, T | null, T | null, T | null];
 

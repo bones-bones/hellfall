@@ -1,15 +1,17 @@
 import fs from "fs";
 import { HCEntry } from "../types";
+import { HCCard } from "../../../src/api-types/Card";
 import data from "../../../src/data/Hellscube-Database.json";
+import {canBeACommander} from "../../../src/hellfall/canBeACommander"
 
-const canBeACommander = (card: HCEntry) => {
-  return (
-    (card["Supertype(s)"]?.[0]?.includes("Legendary") &&
-      card["Card Type(s)"]?.[0]?.includes("Creature")) ||
-    (card["Text Box"]?.[0]?.includes("can be your commander") &&
-      !card["Text Box"]?.[0]?.includes("Irresponsible"))
-  );
-};
+// const canBeACommander = (card: HCCard.Any) => {
+//   return (
+//     (card["Supertype(s)"]?.[0]?.includes("Legendary") &&
+//       card["Card Type(s)"]?.[0]?.includes("Creature")) ||
+//     (card["Text Box"]?.[0]?.includes("can be your commander") &&
+//       !card["Text Box"]?.[0]?.includes("Irresponsible"))
+//   );
+// };
 
 const getDraftmancerCube = () => {
   for (const set of [

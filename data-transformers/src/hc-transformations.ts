@@ -1,11 +1,11 @@
 import fs from 'fs';
 
-import { Token, TokenForImport } from './types';
 // import { downloadImage } from "./downloadImage";
-import { tokenToCard } from './tokenToCard';
 import { fetchTokens } from './fetchTokens';
 import { fetchDatabase } from './fetchdatabase';
 import { fetchUsernameMappings } from './fetchUsernameMapping';
+import { HCRelatedCard } from '../../src/api-types/Card';
+import { HCObject } from '../../src/api-types/Object';
 
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
@@ -16,91 +16,104 @@ const main = async () => {
   const usernameMappings = await fetchUsernameMappings();
 
   const tokens = await fetchTokens();
-  const tokensWithBetterName = tokens.map(entry => {
-    const {
-      //@ts-ignore
-      ['Name (number tokens with the same name, if only one token has that name still add a 1.)']:
-        Name,
-      ...rest
-    } = entry;
-    return { Name, ...rest };
-  });
-  const tokenMap = (tokensWithBetterName as TokenForImport[]).reduce<Record<string, Token[]>>(
-    (current, entry) => {
-      (entry['Related Cards (Read Comment)'] || '').split(';').forEach(cardEntry => {
-        if (current[cardEntry.replace(/\*\d*$/, '')]) {
-          current[cardEntry.replace(/\*\d*$/, '')].push({
-            Name: entry.Name.replace(/(\d*)$/, ' $1'),
-            Image: entry.Image,
-            Power: entry.Power,
-            Toughness: entry.Toughness,
-            Type: entry.Type,
-            // FIELD7: entry.FIELD7,
-          });
-        } else {
-          current[cardEntry.replace(/\*\d*$/, '')] = [
-            {
-              Name: entry.Name.replace(/(\d*)$/, ' $1'),
-              Image: entry.Image,
-              Power: entry.Power,
-              Toughness: entry.Toughness,
-              Type: entry.Type,
-              // FIELD7: entry.FIELD7,
-            },
-          ];
-        }
-      });
-      return current;
-    },
-    {}
-  );
+  // const tokensWithBetterName = tokens.map(entry => {
+  //   const {
+  //     //@ts-ignore
+  //     ['Name (number tokens with the same name, if only one token has that name still add a 1.)']:
+  //       Name,
+  //     ...rest
+  //   } = entry;
+  //   return { Name, ...rest };
+  // });
+  tokens.filter(e=>'all_parts' in e).forEach(token=>{
+    const relatedToken:HCRelatedCard = {
+      object: HCObject.ObjectType.RelatedCard,
+      id:token.id,
+      component:'token',
+      name:token.name,
+      type_line:token.type_line
+    };
+    token.all_parts?.forEach(tokenMaker=>{
+      const relatedCard = data.find(card=>card.name == tokenMaker.name);
+      if (relatedCard){
+        tokenMaker.id = relatedCard.id;
+        token.type_line = relatedCard.type_line;
+        'all_parts' in relatedCard ? relatedCard.all_parts?.push(relatedToken) : relatedCard.all_parts = [relatedToken];
+      }
+    })
+  })
+
+  // const tokenMap = (tokensWithBetterName as TokenForImport[]).reduce<Record<string, Token[]>>(
+  //   (current, entry) => {
+  //     (entry['Related Cards (Read Comment)'] || '').split(';').forEach(cardEntry => {
+  //       if (current[cardEntry.replace(/\*\d*$/, '')]) {
+  //         current[cardEntry.replace(/\*\d*$/, '')].push({
+  //           Name: entry.Name.replace(/(\d*)$/, ' $1'),
+  //           Image: entry.Image,
+  //           Power: entry.Power,
+  //           Toughness: entry.Toughness,
+  //           Type: entry.Type,
+  //           // FIELD7: entry.FIELD7,
+  //         });
+  //       } else {
+  //         current[cardEntry.replace(/\*\d*$/, '')] = [
+  //           {
+  //             Name: entry.Name.replace(/(\d*)$/, ' $1'),
+  //             Image: entry.Image,
+  //             Power: entry.Power,
+  //             Toughness: entry.Toughness,
+  //             Type: entry.Type,
+  //             // FIELD7: entry.FIELD7,
+  //           },
+  //         ];
+  //       }
+  //     });
+  //     return current;
+  //   },
+  //   {}
+  // );
 
   data.forEach(entry => {
     [
-      ...(entry['Supertype(s)'] || []),
-      ...(entry['Card Type(s)'] || []),
-      ...(entry['Subtype(s)'] || []),
-    ].forEach(typeEntry => {
-      if (typeEntry) {
-        const splitTypes = typeEntry.split(';');
-        splitTypes.forEach(splitEntry => {
-          typeSet.add(splitEntry);
-        });
-      }
+      ...(entry.subtypes || []),
+      ...(entry.types || []),
+      ...(entry.subtypes || []),
+    ].forEach(typeEntry => {      
+      typeSet.add(typeEntry);
     });
 
     const usernameMappingEntries = Object.entries(usernameMappings);
 
     replaceLoop: for (const [replacementName, oldNames] of usernameMappingEntries) {
       for (const oldName of oldNames) {
-        if (entry.Creator.split(';').includes(oldName)) {
-          entry.Creator = entry.Creator.replace(oldName, replacementName);
+        if (entry.creator.split(';').includes(oldName)) {
+          entry.creator = entry.creator.replace(oldName, replacementName);
           break replaceLoop;
         }
       }
     }
 
-    creatorSet.add(entry.Creator);
+    creatorSet.add(entry.creator);
 
-    if (entry.Tags && entry.Tags !== '') {
-      entry.Tags.split(';').forEach(e => tagSet.add(e));
+    if ('tags' in entry) {
+      entry.tags?.forEach(e => tagSet.add(e));
     }
 
-    if (entry.Constructed) {
-      // @ts-expect-error not sure about this approach but hey.
-      entry.Constructed = entry.Constructed.split(', ');
-    }
+    // if (entry.Constructed) {
+    //   // @ts-expect-error not sure about this approach but hey.
+    //   entry.Constructed = entry.Constructed.split(', ');
+    // }
 
-    if (tokenMap[entry.Name]) {
-      // Debug unused tokens
-      // (tokenMap[entry.Name] as any).used = true;
+    // if (tokenMap[entry.Name]) {
+    //   // Debug unused tokens
+    //   // (tokenMap[entry.Name] as any).used = true;
 
-      entry.tokens = tokenMap[entry.Name];
+    //   entry.tokens = tokenMap[entry.Name];
 
-      // if (["HC8.0", "HC8.1"].includes(entry.Set)) {
-      //   console.log(entry.Name);
-      // }
-    }
+    //   // if (["HC8.0", "HC8.1"].includes(entry.Set)) {
+    //   //   console.log(entry.Name);
+    //   // }
+    // }
 
     // if (
     //   entry["Text Box"]?.find((e) => e?.includes(" token")) &&
@@ -138,7 +151,7 @@ const main = async () => {
     './src/data/tokens.json',
     JSON.stringify(
       {
-        data: tokensWithBetterName.sort((a, b) => {
+        data: tokens.sort((a, b) => {
           if (a > b) {
             return -1;
           }
@@ -187,7 +200,7 @@ const main = async () => {
       {
         data: data
           //@ts-ignore
-          .concat({ data: tokensWithBetterName }.data.map(tokenToCard)),
+          .concat({ data: tokens }),
       },
       null,
       '\t'

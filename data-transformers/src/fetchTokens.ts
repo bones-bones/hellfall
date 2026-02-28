@@ -39,7 +39,7 @@ export const fetchTokens = async () => {
               object: HCObject.ObjectType.RelatedCard,
               id: '',
               component: 'token_maker',
-              name: name,
+              name: name.replace(/\*\d*$/, ''),
               type_line: '',
             };
             return maker;

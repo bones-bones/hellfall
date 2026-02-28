@@ -1,4 +1,5 @@
 import { HCEntry, TokenForImport } from './types';
+// TODO: Remove
 
 export const tokenToCard = (token: TokenForImport) => {
   const card: HCEntry = {
