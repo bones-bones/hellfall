@@ -147,9 +147,6 @@ export namespace HCCardFields.Gameplay {
   type AllFacesAndSides = {
     name: string;
     type_line: string;
-    supertypes?: string[];
-    types?: string[];
-    subtypes?: string[];
     mana_cost?: string;
   };
 
@@ -293,10 +290,6 @@ export namespace HCCardFields.Print {
      */
     // frame: `${HCFrame}`;
     /**
-     * A computer-readable indicator for the state of this card’s image, one of missing, placeholder, lowres, or highres_scan.
-     */
-    image_status: `${HCImageStatus}`;
-    /**
      * An string with the image for this side.
      */
     image?: string;
@@ -315,7 +308,7 @@ export namespace HCCardFields.Print {
      *
      * @type UUID
      */
-    card_back_id: string;
+    card_back_id?: string;
   };
 
   /**
@@ -325,6 +318,10 @@ export namespace HCCardFields.Print {
    * - Card face level for cards with two sides, e.g. a DFC or a reversible card.
    */
   export type CardSideSpecific = {
+    /**
+     * A computer-readable indicator for the state of this card’s image, one of missing, placeholder, lowres, or highres_scan.
+     */
+    image_status: `${HCImageStatus}`;
     /**
      * An string with the image for this side.
      */

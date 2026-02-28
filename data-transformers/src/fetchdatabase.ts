@@ -1,29 +1,199 @@
 import { sheetsKey } from '../../keys';
-import { HCEntry } from './types';
+import { HCCard } from '../../src/api-types/Card/Card';
+import { HCColor, HCColors, HCImageStatus, HCLayout } from '../../src/api-types/Card/values';
+import { HCLegalitiesField, HCFormat, HCLegality } from '../../src/api-types/Card/values';
+import { HCRelatedCard } from '../../src/api-types/Card/RelatedCard';
+import { HCObject } from '../../src/api-types/Object';
+import { getColorIdentityProp } from '../../src/hellfall/getColorIdentity';
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database (Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
-  const [_garbage, keys, ...rest] = asJson.values as any[];
+  const [_garbage, oldKeys, ...rest] = asJson.values as string[][];
+  const keys = [
+    'id',
+    'name',
+    'image',
+    'creator',
+    'set',
+    'legalities', // done
+    'related', // done
+    'rulings',
+    'cmc', // done
+    '0colors', // done
+    '0mana_cost',
+    '0supertypes', // done
+    '0types', // done
+    '0subtypes', // done
+    '0power',
+    '0toughness',
+    '0loyalty',
+    '0oracle_text',
+    '0flavor_text',
+    '0image',
+    'tags',
+    '1mana_cost',
+    '1supertypes',
+    '1types',
+    '1subtypes',
+    '1power',
+    '1toughness',
+    '1loyalty',
+    '1oracle_text',
+    '1flavor_text',
+    '1image',
+    '2mana_cost',
+    '2supertypes',
+    '2types',
+    '2subtypes',
+    '2power',
+    '2toughness',
+    '2loyalty',
+    '2oracle_text',
+    '2flavor_text',
+    '2image',
+    '3mana_cost',
+    '3supertypes',
+    '3types',
+    '3subtypes',
+    '3power',
+    '3toughness',
+    '3loyalty',
+    '3oracle_text',
+    '3flavor_text',
+    '3image',
+  ];
 
   const theThing = rest.map(entry => {
-    const cardObject: Record<string, any> = {};
+    const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
+      card_faces: [],
+    };
     for (let i = 0; i < keys.length; i++) {
-      if (cardObject[keys[i]] !== undefined) {
-        if (!Array.isArray(cardObject[keys[i]])) {
-          cardObject[keys[i]] = [cardObject[keys[i]]];
+      if (entry[i]) {
+        if ('0123'.includes(keys[i][0])) {
+          const face = parseInt(keys[i][0]);
+          const key = keys[i].slice(1);
+          while (cardObject.card_faces.length <= face) {
+            cardObject.card_faces.push({} as Record<string, any>);
+          }
+          if (key == 'colors') {
+            const colorArr = entry[i]
+              .split(';')
+              .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
+            cardObject.card_faces[face][key] = colorArr
+              ? colorArr
+              : ([HCColor.Colorless] as HCColors);
+          } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
+            if (entry[i]) {
+              cardObject.card_faces[face][key] = entry[i].split(';');
+            }
+          } else if (key == 'loyalty' && cardObject.card_faces[face]['types']?.includes('Battle')) {
+            cardObject.card_faces[face].defense = entry[i];
+          } else {
+            cardObject.card_faces[face][key] = entry[i];
+          }
+          if (key == 'image') {
+            cardObject.card_faces[face].image_status = entry[20].includes('low-quality')
+              ? HCImageStatus.LowRes
+              : HCImageStatus.HighResScan;
+          }
+        } else {
+          if (keys[i] == 'cmc') {
+            cardObject[keys[i]] = parseInt(cardObject[keys[i]]);
+          } else if (keys[i] == 'legalities') {
+            const formats = entry[i].split(', ');
+            const legalities: HCLegalitiesField = {
+              standard: formats.includes('Banned') ? HCLegality.Banned : HCLegality.Legal,
+              '4cb': formats.includes('Banned (4CB)') ? HCLegality.Banned : HCLegality.Legal,
+              commander: formats.includes('Banned (Commander)')
+                ? HCLegality.Banned
+                : HCLegality.Legal,
+            };
+            cardObject[keys[i]] = legalities;
+          } else if (keys[i] == 'related') {
+            const all_parts: [HCRelatedCard] = [
+              {
+                object: HCObject.ObjectType.RelatedCard,
+                id: '',
+                component: 'combo_piece',
+                name: entry[1],
+                type_line: '',
+              },
+            ];
+          } else if (keys[i] == 'tags') {
+            cardObject[keys[i]] = entry[i].split(';');
+          } else {
+            cardObject[keys[i]] = entry[i];
+          }
         }
-        cardObject[keys[i]].push(entry[i]);
-      } else {
-        cardObject[keys[i]] = entry[i];
       }
-      if (keys[i] == 'CMC') {
-        cardObject[keys[i]] = parseInt(cardObject[keys[i]]);
-      }
+      // if (cardObject[keys[i]] !== undefined) {
+      //   if (!Array.isArray(cardObject[keys[i]])) {
+      //     cardObject[keys[i]] = [cardObject[keys[i]]];
+      //   }
+      //   cardObject[keys[i]].push(entry[i]);
+      // } else {
+      //   cardObject[keys[i]] = entry[i];
+      // }
+      // if (keys[i] == 'CMC') {
+      //   cardObject[keys[i]] = parseInt(cardObject[keys[i]]);
+      // }
     }
-    return cardObject as HCEntry;
+    cardObject.color_identity = getColorIdentityProp(cardObject as HCCard.AnyMultiFaced);
+    const keywordList: string[] = [];
+    cardObject.keywords = keywordList;
+    cardObject.variation = false;
+
+    const name = entry[1].split(' // ');
+    const type_line_list: string[] = [];
+    const mana_cost_list: string[] = [];
+    cardObject.card_faces.forEach(face => {
+      face.name = name.length > 0 ? name.shift() : '';
+      const face_type = [
+        face.supertypes?.join(' '),
+        [face.types?.join(' '), face.subtypes?.join(' ')].filter(Boolean).join(' — '),
+      ]
+        .filter(Boolean)
+        .join(' ') as string;
+      face.type_line = face_type;
+      type_line_list.push(face_type);
+      mana_cost_list.push('mana_cost' in face ? face.mana_cost : '');
+      if (!('colors' in face)) {
+        face.colors = [HCColor.Colorless] as HCColors;
+      }
+      if (!('image_status' in face)) {
+        face.image_status = HCImageStatus.Missing;
+      }
+      if (!('oracle_text' in face)) {
+        face.oracle_text = '';
+      }
+    });
+
+    cardObject.type_line = type_line_list.join(' // ');
+    if (mana_cost_list.join('') != '') {
+      cardObject.mana_cost = mana_cost_list.join(' // ');
+    }
+    const mandatoryProps = ['rulings', 'creator', 'cmc'];
+    mandatoryProps
+      .filter(prop => !(prop in cardObject))
+      .forEach(key => (cardObject[key] = key == 'cmc' ? 0 : ''));
+
+    if (cardObject.card_faces.length <= 1) {
+      for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
+        ([key, value]) => !['type_line', 'mana_cost', 'image_status'].includes(key)
+      )) {
+        cardObject[key] = value;
+      }
+      const { card_faces, ...singleCard } = cardObject;
+      cardObject.layout = HCLayout.Normal;
+      return singleCard as HCCard.AnySingleFaced;
+    } else {
+      const names = entry[1];
+      cardObject.layout = HCLayout.Multi;
+      return cardObject as HCCard.AnyMultiFaced;
+    }
   });
 
   return theThing; //.filter((e) => e.Set != "C");

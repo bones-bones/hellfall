@@ -5,6 +5,10 @@ export enum HCImageStatus {
    */
   Missing = 'missing',
   /**
+   * This side doesn't need an image.
+   */
+  Inapplicable = 'inapplicable',
+  /**
    * This card's image is a placeholder HC has generated and visibly marked as such.
    * This is most commonly seen for languages where no real images are yet available to us.
    */

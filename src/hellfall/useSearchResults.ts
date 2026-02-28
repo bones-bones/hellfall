@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react';
 import { HCCard } from '../api-types';
-import {
-  HCColor,
-  HCSearchColor,
-  HCColors,
-  allMiscColors, 
-} from '../api-types';
+import { HCColor, HCSearchColor, HCColors, allMiscColors } from '../api-types';
 import { cardsAtom } from './cardsAtom';
 import { useAtom, useAtomValue } from 'jotai';
 import {
