@@ -157,6 +157,7 @@ const loadExistingData = () => {
     if (fs.existsSync(databasePath)) {
       const databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
       existingCards = databaseContent.data || [];
+      existingCards = existingCards.filter(e=>e.set!='HCT');
     }
     
     if (fs.existsSync(tokensPath)) {
