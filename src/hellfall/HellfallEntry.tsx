@@ -15,7 +15,7 @@ export const HellfallEntry = ({
 }) => {
   return (
     <Container key={id} role="button">
-      <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre' }}>
+      <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap' }}>
         {name}
       </span>
       <br />

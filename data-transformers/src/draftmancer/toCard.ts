@@ -61,10 +61,10 @@ const getDraftmancerCube = () => {
           return `1 ${e.name}`;
         })
         .join("\n")}\n[OtherSlot(18)]\n${otherCardsToWrite
-        .map((e) => {
-          return `1 ${e.name}`;
-        })
-        .join("\n")}`;
+          .map((e) => {
+            return `1 ${e.name}`;
+          })
+          .join("\n")}`;
       fs.writeFileSync(`./${set.id}Cube.txt`, formatted);
     }
   }
@@ -94,10 +94,11 @@ type DraftmancerCard = {
 };
 
 const getDraftMancerCard = (card: HCEntry) => {
+  const draftmancerSafeName = card.Name.replace(/[\[\]]/g, "");
   const cardToReturn: DraftmancerCard = {
-    id: card.Name.replace(" :]", "") + "_custom_",
-    oracle_id: card.Name.replace(" :]", "").trim(),
-    name: card.Name.replace(" :]", "").trim(),
+    id: draftmancerSafeName + "_custom_",
+    oracle_id: draftmancerSafeName,
+    name: draftmancerSafeName,
     mana_cost: (card.Cost?.[0] || "")
       .replace(/\{\?\}/g, "{0}")
       .replace("?", "{0")
@@ -113,7 +114,7 @@ const getDraftMancerCard = (card: HCEntry) => {
       .replace("{2/Brown}", "{2}")
       .replace("Sacrifice a creature:", "{0}")
       .replace("{Discard your hand/RR}", "{R}{R}")
-      .replace("{BB/P}", "{B}"),
+      .replace("{BB/P}", "{B}").replaceAll("{UFO}", "{1}").replaceAll("{Coin}", "{1}"),
 
     // @ts-ignore
     colors: card["Color(s)"]?.split(";").map(colorToDraftMancerColor),
