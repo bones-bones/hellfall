@@ -12,7 +12,7 @@ export const getColorIdentity = (card: HCCard.Any) => {
   // TODO: make color indicators work
   // TODO: special cases for Crypticspire Mantis (must be at least 2), Draft Dodger (Canada = Red and White)
   card.toFaces().forEach(entry => {
-    const costNames = (entry.mana_cost || '').match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
+    const costNames = entry.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
     costNames?.forEach(name => {
       const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
@@ -69,7 +69,7 @@ export const getColorIdentityProp = (card: HCCard.AnyMultiFaced) => {
   // TODO: make color indicators work
   // TODO: special cases for Crypticspire Mantis (must be at least 2), Draft Dodger (Canada = Red and White)
   card.card_faces.forEach(entry => {
-    const costNames = (entry.mana_cost || '').match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
+    const costNames = entry.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
     costNames?.forEach(name => {
       const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());

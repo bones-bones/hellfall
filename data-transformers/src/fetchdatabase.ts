@@ -65,7 +65,12 @@ export const fetchDatabase = async () => {
     '3flavor_text',
     '3image',
   ];
-
+  rest.forEach(row => {
+    while (row.length < keys.length) {
+      row.push('');
+    }
+  });
+  
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
       card_faces: [],
@@ -149,7 +154,10 @@ export const fetchDatabase = async () => {
         .join(' ') as string;
       face.type_line = face_type;
       type_line_list.push(face_type);
-      mana_cost_list.push('mana_cost' in face ? face.mana_cost : '');
+      if (!('mana_cost' in face)) {
+        face.mana_cost = '';
+      }
+      mana_cost_list.push(face.mana_cost);
       if (!('colors' in face)) {
         face.colors = [HCColor.Colorless] as HCColors;
       }
@@ -162,9 +170,9 @@ export const fetchDatabase = async () => {
     });
 
     cardObject.type_line = type_line_list.join(' // ');
-    if (mana_cost_list.join('') != '') {
-      cardObject.mana_cost = mana_cost_list.join(' // ');
-    }
+    const filtered = mana_cost_list.filter(e=>(e))
+    cardObject.mana_cost = mana_cost_list.filter(e=>(e)).join(' // ');
+    
     cardObject.color_identity = getColorIdentityProp(cardObject as HCCard.AnyMultiFaced);
     const mandatoryProps = ['rulings', 'creator', 'cmc'];
     mandatoryProps

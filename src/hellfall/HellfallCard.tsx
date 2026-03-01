@@ -63,7 +63,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               </Text>
               {/* do I need a space here? */}
               <Text typeLevel="body.medium" key="cost">
-                {stringToMana(face.mana_cost || '')}
+                {stringToMana(face.mana_cost)}
               </Text>
               <br />
               <Text typeLevel="body.medium" key="type">

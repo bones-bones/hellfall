@@ -147,7 +147,7 @@ export namespace HCCardFields.Gameplay {
   type AllFacesAndSides = {
     name: string;
     type_line: string;
-    mana_cost?: string;
+    mana_cost: string;
   };
 
   /**
@@ -164,7 +164,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * Nullable 	The mana cost for this card. This value will be any empty string "" if the cost is absent. Remember that per the game rules, a missing mana cost and a mana cost of {0} are different  Multi-faced cards will report this value in card faces.
      */
-    mana_cost?: string;
+    mana_cost: string;
     /**
      * The name of this card.
      */

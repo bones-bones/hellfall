@@ -21,7 +21,12 @@ export const fetchTokens = async () => {
     'oracle_text',
     'creator',
   ];
-
+  rest.forEach(row => {
+    while (row.length < keys.length) {
+      row.push('');
+    }
+  });
+  
   const theThing = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
@@ -45,7 +50,7 @@ export const fetchTokens = async () => {
             return maker;
           });
         } else {
-          tokenObject[keys[i]] == entry[i];
+          tokenObject[keys[i]] = entry[i];
         }
       }
     }
@@ -61,7 +66,7 @@ export const fetchTokens = async () => {
     const mandatoryProps = ['rulings', 'creator', 'cmc', 'type_line', 'oracle_text'];
     mandatoryProps
       .filter(prop => !(prop in tokenObject))
-      .forEach(key => (tokenObject[key] = key == 'cmc' ? 0 : ''));
+      .forEach(prop => (tokenObject[prop] = prop == 'cmc' ? 0 : ''));
     const legalities: HCLegalitiesField = {
       standard: HCLegality.NotLegal,
       '4cb': HCLegality.NotLegal,

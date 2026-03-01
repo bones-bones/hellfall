@@ -80,7 +80,7 @@ export const useSearchResults = () => {
           !costSearch.every(searchTerm => {
             const combined = entry
               .toFaces()
-              .map(e => e.mana_cost || '')
+              .map(e => e.mana_cost)
               .join()
               .toLowerCase();
             if (searchTerm.startsWith('!')) {
