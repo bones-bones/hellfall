@@ -63,10 +63,10 @@ const getDraftmancerCube = () => {
           return `1 ${e.name}`;
         })
         .join("\n")}\n[OtherSlot(18)]\n${otherCardsToWrite
-        .map((e) => {
-          return `1 ${e.name}`;
-        })
-        .join("\n")}`;
+          .map((e) => {
+            return `1 ${e.name}`;
+          })
+          .join("\n")}`;
       fs.writeFileSync(`./${set.id}Cube.txt`, formatted);
     }
   }

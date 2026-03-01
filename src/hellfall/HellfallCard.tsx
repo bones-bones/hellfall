@@ -19,6 +19,31 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
     .filter(e => e.image)
     .map(e => e.image);
 
+  const splitParens = (text: string) => {
+    const chunks: string[] = [];
+    let parenLevel = 0;
+    let chunkStart = 0;
+    for (let i = 0; i < text.length; i++) {
+      if (text[i] == '(') {
+        if (parenLevel == 0 && i > 0) {
+          chunks.push(text.slice(chunkStart, i));
+          chunkStart = i;
+        }
+        parenLevel++;
+      } else if (text[i] == ')' && parenLevel > 0) {
+        parenLevel--;
+        if (parenLevel == 0) {
+          chunks.push(text.slice(chunkStart, i + 1));
+          chunkStart = i + 1;
+        }
+      }
+    }
+    if (chunkStart < text.length) {
+      chunks.push(text.slice(chunkStart));
+    }
+    return chunks;
+  };
+
   return (
     <Container key={data.id}>
       {imagesToShow.length === 0 ? (
@@ -54,7 +79,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
       )}
       <Card>
         <Card.Body padding={'zero'}>
-          {/* <StyledHeading size="large">{data.name}</StyledHeading> */}
+          {/* <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading> */}
           {data.toFaces().map((face, i) => (
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}

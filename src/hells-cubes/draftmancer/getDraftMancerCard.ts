@@ -2,36 +2,41 @@ import { HCCard } from '../../api-types';
 import { DraftmancerCard } from '../types';
 
 export const getDraftMancerCard = (card: HCCard.Any) => {
+  const draftmancerSafeName = card.name.replace(/[\[\]]/g, "");
   const cardToReturn: DraftmancerCard = {
-    id: card.name.replace(' :]', '') + '_custom_',
-    oracle_id: card.name.replace(':]', '').trim(),
-    name: card.name.replace(':]', '').trim(),
+    id: draftmancerSafeName + '_custom_',
+    oracle_id: draftmancerSafeName,
+    name: draftmancerSafeName,
     // This prefers replaceAll for static strings
-    mana_cost: (card.toFaces()[0].mana_cost || '')
-      .replace(/\{\?\}/g, '{0}')
-      .replace('?', '{0}')
-      .replace(/\{H\/.\}/g, '') // TODO do the stringreplace and try ta actually set the number
+    mana_cost: (card.mana_cost?.[0] || '')
+      .replaceAll(/\{\?\}/g, '{0}')
+      .replaceAll('?', '{0}')
+      .replace(/\{H\/.\}/g, '') // nut Shot (TODO do the stringreplace and try ta actually set the number)
       .replace(/\{(.)\/(.)(\/(.))+\}/g, '{$1/$2}')
-      .replace('{9/3}', '{3}')
-      .replace('{-1}', '{0}')
+      .replace('{9/3}', '{3}') // Yargle, Yargle Yargle Yargle
+      .replace('{-1}', '{0}') // Negative Man
       .replace(/\{U\/O\}/g, '{U}') // Cat with homophobia
-      .replace(/\{.\/(.)\}/g, '{$1}') // This one seems wrong
+      .replace(/\{.\/(.)\}/g, '{$1}') // Pyrohyperspasm
       .replace(/\{Pickle\}/g, '{G}') // Pickle Krrik
-      .replace(/\{U\/BB\}/g, '{U/B}')
+      .replace(/\{U\/BB\}/g, '{U/B}') // Murder of Storm Crows
       .replace('{Brown}', '{1}')
-      .replace('{Piss}', '{1}')
-      .replaceAll('{Blood}', '{0}') // More than a few cards with multiple blood
+      .replace('{Yellow}', '{1}')
+      .replaceAll('{Blood}', '{0}') // Ouroboros
       .replace('{2/Brown}', '{2}') // Blonk
-      .replace('Sacrifice a creature:', '{0}')
+      .replace('Sacrifice a creature:', '{0}') // Cat
       .replace('{Discard your hand/RR}', '{R}{R}') // Dumpstergoyf
-      .replace('{BB/P}', '{B}{B}') //THE SKELETON
-      .replace('{UU/P}', '{U}{U}')
-      .replace('{2/Piss}', '{2}')
+      .replace('{BB/P}', '{B}{B}') // THE SKELETON
+      .replace('{UU/P}', '{U}{U}') // Orb Enthusiast
+      .replace('{2/Yellow}', '{2}')
       .replace(/\{(\d)\/(Pink|Yellow)\}/g, '{$1}') // It that Goes in the Green Slot, and some other card, and some other card
-      .replace(/\{H([^/])\}/g, '{$1}') // Half mana {HU} = half blue
-      .replaceAll('{TEMU}', '{1}')
+      .replace(/\{H([^/])\}/g, '{$1}') // nut Shot (Half mana {HU} = half blue)
+      .replaceAll('{TEMU}', '{1}') // TEMU Sabertooth
       .replaceAll('{H/Brown}', '{1}') // It that Goes in the Green Slot
-      .replaceAll('{G/Yellow/P}', '{G}'), // It that Goes in the Green Slot
+      .replaceAll('{G/Yellow/P}', '{G}') // It that Goes in the Green Slot
+      .replaceAll('{UFO}', '{1}') // Gitaxian Satellite
+      .replaceAll('{Coin}', '{1}').replaceAll('{27}', '{11}{11}{6}') // Block of Darksteel
+      .replaceAll('{2/Orange}', '{2}')// Candy Karn
+      .replaceAll('{Orange/U}', '{U}'), // Cat with homophobia
 
     colors: card.toFaces()[0].colors,
     set: 'custom',
@@ -49,7 +54,7 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
       .replace(/:\[/g, ''),
 
     printed_names: {
-      en: card.name.replace(' :]', ''), // Six Flags
+      en: draftmancerSafeName
     },
     image_uris: {
       en: 'card_faces' in card && card.card_faces[0].image ? card.card_faces[0].image : card.image!,
@@ -61,7 +66,7 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
         .toFaces()
         .slice(1)
         .map(e => ({
-          name: e.name,
+          name: e.name.replace(/[\[\]]/g, ""),
           image_uris: { en: e.image! },
           type: e.type_line,
         })),

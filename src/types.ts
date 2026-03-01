@@ -27,8 +27,8 @@ export type HCEntry = {
   'Supertype(s)'?: SideArray<string>;
   'Card Type(s)': SideArray<string>;
   'Subtype(s)'?: SideArray<string>;
-  power?: [number | null | '', null, null, null];
-  toughness?: [number | null, null, null, null];
+  Power?: [number | null | '', null, null, null];
+  Toughness?: [number | null, null, null, null];
   Loyalty: [any, null, '', ''];
   'Text Box'?: SideArray<string>;
   'Flavor Text'?: SideArray<string>;

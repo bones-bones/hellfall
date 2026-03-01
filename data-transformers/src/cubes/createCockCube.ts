@@ -81,8 +81,8 @@ const tokenToCard = (token: TokenType, set: string) => {
 
       ...(token.Power &&
         token.Toughness && {
-          pt: { "#text": `${token.Power}/${token.Toughness}` },
-        }),
+        pt: { "#text": `${token.Power}/${token.Toughness}` },
+      }),
       cmc: { "#text": "" },
       color: { "#text": "" },
       manacost: { "#text": "" },
@@ -105,8 +105,8 @@ const toCard = ({
   "Supertype(s)": Super,
   "Subtype(s)": Sub,
   "Text Box": Text,
-  power,
-  toughness,
+  Power: power,
+  Toughness: toughness,
   Image,
 }: HCEntry) => {
   const cCard: CockCard = {
