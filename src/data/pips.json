@@ -338,6 +338,13 @@
       "colors": ["Blue"]
     },
     {
+      "filename": "mono/variables/XIV.png",
+      "name": "XIV",
+      "isMana": true,
+      "mv": 4,
+      "colors": ["Colorless"]
+    },
+    {
       "filename": "mono/fractional/HW.svg",
       "name": "HW",
       "isMana": true,
@@ -1516,6 +1523,13 @@
       "isMana": true,
       "mv": 2,
       "colors": ["Blue","Purple"]
+    },
+    {
+      "filename": "hybrid/misc/Rakdos.png",
+      "name": "Rakdos",
+      "isMana": true,
+      "mv": 1,
+      "colors": ["Black","Red"]
     },
     {
       "filename": "mono/weirdNums/100000.svg",
