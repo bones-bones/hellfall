@@ -187,7 +187,7 @@ const main = async () => {
       {
         data: data
           //@ts-ignore
-          .concat({ data: tokensWithBetterName }.data.map(tokenToCard)),
+          .concat(tokensWithBetterName.map(tokenToCard)),
       },
       null,
       '\t'
