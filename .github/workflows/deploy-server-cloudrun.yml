@@ -1,0 +1,73 @@
+# Deploy hellfall server to Google Cloud Run.
+# Trigger: push to main when server/ changes, or manual run.
+#
+# Required GitHub Secrets:
+#   GCP_PROJECT_ID  - Google Cloud project ID
+#   GCP_SA_KEY      - JSON key for a service account with:
+#                     Artifact Registry Writer, Cloud Run Admin, Service Account User
+#
+# Optional (set in Cloud Run console instead if you prefer):
+#   DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, JWT_SECRET, FRONTEND_URL, AUTH_SERVER_URL
+
+name: Deploy server to Cloud Run
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'server/**'
+  workflow_dispatch:
+
+env:
+  GCP_REGION: us-central1
+  IMAGE_NAME: hellfall-server
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Configure Docker for Artifact Registry
+        run: |
+          gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev --quiet
+
+      - name: Build Docker image
+        working-directory: server
+        run: |
+          docker build -t ${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+          docker tag ${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            ${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Push to Artifact Registry
+        run: |
+          docker push ${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.IMAGE_NAME }}
+          region: ${{ env.GCP_REGION }}
+          image: ${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          flags: --allow-unauthenticated
+        id: deploy
+
+      - name: Show service URL
+        run: |
+          echo "Deployed to ${{ steps.deploy.outputs.url }}"

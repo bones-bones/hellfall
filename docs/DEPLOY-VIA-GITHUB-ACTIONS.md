@@ -36,9 +36,9 @@ Pick one and implement the “Deploy” step accordingly.
 - **Repo settings:** Enable **Pages** → Source: “GitHub Actions”.
 - **Permissions:** Workflow needs `contents: read`, `pages: write`, `id-token: write` (for OIDC with deploy-pages).
 
-### B. Static host (S3, Netlify, Vercel, etc.)
+### B. Static host (S3, Netlify, etc.)
 
-- **Deploy step:** Use the provider’s official action (e.g. `aws-actions/configure-aws-credentials` + `aws sync`, or Netlify/Vercel CLI in a step). Push the contents of `build/`.
+- **Deploy step:** Use the provider’s official action (e.g. `aws-actions/configure-aws-credentials` + `aws sync`, or Netlify CLI in a step). Push the contents of `build/`.
 - **Secrets:** Store provider credentials (e.g. `AWS_ACCESS_KEY_ID`, `NETLIFY_AUTH_TOKEN`) in repo **Settings → Secrets and variables → Actions** and reference them in the workflow.
 
 ### C. Custom server (SSH / rsync / FTP)
@@ -98,7 +98,7 @@ No separate “release” script is required in `package.json` unless you want a
 |------|----------------|
 | **Trigger** | `release: types: [published]` (+ optional `workflow_dispatch`) |
 | **Build** | Node 20, `yarn install --frozen-lockfile`, `yarn build` |
-| **Deploy** | Start with **GitHub Pages**; switch to S3/Netlify/Vercel/SSH by changing only the deploy step and secrets. |
+| **Deploy** | Start with **GitHub Pages**; switch to S3/Netlify/SSH by changing only the deploy step and secrets. |
 | **Release command** | Use GitHub Releases (UI or `gh release create`); no extra npm script required for deployment. |
 
 Once the workflow file is in place and the first release is published, Hellfall will be deployed automatically on every release, replacing the need to run the build locally for deploy.

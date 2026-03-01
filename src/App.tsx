@@ -8,8 +8,9 @@ import { SingleCard } from './hellfall/SingleCard';
 import { Header } from './header';
 import { Breakdown } from './breakdown/Breakdown';
 import { Decks } from './decks/Decks';
-import { Watchwolfwar } from './Watchwolfwar';
-import { Watchwolfresults } from './Watchwolfresults';
+import { WatchwolfWar } from './watchWolf/WatchWolfWar';
+import { Watchwolfresults } from './watchWolf/WatchWolfResults';
+import { Login } from './auth/Login';
 import { NameToId, IsNonTokenName } from './hellfall/backCompat';
 
 interface ValidatedCardRouteProps {
@@ -52,7 +53,8 @@ const ApplicationRoutes = () => {
       element: <ValidatedCardRoute element={<SingleCard />} />,
     },
     { path: '/breakdown', element: <Breakdown /> },
-    { path: '/Watchwolfwar', element: <Watchwolfwar /> },
+    { path: '/login', element: <Login /> },
+    { path: '/Watchwolfwar', element: <WatchwolfWar /> },
     { path: '/Watchwolfresults', element: <Watchwolfresults /> },
   ]);
 };

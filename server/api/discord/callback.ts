@@ -24,7 +24,7 @@ export const callbackHandler = async (req: HandlerRequest, res: HandlerResponse)
   const savedState = getCookie(req, "discord_oauth_state");
 
   if (!code || !state || state !== savedState) {
-    Object.entries(withCors({})).forEach(([header, value]) => res.setHeader(header, value));
+    Object.entries(withCors({}, req)).forEach(([header, value]) => res.setHeader(header, value));
     res.writeHead(302, { Location: `${env.FRONTEND_URL}?auth=error` });
     res.end();
     return;
@@ -61,12 +61,12 @@ export const callbackHandler = async (req: HandlerRequest, res: HandlerResponse)
       `discord_oauth_state=; Path=/; HttpOnly; Max-Age=0`,
       cookie,
     ]);
-    Object.entries(withCors({})).forEach(([header, value]) => res.setHeader(header, value));
+    Object.entries(withCors({}, req)).forEach(([header, value]) => res.setHeader(header, value));
     res.writeHead(302, { Location: `${env.FRONTEND_URL}?auth=ok` });
     res.end();
   } catch (err) {
     console.error("discord/callback", err);
-    Object.entries(withCors({})).forEach(([k, v]) => res.setHeader(k, v));
+    Object.entries(withCors({}, req)).forEach(([k, v]) => res.setHeader(k, v));
     res.writeHead(302, { Location: `${env.FRONTEND_URL}?auth=error` });
     res.end();
   }

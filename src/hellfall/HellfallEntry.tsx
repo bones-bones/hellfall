@@ -14,12 +14,12 @@ export const HellfallEntry = ({
   onClickTitle?: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
   return (
-    <Container key={id} role="button">
-      <span key={id} onClick={onClickTitle}>
+    <Container role="button">
+      <span onClick={onClickTitle}>
         {name}
       </span>
       <br />
-      <StyledImage key={id} src={url} onClick={onClick} referrerPolicy="no-referrer" />
+      <StyledImage src={url} onClick={onClick} referrerPolicy="no-referrer" />
     </Container>
   );
 };

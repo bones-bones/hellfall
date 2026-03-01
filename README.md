@@ -16,7 +16,7 @@ Scripts used for extracting and transforming data
 
 ## [server](./server/)
 
-Serverless Discord OAuth login. Deploy to Vercel (or similar); set `REACT_APP_AUTH_API_URL` in the main app to show “Login with Discord” in the header.
+Serverless Discord OAuth login. Deploy to Cloud Run (or similar); set `REACT_APP_AUTH_API_URL` in the main app to show “Login with Discord” in the header.
 
 ## [deck-builder](./src/deck-builder/)
 

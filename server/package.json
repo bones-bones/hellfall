@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
+    "build:prod": "tsc -p tsconfig.build.json",
     "dev": "tsx watch server.ts",
-    "start": "tsx server.ts"
+    "start": "tsx server.ts",
+    "start:prod": "node dist/server.js"
   },
   "dependencies": {
     "@google-cloud/firestore": "^7.1.0",

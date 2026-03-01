@@ -24,11 +24,11 @@ function parseQuery(search: string | null): Record<string, string | string[]> {
   if (!search) return {};
   const params = new URLSearchParams(search);
   const out: Record<string, string | string[]> = {};
-  for (const [k, v] of params) {
-    const prev = out[k];
-    if (prev === undefined) out[k] = v;
-    else if (Array.isArray(prev)) prev.push(v);
-    else out[k] = [prev, v];
+  for (const [key, values] of params) {
+    const prev = out[key];
+    if (prev === undefined) { out[key] = values }
+    else if (Array.isArray(prev)) prev.push(values);
+    else out[key] = [prev, values];
   }
   return out;
 }

@@ -8,6 +8,7 @@ const docRef = db.collection("cards");
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
   for await (const chunk of req) chunks.push(chunk);
+  // @ts-ignore
   const body = Buffer.concat(chunks).toString("utf-8");
   return body ? JSON.parse(body) : {};
 }
@@ -16,7 +17,7 @@ export const watchwolfHandler = async (
   req: HandlerRequest,
   res: HandlerResponse
 ): Promise<void> => {
-  const headers = withCors({ "Content-Type": "application/json" });
+  const headers = withCors({ "Content-Type": "application/json" }, req);
   Object.assign(headers, { "Cache-Control": "public, max-age=86400" });
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 

@@ -1,6 +1,6 @@
 # Hellfall Server
 
-Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses standard Node HTTP request/response, runs as a local server or on any Node serverless platform (Vercel, AWS Lambda, etc.).
+Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses standard Node HTTP request/response, runs as a local server or on any Node serverless platform (Cloud Run, AWS Lambda, etc.).
 
 ## Endpoints
 
@@ -52,6 +52,13 @@ yarn dev
 The server listens on port 3003 (or `PORT` if set). In the main app, set `REACT_APP_AUTH_API_URL` to `http://localhost:3003` so “Login with Discord” and `/api/me` hit this server.
 
 For production: run `yarn start` or deploy the `api/` handlers to your preferred serverless platform.
+
+## Docker & Google Cloud Run
+
+The server can be run in Docker and deployed to Google Cloud Run (see [google-cloud-setup.example.md](./google-cloud-setup.example.md)). Copy that file to `google-cloud-setup.md` (gitignored) for your own project-specific notes.
+
+- Build image: `docker build -t hellfall-server ./server` (from repo root).
+- GitHub Actions: pushes to `main` that change `server/` trigger a deploy to Cloud Run when `GCP_PROJECT_ID` and `GCP_SA_KEY` are set in repo secrets.
 
 ## Frontend usage
 

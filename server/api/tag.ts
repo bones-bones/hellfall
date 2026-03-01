@@ -3,6 +3,7 @@ import { verifySessionToken } from "./lib/jwt.js";
 import { withCors } from "./lib/cors.js";
 import { getUserAsGuildMember } from "./lib/discord.js";
 import type { HandlerRequest, HandlerResponse } from "./lib/types.js";
+import { DATABASE_CONTRIBUTOR } from "./discord/constants.js";
 
 function getCookie(req: HandlerRequest, name: string): string | null {
   const raw = req.headers.cookie;
@@ -12,7 +13,7 @@ function getCookie(req: HandlerRequest, name: string): string | null {
 }
 
 export const tagHandler = async (req: HandlerRequest, res: HandlerResponse): Promise<void> => {
-  const headers = withCors({ "Content-Type": "application/json" });
+  const headers = withCors({ "Content-Type": "application/json" }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
   if (req.method === "OPTIONS") {
@@ -42,7 +43,7 @@ export const tagHandler = async (req: HandlerRequest, res: HandlerResponse): Pro
     return;
   }
 
-  const roleId = env.DISCORD_TAG_ROLE_ID;
+  const roleId = DATABASE_CONTRIBUTOR;
   if (!roleId) {
     res.statusCode = 500;
     res.end(JSON.stringify({ ok: false, reason: "role_not_configured" }));

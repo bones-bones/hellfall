@@ -19,7 +19,7 @@ import { useKeyPress } from '../hooks';
 
 //TODO: make results use Id natively on the backend
 
-export const Watchwolfwar = () => {
+export const WatchwolfWar = () => {
   const escape = useKeyPress('Escape');
   const cards = useAtomValue(cardsAtom).filter(e => e.isActualToken != true && e.Set != 'C');
   const RandyRandom = useAtomValue(cardsAtom);

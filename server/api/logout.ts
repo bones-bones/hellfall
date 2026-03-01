@@ -4,7 +4,7 @@ import type { HandlerRequest, HandlerResponse } from "./lib/types.js";
 
 export const logoutHandler = (req: HandlerRequest, res: HandlerResponse): void => {
   if (req.method === "OPTIONS") {
-    Object.entries(withCors({})).forEach(([k, v]) => res.setHeader(k, v));
+    Object.entries(withCors({}, req)).forEach(([k, v]) => res.setHeader(k, v));
     res.statusCode = 204;
     res.end();
     return;
@@ -19,7 +19,7 @@ export const logoutHandler = (req: HandlerRequest, res: HandlerResponse): void =
 
   const clearCookie = `${env.COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
   res.setHeader("Set-Cookie", clearCookie);
-  Object.entries(withCors({})).forEach(([k, v]) => res.setHeader(k, v));
+  Object.entries(withCors({}, req)).forEach(([k, v]) => res.setHeader(k, v));
 
   const redirect = typeof (req.query?.redirect) === "string" ? req.query.redirect : env.FRONTEND_URL;
   res.writeHead(302, { Location: redirect });

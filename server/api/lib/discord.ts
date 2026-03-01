@@ -50,7 +50,6 @@ export async function getDiscordUser(accessToken: string) {
   const res = await fetch(`${DISCORD_API}/users/@me`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
-  console.log(accessToken, res.status);
 
   if (!res.ok) {
     const text = await res.text();
@@ -69,7 +68,7 @@ export async function getUserAsGuildMember(
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
-  console.log(`${DISCORD_API}/users/@me/guilds`, res.status);
+
   if (res.status === 404) { return null; }
   if (!res.ok) {
     const text = await res.text();

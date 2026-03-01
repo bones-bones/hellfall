@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { buildAuthorizeUrl } from "../lib/discord.js";
 import { env } from "../lib/env.js";
-import { withCors, getAllowedOrigin } from "../lib/cors.js";
+import { withCors, getCorsOrigin } from "../lib/cors.js";
 import type { HandlerRequest, HandlerResponse } from "../lib/types.js";
 
 function randomState(): string {
@@ -10,7 +10,7 @@ function randomState(): string {
 
 export const loginHandler = (req: HandlerRequest, res: HandlerResponse): void => {
   if (req.method === "OPTIONS") {
-    res.setHeader("Access-Control-Allow-Origin", getAllowedOrigin());
+    res.setHeader("Access-Control-Allow-Origin", getCorsOrigin(req));
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.statusCode = 204;
     res.end();
@@ -30,7 +30,7 @@ export const loginHandler = (req: HandlerRequest, res: HandlerResponse): void =>
     const url = buildAuthorizeUrl({ clientId: env.DISCORD_CLIENT_ID, redirectUri, state, scope: ["identify", "guilds.members.read", "guilds"] });
 
     res.setHeader("Set-Cookie", `discord_oauth_state=${state}; Path=/; HttpOnly; SameSite=Lax; Max-Age=600`);
-    Object.entries(withCors({})).forEach(([header, value]) => res.setHeader(header, value));
+    Object.entries(withCors({}, req)).forEach(([header, value]) => res.setHeader(header, value));
     res.writeHead(302, { Location: url });
     res.end();
   } catch (err) {

@@ -12,7 +12,7 @@ function getCookie(req: HandlerRequest, name: string): string | null {
 }
 
 export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Promise<void> => {
-  const headers = withCors({ "Content-Type": "application/json" });
+  const headers = withCors({ "Content-Type": "application/json" }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
   if (req.method === "OPTIONS") {

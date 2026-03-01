@@ -4,7 +4,7 @@ import { styled } from '@workday/canvas-kit-react/common';
 import { useAuth } from '../auth';
 
 export const Header = () => {
-  const { user, loading, loginUrl, logoutUrl } = useAuth();
+  const { user, logoutUrl } = useAuth();
 
   return (
     <>
@@ -17,19 +17,12 @@ export const Header = () => {
           <Link to={'/decks'}>constructed</Link>, <Link to={'/Watchwolfwar'}>WatchWolfWar</Link>,{' '}
           <Link to={'https://discord.gg/EWFcAnVdkX'}>discord</Link>,{' '}
           <Link to={'https://www.reddit.com/r/HellsCube/'}>reddit</Link>
-          {loginUrl && (
-            <>
-              {' '}
+          {user && logoutUrl && (
+            <AuthBlock>
               |{' '}
-              {user ? (
-                <>
-                  <span title={user.email ?? undefined}>{user.username}</span>,{' '}
-                  <a href={logoutUrl}>logout</a>
-                </>
-              ) : (
-                <a href={loginUrl}>{loading ? '…' : 'login'}</a>
-              )}
-            </>
+              <span title={user.email ?? undefined} data-logged-in>{user.username}</span>,{' '}
+              <a href={logoutUrl}>logout</a>
+            </AuthBlock>
           )}
         </Navigation>
       </StyledHeader>
@@ -46,5 +39,14 @@ const StyledHeader = styled('div')({
   backgroundColor: '#C690FF',
   borderBottom: '2px solid lightgray',
   marginTop: '0px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 });
-const Navigation = styled('nav')();
+const Navigation = styled('nav')({
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  flex: 1,
+});
+const AuthBlock = styled('span')({ marginLeft: 'auto' });
