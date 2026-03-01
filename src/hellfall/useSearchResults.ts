@@ -220,18 +220,18 @@ export const useSearchResults = () => {
         if (power) {
           switch (power.operator) {
             case '=': {
-              if (parseInt(entry.power?.[0] + '') !== power.value) {
+              if (parseInt(entry.Power?.[0] + '') !== power.value) {
                 return false;
               }
               break;
             }
             case '<': {
               if (
-                !entry.power?.[0] ||
+                !entry.Power?.[0] ||
                 !(
-                  (Number.isNaN(parseInt(entry.power[0] + ''))
+                  (Number.isNaN(parseInt(entry.Power[0] + ''))
                     ? 0
-                    : parseInt(entry.power[0] + '')) < power.value
+                    : parseInt(entry.Power[0] + '')) < power.value
                 )
               ) {
                 return false;
@@ -240,11 +240,11 @@ export const useSearchResults = () => {
             }
             case '>': {
               if (
-                !entry.power?.[0] ||
+                !entry.Power?.[0] ||
                 !(
-                  (Number.isNaN(parseInt(entry.power[0] + ''))
+                  (Number.isNaN(parseInt(entry.Power[0] + ''))
                     ? 0
-                    : parseInt(entry.power[0] + '')) > power.value
+                    : parseInt(entry.Power[0] + '')) > power.value
                 )
               ) {
                 return false;
@@ -256,18 +256,18 @@ export const useSearchResults = () => {
         if (toughness) {
           switch (toughness.operator) {
             case '=': {
-              if (parseInt(entry.toughness?.[0] + '') !== toughness.value) {
+              if (parseInt(entry.Toughness?.[0] + '') !== toughness.value) {
                 return false;
               }
               break;
             }
             case '<': {
               if (
-                !entry.toughness?.[0] ||
+                !entry.Toughness?.[0] ||
                 !(
-                  (Number.isNaN(parseInt(entry.toughness[0] + ''))
+                  (Number.isNaN(parseInt(entry.Toughness[0] + ''))
                     ? 0
-                    : parseInt(entry.toughness[0] + '')) < toughness.value
+                    : parseInt(entry.Toughness[0] + '')) < toughness.value
                 )
               ) {
                 return false;
@@ -276,11 +276,11 @@ export const useSearchResults = () => {
             }
             case '>': {
               if (
-                !entry.toughness?.[0] ||
+                !entry.Toughness?.[0] ||
                 !(
-                  (Number.isNaN(parseInt(entry.toughness[0] + ''))
+                  (Number.isNaN(parseInt(entry.Toughness[0] + ''))
                     ? 0
-                    : parseInt(entry.toughness[0] + '')) > toughness.value
+                    : parseInt(entry.Toughness[0] + '')) > toughness.value
                 )
               ) {
                 return false;
