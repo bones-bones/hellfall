@@ -91,9 +91,7 @@ export const fetchDatabase = async () => {
               ? colorArr
               : ([HCColor.Colorless] as HCColors);
           } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
-            if (entry[i]) {
-              cardObject.card_faces[face][key] = entry[i].split(';');
-            }
+            cardObject.card_faces[face][key] = entry[i].split(';');
           } else if (key == 'loyalty' && cardObject.card_faces[face]['types']?.includes('Battle')) {
             cardObject.card_faces[face].defense = entry[i];
           } else {
@@ -170,7 +168,6 @@ export const fetchDatabase = async () => {
     });
 
     cardObject.type_line = type_line_list.join(' // ');
-    const filtered = mana_cost_list.filter(e=>(e))
     cardObject.mana_cost = mana_cost_list.filter(e=>(e)).join(' // ');
     
     cardObject.color_identity = getColorIdentityProp(cardObject as HCCard.AnyMultiFaced);

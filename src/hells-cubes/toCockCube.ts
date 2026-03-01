@@ -44,28 +44,28 @@ export const toCockCube = ({
   tokens.data.forEach(tokenEntry => {
     const tokenCardEntry = xmlDoc.createElement('card');
     const name = xmlDoc.createElement('name');
-    name.textContent = tokenEntry.Name.replace(/\*\d$/, '');
+    name.textContent = tokenEntry.name.replace(/\*\d$/, '');
 
     const setElement = xmlDoc.createElement('set');
-    setElement.setAttribute('picURL', tokenEntry.Image);
+    setElement.setAttribute('picURL', tokenEntry.image);
 
     const type = xmlDoc.createElement('type');
-    type.textContent = 'Token ' + tokenEntry.Type?.split(';').join(' ');
+    type.textContent = 'Token ' + tokenEntry.types?.join(' ');
 
     const tablerow = xmlDoc.createElement('tablerow');
-    tablerow.textContent = getTableRowForToken(tokenEntry.Type).toString();
+    tablerow.textContent = getTableRowForToken(tokenEntry.types?.join(' ') || '').toString();
     const prop = xmlDoc.createElement('prop');
     recursiveAdoption(tokenCardEntry, [name, prop, [type], setElement, tablerow]);
 
     let used = false;
-    tokenEntry['Related Cards (Read Comment)']?.split(';').forEach(related => {
+    tokenEntry.all_parts?.forEach(related => {
       const relatedEntry = xmlDoc.createElement('reverse-related');
-      relatedEntry.textContent = related;
-      if (cards.find(entry => related == entry.name)?.tags?.includes('persistent-tokens')) {
+      relatedEntry.textContent = related.name;
+      if (cards.find(entry => related.name == entry.name)?.tags?.includes('persistent-tokens')) {
         relatedEntry.setAttribute('persistent', 'persistent');
       }
 
-      const count = /(.*)(\*\d)$/.exec(related);
+      const count = /(.*)(\*\d)$/.exec(related.name);
       if (count) {
         relatedEntry.setAttribute('count', '' + count);
       }
@@ -144,7 +144,7 @@ const hcCardToCockCard = ({
   color.textContent = face.colors.join('');
 
   const manaCost = xmlDoc.createElement('manacost');
-  manaCost.textContent = face.mana_cost?.replace(/\{(.)\}/g, '$1') || '';
+  manaCost.textContent = face.mana_cost.replace(/\{(.)\}/g, '$1') || '';
 
   const mainType = xmlDoc.createElement('maintype');
   mainType.textContent = face.types?.includes('Creature')

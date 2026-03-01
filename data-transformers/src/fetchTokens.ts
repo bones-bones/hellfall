@@ -26,7 +26,7 @@ export const fetchTokens = async () => {
       row.push('');
     }
   });
-  
+
   const theThing = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
@@ -63,7 +63,7 @@ export const fetchTokens = async () => {
         delete tokenObject.subtypes;
       }
     }
-    const mandatoryProps = ['rulings', 'creator', 'cmc', 'type_line', 'oracle_text'];
+    const mandatoryProps = ['rulings', 'creator', 'cmc', 'type_line', 'oracle_text', 'mana_cost'];
     mandatoryProps
       .filter(prop => !(prop in tokenObject))
       .forEach(prop => (tokenObject[prop] = prop == 'cmc' ? 0 : ''));

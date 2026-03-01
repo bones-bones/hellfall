@@ -315,6 +315,7 @@ export const useSearchResults = () => {
           return false;
         }
 
+        // TODO: handle split cards/adventures/transforms better
         if (searchColors.length > 0) {
           if (
             !(
