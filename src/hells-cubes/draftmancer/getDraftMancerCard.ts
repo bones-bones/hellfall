@@ -2,7 +2,7 @@ import { HCCard } from '../../api-types';
 import { DraftmancerCard } from '../types';
 
 export const getDraftMancerCard = (card: HCCard.Any) => {
-  const draftmancerSafeName = card.name.replace(/[\[\]]/g, '');
+  const draftmancerSafeName = card.name.replace(/[[\]]/g, '');
   const cardToReturn: DraftmancerCard = {
     id: draftmancerSafeName + '_custom_',
     oracle_id: draftmancerSafeName,
@@ -67,7 +67,7 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
         .toFaces()
         .slice(1)
         .map(e => ({
-          name: e.name.replace(/[\[\]]/g, ''),
+          name: e.name.replace(/[[\]]/g, ''),
           image_uris: { en: e.image! },
           type: e.type_line,
         })),
