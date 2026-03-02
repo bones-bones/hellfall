@@ -250,7 +250,7 @@ const main = async () => {
 
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
-      [...(face.subtypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
+      [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
           typeSet.add(typeEntry);
         }
