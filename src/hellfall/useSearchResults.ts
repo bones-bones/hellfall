@@ -295,7 +295,6 @@ export const useSearchResults = () => {
         if (
           colorIdentityCriteria.length > 0 &&
           !getColorIdentity(entry).every(cardColorIdentityComponent => {
-            debugger;
             const miscBullshitColorIdentityCriteria = (
               colorIdentityCriteria.includes(MISC_BULLSHIT)
                 ? [...colorIdentityCriteria, ...miscColors].filter(e => e != MISC_BULLSHIT)
@@ -325,7 +324,6 @@ export const useSearchResults = () => {
             //   ? [...searchColors, ...allMiscColors].filter(e => e != MISC_BULLSHIT)
             //   : searchColors;
             // const useMisc = searchColors.includes(MISC_BULLSHIT);
-            // debugger
             if (searchColors.includes('C') && colorComparison != '>=') {
               if (!entry.toFaces()[0].colors.includes('C')) {
                 return false;
