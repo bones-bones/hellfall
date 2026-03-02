@@ -13,7 +13,7 @@ import { keyframes } from '@emotion/react';
 import { canBeACommander } from '../hellfall/canBeACommander';
 
 export const Draft = () => {
-  const [set, setSet] = useState<'HLC' | 'HC2' | 'HC3' | 'HC4' | 'HC5' | 'HC6' | undefined>(
+  const [Set, setSet] = useState<'HLC' | 'HC2' | 'HC3' | 'HC4' | 'HC5' | 'HC6' | undefined>(
     undefined
   );
 
@@ -25,9 +25,9 @@ export const Draft = () => {
 
   useEffect(() => {
     const draft = [];
-    if (set) {
-      if (set === 'HC6') {
-        const filtered = cards.filter(({ Set }) => Set === set);
+    if (Set) {
+      if (Set === 'HC6') {
+        const filtered = cards.filter(({ set }) => set == Set);
         const commanders = filtered.filter(canBeACommander);
         const nonManders = filtered.filter(e => !canBeACommander(e));
         const shuffledManders = commanders.sort(() => (Math.random() > Math.random() ? 1 : -1));
@@ -45,7 +45,7 @@ export const Draft = () => {
         }
         setDraft(draft as any);
       } else {
-        const filtered = cards.filter(e => e.Set === set);
+        const filtered = cards.filter(e => e.set === Set);
         const shuffled = filtered.sort(() => (Math.random() > Math.random() ? 1 : -1));
 
         for (let i = 0; i < 3; i++) {
@@ -59,9 +59,9 @@ export const Draft = () => {
         setDraft(draft as any);
       }
     }
-  }, [set]);
+  }, [Set]);
 
-  if (set === 'HC5') {
+  if (Set === 'HC5') {
     return (
       <ErrorContainer>
         <ErrorBanner>ERROR</ErrorBanner>
@@ -75,10 +75,10 @@ export const Draft = () => {
         Hellscube draft simulator (the bots are dumb) (if you are looking to play afterwards, try
         draftmancer instead)
       </h2>
-      {cards && !set && (
+      {cards && !Set && (
         <FormField label="Select your set">
           <Select
-            value={set}
+            value={Set}
             onChange={e => setSet(e.target.value as any)}
             options={[
               { value: '---', disabled: true },

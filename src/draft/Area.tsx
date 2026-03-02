@@ -2,15 +2,15 @@ import { useAtom, useSetAtom } from 'jotai';
 
 import { deckAtom, draftAtom } from './draftAtom';
 import { useState } from 'react';
-import { HCEntry } from '../types';
 import styled from '@emotion/styled';
 import { TheDraft } from './types';
 import { CARDS_PER_PACK } from './constants';
+import { HCCard } from '../api-types';
 
 export const Area = () => {
   const [draft, setDraft] = useAtom(draftAtom);
 
-  const [draftedCards, setDraftedCards] = useState<HCEntry[]>([]);
+  const [draftedCards, setDraftedCards] = useState<HCCard.Any[]>([]);
   const setDeck = useSetAtom(deckAtom);
 
   const activePack = (draftedCards.length % CARDS_PER_PACK) % 8;
@@ -31,9 +31,9 @@ export const Area = () => {
                   return (
                     <Card
                       width="200px"
-                      title={entry.Name}
-                      key={entry.Name + i}
-                      src={entry.Image[0]!}
+                      title={entry.name}
+                      key={entry.name + i}
+                      src={entry.image!}
                       crossOrigin="anonymous"
                       onClick={() => {
                         if ([...draftedCards, entry].length === 3 * CARDS_PER_PACK) {
@@ -44,7 +44,7 @@ export const Area = () => {
                           [
                             draft[0].map((packEntry, index) => {
                               if (index === activePack) {
-                                return packEntry.filter(packCard => packCard.Name !== entry.Name);
+                                return packEntry.filter(packCard => packCard.name !== entry.name);
                               }
                               const randomPick = Math.floor(Math.random() * packEntry.length);
 
@@ -68,12 +68,12 @@ export const Area = () => {
               <div>
                 {draftedCards.map((entry, i) => {
                   return (
-                    <CardContainer key={entry.Name + i}>
+                    <CardContainer key={entry.name + i}>
                       <Card
                         width="210px"
-                        title={entry.Name}
-                        key={entry.Name + i}
-                        src={entry.Image[0]!}
+                        title={entry.name}
+                        key={entry.name + i}
+                        src={entry.image!}
                         crossOrigin="anonymous"
                       />
                     </CardContainer>

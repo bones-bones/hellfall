@@ -1,15 +1,20 @@
 // https://draftmancer.com/cubeformat.html#cube
 import { canBeACommander } from '../../hellfall/canBeACommander';
-import { HCEntry } from '../../types';
+import { HCCard } from '../../api-types';
 import { hcjFrontCards } from '../hellstart/hcj';
 import { getDraftMancerCard } from './getDraftMancerCard';
 
-export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCEntry[] }) => {
-  const componentCards = cards.filter(card => Boolean(card['Component of']));
+export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.Any[] }) => {
+  // TODO: make sure this works
+  const componentCards = cards.filter(card =>
+    Boolean(card.all_parts?.find(e => e.name == card.name && e.component != 'token_maker'))
+  );
 
   const componentCardsAsDraftmancer = componentCards.map(getDraftMancerCard);
 
-  const noComponentCards = cards.filter(e => e['Component of'] === '');
+  const noComponentCards = cards.filter(
+    card => !card.all_parts?.find(e => e.name == card.name && e.component != 'token_maker')
+  );
 
   if (set === 'HC6') {
     const cardsToWrite = noComponentCards.filter(canBeACommander);
@@ -18,18 +23,16 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCEntry[
     console.log(componentCards);
     commanderCardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
-        e['Component of']?.includes(dmCard.name)
+        e.all_parts?.find(entry => entry.name == dmCard.name)
       );
 
       if (cardsThatBelongToThis.length > 0) {
         const matchingDmCards = componentCardsAsDraftmancer.filter(e =>
-          cardsThatBelongToThis.find(secondE => secondE.Name === e.name)
+          cardsThatBelongToThis.find(secondE => secondE.name === e.name)
         );
         dmCard.related_cards = matchingDmCards.map(e => e.name);
         dmCard.draft_effects = [
-          //@ts-ignore
           ...(dmCard.draft_effects || []),
-          //@ts-ignore
           { type: 'AddCards', cards: matchingDmCards.map(e => e.name) },
         ];
       }
@@ -41,18 +44,16 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCEntry[
 
     otherCardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
-        e['Component of']?.includes(dmCard.name)
+        e.all_parts?.find(entry => entry.name == dmCard.name)
       );
 
       if (cardsThatBelongToThis.length > 0) {
         const matchingDmCards = componentCardsAsDraftmancer.filter(e =>
-          cardsThatBelongToThis.find(secondE => secondE.Name === e.name)
+          cardsThatBelongToThis.find(secondE => secondE.name === e.name)
         );
         dmCard.related_cards = matchingDmCards.map(e => e.id);
         dmCard.draft_effects = [
-          //@ts-ignore
           ...(dmCard.draft_effects || []),
-          //@ts-ignore
           { type: 'AddCards', cards: matchingDmCards.map(e => e.name) },
         ];
       }
@@ -93,7 +94,7 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCEntry[
       const asHC = {
         Name: `${e.name} - ${e.tag}`,
         Image: [e.url],
-      } as any as HCEntry;
+      } as any as HCCard.Any;
       return getDraftMancerCard(asHC);
     });
     // augh this sucks and is messy. technically these are just undraftable component cards
@@ -102,9 +103,9 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCEntry[
     cardsToWrite.forEach((entry, i) => {
       const contentNames = noComponentCards
         .filter(cardEntry => {
-          return cardEntry.Tags?.split(';').includes(hcjFrontCards[i].tag);
+          return cardEntry.tags?.includes(hcjFrontCards[i].tag);
         })
-        .map(e => e.Name)
+        .map(e => e.name)
         .map(e => e.replace(/^(\d+) /, 'Number $1'));
       entry.draft_effects = [
         'FaceUp',
@@ -146,12 +147,12 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCEntry[
 
     cardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
-        e['Component of']?.includes(dmCard.name)
+        e.all_parts?.find(entry => entry.name == dmCard.name)
       );
 
       if (cardsThatBelongToThis.length > 0) {
         const matchingDmCards = componentCardsAsDraftmancer.filter(e =>
-          cardsThatBelongToThis.find(secondE => secondE.Name === e.name)
+          cardsThatBelongToThis.find(secondE => secondE.name === e.name)
         );
         dmCard.related_cards = matchingDmCards.map(e => e.name);
         dmCard.draft_effects = [

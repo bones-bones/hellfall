@@ -1,6 +1,6 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../hellfall/cardsAtom';
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 import styled from '@emotion/styled';
 import { HellfallCard } from '../hellfall/HellfallCard';
 import { CardEntry } from './types';
@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { allDecks } from './allDecks';
 import { stringToMana } from '../hellfall/stringToMana';
 
-const activeCardAtom = atom<HCEntry | undefined>(undefined);
+const activeCardAtom = atom<HCCard.Any | undefined>(undefined);
 
 export const Deck = () => {
   const { '*': deckName } = useParams();
@@ -19,16 +19,16 @@ export const Deck = () => {
     if (entry.name[0] == '%') {
       return {
         count: entry.count,
-        name: cards.find(e => e.Id == entry.name.slice(1))!.Id,
+        name: cards.find(e => e.id == entry.name.slice(1))!.id,
         id: entry.name.slice(1),
-        hcEntry: cards.find(e => e.Id == entry.name.slice(1)),
+        hcCard: cards.find(e => e.id == entry.name.slice(1)),
       };
     } else {
       return {
         count: entry.count,
         name: entry.name,
-        id: cards.find(e => e.Name.toLowerCase() == entry.name.toLowerCase())?.Id,
-        hcEntry: cards.find(e => e.Name.toLowerCase() == entry.name.toLowerCase()),
+        id: cards.find(e => e.name.toLowerCase() == entry.name.toLowerCase())?.id,
+        hcCard: cards.find(e => e.name.toLowerCase() == entry.name.toLowerCase()),
       };
     }
   };
@@ -37,50 +37,50 @@ export const Deck = () => {
   const resolvedSideBoard = deck.cards.sideboard.map(resolveCard) as RenderEntry[];
 
   const reduddd = resolvedMainDeck.reduce<Record<string, RenderEntry[]>>((curr, next) => {
-    if (next.hcEntry?.['Card Type(s)'][0]?.includes('Land') || !next.hcEntry) {
+    if (next.hcCard?.toFaces()[0].types?.includes('Land') || !next.hcCard) {
       curr['Land'] = (curr['Land'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Creature')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Creature')) {
       curr['Creature'] = (curr['Creature'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Planeswalker')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Planeswalker')) {
       curr['Planeswalker'] = (curr['Planeswalker'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Instant')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Instant')) {
       curr['Instant'] = (curr['Instant'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Sorcery')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Sorcery')) {
       curr['Sorcery'] = (curr['Sorcery'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Artifact')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Artifact')) {
       curr['Artifact'] = (curr['Artifact'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Enchantment')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Enchantment')) {
       curr['Enchantment'] = (curr['Enchantment'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Battle')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Battle')) {
       curr['Battle'] = (curr['Battle'] ?? []).concat(next);
     } else {
-      curr[next.hcEntry['Card Type(s)'][0] || '????'] = (
-        curr[next.hcEntry['Card Type(s)'][0] || '????'] ?? []
+      curr[next.hcCard.toFaces()[0].types?.join() || '????'] = (
+        curr[next.hcCard.toFaces()[0].types?.join() || '????'] ?? []
       ).concat(next);
     }
 
     return curr;
   }, {});
   const redudddS = resolvedSideBoard.reduce<Record<string, RenderEntry[]>>((curr, next) => {
-    if (next.hcEntry?.['Card Type(s)'][0]?.includes('Creature')) {
+    if (next.hcCard?.toFaces()[0].types?.includes('Creature')) {
       curr['Creature'] = (curr['Creature'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Planeswalker')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Planeswalker')) {
       curr['Planeswalker'] = (curr['Planeswalker'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Instant')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Instant')) {
       curr['Instant'] = (curr['Instant'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Sorcery')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Sorcery')) {
       curr['Sorcery'] = (curr['Sorcery'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Artifact')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Artifact')) {
       curr['Artifact'] = (curr['Artifact'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Enchantment')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Enchantment')) {
       curr['Enchantment'] = (curr['Enchantment'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Battle')) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Battle')) {
       curr['Battle'] = (curr['Battle'] ?? []).concat(next);
-    } else if (next.hcEntry?.['Card Type(s)'][0]?.includes('Land') || !next.hcEntry) {
+    } else if (next.hcCard?.toFaces()[0].types?.includes('Land') || !next.hcCard) {
       curr['Land'] = (curr['Land'] ?? []).concat(next);
     } else {
-      curr[next.hcEntry['Card Type(s)'][0] || '????'] = (
-        curr[next.hcEntry['Card Type(s)'][0] || '????'] ?? []
+      curr[next.hcCard.toFaces()[0].types?.join() || '????'] = (
+        curr[next.hcCard.toFaces()[0].types?.join() || '????'] ?? []
       ).concat(next);
     }
 
@@ -175,7 +175,7 @@ const CategorySection = ({
 }: {
   cards: RenderEntry[];
   title: string;
-  setActive: (val?: HCEntry) => void;
+  setActive: (val?: HCCard.Any) => void;
 }) => {
   return (
     <CatCon key={title}>
@@ -185,16 +185,16 @@ const CategorySection = ({
       <CatSecCon>
         {cards
           .sort((a, b) => {
-            return (a.hcEntry?.CMC || 0) > (b.hcEntry?.CMC || 0) ? 1 : -1;
+            return (a.hcCard?.cmc || 0) > (b.hcCard?.cmc || 0) ? 1 : -1;
           })
           .map(entry => {
             return (
               <CardLineContainer key={entry.name}>
-                <CardColumn onMouseOver={() => setActive(entry.hcEntry)}>
+                <CardColumn onMouseOver={() => setActive(entry.hcCard)}>
                   {entry.count}{' '}
-                  <BoldSpan href={'/hellfall/card/' + entry.hcEntry?.Name}>{entry.name}</BoldSpan>{' '}
+                  <BoldSpan href={'/hellfall/card/' + entry.hcCard?.name}>{entry.name}</BoldSpan>{' '}
                 </CardColumn>{' '}
-                <CostColumn>{stringToMana(entry.hcEntry?.Cost[0] || '')}</CostColumn>
+                <CostColumn>{stringToMana(entry.hcCard?.mana_cost || '')}</CostColumn>
                 <MoneyColumn key={entry.name + 'cash'}>{getPrice(entry.name)}</MoneyColumn>
               </CardLineContainer>
             );
@@ -236,7 +236,7 @@ type RenderEntry = {
   name: string;
   id: string | undefined;
   count: number;
-  hcEntry?: HCEntry;
+  hcCard?: HCCard.Any;
 };
 
 // TODO: write a function that takes a hash of the name and use it to generate number of index spaces between 0.01 and 100.00

@@ -4,7 +4,7 @@ import { toDeck } from '../deck-builder/toDeck';
 import { cardsAtom } from '../hellfall/cardsAtom';
 import { toCockCube } from './toCockCube';
 import { useAtomValue } from 'jotai';
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 import { ReactNode } from 'react';
 import { getDraftmancerForCube } from './draftmancer';
 import { getHc5 } from './getHc5';
@@ -15,7 +15,7 @@ type CubeSetup = {
   name: string;
   id: string;
   description: string;
-  cards: HCEntry[];
+  cards: HCCard.Any[];
   quickLink?: ReactNode;
   tts?: ReactNode;
   printLink?: ReactNode;
@@ -31,7 +31,7 @@ export const CubeResources = () => {
       name: 'Hellscube',
       id: 'HLC',
       description: 'A refined version of the cube that started it all',
-      cards: cards.filter(e => e.Set === 'HLC'),
+      cards: cards.filter(e => e.set === 'HLC'),
       quickLink: <StyledLink to="one">Rules and macros</StyledLink>,
       printLink: (
         <StyledLink to="https://drive.google.com/file/d/1U2Ww7WElGpA95BTOwb2E2sQ0bir4FJHt/view">
@@ -48,13 +48,13 @@ export const CubeResources = () => {
       name: 'Hellscube 2',
       id: 'HC2',
       description: 'The second cube, trades purple for clear archetypes.',
-      cards: cards.filter(e => e.Set === 'HC2'),
+      cards: cards.filter(e => e.set === 'HC2'),
     },
     {
       name: 'Hellscube 3',
       id: 'HC3',
       description: "At least it's not HC2",
-      cards: cards.filter(e => e.Set === 'HC3'),
+      cards: cards.filter(e => e.set === 'HC3'),
       printLink: (
         <StyledLink to={'https://drive.google.com/file/d/1SuXpECOkcCpIcCD-KKGyNjkT9NfeLrEH/view'}>
           PDF of 3.0 by Jumberlack
@@ -70,7 +70,7 @@ export const CubeResources = () => {
       name: 'Hellscube 4',
       id: 'HC4',
       description: 'A Vintage power cube. A rip-roaring good time',
-      cards: cards.filter(e => e.Set === 'HC4'),
+      cards: cards.filter(e => e.set === 'HC4'),
       includeLands: true,
       // readyForAutofill: true,
       printLink: (
@@ -89,13 +89,13 @@ export const CubeResources = () => {
       name: 'Hellscube V(eto)',
       id: 'HCV',
       description: `Here's where vetoed, slotsed, and seasonal cards go. Not suitable for play.`,
-      cards: cards.filter(e => e.Set === 'HCV'),
+      cards: cards.filter(e => e.set === 'HCV'),
     },
     {
       name: 'Hellscube 6',
       id: 'HC6',
       description: 'The Commander Cube',
-      cards: cards.filter(e => e.Set === 'HC6'),
+      cards: cards.filter(e => e.set === 'HC6'),
       // readyForAutofill: true,
       includeLands: true,
       printLink: (
@@ -109,14 +109,14 @@ export const CubeResources = () => {
       id: 'HCC',
       // readyForAutofill: true,
       description: 'Cards that are legal in constructed, but are not in any cube',
-      cards: cards.filter(e => e.Set === 'HCC'),
+      cards: cards.filter(e => e.set === 'HCC'),
     },
     {
       name: 'Hells Chase Posse',
       id: 'HCP',
       // readyForAutofill: true,
       description: 'Planes and Phenomena for some sick planechase action',
-      cards: cards.filter(e => e.Set === 'HCP'),
+      cards: cards.filter(e => e.set === 'HCP'),
       printLink: (
         <StyledLink
           to={'https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing'}
@@ -129,13 +129,13 @@ export const CubeResources = () => {
       name: 'Hellscube 7',
       id: 'HC7',
       description: 'The 7th cube, purple abounds.',
-      cards: cards.filter(e => e.Set === 'HC7.0' || e.Set === 'HC7.1'),
+      cards: cards.filter(e => e.set === 'HC7.0' || e.set === 'HC7.1'),
     },
     {
       name: 'Normal Cube',
       id: 'C',
       description: 'How did that get in there?',
-      cards: cards.filter(e => e.Set === 'C'),
+      cards: cards.filter(e => e.set === 'C'),
     },
     {
       name: 'Heckscube',
@@ -144,21 +144,21 @@ export const CubeResources = () => {
       includeLands: true,
       description:
         'This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC\'s first forays into "beginner-friendly" Magic all the way back in \'97.',
-      cards: cards.filter(e => e.Set === 'HCK'),
+      cards: cards.filter(e => e.set === 'HCK'),
     },
     {
       name: 'Hellscube 8',
       id: 'HC8',
       quickLink: <StyledLink to="/hellscubes/eight">Archetype documents</StyledLink>,
       description: "The 8th cube, we've got archetypes",
-      cards: cards.filter(e => e.Set === 'HC8.0' || e.Set === 'HC8.1'),
+      cards: cards.filter(e => e.set === 'HC8.0' || e.set === 'HC8.1'),
     },
     {
       name: 'Hellscube Jumpstart',
       id: 'HCJ',
 
       description: 'Jumpstart!',
-      cards: cards.filter(e => e.Set === 'HCJ'),
+      cards: cards.filter(e => e.set === 'HCJ'),
     },
   ];
   return (
@@ -275,8 +275,8 @@ export const CubeResources = () => {
 
                       const tokenNames = cubeSetup.cards.flatMap(entry => {
                         // Dear sixel, pls finish
-                        return (entry.tokens || []).map(tokenEntry =>
-                          tokenEntry.Name.replace(/ (\d+)$/g, '$1')
+                        return (entry.all_parts?.filter(e => e.component == 'token') || []).map(
+                          tokenEntry => tokenEntry.name.replace(/ (\d+)$/g, '$1')
                         );
                       });
                       const printableTokens = tokenNames.map(tokenEntry => {
@@ -295,13 +295,13 @@ export const CubeResources = () => {
                       });
 
                       const printableCards = cubeSetup.cards.map(cardEntry => {
-                        const matches = cardList.filter(e => e.Cardname == cardEntry.Name);
-                        if (cardEntry.Name.includes('// Elves')) {
+                        const matches = cardList.filter(e => e.Cardname == cardEntry.name);
+                        if (cardEntry.name.includes('// Elves')) {
                           console.log(cardList, matches);
                         }
 
                         const returnEntry = {
-                          cardName: cardEntry.Name,
+                          cardName: cardEntry.name,
                           sides: matches.map(matchEntry => ({
                             id: matchEntry.Url.replace('https://lh3.googleusercontent.com/d/', ''),
                           })),

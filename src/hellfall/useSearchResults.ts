@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
+import { HCColor, HCSearchColor, HCColors } from '../api-types';
 import { cardsAtom } from './cardsAtom';
 import { useAtom, useAtomValue } from 'jotai';
 import {
@@ -29,15 +30,15 @@ import {
 import { sortFunction } from './sortFunction';
 import { getColorIdentity } from './getColorIdentity';
 import { canBeACommander } from './canBeACommander';
-import { MISC_BULLSHIT, MISC_BULLSHIT_COLORS } from './constants';
+import { debug } from 'console';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
 };
 
 export const useSearchResults = () => {
-  const [resultSet, setResultSet] = useState<HCEntry[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(e => e.Set != 'C');
+  const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
+  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
   const set = useAtomValue(searchSetAtom);
   const costSearch = useAtomValue(costSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
@@ -60,11 +61,29 @@ export const useSearchResults = () => {
   const toughness = useAtomValue(toughnessAtom);
   const tags = useAtomValue(tagsAtom);
   const extraFilters = useAtomValue(extraFiltersAtom);
+  const MISC_BULLSHIT = 'Misc bullshit';
+  const miscColors = [
+    'Pickle',
+    'Yellow',
+    'Brown',
+    'Pink',
+    'Teal',
+    'Orange',
+    'TEMU',
+    'Gold',
+    'Beige',
+    'Grey',
+  ]; //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 
   useEffect(() => {
+    // console.log('useSearchResults effect running', {
+    //   searchColors,
+    //   colorIdentityCriteria,
+    //   // add others
+    // });
     const tempResults = cards
       .filter(entry => {
-        if (set.length > 0 && !isSetInResults(entry.Set, set)) {
+        if (set.length > 0 && !isSetInResults(entry.set, set)) {
           return false;
         }
         if (!extraFilters.includes('isToken') && entry.isActualToken) {
@@ -77,7 +96,11 @@ export const useSearchResults = () => {
         if (
           costSearch.length > 0 &&
           !costSearch.every(searchTerm => {
-            const combined = (entry['Cost'] || []).join(',').toLowerCase();
+            const combined = entry
+              .toFaces()
+              .map(e => e.mana_cost)
+              .join()
+              .toLowerCase();
             if (searchTerm.startsWith('!')) {
               return !combined.includes(searchTerm.substring(1).toLowerCase());
             } else {
@@ -91,7 +114,11 @@ export const useSearchResults = () => {
         if (
           rulesSearch.length > 0 &&
           !rulesSearch.every(searchTerm => {
-            const combined = (entry['Text Box'] || []).join(',').toLowerCase();
+            const combined = entry
+              .toFaces()
+              .map(e => e.oracle_text || '')
+              .join()
+              .toLowerCase();
             if (searchTerm.startsWith('!')) {
               return !combined.includes(searchTerm.substring(1).toLowerCase());
             } else {
@@ -105,36 +132,45 @@ export const useSearchResults = () => {
         if (
           tags.length > 0 &&
           !tags.every(tag => {
-            return entry.Tags?.includes(tag);
+            return entry.tags?.includes(tag);
           })
         ) {
           return false;
         }
 
-        if (nameSearch !== '' && !entry['Name'].toLowerCase().includes(nameSearch.toLowerCase())) {
+        if (
+          nameSearch !== '' &&
+          !entry
+            .toFaces()
+            .map(e => e.name || '')
+            .join(' // ')
+            .toLowerCase()
+            .includes(nameSearch.toLowerCase()) &&
+          !entry.name.toLowerCase().includes(nameSearch.toLowerCase())
+        ) {
           return false;
         }
 
-        if (idSearch !== '' && entry['Id'] != idSearch) {
+        if (idSearch !== '' && entry.id.toLowerCase() != idSearch.toLowerCase()) {
           return false;
         }
 
         if (searchCmc != undefined) {
           switch (searchCmc.operator) {
             case '<': {
-              if (!(entry.CMC < searchCmc.value)) {
+              if (!(entry.cmc < searchCmc.value)) {
                 return false;
               }
               break;
             }
             case '>': {
-              if (!(entry.CMC > searchCmc.value)) {
+              if (!(entry.cmc > searchCmc.value)) {
                 return false;
               }
               break;
             }
             case '=': {
-              if (!(entry.CMC === searchCmc.value)) {
+              if (!(entry.cmc === searchCmc.value)) {
                 return false;
               }
               break;
@@ -148,49 +184,30 @@ export const useSearchResults = () => {
           }
         }
         if (legality.length > 0) {
-          if (legality.includes('legal') && entry.Constructed?.includes('Banned')) {
+          if (legality.includes('legal') && entry.legalities.standard != 'legal') {
             return false;
           }
-          if (legality.includes('4cbLegal') && entry.Constructed?.includes('Banned (4CB)')) {
+          if (legality.includes('4cbLegal') && entry.legalities['4cb'] != 'legal') {
             return false;
           }
 
-          if (
-            legality.includes('hellsmanderLegal') &&
-            entry.Constructed?.includes('Banned (Commander)')
-          ) {
+          if (legality.includes('hellsmanderLegal') && entry.legalities.commander != 'legal') {
             return false;
           }
         }
-        if (creators.length > 0 && !creators.includes(entry.Creator)) {
-          return false;
-        }
-        if (
-          colorIdentityCriteria.length > 0 &&
-          !getColorIdentity(entry).every(cardColorIdentityComponent => {
-            const miscBullshitColorIdentityCriteria = colorIdentityCriteria.includes(MISC_BULLSHIT)
-              ? [...colorIdentityCriteria, ...MISC_BULLSHIT_COLORS].filter(e => e !== MISC_BULLSHIT)
-              : colorIdentityCriteria;
-            const colorTest = (e: string) =>
-              miscBullshitColorIdentityCriteria.includes(e) || e == 'Colorless' || e == undefined;
-            if (Array.isArray(cardColorIdentityComponent)) {
-              return useHybrid
-                ? cardColorIdentityComponent.some(colorTest)
-                : cardColorIdentityComponent.every(colorTest);
-            } else {
-              return colorTest(cardColorIdentityComponent);
-            }
-          })
-        ) {
+        if (creators.length > 0 && !creators.includes(entry.creator)) {
           return false;
         }
         if (
           typeSearch.length > 0 &&
           !typeSearch.every(searchTerm => {
             const combined = [
-              ...(entry['Supertype(s)'] || []),
-              ...(entry['Card Type(s)'] || []),
-              ...(entry['Subtype(s)'] || []),
+              // ...(entry.supertypes || []),
+              ...entry.toFaces().map(e => e.supertypes || ''),
+              // ...(entry.types || []),
+              ...entry.toFaces().map(e => e.types || ''),
+              // ...(entry.subtypes || []),
+              ...entry.toFaces().map(e => e.subtypes || ''),
             ]
               .join(',')
               .toLowerCase();
@@ -206,18 +223,18 @@ export const useSearchResults = () => {
         if (power) {
           switch (power.operator) {
             case '=': {
-              if (parseInt(entry.power?.[0] + '') !== power.value) {
+              if (parseInt(entry.toFaces()[0].power + '') !== power.value) {
                 return false;
               }
               break;
             }
             case '<': {
               if (
-                !entry.power?.[0] ||
+                !entry.toFaces()[0].power ||
                 !(
-                  (Number.isNaN(parseInt(entry.power[0] + ''))
+                  (Number.isNaN(parseInt(entry.toFaces()[0].power + ''))
                     ? 0
-                    : parseInt(entry.power[0] + '')) < power.value
+                    : parseInt(entry.toFaces()[0].power + '')) < power.value
                 )
               ) {
                 return false;
@@ -226,11 +243,11 @@ export const useSearchResults = () => {
             }
             case '>': {
               if (
-                !entry.power?.[0] ||
+                !entry.toFaces()[0].power ||
                 !(
-                  (Number.isNaN(parseInt(entry.power[0] + ''))
+                  (Number.isNaN(parseInt(entry.toFaces()[0].power + ''))
                     ? 0
-                    : parseInt(entry.power[0] + '')) > power.value
+                    : parseInt(entry.toFaces()[0].power + '')) > power.value
                 )
               ) {
                 return false;
@@ -242,18 +259,18 @@ export const useSearchResults = () => {
         if (toughness) {
           switch (toughness.operator) {
             case '=': {
-              if (parseInt(entry.toughness?.[0] + '') !== toughness.value) {
+              if (parseInt(entry.toFaces()[0].toughness + '') !== toughness.value) {
                 return false;
               }
               break;
             }
             case '<': {
               if (
-                !entry.toughness?.[0] ||
+                !entry.toFaces()[0].toughness ||
                 !(
-                  (Number.isNaN(parseInt(entry.toughness[0] + ''))
+                  (Number.isNaN(parseInt(entry.toFaces()[0].toughness + ''))
                     ? 0
-                    : parseInt(entry.toughness[0] + '')) < toughness.value
+                    : parseInt(entry.toFaces()[0].toughness + '')) < toughness.value
                 )
               ) {
                 return false;
@@ -262,11 +279,11 @@ export const useSearchResults = () => {
             }
             case '>': {
               if (
-                !entry.toughness?.[0] ||
+                !entry.toFaces()[0].toughness ||
                 !(
-                  (Number.isNaN(parseInt(entry.toughness[0] + ''))
+                  (Number.isNaN(parseInt(entry.toFaces()[0].toughness + ''))
                     ? 0
-                    : parseInt(entry.toughness[0] + '')) > toughness.value
+                    : parseInt(entry.toFaces()[0].toughness + '')) > toughness.value
                 )
               ) {
                 return false;
@@ -275,44 +292,82 @@ export const useSearchResults = () => {
             }
           }
         }
+        if (
+          colorIdentityCriteria.length > 0 &&
+          !getColorIdentity(entry).every(cardColorIdentityComponent => {
+            const miscBullshitColorIdentityCriteria = (
+              colorIdentityCriteria.includes(MISC_BULLSHIT)
+                ? [...colorIdentityCriteria, ...miscColors].filter(e => e != MISC_BULLSHIT)
+                : colorIdentityCriteria
+            ) as HCColors;
+            const colorTest = (e: HCColor) =>
+              miscBullshitColorIdentityCriteria.includes(e) || e == 'C';
+            return useHybrid
+              ? cardColorIdentityComponent.some(e => colorTest(e as HCColor))
+              : cardColorIdentityComponent.every(e => colorTest(e as HCColor));
+            // TODO: make sure this works (see colorTest)
+          })
+        ) {
+          return false;
+        }
 
+        // TODO: handle split cards/adventures/transforms better
         if (searchColors.length > 0) {
-          if (!(searchColors.includes('Colorless') && entry['Color(s)'] == '')) {
-            const newSearchColors = searchColors.includes(MISC_BULLSHIT)
-              ? [...searchColors]
-              : searchColors;
-
-            const entryColors = (entry['Color(s)'] || '').split(';').map(colorEntry => {
-              if (!['Red', 'Green', 'White', 'Blue', 'Black', 'Purple', ''].includes(colorEntry)) {
-                return MISC_BULLSHIT;
+          if (
+            !(
+              searchColors.includes('C') &&
+              entry.toFaces()[0].colors.length == 1 &&
+              entry.toFaces()[0].colors[0] == 'C'
+            )
+          ) {
+            // const newSearchColors = searchColors.includes(MISC_BULLSHIT)
+            //   ? [...searchColors, ...allMiscColors].filter(e => e != MISC_BULLSHIT)
+            //   : searchColors;
+            // const useMisc = searchColors.includes(MISC_BULLSHIT);
+            if (searchColors.includes('C') && colorComparison != '>=') {
+              if (!entry.toFaces()[0].colors.includes('C')) {
+                return false;
               }
-              return colorEntry;
-            });
+            } else {
+              const newSearchColors = searchColors.filter(e => e != 'C');
+              const entryColorsSet: Set<string> = new Set(
+                entry.toFaces()[0].colors.map(e => {
+                  if (e == null) {
+                    console.log('Card id:', entry.id, 'had a null color.');
+                    return 'C';
+                  } else {
+                    return miscColors.includes(e.toString()) ? MISC_BULLSHIT : e.toString();
+                  }
+                })
+              );
+              entryColorsSet.delete('C');
+              const entryColors: string[] = Array.from(entryColorsSet);
 
-            switch (colorComparison) {
-              case '<=': {
-                if (!entryColors.every(colorEntry => newSearchColors.includes(colorEntry))) {
-                  return false;
+              switch (colorComparison) {
+                case '<=': {
+                  if (!entryColors.every(colorEntry => newSearchColors.includes(colorEntry))) {
+                    return false;
+                  }
+                  break;
                 }
-                break;
-              }
-              case '=': {
-                if (
-                  !(
-                    entryColors.every(colorEntry => newSearchColors.includes(colorEntry)) &&
-                    entryColors.length == newSearchColors.length
-                  )
-                ) {
-                  return false;
+                case '=': {
+                  if (
+                    !(
+                      entryColors.every(colorEntry => newSearchColors.includes(colorEntry)) &&
+                      entryColors.length == newSearchColors.length
+                    )
+                  ) {
+                    return false;
+                  }
+                  break;
                 }
-                break;
-              }
-              case '>=': {
-                if (!entryColors.find(colorEntry => newSearchColors.includes(colorEntry))) {
-                  return false;
-                }
+                case '>=': {
+                  if (!newSearchColors.every(colorEntry => entryColors.includes(colorEntry))) {
+                    return false;
+                  }
 
-                break;
+                  break;
+                }
               }
             }
           }

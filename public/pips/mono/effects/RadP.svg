@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="svg2" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" version="1.1" viewBox="0 0 520 520">
+  <!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  <path id="path3776" d="M520,260c0,143.59-116.41,260-260,260S0,403.59,0,260,116.41,0,260,0s260,116.41,260,260h0Z" fill="#c777d6"/>
+  <circle id="circle6" cx="260" cy="260" r="50"/>
+  <path id="bld-7" d="M185,261.49c0,26.79,14.29,51.55,37.5,64.95l-87.5,151.55C57.65,433.34,10,350.81,10,261.49h175Z"/>
+  <g id="use9-5">
+    <path id="bld-71" d="M297.5,196.54c-23.21-13.4-51.79-13.4-75,0L135,44.99C212.35.33,307.65.33,385,44.99l-87.5,151.55h0Z"/>
+  </g>
+  <g id="use11-9">
+    <path id="bld-72" d="M297.5,326.45c23.21-13.4,37.5-38.16,37.5-64.95h175c0,89.32-47.65,171.85-125,216.51l-87.5-151.55h0Z"/>
+  </g>
+  <path id="path2996" d="M260,0C116.41,0,0,116.41,0,260s116.41,260,260,260,260-116.41,260-260S403.59,0,260,0ZM260,11c137.52,0,249,111.48,249,249s-111.48,249-249,249S11,397.52,11,260,122.48,11,260,11Z" fill="#c777d6"/>
+</svg>

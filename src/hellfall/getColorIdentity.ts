@@ -1,46 +1,171 @@
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types/Card';
+import { pipsAtom } from './pipsAtom';
+import { useAtomValue } from 'jotai';
+import { getDefaultStore } from 'jotai';
+import { HCColor, HCColors } from '../api-types/Card';
+import { splitParens } from './splitParens';
+const store = getDefaultStore();
 
-const MANA_ICON_REGEX = /\{.+?\}/g;
+export const getColorIdentity = (card: HCCard.Any) => {
+  const colorIdentity = new Set<HCColors>();
+  const pips = store.get(pipsAtom);
+  // TODO: make sure color indicators work
+  // TODO: special cases for Crypticspire Mantis (must be at least 2)
+  card.toFaces().forEach(entry => {
+    const costNames = entry.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
-function addManaIconsFromText(
-  text: string,
-  colorIdentity: Set<string | string[]>,
-  stripReminderText = false
-) {
-  const source = stripReminderText ? text.replaceAll(/\(.*?\)/g, '') : text;
-  const icons = source.match(MANA_ICON_REGEX);
-  icons?.forEach(icon => {
-    const iconArray = icon.replaceAll(/[{}]/g, '').split('/');
-    const nResp = iconArray.map(e => manaSymbolColorMatching[e] ?? 'Colorless'); // TODO: the first char cause skeleton
-    if (nResp) {
-      //@ts-ignore
-      colorIdentity.add(nResp);
-    }
-  });
-}
+    costNames?.forEach(name => {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
+        colorIdentity.add(pip.colors!);
+      } /*else {
+        const mappedColor = manaSymbolColorMatching[name];
+        if (mappedColor) {
+          colorIdentity.add([mappedColor]);
+        }
+      }*/
+    });
 
-export const getColorIdentity = (card: HCEntry) => {
-  const colorIdentity = new Set<string | string[]>();
+    const minusReminderText = splitParens(entry.oracle_text)
+      .filter(e => e[0] && e[0] != '(')
+      .join('');
+    const textNames = (minusReminderText || '')
+      .match(/{([^}]+)}/g)
+      ?.map(match => match.slice(1, -1));
 
-  // TODO: make color indicators work
-  // TODO: special cases for Crypticspire Mantis (must be at least 2), Draft Dodger (Canada = Red and White)
-  card.Cost?.forEach(entry => {
-    addManaIconsFromText(entry || '', colorIdentity);
-  });
+    textNames?.forEach(name => {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
+        colorIdentity.add(pip.colors!);
+      } /*else {
+        const mappedColor = manaSymbolColorMatching[name];
+        if (mappedColor) {
+          colorIdentity.add([mappedColor]);
+        }
+      }*/
+    });
 
-  card['Text Box']?.forEach(entry => {
-    addManaIconsFromText(entry || '', colorIdentity, true);
-  });
-
-  card['Subtype(s)']?.forEach(entry => {
-    const splitSubtypes = (entry || '').split(';');
+    const splitSubtypes = entry.subtypes || [];
     splitSubtypes.forEach(typeEntry => {
       const mappedColor = landToColorMapping[typeEntry];
       if (mappedColor) {
-        colorIdentity.add(mappedColor);
+        colorIdentity.add([mappedColor]);
       }
     });
+
+    if ('color_indicator' in entry) {
+      entry.color_indicator?.forEach(color => {
+        colorIdentity.add([color]);
+      });
+    }
   });
+
+  return Array.from(colorIdentity);
+};
+
+export const getColorIdentityProp = (card: HCCard.Any) => {
+  const colorIdentity = new Set<HCColors>();
+  const pips = store.get(pipsAtom);
+  // TODO: make color indicators work
+  // TODO: special cases for Crypticspire Mantis (must be at least 2)
+  if ('card_faces' in card) {
+    card.card_faces.forEach(entry => {
+      const costNames = entry.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
+
+      costNames?.forEach(name => {
+        const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+        if (pip && pip?.represents_mana) {
+          colorIdentity.add(pip.colors!);
+        } /*else {
+          const mappedColor = manaSymbolColorMatching[name];
+          if (mappedColor) {
+            colorIdentity.add([mappedColor]);
+          }
+        }*/
+      });
+
+      const minusReminderText = splitParens(entry.oracle_text)
+        .filter(e => e[0] && e[0] != '(')
+        .join('');
+      const textNames = (minusReminderText || '')
+        .match(/{([^}]+)}/g)
+        ?.map(match => match.slice(1, -1));
+
+      textNames?.forEach(name => {
+        const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+        if (pip && pip?.represents_mana) {
+          colorIdentity.add(pip.colors!);
+        } /*else {
+          const mappedColor = manaSymbolColorMatching[name];
+          if (mappedColor) {
+            colorIdentity.add([mappedColor]);
+          }
+        }*/
+      });
+
+      const splitSubtypes = entry.subtypes || [];
+      splitSubtypes.forEach(typeEntry => {
+        const mappedColor = landToColorMapping[typeEntry];
+        if (mappedColor) {
+          colorIdentity.add([mappedColor]);
+        }
+      });
+
+      if ('color_indicator' in entry) {
+        entry.color_indicator?.forEach(color => {
+          colorIdentity.add([color]);
+        });
+      }
+    });
+  } else {
+    const costNames = card.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
+
+    costNames?.forEach(name => {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
+        colorIdentity.add(pip.colors!);
+      } /*else {
+        const mappedColor = manaSymbolColorMatching[name];
+        if (mappedColor) {
+          colorIdentity.add([mappedColor]);
+        }
+      }*/
+    });
+
+    const minusReminderText = splitParens(card.oracle_text)
+      .filter(e => e[0] && e[0] != '(')
+      .join('');
+    const textNames = (minusReminderText || '')
+      .match(/{([^}]+)}/g)
+      ?.map(match => match.slice(1, -1));
+
+    textNames?.forEach(name => {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
+        colorIdentity.add(pip.colors!);
+      } /*else {
+        const mappedColor = manaSymbolColorMatching[name];
+        if (mappedColor) {
+          colorIdentity.add([mappedColor]);
+        }
+      }*/
+    });
+
+    const splitSubtypes = card.subtypes || [];
+    splitSubtypes.forEach(typeEntry => {
+      const mappedColor = landToColorMapping[typeEntry];
+      if (mappedColor) {
+        colorIdentity.add([mappedColor]);
+      }
+    });
+
+    if ('color_indicator' in card) {
+      card.color_indicator?.forEach(color => {
+        colorIdentity.add([color]);
+      });
+    }
+  }
+
   return Array.from(colorIdentity);
 };
 
@@ -58,50 +183,17 @@ const manaSymbolColorMatching: Record<
   | 'Pink'
   | 'Teal'
   | 'Orange'
-  // | undefined
-> = {
-  W: 'White',
-  B: 'Black',
-  U: 'Blue',
-  R: 'Red',
-  G: 'Green',
-  P: 'Purple',
-  HW: 'White',
-  HB: 'Black',
-  HU: 'Blue',
-  HR: 'Red',
-  HG: 'Green',
-  HP: 'Purple',
-  UU: 'Blue',
-  BB: 'Black',
-  RR: 'Red',
-  GE: 'Green',
-  TG: 'Green',
-  Pickle: 'Pickle',
-  Yellow: 'Yellow',
-  Brown: 'Brown',
-  Pink: 'Pink',
-  Teal: 'Teal',
-  Orange: 'Orange',
-  TEMU: 'Orange',
-  Ketchup: 'Red',
-  Mustard: 'Red',
-  Venezuela: 'White',
-  Stab: 'Red',
-  Microwave: 'Red',
-  Bitcoin: 'Black',
-};
+> = {};
 
-const landToColorMapping: Record<
-  string,
-  'White' | 'Black' | 'Red' | 'Blue' | 'Green' | 'Piss' | 'Pickle' | undefined | 'Purple'
-> = {
-  Plains: 'White',
-  Swamp: 'Black',
-  Island: 'Blue',
-  IslandGX: 'Blue', // TODO: I have sinned
-  Mountain: 'Red',
-  Forest: 'Green',
-  Nebula: 'Purple',
-};
+const landToColorMapping = {
+  Plains: 'W',
+  Ploons: 'W',
+  Swamp: 'B',
+  Island: 'U',
+  // IslandGX: 'Blue', // TODO: I have sinned
+  Mountain: 'R',
+  Moontain: 'R',
+  Forest: 'G',
+  Nebula: 'P',
+} as Record<string, HCColor>;
 //"{3/P}{U}",

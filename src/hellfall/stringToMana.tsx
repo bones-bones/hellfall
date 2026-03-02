@@ -1,18 +1,27 @@
 import styled from '@emotion/styled';
-import { colorToSvgMapping } from './colorToSvgMapping';
-import { MANA_REGEX } from './constants';
+import { pipsAtom } from './pipsAtom';
+import { useAtomValue } from 'jotai';
+import { getDefaultStore } from 'jotai';
+const store = getDefaultStore();
+// TODO: add better alt text handling (do it like scryfall does)
+
+export const getPipSrc = (name: string) => {
+  const pips = store.get(pipsAtom);
+  const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+  return icon ? '/hellfall/pips/' + icon.filename : undefined;
+};
 
 export const stringToMana = (text: string) => {
   return text
-    .split(MANA_REGEX)
+    .split(/({.*?})/)
     .filter(e => e !== '')
     .map(entry => {
       if (entry.startsWith('{') && entry.endsWith('}')) {
-        const icon = colorToSvgMapping(entry.replaceAll(/[{}]/g, ''));
-        return icon ? (
-          <ManaContainer>
-            <ManaSymbol src={icon} />
-          </ManaContainer>
+        const loc = getPipSrc(entry.slice(1, -1));
+        return loc ? (
+          <PipContainer>
+            <PipSymbol src={loc} alt={entry} />
+          </PipContainer>
         ) : (
           entry
         );
@@ -21,9 +30,12 @@ export const stringToMana = (text: string) => {
     });
 };
 
-const ManaSymbol = styled('img')({ height: '16px' });
-const ManaContainer = styled('div')({
+const PipSymbol = styled('img')({ height: '18px', marginTop: '10px' });
+const PipContainer = styled('div')({
   display: 'inline-flex',
-  height: '1.75rem',
-  verticalAlign: '-webkit-baseline-middle',
+  lineHeight: '1.25rem',
+  alignItems: 'top',
+  padding: '0 1px',
+  verticalAlign: 'top',
+  marginTop: '-0.25rem',
 });

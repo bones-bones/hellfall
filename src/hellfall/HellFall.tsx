@@ -17,16 +17,17 @@ import { SortComponent } from './SortComponent';
 import { CHUNK_SIZE } from './constants';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './cardsAtom';
+import { startTransition } from 'react';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cards = useAtomValue(cardsAtom).filter(e => e.Set != 'C');
+  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
   const escape = useKeyPress('Escape');
 
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
 
   const activeCard = cards.find(entry => {
-    return entry.Id === activeCardFromAtom;
+    return entry.id === activeCardFromAtom;
   });
 
   useEffect(() => {
@@ -65,22 +66,30 @@ export const HellFall = () => {
           <HellfallEntry
             onClick={(event: React.MouseEvent<HTMLImageElement>) => {
               if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                window.open('/hellfall/card/' + encodeURIComponent(entry.Id), '_blank');
+                window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
               } else {
-                setActiveCardFromAtom(entry.Id);
+                startTransition(() => {
+                  setActiveCardFromAtom(entry.id);
+                });
               }
             }}
             onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
               if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                window.open('/hellfall/card/' + encodeURIComponent(entry.Id), '_blank');
+                window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
               } else {
-                setActiveCardFromAtom(entry.Id);
+                startTransition(() => {
+                  setActiveCardFromAtom(entry.id);
+                });
               }
             }}
-            key={'' + entry.Id + '-' + i}
-            id={entry.Id}
-            name={entry.Name}
-            url={entry.Image[1] || entry.Image[0]!}
+            key={'' + entry.id + '-' + i}
+            id={entry.id}
+            name={entry.name}
+            url={
+              'card_faces' in entry && entry.card_faces[0].image
+                ? entry.card_faces[0].image
+                : entry.image!
+            }
           />
         ))}
       </Container>

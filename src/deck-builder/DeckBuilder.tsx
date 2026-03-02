@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 import styled from '@emotion/styled';
 import { toDeck } from './toDeck';
 import { FormField } from '@workday/canvas-kit-react/form-field';
@@ -24,10 +24,10 @@ export const DeckBuilder = () => {
   const [textAreaValue, setTextAreaValue] = useState<string>(
     (searchparms.get('list') || '').replaceAll('∆', '\n')
   );
-  const [cards, setCards] = useState<HCEntry[]>([]);
+  const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') || 'your deck name goes here');
-  const [renderCards, setRenderCards] = useState<HCEntry[]>([]);
+  const [renderCards, setRenderCards] = useState<HCCard.Any[]>([]);
   const [playtesting, setPlaytesthing] = useState(false);
 
   useEffect(() => {
@@ -62,26 +62,26 @@ export const DeckBuilder = () => {
       const [count, rest] = [value.slice(0, index), value.slice(index + 1)];
 
       // prettier-ignore
-      if ((rest == "%" && rest[1] && cards.find((entry) => entry.Id === rest.slice(1)) || rest.toLowerCase() in basics)) {
+      if ((rest == "%" && rest[1] && cards.find((entry) => entry.id === rest.slice(1)) || rest.toLowerCase() in basics)) {
         // if second part of string is % followed by digits or is basic name (have to put ignore or prettier moves parens)
         return [parseInt(count), rest];
       }
-      const foundCard = cards.find(entry => entry.Name.toLowerCase() === rest.toLowerCase());
+      const foundCard = cards.find(entry => entry.name.toLowerCase() === rest.toLowerCase());
       if (foundCard) {
         //if string is digits then a space then card name
-        return [parseInt(count), '%' + foundCard.Id];
+        return [parseInt(count), '%' + foundCard.id];
       }
     }
 
     // prettier-ignore
-    if ((value[0] == "%" && value[1] && cards.find((entry) => entry.Id === value.slice(1)) || value.toLowerCase() in basics)) {
+    if ((value[0] == "%" && value[1] && cards.find((entry) => entry.id === value.slice(1)) || value.toLowerCase() in basics)) {
       // if second part of string is % followed by digits or is basic name (have to put ignore or prettier moves parens)
       return [1, value];
     }
-    const foundCard = cards.find(entry => entry['Name'].toLowerCase() === value.toLowerCase());
+    const foundCard = cards.find(entry => entry.name.toLowerCase() === value.toLowerCase());
     if (foundCard) {
       //if string is digits then a space then card name
-      return [1, '%' + foundCard.Id];
+      return [1, '%' + foundCard.id];
     }
     return [1, ''];
   };
@@ -90,32 +90,32 @@ export const DeckBuilder = () => {
     if (cards.length === 0) {
       return;
     }
-    const images: HCEntry[] = (toRender || [])
+    const images: HCCard.Any[] = (toRender || [])
       .filter(entry => entry != '' && !entry.startsWith('# '))
       .flatMap(name => {
         const [count, rest] = toCardArr(name);
         const responseObject = [];
         if (rest[0] == '%') {
           for (let i = 0; i < count; i++) {
-            const card = cards.find(entry => entry.Id == rest.slice(1))!;
+            const card = cards.find(entry => entry.id == rest.slice(1))!;
             responseObject.push(card);
           }
         } else if (rest) {
           for (let i = 0; i < count; i++) {
             const card = {
-              Image: [basics[rest.toLowerCase()]],
-              Name: rest,
-            } as unknown as HCEntry;
+              image: [basics[rest.toLowerCase()]],
+              name: rest,
+            } as unknown as HCCard.Any;
             responseObject.push(card);
           }
         }
         if (responseObject.length == 0) {
           const card = {
-            Image: [
+            image: [
               'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
             ],
-            Name: name + ' - not found',
-          } as unknown as HCEntry;
+            name: name + ' - not found',
+          } as unknown as HCCard.Any;
           responseObject.push(card);
         }
         return responseObject;
@@ -196,9 +196,9 @@ Cock and Balls to Torture and Abuse"
           return (
             <Card
               width="250px"
-              title={entry.Name}
-              key={entry.Name + i}
-              src={entry.Image[0]!}
+              title={entry.name}
+              key={entry.name + i}
+              src={entry.toFaces()[0].image!}
               crossOrigin="anonymous"
             />
           );

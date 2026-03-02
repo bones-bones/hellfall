@@ -1,4 +1,7 @@
-import { BrowserRouter, useRoutes, useParams, Navigate } from 'react-router-dom';
+import { BrowserRouter, useRoutes, useParams, Navigate, useNavigate } from 'react-router-dom';
+import { useSetAtom } from 'jotai';
+import { pipsAtom, loadPips } from './hellfall/pipsAtom';
+import { useEffect, useState } from 'react';
 import { HellFall } from './hellfall';
 import { Hellscubes } from './hells-cubes';
 import { DeckBuilder } from './deck-builder';
@@ -11,33 +14,51 @@ import { Decks } from './decks/Decks';
 import { WatchwolfWar } from './watchWolf/WatchWolfWar';
 import { Watchwolfresults } from './watchWolf/WatchWolfResults';
 import { Login } from './auth/Login';
-import { NameToId, IsNonTokenName } from './hellfall/backCompat';
+import { useNameToId, useIsNonTokenName } from './hellfall/backCompat';
 
-interface ValidatedCardRouteProps {
-  element: React.ReactElement;
-}
+const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
+  const setPips = useSetAtom(pipsAtom);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-export const App = () => {
-  return (
-    <BrowserRouter basename="hellfall">
-      <Header />
-      <ApplicationRoutes />
-    </BrowserRouter>
-  );
-};
+  useEffect(() => {
+    loadPips().then(data => {
+      setPips(data);
+      setIsLoaded(true);
+    });
+  }, [setPips]);
 
-const ValidatedCardRoute = ({ element }: ValidatedCardRouteProps) => {
-  const params = useParams<{ '*': string }>();
-  const cardIdentifier = params['*'];
-  if (
-    cardIdentifier &&
-    !/^\d+$/.test(cardIdentifier) &&
-    (IsNonTokenName(cardIdentifier) || cardIdentifier == 'random')
-  ) {
-    const cardId = NameToId(cardIdentifier);
-    return <Navigate to={`/card/${cardId}`} replace />;
+  if (!isLoaded) {
+    return <div />;
   }
-  return element;
+
+  return <>{children}</>;
+};
+const CardRoute = () => {
+  const params = useParams<{ '*': string }>();
+  const navigate = useNavigate();
+  const cardIdentifier = params['*'];
+  const IsNonTokenName = useIsNonTokenName(cardIdentifier || '');
+  const cardId = useNameToId(cardIdentifier || '');
+  const [shouldRender, setShouldRender] = useState(false);
+  useEffect(() => {
+    const handleRedirect = async () => {
+      if (
+        cardIdentifier == 'random' ||
+        (cardIdentifier && !/^\d+$/.test(cardIdentifier) && IsNonTokenName)
+      ) {
+        navigate(`/card/${cardId}`, { replace: true });
+        return;
+      }
+      setShouldRender(true);
+    };
+
+    handleRedirect();
+  }, [cardIdentifier, cardId, IsNonTokenName, navigate]);
+
+  if (!shouldRender) {
+    return <div />;
+  }
+  return <SingleCard />;
 };
 
 const ApplicationRoutes = () => {
@@ -50,11 +71,21 @@ const ApplicationRoutes = () => {
     { path: '/', element: <HellFall /> },
     {
       path: '/card/*',
-      element: <ValidatedCardRoute element={<SingleCard />} />,
+      element: <CardRoute />,
     },
     { path: '/breakdown', element: <Breakdown /> },
     { path: '/login', element: <Login /> },
     { path: '/Watchwolfwar', element: <WatchwolfWar /> },
     { path: '/Watchwolfresults', element: <Watchwolfresults /> },
   ]);
+};
+export const App = () => {
+  return (
+    <BrowserRouter basename="hellfall">
+      <Header />
+      <PipsInitializer>
+        <ApplicationRoutes />
+      </PipsInitializer>
+    </BrowserRouter>
+  );
 };
