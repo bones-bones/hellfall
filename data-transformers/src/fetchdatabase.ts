@@ -70,7 +70,7 @@ export const fetchDatabase = async () => {
       row.push('');
     }
   });
-  
+
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
       card_faces: [],
@@ -98,9 +98,10 @@ export const fetchDatabase = async () => {
             cardObject.card_faces[face][key] = entry[i];
           }
           if (key == 'image') {
-            cardObject.card_faces[face].image_status = entry[20] && entry[20].includes('low-quality')
-              ? HCImageStatus.LowRes
-              : HCImageStatus.HighResScan;
+            cardObject.card_faces[face].image_status =
+              entry[20] && entry[20].includes('low-quality')
+                ? HCImageStatus.LowRes
+                : HCImageStatus.HighResScan;
           }
         } else {
           if (keys[i] == 'cmc') {
@@ -133,7 +134,7 @@ export const fetchDatabase = async () => {
         }
       }
     }
-    if (cardObject.card_faces.length == 0){
+    if (cardObject.card_faces.length == 0) {
       cardObject.card_faces.push({} as Record<string, any>);
     }
     cardObject.keywords = [];
@@ -168,8 +169,8 @@ export const fetchDatabase = async () => {
     });
 
     cardObject.type_line = type_line_list.join(' // ');
-    cardObject.mana_cost = mana_cost_list.filter(e=>(e)).join(' // ');
-    
+    cardObject.mana_cost = mana_cost_list.filter(e => e).join(' // ');
+
     cardObject.color_identity = getColorIdentityProp(cardObject as HCCard.AnyMultiFaced);
     const mandatoryProps = ['rulings', 'creator', 'cmc'];
     mandatoryProps

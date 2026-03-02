@@ -84,9 +84,9 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               <Text typeLevel="body.medium" key="name">
-                {stringToMana(face.name)}
+                {face.name}
               </Text>
-              {/* do I need a space here? */}
+              {'   '}
               <Text typeLevel="body.medium" key="cost">
                 {stringToMana(face.mana_cost)}
               </Text>

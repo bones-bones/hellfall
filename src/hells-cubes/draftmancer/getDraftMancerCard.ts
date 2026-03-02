@@ -2,7 +2,7 @@ import { HCCard } from '../../api-types';
 import { DraftmancerCard } from '../types';
 
 export const getDraftMancerCard = (card: HCCard.Any) => {
-  const draftmancerSafeName = card.name.replace(/[\[\]]/g, "");
+  const draftmancerSafeName = card.name.replace(/[\[\]]/g, '');
   const cardToReturn: DraftmancerCard = {
     id: draftmancerSafeName + '_custom_',
     oracle_id: draftmancerSafeName,
@@ -34,8 +34,9 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
       .replaceAll('{H/Brown}', '{1}') // It that Goes in the Green Slot
       .replaceAll('{G/Yellow/P}', '{G}') // It that Goes in the Green Slot
       .replaceAll('{UFO}', '{1}') // Gitaxian Satellite
-      .replaceAll('{Coin}', '{1}').replaceAll('{27}', '{11}{11}{6}') // Block of Darksteel
-      .replaceAll('{2/Orange}', '{2}')// Candy Karn
+      .replaceAll('{Coin}', '{1}')
+      .replaceAll('{27}', '{11}{11}{6}') // Block of Darksteel
+      .replaceAll('{2/Orange}', '{2}') // Candy Karn
       .replaceAll('{Orange/U}', '{U}'), // Cat with homophobia
 
     colors: card.toFaces()[0].colors,
@@ -54,7 +55,7 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
       .replace(/:\[/g, ''),
 
     printed_names: {
-      en: draftmancerSafeName
+      en: draftmancerSafeName,
     },
     image_uris: {
       en: 'card_faces' in card && card.card_faces[0].image ? card.card_faces[0].image : card.image!,
@@ -66,7 +67,7 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
         .toFaces()
         .slice(1)
         .map(e => ({
-          name: e.name.replace(/[\[\]]/g, ""),
+          name: e.name.replace(/[\[\]]/g, ''),
           image_uris: { en: e.image! },
           type: e.type_line,
         })),

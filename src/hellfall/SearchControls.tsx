@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { CheckboxGroup, NamedCheckboxGroup, ColorCheckboxGroup } from './inputs';
+import { CheckboxGroup, NamedCheckboxGroup /**ColorCheckboxGroup*/ } from './inputs';
 import { PillSearch } from './inputs';
 import { TextInput } from '@workday/canvas-kit-react/text-input';
 import { FormField } from '@workday/canvas-kit-react/form-field';
@@ -115,10 +115,23 @@ export const SearchControls = () => {
         />
       </SearchCriteriaSection>
       <SearchCriteriaSection>
-        <ColorCheckboxGroup
+        <NamedCheckboxGroup
           label="Colors"
-          values={Object.values(HCSearchColor)}
-          names={Object.keys(HCSearchColor)}
+          values={
+            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
+          }
+          names={
+            /**Object.keys(HCSearchColor)*/ [
+              'White',
+              'Blue',
+              'Black',
+              'Red',
+              'Green',
+              'Purple',
+              'Colorless',
+              'Misc bullshit',
+            ]
+          }
           initialValue={searchColors}
           onChange={setSearchColors}
         >
@@ -137,11 +150,24 @@ export const SearchControls = () => {
               })}
             </StyledManaSelect>
           </StyledComponentHolder>
-        </ColorCheckboxGroup>
-        <ColorCheckboxGroup
+        </NamedCheckboxGroup>
+        <NamedCheckboxGroup
           label="Color Identity (Commander)"
-          values={Object.values(HCSearchColor)}
-          names={Object.keys(HCSearchColor)}
+          values={
+            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
+          }
+          names={
+            /**Object.keys(HCSearchColor)*/ [
+              'White',
+              'Blue',
+              'Black',
+              'Red',
+              'Green',
+              'Purple',
+              'Colorless',
+              'Misc bullshit',
+            ]
+          }
           initialValue={searchColorsIdentity}
           onChange={setSearchColorsIdentityAtom}
         >
@@ -156,7 +182,7 @@ export const SearchControls = () => {
               }}
             />
           </StyledComponentHolder>
-        </ColorCheckboxGroup>
+        </NamedCheckboxGroup>
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup

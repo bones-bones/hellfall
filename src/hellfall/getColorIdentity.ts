@@ -68,7 +68,7 @@ export const getColorIdentityProp = (card: HCCard.Any) => {
   const pips = store.get(pipsAtom);
   // TODO: make color indicators work
   // TODO: special cases for Crypticspire Mantis (must be at least 2)
-  if ('card_faces' in card){
+  if ('card_faces' in card) {
     card.card_faces.forEach(entry => {
       const costNames = entry.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 

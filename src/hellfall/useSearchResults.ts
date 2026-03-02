@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { HCCard } from '../api-types';
-import { HCColor, HCSearchColor, HCColors, allMiscColors } from '../api-types';
+import { HCColor, HCSearchColor, HCColors } from '../api-types';
 import { cardsAtom } from './cardsAtom';
 import { useAtom, useAtomValue } from 'jotai';
 import {
@@ -30,6 +30,7 @@ import {
 import { sortFunction } from './sortFunction';
 import { getColorIdentity } from './getColorIdentity';
 import { canBeACommander } from './canBeACommander';
+import { debug } from 'console';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
@@ -61,8 +62,25 @@ export const useSearchResults = () => {
   const tags = useAtomValue(tagsAtom);
   const extraFilters = useAtomValue(extraFiltersAtom);
   const MISC_BULLSHIT = 'Misc bullshit';
+  const miscColors = [
+    'Pickle',
+    'Yellow',
+    'Brown',
+    'Pink',
+    'Teal',
+    'Orange',
+    'TEMU',
+    'Gold',
+    'Beige',
+    'Grey',
+  ]; //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 
   useEffect(() => {
+    // console.log('useSearchResults effect running', {
+    //   searchColors,
+    //   colorIdentityCriteria,
+    //   // add others
+    // });
     const tempResults = cards
       .filter(entry => {
         if (set.length > 0 && !isSetInResults(entry.set, set)) {
@@ -121,14 +139,14 @@ export const useSearchResults = () => {
         }
 
         if (
-          (nameSearch !== '' &&
-            !entry
-              .toFaces()
-              .map(e => e.name || '')
-              .join(' // ')
-              .toLowerCase()
-              .includes(nameSearch.toLowerCase())) ||
-          entry.name.toLowerCase().includes(nameSearch.toLowerCase())
+          nameSearch !== '' &&
+          !entry
+            .toFaces()
+            .map(e => e.name || '')
+            .join(' // ')
+            .toLowerCase()
+            .includes(nameSearch.toLowerCase()) &&
+          !entry.name.toLowerCase().includes(nameSearch.toLowerCase())
         ) {
           return false;
         }
@@ -178,26 +196,6 @@ export const useSearchResults = () => {
           }
         }
         if (creators.length > 0 && !creators.includes(entry.creator)) {
-          return false;
-        }
-        if (
-          colorIdentityCriteria.length > 0 &&
-          !getColorIdentity(entry).every(cardColorIdentityComponent => {
-            const miscBullshitColorIdentityCriteria = (
-              colorIdentityCriteria.includes(HCSearchColor.MISC_BULLSHIT)
-                ? [...colorIdentityCriteria, ...allMiscColors].filter(
-                    e => e != HCSearchColor.MISC_BULLSHIT
-                  )
-                : colorIdentityCriteria
-            ) as HCColors;
-            const colorTest = (e: HCColor) =>
-              miscBullshitColorIdentityCriteria.includes(e) || e == HCColor.Colorless;
-            return useHybrid
-              ? cardColorIdentityComponent.some(e => colorTest)
-              : cardColorIdentityComponent.every(e => colorTest);
-            // TODO: make sure this works (see colorTest)
-          })
-        ) {
           return false;
         }
         if (
@@ -297,18 +295,17 @@ export const useSearchResults = () => {
         if (
           colorIdentityCriteria.length > 0 &&
           !getColorIdentity(entry).every(cardColorIdentityComponent => {
+            debugger;
             const miscBullshitColorIdentityCriteria = (
-              colorIdentityCriteria.includes(HCSearchColor.MISC_BULLSHIT)
-                ? [...colorIdentityCriteria, ...allMiscColors].filter(
-                    e => e != HCSearchColor.MISC_BULLSHIT
-                  )
+              colorIdentityCriteria.includes(MISC_BULLSHIT)
+                ? [...colorIdentityCriteria, ...miscColors].filter(e => e != MISC_BULLSHIT)
                 : colorIdentityCriteria
             ) as HCColors;
             const colorTest = (e: HCColor) =>
-              miscBullshitColorIdentityCriteria.includes(e) || e == HCColor.Colorless;
+              miscBullshitColorIdentityCriteria.includes(e) || e == 'C';
             return useHybrid
-              ? cardColorIdentityComponent.some(e => colorTest)
-              : cardColorIdentityComponent.every(e => colorTest);
+              ? cardColorIdentityComponent.some(e => colorTest(e as HCColor))
+              : cardColorIdentityComponent.every(e => colorTest(e as HCColor));
             // TODO: make sure this works (see colorTest)
           })
         ) {
@@ -319,42 +316,60 @@ export const useSearchResults = () => {
         if (searchColors.length > 0) {
           if (
             !(
-              searchColors.includes(HCSearchColor.Colorless) &&
-              entry.toFaces()[0].colors == ([HCColor.Colorless] as HCColors)
+              searchColors.includes('C') &&
+              entry.toFaces()[0].colors.length == 1 &&
+              entry.toFaces()[0].colors[0] == 'C'
             )
           ) {
-            const newSearchColors = (
-              searchColors.includes(HCSearchColor.MISC_BULLSHIT)
-                ? [...searchColors, ...allMiscColors].filter(e => e != MISC_BULLSHIT)
-                : searchColors
-            ) as HCColors;
-
-            const entryColors = entry.toFaces()[0].colors;
-
-            switch (colorComparison) {
-              case '<=': {
-                if (!entryColors.every(colorEntry => newSearchColors.includes(colorEntry))) {
-                  return false;
-                }
-                break;
+            // const newSearchColors = searchColors.includes(MISC_BULLSHIT)
+            //   ? [...searchColors, ...allMiscColors].filter(e => e != MISC_BULLSHIT)
+            //   : searchColors;
+            // const useMisc = searchColors.includes(MISC_BULLSHIT);
+            // debugger
+            if (searchColors.includes('C') && colorComparison != '>=') {
+              if (!entry.toFaces()[0].colors.includes('C')) {
+                return false;
               }
-              case '=': {
-                if (
-                  !(
-                    entryColors.every(colorEntry => newSearchColors.includes(colorEntry)) &&
-                    entryColors.length == newSearchColors.length
-                  )
-                ) {
-                  return false;
-                }
-                break;
-              }
-              case '>=': {
-                if (!entryColors.find(colorEntry => newSearchColors.includes(colorEntry))) {
-                  return false;
-                }
+            } else {
+              const newSearchColors = searchColors.filter(e => e != 'C');
+              const entryColorsSet: Set<string> = new Set(
+                entry.toFaces()[0].colors.map(e => {
+                  if (e == null) {
+                    console.log('Card id:', entry.id, 'had a null color.');
+                    return 'C';
+                  } else {
+                    return miscColors.includes(e.toString()) ? MISC_BULLSHIT : e.toString();
+                  }
+                })
+              );
+              entryColorsSet.delete('C');
+              const entryColors: string[] = Array.from(entryColorsSet);
 
-                break;
+              switch (colorComparison) {
+                case '<=': {
+                  if (!entryColors.every(colorEntry => newSearchColors.includes(colorEntry))) {
+                    return false;
+                  }
+                  break;
+                }
+                case '=': {
+                  if (
+                    !(
+                      entryColors.every(colorEntry => newSearchColors.includes(colorEntry)) &&
+                      entryColors.length == newSearchColors.length
+                    )
+                  ) {
+                    return false;
+                  }
+                  break;
+                }
+                case '>=': {
+                  if (!newSearchColors.every(colorEntry => entryColors.includes(colorEntry))) {
+                    return false;
+                  }
+
+                  break;
+                }
               }
             }
           }
@@ -421,12 +436,6 @@ export const useSearchResults = () => {
     }
     if (tags.length > 0) {
       searchToSet.append('tags', tags.join(','));
-    }
-    if (sortRule != 'Color') {
-      searchToSet.append('order', sortRule);
-    }
-    if (dirRule != 'Asc') {
-      searchToSet.append('dir', dirRule);
     }
     if (sortRule != 'Color') {
       searchToSet.append('order', sortRule);
