@@ -434,6 +434,14 @@
       "colors": ["U"]
     },
     {
+      "filename": "mono/variables/XIV.png",
+      "symbol": "XIV",
+      "english": "X plus four generic mana",
+      "represents_mana": true,
+      "mana_value": 4,
+      "colors": ["Colorless"]
+    },
+    {
       "filename": "mono/fractional/HW.svg",
       "symbol": "HW",
       "english": "one-half white mana",
@@ -1441,6 +1449,14 @@
       "represents_mana": true,
       "mana_value": 2,
       "colors": ["R","C"]
+    },
+    {
+      "filename": "hybrid/misc/Rakdos.png",
+      "symbol": "Rakdos",
+      "english": "one red or black mana that deals two damage to you when spent on a generic cost",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": ["Black","Red"]
     },
     {
       "filename": "tribrid/colors/GWU.svg",
