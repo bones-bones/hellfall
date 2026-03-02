@@ -249,11 +249,13 @@ const main = async () => {
     });
 
   finalCards.forEach(entry => {
-    [...(entry.subtypes || []), ...(entry.types || []), ...(entry.subtypes || [])].forEach(
-      typeEntry => {
-        typeSet.add(typeEntry);
-      }
-    );
+    ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
+      [...(face.subtypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
+        typeEntry => {
+          typeSet.add(typeEntry);
+        }
+      );
+    });
 
     const usernameMappingEntries = Object.entries(usernameMappings);
 

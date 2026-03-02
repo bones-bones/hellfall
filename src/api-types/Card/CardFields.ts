@@ -242,18 +242,6 @@ export namespace HCCardFields.Gameplay {
      * The type line of this card.
      */
     type_line: string;
-    /**
-     * The supertypes of the card.
-     */
-    supertypes?: string[];
-    /**
-     * The types of the card.
-     */
-    types?: string[];
-    /**
-     * The subtypes of the card.
-     */
-    subtypes?: string[];
   };
 }
 

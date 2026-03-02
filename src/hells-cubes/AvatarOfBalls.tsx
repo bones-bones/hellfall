@@ -27,7 +27,7 @@ export const AvatarOfBalls = () => {
         onClick={() => {
           const filtered = cards.filter(entry => {
             return (
-              entry.types?.includes('Creature') &&
+              entry.toFaces()[0].types?.includes('Creature') &&
               ((entry.name.includes('Negative') &&
                 parseInt(powerRef.current?.value || '3') == -1) ||
                 entry.cmc == parseInt(powerRef.current?.value || '3') ||
