@@ -1,4 +1,3 @@
-import { HCEntry } from "../types";
 import { HCCard } from "../../../src/api-types";
 import data from "../../../src/data/Hellscube-Database.json";
 import tokens from "../../../src/data/tokens.json";
