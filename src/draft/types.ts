@@ -1,6 +1,6 @@
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 
-type Pack = HCEntry[];
+type Pack = HCCard.Any[];
 
 type Round = [Pack, Pack, Pack, Pack, Pack, Pack, Pack, Pack];
 

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { CheckboxGroup } from './inputs';
+import { CheckboxGroup, NamedCheckboxGroup /**ColorCheckboxGroup*/ } from './inputs';
 import { PillSearch } from './inputs';
 import { TextInput } from '@workday/canvas-kit-react/text-input';
 import { FormField } from '@workday/canvas-kit-react/form-field';
@@ -28,12 +28,13 @@ import {
   toughnessAtom,
   tagsAtom,
 } from './searchAtoms';
-import { colors } from './constants';
 import { StyledLabel } from './StyledLabel';
 import { CardLegalityControls } from './search-controls/CardLegalityControls';
 import { StyledComponentHolder } from './StyledComponentHolder';
+import { HCSearchColor } from '../api-types';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
+// TODO: figure out type inference issue for cmc
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
@@ -114,9 +115,23 @@ export const SearchControls = () => {
         />
       </SearchCriteriaSection>
       <SearchCriteriaSection>
-        <CheckboxGroup
+        <NamedCheckboxGroup
           label="Colors"
-          values={colors}
+          values={
+            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
+          }
+          names={
+            /**Object.keys(HCSearchColor)*/ [
+              'White',
+              'Blue',
+              'Black',
+              'Red',
+              'Green',
+              'Purple',
+              'Colorless',
+              'Misc bullshit',
+            ]
+          }
           initialValue={searchColors}
           onChange={setSearchColors}
         >
@@ -135,10 +150,24 @@ export const SearchControls = () => {
               })}
             </StyledManaSelect>
           </StyledComponentHolder>
-        </CheckboxGroup>
-        <CheckboxGroup
+        </NamedCheckboxGroup>
+        <NamedCheckboxGroup
           label="Color Identity (Commander)"
-          values={colors}
+          values={
+            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
+          }
+          names={
+            /**Object.keys(HCSearchColor)*/ [
+              'White',
+              'Blue',
+              'Black',
+              'Red',
+              'Green',
+              'Purple',
+              'Colorless',
+              'Misc bullshit',
+            ]
+          }
           initialValue={searchColorsIdentity}
           onChange={setSearchColorsIdentityAtom}
         >
@@ -153,7 +182,7 @@ export const SearchControls = () => {
               }}
             />
           </StyledComponentHolder>
-        </CheckboxGroup>
+        </NamedCheckboxGroup>
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup

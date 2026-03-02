@@ -3,6 +3,7 @@
 - Deck builder README
 - Hellscubes README
 - Include Tokens checkbox
+- make tokens have link to related cards and vice versa
 
 kongming's contraptions needs an HC appended to its name
 its contraptions are also not seperate cards in the XML

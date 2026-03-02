@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { HCEntry } from '../../types';
+import { HCCard } from '../../api-types';
 import { HandCard } from './HandCard';
 import { PlayCard } from './PlayCard';
 import styled from '@emotion/styled';
 
 const PlayArea = styled.div({ border: '1px solid black' });
+// make sure images work properly
 
-type Props = { cards: HCEntry[] };
+type Props = { cards: HCCard.Any[] };
 export const PlaytestArea = ({ cards }: Props) => {
   const { hand, drawCards, ready, playCard, play } = useCardState(cards);
   const [life, setLife] = useState(20);
@@ -38,7 +39,7 @@ export const PlaytestArea = ({ cards }: Props) => {
       <h3>battlefield</h3>
       <PlayArea>
         {play.map(entry => {
-          return <PlayCard key={entry.id} image={entry.card.Image[0]!} />;
+          return <PlayCard key={entry.id} image={entry.card.toFaces()[0].image!} />;
         })}
       </PlayArea>
       <div>
@@ -47,7 +48,7 @@ export const PlaytestArea = ({ cards }: Props) => {
           return (
             <HandCard
               key={entry.id}
-              image={entry.card.Image[0]!}
+              image={entry.card.toFaces()[0].image!}
               onClick={() => {
                 playCard(entry.id);
               }}
@@ -66,9 +67,9 @@ export const PlaytestArea = ({ cards }: Props) => {
   );
 };
 
-type CardRepresentation = { card: HCEntry; id: number };
+type CardRepresentation = { card: HCCard.Any; id: number };
 
-const useCardState = (cards: HCEntry[]) => {
+const useCardState = (cards: HCCard.Any[]) => {
   const [deck, setDeck] = useState<CardRepresentation[]>(
     cards.map((entry, i) => ({ card: entry, id: i })).sort(() => Math.random() - Math.random())
   );

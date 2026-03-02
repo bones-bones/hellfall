@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 import { pipsAtom } from './pipsAtom';
+import { useAtomValue } from 'jotai';
 import { getDefaultStore } from 'jotai';
 const store = getDefaultStore();
 // TODO: add better alt text handling (do it like scryfall does)
 
 export const getPipSrc = (name: string) => {
   const pips = store.get(pipsAtom);
-  const icon = pips?.find(e => e.name.toLowerCase() === name.toLowerCase());
+  const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
   return icon ? '/hellfall/pips/' + icon.filename : undefined;
 };
 

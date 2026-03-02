@@ -1,4 +1,5 @@
 import { atom } from 'jotai';
+import { HCColor, HCSearchColor, HCColors } from '../api-types';
 const searchParams = new URLSearchParams(document.location.search);
 
 export const nameSearchAtom = atom<string>(searchParams.get('name') || '');

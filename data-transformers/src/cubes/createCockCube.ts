@@ -1,4 +1,4 @@
-import { HCEntry } from "../types";
+import { HCCard } from "../../../src/api-types";
 import data from "../../../src/data/Hellscube-Database.json";
 import tokens from "../../../src/data/tokens.json";
 import fs from "fs";
@@ -13,7 +13,7 @@ export const createCockCube = () => {
     { id: "HC6", name: "Hellscube 6" },
   ]) {
     //@ts-ignore
-    const cardsForSet = data.data.filter((entry) => entry.Set === set.id);
+    const cardsForSet = data.data.filter((entry) => entry.set === set.id);
     //@ts-ignore
     const cards = cardsForSet.map(toCard);
 
@@ -21,8 +21,8 @@ export const createCockCube = () => {
       (tokenEntry) =>
         //@ts-ignore
         !!data.data.find((card) => {
-          return tokenEntry["Related Cards (Read Comment)"]!.includes(
-            card.Name
+          return tokenEntry.all_parts?.map(part=>part.name).includes(
+            card.name
           );
         })
     );
@@ -68,80 +68,60 @@ export const createCockCube = () => {
 // <reverse-related>Vhat, Sponsored Champion</reverse-related>
 // </card>
 
-const tokenToCard = (token: TokenType, set: string) => {
+const tokenToCard = (token: HCCard.AnySingleFaced, set: string) => {
   const cCard: CockCard = {
     card: {
       name: {
-        "#text": token.Name,
+        "#text": token.name,
       },
-      set: { "@rarity": "common", "@picURL": token.Image, "#text": set + "" },
+      set: { "@rarity": "common", "@picURL": token.image!, "#text": set + "" },
       type: {
-        "#text": token.Type,
+        "#text": token.type_line,
       },
 
-      ...(token.Power &&
-        token.Toughness && {
-        pt: { "#text": `${token.Power}/${token.Toughness}` },
+      ...(token.power &&
+        token.toughness && {
+        pt: { "#text": `${token.power}/${token.toughness}` },
       }),
       cmc: { "#text": "" },
       color: { "#text": "" },
       manacost: { "#text": "" },
       text: { "#text": "" },
-      "reverse-related": token["Related Cards (Read Comment)"]
-        .split(";")
+      "reverse-related": token.all_parts?.map(part=>part.name)
         .map((entry) => ({ "#text": entry })),
     },
   };
   return cCard;
 };
 
-const toCard = ({
-  Name,
-  Set,
-  "Color(s)": Color,
-  CMC,
-  Cost,
-  "Card Type(s)": Types,
-  "Supertype(s)": Super,
-  "Subtype(s)": Sub,
-  "Text Box": Text,
-  Power: power,
-  Toughness: toughness,
-  Image,
-}: HCEntry) => {
+const toCard = (card: HCCard.Any) => {
+  const front = 'card_faces' in card ? card.card_faces[0] : card;
+  //   // @ts-ignore
+  // const { data } = await import('../data/Hellscube-Database.json');
+  // return (data as HCCard.Any[]).map(card => ({
+  //   ...card,
+  //   toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced] {
+  //     return 'card_faces' in this ? this.card_faces : [this];
+  //   },
+  // }));
+
   const cCard: CockCard = {
     card: {
-      name: { "#text": Name },
-      set: { "@rarity": "common", "@picURL": Image, "#text": Set },
+      name: { "#text": card.name },
+      set: { "@rarity": "common", "@picURL": card.image!, "#text": card.set },
       color: {
-        "#text": Color?.replace("Blue", "U")
-          .replace("Red", "R")
-          .replace("Green", "G")
-          .replace("Black", "B")
-          .replace("White", "W")
-          .replace("Purple", "P")
-          .replace(/;/g, ""),
+        "#text": front.colors.filter(e=>e!='C').join(""),
       },
-      manacost: { "#text": Cost?.[0].replace(/[{}]/g, "") },
-      cmc: { "#text": CMC?.toString() },
+      manacost: { "#text": front.mana_cost.replace(/[{}]/g, "") },
+      cmc: { "#text": card.cmc.toString() },
       type: {
-        "#text": [
-          (Super?.[0] ?? "").replace(/;/g, " "),
-          [
-            (Types?.[0] ?? "").replace(/;/g, " "),
-            (Sub?.[0] ?? "").replace(/;/g, " "),
-          ]
-            .filter(Boolean)
-            .join(" — "),
-        ]
-          .filter(Boolean)
-          .join(" "),
+        "#text": front.type_line,
       },
-      ...(Types?.[0].includes("Creature") && {
-        pt: { "#text": `${power[0]}/${toughness[0]}` },
+      ...(front.types?.includes("Creature") && {
+        pt: { "#text": `${front.power}/${front.toughness}` },
       }),
       text: {
-        "#text": Text?.filter(Boolean)
+        "#text": ('card_faces' in card? card.card_faces: [card]).map(e=>e.oracle_text).filter(Boolean)
           .join("\n//\n")
           .replace(/\\n/g, "\n")
           .replace(/[{}]/g, ""),

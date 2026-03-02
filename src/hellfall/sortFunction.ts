@@ -1,13 +1,15 @@
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
+import { HCColor, HCColors } from '../api-types';
 // TODO: make it possible to sort by color, then alpha, rather than color, then CMC
-// how they can combine: Alpha and ID are
+// how they can combine: Alpha and ID are mutually exclusive, but none of the others are
+// TODO: make sure that parts of ids work
 
 export const sortFunction =
   (sortRule: 'Alpha' | 'CMC' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>
-  (a: HCEntry, b: HCEntry) => {
+  (a: HCCard.Any, b: HCCard.Any) => {
     switch (sortRule) {
       case 'CMC': {
-        if (a.CMC > b.CMC) {
+        if (a.cmc > b.cmc) {
           return dirRule == 'Desc' ? -1 : 1;
         }
         break;
@@ -23,14 +25,14 @@ export const sortFunction =
       }
 
       case 'Alpha': {
-        if (a.Name > b.Name) {
+        if (a.name > b.name) {
           return dirRule == 'Desc' ? -1 : 1;
         }
         break;
       }
 
       case 'Id': {
-        if (parseInt(a.Id) > parseInt(b.Id)) {
+        if (parseInt(a.id) > parseInt(b.id)) {
           return dirRule == 'Desc' ? -1 : 1;
         }
         break;
@@ -40,30 +42,35 @@ export const sortFunction =
     return dirRule == 'Desc' ? 1 : -1;
   };
 
-const getSortString = (card: HCEntry) => {
-  const cardColors = (card['Color(s)'] || '').split(';') as Colors[];
+const getSortString = (card: HCCard.Any) => {
+  const cardColors = card.toFaces()[0]?.colors || '';
 
   return (
     cardColors
       .reduce((curr, next) => curr + (colorSortValue[next] || 10_000_000), 0)
       .toString()
       .padStart(8, '0') +
-    (card['CMC'] || 0).toString().padStart(3) +
-    card.Name
+    (card.cmc || 0).toString().padStart(3) +
+    card.name
   );
 };
 
-const colorSortValue: Record<Colors, number> = {
-  White: 1,
-  Blue: 10,
-  Black: 100,
-  Red: 1000,
-  Green: 10_000,
-  Purple: 100_000,
-  '': 1_000_000,
-  //   Pickle: 7, // 1000000
-  //   Piss: 8,
+const colorSortValue: Record<HCColor, number> = {
+  W: 1,
+  U: 10,
+  B: 100,
+  R: 1000,
+  G: 10_000,
+  P: 100_000,
+  C: 1_000_000,
+  Pickle: 10_000_000,
+  Yellow: 10_000_000,
+  Brown: 10_000_000,
+  Pink: 10_000_000,
+  Teal: 10_000_000,
+  Orange: 10_000_000,
+  TEMU: 10_000_000,
+  Gold: 10_000_000,
+  Beige: 10_000_000,
+  Grey: 10_000_000,
 };
-
-// No bullshit colors
-type Colors = 'Red' | 'Blue' | 'White' | '' | 'Green' | 'Black' | 'Purple';

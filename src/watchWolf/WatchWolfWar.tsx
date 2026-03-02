@@ -14,17 +14,17 @@ import { Link } from 'react-router-dom';
 import { HellfallCard } from '../hellfall/HellfallCard';
 import { activeCardAtom } from '../hellfall/searchAtoms';
 import { xIcon } from '@workday/canvas-system-icons-web';
-import { HCEntry } from '../types';
+import { HCCard } from '../api-types';
 import { useKeyPress } from '../hooks';
 
 //TODO: make results use Id natively on the backend
 
 export const Watchwolfwar = () => {
   const escape = useKeyPress('Escape');
-  const cards = useAtomValue(cardsAtom).filter(e => e.isActualToken != true && e.Set != 'C');
+  const cards = useAtomValue(cardsAtom).filter(e => e.isActualToken != true && e.set != 'C');
   const RandyRandom = useAtomValue(cardsAtom);
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const activeCard = cards.find(entry => entry.Id === activeCardFromAtom);
+  const activeCard = cards.find(entry => entry.id === activeCardFromAtom);
   useEffect(() => {
     if (escape) {
       setActiveCardFromAtom('');
@@ -33,8 +33,8 @@ export const Watchwolfwar = () => {
 
   const submitting = useRef(false);
   const [TwoCardState, SetTwoCardState] = useState<{
-    LeftCard: HCEntry;
-    RightCard: HCEntry;
+    LeftCard: HCCard.Any;
+    RightCard: HCCard.Any;
   }>({
     LeftCard: cards[Math.floor(Math.random() * cards.length)],
     RightCard: cards[Math.floor(Math.random() * cards.length)],
@@ -82,17 +82,17 @@ export const Watchwolfwar = () => {
       </StyleComponent>
       <CardContainer>
         <HellfallEntry
-          id={TwoCardState.LeftCard.Id}
-          name={TwoCardState.LeftCard.Name}
-          url={TwoCardState.LeftCard.Image[0]!}
+          id={TwoCardState.LeftCard.id}
+          name={TwoCardState.LeftCard.name}
+          url={TwoCardState.LeftCard.image!}
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.Id),
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.id),
                 '_blank'
               );
             } else {
-              updateStandings(TwoCardState.LeftCard.Id, TwoCardState.RightCard.Id);
+              updateStandings(TwoCardState.LeftCard.id, TwoCardState.RightCard.id);
               activeIsRight = false;
               setActiveCardFromAtom('');
             }
@@ -100,26 +100,26 @@ export const Watchwolfwar = () => {
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.Id),
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.id),
                 '_blank'
               );
             } else {
-              setActiveCardFromAtom(TwoCardState.LeftCard.Id);
+              setActiveCardFromAtom(TwoCardState.LeftCard.id);
             }
           }}
         />
         <HellfallEntry
-          id={TwoCardState.RightCard.Id}
-          name={TwoCardState.RightCard.Name}
-          url={TwoCardState.RightCard.Image[0]!}
+          id={TwoCardState.RightCard.id}
+          name={TwoCardState.RightCard.name}
+          url={TwoCardState.RightCard.image!}
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.Id),
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.id),
                 '_blank'
               );
             } else {
-              updateStandings(TwoCardState.RightCard.Id, TwoCardState.LeftCard.Id);
+              updateStandings(TwoCardState.RightCard.id, TwoCardState.LeftCard.id);
               activeIsRight = true;
               setActiveCardFromAtom('');
             }
@@ -127,11 +127,11 @@ export const Watchwolfwar = () => {
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.Id),
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.id),
                 '_blank'
               );
             } else {
-              setActiveCardFromAtom(TwoCardState.RightCard.Id);
+              setActiveCardFromAtom(TwoCardState.RightCard.id);
             }
           }}
         />

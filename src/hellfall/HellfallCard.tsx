@@ -1,58 +1,37 @@
 import { Card } from '@workday/canvas-kit-react/card';
-import { HCEntry } from '../types';
 import styled from '@emotion/styled';
 import { Heading, Text } from '@workday/canvas-kit-react/text';
 import { SetLegality } from './SetLegality';
 import { stringToMana } from './stringToMana';
+import { splitParens } from './splitParens';
+import { HCCard } from '../api-types/Card/Card';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-export const HellfallCard = ({ data }: { data: HCEntry }) => {
-  const sideCount =
-    data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
+export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
+  // const faceCount = data.
+  // data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
 
   const [activeImageSide, setActiveImageSide] = useState(0);
 
-  const imagesToShow = data.Image?.filter(e => typeof e === 'string' && e !== '').slice(1);
-
-  const splitParens = (text: string) => {
-    const chunks: string[] = [];
-    let parenLevel = 0;
-    let chunkStart = 0;
-    for (let i = 0; i < text.length; i++) {
-      if (text[i] == '(') {
-        if (parenLevel == 0 && i > 0) {
-          chunks.push(text.slice(chunkStart, i));
-          chunkStart = i;
-        }
-        parenLevel++;
-      } else if (text[i] == ')' && parenLevel > 0) {
-        parenLevel--;
-        if (parenLevel == 0) {
-          chunks.push(text.slice(chunkStart, i + 1));
-          chunkStart = i + 1;
-        }
-      }
-    }
-    if (chunkStart < text.length) {
-      chunks.push(text.slice(chunkStart));
-    }
-    return chunks;
-  };
+  const imagesToShow = data
+    .toFaces()
+    .filter(e => e.image)
+    .map(e => e.image);
 
   return (
-    <Container key={data['Id']}>
+    <Container key={data.id}>
       {imagesToShow.length === 0 ? (
         <Test>
           <ImageContainer key="image-container">
-            <img src={data['Image'][0]!} height="500px" referrerPolicy="no-referrer" />
+            <img src={data.image!} height="500px" referrerPolicy="no-referrer" />
           </ImageContainer>
         </Test>
       ) : (
         <>
-          <ImageContainer key={imagesToShow[activeImageSide] || data['Image'][0]}>
+          <ImageContainer key={imagesToShow[activeImageSide] || data.image}>
             <img
-              src={imagesToShow[activeImageSide] || data['Image'][0]!}
+              src={imagesToShow[activeImageSide] || data.image!}
               height="500px"
               referrerPolicy="no-referrer"
             />
@@ -75,24 +54,24 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
       )}
       <Card>
         <Card.Body padding={'zero'}>
-          <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data['Name']}</StyledHeading>
-          {new Array(sideCount).fill('').map((_, i) => (
-            <div key={'side-' + (i + 1)}>
+          {/* <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading> */}
+          {data.toFaces().map((face, i) => (
+            <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
+              <Text typeLevel="body.medium" key="name">
+                {face.name}
+              </Text>
+              {'   '}
               <Text typeLevel="body.medium" key="cost">
-                {stringToMana(data.Cost?.[i] || '')}
+                {stringToMana(face.mana_cost)}
               </Text>
               <br />
               <Text typeLevel="body.medium" key="type">
-                {`${((data['Supertype(s)'] || [])[i] ?? '').replaceAll(';', ' ')} ${(
-                  data['Card Type(s)']?.[i] || ''
-                ).replaceAll(';', ' ')}${
-                  data['Subtype(s)']?.[i] ? ' — ' + data['Subtype(s)'][i]?.replaceAll(';', ' ') : ''
-                }`}
+                {face.type_line}
               </Text>
               <br />
               <Text typeLevel="body.medium" key="rules" wordBreak="break-word">
-                {(data['Text Box']?.[i] || '').split('\\n').map(entry => (
+                {face.oracle_text.split('\\n').map(entry => (
                   <>
                     {' '}
                     {}
@@ -108,84 +87,101 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
               </Text>
               <br />
 
-              {data['Flavor Text'] &&
-                data['Flavor Text'][i] !== null &&
-                data['Flavor Text'][i] !== '' && (
-                  <>
-                    <ItalicText typeLevel="body.medium" key="flavor">
-                      {renderText((data['Flavor Text']?.[i] || '').split('\\n'))}
-                    </ItalicText>
-                    <br />
-                  </>
-                )}
-              {data['Power']?.[i] &&
-                data['Power'][i]!.toString() !== '' &&
-                data['Power'] != null && (
-                  <>
-                    <Text typeLevel="body.medium" key="stats">
-                      {data['Power'][i]}/{data['Toughness']![i]}
-                    </Text>
-                    <br />
-                  </>
-                )}
-              {data['Loyalty']?.[i] &&
-                data['Loyalty'][i]!.toString() !== '' &&
-                data['Loyalty'][i] != null && (
-                  <>
-                    <Text typeLevel="body.medium" key="loyalty">
-                      {data['Loyalty']?.[i]}
-                    </Text>
-                    <br />
-                  </>
-                )}
+              {face.flavor_text && (
+                <>
+                  <ItalicText typeLevel="body.medium" key="flavor">
+                    {renderText((face.flavor_text || '').split('\\n'))}
+                  </ItalicText>
+                  <br />
+                </>
+              )}
+              {face.power && (
+                <>
+                  <Text typeLevel="body.medium" key="stats">
+                    {face.power}/{face.toughness}
+                  </Text>
+                  <br />
+                </>
+              )}
+              {face.loyalty && (
+                <>
+                  <Text typeLevel="body.medium" key="loyalty">
+                    Loyalty: {face.loyalty}
+                  </Text>
+                  <br />
+                </>
+              )}
+              {face.defense && (
+                <>
+                  <Text typeLevel="body.medium" key="defense">
+                    Defense: {face.defense}
+                  </Text>
+                  <br />
+                </>
+              )}
+              {face.hand_modifier && (
+                <>
+                  <Text typeLevel="body.medium" key="hand_modifier">
+                    Hand Size: {face.hand_modifier}
+                  </Text>
+                  <br />
+                </>
+              )}
+              {face.life_modifier && (
+                <>
+                  <Text typeLevel="body.medium" key="life_modifier">
+                    Starting Life: {face.life_modifier}
+                  </Text>
+                  <br />
+                </>
+              )}
             </div>
           ))}
           <Divider />
-          {data['Set'] && (
+          {data.set && (
             <>
-              <Text typeLevel="body.medium">Set: {data['Set']}</Text>
+              <Text typeLevel="body.medium">Set: {data.set}</Text>
               <br />
             </>
           )}
-          {data['Creator'] && (
+          {data.creator && (
             <>
-              <Text key="creator">Creator: {data['Creator']}</Text>
+              <Text key="creator">Creator: {data.creator}</Text>
               <br />
             </>
           )}
-          {data['Id'] && (
+          {data.id && (
             <>
-              <Text key="id">Id: {data['Id']}</Text>
+              <Text key="id">Id: {data.id}</Text>
               <br />
             </>
           )}
           {
             <>
-              Constructed <SetLegality banned={Boolean(data['Constructed']?.includes('Banned'))} />
+              Constructed <SetLegality banned={Boolean(data.legalities.standard != 'banned')} />
               <br />
-              4CB <SetLegality banned={Boolean(data['Constructed']?.includes('Banned (4CB)'))} />
+              4CB <SetLegality banned={Boolean(data.legalities['4cb'] != 'banned')} />
               <br />
-              Hellsmander{' '}
-              <SetLegality banned={Boolean(data['Constructed']?.includes('Banned (Commander)'))} />
+              Hellsmander <SetLegality banned={Boolean(data.legalities.commander != 'banned')} />
               <br />
             </>
           }
-          {data['Rulings'] && data['Rulings'] != '' && (
+          {data.rulings && (
             <>
               <Divider />
               <div>
                 <StyledHeading size="small">Rulings</StyledHeading>
-                {data['Rulings'].split('\\n').map((e, i) => {
+                {data.rulings.split('\\n').map((e, i) => {
                   return <Ruling key={i}>{e}</Ruling>;
                 })}
               </div>
             </>
           )}
-          {data.Tags && data.Tags !== '' && (
+          {data.tags && (
             <>
               <Text key="Tags">
                 Tags:{' '}
-                {data['Tags'].split(';').map((tagEntry, i, ar) => (
+                {data.tags.map((tagEntry, i, ar) => (
                   <>
                     <Link key={tagEntry} to={'?tags=' + tagEntry} target="_blank">
                       {tagEntry}
@@ -197,14 +193,16 @@ export const HellfallCard = ({ data }: { data: HCEntry }) => {
               <br />
             </>
           )}
-          {data['tokens'] && (
+          {data.all_parts && (
             <>
               <Divider />
               <div>
                 <StyledHeading size="small">Related Tokens</StyledHeading>
-                {data['tokens'].map((entry, i) => (
-                  <img key={entry.Name + i} src={entry.Image} height="500px" />
-                ))}
+                {data.all_parts
+                  .filter(e => e.component == 'token')
+                  .map((entry, i) => (
+                    <img key={entry.name + i} src={entry.image} height="500px" />
+                  ))}
               </div>
             </>
           )}
