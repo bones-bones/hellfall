@@ -43,6 +43,6 @@ Write a script to transform the database
 - use mv instead of cmc
 - make better search syntax (like allowing or)
 - tell users how to use not and/or make it easier to use not (!)
-- switch Hell's Cube (the card), Hellscube Alignment Chart,  to use the new face system
+- switch Hell's Cube (the card), Hellscube Alignment Chart, to use the new face system
 - add reminder cards for morph and its variants (not just manifest)
-- keep both images for A-Sky Diamond, 
+- keep both images for A-Sky Diamond,

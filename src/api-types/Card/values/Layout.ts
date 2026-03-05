@@ -149,7 +149,11 @@ export namespace HCLayoutGroup {
    *
    * @see {@link MultiFacedType} for the type of this group.
    */
-  export const MultiFaced = [`${HCLayout.Multi}`, `${HCLayout.MultiToken}`, `${HCLayout.MeldPart}`] as const;
+  export const MultiFaced = [
+    `${HCLayout.Multi}`,
+    `${HCLayout.MultiToken}`,
+    `${HCLayout.MeldPart}`,
+  ] as const;
 
   /**
    * A type for all layouts that represent a multi-faced card where the faces are on the front and back of the card.

@@ -26,7 +26,7 @@ export const fetchTokens = async () => {
       row.push('');
     }
   });
-  const supers = ['Basic','Legendary','Snow','World','Minigame','Token']
+  const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token'];
 
   const theThing = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
@@ -39,16 +39,16 @@ export const fetchTokens = async () => {
           tokenObject.subtypes = name.split(' ');
         } else if (keys[i] == 'type') {
           const typesAndSupertypes = entry[i].split(';');
-          const superList:string[] = [];
-          const typeList:string[] = []
-          typesAndSupertypes.forEach(e=>{
+          const superList: string[] = [];
+          const typeList: string[] = [];
+          typesAndSupertypes.forEach(e => {
             supers.includes(e) ? superList.push(e) : typeList.push(e);
-          })
-          if (superList){
-            tokenObject.supertypes=superList;
+          });
+          if (superList?.length) {
+            tokenObject.supertypes = superList;
           }
-          if (typeList){
-            tokenObject.types=typeList;
+          if (typeList?.length) {
+            tokenObject.types = typeList;
           }
         } else if (keys[i] == 'token_maker') {
           tokenObject.all_parts = entry[i].split(';').map(name => {

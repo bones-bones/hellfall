@@ -164,16 +164,13 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 face.name != ';' &&
                 (face.name.includes('\\*') ? (
                   <div key="name">
-                    {renderName((face.name.startsWith(';') ? face.name.slice(1): face.name))}
+                    {renderName(face.name.startsWith(';') ? face.name.slice(1) : face.name)}
                   </div>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="name">
                       {renderText(
-                        (face.name.startsWith(';')
-                          ? face.name.slice(1)
-                          : face.name
-                        ).split('\\n')
+                        (face.name.startsWith(';') ? face.name.slice(1) : face.name).split('\\n')
                       )}
                     </Text>
                     <br />

@@ -16,7 +16,7 @@ export const getColorIdentity = (card: HCCard.Any) => {
   };
   const pips = store.get(pipsAtom);
   // TODO: special cases for Crypticspire Mantis (must be at least 2) (see CR 207.5)
-  const addColorsFromFace = (face:HCCard.AnySingleFaced | HCCardFace.MultiFaced) =>{
+  const addColorsFromFace = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced) => {
     const costNames = face.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
     costNames?.forEach(name => {
@@ -63,7 +63,7 @@ export const getColorIdentity = (card: HCCard.Any) => {
         addColors([color]);
       });
     }
-  }
+  };
   if (card.layout == HCLayout.MeldPart) {
     addColorsFromFace(card.toFaces()[0]);
   } else {
@@ -84,54 +84,54 @@ export const getColorIdentityProp = (card: HCCard.Any) => {
     }
   };
   const pips = store.get(pipsAtom);
-  const addColorsFromFace = (face:HCCard.AnySingleFaced | HCCardFace.MultiFaced) =>{
-      const costNames = face.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
+  const addColorsFromFace = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced) => {
+    const costNames = face.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
 
-      costNames?.forEach(name => {
-        const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-        if (pip && pip?.represents_mana) {
-          addColors(pip.colors!);
-        } /*else {
+    costNames?.forEach(name => {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
+        addColors(pip.colors!);
+      } /*else {
           const mappedColor = manaSymbolColorMatching[name];
           if (mappedColor) {
             addColors([mappedColor]);
           }
         }*/
-      });
+    });
 
-      const minusReminderText = splitParens(face.oracle_text)
-        .filter(e => e[0] && e[0] != '(')
-        .join('');
-      const textNames = (minusReminderText || '')
-        .match(/{([^}]+)}/g)
-        ?.map(match => match.slice(1, -1));
+    const minusReminderText = splitParens(face.oracle_text)
+      .filter(e => e[0] && e[0] != '(')
+      .join('');
+    const textNames = (minusReminderText || '')
+      .match(/{([^}]+)}/g)
+      ?.map(match => match.slice(1, -1));
 
-      textNames?.forEach(name => {
-        const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-        if (pip && pip?.represents_mana) {
-          addColors(pip.colors!);
-        } /*else {
+    textNames?.forEach(name => {
+      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+      if (pip && pip?.represents_mana) {
+        addColors(pip.colors!);
+      } /*else {
           const mappedColor = manaSymbolColorMatching[name];
           if (mappedColor) {
             addColors([mappedColor]);
           }
         }*/
-      });
+    });
 
-      const splitSubtypes = face.subtypes || [];
-      splitSubtypes.forEach(typeEntry => {
-        const mappedColor = landToColorMapping[typeEntry];
-        if (mappedColor) {
-          addColors([mappedColor]);
-        }
-      });
-
-      if ('color_indicator' in face) {
-        face.color_indicator?.forEach(color => {
-          addColors([color]);
-        });
+    const splitSubtypes = face.subtypes || [];
+    splitSubtypes.forEach(typeEntry => {
+      const mappedColor = landToColorMapping[typeEntry];
+      if (mappedColor) {
+        addColors([mappedColor]);
       }
-  }
+    });
+
+    if ('color_indicator' in face) {
+      face.color_indicator?.forEach(color => {
+        addColors([color]);
+      });
+    }
+  };
   // TODO: special cases for Crypticspire Mantis (must be at least 2)
   if ('card_faces' in card) {
     if (card.layout == HCLayout.MeldPart) {

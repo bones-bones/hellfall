@@ -87,10 +87,10 @@ export const fetchDatabase = async () => {
             const colorArr = entry[i]
               .split(';')
               .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
-            cardObject.card_faces[face][key] = colorArr
+            cardObject.card_faces[face][key] = colorArr?.length
               ? colorArr
               : ([HCColor.Colorless] as HCColors);
-            cardObject.colors = colorArr ? colorArr : ([HCColor.Colorless] as HCColors);
+            cardObject.colors = colorArr?.length ? colorArr : ([HCColor.Colorless] as HCColors);
           } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
             cardObject.card_faces[face][key] = entry[i].split(';');
           } else if (key == 'loyalty' && cardObject.card_faces[face]['types']?.includes('Battle')) {
@@ -221,7 +221,10 @@ export const fetchDatabase = async () => {
     } else {
       // const names = entry[1];
       // entry[6] is Related Cards
-      cardObject.layout = (cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld') || entry[6]) ? HCLayout.MeldPart: HCLayout.Multi;
+      cardObject.layout =
+        cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld') || entry[6]
+          ? HCLayout.MeldPart
+          : HCLayout.Multi;
       return cardObject as HCCard.AnyMultiFaced;
     }
   });

@@ -76,6 +76,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
   const merged: HCCard.Any = { ...existingCard };
 
   Object.entries(newCard).forEach(([key, value]) => {
+    // TODO: make sure that empty arrays being truthy doesn't break anything here
     if (value) {
       if (
         key === 'card_faces' &&
@@ -168,7 +169,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           (merged.layout == HCLayout.Normal || merged.layout == HCLayout.Token)
         ) {
           merged.layout = value as typeof newCard.layout;
-        } else if (('card_faces' in merged) &&('card_faces' in newCard)) {
+        } else if ('card_faces' in merged && 'card_faces' in newCard) {
           merged.layout = value as typeof newCard.layout;
         }
       } else if (!['keywords', 'variation'].includes(key)) {
@@ -249,7 +250,7 @@ const loadExistingData = () => {
       // This is needed if a mandatory prop is missing
       // const rawCards = databaseContent.data || [];
       // const filteredCards = rawCards.filter((e: any) => e.set != 'HCT');
-      
+
       // existingCards = filteredCards.map((card: any) => {
       //   if (!card.layout) {
       //     return {
@@ -282,7 +283,7 @@ const main = async () => {
   const { data: newCards } = { data: await fetchDatabase() };
   const usernameMappings = await fetchUsernameMappings();
   const tokenExcludedIds = ['the first pick1'];
-  const newTokens = (await fetchTokens()).filter(e=>!(tokenExcludedIds.includes(e.id)));
+  const newTokens = (await fetchTokens()).filter(e => !tokenExcludedIds.includes(e.id));
   let finalCards = newCards;
   let finalTokens = newTokens;
   if (UPDATE_MODE) {
@@ -309,7 +310,9 @@ const main = async () => {
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
           const relatedCard = finalCards.find(card =>
-            tokenMaker.id ? card.id == tokenMaker.id : card.name.toLowerCase() == tokenMaker.name.toLowerCase()
+            tokenMaker.id
+              ? card.id == tokenMaker.id
+              : card.name.toLowerCase() == tokenMaker.name.toLowerCase()
           );
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
@@ -327,7 +330,9 @@ const main = async () => {
             }
           } else {
             const related = finalTokens.find(otherToken =>
-              tokenMaker.id ? otherToken.id == tokenMaker.id : otherToken.name.toLowerCase() == tokenMaker.name.toLowerCase()
+              tokenMaker.id
+                ? otherToken.id == tokenMaker.id
+                : otherToken.name.toLowerCase() == tokenMaker.name.toLowerCase()
             );
             if (related) {
               tokenMaker.id = related.id;
@@ -353,7 +358,9 @@ const main = async () => {
         ?.filter(e => e.component == 'meld_part')
         .forEach(meldPart => {
           const relatedCard = finalCards.find(card =>
-            meldPart.id ? card.id == meldPart.id : card.name.toLowerCase() == meldPart.name.toLowerCase()
+            meldPart.id
+              ? card.id == meldPart.id
+              : card.name.toLowerCase() == meldPart.name.toLowerCase()
           );
           if (relatedCard) {
             meldPart.id = relatedCard.id;
@@ -380,7 +387,7 @@ const main = async () => {
             //   }
           }
         });
-      if (meldPartIds) {
+      if (meldPartIds && meldPartIds.length) {
         const meldResult: HCRelatedCard = {
           object: HCObject.ObjectType.RelatedCard,
           id: token.id,
@@ -418,24 +425,26 @@ const main = async () => {
         name: card.name,
         type_line: card.type_line,
       };
-      card.all_parts?.filter(e=>e.component == 'token').forEach(tokenCard => {
-        const relatedCard = finalCards.find(e => e.id == tokenCard.id);
-        if (relatedCard) {
-          tokenCard.id = relatedCard.id;
-          tokenCard.name = relatedCard.name;
-          tokenCard.type_line = relatedCard.type_line;
-          if ('all_parts' in relatedCard) {
-            const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-            if (tokenIndex == -1) {
-              relatedCard.all_parts?.push(relatedToken);
+      card.all_parts
+        ?.filter(e => e.component == 'token')
+        .forEach(tokenCard => {
+          const relatedCard = finalCards.find(e => e.id == tokenCard.id);
+          if (relatedCard) {
+            tokenCard.id = relatedCard.id;
+            tokenCard.name = relatedCard.name;
+            tokenCard.type_line = relatedCard.type_line;
+            if ('all_parts' in relatedCard) {
+              const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+              if (tokenIndex == -1) {
+                relatedCard.all_parts?.push(relatedToken);
+              } else {
+                relatedCard.all_parts![tokenIndex!] = relatedToken;
+              }
             } else {
-              relatedCard.all_parts![tokenIndex!] = relatedToken;
+              relatedCard.all_parts = [relatedToken];
             }
-          } else {
-            relatedCard.all_parts = [relatedToken];
           }
-        }
-      });
+        });
     });
   finalCards
     .filter(e => 'all_parts' in e)
@@ -519,16 +528,27 @@ const main = async () => {
     }
     return -1;
   });
-  const tokenLayoutOrder = [HCLayout.Token,HCLayout.MultiToken,HCLayout.Emblem,HCLayout.MeldResult]
+  const tokenLayoutOrder = [
+    HCLayout.Token,
+    HCLayout.MultiToken,
+    HCLayout.Emblem,
+    HCLayout.MeldResult,
+  ];
   finalTokens.sort((a, b) => {
-    if (a.layout !=b.layout) {
-      if (tokenLayoutOrder.indexOf(a.layout as HCLayout) > tokenLayoutOrder.indexOf(b.layout as HCLayout)) {
+    if (a.layout != b.layout) {
+      if (
+        tokenLayoutOrder.indexOf(a.layout as HCLayout) >
+        tokenLayoutOrder.indexOf(b.layout as HCLayout)
+      ) {
         return 1;
       }
       return -1;
     }
     if (a.name == b.name) {
-      if ((parseInt(a.id.match(/\d+$/)?.[0]|| "") || 0) > (parseInt(b.id.match(/\d+$/)?.[0]|| "") || 0) ) {
+      if (
+        (parseInt(a.id.match(/\d+$/)?.[0] || '') || 0) >
+        (parseInt(b.id.match(/\d+$/)?.[0] || '') || 0)
+      ) {
         return 1;
       }
       return -1;
