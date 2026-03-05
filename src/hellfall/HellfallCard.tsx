@@ -338,9 +338,10 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
             <>
               <Divider />
               <div>
-                <StyledHeading size="small">Related Tokens</StyledHeading>
+                <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
+                {/* TODO: make this a link */}
                 {data.all_parts
-                  .filter(e => e.component == 'token')
+                  .filter(e => e.id!=data.id)
                   .map((entry, i) => (
                     <img key={entry.name + i} src={entry.image} height="500px" />
                   ))}

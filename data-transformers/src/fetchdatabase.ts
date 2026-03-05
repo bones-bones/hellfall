@@ -119,15 +119,15 @@ export const fetchDatabase = async () => {
             };
             cardObject[keys[i]] = legalities;
           } else if (keys[i] == 'related') {
-            const all_parts: [HCRelatedCard] = [
-              {
-                object: HCObject.ObjectType.RelatedCard,
-                id: '',
-                component: 'combo_piece',
-                name: entry[i],
-                type_line: '',
-              },
-            ];
+            // const all_parts: [HCRelatedCard] = [
+            //   {
+            //     object: HCObject.ObjectType.RelatedCard,
+            //     id: '',
+            //     component: 'combo_piece',
+            //     name: entry[i],
+            //     type_line: '',
+            //   },
+            // ];
           } else if (keys[i] == 'tags') {
             cardObject[keys[i]] = entry[i].split(';');
           } else {

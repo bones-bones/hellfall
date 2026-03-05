@@ -305,6 +305,7 @@ const main = async () => {
         component: 'token',
         name: token.name,
         type_line: token.type_line,
+        image:token.image
       };
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
@@ -318,6 +319,7 @@ const main = async () => {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
             tokenMaker.type_line = relatedCard.type_line;
+            tokenMaker.image=relatedCard.image;
             if ('all_parts' in relatedCard) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == token.id);
               if (tokenIndex == -1) {
@@ -338,6 +340,7 @@ const main = async () => {
               tokenMaker.id = related.id;
               tokenMaker.name = related.name;
               tokenMaker.type_line = related.type_line;
+              tokenMaker.image=related.image
               if ('all_parts' in related) {
                 const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
                 if (tokenIndex == -1) {
@@ -353,7 +356,6 @@ const main = async () => {
         });
       const meldPartIds: string[] = [];
       const meldRelatedCards: HCRelatedCard[] = [];
-      // make meld parts work - maybe make array of all parts + result as related cards, then add it to all parts and result?
       token.all_parts
         ?.filter(e => e.component == 'meld_part')
         .forEach(meldPart => {
@@ -367,6 +369,7 @@ const main = async () => {
             meldPartIds.push(relatedCard.id);
             meldPart.name = relatedCard.name;
             meldPart.type_line = relatedCard.type_line;
+            meldPart.image='card_faces' in relatedCard ? relatedCard.card_faces[0].image: relatedCard.image;
             meldRelatedCards.push(meldPart);
             // } else {
             //   const related = finalTokens.find(otherToken => tokenMaker.id ? otherToken.id == tokenMaker.id : otherToken.name == tokenMaker.name);
@@ -394,6 +397,7 @@ const main = async () => {
           component: 'meld_result',
           name: token.name,
           type_line: token.type_line,
+          image:token.image
         };
         meldRelatedCards.push(meldResult);
         meldPartIds.forEach(id => {
@@ -424,6 +428,7 @@ const main = async () => {
         component: 'token_maker',
         name: card.name,
         type_line: card.type_line,
+        image:card.image
       };
       card.all_parts
         ?.filter(e => e.component == 'token')
@@ -433,6 +438,7 @@ const main = async () => {
             tokenCard.id = relatedCard.id;
             tokenCard.name = relatedCard.name;
             tokenCard.type_line = relatedCard.type_line;
+            tokenCard.image=relatedCard.image;
             if ('all_parts' in relatedCard) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
               if (tokenIndex == -1) {
@@ -455,6 +461,7 @@ const main = async () => {
           storedRelated.id = relatedCard.id;
           storedRelated.name = relatedCard.name;
           storedRelated.type_line = relatedCard.type_line;
+          storedRelated.image=relatedCard.image
         }
       });
     });
