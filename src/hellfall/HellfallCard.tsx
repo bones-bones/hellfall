@@ -5,6 +5,7 @@ import { SetLegality } from './SetLegality';
 import { stringToMana } from './stringToMana';
 import { splitParens } from './splitParens';
 import { HCCard } from '../api-types/Card/Card';
+import { HellfallRelatedEntry } from './HellfallEntry';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -343,7 +344,28 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 {data.all_parts
                   .filter(e => e.id!=data.id)
                   .map((entry, i) => (
-                    <img key={entry.name + i} src={entry.image} height="500px" />
+                    <HellfallRelatedEntry
+                      onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                        if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                          window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                        } else {
+                          window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id), '_blank';
+                        }
+                      }}
+                      onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+                        if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                          window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                        } else {
+                          window.location.href='/hellfall/card/' + encodeURIComponent(entry.id), '_blank';
+                        }
+                      }}
+                      key={entry.id}
+                      id={entry.id}
+                      name={entry.name}
+                      url={entry.image!}
+                    />
+                    
+                    // <img key={entry.name + i} src={entry.image} height="500px" />
                   ))}
               </div>
             </>
