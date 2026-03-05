@@ -162,6 +162,12 @@ export namespace HCCard {
   /** A card with the Multi layout. */
   export type Multi = AnyMulti & Layout<HCLayout.Multi>;
 
+  /** A card with the MultiToken layout. */
+  export type MultiToken = AnyMulti & Layout<HCLayout.MultiToken>;
+
+  /** A card with the MeldPart layout. */
+  export type MeldPart = AnyMulti & Layout<HCLayout.MeldPart>;
+
   // /**
   //  * Any split layout, either single sided or double sided. These will both have `card_faces`.
   //  */

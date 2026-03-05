@@ -168,17 +168,16 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           (merged.layout == HCLayout.Normal || merged.layout == HCLayout.Token)
         ) {
           merged.layout = value as typeof newCard.layout;
+        } else if (('card_faces' in merged) &&('card_faces' in newCard)) {
+          merged.layout = value as typeof newCard.layout;
         }
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;
       }
     }
   });
-  // handle adding card_faces
+  // handle adding card_faces (make sure this works)
   if (!('card_faces' in merged) && 'card_faces' in newCard) {
-    const mergedFaces = merged as unknown as HCCard.AnyMultiFaced;
-    mergedFaces.layout = merged.layout == HCLayout.Normal ? HCLayout.Multi : HCLayout.MultiToken;
-    mergedFaces.card_faces = newCard.card_faces;
     const removeProps = [
       'color_indicator',
       'supertypes',
@@ -192,10 +191,13 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       'flavor_text',
     ];
     removeProps.forEach(prop => {
-      if (prop in mergedFaces) {
-        delete mergedFaces[prop as keyof typeof mergedFaces];
+      if (prop in merged) {
+        delete merged[prop as keyof typeof merged];
       }
     });
+    const mergedFaces = merged as unknown as HCCard.AnyMultiFaced;
+    mergedFaces.layout = merged.layout == HCLayout.Normal ? HCLayout.Multi : HCLayout.MultiToken;
+    mergedFaces.card_faces = newCard.card_faces;
     setDerivedProps(mergedFaces);
     return mergedFaces;
   } else {
@@ -244,6 +246,19 @@ const loadExistingData = () => {
 
     if (fs.existsSync(databasePath)) {
       const databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
+      // This is needed if a mandatory prop is missing
+      // const rawCards = databaseContent.data || [];
+      // const filteredCards = rawCards.filter((e: any) => e.set != 'HCT');
+      
+      // existingCards = filteredCards.map((card: any) => {
+      //   if (!card.layout) {
+      //     return {
+      //       ...card,
+      //       layout: HCLayout.Normal
+      //     } as HCCard.Any;
+      //   }
+      //   return card as HCCard.Any;
+      // });
       existingCards = databaseContent.data || [];
       existingCards = existingCards.filter(e => e.set != 'HCT');
     }
@@ -294,7 +309,7 @@ const main = async () => {
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
           const relatedCard = finalCards.find(card =>
-            tokenMaker.id ? card.id == tokenMaker.id : card.name == tokenMaker.name
+            tokenMaker.id ? card.id == tokenMaker.id : card.name.toLowerCase() == tokenMaker.name.toLowerCase()
           );
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
@@ -312,7 +327,7 @@ const main = async () => {
             }
           } else {
             const related = finalTokens.find(otherToken =>
-              tokenMaker.id ? otherToken.id == tokenMaker.id : otherToken.name == tokenMaker.name
+              tokenMaker.id ? otherToken.id == tokenMaker.id : otherToken.name.toLowerCase() == tokenMaker.name.toLowerCase()
             );
             if (related) {
               tokenMaker.id = related.id;
@@ -338,7 +353,7 @@ const main = async () => {
         ?.filter(e => e.component == 'meld_part')
         .forEach(meldPart => {
           const relatedCard = finalCards.find(card =>
-            meldPart.id ? card.id == meldPart.id : card.name == meldPart.name
+            meldPart.id ? card.id == meldPart.id : card.name.toLowerCase() == meldPart.name.toLowerCase()
           );
           if (relatedCard) {
             meldPart.id = relatedCard.id;

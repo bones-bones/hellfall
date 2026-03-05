@@ -26,6 +26,7 @@ export const fetchTokens = async () => {
       row.push('');
     }
   });
+  const supers = ['Basic','Legendary','Snow','World','Minigame','Token']
 
   const theThing = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
@@ -37,7 +38,18 @@ export const fetchTokens = async () => {
           tokenObject.name = name;
           tokenObject.subtypes = name.split(' ');
         } else if (keys[i] == 'type') {
-          tokenObject.types = entry[i].split(';');
+          const typesAndSupertypes = entry[i].split(';');
+          const superList:string[] = [];
+          const typeList:string[] = []
+          typesAndSupertypes.forEach(e=>{
+            supers.includes(e) ? superList.push(e) : typeList.push(e);
+          })
+          if (superList){
+            tokenObject.supertypes=superList;
+          }
+          if (typeList){
+            tokenObject.types=typeList;
+          }
         } else if (keys[i] == 'token_maker') {
           tokenObject.all_parts = entry[i].split(';').map(name => {
             const maker: HCRelatedCard = {

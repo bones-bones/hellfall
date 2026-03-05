@@ -99,6 +99,7 @@ export const fetchDatabase = async () => {
             cardObject.card_faces[face][key] = entry[i];
           }
           if (key == 'image') {
+            // entry[20] is tags
             cardObject.card_faces[face].image_status =
               entry[20] && entry[20].includes('low-quality')
                 ? HCImageStatus.LowRes
@@ -215,11 +216,12 @@ export const fetchDatabase = async () => {
         cardObject[key] = value;
       }
       const { card_faces, ...singleCard } = cardObject;
-      cardObject.layout = HCLayout.Normal;
+      singleCard.layout = HCLayout.Normal;
       return singleCard as HCCard.AnySingleFaced;
     } else {
-      const names = entry[1];
-      cardObject.layout = HCLayout.Multi;
+      // const names = entry[1];
+      // entry[6] is Related Cards
+      cardObject.layout = (cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld') || entry[6]) ? HCLayout.MeldPart: HCLayout.Multi;
       return cardObject as HCCard.AnyMultiFaced;
     }
   });
