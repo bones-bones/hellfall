@@ -8,12 +8,89 @@ import { HCCard } from '../api-types/Card/Card';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+const renderText = (text: string[]) => {
+  return text.map(entry => {
+    return (
+      <>
+        {stringToMana(entry)}
+        <br />
+      </>
+    );
+  });
+};
+const renderFlavorLine = (text: string) => {
+  const parts = text.split('\\*');
+  return parts.map((part, index) => {
+    if (index % 2 == 1) {
+      return (
+        <Text typeLevel="body.medium" key={`non-italic-${index}`}>
+          {stringToMana(part)}
+        </Text>
+      );
+    } else {
+      return (
+        <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+          {stringToMana(part)}
+        </ItalicText>
+      );
+    }
+  });
+};
+const renderFlavorText = (text: string[]) => {
+  return text.map(entry => {
+    return (
+      <>
+        {renderFlavorLine(entry)}
+        <br />
+      </>
+    );
+  });
+};
+const renderOracleLine = (text: string) => {
+  const parts = text.split('\\*');
+  return parts.map((part, index) => {
+    if (index % 2 == 0) {
+      return (
+        <Text typeLevel="body.medium" key={`non-italic-${index}`}>
+          {stringToMana(part)}
+        </Text>
+      );
+    } else {
+      return (
+        <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+          {stringToMana(part)}
+        </ItalicText>
+      );
+    }
+  });
+};
+const renderOracleText = (text: string[]) => {
+  return text.map(entry => {
+    return (
+      <>
+        {renderOracleLine(
+          splitParens(entry)
+            .map((chunk, ci) => {
+              if (chunk.startsWith('(')) {
+                return '\\*' + chunk + '\\*';
+                // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
+              }
+              return chunk;
+            })
+            .join('')
+        )}
+        <br />
+      </>
+    );
+  });
+};
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   // const faceCount = data.
   // data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
 
   const [activeImageSide, setActiveImageSide] = useState(0);
 
+  // TODO: add handling for flip and aftermath
   const imagesToShow = data
     .toFaces()
     .filter(e => e.image)
@@ -59,7 +136,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               <Text typeLevel="body.medium" key="name">
-                {face.name}
+                {face.name[0] == ';' ? face.name.slice(1) : face.name}
               </Text>
               {'   '}
               <Text typeLevel="body.medium" key="cost">
@@ -70,31 +147,54 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 {face.type_line}
               </Text>
               <br />
-              <Text typeLevel="body.medium" key="rules" wordBreak="break-word">
-                {face.oracle_text.split('\\n').map(entry => (
+              {face.oracle_text &&
+                face.oracle_text != ';' &&
+                (face.oracle_text.includes('\\*') || face.oracle_text.includes('(') ? (
+                  <div key="rules">
+                    {renderOracleText(
+                      (face.oracle_text.startsWith(';')
+                        ? face.oracle_text.slice(1)
+                        : face.oracle_text
+                      ).split('\\n')
+                    )}
+                  </div>
+                ) : (
                   <>
-                    {' '}
-                    {}
-                    {splitParens(entry).map((chunk, ci) => {
-                      if (chunk.startsWith('(')) {
-                        return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
-                      }
-                      return stringToMana(chunk);
-                    })}
+                    <Text typeLevel="body.medium" key="flavor">
+                      {renderText(
+                        (face.oracle_text.startsWith(';')
+                          ? face.oracle_text.slice(1)
+                          : face.oracle_text
+                        ).split('\\n')
+                      )}
+                    </Text>
                     <br />
                   </>
                 ))}
-              </Text>
-              <br />
-
-              {face.flavor_text && (
-                <>
-                  <ItalicText typeLevel="body.medium" key="flavor">
-                    {renderText((face.flavor_text || '').split('\\n'))}
-                  </ItalicText>
-                  <br />
-                </>
-              )}
+              {face.flavor_text &&
+                face.flavor_text != ';' &&
+                (face.flavor_text.includes('\\*') ? (
+                  <div key="flavor">
+                    {renderFlavorText(
+                      (face.flavor_text.startsWith(';')
+                        ? face.flavor_text.slice(1)
+                        : face.flavor_text
+                      ).split('\\n')
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <ItalicText typeLevel="body.medium" key="flavor">
+                      {renderText(
+                        (face.flavor_text.startsWith(';')
+                          ? face.flavor_text.slice(1)
+                          : face.flavor_text
+                        ).split('\\n')
+                      )}
+                    </ItalicText>
+                    <br />
+                  </>
+                ))}
               {face.power && (
                 <>
                   <Text typeLevel="body.medium" key="stats">
@@ -213,17 +313,6 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
 };
 
 const Ruling = styled.div({ paddingTop: '5px' });
-
-const renderText = (text: string[]) => {
-  return text.map(entry => {
-    return (
-      <>
-        {stringToMana(entry)}
-        <br />
-      </>
-    );
-  });
-};
 
 const Container = styled.div({
   display: 'flex',

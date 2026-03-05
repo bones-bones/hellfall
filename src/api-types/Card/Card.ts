@@ -104,8 +104,8 @@ export namespace HCCard {
   /** A card with the Normal layout. */
   export type Normal = AnySingleFaced & Layout<HCLayout.Normal>;
 
-  // /** A card with the Meld layout. */
-  // export type Meld = AnySingleFaced & Layout<HCLayout.Meld>;
+  // /** A card with the MeldResult layout. */
+  export type MeldResult = AnySingleFaced & Layout<HCLayout.MeldResult>;
 
   // /** A card with the Leveler layout. */
   // export type Leveler = AnySingleFaced & Layout<HCLayout.Leveler>;
@@ -135,10 +135,10 @@ export namespace HCCard {
   // export type Vanguard = AnySingleFaced & Layout<HCLayout.Vanguard>;
 
   // /** A card with the Token layout. */
-  // export type Token = AnySingleFaced & Layout<HCLayout.Token>;
+  export type Token = AnySingleFaced & Layout<HCLayout.Token>;
 
   // /** A card with the Emblem layout. */
-  // export type Emblem = AnySingleFaced & Layout<HCLayout.Emblem>;
+  export type Emblem = AnySingleFaced & Layout<HCLayout.Emblem>;
 
   // /** A card with the Augment layout. */
   // export type Augment = AnySingleFaced & Layout<HCLayout.Augment>;

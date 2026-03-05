@@ -6,6 +6,14 @@ export enum HCLayout {
   Normal = 'normal',
   /** A multi-faced card */
   Multi = 'multi',
+  /** Cards that are the result of melding */
+  MeldResult = 'meld_result',
+  /** Token cards */
+  Token = 'token',
+  /** Tokens with another token printed on the back */
+  MultiToken = 'multi_token',
+  /** Emblem cards */
+  Emblem = 'emblem',
 }
 
 /**
@@ -73,7 +81,7 @@ export namespace HCLayoutGroup {
    */
   export const SingleFaced = [
     `${HCLayout.Normal}`,
-    // `${HCLayout.Meld}`,
+    `${HCLayout.MeldResult}`,
     // `${HCLayout.Leveler}`,
     // `${HCLayout.Class}`,
     // `${HCLayout.Saga}`,
@@ -83,8 +91,8 @@ export namespace HCLayoutGroup {
     // `${HCLayout.Planar}`,
     // `${HCLayout.Scheme}`,
     // `${HCLayout.Vanguard}`,
-    // `${HCLayout.Token}`,
-    // `${HCLayout.Emblem}`,
+    `${HCLayout.Token}`,
+    `${HCLayout.Emblem}`,
     // `${HCLayout.Augment}`,
     // `${HCLayout.Host}`,
   ] as const;
@@ -139,7 +147,7 @@ export namespace HCLayoutGroup {
    *
    * @see {@link MultiFacedType} for the type of this group.
    */
-  export const MultiFaced = [`${HCLayout.Multi}`] as const;
+  export const MultiFaced = [`${HCLayout.Multi}`, `${HCLayout.MultiToken}`] as const;
 
   /**
    * A type for all layouts that represent a multi-faced card where the faces are on the front and back of the card.

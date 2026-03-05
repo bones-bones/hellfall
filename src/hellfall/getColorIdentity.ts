@@ -7,9 +7,14 @@ import { splitParens } from './splitParens';
 const store = getDefaultStore();
 
 export const getColorIdentity = (card: HCCard.Any) => {
-  const colorIdentity = new Set<HCColors>();
+  const colorIdentity = new Map<string, Set<string>>();
+  const addColors = (colors: HCColors) => {
+    const key = [...new Set(colors as string[])].sort().join('');
+    if (!colorIdentity.has(key)) {
+      colorIdentity.set(key, new Set(colors));
+    }
+  };
   const pips = store.get(pipsAtom);
-  // TODO: make sure color indicators work
   // TODO: special cases for Crypticspire Mantis (must be at least 2)
   card.toFaces().forEach(entry => {
     const costNames = entry.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
@@ -17,11 +22,11 @@ export const getColorIdentity = (card: HCCard.Any) => {
     costNames?.forEach(name => {
       const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
       if (pip && pip?.represents_mana) {
-        colorIdentity.add(pip.colors!);
+        addColors(pip.colors!);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
-          colorIdentity.add([mappedColor]);
+          addColors([mappedColor]);
         }
       }*/
     });
@@ -36,11 +41,11 @@ export const getColorIdentity = (card: HCCard.Any) => {
     textNames?.forEach(name => {
       const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
       if (pip && pip?.represents_mana) {
-        colorIdentity.add(pip.colors!);
+        addColors(pip.colors!);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
-          colorIdentity.add([mappedColor]);
+          addColors([mappedColor]);
         }
       }*/
     });
@@ -49,24 +54,29 @@ export const getColorIdentity = (card: HCCard.Any) => {
     splitSubtypes.forEach(typeEntry => {
       const mappedColor = landToColorMapping[typeEntry];
       if (mappedColor) {
-        colorIdentity.add([mappedColor]);
+        addColors([mappedColor]);
       }
     });
 
     if ('color_indicator' in entry) {
       entry.color_indicator?.forEach(color => {
-        colorIdentity.add([color]);
+        addColors([color]);
       });
     }
   });
 
-  return Array.from(colorIdentity);
+  return Array.from(colorIdentity.values()).map(set => Array.from(set) as HCColors);
 };
 
 export const getColorIdentityProp = (card: HCCard.Any) => {
-  const colorIdentity = new Set<HCColors>();
+  const colorIdentity = new Map<string, Set<string>>();
+  const addColors = (colors: HCColors) => {
+    const key = [...new Set(colors as string[])].sort().join('');
+    if (!colorIdentity.has(key)) {
+      colorIdentity.set(key, new Set(colors));
+    }
+  };
   const pips = store.get(pipsAtom);
-  // TODO: make color indicators work
   // TODO: special cases for Crypticspire Mantis (must be at least 2)
   if ('card_faces' in card) {
     card.card_faces.forEach(entry => {
@@ -75,11 +85,11 @@ export const getColorIdentityProp = (card: HCCard.Any) => {
       costNames?.forEach(name => {
         const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
         if (pip && pip?.represents_mana) {
-          colorIdentity.add(pip.colors!);
+          addColors(pip.colors!);
         } /*else {
           const mappedColor = manaSymbolColorMatching[name];
           if (mappedColor) {
-            colorIdentity.add([mappedColor]);
+            addColors([mappedColor]);
           }
         }*/
       });
@@ -94,11 +104,11 @@ export const getColorIdentityProp = (card: HCCard.Any) => {
       textNames?.forEach(name => {
         const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
         if (pip && pip?.represents_mana) {
-          colorIdentity.add(pip.colors!);
+          addColors(pip.colors!);
         } /*else {
           const mappedColor = manaSymbolColorMatching[name];
           if (mappedColor) {
-            colorIdentity.add([mappedColor]);
+            addColors([mappedColor]);
           }
         }*/
       });
@@ -107,13 +117,13 @@ export const getColorIdentityProp = (card: HCCard.Any) => {
       splitSubtypes.forEach(typeEntry => {
         const mappedColor = landToColorMapping[typeEntry];
         if (mappedColor) {
-          colorIdentity.add([mappedColor]);
+          addColors([mappedColor]);
         }
       });
 
       if ('color_indicator' in entry) {
         entry.color_indicator?.forEach(color => {
-          colorIdentity.add([color]);
+          addColors([color]);
         });
       }
     });
@@ -123,11 +133,11 @@ export const getColorIdentityProp = (card: HCCard.Any) => {
     costNames?.forEach(name => {
       const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
       if (pip && pip?.represents_mana) {
-        colorIdentity.add(pip.colors!);
+        addColors(pip.colors!);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
-          colorIdentity.add([mappedColor]);
+          addColors([mappedColor]);
         }
       }*/
     });
@@ -142,11 +152,11 @@ export const getColorIdentityProp = (card: HCCard.Any) => {
     textNames?.forEach(name => {
       const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
       if (pip && pip?.represents_mana) {
-        colorIdentity.add(pip.colors!);
+        addColors(pip.colors!);
       } /*else {
         const mappedColor = manaSymbolColorMatching[name];
         if (mappedColor) {
-          colorIdentity.add([mappedColor]);
+          addColors([mappedColor]);
         }
       }*/
     });
@@ -155,18 +165,18 @@ export const getColorIdentityProp = (card: HCCard.Any) => {
     splitSubtypes.forEach(typeEntry => {
       const mappedColor = landToColorMapping[typeEntry];
       if (mappedColor) {
-        colorIdentity.add([mappedColor]);
+        addColors([mappedColor]);
       }
     });
 
     if ('color_indicator' in card) {
       card.color_indicator?.forEach(color => {
-        colorIdentity.add([color]);
+        addColors([color]);
       });
     }
   }
 
-  return Array.from(colorIdentity);
+  return Array.from(colorIdentity.values()).map(set => Array.from(set) as HCColors);
 };
 
 const manaSymbolColorMatching: Record<

@@ -8,7 +8,7 @@ import { getColorIdentityProp } from '../../src/hellfall/getColorIdentity';
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
   const [_garbage, oldKeys, ...rest] = asJson.values as string[][];
@@ -90,6 +90,7 @@ export const fetchDatabase = async () => {
             cardObject.card_faces[face][key] = colorArr
               ? colorArr
               : ([HCColor.Colorless] as HCColors);
+            cardObject.colors = colorArr ? colorArr : ([HCColor.Colorless] as HCColors);
           } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
             cardObject.card_faces[face][key] = entry[i].split(';');
           } else if (key == 'loyalty' && cardObject.card_faces[face]['types']?.includes('Battle')) {
@@ -101,7 +102,7 @@ export const fetchDatabase = async () => {
             cardObject.card_faces[face].image_status =
               entry[20] && entry[20].includes('low-quality')
                 ? HCImageStatus.LowRes
-                : HCImageStatus.HighResScan;
+                : HCImageStatus.HighRes;
           }
         } else {
           if (keys[i] == 'cmc') {
@@ -131,6 +132,12 @@ export const fetchDatabase = async () => {
           } else {
             cardObject[keys[i]] = entry[i];
           }
+          if (keys[i] == 'image') {
+            cardObject.image_status =
+              entry[20] && entry[20].includes('low-quality')
+                ? HCImageStatus.LowRes
+                : HCImageStatus.MedRes;
+          }
         }
       }
     }
@@ -143,7 +150,7 @@ export const fetchDatabase = async () => {
     const name = entry[1].split(' // ');
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
-    cardObject.card_faces.forEach(face => {
+    cardObject.card_faces.forEach((face, index) => {
       face.name = name.length > 0 ? name.shift() : '';
       const face_type = [
         face.supertypes?.join(' '),
@@ -160,8 +167,31 @@ export const fetchDatabase = async () => {
       if (!('colors' in face)) {
         face.colors = [HCColor.Colorless] as HCColors;
       }
-      if (!('image_status' in face)) {
-        face.image_status = HCImageStatus.Missing;
+      if (!('image_status' in face) || ['split'].includes(face.image_status)) {
+        if (index == 0) {
+          face.image_status = HCImageStatus.Front;
+        } else if (
+          'tags' in cardObject &&
+          cardObject.tags.includes(
+            'flip'
+          ) /*  || ('oracle_text' in cardObject.card_faces[0] && cardObject.card_faces[0].oracle_text.toLowerCase().includes("flip")) */
+        ) {
+          face.image_status = HCImageStatus.Flip;
+        } else if (
+          'tags' in cardObject &&
+          cardObject.tags.includes(
+            'aftermath'
+          ) /*  || ('oracle_text' in face && face.oracle_text.toLowerCase().includes("aftermath")) */
+        ) {
+          face.image_status = HCImageStatus.Aftermath;
+        } else if (
+          'subtypes' in face &&
+          (face.subtypes.includes('Adventure') || face.subtypes.includes('Omen'))
+        ) {
+          face.image_status = HCImageStatus.Inset;
+        } else {
+          face.image_status = HCImageStatus.Split;
+        }
       }
       if (!('oracle_text' in face)) {
         face.oracle_text = '';
@@ -179,7 +209,8 @@ export const fetchDatabase = async () => {
 
     if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
-        ([key, value]) => !['name', 'type_line', 'mana_cost', 'image_status'].includes(key)
+        ([key, value]) =>
+          !['name', 'type_line', 'mana_cost', 'image_status', 'colors'].includes(key)
       )) {
         cardObject[key] = value;
       }

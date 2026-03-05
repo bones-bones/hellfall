@@ -3,6 +3,7 @@ import { pipsAtom } from './pipsAtom';
 import { useAtomValue } from 'jotai';
 import { getDefaultStore } from 'jotai';
 const store = getDefaultStore();
+// TODO: add shadows to pips in mana costs (or maybe just always?)
 // TODO: add better alt text handling (do it like scryfall does)
 
 export const getPipSrc = (name: string) => {

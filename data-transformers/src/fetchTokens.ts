@@ -6,7 +6,7 @@ import { HCLegality, HCLegalitiesField } from '../../src/api-types/Card';
 
 export const fetchTokens = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
 
@@ -43,7 +43,7 @@ export const fetchTokens = async () => {
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: '',
-              component: 'token_maker',
+              component: entry[6] == 'meld' ? 'meld_part' : 'token_maker',
               name: name.replace(/\*\d*$/, ''),
               type_line: '',
             };
@@ -77,12 +77,17 @@ export const fetchTokens = async () => {
     tokenObject.color_identity = [] as HCColors[];
     tokenObject.keywords = [];
     tokenObject.set = 'HCT';
-    tokenObject.image_status = HCImageStatus.HighResScan;
+    tokenObject.image_status = HCImageStatus.HighRes;
 
     tokenObject.isActualToken = true;
     tokenObject.variation = false;
-    tokenObject.layout = HCLayout.Normal;
-    return tokenObject as HCCard.AnySingleFaced;
+    tokenObject.layout =
+      entry[6] == 'meld'
+        ? HCLayout.MeldResult
+        : 'types' in tokenObject && tokenObject.types.includes('Emblem')
+        ? HCLayout.Emblem
+        : HCLayout.Token;
+    return tokenObject as HCCard.Any;
   });
   return theThing;
 };

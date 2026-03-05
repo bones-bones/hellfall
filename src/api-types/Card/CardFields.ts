@@ -158,6 +158,10 @@ export namespace HCCardFields.Gameplay {
    */
   export type CardFaceSpecific = AllFacesAndSides & {
     /**
+     * This face’s colors.
+     */
+    colors: HCColors;
+    /**
      * The colors in this card’s color indicator, if any. A null value for this field indicates the card does not have one.
      */
     color_indicator?: HCColors;
@@ -189,10 +193,6 @@ export namespace HCCardFields.Gameplay {
      * The Oracle text for this card, if any.
      */
     oracle_text: string;
-    /**
-     * This face’s colors.
-     */
-    colors: HCColors;
   } & CombatStats &
     VanguardStats;
 
@@ -222,6 +222,10 @@ export namespace HCCardFields.Gameplay {
      * @type Decimal
      */
     cmc: number;
+    /**
+     * The front's colors.
+     */
+    colors: HCColors;
     /**
      * This card’s color identity. It is a list of HCColors in order to handle the hybrid rules.
      */
@@ -277,6 +281,10 @@ export namespace HCCardFields.Print {
      * This card’s frame layout.
      */
     // frame: `${HCFrame}`;
+    /**
+     * A computer-readable indicator for the state of this card’s image, one of missing, placeholder, lowres, or highres_scan.
+     */
+    image_status: `${HCImageStatus}`;
     /**
      * An string with the image for this side.
      */

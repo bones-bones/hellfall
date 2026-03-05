@@ -311,13 +311,13 @@ export const useSearchResults = () => {
           return false;
         }
 
-        // TODO: handle split cards/adventures/transforms better
+        // TODO: handle split cards/adventures/transforms/flips better
         if (searchColors.length > 0) {
           if (
             !(
               searchColors.includes('C') &&
-              entry.toFaces()[0].colors.length == 1 &&
-              entry.toFaces()[0].colors[0] == 'C'
+              entry./**toFaces()[0].*/ colors.length == 1 &&
+              entry./**toFaces()[0].*/ colors[0] == 'C'
             )
           ) {
             // const newSearchColors = searchColors.includes(MISC_BULLSHIT)
@@ -325,13 +325,13 @@ export const useSearchResults = () => {
             //   : searchColors;
             // const useMisc = searchColors.includes(MISC_BULLSHIT);
             if (searchColors.includes('C') && colorComparison != '>=') {
-              if (!entry.toFaces()[0].colors.includes('C')) {
+              if (!entry./**toFaces()[0].*/ colors.includes('C')) {
                 return false;
               }
             } else {
               const newSearchColors = searchColors.filter(e => e != 'C');
               const entryColorsSet: Set<string> = new Set(
-                entry.toFaces()[0].colors.map(e => {
+                entry./**toFaces()[0].*/ colors.map(e => {
                   if (e == null) {
                     console.log('Card id:', entry.id, 'had a null color.');
                     return 'C';
