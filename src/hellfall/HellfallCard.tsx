@@ -18,10 +18,17 @@ const renderText = (text: string[]) => {
     );
   });
 };
-const renderFlavorLine = (text: string) => {
+const renderName = (text: string) => {
+  // const parenLine = splitParens(text).map((chunk, ci) => {
+  //   if (chunk.startsWith('(')) {
+  //     return '\\*' + chunk + '\\*';
+  //     // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
+  //     }
+  //     return chunk;
+  //   }).join('')
   const parts = text.split('\\*');
   return parts.map((part, index) => {
-    if (index % 2 == 1) {
+    if (index % 2 == 0) {
       return (
         <Text typeLevel="body.medium" key={`non-italic-${index}`}>
           {stringToMana(part)}
@@ -34,16 +41,6 @@ const renderFlavorLine = (text: string) => {
         </ItalicText>
       );
     }
-  });
-};
-const renderFlavorText = (text: string[]) => {
-  return text.map(entry => {
-    return (
-      <>
-        {renderFlavorLine(entry)}
-        <br />
-      </>
-    );
   });
 };
 const renderOracleLine = (text: string) => {
@@ -79,6 +76,34 @@ const renderOracleText = (text: string[]) => {
             })
             .join('')
         )}
+        <br />
+      </>
+    );
+  });
+};
+const renderFlavorLine = (text: string) => {
+  const parts = text.split('\\*');
+  return parts.map((part, index) => {
+    if (index % 2 == 1) {
+      return (
+        <Text typeLevel="body.medium" key={`non-italic-${index}`}>
+          {stringToMana(part)}
+        </Text>
+      );
+    } else {
+      return (
+        <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+          {stringToMana(part)}
+        </ItalicText>
+      );
+    }
+  });
+};
+const renderFlavorText = (text: string[]) => {
+  return text.map(entry => {
+    return (
+      <>
+        {renderFlavorLine(entry)}
         <br />
       </>
     );
@@ -135,9 +160,28 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           {data.toFaces().map((face, i) => (
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
-              <Text typeLevel="body.medium" key="name">
+              {face.name &&
+                face.name != ';' &&
+                (face.name.includes('\\*') ? (
+                  <div key="name">
+                    {renderName((face.name.startsWith(';') ? face.name.slice(1): face.name))}
+                  </div>
+                ) : (
+                  <>
+                    <Text typeLevel="body.medium" key="name">
+                      {renderText(
+                        (face.name.startsWith(';')
+                          ? face.name.slice(1)
+                          : face.name
+                        ).split('\\n')
+                      )}
+                    </Text>
+                    <br />
+                  </>
+                ))}
+              {/* <Text typeLevel="body.medium" key="name">
                 {face.name[0] == ';' ? face.name.slice(1) : face.name}
-              </Text>
+              </Text> */}
               {'   '}
               <Text typeLevel="body.medium" key="cost">
                 {stringToMana(face.mana_cost)}
