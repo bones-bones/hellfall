@@ -46,3 +46,4 @@ Write a script to transform the database
 - switch Hell's Cube (the card), Hellscube Alignment Chart, to use the new face system
 - add reminder cards for morph and its variants (not just manifest)
 - keep both images for A-Sky Diamond,
+- make pagination work with brwoser back button and make it go back to page 1 when search changes
