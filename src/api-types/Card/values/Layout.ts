@@ -10,12 +10,22 @@ export enum HCLayout {
   MeldPart = 'meld_part',
   /** Cards that are the result of melding */
   MeldResult = 'meld_result',
-  /** Token cards */
+  /** Tokens */
   Token = 'token',
   /** Tokens with another token printed on the back */
   MultiToken = 'multi_token',
   /** Emblem cards */
   Emblem = 'emblem',
+  /** Reminder cards */
+  Reminder = 'reminder',
+  /** Sticker sheets */
+  Sticker = 'sticker',
+  /** Dungeons */
+  Dungeon = 'dungeon',
+  /** Token copies of real cards */
+  RealCardToken = 'real_card_token',
+  /** Misc images that aren't actually cards */
+  Misc = 'misc'
 }
 
 /**
@@ -95,6 +105,11 @@ export namespace HCLayoutGroup {
     // `${HCLayout.Vanguard}`,
     `${HCLayout.Token}`,
     `${HCLayout.Emblem}`,
+    `${HCLayout.Reminder}`,
+    `${HCLayout.Sticker}`,
+    `${HCLayout.Dungeon}`,
+    `${HCLayout.RealCardToken}`,
+    `${HCLayout.Misc}`,
     // `${HCLayout.Augment}`,
     // `${HCLayout.Host}`,
   ] as const;
@@ -162,4 +177,50 @@ export namespace HCLayoutGroup {
    *
    */
   export type MultiFacedType = (typeof MultiFaced)[number];
+  
+
+  /**
+   * All layouts that represent an actual card.
+   *
+   * @see {@link CardLayoutType} for the type of this group.
+   */
+  export const CardLayout = [
+    `${HCLayout.Normal}`,
+    `${HCLayout.Multi}`,
+    `${HCLayout.MeldPart}`,
+  ] as const;
+
+  /**
+   * A type for all layouts that represent an actual card.
+   *
+   * @see {@link CardLayout} for an array version.
+   *
+   */
+  export type CardLayoutType = (typeof CardLayout)[number];
+
+
+  /**
+   * All layouts that represent a token.
+   *
+   * @see {@link TokenLayoutType} for the type of this group.
+   */
+  export const TokenLayout = [
+    `${HCLayout.Token}`,
+    `${HCLayout.MultiToken}`,
+    `${HCLayout.Emblem}`,
+    `${HCLayout.Reminder}`,
+    `${HCLayout.Sticker}`,
+    `${HCLayout.Dungeon}`,
+    `${HCLayout.RealCardToken}`,
+    `${HCLayout.Misc}`,
+    `${HCLayout.MeldResult}`,
+  ] as const;
+
+  /**
+   * A type for all layouts that represent a token.
+   *
+   * @see {@link TokenLayout} for an array version.
+   *
+   */
+  export type TokenLayoutType = (typeof TokenLayout)[number];
 }

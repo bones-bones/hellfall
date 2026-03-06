@@ -10,6 +10,7 @@ import {
   HCImageStatus,
   HCLayout,
   HCRelatedCard,
+  HCLayoutGroup
 } from '../../src/api-types/Card';
 import { HCObject } from '../../src/api-types/Object';
 import { getDefaultStore } from 'jotai';
@@ -101,10 +102,10 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
                   }
                 } else if (k == 'colors') {
                   // TODO: store current version and print the diff if there is one
-                  if (index == 0) {
-                    (merged as any)[k] = v;
-                    (face as any)[k] = v;
-                  }
+                  // if (index == 0) {
+                    // (merged as any)[k] = v;
+                    // (face as any)[k] = v;
+                  // }
                 } else if (k == 'image_status') {
                   // TODO: store current version and print the diff if there is one
                   if (
@@ -535,17 +536,17 @@ const main = async () => {
     }
     return -1;
   });
-  const tokenLayoutOrder = [
-    HCLayout.Token,
-    HCLayout.MultiToken,
-    HCLayout.Emblem,
-    HCLayout.MeldResult,
-  ];
+  // const tokenLayoutOrder = [
+  //   HCLayout.Token,
+  //   HCLayout.MultiToken,
+  //   HCLayout.Emblem,
+  //   HCLayout.MeldResult,
+  // ];
   finalTokens.sort((a, b) => {
     if (a.layout != b.layout) {
-      if (
-        tokenLayoutOrder.indexOf(a.layout as HCLayout) >
-        tokenLayoutOrder.indexOf(b.layout as HCLayout)
+      if ( HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) > HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
+        // tokenLayoutOrder.indexOf(a.layout as HCLayout) >
+        // tokenLayoutOrder.indexOf(b.layout as HCLayout)
       ) {
         return 1;
       }
