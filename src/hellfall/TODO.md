@@ -50,3 +50,5 @@ Write a script to transform the database
 - make pagination work with browser back button and make it go back to page 1 when search changes
 - make changes in url correctly work with forward and back buttons in browser
 - make search for text (including in names) be able to ignore \* (same for hyperlinks to card names)
+- add handling for splitting sides>4
+- implement grid type layout (has singlefaceonly attributes for overall card, but also has card_faces)

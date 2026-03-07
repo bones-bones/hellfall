@@ -24,6 +24,8 @@ const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
 const UPDATE_MODE = process.argv.includes('--update');
+const oneWayMergeProps = ['name','mana_cost','color_indicator','supertypes','types','type_line','subtypes','oracle_text','flavor_text','power','toughness','loyalty','defense','hand_modifier','life_modifier','attraction_lights','watermark'];
+const oneWayDontMergeProps = ['color_identity','layout']
 const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
     if ('card_faces' in card && 'all_parts' in card) {
@@ -141,6 +143,12 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         while (merged.card_faces.length < newCard.card_faces.length) {
           merged.card_faces.push(newCard.card_faces[merged.card_faces.length]);
         }
+      } else if ('card_faces' in merged && !('card_faces' in newCard) && oneWayMergeProps.includes(key)) {
+        const x = 1
+        merged.card_faces[0][key as keyof HCCardFace.MultiFaced]!= value;
+      } else if ('card_faces' in merged && !('card_faces' in newCard) && oneWayDontMergeProps.includes(key)) {
+        // TODO: store current version and print the diff if there is one
+        const x = 1
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.isActualToken) {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && ['name', 'oracle_text', 'flavor_text'].includes(key)) {

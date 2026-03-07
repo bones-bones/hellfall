@@ -216,6 +216,42 @@ export namespace HCCardFields.Gameplay {
   //    */
   //   colors: HCColors;
   // };
+  /**
+   * These fields only show up on multiface cards.
+   * - Root level for multiface cards.
+   */
+  export type FrontSpecific = {
+    /**
+     * The card’s mana value. Note that some funny cards have fractional mana costs.
+     *
+     * @type Decimal
+     */
+    cmc: number;
+    /**
+     * The front's colors.
+     */
+    colors: HCColors;
+    /**
+     * This card’s color identity. It is a list of HCColors in order to handle the hybrid rules.
+     */
+    color_identity: HCColors[];
+    /**
+     * An array of keywords that this card uses, such as 'Flying' and 'Cumulative upkeep'.
+     */
+    keywords: string[];
+    /**
+     * The name of this card. If this card has multiple faces, this field will contain all names separated by ␣//␣.
+     */
+    name: string;
+    /**
+     * Colors of mana that this card could produce.
+     */
+    produced_mana?: HCManaTypes;
+    /**
+     * The type line of this card.
+     */
+    type_line: string;
+  };
 
   /**
    * These fields are specific for a card.

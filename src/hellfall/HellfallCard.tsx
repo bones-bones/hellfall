@@ -160,7 +160,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
       )}
       <Card>
         <Card.Body padding={'zero'}>
-          {/* <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading> */}
+          {/* {'card_faces' in data && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading>} */}
           {data.toFaces().map((face, i) => (
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}

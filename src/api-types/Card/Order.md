@@ -33,6 +33,7 @@ main card:
 - isActualToken?
 - variation
 - variation_of?
+- layout
 - card_faces?
 - all_parts?
 

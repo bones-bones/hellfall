@@ -6,6 +6,8 @@ export enum HCLayout {
   Normal = 'normal',
   /** A multi-faced card */
   Multi = 'multi',
+  /** A multi-faced card that needs to be rendered as a grid */
+  // Grid = 'grid',
   /** Cards that can meld */
   MeldPart = 'meld_part',
   /** Cards that are the result of melding */
@@ -18,6 +20,8 @@ export enum HCLayout {
   Emblem = 'emblem',
   /** Reminder cards */
   Reminder = 'reminder',
+  /** Reminder cards with additional faces */
+  MultiReminder = 'multi_reminder',
   /** Sticker sheets */
   Sticker = 'sticker',
   /** Dungeons */
@@ -168,6 +172,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Multi}`,
     `${HCLayout.MultiToken}`,
     `${HCLayout.MeldPart}`,
+    `${HCLayout.MultiReminder}`,
   ] as const;
 
   /**
@@ -207,6 +212,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.MultiToken}`,
     `${HCLayout.Emblem}`,
     `${HCLayout.Reminder}`,
+    `${HCLayout.MultiReminder}`,
     `${HCLayout.Sticker}`,
     `${HCLayout.Dungeon}`,
     `${HCLayout.RealCardToken}`,
