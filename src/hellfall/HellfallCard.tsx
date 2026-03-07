@@ -301,11 +301,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           )}
           {
             <>
-              Constructed <SetLegality banned={Boolean(data.legalities.standard == 'banned')} />
+              Constructed <SetLegality banned={Boolean(data.legalities.standard != 'legal')} />
               <br />
-              4CB <SetLegality banned={Boolean(data.legalities['4cb'] == 'banned')} />
+              4CB <SetLegality banned={Boolean(data.legalities['4cb'] != 'legal')} />
               <br />
-              Hellsmander <SetLegality banned={Boolean(data.legalities.commander == 'banned')} />
+              Hellsmander <SetLegality banned={Boolean(data.legalities.commander != 'legal')} />
               <br />
             </>
           }
