@@ -47,4 +47,6 @@ Write a script to transform the database
 - add reminder cards for morph and its variants (not just manifest)
 - use multi_token for Scrap Heap Reminder Card1 (also add wurms),
 - keep both images for A-Sky Diamond,
-- make pagination work with brwoser back button and make it go back to page 1 when search changes
+- make pagination work with browser back button and make it go back to page 1 when search changes
+- make changes in url correctly work with forward and back buttons in browser
+- make search for text (including in names) be able to ignore \* (same for hyperlinks to card names)

@@ -43,8 +43,7 @@ export const sortFunction =
   };
 
 const getSortString = (card: HCCard.Any) => {
-  const cardColors = card.toFaces()[0]?.colors || '';
-
+  const cardColors = card.toFaces()[0]?.colors || [];
   return (
     cardColors
       .reduce((curr, next) => curr + (colorSortValue[next] || 10_000_000), 0)

@@ -36,11 +36,29 @@ export const fetchTokens = async () => {
     'Ad Card': HCLayout.Misc,
     Misc: HCLayout.Misc,
   };
+  const defaultProps: Record<string, any> = {
+    rulings: '',
+    creator: '',
+    legalities: {
+      standard: HCLegality.NotLegal,
+      '4cb': HCLegality.NotLegal,
+      commander: HCLegality.NotLegal,
+    } as HCLegalitiesField,
+    mana_cost: '',
+    colors: [HCColor.Colorless] as HCColors,
+    cmc: 0,
+    color_identity: [] as HCColors[],
+    keywords: [],
+    set: 'HCT',
+    variation: false,
+    image_status: HCImageStatus.HighRes,
+    isActualToken: true,
+  };
 
   const theThing = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
-      if (entry[i] != '') {
+      if (entry[i]) {
         if (keys[i] == 'name') {
           tokenObject.id = entry[i];
           const name: string = entry[i].replace(/\d+$/, '');
@@ -77,31 +95,41 @@ export const fetchTokens = async () => {
     }
     if (entry[6] == 'meld') {
       tokenObject.layout = HCLayout.MeldResult;
-    } else if ('types' in tokenObject && tokenObject.types.includes('Emblem')) {
-      tokenObject.layout = HCLayout.Emblem;
-    } else if ('types' in tokenObject && tokenObject.types.includes('Reminder Card')) {
-      tokenObject.layout = HCLayout.Reminder;
-    } else if ('types' in tokenObject && tokenObject.types.includes('Sticker Sheet')) {
-      tokenObject.layout = HCLayout.Sticker;
+    } else if ('types' in tokenObject && tokenObject.types[0] in typeLayouts) {
+      tokenObject.layout = typeLayouts[tokenObject.types[0]];
+      if (tokenObject.types.length > 1) {
+        tokenObject.types.shift();
+      }
     } else {
       tokenObject.layout = HCLayout.Token;
     }
-
-    if ('types' in tokenObject) {
-      if (tokenObject.types[0] in typeLayouts) {
-        tokenObject.layout = typeLayouts[tokenObject.types[0]];
-        if (tokenObject.types.length > 1) {
-          tokenObject.types.shift();
-        }
-      }
-      tokenObject.type_line = [tokenObject.types?.join(' '), tokenObject.subtypes?.join(' ')]
+    // } else if ('types' in tokenObject && tokenObject.types.includes('Emblem')) {
+    //   tokenObject.layout = HCLayout.Emblem;
+    // } else if ('types' in tokenObject && tokenObject.types.includes('Reminder Card')) {
+    //   tokenObject.layout = HCLayout.Reminder;
+    // } else if ('types' in tokenObject && tokenObject.types.includes('Sticker Sheet')) {
+    //   tokenObject.layout = HCLayout.Sticker;
+    // } else {
+    //   tokenObject.layout = HCLayout.Token;
+    // }
+    if ('types' in tokenObject || 'supertypes' in tokenObject) {
+      tokenObject.type_line = [
+        tokenObject.supertypes?.join(' '),
+        [tokenObject.types?.join(' '), tokenObject.subtypes?.join(' ')].filter(Boolean).join(' — '),
+      ]
         .filter(Boolean)
-        .join(' — ');
+        .join(' ') as string;
     } else {
       if ('subtypes' in tokenObject) {
         delete tokenObject.subtypes;
       }
+      tokenObject.type_line = '';
     }
+    Object.keys(defaultProps)
+      .filter(key => !(key in tokenObject))
+      .forEach(key => {
+        tokenObject[key] = defaultProps[key];
+      });
     const mandatoryProps = ['rulings', 'creator', 'cmc', 'type_line', 'oracle_text', 'mana_cost'];
     mandatoryProps
       .filter(prop => !(prop in tokenObject))
@@ -111,21 +139,15 @@ export const fetchTokens = async () => {
       '4cb': HCLegality.NotLegal,
       commander: HCLegality.NotLegal,
     };
-    tokenObject.legalities = legalities;
-    tokenObject.colors = [HCColor.Colorless] as HCColors;
-    tokenObject.color_identity = [] as HCColors[];
-    tokenObject.keywords = [];
-    tokenObject.set = 'HCT';
-    tokenObject.image_status = HCImageStatus.HighRes;
+    // tokenObject.legalities = legalities;
+    // tokenObject.colors = [HCColor.Colorless] as HCColors;
+    // tokenObject.color_identity = [] as HCColors[];
+    // tokenObject.keywords = [];
+    // tokenObject.set = 'HCT';
+    // tokenObject.image_status = HCImageStatus.HighRes;
 
-    tokenObject.isActualToken = true;
-    tokenObject.variation = false;
-    if (entry[6] == 'meld') {
-      tokenObject.layout = HCLayout.MeldResult;
-    }
-    if (!('layout' in tokenObject)) {
-      tokenObject.layout = HCLayout.Token;
-    }
+    // tokenObject.isActualToken = true;
+    // tokenObject.variation = false;
     return tokenObject as HCCard.Any;
   });
   return theThing;

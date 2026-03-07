@@ -20,14 +20,16 @@ const renderText = (text: string[]) => {
   });
 };
 const renderName = (text: string) => {
-  // const parenLine = splitParens(text).map((chunk, ci) => {
-  //   if (chunk.startsWith('(')) {
-  //     return '\\*' + chunk + '\\*';
-  //     // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
-  //     }
-  //     return chunk;
-  //   }).join('')
-  const parts = text.split('\\*');
+  const parenLine = splitParens(text)
+    .map((chunk, ci) => {
+      if (chunk.startsWith('(')) {
+        return '\\*' + chunk + '\\*';
+        // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
+      }
+      return chunk;
+    })
+    .join('');
+  const parts = parenLine.split('\\*');
   return parts.map((part, index) => {
     if (index % 2 == 0) {
       return (
@@ -117,7 +119,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const [activeImageSide, setActiveImageSide] = useState(0);
 
   // TODO: add handling for flip and aftermath
-  // TODO: render pips in flavor text
+  // TODO: add color indicator symbols
   const imagesToShow = data
     .toFaces()
     .filter(e => e.image)
@@ -164,7 +166,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {i > 0 && <Divider />}
               {face.name &&
                 face.name != ';' &&
-                (face.name.includes('\\*') ? (
+                (face.name.includes('\\*') || face.name.includes('(') ? (
                   <div key="name">
                     {renderName(face.name.startsWith(';') ? face.name.slice(1) : face.name)}
                   </div>

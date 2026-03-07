@@ -71,6 +71,28 @@ export const fetchDatabase = async () => {
     }
   });
 
+  const defaultProps: Record<string, any> = {
+    name: '',
+    rulings: '',
+    creator: '',
+    legalities: {
+      standard: HCLegality.Banned,
+      '4cb': HCLegality.Banned,
+      commander: HCLegality.Banned,
+    } as HCLegalitiesField,
+    cmc: 0,
+    colors: [HCColor.Colorless] as HCColors,
+    keywords: [],
+    set: '',
+    variation: false,
+  };
+
+  const defaultMultiFaceProps: Record<string, any> = {
+    mana_cost: '',
+    colors: [HCColor.Colorless] as HCColors,
+    oracle_text: '',
+  };
+
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
       card_faces: [],
@@ -87,10 +109,10 @@ export const fetchDatabase = async () => {
             const colorArr = entry[i]
               .split(';')
               .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
-            cardObject.card_faces[face][key] = colorArr?.length
-              ? colorArr
-              : ([HCColor.Colorless] as HCColors);
-            cardObject.colors = colorArr?.length ? colorArr : ([HCColor.Colorless] as HCColors);
+            cardObject.card_faces[face][key] =
+              entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
+            cardObject.colors =
+              entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
           } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
             cardObject.card_faces[face][key] = entry[i].split(';');
           } else if (key == 'loyalty' && cardObject.card_faces[face]['types']?.includes('Battle')) {
@@ -145,8 +167,8 @@ export const fetchDatabase = async () => {
     if (cardObject.card_faces.length == 0) {
       cardObject.card_faces.push({} as Record<string, any>);
     }
-    cardObject.keywords = [];
-    cardObject.variation = false;
+    // cardObject.keywords = [];
+    // cardObject.variation = false;
 
     const name = entry[1].split(' // ');
     const type_line_list: string[] = [];
@@ -161,28 +183,19 @@ export const fetchDatabase = async () => {
         .join(' ') as string;
       face.type_line = face_type;
       type_line_list.push(face_type);
-      if (!('mana_cost' in face)) {
-        face.mana_cost = '';
-      }
-      mana_cost_list.push(face.mana_cost);
-      if (!('colors' in face)) {
-        face.colors = [HCColor.Colorless] as HCColors;
-      }
       if (!('image_status' in face) || ['split'].includes(face.image_status)) {
         if (index == 0) {
           face.image_status = HCImageStatus.Front;
         } else if (
           'tags' in cardObject &&
-          cardObject.tags.includes(
-            'flip'
-          ) /*  || ('oracle_text' in cardObject.card_faces[0] && cardObject.card_faces[0].oracle_text.toLowerCase().includes("flip")) */
+          cardObject.tags.includes('flip')
+          /*  || ('oracle_text' in cardObject.card_faces[0] && cardObject.card_faces[0].oracle_text.toLowerCase().includes("flip")) */
         ) {
           face.image_status = HCImageStatus.Flip;
         } else if (
           'tags' in cardObject &&
-          cardObject.tags.includes(
-            'aftermath'
-          ) /*  || ('oracle_text' in face && face.oracle_text.toLowerCase().includes("aftermath")) */
+          cardObject.tags.includes('aftermath')
+          /*  || ('oracle_text' in face && face.oracle_text.toLowerCase().includes("aftermath")) */
         ) {
           face.image_status = HCImageStatus.Aftermath;
         } else if (
@@ -194,24 +207,27 @@ export const fetchDatabase = async () => {
           face.image_status = HCImageStatus.Split;
         }
       }
-      if (!('oracle_text' in face)) {
-        face.oracle_text = '';
-      }
+      Object.keys(defaultMultiFaceProps)
+        .filter(key => !(key in face))
+        .forEach(key => {
+          face[key] = defaultMultiFaceProps[key];
+        });
+      mana_cost_list.push(face.mana_cost);
     });
 
     cardObject.type_line = type_line_list.join(' // ');
     cardObject.mana_cost = mana_cost_list.filter(e => e).join(' // ');
 
     cardObject.color_identity = getColorIdentityProp(cardObject as HCCard.AnyMultiFaced);
-    const mandatoryProps = ['rulings', 'creator', 'cmc'];
-    mandatoryProps
-      .filter(prop => !(prop in cardObject))
-      .forEach(key => (cardObject[key] = key == 'cmc' ? 0 : ''));
+    Object.keys(defaultProps)
+      .filter(key => !(key in cardObject))
+      .forEach(key => {
+        cardObject[key] = defaultProps[key];
+      });
 
     if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
-        ([key, value]) =>
-          !['name', 'type_line', 'mana_cost', 'image_status', 'colors'].includes(key)
+        ([k, v]) => !['name', 'type_line', 'mana_cost', 'image_status', 'colors'].includes(k)
       )) {
         cardObject[key] = value;
       }

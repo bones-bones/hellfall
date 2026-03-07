@@ -193,6 +193,12 @@ export namespace HCCardFields.Gameplay {
      * The Oracle text for this card, if any.
      */
     oracle_text: string;
+    /**
+     * The lit Unfinity attractions lights on this card, if any.
+     *
+     * This will be an array of numbers ranging from 1 to 6 inclusive.
+     */
+    attraction_lights?: number[];
   } & CombatStats &
     VanguardStats;
 
@@ -267,12 +273,6 @@ export namespace HCCardFields.Print {
      * @type UUID
      */
     // artist_ids?: string[];
-    /**
-     * The lit Unfinity attractions lights on this card, if any.
-     *
-     * This will be an array of numbers ranging from 1 to 6 inclusive.
-     */
-    attraction_lights?: number[];
     /**
      * This card’s border color: black, white, borderless, silver, or gold.
      */

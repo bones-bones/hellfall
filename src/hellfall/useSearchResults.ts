@@ -330,6 +330,9 @@ export const useSearchResults = () => {
               }
             } else {
               const newSearchColors = searchColors.filter(e => e != 'C');
+              // if (!entry.colors) {
+              //   debugger;
+              // }
               const entryColorsSet: Set<string> = new Set(
                 entry./**toFaces()[0].*/ colors.map(e => {
                   if (e == null) {

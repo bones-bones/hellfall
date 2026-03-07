@@ -77,6 +77,12 @@ const setDerivedProps = (card: HCCard.Any) => {
  */
 const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
   const merged: HCCard.Any = { ...existingCard };
+  if (
+    !('colors' in existingCard && existingCard.colors) ||
+    !('colors' in newCard && newCard.colors)
+  ) {
+    const x = 1;
+  }
 
   Object.entries(newCard).forEach(([key, value]) => {
     // TODO: make sure that empty arrays being truthy doesn't break anything here
@@ -89,8 +95,14 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         'card_faces' in newCard
       ) {
         merged.card_faces = existingCard.card_faces.map((face, index) => {
+          if (!('colors' in face && face.colors)) {
+            const x = 1;
+          }
           if (index < value.length) {
             const newFace = newCard.card_faces?.[index];
+            if (!('colors' in newFace && newFace.colors)) {
+              const x = 1;
+            }
             if (existingCard.card_faces.length > 4 && index == 3) {
               // this is necessary due to how the sheet is formatted
               // TODO: store current version and print the diff if there is one
