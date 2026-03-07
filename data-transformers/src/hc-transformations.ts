@@ -10,7 +10,7 @@ import {
   HCImageStatus,
   HCLayout,
   HCRelatedCard,
-  HCLayoutGroup
+  HCLayoutGroup,
 } from '../../src/api-types/Card';
 import { HCObject } from '../../src/api-types/Object';
 import { getDefaultStore } from 'jotai';
@@ -96,7 +96,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
               // TODO: store current version and print the diff if there is one
             } else {
               Object.entries(newFace).forEach(([k, v]) => {
-                if (['name', 'oracle_text', 'flavor_text'].includes(k)) {
+                if (k in face && ['name', 'oracle_text', 'flavor_text'].includes(k)) {
                   if (face[k as keyof typeof face]![0] == ';') {
                     // TODO: store current version and print the diff if there is one
                   } else if (v) {
@@ -105,8 +105,8 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
                 } else if (k == 'colors') {
                   // TODO: store current version and print the diff if there is one
                   // if (index == 0) {
-                    // (merged as any)[k] = v;
-                    // (face as any)[k] = v;
+                  // (merged as any)[k] = v;
+                  // (face as any)[k] = v;
                   // }
                 } else if (k == 'image_status') {
                   // TODO: store current version and print the diff if there is one
@@ -131,7 +131,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         }
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.isActualToken) {
         // TODO: store current version and print the diff if there is one
-      } else if (['name', 'oracle_text', 'flavor_text'].includes(key)) {
+      } else if (key in merged && ['name', 'oracle_text', 'flavor_text'].includes(key)) {
         if ((merged[key as keyof typeof merged]! as string)[0] == ';') {
           // TODO: store current version and print the diff if there is one
         } else if (value) {
@@ -144,9 +144,11 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         'all_parts' in existingCard &&
         'all_parts' in newCard
       ) {
-        merged.all_parts = existingCard.all_parts?.map(part=> {
-          const newPart = newCard.all_parts?.find(e=>e.name.toLowerCase() == part.name.toLowerCase());
-          if (newPart){
+        merged.all_parts = existingCard.all_parts?.map(part => {
+          const newPart = newCard.all_parts?.find(
+            e => e.name.toLowerCase() == part.name.toLowerCase()
+          );
+          if (newPart) {
             Object.entries(newPart).forEach(([k, v]) => {
               if ((k == 'name' || k == 'component') && v) {
                 (part as any)[k] = v;
@@ -154,12 +156,12 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
             });
           }
           return part;
-        })
-        newCard.all_parts?.forEach(part=>{
-          if (!(merged.all_parts?.find(e=>e.name.toLowerCase() == part.name.toLowerCase()))) {
+        });
+        newCard.all_parts?.forEach(part => {
+          if (!merged.all_parts?.find(e => e.name.toLowerCase() == part.name.toLowerCase())) {
             merged.all_parts?.push(part);
           }
-        })
+        });
       } else if (key == 'image_status') {
         // TODO: store current version and print the diff if there is one
         if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {
@@ -309,7 +311,7 @@ const main = async () => {
         component: 'token',
         name: token.name,
         type_line: token.type_line,
-        image:token.image
+        image: token.image,
       };
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
@@ -323,7 +325,7 @@ const main = async () => {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
             tokenMaker.type_line = relatedCard.type_line;
-            tokenMaker.image=relatedCard.image;
+            tokenMaker.image = relatedCard.image;
             if ('all_parts' in relatedCard) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == token.id);
               if (tokenIndex == -1) {
@@ -344,7 +346,7 @@ const main = async () => {
               tokenMaker.id = related.id;
               tokenMaker.name = related.name;
               tokenMaker.type_line = related.type_line;
-              tokenMaker.image=related.image
+              tokenMaker.image = related.image;
               if ('all_parts' in related) {
                 const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
                 if (tokenIndex == -1) {
@@ -373,7 +375,8 @@ const main = async () => {
             meldPartIds.push(relatedCard.id);
             meldPart.name = relatedCard.name;
             meldPart.type_line = relatedCard.type_line;
-            meldPart.image='card_faces' in relatedCard ? relatedCard.card_faces[0].image: relatedCard.image;
+            meldPart.image =
+              'card_faces' in relatedCard ? relatedCard.card_faces[0].image : relatedCard.image;
             meldRelatedCards.push(meldPart);
             // } else {
             //   const related = finalTokens.find(otherToken => tokenMaker.id ? otherToken.id == tokenMaker.id : otherToken.name == tokenMaker.name);
@@ -401,7 +404,7 @@ const main = async () => {
           component: 'meld_result',
           name: token.name,
           type_line: token.type_line,
-          image:token.image
+          image: token.image,
         };
         meldRelatedCards.push(meldResult);
         meldPartIds.forEach(id => {
@@ -432,7 +435,7 @@ const main = async () => {
         component: 'token_maker',
         name: card.name,
         type_line: card.type_line,
-        image:card.image
+        image: card.image,
       };
       card.all_parts
         ?.filter(e => e.component == 'token')
@@ -442,7 +445,7 @@ const main = async () => {
             tokenCard.id = relatedCard.id;
             tokenCard.name = relatedCard.name;
             tokenCard.type_line = relatedCard.type_line;
-            tokenCard.image=relatedCard.image;
+            tokenCard.image = relatedCard.image;
             if ('all_parts' in relatedCard) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
               if (tokenIndex == -1) {
@@ -465,7 +468,7 @@ const main = async () => {
           storedRelated.id = relatedCard.id;
           storedRelated.name = relatedCard.name;
           storedRelated.type_line = relatedCard.type_line;
-          storedRelated.image=relatedCard.image
+          storedRelated.image = relatedCard.image;
         }
       });
     });
@@ -547,7 +550,9 @@ const main = async () => {
   // ];
   finalTokens.sort((a, b) => {
     if (a.layout != b.layout) {
-      if ( HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) > HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
+      if (
+        HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) >
+        HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
         // tokenLayoutOrder.indexOf(a.layout as HCLayout) >
         // tokenLayoutOrder.indexOf(b.layout as HCLayout)
       ) {

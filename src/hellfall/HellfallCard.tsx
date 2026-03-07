@@ -342,21 +342,23 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <div>
                 <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
                 {data.all_parts
-                  .filter(e => e.id!=data.id)
+                  .filter(e => e.id != data.id)
                   .map((entry, i) => (
                     <HellfallRelatedEntry
                       onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                         if (event.button === 1 || event.metaKey || event.ctrlKey) {
                           window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
                         } else {
-                          window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id), '_blank';
+                          (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
+                            '_blank';
                         }
                       }}
                       onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
                         if (event.button === 1 || event.metaKey || event.ctrlKey) {
                           window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
                         } else {
-                          window.location.href='/hellfall/card/' + encodeURIComponent(entry.id), '_blank';
+                          (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
+                            '_blank';
                         }
                       }}
                       key={entry.id}
@@ -364,7 +366,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       name={entry.name}
                       url={entry.image!}
                     />
-                    
+
                     // <img key={entry.name + i} src={entry.image} height="500px" />
                   ))}
               </div>

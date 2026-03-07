@@ -45,5 +45,6 @@ Write a script to transform the database
 - tell users how to use not and/or make it easier to use not (!)
 - switch Hell's Cube (the card), Hellscube Alignment Chart, to use the new face system
 - add reminder cards for morph and its variants (not just manifest)
+- use multi_token for Scrap Heap Reminder Card1 (also add wurms),
 - keep both images for A-Sky Diamond,
 - make pagination work with brwoser back button and make it go back to page 1 when search changes

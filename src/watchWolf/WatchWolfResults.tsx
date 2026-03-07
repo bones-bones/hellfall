@@ -16,7 +16,12 @@ import { useKeyPress } from '../hooks';
 
 //TODO: make results use Id natively on the backend
 
-interface Standing { Id: string; Wins: number; Matches: number; Winrate?: string }
+interface Standing {
+  Id: string;
+  Wins: number;
+  Matches: number;
+  Winrate?: string;
+}
 
 export const Watchwolfresults = () => {
   const escape = useKeyPress('Escape');
@@ -36,35 +41,34 @@ export const Watchwolfresults = () => {
   const wrGroupedStandings = useMemo(() => {
     if (!standings) return [];
     // first we create an object where the keys are winrates and the values are arrays of standings.
-    const buckets = standings
-      .reduce<Record<string, Standing[]>>((accumulator, standing) => {
-        const winrate = ((standing.Wins / standing.Matches) * 100).toFixed(0)
-        if (!(winrate in accumulator)) {
-          // this winrate does not exist in the accumulator object yet,
-          // lets create an empty array under its key. 
-          accumulator[winrate] = []
-        }
-        accumulator[winrate].push({ ...standing, Winrate: winrate })
-        return accumulator
-      }, {})
+    const buckets = standings.reduce<Record<string, Standing[]>>((accumulator, standing) => {
+      const winrate = ((standing.Wins / standing.Matches) * 100).toFixed(0);
+      if (!(winrate in accumulator)) {
+        // this winrate does not exist in the accumulator object yet,
+        // lets create an empty array under its key.
+        accumulator[winrate] = [];
+      }
+      accumulator[winrate].push({ ...standing, Winrate: winrate });
+      return accumulator;
+    }, {});
     // then we sort all value arrays so we dont have to do it at render
     for (const wrKey in buckets) {
-      const wr = Number(wrKey)
+      const wr = Number(wrKey);
       buckets[wrKey].sort((a, b) => {
         // if wr >= 50, we want to sort by wins descending
         if (wr >= 50) {
-          return b.Wins - a.Wins
+          return b.Wins - a.Wins;
         }
         // if wr < 50, we want to sort by matches - wins (losses) ascending
-        return (a.Matches - a.Wins) - (b.Matches - b.Wins)
-      })
+        return a.Matches - a.Wins - (b.Matches - b.Wins);
+      });
     }
     // then we sort the keys so we can iterate over them in order
-    const sortedKeys = Object.keys(buckets).sort((a, b) => Number(b) - Number(a))
+    const sortedKeys = Object.keys(buckets).sort((a, b) => Number(b) - Number(a));
     // and last we flatten the buckets into a single array
-    const flattened = sortedKeys.flatMap(key => buckets[key])
-    return flattened
-  }, [standings])
+    const flattened = sortedKeys.flatMap(key => buckets[key]);
+    return flattened;
+  }, [standings]);
 
   return (
     <PageContainer>
@@ -99,30 +103,34 @@ export const Watchwolfresults = () => {
         <ResultsReceptaclePlaceThing>
           {/* Header row, but we just re-use the ResultRow component */}
           <ResultRow style={{ marginBottom: 6 }}>
-            <div><strong>Card Name</strong> [Creator]</div>
+            <div>
+              <strong>Card Name</strong> [Creator]
+            </div>
             <span>Winrate</span>
             <span>W/L</span>
           </ResultRow>
 
-          {wrGroupedStandings
-            ?.slice(0, cards.length)
-            .map(entry => {
-              const card = cards.find(e => entry.Id === e.id);
-              if (!card) return null;
+          {wrGroupedStandings?.slice(0, cards.length).map(entry => {
+            const card = cards.find(e => entry.Id === e.id);
+            if (!card) return null;
 
-              return (
-                <ResultRow
-                  key={entry.Id}
-                  onClick={() => {
-                    setActiveCardFromAtom(entry.Id);
-                  }}
-                >
-                  <div><strong>{card.name}</strong> [{card.creator}]</div>
-                  <span>{entry.Winrate}%</span>
-                  <span>{entry.Wins}/{entry.Matches}</span>
-                </ResultRow>
-              );
-            })}
+            return (
+              <ResultRow
+                key={entry.Id}
+                onClick={() => {
+                  setActiveCardFromAtom(entry.Id);
+                }}
+              >
+                <div>
+                  <strong>{card.name}</strong> [{card.creator}]
+                </div>
+                <span>{entry.Winrate}%</span>
+                <span>
+                  {entry.Wins}/{entry.Matches}
+                </span>
+              </ResultRow>
+            );
+          })}
         </ResultsReceptaclePlaceThing>
       </StyleComponent>
     </PageContainer>
@@ -171,7 +179,7 @@ const ResultRow = styled('div')`
     flex: 1;
     text-align: left;
   }
-`
+`;
 
 const StyleComponent = styled('div')({ color: 'purple', display: 'flex' });
 

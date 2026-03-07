@@ -4,7 +4,6 @@ import { HCColor, HCColors } from '../../src/api-types/Card';
 import { HCObject } from '../../src/api-types/Object';
 import { HCLegality, HCLegalitiesField } from '../../src/api-types/Card';
 
-
 export const fetchTokens = async () => {
   const requestedData = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database+(Unapproved)?alt=json&key=${sheetsKey}`
@@ -28,15 +27,15 @@ export const fetchTokens = async () => {
     }
   });
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token'];
-  const typeLayouts:Record<string,HCLayout> = {
-    "Emblem":HCLayout.Emblem,
-    "Reminder Card":HCLayout.Reminder,
-    "Sticker Sheet":HCLayout.Sticker,
-    "Dungeon":HCLayout.Dungeon,
-    "Real Card":HCLayout.RealCardToken,
-    "Ad Card":HCLayout.Misc,
-    "Misc":HCLayout.Misc
-  }
+  const typeLayouts: Record<string, HCLayout> = {
+    Emblem: HCLayout.Emblem,
+    'Reminder Card': HCLayout.Reminder,
+    'Sticker Sheet': HCLayout.Sticker,
+    Dungeon: HCLayout.Dungeon,
+    'Real Card': HCLayout.RealCardToken,
+    'Ad Card': HCLayout.Misc,
+    Misc: HCLayout.Misc,
+  };
 
   const theThing = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
@@ -77,21 +76,21 @@ export const fetchTokens = async () => {
       }
     }
     if (entry[6] == 'meld') {
-      tokenObject.layout = HCLayout.MeldResult
-    } else if ('types' in tokenObject && tokenObject.types.includes('Emblem')){
+      tokenObject.layout = HCLayout.MeldResult;
+    } else if ('types' in tokenObject && tokenObject.types.includes('Emblem')) {
       tokenObject.layout = HCLayout.Emblem;
-    } else if ('types' in tokenObject && tokenObject.types.includes('Reminder Card')){
+    } else if ('types' in tokenObject && tokenObject.types.includes('Reminder Card')) {
       tokenObject.layout = HCLayout.Reminder;
-    } else if ('types' in tokenObject && tokenObject.types.includes('Sticker Sheet')){
+    } else if ('types' in tokenObject && tokenObject.types.includes('Sticker Sheet')) {
       tokenObject.layout = HCLayout.Sticker;
     } else {
-      tokenObject.layout = HCLayout.Token
+      tokenObject.layout = HCLayout.Token;
     }
 
     if ('types' in tokenObject) {
       if (tokenObject.types[0] in typeLayouts) {
         tokenObject.layout = typeLayouts[tokenObject.types[0]];
-        if (tokenObject.types.length>1) {
+        if (tokenObject.types.length > 1) {
           tokenObject.types.shift();
         }
       }

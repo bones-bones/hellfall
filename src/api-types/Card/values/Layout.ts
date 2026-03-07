@@ -25,7 +25,7 @@ export enum HCLayout {
   /** Token copies of real cards */
   RealCardToken = 'real_card_token',
   /** Misc images that aren't actually cards */
-  Misc = 'misc'
+  Misc = 'misc',
 }
 
 /**
@@ -177,7 +177,6 @@ export namespace HCLayoutGroup {
    *
    */
   export type MultiFacedType = (typeof MultiFaced)[number];
-  
 
   /**
    * All layouts that represent an actual card.
@@ -197,7 +196,6 @@ export namespace HCLayoutGroup {
    *
    */
   export type CardLayoutType = (typeof CardLayout)[number];
-
 
   /**
    * All layouts that represent a token.
