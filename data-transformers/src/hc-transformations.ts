@@ -15,7 +15,7 @@ import {
 import { HCObject } from '../../src/api-types/Object';
 import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/pipsAtom';
-import { getColorIdentityProp } from '../../src/hellfall/getColorIdentity';
+import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
 
 // TODO: make sure all_parts doesn't keep duplicates (maybe do it at the same time as sorting it?)
 // TODO: hard sort the property order in a logical way
@@ -24,8 +24,26 @@ const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
 const UPDATE_MODE = process.argv.includes('--update');
-const oneWayMergeProps = ['name','mana_cost','color_indicator','supertypes','types','type_line','subtypes','oracle_text','flavor_text','power','toughness','loyalty','defense','hand_modifier','life_modifier','attraction_lights','watermark'];
-const oneWayDontMergeProps = ['color_identity','layout']
+const oneWayMergeProps = [
+  'name',
+  'mana_cost',
+  'color_indicator',
+  'supertypes',
+  'types',
+  'type_line',
+  'subtypes',
+  'oracle_text',
+  'flavor_text',
+  'power',
+  'toughness',
+  'loyalty',
+  'defense',
+  'hand_modifier',
+  'life_modifier',
+  'attraction_lights',
+  'watermark',
+];
+const oneWayDontMergeProps = ['color_identity', 'color_identity_hybrid', 'layout'];
 const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
     if ('card_faces' in card && 'all_parts' in card) {
@@ -44,6 +62,9 @@ const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
   });
 };
 const setDerivedProps = (card: HCCard.Any) => {
+  if (card.id == '6521') {
+    const x = 1;
+  }
   // const derivedCard:HCCard.Any = { ...card };
   if ('card_faces' in card) {
     const type_line_list: string[] = [];
@@ -69,7 +90,9 @@ const setDerivedProps = (card: HCCard.Any) => {
       .filter(Boolean)
       .join(' ') as string;
   }
-  card.color_identity = getColorIdentityProp(card);
+  const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
+  card.color_identity = color_identity;
+  card.color_identity_hybrid = color_identity_hybrid;
 };
 /**
  *
@@ -79,10 +102,7 @@ const setDerivedProps = (card: HCCard.Any) => {
  */
 const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
   const merged: HCCard.Any = { ...existingCard };
-  if (
-    !('colors' in existingCard && existingCard.colors) ||
-    !('colors' in newCard && newCard.colors)
-  ) {
+  if (merged.id == '6521') {
     const x = 1;
   }
 
@@ -97,9 +117,9 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         'card_faces' in newCard
       ) {
         merged.card_faces = existingCard.card_faces.map((face, index) => {
-          if (!('colors' in face && face.colors)) {
-            const x = 1;
-          }
+          // if (!('colors' in face && face.colors)) {
+          //   const x = 1;
+          // }
           if (index < value.length) {
             const newFace = newCard.card_faces?.[index];
             if (!('colors' in newFace && newFace.colors)) {
@@ -143,9 +163,17 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         while (merged.card_faces.length < newCard.card_faces.length) {
           merged.card_faces.push(newCard.card_faces[merged.card_faces.length]);
         }
-      } else if ('card_faces' in merged && !('card_faces' in newCard) && oneWayMergeProps.includes(key)) {
-        merged.card_faces[0][key as keyof HCCardFace.MultiFaced]!= value;
-      } else if ('card_faces' in merged && !('card_faces' in newCard) && oneWayDontMergeProps.includes(key)) {
+      } else if (
+        'card_faces' in merged &&
+        !('card_faces' in newCard) &&
+        oneWayMergeProps.includes(key)
+      ) {
+        merged.card_faces[0][key as keyof HCCardFace.MultiFaced] != value;
+      } else if (
+        'card_faces' in merged &&
+        !('card_faces' in newCard) &&
+        oneWayDontMergeProps.includes(key)
+      ) {
         // TODO: store current version and print the diff if there is one
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.isActualToken) {
         // TODO: store current version and print the diff if there is one

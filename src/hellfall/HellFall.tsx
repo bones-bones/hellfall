@@ -86,7 +86,7 @@ export const HellFall = () => {
             id={entry.id}
             name={entry.name}
             url={
-              'card_faces' in entry && entry.layout == "meld_part" && entry.card_faces[0].image
+              'card_faces' in entry && entry.layout == 'meld_part' && entry.card_faces[0].image
                 ? entry.card_faces[0].image
                 : entry.image!
             }

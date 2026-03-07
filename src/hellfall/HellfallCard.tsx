@@ -173,7 +173,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="name">
-                      {stringToMana((face.name.startsWith(';') ? face.name.slice(1) : face.name))}
+                      {stringToMana(face.name.startsWith(';') ? face.name.slice(1) : face.name)}
                     </Text>
                     {/* <br /> */}
                   </>

@@ -4,7 +4,7 @@ import { HCColor, HCColors, HCImageStatus, HCLayout } from '../../src/api-types/
 import { HCLegalitiesField, HCFormat, HCLegality } from '../../src/api-types/Card/values';
 import { HCRelatedCard } from '../../src/api-types/Card/RelatedCard';
 import { HCObject } from '../../src/api-types/Object';
-import { getColorIdentityProp } from '../../src/hellfall/getColorIdentity';
+import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
@@ -151,10 +151,12 @@ export const fetchDatabase = async () => {
             //   },
             // ];
           } else if (keys[i] == 'tags') {
-            const tags = entry[i].split(';')
+            const tags = entry[i].split(';');
             cardObject[keys[i]] = tags;
-            if (entry[i].includes("watermark")) {
-              cardObject.card_faces[0].watermark = tags.filter(tag=>tag.includes('watermark'))[0].split("-")[0];
+            if (entry[i].includes('watermark')) {
+              cardObject.card_faces[0].watermark = tags
+                .filter(tag => tag.includes('watermark'))[0]
+                .split('-')[0];
               // tags.filter(tag=>tag.includes('watermark')).forEach((tag,index)=>{
               //   cardObject.card_faces[index].watermark=tag.split("-")[0]
               // })
@@ -225,7 +227,11 @@ export const fetchDatabase = async () => {
     cardObject.type_line = type_line_list.join(' // ');
     cardObject.mana_cost = mana_cost_list.filter(e => e).join(' // ');
 
-    cardObject.color_identity = getColorIdentityProp(cardObject as HCCard.AnyMultiFaced);
+    const { color_identity, color_identity_hybrid } = getColorIdentityProps(
+      cardObject as HCCard.AnyMultiFaced
+    );
+    cardObject.color_identity = color_identity;
+    cardObject.color_identity_hybrid = color_identity_hybrid;
     Object.keys(defaultProps)
       .filter(key => !(key in cardObject))
       .forEach(key => {

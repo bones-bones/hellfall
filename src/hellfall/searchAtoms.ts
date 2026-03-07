@@ -33,6 +33,10 @@ export const searchColorComparisonAtom = atom(
   (searchParams.get('colorComparison') || '=') as '<=' | '>=' | '='
 );
 
+export const searchColorIdentityComparisonAtom = atom(
+  (searchParams.get('colorIdentityComparison') || '<=') as '<=' | '>=' | '='
+);
+
 export const powerAtom = atom<{ value: number; operator: '<' | '=' | '>' } | undefined>(
   (() => {
     const parms = searchParams.get('p');

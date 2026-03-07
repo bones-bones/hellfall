@@ -232,9 +232,13 @@ export namespace HCCardFields.Gameplay {
      */
     colors: HCColors;
     /**
-     * This card’s color identity. It is a list of HCColors in order to handle the hybrid rules.
+     * This card’s color identity..
      */
-    color_identity: HCColors[];
+    color_identity: HCColors;
+    /**
+     * This card’s color identity for hybrid. It is a list of HCColors in order to handle the hybrid rules.
+     */
+    color_identity_hybrid: HCColors[];
     /**
      * An array of keywords that this card uses, such as 'Flying' and 'Cumulative upkeep'.
      */
@@ -269,9 +273,13 @@ export namespace HCCardFields.Gameplay {
      */
     colors: HCColors;
     /**
-     * This card’s color identity. It is a list of HCColors in order to handle the hybrid rules.
+     * This card’s color identity..
      */
-    color_identity: HCColors[];
+    color_identity: HCColors;
+    /**
+     * This card’s color identity for hybrid. It is a list of HCColors in order to handle the hybrid rules.
+     */
+    color_identity_hybrid: HCColors[];
     /**
      * An array of keywords that this card uses, such as 'Flying' and 'Cumulative upkeep'.
      */

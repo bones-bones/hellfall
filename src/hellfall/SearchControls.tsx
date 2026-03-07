@@ -23,6 +23,7 @@ import {
   typeSearchAtom,
   searchColorsIdentityAtom,
   searchColorComparisonAtom,
+  searchColorIdentityComparisonAtom,
   useHybridIdentityAtom,
   powerAtom,
   toughnessAtom,
@@ -53,6 +54,9 @@ export const SearchControls = () => {
   const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(searchColorsIdentityAtom);
   const [useHybrid, setUseHybrid] = useAtom(useHybridIdentityAtom);
   const [colorComparison, setColorComparison] = useAtom(searchColorComparisonAtom);
+  const [colorIdentityComparison, setColorIdentityComparison] = useAtom(
+    searchColorIdentityComparisonAtom
+  );
 
   return (
     <SearchContainer>
@@ -171,6 +175,21 @@ export const SearchControls = () => {
           initialValue={searchColorsIdentity}
           onChange={setSearchColorsIdentityAtom}
         >
+          <StyledComponentHolder>
+            <StyledLabel htmlFor="styledManaSelect">{'Color Identity Comparison'}</StyledLabel>
+            <StyledManaSelect
+              id="styledManaSelect"
+              defaultValue={colorIdentityComparison}
+              value={colorIdentityComparison}
+              onChange={event => {
+                setColorIdentityComparison(event.target.value as any);
+              }}
+            >
+              {['<=', '=', '>='].map(entry => {
+                return <option key={entry}>{entry}</option>;
+              })}
+            </StyledManaSelect>
+          </StyledComponentHolder>
           <StyledComponentHolder>
             <StyledLabel htmlFor="useHybrid">{'Use Alternate Hybrid Rule'}</StyledLabel>
             <SearchCheckbox

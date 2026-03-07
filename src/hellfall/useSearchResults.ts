@@ -15,6 +15,7 @@ import {
   searchCmcAtom,
   searchColorComparisonAtom,
   searchColorsAtom,
+  searchColorIdentityComparisonAtom,
   searchColorsIdentityAtom,
   useHybridIdentityAtom,
   searchSetAtom,
@@ -55,6 +56,7 @@ export const useSearchResults = () => {
   const useHybrid = useAtomValue(useHybridIdentityAtom);
   const activeCard = useAtomValue(activeCardAtom);
   const colorComparison = useAtomValue(searchColorComparisonAtom);
+  const colorIdentityComparison = useAtomValue(searchColorIdentityComparisonAtom);
   const isCommander = useAtomValue(isCommanderAtom);
   const [page, setPageAtom] = useAtom(offsetAtom);
   const power = useAtomValue(powerAtom);
@@ -292,23 +294,99 @@ export const useSearchResults = () => {
             }
           }
         }
-        if (
-          colorIdentityCriteria.length > 0 &&
-          !entry.color_identity.every(cardColorIdentityComponent => {
-          // !getColorIdentity(entry).every(cardColorIdentityComponent => {
-            const miscBullshitColorIdentityCriteria = (
-              colorIdentityCriteria.includes(MISC_BULLSHIT)
-                ? [...colorIdentityCriteria, ...miscColors].filter(e => e != MISC_BULLSHIT)
-                : colorIdentityCriteria);
-            const colorTest = (e:string) =>
-              miscBullshitColorIdentityCriteria.includes(e) || e == 'C';
-            return useHybrid
-              ? cardColorIdentityComponent.some(e => colorTest(e))
-              : cardColorIdentityComponent.every(e => colorTest(e));
-            // TODO: make sure this works (see colorTest)
-          })
-        ) {
-          return false;
+        if (colorIdentityCriteria.length > 0) {
+          if (useHybrid) {
+            if (!('color_identity_hybrid' in entry)) {
+              debugger;
+            }
+            if (
+              !entry.color_identity_hybrid.every(cardColorIdentityComponent => {
+                // !getColorIdentity(entry).every(cardColorIdentityComponent => {
+                const miscBullshitColorIdentityCriteria = colorIdentityCriteria.includes(
+                  MISC_BULLSHIT
+                )
+                  ? [...colorIdentityCriteria, ...miscColors].filter(e => e != MISC_BULLSHIT)
+                  : colorIdentityCriteria;
+                const colorTest = (e: string) =>
+                  miscBullshitColorIdentityCriteria.includes(e) || e == 'C';
+                return cardColorIdentityComponent.some(e => colorTest(e));
+                // TODO: make sure this works (see colorTest)
+              })
+            ) {
+              return false;
+            }
+          } else {
+            if (
+              !(
+                colorIdentityCriteria.includes('C') &&
+                entry.color_identity.length == 1 &&
+                entry.color_identity[0] == 'C'
+              )
+            ) {
+              // const newColorIdentityCriteria = colorIdentityCriteria.includes(MISC_BULLSHIT)
+              //   ? [...colorIdentityCriteria, ...allMiscColors].filter(e => e != MISC_BULLSHIT)
+              //   : colorIdentityCriteria;
+              // const useMisc = colorIdentityCriteria.includes(MISC_BULLSHIT);
+              if (colorIdentityCriteria.includes('C') && colorComparison != '>=') {
+                if (!entry.color_identity.includes('C')) {
+                  return false;
+                }
+              } else {
+                const newColorIdentityCriteria = colorIdentityCriteria.filter(e => e != 'C');
+                // if (!entry.color_identity) {
+                //   debugger;
+                // }
+                const entryColorIdentitySet: Set<string> = new Set(
+                  entry.color_identity.map(e => {
+                    if (e == null) {
+                      console.log('Card id:', entry.id, 'had a null color identity.');
+                      return 'C';
+                    } else {
+                      return miscColors.includes(e.toString()) ? MISC_BULLSHIT : e.toString();
+                    }
+                  })
+                );
+                entryColorIdentitySet.delete('C');
+                const entryColorIdentity: string[] = Array.from(entryColorIdentitySet);
+
+                switch (colorIdentityComparison) {
+                  case '<=': {
+                    if (
+                      !entryColorIdentity.every(colorEntry =>
+                        newColorIdentityCriteria.includes(colorEntry)
+                      )
+                    ) {
+                      return false;
+                    }
+                    break;
+                  }
+                  case '=': {
+                    if (
+                      !(
+                        entryColorIdentity.every(colorEntry =>
+                          newColorIdentityCriteria.includes(colorEntry)
+                        ) && entryColorIdentity.length == newColorIdentityCriteria.length
+                      )
+                    ) {
+                      return false;
+                    }
+                    break;
+                  }
+                  case '>=': {
+                    if (
+                      !newColorIdentityCriteria.every(colorEntry =>
+                        entryColorIdentity.includes(colorEntry)
+                      )
+                    ) {
+                      return false;
+                    }
+
+                    break;
+                  }
+                }
+              }
+            }
+          }
         }
 
         // TODO: handle split cards/adventures/transforms/flips better
@@ -429,6 +507,9 @@ export const useSearchResults = () => {
     if (colorComparison !== '<=') {
       searchToSet.append('colorComparison', colorComparison);
     }
+    if (colorIdentityComparison !== '<=') {
+      searchToSet.append('colorIdentityComparison', colorIdentityComparison);
+    }
     if (power) {
       searchToSet.append('p', `${power.operator}${power.value}`);
     }
@@ -476,6 +557,7 @@ export const useSearchResults = () => {
     activeCard,
     page,
     colorComparison,
+    colorIdentityComparison,
     isCommander,
     power,
     toughness,

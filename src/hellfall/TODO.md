@@ -56,6 +56,6 @@ Write a script to transform the database
 - make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
 - special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?)
-- make sure non-number p/t values work in searches (X, *, etc.)
+- make sure non-number p/t values work in searches (X, \*, etc.)
 - make tokens searchable (use set?)
 - add comparison operator to color identity (also use this for alternate hybrid rule)
