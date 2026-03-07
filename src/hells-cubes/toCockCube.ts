@@ -44,7 +44,7 @@ export const toCockCube = ({
   tokens.data.forEach(tokenEntry => {
     const tokenCardEntry = xmlDoc.createElement('card');
     const name = xmlDoc.createElement('name');
-    name.textContent = tokenEntry.name.replace(/\*\d$/, '');
+    name.textContent = tokenEntry.name.replace(/\*\d+$/, '');
 
     const setElement = xmlDoc.createElement('set');
     setElement.setAttribute('picURL', tokenEntry.image);
