@@ -17,7 +17,7 @@ import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/pipsAtom';
 import { getColorIdentityProp } from '../../src/hellfall/getColorIdentity';
 
-// TODO: add images to related cards
+// TODO: make sure all_parts doesn't keep duplicates
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
@@ -142,9 +142,9 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         'all_parts' in existingCard &&
         'all_parts' in newCard
       ) {
-        merged.all_parts = existingCard.all_parts!.map((part, index) => {
-          if (index < value.length) {
-            const newPart = newCard.all_parts?.[index]!;
+        merged.all_parts = existingCard.all_parts?.map(part=> {
+          const newPart = newCard.all_parts?.find(e=>e.name.toLowerCase() == part.name.toLowerCase());
+          if (newPart){
             Object.entries(newPart).forEach(([k, v]) => {
               if ((k == 'name' || k == 'component') && v) {
                 (part as any)[k] = v;
@@ -152,11 +152,12 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
             });
           }
           return part;
-        });
-        // TODO: Is this necessary?
-        while (merged.all_parts.length < newCard.all_parts!.length) {
-          merged.all_parts.push(newCard.all_parts![merged.all_parts.length]);
-        }
+        })
+        newCard.all_parts?.forEach(part=>{
+          if (!(merged.all_parts?.find(e=>e.name.toLowerCase() == part.name.toLowerCase()))) {
+            merged.all_parts?.push(part);
+          }
+        })
       } else if (key == 'image_status') {
         // TODO: store current version and print the diff if there is one
         if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {
