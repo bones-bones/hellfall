@@ -294,17 +294,17 @@ export const useSearchResults = () => {
         }
         if (
           colorIdentityCriteria.length > 0 &&
-          !getColorIdentity(entry).every(cardColorIdentityComponent => {
+          !entry.color_identity.every(cardColorIdentityComponent => {
+          // !getColorIdentity(entry).every(cardColorIdentityComponent => {
             const miscBullshitColorIdentityCriteria = (
               colorIdentityCriteria.includes(MISC_BULLSHIT)
                 ? [...colorIdentityCriteria, ...miscColors].filter(e => e != MISC_BULLSHIT)
-                : colorIdentityCriteria
-            ) as HCColors;
-            const colorTest = (e: HCColor) =>
+                : colorIdentityCriteria);
+            const colorTest = (e:string) =>
               miscBullshitColorIdentityCriteria.includes(e) || e == 'C';
             return useHybrid
-              ? cardColorIdentityComponent.some(e => colorTest(e as HCColor))
-              : cardColorIdentityComponent.every(e => colorTest(e as HCColor));
+              ? cardColorIdentityComponent.some(e => colorTest(e))
+              : cardColorIdentityComponent.every(e => colorTest(e));
             // TODO: make sure this works (see colorTest)
           })
         ) {

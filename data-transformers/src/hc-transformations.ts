@@ -144,11 +144,9 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           merged.card_faces.push(newCard.card_faces[merged.card_faces.length]);
         }
       } else if ('card_faces' in merged && !('card_faces' in newCard) && oneWayMergeProps.includes(key)) {
-        const x = 1
         merged.card_faces[0][key as keyof HCCardFace.MultiFaced]!= value;
       } else if ('card_faces' in merged && !('card_faces' in newCard) && oneWayDontMergeProps.includes(key)) {
         // TODO: store current version and print the diff if there is one
-        const x = 1
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.isActualToken) {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && ['name', 'oracle_text', 'flavor_text'].includes(key)) {

@@ -151,7 +151,14 @@ export const fetchDatabase = async () => {
             //   },
             // ];
           } else if (keys[i] == 'tags') {
-            cardObject[keys[i]] = entry[i].split(';');
+            const tags = entry[i].split(';')
+            cardObject[keys[i]] = tags;
+            if (entry[i].includes("watermark")) {
+              cardObject.card_faces[0].watermark = tags.filter(tag=>tag.includes('watermark'))[0].split("-")[0];
+              // tags.filter(tag=>tag.includes('watermark')).forEach((tag,index)=>{
+              //   cardObject.card_faces[index].watermark=tag.split("-")[0]
+              // })
+            }
           } else {
             cardObject[keys[i]] = entry[i];
           }

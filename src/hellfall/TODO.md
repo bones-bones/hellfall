@@ -52,3 +52,10 @@ Write a script to transform the database
 - make search for text (including in names) be able to ignore \* (same for hyperlinks to card names)
 - add handling for splitting sides>4
 - implement grid type layout (has singlefaceonly attributes for overall card, but also has card_faces)
+- make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
+- make popup container wrap text to window width
+- add bars internal to card entries like scryfall does
+- special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?)
+- make sure non-number p/t values work in searches (X, *, etc.)
+- make tokens searchable (use set?)
+- add comparison operator to color identity (also use this for alternate hybrid rule)
