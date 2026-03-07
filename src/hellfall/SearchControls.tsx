@@ -198,8 +198,12 @@ export const SearchControls = () => {
             'HCC',
             'HCP',
             'HC7',
+            'HC7.0',
+            'HC7.1',
             'HCK',
             'HC8',
+            'HC8.0',
+            'HC8.1',
             'HCJ',
           ]}
           onChange={setSet}
