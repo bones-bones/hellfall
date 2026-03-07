@@ -17,7 +17,7 @@ export const AvatarOfBalls = () => {
   return (
     <>
       <h2>Avatar of BallsJr123</h2>
-      <FormField label={'Power?'}>
+      <FormField label={'Value?'}>
         <TextInput type="number" defaultValue={3} ref={powerRef} />
       </FormField>
       <FormField label={'How many?'}>
