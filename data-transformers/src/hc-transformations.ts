@@ -17,7 +17,9 @@ import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/pipsAtom';
 import { getColorIdentityProp } from '../../src/hellfall/getColorIdentity';
 
-// TODO: make sure all_parts doesn't keep duplicates
+// TODO: make sure all_parts doesn't keep duplicates (maybe do it at the same time as sorting it?)
+// TODO: hard sort the property order in a logical way
+// TODO: deal with moyai
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();

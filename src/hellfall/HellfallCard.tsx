@@ -117,6 +117,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const [activeImageSide, setActiveImageSide] = useState(0);
 
   // TODO: add handling for flip and aftermath
+  // TODO: render pips in flavor text
   const imagesToShow = data
     .toFaces()
     .filter(e => e.image)
