@@ -102,30 +102,54 @@ export const fetchDatabase = async () => {
         if ('0123'.includes(keys[i][0])) {
           const face = parseInt(keys[i][0]);
           const key = keys[i].slice(1);
-          while (cardObject.card_faces.length <= face) {
-            cardObject.card_faces.push({} as Record<string, any>);
-          }
-          if (key == 'colors') {
-            const colorArr = entry[i]
-              .split(';')
-              .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
-            cardObject.card_faces[face][key] =
-              entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
-            cardObject.colors =
-              entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
-          } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
-            cardObject.card_faces[face][key] = entry[i].split(';');
-          } else if (key == 'loyalty' && cardObject.card_faces[face]['types']?.includes('Battle')) {
-            cardObject.card_faces[face].defense = entry[i];
+
+          if (face == 3 && entry[i].includes(" // ")) {
+            const entryList= entry[i].split(" // ");
+            entryList.forEach((value,index) => {
+              while (cardObject.card_faces.length <= face+index) {
+                cardObject.card_faces.push({} as Record<string, any>);
+              }
+              if (['supertypes', 'types', 'subtypes'].includes(key)) {
+                cardObject.card_faces[face+index][key] = value.split(';');
+              } else if (key == 'loyalty' && cardObject.card_faces[face+index]['types']?.includes('Battle')) {
+                cardObject.card_faces[face+index].defense = value;
+              } else {
+                cardObject.card_faces[face+index][key] = value;
+              }
+              if (key == 'image') {
+                // entry[20] is tags
+                cardObject.card_faces[face+index].image_status =
+                  entry[20] && entry[20].includes('low-quality')
+                    ? HCImageStatus.LowRes
+                    : HCImageStatus.HighRes;
+              }
+            })
           } else {
-            cardObject.card_faces[face][key] = entry[i];
-          }
-          if (key == 'image') {
-            // entry[20] is tags
-            cardObject.card_faces[face].image_status =
-              entry[20] && entry[20].includes('low-quality')
-                ? HCImageStatus.LowRes
-                : HCImageStatus.HighRes;
+            while (cardObject.card_faces.length <= face) {
+              cardObject.card_faces.push({} as Record<string, any>);
+            }
+            if (key == 'colors') {
+              const colorArr = entry[i]
+                .split(';')
+                .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
+              cardObject.card_faces[face][key] =
+                entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
+              cardObject.colors =
+                entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
+            } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
+              cardObject.card_faces[face][key] = entry[i].split(';');
+            } else if (key == 'loyalty' && cardObject.card_faces[face]['types']?.includes('Battle')) {
+              cardObject.card_faces[face].defense = entry[i];
+            } else {
+              cardObject.card_faces[face][key] = entry[i];
+            }
+            if (key == 'image') {
+              // entry[20] is tags
+              cardObject.card_faces[face].image_status =
+                entry[20] && entry[20].includes('low-quality')
+                  ? HCImageStatus.LowRes
+                  : HCImageStatus.HighRes;
+            }
           }
         } else {
           if (keys[i] == 'cmc') {

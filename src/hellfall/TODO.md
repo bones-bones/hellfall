@@ -55,7 +55,16 @@ Write a script to transform the database
 - make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
 - make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
-- special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?)
+- special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?), Ability Bingo
 - make sure non-number p/t values work in searches (X, \*, etc.)
 - make tokens searchable (use set?)
-- add comparison operator to color identity (also use this for alternate hybrid rule)
+- add ability to search by number of colors (identity)
+- switch search to text bar and make the mass of buttons hidden as advanced search
+- add side 5+ parsing, then use B//R//E//A//D as a test case for it
+- see if any better images are floating around for HC2 in general
+- add secondary image for single-faced cards if necessary
+- add new related card categories for draftpartner (kongming, meld, taco bell, etc.)
+  - or maybe just have a list of ids in the main card and a variable in the secondary card pointing to the main card? (easier to implement quickly; won't interfere) (make these optional card fields)
+  - or maybe have an optional prop in RelatedCard to indicate draftpartner relationships?
+  - also add optional prop to indicate that this card shouldn't go directly into draft
+  - single prop/set of props for storing image shown in draft alongside draftpartner props
