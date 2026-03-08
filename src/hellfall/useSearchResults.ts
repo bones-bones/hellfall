@@ -296,9 +296,9 @@ export const useSearchResults = () => {
         }
         if (colorIdentityCriteria.length > 0) {
           if (useHybrid) {
-            if (!('color_identity_hybrid' in entry)) {
-              debugger;
-            }
+            // if (!('color_identity_hybrid' in entry)) {
+            //   debugger;
+            // }
             if (
               !entry.color_identity_hybrid.every(cardColorIdentityComponent => {
                 // !getColorIdentity(entry).every(cardColorIdentityComponent => {
