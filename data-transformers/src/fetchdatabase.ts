@@ -160,7 +160,7 @@ export const fetchDatabase = async () => {
           }
         } else {
           if (keys[i] == 'cmc') {
-            cardObject[keys[i]] = parseInt(entry[i]);
+            cardObject[keys[i]] = entry[i] != '∞' ? parseInt(entry[i]) : 9999999999999999999999999; // The Infinitoken case
           } else if (keys[i] == 'legalities') {
             const formats = entry[i].split(', ');
             const legalities: HCLegalitiesField = {
