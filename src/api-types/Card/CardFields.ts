@@ -326,13 +326,33 @@ export namespace HCCardFields.Print {
      */
     // frame: `${HCFrame}`;
     /**
-     * A computer-readable indicator for the state of this card’s image, one of missing, placeholder, lowres, or highres_scan.
+     * A computer-readable indicator for the state of this card’s image.
      */
     image_status: `${HCImageStatus}`;
     /**
-     * An string with the image for this side.
+     * A string with the image for this side.
      */
     image?: string;
+    /**
+     * A computer-readable indicator for the state of this card’s draft image.
+     */
+    draft_image_status: `${HCImageStatus}`;
+    /**
+     * A string with the draft image.
+     */
+    draft_image?: string;
+    /**
+     * A list of ids to add to the draft pool when this is drafted.
+     */
+    // draft_partner_ids?: string[];
+    /**
+     * Whether this card shouldn't be directly draftable
+     */
+    not_directly_draftable?: boolean;
+    /**
+     * Whether this card has draftpartners
+     */
+    has_draft_partners?: boolean;
     /**
      * This card’s set code.
      */
@@ -359,7 +379,7 @@ export namespace HCCardFields.Print {
    */
   export type CardSideSpecific = {
     /**
-     * A computer-readable indicator for the state of this card’s image, one of missing, placeholder, lowres, or highres_scan.
+     * A computer-readable indicator for the state of this card’s image.
      */
     image_status: `${HCImageStatus}`;
     /**

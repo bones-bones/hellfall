@@ -85,6 +85,7 @@ export const fetchDatabase = async () => {
     keywords: [],
     set: '',
     variation: false,
+    draft_image_status: HCImageStatus.Inapplicable,
   };
 
   const defaultMultiFaceProps: Record<string, any> = {
@@ -103,27 +104,30 @@ export const fetchDatabase = async () => {
           const face = parseInt(keys[i][0]);
           const key = keys[i].slice(1);
 
-          if (face == 3 && entry[i].includes(" // ")) {
-            const entryList= entry[i].split(" // ");
-            entryList.forEach((value,index) => {
-              while (cardObject.card_faces.length <= face+index) {
+          if (face == 3 && entry[i].includes(' // ')) {
+            const entryList = entry[i].split(' // ');
+            entryList.forEach((value, index) => {
+              while (cardObject.card_faces.length <= face + index) {
                 cardObject.card_faces.push({} as Record<string, any>);
               }
               if (['supertypes', 'types', 'subtypes'].includes(key)) {
-                cardObject.card_faces[face+index][key] = value.split(';');
-              } else if (key == 'loyalty' && cardObject.card_faces[face+index]['types']?.includes('Battle')) {
-                cardObject.card_faces[face+index].defense = value;
+                cardObject.card_faces[face + index][key] = value.split(';');
+              } else if (
+                key == 'loyalty' &&
+                cardObject.card_faces[face + index]['types']?.includes('Battle')
+              ) {
+                cardObject.card_faces[face + index].defense = value;
               } else {
-                cardObject.card_faces[face+index][key] = value;
+                cardObject.card_faces[face + index][key] = value;
               }
               if (key == 'image') {
                 // entry[20] is tags
-                cardObject.card_faces[face+index].image_status =
+                cardObject.card_faces[face + index].image_status =
                   entry[20] && entry[20].includes('low-quality')
                     ? HCImageStatus.LowRes
                     : HCImageStatus.HighRes;
               }
-            })
+            });
           } else {
             while (cardObject.card_faces.length <= face) {
               cardObject.card_faces.push({} as Record<string, any>);
@@ -138,7 +142,10 @@ export const fetchDatabase = async () => {
                 entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
             } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
               cardObject.card_faces[face][key] = entry[i].split(';');
-            } else if (key == 'loyalty' && cardObject.card_faces[face]['types']?.includes('Battle')) {
+            } else if (
+              key == 'loyalty' &&
+              cardObject.card_faces[face]['types']?.includes('Battle')
+            ) {
               cardObject.card_faces[face].defense = entry[i];
             } else {
               cardObject.card_faces[face][key] = entry[i];
@@ -165,15 +172,20 @@ export const fetchDatabase = async () => {
             };
             cardObject[keys[i]] = legalities;
           } else if (keys[i] == 'related') {
-            // const all_parts: [HCRelatedCard] = [
-            //   {
-            //     object: HCObject.ObjectType.RelatedCard,
-            //     id: '',
-            //     component: 'combo_piece',
-            //     name: entry[i],
-            //     type_line: '',
-            //   },
-            // ];
+            const all_parts: [HCRelatedCard] = [
+              {
+                object: HCObject.ObjectType.RelatedCard,
+                id: '',
+                component: 'draft_partner',
+                name: entry[i],
+                type_line: '',
+                image: '',
+                is_draft_partner: true,
+              },
+            ];
+            cardObject.all_parts = all_parts;
+            cardObject.not_directly_draftable = true;
+            cardObject.has_draft_partners = true;
           } else if (keys[i] == 'tags') {
             const tags = entry[i].split(';');
             cardObject[keys[i]] = tags;
@@ -261,10 +273,22 @@ export const fetchDatabase = async () => {
       .forEach(key => {
         cardObject[key] = defaultProps[key];
       });
+    if (
+      cardObject.card_faces.length <= 1 ||
+      cardObject.card_faces[0]?.oracle_text?.toLowerCase().includes('draftpartner')
+    ) {
+      if ('image' in cardObject.card_faces[0] && cardObject.card_faces[0].image) {
+        cardObject.draft_image = cardObject.image;
+        cardObject.draft_image_status = cardObject.image_status;
+        cardObject.image = cardObject.card_faces[0].image;
+        cardObject.image_status = cardObject.card_faces[0].image_status;
+      }
+    }
 
     if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
-        ([k, v]) => !['name', 'type_line', 'mana_cost', 'image_status', 'colors'].includes(k)
+        ([k, v]) =>
+          !['name', 'type_line', 'mana_cost', 'image_status', 'colors', 'image'].includes(k)
       )) {
         cardObject[key] = value;
       }
@@ -272,12 +296,18 @@ export const fetchDatabase = async () => {
       singleCard.layout = HCLayout.Normal;
       return singleCard as HCCard.AnySingleFaced;
     } else {
+      if (cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')) {
+        cardObject.layout = HCLayout.MeldPart;
+        if ('all_parts' in cardObject) {
+          cardObject.all_parts[0].component = 'meld_part';
+        }
+      }
       // const names = entry[1];
       // entry[6] is Related Cards
       cardObject.layout =
-        cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld') || entry[6]
-          ? HCLayout.MeldPart
-          : HCLayout.Multi;
+        // cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
+        // ? HCLayout.MeldPart:
+        HCLayout.Multi;
       return cardObject as HCCard.AnyMultiFaced;
     }
   });

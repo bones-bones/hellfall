@@ -62,9 +62,6 @@ const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
   });
 };
 const setDerivedProps = (card: HCCard.Any) => {
-  if (card.id == '6521') {
-    const x = 1;
-  }
   // const derivedCard:HCCard.Any = { ...card };
   if ('card_faces' in card) {
     const type_line_list: string[] = [];
@@ -102,10 +99,6 @@ const setDerivedProps = (card: HCCard.Any) => {
  */
 const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
   const merged: HCCard.Any = { ...existingCard };
-  if (merged.id == '6521') {
-    const x = 1;
-  }
-
   Object.entries(newCard).forEach(([key, value]) => {
     // TODO: make sure that empty arrays being truthy doesn't break anything here
     if (value) {
@@ -125,37 +118,37 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
             if (!('colors' in newFace && newFace.colors)) {
               const x = 1;
             }
-            if (existingCard.card_faces.length > 4 && index == 3) {
-              // this is necessary due to how the sheet is formatted
-              // TODO: store current version and print the diff if there is one
-            } else {
-              Object.entries(newFace).forEach(([k, v]) => {
-                if (k in face && ['name', 'oracle_text', 'flavor_text'].includes(k)) {
-                  if (face[k as keyof typeof face]![0] == ';') {
-                    // TODO: store current version and print the diff if there is one
-                  } else if (v) {
-                    (face as any)[k] = v;
-                  }
-                } else if (k == 'colors') {
+            // if (existingCard.card_faces.length > 4 && index == 3) {
+            //   // this is necessary due to how the sheet is formatted
+            //   // TODO: store current version and print the diff if there is one
+            // } else {
+            Object.entries(newFace).forEach(([k, v]) => {
+              if (k in face && ['name', 'oracle_text', 'flavor_text'].includes(k)) {
+                if (face[k as keyof typeof face]![0] == ';') {
                   // TODO: store current version and print the diff if there is one
-                  // if (index == 0) {
-                  // (merged as any)[k] = v;
-                  // (face as any)[k] = v;
-                  // }
-                } else if (k == 'image_status') {
-                  // TODO: store current version and print the diff if there is one
-                  if (
-                    face.image_status == HCImageStatus.Missing ||
-                    face.image_status ==
-                      HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
-                  ) {
-                    (face as any)[k] = v;
-                  }
                 } else if (v) {
                   (face as any)[k] = v;
                 }
-              });
-            }
+              } else if (k == 'colors') {
+                // TODO: store current version and print the diff if there is one
+                // if (index == 0) {
+                // (merged as any)[k] = v;
+                // (face as any)[k] = v;
+                // }
+              } else if (k == 'image_status') {
+                // TODO: store current version and print the diff if there is one
+                if (
+                  face.image_status == HCImageStatus.Missing ||
+                  face.image_status ==
+                    HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
+                ) {
+                  (face as any)[k] = v;
+                }
+              } else if (v) {
+                (face as any)[k] = v;
+              }
+            });
+            // }
           }
           return face;
         });
@@ -196,7 +189,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           );
           if (newPart) {
             Object.entries(newPart).forEach(([k, v]) => {
-              if ((k == 'name' || k == 'component') && v) {
+              if (['name', 'component', 'is_draft_partner'].includes(k) && v) {
                 (part as any)[k] = v;
               }
             });
@@ -423,6 +416,7 @@ const main = async () => {
             meldPart.type_line = relatedCard.type_line;
             meldPart.image =
               'card_faces' in relatedCard ? relatedCard.card_faces[0].image : relatedCard.image;
+            meldPart.is_draft_partner = true;
             meldRelatedCards.push(meldPart);
             // } else {
             //   const related = finalTokens.find(otherToken => tokenMaker.id ? otherToken.id == tokenMaker.id : otherToken.name == tokenMaker.name);
@@ -455,6 +449,9 @@ const main = async () => {
         meldRelatedCards.push(meldResult);
         meldPartIds.forEach(id => {
           const relatedCard = finalCards.find(card => card.id == id);
+          if (!('has_draft_partners' in relatedCard!)) {
+            relatedCard!.has_draft_partners = true;
+          }
           meldRelatedCards
             .filter(e => e.id != id)
             .forEach(meldPart => {
@@ -486,23 +483,68 @@ const main = async () => {
       card.all_parts
         ?.filter(e => e.component == 'token')
         .forEach(tokenCard => {
-          const relatedCard = finalCards.find(e => e.id == tokenCard.id);
-          if (relatedCard) {
-            tokenCard.id = relatedCard.id;
-            tokenCard.name = relatedCard.name;
-            tokenCard.type_line = relatedCard.type_line;
-            tokenCard.image = relatedCard.image;
-            if ('all_parts' in relatedCard) {
-              const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-              if (tokenIndex == -1) {
-                relatedCard.all_parts?.push(relatedToken);
-              } else {
-                relatedCard.all_parts![tokenIndex!] = relatedToken;
-              }
+          const relatedCard = finalCards.find(e =>
+            tokenCard.id
+              ? e.id == tokenCard.id
+              : e.name.toLowerCase() == tokenCard.name.toLowerCase()
+          );
+          // if (relatedCard) {
+          tokenCard.id = relatedCard!.id;
+          tokenCard.name = relatedCard!.name;
+          tokenCard.type_line = relatedCard!.type_line;
+          tokenCard.image = relatedCard!.image;
+          if ('all_parts' in relatedCard!) {
+            const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+            if (tokenIndex == -1) {
+              relatedCard.all_parts?.push(relatedToken);
             } else {
-              relatedCard.all_parts = [relatedToken];
+              relatedCard.all_parts![tokenIndex!] = relatedToken;
             }
+          } else {
+            relatedCard!.all_parts = [relatedToken];
           }
+          // }
+        });
+    });
+  finalCards
+    .filter(e => 'all_parts' in e)
+    .forEach(card => {
+      const relatedPartner: HCRelatedCard = {
+        object: HCObject.ObjectType.RelatedCard,
+        id: card.id,
+        component: 'draft_partner',
+        name: card.name,
+        type_line: card.type_line,
+        image: card.image,
+        is_draft_partner: true,
+      };
+      card.all_parts
+        ?.filter(e => e.component == 'draft_partner')
+        .forEach(partnerCard => {
+          const relatedCard = finalCards.find(e =>
+            partnerCard.id
+              ? e.id == partnerCard.id
+              : e.name.toLowerCase() == partnerCard.name.toLowerCase()
+          );
+          // if (relatedCard) {
+          if (!('has_draft_partners' in relatedCard!)) {
+            relatedCard!.has_draft_partners = true;
+          }
+          partnerCard.id = relatedCard!.id;
+          partnerCard.name = relatedCard!.name;
+          partnerCard.type_line = relatedCard!.type_line;
+          partnerCard.image = relatedCard!.image;
+          if ('all_parts' in relatedCard!) {
+            const partnerIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+            if (partnerIndex == -1) {
+              relatedCard.all_parts?.push(relatedPartner);
+            } else {
+              relatedCard.all_parts![partnerIndex!] = relatedPartner;
+            }
+          } else {
+            relatedCard!.all_parts = [relatedPartner];
+          }
+          // }
         });
     });
   finalCards
