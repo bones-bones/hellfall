@@ -63,10 +63,10 @@ Write a script to transform the database
 - ~~ add side 5+ parsing, then use B//R//E//A//D as a test case for it~~
 - see if any better images are floating around for HC2 in general
 - add secondary image for single-faced cards if necessary
-- add new related card categories for draftpartner (kongming, meld, taco bell, etc.)
-  - or maybe just have a list of ids in the main card and a variable in the secondary card pointing to the main card? (easier to implement quickly; won't interfere) (make these optional card fields)
-  - or maybe have an optional prop in RelatedCard to indicate draftpartner relationships?
-  - also add optional prop to indicate that this card shouldn't go directly into draft
-  - single prop/set of props for storing image shown in draft alongside draftpartner props
-- add viewer for draft image after other side images
+- ~~ add new related card categories for draftpartner (kongming, meld, taco bell, etc.)~~
+  ~~ or maybe just have a list of ids in the main card and a variable in the secondary card pointing to the main card? (easier to implement quickly; won't interfere) (make these optional card fields)~~
+  ~~ or maybe have an optional prop in RelatedCard to indicate draftpartner relationships?~~
+  ~~ also add optional prop to indicate that this card shouldn't go directly into draft~~
+  ~~ single prop/set of props for storing image shown in draft alongside draftpartner props~~
+- ~~ add viewer for draft image after other side images~~
 - show draftpartners on related cards on HellfallCard

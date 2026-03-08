@@ -488,22 +488,22 @@ const main = async () => {
               ? e.id == tokenCard.id
               : e.name.toLowerCase() == tokenCard.name.toLowerCase()
           );
-          // if (relatedCard) {
-          tokenCard.id = relatedCard!.id;
-          tokenCard.name = relatedCard!.name;
-          tokenCard.type_line = relatedCard!.type_line;
-          tokenCard.image = relatedCard!.image;
-          if ('all_parts' in relatedCard!) {
-            const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-            if (tokenIndex == -1) {
-              relatedCard.all_parts?.push(relatedToken);
+          if (relatedCard) {
+            tokenCard.id = relatedCard!.id;
+            tokenCard.name = relatedCard!.name;
+            tokenCard.type_line = relatedCard!.type_line;
+            tokenCard.image = relatedCard!.image;
+            if ('all_parts' in relatedCard!) {
+              const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+              if (tokenIndex == -1) {
+                relatedCard.all_parts?.push(relatedToken);
+              } else {
+                relatedCard.all_parts![tokenIndex!] = relatedToken;
+              }
             } else {
-              relatedCard.all_parts![tokenIndex!] = relatedToken;
+              relatedCard!.all_parts = [relatedToken];
             }
-          } else {
-            relatedCard!.all_parts = [relatedToken];
           }
-          // }
         });
     });
   finalCards

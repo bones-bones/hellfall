@@ -29,6 +29,10 @@ export enum HCImageStatus {
    */
   Aftermath = 'aftermath',
   /**
+   * This face is a draftpartner card.
+   */
+  DraftPartner = 'draft_partner',
+  /**
    * This card's image is a placeholder HC has generated and visibly marked as such.
    * This is most commonly seen for languages where no real images are yet available to us.
    */

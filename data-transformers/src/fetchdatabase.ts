@@ -248,6 +248,8 @@ export const fetchDatabase = async () => {
           (face.subtypes.includes('Adventure') || face.subtypes.includes('Omen'))
         ) {
           face.image_status = HCImageStatus.Inset;
+        } else if (cardObject.card_faces[0].oracle_text.toLowerCase().includes("draftpartner")) {
+          face.image_status=HCImageStatus.DraftPartner;
         } else {
           face.image_status = HCImageStatus.Split;
         }
@@ -278,10 +280,14 @@ export const fetchDatabase = async () => {
       cardObject.card_faces[0]?.oracle_text?.toLowerCase().includes('draftpartner')
     ) {
       if ('image' in cardObject.card_faces[0] && cardObject.card_faces[0].image) {
-        cardObject.draft_image = cardObject.image;
-        cardObject.draft_image_status = cardObject.image_status;
+        if ('image' in cardObject && cardObject.image) {
+          cardObject.draft_image = cardObject.image;
+          cardObject.draft_image_status = cardObject.image_status;
+        }
         cardObject.image = cardObject.card_faces[0].image;
         cardObject.image_status = cardObject.card_faces[0].image_status;
+        delete cardObject.card_faces[0].image;
+        cardObject.card_faces[0].image_status='front';
       }
     }
 

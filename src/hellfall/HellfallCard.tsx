@@ -120,10 +120,20 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
 
   // TODO: add handling for flip and aftermath
   // TODO: add color indicator symbols
-  const imagesToShow = data
-    .toFaces()
-    .filter(e => e.image)
-    .map(e => e.image);
+  const imagesToShow =
+    'card_faces' in data
+      ? [
+          data.image,
+          ...data
+            .toFaces()
+            .filter(e => e.image)
+            .map(e => e.image),
+        ]
+      : [data.image];
+  const draftImage = data.draft_image;
+  if (draftImage) {
+    imagesToShow.push(draftImage);
+  }
 
   return (
     <Container key={data.id}>
@@ -152,7 +162,9 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       setActiveImageSide(i);
                     }}
                     disabled={i === activeImageSide}
-                  >{`side ${i + 1}`}</button>
+                  >
+                    {i == imagesToShow.length - 1 && draftImage ? 'draft' : `side ${i + 1}`}
+                  </button>
                 );
               })}
           </ButtonContainer>
