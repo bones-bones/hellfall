@@ -105,7 +105,7 @@ export const fetchDatabase = async () => {
           }
         } else {
           if (keys[i] == 'cmc') {
-            cardObject[keys[i]] = parseInt(entry[i]);
+            cardObject[keys[i]] = entry[i] != '∞' ? parseInt(entry[i]) : 9999999999999999999999999; // The Infinitoken case
           } else if (keys[i] == 'legalities') {
             const formats = entry[i].split(', ');
             const legalities: HCLegalitiesField = {
@@ -187,7 +187,6 @@ export const fetchDatabase = async () => {
       cardObject.layout = HCLayout.Normal;
       return singleCard as HCCard.AnySingleFaced;
     } else {
-      const names = entry[1];
       cardObject.layout = HCLayout.Multi;
       return cardObject as HCCard.AnyMultiFaced;
     }

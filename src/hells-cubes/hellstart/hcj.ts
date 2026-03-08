@@ -6,6 +6,44 @@ export type HCJPackInfo = {
   lands: { count: number; name: string }[];
 };
 
+import { HCCard } from '../../api-types/Card/Card';
+import { HCLayout } from '../../api-types/Card/values/Layout';
+import { HCLegality } from '../../api-types/Card/values/Legality';
+import { HCColor } from '../../api-types/Card/values/Color';
+import type { HCColors } from '../../api-types/Card/values/Color';
+import { HCImageStatus } from '../../api-types/Card/values/ImageStatus';
+import { HCObject } from '../../api-types/Object';
+import { withToFaces } from '../getHc5';
+
+/** Convert pack front metadata into an HCCard.Any with toFaces() for use in getDraftMancerCard etc. */
+export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
+  const card: Omit<HCCard.Normal, 'toFaces'> = {
+    object: HCObject.ObjectType.Card,
+    id: `hcj-${entry.tag}`,
+    layout: HCLayout.Normal,
+    name: `${entry.name} - ${entry.tag}`,
+    image: entry.url,
+    image_status: HCImageStatus.HighResScan,
+    cmc: 0,
+    creator: '',
+    set: 'HCJ',
+    rulings: '',
+    type_line: 'Card',
+    oracle_text: '',
+    mana_cost: '',
+    color_identity: [[HCColor.Colorless]],
+    colors: [HCColor.Colorless] as HCColors,
+    keywords: [],
+    legalities: {
+      standard: HCLegality.Legal,
+      '4cb': HCLegality.Legal,
+      commander: HCLegality.Legal,
+    },
+    variation: false,
+  };
+  return withToFaces(card as HCCard.Normal);
+}
+
 export const hcjFrontCards: HCJPackInfo[] = [
   {
     name: `"Bant Thopters`,

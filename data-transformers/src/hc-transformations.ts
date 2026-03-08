@@ -1,6 +1,5 @@
 import fs from 'fs';
 
-// import { downloadImage } from "./downloadImage";
 import { fetchTokens } from './fetchTokens';
 import { fetchDatabase } from './fetchdatabase';
 import { fetchUsernameMappings } from './fetchUsernameMapping';
@@ -24,7 +23,6 @@ const moveCardFacesToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
   });
 };
 const setDerivedProps = (card: HCCard.Any) => {
-  // const derivedCard:HCCard.Any = { ...card };
   if ('card_faces' in card) {
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];

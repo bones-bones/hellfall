@@ -8,7 +8,7 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
     oracle_id: draftmancerSafeName,
     name: draftmancerSafeName,
     // This prefers replaceAll for static strings
-    mana_cost: (card.mana_cost?.[0] || '')
+    mana_cost: (card.mana_cost || '')
       .replaceAll(/\{\?\}/g, '{0}')
       .replaceAll('?', '{0}')
       .replace(/\{H\/.\}/g, '') // nut Shot (TODO do the stringreplace and try ta actually set the number)
@@ -43,7 +43,7 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
     set: 'custom',
     collector_number: '',
     rarity: 'rare',
-    type: `${card.toFaces()[0].supertypes?.join(' ')} ${card.toFaces()[0].types?.join(' ')}`.trim(),
+    type: [card.toFaces()[0].supertypes?.join(' '), card.toFaces()[0].types?.join(' ')].join(' ').trim(),
     subtypes: card.toFaces()[0].subtypes?.filter(e => e != '') || [],
     rating: 0,
     in_booster: true,
