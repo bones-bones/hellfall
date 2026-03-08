@@ -23,7 +23,7 @@ export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
     layout: HCLayout.Normal,
     name: `${entry.name} - ${entry.tag}`,
     image: entry.url,
-    image_status: HCImageStatus.HighResScan,
+    image_status: HCImageStatus.HighRes,
     cmc: 0,
     creator: '',
     set: 'HCJ',
@@ -31,7 +31,7 @@ export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
     type_line: 'Card',
     oracle_text: '',
     mana_cost: '',
-    color_identity: [[HCColor.Colorless]],
+    color_identity: [HCColor.Colorless],
     colors: [HCColor.Colorless] as HCColors,
     keywords: [],
     legalities: {
@@ -39,6 +39,8 @@ export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
       '4cb': HCLegality.Legal,
       commander: HCLegality.Legal,
     },
+    color_identity_hybrid:[],
+    draft_image_status:HCImageStatus.Inapplicable,
     variation: false,
   };
   return withToFaces(card as HCCard.Normal);

@@ -44,7 +44,7 @@ export enum HCImageStatus {
   // ExtHighRes = 'exthighres',
   /**
    * This card's image is high resolution.
-   * This generally comes from pasting over a scryfall scan or sites like mtg.design or cardconjurer.
+   * This generally comes from pasting over a scryfall scan or sites like mtg.design, cardconjurer, or artificer.
    * Examples:
    * https://lh3.googleusercontent.com/d/1OtAM_tAgZIO1rREaOSRhRlqxLk3C7N1u
    * https://lh3.googleusercontent.com/d/1jDzsVt1paJQ6_TYRnuAkT4rkMSczh-wB
