@@ -29,12 +29,14 @@ const PLACEHOLDER_CARD: Omit<HCCard.Normal, 'toFaces'> = {
     '4cb': HCLegality.Legal,
     commander: HCLegality.Legal,
   },
-  color_identity_hybrid:[],
-  draft_image_status:HCImageStatus.Inapplicable,
+  color_identity_hybrid: [],
+  draft_image_status: HCImageStatus.Inapplicable,
   variation: false,
 };
 
-function withToFaces<T extends HCCard.Any>(card: T): T & { toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced] } {
+function withToFaces<T extends HCCard.Any>(
+  card: T
+): T & { toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced] } {
   return {
     ...card,
     toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced] {

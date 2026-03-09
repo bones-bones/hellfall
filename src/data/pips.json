@@ -1905,6 +1905,30 @@
       "symbol": "Faith",
       "english": "a faith counter",
       "represents_mana": false
+    },
+    {
+      "filename": "symbols/emoji/hypermaro.png",
+      "symbol": "hypermaro",
+      "english": "hypermaro",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/emoji/karn.png",
+      "symbol": "karn",
+      "english": "karn",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/emoji/moyai.png",
+      "symbol": "moyai",
+      "english": "moyai",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/emoji/dreadmaw.png",
+      "symbol": "dreadmaw",
+      "english": "dreadmaw",
+      "represents_mana": false
     }
   ]
 }

@@ -45,13 +45,13 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
     orderSegment.cards.forEach((card, index) => {
       const existingCard = [...fronts.querySelectorAll('card')].find(e => {
         console.log(card);
-      // @ts-expect-error
+        // @ts-expect-error
         return e.querySelector('id').textContent == card.sides[0].id;
       });
       if (existingCard) {
-      // @ts-expect-error
+        // @ts-expect-error
         existingCard.querySelector('slots').textContent = `${
-      // @ts-expect-error
+          // @ts-expect-error
           existingCard.querySelector('slots').textContent
         },${index}`;
       } else {
@@ -81,13 +81,13 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
       }
       // @ts-ignore
       const existingCard = [...backs.querySelectorAll('card')].find(
-      // @ts-ignore
+        // @ts-ignore
         e => e.querySelector('id').textContent == card.sides[1].id
       );
       if (existingCard) {
-      // @ts-ignore
+        // @ts-ignore
         existingCard.querySelector('slots').textContent = `${
-      // @ts-ignore
+          // @ts-ignore
           existingCard.querySelector('slots').textContent
         },${index}`;
       } else {
