@@ -112,6 +112,20 @@ const renderFlavorText = (text: string[]) => {
     );
   });
 };
+const getImages = (card:HCCard.Any) => {
+  const imagesToShow:string[] = [];
+
+  if (!('card_faces' in card) || (card.card_faces.length>1 && !('image' in card.card_faces[0]))) {
+    imagesToShow.push(card.image!);
+  }
+  if ('card_faces' in card) {
+    imagesToShow.push(...card.card_faces.filter(e=>e.image).map(e=>e.image!));
+  }
+  if ('draft_image' in card) {
+    imagesToShow.push(card.draft_image!);
+  }
+  return imagesToShow;  
+}
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   // const faceCount = data.
   // data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
@@ -120,20 +134,20 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
 
   // TODO: add handling for flip and aftermath
   // TODO: add color indicator symbols
-  const imagesToShow =
-    'card_faces' in data
-      ? [
-          data.image,
-          ...data
-            .toFaces()
-            .filter(e => e.image)
-            .map(e => e.image),
-        ]
-      : [data.image];
-  const draftImage = data.draft_image;
-  if (draftImage) {
-    imagesToShow.push(draftImage);
-  }
+  const imagesToShow = getImages(data);
+  //   'card_faces' in data
+  //     ? [
+  //         data.image,
+  //         ...data
+  //           .toFaces()
+  //           .filter(e => e.image)
+  //           .map(e => e.image),
+  //       ]
+  //     : [data.image];
+  // const draftImage = data.draft_image;
+  // if (draftImage) {
+  //   imagesToShow.push(draftImage);
+  // }
 
   return (
     <Container key={data.id}>
@@ -163,7 +177,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     }}
                     disabled={i === activeImageSide}
                   >
-                    {i == imagesToShow.length - 1 && draftImage ? 'draft' : `side ${i + 1}`}
+                    {i == imagesToShow.length - 1 && data.draft_image ? 'draft' : `side ${i + 1}`}
                   </button>
                 );
               })}

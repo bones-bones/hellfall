@@ -8,7 +8,7 @@ import {
   // HCFrameEffect,
   // HCGame,
   HCImageStatus,
-  HCImageUris,
+  // HCImageUris,
   // HCLanguageCode,
   HCLayout,
   HCLegalitiesField,
@@ -22,7 +22,7 @@ import {
 
 import { HCCardFace } from './CardFace';
 import { HCRelatedCard } from './RelatedCard';
-import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType';
+// import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType';
 // import { SetType } from "../Set/values";
 
 /**
@@ -144,7 +144,7 @@ export namespace HCCardFields.Gameplay {
   /**
    * On multi-face cards, these fields are duplicated at the card and face level.
    */
-  type AllFacesAndSides = {
+  type AllFaces = {
     name: string;
     type_line: string;
     mana_cost: string;
@@ -156,7 +156,7 @@ export namespace HCCardFields.Gameplay {
    * - Root level for a single-face card.
    * - Card face level for a multi-face card.
    */
-  export type CardFaceSpecific = AllFacesAndSides & {
+  export type CardFaceSpecific = AllFaces & {
     /**
      * This face’s colors.
      */
@@ -202,66 +202,12 @@ export namespace HCCardFields.Gameplay {
   } & CombatStats &
     VanguardStats;
 
-  // export type CardSideSpecific = AllFacesAndSides & {
-  //   /**
-  //    * The name of this card.
-  //    */
-  //   name: string;
-  //   /**
-  //    * The type line of this card.
-  //    */
-  //   type_line: string;
-  //   /**
-  //    * This card’s colors, if the overall card has colors defined by the rules. Otherwise the colors will be on the card_faces objects.
-  //    */
-  //   colors: HCColors;
-  // };
-  /**
-   * These fields only show up on multiface cards.
-   * - Root level for multiface cards.
-   */
-  export type FrontSpecific = {
-    /**
-     * The card’s mana value. Note that some funny cards have fractional mana costs.
-     *
-     * @type Decimal
-     */
-    cmc: number;
-    /**
-     * The front's colors.
-     */
-    colors: HCColors;
-    /**
-     * This card’s color identity..
-     */
-    color_identity: HCColors;
-    /**
-     * This card’s color identity for hybrid. It is a list of HCColors in order to handle the hybrid rules.
-     */
-    color_identity_hybrid: HCColors[];
-    /**
-     * An array of keywords that this card uses, such as 'Flying' and 'Cumulative upkeep'.
-     */
-    keywords: string[];
-    /**
-     * The name of this card. If this card has multiple faces, this field will contain all names separated by ␣//␣.
-     */
-    name: string;
-    /**
-     * Colors of mana that this card could produce.
-     */
-    produced_mana?: HCManaTypes;
-    /**
-     * The type line of this card.
-     */
-    type_line: string;
-  };
 
   /**
    * These fields are specific for a card.
    * - Root level for all layouts.
    */
-  export type CardSpecific = AllFacesAndSides & {
+  export type CardSpecific = AllFaces & {
     /**
      * The card’s mana value. Note that some funny cards have fractional mana costs.
      *
@@ -291,7 +237,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * Colors of mana that this card could produce.
      */
-    produced_mana?: HCManaTypes;
+    // produced_mana?: HCManaTypes;
     /**
      * The type line of this card.
      */
@@ -330,7 +276,7 @@ export namespace HCCardFields.Print {
      */
     image_status: `${HCImageStatus}`;
     /**
-     * A string with the image for this side.
+     * A string with the image for this card.
      */
     image?: string;
     /**
@@ -360,41 +306,20 @@ export namespace HCCardFields.Print {
   } & VariationInfo;
 
   /**
-   * These print fields only show up when a card is single-sided.
-   */
-  export type SingleSideOnly = {
-    /**
-     * The HC ID for the card back design present on this card.
-     *
-     * @type UUID
-     */
-    card_back_id?: string;
-  };
-
-  /**
-   * These print fields are specific for the side of a card.
-   *
-   * - Root level for single-sided cards, whether with single-part or multi-part.
-   * - Card face level for cards with two sides, e.g. a DFC or a reversible card.
-   */
-  export type CardSideSpecific = {
-    /**
-     * A computer-readable indicator for the state of this card’s image.
-     */
-    image_status: `${HCImageStatus}`;
-    /**
-     * An string with the image for this side.
-     */
-    image?: string;
-  };
-
-  /**
    * These print fields are specific for a card face.
    *
    * - Root level for a single-faced card.
    * - Card face level for a multi-faced card.
    */
   export type CardFaceSpecific = {
+    /**
+     * A computer-readable indicator for the state of this face's image. If this face doesn't have an image, this also explains why.
+     */
+    image_status: `${HCImageStatus}`;
+    /**
+     * A string with the image for this face, if any.
+     */
+    image?: string;
     /**
      * The flavor text, if any.
      */
@@ -403,22 +328,6 @@ export namespace HCCardFields.Print {
      * This card’s watermark, if any.
      */
     watermark?: string;
-  };
-
-  /**
-   * These print fields only ever show up on a card face.
-   */
-  export type CardFaceOnly = {
-    /**
-     * The name of the illustrator of this card face. Newly spoiled cards may not have this field yet.
-     */
-    // artist?: string;
-    /**
-     * The ID of the illustrator of this card face. Newly spoiled cards may not have this field yet.
-     *
-     * @type UUID
-     */
-    // artist_id?: string;
   };
 
   type VariationInfo = {
