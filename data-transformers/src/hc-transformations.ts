@@ -397,6 +397,39 @@ const main = async () => {
             }
           }
         });
+      const relatedTokenMaker: HCRelatedCard = {
+        object: HCObject.ObjectType.RelatedCard,
+        id: token.id,
+        component: 'token_maker',
+        name: token.name,
+        type_line: token.type_line,
+        image: token.image,
+      };
+      token.all_parts
+        ?.filter(e => e.component == 'token')
+        .forEach(subToken => {
+          const related = finalTokens.find(otherToken =>
+            subToken.id
+              ? otherToken.id == subToken.id
+              : otherToken.name.toLowerCase() == subToken.name.toLowerCase()
+          );
+          if (related) {
+            subToken.id = related.id;
+            subToken.name = related.name;
+            subToken.type_line = related.type_line;
+            subToken.image = related.image;
+            if ('all_parts' in related) {
+              const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
+              if (tokenIndex == -1) {
+                related.all_parts?.push(relatedTokenMaker);
+              } else {
+                related.all_parts![tokenIndex!] = relatedTokenMaker;
+              }
+            } else {
+              related.all_parts = [relatedTokenMaker];
+            }
+          }
+        });
       const meldPartIds: string[] = [];
       const meldRelatedCards: HCRelatedCard[] = [];
       token.all_parts

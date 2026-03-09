@@ -71,3 +71,4 @@ Write a script to transform the database
 - ~~ add viewer for draft image after other side images~~
 - ~~ show draftpartners on related cards on HellfallCard~~
 - full documentation
+- add parsing to hc-transformations that allows "variation_of" in tokens to be just a number
