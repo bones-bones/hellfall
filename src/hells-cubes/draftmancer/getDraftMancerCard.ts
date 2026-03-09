@@ -110,6 +110,6 @@ const shouldReveal = (card: HCCard.Any) => {
   return (
     card.toFaces()[0].oracle_text.includes('hen you draft') ||
     card.toFaces()[0].oracle_text.includes('raftpartner') ||
-    card.toFaces()[0].oracle_text.toLowerCase().includes('s you draft')
+    card.toFaces()[0].oracle_text.includes('s you draft')
   );
 };
