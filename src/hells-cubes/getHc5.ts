@@ -53,6 +53,7 @@ export function getHc5(): HCCard.Any[] {
     withToFaces({
       ...PLACEHOLDER_CARD,
       id: `hc5-placeholder-${i}`,
+      name: `◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎ ${i}`,
     } as HCCard.Normal)
   );
 }

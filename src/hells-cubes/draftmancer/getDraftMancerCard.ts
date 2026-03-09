@@ -4,8 +4,8 @@ import { DraftmancerCard } from '../types';
 export const getDraftMancerCard = (card: HCCard.Any) => {
   const draftmancerSafeName = card.name.replace(/[[\]]/g, '');
   const cardToReturn: DraftmancerCard = {
-    id: draftmancerSafeName + '_custom_',
-    oracle_id: draftmancerSafeName,
+    id: card.id + '_custom_',
+    oracle_id: card.id,
     name: draftmancerSafeName,
     // This prefers replaceAll for static strings
     mana_cost: (card.mana_cost || '')
@@ -24,7 +24,7 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
       .replaceAll('{Blood}', '{0}') // Ouroboros
       .replace('{2/Brown}', '{2}') // Blonk
       .replace('Sacrifice a creature:', '{0}') // Cat
-      .replace('{Discard your hand/RR}', '{R}{R}') // Dumpstergoyf
+      .replace('{Discard your hand/RR}', '{R}{R}') // Dumpstergoyf // {2/Beige}
       .replace('{BB/P}', '{B}{B}') // THE SKELETON
       .replace('{UU/P}', '{U}{U}') // Orb Enthusiast
       .replace('{2/Yellow}', '{2}')
@@ -35,13 +35,17 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
       .replaceAll('{G/Yellow/P}', '{G}') // It that Goes in the Green Slot
       .replaceAll('{UFO}', '{1}') // Gitaxian Satellite
       .replaceAll('{Coin}', '{1}')
+      .replace('{2/Beige}{2/Grey}{2/Gold}', '{6}')// Beego
       .replaceAll('{27}', '{11}{11}{6}') // Block of Darksteel
       .replaceAll('{2/Orange}', '{2}') // Candy Karn
-      .replaceAll('{Orange/U}', '{U}'), // Cat with homophobia
+      .replaceAll('{Orange/U}', '{U}') // Cat with homophobia
+      .replace(/\{(Chris|Lois|Stewie|Meg|Peter)\}/g, '{1}') // Family Circus
+      .replace(/\{600000\}/g, '{10}') // Tax Write-Off Statue
+      .replaceAll('{Orange/U}', '{U}'),// Cat with homophobia
 
-    colors: card.toFaces()[0].colors,
+    colors: card.toFaces()[0].colors.filter(e => ['R', 'U', 'B', 'G', 'W'].includes(e)),
     set: 'custom',
-    collector_number: '',
+    collector_number: card.id,
     rarity: 'rare',
     type: [card.toFaces()[0].supertypes?.join(' '), card.toFaces()[0].types?.join(' ')].join(' ').trim(),
     subtypes: card.toFaces()[0].subtypes?.filter(e => e != '') || [],

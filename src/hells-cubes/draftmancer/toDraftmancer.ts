@@ -5,6 +5,9 @@ import { hcjFrontCards, packInfoToCard } from '../hellstart/hcj';
 import { getDraftMancerCard } from './getDraftMancerCard';
 
 export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.Any[] }) => {
+  cards.forEach(card => {
+    card.name = card.name.replace(/\[/g, 'OPENBRACKET').replace(/\]/g, 'CLOSEBRACKET').replace(/^ /g, 'SPACE');
+  });
   // TODO: make sure this works
   const componentCards = cards.filter(card =>
     Boolean(card.all_parts?.find(e => e.name == card.name && e.component != 'token_maker'))
