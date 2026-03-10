@@ -55,11 +55,12 @@ Write a script to transform the database
 - make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
 - special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?), Ability Bingo
-  - HOW, 
+
+  - HOW,
   - add grid (that allows root-level stuff as well as faces?)?
   - switch Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, to use the new face system
 
-- make sure non-number p/t values work in searches (X, \*, etc.)
+- ~~ make sure non-number p/t values work in searches (X, \*, etc.)~~
 - make tokens searchable (use set?)
 - add ability to search by number of colors (identity)
 - switch search to text bar and make the mass of buttons hidden as advanced search
@@ -80,4 +81,3 @@ Write a script to transform the database
 - fix formatting of all sagas
 - make token copy of hells cards work when added either way (currently requires insertion of relatedcard with component: "token")
 - ~~ add italics parsing for type line (for Purple Removal Spell)~~
-- add 

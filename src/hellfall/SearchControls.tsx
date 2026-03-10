@@ -22,11 +22,9 @@ import {
   typeSearchAtom,
   searchColorComparisonAtom,
   searchColorsAtom,
-  // searchColorNumberComparisonAtom,
   searchColorNumberAtom,
   searchColorIdentityComparisonAtom,
   searchColorIdentitiesAtom,
-  // searchColorIdentityNumberComparisonAtom,
   searchColorIdentityNumberAtom,
   useHybridIdentityAtom,
   powerAtom,
@@ -41,7 +39,6 @@ import { StyledComponentHolder } from './StyledComponentHolder';
 import { HCSearchColor } from '../api-types';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
-// TODO: figure out type inference issue for cmc
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
@@ -60,16 +57,14 @@ export const SearchControls = () => {
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [colorComparison, setColorComparison] = useAtom(searchColorComparisonAtom);
   const [searchColorNumber, setSearchColorNumber] = useAtom(searchColorNumberAtom);
-  // const [colorNumberComparison, setColorNumberComparison] = useAtom(searchColorNumberComparisonAtom);
   const [searchColorIdentities, setSearchColorIdentitiesAtom] = useAtom(searchColorIdentitiesAtom);
   const [colorIdentityComparison, setColorIdentityComparison] = useAtom(
     searchColorIdentityComparisonAtom
   );
   const [useHybrid, setUseHybrid] = useAtom(useHybridIdentityAtom);
-  const [searchColorIdentityNumber, setSearchColorIdentityNumber] = useAtom(searchColorIdentityNumberAtom);
-  // const [colorIdentityNumberComparison, setColorIdentityNumberComparison] = useAtom(
-    // searchColorIdentityNumberComparisonAtom
-  // );
+  const [searchColorIdentityNumber, setSearchColorIdentityNumber] = useAtom(
+    searchColorIdentityNumberAtom
+  );
 
   return (
     <SearchContainer>
@@ -162,13 +157,17 @@ export const SearchControls = () => {
                 setColorComparison(event.target.value as any);
               }}
             >
-              {['<=', '=', '>='].map(entry => {
+              {['<', '<=', '=', '>=', '>'].map(entry => {
                 return <option key={entry}>{entry}</option>;
               })}
             </StyledManaSelect>
           </StyledComponentHolder>
         </NamedCheckboxGroup>
-        <NumberSelector label={'Color Number'} onChange={setSearchColorNumber} initialValue={searchColorNumber} />
+        <NumberSelector
+          label={'Color Number'}
+          onChange={setSearchColorNumber}
+          initialValue={searchColorNumber}
+        />
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
           values={
@@ -199,7 +198,7 @@ export const SearchControls = () => {
                 setColorIdentityComparison(event.target.value as any);
               }}
             >
-              {['<=', '=', '>='].map(entry => {
+              {['<', '<=', '=', '>=', '>'].map(entry => {
                 return <option key={entry}>{entry}</option>;
               })}
             </StyledManaSelect>
@@ -216,7 +215,11 @@ export const SearchControls = () => {
             />
           </StyledComponentHolder>
         </NamedCheckboxGroup>
-        <NumberSelector label={'Color Identity Number'} onChange={setSearchColorIdentityNumber} initialValue={searchColorIdentityNumber} />
+        <NumberSelector
+          label={'Color Identity Number'}
+          onChange={setSearchColorIdentityNumber}
+          initialValue={searchColorIdentityNumber}
+        />
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup

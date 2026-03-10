@@ -214,9 +214,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <br />
               {face.type_line &&
                 (face.type_line.includes('\\*') || face.type_line.includes('(') ? (
-                  <div key="type">
-                    {renderName(face.type_line)}
-                  </div>
+                  <div key="type">{renderName(face.type_line)}</div>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="type">
