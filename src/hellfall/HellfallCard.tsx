@@ -112,20 +112,20 @@ const renderFlavorText = (text: string[]) => {
     );
   });
 };
-const getImages = (card:HCCard.Any) => {
-  const imagesToShow:string[] = [];
+const getImages = (card: HCCard.Any) => {
+  const imagesToShow: string[] = [];
 
-  if (!('card_faces' in card) || (card.card_faces.length>1 && !('image' in card.card_faces[0]))) {
+  if (!('card_faces' in card) || (card.card_faces.length > 1 && !('image' in card.card_faces[0]))) {
     imagesToShow.push(card.image!);
   }
   if ('card_faces' in card) {
-    imagesToShow.push(...card.card_faces.filter(e=>e.image).map(e=>e.image!));
+    imagesToShow.push(...card.card_faces.filter(e => e.image).map(e => e.image!));
   }
   if ('draft_image' in card) {
     imagesToShow.push(card.draft_image!);
   }
-  return imagesToShow;  
-}
+  return imagesToShow;
+};
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   // const faceCount = data.
   // data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
@@ -212,9 +212,22 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 {stringToMana(face.mana_cost)}
               </Text>
               <br />
-              <Text typeLevel="body.medium" key="type">
+              {face.type_line &&
+                (face.type_line.includes('\\*') || face.type_line.includes('(') ? (
+                  <div key="type">
+                    {renderName(face.type_line)}
+                  </div>
+                ) : (
+                  <>
+                    <Text typeLevel="body.medium" key="type">
+                      {stringToMana(face.type_line)}
+                    </Text>
+                    {/* <br /> */}
+                  </>
+                ))}
+              {/* <Text typeLevel="body.medium" key="type">
                 {face.type_line}
-              </Text>
+              </Text> */}
               <br />
               {face.oracle_text &&
                 face.oracle_text != ';' &&

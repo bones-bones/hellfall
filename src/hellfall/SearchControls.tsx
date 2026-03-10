@@ -7,7 +7,7 @@ import { FormField } from '@workday/canvas-kit-react/form-field';
 import cardTypes from '../data/types.json';
 import creators_data from '../data/creators.json';
 import tags_data from '../data/tags.json';
-import { CmcSelector } from './inputs';
+import { NumberSelector } from './inputs';
 import { SearchCheckbox } from './SearchCheckbox';
 
 import { useAtom } from 'jotai';
@@ -17,16 +17,22 @@ import {
   costSearchAtom,
   rulesSearchAtom,
   searchCmcAtom,
-  searchColorsAtom,
   searchSetAtom,
   creatorsAtom,
   typeSearchAtom,
-  searchColorsIdentityAtom,
   searchColorComparisonAtom,
+  searchColorsAtom,
+  // searchColorNumberComparisonAtom,
+  searchColorNumberAtom,
   searchColorIdentityComparisonAtom,
+  searchColorIdentitiesAtom,
+  // searchColorIdentityNumberComparisonAtom,
+  searchColorIdentityNumberAtom,
   useHybridIdentityAtom,
   powerAtom,
   toughnessAtom,
+  loyaltyAtom,
+  defenseAtom,
   tagsAtom,
 } from './searchAtoms';
 import { StyledLabel } from './StyledLabel';
@@ -46,17 +52,24 @@ export const SearchControls = () => {
   const [searchCmc, setSearchCmc] = useAtom(searchCmcAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
-
+  const [loyalty, setLoyalty] = useAtom(loyaltyAtom);
+  const [defense, setDefense] = useAtom(defenseAtom);
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
-  const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
   const [tags, setTags] = useAtom(tagsAtom);
-  const [searchColorsIdentity, setSearchColorsIdentityAtom] = useAtom(searchColorsIdentityAtom);
-  const [useHybrid, setUseHybrid] = useAtom(useHybridIdentityAtom);
+  const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [colorComparison, setColorComparison] = useAtom(searchColorComparisonAtom);
+  const [searchColorNumber, setSearchColorNumber] = useAtom(searchColorNumberAtom);
+  // const [colorNumberComparison, setColorNumberComparison] = useAtom(searchColorNumberComparisonAtom);
+  const [searchColorIdentities, setSearchColorIdentitiesAtom] = useAtom(searchColorIdentitiesAtom);
   const [colorIdentityComparison, setColorIdentityComparison] = useAtom(
     searchColorIdentityComparisonAtom
   );
+  const [useHybrid, setUseHybrid] = useAtom(useHybridIdentityAtom);
+  const [searchColorIdentityNumber, setSearchColorIdentityNumber] = useAtom(searchColorIdentityNumberAtom);
+  // const [colorIdentityNumberComparison, setColorIdentityNumberComparison] = useAtom(
+    // searchColorIdentityNumberComparisonAtom
+  // );
 
   return (
     <SearchContainer>
@@ -155,6 +168,7 @@ export const SearchControls = () => {
             </StyledManaSelect>
           </StyledComponentHolder>
         </NamedCheckboxGroup>
+        <NumberSelector label={'Color Number'} onChange={setSearchColorNumber} initialValue={searchColorNumber} />
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
           values={
@@ -172,8 +186,8 @@ export const SearchControls = () => {
               'Misc bullshit',
             ]
           }
-          initialValue={searchColorsIdentity}
-          onChange={setSearchColorsIdentityAtom}
+          initialValue={searchColorIdentities}
+          onChange={setSearchColorIdentitiesAtom}
         >
           <StyledComponentHolder>
             <StyledLabel htmlFor="styledManaSelect">{'Color Identity Comparison'}</StyledLabel>
@@ -202,6 +216,7 @@ export const SearchControls = () => {
             />
           </StyledComponentHolder>
         </NamedCheckboxGroup>
+        <NumberSelector label={'Color Identity Number'} onChange={setSearchColorIdentityNumber} initialValue={searchColorIdentityNumber} />
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup
@@ -228,9 +243,11 @@ export const SearchControls = () => {
           onChange={setSet}
         />
         <CardLegalityControls />
-        <CmcSelector label={'Mana value'} onChange={setSearchCmc} initialValue={searchCmc} />
-        <CmcSelector label={'Power'} onChange={setPower} initialValue={power} />
-        <CmcSelector label={'Toughness'} onChange={setToughness} initialValue={toughness} />
+        <NumberSelector label={'Mana value'} onChange={setSearchCmc} initialValue={searchCmc} />
+        <NumberSelector label={'Power'} onChange={setPower} initialValue={power} />
+        <NumberSelector label={'Toughness'} onChange={setToughness} initialValue={toughness} />
+        <NumberSelector label={'Loyalty'} onChange={setLoyalty} initialValue={loyalty} />
+        <NumberSelector label={'Defense'} onChange={setDefense} initialValue={defense} />
       </SearchCriteriaSection>
     </SearchContainer>
   );

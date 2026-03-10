@@ -43,7 +43,6 @@ Write a script to transform the database
 - use mv instead of cmc
 - make better search syntax (like allowing or)
 - tell users how to use not and/or make it easier to use not (!)
-- switch Hell's Cube (the card), Hellscube Alignment Chart, to use the new face system
 - add reminder cards for morph and its variants (not just manifest)
 - ~~ use multi_token for Scrap Heap Reminder Card1 (also add wurms),~~
 - keep both images for A-Sky Diamond,
@@ -56,6 +55,10 @@ Write a script to transform the database
 - make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
 - special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?), Ability Bingo
+  - HOW, 
+  - add grid (that allows root-level stuff as well as faces?)?
+  - switch Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, to use the new face system
+
 - make sure non-number p/t values work in searches (X, \*, etc.)
 - make tokens searchable (use set?)
 - add ability to search by number of colors (identity)
@@ -71,4 +74,10 @@ Write a script to transform the database
 - ~~ add viewer for draft image after other side images~~
 - ~~ show draftpartners on related cards on HellfallCard~~
 - full documentation
-- add parsing to hc-transformations that allows "variation_of" in tokens to be just a number
+- ~~ add parsing to hc-transformations that allows "variation_of" in tokens to be just a number~~
+- use draft_image for full image of multisided cards?
+- add redirect for card name (in backcompat) that looks for first name in multiface cards
+- fix formatting of all sagas
+- make token copy of hells cards work when added either way (currently requires insertion of relatedcard with component: "token")
+- ~~ add italics parsing for type line (for Purple Removal Spell)~~
+- add 

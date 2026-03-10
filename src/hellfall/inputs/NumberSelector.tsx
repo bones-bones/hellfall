@@ -2,6 +2,13 @@ import styled from '@emotion/styled';
 
 import { useState, useEffect } from 'react';
 import { StyledLegend } from '../StyledLabel';
+export const toNumber = (numStr:string|undefined) => {
+  if (!(numStr)) {
+    return undefined
+  } else {
+    
+  }
+}
 
 export const NumericComparatorSelector = ({
   onChange,

@@ -25,16 +25,57 @@ export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
 
 export const searchColorsAtom = atom(searchParams.get('colors')?.split(',') || []);
 
-export const searchColorsIdentityAtom = atom(searchParams.get('colorIdentity')?.split(',') || []);
-
-export const useHybridIdentityAtom = atom(searchParams.get('useHybrid') == 'true');
-
 export const searchColorComparisonAtom = atom(
   (searchParams.get('colorComparison') || '=') as '<=' | '>=' | '='
 );
 
+// export const searchColorNumberAtom = atom(searchParams.get('colorNumber') || '');
+
+// export const searchColorNumberComparisonAtom = atom(
+//   (searchParams.get('colorNumberComparison') || '=') as '<=' | '>=' | '='
+// );
+
+export const searchColorIdentitiesAtom = atom(searchParams.get('colorIdentity')?.split(',') || []);
+
 export const searchColorIdentityComparisonAtom = atom(
   (searchParams.get('colorIdentityComparison') || '<=') as '<=' | '>=' | '='
+);
+
+// export const searchColorIdentityNumberAtom = atom(searchParams.get('colorIdentityNumber') || '');
+
+// export const searchColorIdentityNumberComparisonAtom = atom(
+//   (searchParams.get('colorIdentityNumberComparison') || '<=') as '<=' | '>=' | '='
+// );
+
+export const useHybridIdentityAtom = atom(searchParams.get('useHybrid') == 'true');
+
+export const searchColorNumberAtom = atom<{ value: number; operator: '<' | '=' | '>' } | undefined>(
+  (() => {
+    const parms = searchParams.get('colorNumber');
+
+    const extracted = parms?.match(/([<=>])(\d)/);
+    if (extracted) {
+      return {
+        value: parseInt(extracted[2]),
+        operator: extracted[1] as '<' | '=' | '>',
+      };
+    }
+    return undefined;
+  })()
+);
+
+export const searchColorIdentityNumberAtom = atom<{ value: number; operator: '<' | '=' | '>' } | undefined>(
+  (() => {
+    const parms = searchParams.get('colorIdentityNumber');
+    const extracted = parms?.match(/([<=>])(\d)/);
+    if (extracted) {
+      return {
+        value: parseInt(extracted[2]),
+        operator: extracted[1] as '<' | '=' | '>',
+      };
+    }
+    return undefined;
+  })()
 );
 
 export const powerAtom = atom<{ value: number; operator: '<' | '=' | '>' } | undefined>(
@@ -65,14 +106,55 @@ export const toughnessAtom = atom<{ value: number; operator: '<' | '=' | '>' } |
     return undefined;
   })()
 );
+export const loyaltyAtom = atom<{ value: number; operator: '<' | '=' | '>' } | undefined>(
+  (() => {
+    const parms = searchParams.get('l');
 
-export const searchCmcAtom = atom<
-  | {
-      operator: '>' | '<' | '=' | '';
-      value: number;
+    const extracted = parms?.match(/([<=>])(\d)/);
+    if (extracted) {
+      return {
+        value: parseInt(extracted[2]),
+        operator: extracted[1] as '<' | '=' | '>',
+      };
     }
-  | undefined
->(searchParams.get('manaValue') ? JSON.parse(searchParams.get('manaValue')!) : undefined);
+    return undefined;
+  })()
+);
+
+export const defenseAtom = atom<{ value: number; operator: '<' | '=' | '>' } | undefined>(
+  (() => {
+    const parms = searchParams.get('d');
+    const extracted = parms?.match(/([<=>])(\d)/);
+    if (extracted) {
+      return {
+        value: parseInt(extracted[2]),
+        operator: extracted[1] as '<' | '=' | '>',
+      };
+    }
+    return undefined;
+  })()
+);
+
+export const searchCmcAtom = atom<{ value: number; operator: '<' | '=' | '>' } | undefined>(
+  (() => {
+    const parms = searchParams.get('manaValue');
+    const extracted = parms?.match(/([<=>])(\d)/);
+    if (extracted) {
+      return {
+        value: parseInt(extracted[2]),
+        operator: extracted[1] as '<' | '=' | '>',
+      };
+    }
+    return undefined;
+  })()
+);
+// export const searchCmcAtom = atom<
+//   | {
+//       operator: '>' | '<' | '=' | '';
+//       value: number;
+//     }
+//   | undefined
+// >(searchParams.get('manaValue') ? JSON.parse(searchParams.get('manaValue')!) : undefined);
 
 export const sortAtom = atom(
   (searchParams.get('order') || 'Color') as 'Alpha' | 'CMC' | 'Color' | 'Id'
