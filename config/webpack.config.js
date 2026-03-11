@@ -11,6 +11,9 @@ const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const paths = require("./paths");
 const modules = require("./modules");
+const {
+  transformHellscubeDatabase,
+} = require("./transformHellscubeDatabase");
 
 const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
 const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
@@ -275,6 +278,11 @@ module.exports = function (webpackEnv) {
           {
             from: "src/data/Hellscube-Database.json",
             to: "Hellscube-Database.json",
+            transform(content) {
+              const raw = content.toString("utf8");
+              const out = transformHellscubeDatabase(raw);
+              return Buffer.from(out, "utf8");
+            },
           },
           {
             from: "public/pips",

@@ -25,7 +25,7 @@ export const callbackHandler = async (req: HandlerRequest, res: HandlerResponse)
 
   if (!code || !state || state !== savedState) {
     Object.entries(withCors({}, req)).forEach(([header, value]) => res.setHeader(header, value));
-    res.writeHead(302, { Location: `${env.FRONTEND_URL}?auth=error` });
+    res.writeHead(302, { Location: `${env.AUTH_SERVER_URL}/api/discord/done?auth=error` });
     res.end();
     return;
   }
@@ -48,26 +48,30 @@ export const callbackHandler = async (req: HandlerRequest, res: HandlerResponse)
     });
 
     const isProd = env.AUTH_SERVER_URL.startsWith("https");
-    const cookie = [
+    const cookieParts = [
       `${env.COOKIE_NAME}=${sessionToken}`,
       "Path=/",
       "HttpOnly",
       "SameSite=Lax",
       "Max-Age=604800", // 7 days
       ...(isProd ? ["Secure"] : []),
-    ].join("; ");
+    ];
+    if (env.COOKIE_DOMAIN) cookieParts.push(`Domain=${env.COOKIE_DOMAIN}`);
+    const cookie = cookieParts.join("; ");
 
     res.setHeader("Set-Cookie", [
       `discord_oauth_state=; Path=/; HttpOnly; Max-Age=0`,
       cookie,
     ]);
     Object.entries(withCors({}, req)).forEach(([header, value]) => res.setHeader(header, value));
-    res.writeHead(302, { Location: `${env.FRONTEND_URL}?auth=ok` });
+    // Redirect to same origin first so the browser stores the cookie (then /done redirects to frontend)
+    const doneUrl = `${env.AUTH_SERVER_URL}/api/discord/done?auth=ok`;
+    res.writeHead(302, { Location: doneUrl });
     res.end();
   } catch (err) {
     console.error("discord/callback", err);
     Object.entries(withCors({}, req)).forEach(([k, v]) => res.setHeader(k, v));
-    res.writeHead(302, { Location: `${env.FRONTEND_URL}?auth=error` });
+    res.writeHead(302, { Location: `${env.AUTH_SERVER_URL}/api/discord/done?auth=error` });
     res.end();
   }
 }

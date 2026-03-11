@@ -8,6 +8,8 @@ import { tagHandler } from "./api/tag.js";
 import { watchwolfHandler } from "./api/watchwolf.js";
 import { loginHandler } from "./api/discord/login.js";
 import { callbackHandler } from "./api/discord/callback.js";
+import { doneHandler } from "./api/discord/done.js";
+import { cardTagsHandler } from "./api/cardTags.js";
 
 const PORT = Number(process.env.PORT) || 3003;
 
@@ -17,8 +19,21 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
   "/api/tag": tagHandler,
   "/api/watchwolf": watchwolfHandler,
   "/api/discord/login": loginHandler,
-  "/api/discord/callback": callbackHandler
+  "/api/discord/callback": callbackHandler,
+  "/api/discord/done": doneHandler
 };
+
+const CARD_TAGS_PREFIX = "/api/cards/";
+
+function parseCardTagsPath(path: string): { cardId: string; tag: string | null } | null {
+  if (!path.startsWith(CARD_TAGS_PREFIX)) return null;
+  const rest = path.slice(CARD_TAGS_PREFIX.length);
+  const parts = rest.split("/");
+  if (parts.length < 2 || parts[0] === "" || parts[1] !== "tags") return null;
+  const cardId = parts[0];
+  const tag = parts.length >= 3 && parts[2] !== "" ? parts[2] : null;
+  return { cardId, tag };
+}
 
 function parseQuery(search: string | null): Record<string, string | string[]> {
   if (!search) return {};
@@ -36,6 +51,18 @@ function parseQuery(search: string | null): Record<string, string | string[]> {
 createServer(async (req: IncomingMessage, res: ServerResponse) => {
   const { pathname, search } = parseUrl(req.url ?? "/", true);
   const path = pathname ?? "/";
+
+  const cardTagsParams = parseCardTagsPath(path);
+  if (cardTagsParams) {
+    (req as HandlerRequest).query = parseQuery(search);
+    await cardTagsHandler(
+      req as HandlerRequest,
+      res as HandlerResponse,
+      cardTagsParams.cardId,
+      cardTagsParams.tag
+    );
+    return;
+  }
 
   const loader = routes[path];
   if (!loader) {

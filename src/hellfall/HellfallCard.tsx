@@ -8,11 +8,16 @@ import { HCCard } from '../api-types/Card/Card';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
-  // const faceCount = data.
-  // data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
+import { useAuth } from '../auth';
+import { useCardTagOverrides } from './useCardTagOverrides';
+import tagsData from '../data/tags.json';
 
+export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
+  const { user } = useAuth();
+  const [displayTags, addTag, removeTag, tagsLoading, tagsError] = useCardTagOverrides(data.id, data.tags);
   const [activeImageSide, setActiveImageSide] = useState(0);
+  const [newTagInput, setNewTagInput] = useState('');
+  const [tagActionError, setTagActionError] = useState<string | null>(null);
 
   const imagesToShow = data
     .toFaces()
@@ -177,22 +182,99 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               </div>
             </>
           )}
-          {data.tags && (
+          {displayTags.length > 0 || user ? (
             <>
+              {tagsLoading && <Text typeLevel="body.small">Loading tags…</Text>}
+              {tagsError && (
+                <Text typeLevel="body.small" style={{ color: '#c00' }}>
+                  Could not load tag overrides.
+                </Text>
+              )}
+              {tagActionError && (
+                <Text typeLevel="body.small" style={{ color: '#c00' }}>
+                  {tagActionError}
+                </Text>
+              )}
               <Text key="Tags">
                 Tags:{' '}
-                {data.tags.map((tagEntry, i, ar) => (
-                  <>
-                    <Link key={tagEntry} to={'?tags=' + tagEntry} target="_blank">
+                {displayTags.map((tagEntry, i, ar) => (
+                  <span key={tagEntry}>
+                    <Link to={'?tags=' + tagEntry} target="_blank">
                       {tagEntry}
                     </Link>
+                    {user && (
+                      <TagRemoveButton
+                        type="button"
+                        onClick={async () => {
+                          setTagActionError(null);
+                          try {
+                            await removeTag(tagEntry);
+                          } catch {
+                            setTagActionError('Failed to remove tag');
+                          }
+                        }}
+                        title="Remove tag"
+                        aria-label={`Remove tag ${tagEntry}`}
+                      >
+                      ×
+                      </TagRemoveButton>
+                    )}
                     {i < ar.length - 1 && ', '}
-                  </>
+                  </span>
                 ))}
               </Text>
+              {user && (
+                <TagAddRow>
+                  <input
+                    type="text"
+                    list="hellfall-tag-list"
+                    value={newTagInput}
+                    onChange={e => setNewTagInput(e.target.value)}
+                    onKeyDown={async e => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const v = newTagInput.trim();
+                        if (v) {
+                          setTagActionError(null);
+                          try {
+                            await addTag(v);
+                            setNewTagInput('');
+                          } catch {
+                            setTagActionError('Failed to add tag');
+                          }
+                        }
+                      }
+                    }}
+                    placeholder="Add tag..."
+                    aria-label="Add tag"
+                  />
+                  <datalist id="hellfall-tag-list">
+                    {(tagsData.data as string[]).map(t => (
+                      <option key={t} value={t} />
+                    ))}
+                  </datalist>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      const v = newTagInput.trim();
+                      if (v) {
+                        setTagActionError(null);
+                        try {
+                          await addTag(v);
+                          setNewTagInput('');
+                        } catch {
+                          setTagActionError('Failed to add tag');
+                        }
+                      }
+                    }}
+                  >
+                    Add
+                  </button>
+                </TagAddRow>
+              )}
               <br />
             </>
-          )}
+          ) : null}
           {data.all_parts && (
             <>
               <Divider />
@@ -254,6 +336,27 @@ const Divider = styled.div({
   backgroundColor: 'grey',
   marginTop: '10px',
   marginBottom: '10px',
+});
+
+const TagRemoveButton = styled.button({
+  marginLeft: '2px',
+  padding: '0 4px',
+  cursor: 'pointer',
+  background: 'transparent',
+  border: 'none',
+  fontSize: '1.1em',
+  lineHeight: 1,
+  verticalAlign: 'middle',
+  color: '#666',
+  '&:hover': { color: '#c00' },
+});
+
+const TagAddRow = styled.div({
+  marginTop: '6px',
+  display: 'flex',
+  gap: '8px',
+  alignItems: 'center',
+  '& input': { minWidth: '120px' },
 });
 
 const ButtonContainer = styled.div();

@@ -22,10 +22,9 @@ gcloud services enable run.googleapis.com artifactregistry.googleapis.com secret
 3. Create an Artifact Registry repo for the server image:
 
 ```bash
-gcloud artifacts repositories create hellfall-server --repository-format=docker --location=REGION
+gcloud artifacts repositories create hellfall --repository-format=docker --location=us-central1
 ```
 
-Use the same `REGION` you use for Cloud Run (e.g. `us-central1`).
 
 ---
 
@@ -34,7 +33,7 @@ Use the same `REGION` you use for Cloud Run (e.g. `us-central1`).
 1. Create a service account (or reuse one) with access to Firestore and any secrets:
 
 ```bash
-gcloud iam service-accounts create hellfall-server \
+gcloud iam service-accounts create hellfall \
   --display-name="Hellfall Server"
 ```
 

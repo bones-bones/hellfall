@@ -30,6 +30,11 @@ export const env = {
   get COOKIE_NAME(): string {
     return process.env.COOKIE_NAME || "hellfall_session";
   },
+  /** Optional: e.g. .skeleton.club so cookie works across subdomains (skeleton.club + api.skeleton.club). */
+  get COOKIE_DOMAIN(): string | undefined {
+    const v = process.env.COOKIE_DOMAIN;
+    return v === "" ? undefined : v;
+  },
   get JWT_ISSUER(): string {
     return process.env.JWT_ISSUER || "hellfall-auth";
   },
