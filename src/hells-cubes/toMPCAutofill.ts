@@ -43,13 +43,15 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
     // Fronts block
     const fronts = xmlDoc.createElement('fronts');
     orderSegment.cards.forEach((card, index) => {
-      // @ts-expect-error
       const existingCard = [...fronts.querySelectorAll('card')].find(e => {
         console.log(card);
+        // @ts-expect-error
         return e.querySelector('id').textContent == card.sides[0].id;
       });
       if (existingCard) {
+        // @ts-expect-error
         existingCard.querySelector('slots').textContent = `${
+          // @ts-expect-error
           existingCard.querySelector('slots').textContent
         },${index}`;
       } else {
@@ -79,10 +81,13 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
       }
       // @ts-ignore
       const existingCard = [...backs.querySelectorAll('card')].find(
+        // @ts-ignore
         e => e.querySelector('id').textContent == card.sides[1].id
       );
       if (existingCard) {
+        // @ts-ignore
         existingCard.querySelector('slots').textContent = `${
+          // @ts-ignore
           existingCard.querySelector('slots').textContent
         },${index}`;
       } else {

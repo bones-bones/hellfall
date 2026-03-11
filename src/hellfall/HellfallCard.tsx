@@ -5,19 +5,149 @@ import { SetLegality } from './SetLegality';
 import { stringToMana } from './stringToMana';
 import { splitParens } from './splitParens';
 import { HCCard } from '../api-types/Card/Card';
+import { HellfallRelatedEntry } from './HellfallEntry';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+const renderText = (text: string[]) => {
+  return text.map(entry => {
+    return (
+      <>
+        {stringToMana(entry)}
+        <br />
+      </>
+    );
+  });
+};
+const renderName = (text: string) => {
+  const parenLine = splitParens(text)
+    .map((chunk, ci) => {
+      if (chunk.startsWith('(')) {
+        return '\\*' + chunk + '\\*';
+        // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
+      }
+      return chunk;
+    })
+    .join('');
+  const parts = parenLine.split('\\*');
+  return parts.map((part, index) => {
+    if (index % 2 == 0) {
+      return (
+        <Text typeLevel="body.medium" key={`non-italic-${index}`}>
+          {stringToMana(part)}
+        </Text>
+      );
+    } else {
+      return (
+        <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+          {stringToMana(part)}
+        </ItalicText>
+      );
+    }
+  });
+};
+const renderOracleLine = (text: string) => {
+  const parts = text.split('\\*');
+  return parts.map((part, index) => {
+    if (index % 2 == 0) {
+      return (
+        <Text typeLevel="body.medium" key={`non-italic-${index}`}>
+          {stringToMana(part)}
+        </Text>
+      );
+    } else {
+      return (
+        <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+          {stringToMana(part)}
+        </ItalicText>
+      );
+    }
+  });
+};
+const renderOracleText = (text: string[]) => {
+  return text.map(entry => {
+    return (
+      <>
+        {renderOracleLine(
+          splitParens(entry)
+            .map((chunk, ci) => {
+              if (chunk.startsWith('(')) {
+                return '\\*' + chunk + '\\*';
+                // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
+              }
+              return chunk;
+            })
+            .join('')
+        )}
+        <br />
+      </>
+    );
+  });
+};
+const renderFlavorLine = (text: string) => {
+  const parts = text.split('\\*');
+  return parts.map((part, index) => {
+    if (index % 2 == 1) {
+      return (
+        <Text typeLevel="body.medium" key={`non-italic-${index}`}>
+          {stringToMana(part)}
+        </Text>
+      );
+    } else {
+      return (
+        <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+          {stringToMana(part)}
+        </ItalicText>
+      );
+    }
+  });
+};
+const renderFlavorText = (text: string[]) => {
+  return text.map(entry => {
+    return (
+      <>
+        {renderFlavorLine(entry)}
+        <br />
+      </>
+    );
+  });
+};
+const getImages = (card: HCCard.Any) => {
+  const imagesToShow: string[] = [];
+
+  if (!('card_faces' in card) || (card.card_faces.length > 1 && !('image' in card.card_faces[0]))) {
+    imagesToShow.push(card.image!);
+  }
+  if ('card_faces' in card) {
+    imagesToShow.push(...card.card_faces.filter(e => e.image).map(e => e.image!));
+  }
+  if ('draft_image' in card) {
+    imagesToShow.push(card.draft_image!);
+  }
+  return imagesToShow;
+};
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   // const faceCount = data.
   // data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
 
   const [activeImageSide, setActiveImageSide] = useState(0);
 
-  const imagesToShow = data
-    .toFaces()
-    .filter(e => e.image)
-    .map(e => e.image);
+  // TODO: add handling for flip and aftermath
+  // TODO: add color indicator symbols
+  const imagesToShow = getImages(data);
+  //   'card_faces' in data
+  //     ? [
+  //         data.image,
+  //         ...data
+  //           .toFaces()
+  //           .filter(e => e.image)
+  //           .map(e => e.image),
+  //       ]
+  //     : [data.image];
+  // const draftImage = data.draft_image;
+  // if (draftImage) {
+  //   imagesToShow.push(draftImage);
+  // }
 
   return (
     <Container key={data.id}>
@@ -46,7 +176,9 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       setActiveImageSide(i);
                     }}
                     disabled={i === activeImageSide}
-                  >{`side ${i + 1}`}</button>
+                  >
+                    {i == imagesToShow.length - 1 && data.draft_image ? 'draft' : `side ${i + 1}`}
+                  </button>
                 );
               })}
           </ButtonContainer>
@@ -54,47 +186,95 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
       )}
       <Card>
         <Card.Body padding={'zero'}>
-          {/* <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading> */}
+          {/* {'card_faces' in data && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading>} */}
           {data.toFaces().map((face, i) => (
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
-              <Text typeLevel="body.medium" key="name">
-                {face.name}
-              </Text>
+              {face.name &&
+                face.name != ';' &&
+                (face.name.includes('\\*') || face.name.includes('(') ? (
+                  <div key="name">
+                    {renderName(face.name.startsWith(';') ? face.name.slice(1) : face.name)}
+                  </div>
+                ) : (
+                  <>
+                    <Text typeLevel="body.medium" key="name">
+                      {stringToMana(face.name.startsWith(';') ? face.name.slice(1) : face.name)}
+                    </Text>
+                    {/* <br /> */}
+                  </>
+                ))}
+              {/* <Text typeLevel="body.medium" key="name">
+                {face.name[0] == ';' ? face.name.slice(1) : face.name}
+              </Text> */}
               {'   '}
               <Text typeLevel="body.medium" key="cost">
                 {stringToMana(face.mana_cost)}
               </Text>
               <br />
-              <Text typeLevel="body.medium" key="type">
-                {face.type_line}
-              </Text>
-              <br />
-              <Text typeLevel="body.medium" key="rules" wordBreak="break-word">
-                {face.oracle_text.split('\\n').map(entry => (
+              {face.type_line &&
+                (face.type_line.includes('\\*') || face.type_line.includes('(') ? (
+                  <div key="type">{renderName(face.type_line)}</div>
+                ) : (
                   <>
-                    {' '}
-                    {}
-                    {splitParens(entry).map((chunk, ci) => {
-                      if (chunk.startsWith('(')) {
-                        return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
-                      }
-                      return stringToMana(chunk);
-                    })}
+                    <Text typeLevel="body.medium" key="type">
+                      {stringToMana(face.type_line)}
+                    </Text>
+                    {/* <br /> */}
+                  </>
+                ))}
+              {/* <Text typeLevel="body.medium" key="type">
+                {face.type_line}
+              </Text> */}
+              <br />
+              {face.oracle_text &&
+                face.oracle_text != ';' &&
+                (face.oracle_text.includes('\\*') || face.oracle_text.includes('(') ? (
+                  <div key="rules">
+                    {renderOracleText(
+                      (face.oracle_text.startsWith(';')
+                        ? face.oracle_text.slice(1)
+                        : face.oracle_text
+                      ).split('\\n')
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <Text typeLevel="body.medium" key="flavor">
+                      {renderText(
+                        (face.oracle_text.startsWith(';')
+                          ? face.oracle_text.slice(1)
+                          : face.oracle_text
+                        ).split('\\n')
+                      )}
+                    </Text>
                     <br />
                   </>
                 ))}
-              </Text>
-              <br />
-
-              {face.flavor_text && (
-                <>
-                  <ItalicText typeLevel="body.medium" key="flavor">
-                    {renderText((face.flavor_text || '').split('\\n'))}
-                  </ItalicText>
-                  <br />
-                </>
-              )}
+              {face.flavor_text &&
+                face.flavor_text != ';' &&
+                (face.flavor_text.includes('\\*') ? (
+                  <div key="flavor">
+                    {renderFlavorText(
+                      (face.flavor_text.startsWith(';')
+                        ? face.flavor_text.slice(1)
+                        : face.flavor_text
+                      ).split('\\n')
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <ItalicText typeLevel="body.medium" key="flavor">
+                      {renderText(
+                        (face.flavor_text.startsWith(';')
+                          ? face.flavor_text.slice(1)
+                          : face.flavor_text
+                        ).split('\\n')
+                      )}
+                    </ItalicText>
+                    <br />
+                  </>
+                ))}
               {face.power && (
                 <>
                   <Text typeLevel="body.medium" key="stats">
@@ -197,11 +377,34 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
             <>
               <Divider />
               <div>
-                <StyledHeading size="small">Related Tokens</StyledHeading>
+                <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
                 {data.all_parts
-                  .filter(e => e.component == 'token')
+                  .filter(e => e.id != data.id)
                   .map((entry, i) => (
-                    <img key={entry.name + i} src={entry.image} height="500px" />
+                    <HellfallRelatedEntry
+                      onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                        if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                          window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                        } else {
+                          (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
+                            '_blank';
+                        }
+                      }}
+                      onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+                        if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                          window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                        } else {
+                          (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
+                            '_blank';
+                        }
+                      }}
+                      key={entry.id}
+                      id={entry.id}
+                      name={entry.name}
+                      url={entry.image!}
+                    />
+
+                    // <img key={entry.name + i} src={entry.image} height="500px" />
                   ))}
               </div>
             </>
@@ -213,17 +416,6 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
 };
 
 const Ruling = styled.div({ paddingTop: '5px' });
-
-const renderText = (text: string[]) => {
-  return text.map(entry => {
-    return (
-      <>
-        {stringToMana(entry)}
-        <br />
-      </>
-    );
-  });
-};
 
 const Container = styled.div({
   display: 'flex',

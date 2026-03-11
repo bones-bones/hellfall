@@ -17,20 +17,5 @@ export namespace HCCardFace {
    */
   export type MultiFaced = AbstractCardFace &
     HCCardFields.Gameplay.CardFaceSpecific &
-    HCCardFields.Print.CardFaceSpecific &
-    HCCardFields.Print.CardFaceOnly &
-    HCCardFields.Print.CardSideSpecific;
-  /**
-   * A card face found on multi-sided cards.
-   *
-   * E.g. Transform and MDFC cards.
-   */
-  // export type MultiSided = AbstractCardFace &
-  //   HCCardFields.Gameplay.CardFaceSpecific &
-  //   HCCardFields.Gameplay.CardSideSpecific &
-  //   HCCardFields.Print.CardFaceSpecific &
-  //   HCCardFields.Print.CardFaceOnly &
-  //   HCCardFields.Print.CardSideSpecific;
-
-  // export type Any = Split | MultiSided;
+    HCCardFields.Print.CardFaceSpecific
 }

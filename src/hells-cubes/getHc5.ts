@@ -21,7 +21,7 @@ const PLACEHOLDER_CARD: Omit<HCCard.Normal, 'toFaces'> = {
   type_line: 'Card',
   oracle_text: '',
   mana_cost: '',
-  color_identity: [[HCColor.Colorless]],
+  color_identity: [HCColor.Colorless],
   colors: [HCColor.Colorless] as HCColors,
   keywords: [],
   legalities: {
@@ -29,10 +29,14 @@ const PLACEHOLDER_CARD: Omit<HCCard.Normal, 'toFaces'> = {
     '4cb': HCLegality.Legal,
     commander: HCLegality.Legal,
   },
+  color_identity_hybrid: [],
+  draft_image_status: HCImageStatus.Inapplicable,
   variation: false,
 };
 
-function withToFaces<T extends HCCard.Any>(card: T): T & { toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced] } {
+function withToFaces<T extends HCCard.Any>(
+  card: T
+): T & { toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced] } {
   return {
     ...card,
     toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced] {

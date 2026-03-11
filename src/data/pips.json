@@ -1599,7 +1599,7 @@
       "symbol": "Pickle",
       "english": "shout \"Pickle K'rrik!\" as loud as you can or two life",
       "represents_mana": true,
-      "mana_value": 0,
+      "mana_value": 1,
       "colors": ["Pickle", "C"]
     },
     {
@@ -1898,6 +1898,36 @@
       "filename": "symbols/additional/Deadeye.png",
       "symbol": "Deadeye",
       "english": "a deadeye counter",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/additional/Faith.png",
+      "symbol": "Faith",
+      "english": "a faith counter",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/emoji/hypermaro.png",
+      "symbol": "hypermaro",
+      "english": "hypermaro",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/emoji/karn.png",
+      "symbol": "karn",
+      "english": "karn",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/emoji/moyai.png",
+      "symbol": "moyai",
+      "english": "moyai",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/emoji/dreadmaw.png",
+      "symbol": "dreadmaw",
+      "english": "dreadmaw",
       "represents_mana": false
     }
   ]

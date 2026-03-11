@@ -6,7 +6,7 @@ import { HCLegality, HCLegalitiesField } from '../../src/api-types/Card';
 
 export const fetchTokens = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
 
@@ -26,25 +26,65 @@ export const fetchTokens = async () => {
       row.push('');
     }
   });
+  const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token'];
+  const typeLayouts: Record<string, HCLayout> = {
+    Emblem: HCLayout.Emblem,
+    'Reminder Card': HCLayout.Reminder,
+    'Sticker Sheet': HCLayout.Sticker,
+    Dungeon: HCLayout.Dungeon,
+    'Real Card': HCLayout.RealCardToken,
+    'Ad Card': HCLayout.Misc,
+    Misc: HCLayout.Misc,
+  };
+  const defaultProps: Record<string, any> = {
+    rulings: '',
+    creator: '',
+    legalities: {
+      standard: HCLegality.NotLegal,
+      '4cb': HCLegality.NotLegal,
+      commander: HCLegality.NotLegal,
+    } as HCLegalitiesField,
+    mana_cost: '',
+    colors: [HCColor.Colorless] as HCColors,
+    cmc: 0,
+    color_identity: [] as HCColors,
+    color_identity_hybrid: [] as HCColors[],
+    keywords: [],
+    set: 'HCT',
+    variation: false,
+    image_status: HCImageStatus.HighRes,
+    isActualToken: true,
+  };
 
   const theThing = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
-      if (entry[i] != '') {
+      if (entry[i]) {
         if (keys[i] == 'name') {
           tokenObject.id = entry[i];
           const name: string = entry[i].replace(/\d+$/, '');
           tokenObject.name = name;
           tokenObject.subtypes = name.split(' ');
         } else if (keys[i] == 'type') {
-          tokenObject.types = entry[i].split(';');
+          const typesAndSupertypes = entry[i].split(';');
+          const superList: string[] = [];
+          const typeList: string[] = [];
+          typesAndSupertypes.forEach(e => {
+            supers.includes(e) ? superList.push(e) : typeList.push(e);
+          });
+          if (superList?.length) {
+            tokenObject.supertypes = superList;
+          }
+          if (typeList?.length) {
+            tokenObject.types = typeList;
+          }
         } else if (keys[i] == 'token_maker') {
           tokenObject.all_parts = entry[i].split(';').map(name => {
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: '',
-              component: 'token_maker',
-              name: name.replace(/\*\d*$/, ''),
+              component: entry[6] == 'meld' ? 'meld_part' : 'token_maker',
+              name: name.replace(/\*\d+$/, ''),
               type_line: '',
             };
             return maker;
@@ -54,15 +94,43 @@ export const fetchTokens = async () => {
         }
       }
     }
-    if ('types' in tokenObject) {
-      tokenObject.type_line = [tokenObject.types?.join(' '), tokenObject.subtypes?.join(' ')]
+    if (entry[6] == 'meld') {
+      tokenObject.layout = HCLayout.MeldResult;
+    } else if ('types' in tokenObject && tokenObject.types[0] in typeLayouts) {
+      tokenObject.layout = typeLayouts[tokenObject.types[0]];
+      if (tokenObject.types.length > 1) {
+        tokenObject.types.shift();
+      }
+    } else {
+      tokenObject.layout = HCLayout.Token;
+    }
+    // } else if ('types' in tokenObject && tokenObject.types.includes('Emblem')) {
+    //   tokenObject.layout = HCLayout.Emblem;
+    // } else if ('types' in tokenObject && tokenObject.types.includes('Reminder Card')) {
+    //   tokenObject.layout = HCLayout.Reminder;
+    // } else if ('types' in tokenObject && tokenObject.types.includes('Sticker Sheet')) {
+    //   tokenObject.layout = HCLayout.Sticker;
+    // } else {
+    //   tokenObject.layout = HCLayout.Token;
+    // }
+    if ('types' in tokenObject || 'supertypes' in tokenObject) {
+      tokenObject.type_line = [
+        tokenObject.supertypes?.join(' '),
+        [tokenObject.types?.join(' '), tokenObject.subtypes?.join(' ')].filter(Boolean).join(' — '),
+      ]
         .filter(Boolean)
-        .join(' — ');
+        .join(' ') as string;
     } else {
       if ('subtypes' in tokenObject) {
         delete tokenObject.subtypes;
       }
+      tokenObject.type_line = '';
     }
+    Object.keys(defaultProps)
+      .filter(key => !(key in tokenObject))
+      .forEach(key => {
+        tokenObject[key] = defaultProps[key];
+      });
     const mandatoryProps = ['rulings', 'creator', 'cmc', 'type_line', 'oracle_text', 'mana_cost'];
     mandatoryProps
       .filter(prop => !(prop in tokenObject))
@@ -72,17 +140,16 @@ export const fetchTokens = async () => {
       '4cb': HCLegality.NotLegal,
       commander: HCLegality.NotLegal,
     };
-    tokenObject.legalities = legalities;
-    tokenObject.colors = [HCColor.Colorless] as HCColors;
-    tokenObject.color_identity = [] as HCColors[];
-    tokenObject.keywords = [];
-    tokenObject.set = 'HCT';
-    tokenObject.image_status = HCImageStatus.HighResScan;
+    // tokenObject.legalities = legalities;
+    // tokenObject.colors = [HCColor.Colorless] as HCColors;
+    // tokenObject.color_identity = [] as HCColors[];
+    // tokenObject.keywords = [];
+    // tokenObject.set = 'HCT';
+    // tokenObject.image_status = HCImageStatus.HighRes;
 
-    tokenObject.isActualToken = true;
-    tokenObject.variation = false;
-    tokenObject.layout = HCLayout.Normal;
-    return tokenObject as HCCard.AnySingleFaced;
+    // tokenObject.isActualToken = true;
+    // tokenObject.variation = false;
+    return tokenObject as HCCard.Any;
   });
   return theThing;
 };
