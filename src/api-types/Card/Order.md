@@ -26,6 +26,8 @@ main card:
 - watermark?!
 - image_status
 - image?
+- draft_image_status
+- draft_image?
 - legalities
 - creator
 - rulings

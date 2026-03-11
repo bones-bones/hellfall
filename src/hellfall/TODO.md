@@ -39,6 +39,7 @@ Write a script to transform the database
   ~~- add guide for !~~
   ~~- mobile support~~
   ~~- Script to fetch and transform sheets directly from google doc~~
+- add color indicators to HellfallCard
 - sort by color but not cmc
 - use mv instead of cmc
 - make better search syntax (like allowing or)
@@ -54,7 +55,7 @@ Write a script to transform the database
 - make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
 - make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
-- special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?), Ability Bingo
+- special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?), Ability Bingo, Bear Alignment Chart
 
   - HOW,
   - add grid (that allows root-level stuff as well as faces?)?
@@ -78,6 +79,9 @@ Write a script to transform the database
 - ~~ add parsing to hc-transformations that allows "variation_of" in tokens to be just a number~~
 - use draft_image for full image of multisided cards?
 - add redirect for card name (in backcompat) that looks for first name in multiface cards
+- make sure subids work with backcompat
 - fix formatting of all sagas
+- fix formatting of all flavor text attribution (always newline, no space)
 - make token copy of hells cards work when added either way (currently requires insertion of relatedcard with component: "token")
 - ~~ add italics parsing for type line (for Purple Removal Spell)~~
+- rework hybrid identity search to use the comparison operators

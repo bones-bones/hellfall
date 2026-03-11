@@ -28,6 +28,8 @@ export enum HCLayout {
   Dungeon = 'dungeon',
   /** Token copies of real cards */
   RealCardToken = 'real_card_token',
+  /** Token copies of real multi-faced cards */
+  RealCardMultiToken = 'real_card_multi_token',
   /** Misc images that aren't actually cards */
   Misc = 'misc',
 }
@@ -135,6 +137,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.MultiToken}`,
     `${HCLayout.MeldPart}`,
     `${HCLayout.MultiReminder}`,
+    `${HCLayout.RealCardMultiToken}`,
   ] as const;
 
   /**
@@ -178,6 +181,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Sticker}`,
     `${HCLayout.Dungeon}`,
     `${HCLayout.RealCardToken}`,
+    `${HCLayout.RealCardMultiToken}`,
     `${HCLayout.Misc}`,
     `${HCLayout.MeldResult}`,
   ] as const;

@@ -212,7 +212,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           (merged.layout == HCLayout.Normal || merged.layout == HCLayout.Token)
         ) {
           merged.layout = value as typeof newCard.layout;
-        } else if ('card_faces' in merged && 'card_faces' in newCard) {
+        } else if ('card_faces' in merged && 'card_faces' in newCard && merged.layout != HCLayout.RealCardMultiToken) {
           merged.layout = value as typeof newCard.layout;
         }
       } else if (!['keywords', 'variation'].includes(key)) {
@@ -220,6 +220,9 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       }
     }
   });
+  if (merged.variation && parseInt(merged.variation_of!)) {
+    merged.variation_of = merged.name + merged.variation_of;
+  }
   // handle adding card_faces (make sure this works)
   if (!('card_faces' in merged) && 'card_faces' in newCard) {
     const removeProps = [
