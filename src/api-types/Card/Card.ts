@@ -13,7 +13,7 @@ type Layout<T extends `${HCLayout}`> = Pick<HCCardFields.Core.HCReferences, 'lay
  * This collection is focused around two core varieties of cards:
  * - {@link HCCard.AnySingleFaced} describes any card with one face and no `card_faces` property, e.g. {@link HCCard.Normal Normal} or {@link HCCard.Saga Saga}.
  * - {@link HCCard.AnyMultiFaced} describes any card with multiple faces.
- * 
+ *
  * It also provides a broader grouping:
  * - {@link HCCard.Any} describes any card at all. Think of it as like `any` but for cards.
  *
@@ -62,7 +62,7 @@ export namespace HCCard {
       /**
        * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
        * We haven't yet figured out how to implement this.
-       * 
+       *
        * @returns An array of values for the prop
        * For single-faced cards, returns an array with the prop itself.
        * For multi-faced cards, returns the prop from each member of the card_faces array.
@@ -137,12 +137,9 @@ export namespace HCCard {
    *
    * Since this may be of any layout, common fields are available, but layout-specific fields (e.g. card_faces) will be unavailable until you perform type narrowing on it.
    */
-  export type Any =
-    | AnySingleFaced
-    | AnyMultiFaced;
+  export type Any = AnySingleFaced | AnyMultiFaced;
   /**
    * Any card that is multifaced.
    */
-  export type AnyMultiFaced =
-    AnyMulti;
+  export type AnyMultiFaced = AnyMulti;
 }

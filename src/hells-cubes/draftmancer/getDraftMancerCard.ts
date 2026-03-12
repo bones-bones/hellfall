@@ -35,19 +35,21 @@ export const getDraftMancerCard = (card: HCCard.Any) => {
       .replaceAll('{G/Yellow/P}', '{G}') // It that Goes in the Green Slot
       .replaceAll('{UFO}', '{1}') // Gitaxian Satellite
       .replaceAll('{Coin}', '{1}')
-      .replace('{2/Beige}{2/Grey}{2/Gold}', '{6}')// Beego
+      .replace('{2/Beige}{2/Grey}{2/Gold}', '{6}') // Beego
       .replaceAll('{27}', '{11}{11}{6}') // Block of Darksteel
       .replaceAll('{2/Orange}', '{2}') // Candy Karn
       .replaceAll('{Orange/U}', '{U}') // Cat with homophobia
       .replace(/\{(Chris|Lois|Stewie|Meg|Peter)\}/g, '{1}') // Family Circus
       .replace(/\{600000\}/g, '{10}') // Tax Write-Off Statue
-      .replaceAll('{Orange/U}', '{U}'),// Cat with homophobia
+      .replaceAll('{Orange/U}', '{U}'), // Cat with homophobia
 
     colors: card.toFaces()[0].colors.filter(e => ['R', 'U', 'B', 'G', 'W'].includes(e)),
     set: 'custom',
     collector_number: card.id,
     rarity: 'rare',
-    type: [card.toFaces()[0].supertypes?.join(' '), card.toFaces()[0].types?.join(' ')].join(' ').trim(),
+    type: [card.toFaces()[0].supertypes?.join(' '), card.toFaces()[0].types?.join(' ')]
+      .join(' ')
+      .trim(),
     subtypes: card.toFaces()[0].subtypes?.filter(e => e != '') || [],
     rating: 0,
     in_booster: true,
@@ -110,6 +112,7 @@ const cardSpecificControl = (card: HCCard.Any) => {
   }
 };
 
+// TODO: Handle cards like Highlander
 const shouldReveal = (card: HCCard.Any) => {
   return (
     card.toFaces()[0].oracle_text.includes('hen you draft') ||

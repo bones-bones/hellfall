@@ -85,3 +85,6 @@ Write a script to transform the database
 - make token copy of hells cards work when added either way (currently requires insertion of relatedcard with component: "token")
 - ~~ add italics parsing for type line (for Purple Removal Spell)~~
 - rework hybrid identity search to use the comparison operators
+- add general get all images method for cards?
+- figure out how to handle cards with self-draftpartner (Squadron Wastes)
+- deal with later: Boo, Hamster; _______ Balls

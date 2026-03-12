@@ -202,7 +202,6 @@ export namespace HCCardFields.Gameplay {
   } & CombatStats &
     VanguardStats;
 
-
   /**
    * These fields are specific for a card.
    * - Root level for all layouts.

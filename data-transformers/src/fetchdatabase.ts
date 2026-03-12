@@ -8,7 +8,7 @@ import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
   const [_garbage, oldKeys, ...rest] = asJson.values as string[][];
@@ -244,12 +244,14 @@ export const fetchDatabase = async () => {
         ) {
           face.image_status = HCImageStatus.Aftermath;
         } else if (
-          'subtypes' in face &&
-          (face.subtypes.includes('Adventure') || face.subtypes.includes('Omen'))
+          'tags' in cardObject &&
+          cardObject.tags.includes('inset')
+          // || 'subtypes' in face &&
+          // (face.subtypes.includes('Adventure') || face.subtypes.includes('Omen'))
         ) {
           face.image_status = HCImageStatus.Inset;
-        } else if (cardObject.card_faces[0].oracle_text.toLowerCase().includes("draftpartner")) {
-          face.image_status=HCImageStatus.DraftPartner;
+        } else if (cardObject.card_faces[0].oracle_text.toLowerCase().includes('draftpartner')) {
+          face.image_status = HCImageStatus.DraftPartner;
         } else {
           face.image_status = HCImageStatus.Split;
         }
@@ -287,7 +289,7 @@ export const fetchDatabase = async () => {
         cardObject.image = cardObject.card_faces[0].image;
         cardObject.image_status = cardObject.card_faces[0].image_status;
         delete cardObject.card_faces[0].image;
-        cardObject.card_faces[0].image_status='front';
+        cardObject.card_faces[0].image_status = 'front';
       }
     }
 
@@ -308,12 +310,14 @@ export const fetchDatabase = async () => {
           cardObject.all_parts[0].component = 'meld_part';
         }
       }
-      // const names = entry[1];
-      // entry[6] is Related Cards
-      cardObject.layout =
-        // cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
-        // ? HCLayout.MeldPart:
-        HCLayout.Multi;
+      if (!('layout' in cardObject)) {
+        // const names = entry[1];
+        // entry[6] is Related Cards
+        cardObject.layout =
+          // cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
+          // ? HCLayout.MeldPart:
+          HCLayout.Multi;
+      }
       return cardObject as HCCard.AnyMultiFaced;
     }
   });

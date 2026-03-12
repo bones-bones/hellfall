@@ -120,11 +120,11 @@ Each type and enum exported by this library corresponds to a Hellfall API object
 Points of interest:
 
 - [HCCard](src/objects/Card/Card.ts) describes [Cards](https://scryfall.com/docs/api/cards) and their faces. Each individual card layout is managed via type narrowing on the `layout` field.
-<!-- - [ScryfallCatalog](src/objects/Catalog/Catalog.ts) describes [the catalogs](https://scryfall.com/docs/api/catalogs). -->
-<!-- - [ScryfallError](src/objects/Error/Error.ts) describes [error responses](https://scryfall.com/docs/api/errors). -->
-<!-- - [ScryfallList](src/objects/List/List.ts) describes [lists](https://scryfall.com/docs/api/lists), and provides shortcuts to describe the common types of lists. -->
-<!-- - [ScryfallMigration](src/objects/Migration/Migration.ts) describes [migrations](https://scryfall.com/docs/api/migrations). -->
-<!-- - [ScryfallSet](src/objects/Set/Set.ts) describes [card sets](https://scryfall.com/docs/api/sets). -->
+  <!-- - [ScryfallCatalog](src/objects/Catalog/Catalog.ts) describes [the catalogs](https://scryfall.com/docs/api/catalogs). -->
+  <!-- - [ScryfallError](src/objects/Error/Error.ts) describes [error responses](https://scryfall.com/docs/api/errors). -->
+  <!-- - [ScryfallList](src/objects/List/List.ts) describes [lists](https://scryfall.com/docs/api/lists), and provides shortcuts to describe the common types of lists. -->
+  <!-- - [ScryfallMigration](src/objects/Migration/Migration.ts) describes [migrations](https://scryfall.com/docs/api/migrations). -->
+  <!-- - [ScryfallSet](src/objects/Set/Set.ts) describes [card sets](https://scryfall.com/docs/api/sets). -->
 
 <!-- If the API provides an object, this library provides it as well. (If it doesn't, please [tell us][issues]!) -->
 
