@@ -94,8 +94,12 @@ const setDerivedProps = (card: HCCard.Any) => {
  * @param newCard The card from the google sheet
  * @returns
  */
-const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
+const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any, usingApproved:boolean=false): HCCard.Any => {
   const merged: HCCard.Any = { ...existingCard };
+  if (usingApproved && (merged.has_draft_partners || ('card_faces' in merged && merged.card_faces.length>4))) {
+    return merged;
+  }
+
   Object.entries(newCard).forEach(([key, value]) => {
     // TODO: make sure that empty arrays being truthy doesn't break anything here
     if (value) {
@@ -235,7 +239,6 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
   if (merged.variation && parseInt(merged.variation_of!)) {
     merged.variation_of = merged.name + merged.variation_of;
   }
-  // handle adding card_faces (make sure this works)
   if (!('card_faces' in merged) && 'card_faces' in newCard) {
     const removeProps = [
       'color_indicator',
@@ -277,7 +280,7 @@ const mergeDatabases = (
     const newCard = newCardMap.get(existingCard.id);
     if (newCard) {
       newCardMap.delete(newCard.id);
-      return mergeCards(existingCard, newCard);
+      return mergeCards(existingCard, newCard, false);
     }
     return existingCard;
   });
@@ -361,9 +364,7 @@ const loadExistingData = () => {
     console.warn('Could not load cards, proceeding with undefined content:', error);
   }
 
-  const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => e.set != 'HCT') || [], 'set', '', 'parts')
-    : [];
+  const existingCards = databaseContent ? dataToCards(databaseContent.data.filter((e: any) => e.set != 'HCT') || []) : [];
 
   try {
     if (fs.existsSync(tokensPath)) {
@@ -373,9 +374,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent
-    ? dataToCards(tokensContent.data || [], 'set', '', 'parts')
-    : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {
