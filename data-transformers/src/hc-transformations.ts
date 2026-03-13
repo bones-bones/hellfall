@@ -338,29 +338,32 @@ const dataToCards = (cards:any,missingProp:string='', missingPropValue:any='', a
   }
 }
 const loadExistingData = () => {
-  try {
     const databasePath = './src/data/Hellscube-Database.json';
     const tokensPath = './src/data/tokens.json';
 
-    let existingCards: HCCard.Any[] = [];
-    let existingTokens: HCCard.Any[] = [];
+    let databaseContent = undefined;
+    let tokensContent = undefined;
 
-    if (fs.existsSync(databasePath)) {
-      const databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
-      
-      existingCards = dataToCards(databaseContent.data.filter((e:any)=>e.set!='HCT') || [],'set','','parts');
+    try {
+      if (fs.existsSync(databasePath)) {
+        databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
+      }
+    } catch (error) {
+      console.warn('Could not load cards, proceeding with undefined content:', error);
     }
 
-    if (fs.existsSync(tokensPath)) {
-      const tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
-      existingCards = dataToCards(tokensContent || [],'set','','parts');
-    }
+    const existingCards = databaseContent ? dataToCards(databaseContent.data.filter((e:any)=>e.set!='HCT') || [],'set','','parts'):[];
 
-    return { existingCards, existingTokens };
-  } catch (error) {
-    console.warn('Could not load existing data, proceeding with fresh data only:', error);
-    return { existingCards: [], existingTokens: [] };
-  }
+    try {
+      if (fs.existsSync(tokensPath)) {
+        tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
+      }
+    } catch (error) {
+      console.warn('Could not load tokens, proceeding with undefined content:', error);
+    }
+    
+    const existingTokens = tokensContent ? dataToCards(tokensContent.data || [],'set','','parts'):[];
+    return { existingCards, existingTokens};
 };
 const main = async () => {
   const store = getDefaultStore();
