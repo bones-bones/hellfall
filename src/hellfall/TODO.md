@@ -62,7 +62,7 @@ Write a script to transform the database
   - switch Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, to use the new face system
 
 - ~~ make sure non-number p/t values work in searches (X, \*, etc.)~~
-- make tokens searchable (use set?)
+- ~~ make tokens searchable (use set?) ~~
 - add ability to search by number of colors (identity)
 - switch search to text bar and make the mass of buttons hidden as advanced search
 - ~~ add side 5+ parsing, then use B//R//E//A//D as a test case for it~~
@@ -87,7 +87,7 @@ Write a script to transform the database
 - rework hybrid identity search to use the comparison operators
 - add general get all images method for cards?
 - figure out how to handle cards with self-draftpartner (Squadron Wastes)
-- deal with later (skipped): _______ Balls
+- deal with later (skipped): **\_\_\_** Balls
 - do better: evolution of the dreadmaw
 - fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw
 - add: color indicator, attraction lights

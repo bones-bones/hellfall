@@ -21,6 +21,7 @@ import {
   searchColorIdentityNumberAtom,
   useHybridIdentityAtom,
   searchSetAtom,
+  searchTokenAtom,
   sortAtom,
   typeSearchAtom,
   isCommanderAtom,
@@ -46,6 +47,7 @@ export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
   const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
   const set = useAtomValue(searchSetAtom);
+  const cardsOrTokens = useAtomValue(searchTokenAtom);
   const costSearch = useAtomValue(costSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const idSearch = useAtomValue(idSearchAtom);
@@ -94,14 +96,48 @@ export const useSearchResults = () => {
     // });
     const tempResults = cards
       .filter(entry => {
-        if (set.length > 0 && !isSetInResults(entry.set, set)) {
-          return false;
-        }
-        if (!extraFilters.includes('isToken') && entry.isActualToken) {
-          return false;
-        }
-        if (extraFilters.includes('isToken') && !entry.isActualToken) {
-          return false;
+        switch (cardsOrTokens) {
+          case 'Cards':
+            if (set.length > 0 && !isSetInResults(entry.set, set)) {
+              return false;
+            }
+            if (entry.isActualToken) {
+              return false;
+            }
+            break;
+          case 'Tokens':
+            if (
+              set.length > 0 &&
+              !(
+                'all_parts' in entry &&
+                entry.all_parts
+                  ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
+                  .some(part => isSetInResults(part.set, set))
+              )
+            ) {
+              return false;
+            }
+            if (set.length == 0 && !entry.isActualToken) {
+              return false;
+            }
+            break;
+          case 'Both':
+            if (set.length > 0) {
+              if (
+                !isSetInResults(entry.set, set) &&
+                !(
+                  'all_parts' in entry &&
+                  entry.all_parts
+                    ?.filter(e =>
+                      ['token_maker', 'meld_part', 'draft_partner'].includes(e.component)
+                    )
+                    .some(part => isSetInResults(part.set, set))
+                )
+              ) {
+                return false;
+              }
+            }
+            break;
         }
 
         if (
@@ -792,6 +828,9 @@ export const useSearchResults = () => {
     if (set.length > 0) {
       searchToSet.append('set', set.join(','));
     }
+    if (cardsOrTokens != 'Cards') {
+      searchToSet.append('token', cardsOrTokens);
+    }
     if (searchColors.length > 0) {
       searchToSet.append('colors', searchColors.join(','));
     }
@@ -868,6 +907,7 @@ export const useSearchResults = () => {
     costSearch,
     rulesSearch,
     set,
+    cardsOrTokens,
     searchColors,
     searchColorIdentities,
     searchColorNumber,

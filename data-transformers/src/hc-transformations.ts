@@ -220,7 +220,11 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           (merged.layout == HCLayout.Normal || merged.layout == HCLayout.Token)
         ) {
           merged.layout = value as typeof newCard.layout;
-        } else if ('card_faces' in merged && 'card_faces' in newCard && merged.layout != HCLayout.RealCardMultiToken) {
+        } else if (
+          'card_faces' in merged &&
+          'card_faces' in newCard &&
+          merged.layout != HCLayout.RealCardMultiToken
+        ) {
           merged.layout = value as typeof newCard.layout;
         }
       } else if (!['keywords', 'variation'].includes(key)) {
@@ -291,16 +295,21 @@ const mergeDatabases = (
 
   return { mergedCards, mergedTokens };
 };
-const dataToCards = (cards:any,missingProp:string='', missingPropValue:any='', addTo:''|'cards'|'faces'|'parts'='') => {
+const dataToCards = (
+  cards: any,
+  missingProp: string = '',
+  missingPropValue: any = '',
+  addTo: '' | 'cards' | 'faces' | 'parts' = ''
+) => {
   switch (addTo) {
     case '':
-      return cards as HCCard.Any[]
+      return cards as HCCard.Any[];
     case 'cards':
       return cards.map((card: any) => {
         if (!(missingProp in card)) {
           return {
             ...card,
-            [missingProp]: missingPropValue
+            [missingProp]: missingPropValue,
           } as HCCard.Any;
         }
         return card as HCCard.Any;
@@ -308,62 +317,66 @@ const dataToCards = (cards:any,missingProp:string='', missingPropValue:any='', a
     case 'faces':
       return cards.map((card: any) => {
         if ('card_faces' in card) {
-          card.card_faces=card.card_faces.map((face:any) =>{
+          card.card_faces = card.card_faces.map((face: any) => {
             if (!(missingProp in face)) {
               return {
                 ...face,
-                [missingProp]: missingPropValue
+                [missingProp]: missingPropValue,
               } as HCCardFace.MultiFaced;
             }
             return face as HCCardFace.MultiFaced;
-          })
+          });
         }
         return card as HCCard.Any;
       }) as HCCard.Any[];
     case 'parts':
       return cards.map((card: any) => {
         if ('all_parts' in card) {
-          card.all_parts=card.all_parts.map((part:any) =>{
+          card.all_parts = card.all_parts.map((part: any) => {
             if (!(missingProp in part)) {
               return {
                 ...part,
-                [missingProp]: missingPropValue
+                [missingProp]: missingPropValue,
               } as HCRelatedCard;
             }
             return part as HCRelatedCard;
-          })
+          });
         }
         return card as HCCard.Any;
       }) as HCCard.Any[];
   }
-}
+};
 const loadExistingData = () => {
-    const databasePath = './src/data/Hellscube-Database.json';
-    const tokensPath = './src/data/tokens.json';
+  const databasePath = './src/data/Hellscube-Database.json';
+  const tokensPath = './src/data/tokens.json';
 
-    let databaseContent = undefined;
-    let tokensContent = undefined;
+  let databaseContent = undefined;
+  let tokensContent = undefined;
 
-    try {
-      if (fs.existsSync(databasePath)) {
-        databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
-      }
-    } catch (error) {
-      console.warn('Could not load cards, proceeding with undefined content:', error);
+  try {
+    if (fs.existsSync(databasePath)) {
+      databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
     }
+  } catch (error) {
+    console.warn('Could not load cards, proceeding with undefined content:', error);
+  }
 
-    const existingCards = databaseContent ? dataToCards(databaseContent.data.filter((e:any)=>e.set!='HCT') || [],'set','','parts'):[];
+  const existingCards = databaseContent
+    ? dataToCards(databaseContent.data.filter((e: any) => e.set != 'HCT') || [], 'set', '', 'parts')
+    : [];
 
-    try {
-      if (fs.existsSync(tokensPath)) {
-        tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
-      }
-    } catch (error) {
-      console.warn('Could not load tokens, proceeding with undefined content:', error);
+  try {
+    if (fs.existsSync(tokensPath)) {
+      tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
     }
-    
-    const existingTokens = tokensContent ? dataToCards(tokensContent.data || [],'set','','parts'):[];
-    return { existingCards, existingTokens};
+  } catch (error) {
+    console.warn('Could not load tokens, proceeding with undefined content:', error);
+  }
+
+  const existingTokens = tokensContent
+    ? dataToCards(tokensContent.data || [], 'set', '', 'parts')
+    : [];
+  return { existingCards, existingTokens };
 };
 const main = async () => {
   const store = getDefaultStore();
@@ -395,7 +408,7 @@ const main = async () => {
         component: 'token',
         name: token.name,
         type_line: token.type_line,
-        set:token.set,
+        set: token.set,
         image: token.image,
       };
       token.all_parts
@@ -528,7 +541,7 @@ const main = async () => {
           component: 'meld_result',
           name: token.name,
           type_line: token.type_line,
-          set:token.set,
+          set: token.set,
           image: token.image,
         };
         meldRelatedCards.push(meldResult);
