@@ -18,7 +18,6 @@ import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
 
 // TODO: make sure all_parts doesn't keep duplicates (maybe do it at the same time as sorting it?)
 // TODO: hard sort the property order in a logical way
-// TODO: deal with moyai
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
@@ -166,6 +165,15 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         oneWayDontMergeProps.includes(key)
       ) {
         // TODO: store current version and print the diff if there is one
+      } else if (key == 'draft_image_status') {
+        // TODO: store current version and print the diff if there is one
+        if (
+          merged.draft_image_status == HCImageStatus.Missing ||
+          merged.draft_image_status ==
+            HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
+        ) {
+          (merged as any)[key] = value;
+        }
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.isActualToken) {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && ['name', 'oracle_text', 'flavor_text'].includes(key)) {
@@ -283,6 +291,52 @@ const mergeDatabases = (
 
   return { mergedCards, mergedTokens };
 };
+const dataToCards = (cards:any,missingProp:string='', missingPropValue:any='', addTo:''|'cards'|'faces'|'parts'='') => {
+  switch (addTo) {
+    case '':
+      return cards as HCCard.Any[]
+    case 'cards':
+      return cards.map((card: any) => {
+        if (!(missingProp in card)) {
+          return {
+            ...card,
+            [missingProp]: missingPropValue
+          } as HCCard.Any;
+        }
+        return card as HCCard.Any;
+      }) as HCCard.Any[];
+    case 'faces':
+      return cards.map((card: any) => {
+        if ('card_faces' in card) {
+          card.card_faces=card.card_faces.map((face:any) =>{
+            if (!(missingProp in face)) {
+              return {
+                ...face,
+                [missingProp]: missingPropValue
+              } as HCCardFace.MultiFaced;
+            }
+            return face as HCCardFace.MultiFaced;
+          })
+        }
+        return card as HCCard.Any;
+      }) as HCCard.Any[];
+    case 'parts':
+      return cards.map((card: any) => {
+        if ('all_parts' in card) {
+          card.all_parts=card.all_parts.map((part:any) =>{
+            if (!(missingProp in part)) {
+              return {
+                ...part,
+                [missingProp]: missingPropValue
+              } as HCRelatedCard;
+            }
+            return part as HCRelatedCard;
+          })
+        }
+        return card as HCCard.Any;
+      }) as HCCard.Any[];
+  }
+}
 const loadExistingData = () => {
   try {
     const databasePath = './src/data/Hellscube-Database.json';
@@ -293,26 +347,13 @@ const loadExistingData = () => {
 
     if (fs.existsSync(databasePath)) {
       const databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
-      // This is needed if a mandatory prop is missing
-      // const rawCards = databaseContent.data || [];
-      // const filteredCards = rawCards.filter((e: any) => e.set != 'HCT');
-
-      // existingCards = filteredCards.map((card: any) => {
-      //   if (!card.layout) {
-      //     return {
-      //       ...card,
-      //       layout: HCLayout.Normal
-      //     } as HCCard.Any;
-      //   }
-      //   return card as HCCard.Any;
-      // });
-      existingCards = databaseContent.data || [];
-      existingCards = existingCards.filter(e => e.set != 'HCT');
+      
+      existingCards = dataToCards(databaseContent.data.filter((e:any)=>e.set!='HCT') || [],'set','','parts');
     }
 
     if (fs.existsSync(tokensPath)) {
       const tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
-      existingTokens = tokensContent.data || [];
+      existingCards = dataToCards(tokensContent || [],'set','','parts');
     }
 
     return { existingCards, existingTokens };
@@ -351,6 +392,7 @@ const main = async () => {
         component: 'token',
         name: token.name,
         type_line: token.type_line,
+        set:token.set,
         image: token.image,
       };
       token.all_parts
@@ -365,6 +407,7 @@ const main = async () => {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
             tokenMaker.type_line = relatedCard.type_line;
+            tokenMaker.set = relatedCard.set;
             tokenMaker.image = relatedCard.image;
             if ('all_parts' in relatedCard) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == token.id);
@@ -386,6 +429,7 @@ const main = async () => {
               tokenMaker.id = related.id;
               tokenMaker.name = related.name;
               tokenMaker.type_line = related.type_line;
+              tokenMaker.set = related.set;
               tokenMaker.image = related.image;
               if ('all_parts' in related) {
                 const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
@@ -406,6 +450,7 @@ const main = async () => {
         component: 'token_maker',
         name: token.name,
         type_line: token.type_line,
+        set: token.set,
         image: token.image,
       };
       token.all_parts
@@ -420,6 +465,7 @@ const main = async () => {
             subToken.id = related.id;
             subToken.name = related.name;
             subToken.type_line = related.type_line;
+            subToken.set = related.set;
             subToken.image = related.image;
             if ('all_parts' in related) {
               const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
@@ -448,6 +494,7 @@ const main = async () => {
             meldPartIds.push(relatedCard.id);
             meldPart.name = relatedCard.name;
             meldPart.type_line = relatedCard.type_line;
+            meldPart.set = relatedCard.set;
             meldPart.image =
               'card_faces' in relatedCard ? relatedCard.card_faces[0].image : relatedCard.image;
             meldPart.is_draft_partner = true;
@@ -478,6 +525,7 @@ const main = async () => {
           component: 'meld_result',
           name: token.name,
           type_line: token.type_line,
+          set:token.set,
           image: token.image,
         };
         meldRelatedCards.push(meldResult);
@@ -512,6 +560,7 @@ const main = async () => {
         component: 'token_maker',
         name: card.name,
         type_line: card.type_line,
+        set: card.set,
         image: card.image,
       };
       card.all_parts
@@ -526,6 +575,7 @@ const main = async () => {
             tokenCard.id = relatedCard!.id;
             tokenCard.name = relatedCard!.name;
             tokenCard.type_line = relatedCard!.type_line;
+            tokenCard.set = relatedCard!.set;
             tokenCard.image = relatedCard!.image;
             if ('all_parts' in relatedCard!) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
@@ -549,6 +599,7 @@ const main = async () => {
         component: 'draft_partner',
         name: card.name,
         type_line: card.type_line,
+        set: card.set,
         image: card.image,
         is_draft_partner: true,
       };
@@ -567,6 +618,7 @@ const main = async () => {
           partnerCard.id = relatedCard!.id;
           partnerCard.name = relatedCard!.name;
           partnerCard.type_line = relatedCard!.type_line;
+          partnerCard.set = relatedCard!.set;
           partnerCard.image = relatedCard!.image;
           if ('all_parts' in relatedCard!) {
             const partnerIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
@@ -590,6 +642,7 @@ const main = async () => {
           storedRelated.id = relatedCard.id;
           storedRelated.name = relatedCard.name;
           storedRelated.type_line = relatedCard.type_line;
+          storedRelated.set = relatedCard.set;
           storedRelated.image = relatedCard.image;
         }
       });

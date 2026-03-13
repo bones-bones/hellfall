@@ -55,7 +55,7 @@ Write a script to transform the database
 - make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
 - make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
-- special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?), Ability Bingo, Bear Alignment Chart
+- special cases: Scared Turtle // Snappy Turtle for flip, Pie Rat for toughness (because of parseInt for comparing/sorting?), Ability Bingo, Bear Alignment Chart, Force of Rowan (for draft)
 
   - HOW,
   - add grid (that allows root-level stuff as well as faces?)?
@@ -87,4 +87,7 @@ Write a script to transform the database
 - rework hybrid identity search to use the comparison operators
 - add general get all images method for cards?
 - figure out how to handle cards with self-draftpartner (Squadron Wastes)
-- deal with later: Boo, Hamster; _______ Balls
+- deal with later (skipped): _______ Balls
+- do better: evolution of the dreadmaw
+- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw
+- add: color indicator, attraction lights

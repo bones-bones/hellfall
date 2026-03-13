@@ -86,6 +86,8 @@ export const fetchTokens = async () => {
               component: entry[6] == 'meld' ? 'meld_part' : 'token_maker',
               name: name.replace(/\*\d+$/, ''),
               type_line: '',
+              set:'',
+              image:'',
             };
             return maker;
           });

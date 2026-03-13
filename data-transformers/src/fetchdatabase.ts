@@ -179,6 +179,7 @@ export const fetchDatabase = async () => {
                 component: 'draft_partner',
                 name: entry[i],
                 type_line: '',
+                set:'',
                 image: '',
                 is_draft_partner: true,
               },
