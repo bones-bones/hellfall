@@ -94,9 +94,16 @@ const setDerivedProps = (card: HCCard.Any) => {
  * @param newCard The card from the google sheet
  * @returns
  */
-const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any, usingApproved:boolean=false): HCCard.Any => {
+const mergeCards = (
+  existingCard: HCCard.Any,
+  newCard: HCCard.Any,
+  usingApproved: boolean = false
+): HCCard.Any => {
   const merged: HCCard.Any = { ...existingCard };
-  if (usingApproved && (merged.has_draft_partners || ('card_faces' in merged && merged.card_faces.length>4))) {
+  if (
+    usingApproved &&
+    (merged.has_draft_partners || ('card_faces' in merged && merged.card_faces.length > 4) || ('card_faces' in merged != 'card_faces' in newCard))
+  ) {
     return merged;
   }
 
@@ -280,7 +287,7 @@ const mergeDatabases = (
     const newCard = newCardMap.get(existingCard.id);
     if (newCard) {
       newCardMap.delete(newCard.id);
-      return mergeCards(existingCard, newCard, false);
+      return mergeCards(existingCard, newCard, true);
     }
     return existingCard;
   });
@@ -364,7 +371,9 @@ const loadExistingData = () => {
     console.warn('Could not load cards, proceeding with undefined content:', error);
   }
 
-  const existingCards = databaseContent ? dataToCards(databaseContent.data.filter((e: any) => e.set != 'HCT') || []) : [];
+  const existingCards = databaseContent
+    ? dataToCards(databaseContent.data.filter((e: any) => e.set != 'HCT') || [])
+    : [];
 
   try {
     if (fs.existsSync(tokensPath)) {
