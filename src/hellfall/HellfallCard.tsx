@@ -2,7 +2,7 @@ import { Card } from '@workday/canvas-kit-react/card';
 import styled from '@emotion/styled';
 import { Heading, Text } from '@workday/canvas-kit-react/text';
 import { SetLegality } from './SetLegality';
-import { stringToMana } from './stringToMana';
+import { colorsToIndicator, stringToMana } from './stringToMana';
 import { splitParens } from './splitParens';
 import { HCCard } from '../api-types/Card/Card';
 import { HellfallRelatedEntry } from './HellfallEntry';
@@ -211,6 +211,14 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 {stringToMana(face.mana_cost)}
               </Text>
               <br />
+              {face.color_indicator && (
+                <>
+                  <Text typeLevel="body.medium" key="color-indicator">
+                    {colorsToIndicator(face.color_indicator)}
+                  </Text>
+              {'   '}
+                </>
+              )}
               {face.type_line &&
                 (face.type_line.includes('\\*') || face.type_line.includes('(') ? (
                   <div key="type">{renderName(face.type_line)}</div>

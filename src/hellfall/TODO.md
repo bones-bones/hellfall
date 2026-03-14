@@ -92,7 +92,9 @@ Write a script to transform the database
 - deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance)
 - do better: evolution of the dreadmaw
 - fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw
-- add to HellfallCard: color indicator, attraction lights
+- add to HellfallCard: ~~color indicator, ~~ attraction lights
 - allow for removal of optional props, sides, and cards from all_parts that aren't in the database where appropriate (also remove duplicates from all_parts)
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - figure out how to do shadows on mana symbols in costs
+- figure out why loading from the approved db sometimes leads to empty colors
+- add english hover to pips
