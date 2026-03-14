@@ -1539,8 +1539,8 @@
       "colors": ["R", "W", "B"]
     },
     {
-      "filename": "tribrid/colors/CGW.svg",
-      "symbol": "C/G/W",
+      "filename": "tribrid/colors/WCG.svg",
+      "symbol": "W/C/G",
       "english": "one colorless, green, or white mana",
       "represents_mana": true,
       "mana_value": 1,

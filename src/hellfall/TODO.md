@@ -86,8 +86,13 @@ Write a script to transform the database
 - ~~ add italics parsing for type line (for Purple Removal Spell)~~
 - rework hybrid identity search to use the comparison operators
 - add general get all images method for cards?
-- figure out how to handle cards with self-draftpartner (Squadron Wastes)
-- deal with later (skipped): **\_\_\_** Balls
+- figure out how to handle cards with self-draftpartner (Squadron Wastes) and draftpartner with tokens (Notorious Wicker Picker)
+- figure out how to deal with sticker sheets consistently! (Notorious Wicker Picker), (Land of ______ and ______), 
+- figure out how to deal with dungeons consistently (low on groceries)
+- deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance)
 - do better: evolution of the dreadmaw
 - fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw
-- add: color indicator, attraction lights
+- add to HellfallCard: color indicator, attraction lights
+- allow for removal of optional props, sides, and cards from all_parts that aren't in the database where appropriate (also remove duplicates from all_parts)
+- FIX KEYBOARD SHORTCUTS ON HELLFALL
+- figure out how to do shadows on mana symbols in costs

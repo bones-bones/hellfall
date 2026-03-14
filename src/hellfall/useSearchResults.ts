@@ -38,6 +38,7 @@ import { getColorIdentity } from './getColorIdentity';
 import { canBeACommander } from './canBeACommander';
 import { debug } from 'console';
 import { toNumber } from './inputs/NumberSelector';
+import { colorCompOp } from './colorComps';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
@@ -616,21 +617,9 @@ export const useSearchResults = () => {
 
         // TODO: handle split cards/adventures/transforms/flips better
         if (searchColors.length > 0) {
-          if (searchColors.includes('C')) {
-            if (
-              (!entry.colors.includes('C') && ['<=', '='].includes(colorComparison)) ||
-              (entry.colors.includes('C') && colorComparison == '>') ||
-              colorComparison == '<'
-            ) {
-              return false;
-            }
-          } else if (!entry.colors || entry.colors.length == 0) {
+          if (!entry.colors || entry.colors.length == 0) {
             // debugger;
             console.log('Card id:', entry.id, 'had a null color.');
-            if (['=', '>=', '>'].includes(colorComparison)) {
-              return false;
-            }
-          } else if (entry.colors.includes('C')) {
             if (['=', '>=', '>'].includes(colorComparison)) {
               return false;
             }
@@ -641,54 +630,8 @@ export const useSearchResults = () => {
               })
             );
             const entryColors: string[] = Array.from(entryColorsSet);
-            switch (colorComparison) {
-              case '<': {
-                if (
-                  !(
-                    entryColors.every(colorEntry => searchColors.includes(colorEntry)) &&
-                    entryColors.length < searchColors.length
-                  )
-                ) {
-                  return false;
-                }
-                break;
-              }
-              case '<=': {
-                if (!entryColors.every(colorEntry => searchColors.includes(colorEntry))) {
-                  return false;
-                }
-                break;
-              }
-              case '=': {
-                if (
-                  !(
-                    entryColors.every(colorEntry => searchColors.includes(colorEntry)) &&
-                    entryColors.length == searchColors.length
-                  )
-                ) {
-                  return false;
-                }
-                break;
-              }
-              case '>=': {
-                if (!searchColors.every(colorEntry => entryColors.includes(colorEntry))) {
-                  return false;
-                }
-
-                break;
-              }
-              case '>': {
-                if (
-                  !(
-                    searchColors.every(colorEntry => entryColors.includes(colorEntry)) &&
-                    entryColors.length > searchColors.length
-                  )
-                ) {
-                  return false;
-                }
-
-                break;
-              }
+            if (!colorCompOp(entryColors,colorComparison,searchColors)) {
+              return false
             }
           }
         }
@@ -714,22 +657,10 @@ export const useSearchResults = () => {
               return false;
             }
           } else {
-            if (searchColorIdentities.includes('C')) {
-              if (
-                (!entry.color_identity.includes('C') && ['<=', '='].includes(colorComparison)) ||
-                (entry.color_identity.includes('C') && colorComparison == '>') ||
-                colorComparison == '<'
-              ) {
-                return false;
-              }
-            } else if (!entry.color_identity || entry.color_identity.length == 0) {
+            if (!entry.color_identity || entry.color_identity.length == 0) {
               // debugger;
               console.log('Card id:', entry.id, 'had a null color identity.');
-              if (['=', '>=', '>'].includes(colorComparison)) {
-                return false;
-              }
-            } else if (entry.color_identity.includes('C')) {
-              if (['=', '>=', '>'].includes(colorComparison)) {
+              if (['=', '>=', '>'].includes(colorIdentityComparison)) {
                 return false;
               }
             } else {
@@ -739,65 +670,8 @@ export const useSearchResults = () => {
                 })
               );
               const entryColorIdentities: string[] = Array.from(entryColorIdentitiesSet);
-              switch (colorComparison) {
-                case '<': {
-                  if (
-                    !(
-                      entryColorIdentities.every(colorEntry =>
-                        searchColorIdentities.includes(colorEntry)
-                      ) && entryColorIdentities.length < searchColorIdentities.length
-                    )
-                  ) {
-                    return false;
-                  }
-                  break;
-                }
-                case '<=': {
-                  if (
-                    !entryColorIdentities.every(colorEntry =>
-                      searchColorIdentities.includes(colorEntry)
-                    )
-                  ) {
-                    return false;
-                  }
-                  break;
-                }
-                case '=': {
-                  if (
-                    !(
-                      entryColorIdentities.every(colorEntry =>
-                        searchColorIdentities.includes(colorEntry)
-                      ) && entryColorIdentities.length == searchColorIdentities.length
-                    )
-                  ) {
-                    return false;
-                  }
-                  break;
-                }
-                case '>=': {
-                  if (
-                    !searchColorIdentities.every(colorEntry =>
-                      entryColorIdentities.includes(colorEntry)
-                    )
-                  ) {
-                    return false;
-                  }
-
-                  break;
-                }
-                case '>': {
-                  if (
-                    !(
-                      searchColorIdentities.every(colorEntry =>
-                        entryColorIdentities.includes(colorEntry)
-                      ) && entryColorIdentities.length > searchColorIdentities.length
-                    )
-                  ) {
-                    return false;
-                  }
-
-                  break;
-                }
+              if (!colorCompOp(entryColorIdentities,colorIdentityComparison,searchColorIdentities)) {
+                return false
               }
             }
           }
