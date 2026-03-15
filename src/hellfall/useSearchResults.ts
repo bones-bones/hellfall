@@ -34,7 +34,6 @@ import {
   dirAtom,
 } from './searchAtoms';
 import { sortFunction } from './sortFunction';
-import { getColorIdentity } from './getColorIdentity';
 import { canBeACommander } from './canBeACommander';
 import { debug } from 'console';
 import { toNumber } from './inputs/NumberSelector';

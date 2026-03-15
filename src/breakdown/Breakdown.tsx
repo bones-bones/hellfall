@@ -8,7 +8,6 @@ import { SidePanel, SidePanelOpenDirection } from '@workday/canvas-kit-react/sid
 import { Card, TertiaryButton, ToolbarIconButton } from '@workday/canvas-kit-react';
 import { HellfallCard } from '../hellfall/HellfallCard';
 import { activeCardAtom } from '../hellfall/searchAtoms';
-import { getColorIdentity } from '../hellfall/getColorIdentity';
 import { canBeACommander } from '../hellfall/canBeACommander';
 // TODO: make sure this still works
 export const Breakdown = () => {
