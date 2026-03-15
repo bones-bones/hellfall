@@ -687,7 +687,7 @@ const main = async () => {
     .forEach(card => {
       for (let i = card.all_parts?.length!-1; i>=0; i--) {
         const part = card.all_parts![i];
-        if (card.all_parts!.slice(i).find(e=>e.id == part.id || (part.component == 'token' && (finalCards.find(e=>e.id == part.id) ? !finalCards.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id) : !finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id))))) {
+        if (card.all_parts!.slice(i).find(e=>e.id == part.id || (part.component == 'token' && (finalCards.find(e=>e.id == part.id) ? !(finalCards.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component == 'token_maker') : !(finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component == 'token_maker'))))) {
           card.all_parts?.splice(i,1);
         }
       }
@@ -697,7 +697,7 @@ const main = async () => {
     .forEach(token => {
       for (let i = token.all_parts?.length!-1; i>=0; i--) {
         const part = token.all_parts![i];
-        if (token.all_parts!.slice(i).find(e=>e.id == part.id || (part.component == 'token' && !finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==token.id)))) {
+        if (token.all_parts!.slice(i).find(e=>e.id == part.id || (part.component == 'token' && !(finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==token.id)?.component == 'token_maker')))) {
           token.all_parts?.splice(i,1);
         }
       }
