@@ -1,4 +1,4 @@
-import { HCCard, HCCardFace, HCLayout } from '../api-types/Card';
+import { HCCard, HCCardFace, HCLayout, HCLayoutGroup } from '../api-types/Card';
 import { pipsAtom } from './pipsAtom';
 import { useAtomValue } from 'jotai';
 import { getDefaultStore } from 'jotai';
@@ -71,7 +71,7 @@ export const getColorIdentityProps = (
   };
   // TODO: special cases for Crypticspire Mantis (must be at least 2)
   if ('card_faces' in card) {
-    if (card.layout == HCLayout.MeldPart) {
+    if (HCLayoutGroup.FrontIdentityLayout.includes(card.layout as HCLayoutGroup.FrontIdentityLayoutType)) {
       addColorsFromFace(card.card_faces[0]);
     } else {
       card.card_faces.forEach(entry => {

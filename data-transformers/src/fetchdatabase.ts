@@ -338,12 +338,22 @@ export const fetchDatabase = async () => {
         }
       }
       if (!('layout' in cardObject)) {
-        // const names = entry[1];
-        // entry[6] is Related Cards
-        cardObject.layout =
-          // cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
-          // ? HCLayout.MeldPart:
-          HCLayout.Multi;
+        if (cardObject.tags?.includes('reminder-on-back')) {
+          cardObject.layout = HCLayout.ReminderOnBack;
+        } else if (cardObject.tags?.includes('dungeon-on-back')) {
+          cardObject.layout = HCLayout.DungeonOnBack;
+        } else if (cardObject.tags?.includes('stickers-on-back')) {
+          cardObject.layout = HCLayout.StickersOnBack;
+        } else if (cardObject.tags?.includes('token-on-back')) {
+          cardObject.layout = HCLayout.TokenOnBack;
+        } else {
+          // const names = entry[1];
+          // entry[6] is Related Cards
+          cardObject.layout =
+            // cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
+            // ? HCLayout.MeldPart:
+            HCLayout.Multi;
+        }
       }
       return cardObject as HCCard.AnyMultiFaced;
     }

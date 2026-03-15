@@ -39,7 +39,7 @@ export enum HCImageStatus {
   /**
    * This face is a sticker sheet.
    */
-  Sticker = 'sticker',
+  Stickers = 'stickers',
   /**
    * This face is a token.
    */

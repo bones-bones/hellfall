@@ -54,7 +54,7 @@ Write a script to transform the database
 - special cases: Scared Turtle // Snappy Turtle for flip, Ability Bingo, Bear Alignment Chart, Force of Rowan (for draft)
 
   - add grid (that allows root-level stuff as well as faces?)?
-  - switch Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, Blingo, Assimilated Strategist to use the new face system
+  - use girid? to deal with Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, Blingo, Assimilated Strategist, bear hate, 
 
 - switch search to text bar and make the mass of buttons hidden as advanced search
 - see if any better images are floating around for HC2 in general

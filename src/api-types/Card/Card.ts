@@ -12,7 +12,7 @@ type Layout<T extends `${HCLayout}`> = Pick<HCCardFields.Core.HCReferences, 'lay
  *
  * This collection is focused around two core varieties of cards:
  * - {@link HCCard.AnySingleFaced} describes any card with one face and no `card_faces` property, e.g. {@link HCCard.Normal Normal} or {@link HCCard.Saga Saga}.
- * - {@link HCCard.AnyMultiFaced} describes any card with multiple faces.
+ * - {@link HCCard.AnyMultiFacedFaced} describes any card with multiple faces.
  *
  * It also provides a broader grouping:
  * - {@link HCCard.Any} describes any card at all. Think of it as like `any` but for cards.
@@ -32,7 +32,7 @@ type Layout<T extends `${HCLayout}`> = Pick<HCCardFields.Core.HCReferences, 'lay
  * const mysteryCard: HCCard.Any = getCard();
  *
  * if ("card_faces" in mysteryCard) {
- *   const mfc: HCCard.AnyMultiFaced = mysteryCard;
+ *   const mfc: HCCard.AnyMultiFacedFaced = mysteryCard;
  * } else {
  *   const sfc: HCCard.AnySingleFaced = mysteryCard;
  * }
@@ -85,7 +85,7 @@ export namespace HCCard {
   /**
    * Any card with a single-faced layout.
    *
-   * Examples: {@link HCLayout.Normal}, {@link HCLayout.Token}, {@link HCLayout.Sticker}.
+   * Examples: {@link HCLayout.Normal}, {@link HCLayout.Token}, {@link HCLayout.Stickers}.
    */
   export type AnySingleFaced = AbstractCard &
     Layout<HCLayoutGroup.SingleFacedType> &
@@ -106,6 +106,24 @@ export namespace HCCard {
 
   // /** A card with the Emblem layout. */
   export type Emblem = AnySingleFaced & Layout<HCLayout.Emblem>;
+
+  // /** A card with the Reminder layout. */
+  export type Reminder = AnySingleFaced & Layout<HCLayout.Reminder>;
+
+  // /** A card with the Stickers layout. */
+  export type Stickers = AnySingleFaced & Layout<HCLayout.Stickers>;
+
+  // /** A card with the Dungeon layout. */
+  export type Dungeon = AnySingleFaced & Layout<HCLayout.Dungeon>;
+
+  // /** A card with the RealCardToken layout. */
+  export type RealCardToken = AnySingleFaced & Layout<HCLayout.RealCardToken>;
+
+  // /** A card with the Checklist layout. */
+  export type Checklist = AnySingleFaced & Layout<HCLayout.Checklist>;
+
+  // /** A card with the Misc layout. */
+  export type Misc = AnySingleFaced & Layout<HCLayout.Misc>;
 }
 
 export namespace HCCard {
@@ -117,16 +135,34 @@ export namespace HCCard {
   /**
    * Any multi-faced layout. These will all have `card_faces`.
    */
-  export type AnyMulti = MultiFace<HCCardFace.MultiFaced> & Layout<HCLayoutGroup.MultiFacedType>;
+  export type AnyMultiFaced = MultiFace<HCCardFace.MultiFaced> & Layout<HCLayoutGroup.MultiFacedType>;
 
   /** A card with the Multi layout. */
-  export type Multi = AnyMulti & Layout<HCLayout.Multi>;
+  export type Multi = AnyMultiFaced & Layout<HCLayout.Multi>;
 
   /** A card with the MultiToken layout. */
-  export type MultiToken = AnyMulti & Layout<HCLayout.MultiToken>;
+  export type MultiToken = AnyMultiFaced & Layout<HCLayout.MultiToken>;
 
   /** A card with the MeldPart layout. */
-  export type MeldPart = AnyMulti & Layout<HCLayout.MeldPart>;
+  export type MeldPart = AnyMultiFaced & Layout<HCLayout.MeldPart>;
+
+  /** A card with the MultiReminder layout. */
+  export type MultiReminder = AnyMultiFaced & Layout<HCLayout.MultiReminder>;
+
+  /** A card with the RealCardMultiToken layout. */
+  export type RealCardMultiToken = AnyMultiFaced & Layout<HCLayout.RealCardMultiToken>;
+
+  /** A card with the ReminderOnBack layout. */
+  export type ReminderOnBack = AnyMultiFaced & Layout<HCLayout.ReminderOnBack>;
+
+  /** A card with the TokenOnBack layout. */
+  export type TokenOnBack = AnyMultiFaced & Layout<HCLayout.TokenOnBack>;
+
+  /** A card with the DungeonOnBack layout. */
+  export type DungeonOnBack = AnyMultiFaced & Layout<HCLayout.DungeonOnBack>;
+
+  /** A card with the StickersOnBack layout. */
+  export type StickersOnBack = AnyMultiFaced & Layout<HCLayout.StickersOnBack>;
 }
 
 export namespace HCCard {
@@ -138,8 +174,4 @@ export namespace HCCard {
    * Since this may be of any layout, common fields are available, but layout-specific fields (e.g. card_faces) will be unavailable until you perform type narrowing on it.
    */
   export type Any = AnySingleFaced | AnyMultiFaced;
-  /**
-   * Any card that is multifaced.
-   */
-  export type AnyMultiFaced = AnyMulti;
 }

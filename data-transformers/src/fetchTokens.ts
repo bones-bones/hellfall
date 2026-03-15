@@ -30,7 +30,7 @@ export const fetchTokens = async () => {
   const typeLayouts: Record<string, HCLayout> = {
     Emblem: HCLayout.Emblem,
     'Reminder Card': HCLayout.Reminder,
-    Stickers: HCLayout.Sticker,
+    Stickers: HCLayout.Stickers,
     Dungeon: HCLayout.Dungeon,
     'Real Card': HCLayout.RealCardToken,
     'Ad Card': HCLayout.Misc,
@@ -112,7 +112,7 @@ export const fetchTokens = async () => {
     // } else if ('types' in tokenObject && tokenObject.types.includes('Reminder Card')) {
     //   tokenObject.layout = HCLayout.Reminder;
     // } else if ('types' in tokenObject && tokenObject.types.includes('Stickers')) {
-    //   tokenObject.layout = HCLayout.Sticker;
+    //   tokenObject.layout = HCLayout.Stickers;
     // } else {
     //   tokenObject.layout = HCLayout.Token;
     // }

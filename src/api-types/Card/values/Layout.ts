@@ -23,7 +23,7 @@ export enum HCLayout {
   /** Reminder cards with additional faces */
   MultiReminder = 'multi_reminder',
   /** Sticker sheets */
-  Sticker = 'sticker',
+  Stickers = 'stickers',
   /** Dungeons */
   Dungeon = 'dungeon',
   /** Token copies of real cards */
@@ -35,7 +35,13 @@ export enum HCLayout {
   /** Misc images that aren't actually cards */
   Misc = 'misc',
   /** reminder on back of card */
-  
+  ReminderOnBack = 'reminder_on_back',
+  /** dungeon on back of card */
+  DungeonOnBack = 'dungeon_on_back',
+  /** token on back of card */
+  TokenOnBack = 'token_on_back',
+  /** stickers on back of card */
+  StickersOnBack = 'stickers_on_back',
 }
 
 // /**
@@ -116,7 +122,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Token}`,
     `${HCLayout.Emblem}`,
     `${HCLayout.Reminder}`,
-    `${HCLayout.Sticker}`,
+    `${HCLayout.Stickers}`,
     `${HCLayout.Dungeon}`,
     `${HCLayout.RealCardToken}`,
     `${HCLayout.Checklist}`,
@@ -143,6 +149,10 @@ export namespace HCLayoutGroup {
     `${HCLayout.MeldPart}`,
     `${HCLayout.MultiReminder}`,
     `${HCLayout.RealCardMultiToken}`,
+    `${HCLayout.ReminderOnBack}`,
+    `${HCLayout.TokenOnBack}`,
+    `${HCLayout.DungeonOnBack}`,
+    `${HCLayout.StickersOnBack}`,
   ] as const;
 
   /**
@@ -162,6 +172,10 @@ export namespace HCLayoutGroup {
     `${HCLayout.Normal}`,
     `${HCLayout.Multi}`,
     `${HCLayout.MeldPart}`,
+    `${HCLayout.ReminderOnBack}`,
+    `${HCLayout.TokenOnBack}`,
+    `${HCLayout.DungeonOnBack}`,
+    `${HCLayout.StickersOnBack}`,
   ] as const;
 
   /**
@@ -183,7 +197,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Emblem}`,
     `${HCLayout.Reminder}`,
     `${HCLayout.MultiReminder}`,
-    `${HCLayout.Sticker}`,
+    `${HCLayout.Stickers}`,
     `${HCLayout.Dungeon}`,
     `${HCLayout.RealCardToken}`,
     `${HCLayout.RealCardMultiToken}`,
@@ -199,4 +213,25 @@ export namespace HCLayoutGroup {
    *
    */
   export type TokenLayoutType = (typeof TokenLayout)[number];
+
+  /**
+   * All layouts that only use their front for color identity.
+   *
+   * @see {@link FrontIdentityLayoutType} for the type of this group.
+   */
+  export const FrontIdentityLayout = [
+    `${HCLayout.MeldPart}`,
+    `${HCLayout.ReminderOnBack}`,
+    `${HCLayout.TokenOnBack}`,
+    `${HCLayout.DungeonOnBack}`,
+    `${HCLayout.StickersOnBack}`,
+  ] as const;
+
+  /**
+   * A type for all layouts that only use their front for color identity.
+   *
+   * @see {@link FrontIdentityLayout} for an array version.
+   *
+   */
+  export type FrontIdentityLayoutType = (typeof FrontIdentityLayout)[number];
 }
