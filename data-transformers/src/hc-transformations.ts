@@ -105,6 +105,9 @@ const mergeCards = (
   newCard: HCCard.Any,
   usingApproved: boolean = false
 ): HCCard.Any => {
+  if (existingCard.id == 'Whale1') {
+    const x = 1;
+  }
   if (usingApproved && (existingCard.has_draft_partners || [HCLayout.MeldPart,HCLayout.MeldResult].includes(existingCard.layout as HCLayout) || ('card_faces' in existingCard && existingCard.card_faces.length>4))) {
     return existingCard;
   }
@@ -445,9 +448,15 @@ const main = async () => {
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
+          if (tokenMaker.id == 'Whale1') {
+            const x = 1
+          }
           // goes by id if possible, but if not, it goes by name; tries to find in tokens, then tries in cards
-          const relatedCard = tokenMaker.id ? (finalTokens.find(card=>card.id == token.id) ? finalTokens.find(card=>card.id == token.id) : finalCards.find(card => card.id == tokenMaker.id)): (finalTokens.find(card=>card.id.toLowerCase() == token.name.toLowerCase()) ? finalTokens.find(card=>card.id.toLowerCase() == token.name.toLowerCase()) : finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase()));
+          const relatedCard = tokenMaker.id ? (finalTokens.find(card=>card.id == tokenMaker.id) ? finalTokens.find(card=>card.id == tokenMaker.id) : finalCards.find(card => card.id == tokenMaker.id)): (finalTokens.find(card=>card.id.toLowerCase() == tokenMaker.name.toLowerCase()) ? finalTokens.find(card=>card.id.toLowerCase() == tokenMaker.name.toLowerCase()) : finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase()));
           if (relatedCard) {
+            if (relatedCard.id == 'Whale1') {
+              const x = 1
+            }
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
             tokenMaker.type_line = relatedCard.type_line;
@@ -648,6 +657,9 @@ const main = async () => {
           if (!('has_draft_partners' in relatedCard!)) {
             relatedCard!.has_draft_partners = true;
           }
+          if (!('has_draft_partners' in card)) {
+            card.has_draft_partners = true;
+          }
           partnerCard.id = relatedCard!.id;
           partnerCard.name = relatedCard!.name;
           partnerCard.type_line = relatedCard!.type_line;
@@ -687,19 +699,41 @@ const main = async () => {
     .forEach(card => {
       for (let i = card.all_parts?.length!-1; i>=0; i--) {
         const part = card.all_parts![i];
-        if (card.all_parts!.slice(i).find(e=>e.id == part.id || (part.component == 'token' && (finalCards.find(e=>e.id == part.id) ? !(finalCards.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component == 'token_maker') : !(finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component == 'token_maker'))))) {
+
+        if (card.all_parts!.slice(0,i).find(e=>e.id == part.id)) {
           card.all_parts?.splice(i,1);
+        } else if (part.component == 'token') {
+          if (finalCards.find(e=>e.id == part.id)) {
+            if (!(finalCards.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component == 'token_maker')) {
+              card.all_parts?.splice(i,1);
+            }
+          } else {
+            const tok = finalTokens.find(e=>e.id == part.id);
+            const pts = finalTokens.find(e=>e.id == part.id)?.all_parts;
+            const rel = finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id);
+            const comp = finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component;
+            if (!(finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component == 'token_maker')) {
+              card.all_parts?.splice(i,1);
+            }
+          }
         }
       }
+      if (card.all_parts?.length == 0) {
+        delete card.all_parts;
+      }
     });
+    
   finalTokens
     .filter(e => 'all_parts' in e)
     .forEach(token => {
       for (let i = token.all_parts?.length!-1; i>=0; i--) {
         const part = token.all_parts![i];
-        if (token.all_parts!.slice(i).find(e=>e.id == part.id || (part.component == 'token' && !(finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==token.id)?.component == 'token_maker')))) {
+        if (token.all_parts!.slice(0,i).find(e=>e.id == part.id) || (part.component == 'token' && !(finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==token.id)?.component == 'token_maker'))) {
           token.all_parts?.splice(i,1);
         }
+      }
+      if (token.all_parts?.length == 0) {
+        delete token.all_parts;
       }
     });
   finalCards.forEach(entry => {

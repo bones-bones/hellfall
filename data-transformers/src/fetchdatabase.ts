@@ -172,19 +172,19 @@ export const fetchDatabase = async () => {
             };
             cardObject[keys[i]] = legalities;
           } else if (keys[i] == 'related') {
-            // entry[20] is tags, entry[17] is 0oracle_text
+            // entry[20] is tags, entry[17] is 0oracle_text, entry[6] is Related Cards
             const all_parts: [HCRelatedCard] = [
               {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',
-                component: entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') ? 'meld_part' : entry[20].includes('draft-partner') ? 'draft_partner' : 'token_maker',
+                component: entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') ? 'meld_part' : entry[20].includes('draftpartner') ? 'draft_partner' : 'token_maker',
                 name: entry[i],
                 type_line: '',
                 set: '',
                 image: '',
               },
             ];
-            if (entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') || entry[20].includes('draft-partner')) {
+            if (entry[6] != 'Head of the Forbidden One' &&(entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') || entry[20].includes('draftpartner'))) {
               all_parts[0].is_draft_partner=true;
               cardObject.not_directly_draftable = true;
               cardObject.has_draft_partners = true;
