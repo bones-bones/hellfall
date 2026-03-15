@@ -630,8 +630,8 @@ export const useSearchResults = () => {
               })
             );
             const entryColors: string[] = Array.from(entryColorsSet);
-            if (!colorCompOp(entryColors,colorComparison,searchColors)) {
-              return false
+            if (!colorCompOp(entryColors, colorComparison, searchColors)) {
+              return false;
             }
           }
         }
@@ -670,8 +670,10 @@ export const useSearchResults = () => {
                 })
               );
               const entryColorIdentities: string[] = Array.from(entryColorIdentitiesSet);
-              if (!colorCompOp(entryColorIdentities,colorIdentityComparison,searchColorIdentities)) {
-                return false
+              if (
+                !colorCompOp(entryColorIdentities, colorIdentityComparison, searchColorIdentities)
+              ) {
+                return false;
               }
             }
           }

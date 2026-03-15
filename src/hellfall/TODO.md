@@ -73,14 +73,14 @@ Write a script to transform the database
 - rework hybrid identity search to use the comparison operators
 - add general get all images method for cards?
 - figure out how to handle cards with self-draftpartner (Squadron Wastes, Playset of Squadron Hawks (On Clearance), The Squadron Hawk) and draftpartner with tokens (Notorious Wicker Picker)
-- figure out how to deal with sticker sheets consistently! (Notorious Wicker Picker, Land of ______ and ______, Hellscube Imperial Appraiser, Wicky P, Vintage Banworthy, Hellscube Rebalancing Team, Honk Honk)
+- figure out how to deal with sticker sheets consistently! (Notorious Wicker Picker, Land of **\_\_** and **\_\_**, Hellscube Imperial Appraiser, Wicky P, Vintage Banworthy, Hellscube Rebalancing Team, Honk Honk)
   - have main card have two sides; second side is sticker sheet, but doesn't have image in main card
   - main card has draft image of both sides and main image of just regular card
   - sticker sheet is also attached token that has its own image and draftpartner with main card
   - main card name is just the regular card
   - this is partially done; need to fully implement the partner part
 - fix tags for cards with draft_image
-- deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance), Half-Thriving ____ Half-Thriving ____, Hell's Cube (both versions)
+- deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions)
 - do better: evolution of the dreadmaw
 - fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
@@ -91,7 +91,7 @@ Write a script to transform the database
 - figure out why loading from the approved db sometimes leads to empty colors
 - figure out why new entries sometimes don't get correct derived props
 - add english hover to pips
-- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, 
+- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God,
 - ask for ruling: Armory Manufactor
 - use layout to help disambiguate what's on the back for multis with draft images
 - don't count back sides that are reminders, tokens, or dungeons for color identity

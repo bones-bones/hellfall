@@ -33,10 +33,12 @@ export const stringToMana = (text: string) => {
     });
 };
 
-export const colorsToIndicator = (colors:HCColors) => {
+export const colorsToIndicator = (colors: HCColors) => {
   const pips = store.get(pipsAtom);
-  const icon = pips?.find(e => !e.represents_mana && 'colors' in e && sameColors(e.colors!,colors));
-  const loc = icon ? '/hellfall/pips/' + icon.filename : undefined;;
+  const icon = pips?.find(
+    e => !e.represents_mana && 'colors' in e && sameColors(e.colors!, colors)
+  );
+  const loc = icon ? '/hellfall/pips/' + icon.filename : undefined;
   return loc ? (
     <PipContainer>
       <PipSymbol src={loc} alt={icon?.symbol} />
@@ -44,7 +46,7 @@ export const colorsToIndicator = (colors:HCColors) => {
   ) : (
     colors.toString()
   );
-}
+};
 
 const PipSymbol = styled('img')({ height: '18px', marginTop: '10px' });
 const PipContainer = styled('div')({

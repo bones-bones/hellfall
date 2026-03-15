@@ -30,12 +30,12 @@ export const fetchTokens = async () => {
   const typeLayouts: Record<string, HCLayout> = {
     Emblem: HCLayout.Emblem,
     'Reminder Card': HCLayout.Reminder,
-    'Stickers': HCLayout.Sticker,
+    Stickers: HCLayout.Sticker,
     Dungeon: HCLayout.Dungeon,
     'Real Card': HCLayout.RealCardToken,
     'Ad Card': HCLayout.Misc,
     Misc: HCLayout.Misc,
-    'Checklist': HCLayout.Checklist
+    Checklist: HCLayout.Checklist,
   };
   const defaultProps: Record<string, any> = {
     rulings: '',

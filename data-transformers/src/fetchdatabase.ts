@@ -177,15 +177,25 @@ export const fetchDatabase = async () => {
               {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',
-                component: entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') ? 'meld_part' : entry[20].includes('draftpartner') ? 'draft_partner' : 'token_maker',
+                component:
+                  entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
+                    ? 'meld_part'
+                    : entry[20].includes('draftpartner')
+                    ? 'draft_partner'
+                    : 'token_maker',
                 name: entry[i],
                 type_line: '',
                 set: '',
                 image: '',
               },
             ];
-            if (entry[6] != 'Head of the Forbidden One' &&(entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') || entry[20].includes('draftpartner'))) {
-              all_parts[0].is_draft_partner=true;
+            if (
+              entry[6] != 'Head of the Forbidden One' &&
+              (entry[17].toLowerCase().includes('meld') ||
+                entry[20].includes('meld') ||
+                entry[20].includes('draftpartner'))
+            ) {
+              all_parts[0].is_draft_partner = true;
               cardObject.not_directly_draftable = true;
               cardObject.has_draft_partners = true;
             }
@@ -306,7 +316,12 @@ export const fetchDatabase = async () => {
       singleCard.layout = HCLayout.Normal;
       return singleCard as HCCard.AnySingleFaced;
     } else {
-      if (cardObject.card_faces.filter(e=>e.image).length == 1 && cardObject.card_faces[0].image) {
+      if (
+        cardObject.card_faces[0].image &&
+        (cardObject.card_faces.filter(e => e.image).length == 1 ||
+          cardObject.tags?.includes('meld') ||
+          cardObject.tags?.includes('draftpartner'))
+      ) {
         if ('image' in cardObject && cardObject.image) {
           cardObject.draft_image = cardObject.image;
           cardObject.draft_image_status = cardObject.image_status;

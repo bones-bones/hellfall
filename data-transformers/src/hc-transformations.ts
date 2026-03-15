@@ -41,12 +41,35 @@ const oneWayMergeProps = [
   'attraction_lights',
   'watermark',
 ];
-const oneWayMandatoryProps = ['name','mana_cost','type_line'];
+const oneWayMandatoryProps = ['name', 'mana_cost', 'type_line'];
 const oneWayDontMergeProps = ['color_identity', 'color_identity_hybrid', 'layout'];
-const cardBlankableProps = ['rulings','oracle_text','cmc']
-const cardRemovableProps = ['tags','defense','loyalty','power','toughness','supertypes','types','subtypes','flavor_text'/**,'all_parts' */,'image'/**,'draft_image'*/,'not_directly_draftable','has_draft_partners','watermark']
+const cardBlankableProps = ['rulings', 'oracle_text', 'cmc'];
+const cardRemovableProps = [
+  'tags',
+  'defense',
+  'loyalty',
+  'power',
+  'toughness',
+  'supertypes',
+  'types',
+  'subtypes',
+  'flavor_text' /**,'all_parts' */,
+  'image' /**,'draft_image'*/,
+  'not_directly_draftable',
+  'has_draft_partners',
+  'watermark',
+];
 // const tokenBlankableProps = []
-const tokenRemovableProps = ['power','toughness','supertypes','types'/**,'all_parts' */,'image','draft_image','not_directly_draftable','has_draft_partners']
+const tokenRemovableProps = [
+  'power',
+  'toughness',
+  'supertypes',
+  'types' /**,'all_parts' */,
+  'image',
+  'draft_image',
+  'not_directly_draftable',
+  'has_draft_partners',
+];
 // TODO: implement more robust allparts derivation system
 const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
@@ -108,46 +131,59 @@ const mergeCards = (
   if (existingCard.id == 'Whale1') {
     const x = 1;
   }
-  if (usingApproved && (existingCard.has_draft_partners || [HCLayout.MeldPart,HCLayout.MeldResult].includes(existingCard.layout as HCLayout) || ('card_faces' in existingCard && existingCard.card_faces.length>4))) {
+  if (
+    usingApproved &&
+    (existingCard.has_draft_partners ||
+      [HCLayout.MeldPart, HCLayout.MeldResult].includes(existingCard.layout as HCLayout) ||
+      ('card_faces' in existingCard && existingCard.card_faces.length > 4))
+  ) {
     return existingCard;
   }
   // TODO: replace with actual type checking
-  if ([HCLayout.MultiToken,HCLayout.MultiReminder,HCLayout.RealCardMultiToken].includes(existingCard.layout as HCLayout)) {
+  if (
+    [HCLayout.MultiToken, HCLayout.MultiReminder, HCLayout.RealCardMultiToken].includes(
+      existingCard.layout as HCLayout
+    )
+  ) {
     const merged: HCCard.Any = { ...existingCard };
-    ['image','creator','all_parts'].forEach(key=>{
-      (merged as any)[key]=newCard[key as keyof typeof newCard];
-    })
-    return merged
+    ['image', 'creator', 'all_parts'].forEach(key => {
+      (merged as any)[key] = newCard[key as keyof typeof newCard];
+    });
+    return merged;
   }
 
-  let mergedPrelim:any = undefined;
+  let mergedPrelim: any = undefined;
   if (!('card_faces' in existingCard) && 'card_faces' in newCard) {
-    mergedPrelim = {...existingCard} as any;
+    mergedPrelim = { ...existingCard } as any;
     mergedPrelim.card_faces = [{}] as HCCardFace.MultiFaced[];
     oneWayMergeProps.forEach(prop => {
       if (prop in mergedPrelim) {
         mergedPrelim.card_faces[0][prop] = mergedPrelim[prop];
-        if (!['name','mana_cost','type_line'].includes(prop)) {
-          delete mergedPrelim[prop]
+        if (!['name', 'mana_cost', 'type_line'].includes(prop)) {
+          delete mergedPrelim[prop];
         }
       }
-    })
+    });
     mergedPrelim.layout = newCard.layout;
   } else if ('card_faces' in existingCard && !('card_faces' in newCard)) {
-    mergedPrelim = {...existingCard} as any;
+    mergedPrelim = { ...existingCard } as any;
     oneWayMergeProps.forEach(prop => {
       if (prop in mergedPrelim.card_faces[0]) {
         mergedPrelim[prop] = mergedPrelim.card_faces[0][prop];
       }
-    })
+    });
     delete mergedPrelim.card_faces;
     mergedPrelim.layout = newCard.layout;
   }
-  
-  
-  const merged: HCCard.Any = 'card_faces' in existingCard == 'card_faces' in newCard ? { ...existingCard } : 'card_faces' in mergedPrelim ? {...(mergedPrelim as HCCard.AnyMultiFaced)}:{...(mergedPrelim as HCCard.AnySingleFaced)};
+
+  const merged: HCCard.Any =
+    'card_faces' in existingCard == 'card_faces' in newCard
+      ? { ...existingCard }
+      : 'card_faces' in mergedPrelim
+      ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
+      : { ...(mergedPrelim as HCCard.AnySingleFaced) };
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
-    setDerivedProps(merged)
+    setDerivedProps(merged);
   }
   Object.entries(newCard).forEach(([key, value]) => {
     // TODO: make sure that empty arrays being truthy doesn't break anything here
@@ -180,12 +216,14 @@ const mergeCards = (
                 (face as any)[k] = v;
               }
             });
-            cardRemovableProps.filter(prop=>prop in face && !(prop in newFace)).forEach(prop => {
-              if (prop == 'image') {
-                face.image_status = newFace.image_status;
-              }
-              delete (face as any)[prop];
-            })
+            cardRemovableProps
+              .filter(prop => prop in face && !(prop in newFace))
+              .forEach(prop => {
+                if (prop == 'image') {
+                  face.image_status = newFace.image_status;
+                }
+                delete (face as any)[prop];
+              });
           }
           return face;
         });
@@ -218,12 +256,16 @@ const mergeCards = (
       ) {
         merged.all_parts = newCard.all_parts?.map(part => {
           // superToken is used when the card is a token and part is also a token that makes this token
-          const superToken = existingCard.all_parts?.find(e => e.id.toLowerCase() == part.name.toLowerCase());
-          const existingPart = superToken ? superToken : existingCard.all_parts?.find(e => e.name.toLowerCase() == part.name.toLowerCase());
+          const superToken = existingCard.all_parts?.find(
+            e => e.id.toLowerCase() == part.name.toLowerCase()
+          );
+          const existingPart = superToken
+            ? superToken
+            : existingCard.all_parts?.find(e => e.name.toLowerCase() == part.name.toLowerCase());
           if (existingPart) {
             // if there is already a part, update it
             Object.entries(existingPart).forEach(([k, v]) => {
-              if (!['name', 'component'/**,'is_draft_partner'*/].includes(k) && v) {
+              if (!['name', 'component' /**,'is_draft_partner'*/].includes(k) && v) {
                 (part as any)[k] = v;
               } else if (k == 'name' && superToken) {
                 part.id = v as string;
@@ -232,7 +274,7 @@ const mergeCards = (
             });
           }
           return part;
-        })
+        });
         // merged.all_parts = existingCard.all_parts?.map(part => {
         //   const newPart = newCard.all_parts?.find(
         //     e => e.name.toLowerCase() == part.name.toLowerCase()
@@ -247,9 +289,15 @@ const mergeCards = (
         //   return part;
         // });
         // TODO: make sure there aren't any other component types to add to the list
-        existingCard.all_parts?.filter(part=>!['token_maker'].includes(part.component) && !merged.all_parts?.some(e=>e.id == part.id)).forEach(part => {
+        existingCard.all_parts
+          ?.filter(
+            part =>
+              !['token_maker'].includes(part.component) &&
+              !merged.all_parts?.some(e => e.id == part.id)
+          )
+          .forEach(part => {
             merged.all_parts?.push(part);
-        });
+          });
       } else if (key == 'image_status') {
         // TODO: store current version and print the diff if there is one
         if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {
@@ -273,24 +321,32 @@ const mergeCards = (
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;
       }
-    } else if (!merged.isActualToken && merged[key as keyof typeof merged] && cardBlankableProps.includes(key)) {
+    } else if (
+      !merged.isActualToken &&
+      merged[key as keyof typeof merged] &&
+      cardBlankableProps.includes(key)
+    ) {
       (merged as any)[key] = value;
     }
   });
   if (!merged.isActualToken) {
-    cardRemovableProps.filter(key=>key in merged && !(key in newCard)).forEach(key => {
-      if (key == 'image') {
-        merged.image_status = newCard.image_status;
-      }
-      delete (merged as any)[key];
-    })
+    cardRemovableProps
+      .filter(key => key in merged && !(key in newCard))
+      .forEach(key => {
+        if (key == 'image') {
+          merged.image_status = newCard.image_status;
+        }
+        delete (merged as any)[key];
+      });
   } else {
-    tokenRemovableProps.filter(key=>key in merged && !(key in newCard)).forEach(key => {
-      if (key == 'image') {
-        merged.image_status = newCard.image_status;
-      }
-      delete (merged as any)[key];
-    })
+    tokenRemovableProps
+      .filter(key => key in merged && !(key in newCard))
+      .forEach(key => {
+        if (key == 'image') {
+          merged.image_status = newCard.image_status;
+        }
+        delete (merged as any)[key];
+      });
   }
   if (merged.variation && merged.isActualToken && parseInt(merged.variation_of!)) {
     merged.variation_of = merged.name + merged.variation_of;
@@ -448,15 +504,15 @@ const main = async () => {
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          if (tokenMaker.id == 'Whale1') {
-            const x = 1
-          }
           // goes by id if possible, but if not, it goes by name; tries to find in tokens, then tries in cards
-          const relatedCard = tokenMaker.id ? (finalTokens.find(card=>card.id == tokenMaker.id) ? finalTokens.find(card=>card.id == tokenMaker.id) : finalCards.find(card => card.id == tokenMaker.id)): (finalTokens.find(card=>card.id.toLowerCase() == tokenMaker.name.toLowerCase()) ? finalTokens.find(card=>card.id.toLowerCase() == tokenMaker.name.toLowerCase()) : finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase()));
+          const relatedCard = tokenMaker.id
+            ? finalCards.find(card => card.id == tokenMaker.id)
+              ? finalCards.find(card => card.id == tokenMaker.id)
+              : finalTokens.find(card => card.id == tokenMaker.id)
+            : finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
+            ? finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
+            : finalTokens.find(card => card.id.toLowerCase() == tokenMaker.name.toLowerCase());
           if (relatedCard) {
-            if (relatedCard.id == 'Whale1') {
-              const x = 1
-            }
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
             tokenMaker.type_line = relatedCard.type_line;
@@ -473,12 +529,15 @@ const main = async () => {
               relatedCard.all_parts = [relatedToken];
             }
             // if stickers, add draftpartner props
-            if (token.type_line.includes('Stickers') && relatedCard.tags?.includes('draftpartner')) {
-              relatedCard.has_draft_partners=true;
-              token.has_draft_partners=true;
-              token.not_directly_draftable=true;
-              tokenMaker.is_draft_partner=true;
-              relatedCard.all_parts!.find(e=>e.id==token.id)!.is_draft_partner=true;
+            if (
+              token.type_line.includes('Stickers') &&
+              relatedCard.tags?.includes('draftpartner')
+            ) {
+              relatedCard.has_draft_partners = true;
+              token.has_draft_partners = true;
+              token.not_directly_draftable = true;
+              tokenMaker.is_draft_partner = true;
+              relatedCard.all_parts!.find(e => e.id == token.id)!.is_draft_partner = true;
             }
           }
         });
@@ -533,8 +592,9 @@ const main = async () => {
             meldPart.name = relatedCard.name;
             meldPart.type_line = relatedCard.type_line;
             meldPart.set = relatedCard.set;
-            meldPart.image =
-              'card_faces' in relatedCard ? relatedCard.card_faces[0].image : relatedCard.image;
+            meldPart.image = relatedCard.image;
+            // meldPart.image =
+            //   'card_faces' in relatedCard && relatedCard.card_faces[0].image ? relatedCard.card_faces[0].image : relatedCard.image;
             if (token.id != 'Omnath, the Forbidden One1') {
               meldPart.is_draft_partner = true;
             }
@@ -679,41 +739,55 @@ const main = async () => {
         });
     });
   // make sure all relateds are updated (TODO: Is this necessary?)
-  finalCards
-    .filter(e => 'all_parts' in e)
-    .forEach(card => {
-      card.all_parts?.forEach(storedRelated => {
-        const relatedCard = finalCards.find(e => e.id == storedRelated.id);
-        if (relatedCard) {
-          storedRelated.id = relatedCard.id;
-          storedRelated.name = relatedCard.name;
-          storedRelated.type_line = relatedCard.type_line;
-          storedRelated.set = relatedCard.set;
-          storedRelated.image = relatedCard.image;
-        }
-      });
-    });
+  // finalCards
+  //   .filter(e => 'all_parts' in e)
+  //   .forEach(card => {
+  //     card.all_parts?.forEach(storedRelated => {
+  //       const relatedCard = finalCards.find(e => e.id == storedRelated.id);
+  //       if (relatedCard) {
+  //         storedRelated.id = relatedCard.id;
+  //         storedRelated.name = relatedCard.name;
+  //         storedRelated.type_line = relatedCard.type_line;
+  //         storedRelated.set = relatedCard.set;
+  //         storedRelated.image = relatedCard.image;
+  //       }
+  //     });
+  //   });
   // trims duplicates and parts with components of 'token' that are missing the corresponding one from all_parts
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
-      for (let i = card.all_parts?.length!-1; i>=0; i--) {
+      for (let i = card.all_parts?.length! - 1; i >= 0; i--) {
         const part = card.all_parts![i];
 
-        if (card.all_parts!.slice(0,i).find(e=>e.id == part.id)) {
-          card.all_parts?.splice(i,1);
+        if (card.all_parts!.slice(0, i).find(e => e.id == part.id)) {
+          card.all_parts?.splice(i, 1);
         } else if (part.component == 'token') {
-          if (finalCards.find(e=>e.id == part.id)) {
-            if (!(finalCards.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component == 'token_maker')) {
-              card.all_parts?.splice(i,1);
+          if (finalCards.find(e => e.id == part.id)) {
+            if (
+              !(
+                finalCards.find(e => e.id == part.id)?.all_parts?.find(e => e.id == card.id)
+                  ?.component == 'token_maker'
+              )
+            ) {
+              card.all_parts?.splice(i, 1);
             }
           } else {
-            const tok = finalTokens.find(e=>e.id == part.id);
-            const pts = finalTokens.find(e=>e.id == part.id)?.all_parts;
-            const rel = finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id);
-            const comp = finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component;
-            if (!(finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id)?.component == 'token_maker')) {
-              card.all_parts?.splice(i,1);
+            const tok = finalTokens.find(e => e.id == part.id);
+            const pts = finalTokens.find(e => e.id == part.id)?.all_parts;
+            const rel = finalTokens
+              .find(e => e.id == part.id)
+              ?.all_parts?.find(e => e.id == card.id);
+            const comp = finalTokens
+              .find(e => e.id == part.id)
+              ?.all_parts?.find(e => e.id == card.id)?.component;
+            if (
+              !(
+                finalTokens.find(e => e.id == part.id)?.all_parts?.find(e => e.id == card.id)
+                  ?.component == 'token_maker'
+              )
+            ) {
+              card.all_parts?.splice(i, 1);
             }
           }
         }
@@ -722,14 +796,21 @@ const main = async () => {
         delete card.all_parts;
       }
     });
-    
+
   finalTokens
     .filter(e => 'all_parts' in e)
     .forEach(token => {
-      for (let i = token.all_parts?.length!-1; i>=0; i--) {
+      for (let i = token.all_parts?.length! - 1; i >= 0; i--) {
         const part = token.all_parts![i];
-        if (token.all_parts!.slice(0,i).find(e=>e.id == part.id) || (part.component == 'token' && !(finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==token.id)?.component == 'token_maker'))) {
-          token.all_parts?.splice(i,1);
+        if (
+          token.all_parts!.slice(0, i).find(e => e.id == part.id) ||
+          (part.component == 'token' &&
+            !(
+              finalTokens.find(e => e.id == part.id)?.all_parts?.find(e => e.id == token.id)
+                ?.component == 'token_maker'
+            ))
+        ) {
+          token.all_parts?.splice(i, 1);
         }
       }
       if (token.all_parts?.length == 0) {
