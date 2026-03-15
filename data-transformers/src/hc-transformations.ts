@@ -178,6 +178,9 @@ const mergeCards = (
               }
             });
             cardRemovableProps.filter(prop=>prop in face && !(prop in newFace)).forEach(prop => {
+              if (prop == 'image') {
+                face.image_status = newFace.image_status;
+              }
               delete (face as any)[prop];
             })
           }
@@ -257,10 +260,16 @@ const mergeCards = (
   });
   if (!merged.isActualToken) {
     cardRemovableProps.filter(key=>key in merged && !(key in newCard)).forEach(key => {
+      if (key == 'image') {
+        merged.image_status = newCard.image_status;
+      }
       delete (merged as any)[key];
     })
   } else {
     tokenRemovableProps.filter(key=>key in merged && !(key in newCard)).forEach(key => {
+      if (key == 'image') {
+        merged.image_status = newCard.image_status;
+      }
       delete (merged as any)[key];
     })
   }
