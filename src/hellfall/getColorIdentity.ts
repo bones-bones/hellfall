@@ -71,7 +71,11 @@ export const getColorIdentityProps = (
   };
   // TODO: special cases for Crypticspire Mantis (must be at least 2)
   if ('card_faces' in card) {
-    if (HCLayoutGroup.FrontIdentityLayout.includes(card.layout as HCLayoutGroup.FrontIdentityLayoutType)) {
+    if (
+      HCLayoutGroup.FrontIdentityLayout.includes(
+        card.layout as HCLayoutGroup.FrontIdentityLayoutType
+      )
+    ) {
       addColorsFromFace(card.card_faces[0]);
     } else {
       card.card_faces.forEach(entry => {

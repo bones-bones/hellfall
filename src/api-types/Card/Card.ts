@@ -135,7 +135,8 @@ export namespace HCCard {
   /**
    * Any multi-faced layout. These will all have `card_faces`.
    */
-  export type AnyMultiFaced = MultiFace<HCCardFace.MultiFaced> & Layout<HCLayoutGroup.MultiFacedType>;
+  export type AnyMultiFaced = MultiFace<HCCardFace.MultiFaced> &
+    Layout<HCLayoutGroup.MultiFacedType>;
 
   /** A card with the Multi layout. */
   export type Multi = AnyMultiFaced & Layout<HCLayout.Multi>;

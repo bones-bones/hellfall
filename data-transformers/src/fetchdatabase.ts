@@ -340,16 +340,16 @@ export const fetchDatabase = async () => {
       if (!('layout' in cardObject)) {
         if (cardObject.tags?.includes('reminder-on-back')) {
           cardObject.layout = HCLayout.ReminderOnBack;
-          cardObject.card_faces[1].image_status=HCImageStatus.Reminder;
+          cardObject.card_faces[-1].image_status = HCImageStatus.Reminder;
         } else if (cardObject.tags?.includes('dungeon-on-back')) {
           cardObject.layout = HCLayout.DungeonOnBack;
-          cardObject.card_faces[1].image_status=HCImageStatus.Dungeon;
+          cardObject.card_faces[-1].image_status = HCImageStatus.Dungeon;
         } else if (cardObject.tags?.includes('stickers-on-back')) {
           cardObject.layout = HCLayout.StickersOnBack;
-          cardObject.card_faces[1].image_status=HCImageStatus.Stickers;
+          cardObject.card_faces[-1].image_status = HCImageStatus.Stickers;
         } else if (cardObject.tags?.includes('token-on-back')) {
           cardObject.layout = HCLayout.TokenOnBack;
-          cardObject.card_faces[1].image_status=HCImageStatus.Token;
+          cardObject.card_faces[-1].image_status = HCImageStatus.Token;
         } else {
           // const names = entry[1];
           // entry[6] is Related Cards
