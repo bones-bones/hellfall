@@ -78,19 +78,22 @@ Write a script to transform the database
   - main card has draft image of both sides and main image of just regular card
   - sticker sheet is also attached token that has its own image and draftpartner with main card
   - main card name is just the regular card
-- figure out how to deal with dungeons consistently (do like sticker sheets) (low on groceries, Dante Alighieri, That One Stock American Cartoon Episode)
-- same for cards that have tokens on back (Doomguy and Isabelle)
-  - 
-- 
+  - this is partially done; need to fully implement the partner part
+- fix tags for cards with draft_image
 - deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance), Half-Thriving ____ Half-Thriving ____, Hell's Cube (both versions)
 - do better: evolution of the dreadmaw
 - fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - allow for removal of optional props, sides, and cards from all_parts that aren't in the database where appropriate (also remove duplicates from all_parts) (use sheet to hold subtokens as token ids in related cards column) (use component of to code for tokens of hellscube cards)
-- remove props that are in singleface cards but not multiface cards when adding card_faces to existing card
+- ~~ remove props that are in singleface cards but not multiface cards when adding card_faces to existing card ~~
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - figure out how to do shadows on mana symbols in costs
 - figure out why loading from the approved db sometimes leads to empty colors
 - figure out why new entries sometimes don't get correct derived props
 - add english hover to pips
-- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless)
+- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, 
+- ask for ruling: Armory Manufactor
+- use layout to help disambiguate what's on the back for multis with draft images
+- don't count back sides that are reminders, tokens, or dungeons for color identity
+- deal with multiple creators
+- make sure mork fetches draft image where it exists

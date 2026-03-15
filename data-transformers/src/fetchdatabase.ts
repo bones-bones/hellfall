@@ -8,7 +8,7 @@ import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
   const [_garbage, oldKeys, ...rest] = asJson.values as string[][];
@@ -171,22 +171,25 @@ export const fetchDatabase = async () => {
                 : HCLegality.Legal,
             };
             cardObject[keys[i]] = legalities;
-          } else if (keys[i] == 'related' && entry[i] !="Head of the Forbidden One") {
+          } else if (keys[i] == 'related') {
+            // entry[20] is tags, entry[17] is 0oracle_text
             const all_parts: [HCRelatedCard] = [
               {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',
-                component: 'draft_partner',
+                component: entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') ? 'meld_part' : entry[20].includes('draft-partner') ? 'draft_partner' : 'token_maker',
                 name: entry[i],
                 type_line: '',
                 set: '',
                 image: '',
-                is_draft_partner: true,
               },
             ];
+            if (entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') || entry[20].includes('draft-partner')) {
+              all_parts[0].is_draft_partner=true;
+              cardObject.not_directly_draftable = true;
+              cardObject.has_draft_partners = true;
+            }
             cardObject.all_parts = all_parts;
-            cardObject.not_directly_draftable = true;
-            cardObject.has_draft_partners = true;
           } else if (keys[i] == 'tags') {
             const tags = entry[i].split(';');
             cardObject[keys[i]] = tags;
@@ -213,8 +216,6 @@ export const fetchDatabase = async () => {
     if (cardObject.card_faces.length == 0) {
       cardObject.card_faces.push({} as Record<string, any>);
     }
-    // cardObject.keywords = [];
-    // cardObject.variation = false;
 
     const name = entry[1].split(' // ');
     const type_line_list: string[] = [];

@@ -111,7 +111,7 @@ const mergeCards = (
   // TODO: replace with actual type checking
   if ([HCLayout.MultiToken,HCLayout.MultiReminder,HCLayout.RealCardMultiToken].includes(existingCard.layout as HCLayout)) {
     const merged: HCCard.Any = { ...existingCard };
-    ['image','creator',/**,'all_parts' */].forEach(key=>{
+    ['image','creator','all_parts'].forEach(key=>{
       (merged as any)[key]=newCard[key as keyof typeof newCard];
     })
     return merged
@@ -213,23 +213,39 @@ const mergeCards = (
         'all_parts' in existingCard &&
         'all_parts' in newCard
       ) {
-        merged.all_parts = existingCard.all_parts?.map(part => {
-          const newPart = newCard.all_parts?.find(
-            e => e.name.toLowerCase() == part.name.toLowerCase()
-          );
-          if (newPart) {
-            Object.entries(newPart).forEach(([k, v]) => {
-              if (['name', 'component', 'is_draft_partner'].includes(k) && v) {
+        merged.all_parts = newCard.all_parts?.map(part => {
+          // superToken is used when the card is a token and part is also a token that makes this token
+          const superToken = existingCard.all_parts?.find(e => e.id.toLowerCase() == part.name.toLowerCase());
+          const existingPart = superToken ? superToken : existingCard.all_parts?.find(e => e.name.toLowerCase() == part.name.toLowerCase());
+          if (existingPart) {
+            // if there is already a part, update it
+            Object.entries(existingPart).forEach(([k, v]) => {
+              if (!['name', 'component'/**,'is_draft_partner'*/].includes(k) && v) {
                 (part as any)[k] = v;
+              } else if (k == 'name' && superToken) {
+                part.id = v as string;
+                part.name = (v as string).replace(/\*\d+$/, '');
               }
             });
           }
           return part;
-        });
-        newCard.all_parts?.forEach(part => {
-          if (!merged.all_parts?.find(e => e.name.toLowerCase() == part.name.toLowerCase())) {
+        })
+        // merged.all_parts = existingCard.all_parts?.map(part => {
+        //   const newPart = newCard.all_parts?.find(
+        //     e => e.name.toLowerCase() == part.name.toLowerCase()
+        //   );
+        //   if (newPart) {
+        //     Object.entries(newPart).forEach(([k, v]) => {
+        //       if (['name', 'component', 'is_draft_partner'].includes(k) && v) {
+        //         (part as any)[k] = v;
+        //       }
+        //     });
+        //   }
+        //   return part;
+        // });
+        // TODO: make sure there aren't any other component types to add to the list
+        existingCard.all_parts?.filter(part=>!['token_maker'].includes(part.component) && !merged.all_parts?.some(e=>e.id == part.id)).forEach(part => {
             merged.all_parts?.push(part);
-          }
         });
       } else if (key == 'image_status') {
         // TODO: store current version and print the diff if there is one
@@ -293,7 +309,7 @@ const mergeDatabases = (
     const newCard = newCardMap.get(existingCard.id);
     if (newCard) {
       newCardMap.delete(newCard.id);
-      return mergeCards(existingCard, newCard, true);
+      return mergeCards(existingCard, newCard);
     }
     return existingCard;
   });
@@ -416,6 +432,7 @@ const main = async () => {
   finalTokens
     .filter(e => 'all_parts' in e)
     .forEach(token => {
+      // add all tokens to all_parts
       const relatedToken: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: token.id,
@@ -428,11 +445,8 @@ const main = async () => {
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          const relatedCard = finalCards.find(card =>
-            tokenMaker.id
-              ? card.id == tokenMaker.id
-              : card.name.toLowerCase() == tokenMaker.name.toLowerCase()
-          );
+          // goes by id if possible, but if not, it goes by name; tries to find in tokens, then tries in cards
+          const relatedCard = tokenMaker.id ? (finalTokens.find(card=>card.id == token.id) ? finalTokens.find(card=>card.id == token.id) : finalCards.find(card => card.id == tokenMaker.id)): (finalTokens.find(card=>card.id.toLowerCase() == token.name.toLowerCase()) ? finalTokens.find(card=>card.id.toLowerCase() == token.name.toLowerCase()) : finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase()));
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
@@ -449,66 +463,51 @@ const main = async () => {
             } else {
               relatedCard.all_parts = [relatedToken];
             }
-          } else {
-            const related = finalTokens.find(otherToken =>
-              tokenMaker.id
-                ? otherToken.id == tokenMaker.id
-                : otherToken.name.toLowerCase() == tokenMaker.name.toLowerCase()
-            );
-            if (related) {
-              tokenMaker.id = related.id;
-              tokenMaker.name = related.name;
-              tokenMaker.type_line = related.type_line;
-              tokenMaker.set = related.set;
-              tokenMaker.image = related.image;
-              if ('all_parts' in related) {
-                const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
-                if (tokenIndex == -1) {
-                  related.all_parts?.push(relatedToken);
-                } else {
-                  related.all_parts![tokenIndex!] = relatedToken;
-                }
-              } else {
-                related.all_parts = [relatedToken];
-              }
+            // if stickers, add draftpartner props
+            if (token.type_line.includes('Stickers') && relatedCard.tags?.includes('draftpartner')) {
+              relatedCard.has_draft_partners=true;
+              token.has_draft_partners=true;
+              token.not_directly_draftable=true;
+              tokenMaker.is_draft_partner=true;
+              relatedCard.all_parts!.find(e=>e.id==token.id)!.is_draft_partner=true;
             }
           }
         });
-      const relatedTokenMaker: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: token.id,
-        component: 'token_maker',
-        name: token.name,
-        type_line: token.type_line,
-        set: token.set,
-        image: token.image,
-      };
-      token.all_parts
-        ?.filter(e => e.component == 'token')
-        .forEach(subToken => {
-          const related = finalTokens.find(otherToken =>
-            subToken.id
-              ? otherToken.id == subToken.id
-              : otherToken.name.toLowerCase() == subToken.name.toLowerCase()
-          );
-          if (related) {
-            subToken.id = related.id;
-            subToken.name = related.name;
-            subToken.type_line = related.type_line;
-            subToken.set = related.set;
-            subToken.image = related.image;
-            if ('all_parts' in related) {
-              const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
-              if (tokenIndex == -1) {
-                related.all_parts?.push(relatedTokenMaker);
-              } else {
-                related.all_parts![tokenIndex!] = relatedTokenMaker;
-              }
-            } else {
-              related.all_parts = [relatedTokenMaker];
-            }
-          }
-        });
+      // const relatedTokenMaker: HCRelatedCard = {
+      //   object: HCObject.ObjectType.RelatedCard,
+      //   id: token.id,
+      //   component: 'token_maker',
+      //   name: token.name,
+      //   type_line: token.type_line,
+      //   set: token.set,
+      //   image: token.image,
+      // };
+      // token.all_parts
+      //   ?.filter(e => e.component == 'token')
+      //   .forEach(subToken => {
+      //     const related = finalTokens.find(otherToken =>
+      //       subToken.id
+      //         ? otherToken.id == subToken.id
+      //         : otherToken.name.toLowerCase() == subToken.name.toLowerCase()
+      //     );
+      //     if (related) {
+      //       subToken.id = related.id;
+      //       subToken.name = related.name;
+      //       subToken.type_line = related.type_line;
+      //       subToken.set = related.set;
+      //       subToken.image = related.image;
+      //       if ('all_parts' in related) {
+      //         const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
+      //         if (tokenIndex == -1) {
+      //           related.all_parts?.push(relatedTokenMaker);
+      //         } else {
+      //           related.all_parts![tokenIndex!] = relatedTokenMaker;
+      //         }
+      //       } else {
+      //         related.all_parts = [relatedTokenMaker];
+      //       }
+      //     }
+      //   });
       const meldPartIds: string[] = [];
       const meldRelatedCards: HCRelatedCard[] = [];
       token.all_parts
@@ -583,32 +582,33 @@ const main = async () => {
         });
       }
     });
+  // update cards that have tokens copies of them made by other cards
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
       const relatedToken: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: card.id,
-        component: 'token_maker',
+        component: 'token',
         name: card.name,
         type_line: card.type_line,
         set: card.set,
         image: card.image,
       };
       card.all_parts
-        ?.filter(e => e.component == 'token')
-        .forEach(tokenCard => {
+        ?.filter(e => e.component == 'token_maker')
+        .forEach(tokenMaker => {
           const relatedCard = finalCards.find(e =>
-            tokenCard.id
-              ? e.id == tokenCard.id
-              : e.name.toLowerCase() == tokenCard.name.toLowerCase()
+            tokenMaker.id
+              ? e.id == tokenMaker.id
+              : e.name.toLowerCase() == tokenMaker.name.toLowerCase()
           );
           if (relatedCard) {
-            tokenCard.id = relatedCard!.id;
-            tokenCard.name = relatedCard!.name;
-            tokenCard.type_line = relatedCard!.type_line;
-            tokenCard.set = relatedCard!.set;
-            tokenCard.image = relatedCard!.image;
+            tokenMaker.id = relatedCard!.id;
+            tokenMaker.name = relatedCard!.name;
+            tokenMaker.type_line = relatedCard!.type_line;
+            tokenMaker.set = relatedCard!.set;
+            tokenMaker.image = relatedCard!.image;
             if ('all_parts' in relatedCard!) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
               if (tokenIndex == -1) {
@@ -622,6 +622,7 @@ const main = async () => {
           }
         });
     });
+  // update draftpartners
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
@@ -665,6 +666,7 @@ const main = async () => {
           // }
         });
     });
+  // make sure all relateds are updated (TODO: Is this necessary?)
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
@@ -679,7 +681,27 @@ const main = async () => {
         }
       });
     });
-
+  // trims duplicates and parts with components of 'token' that are missing the corresponding one from all_parts
+  finalCards
+    .filter(e => 'all_parts' in e)
+    .forEach(card => {
+      for (let i = card.all_parts?.length!-1; i>=0; i--) {
+        const part = card.all_parts![i];
+        if (card.all_parts!.slice(i).find(e=>e.id == part.id || (part.component == 'token' && (finalCards.find(e=>e.id == part.id) ? !finalCards.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id) : !finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==card.id))))) {
+          card.all_parts?.splice(i,1);
+        }
+      }
+    });
+  finalTokens
+    .filter(e => 'all_parts' in e)
+    .forEach(token => {
+      for (let i = token.all_parts?.length!-1; i>=0; i--) {
+        const part = token.all_parts![i];
+        if (token.all_parts!.slice(i).find(e=>e.id == part.id || (part.component == 'token' && !finalTokens.find(e=>e.id == part.id)?.all_parts?.find(e=>e.id==token.id)))) {
+          token.all_parts?.splice(i,1);
+        }
+      }
+    });
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
