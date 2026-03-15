@@ -21,6 +21,10 @@ export const legalityAtom = atom<LegalType[]>(
 export const typeSearchAtom = atom<string[]>(searchParams.get('type')?.split(',') || []);
 export const searchSetAtom = atom(searchParams.get('set')?.split(',') || []);
 
+export const searchTokenAtom = atom(
+  (searchParams.get('token') || 'Cards') as 'Cards' | 'Tokens' | 'Both'
+);
+
 export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
 
 export const searchColorsAtom = atom(searchParams.get('colors')?.split(',') || []);

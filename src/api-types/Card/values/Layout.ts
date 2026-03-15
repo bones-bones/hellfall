@@ -30,6 +30,8 @@ export enum HCLayout {
   RealCardToken = 'real_card_token',
   /** Token copies of real multi-faced cards */
   RealCardMultiToken = 'real_card_multi_token',
+  /** Checklist cards (used to represent double-sided cards in hands and libraries) */
+  Checklist = 'checklist',
   /** Misc images that aren't actually cards */
   Misc = 'misc',
 }
@@ -115,6 +117,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Sticker}`,
     `${HCLayout.Dungeon}`,
     `${HCLayout.RealCardToken}`,
+    `${HCLayout.Checklist}`,
     `${HCLayout.Misc}`,
     // `${HCLayout.Augment}`,
     // `${HCLayout.Host}`,
@@ -182,6 +185,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Dungeon}`,
     `${HCLayout.RealCardToken}`,
     `${HCLayout.RealCardMultiToken}`,
+    `${HCLayout.Checklist}`,
     `${HCLayout.Misc}`,
     `${HCLayout.MeldResult}`,
   ] as const;

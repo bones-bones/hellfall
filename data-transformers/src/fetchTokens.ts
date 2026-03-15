@@ -30,11 +30,12 @@ export const fetchTokens = async () => {
   const typeLayouts: Record<string, HCLayout> = {
     Emblem: HCLayout.Emblem,
     'Reminder Card': HCLayout.Reminder,
-    'Sticker Sheet': HCLayout.Sticker,
+    'Stickers': HCLayout.Sticker,
     Dungeon: HCLayout.Dungeon,
     'Real Card': HCLayout.RealCardToken,
     'Ad Card': HCLayout.Misc,
     Misc: HCLayout.Misc,
+    'Checklist': HCLayout.Checklist
   };
   const defaultProps: Record<string, any> = {
     rulings: '',
@@ -86,6 +87,8 @@ export const fetchTokens = async () => {
               component: entry[6] == 'meld' ? 'meld_part' : 'token_maker',
               name: name.replace(/\*\d+$/, ''),
               type_line: '',
+              set: '',
+              image: '',
             };
             return maker;
           });
@@ -108,7 +111,7 @@ export const fetchTokens = async () => {
     //   tokenObject.layout = HCLayout.Emblem;
     // } else if ('types' in tokenObject && tokenObject.types.includes('Reminder Card')) {
     //   tokenObject.layout = HCLayout.Reminder;
-    // } else if ('types' in tokenObject && tokenObject.types.includes('Sticker Sheet')) {
+    // } else if ('types' in tokenObject && tokenObject.types.includes('Stickers')) {
     //   tokenObject.layout = HCLayout.Sticker;
     // } else {
     //   tokenObject.layout = HCLayout.Token;

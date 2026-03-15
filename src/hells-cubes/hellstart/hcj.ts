@@ -39,8 +39,8 @@ export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
       '4cb': HCLegality.Legal,
       commander: HCLegality.Legal,
     },
-    color_identity_hybrid:[],
-    draft_image_status:HCImageStatus.Inapplicable,
+    color_identity_hybrid: [],
+    draft_image_status: HCImageStatus.Inapplicable,
     variation: false,
   };
   return withToFaces(card as HCCard.Normal);

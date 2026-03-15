@@ -8,7 +8,7 @@ import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
   const [_garbage, oldKeys, ...rest] = asJson.values as string[][];
@@ -172,20 +172,24 @@ export const fetchDatabase = async () => {
             };
             cardObject[keys[i]] = legalities;
           } else if (keys[i] == 'related') {
+            // entry[20] is tags, entry[17] is 0oracle_text, entry[6] is Related Cards
             const all_parts: [HCRelatedCard] = [
               {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',
-                component: 'draft_partner',
+                component: entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') ? 'meld_part' : entry[20].includes('draftpartner') ? 'draft_partner' : 'token_maker',
                 name: entry[i],
                 type_line: '',
+                set: '',
                 image: '',
-                is_draft_partner: true,
               },
             ];
+            if (entry[6] != 'Head of the Forbidden One' &&(entry[17].toLowerCase().includes('meld') || entry[20].includes('meld') || entry[20].includes('draftpartner'))) {
+              all_parts[0].is_draft_partner=true;
+              cardObject.not_directly_draftable = true;
+              cardObject.has_draft_partners = true;
+            }
             cardObject.all_parts = all_parts;
-            cardObject.not_directly_draftable = true;
-            cardObject.has_draft_partners = true;
           } else if (keys[i] == 'tags') {
             const tags = entry[i].split(';');
             cardObject[keys[i]] = tags;
@@ -212,8 +216,6 @@ export const fetchDatabase = async () => {
     if (cardObject.card_faces.length == 0) {
       cardObject.card_faces.push({} as Record<string, any>);
     }
-    // cardObject.keywords = [];
-    // cardObject.variation = false;
 
     const name = entry[1].split(' // ');
     const type_line_list: string[] = [];
@@ -244,12 +246,14 @@ export const fetchDatabase = async () => {
         ) {
           face.image_status = HCImageStatus.Aftermath;
         } else if (
-          'subtypes' in face &&
-          (face.subtypes.includes('Adventure') || face.subtypes.includes('Omen'))
+          'tags' in cardObject &&
+          cardObject.tags.includes('inset')
+          // || 'subtypes' in face &&
+          // (face.subtypes.includes('Adventure') || face.subtypes.includes('Omen'))
         ) {
           face.image_status = HCImageStatus.Inset;
-        } else if (cardObject.card_faces[0].oracle_text.toLowerCase().includes("draftpartner")) {
-          face.image_status=HCImageStatus.DraftPartner;
+        } else if (cardObject.card_faces[0].oracle_text.toLowerCase().includes('draftpartner')) {
+          face.image_status = HCImageStatus.DraftPartner;
         } else {
           face.image_status = HCImageStatus.Split;
         }
@@ -287,7 +291,7 @@ export const fetchDatabase = async () => {
         cardObject.image = cardObject.card_faces[0].image;
         cardObject.image_status = cardObject.card_faces[0].image_status;
         delete cardObject.card_faces[0].image;
-        cardObject.card_faces[0].image_status='front';
+        cardObject.card_faces[0].image_status = 'front';
       }
     }
 
@@ -302,18 +306,30 @@ export const fetchDatabase = async () => {
       singleCard.layout = HCLayout.Normal;
       return singleCard as HCCard.AnySingleFaced;
     } else {
+      if (cardObject.card_faces.filter(e=>e.image).length == 1 && cardObject.card_faces[0].image) {
+        if ('image' in cardObject && cardObject.image) {
+          cardObject.draft_image = cardObject.image;
+          cardObject.draft_image_status = cardObject.image_status;
+        }
+        cardObject.image = cardObject.card_faces[0].image;
+        cardObject.image_status = cardObject.card_faces[0].image_status;
+        delete cardObject.card_faces[0].image;
+        cardObject.card_faces[0].image_status = 'front';
+      }
       if (cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')) {
         cardObject.layout = HCLayout.MeldPart;
         if ('all_parts' in cardObject) {
           cardObject.all_parts[0].component = 'meld_part';
         }
       }
-      // const names = entry[1];
-      // entry[6] is Related Cards
-      cardObject.layout =
-        // cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
-        // ? HCLayout.MeldPart:
-        HCLayout.Multi;
+      if (!('layout' in cardObject)) {
+        // const names = entry[1];
+        // entry[6] is Related Cards
+        cardObject.layout =
+          // cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
+          // ? HCLayout.MeldPart:
+          HCLayout.Multi;
+      }
       return cardObject as HCCard.AnyMultiFaced;
     }
   });
