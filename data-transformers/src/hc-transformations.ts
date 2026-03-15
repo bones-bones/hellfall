@@ -256,7 +256,7 @@ const mergeCards = (
       ) {
         merged.all_parts = newCard.all_parts?.map(part => {
           // superToken is used when the card is a token and part is also a token that makes this token
-          const superToken = existingCard.all_parts?.find(
+          const superToken = existingCard.all_parts?.filter(e=>e.name == e.id.replace(/\d+$/, '')).find(
             e => e.id.toLowerCase() == part.name.toLowerCase()
           );
           const existingPart = superToken
@@ -267,7 +267,7 @@ const mergeCards = (
             Object.entries(existingPart).forEach(([k, v]) => {
               if (!['name', 'component' /**,'is_draft_partner'*/].includes(k) && v) {
                 (part as any)[k] = v;
-              } else if (k == 'name' && superToken) {
+              } else if (k == 'id' && superToken) {
                 part.id = v as string;
                 part.name = (v as string).replace(/\*\d+$/, '');
               }
