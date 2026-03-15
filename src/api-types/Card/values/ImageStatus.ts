@@ -45,6 +45,10 @@ export enum HCImageStatus {
    */
   Token = 'token',
   /**
+   * This face is a reminder card.
+   */
+  Reminder = 'reminder',
+  /**
    * This card's image is a placeholder HC has generated and visibly marked as such.
    * This is most commonly seen for languages where no real images are yet available to us.
    */

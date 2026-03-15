@@ -296,6 +296,9 @@ const mergeCards = (
           merged.layout != HCLayout.RealCardMultiToken
         ) {
           merged.layout = value as typeof newCard.layout;
+          if (merged.layout != HCLayout.Multi && !merged.card_faces[1].image && [HCImageStatus.Split,HCImageStatus.DraftPartner].includes(merged.card_faces[1].image_status as HCImageStatus)) {
+            merged.card_faces[1].image_status = newCard.card_faces[1].image_status;
+          }
         }
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;
