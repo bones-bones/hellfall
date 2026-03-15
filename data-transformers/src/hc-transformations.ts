@@ -41,7 +41,13 @@ const oneWayMergeProps = [
   'attraction_lights',
   'watermark',
 ];
+const oneWayMandatoryProps = ['name','mana_cost','type_line'];
 const oneWayDontMergeProps = ['color_identity', 'color_identity_hybrid', 'layout'];
+const cardBlankableProps = ['rulings','oracle_text','cmc']
+const cardRemovableProps = ['tags','defense','loyalty','power','toughness','supertypes','types','subtypes','flavor_text'/**,'all_parts' */,'image','draft_image','not_directly_draftable','has_draft_partners','watermark']
+// const tokenBlankableProps = []
+const tokenRemovableProps = ['power','toughness','supertypes','types'/**,'all_parts' */,'image','draft_image','not_directly_draftable','has_draft_partners']
+// TODO: implement more robust allparts derivation system
 const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
     if ('card_faces' in card && 'all_parts' in card) {
@@ -99,14 +105,70 @@ const mergeCards = (
   newCard: HCCard.Any,
   usingApproved: boolean = false
 ): HCCard.Any => {
-  const merged: HCCard.Any = { ...existingCard };
-  if (
-    usingApproved &&
-    (merged.has_draft_partners || ('card_faces' in merged && merged.card_faces.length > 4) || ('card_faces' in merged != 'card_faces' in newCard))
-  ) {
-    return merged;
+  if (usingApproved && (existingCard.has_draft_partners || [HCLayout.MeldPart,HCLayout.MeldResult].includes(existingCard.layout as HCLayout))) {
+    return existingCard;
+  }
+  // TODO: replace with actual type checking
+  if ([HCLayout.MultiToken,HCLayout.MultiReminder,HCLayout.RealCardMultiToken].includes(existingCard.layout as HCLayout)) {
+    const merged: HCCard.Any = { ...existingCard };
+    ['image','creator',/**,'all_parts' */].forEach(key=>{
+      (merged as any)[key]=newCard[key as keyof typeof newCard];
+    })
   }
 
+  let mergedPrelim:any = undefined;
+  if (!('card_faces' in existingCard) && 'card_faces' in newCard) {
+    mergedPrelim = {...existingCard} as any;
+    mergedPrelim.card_faces = [{}] as HCCardFace.MultiFaced[];
+    oneWayMergeProps.forEach(prop => {
+      if (prop in mergedPrelim) {
+        mergedPrelim.card_faces[0][prop] = mergedPrelim[prop];
+        if (!['name','mana_cost','type_line'].includes(prop)) {
+          delete mergedPrelim[prop]
+        }
+      }
+    })
+    mergedPrelim.layout = newCard.layout;
+  } else if ('card_faces' in existingCard && !('card_faces' in newCard)) {
+    mergedPrelim = {...existingCard} as any;
+    oneWayMergeProps.forEach(prop => {
+      if (prop in mergedPrelim.card_faces[0]) {
+        mergedPrelim[prop] = mergedPrelim.card_faces[0][prop];
+      }
+    })
+    delete mergedPrelim.card_faces;
+    mergedPrelim.layout = newCard.layout;
+  }
+  
+  
+  const merged: HCCard.Any = 'card_faces' in existingCard == 'card_faces' in newCard ? { ...existingCard } : 'card_faces' in mergedPrelim ? {...(mergedPrelim as HCCard.AnyMultiFaced)}:{...(mergedPrelim as HCCard.AnySingleFaced)};
+  if ('card_faces' in existingCard != 'card_faces' in newCard) {
+    setDerivedProps(merged)
+  }
+  // if (!('card_faces' in merged) && 'card_faces' in newCard) {
+  //   const removeProps = [
+  //     'color_indicator',
+  //     'supertypes',
+  //     'types',
+  //     'subtypes',
+  //     'power',
+  //     'toughness',
+  //     'loyalty',
+  //     'defense',
+  //     'oracle_text',
+  //     'flavor_text',
+  //   ];
+  //   removeProps.forEach(prop => {
+  //     if (prop in merged) {
+  //       delete merged[prop as keyof typeof merged];
+  //     }
+  //   });
+  //   const mergedFaces = merged as unknown as HCCard.AnyMultiFaced;
+  //   mergedFaces.layout = merged.layout == HCLayout.Normal ? HCLayout.Multi : HCLayout.MultiToken;
+  //   mergedFaces.card_faces = newCard.card_faces;
+  //   setDerivedProps(mergedFaces);
+  //   return mergedFaces;
+  // }
   Object.entries(newCard).forEach(([key, value]) => {
     // TODO: make sure that empty arrays being truthy doesn't break anything here
     if (value) {
@@ -123,9 +185,9 @@ const mergeCards = (
           // }
           if (index < value.length) {
             const newFace = newCard.card_faces?.[index];
-            if (!('colors' in newFace && newFace.colors)) {
-              const x = 1;
-            }
+            // if (!('colors' in newFace && newFace.colors)) {
+            //   const x = 1;
+            // }
             // if (existingCard.card_faces.length > 4 && index == 3) {
             //   // this is necessary due to how the sheet is formatted
             //   // TODO: store current version and print the diff if there is one
@@ -134,7 +196,7 @@ const mergeCards = (
               if (k in face && ['name', 'oracle_text', 'flavor_text'].includes(k)) {
                 if (face[k as keyof typeof face]![0] == ';') {
                   // TODO: store current version and print the diff if there is one
-                } else if (v) {
+                } else if (v || k == 'oracle_text') {
                   (face as any)[k] = v;
                 }
               } else if (k == 'colors') {
@@ -145,17 +207,20 @@ const mergeCards = (
                 // }
               } else if (k == 'image_status') {
                 // TODO: store current version and print the diff if there is one
-                if (
-                  face.image_status == HCImageStatus.Missing ||
-                  face.image_status ==
-                    HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
-                ) {
-                  (face as any)[k] = v;
-                }
-              } else if (v) {
+                // if (
+                //   face.image_status == HCImageStatus.Missing ||
+                //   face.image_status ==
+                //     HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
+                // ) {
+                //   (face as any)[k] = v;
+                // }
+              } else if (v || (!merged.isActualToken && cardBlankableProps.includes(k))) {
                 (face as any)[k] = v;
               }
             });
+            cardRemovableProps.filter(prop=>prop in face && !(prop in newFace)).forEach(prop => {
+              delete (face as any)[prop];
+            })
             // }
           }
           return face;
@@ -164,17 +229,17 @@ const mergeCards = (
         while (merged.card_faces.length < newCard.card_faces.length) {
           merged.card_faces.push(newCard.card_faces[merged.card_faces.length]);
         }
-      } else if (
-        'card_faces' in merged &&
-        !('card_faces' in newCard) &&
-        oneWayMergeProps.includes(key)
-      ) {
-        merged.card_faces[0][key as keyof HCCardFace.MultiFaced] != value;
-      } else if (
-        'card_faces' in merged &&
-        !('card_faces' in newCard) &&
-        oneWayDontMergeProps.includes(key)
-      ) {
+      // } else if (
+      //   'card_faces' in merged &&
+      //   !('card_faces' in newCard) &&
+      //   oneWayMergeProps.includes(key)
+      // ) {
+      //   // merged.card_faces[0][key as keyof HCCardFace.MultiFaced] = value;
+      // } else if (
+      //   'card_faces' in merged &&
+      //   !('card_faces' in newCard) &&
+      //   oneWayDontMergeProps.includes(key)
+      // ) {
         // TODO: store current version and print the diff if there is one
       } else if (key == 'draft_image_status') {
         // TODO: store current version and print the diff if there is one
@@ -241,38 +306,49 @@ const mergeCards = (
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;
       }
+    } else if (!merged.isActualToken && merged[key as keyof typeof merged] && cardBlankableProps.includes(key)) {
+      (merged as any)[key] = value;
     }
   });
-  if (merged.variation && parseInt(merged.variation_of!)) {
+  if (!merged.isActualToken) {
+    cardRemovableProps.filter(key=>key in merged && !(key in newCard)).forEach(key => {
+      delete (merged as any)[key];
+    })
+  } else {
+    tokenRemovableProps.filter(key=>key in merged && !(key in newCard)).forEach(key => {
+      delete (merged as any)[key];
+    })
+  }
+  if (merged.variation && merged.isActualToken && parseInt(merged.variation_of!)) {
     merged.variation_of = merged.name + merged.variation_of;
   }
-  if (!('card_faces' in merged) && 'card_faces' in newCard) {
-    const removeProps = [
-      'color_indicator',
-      'supertypes',
-      'types',
-      'subtypes',
-      'power',
-      'toughness',
-      'loyalty',
-      'defense',
-      'oracle_text',
-      'flavor_text',
-    ];
-    removeProps.forEach(prop => {
-      if (prop in merged) {
-        delete merged[prop as keyof typeof merged];
-      }
-    });
-    const mergedFaces = merged as unknown as HCCard.AnyMultiFaced;
-    mergedFaces.layout = merged.layout == HCLayout.Normal ? HCLayout.Multi : HCLayout.MultiToken;
-    mergedFaces.card_faces = newCard.card_faces;
-    setDerivedProps(mergedFaces);
-    return mergedFaces;
-  } else {
-    setDerivedProps(merged);
-    return merged;
-  }
+  // if (!('card_faces' in merged) && 'card_faces' in newCard) {
+  //   const removeProps = [
+  //     'color_indicator',
+  //     'supertypes',
+  //     'types',
+  //     'subtypes',
+  //     'power',
+  //     'toughness',
+  //     'loyalty',
+  //     'defense',
+  //     'oracle_text',
+  //     'flavor_text',
+  //   ];
+  //   removeProps.forEach(prop => {
+  //     if (prop in merged) {
+  //       delete merged[prop as keyof typeof merged];
+  //     }
+  //   });
+  //   const mergedFaces = merged as unknown as HCCard.AnyMultiFaced;
+  //   mergedFaces.layout = merged.layout == HCLayout.Normal ? HCLayout.Multi : HCLayout.MultiToken;
+  //   mergedFaces.card_faces = newCard.card_faces;
+  //   setDerivedProps(mergedFaces);
+  //   return mergedFaces;
+  // } else {
+  setDerivedProps(merged);
+  return merged;
+  // }
 };
 const mergeDatabases = (
   existingCards: HCCard.Any[],
@@ -287,7 +363,7 @@ const mergeDatabases = (
     const newCard = newCardMap.get(existingCard.id);
     if (newCard) {
       newCardMap.delete(newCard.id);
-      return mergeCards(existingCard, newCard, true);
+      return mergeCards(existingCard, newCard);
     }
     return existingCard;
   });
@@ -521,7 +597,9 @@ const main = async () => {
             meldPart.set = relatedCard.set;
             meldPart.image =
               'card_faces' in relatedCard ? relatedCard.card_faces[0].image : relatedCard.image;
-            meldPart.is_draft_partner = true;
+            if (token.id != 'Omnath, the Forbidden One1') {
+              meldPart.is_draft_partner = true;
+            }
             meldRelatedCards.push(meldPart);
             // } else {
             //   const related = finalTokens.find(otherToken => tokenMaker.id ? otherToken.id == tokenMaker.id : otherToken.name == tokenMaker.name);
@@ -555,7 +633,7 @@ const main = async () => {
         meldRelatedCards.push(meldResult);
         meldPartIds.forEach(id => {
           const relatedCard = finalCards.find(card => card.id == id);
-          if (!('has_draft_partners' in relatedCard!)) {
+          if (!('has_draft_partners' in relatedCard!) && token.id != 'Omnath, the Forbidden One1') {
             relatedCard!.has_draft_partners = true;
           }
           meldRelatedCards

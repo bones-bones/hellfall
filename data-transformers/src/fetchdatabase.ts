@@ -8,7 +8,7 @@ import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
   const [_garbage, oldKeys, ...rest] = asJson.values as string[][];
@@ -171,7 +171,7 @@ export const fetchDatabase = async () => {
                 : HCLegality.Legal,
             };
             cardObject[keys[i]] = legalities;
-          } else if (keys[i] == 'related') {
+          } else if (keys[i] == 'related' && entry[i] !="Head of the Forbidden One") {
             const all_parts: [HCRelatedCard] = [
               {
                 object: HCObject.ObjectType.RelatedCard,
@@ -305,6 +305,17 @@ export const fetchDatabase = async () => {
       singleCard.layout = HCLayout.Normal;
       return singleCard as HCCard.AnySingleFaced;
     } else {
+      // TODO: Add this
+      // if (cardObject.card_faces.filter(e=>e.image).length == 1 && cardObject.card_faces[0].image) {
+      //   if ('image' in cardObject && cardObject.image) {
+      //     cardObject.draft_image = cardObject.image;
+      //     cardObject.draft_image_status = cardObject.image_status;
+      //   }
+      //   cardObject.image = cardObject.card_faces[0].image;
+      //   cardObject.image_status = cardObject.card_faces[0].image_status;
+      //   delete cardObject.card_faces[0].image;
+      //   cardObject.card_faces[0].image_status = 'front';
+      // }
       if (cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')) {
         cardObject.layout = HCLayout.MeldPart;
         if ('all_parts' in cardObject) {
