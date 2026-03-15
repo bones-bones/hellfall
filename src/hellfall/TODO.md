@@ -84,7 +84,7 @@ Write a script to transform the database
 - 
 - deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance), Half-Thriving ____ Half-Thriving ____, Hell's Cube (both versions)
 - do better: evolution of the dreadmaw
-- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw
+- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - allow for removal of optional props, sides, and cards from all_parts that aren't in the database where appropriate (also remove duplicates from all_parts) (use sheet to hold subtokens as token ids in related cards column) (use component of to code for tokens of hellscube cards)
 - remove props that are in singleface cards but not multiface cards when adding card_faces to existing card

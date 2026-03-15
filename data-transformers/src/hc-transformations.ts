@@ -44,7 +44,7 @@ const oneWayMergeProps = [
 const oneWayMandatoryProps = ['name','mana_cost','type_line'];
 const oneWayDontMergeProps = ['color_identity', 'color_identity_hybrid', 'layout'];
 const cardBlankableProps = ['rulings','oracle_text','cmc']
-const cardRemovableProps = ['tags','defense','loyalty','power','toughness','supertypes','types','subtypes','flavor_text'/**,'all_parts' */,'image','draft_image','not_directly_draftable','has_draft_partners','watermark']
+const cardRemovableProps = ['tags','defense','loyalty','power','toughness','supertypes','types','subtypes','flavor_text'/**,'all_parts' */,'image'/**,'draft_image'*/,'not_directly_draftable','has_draft_partners','watermark']
 // const tokenBlankableProps = []
 const tokenRemovableProps = ['power','toughness','supertypes','types'/**,'all_parts' */,'image','draft_image','not_directly_draftable','has_draft_partners']
 // TODO: implement more robust allparts derivation system
@@ -105,7 +105,7 @@ const mergeCards = (
   newCard: HCCard.Any,
   usingApproved: boolean = false
 ): HCCard.Any => {
-  if (usingApproved && (existingCard.has_draft_partners || [HCLayout.MeldPart,HCLayout.MeldResult].includes(existingCard.layout as HCLayout))) {
+  if (usingApproved && (existingCard.has_draft_partners || [HCLayout.MeldPart,HCLayout.MeldResult].includes(existingCard.layout as HCLayout) || ('card_faces' in existingCard && existingCard.card_faces.length>4))) {
     return existingCard;
   }
   // TODO: replace with actual type checking
@@ -114,6 +114,7 @@ const mergeCards = (
     ['image','creator',/**,'all_parts' */].forEach(key=>{
       (merged as any)[key]=newCard[key as keyof typeof newCard];
     })
+    return merged
   }
 
   let mergedPrelim:any = undefined;
@@ -145,30 +146,6 @@ const mergeCards = (
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     setDerivedProps(merged)
   }
-  // if (!('card_faces' in merged) && 'card_faces' in newCard) {
-  //   const removeProps = [
-  //     'color_indicator',
-  //     'supertypes',
-  //     'types',
-  //     'subtypes',
-  //     'power',
-  //     'toughness',
-  //     'loyalty',
-  //     'defense',
-  //     'oracle_text',
-  //     'flavor_text',
-  //   ];
-  //   removeProps.forEach(prop => {
-  //     if (prop in merged) {
-  //       delete merged[prop as keyof typeof merged];
-  //     }
-  //   });
-  //   const mergedFaces = merged as unknown as HCCard.AnyMultiFaced;
-  //   mergedFaces.layout = merged.layout == HCLayout.Normal ? HCLayout.Multi : HCLayout.MultiToken;
-  //   mergedFaces.card_faces = newCard.card_faces;
-  //   setDerivedProps(mergedFaces);
-  //   return mergedFaces;
-  // }
   Object.entries(newCard).forEach(([key, value]) => {
     // TODO: make sure that empty arrays being truthy doesn't break anything here
     if (value) {
@@ -185,13 +162,6 @@ const mergeCards = (
           // }
           if (index < value.length) {
             const newFace = newCard.card_faces?.[index];
-            // if (!('colors' in newFace && newFace.colors)) {
-            //   const x = 1;
-            // }
-            // if (existingCard.card_faces.length > 4 && index == 3) {
-            //   // this is necessary due to how the sheet is formatted
-            //   // TODO: store current version and print the diff if there is one
-            // } else {
             Object.entries(newFace).forEach(([k, v]) => {
               if (k in face && ['name', 'oracle_text', 'flavor_text'].includes(k)) {
                 if (face[k as keyof typeof face]![0] == ';') {
@@ -201,19 +171,8 @@ const mergeCards = (
                 }
               } else if (k == 'colors') {
                 // TODO: store current version and print the diff if there is one
-                // if (index == 0) {
-                // (merged as any)[k] = v;
-                // (face as any)[k] = v;
-                // }
               } else if (k == 'image_status') {
                 // TODO: store current version and print the diff if there is one
-                // if (
-                //   face.image_status == HCImageStatus.Missing ||
-                //   face.image_status ==
-                //     HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
-                // ) {
-                //   (face as any)[k] = v;
-                // }
               } else if (v || (!merged.isActualToken && cardBlankableProps.includes(k))) {
                 (face as any)[k] = v;
               }
@@ -221,26 +180,12 @@ const mergeCards = (
             cardRemovableProps.filter(prop=>prop in face && !(prop in newFace)).forEach(prop => {
               delete (face as any)[prop];
             })
-            // }
           }
           return face;
         });
-        // TODO: Is this necessary?
         while (merged.card_faces.length < newCard.card_faces.length) {
           merged.card_faces.push(newCard.card_faces[merged.card_faces.length]);
         }
-      // } else if (
-      //   'card_faces' in merged &&
-      //   !('card_faces' in newCard) &&
-      //   oneWayMergeProps.includes(key)
-      // ) {
-      //   // merged.card_faces[0][key as keyof HCCardFace.MultiFaced] = value;
-      // } else if (
-      //   'card_faces' in merged &&
-      //   !('card_faces' in newCard) &&
-      //   oneWayDontMergeProps.includes(key)
-      // ) {
-        // TODO: store current version and print the diff if there is one
       } else if (key == 'draft_image_status') {
         // TODO: store current version and print the diff if there is one
         if (
@@ -322,30 +267,6 @@ const mergeCards = (
   if (merged.variation && merged.isActualToken && parseInt(merged.variation_of!)) {
     merged.variation_of = merged.name + merged.variation_of;
   }
-  // if (!('card_faces' in merged) && 'card_faces' in newCard) {
-  //   const removeProps = [
-  //     'color_indicator',
-  //     'supertypes',
-  //     'types',
-  //     'subtypes',
-  //     'power',
-  //     'toughness',
-  //     'loyalty',
-  //     'defense',
-  //     'oracle_text',
-  //     'flavor_text',
-  //   ];
-  //   removeProps.forEach(prop => {
-  //     if (prop in merged) {
-  //       delete merged[prop as keyof typeof merged];
-  //     }
-  //   });
-  //   const mergedFaces = merged as unknown as HCCard.AnyMultiFaced;
-  //   mergedFaces.layout = merged.layout == HCLayout.Normal ? HCLayout.Multi : HCLayout.MultiToken;
-  //   mergedFaces.card_faces = newCard.card_faces;
-  //   setDerivedProps(mergedFaces);
-  //   return mergedFaces;
-  // } else {
   setDerivedProps(merged);
   return merged;
   // }

@@ -305,17 +305,17 @@ export const fetchDatabase = async () => {
       singleCard.layout = HCLayout.Normal;
       return singleCard as HCCard.AnySingleFaced;
     } else {
-      // TODO: Add this
-      // if (cardObject.card_faces.filter(e=>e.image).length == 1 && cardObject.card_faces[0].image) {
-      //   if ('image' in cardObject && cardObject.image) {
-      //     cardObject.draft_image = cardObject.image;
-      //     cardObject.draft_image_status = cardObject.image_status;
-      //   }
-      //   cardObject.image = cardObject.card_faces[0].image;
-      //   cardObject.image_status = cardObject.card_faces[0].image_status;
-      //   delete cardObject.card_faces[0].image;
-      //   cardObject.card_faces[0].image_status = 'front';
-      // }
+      // TODO: test this
+      if (cardObject.card_faces.filter(e=>e.image).length == 1 && cardObject.card_faces[0].image) {
+        if ('image' in cardObject && cardObject.image) {
+          cardObject.draft_image = cardObject.image;
+          cardObject.draft_image_status = cardObject.image_status;
+        }
+        cardObject.image = cardObject.card_faces[0].image;
+        cardObject.image_status = cardObject.card_faces[0].image_status;
+        delete cardObject.card_faces[0].image;
+        cardObject.card_faces[0].image_status = 'front';
+      }
       if (cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')) {
         cardObject.layout = HCLayout.MeldPart;
         if ('all_parts' in cardObject) {
