@@ -34,6 +34,8 @@ export enum HCLayout {
   Checklist = 'checklist',
   /** Misc images that aren't actually cards */
   Misc = 'misc',
+  /** reminder on back of card */
+  
 }
 
 // /**

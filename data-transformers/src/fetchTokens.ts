@@ -143,15 +143,6 @@ export const fetchTokens = async () => {
       '4cb': HCLegality.NotLegal,
       commander: HCLegality.NotLegal,
     };
-    // tokenObject.legalities = legalities;
-    // tokenObject.colors = [HCColor.Colorless] as HCColors;
-    // tokenObject.color_identity = [] as HCColors[];
-    // tokenObject.keywords = [];
-    // tokenObject.set = 'HCT';
-    // tokenObject.image_status = HCImageStatus.HighRes;
-
-    // tokenObject.isActualToken = true;
-    // tokenObject.variation = false;
     return tokenObject as HCCard.Any;
   });
   return theThing;

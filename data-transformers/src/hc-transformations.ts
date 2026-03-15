@@ -16,7 +16,6 @@ import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/pipsAtom';
 import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
 
-// TODO: make sure all_parts doesn't keep duplicates (maybe do it at the same time as sorting it?)
 // TODO: hard sort the property order in a logical way
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
@@ -41,8 +40,6 @@ const oneWayMergeProps = [
   'attraction_lights',
   'watermark',
 ];
-const oneWayMandatoryProps = ['name', 'mana_cost', 'type_line'];
-const oneWayDontMergeProps = ['color_identity', 'color_identity_hybrid', 'layout'];
 const cardBlankableProps = ['rulings', 'oracle_text', 'cmc'];
 const cardRemovableProps = [
   'tags',
@@ -53,7 +50,7 @@ const cardRemovableProps = [
   'supertypes',
   'types',
   'subtypes',
-  'flavor_text' /**,'all_parts' */,
+  'flavor_text',
   'image' /**,'draft_image'*/,
   'not_directly_draftable',
   'has_draft_partners',
@@ -64,13 +61,13 @@ const tokenRemovableProps = [
   'power',
   'toughness',
   'supertypes',
-  'types' /**,'all_parts' */,
+  'types',
   'image',
   'draft_image',
   'not_directly_draftable',
   'has_draft_partners',
 ];
-// TODO: implement more robust allparts derivation system
+
 const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
     if ('card_faces' in card && 'all_parts' in card) {
@@ -186,7 +183,6 @@ const mergeCards = (
     setDerivedProps(merged);
   }
   Object.entries(newCard).forEach(([key, value]) => {
-    // TODO: make sure that empty arrays being truthy doesn't break anything here
     if (value) {
       if (
         key === 'card_faces' &&
@@ -196,9 +192,6 @@ const mergeCards = (
         'card_faces' in newCard
       ) {
         merged.card_faces = existingCard.card_faces.map((face, index) => {
-          // if (!('colors' in face && face.colors)) {
-          //   const x = 1;
-          // }
           if (index < value.length) {
             const newFace = newCard.card_faces?.[index];
             Object.entries(newFace).forEach(([k, v]) => {
@@ -256,9 +249,9 @@ const mergeCards = (
       ) {
         merged.all_parts = newCard.all_parts?.map(part => {
           // superToken is used when the card is a token and part is also a token that makes this token
-          const superToken = existingCard.all_parts?.filter(e=>e.name == e.id.replace(/\d+$/, '')).find(
-            e => e.id.toLowerCase() == part.name.toLowerCase()
-          );
+          const superToken = existingCard.all_parts
+            ?.filter(e => e.name == e.id.replace(/\d+$/, ''))
+            .find(e => e.id.toLowerCase() == part.name.toLowerCase());
           const existingPart = superToken
             ? superToken
             : existingCard.all_parts?.find(e => e.name.toLowerCase() == part.name.toLowerCase());
@@ -275,20 +268,6 @@ const mergeCards = (
           }
           return part;
         });
-        // merged.all_parts = existingCard.all_parts?.map(part => {
-        //   const newPart = newCard.all_parts?.find(
-        //     e => e.name.toLowerCase() == part.name.toLowerCase()
-        //   );
-        //   if (newPart) {
-        //     Object.entries(newPart).forEach(([k, v]) => {
-        //       if (['name', 'component', 'is_draft_partner'].includes(k) && v) {
-        //         (part as any)[k] = v;
-        //       }
-        //     });
-        //   }
-        //   return part;
-        // });
-        // TODO: make sure there aren't any other component types to add to the list
         existingCard.all_parts
           ?.filter(
             part =>
@@ -353,7 +332,6 @@ const mergeCards = (
   }
   setDerivedProps(merged);
   return merged;
-  // }
 };
 const mergeDatabases = (
   existingCards: HCCard.Any[],
@@ -541,41 +519,6 @@ const main = async () => {
             }
           }
         });
-      // const relatedTokenMaker: HCRelatedCard = {
-      //   object: HCObject.ObjectType.RelatedCard,
-      //   id: token.id,
-      //   component: 'token_maker',
-      //   name: token.name,
-      //   type_line: token.type_line,
-      //   set: token.set,
-      //   image: token.image,
-      // };
-      // token.all_parts
-      //   ?.filter(e => e.component == 'token')
-      //   .forEach(subToken => {
-      //     const related = finalTokens.find(otherToken =>
-      //       subToken.id
-      //         ? otherToken.id == subToken.id
-      //         : otherToken.name.toLowerCase() == subToken.name.toLowerCase()
-      //     );
-      //     if (related) {
-      //       subToken.id = related.id;
-      //       subToken.name = related.name;
-      //       subToken.type_line = related.type_line;
-      //       subToken.set = related.set;
-      //       subToken.image = related.image;
-      //       if ('all_parts' in related) {
-      //         const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
-      //         if (tokenIndex == -1) {
-      //           related.all_parts?.push(relatedTokenMaker);
-      //         } else {
-      //           related.all_parts![tokenIndex!] = relatedTokenMaker;
-      //         }
-      //       } else {
-      //         related.all_parts = [relatedTokenMaker];
-      //       }
-      //     }
-      //   });
       const meldPartIds: string[] = [];
       const meldRelatedCards: HCRelatedCard[] = [];
       token.all_parts
@@ -599,23 +542,6 @@ const main = async () => {
               meldPart.is_draft_partner = true;
             }
             meldRelatedCards.push(meldPart);
-            // } else {
-            //   const related = finalTokens.find(otherToken => tokenMaker.id ? otherToken.id == tokenMaker.id : otherToken.name == tokenMaker.name);
-            //   if (related){
-            //     tokenMaker.id = related.id;
-            //     tokenMaker.name = related.name;
-            //     tokenMaker.type_line = related.type_line;
-            //     if ('all_parts' in related) {
-            //       const tokenIndex = related.all_parts?.findIndex(e => e.id == token.id);
-            //       if (tokenIndex == -1) {
-            //         related.all_parts?.push(relatedToken);
-            //       } else {
-            //         related.all_parts![tokenIndex!] = relatedToken;
-            //       }
-            //     } else {
-            //       related.all_parts = [relatedToken];
-            //     }
-            //   }
           }
         });
       if (meldPartIds && meldPartIds.length) {
@@ -738,7 +664,7 @@ const main = async () => {
           // }
         });
     });
-  // make sure all relateds are updated (TODO: Is this necessary?)
+  // make sure all relateds are updated (TODO: figure out if this is necessary)
   // finalCards
   //   .filter(e => 'all_parts' in e)
   //   .forEach(card => {
@@ -886,19 +812,11 @@ const main = async () => {
     }
     return -1;
   });
-  // const tokenLayoutOrder = [
-  //   HCLayout.Token,
-  //   HCLayout.MultiToken,
-  //   HCLayout.Emblem,
-  //   HCLayout.MeldResult,
-  // ];
   finalTokens.sort((a, b) => {
     if (a.layout != b.layout) {
       if (
         HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) >
         HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
-        // tokenLayoutOrder.indexOf(a.layout as HCLayout) >
-        // tokenLayoutOrder.indexOf(b.layout as HCLayout)
       ) {
         return 1;
       }
