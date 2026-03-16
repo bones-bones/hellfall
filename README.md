@@ -6,6 +6,10 @@ Like scryfall but for Hellscube. Also other stuff.
 
 Core hellfall application.
 
+## [api-types](./src/api-types/README.md)
+
+A great place to start getting an idea of how cards work and are treated
+
 ## [hellscube](./src/hells-cubes/)
 
 This page contains random card selectors used for various cubes to make irl drafting smoother. currently only supports 1.

@@ -121,7 +121,7 @@ const hcCardToCockCard = ({
 
   const setElement = xmlDoc.createElement('set');
   setElement.setAttribute('rarity', 'common');
-  setElement.setAttribute('picURL', face.image!);
+  setElement.setAttribute('picURL', face.image || entry.image!);
   setElement.textContent = set;
   const color = xmlDoc.createElement('color');
   color.textContent = face.colors.join('');

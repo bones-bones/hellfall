@@ -6,23 +6,23 @@ This library documents the definitive comprehensive typings for hellfall, which 
 
 ### Values
 
-#### Color
+#### [Color](./Card/values/Color.ts)
 
 This is for card colors. Most of this file (everything except HCColor and HCColors) isn't currently in use anywhere else becuase it causes React errors that we can't figure out how to solve. It includes the regular magic colors, as well as the colors exclusive to Hellscube.
 
-#### ImageStatus
+#### [ImageStatus](./Card/values/ImageStatus.ts)
 
 This is for the image status, as well as for explaining why a face doesn't have an image. This takes up much of the role of Layout in the Scryfall version.
 
-#### Layout
+#### [Layout](./Card/values/Layout.ts)
 
 This is for the card layout. We really only use it for info that can't be stored with ImageStatus.
 
-### RelatedCard
+### [RelatedCard](./Card/RelatedCard.ts)
 
 This is for simplified versions of cards that can be stored to show card relationships. We use this for more than Scryfall does, since it's useful for Draftpartner cards.
 
-### CardFields
+### [CardFields](./Card/CardFields.ts)
 
 We don't use a lot of the URI fields that scryfall has, since we store more things directly. We also store card types, subtypes, and supertypes to allow for easier searching.
 
@@ -30,15 +30,15 @@ We also have `color_identity_hybrid`, which allows for searching for color ident
 
 We don't make the distinction that Scryfall does between sides and faces.
 
-### CardFace
+### [CardFace](./Card/CardFace.ts)
 
 We really only have one kind of face, so this file is much simpler than Scryfall's version.
 
-### Card
+### [Card](./Card/Card.ts)
 
 Since don't make the distinction that Scryfall does between sides and faces, this file is simpler than Scryfall's version.
 
-### Symbology
+### [Symbology](./Symbology/index.ts)
 
 This is for symbols/pips.
 

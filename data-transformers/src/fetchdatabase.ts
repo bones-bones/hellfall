@@ -95,7 +95,7 @@ export const fetchDatabase = async () => {
   };
 
   const theThing = rest.map(entry => {
-    const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
+    const cardObject: Record<string, any> & { card_faces: Record<string, any>[], tags?: string[] } = {
       card_faces: [],
     };
     for (let i = 0; i < keys.length; i++) {
@@ -244,22 +244,20 @@ export const fetchDatabase = async () => {
         if (index == 0) {
           face.image_status = HCImageStatus.Front;
         } else if (
-          'tags' in cardObject &&
-          cardObject.tags.includes('flip')
+          cardObject.tags?.includes('flip')
           /*  || ('oracle_text' in cardObject.card_faces[0] && cardObject.card_faces[0].oracle_text.toLowerCase().includes("flip")) */
         ) {
           face.image_status = HCImageStatus.Flip;
         } else if (
           'tags' in cardObject &&
-          cardObject.tags.includes('aftermath')
+          cardObject.tags?.includes('aftermath')
           /*  || ('oracle_text' in face && face.oracle_text.toLowerCase().includes("aftermath")) */
         ) {
           face.image_status = HCImageStatus.Aftermath;
         } else if (
-          'tags' in cardObject &&
-          cardObject.tags.includes('inset')
-          // || 'subtypes' in face &&
-          // (face.subtypes.includes('Adventure') || face.subtypes.includes('Omen'))
+          cardObject.tags?.includes('inset')
+          || 'subtypes' in face &&
+          (face.subtypes.includes('Adventure') || face.subtypes.includes('Omen'))
         ) {
           face.image_status = HCImageStatus.Inset;
         } else if (cardObject.card_faces[0].oracle_text.toLowerCase().includes('draftpartner')) {
