@@ -337,7 +337,7 @@ export const fetchDatabase = async () => {
           cardObject.all_parts[0].component = 'meld_part';
         }
       }
-      if (!('layout' in cardObject)&& !cardObject.card_faces.at(-1)!.image) {
+      if (!('layout' in cardObject) && !cardObject.card_faces.at(-1)!.image) {
         if (cardObject.tags?.includes('reminder-on-back')) {
           cardObject.layout = HCLayout.ReminderOnBack;
           cardObject.card_faces.at(-1)!.image_status = HCImageStatus.Reminder;
