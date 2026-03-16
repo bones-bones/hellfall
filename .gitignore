@@ -45,4 +45,5 @@ server/.env
 .yarnrc.yml
 yarn.lock
 
+.vscode/launch.json
 .env
