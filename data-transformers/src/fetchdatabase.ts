@@ -4,7 +4,7 @@ import { HCColor, HCColors, HCImageStatus, HCLayout } from '../../src/api-types/
 import { HCLegalitiesField, HCFormat, HCLegality } from '../../src/api-types/Card/values';
 import { HCRelatedCard } from '../../src/api-types/Card/RelatedCard';
 import { HCObject } from '../../src/api-types/Object';
-import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
+import { getColorIdentityProps } from './getColorIdentity';
 
 export const fetchDatabase = async () => {
   const requestedData = await fetch(
@@ -181,8 +181,8 @@ export const fetchDatabase = async () => {
                   entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
                     ? 'meld_part'
                     : entry[20].includes('draftpartner')
-                    ? 'draft_partner'
-                    : 'token_maker',
+                      ? 'draft_partner'
+                      : 'token_maker',
                 name: entry[i],
                 type_line: '',
                 set: '',

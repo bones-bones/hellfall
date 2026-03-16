@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { toDeck } from '../deck-builder/toDeck';
-import { cardsAtom } from '../hellfall/cardsAtom';
-import { toCockCube } from './toCockCube';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom';
+import { toCockCube } from './cockatrice/toCockCube';
 import { useAtomValue } from 'jotai';
 import { HCCard } from '../api-types';
 import { ReactNode } from 'react';

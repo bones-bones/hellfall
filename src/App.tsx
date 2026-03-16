@@ -1,13 +1,13 @@
-import { BrowserRouter, useRoutes, useParams, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter, useRoutes, useParams, useNavigate } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
-import { pipsAtom, loadPips } from './hellfall/pipsAtom';
+import { pipsAtom, loadPips } from './hellfall/atoms/pipsAtom';
 import { useEffect, useState } from 'react';
 import { HellFall } from './hellfall';
 import { Hellscubes } from './hells-cubes';
 import { DeckBuilder } from './deck-builder';
 import { Draft } from './draft';
 import { LandBox } from './land-box';
-import { SingleCard } from './hellfall/SingleCard';
+import { SingleCard } from './hellfall/card/SingleCard';
 import { Header } from './header';
 import { Breakdown } from './breakdown/Breakdown';
 import { Decks } from './decks/Decks';

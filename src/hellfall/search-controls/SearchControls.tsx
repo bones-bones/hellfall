@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 
-import { CheckboxGroup, NamedCheckboxGroup /**ColorCheckboxGroup*/ } from './inputs';
-import { PillSearch } from './inputs';
+import { CheckboxGroup, NamedCheckboxGroup /**ColorCheckboxGroup*/ } from '../inputs';
+import { PillSearch } from '../inputs';
 import { TextInput } from '@workday/canvas-kit-react/text-input';
 import { FormField } from '@workday/canvas-kit-react/form-field';
-import cardTypes from '../data/types.json';
-import creators_data from '../data/creators.json';
-import tags_data from '../data/tags.json';
-import { NumberSelector } from './inputs';
+import cardTypes from '../../data/types.json';
+import creators_data from '../../data/creators.json';
+import tags_data from '../../data/tags.json';
+import { NumberSelector } from '../inputs';
 import { SearchCheckbox } from './SearchCheckbox';
 
 import { useAtom } from 'jotai';
@@ -33,11 +33,10 @@ import {
   loyaltyAtom,
   defenseAtom,
   tagsAtom,
-} from './searchAtoms';
-import { StyledLabel } from './StyledLabel';
-import { CardLegalityControls } from './search-controls/CardLegalityControls';
-import { StyledComponentHolder } from './StyledComponentHolder';
-import { HCSearchColor } from '../api-types';
+} from '../atoms/searchAtoms';
+import { StyledLabel } from '../StyledLabel';
+import { CardLegalityControls } from './CardLegalityControls';
+import { StyledComponentHolder } from '../StyledComponentHolder';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 

@@ -2,14 +2,14 @@ import { Card } from '@workday/canvas-kit-react/card';
 import styled from '@emotion/styled';
 import { Heading, Text } from '@workday/canvas-kit-react/text';
 import { SetLegality } from './SetLegality';
-import { colorsToIndicator, stringToMana } from './stringToMana';
-import { splitParens } from './splitParens';
-import { HCCard } from '../api-types/Card/Card';
-import { HellfallRelatedEntry } from './HellfallEntry';
+import { colorsToIndicator, stringToMana } from '../stringToMana';
+import { splitParens } from '../splitParens';
+import { HCCard } from '../../api-types/Card/Card';
+import { HellfallRelatedEntry } from '../HellfallEntry';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { stripSemicolon } from './inputs/stripSemicolon';
+import { stripSemicolon } from '../inputs/stripSemicolon';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (

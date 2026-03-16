@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
-import { isCommanderAtom, legalityAtom } from '../searchAtoms';
-import { SearchCheckbox } from '../SearchCheckbox';
+import { isCommanderAtom, legalityAtom } from '../atoms/searchAtoms';
+import { SearchCheckbox } from './SearchCheckbox';
 import { StyledLegend, StyledLabel } from '../StyledLabel';
 import { StyledComponentHolder } from '../StyledComponentHolder';
 import { useState } from 'react';
