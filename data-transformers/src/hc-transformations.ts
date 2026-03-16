@@ -15,7 +15,6 @@ import { HCObject } from '../../src/api-types/Object';
 import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
 import { getColorIdentityProps } from './getColorIdentity';
-
 // TODO: hard sort the property order in a logical way
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
@@ -67,6 +66,15 @@ const tokenRemovableProps = [
   'not_directly_draftable',
   'has_draft_partners',
 ];
+/**
+ * Checks whether search text equals text from a card
+ * @param cardText text from the card
+ * @param searchText text to search for
+ * @returns whether they are equal
+ */
+export const textEquals = (cardText:string,searchText:string) => {
+  return cardText.toLowerCase() == searchText.toLowerCase() || cardText.toLowerCase().replaceAll('\\*','') == searchText.toLowerCase().replaceAll('\\*','')
+}
 
 const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
@@ -340,10 +348,10 @@ const mergeCards = (
           // superToken is used when the card is a token and part is also a token that makes this token
           const superToken = existingCard.all_parts
             ?.filter(e => e.name == e.id.replace(/\d+$/, ''))
-            .find(e => e.id.toLowerCase() == part.name.toLowerCase());
+            .find(e => textEquals(e.id,part.name));
           const existingPart = superToken
             ? superToken
-            : existingCard.all_parts?.find(e => e.name.toLowerCase() == part.name.toLowerCase());
+            : existingCard.all_parts?.find(e => textEquals(e.name,part.name));
           if (existingPart) {
             // if there is already a part, update it
             Object.entries(existingPart).forEach(([k, v]) => {
@@ -585,9 +593,9 @@ const main = async () => {
             ? finalCards.find(card => card.id == tokenMaker.id)
               ? finalCards.find(card => card.id == tokenMaker.id)
               : finalTokens.find(card => card.id == tokenMaker.id)
-            : finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
-            ? finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
-            : finalTokens.find(card => card.id.toLowerCase() == tokenMaker.name.toLowerCase());
+            : finalCards.find(card => textEquals(card.name,tokenMaker.name))
+            ? finalCards.find(card => textEquals(card.name,tokenMaker.name))
+            : finalTokens.find(card => textEquals(card.id,tokenMaker.name));
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
@@ -622,11 +630,7 @@ const main = async () => {
       token.all_parts
         ?.filter(e => e.component == 'meld_part')
         .forEach(meldPart => {
-          const relatedCard = finalCards.find(card =>
-            meldPart.id
-              ? card.id == meldPart.id
-              : card.name.toLowerCase() == meldPart.name.toLowerCase()
-          );
+          const relatedCard = finalCards.find(card => meldPart.id ? card.id == meldPart.id : textEquals(card.name,meldPart.name));
           if (relatedCard) {
             meldPart.id = relatedCard.id;
             meldPartIds.push(relatedCard.id);
@@ -691,11 +695,7 @@ const main = async () => {
       card.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          const relatedCard = finalCards.find(e =>
-            tokenMaker.id
-              ? e.id == tokenMaker.id
-              : e.name.toLowerCase() == tokenMaker.name.toLowerCase()
-          );
+          const relatedCard = finalCards.find(e => tokenMaker.id ? e.id == tokenMaker.id: textEquals(e.name,tokenMaker.name));
           if (relatedCard) {
             tokenMaker.id = relatedCard!.id;
             tokenMaker.name = relatedCard!.name;
@@ -732,11 +732,7 @@ const main = async () => {
       card.all_parts
         ?.filter(e => e.component == 'draft_partner')
         .forEach(partnerCard => {
-          const relatedCard = finalCards.find(e =>
-            partnerCard.id
-              ? e.id == partnerCard.id
-              : e.name.toLowerCase() == partnerCard.name.toLowerCase()
-          );
+          const relatedCard = finalCards.find(e => partnerCard.id ? e.id == partnerCard.id : textEquals(e.name,partnerCard.name));
           // if (relatedCard) {
           if (!('has_draft_partners' in relatedCard!)) {
             relatedCard!.has_draft_partners = true;

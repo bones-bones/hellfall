@@ -42,6 +42,24 @@ import { colorCompOp } from './colorComps';
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
 };
+/**
+ * Checks whether search text is in text from a card
+ * @param cardText text from the card
+ * @param searchText text to search for
+ * @returns whether there is a match
+ */
+export const textSearchIncludes = (cardText:string,searchText:string) => {
+  return cardText.toLowerCase().includes(searchText.toLowerCase()) || cardText.toLowerCase().replaceAll('\\*','').includes(searchText.toLowerCase().replaceAll('\\*',''))
+}
+/**
+ * Checks whether search text equals text from a card
+ * @param cardText text from the card
+ * @param searchText text to search for
+ * @returns whether they are equal
+ */
+export const textEquals = (cardText:string,searchText:string) => {
+  return cardText.toLowerCase() == searchText.toLowerCase() || cardText.toLowerCase().replaceAll('\\*','') == searchText.toLowerCase().replaceAll('\\*','')
+}
 
 export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
@@ -143,62 +161,40 @@ export const useSearchResults = () => {
         if (
           costSearch.length > 0 &&
           !costSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.mana_cost)
-              .join()
-              .toLowerCase();
+            const combined = entry.toFaces().map(e => e.mana_cost).join();
             if (searchTerm.startsWith('!')) {
-              return !combined.includes(searchTerm.substring(1).toLowerCase());
+              return !textSearchIncludes(combined,searchTerm.substring(1));
             } else {
-              return combined.includes(searchTerm.toLowerCase());
+              return textSearchIncludes(combined,searchTerm);
             }
           })
         ) {
           return false;
         }
 
-        if (
-          rulesSearch.length > 0 &&
-          !rulesSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.oracle_text || '')
-              .join()
-              .toLowerCase();
+        if (rulesSearch.length > 0 && !rulesSearch.every(searchTerm => {
+            const combined = entry.toFaces().map(e => e.oracle_text || '').join();
             if (searchTerm.startsWith('!')) {
-              return !combined.includes(searchTerm.substring(1).toLowerCase());
+              return !textSearchIncludes(combined,searchTerm.substring(1));
             } else {
-              return combined.includes(searchTerm.toLowerCase());
+              return textSearchIncludes(combined,searchTerm);
             }
           })
         ) {
           return false;
         }
 
-        if (
-          tags.length > 0 &&
-          !tags.every(tag => {
-            return entry.tags?.includes(tag);
-          })
+        if (tags.length > 0 && !tags.every(tag => {return entry.tags?.includes(tag);})
         ) {
           return false;
         }
 
-        if (
-          nameSearch !== '' &&
-          !entry
-            .toFaces()
-            .map(e => e.name || '')
-            .join(' // ')
-            .toLowerCase()
-            .includes(nameSearch.toLowerCase()) &&
-          !entry.name.toLowerCase().includes(nameSearch.toLowerCase())
+        if (nameSearch !== '' && !textSearchIncludes(entry.toFaces().map(e => e.name || '').join(' // '),nameSearch) &&!textSearchIncludes(entry.name,nameSearch)
         ) {
           return false;
         }
-
-        if (idSearch !== '' && entry.id.toLowerCase() != idSearch.toLowerCase()) {
+        // TODO: decide if this should use includes instead of equals
+        if (idSearch !== '' && !textEquals(entry.id,idSearch)) {
           return false;
         }
 
@@ -261,19 +257,14 @@ export const useSearchResults = () => {
           typeSearch.length > 0 &&
           !typeSearch.every(searchTerm => {
             const combined = [
-              // ...(entry.supertypes || []),
               ...entry.toFaces().map(e => e.supertypes || ''),
-              // ...(entry.types || []),
               ...entry.toFaces().map(e => e.types || ''),
-              // ...(entry.subtypes || []),
               ...entry.toFaces().map(e => e.subtypes || ''),
-            ]
-              .join(',')
-              .toLowerCase();
+            ].join(',')
             if (searchTerm.startsWith('!')) {
-              return !combined.includes(searchTerm.substring(1).toLowerCase());
+              return !textSearchIncludes(combined,searchTerm.substring(1));
             } else {
-              return combined.includes(searchTerm.toLowerCase());
+              return textSearchIncludes(combined,searchTerm);
             }
           })
         ) {

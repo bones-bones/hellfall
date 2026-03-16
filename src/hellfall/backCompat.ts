@@ -2,6 +2,7 @@
 // TODO: add compatibility for subids
 import { useAtom, useAtomValue } from 'jotai';
 import { cardsAtom } from './atoms/cardsAtom';
+import { textEquals } from './useSearchResults';
 
 export const useNameToId = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);
@@ -11,16 +12,10 @@ export const useNameToId = (name: string): string | undefined => {
     return theId;
   }
   return (
-    cards.find(card => card.id.toLowerCase() == name.toLowerCase())?.id ??
-    cards.find(card => card.name.toLowerCase() == name.toLowerCase())?.id ??
-    cards.find(
-      card => 'card_faces' in card && card.card_faces[0].name.toLowerCase() == name.toLowerCase()
-    )?.id ??
-    cards.find(
-      card =>
-        'card_faces' in card &&
-        card.card_faces.some(face => face.name.toLowerCase() == name.toLowerCase())
-    )?.id
+    cards.find(card => textEquals(card.id,name))?.id ??
+    cards.find(card => textEquals(card.name,name))?.id ??
+    cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
+    cards.find(card =>'card_faces' in card && card.card_faces.some(face => textEquals(face.name,name)))?.id
   );
 };
 export const useIsId = (id: string): boolean => {
