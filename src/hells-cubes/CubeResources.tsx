@@ -156,7 +156,11 @@ export const CubeResources = () => {
     {
       name: 'Hellscube Jumpstart',
       id: 'HCJ',
-
+      printLink: (
+        <StyledLink to={'https://drive.google.com/file/d/1CGJXmtv1Z9LBm7IkEkCxz0-R9AFoO7_i/view'}>
+          PDF by g0m
+        </StyledLink>
+      ),
       description: 'Jumpstart!',
       cards: cards.filter(e => e.set === 'HCJ'),
     },
