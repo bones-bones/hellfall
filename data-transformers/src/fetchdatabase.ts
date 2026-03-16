@@ -273,7 +273,7 @@ export const fetchDatabase = async () => {
         } else if (cardObject.tags?.includes('draftpartner') || cardObject.card_faces[0].oracle_text?.toLowerCase().includes('draftpartner')) {
           face.image_status = HCImageStatus.DraftPartner;
         } else if (
-          cardObject.tags?.includes('reminder-on-back') || face.types?.includes('Reminder Card')
+          cardObject.tags?.includes('reminder-on-back') || face.types?.includes('Reminder Card') || face.types?.includes('Spellbook')
         ) {
           face.image_status = HCImageStatus.Reminder;
         } else if (
@@ -349,7 +349,7 @@ export const fetchDatabase = async () => {
         cardObject[key] = value;
       }
       const { card_faces, ...singleCard } = cardObject;
-      singleCard.layout = HCLayout.Normal;
+      singleCard.layout = singleCard.tags?.includes('noncard') ? HCLayout.Misc : HCLayout.Normal;
       return singleCard as HCCard.AnySingleFaced;
     } else {
       if (

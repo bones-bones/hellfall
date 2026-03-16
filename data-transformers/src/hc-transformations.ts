@@ -68,23 +68,132 @@ const tokenRemovableProps = [
   'has_draft_partners',
 ];
 
-const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
+// const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
+//   return cards.map(card => {
+//     if ('card_faces' in card && 'all_parts' in card) {
+//       const { card_faces, all_parts, ...rest } = card;
+//       return { ...rest, card_faces, all_parts } as HCCard.AnyMultiFaced;
+//     }
+//     if ('card_faces' in card) {
+//       const { card_faces, ...rest } = card;
+//       return { ...rest, card_faces } as HCCard.AnyMultiFaced;
+//     }
+//     if ('all_parts' in card) {
+//       const { all_parts, ...rest } = card;
+//       return { ...rest, all_parts } as HCCard.AnySingleFaced;
+//     }
+//     return card;
+//   });
+// };
+const addToJSONToCards = (cards:HCCard.Any[]):HCCard.Any[]=>{
   return cards.map(card => {
-    if ('card_faces' in card && 'all_parts' in card) {
-      const { card_faces, all_parts, ...rest } = card;
-      return { ...rest, card_faces, all_parts } as HCCard.AnyMultiFaced;
-    }
-    if ('card_faces' in card) {
-      const { card_faces, ...rest } = card;
-      return { ...rest, card_faces } as HCCard.AnyMultiFaced;
-    }
-    if ('all_parts' in card) {
-      const { all_parts, ...rest } = card;
-      return { ...rest, all_parts } as HCCard.AnySingleFaced;
-    }
-    return card;
-  });
-};
+    const cardWithJSON = Object.assign({},card,{
+      toJSON(this:Record<string,any>) {
+        const ordered: Record<string,any> = {};
+        const propOrder = [
+          'id',
+          'name',
+          'set',
+          'cmc',
+          'mana_cost',
+          'colors',
+          'color_indicator',
+          'color_identity',
+          'color_identity_hybrid',
+          'supertypes',
+          'types',
+          'subtypes',
+          'type_line',
+          'oracle_text',
+          'flavor_text',
+          'power',
+          'toughness',
+          'loyalty',
+          'defense',
+          'hand_modifier',
+          'life_modifier',
+          'attraction_lights',
+          'watermark',
+          'image_status',
+          'image',
+          'draft_image_status',
+          'draft_image',
+          'not_directly_draftable',
+          'has_draft_partners',
+          'legalities',
+          'creator',
+          'rulings',
+          'tags',
+          'keywords',
+          'isActualToken',
+          'variation',
+          'variation_of',
+          'layout',
+        ]
+        const facePropOrder = [
+          'name',
+          'mana_cost',
+          'colors',
+          'color_indicator',
+          'supertypes',
+          'types',
+          'subtypes',
+          'type_line',
+          'oracle_text',
+          'flavor_text',
+          'power',
+          'toughness',
+          'loyalty',
+          'defense',
+          'hand_modifier',
+          'life_modifier',
+          'attraction_lights',
+          'watermark',
+          'image_status',
+          'image',
+        ]
+        const partPropOrder = [
+          'id',
+          'name',
+          'set',
+          'type_line',
+          'image',
+          'component',
+          'is_draft_partner',
+        ]
+        propOrder.forEach(prop => {
+          if (prop in this) {
+            ordered[prop] = this[prop]
+          }
+        })
+        if ('card_faces' in this) {
+          ordered.card_faces = this.card_faces.map((face:Record<string,any>) => {
+            const orderedFace:Record<string,any>={};
+            facePropOrder.forEach(prop=>{
+              if (prop in face) {
+                orderedFace[prop] = face[prop];
+              }
+            })
+            return orderedFace;
+          })
+        }
+        if ('all_parts' in this) {
+          ordered.all_parts = this.all_parts.map((part:Record<string,any>) => {
+            const orderedPart:Record<string,any>={};
+            partPropOrder.forEach(prop=>{
+              if (prop in part) {
+                orderedPart[prop] = part[prop];
+              }
+            })
+            return orderedPart;
+          })
+        }
+        return ordered
+      }
+    })
+    return cardWithJSON as HCCard.Any;
+  })
+}
 const setDerivedProps = (card: HCCard.Any) => {
   if ('card_faces' in card) {
     const type_line_list: string[] = [];
@@ -174,8 +283,8 @@ const mergeCards = (
     'card_faces' in existingCard == 'card_faces' in newCard
       ? { ...existingCard }
       : 'card_faces' in mergedPrelim
-        ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
-        : { ...(mergedPrelim as HCCard.AnySingleFaced) };
+      ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
+      : { ...(mergedPrelim as HCCard.AnySingleFaced) };
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     setDerivedProps(merged);
   }
@@ -494,8 +603,8 @@ const main = async () => {
               ? finalCards.find(card => card.id == tokenMaker.id)
               : finalTokens.find(card => card.id == tokenMaker.id)
             : finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
-              ? finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
-              : finalTokens.find(card => card.id.toLowerCase() == tokenMaker.name.toLowerCase());
+            ? finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
+            : finalTokens.find(card => card.id.toLowerCase() == tokenMaker.name.toLowerCase());
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
@@ -862,7 +971,7 @@ const main = async () => {
     './src/data/tokens.json',
     JSON.stringify(
       {
-        data: moveArraysToBottom(finalTokens),
+        data: addToJSONToCards(finalTokens),
       },
       null,
       '\t'
@@ -904,7 +1013,7 @@ const main = async () => {
     './src/data/Hellscube-Database.json',
     JSON.stringify(
       {
-        data: moveArraysToBottom(finalCards).concat(moveArraysToBottom(finalTokens)),
+        data: addToJSONToCards(finalCards).concat(addToJSONToCards(finalTokens)),
       },
       null,
       '\t'
