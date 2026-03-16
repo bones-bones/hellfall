@@ -6,7 +6,10 @@ import { getDraftMancerCard } from './getDraftMancerCard';
 
 export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.Any[] }) => {
   cards.forEach(card => {
-    card.name = card.name.replace(/\[/g, 'OPENBRACKET').replace(/\]/g, 'CLOSEBRACKET').replace(/^ /g, 'SPACE');
+    card.name = card.name
+      .replace(/\[/g, 'OPENBRACKET')
+      .replace(/\]/g, 'CLOSEBRACKET')
+      .replace(/^ /g, 'SPACE');
   });
   // TODO: make sure this works
   const componentCards = cards.filter(card =>
@@ -85,10 +88,10 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
       .filter(e => e.name != 'Prismatic Pardner')
       .map(e => `1 ${e.name}`)
       .join('\n')}\n[OtherSlot(18)]\n${otherCardsToWrite
-        .map(e => {
-          return `1 ${e.name}`;
-        })
-        .join('\n')}`;
+      .map(e => {
+        return `1 ${e.name}`;
+      })
+      .join('\n')}`;
 
     return formatted;
   } else if (set === 'HCJ') {

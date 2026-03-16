@@ -18,6 +18,7 @@ import {
   rulesSearchAtom,
   searchCmcAtom,
   searchSetAtom,
+  searchTokenAtom,
   creatorsAtom,
   typeSearchAtom,
   searchColorComparisonAtom,
@@ -42,6 +43,7 @@ import { HCSearchColor } from '../api-types';
 
 export const SearchControls = () => {
   const [set, setSet] = useAtom(searchSetAtom);
+  const [cardsOrTokens, setCardsOrTokens] = useAtom(searchTokenAtom);
   const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
   const [costSearch, setCostSearch] = useAtom(costSearchAtom);
@@ -244,7 +246,23 @@ export const SearchControls = () => {
             'HCJ',
           ]}
           onChange={setSet}
-        />
+        >
+          <StyledComponentHolder>
+            <StyledLabel htmlFor="styledManaSelect">{'Cards/Tokens?'}</StyledLabel>
+            <StyledManaSelect
+              id="cards or tokens"
+              defaultValue={cardsOrTokens}
+              value={cardsOrTokens}
+              onChange={event => {
+                setCardsOrTokens(event.target.value as any);
+              }}
+            >
+              {['Cards', 'Tokens', 'Both'].map(entry => {
+                return <option key={entry}>{entry}</option>;
+              })}
+            </StyledManaSelect>
+          </StyledComponentHolder>
+        </CheckboxGroup>
         <CardLegalityControls />
         <NumberSelector label={'Mana value'} onChange={setSearchCmc} initialValue={searchCmc} />
         <NumberSelector label={'Power'} onChange={setPower} initialValue={power} />

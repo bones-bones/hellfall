@@ -18,6 +18,7 @@ import { CHUNK_SIZE } from './constants';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './cardsAtom';
 import { startTransition } from 'react';
+import { stripSemicolon } from './inputs/stripSemicolon';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -84,7 +85,7 @@ export const HellFall = () => {
             }}
             key={'' + entry.id + '-' + i}
             id={entry.id}
-            name={entry.name}
+            name={stripSemicolon(entry.name)}
             url={
               'card_faces' in entry && entry.layout == 'meld_part' && entry.card_faces[0].image
                 ? entry.card_faces[0].image

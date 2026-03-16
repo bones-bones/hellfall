@@ -30,11 +30,12 @@ export const fetchTokens = async () => {
   const typeLayouts: Record<string, HCLayout> = {
     Emblem: HCLayout.Emblem,
     'Reminder Card': HCLayout.Reminder,
-    'Sticker Sheet': HCLayout.Sticker,
+    Stickers: HCLayout.Stickers,
     Dungeon: HCLayout.Dungeon,
     'Real Card': HCLayout.RealCardToken,
     'Ad Card': HCLayout.Misc,
     Misc: HCLayout.Misc,
+    Checklist: HCLayout.Checklist,
   };
   const defaultProps: Record<string, any> = {
     rulings: '',
@@ -86,6 +87,8 @@ export const fetchTokens = async () => {
               component: entry[6] == 'meld' ? 'meld_part' : 'token_maker',
               name: name.replace(/\*\d+$/, ''),
               type_line: '',
+              set: '',
+              image: '',
             };
             return maker;
           });
@@ -108,8 +111,8 @@ export const fetchTokens = async () => {
     //   tokenObject.layout = HCLayout.Emblem;
     // } else if ('types' in tokenObject && tokenObject.types.includes('Reminder Card')) {
     //   tokenObject.layout = HCLayout.Reminder;
-    // } else if ('types' in tokenObject && tokenObject.types.includes('Sticker Sheet')) {
-    //   tokenObject.layout = HCLayout.Sticker;
+    // } else if ('types' in tokenObject && tokenObject.types.includes('Stickers')) {
+    //   tokenObject.layout = HCLayout.Stickers;
     // } else {
     //   tokenObject.layout = HCLayout.Token;
     // }
@@ -140,15 +143,6 @@ export const fetchTokens = async () => {
       '4cb': HCLegality.NotLegal,
       commander: HCLegality.NotLegal,
     };
-    // tokenObject.legalities = legalities;
-    // tokenObject.colors = [HCColor.Colorless] as HCColors;
-    // tokenObject.color_identity = [] as HCColors[];
-    // tokenObject.keywords = [];
-    // tokenObject.set = 'HCT';
-    // tokenObject.image_status = HCImageStatus.HighRes;
-
-    // tokenObject.isActualToken = true;
-    // tokenObject.variation = false;
     return tokenObject as HCCard.Any;
   });
   return theThing;

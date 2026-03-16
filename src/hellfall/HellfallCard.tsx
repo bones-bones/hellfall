@@ -2,13 +2,14 @@ import { Card } from '@workday/canvas-kit-react/card';
 import styled from '@emotion/styled';
 import { Heading, Text } from '@workday/canvas-kit-react/text';
 import { SetLegality } from './SetLegality';
-import { stringToMana } from './stringToMana';
+import { colorsToIndicator, stringToMana } from './stringToMana';
 import { splitParens } from './splitParens';
 import { HCCard } from '../api-types/Card/Card';
 import { HellfallRelatedEntry } from './HellfallEntry';
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { stripSemicolon } from './inputs/stripSemicolon';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
@@ -193,13 +194,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.name &&
                 face.name != ';' &&
                 (face.name.includes('\\*') || face.name.includes('(') ? (
-                  <div key="name">
-                    {renderName(face.name.startsWith(';') ? face.name.slice(1) : face.name)}
-                  </div>
+                  <div key="name">{renderName(stripSemicolon(face.name))}</div>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="name">
-                      {stringToMana(face.name.startsWith(';') ? face.name.slice(1) : face.name)}
+                      {stringToMana(stripSemicolon(face.name))}
                     </Text>
                     {/* <br /> */}
                   </>
@@ -212,6 +211,14 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 {stringToMana(face.mana_cost)}
               </Text>
               <br />
+              {face.color_indicator && (
+                <>
+                  <Text typeLevel="body.medium" key="color-indicator">
+                    {colorsToIndicator(face.color_indicator)}
+                  </Text>
+                  {'   '}
+                </>
+              )}
               {face.type_line &&
                 (face.type_line.includes('\\*') || face.type_line.includes('(') ? (
                   <div key="type">{renderName(face.type_line)}</div>
@@ -231,22 +238,12 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 face.oracle_text != ';' &&
                 (face.oracle_text.includes('\\*') || face.oracle_text.includes('(') ? (
                   <div key="rules">
-                    {renderOracleText(
-                      (face.oracle_text.startsWith(';')
-                        ? face.oracle_text.slice(1)
-                        : face.oracle_text
-                      ).split('\\n')
-                    )}
+                    {renderOracleText(stripSemicolon(face.oracle_text).split('\\n'))}
                   </div>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="flavor">
-                      {renderText(
-                        (face.oracle_text.startsWith(';')
-                          ? face.oracle_text.slice(1)
-                          : face.oracle_text
-                        ).split('\\n')
-                      )}
+                      {renderText(stripSemicolon(face.oracle_text).split('\\n'))}
                     </Text>
                     <br />
                   </>
@@ -255,22 +252,12 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 face.flavor_text != ';' &&
                 (face.flavor_text.includes('\\*') ? (
                   <div key="flavor">
-                    {renderFlavorText(
-                      (face.flavor_text.startsWith(';')
-                        ? face.flavor_text.slice(1)
-                        : face.flavor_text
-                      ).split('\\n')
-                    )}
+                    {renderFlavorText(stripSemicolon(face.flavor_text).split('\\n'))}
                   </div>
                 ) : (
                   <>
                     <ItalicText typeLevel="body.medium" key="flavor">
-                      {renderText(
-                        (face.flavor_text.startsWith(';')
-                          ? face.flavor_text.slice(1)
-                          : face.flavor_text
-                        ).split('\\n')
-                      )}
+                      {renderText(stripSemicolon(face.flavor_text).split('\\n'))}
                     </ItalicText>
                     <br />
                   </>
@@ -400,7 +387,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       }}
                       key={entry.id}
                       id={entry.id}
-                      name={entry.name}
+                      name={stripSemicolon(entry.name)}
                       url={entry.image!}
                     />
 

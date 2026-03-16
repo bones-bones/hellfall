@@ -29,7 +29,11 @@ export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
    */
   type_line: string;
   /**
-   * An string with the image for this card.
+   * A string with the set for this card.
+   */
+  set: string;
+  /**
+   * A string with the image for this card.
    */
   image?: string;
   /**
