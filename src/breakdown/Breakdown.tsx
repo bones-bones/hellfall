@@ -1,13 +1,13 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { cardsAtom } from '../hellfall/cardsAtom';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom';
 import { HCCard } from '../api-types';
 import styled from '@emotion/styled';
 import { xIcon } from '@workday/canvas-system-icons-web';
 
 import { SidePanel, SidePanelOpenDirection } from '@workday/canvas-kit-react/side-panel';
 import { Card, TertiaryButton, ToolbarIconButton } from '@workday/canvas-kit-react';
-import { HellfallCard } from '../hellfall/HellfallCard';
-import { activeCardAtom } from '../hellfall/searchAtoms';
+import { HellfallCard } from '../hellfall/card/HellfallCard';
+import { activeCardAtom } from '../hellfall/atoms/searchAtoms';
 import { canBeACommander } from '../hellfall/canBeACommander';
 // TODO: make sure this still works
 export const Breakdown = () => {

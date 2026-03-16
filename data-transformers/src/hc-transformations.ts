@@ -13,8 +13,8 @@ import {
 } from '../../src/api-types/Card';
 import { HCObject } from '../../src/api-types/Object';
 import { getDefaultStore } from 'jotai';
-import { loadPips, pipsAtom } from '../../src/hellfall/pipsAtom';
-import { getColorIdentityProps } from '../../src/hellfall/getColorIdentity';
+import { loadPips, pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
+import { getColorIdentityProps } from './getColorIdentity';
 
 // TODO: hard sort the property order in a logical way
 const typeSet = new Set<string>();
@@ -174,8 +174,8 @@ const mergeCards = (
     'card_faces' in existingCard == 'card_faces' in newCard
       ? { ...existingCard }
       : 'card_faces' in mergedPrelim
-      ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
-      : { ...(mergedPrelim as HCCard.AnySingleFaced) };
+        ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
+        : { ...(mergedPrelim as HCCard.AnySingleFaced) };
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     setDerivedProps(merged);
   }
@@ -352,7 +352,7 @@ const mergeDatabases = (
     const newCard = newCardMap.get(existingCard.id);
     if (newCard) {
       newCardMap.delete(newCard.id);
-      return mergeCards(existingCard, newCard, false);
+      return mergeCards(existingCard, newCard, true);
     }
     return existingCard;
   });
@@ -494,8 +494,8 @@ const main = async () => {
               ? finalCards.find(card => card.id == tokenMaker.id)
               : finalTokens.find(card => card.id == tokenMaker.id)
             : finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
-            ? finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
-            : finalTokens.find(card => card.id.toLowerCase() == tokenMaker.name.toLowerCase());
+              ? finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
+              : finalTokens.find(card => card.id.toLowerCase() == tokenMaker.name.toLowerCase());
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;

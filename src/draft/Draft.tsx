@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { FormField } from '@workday/canvas-kit-react/form-field';
 import { Select } from '@workday/canvas-kit-preview-react/select';
-import { cardsAtom } from '../hellfall/cardsAtom';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom';
 import { Area } from './Area';
 import { useAtom, useAtomValue } from 'jotai';
 import { deckAtom, draftAtom } from './draftAtom';

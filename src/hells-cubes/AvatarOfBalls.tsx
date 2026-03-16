@@ -1,6 +1,6 @@
 import { FormField, PrimaryButton, TextInput } from '@workday/canvas-kit-react';
 import { useRef, useState } from 'react';
-import { cardsAtom } from '../hellfall/cardsAtom';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom';
 import { HCCard } from '../api-types';
 import { HellfallEntry } from '../hellfall/HellfallEntry';
 import { useAtomValue } from 'jotai';

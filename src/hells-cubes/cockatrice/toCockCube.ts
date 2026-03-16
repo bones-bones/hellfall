@@ -1,7 +1,11 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
-import { HCCard } from '../api-types';
-import tokens from '../data/tokens.json';
-import { recursiveAdoption } from './recursiveAdoption';
+import { HCCard } from '../../api-types';
+import tokens from '../../data/tokens.json';
+import { recursiveAdoption } from '../recursiveAdoption';
+import { getLayout } from './getLayout';
+import { getTableRow } from './getTableRow';
+import { getTableRowForToken } from './getTableRowForToken';
+import { prettifyXml } from './prettifyXml';
 export const toCockCube = ({
   name,
   set,
@@ -90,30 +94,7 @@ export const toCockCube = ({
   return prettifyXml(formattedXmlString);
 };
 
-// https://stackoverflow.com/questions/376373/pretty-printing-xml-with-javascript
-const prettifyXml = function (sourceXml: string) {
-  const xmlDoc = new DOMParser().parseFromString(sourceXml, 'application/xml');
-  const a = [
-    '<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">',
-    ' <xsl:strip-space elements="*"/>',
-    ' <xsl:template match="para[content-style][not(text())]">',
-    '   <xsl:value-of select="normalize-space(.)"/>',
-    ' </xsl:template>',
-    ' <xsl:template match="node()|@*">',
-    '   <xsl:copy><xsl:apply-templates select="node()|@*"/></xsl:copy>',
-    ' </xsl:template>',
-    ' <xsl:output indent="yes" />',
-    '</xsl:stylesheet>',
-  ].join('\n');
 
-  const xsltDoc = new DOMParser().parseFromString(a, 'application/xml');
-
-  const xsltProcessor = new XSLTProcessor();
-  xsltProcessor.importStylesheet(xsltDoc);
-  const resultDoc = xsltProcessor.transformToDocument(xmlDoc);
-  const resultXml = new XMLSerializer().serializeToString(resultDoc);
-  return resultXml;
-};
 
 const hcCardToCockCard = ({
   xmlDoc,
@@ -129,9 +110,11 @@ const hcCardToCockCard = ({
   sideIndex: number;
 }) => {
   const face = entry.toFaces()[sideIndex];
+
   const tempCard = xmlDoc.createElement('card');
   const name = xmlDoc.createElement('name');
-  name.textContent = face.name;
+  name.textContent = entry.name;
+  console.log(entry, face)
 
   const text = xmlDoc.createElement('text');
   text.textContent = face.oracle_text.replace(/\\n/g, '\n').replace(/[{}]/g, '');
@@ -225,64 +208,4 @@ const hcCardToCockCard = ({
   }
 
   return tempCard;
-};
-
-const getLayout = (card: HCCard.Any) => {
-  if (
-    (card.toFaces().filter(e => e.image).length <= 1 && card.toFaces().length > 1) ||
-    card.toFaces()[0].types?.some(e => ['Battle', 'Plane', 'Phenomenon'].includes(e))
-  ) {
-    return 'split';
-  }
-
-  return 'normal';
-};
-
-// TODO: Should these use only the first face?
-const getTableRow = (card: HCCard.Any) => {
-  if (
-    card
-      .toFaces()
-      .map(e => e.types)
-      .flat()
-      .some(e => ['Instant', 'Sorcery'].includes(e!))
-  ) {
-    return 3;
-  }
-
-  if (
-    card
-      .toFaces()
-      .map(e => e.types)
-      .flat()
-      .includes('Creature')
-  ) {
-    return 2;
-  }
-
-  if (
-    card
-      .toFaces()
-      .map(e => e.types)
-      .flat()
-      .includes('Land')
-  ) {
-    return 0;
-  }
-  return 1;
-};
-
-const getTableRowForToken = (type: string) => {
-  if (type.split(';').includes('Instant') || type.split(';').includes('Sorcery')) {
-    return 3;
-  }
-
-  if (type.split(';').includes('Creature')) {
-    return 2;
-  }
-
-  if (type.split(';').includes('Land')) {
-    return 0;
-  }
-  return 1;
 };

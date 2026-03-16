@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useState, useEffect, PropsWithChildren, FC } from 'react';
-import { SearchCheckbox } from '../SearchCheckbox';
+import { SearchCheckbox } from '../search-controls/SearchCheckbox';
 import { StyledLegend } from '../StyledLabel';
 import { HCSearchColor } from '../../api-types';
 

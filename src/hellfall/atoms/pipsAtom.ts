@@ -1,10 +1,12 @@
-import { HCCardSymbol } from '../api-types/Symbology';
+import { HCCardSymbol } from '../../api-types/Symbology';
 import { atom } from 'jotai';
 
 export const pipsAtom = atom<HCCardSymbol[]>([]);
 
 export const loadPips = async () => {
-  const { data } = await import('../data/pips.json');
+  // @ts-ignore
+  const { data } = await import('../../data/pips.json');
+  // @ts-ignore
   const transformedData = data.map(item => {
     let manaValue: number;
 

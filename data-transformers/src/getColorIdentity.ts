@@ -1,9 +1,8 @@
-import { HCCard, HCCardFace, HCLayout, HCLayoutGroup } from '../api-types/Card';
-import { pipsAtom } from './pipsAtom';
-import { useAtomValue } from 'jotai';
+import { HCCard, HCCardFace, HCLayoutGroup } from '../../src/api-types/Card';
+import { pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
 import { getDefaultStore } from 'jotai';
-import { HCColor, HCColors } from '../api-types/Card';
-import { splitParens } from './splitParens';
+import { HCColor, HCColors } from '../../src/api-types/Card';
+import { splitParens } from '../../src/hellfall/splitParens';
 const store = getDefaultStore();
 
 export const getColorIdentityProps = (

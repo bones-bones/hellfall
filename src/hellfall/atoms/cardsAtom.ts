@@ -1,11 +1,11 @@
 import { atom } from 'jotai';
-import { HCCard } from '../api-types';
-import { HCCardFace } from '../api-types';
+import { HCCard } from '../../api-types';
+import { HCCardFace } from '../../api-types';
 
 // @ts-ignore
 export const cardsAtom = atom<HCCard.Any[]>(async () => {
   // @ts-ignore
-  const { data } = await import('../data/Hellscube-Database.json');
+  const { data } = await import('../../data/Hellscube-Database.json');
   return (data as HCCard.Any[]).map(card => ({
     ...card,
     toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced] {

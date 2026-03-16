@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { pipsAtom } from './pipsAtom';
+import { pipsAtom } from './atoms/pipsAtom';
 import { useAtomValue } from 'jotai';
 import { getDefaultStore } from 'jotai';
 import { HCColors } from '../api-types';
