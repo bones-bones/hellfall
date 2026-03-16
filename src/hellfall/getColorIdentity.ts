@@ -76,7 +76,9 @@ export const getColorIdentityProps = (
         card.layout as HCLayoutGroup.FrontIdentityLayoutType
       )
     ) {
-      addColorsFromFace(card.card_faces[0]);
+      card.card_faces.slice(0,-1).forEach(entry => {
+        addColorsFromFace(entry);
+      });
     } else {
       card.card_faces.forEach(entry => {
         addColorsFromFace(entry);
