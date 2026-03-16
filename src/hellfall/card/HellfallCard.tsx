@@ -134,7 +134,6 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const [activeImageSide, setActiveImageSide] = useState(0);
 
   // TODO: add handling for flip and aftermath
-  // TODO: add color indicator symbols
   const imagesToShow = getImages(data);
   //   'card_faces' in data
   //     ? [

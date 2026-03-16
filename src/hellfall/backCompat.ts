@@ -1,5 +1,4 @@
 // note: this implementation maintains links and references for all cards except "3" (Id: 819) and "1984" (Id: 5353)
-// TODO: add compatibility for subids
 import { useAtom, useAtomValue } from 'jotai';
 import { cardsAtom } from './atoms/cardsAtom';
 import { textEquals } from './useSearchResults';
@@ -12,10 +11,12 @@ export const useNameToId = (name: string): string | undefined => {
     return theId;
   }
   return (
-    cards.find(card => textEquals(card.id,name))?.id ??
-    cards.find(card => textEquals(card.name,name))?.id ??
+    cards.find(card => textEquals(card.id, name))?.id ??
+    cards.find(card => textEquals(card.name, name))?.id ??
     cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
-    cards.find(card =>'card_faces' in card && card.card_faces.some(face => textEquals(face.name,name)))?.id
+    cards.find(
+      card => 'card_faces' in card && card.card_faces.some(face => textEquals(face.name, name))
+    )?.id
   );
 };
 export const useIsId = (id: string): boolean => {

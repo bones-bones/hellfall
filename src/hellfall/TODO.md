@@ -80,7 +80,6 @@ Write a script to transform the database
 - ask for ruling: Armory Manufactor
 - deal with multiple creators
 - make sure mork fetches draft image where it exists
-- allow search & namings to ignore italics symbols
 - deal with spellbooks (prop in relatedCard)
 - call the dermotaxi as token_on_back?
 - make tag links work correctly on individual card pages
