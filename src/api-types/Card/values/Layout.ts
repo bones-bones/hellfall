@@ -1,10 +1,12 @@
 /**
  * The set of card layouts.
  */
+
+// TODO: Decide whether to do array for cards that arguably fit multiple layouts
 export enum HCLayout {
   /** A standard Magic card with one face */
   Normal = 'normal',
-  /** A multi-faced card */
+  /** A multi-faced card that doesn't fit into another category */
   Multi = 'multi',
   /** A multi-faced card that needs to be rendered as a grid (still  needs to be implemented) */
   // Grid = 'grid',
@@ -34,69 +36,30 @@ export enum HCLayout {
   Checklist = 'checklist',
   /** Misc images that aren't actually cards */
   Misc = 'misc',
-  /** reminder on back of card */
+  /** Cards with faces of draftpartners */
+  DraftPartner = 'draft_partner',
+  /** Cards with a reminder on the back */
   ReminderOnBack = 'reminder_on_back',
-  /** dungeon on back of card */
+  /** Cards with a  dungeon on the back */
   DungeonOnBack = 'dungeon_on_back',
-  /** token on back of card */
+  /** Cards with a token on the back */
   TokenOnBack = 'token_on_back',
-  /** stickers on back of card */
+  /** Cards with a sticker sheet on the back */
   StickersOnBack = 'stickers_on_back',
+  /** The following apply if none of the other multi ones apply, and the first one to match is applied */
+  /** Cards that can be played on more than one face */
+  Modal = 'modal',
+  /** Cards that transform */
+  Transform = 'transform',
+  /** Cards that flip */
+  Flip = 'flip',
+  /** Cards with an inset */
+  Inset = 'inset',
+  /** Cards with an aftermath face */
+  Aftermath = 'aftermath',
+  /** Split cards */
+  Split = 'split',
 }
-
-// /**
-//  * The set of layouts for a specific face.
-//  */
-// export enum HCFaceLayout {
-//   /** A standard Magic card face */
-//   Normal = 'normal',
-//   /** A split face */
-//   Split = 'split',
-//   /** A flip face */
-//   Flip = 'flip',
-//   /** Double-sided cards that transform */
-//   Transform = 'transform',
-//   /** Double-sided cards that can be played either-side */
-//   ModalDfc = 'modal_dfc',
-//   /** Cards with meld parts printed on the back */
-//   Meld = 'meld',
-//   /** Cards with Level Up */
-//   Leveler = 'leveler',
-//   /** Class-type enchantment cards */
-//   Class = 'class',
-//   /** Saga-type cards */
-//   Saga = 'saga',
-//   /** Cards with an Adventure spell part */
-//   Adventure = 'adventure',
-//   /** Cards with Mutate */
-//   Mutate = 'mutate',
-//   /** Cards with Prototype */
-//   Prototype = 'prototype',
-//   /** Battle-type cards */
-//   Battle = 'battle',
-//   /** Plane and Phenomenon-type cards */
-//   Planar = 'planar',
-//   /** Scheme-type cards */
-//   Scheme = 'scheme',
-//   /** Vanguard-type cards */
-//   Vanguard = 'vanguard',
-//   /** Token cards */
-//   Token = 'token',
-//   /** Tokens with another token printed on the back */
-//   DoubleFacedToken = 'double_faced_token',
-//   /** Emblem cards */
-//   Emblem = 'emblem',
-//   /** Cards with Augment */
-//   Augment = 'augment',
-//   /** Host-type cards */
-//   Host = 'host',
-//   /** Art Series collectable double-faced cards */
-//   ArtSeries = 'art_series',
-//   /** A Magic card with two sides that are unrelated */
-//   ReversibleCard = 'reversible_card',
-//   /** A special type of multi-part enchantment from Murders at Karlov Manor */
-//   Case = 'case',
-// }
 
 /**
  * Groupings of layouts.
@@ -110,15 +73,6 @@ export namespace HCLayoutGroup {
   export const SingleFaced = [
     `${HCLayout.Normal}`,
     `${HCLayout.MeldResult}`,
-    // `${HCLayout.Leveler}`,
-    // `${HCLayout.Class}`,
-    // `${HCLayout.Saga}`,
-    // `${HCLayout.Mutate}`,
-    // `${HCLayout.Prototype}`,
-    // `${HCLayout.Battle}`,
-    // `${HCLayout.Planar}`,
-    // `${HCLayout.Scheme}`,
-    // `${HCLayout.Vanguard}`,
     `${HCLayout.Token}`,
     `${HCLayout.Emblem}`,
     `${HCLayout.Reminder}`,
@@ -127,8 +81,6 @@ export namespace HCLayoutGroup {
     `${HCLayout.RealCardToken}`,
     `${HCLayout.Checklist}`,
     `${HCLayout.Misc}`,
-    // `${HCLayout.Augment}`,
-    // `${HCLayout.Host}`,
   ] as const;
 
   /**
@@ -149,10 +101,17 @@ export namespace HCLayoutGroup {
     `${HCLayout.MeldPart}`,
     `${HCLayout.MultiReminder}`,
     `${HCLayout.RealCardMultiToken}`,
+    `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
     `${HCLayout.DungeonOnBack}`,
     `${HCLayout.StickersOnBack}`,
+    `${HCLayout.Modal}`,
+    `${HCLayout.Transform}`,
+    `${HCLayout.Flip}`,
+    `${HCLayout.Inset}`,
+    `${HCLayout.Aftermath}`,
+    `${HCLayout.Split}`,
   ] as const;
 
   /**
@@ -172,10 +131,17 @@ export namespace HCLayoutGroup {
     `${HCLayout.Normal}`,
     `${HCLayout.Multi}`,
     `${HCLayout.MeldPart}`,
+    `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
     `${HCLayout.DungeonOnBack}`,
     `${HCLayout.StickersOnBack}`,
+    `${HCLayout.Modal}`,
+    `${HCLayout.Transform}`,
+    `${HCLayout.Flip}`,
+    `${HCLayout.Inset}`,
+    `${HCLayout.Aftermath}`,
+    `${HCLayout.Split}`,
   ] as const;
 
   /**
@@ -221,6 +187,7 @@ export namespace HCLayoutGroup {
    */
   export const FrontIdentityLayout = [
     `${HCLayout.MeldPart}`,
+    `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
     `${HCLayout.DungeonOnBack}`,

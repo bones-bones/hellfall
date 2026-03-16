@@ -125,9 +125,6 @@ const mergeCards = (
   newCard: HCCard.Any,
   usingApproved: boolean = false
 ): HCCard.Any => {
-  if (existingCard.id == 'Whale1') {
-    const x = 1;
-  }
   if (
     usingApproved &&
     (existingCard.has_draft_partners ||
@@ -203,7 +200,7 @@ const mergeCards = (
                 }
               } else if (k == 'colors') {
                 // TODO: store current version and print the diff if there is one
-              } else if (k == 'image_status') {
+              } else if (k == 'image_status' && newFace.image) {
                 // TODO: store current version and print the diff if there is one
               } else if (v || (!merged.isActualToken && cardBlankableProps.includes(k))) {
                 (face as any)[k] = v;
@@ -286,8 +283,8 @@ const mergeCards = (
         // TODO: store current version and print the diff if there is one
         if (
           !('card_faces' in merged) &&
-          !('card_faces' in newCard) &&
-          (merged.layout == HCLayout.Normal || merged.layout == HCLayout.Token)
+          !('card_faces' in newCard) /**&&
+          (merged.layout == HCLayout.Normal || merged.layout == HCLayout.Token)*/
         ) {
           merged.layout = value as typeof newCard.layout;
         } else if (
@@ -296,15 +293,15 @@ const mergeCards = (
           merged.layout != HCLayout.RealCardMultiToken
         ) {
           merged.layout = value as typeof newCard.layout;
-          if (
-            merged.layout != HCLayout.Multi &&
-            !merged.card_faces[1].image &&
-            [HCImageStatus.Split, HCImageStatus.DraftPartner].includes(
-              merged.card_faces[1].image_status as HCImageStatus
-            )
-          ) {
-            merged.card_faces[1].image_status = newCard.card_faces[1].image_status;
-          }
+          // if (
+          //   merged.layout != HCLayout.Multi &&
+          //   !merged.card_faces.at(-1)!.image &&
+          //   [HCImageStatus.Split, HCImageStatus.DraftPartner].includes(
+          //     merged.card_faces[1].image_status as HCImageStatus
+          //   )
+          // ) {
+          //   merged.card_faces.at(-1)!.image_status = newCard.card_faces.at(-1)!.image_status;
+          // }
         }
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;
@@ -355,7 +352,7 @@ const mergeDatabases = (
     const newCard = newCardMap.get(existingCard.id);
     if (newCard) {
       newCardMap.delete(newCard.id);
-      return mergeCards(existingCard, newCard, true);
+      return mergeCards(existingCard, newCard, false);
     }
     return existingCard;
   });
