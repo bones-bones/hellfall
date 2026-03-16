@@ -68,28 +68,11 @@ const tokenRemovableProps = [
   'has_draft_partners',
 ];
 
-// const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
-//   return cards.map(card => {
-//     if ('card_faces' in card && 'all_parts' in card) {
-//       const { card_faces, all_parts, ...rest } = card;
-//       return { ...rest, card_faces, all_parts } as HCCard.AnyMultiFaced;
-//     }
-//     if ('card_faces' in card) {
-//       const { card_faces, ...rest } = card;
-//       return { ...rest, card_faces } as HCCard.AnyMultiFaced;
-//     }
-//     if ('all_parts' in card) {
-//       const { all_parts, ...rest } = card;
-//       return { ...rest, all_parts } as HCCard.AnySingleFaced;
-//     }
-//     return card;
-//   });
-// };
-const addToJSONToCards = (cards:HCCard.Any[]):HCCard.Any[]=>{
+const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
-    const cardWithJSON = Object.assign({},card,{
-      toJSON(this:Record<string,any>) {
-        const ordered: Record<string,any> = {};
+    const cardWithJSON = Object.assign({}, card, {
+      toJSON(this: Record<string, any>) {
+        const ordered: Record<string, any> = {};
         const propOrder = [
           'id',
           'name',
@@ -129,7 +112,7 @@ const addToJSONToCards = (cards:HCCard.Any[]):HCCard.Any[]=>{
           'variation',
           'variation_of',
           'layout',
-        ]
+        ];
         const facePropOrder = [
           'name',
           'mana_cost',
@@ -151,7 +134,7 @@ const addToJSONToCards = (cards:HCCard.Any[]):HCCard.Any[]=>{
           'watermark',
           'image_status',
           'image',
-        ]
+        ];
         const partPropOrder = [
           'id',
           'name',
@@ -160,40 +143,40 @@ const addToJSONToCards = (cards:HCCard.Any[]):HCCard.Any[]=>{
           'image',
           'component',
           'is_draft_partner',
-        ]
+        ];
         propOrder.forEach(prop => {
           if (prop in this) {
-            ordered[prop] = this[prop]
+            ordered[prop] = this[prop];
           }
-        })
+        });
         if ('card_faces' in this) {
-          ordered.card_faces = this.card_faces.map((face:Record<string,any>) => {
-            const orderedFace:Record<string,any>={};
-            facePropOrder.forEach(prop=>{
+          ordered.card_faces = this.card_faces.map((face: Record<string, any>) => {
+            const orderedFace: Record<string, any> = {};
+            facePropOrder.forEach(prop => {
               if (prop in face) {
                 orderedFace[prop] = face[prop];
               }
-            })
+            });
             return orderedFace;
-          })
+          });
         }
         if ('all_parts' in this) {
-          ordered.all_parts = this.all_parts.map((part:Record<string,any>) => {
-            const orderedPart:Record<string,any>={};
-            partPropOrder.forEach(prop=>{
+          ordered.all_parts = this.all_parts.map((part: Record<string, any>) => {
+            const orderedPart: Record<string, any> = {};
+            partPropOrder.forEach(prop => {
               if (prop in part) {
                 orderedPart[prop] = part[prop];
               }
-            })
+            });
             return orderedPart;
-          })
+          });
         }
-        return ordered
-      }
-    })
+        return ordered;
+      },
+    });
     return cardWithJSON as HCCard.Any;
-  })
-}
+  });
+};
 const setDerivedProps = (card: HCCard.Any) => {
   if ('card_faces' in card) {
     const type_line_list: string[] = [];

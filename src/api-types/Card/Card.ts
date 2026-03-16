@@ -81,7 +81,7 @@ export namespace HCCard {
       /**
        * Custom JSON serialization to ensure consistent property order.
        * This method is automatically called by JSON.stringify().
-       * 
+       *
        * @returns An ordered object representation of the card
        */
       toJSON(): Record<string, any>;

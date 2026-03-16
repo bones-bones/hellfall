@@ -20,7 +20,7 @@ export type HCCardSymbol = HCObject.Object<HCObject.ObjectType.CardSymbol> & {
    */
   english: string;
   /**
-   * True if it is possible to write this symbol “backwards”. For example, the official symbol {U/P} is sometimes written as {P/U} or {P\U} in informal settings. Note that the HC API never writes symbols backwards in other responses. This field is provided for informational purposes.
+   * True if it is possible to write this symbol "backwards". For example, the official symbol {U/P} is sometimes written as {P/U} or {P\U} in informal settings. Note that the HC API never writes symbols backwards in other responses. This field is provided for informational purposes.
    */
   // transposable: boolean;
   /**
@@ -28,7 +28,7 @@ export type HCCardSymbol = HCObject.Object<HCObject.ObjectType.CardSymbol> & {
    */
   represents_mana: boolean;
   /**
-   * A decimal number representing this symbol’s mana value (also knowns as the converted mana cost). Note that mana symbols from funny sets can have fractional mana values.
+   * A decimal number representing this symbol's mana value (also knowns as the converted mana cost). Note that mana symbols from funny sets can have fractional mana values.
    *
    * @type Decimal
    */
@@ -42,7 +42,7 @@ export type HCCardSymbol = HCObject.Object<HCObject.ObjectType.CardSymbol> & {
    */
   colors?: HCColors;
   /**
-   * True if the symbol is a hybrid mana symbol. Note that monocolor Phyrexian symbols aren’t considered hybrid.
+   * True if the symbol is a hybrid mana symbol. Note that monocolor Phyrexian symbols aren't considered hybrid.
    */
   // hybrid: boolean;
   /**

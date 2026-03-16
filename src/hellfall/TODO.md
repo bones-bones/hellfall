@@ -54,7 +54,7 @@ Write a script to transform the database
 - special cases: Scared Turtle // Snappy Turtle for flip, Ability Bingo, Bear Alignment Chart, Force of Rowan (for draft)
 
   - add grid (that allows root-level stuff as well as faces?)?
-  - use girid? to deal with Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, Blingo, Assimilated Strategist, bear hate,
+  - use grid? to deal with Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, Blingo, Assimilated Strategist, bear hate,
 
 - switch search to text bar and make the mass of buttons hidden as advanced search
 - see if any better images are floating around for HC2 in general
@@ -80,6 +80,7 @@ Write a script to transform the database
 - ask for ruling: Armory Manufactor
 - deal with multiple creators
 - make sure mork fetches draft image where it exists
-- allow search to ignore italics symbols
+- allow search & namings to ignore italics symbols
 - deal with spellbooks (prop in relatedCard)
 - call the dermotaxi as token_on_back?
+- make tag links work correctly on individual card pages

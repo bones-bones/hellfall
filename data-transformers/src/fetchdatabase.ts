@@ -94,33 +94,33 @@ export const fetchDatabase = async () => {
     oracle_text: '',
   };
 
-  const multiFaceTagLayouts:Record<string,HCLayout> = {
-    meld:HCLayout.MeldPart,
-    draftpaftner:HCLayout.DraftPartner,
-    'reminder-on-back':HCLayout.ReminderOnBack,
-    'dungeon-on-back':HCLayout.DungeonOnBack,
-    'token-on-back':HCLayout.TokenOnBack,
-    'stickers-on-back':HCLayout.StickersOnBack,
-    mdfc:HCLayout.Modal,
-    transform:HCLayout.Transform,
-    flip:HCLayout.Flip,
-    inset:HCLayout.Inset,
-    aftermath:HCLayout.Aftermath,
-    split:HCLayout.Split
-  }
-  
-  const multiFaceTagImageStatuses:Record<string,HCImageStatus> = {
-    draftpaftner:HCImageStatus.DraftPartner,
-    'reminder-on-back':HCImageStatus.Reminder,
-    'dungeon-on-back':HCImageStatus.Dungeon,
-    'token-on-back':HCImageStatus.Token,
-    'stickers-on-back':HCImageStatus.Stickers,
-    flip:HCImageStatus.Flip,
-    inset:HCImageStatus.Inset,
-    aftermath:HCImageStatus.Aftermath,
-    split:HCImageStatus.Split
-  }
-  
+  const multiFaceTagLayouts: Record<string, HCLayout> = {
+    meld: HCLayout.MeldPart,
+    draftpaftner: HCLayout.DraftPartner,
+    'reminder-on-back': HCLayout.ReminderOnBack,
+    'dungeon-on-back': HCLayout.DungeonOnBack,
+    'token-on-back': HCLayout.TokenOnBack,
+    'stickers-on-back': HCLayout.StickersOnBack,
+    mdfc: HCLayout.Modal,
+    transform: HCLayout.Transform,
+    flip: HCLayout.Flip,
+    inset: HCLayout.Inset,
+    aftermath: HCLayout.Aftermath,
+    split: HCLayout.Split,
+  };
+
+  const multiFaceTagImageStatuses: Record<string, HCImageStatus> = {
+    draftpaftner: HCImageStatus.DraftPartner,
+    'reminder-on-back': HCImageStatus.Reminder,
+    'dungeon-on-back': HCImageStatus.Dungeon,
+    'token-on-back': HCImageStatus.Token,
+    'stickers-on-back': HCImageStatus.Stickers,
+    flip: HCImageStatus.Flip,
+    inset: HCImageStatus.Inset,
+    aftermath: HCImageStatus.Aftermath,
+    split: HCImageStatus.Split,
+  };
+
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
       card_faces: [],
@@ -208,8 +208,8 @@ export const fetchDatabase = async () => {
                   entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
                     ? 'meld_part'
                     : entry[20].includes('draftpartner')
-                      ? 'draft_partner'
-                      : 'token_maker',
+                    ? 'draft_partner'
+                    : 'token_maker',
                 name: entry[i],
                 type_line: '',
                 set: '',
@@ -270,34 +270,47 @@ export const fetchDatabase = async () => {
       if (!('image_status' in face) /**|| ['split'].includes(face.image_status)*/) {
         if (index == 0) {
           face.image_status = HCImageStatus.Front;
-        } else if (cardObject.tags?.includes('draftpartner') || cardObject.card_faces[0].oracle_text?.toLowerCase().includes('draftpartner')) {
+        } else if (
+          cardObject.tags?.includes('draftpartner') ||
+          cardObject.card_faces[0].oracle_text?.toLowerCase().includes('draftpartner')
+        ) {
           face.image_status = HCImageStatus.DraftPartner;
         } else if (
-          cardObject.tags?.includes('reminder-on-back') || face.types?.includes('Reminder Card') || face.types?.includes('Spellbook')
+          cardObject.tags?.includes('reminder-on-back') ||
+          face.types?.includes('Reminder Card') ||
+          face.types?.includes('Spellbook')
         ) {
           face.image_status = HCImageStatus.Reminder;
         } else if (
-          cardObject.tags?.includes('dungeon-on-back') || face.types?.includes('Dungeon')
+          cardObject.tags?.includes('dungeon-on-back') ||
+          face.types?.includes('Dungeon')
         ) {
           face.image_status = HCImageStatus.Dungeon;
         } else if (
-          cardObject.tags?.includes('stickers-on-back') || face.types?.includes('Stickers')
+          cardObject.tags?.includes('stickers-on-back') ||
+          face.types?.includes('Stickers')
         ) {
           face.image_status = HCImageStatus.Stickers;
         } else if (
-          cardObject.tags?.includes('token-on-back') || face.supertypes?.includes('Token')
+          cardObject.tags?.includes('token-on-back') ||
+          face.supertypes?.includes('Token')
         ) {
           face.image_status = HCImageStatus.Token;
         } else if (
-          cardObject.tags?.includes('flip') || cardObject.card_faces[0].oracle_text?.toLowerCase().includes("flip")
+          cardObject.tags?.includes('flip') ||
+          cardObject.card_faces[0].oracle_text?.toLowerCase().includes('flip')
         ) {
           face.image_status = HCImageStatus.Flip;
         } else if (
-          cardObject.tags?.includes('aftermath') || face.oracle_text?.toLowerCase().includes("aftermath")
+          cardObject.tags?.includes('aftermath') ||
+          face.oracle_text?.toLowerCase().includes('aftermath')
         ) {
           face.image_status = HCImageStatus.Aftermath;
         } else if (
-          cardObject.tags?.includes('inset') || face.subtypes?.some((sub:string) => ['Adventure','Omen','Departure','Odyssey','Return'].includes(sub))
+          cardObject.tags?.includes('inset') ||
+          face.subtypes?.some((sub: string) =>
+            ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub)
+          )
         ) {
           face.image_status = HCImageStatus.Inset;
         } else {
@@ -368,53 +381,69 @@ export const fetchDatabase = async () => {
         cardObject.card_faces[0].image_status = 'front';
       }
       if (!('layout' in cardObject)) {
-        if (cardObject.tags?.includes('meld') || cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')) {
+        if (
+          cardObject.tags?.includes('meld') ||
+          cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
+        ) {
           cardObject.layout = HCLayout.MeldPart;
           if ('all_parts' in cardObject) {
             cardObject.all_parts[0].component = 'meld_part';
           }
-        } else if (cardObject.tags?.includes('draftpartner') || cardObject.card_faces[0].oracle_text.toLowerCase().includes('draftpartner')) {
+        } else if (
+          cardObject.tags?.includes('draftpartner') ||
+          cardObject.card_faces[0].oracle_text.toLowerCase().includes('draftpartner')
+        ) {
           cardObject.layout = HCLayout.DraftPartner;
         } else if (
-          cardObject.tags?.includes('reminder-on-back') || cardObject.card_faces.at(-1)?.types?.includes('Reminder Card')
+          cardObject.tags?.includes('reminder-on-back') ||
+          cardObject.card_faces.at(-1)?.types?.includes('Reminder Card')
         ) {
           cardObject.layout = HCLayout.ReminderOnBack;
         } else if (
-          cardObject.tags?.includes('dungeon-on-back') || cardObject.card_faces.at(-1)?.types?.includes('Dungeon')
+          cardObject.tags?.includes('dungeon-on-back') ||
+          cardObject.card_faces.at(-1)?.types?.includes('Dungeon')
         ) {
           cardObject.layout = HCLayout.DungeonOnBack;
         } else if (
-          cardObject.tags?.includes('stickers-on-back') || cardObject.card_faces.at(-1)?.types?.includes('Stickers')
+          cardObject.tags?.includes('stickers-on-back') ||
+          cardObject.card_faces.at(-1)?.types?.includes('Stickers')
         ) {
           cardObject.layout = HCLayout.StickersOnBack;
         } else if (
-          cardObject.tags?.includes('token-on-back') || cardObject.card_faces.at(-1)?.supertypes?.includes('Token')
+          cardObject.tags?.includes('token-on-back') ||
+          cardObject.card_faces.at(-1)?.supertypes?.includes('Token')
         ) {
           cardObject.layout = HCLayout.TokenOnBack;
-        } else if (
-          cardObject.tags?.includes('mdfc')
-        ) {
+        } else if (cardObject.tags?.includes('mdfc')) {
           cardObject.layout = HCLayout.Modal;
         } else if (
-          cardObject.tags?.includes('transform') || cardObject.card_faces[0].oracle_text.toLowerCase().includes("transform")
+          cardObject.tags?.includes('transform') ||
+          cardObject.card_faces[0].oracle_text.toLowerCase().includes('transform')
         ) {
           cardObject.layout = HCLayout.Transform;
-        } else if (cardObject.card_faces.slice(1).find(e=>e.image)) {
+        } else if (cardObject.card_faces.slice(1).find(e => e.image)) {
           if (cardObject.card_faces.slice(1).some(face => face.mana_cost && face.image)) {
             cardObject.layout = HCLayout.Modal;
           } else {
             cardObject.layout = HCLayout.Transform;
           }
         } else if (
-          cardObject.tags?.includes('flip') || cardObject.card_faces[0].oracle_text.toLowerCase().includes("flip")
+          cardObject.tags?.includes('flip') ||
+          cardObject.card_faces[0].oracle_text.toLowerCase().includes('flip')
         ) {
           cardObject.layout = HCLayout.Flip;
         } else if (
-          cardObject.tags?.includes('inset') || cardObject.card_faces.some(face => face.subtypes?.some((sub:string) => ['Adventure','Omen','Departure','Odyssey','Return'].includes(sub)))
+          cardObject.tags?.includes('inset') ||
+          cardObject.card_faces.some(face =>
+            face.subtypes?.some((sub: string) =>
+              ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub)
+            )
+          )
         ) {
           cardObject.layout = HCLayout.Inset;
         } else if (
-          cardObject.tags?.includes('aftermath') || cardObject.card_faces.some(face=> face.oracle_text.toLowerCase().includes("aftermath"))
+          cardObject.tags?.includes('aftermath') ||
+          cardObject.card_faces.some(face => face.oracle_text.toLowerCase().includes('aftermath'))
         ) {
           cardObject.layout = HCLayout.Aftermath;
         } else {
