@@ -6,7 +6,7 @@ import { HCLegality, HCLegalitiesField } from '../../src/api-types/Card';
 
 export const fetchTokens = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
 
