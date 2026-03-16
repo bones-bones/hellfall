@@ -230,7 +230,13 @@ const mergeCards = (
   if (
     usingApproved &&
     (existingCard.has_draft_partners ||
-      [HCLayout.MeldPart, HCLayout.MeldResult].includes(existingCard.layout as HCLayout) ||
+      [
+        HCLayout.MeldPart,
+        HCLayout.MeldResult,
+        HCLayout.MultiToken,
+        HCLayout.MultiReminder,
+        HCLayout.RealCardMultiToken,
+      ].includes(existingCard.layout as HCLayout) ||
       ('card_faces' in existingCard && existingCard.card_faces.length > 4))
   ) {
     return existingCard;
@@ -454,7 +460,7 @@ const mergeDatabases = (
     const newCard = newCardMap.get(existingCard.id);
     if (newCard) {
       newCardMap.delete(newCard.id);
-      return mergeCards(existingCard, newCard, false);
+      return mergeCards(existingCard, newCard, true);
     }
     return existingCard;
   });
