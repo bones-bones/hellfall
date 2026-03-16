@@ -82,3 +82,4 @@ Write a script to transform the database
 - deal with spellbooks (prop in relatedCard)
 - call the dermotaxi as token_on_back?
 - make tag links work correctly on individual card pages
+- make simplifier for hybrid identity
