@@ -81,3 +81,5 @@ Write a script to transform the database
 - deal with multiple creators
 - make sure mork fetches draft image where it exists
 - allow search to ignore italics symbols
+- deal with spellbooks (prop in relatedCard)
+- call the dermotaxi as token_on_back?
