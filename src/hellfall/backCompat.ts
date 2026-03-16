@@ -10,10 +10,20 @@ export const useNameToId = (name: string): string | undefined => {
     const theId = filteredCards[Math.floor(Math.random() * filteredCards.length)].id;
     return theId;
   }
-  return cards.find(card => card.name === name)?.id;
+  return (
+    cards.find(card => card.id.toLowerCase() == name.toLowerCase())?.id ??
+    cards.find(card => card.name.toLowerCase() == name.toLowerCase())?.id ??
+    cards.find(
+      card => 'card_faces' in card && card.card_faces[0].name.toLowerCase() == name.toLowerCase()
+    )?.id ??
+    cards.find(
+      card =>
+        'card_faces' in card &&
+        card.card_faces.some(face => face.name.toLowerCase() == name.toLowerCase())
+    )?.id
+  );
 };
-export const useIsNonTokenName = (name: string): boolean => {
+export const useIsId = (id: string): boolean => {
   const cards = useAtomValue(cardsAtom);
-  const cardNames = cards.filter(e => !e.isActualToken).map(e => e.name);
-  return cardNames.includes(name);
+  return !!cards.find(card => card.id == id);
 };

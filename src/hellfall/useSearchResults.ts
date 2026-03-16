@@ -21,6 +21,7 @@ import {
   searchColorIdentityNumberAtom,
   useHybridIdentityAtom,
   searchSetAtom,
+  searchTokenAtom,
   sortAtom,
   typeSearchAtom,
   isCommanderAtom,
@@ -33,10 +34,10 @@ import {
   dirAtom,
 } from './searchAtoms';
 import { sortFunction } from './sortFunction';
-import { getColorIdentity } from './getColorIdentity';
 import { canBeACommander } from './canBeACommander';
 import { debug } from 'console';
 import { toNumber } from './inputs/NumberSelector';
+import { colorCompOp } from './colorComps';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
@@ -46,6 +47,7 @@ export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
   const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
   const set = useAtomValue(searchSetAtom);
+  const cardsOrTokens = useAtomValue(searchTokenAtom);
   const costSearch = useAtomValue(costSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const idSearch = useAtomValue(idSearchAtom);
@@ -94,14 +96,48 @@ export const useSearchResults = () => {
     // });
     const tempResults = cards
       .filter(entry => {
-        if (set.length > 0 && !isSetInResults(entry.set, set)) {
-          return false;
-        }
-        if (!extraFilters.includes('isToken') && entry.isActualToken) {
-          return false;
-        }
-        if (extraFilters.includes('isToken') && !entry.isActualToken) {
-          return false;
+        switch (cardsOrTokens) {
+          case 'Cards':
+            if (set.length > 0 && !isSetInResults(entry.set, set)) {
+              return false;
+            }
+            if (entry.isActualToken) {
+              return false;
+            }
+            break;
+          case 'Tokens':
+            if (
+              set.length > 0 &&
+              !(
+                'all_parts' in entry &&
+                entry.all_parts
+                  ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
+                  .some(part => isSetInResults(part.set, set))
+              )
+            ) {
+              return false;
+            }
+            if (set.length == 0 && !entry.isActualToken) {
+              return false;
+            }
+            break;
+          case 'Both':
+            if (set.length > 0) {
+              if (
+                !isSetInResults(entry.set, set) &&
+                !(
+                  'all_parts' in entry &&
+                  entry.all_parts
+                    ?.filter(e =>
+                      ['token_maker', 'meld_part', 'draft_partner'].includes(e.component)
+                    )
+                    .some(part => isSetInResults(part.set, set))
+                )
+              ) {
+                return false;
+              }
+            }
+            break;
         }
 
         if (
@@ -580,21 +616,9 @@ export const useSearchResults = () => {
 
         // TODO: handle split cards/adventures/transforms/flips better
         if (searchColors.length > 0) {
-          if (searchColors.includes('C')) {
-            if (
-              (!entry.colors.includes('C') && ['<=', '='].includes(colorComparison)) ||
-              (entry.colors.includes('C') && colorComparison == '>') ||
-              colorComparison == '<'
-            ) {
-              return false;
-            }
-          } else if (!entry.colors || entry.colors.length == 0) {
+          if (!entry.colors || entry.colors.length == 0) {
             // debugger;
             console.log('Card id:', entry.id, 'had a null color.');
-            if (['=', '>=', '>'].includes(colorComparison)) {
-              return false;
-            }
-          } else if (entry.colors.includes('C')) {
             if (['=', '>=', '>'].includes(colorComparison)) {
               return false;
             }
@@ -605,54 +629,8 @@ export const useSearchResults = () => {
               })
             );
             const entryColors: string[] = Array.from(entryColorsSet);
-            switch (colorComparison) {
-              case '<': {
-                if (
-                  !(
-                    entryColors.every(colorEntry => searchColors.includes(colorEntry)) &&
-                    entryColors.length < searchColors.length
-                  )
-                ) {
-                  return false;
-                }
-                break;
-              }
-              case '<=': {
-                if (!entryColors.every(colorEntry => searchColors.includes(colorEntry))) {
-                  return false;
-                }
-                break;
-              }
-              case '=': {
-                if (
-                  !(
-                    entryColors.every(colorEntry => searchColors.includes(colorEntry)) &&
-                    entryColors.length == searchColors.length
-                  )
-                ) {
-                  return false;
-                }
-                break;
-              }
-              case '>=': {
-                if (!searchColors.every(colorEntry => entryColors.includes(colorEntry))) {
-                  return false;
-                }
-
-                break;
-              }
-              case '>': {
-                if (
-                  !(
-                    searchColors.every(colorEntry => entryColors.includes(colorEntry)) &&
-                    entryColors.length > searchColors.length
-                  )
-                ) {
-                  return false;
-                }
-
-                break;
-              }
+            if (!colorCompOp(entryColors, colorComparison, searchColors)) {
+              return false;
             }
           }
         }
@@ -678,22 +656,10 @@ export const useSearchResults = () => {
               return false;
             }
           } else {
-            if (searchColorIdentities.includes('C')) {
-              if (
-                (!entry.color_identity.includes('C') && ['<=', '='].includes(colorComparison)) ||
-                (entry.color_identity.includes('C') && colorComparison == '>') ||
-                colorComparison == '<'
-              ) {
-                return false;
-              }
-            } else if (!entry.color_identity || entry.color_identity.length == 0) {
+            if (!entry.color_identity || entry.color_identity.length == 0) {
               // debugger;
               console.log('Card id:', entry.id, 'had a null color identity.');
-              if (['=', '>=', '>'].includes(colorComparison)) {
-                return false;
-              }
-            } else if (entry.color_identity.includes('C')) {
-              if (['=', '>=', '>'].includes(colorComparison)) {
+              if (['=', '>=', '>'].includes(colorIdentityComparison)) {
                 return false;
               }
             } else {
@@ -703,65 +669,10 @@ export const useSearchResults = () => {
                 })
               );
               const entryColorIdentities: string[] = Array.from(entryColorIdentitiesSet);
-              switch (colorComparison) {
-                case '<': {
-                  if (
-                    !(
-                      entryColorIdentities.every(colorEntry =>
-                        searchColorIdentities.includes(colorEntry)
-                      ) && entryColorIdentities.length < searchColorIdentities.length
-                    )
-                  ) {
-                    return false;
-                  }
-                  break;
-                }
-                case '<=': {
-                  if (
-                    !entryColorIdentities.every(colorEntry =>
-                      searchColorIdentities.includes(colorEntry)
-                    )
-                  ) {
-                    return false;
-                  }
-                  break;
-                }
-                case '=': {
-                  if (
-                    !(
-                      entryColorIdentities.every(colorEntry =>
-                        searchColorIdentities.includes(colorEntry)
-                      ) && entryColorIdentities.length == searchColorIdentities.length
-                    )
-                  ) {
-                    return false;
-                  }
-                  break;
-                }
-                case '>=': {
-                  if (
-                    !searchColorIdentities.every(colorEntry =>
-                      entryColorIdentities.includes(colorEntry)
-                    )
-                  ) {
-                    return false;
-                  }
-
-                  break;
-                }
-                case '>': {
-                  if (
-                    !(
-                      searchColorIdentities.every(colorEntry =>
-                        entryColorIdentities.includes(colorEntry)
-                      ) && entryColorIdentities.length > searchColorIdentities.length
-                    )
-                  ) {
-                    return false;
-                  }
-
-                  break;
-                }
+              if (
+                !colorCompOp(entryColorIdentities, colorIdentityComparison, searchColorIdentities)
+              ) {
+                return false;
               }
             }
           }
@@ -791,6 +702,9 @@ export const useSearchResults = () => {
     }
     if (set.length > 0) {
       searchToSet.append('set', set.join(','));
+    }
+    if (cardsOrTokens != 'Cards') {
+      searchToSet.append('token', cardsOrTokens);
     }
     if (searchColors.length > 0) {
       searchToSet.append('colors', searchColors.join(','));
@@ -868,6 +782,7 @@ export const useSearchResults = () => {
     costSearch,
     rulesSearch,
     set,
+    cardsOrTokens,
     searchColors,
     searchColorIdentities,
     searchColorNumber,

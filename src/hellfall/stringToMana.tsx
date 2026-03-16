@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { pipsAtom } from './pipsAtom';
 import { useAtomValue } from 'jotai';
 import { getDefaultStore } from 'jotai';
+import { HCColors } from '../api-types';
+import { sameColors } from './colorComps';
 const store = getDefaultStore();
 // TODO: add shadows to pips in mana costs (or maybe just always?)
 // TODO: add better alt text handling (do it like scryfall does)
@@ -29,6 +31,21 @@ export const stringToMana = (text: string) => {
       }
       return entry;
     });
+};
+
+export const colorsToIndicator = (colors: HCColors) => {
+  const pips = store.get(pipsAtom);
+  const icon = pips?.find(
+    e => !e.represents_mana && 'colors' in e && sameColors(e.colors!, colors)
+  );
+  const loc = icon ? '/hellfall/pips/' + icon.filename : undefined;
+  return loc ? (
+    <PipContainer>
+      <PipSymbol src={loc} alt={icon?.symbol} />
+    </PipContainer>
+  ) : (
+    colors.toString()
+  );
 };
 
 const PipSymbol = styled('img')({ height: '18px', marginTop: '10px' });

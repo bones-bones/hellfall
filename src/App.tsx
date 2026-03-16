@@ -13,7 +13,7 @@ import { Breakdown } from './breakdown/Breakdown';
 import { Decks } from './decks/Decks';
 import { Watchwolfwar } from './watchWolf/WatchWolfWar';
 import { Watchwolfresults } from './watchWolf/WatchWolfResults';
-import { useNameToId, useIsNonTokenName } from './hellfall/backCompat';
+import { useNameToId, useIsId } from './hellfall/backCompat';
 
 const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
   const setPips = useSetAtom(pipsAtom);
@@ -36,15 +36,12 @@ const CardRoute = () => {
   const params = useParams<{ '*': string }>();
   const navigate = useNavigate();
   const cardIdentifier = params['*'];
-  const IsNonTokenName = useIsNonTokenName(cardIdentifier || '');
   const cardId = useNameToId(cardIdentifier || '');
+  const IsId = useIsId(cardIdentifier || '');
   const [shouldRender, setShouldRender] = useState(false);
   useEffect(() => {
     const handleRedirect = async () => {
-      if (
-        cardIdentifier == 'random' ||
-        (cardIdentifier && !/^\d+$/.test(cardIdentifier) && IsNonTokenName)
-      ) {
+      if (cardIdentifier == 'random' || (!IsId && cardId)) {
         navigate(`/card/${cardId}`, { replace: true });
         return;
       }
@@ -52,7 +49,7 @@ const CardRoute = () => {
     };
 
     handleRedirect();
-  }, [cardIdentifier, cardId, IsNonTokenName, navigate]);
+  }, [cardIdentifier, cardId, navigate]);
 
   if (!shouldRender) {
     return <div />;

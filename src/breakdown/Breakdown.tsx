@@ -8,7 +8,6 @@ import { SidePanel, SidePanelOpenDirection } from '@workday/canvas-kit-react/sid
 import { Card, TertiaryButton, ToolbarIconButton } from '@workday/canvas-kit-react';
 import { HellfallCard } from '../hellfall/HellfallCard';
 import { activeCardAtom } from '../hellfall/searchAtoms';
-import { getColorIdentity } from '../hellfall/getColorIdentity';
 import { canBeACommander } from '../hellfall/canBeACommander';
 // TODO: make sure this still works
 export const Breakdown = () => {
@@ -32,7 +31,7 @@ export const Breakdown = () => {
     .filter(e => canBeACommander(e))
     .reduce<Record<string, HCCard.Any[]>>(
       (curr, next) => {
-        const colorSet = Array.from(new Set(getColorIdentity(next).flat().filter(Boolean))).sort();
+        const colorSet = Array.from(new Set(next.color_identity.flat().filter(Boolean))).sort();
         console.log(colorSet);
         if (curr[next.toFaces()[0]?.colors.join('') || 'undefined']) {
           curr[next.toFaces()[0]?.colors.join('') || 'undefined'].push(next);
