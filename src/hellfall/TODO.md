@@ -79,3 +79,4 @@ Write a script to transform the database
 - ask for ruling: Armory Manufactor
 - deal with multiple creators
 - make sure mork fetches draft image where it exists
+- allow search to ignore italics symbols
