@@ -61,7 +61,6 @@ Write a script to transform the database
 - full documentation
 - use draft_image for full image of multisided cards?
 - fix formatting of all sagas
-- fix formatting of all flavor text attribution (always newline, no space)
 - fix formatting of em dashes (no space when it replaces a colon)
 - rework hybrid identity search to use the comparison operators
 - add general get all images method for cards?
