@@ -10,7 +10,7 @@ export const fetchTokens = async () => {
   );
   const asJson = (await requestedData.json()) as any;
 
-  const [oldkeys, ...rest] = asJson.values as string[][];
+  const [_oldkeys, ...rest] = asJson.values as string[][];
   const keys = [
     'name',
     'image',
