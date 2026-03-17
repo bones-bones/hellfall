@@ -94,8 +94,6 @@ export const toCockCube = ({
   return prettifyXml(formattedXmlString);
 };
 
-
-
 const hcCardToCockCard = ({
   xmlDoc,
   set,
@@ -114,7 +112,7 @@ const hcCardToCockCard = ({
   const tempCard = xmlDoc.createElement('card');
   const name = xmlDoc.createElement('name');
   name.textContent = entry.name;
-  console.log(entry, face)
+  console.log(entry, face);
 
   const text = xmlDoc.createElement('text');
   text.textContent = face.oracle_text.replace(/\\n/g, '\n').replace(/[{}]/g, '');

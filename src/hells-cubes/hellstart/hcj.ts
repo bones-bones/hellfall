@@ -13,11 +13,11 @@ import { HCColor } from '../../api-types/Card/values/Color';
 import type { HCColors } from '../../api-types/Card/values/Color';
 import { HCImageStatus } from '../../api-types/Card/values/ImageStatus';
 import { HCObject } from '../../api-types/Object';
-import { withToFaces } from '../getHc5';
+import { withCardMethods } from '../getHc5';
 
 /** Convert pack front metadata into an HCCard.Any with toFaces() for use in getDraftMancerCard etc. */
 export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
-  const card: Omit<HCCard.Normal, 'toFaces'> = {
+  const card: Omit<HCCard.Normal, 'toFaces' | 'toJSON'> = {
     object: HCObject.ObjectType.Card,
     id: `hcj-${entry.tag}`,
     layout: HCLayout.Normal,
@@ -43,7 +43,7 @@ export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
     draft_image_status: HCImageStatus.Inapplicable,
     variation: false,
   };
-  return withToFaces(card as HCCard.Normal);
+  return withCardMethods(card as HCCard.Normal);
 }
 
 export const hcjFrontCards: HCJPackInfo[] = [
@@ -274,7 +274,7 @@ export const hcjFrontCards: HCJPackInfo[] = [
     url: 'https://lh3.googleusercontent.com/d/13e0fZCdItnKvdrdAxmCIh7_QcQRiTuGv',
     tag: 'self-discard-pack',
 
-    secondCopyOf: 'Zhur-Taa’s Weakest Addict',
+    secondCopyOf: "Zhur-Taa's Weakest Addict",
     lands: [{ count: 5, name: 'Forest' }],
   },
   {

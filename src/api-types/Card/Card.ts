@@ -78,6 +78,13 @@ export namespace HCCard {
        * For multi-faced cards, returns the prop from each member of the card_faces array and from the card itself.
        */
       // getPropFromAllFacesInclusive(prop:string):any[];
+      /**
+       * Custom JSON serialization to ensure consistent property order.
+       * This method is automatically called by JSON.stringify().
+       *
+       * @returns An ordered object representation of the card
+       */
+      toJSON(): Record<string, any>;
     };
 }
 

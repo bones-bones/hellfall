@@ -5,7 +5,7 @@ import { HCObject } from '../Object';
  */
 export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
   /**
-   * An unique ID for this card in HC’s database.
+   * An unique ID for this card in HC's database.
    *
    * @type UUID
    */
@@ -37,7 +37,7 @@ export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
    */
   image?: string;
   /**
-   * A URI where you can retrieve a full object describing this card on HC’s API.
+   * A URI where you can retrieve a full object describing this card on HC's API.
    *
    * @type URI
    */

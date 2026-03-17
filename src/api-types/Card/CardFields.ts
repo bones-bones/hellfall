@@ -36,13 +36,13 @@ export namespace HCCardFields.Core {
    */
   export type HCReferences = {
     /**
-     * A unique ID for this card in HC’s database.
+     * A unique ID for this card in HC's database.
      *
      * @type UUID
      */
     id: string;
     /**
-     * A code for this card’s layout. TODO: rework
+     * A code for this card's layout. TODO: rework
      *
      * @see {@link https://scryfall.com/docs/api/layouts}
      */
@@ -52,13 +52,13 @@ export namespace HCCardFields.Core {
      */
     rulings: string;
     /**
-     * A link to this card’s permapage on HC’s website.
+     * A link to this card's permapage on HC's website.
      *
      * @type URI
      */
     // scryfall_uri: string;
     /**
-     * A link to this card object on HC’s API.
+     * A link to this card object on HC's API.
      *
      * @type URI
      */
@@ -108,11 +108,11 @@ export namespace HCCardFields.Gameplay {
    */
   export type VanguardStats = {
     /**
-     * This card’s hand modifier, if it is Vanguard card. This value will contain a delta, such as -1.
+     * This card's hand modifier, if it is Vanguard card. This value will contain a delta, such as -1.
      */
     hand_modifier?: string;
     /**
-     * This card’s life modifier, if it is Vanguard card. This value will contain a delta, such as +2.
+     * This card's life modifier, if it is Vanguard card. This value will contain a delta, such as +2.
      */
     life_modifier?: string;
   };
@@ -132,11 +132,11 @@ export namespace HCCardFields.Gameplay {
      */
     loyalty?: string;
     /**
-     * This card’s power, if any. Note that some cards have powers that are not numeric, such as `"*"`.
+     * This card's power, if any. Note that some cards have powers that are not numeric, such as `"*"`.
      */
     power?: string;
     /**
-     * This card’s toughness, if any. Note that some cards have toughnesses that are not numeric, such as `"*"`.
+     * This card's toughness, if any. Note that some cards have toughnesses that are not numeric, such as `"*"`.
      */
     toughness?: string;
   };
@@ -158,11 +158,11 @@ export namespace HCCardFields.Gameplay {
    */
   export type CardFaceSpecific = AllFaces & {
     /**
-     * This face’s colors.
+     * This face's colors.
      */
     colors: HCColors;
     /**
-     * The colors in this card’s color indicator, if any. A null value for this field indicates the card does not have one.
+     * The colors in this card's color indicator, if any. A null value for this field indicates the card does not have one.
      */
     color_indicator?: HCColors;
     /**
@@ -208,7 +208,7 @@ export namespace HCCardFields.Gameplay {
    */
   export type CardSpecific = AllFaces & {
     /**
-     * The card’s mana value. Note that some funny cards have fractional mana costs.
+     * The card's mana value. Note that some funny cards have fractional mana costs.
      *
      * @type Decimal
      */
@@ -218,11 +218,11 @@ export namespace HCCardFields.Gameplay {
      */
     colors: HCColors;
     /**
-     * This card’s color identity..
+     * This card's color identity..
      */
     color_identity: HCColors;
     /**
-     * This card’s color identity for hybrid. It is a list of HCColors in order to handle the hybrid rules.
+     * This card's color identity for hybrid. It is a list of HCColors in order to handle the hybrid rules.
      */
     color_identity_hybrid: HCColors[];
     /**
@@ -263,15 +263,15 @@ export namespace HCCardFields.Print {
      */
     // artist_ids?: string[];
     /**
-     * This card’s border color: black, white, borderless, silver, or gold.
+     * This card's border color: black, white, borderless, silver, or gold.
      */
     // border_color: `${HCBorderColor}`;
     /**
-     * This card’s frame layout.
+     * This card's frame layout.
      */
     // frame: `${HCFrame}`;
     /**
-     * A computer-readable indicator for the state of this card’s image.
+     * A computer-readable indicator for the state of this card's image.
      */
     image_status: `${HCImageStatus}`;
     /**
@@ -279,7 +279,7 @@ export namespace HCCardFields.Print {
      */
     image?: string;
     /**
-     * A computer-readable indicator for the state of this card’s draft image.
+     * A computer-readable indicator for the state of this card's draft image.
      */
     draft_image_status: `${HCImageStatus}`;
     /**
@@ -299,7 +299,7 @@ export namespace HCCardFields.Print {
      */
     has_draft_partners?: boolean;
     /**
-     * This card’s set code.
+     * This card's set code.
      */
     set: string;
   } & VariationInfo;
@@ -324,7 +324,7 @@ export namespace HCCardFields.Print {
      */
     flavor_text?: string;
     /**
-     * This card’s watermark, if any.
+     * This card's watermark, if any.
      */
     watermark?: string;
   };

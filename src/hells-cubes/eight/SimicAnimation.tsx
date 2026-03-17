@@ -7,10 +7,10 @@ export const SimicAnimation = () => {
       <BigContainer>
         <h1>Simic Animation</h1>
         <div>
-          In true Simic fashion, our goal is to take things that unfortunately aren’t creatures, and
+          In true Simic fashion, our goal is to take things that unfortunately aren't creatures, and
           with a little Hellscube magic, turn them into lean, mean, game-progress-making creatures!
-          Whether that’s normal things like lands and artifacts, or something wacky like your entire
-          hand or graveyard, we’ll make it happen! This is an unusual archetype, and as such, will
+          Whether that's normal things like lands and artifacts, or something wacky like your entire
+          hand or graveyard, we'll make it happen! This is an unusual archetype, and as such, will
           probably require some focused effort to really make it click. That being said, here are my
           goals and how I think we can bring this archetype to life:
         </div>
@@ -28,11 +28,11 @@ export const SimicAnimation = () => {
           creature in addition to its other types. (This effect lasts indefinitely.)
           <br /> <br />
           Some example cards with these mechanics are in this thread: ⁠Proposed mechanic for UG:
-          Anima…. I imagine animate N will be the more common variant, since it’s easier to tune the
+          Anima…. I imagine animate N will be the more common variant, since it's easier to tune the
           stats according to the mana cost and effect of the card using it. On the other hand, since
-          animate (no number afterwards) doesn’t really work on lands and tokens, I think it’s
-          probably better used on cards which animate themselves. Of course, you don’t have to use
-          this mechanic if it doesn’t fit the card you’re making, but if it does, I encourage you to
+          animate (no number afterwards) doesn't really work on lands and tokens, I think it's
+          probably better used on cards which animate themselves. Of course, you don't have to use
+          this mechanic if it doesn't fit the card you're making, but if it does, I encourage you to
           use Animate to shortcut the wordy phrasing of animation!
         </div>
         <h2>Assembling an Animation Studio</h2>
@@ -63,8 +63,8 @@ export const SimicAnimation = () => {
         <div>Manlands. That is all.</div>
         <br />
         <div>
-          Well, I have more to say. But it’s still about manlands. I encourage you to lean into the
-          theme of “land creatures!” Make some payoffs for land creatures, since they seem like a
+          Well, I have more to say. But it's still about manlands. I encourage you to lean into the
+          theme of "land creatures!"" Make some payoffs for land creatures, since they seem like a
           great fit for HC8 all around. Most of the green archetypes are happy with land creatures,
           especially…
         </div>
@@ -76,8 +76,8 @@ export const SimicAnimation = () => {
           </StyledH3>
         </Link>
         <div>
-          You know what’s hard to sacrifice? Lands. You know what’s easy to sacrifice? Creatures.
-          You see where I’m going with this. Animating lands makes them more likely to die, whether
+          You know what's hard to sacrifice? Lands. You know what's easy to sacrifice? Creatures.
+          You see where I'm going with this. Animating lands makes them more likely to die, whether
           in combat or in an unfortunate Deadly Dispute. While that might usually be something to
           tread lightly around, HC8 is fully set up to take advantage of it! BG landristocrats turns
           the risk-reward of land animation into reward-reward, so embrace it and let your land

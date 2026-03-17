@@ -8,8 +8,8 @@ export const GolgariLandistocrats = () => {
         <ManaSymbol src={getPipSrc('B/G')} /> Golgari Landistocrats
       </h1>
       <div>
-        Green loves lands and the graveyard, and black loves… the graveyard (Isn’t the color pie{' '}
-        <i>amazing?</i>), so wouldn’t it be nice if you could put them together and use lands for
+        Green loves lands and the graveyard, and black loves… the graveyard (Isn't the color pie{' '}
+        <i>amazing?</i>), so wouldn't it be nice if you could put them together and use lands for
         more than mana by killing them off? No? Well, I have the archetype for you: BG
         Landistocrats! This archetype is all about sacrificing, milling, or otherwise filling your
         graveyard with lands to be used as a resource for reanimating or buffing cards in some way
@@ -48,15 +48,15 @@ export const GolgariLandistocrats = () => {
       </div>
       <br />
       <h2>(?) So my graveyard is full of lands. Now what?</h2>
-      <div>Great question if I’d say so myself. You fucking idiot. OF COURSE I said so mysel-</div>
+      <div>Great question if I'd say so myself. You fucking idiot. OF COURSE I said so mysel-</div>
       <br />
       <div>
         The best payoffs for Landistocrats can come from the landfill triggers themselves, such as
-        the good ol’ Drain and Gain™ or buffing creatures you control in some way, whether it be p/t
+        the good ol' Drain and Gain™ or buffing creatures you control in some way, whether it be p/t
         or some abomination of a keyword ability. Other payoffs can come from the act of lands dying
         or being sacrificed, or buffs based on the number of lands in your graveyard in general
         (Think Lord of Extinction, but for lands only). The rest is up to you. God only knows what
-        shit you’ll come up with to make this work, but I have faith in all of you. Just find a way
+        shit you'll come up with to make this work, but I have faith in all of you. Just find a way
         to win the game somehow.
       </div>
       <h2>💡 Archetype Synergy</h2>
@@ -93,7 +93,7 @@ export const GolgariLandistocrats = () => {
       </div>
       <h2>My Terrible Conclusion</h2>
       <div>
-        So that’s that! Good luck, have fun, lock the fuck in, and don’t squander your resources too
+        So that's that! Good luck, have fun, lock the fuck in, and don't squander your resources too
         quickly.
       </div>
       <br />

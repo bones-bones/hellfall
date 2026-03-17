@@ -15,8 +15,6 @@ import { HCObject } from '../../src/api-types/Object';
 import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
 import { getColorIdentityProps } from './getColorIdentity';
-
-// TODO: hard sort the property order in a logical way
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
@@ -67,22 +65,126 @@ const tokenRemovableProps = [
   'not_directly_draftable',
   'has_draft_partners',
 ];
+/**
+ * Checks whether search text equals text from a card
+ * @param cardText text from the card
+ * @param searchText text to search for
+ * @returns whether they are equal
+ */
+export const textEquals = (cardText: string, searchText: string) => {
+  return (
+    cardText.toLowerCase() == searchText.toLowerCase() ||
+    cardText.toLowerCase().replaceAll('\\*', '') == searchText.toLowerCase().replaceAll('\\*', '')
+  );
+};
 
-const moveArraysToBottom = (cards: HCCard.Any[]): HCCard.Any[] => {
+const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
-    if ('card_faces' in card && 'all_parts' in card) {
-      const { card_faces, all_parts, ...rest } = card;
-      return { ...rest, card_faces, all_parts } as HCCard.AnyMultiFaced;
-    }
-    if ('card_faces' in card) {
-      const { card_faces, ...rest } = card;
-      return { ...rest, card_faces } as HCCard.AnyMultiFaced;
-    }
-    if ('all_parts' in card) {
-      const { all_parts, ...rest } = card;
-      return { ...rest, all_parts } as HCCard.AnySingleFaced;
-    }
-    return card;
+    const cardWithJSON = Object.assign({}, card, {
+      toJSON(this: Record<string, any>) {
+        const ordered: Record<string, any> = {};
+        const propOrder = [
+          'id',
+          'name',
+          'set',
+          'cmc',
+          'mana_cost',
+          'colors',
+          'color_indicator',
+          'color_identity',
+          'color_identity_hybrid',
+          'supertypes',
+          'types',
+          'subtypes',
+          'type_line',
+          'oracle_text',
+          'flavor_text',
+          'power',
+          'toughness',
+          'loyalty',
+          'defense',
+          'hand_modifier',
+          'life_modifier',
+          'attraction_lights',
+          'watermark',
+          'image_status',
+          'image',
+          'draft_image_status',
+          'draft_image',
+          'not_directly_draftable',
+          'has_draft_partners',
+          'legalities',
+          'creator',
+          'rulings',
+          'tags',
+          'keywords',
+          'isActualToken',
+          'variation',
+          'variation_of',
+          'layout',
+        ];
+        const facePropOrder = [
+          'name',
+          'mana_cost',
+          'colors',
+          'color_indicator',
+          'supertypes',
+          'types',
+          'subtypes',
+          'type_line',
+          'oracle_text',
+          'flavor_text',
+          'power',
+          'toughness',
+          'loyalty',
+          'defense',
+          'hand_modifier',
+          'life_modifier',
+          'attraction_lights',
+          'watermark',
+          'image_status',
+          'image',
+        ];
+        const partPropOrder = [
+          'id',
+          'name',
+          'set',
+          'type_line',
+          'image',
+          'component',
+          'is_draft_partner',
+        ];
+        propOrder.forEach(prop => {
+          if (prop in this) {
+            ordered[prop] = this[prop];
+          }
+        });
+        if ('card_faces' in this) {
+          ordered.card_faces = this.card_faces.map((face: Record<string, any>) => {
+            const orderedFace: Record<string, any> = {};
+            facePropOrder.forEach(prop => {
+              if (prop in face) {
+                orderedFace[prop] = face[prop];
+              }
+            });
+            return orderedFace;
+          });
+        }
+        if ('all_parts' in this) {
+          ordered.all_parts = this.all_parts.map((part: Record<string, any>) => {
+            const orderedPart: Record<string, any> = {};
+            partPropOrder.forEach(prop => {
+              if (prop in part) {
+                orderedPart[prop] = part[prop];
+              }
+            });
+            return orderedPart;
+          });
+        }
+        return ordered;
+      },
+    });
+    return cardWithJSON as HCCard.Any;
   });
 };
 const setDerivedProps = (card: HCCard.Any) => {
@@ -125,13 +227,16 @@ const mergeCards = (
   newCard: HCCard.Any,
   usingApproved: boolean = false
 ): HCCard.Any => {
-  if (existingCard.id == 'Whale1') {
-    const x = 1;
-  }
   if (
     usingApproved &&
     (existingCard.has_draft_partners ||
-      [HCLayout.MeldPart, HCLayout.MeldResult].includes(existingCard.layout as HCLayout) ||
+      [
+        HCLayout.MeldPart,
+        HCLayout.MeldResult,
+        HCLayout.MultiToken,
+        HCLayout.MultiReminder,
+        HCLayout.RealCardMultiToken,
+      ].includes(existingCard.layout as HCLayout) ||
       ('card_faces' in existingCard && existingCard.card_faces.length > 4))
   ) {
     return existingCard;
@@ -177,8 +282,8 @@ const mergeCards = (
     'card_faces' in existingCard == 'card_faces' in newCard
       ? { ...existingCard }
       : 'card_faces' in mergedPrelim
-        ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
-        : { ...(mergedPrelim as HCCard.AnySingleFaced) };
+      ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
+      : { ...(mergedPrelim as HCCard.AnySingleFaced) };
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     setDerivedProps(merged);
   }
@@ -203,7 +308,7 @@ const mergeCards = (
                 }
               } else if (k == 'colors') {
                 // TODO: store current version and print the diff if there is one
-              } else if (k == 'image_status') {
+              } else if (k == 'image_status' && newFace.image) {
                 // TODO: store current version and print the diff if there is one
               } else if (v || (!merged.isActualToken && cardBlankableProps.includes(k))) {
                 (face as any)[k] = v;
@@ -228,7 +333,7 @@ const mergeCards = (
         if (
           merged.draft_image_status == HCImageStatus.Missing ||
           merged.draft_image_status ==
-          HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
+            HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
         ) {
           (merged as any)[key] = value;
         }
@@ -251,10 +356,10 @@ const mergeCards = (
           // superToken is used when the card is a token and part is also a token that makes this token
           const superToken = existingCard.all_parts
             ?.filter(e => e.name == e.id.replace(/\d+$/, ''))
-            .find(e => e.id.toLowerCase() == part.name.toLowerCase());
+            .find(e => textEquals(e.id, part.name));
           const existingPart = superToken
             ? superToken
-            : existingCard.all_parts?.find(e => e.name.toLowerCase() == part.name.toLowerCase());
+            : existingCard.all_parts?.find(e => textEquals(e.name, part.name));
           if (existingPart) {
             // if there is already a part, update it
             Object.entries(existingPart).forEach(([k, v]) => {
@@ -286,8 +391,8 @@ const mergeCards = (
         // TODO: store current version and print the diff if there is one
         if (
           !('card_faces' in merged) &&
-          !('card_faces' in newCard) &&
-          (merged.layout == HCLayout.Normal || merged.layout == HCLayout.Token)
+          !('card_faces' in newCard) /**&&
+          (merged.layout == HCLayout.Normal || merged.layout == HCLayout.Token)*/
         ) {
           merged.layout = value as typeof newCard.layout;
         } else if (
@@ -296,15 +401,15 @@ const mergeCards = (
           merged.layout != HCLayout.RealCardMultiToken
         ) {
           merged.layout = value as typeof newCard.layout;
-          if (
-            merged.layout != HCLayout.Multi &&
-            !merged.card_faces[1].image &&
-            [HCImageStatus.Split, HCImageStatus.DraftPartner].includes(
-              merged.card_faces[1].image_status as HCImageStatus
-            )
-          ) {
-            merged.card_faces[1].image_status = newCard.card_faces[1].image_status;
-          }
+          // if (
+          //   merged.layout != HCLayout.Multi &&
+          //   !merged.card_faces.at(-1)!.image &&
+          //   [HCImageStatus.Split, HCImageStatus.DraftPartner].includes(
+          //     merged.card_faces[1].image_status as HCImageStatus
+          //   )
+          // ) {
+          //   merged.card_faces.at(-1)!.image_status = newCard.card_faces.at(-1)!.image_status;
+          // }
         }
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;
@@ -496,9 +601,9 @@ const main = async () => {
             ? finalCards.find(card => card.id == tokenMaker.id)
               ? finalCards.find(card => card.id == tokenMaker.id)
               : finalTokens.find(card => card.id == tokenMaker.id)
-            : finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
-              ? finalCards.find(card => card.name.toLowerCase() == tokenMaker.name.toLowerCase())
-              : finalTokens.find(card => card.id.toLowerCase() == tokenMaker.name.toLowerCase());
+            : finalCards.find(card => textEquals(card.name, tokenMaker.name))
+            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
+            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
@@ -534,9 +639,7 @@ const main = async () => {
         ?.filter(e => e.component == 'meld_part')
         .forEach(meldPart => {
           const relatedCard = finalCards.find(card =>
-            meldPart.id
-              ? card.id == meldPart.id
-              : card.name.toLowerCase() == meldPart.name.toLowerCase()
+            meldPart.id ? card.id == meldPart.id : textEquals(card.name, meldPart.name)
           );
           if (relatedCard) {
             meldPart.id = relatedCard.id;
@@ -603,9 +706,7 @@ const main = async () => {
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
           const relatedCard = finalCards.find(e =>
-            tokenMaker.id
-              ? e.id == tokenMaker.id
-              : e.name.toLowerCase() == tokenMaker.name.toLowerCase()
+            tokenMaker.id ? e.id == tokenMaker.id : textEquals(e.name, tokenMaker.name)
           );
           if (relatedCard) {
             tokenMaker.id = relatedCard!.id;
@@ -644,9 +745,7 @@ const main = async () => {
         ?.filter(e => e.component == 'draft_partner')
         .forEach(partnerCard => {
           const relatedCard = finalCards.find(e =>
-            partnerCard.id
-              ? e.id == partnerCard.id
-              : e.name.toLowerCase() == partnerCard.name.toLowerCase()
+            partnerCard.id ? e.id == partnerCard.id : textEquals(e.name, partnerCard.name)
           );
           // if (relatedCard) {
           if (!('has_draft_partners' in relatedCard!)) {
@@ -865,7 +964,7 @@ const main = async () => {
     './src/data/tokens.json',
     JSON.stringify(
       {
-        data: moveArraysToBottom(finalTokens),
+        data: addToJSONToCards(finalTokens),
       },
       null,
       '\t'
@@ -907,7 +1006,7 @@ const main = async () => {
     './src/data/Hellscube-Database.json',
     JSON.stringify(
       {
-        data: moveArraysToBottom(finalCards).concat(moveArraysToBottom(finalTokens)),
+        data: addToJSONToCards(finalCards).concat(addToJSONToCards(finalTokens)),
       },
       null,
       '\t'
