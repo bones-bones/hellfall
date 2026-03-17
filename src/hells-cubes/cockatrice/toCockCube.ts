@@ -40,9 +40,27 @@ export const toCockCube = ({
   ]);
 
   cards.forEach(entry => {
-    recursiveAdoption(cardsElement, [
-      hcCardToCockCard({ xmlDoc, set, entry, cardsElement, sideIndex: 0 }),
-    ]);
+    const isSplitAndLinkedLayout =
+      entry.layout === 'transform' || entry.layout === 'modal';
+    if (isSplitAndLinkedLayout) {
+      // Each side is a separate card in the cube
+      entry.toFaces().forEach((_, i) => {
+        recursiveAdoption(cardsElement, [
+          hcCardToCockCard({
+            xmlDoc,
+            set,
+            entry,
+            cardsElement,
+            sideIndex: i,
+            splitAndLinkedLayout: true,
+          }),
+        ]);
+      });
+    } else {
+      recursiveAdoption(cardsElement, [
+        hcCardToCockCard({ xmlDoc, set, entry, cardsElement, sideIndex: 0 }),
+      ]);
+    }
   });
 
   tokens.data.forEach(tokenEntry => {
@@ -100,26 +118,27 @@ const hcCardToCockCard = ({
   entry,
   cardsElement,
   sideIndex,
+  splitAndLinkedLayout = false,
 }: {
   xmlDoc: XMLDocument;
   set: string;
   entry: HCCard.Any;
   cardsElement: HTMLElement;
   sideIndex: number;
+  splitAndLinkedLayout?: boolean;
 }) => {
   const face = entry.toFaces()[sideIndex];
 
   const tempCard = xmlDoc.createElement('card');
   const name = xmlDoc.createElement('name');
-  name.textContent = entry.name;
-  console.log(entry, face);
+  name.textContent = splitAndLinkedLayout ? face.name : entry.name;
 
   const text = xmlDoc.createElement('text');
   text.textContent = face.oracle_text.replace(/\\n/g, '\n').replace(/[{}]/g, '');
 
   const setElement = xmlDoc.createElement('set');
   setElement.setAttribute('rarity', 'common');
-  setElement.setAttribute('picURL', face.image!);
+  setElement.setAttribute('picURL', face.image || entry.image!);
   setElement.textContent = set;
   const color = xmlDoc.createElement('color');
   color.textContent = face.colors.join('');
@@ -131,8 +150,10 @@ const hcCardToCockCard = ({
   mainType.textContent = face.types?.includes('Creature')
     ? 'Creature'
     : face.types?.slice(-1)[0] || '';
+
   const cmc = xmlDoc.createElement('cmc');
   cmc.textContent = entry.cmc.toString() || '';
+
   const type = xmlDoc.createElement('type');
   type.textContent = face.type_line;
 
@@ -158,18 +179,31 @@ const hcCardToCockCard = ({
   const side = xmlDoc.createElement('side');
   side.textContent = sideIndex === 0 ? 'front' : 'back';
 
-  let reverse;
+  const reverseElements: HTMLElement[] = [];
 
-  // If we're not processing the first side, then we need to attach each side to the original
-  // augh this sucks, printable image should have had a different name
-  if (sideIndex !== 0 || entry.toFaces().filter(e => e.image).length > 1) {
-    reverse = xmlDoc.createElement('reverse-related');
+  // Back → front: if we're not the first side, attach to the front face (transform link).
+  if (
+    (splitAndLinkedLayout && sideIndex !== 0) ||
+    (!splitAndLinkedLayout && (sideIndex !== 0 || entry.toFaces().filter(e => e.image).length > 1))
+  ) {
+    const reverse = xmlDoc.createElement('reverse-related');
     reverse.textContent = entry.toFaces()[0].name; // RIP Farsight
     reverse.setAttribute('attach', 'transform');
+    reverseElements.push(reverse);
+  }
+
+  // Front → back: for transform layout, front face also links to each other face.
+  if (splitAndLinkedLayout && sideIndex === 0 && entry.toFaces().length > 1) {
+    for (let i = 1; i < entry.toFaces().length; i++) {
+      const reverse = xmlDoc.createElement('reverse-related');
+      reverse.textContent = entry.toFaces()[i].name;
+      reverse.setAttribute('attach', 'transform');
+      reverseElements.push(reverse);
+    }
   }
 
   const layout = xmlDoc.createElement('layout');
-  layout.textContent = sideIndex > 0 ? 'transform' : getLayout(entry);
+  layout.textContent = splitAndLinkedLayout ? 'normal' : sideIndex > 0 ? 'transform' : getLayout(entry);
 
   const tablerow = xmlDoc.createElement('tablerow');
   tablerow.textContent = getTableRow(entry).toString();
@@ -187,18 +221,19 @@ const hcCardToCockCard = ({
         e => e !== undefined
       ),
       setElement,
-      reverse,
+      ...reverseElements,
       tablerow,
     ].filter(e => e !== undefined)
   );
 
+  // Add remaining transform-style faces as separate card elements (skip for transform layout; those are already added at top level)
   if (
-    sideIndex == 0 &&
+    !splitAndLinkedLayout &&
+    sideIndex === 0 &&
     entry.toFaces().filter(e => e.image).length > 1 &&
     !['MR. CRIME 1981 // Felony Theft'].includes(entry.name)
   ) {
-    // TODO: make sure this works
-    for (let i = 1; i < entry.toFaces().length - 1; i++) {
+    for (let i = 1; i < entry.toFaces().length; i++) {
       recursiveAdoption(cardsElement, [
         hcCardToCockCard({ xmlDoc, set, entry, cardsElement, sideIndex: i }),
       ]);
