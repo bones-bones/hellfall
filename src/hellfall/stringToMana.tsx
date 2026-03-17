@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { pipsAtom } from './atoms/pipsAtom';
 import { useAtomValue } from 'jotai';
 import { getDefaultStore } from 'jotai';
-import { HCColors } from '../api-types';
+import { HCCardSymbol, HCColors } from '../api-types';
 import { sameColors } from './colorComps';
 const store = getDefaultStore();
 // TODO: add shadows to pips in mana costs (or maybe just always?)
@@ -13,6 +13,32 @@ export const getPipSrc = (name: string) => {
   const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
   return icon ? '/hellfall/pips/' + icon.filename : undefined;
 };
+export const getPip = (name: string) => {
+  const pips = store.get(pipsAtom);
+  return pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+};
+export const pipToSrc = (pip:HCCardSymbol) => {
+  return '/hellfall/pips/' + pip.filename;
+}
+const getClipPath = (pip:HCCardSymbol) => {
+  if (!pip.clip_type) {
+    return undefined
+  }
+  switch(pip.clip_type) {
+    case 'right-half':
+      return 'inset(0 0 0 1.125px)';
+    // case 'top-left-third':
+    //   return 'path("M 12,12 L 12,0 A 12,12 0 0,1 22.392,18 L 12,12 Z")';
+    default:
+      return undefined;
+  }
+};
+export const isNoShadow = (name: string) => {
+  const pips = store.get(pipsAtom);
+  const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
+  return icon?.no_shadow as boolean;
+};
+
 
 export const stringToMana = (text: string) => {
   return text
@@ -20,10 +46,15 @@ export const stringToMana = (text: string) => {
     .filter(e => e !== '')
     .map(entry => {
       if (entry.startsWith('{') && entry.endsWith('}')) {
-        const loc = getPipSrc(entry.slice(1, -1));
-        return loc ? (
-          <PipContainer>
-            <PipSymbol src={loc} alt={entry} />
+        const icon = getPip(entry.slice(1, -1));
+        const noShadow=isNoShadow(entry.slice(1,-1))
+        return icon ? (
+          <PipContainer style={icon.no_shadow ? {margin: '1px 1px -px 1px'} : { filter:'drop-shadow(-1.125px 1.125px 0 rgba(0,0,0,0.85))', clipPath:getClipPath(icon)}}>
+            <PipSymbol
+              src={pipToSrc(icon)}
+              alt={entry}
+              title={icon.english}
+            />
           </PipContainer>
         ) : (
           entry
@@ -38,22 +69,25 @@ export const colorsToIndicator = (colors: HCColors) => {
   const icon = pips?.find(
     e => !e.represents_mana && 'colors' in e && sameColors(e.colors!, colors)
   );
-  const loc = icon ? '/hellfall/pips/' + icon.filename : undefined;
-  return loc ? (
+
+  // const loc = icon ? '/hellfall/pips/' + icon.filename : undefined;
+  return icon ? (
     <PipContainer>
-      <PipSymbol src={loc} alt={icon?.symbol} />
+      <PipSymbol src={pipToSrc(icon)} alt={icon?.symbol} title={icon.english} />
     </PipContainer>
   ) : (
     colors.toString()
   );
 };
 
-const PipSymbol = styled('img')({ height: '18px', marginTop: '10px' });
+const PipSymbol = styled('img')({ height: '18px'/**,marginTop: '10px'*/});
 const PipContainer = styled('div')({
-  display: 'inline-flex',
+  display: 'inline-block',
   lineHeight: '1.25rem',
-  alignItems: 'top',
-  padding: '0 1px',
-  verticalAlign: 'top',
-  marginTop: '-0.25rem',
+  // alignItems: 'top',
+  padding: '0px 0.75px 0px 0.75px',
+  verticalAlign: 'text-bottom',
+  // marginTop: '-0.25rem',
+  margin: '1px 1px -1px 1px',
+  cursor:'help',
 });

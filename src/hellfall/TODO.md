@@ -83,3 +83,4 @@ Write a script to transform the database
 - call the dermotaxi as token_on_back?
 - make tag links work correctly on individual card pages
 - make simplifier for hybrid identity
+- figure out problems with pip clipping and shadows

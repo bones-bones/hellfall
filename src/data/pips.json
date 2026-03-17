@@ -908,7 +908,7 @@
     {
       "filename": "mono/weirdNums/Question.svg",
       "symbol": "?",
-      "english": "an undetermined amount or color of mana",
+      "english": "an undetermined amount and/or type of mana",
       "represents_mana": true,
       "mana_value": 1,
       "colors": [
@@ -983,7 +983,8 @@
       "mana_value": 4,
       "colors": [
         "Colorless"
-      ]
+      ],
+      "no_shadow":true
     },
     {
       "filename": "mono/fractional/HW.svg",
@@ -993,7 +994,8 @@
       "mana_value": 0.5,
       "colors": [
         "W"
-      ]
+      ],
+      "clip_type": "right-half"
     },
     {
       "filename": "mono/fractional/HU.svg",
@@ -1003,7 +1005,8 @@
       "mana_value": 0.5,
       "colors": [
         "U"
-      ]
+      ],
+      "clip_type": "right-half"
     },
     {
       "filename": "mono/fractional/HB.svg",
@@ -1013,7 +1016,8 @@
       "mana_value": 0.5,
       "colors": [
         "B"
-      ]
+      ],
+      "clip_type": "right-half"
     },
     {
       "filename": "mono/fractional/HR.svg",
@@ -1023,7 +1027,8 @@
       "mana_value": 0.5,
       "colors": [
         "R"
-      ]
+      ],
+      "clip_type": "right-half"
     },
     {
       "filename": "mono/fractional/HG.svg",
@@ -1033,7 +1038,8 @@
       "mana_value": 0.5,
       "colors": [
         "G"
-      ]
+      ],
+      "clip_type": "right-half"
     },
     {
       "filename": "mono/fractional/HP.svg",
@@ -1043,7 +1049,8 @@
       "mana_value": 0.5,
       "colors": [
         "P"
-      ]
+      ],
+      "clip_type": "right-half"
     },
     {
       "filename": "mono/fractional/HC.svg",
@@ -1053,7 +1060,8 @@
       "mana_value": 0.5,
       "colors": [
         "C"
-      ]
+      ],
+      "clip_type": "right-half"
     },
     {
       "filename": "mono/fractional/Doge.svg",
@@ -1083,7 +1091,8 @@
       "mana_value": 0.5,
       "colors": [
         "P"
-      ]
+      ],
+      "clip_type": "right-half"
     },
     {
       "filename": "mono/fractional/JUP.png",
@@ -1114,7 +1123,8 @@
       "mana_value": "1/3",
       "colors": [
         "G"
-      ]
+      ],
+      "clip_type":"top-left-third"
     },
     {
       "filename": "mono/fractional/TG2.svg",
@@ -1124,7 +1134,8 @@
       "mana_value": "1/3",
       "colors": [
         "G"
-      ]
+      ],
+      "no_shadow":true
     },
     {
       "filename": "mono/fractional/TG3.svg",
