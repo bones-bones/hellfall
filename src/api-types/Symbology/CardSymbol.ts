@@ -60,7 +60,7 @@ export type HCCardSymbol = HCObject.Object<HCObject.ObjectType.CardSymbol> & {
   /**
    * type of custom shadow clipping if necessary
    */
-  clip_type?:'right-half'|'top-left-third';
+  clip_type?:'right-half'|'top-left-third'|'bottom-third';
   /**
    * A path to an image of this symbol.
    *

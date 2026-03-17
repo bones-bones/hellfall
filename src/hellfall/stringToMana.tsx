@@ -5,8 +5,6 @@ import { getDefaultStore } from 'jotai';
 import { HCCardSymbol, HCColors } from '../api-types';
 import { sameColors } from './colorComps';
 const store = getDefaultStore();
-// TODO: add shadows to pips in mana costs (or maybe just always?)
-// TODO: add better alt text handling (do it like scryfall does)
 
 export const getPipSrc = (name: string) => {
   const pips = store.get(pipsAtom);
@@ -27,8 +25,10 @@ const getClipPath = (pip:HCCardSymbol) => {
   switch(pip.clip_type) {
     case 'right-half':
       return 'inset(0 0 0 1.125px)';
-    // case 'top-left-third':
-    //   return 'path("M 12,12 L 12,0 A 12,12 0 0,1 22.392,18 L 12,12 Z")';
+    case 'top-left-third':
+      return 'path("M9,0v9l-6.84,3.95-.96.55-1.32.76c-.64-1.24-1.01-2.65-1.01-4.14C-1.12,7.32.16,4.81,2.18,3.16,3.83,1.23,6.28,0,9,0Z")';
+    case 'bottom-third':
+      return 'path("M15.59,13.5c-.53.92-1.22,1.73-2.01,2.4-1.65,1.97-4.13,3.23-6.91,3.23-3.48,0-6.5-1.97-7.99-4.86l1.32-.76,7.79-4.5,7.33,4.23.47.27Z")'
     default:
       return undefined;
   }
