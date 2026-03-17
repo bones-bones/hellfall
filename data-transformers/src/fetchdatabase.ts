@@ -11,7 +11,7 @@ export const fetchDatabase = async () => {
     `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
-  const [_garbage, oldKeys, ...rest] = asJson.values as string[][];
+  const [_garbage, _oldKeys, ...rest] = asJson.values as string[][];
   const keys = [
     'id',
     'name',
