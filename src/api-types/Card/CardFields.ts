@@ -72,6 +72,10 @@ export namespace HCCardFields.Core {
      */
     tags?: string[];
     /**
+     * All tag notes of this card.
+     */
+    tag_notes?: Record<string, string>;
+    /**
      * Whether this card is an actual token (TODO: replace with type-based checks)
      */
     isActualToken?: boolean;

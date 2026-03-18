@@ -42,6 +42,7 @@ const oneWayMergeProps = [
 const cardBlankableProps = ['rulings', 'oracle_text', 'cmc', 'mana_cost'];
 const cardRemovableProps = [
   'tags',
+  'tag_notes',
   'defense',
   'loyalty',
   'power',
@@ -163,6 +164,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'rulings',
           'watermark',
           'tags',
+          'tag_notes',
           'variation',
           'variation_of',
           'isActualToken',

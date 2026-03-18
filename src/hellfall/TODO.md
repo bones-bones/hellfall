@@ -84,7 +84,6 @@ Write a script to transform the database
 - make tag links work correctly on individual card pages
 - make simplifier for hybrid identity
 - figure out problems with pip clipping and shadows
-- add optional prop "tag_notes":Record<string, string>
 - make other cards in feel the ground quake have each other in all_parts? (Do I want to have kongming's contraptions also do this?)
 - get a your dreadmaw reminder card/token as well as dreadmaw offspring tokens
 - add sorting for colors
@@ -93,3 +92,4 @@ Write a script to transform the database
 - make search page update conditions more logical
 - implement tags based on notes column to mark spellbook tokens?
 - make token search work better
+- fully implement NotMagic

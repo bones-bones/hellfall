@@ -229,7 +229,18 @@ export const fetchDatabase = async () => {
             cardObject.all_parts = all_parts;
           } else if (keys[i] == 'tags') {
             const tags = entry[i].split(';');
-            cardObject[keys[i]] = tags;
+            cardObject[keys[i]] = tags.map(fullTag => {
+              if (fullTag.includes('<') && fullTag.includes('>')) {
+                const [tag, note] = fullTag.split('<');
+                if (!('tag_notes' in cardObject)) {
+                  cardObject.tag_notes = {} as Record<string, string>;
+                }
+                cardObject.tag_notes[tag] = note.slice(0, -1);
+                return tag;
+              } else {
+                return fullTag;
+              }
+            });
             if (entry[i].includes('watermark')) {
               cardObject.card_faces[0].watermark = tags
                 .filter(tag => tag.includes('watermark'))[0]
