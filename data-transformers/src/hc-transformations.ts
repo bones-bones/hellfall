@@ -65,6 +65,18 @@ const tokenRemovableProps = [
   'not_directly_draftable',
   'has_draft_partners',
 ];
+const movedIds: Record<string, string> = {
+  '219': '6727',
+  '219b': '6728',
+  '1121': '6729',
+  '1121b': '6730',
+  '1121c': '6731',
+  '1121d': '6732',
+  '1121e': '6733',
+  '2035': '6734',
+  '2035b': '6735',
+};
+
 /**
  * Checks whether search text equals text from a card
  * @param cardText text from the card
@@ -457,7 +469,9 @@ const mergeDatabases = (
   const newTokenMap = new Map(newTokens.map(token => [token.id, token]));
 
   const mergedCards = existingCards.map(existingCard => {
-    const newCard = newCardMap.get(existingCard.id);
+    const newCard = !(existingCard.id in movedIds)
+      ? newCardMap.get(existingCard.id)
+      : newCardMap.get(movedIds[existingCard.id]);
     if (newCard) {
       newCardMap.delete(newCard.id);
       return mergeCards(existingCard, newCard, false);
@@ -467,7 +481,9 @@ const mergeDatabases = (
   mergedCards.push(...Array.from(newCardMap.values()));
 
   const mergedTokens = existingTokens.map(existingToken => {
-    const newToken = newTokenMap.get(existingToken.id);
+    const newToken = !(existingToken.id in movedIds)
+      ? newTokenMap.get(existingToken.id)
+      : newTokenMap.get(movedIds[existingToken.id]);
     if (newToken) {
       newTokenMap.delete(newToken.id);
       return mergeCards(existingToken, newToken);

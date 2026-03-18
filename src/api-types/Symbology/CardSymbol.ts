@@ -56,11 +56,11 @@ export type HCCardSymbol = HCObject.Object<HCObject.ObjectType.CardSymbol> & {
   /**
    * True if the symbol doesn't need a drop shadow.
    */
-  no_shadow?:boolean;
+  no_shadow?: boolean;
   /**
    * type of custom shadow clipping if necessary
    */
-  clip_type?:'right-half'|'top-left-third'|'bottom-third';
+  clip_type?: 'right-half' | 'top-left-third' | 'bottom-third';
   /**
    * A path to an image of this symbol.
    *
