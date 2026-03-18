@@ -77,10 +77,8 @@ export const fetchNotMagic = async () => {
     for (let i = 0; i < keys.length; i++) {
       if (entry[i]) {
         if (keys[i] == 'name') {
-          tokenObject.id = entry[i] + ['Pot of Greed'].includes(entry[i]) ? '3' : '1';
-          const name: string = entry[i].replace(/\d+$/, '');
-          tokenObject.name = name;
-          tokenObject.subtypes = name.split(' ');
+          tokenObject.id = entry[i] + (['Pot of Greed'].includes(entry[i]) ? '3' : '1');
+          tokenObject.name = entry[i];
         } else if (keys[i] == 'colors') {
           const colorArr = entry[i]
             .split(';')
