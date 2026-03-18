@@ -51,7 +51,7 @@ Write a script to transform the database
 - make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
 - make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
-- special cases: Scared Turtle // Snappy Turtle for flip, Ability Bingo, Bear Alignment Chart, Force of Rowan (for draft)
+- special cases: Scared Turtle // Snappy Turtle for flip, Ability Bingo, Bear Alignment Chart, Force of Rowan (for draft), Italic Plagiarist (italics in typeline with regular types)
 
   - add grid (that allows root-level stuff as well as faces?)?
   - use grid? to deal with Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, Blingo, Assimilated Strategist, bear hate,
@@ -68,7 +68,7 @@ Write a script to transform the database
 - fix tags for cards with draft_image
 - deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions)
 - do better: evolution of the dreadmaw
-- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino
+- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - figure out how to do shadows on mana symbols in costs
@@ -88,3 +88,6 @@ Write a script to transform the database
 - make other cards in feel the ground quake have each other in all_parts? (Do I want to have kongming's contraptions also do this?)
 - get a your dreadmaw reminder card/token as well as dreadmaw offspring tokens
 - add sorting for colors
+- deal with later: Dungeon Jumper, The Rat Pack
+- switch italics to use serif font? (that way it's more distinct)
+- make search page update conditions more logical
