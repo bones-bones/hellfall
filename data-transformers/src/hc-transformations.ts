@@ -728,9 +728,6 @@ const main = async () => {
         };
         meldRelatedCards.push(meldResult);
         meldPartIds.forEach(id => {
-          if (id == '6727') {
-            const x = 1
-          }
           const relatedCard = finalCards.find(card => card.id == id);
           if (!relatedCard?.has_draft_partners && token.id != 'Omnath, the Forbidden One1') {
             relatedCard!.has_draft_partners = true;
