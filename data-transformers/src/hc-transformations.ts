@@ -391,9 +391,10 @@ const mergeCards = (
           const superToken = existingCard.all_parts
             ?.filter(e => e.name == e.id.replace(/\d+$/, ''))
             .find(e => textEquals(e.id, part.name));
-          const existingPart = superToken && existingCard.isActualToken
-            ? superToken
-            : existingCard.all_parts?.find(e => textEquals(e.name, part.name));
+          const existingPart =
+            superToken && existingCard.isActualToken
+              ? superToken
+              : existingCard.all_parts?.find(e => textEquals(e.name, part.name));
           if (existingPart) {
             // if there is already a part, update it
             Object.entries(existingPart).forEach(([k, v]) => {
@@ -711,7 +712,6 @@ const main = async () => {
             //   'card_faces' in relatedCard && relatedCard.card_faces[0].image ? relatedCard.card_faces[0].image : relatedCard.image;
             if (token.id != 'Omnath, the Forbidden One1') {
               meldPart.is_draft_partner = true;
-
             }
             meldRelatedCards.push(meldPart);
           }
