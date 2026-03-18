@@ -56,8 +56,8 @@ export const fetchTokens = async () => {
     variation: false,
     image_status: HCImageStatus.HighRes,
     isActualToken: true,
-    type_line:'',
-    layout:HCLayout.Token
+    type_line: '',
+    layout: HCLayout.Token,
   };
 
   const theThing = rest.map(entry => {

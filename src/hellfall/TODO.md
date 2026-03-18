@@ -91,3 +91,4 @@ Write a script to transform the database
 - deal with later: Dungeon Jumper, The Rat Pack
 - switch italics to use serif font? (that way it's more distinct)
 - make search page update conditions more logical
+- implement tags based on notes column to mark spellbook tokens?
