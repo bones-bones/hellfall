@@ -39,7 +39,7 @@ const oneWayMergeProps = [
   'attraction_lights',
   'watermark',
 ];
-const cardBlankableProps = ['rulings', 'oracle_text', 'cmc'];
+const cardBlankableProps = ['rulings', 'oracle_text', 'cmc', 'mana_cost'];
 const cardRemovableProps = [
   'tags',
   'defense',
