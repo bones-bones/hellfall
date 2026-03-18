@@ -81,15 +81,17 @@ Write a script to transform the database
 - make sure mork fetches draft image where it exists
 - deal with spellbooks (prop in relatedCard)
 - call the dermotaxi as token_on_back?
-- make tag links work correctly on individual card pages
 - make simplifier for hybrid identity
 - figure out problems with pip clipping and shadows
 - make other cards in feel the ground quake have each other in all_parts? (Do I want to have kongming's contraptions also do this?)
 - get a your dreadmaw reminder card/token as well as dreadmaw offspring tokens
-- add sorting for colors
+- add sorting for colors (in HCColors arrays)
 - deal with later: Dungeon Jumper, The Rat Pack
 - switch italics to use serif font? (that way it's more distinct)
 - make search page update conditions more logical
 - implement tags based on notes column to mark spellbook tokens?
 - make token search work better
 - fully implement NotMagic
+- make tag notes show up on sheet
+- make tag links work correctly on individual card pages
+- make full images for dfcs with three images go to draft image
