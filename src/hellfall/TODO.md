@@ -68,7 +68,7 @@ Write a script to transform the database
 - fix tags for cards with draft_image
 - deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions)
 - do better: evolution of the dreadmaw
-- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino
+- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - figure out how to do shadows on mana symbols in costs
@@ -84,3 +84,7 @@ Write a script to transform the database
 - make tag links work correctly on individual card pages
 - make simplifier for hybrid identity
 - figure out problems with pip clipping and shadows
+- add optional prop "tag_notes":Record<string, string>
+- make other cards in feel the ground quake have each other in all_parts? (Do I want to have kongming's contraptions also do this?)
+- get a your dreadmaw reminder card/token as well as dreadmaw offspring tokens
+- add sorting for colors

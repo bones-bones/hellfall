@@ -49,7 +49,8 @@ const cardRemovableProps = [
   'types',
   'subtypes',
   'flavor_text',
-  'image' /**,'draft_image'*/,
+  'image',
+  'draft_image',
   'not_directly_draftable',
   'has_draft_partners',
   'watermark',
@@ -440,6 +441,8 @@ const mergeCards = (
       .forEach(key => {
         if (key == 'image') {
           merged.image_status = newCard.image_status;
+        } else if (key == 'draft_image') {
+          merged.draft_image_status = newCard.draft_image_status;
         }
         delete (merged as any)[key];
       });
@@ -775,6 +778,7 @@ const main = async () => {
           partnerCard.type_line = relatedCard!.type_line;
           partnerCard.set = relatedCard!.set;
           partnerCard.image = relatedCard!.image;
+          partnerCard.is_draft_partner=true
           if ('all_parts' in relatedCard!) {
             const partnerIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
             if (partnerIndex == -1) {
