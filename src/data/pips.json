@@ -60,7 +60,7 @@
       "english": "Color Indicator: Colorless",
       "represents_mana": false,
       "colors": [
-        "P"
+        "C"
       ]
     },
     {
@@ -408,15 +408,6 @@
         "B",
         "R",
         "G"
-      ]
-    },
-    {
-      "filename": "colorIndicators/mono/P.svg",
-      "symbol": "P",
-      "english": "Color Indicator: Purple",
-      "represents_mana": false,
-      "colors": [
-        "P"
       ]
     },
     {
@@ -984,7 +975,7 @@
       "colors": [
         "Colorless"
       ],
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "mono/fractional/HW.svg",
@@ -1124,7 +1115,7 @@
       "colors": [
         "G"
       ],
-      "clip_type":"top-left-third"
+      "clip_type": "top-left-third"
     },
     {
       "filename": "mono/fractional/TG2.svg",
@@ -1135,7 +1126,7 @@
       "colors": [
         "G"
       ],
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "mono/fractional/TG3.svg",
@@ -1146,7 +1137,7 @@
       "colors": [
         "G"
       ],
-      "clip_type":"bottom-third"
+      "clip_type": "bottom-third"
     },
     {
       "filename": "mono/effects/ant.png",
@@ -1157,7 +1148,7 @@
       "colors": [
         "C"
       ],
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "mono/effects/GE.svg",
@@ -1168,7 +1159,7 @@
       "colors": [
         "G"
       ],
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "mono/effects/Milk.svg",
@@ -2353,7 +2344,7 @@
         "Black",
         "Red"
       ],
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "tribrid/colors/GWU.svg",
@@ -2751,35 +2742,35 @@
       "symbol": "E",
       "english": "an energy counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/base/Paw.svg",
       "symbol": "Paw",
       "english": "modal budget pawprint",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/base/TK.svg",
       "symbol": "TK",
       "english": "a ticket counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/base/CHAOS.svg",
       "symbol": "CHAOS",
       "english": "chaos",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Bell.webp",
       "symbol": "Bell",
       "english": "a bell counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/UpRight.png",
@@ -2798,14 +2789,14 @@
       "symbol": "flying",
       "english": "the number of instances of flying on this",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Gem.png",
       "symbol": "Gem",
       "english": "a gem (you can't afford this)",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/HT.svg",
@@ -2818,28 +2809,28 @@
       "symbol": "shadow",
       "english": "shadow, which can be spent to put a shadow counter on a creature you control",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Rock Mushroom.png",
       "symbol": "Rock Mushroom",
       "english": "a rock mushroom",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Spore.png",
       "symbol": "Spore",
       "english": "a spore counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Blood.png",
       "symbol": "Blood",
       "english": "sacrifice a creature",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/PhT.svg",
@@ -2852,7 +2843,7 @@
       "symbol": "Brick",
       "english": "a brick counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Moona.svg",
@@ -2865,56 +2856,56 @@
       "symbol": "TRIANGLE",
       "english": "name sticker equivalent to one red mana",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/sun.png",
       "symbol": "sun",
       "english": "a sun counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Coin.png",
       "symbol": "Coin",
       "english": "a coin counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/temporary-currency.svg",
       "symbol": "temporary-currency",
       "english": "a temporary currency counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/SouljaGame.png",
       "symbol": "SouljaGame",
       "english": "a junk token",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Chris.png",
       "symbol": "Chris",
       "english": "as a state-based action, create a creature token copy of this family guy character, then sacrifice it",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Lois.png",
       "symbol": "Lois",
       "english": "as a state-based action, create a creature token copy of this family guy character, then sacrifice it",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Stewie.png",
       "symbol": "Stewie",
       "english": "as a state-based action, create a creature token copy of this family guy character, then sacrifice it",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Meg.png",
@@ -2927,49 +2918,49 @@
       "symbol": "Peter",
       "english": "as a state-based action, create a creature token copy of this family guy character, then sacrifice it",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Deadeye.png",
       "symbol": "Deadeye",
       "english": "a deadeye counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/additional/Faith.png",
       "symbol": "Faith",
       "english": "a faith counter",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/emoji/hypermaro.png",
       "symbol": "hypermaro",
       "english": "hypermaro",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/emoji/karn.png",
       "symbol": "karn",
       "english": "karn",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/emoji/moyai.png",
       "symbol": "moyai",
       "english": "moyai",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     },
     {
       "filename": "symbols/emoji/dreadmaw.png",
       "symbol": "dreadmaw",
       "english": "dreadmaw",
       "represents_mana": false,
-      "no_shadow":true
+      "no_shadow": true
     }
   ]
 }
