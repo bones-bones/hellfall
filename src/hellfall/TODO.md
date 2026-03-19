@@ -95,3 +95,7 @@ Write a script to transform the database
 - make tag notes show up on sheet
 - make tag links work correctly on individual card pages
 - make full images for dfcs with three images go to draft image
+- figure out why storm crow1 won't put both crow storm1 and 4214 into all_parts
+- deal with later: 4x Squadron Hawks
+- start doing variations even between card sheet and token sheet
+- deal with draftable sticker sheets (Amonkhet Punchcard)

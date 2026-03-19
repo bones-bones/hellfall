@@ -751,7 +751,7 @@ const main = async () => {
         });
       }
     });
-  // update cards that have tokens copies of them made by other cards
+  // update cards that have token copies of them made by other cards
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
