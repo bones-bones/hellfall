@@ -621,13 +621,13 @@ export const useSearchResults = () => {
               break;
             }
             case '>=': {
-              if (cardColorIdentityNumber >= searchColorIdentityNumber.value) {
+              if (!(cardColorIdentityNumber >= searchColorIdentityNumber.value)) {
                 return false;
               }
               break;
             }
             case '>': {
-              if (cardColorIdentityNumber > searchColorIdentityNumber.value) {
+              if (!(cardColorIdentityNumber > searchColorIdentityNumber.value)) {
                 return false;
               }
               break;

@@ -6,7 +6,7 @@ import { HCLegality, HCLegalitiesField } from '../../src/api-types/Card';
 
 export const fetchTokens = async () => {
   const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database?alt=json&key=${sheetsKey}`
+    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
 
@@ -48,6 +48,7 @@ export const fetchTokens = async () => {
     mana_cost: '',
     colors: [HCColor.Colorless] as HCColors,
     cmc: 0,
+    oracle_text: '',
     color_identity: [] as HCColors,
     color_identity_hybrid: [] as HCColors[],
     keywords: [],
@@ -55,6 +56,8 @@ export const fetchTokens = async () => {
     variation: false,
     image_status: HCImageStatus.HighRes,
     isActualToken: true,
+    type_line: '',
+    layout: HCLayout.Token,
   };
 
   const theThing = rest.map(entry => {
@@ -104,8 +107,6 @@ export const fetchTokens = async () => {
       if (tokenObject.types.length > 1) {
         tokenObject.types.shift();
       }
-    } else {
-      tokenObject.layout = HCLayout.Token;
     }
     // } else if ('types' in tokenObject && tokenObject.types.includes('Emblem')) {
     //   tokenObject.layout = HCLayout.Emblem;
@@ -134,15 +135,6 @@ export const fetchTokens = async () => {
       .forEach(key => {
         tokenObject[key] = defaultProps[key];
       });
-    const mandatoryProps = ['rulings', 'creator', 'cmc', 'type_line', 'oracle_text', 'mana_cost'];
-    mandatoryProps
-      .filter(prop => !(prop in tokenObject))
-      .forEach(prop => (tokenObject[prop] = prop == 'cmc' ? 0 : ''));
-    const legalities: HCLegalitiesField = {
-      standard: HCLegality.NotLegal,
-      '4cb': HCLegality.NotLegal,
-      commander: HCLegality.NotLegal,
-    };
     return tokenObject as HCCard.Any;
   });
   return theThing;

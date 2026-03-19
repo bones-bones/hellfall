@@ -11,7 +11,7 @@ export const fetchDatabase = async () => {
     `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
   );
   const asJson = (await requestedData.json()) as any;
-  const [_garbage, oldKeys, ...rest] = asJson.values as string[][];
+  const [_garbage, _oldKeys, ...rest] = asJson.values as string[][];
   const keys = [
     'id',
     'name',
@@ -229,7 +229,18 @@ export const fetchDatabase = async () => {
             cardObject.all_parts = all_parts;
           } else if (keys[i] == 'tags') {
             const tags = entry[i].split(';');
-            cardObject[keys[i]] = tags;
+            cardObject[keys[i]] = tags.map(fullTag => {
+              if (fullTag.includes('<') && fullTag.includes('>')) {
+                const [tag, note] = fullTag.split('<');
+                if (!('tag_notes' in cardObject)) {
+                  cardObject.tag_notes = {} as Record<string, string>;
+                }
+                cardObject.tag_notes[tag] = note.slice(0, -1);
+                return tag;
+              } else {
+                return fullTag;
+              }
+            });
             if (entry[i].includes('watermark')) {
               cardObject.card_faces[0].watermark = tags
                 .filter(tag => tag.includes('watermark'))[0]

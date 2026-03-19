@@ -51,7 +51,7 @@ Write a script to transform the database
 - make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
 - make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
-- special cases: Scared Turtle // Snappy Turtle for flip, Ability Bingo, Bear Alignment Chart, Force of Rowan (for draft)
+- special cases: Scared Turtle // Snappy Turtle for flip, Ability Bingo, Bear Alignment Chart, Force of Rowan (for draft), Italic Plagiarist (italics in typeline with regular types)
 
   - add grid (that allows root-level stuff as well as faces?)?
   - use grid? to deal with Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, Blingo, Assimilated Strategist, bear hate,
@@ -61,7 +61,6 @@ Write a script to transform the database
 - full documentation
 - use draft_image for full image of multisided cards?
 - fix formatting of all sagas
-- fix formatting of all flavor text attribution (always newline, no space)
 - fix formatting of em dashes (no space when it replaces a colon)
 - rework hybrid identity search to use the comparison operators
 - add general get all images method for cards?
@@ -69,7 +68,7 @@ Write a script to transform the database
 - fix tags for cards with draft_image
 - deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions)
 - do better: evolution of the dreadmaw
-- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino
+- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - figure out how to do shadows on mana symbols in costs
@@ -82,4 +81,21 @@ Write a script to transform the database
 - make sure mork fetches draft image where it exists
 - deal with spellbooks (prop in relatedCard)
 - call the dermotaxi as token_on_back?
+- make simplifier for hybrid identity
+- figure out problems with pip clipping and shadows
+- make other cards in feel the ground quake have each other in all_parts? (Do I want to have kongming's contraptions also do this?)
+- get a your dreadmaw reminder card/token as well as dreadmaw offspring tokens
+- add sorting for colors (in HCColors arrays)
+- deal with later: Dungeon Jumper, The Rat Pack
+- switch italics to use serif font? (that way it's more distinct)
+- make search page update conditions more logical
+- implement tags based on notes column to mark spellbook tokens?
+- make token search work better
+- fully implement NotMagic
+- make tag notes show up on sheet
 - make tag links work correctly on individual card pages
+- make full images for dfcs with three images go to draft image
+- figure out why storm crow1 won't put both crow storm1 and 4214 into all_parts
+- deal with later: 4x Squadron Hawks
+- start doing variations even between card sheet and token sheet
+- deal with draftable sticker sheets (Amonkhet Punchcard)

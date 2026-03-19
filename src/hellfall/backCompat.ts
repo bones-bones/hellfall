@@ -5,6 +5,20 @@ import { textEquals } from './useSearchResults';
 
 export const useNameToId = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);
+  const movedIds: Record<string, string> = {
+    '219': '6727',
+    '219b': '6728',
+    '1121': '6729',
+    '1121b': '6730',
+    '1121c': '6731',
+    '1121d': '6732',
+    '1121e': '6733',
+    '2035': '6734',
+    '2035b': '6735',
+  };
+  if (name in movedIds) {
+    return movedIds[name];
+  }
   const filteredCards = cards.filter(e => e.set != 'C');
   if (name == 'random' && filteredCards.length > 0) {
     const theId = filteredCards[Math.floor(Math.random() * filteredCards.length)].id;
