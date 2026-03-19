@@ -35,52 +35,58 @@ export const Deck = () => {
   const resolvedMainDeck = deck.cards.main.map(resolveCard) as RenderEntry[];
 
   const resolvedSideBoard = deck.cards.sideboard.map(resolveCard) as RenderEntry[];
+  const renderTypes = (card:RenderEntry):(string[]|undefined) => {
+    if (!card.hcCard) {
+      return undefined
+    }
+    return 'card_faces' in card.hcCard ? card.hcCard.card_faces[0].types : card.hcCard.types;
+  }
 
   const reduddd = resolvedMainDeck.reduce<Record<string, RenderEntry[]>>((curr, next) => {
-    if (next.hcCard?.toFaces()[0].types?.includes('Land') || !next.hcCard) {
+    if (renderTypes(next)?.includes('Land') || !next.hcCard) {
       curr['Land'] = (curr['Land'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Creature')) {
+    } else if (renderTypes(next)?.includes('Creature')) {
       curr['Creature'] = (curr['Creature'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Planeswalker')) {
+    } else if (renderTypes(next)?.includes('Planeswalker')) {
       curr['Planeswalker'] = (curr['Planeswalker'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Instant')) {
+    } else if (renderTypes(next)?.includes('Instant')) {
       curr['Instant'] = (curr['Instant'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Sorcery')) {
+    } else if (renderTypes(next)?.includes('Sorcery')) {
       curr['Sorcery'] = (curr['Sorcery'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Artifact')) {
+    } else if (renderTypes(next)?.includes('Artifact')) {
       curr['Artifact'] = (curr['Artifact'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Enchantment')) {
+    } else if (renderTypes(next)?.includes('Enchantment')) {
       curr['Enchantment'] = (curr['Enchantment'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Battle')) {
+    } else if (renderTypes(next)?.includes('Battle')) {
       curr['Battle'] = (curr['Battle'] ?? []).concat(next);
     } else {
-      curr[next.hcCard.toFaces()[0].types?.join() || '????'] = (
-        curr[next.hcCard.toFaces()[0].types?.join() || '????'] ?? []
+      curr[renderTypes(next)?.join() || '????'] = (
+        curr[renderTypes(next)?.join() || '????'] ?? []
       ).concat(next);
     }
 
     return curr;
   }, {});
   const redudddS = resolvedSideBoard.reduce<Record<string, RenderEntry[]>>((curr, next) => {
-    if (next.hcCard?.toFaces()[0].types?.includes('Creature')) {
+    if (renderTypes(next)?.includes('Creature')) {
       curr['Creature'] = (curr['Creature'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Planeswalker')) {
+    } else if (renderTypes(next)?.includes('Planeswalker')) {
       curr['Planeswalker'] = (curr['Planeswalker'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Instant')) {
+    } else if (renderTypes(next)?.includes('Instant')) {
       curr['Instant'] = (curr['Instant'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Sorcery')) {
+    } else if (renderTypes(next)?.includes('Sorcery')) {
       curr['Sorcery'] = (curr['Sorcery'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Artifact')) {
+    } else if (renderTypes(next)?.includes('Artifact')) {
       curr['Artifact'] = (curr['Artifact'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Enchantment')) {
+    } else if (renderTypes(next)?.includes('Enchantment')) {
       curr['Enchantment'] = (curr['Enchantment'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Battle')) {
+    } else if (renderTypes(next)?.includes('Battle')) {
       curr['Battle'] = (curr['Battle'] ?? []).concat(next);
-    } else if (next.hcCard?.toFaces()[0].types?.includes('Land') || !next.hcCard) {
+    } else if (renderTypes(next)?.includes('Land') || !next.hcCard) {
       curr['Land'] = (curr['Land'] ?? []).concat(next);
     } else {
-      curr[next.hcCard.toFaces()[0].types?.join() || '????'] = (
-        curr[next.hcCard.toFaces()[0].types?.join() || '????'] ?? []
+      curr[renderTypes(next)?.join() || '????'] = (
+        curr[renderTypes(next)?.join() || '????'] ?? []
       ).concat(next);
     }
 
