@@ -518,7 +518,7 @@ const mergeDatabases = (
       : newCardMap.get(movedIds[existingCard.id]);
     if (newCard) {
       newCardMap.delete(newCard.id);
-      return mergeCards(existingCard, newCard, true);
+      return mergeCards(existingCard, newCard, false);
     }
     return existingCard;
   });
