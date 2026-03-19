@@ -38,6 +38,7 @@ export const DeckBuilder = () => {
 
   useEffect(() => {
     if (textAreaRef.current) {
+      debugger;
       setToRender(textAreaRef.current.value.split('\n'));
 
       const searchToSet = new URLSearchParams();
@@ -55,6 +56,7 @@ export const DeckBuilder = () => {
   }, [textAreaValue, deckName]);
 
   const toCardArr = (value: string): [number, string] => {
+    debugger;
     if (/^(?!0+\s)\d+\s/.test(value)) {
       // if string starts with digits followed by a space
       const index = value.indexOf(' ');
@@ -93,6 +95,7 @@ export const DeckBuilder = () => {
     const images: HCCard.Any[] = (toRender || [])
       .filter(entry => entry != '' && !entry.startsWith('# '))
       .flatMap(name => {
+        debugger;
         const [count, rest] = toCardArr(name);
         const responseObject = [];
         if (rest[0] == '%') {
@@ -198,7 +201,7 @@ Cock and Balls to Torture and Abuse"
               width="250px"
               title={entry.name}
               key={entry.name + i}
-              src={entry.toFaces()[0].image!}
+              src={entry.draft_image ? entry.draft_image : entry.image}
               crossOrigin="anonymous"
             />
           );
