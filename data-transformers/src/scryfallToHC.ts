@@ -90,6 +90,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'flavor_text',
     'watermark',
     'attraction_lights',
+    'type_line'
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
@@ -161,8 +162,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
         cardObject.card_faces?.push({} as HCCardFace.MultiFaced);
 
         Object.entries(face).forEach(([k, v]) => {
-          if (k) {
-          } else if (colorProps.includes(key)) {
+          if (colorProps.includes(key)) {
             cardObject.card_faces![index][k] = (
               value.length ? value : [HCColor.Colorless]
             ) as HCColors;

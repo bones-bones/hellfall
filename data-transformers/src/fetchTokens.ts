@@ -3,6 +3,7 @@ import { HCCard, HCImageStatus, HCLayout, HCRelatedCard } from '../../src/api-ty
 import { HCColor, HCColors } from '../../src/api-types/Card';
 import { HCObject } from '../../src/api-types/Object';
 import { HCLegality, HCLegalitiesField } from '../../src/api-types/Card';
+import { fetchScryfallTokens } from './fetchScryfallTokens';
 
 export const fetchTokens = async () => {
   const requestedData = await fetch(
@@ -64,7 +65,7 @@ export const fetchTokens = async () => {
   ]
   
 
-  const theThing = rest.map(entry => {
+  const HCTokens = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
       if (entry[i]) {
@@ -145,5 +146,6 @@ export const fetchTokens = async () => {
       });
     return tokenObject as HCCard.Any;
   });
-  return theThing;
+  const ScryfallTokens = await fetchScryfallTokens();
+  return HCTokens.concat(ScryfallTokens);
 };
