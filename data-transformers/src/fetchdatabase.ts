@@ -121,6 +121,10 @@ export const fetchDatabase = async () => {
     split: HCImageStatus.Split,
   };
 
+  const hardCardNames:string[] = [
+    'Crypt of u/Em9500','1d6','Avatar of BallsJr123','Sekiro for the PS4','Avatar of Discord v2','That One Time in WW1', 'Plagiarism by doomclaw9','Carrion Feeder from MH8'
+  ]
+
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
       card_faces: [],
@@ -200,22 +204,43 @@ export const fetchDatabase = async () => {
             cardObject[keys[i]] = legalities;
           } else if (keys[i] == 'related') {
             // entry[20] is tags, entry[17] is 0oracle_text, entry[6] is Related Cards
-            const all_parts: [HCRelatedCard] = [
-              {
+            const all_parts:HCRelatedCard[] = entry[i].split(';').map(name => {
+              const base = name.replace(/\d+$/, '');
+              const useBase = /\d/.test(name.at(-1)!) && !hardCardNames.includes(name) && base && ![' ','-','^','.','/','+',',',"'"].includes(base.at(-1)!);
+
+              const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
-                id: '',
+                id: useBase ? name : '',
                 component:
                   entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
                     ? 'meld_part'
                     : entry[20].includes('draftpartner')
                     ? 'draft_partner'
                     : 'token_maker',
-                name: entry[i],
+                name: useBase ? base : name,
                 type_line: '',
                 set: '',
                 image: '',
-              },
-            ];
+              };
+              return maker;
+          });
+
+            // const all_parts: [HCRelatedCard] = [
+            //   {
+            //     object: HCObject.ObjectType.RelatedCard,
+            //     id: '',
+                // component:
+                //   entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
+                //     ? 'meld_part'
+                //     : entry[20].includes('draftpartner')
+                //     ? 'draft_partner'
+                //     : 'token_maker',
+            //     name: entry[i],
+            //     type_line: '',
+            //     set: '',
+            //     image: '',
+            //   },
+            // ];
             if (
               entry[6] != 'Head of the Forbidden One' &&
               (entry[17].toLowerCase().includes('meld') ||

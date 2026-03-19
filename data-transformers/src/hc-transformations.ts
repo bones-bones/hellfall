@@ -325,6 +325,9 @@ const mergeCards = (
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     setDerivedProps(merged);
   }
+  if (merged.id == 'Storm Crow1') {
+    const x = 1;
+  }
   Object.entries(newCard).forEach(([key, value]) => {
     if (value) {
       if (
@@ -392,21 +395,24 @@ const mergeCards = (
       ) {
         merged.all_parts = newCard.all_parts?.map(part => {
           // superToken is used when the card is a token and part is also a token that makes this token
-          const superToken = existingCard.all_parts
-            ?.filter(e => e.name == e.id.replace(/\d+$/, ''))
-            .find(e => textEquals(e.id, part.name));
-          const existingPart =
-            superToken && existingCard.isActualToken
-              ? superToken
-              : existingCard.all_parts?.find(e => textEquals(e.name, part.name));
+          // const superToken = existingCard.all_parts
+          //   ?.filter(e => e.name == e.id.replace(/\d+$/, ''))
+          //   .find(e => textEquals(e.id, part.name));
+          // is true when the thing that makes this is itself a token
+          const tokenIsMaker = part.name && part.id;
+          const existingPart = tokenIsMaker? existingCard.all_parts?.find(e => textEquals(e.id, part.id)): existingCard.all_parts?.find(e => textEquals(e.name, part.name));
+          // const existingPart =
+          //   superToken && existingCard.isActualToken
+          //     ? superToken
+          //     : existingCard.all_parts?.find(e => textEquals(e.name, part.name) );
           if (existingPart) {
             // if there is already a part, update it
             Object.entries(existingPart).forEach(([k, v]) => {
               if (!['name', 'component' /**,'is_draft_partner'*/].includes(k) && v) {
                 (part as any)[k] = v;
-              } else if (k == 'id' && superToken) {
-                part.id = v as string;
-                part.name = (v as string).replace(/\*\d+$/, '');
+              // } else if (k == 'id' && tokenIsMaker) {
+              //   part.id = v as string;
+              //   part.name = (v as string).replace(/\*\d+$/, '');
               }
             });
           }
@@ -660,7 +666,7 @@ const main = async () => {
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          // goes by id if possible, but if not, it goes by name; tries to find in tokens, then tries in cards
+          // goes by id if possible, but if not, it goes by name; tries to find in cards, then tries in tokens
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
               ? finalCards.find(card => card.id == tokenMaker.id)
@@ -753,7 +759,7 @@ const main = async () => {
         });
       }
     });
-  // update cards that have token copies of them made by other cards
+  // update cards that have token copies of them made by other cards or by tokens
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
@@ -769,15 +775,22 @@ const main = async () => {
       card.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          const relatedCard = finalCards.find(e =>
-            tokenMaker.id ? e.id == tokenMaker.id : textEquals(e.name, tokenMaker.name)
-          );
+          const relatedCard = tokenMaker.id
+            ? finalCards.find(card => card.id == tokenMaker.id)
+              ? finalCards.find(card => card.id == tokenMaker.id)
+              : finalTokens.find(card => card.id == tokenMaker.id)
+            : finalCards.find(card => textEquals(card.name, tokenMaker.name))
+            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
+            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
+          // const relatedCard = finalCards.find(e =>
+          //   tokenMaker.id ? e.id == tokenMaker.id : textEquals(e.name, tokenMaker.name)
+          // );
           if (relatedCard) {
-            tokenMaker.id = relatedCard!.id;
-            tokenMaker.name = relatedCard!.name;
-            tokenMaker.type_line = relatedCard!.type_line;
-            tokenMaker.set = relatedCard!.set;
-            tokenMaker.image = relatedCard!.image;
+            tokenMaker.id = relatedCard.id;
+            tokenMaker.name = relatedCard.name;
+            tokenMaker.type_line = relatedCard.type_line;
+            tokenMaker.set = relatedCard.set;
+            tokenMaker.image = relatedCard.image;
             if ('all_parts' in relatedCard!) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
               if (tokenIndex == -1) {

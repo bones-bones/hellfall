@@ -29,6 +29,7 @@
     "identity-obj-proxy": "3.0.0",
     "jotai": "^2.0.1",
     "jsdom": "^17.0.0",
+    "p-limit": "^7.3.0",
     "prompts": "2.4.0",
     "react": "^18",
     "react-app-polyfill": "^2.0.0",
