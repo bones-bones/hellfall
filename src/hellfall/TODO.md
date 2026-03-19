@@ -98,4 +98,6 @@ Write a script to transform the database
 - figure out why storm crow1 won't put both crow storm1 and 4214 into all_parts
 - deal with later: 4x Squadron Hawks
 - start doing variations even between card sheet and token sheet
-- deal with draftable sticker sheets (Amonkhet Punchcard)
+- deal with draftable sticker sheets (Amonkhet Punchcard), (Carnival Elephant Meteor)
+- deal with tokens that make cards (card factory -> gorm the great)
+- reminder card for attractions

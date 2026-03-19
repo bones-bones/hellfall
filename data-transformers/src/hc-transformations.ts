@@ -130,6 +130,8 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
         const ordered: Record<string, any> = {};
         const propOrder = [
           'id',
+          'scryfall_id',
+          'oracle_id',
           'name',
           'set',
           'image_status',
