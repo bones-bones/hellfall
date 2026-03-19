@@ -400,7 +400,7 @@ const mergeCards = (
           //   .find(e => textEquals(e.id, part.name));
           // is true when the thing that makes this is itself a token
           const tokenIsMaker = part.name && part.id;
-          const existingPart = tokenIsMaker? existingCard.all_parts?.find(e => textEquals(e.id, part.id)): existingCard.all_parts?.find(e => textEquals(e.name, part.name));
+          const existingPart = tokenIsMaker? existingCard.all_parts?.find(e => textEquals(e.id, part.id)): existingCard.all_parts?.find(e => textEquals(e.name, part.name) && e.name!=e.id.replace(/\d+$/, ''));
           // const existingPart =
           //   superToken && existingCard.isActualToken
           //     ? superToken
