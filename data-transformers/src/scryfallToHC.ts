@@ -216,7 +216,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     } else if (key in keyCorrespondences) {
       cardObject[keyCorrespondences[key]] = value;
     } else if (italicsReplaceKeys.includes(key)) {
-      cardObject[key] = value.replaceAll('*','\\*');
+      cardObject[key] = value.replaceAll('*','\\*').replaceAll('\n','\\n');
     } else if (sameKeys.includes(key)) {
       cardObject[key] = value;
     }
