@@ -76,9 +76,13 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       ? cardLayoutCorrespondences[layout]
       : HCLayout.Normal;
   };
+  const italicsReplaceKeys:string[] = [
+    'name',
+    'flavor_text',
+    'oracle_text'
+  ]
   const sameKeys: string[] = [
     'oracle_id',
-    'name',
     'hand_modifier',
     'life_modifier',
     'defense',
@@ -87,7 +91,6 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'toughness',
     'mana_cost',
     'cmc',
-    'flavor_text',
     'watermark',
     'attraction_lights',
     'type_line'
@@ -212,6 +215,8 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       });
     } else if (key in keyCorrespondences) {
       cardObject[keyCorrespondences[key]] = value;
+    } else if (italicsReplaceKeys.includes(key)) {
+      cardObject[key] = value.replaceAll('*','\\*');
     } else if (sameKeys.includes(key)) {
       cardObject[key] = value;
     }
