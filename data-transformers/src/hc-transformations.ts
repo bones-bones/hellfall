@@ -284,10 +284,12 @@ const mergeCards = (
     return existingCard;
   }
   // TODO: replace with actual type checking
-  if (partialMergeOnlyLayouts.includes(existingCard.layout as HCLayout)) {
+  if (partialMergeOnlyLayouts.includes(existingCard.layout as HCLayout) && existingCard.set.slice(0,2)!='SF') {
     const merged: HCCard.Any = { ...existingCard };
     ['image', 'creator', 'all_parts'].forEach(key => {
-      (merged as any)[key] = newCard[key as keyof typeof newCard];
+      if (newCard[key as keyof typeof newCard]) {
+        (merged as any)[key] = newCard[key as keyof typeof newCard];
+      }
     });
     return merged;
   }
