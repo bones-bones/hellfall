@@ -284,7 +284,10 @@ const mergeCards = (
     return existingCard;
   }
   // TODO: replace with actual type checking
-  if (partialMergeOnlyLayouts.includes(existingCard.layout as HCLayout) && existingCard.set.slice(0,2)!='SF') {
+  if (
+    partialMergeOnlyLayouts.includes(existingCard.layout as HCLayout) &&
+    existingCard.set.slice(0, 2) != 'SF'
+  ) {
     const merged: HCCard.Any = { ...existingCard };
     ['image', 'creator', 'all_parts'].forEach(key => {
       if (newCard[key as keyof typeof newCard]) {
@@ -402,7 +405,11 @@ const mergeCards = (
           //   .find(e => textEquals(e.id, part.name));
           // is true when the thing that makes this is itself a token
           const tokenIsMaker = part.name && part.id;
-          const existingPart = tokenIsMaker? existingCard.all_parts?.find(e => textEquals(e.id, part.id)): existingCard.all_parts?.find(e => textEquals(e.name, part.name) && e.name!=e.id.replace(/\d+$/, ''));
+          const existingPart = tokenIsMaker
+            ? existingCard.all_parts?.find(e => textEquals(e.id, part.id))
+            : existingCard.all_parts?.find(
+                e => textEquals(e.name, part.name) && e.name != e.id.replace(/\d+$/, '')
+              );
           // const existingPart =
           //   superToken && existingCard.isActualToken
           //     ? superToken
@@ -412,9 +419,9 @@ const mergeCards = (
             Object.entries(existingPart).forEach(([k, v]) => {
               if (!['name', 'component' /**,'is_draft_partner'*/].includes(k) && v) {
                 (part as any)[k] = v;
-              // } else if (k == 'id' && tokenIsMaker) {
-              //   part.id = v as string;
-              //   part.name = (v as string).replace(/\*\d+$/, '');
+                // } else if (k == 'id' && tokenIsMaker) {
+                //   part.id = v as string;
+                //   part.name = (v as string).replace(/\*\d+$/, '');
               }
             });
           }

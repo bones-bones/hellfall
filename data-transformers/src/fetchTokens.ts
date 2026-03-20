@@ -60,10 +60,16 @@ export const fetchTokens = async () => {
     type_line: '',
     layout: HCLayout.Token,
   };
-  const hardCardNames:string[] = [
-    'Crypt of u/Em9500','1d6','Avatar of BallsJr123','Sekiro for the PS4','Avatar of Discord v2','That One Time in WW1', 'Plagiarism by doomclaw9','Carrion Feeder from MH8'
-  ]
-  
+  const hardCardNames: string[] = [
+    'Crypt of u/Em9500',
+    '1d6',
+    'Avatar of BallsJr123',
+    'Sekiro for the PS4',
+    'Avatar of Discord v2',
+    'That One Time in WW1',
+    'Plagiarism by doomclaw9',
+    'Carrion Feeder from MH8',
+  ];
 
   const HCTokens = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
@@ -89,9 +95,13 @@ export const fetchTokens = async () => {
           }
         } else if (keys[i] == 'token_maker') {
           tokenObject.all_parts = entry[i].split(';').map(oldName => {
-            const name = oldName.replace(/\*\d+$/, '')
+            const name = oldName.replace(/\*\d+$/, '');
             const base = name.replace(/\d+$/, '');
-            const useBase = /\d/.test(name.at(-1)!) && !hardCardNames.includes(name) && base && ![' ','-','^','.','/','+',',',"'"].includes(base.at(-1)!);
+            const useBase =
+              /\d/.test(name.at(-1)!) &&
+              !hardCardNames.includes(name) &&
+              base &&
+              ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
 
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,

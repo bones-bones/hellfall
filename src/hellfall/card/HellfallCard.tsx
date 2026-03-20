@@ -349,9 +349,22 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 Tags:{' '}
                 {data.tags.map((tagEntry, i, ar) => (
                   <>
-                    <Link key={tagEntry} to={'?tags=' + tagEntry} target="_blank">
+                    <Link key={tagEntry} to={'/?tags=' + tagEntry} target="_blank">
                       {tagEntry}
                     </Link>
+                    {data.tag_notes &&
+                      tagEntry in data.tag_notes &&
+                      (data.tag_notes[tagEntry].slice(0, 6) == 'https:' ? (
+                        <>
+                          <Text> (</Text>
+                          <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
+                          <Text>)</Text>
+                        </>
+                      ) : (
+                        <>
+                          <Text> ({data.tag_notes[tagEntry]})</Text>
+                        </>
+                      ))}
                     {i < ar.length - 1 && ', '}
                   </>
                 ))}

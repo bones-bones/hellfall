@@ -74,12 +74,11 @@ Write a script to transform the database
 - figure out how to do shadows on mana symbols in costs
 - figure out why loading from the approved db sometimes leads to empty colors
 - figure out why new entries sometimes don't get correct derived props
-- add english hover to pips
 - add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God,
 - ask for ruling: Armory Manufactor
 - deal with multiple creators
 - make sure mork fetches draft image where it exists
-- deal with spellbooks (prop in relatedCard)
+- deal with spellbooks (prop in relatedCard?)
 - call the dermotaxi as token_on_back?
 - make simplifier for hybrid identity
 - figure out problems with pip clipping and shadows
@@ -92,12 +91,14 @@ Write a script to transform the database
 - implement tags based on notes column to mark spellbook tokens?
 - make token search work better
 - fully implement NotMagic
-- make tag notes show up on sheet
-- make tag links work correctly on individual card pages
-- make full images for dfcs with three images go to draft image
-- figure out why storm crow1 won't put both crow storm1 and 4214 into all_parts
+- make full images for dfcs with three+ images go to draft_image
 - deal with later: 4x Squadron Hawks
 - start doing variations even between card sheet and token sheet
-- deal with draftable sticker sheets (Amonkhet Punchcard), (Carnival Elephant Meteor)
-- deal with tokens that make cards (card factory -> gorm the great)
-- reminder card for attractions
+- deal with draftable sticker sheets (Amonkhet Punchcard, Carnival Elephant Meteor, etc)
+- add reminder card for attractions
+- figure out subtypes for nontoken tokens (emblems, dungeons, etc.)
+- add code to remove cards that aren't in the database
+- mork:
+  - add ids
+  - revamp fetch function to deal better with cards that have multiple printings (use bar and set like mtgcardfetcher does; allow use of id; allow use of )
+  - make more accessible options for multiside and flip cards (like how scryfall does it) (make sure it works on the actual search page too)

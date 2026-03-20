@@ -76,11 +76,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       ? cardLayoutCorrespondences[layout]
       : HCLayout.Normal;
   };
-  const italicsReplaceKeys:string[] = [
-    'name',
-    'flavor_text',
-    'oracle_text'
-  ]
+  const italicsReplaceKeys: string[] = ['name', 'flavor_text', 'oracle_text'];
   const sameKeys: string[] = [
     'oracle_id',
     'hand_modifier',
@@ -93,7 +89,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'cmc',
     'watermark',
     'attraction_lights',
-    'type_line'
+    'type_line',
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
@@ -118,7 +114,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     mana_cost: '',
     colors: [HCColor.Colorless] as HCColors,
     oracle_text: '',
-    image_status:HCImageStatus.Split
+    image_status: HCImageStatus.Split,
   };
   const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
   const subKeywords: Record<string, string> = {
@@ -176,7 +172,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
           } else if (k in keyCorrespondences) {
             cardObject.card_faces![index][keyCorrespondences[k]] = v;
           } else if (italicsReplaceKeys.includes(k)) {
-            cardObject.card_faces![index][k] = (v as string).replaceAll('*','\\*').replaceAll('\n','\\n');
+            cardObject.card_faces![index][k] = (v as string)
+              .replaceAll('*', '\\*')
+              .replaceAll('\n', '\\n');
           } else if (sameKeys.includes(k)) {
             cardObject.card_faces![index][k] = v;
           }
@@ -193,7 +191,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
                   cardObject.card_faces![index].types = [];
                 }
                 if (word == 'Card') {
-                  cardObject.layout = HCLayout.MultiReminder
+                  cardObject.layout = HCLayout.MultiReminder;
                   cardObject.card_faces![index].types.push('Reminder Card');
                 } else {
                   cardObject.card_faces![index].types.push(word);
@@ -230,7 +228,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     } else if (key in keyCorrespondences) {
       cardObject[keyCorrespondences[key]] = value;
     } else if (italicsReplaceKeys.includes(key)) {
-      cardObject[key] = value.replaceAll('*','\\*').replaceAll('\n','\\n');
+      cardObject[key] = value.replaceAll('*', '\\*').replaceAll('\n', '\\n');
     } else if (sameKeys.includes(key)) {
       cardObject[key] = value;
     }
@@ -247,7 +245,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
             cardObject.types = [];
           }
           if (word == 'Card') {
-            cardObject.layout = HCLayout.Reminder
+            cardObject.layout = HCLayout.Reminder;
             cardObject.types.push('Reminder Card');
           } else {
             if (word == 'Dungeon') {
@@ -282,7 +280,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
         cardObject.image = face.image;
         cardObject.image_status = face.image_status;
         delete face.image;
-        face.image_status = HCImageStatus.Front
+        face.image_status = HCImageStatus.Front;
       }
       Object.entries(defaultMultiFaceProps).forEach(([key, value]) => {
         if (!(key in face)) {
@@ -299,7 +297,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     });
   }
   if (asToken) {
-    cardObject.isActualToken = true
+    cardObject.isActualToken = true;
   }
   return cardObject as HCCard.Any;
 };

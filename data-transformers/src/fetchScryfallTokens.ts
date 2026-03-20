@@ -3,7 +3,7 @@ import { HCCard, HCImageStatus, HCLayout, HCRelatedCard } from '../../src/api-ty
 import { HCColor, HCColors } from '../../src/api-types/Card';
 import { HCObject } from '../../src/api-types/Object';
 import { HCLegality, HCLegalitiesField } from '../../src/api-types/Card';
-import { ScryfallCard } from "@scryfall/api-types";
+import { ScryfallCard } from '@scryfall/api-types';
 import pLimit from 'p-limit';
 import { ScryfallToHC } from './scryfallToHC';
 
@@ -15,11 +15,11 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 async function fetchCardById(cardId: string): Promise<ScryfallCard.Any> {
   return limiter(async () => {
     const url = `https://api.scryfall.com/cards/${cardId}`;
-    
+
     const response = await fetch(url, {
       headers: {
-        "User-Agent": "Hellfall/0.1.0",
-        "Accept": "application/json;q=0.9,*/*;q=0.8",
+        'User-Agent': 'Hellfall/0.1.0',
+        Accept: 'application/json;q=0.9,*/*;q=0.8',
       },
     });
 
@@ -32,7 +32,7 @@ async function fetchCardById(cardId: string): Promise<ScryfallCard.Any> {
     }
 
     await delay(REQUEST_DELAY_MS);
-    
+
     const cardData: ScryfallCard.Any = (await response.json()) as any;
     return cardData;
   });
@@ -45,12 +45,7 @@ export const fetchScryfallTokens = async () => {
   const asJson = (await requestedData.json()) as any;
 
   const [_oldkeys, ...rest] = asJson.values as string[][];
-  const keys = [
-    'id',
-    'scryfall_id',
-    'layout',
-    'token_maker',
-  ];
+  const keys = ['id', 'scryfall_id', 'layout', 'token_maker'];
   rest.forEach(row => {
     while (row.length < keys.length) {
       row.push('');
@@ -66,32 +61,34 @@ export const fetchScryfallTokens = async () => {
     Misc: HCLayout.Misc,
     Checklist: HCLayout.Checklist,
   };
-  
-  const theThing = await Promise.all(rest.map(async entry => {
-    const tokenObject = ScryfallToHC(await fetchCardById(entry[1]))
-    for (let i = 0; i < keys.length; i++) {
-      if (entry[i]) {
-        if (keys[i] == 'id') {
-          tokenObject.id = entry[i];
-        } else if (keys[i] == 'layout') {
-          tokenObject.layout = typeLayouts[entry[i]];
-        } else if (keys[i] == 'token_maker') {
-          tokenObject.all_parts = entry[i].split(';').map(name => {
-            const maker: HCRelatedCard = {
-              object: HCObject.ObjectType.RelatedCard,
-              id: '',
-              component: 'token_maker',
-              name: name.replace(/\*\d+$/, ''),
-              type_line: '',
-              set: '',
-              image: '',
-            };
-            return maker;
-          });
+
+  const theThing = await Promise.all(
+    rest.map(async entry => {
+      const tokenObject = ScryfallToHC(await fetchCardById(entry[1]));
+      for (let i = 0; i < keys.length; i++) {
+        if (entry[i]) {
+          if (keys[i] == 'id') {
+            tokenObject.id = entry[i];
+          } else if (keys[i] == 'layout') {
+            tokenObject.layout = typeLayouts[entry[i]];
+          } else if (keys[i] == 'token_maker') {
+            tokenObject.all_parts = entry[i].split(';').map(name => {
+              const maker: HCRelatedCard = {
+                object: HCObject.ObjectType.RelatedCard,
+                id: '',
+                component: 'token_maker',
+                name: name.replace(/\*\d+$/, ''),
+                type_line: '',
+                set: '',
+                image: '',
+              };
+              return maker;
+            });
+          }
         }
       }
-    }
-    return tokenObject;
-  }));
+      return tokenObject;
+    })
+  );
   return theThing;
 };
