@@ -213,6 +213,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       });
     } else if (colorProps.includes(key)) {
       cardObject[key] = (value.length ? value : [HCColor.Colorless]) as HCColors;
+    } else if (key == 'image_uris') {
+      cardObject.image = (value as ScryfallImageUris).large;
+      cardObject.image_status = HCImageStatus.HighRes;
     } else if (key == 'layout' && !('layout' in cardObject)) {
       cardObject.layout = convertLayout(value as ScryfallLayout);
     } else if (key == 'keywords') {
@@ -265,6 +268,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     }
   });
   cardObject.id = card.id; // make sure to give correct ID using name for tokens
+  if (card.layout == 'token' && card.type_line == 'Creature') {
+    cardObject.layout = HCLayout.Reminder;
+  }
   Object.entries(defaultProps).forEach(([key, value]) => {
     if (!(key in cardObject)) {
       cardObject[key] = value;
