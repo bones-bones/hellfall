@@ -247,6 +247,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
             cardObject.layout = HCLayout.Reminder
             cardObject.types.push('Reminder Card');
           } else {
+            if (word == 'Dungeon') {
+              cardObject.layout = HCLayout.Dungeon;
+            }
             cardObject.types.push(word);
           }
         }
