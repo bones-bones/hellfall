@@ -10,7 +10,7 @@ export const toDeck = (cards: HCCard.Any[]) => {
     (baseDeck.ObjectStates[0].DeckIDs as number[]).push((i + 1) * 100);
 
     const thing = {
-      FaceURL: entry.toFaces()[0].image,
+      FaceURL: 'card_faces' in entry && entry.card_faces[0].image ? entry.card_faces[0].image:entry.image,
       BackURL:
         'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
       NumWidth: 1,
@@ -27,7 +27,7 @@ export const toDeck = (cards: HCCard.Any[]) => {
       thing: { [i + 1 + '']: thing },
       name: entry.name,
       id: (i + 1) * 100,
-      description: entry.toFaces()[0].oracle_text || entry.name,
+      description: ('card_faces' in entry ? entry.card_faces[0].oracle_text:entry.oracle_text) || entry.name,
     });
     // TODO: don't break lands
     // const sideCount = entry["Card Type(s)"].filter(

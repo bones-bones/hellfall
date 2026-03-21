@@ -198,7 +198,7 @@ Cock and Balls to Torture and Abuse"
               width="250px"
               title={entry.name}
               key={entry.name + i}
-              src={entry.toFaces()[0].image!}
+              src={entry.draft_image ? entry.draft_image : entry.image}
               crossOrigin="anonymous"
             />
           );
