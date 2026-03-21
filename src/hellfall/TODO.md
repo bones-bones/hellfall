@@ -91,12 +91,13 @@ Write a script to transform the database
 - make token search work better
 - fully implement NotMagic
 - make full images for dfcs with three+ images go to draft_image
-- deal with later: 4x Squadron Hawks, Learn from Better Designers (specifically its draftpartner implementation)
+- deal with later: 4x Squadron Hawks, Learn from Better Designers, Liliana, Breaker of Oaths (specifically its draftpartner implementation)
 - start doing variations even between card sheet and token sheet
 - deal with draftable sticker sheets (Amonkhet Punchcard, Carnival Elephant Meteor, etc)
 - add reminder card for attractions
 - figure out subtypes for nontoken tokens (emblems, dungeons, etc.)
-- add code to remove cards that aren't in the database
+- add code to remove cards that aren't in the database (only when going from unapproved?)
+- don't fetch SFT tokens with "token" layout from scryfall every time
 - mork:
   - add ids
   - revamp fetch function to deal better with cards that have multiple printings (use bar and set like mtgcardfetcher does; allow use of id; allow use of )

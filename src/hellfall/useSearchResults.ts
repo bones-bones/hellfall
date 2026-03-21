@@ -306,8 +306,8 @@ export const useSearchResults = () => {
               if (
                 !(
                   'power' in entry.toFaces()[0] &&
-                  power.value <
-                    (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!)
+                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) <
+                    power.value
                 )
               ) {
                 return false;
@@ -318,8 +318,8 @@ export const useSearchResults = () => {
               if (
                 !(
                   'power' in entry.toFaces()[0] &&
-                  power.value <=
-                    (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!)
+                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) <=
+                    power.value
                 )
               ) {
                 return false;
@@ -336,8 +336,8 @@ export const useSearchResults = () => {
               if (
                 !(
                   'power' in entry.toFaces()[0] &&
-                  power.value >=
-                    (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!)
+                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) >=
+                    power.value
                 )
               ) {
                 return false;
@@ -348,8 +348,8 @@ export const useSearchResults = () => {
               if (
                 !(
                   'power' in entry.toFaces()[0] &&
-                  power.value >
-                    (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!)
+                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) >
+                    power.value
                 )
               ) {
                 return false;
@@ -364,10 +364,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'toughness' in entry.toFaces()[0] &&
-                  toughness.value <
-                    (!toNumber(entry.toFaces()[0].toughness)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].toughness)!)
+                  (!toNumber(entry.toFaces()[0].toughness)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].toughness)!) < toughness.value
                 )
               ) {
                 return false;
@@ -378,10 +377,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'toughness' in entry.toFaces()[0] &&
-                  toughness.value <=
-                    (!toNumber(entry.toFaces()[0].toughness)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].toughness)!)
+                  (!toNumber(entry.toFaces()[0].toughness)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].toughness)!) <= toughness.value
                 )
               ) {
                 return false;
@@ -398,10 +396,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'toughness' in entry.toFaces()[0] &&
-                  toughness.value >=
-                    (!toNumber(entry.toFaces()[0].toughness)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].toughness)!)
+                  (!toNumber(entry.toFaces()[0].toughness)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].toughness)!) >= toughness.value
                 )
               ) {
                 return false;
@@ -412,10 +409,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'toughness' in entry.toFaces()[0] &&
-                  toughness.value >
-                    (!toNumber(entry.toFaces()[0].toughness)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].toughness)!)
+                  (!toNumber(entry.toFaces()[0].toughness)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].toughness)!) > toughness.value
                 )
               ) {
                 return false;
@@ -430,10 +426,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'loyalty' in entry.toFaces()[0] &&
-                  loyalty.value <
-                    (!toNumber(entry.toFaces()[0].loyalty)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].loyalty)!)
+                  (!toNumber(entry.toFaces()[0].loyalty)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].loyalty)!) < loyalty.value
                 )
               ) {
                 return false;
@@ -444,10 +439,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'loyalty' in entry.toFaces()[0] &&
-                  loyalty.value <=
-                    (!toNumber(entry.toFaces()[0].loyalty)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].loyalty)!)
+                  (!toNumber(entry.toFaces()[0].loyalty)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].loyalty)!) <= loyalty.value
                 )
               ) {
                 return false;
@@ -464,10 +458,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'loyalty' in entry.toFaces()[0] &&
-                  loyalty.value >=
-                    (!toNumber(entry.toFaces()[0].loyalty)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].loyalty)!)
+                  (!toNumber(entry.toFaces()[0].loyalty)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].loyalty)!) >= loyalty.value
                 )
               ) {
                 return false;
@@ -478,10 +471,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'loyalty' in entry.toFaces()[0] &&
-                  loyalty.value >
-                    (!toNumber(entry.toFaces()[0].loyalty)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].loyalty)!)
+                  (!toNumber(entry.toFaces()[0].loyalty)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].loyalty)!) > loyalty.value
                 )
               ) {
                 return false;
@@ -496,10 +488,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'defense' in entry.toFaces()[0] &&
-                  defense.value <
-                    (!toNumber(entry.toFaces()[0].defense)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].defense)!)
+                  (!toNumber(entry.toFaces()[0].defense)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].defense)!) < defense.value
                 )
               ) {
                 return false;
@@ -510,10 +501,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'defense' in entry.toFaces()[0] &&
-                  defense.value <=
-                    (!toNumber(entry.toFaces()[0].defense)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].defense)!)
+                  (!toNumber(entry.toFaces()[0].defense)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].defense)!) <= defense.value
                 )
               ) {
                 return false;
@@ -530,10 +520,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'defense' in entry.toFaces()[0] &&
-                  defense.value >=
-                    (!toNumber(entry.toFaces()[0].defense)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].defense)!)
+                  (!toNumber(entry.toFaces()[0].defense)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].defense)!) >= defense.value
                 )
               ) {
                 return false;
@@ -544,10 +533,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'defense' in entry.toFaces()[0] &&
-                  defense.value >
-                    (!toNumber(entry.toFaces()[0].defense)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].defense)!)
+                  (!toNumber(entry.toFaces()[0].defense)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].defense)!) > defense.value
                 )
               ) {
                 return false;
