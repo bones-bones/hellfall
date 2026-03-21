@@ -10,6 +10,8 @@ import {
   HCLayout,
   HCRelatedCard,
   HCLayoutGroup,
+  HCColor,
+  HCColors,
 } from '../../src/api-types/Card';
 import { HCObject } from '../../src/api-types/Object';
 import { getDefaultStore } from 'jotai';
@@ -260,6 +262,9 @@ const setDerivedProps = (card: HCCard.Any) => {
       .filter(Boolean)
       .join(' ') as string;
   }
+  if (!card.colors.length) {
+    card.colors = [HCColor.Colorless] as HCColors;
+  }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
   card.color_identity = color_identity;
   card.color_identity_hybrid = color_identity_hybrid;
@@ -329,9 +334,6 @@ const mergeCards = (
       : { ...(mergedPrelim as HCCard.AnySingleFaced) };
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     setDerivedProps(merged);
-  }
-  if (merged.id == 'Storm Crow1') {
-    const x = 1;
   }
   Object.entries(newCard).forEach(([key, value]) => {
     if (value) {
@@ -539,7 +541,14 @@ const mergeDatabases = (
     }
     return existingCard;
   });
-  mergedCards.push(...Array.from(newCardMap.values()));
+  mergedCards.push(
+    ...Array.from(
+      newCardMap.values().map(card => {
+        setDerivedProps(card);
+        return card;
+      })
+    )
+  );
 
   const mergedTokens = existingTokens.map(existingToken => {
     const newToken = !(existingToken.id in movedIds)
@@ -551,7 +560,14 @@ const mergeDatabases = (
     }
     return existingToken;
   });
-  mergedTokens.push(...Array.from(newTokenMap.values()));
+  mergedTokens.push(
+    ...Array.from(
+      newTokenMap.values().map(token => {
+        setDerivedProps(token);
+        return token;
+      })
+    )
+  );
 
   return { mergedCards, mergedTokens };
 };

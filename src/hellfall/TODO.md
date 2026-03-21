@@ -79,7 +79,6 @@ Write a script to transform the database
 - deal with multiple creators
 - make sure mork fetches draft image where it exists
 - deal with spellbooks (prop in relatedCard?)
-- call the dermotaxi as token_on_back?
 - make simplifier for hybrid identity
 - figure out problems with pip clipping and shadows
 - make other cards in feel the ground quake have each other in all_parts? (Do I want to have kongming's contraptions also do this?)
@@ -92,7 +91,7 @@ Write a script to transform the database
 - make token search work better
 - fully implement NotMagic
 - make full images for dfcs with three+ images go to draft_image
-- deal with later: 4x Squadron Hawks
+- deal with later: 4x Squadron Hawks, Learn from Better Designers (specifically its draftpartner implementation)
 - start doing variations even between card sheet and token sheet
 - deal with draftable sticker sheets (Amonkhet Punchcard, Carnival Elephant Meteor, etc)
 - add reminder card for attractions
