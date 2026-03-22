@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { toDeck } from '../deck-builder/toDeck';
-import { cardsAtom } from '../hellfall/cardsAtom';
-import { toCockCube } from './toCockCube';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom';
+import { toCockCube } from './cockatrice/toCockCube';
 import { useAtomValue } from 'jotai';
 import { HCCard } from '../api-types';
 import { ReactNode } from 'react';
@@ -156,7 +156,11 @@ export const CubeResources = () => {
     {
       name: 'Hellscube Jumpstart',
       id: 'HCJ',
-
+      printLink: (
+        <StyledLink to={'https://drive.google.com/file/d/1CGJXmtv1Z9LBm7IkEkCxz0-R9AFoO7_i/view'}>
+          PDF by g0m
+        </StyledLink>
+      ),
       description: 'Jumpstart!',
       cards: cards.filter(e => e.set === 'HCJ'),
     },

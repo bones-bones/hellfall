@@ -30,16 +30,16 @@ export const ParadoxIncorporated = () => {
         should be mostly relegated to more unique versions like impulse draws, future sight effects,
         underworld breach effects, or wishes as opposed to the traditional form of card draw. After
         all, the last thing we would want is to add more cards to our hand. So if you are in either
-        of Paradox Inc’s two colors, feel free to keep that in mind. Additionally, Paradox dosen’t
+        of Paradox Inc's two colors, feel free to keep that in mind. Additionally, Paradox dosen't
         care how you cast the spell or how many you cast, just make sure the spells are from other
-        zones. Multicasting, while useful, isn’t essential.
+        zones. Multicasting, while useful, isn't essential.
       </div>
       <br />
       <h2>Help Wanted</h2>
       <div>
         One of our best employees, [[Agent Fblthp]] has gone ahead and done what he does best: get
-        lost. Specifically, he has gotten lost in “HC6”. He fits perfectly in Paradox Incorporated
-        and shows how to make a payoff that doesn’t necessarily have Paradox itself stapled onto it.
+        lost. Specifically, he has gotten lost in "HC6". He fits perfectly in Paradox Incorporated
+        and shows how to make a payoff that doesn't necessarily have Paradox itself stapled onto it.
         Feel free to use his work as inspiration. In addition, I would appreciate if anyone could
         help find him and bring this masterpiece of an employee back to our company in HC8.
       </div>
@@ -47,10 +47,10 @@ export const ParadoxIncorporated = () => {
       <h2>Real Estate</h2>
       <div>
         Despite what people may think, Paradox Incorporated is not a real estate company. If you
-        wish to claim some land for the company be aware that we are the only archetype that isn’t
+        wish to claim some land for the company be aware that we are the only archetype that isn't
         in anyway connected to the 2 real estate giants, Landistocrats and Lands. As such our lands
         can be more general and less utility focused. Mana is our bottleneck and we have plenty of
-        card advantage so we don’t need all that many effects stapled to our lands. In fact, our
+        card advantage so we don't need all that many effects stapled to our lands. In fact, our
         keyword specifically excludes lands so if you do create a land, be aware that having lands
         with effects will generally not be worth it for Paradox. Instead lands that have fixing or
         benefit from paradoxically casting spells are greatly appreciated instead. Additionally, as

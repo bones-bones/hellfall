@@ -1,14 +1,13 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { cardsAtom } from '../hellfall/cardsAtom';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom';
 import { HCCard } from '../api-types';
 import styled from '@emotion/styled';
 import { xIcon } from '@workday/canvas-system-icons-web';
 
 import { SidePanel, SidePanelOpenDirection } from '@workday/canvas-kit-react/side-panel';
 import { Card, TertiaryButton, ToolbarIconButton } from '@workday/canvas-kit-react';
-import { HellfallCard } from '../hellfall/HellfallCard';
-import { activeCardAtom } from '../hellfall/searchAtoms';
-import { getColorIdentity } from '../hellfall/getColorIdentity';
+import { HellfallCard } from '../hellfall/card/HellfallCard';
+import { activeCardAtom } from '../hellfall/atoms/searchAtoms';
 import { canBeACommander } from '../hellfall/canBeACommander';
 // TODO: make sure this still works
 export const Breakdown = () => {
@@ -32,7 +31,7 @@ export const Breakdown = () => {
     .filter(e => canBeACommander(e))
     .reduce<Record<string, HCCard.Any[]>>(
       (curr, next) => {
-        const colorSet = Array.from(new Set(getColorIdentity(next).flat().filter(Boolean))).sort();
+        const colorSet = Array.from(new Set(next.color_identity.flat().filter(Boolean))).sort();
         console.log(colorSet);
         if (curr[next.toFaces()[0]?.colors.join('') || 'undefined']) {
           curr[next.toFaces()[0]?.colors.join('') || 'undefined'].push(next);

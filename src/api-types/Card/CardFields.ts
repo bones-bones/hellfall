@@ -8,7 +8,7 @@ import {
   // HCFrameEffect,
   // HCGame,
   HCImageStatus,
-  HCImageUris,
+  // HCImageUris,
   // HCLanguageCode,
   HCLayout,
   HCLegalitiesField,
@@ -22,7 +22,7 @@ import {
 
 import { HCCardFace } from './CardFace';
 import { HCRelatedCard } from './RelatedCard';
-import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType';
+// import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType';
 // import { SetType } from "../Set/values";
 
 /**
@@ -36,13 +36,13 @@ export namespace HCCardFields.Core {
    */
   export type HCReferences = {
     /**
-     * A unique ID for this card in HC’s database.
+     * A unique ID for this card in HC's database.
      *
      * @type UUID
      */
     id: string;
     /**
-     * A code for this card’s layout. TODO: rework
+     * A code for this card's layout. TODO: rework
      *
      * @see {@link https://scryfall.com/docs/api/layouts}
      */
@@ -52,13 +52,13 @@ export namespace HCCardFields.Core {
      */
     rulings: string;
     /**
-     * A link to this card’s permapage on HC’s website.
+     * A link to this card's permapage on HC's website.
      *
      * @type URI
      */
     // scryfall_uri: string;
     /**
-     * A link to this card object on HC’s API.
+     * A link to this card object on HC's API.
      *
      * @type URI
      */
@@ -71,6 +71,10 @@ export namespace HCCardFields.Core {
      * All tags of this card.
      */
     tags?: string[];
+    /**
+     * All tag notes of this card.
+     */
+    tag_notes?: Record<string, string>;
     /**
      * Whether this card is an actual token (TODO: replace with type-based checks)
      */
@@ -108,11 +112,11 @@ export namespace HCCardFields.Gameplay {
    */
   export type VanguardStats = {
     /**
-     * This card’s hand modifier, if it is Vanguard card. This value will contain a delta, such as -1.
+     * This card's hand modifier, if it is Vanguard card. This value will contain a delta, such as -1.
      */
     hand_modifier?: string;
     /**
-     * This card’s life modifier, if it is Vanguard card. This value will contain a delta, such as +2.
+     * This card's life modifier, if it is Vanguard card. This value will contain a delta, such as +2.
      */
     life_modifier?: string;
   };
@@ -132,11 +136,11 @@ export namespace HCCardFields.Gameplay {
      */
     loyalty?: string;
     /**
-     * This card’s power, if any. Note that some cards have powers that are not numeric, such as `"*"`.
+     * This card's power, if any. Note that some cards have powers that are not numeric, such as `"*"`.
      */
     power?: string;
     /**
-     * This card’s toughness, if any. Note that some cards have toughnesses that are not numeric, such as `"*"`.
+     * This card's toughness, if any. Note that some cards have toughnesses that are not numeric, such as `"*"`.
      */
     toughness?: string;
   };
@@ -144,7 +148,7 @@ export namespace HCCardFields.Gameplay {
   /**
    * On multi-face cards, these fields are duplicated at the card and face level.
    */
-  type AllFacesAndSides = {
+  type AllFaces = {
     name: string;
     type_line: string;
     mana_cost: string;
@@ -156,9 +160,13 @@ export namespace HCCardFields.Gameplay {
    * - Root level for a single-face card.
    * - Card face level for a multi-face card.
    */
-  export type CardFaceSpecific = AllFacesAndSides & {
+  export type CardFaceSpecific = AllFaces & {
     /**
-     * The colors in this card’s color indicator, if any. A null value for this field indicates the card does not have one.
+     * This face's colors.
+     */
+    colors: HCColors;
+    /**
+     * The colors in this card's color indicator, if any. A null value for this field indicates the card does not have one.
      */
     color_indicator?: HCColors;
     /**
@@ -190,42 +198,37 @@ export namespace HCCardFields.Gameplay {
      */
     oracle_text: string;
     /**
-     * This face’s colors.
+     * The lit Unfinity attractions lights on this card, if any.
+     *
+     * This will be an array of numbers ranging from 1 to 6 inclusive.
      */
-    colors: HCColors;
+    attraction_lights?: number[];
   } & CombatStats &
     VanguardStats;
-
-  // export type CardSideSpecific = AllFacesAndSides & {
-  //   /**
-  //    * The name of this card.
-  //    */
-  //   name: string;
-  //   /**
-  //    * The type line of this card.
-  //    */
-  //   type_line: string;
-  //   /**
-  //    * This card’s colors, if the overall card has colors defined by the rules. Otherwise the colors will be on the card_faces objects.
-  //    */
-  //   colors: HCColors;
-  // };
 
   /**
    * These fields are specific for a card.
    * - Root level for all layouts.
    */
-  export type CardSpecific = AllFacesAndSides & {
+  export type CardSpecific = AllFaces & {
     /**
-     * The card’s mana value. Note that some funny cards have fractional mana costs.
+     * The card's mana value. Note that some funny cards have fractional mana costs.
      *
      * @type Decimal
      */
     cmc: number;
     /**
-     * This card’s color identity. It is a list of HCColors in order to handle the hybrid rules.
+     * The front's colors.
      */
-    color_identity: HCColors[];
+    colors: HCColors;
+    /**
+     * This card's color identity..
+     */
+    color_identity: HCColors;
+    /**
+     * This card's color identity for hybrid. It is a list of HCColors in order to handle the hybrid rules.
+     */
+    color_identity_hybrid: HCColors[];
     /**
      * An array of keywords that this card uses, such as 'Flying' and 'Cumulative upkeep'.
      */
@@ -237,7 +240,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * Colors of mana that this card could produce.
      */
-    produced_mana?: HCManaTypes;
+    // produced_mana?: HCManaTypes;
     /**
      * The type line of this card.
      */
@@ -264,57 +267,46 @@ export namespace HCCardFields.Print {
      */
     // artist_ids?: string[];
     /**
-     * The lit Unfinity attractions lights on this card, if any.
-     *
-     * This will be an array of numbers ranging from 1 to 6 inclusive.
-     */
-    attraction_lights?: number[];
-    /**
-     * This card’s border color: black, white, borderless, silver, or gold.
+     * This card's border color: black, white, borderless, silver, or gold.
      */
     // border_color: `${HCBorderColor}`;
     /**
-     * This card’s frame layout.
+     * This card's frame layout.
      */
     // frame: `${HCFrame}`;
     /**
-     * An string with the image for this side.
-     */
-    image?: string;
-    /**
-     * This card’s set code.
-     */
-    set: string;
-  } & VariationInfo;
-
-  /**
-   * These print fields only show up when a card is single-sided.
-   */
-  export type SingleSideOnly = {
-    /**
-     * The HC ID for the card back design present on this card.
-     *
-     * @type UUID
-     */
-    card_back_id?: string;
-  };
-
-  /**
-   * These print fields are specific for the side of a card.
-   *
-   * - Root level for single-sided cards, whether with single-part or multi-part.
-   * - Card face level for cards with two sides, e.g. a DFC or a reversible card.
-   */
-  export type CardSideSpecific = {
-    /**
-     * A computer-readable indicator for the state of this card’s image, one of missing, placeholder, lowres, or highres_scan.
+     * A computer-readable indicator for the state of this card's image.
      */
     image_status: `${HCImageStatus}`;
     /**
-     * An string with the image for this side.
+     * A string with the image for this card.
      */
     image?: string;
-  };
+    /**
+     * A computer-readable indicator for the state of this card's draft image.
+     */
+    draft_image_status: `${HCImageStatus}`;
+    /**
+     * A string with the draft image.
+     */
+    draft_image?: string;
+    /**
+     * A list of ids to add to the draft pool when this is drafted.
+     */
+    // draft_partner_ids?: string[];
+    /**
+     * Whether this card shouldn't be directly draftable
+     */
+    not_directly_draftable?: boolean;
+    /**
+     * Whether this card has draftpartners
+     */
+    has_draft_partners?: boolean;
+    /**
+     * This card's set code.
+     */
+    set: string;
+  } & VariationInfo;
 
   /**
    * These print fields are specific for a card face.
@@ -324,29 +316,21 @@ export namespace HCCardFields.Print {
    */
   export type CardFaceSpecific = {
     /**
+     * A computer-readable indicator for the state of this face's image. If this face doesn't have an image, this also explains why.
+     */
+    image_status: `${HCImageStatus}`;
+    /**
+     * A string with the image for this face, if any.
+     */
+    image?: string;
+    /**
      * The flavor text, if any.
      */
     flavor_text?: string;
     /**
-     * This card’s watermark, if any.
+     * This card's watermark, if any.
      */
     watermark?: string;
-  };
-
-  /**
-   * These print fields only ever show up on a card face.
-   */
-  export type CardFaceOnly = {
-    /**
-     * The name of the illustrator of this card face. Newly spoiled cards may not have this field yet.
-     */
-    // artist?: string;
-    /**
-     * The ID of the illustrator of this card face. Newly spoiled cards may not have this field yet.
-     *
-     * @type UUID
-     */
-    // artist_id?: string;
   };
 
   type VariationInfo = {

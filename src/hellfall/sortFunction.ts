@@ -1,8 +1,8 @@
 import { HCCard } from '../api-types';
 import { HCColor, HCColors } from '../api-types';
+import { stripSemicolon } from './inputs/stripSemicolon';
 // TODO: make it possible to sort by color, then alpha, rather than color, then CMC
 // how they can combine: Alpha and ID are mutually exclusive, but none of the others are
-// TODO: make sure that parts of ids work
 
 export const sortFunction =
   (sortRule: 'Alpha' | 'CMC' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>
@@ -25,14 +25,40 @@ export const sortFunction =
       }
 
       case 'Alpha': {
-        if (a.name > b.name) {
+        if (stripSemicolon(a.name) == stripSemicolon(b.name)) {
+          if (a.isActualToken && b.isActualToken) {
+            if (
+              (parseInt(a.id.match(/\d+$/)?.[0] || '') || 0) >
+              (parseInt(b.id.match(/\d+$/)?.[0] || '') || 0)
+            ) {
+              return dirRule == 'Desc' ? -1 : 1;
+            }
+          } else if (a.isActualToken != b.isActualToken) {
+            if (a.isActualToken) {
+              return dirRule == 'Desc' ? -1 : 1;
+            }
+          } else {
+            if (parseInt(a.id) == parseInt(b.id)) {
+              if (a.id > b.id) {
+                return dirRule == 'Desc' ? -1 : 1;
+              }
+            } else if (parseInt(a.id) > parseInt(b.id)) {
+              return dirRule == 'Desc' ? -1 : 1;
+            }
+          }
+          return dirRule == 'Desc' ? -1 : 1;
+        } else if (stripSemicolon(a.name) > stripSemicolon(b.name)) {
           return dirRule == 'Desc' ? -1 : 1;
         }
         break;
       }
 
       case 'Id': {
-        if (parseInt(a.id) > parseInt(b.id)) {
+        if (parseInt(a.id) == parseInt(b.id)) {
+          if (a.id > b.id) {
+            return dirRule == 'Desc' ? -1 : 1;
+          }
+        } else if (parseInt(a.id) > parseInt(b.id)) {
           return dirRule == 'Desc' ? -1 : 1;
         }
         break;
@@ -43,15 +69,14 @@ export const sortFunction =
   };
 
 const getSortString = (card: HCCard.Any) => {
-  const cardColors = card.toFaces()[0]?.colors || '';
-
+  const cardColors = card.toFaces()[0]?.colors || [];
   return (
     cardColors
       .reduce((curr, next) => curr + (colorSortValue[next] || 10_000_000), 0)
       .toString()
       .padStart(8, '0') +
     (card.cmc || 0).toString().padStart(3) +
-    card.name
+    stripSemicolon(card.name)
   );
 };
 

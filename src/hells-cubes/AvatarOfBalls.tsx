@@ -1,6 +1,6 @@
 import { FormField, PrimaryButton, TextInput } from '@workday/canvas-kit-react';
 import { useRef, useState } from 'react';
-import { cardsAtom } from '../hellfall/cardsAtom';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom';
 import { HCCard } from '../api-types';
 import { HellfallEntry } from '../hellfall/HellfallEntry';
 import { useAtomValue } from 'jotai';
@@ -17,7 +17,7 @@ export const AvatarOfBalls = () => {
   return (
     <>
       <h2>Avatar of BallsJr123</h2>
-      <FormField label={'Power?'}>
+      <FormField label={'Value?'}>
         <TextInput type="number" defaultValue={3} ref={powerRef} />
       </FormField>
       <FormField label={'How many?'}>

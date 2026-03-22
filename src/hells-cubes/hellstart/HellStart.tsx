@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { cardsAtom } from '../../hellfall/cardsAtom';
+import { cardsAtom } from '../../hellfall/atoms/cardsAtom';
 import styled from '@emotion/styled';
 import { hcjFrontCards, HCJPackInfo } from './hcj';
 

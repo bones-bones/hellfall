@@ -1,5 +1,4 @@
-export * from '.';
-export * from './Card';
+export type * from './Card';
 export * from './CardFace';
 export * from './CardFields';
 export * from './RelatedCard';

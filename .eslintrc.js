@@ -45,4 +45,12 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['src/hells-cubes/eight/*.{js,jsx,ts,tsx}'],
+      rules: {
+        'react/no-unescaped-entities': 'off',
+      },
+    },
+  ],
 };

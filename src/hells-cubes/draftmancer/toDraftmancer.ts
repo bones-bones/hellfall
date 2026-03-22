@@ -1,10 +1,16 @@
 // https://draftmancer.com/cubeformat.html#cube
 import { canBeACommander } from '../../hellfall/canBeACommander';
 import { HCCard } from '../../api-types';
-import { hcjFrontCards } from '../hellstart/hcj';
+import { hcjFrontCards, packInfoToCard } from '../hellstart/hcj';
 import { getDraftMancerCard } from './getDraftMancerCard';
 
 export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.Any[] }) => {
+  cards.forEach(card => {
+    card.name = card.name
+      .replace(/\[/g, 'OPENBRACKET')
+      .replace(/\]/g, 'CLOSEBRACKET')
+      .replace(/^ /g, 'SPACE');
+  });
   // TODO: make sure this works
   const componentCards = cards.filter(card =>
     Boolean(card.all_parts?.find(e => e.name == card.name && e.component != 'token_maker'))
@@ -20,7 +26,6 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
     const cardsToWrite = noComponentCards.filter(canBeACommander);
 
     const commanderCardsToWrite = cardsToWrite.map(getDraftMancerCard);
-    console.log(componentCards);
     commanderCardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
         e.all_parts?.find(entry => entry.name == dmCard.name)
@@ -90,13 +95,7 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
 
     return formatted;
   } else if (set === 'HCJ') {
-    const cardsToWrite = hcjFrontCards.map(e => {
-      const asHC = {
-        Name: `${e.name} - ${e.tag}`,
-        Image: [e.url],
-      } as any as HCCard.Any;
-      return getDraftMancerCard(asHC);
-    });
+    const cardsToWrite = hcjFrontCards.map(e => getDraftMancerCard(packInfoToCard(e)));
     // augh this sucks and is messy. technically these are just undraftable component cards
     const hcjAsDraftmancer = noComponentCards.map(getDraftMancerCard);
 

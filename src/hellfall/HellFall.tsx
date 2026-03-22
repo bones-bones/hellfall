@@ -6,18 +6,19 @@ import { styled } from '@workday/canvas-kit-react/common';
 import { SidePanel, SidePanelOpenDirection } from '@workday/canvas-kit-react/side-panel';
 import { PaginationComponent } from './inputs';
 
-import { HellfallCard } from './HellfallCard';
+import { HellfallCard } from './card/HellfallCard';
 import { Card } from '@workday/canvas-kit-react/card';
 import { ToolbarIconButton } from '@workday/canvas-kit-react/button';
 import { useAtom, useAtomValue } from 'jotai';
-import { activeCardAtom, offsetAtom } from './searchAtoms';
+import { activeCardAtom, offsetAtom } from './atoms/searchAtoms';
 import { useSearchResults } from './useSearchResults';
-import { SearchControls } from './SearchControls';
-import { SortComponent } from './SortComponent';
+import { SearchControls } from './search-controls/SearchControls';
+import { SortComponent } from './search-controls/SortComponent';
 import { CHUNK_SIZE } from './constants';
 import { useKeyPress } from '../hooks';
-import { cardsAtom } from './cardsAtom';
+import { cardsAtom } from './atoms/cardsAtom';
 import { startTransition } from 'react';
+import { stripSemicolon } from './inputs/stripSemicolon';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -84,9 +85,9 @@ export const HellFall = () => {
             }}
             key={'' + entry.id + '-' + i}
             id={entry.id}
-            name={entry.name}
+            name={stripSemicolon(entry.name)}
             url={
-              'card_faces' in entry && entry.card_faces[0].image
+              'card_faces' in entry && entry.layout == 'meld_part' && entry.card_faces[0].image
                 ? entry.card_faces[0].image
                 : entry.image!
             }

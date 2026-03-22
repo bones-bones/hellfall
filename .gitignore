@@ -36,5 +36,12 @@ pics/
 pics.zip
 keys.ts
 
-.notes.md
+server/.env
+
+# yarn
+.yarn/install-state.gz
+.yarnrc.yml
+yarn.lock
+
+.vscode/launch.json
 .env
