@@ -286,6 +286,7 @@ const mergeCards = (
       stayUnapprovedLayouts.includes(existingCard.layout as HCLayout) ||
       ('card_faces' in existingCard && existingCard.card_faces.length > 4))
   ) {
+    setDerivedProps(existingCard);
     return existingCard;
   }
   // TODO: replace with actual type checking
@@ -299,6 +300,7 @@ const mergeCards = (
         (merged as any)[key] = newCard[key as keyof typeof newCard];
       }
     });
+    setDerivedProps(merged);
     return merged;
   }
 
