@@ -193,7 +193,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.name &&
                 face.name != ';' &&
                 (face.name.includes('\\*') || face.name.includes('(') ? (
-                  <div key="name">{renderName(stripSemicolon(face.name))}</div>
+                  <span key="name">{renderName(stripSemicolon(face.name))}</span>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="name">
@@ -220,7 +220,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               )}
               {face.type_line &&
                 (face.type_line.includes('\\*') || face.type_line.includes('(') ? (
-                  <div key="type">{renderName(face.type_line)}</div>
+                  <span key="type">{renderName(face.type_line)}</span>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="type">
@@ -236,9 +236,9 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.oracle_text &&
                 face.oracle_text != ';' &&
                 (face.oracle_text.includes('\\*') || face.oracle_text.includes('(') ? (
-                  <div key="rules">
+                  <span key="rules">
                     {renderOracleText(stripSemicolon(face.oracle_text).split('\\n'))}
-                  </div>
+                  </span>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="flavor">
@@ -250,9 +250,9 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.flavor_text &&
                 face.flavor_text != ';' &&
                 (face.flavor_text.includes('\\*') ? (
-                  <div key="flavor">
+                  <span key="flavor">
                     {renderFlavorText(stripSemicolon(face.flavor_text).split('\\n'))}
-                  </div>
+                  </span>
                 ) : (
                   <>
                     <ItalicText typeLevel="body.medium" key="flavor">

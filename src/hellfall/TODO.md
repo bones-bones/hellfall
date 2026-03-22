@@ -54,7 +54,7 @@ Write a script to transform the database
 - special cases: Scared Turtle // Snappy Turtle for flip, Ability Bingo, Bear Alignment Chart, Force of Rowan (for draft), Italic Plagiarist (italics in typeline with regular types)
 
   - add grid (that allows root-level stuff as well as faces?)?
-  - use grid? to deal with Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, Blingo, Assimilated Strategist, bear hate,
+  - use grid? to deal with Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, Blingo, Assimilated Strategist, bear hate, Conflict in Literature, Magus of the MovieGrid.io, Gruul Plantation
 
 - switch search to text bar and make the mass of buttons hidden as advanced search
 - see if any better images are floating around for HC2 in general
@@ -83,7 +83,7 @@ Write a script to transform the database
 - figure out problems with pip clipping and shadows
 - make other cards in feel the ground quake have each other in all_parts? (Do I want to have kongming's contraptions also do this?)
 - get a your dreadmaw reminder card/token as well as dreadmaw offspring tokens
-- add sorting for colors (in HCColors arrays)
+- add sorting for colors (in HCColors arrays) (use color order on Extreme Flower Picking)
 - deal with later: Dungeon Jumper, The Rat Pack
 - switch italics to use serif font? (that way it's more distinct)
 - make search page update conditions more logical
@@ -98,7 +98,10 @@ Write a script to transform the database
 - figure out subtypes for nontoken tokens (emblems, dungeons, etc.)
 - add code to remove cards that aren't in the database (only when going from unapproved?)
 - don't fetch SFT tokens with "token" layout from scryfall every time
+- add color indicator for Pan (blue/pink/yellow)
 - mork:
   - add ids
   - revamp fetch function to deal better with cards that have multiple printings (use bar and set like mtgcardfetcher does; allow use of id; allow use of )
   - make more accessible options for multiside and flip cards (like how scryfall does it) (make sure it works on the actual search page too)
+- make links work in card text
+- indicate that IOU and Phyrexian Goblin Creature Copy are not directly draftable
