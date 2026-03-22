@@ -318,8 +318,8 @@ const mergeCards = (
     'card_faces' in existingCard == 'card_faces' in newCard
       ? { ...existingCard }
       : 'card_faces' in mergedPrelim
-      ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
-      : { ...(mergedPrelim as HCCard.AnySingleFaced) };
+        ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
+        : { ...(mergedPrelim as HCCard.AnySingleFaced) };
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     setDerivedProps(merged);
   }
@@ -369,7 +369,7 @@ const mergeCards = (
         if (
           merged.draft_image_status == HCImageStatus.Missing ||
           merged.draft_image_status ==
-            HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
+          HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
         ) {
           (merged as any)[key] = value;
         }
@@ -664,8 +664,8 @@ const main = async () => {
               ? finalCards.find(card => card.id == tokenMaker.id)
               : finalTokens.find(card => card.id == tokenMaker.id)
             : finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
+              ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
+              : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
@@ -810,7 +810,7 @@ const main = async () => {
             partnerCard.id ? e.id == partnerCard.id : textEquals(e.name, partnerCard.name)
           );
           // if (relatedCard) {
-          if (!('has_draft_partners' in relatedCard!)) {
+          if (relatedCard && !('has_draft_partners' in relatedCard!)) {
             relatedCard!.has_draft_partners = true;
           }
           if (!('has_draft_partners' in card)) {
