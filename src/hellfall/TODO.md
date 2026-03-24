@@ -102,7 +102,7 @@ Write a script to transform the database
 - indicate that IOU and Phyrexian Goblin Creature Copy are not directly draftable
 - make sure that accents don't interfere with search (test with Niccolò Machiavelli)
 - add flavor text search
-- add 
+- add
 - special cases: Scared Turtle // Snappy Turtle for flip, , Force of Rowan (for draft), Italic Plagiarist (italics in typeline with regular types)
 
   - add grid (that allows root-level stuff as well as faces?)?
@@ -115,6 +115,7 @@ Write a script to transform the database
   - move_grid: Blingo, Assimilated Strategist, Hell's Cube (the card)?
   - split_grid: Bear Alignment Chart?, bear hate?, Hellscube Alignment Chart, Conflict in Literature
   - poly: The Kodama Compass, Goblin Boardgamer, Ancient Hexadon, Revolving Wilds
+
 - add extras button for card/tokens, constructed cube, etc.
 - make brackets in cardnames not break anything
 - add cmc prop to faces?

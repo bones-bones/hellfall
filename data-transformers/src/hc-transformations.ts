@@ -528,11 +528,13 @@ const mergeDatabases = (
   existingCards: HCCard.Any[],
   newCards: HCCard.Any[],
   existingTokens: HCCard.Any[],
-  newTokens: HCCard.Any[], usingApproved:boolean=false
+  newTokens: HCCard.Any[],
+  usingApproved: boolean = false
 ): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[] } => {
   // const newCardMap = new Map(newCards.map(card => [card.id, card]));
   const existingCardMap = new Map(existingCards.map(card => [card.id, card]));
-  const newTokenMap = new Map(newTokens.map(token => [token.id, token]));
+  // const newTokenMap = new Map(newTokens.map(token => [token.id, token]));
+  const existingTokenMap = new Map(existingTokens.map(token => [token.id.toLowerCase(), token]));
 
   // const mergedCards = existingCards.map(existingCard => {
   //   const newCard = !(existingCard.id in movedIds)
@@ -565,7 +567,7 @@ const mergeDatabases = (
   if (usingApproved) {
     mergedCards.push(
       ...Array.from(
-          existingCardMap.values().map(card => {
+        existingCardMap.values().map(card => {
           setDerivedProps(card);
           return card;
         })
@@ -573,24 +575,44 @@ const mergeDatabases = (
     );
   }
 
-  const mergedTokens = existingTokens.map(existingToken => {
-    const newToken = !(existingToken.id in movedIds)
-      ? newTokenMap.get(existingToken.id)
-      : newTokenMap.get(movedIds[existingToken.id]);
-    if (newToken) {
-      newTokenMap.delete(newToken.id);
-      return mergeCards(existingToken, newToken);
+  // const mergedTokens = existingTokens.map(existingToken => {
+  //   const newToken = !(existingToken.id in movedIds)
+  //     ? newTokenMap.get(existingToken.id)
+  //     : newTokenMap.get(movedIds[existingToken.id]);
+  //   if (newToken) {
+  //     newTokenMap.delete(newToken.id);
+  //     return mergeCards(existingToken, newToken);
+  //   }
+  //   return existingToken;
+  // });
+  // mergedTokens.push(
+  //   ...Array.from(
+  //     newTokenMap.values().map(token => {
+  //       setDerivedProps(token);
+  //       return token;
+  //     })
+  //   )
+  // );
+  const mergedTokens = newTokens.map(newToken => {
+    const existingToken = !(newToken.id in movedIds)
+      ? existingTokenMap.get(newToken.id.toLowerCase())
+      : existingTokenMap.get(movedIds[newToken.id]);
+    if (existingToken) {
+      existingTokenMap.delete(existingToken.id.toLowerCase());
+      return mergeCards(existingToken, newToken, usingApproved);
     }
-    return existingToken;
+    return newToken;
   });
-  mergedTokens.push(
-    ...Array.from(
-      newTokenMap.values().map(token => {
-        setDerivedProps(token);
-        return token;
-      })
-    )
-  );
+  if (usingApproved) {
+    mergedTokens.push(
+      ...Array.from(
+        existingTokenMap.values().map(Token => {
+          setDerivedProps(Token);
+          return Token;
+        })
+      )
+    );
+  }
 
   return { mergedCards, mergedTokens };
 };

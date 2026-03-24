@@ -40,8 +40,7 @@ export const toCockCube = ({
   ]);
 
   cards.forEach(entry => {
-    const isSplitAndLinkedLayout =
-      entry.layout === 'transform' || entry.layout === 'modal';
+    const isSplitAndLinkedLayout = entry.layout === 'transform' || entry.layout === 'modal';
     if (isSplitAndLinkedLayout) {
       // Each side is a separate card in the cube
       entry.toFaces().forEach((_, i) => {
@@ -203,7 +202,11 @@ const hcCardToCockCard = ({
   }
 
   const layout = xmlDoc.createElement('layout');
-  layout.textContent = splitAndLinkedLayout ? 'normal' : sideIndex > 0 ? 'transform' : getLayout(entry);
+  layout.textContent = splitAndLinkedLayout
+    ? 'normal'
+    : sideIndex > 0
+    ? 'transform'
+    : getLayout(entry);
 
   const tablerow = xmlDoc.createElement('tablerow');
   tablerow.textContent = getTableRow(entry).toString();

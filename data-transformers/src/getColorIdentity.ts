@@ -9,14 +9,26 @@ export const getColorIdentityProps = (
   card: HCCard.Any
 ): { color_identity: HCColors; color_identity_hybrid: HCColors[] } => {
   const colorIdentity = new Set<string>();
-  const colorIdentityHybrid = new Map<string, Set<string>>();
+  const colorIdentityHybrid: HCColors[] = [];
   const addColors = (colors: HCColors) => {
     colors.forEach(color => {
       colorIdentity.add(color);
     });
-    const key = [...new Set(colors as string[])].sort().join('');
-    if (!colorIdentityHybrid.has(key)) {
-      colorIdentityHybrid.set(key, new Set(colors));
+    if (!colors.includes(HCColor.Colorless)) {
+      // if the new colors are not contained in some existing colorSet
+      if (
+        !colorIdentityHybrid.some(colorSet => {
+          colors.every(color => colorSet.includes(color));
+        })
+      ) {
+        for (let i = colorIdentityHybrid.length; i >= 0; i--) {
+          // if the existing colorSet is completely inside the new colorSet, delete it
+          if (colorIdentityHybrid[i].every(color => colors.includes(color))) {
+            delete colorIdentityHybrid[i];
+          }
+        }
+        colorIdentityHybrid.push(colors);
+      }
     }
   };
   const pips = store.get(pipsAtom);
@@ -128,5 +140,5 @@ const landToColorMapping = {
   Oasis: 'Orange',
   Mudflats: 'Brown',
   'Gas-Station': 'Yellow',
-  Carnival: 'Pink'
+  Carnival: 'Pink',
 } as Record<string, HCColor>;
