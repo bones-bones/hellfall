@@ -528,29 +528,50 @@ const mergeDatabases = (
   existingCards: HCCard.Any[],
   newCards: HCCard.Any[],
   existingTokens: HCCard.Any[],
-  newTokens: HCCard.Any[]
+  newTokens: HCCard.Any[], usingApproved:boolean=false
 ): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[] } => {
-  const newCardMap = new Map(newCards.map(card => [card.id, card]));
+  // const newCardMap = new Map(newCards.map(card => [card.id, card]));
+  const existingCardMap = new Map(existingCards.map(card => [card.id, card]));
   const newTokenMap = new Map(newTokens.map(token => [token.id, token]));
 
-  const mergedCards = existingCards.map(existingCard => {
-    const newCard = !(existingCard.id in movedIds)
-      ? newCardMap.get(existingCard.id)
-      : newCardMap.get(movedIds[existingCard.id]);
-    if (newCard) {
-      newCardMap.delete(newCard.id);
-      return mergeCards(existingCard, newCard, false);
+  // const mergedCards = existingCards.map(existingCard => {
+  //   const newCard = !(existingCard.id in movedIds)
+  //     ? newCardMap.get(existingCard.id)
+  //     : newCardMap.get(movedIds[existingCard.id]);
+  //   if (newCard) {
+  //     newCardMap.delete(newCard.id);
+  //     return mergeCards(existingCard, newCard, usingApproved);
+  //   }
+  //   return existingCard;
+  // });
+  // mergedCards.push(
+  //   ...Array.from(
+  //     newCardMap.values().map(card => {
+  //       setDerivedProps(card);
+  //       return card;
+  //     })
+  //   )
+  // );
+  const mergedCards = newCards.map(newCard => {
+    const existingCard = !(newCard.id in movedIds)
+      ? existingCardMap.get(newCard.id)
+      : existingCardMap.get(movedIds[newCard.id]);
+    if (existingCard) {
+      existingCardMap.delete(existingCard.id);
+      return mergeCards(existingCard, newCard, usingApproved);
     }
-    return existingCard;
+    return newCard;
   });
-  mergedCards.push(
-    ...Array.from(
-      newCardMap.values().map(card => {
-        setDerivedProps(card);
-        return card;
-      })
-    )
-  );
+  if (usingApproved) {
+    mergedCards.push(
+      ...Array.from(
+          existingCardMap.values().map(card => {
+          setDerivedProps(card);
+          return card;
+        })
+      )
+    );
+  }
 
   const mergedTokens = existingTokens.map(existingToken => {
     const newToken = !(existingToken.id in movedIds)
@@ -670,7 +691,7 @@ const main = async () => {
   if (UPDATE_MODE) {
     console.log('Running in update mode - merging with existing data...');
     const { existingCards, existingTokens } = loadExistingData();
-    const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
+    const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens, false);
     finalCards = merged.mergedCards;
     finalTokens = merged.mergedTokens as HCCard.AnySingleFaced[];
   } else {
