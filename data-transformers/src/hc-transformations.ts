@@ -251,6 +251,9 @@ const setDerivedProps = (card: HCCard.Any) => {
       face.type_line = face_type;
       type_line_list.push(face_type);
       mana_cost_list.push(face.mana_cost);
+      if (face.colors.length && face.colors.includes('C')) {
+        face.colors = [] as HCColors;
+      }
     });
     card.type_line = type_line_list.join(' // ');
     card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
@@ -595,7 +598,7 @@ const mergeDatabases = (
   // );
   const mergedTokens = newTokens.map(newToken => {
     const existingToken = !(newToken.id in movedIds)
-      ? existingTokenMap.get(newToken.id.toLowerCase())
+      ? existingTokenMap.get(newToken.id?.toLowerCase())
       : existingTokenMap.get(movedIds[newToken.id]);
     if (existingToken) {
       existingTokenMap.delete(existingToken.id.toLowerCase());
@@ -894,30 +897,30 @@ const main = async () => {
           const relatedCard = finalCards.find(e =>
             partnerCard.id ? e.id == partnerCard.id : textEquals(e.name, partnerCard.name)
           );
-          // if (relatedCard) {
-          if (!('has_draft_partners' in relatedCard!)) {
-            relatedCard!.has_draft_partners = true;
-          }
-          if (!('has_draft_partners' in card)) {
-            card.has_draft_partners = true;
-          }
-          partnerCard.id = relatedCard!.id;
-          partnerCard.name = relatedCard!.name;
-          partnerCard.type_line = relatedCard!.type_line;
-          partnerCard.set = relatedCard!.set;
-          partnerCard.image = relatedCard!.image;
-          partnerCard.is_draft_partner = true;
-          if ('all_parts' in relatedCard!) {
-            const partnerIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-            if (partnerIndex == -1) {
-              relatedCard.all_parts?.push(relatedPartner);
-            } else {
-              relatedCard.all_parts![partnerIndex!] = relatedPartner;
+          if (relatedCard) {
+            if (!('has_draft_partners' in relatedCard!)) {
+              relatedCard!.has_draft_partners = true;
             }
-          } else {
-            relatedCard!.all_parts = [relatedPartner];
+            if (!('has_draft_partners' in card)) {
+              card.has_draft_partners = true;
+            }
+            partnerCard.id = relatedCard!.id;
+            partnerCard.name = relatedCard!.name;
+            partnerCard.type_line = relatedCard!.type_line;
+            partnerCard.set = relatedCard!.set;
+            partnerCard.image = relatedCard!.image;
+            partnerCard.is_draft_partner = true;
+            if ('all_parts' in relatedCard!) {
+              const partnerIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+              if (partnerIndex == -1) {
+                relatedCard.all_parts?.push(relatedPartner);
+              } else {
+                relatedCard.all_parts![partnerIndex!] = relatedPartner;
+              }
+            } else {
+              relatedCard!.all_parts = [relatedPartner];
+            }
           }
-          // }
         });
     });
   // make sure all relateds are updated (TODO: figure out if this is necessary)
