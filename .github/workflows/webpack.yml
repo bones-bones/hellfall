@@ -38,7 +38,7 @@ jobs:
           cat package.json | grep -A 10 '"dependencies"'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Lint
         run: yarn fix
