@@ -74,12 +74,11 @@ Write a script to transform the database
 - deal with multiple creators
 - make sure mork fetches draft image where it exists
 - deal with spellbooks (prop in relatedCard?)
-- make simplifier for hybrid identity
 - figure out problems with pip clipping and shadows
 - make other cards in feel the ground quake have each other in all_parts? (Do I want to have kongming's contraptions also do this?)
 - get a your dreadmaw reminder card/token as well as dreadmaw offspring tokens
 - add sorting for colors (in HCColors arrays) (use color order on Extreme Flower Picking)
-- deal with later: Dungeon Jumper, The Rat Pack
+- deal with later: Dungeon Jumper
 - switch italics to use serif font? (that way it's more distinct)
 - make search page update conditions more logical
 - implement tags based on notes column to mark spellbook tokens?
@@ -87,11 +86,9 @@ Write a script to transform the database
 - fully implement NotMagic
 - make full images for dfcs with three+ images go to draft_image
 - deal with later: 4x Squadron Hawks, Learn from Better Designers, Liliana, Breaker of Oaths (specifically its draftpartner implementation), Urza's Will (draftpartner)
-- start doing variations even between card sheet and token sheet
 - deal with draftable sticker sheets (Amonkhet Punchcard, Carnival Elephant Meteor, etc)
 - add reminder card for attractions
 - figure out subtypes for nontoken tokens (emblems, dungeons, etc.)
-- add code to remove cards that aren't in the database (only when going from unapproved?)
 - don't fetch SFT tokens with "token" layout from scryfall every time
 - add color indicator for Pan & Pan Harmonica (yellow/blue/pink)
 - mork:
@@ -102,7 +99,6 @@ Write a script to transform the database
 - indicate that IOU and Phyrexian Goblin Creature Copy are not directly draftable
 - make sure that accents don't interfere with search (test with Niccolò Machiavelli)
 - add flavor text search
-- add
 - special cases: Scared Turtle // Snappy Turtle for flip, , Force of Rowan (for draft), Italic Plagiarist (italics in typeline with regular types)
 
   - add grid (that allows root-level stuff as well as faces?)?
@@ -116,6 +112,7 @@ Write a script to transform the database
   - split_grid: Bear Alignment Chart?, bear hate?, Hellscube Alignment Chart, Conflict in Literature
   - poly: The Kodama Compass, Goblin Boardgamer, Ancient Hexadon, Revolving Wilds
 
+- add hybrid color identity number search prop?
 - add extras button for card/tokens, constructed cube, etc.
 - make brackets in cardnames not break anything
 - add cmc prop to faces?

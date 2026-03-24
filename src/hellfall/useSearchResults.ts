@@ -37,7 +37,7 @@ import { sortFunction } from './sortFunction';
 import { canBeACommander } from './canBeACommander';
 import { debug } from 'console';
 import { toNumber } from './inputs/NumberSelector';
-import { colorCompOp } from './colorComps';
+import { colorCompOp, hybridColorCompOp, hybridIdentityMiscReduce } from './colorComps';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
@@ -646,23 +646,30 @@ export const useSearchResults = () => {
 
         if (searchColorIdentities.length > 0) {
           if (useHybrid) {
-            // if (!('color_identity_hybrid' in entry)) {
-            //   debugger;
-            // }
             if (
-              !entry.color_identity_hybrid.every(cardColorIdentityComponent => {
-                const miscBullshitSearchColorIdentities = searchColorIdentities.includes(
-                  MISC_BULLSHIT
-                )
-                  ? [...searchColorIdentities, ...miscColors].filter(e => e != MISC_BULLSHIT)
-                  : searchColorIdentities;
-                const colorTest = (e: string) =>
-                  miscBullshitSearchColorIdentities.includes(e) || e == 'C';
-                return cardColorIdentityComponent.some(e => colorTest(e));
-              })
+              !hybridColorCompOp(hybridIdentityMiscReduce(entry.color_identity_hybrid), colorIdentityComparison, searchColorIdentities)
             ) {
               return false;
             }
+
+            // if (!('color_identity_hybrid' in entry)) {
+            //   debugger;
+            // }
+            
+            // if (
+            //   !entry.color_identity_hybrid.every(cardColorIdentityComponent => {
+            //     const miscBullshitSearchColorIdentities = searchColorIdentities.includes(
+            //       MISC_BULLSHIT
+            //     )
+            //       ? [...searchColorIdentities, ...miscColors].filter(e => e != MISC_BULLSHIT)
+            //       : searchColorIdentities;
+            //     const colorTest = (e: string) =>
+            //       miscBullshitSearchColorIdentities.includes(e) || e == 'C';
+            //     return cardColorIdentityComponent.some(e => colorTest(e));
+            //   })
+            // ) {
+            //   return false;
+            // }
           } else {
             if (!entry.color_identity || entry.color_identity.length == 0) {
               // debugger;

@@ -12,7 +12,9 @@ export const getColorIdentityProps = (
   const colorIdentityHybrid: HCColors[] = [];
   const addColors = (colors: HCColors) => {
     colors.forEach(color => {
-      colorIdentity.add(color);
+      if (color != HCColor.Colorless) {
+        colorIdentity.add(color);
+      }
     });
     if (colors && !colors.includes(HCColor.Colorless) && colors.length > 0) {
       // if the new colors do not contain some existing colorSet
@@ -78,7 +80,7 @@ export const getColorIdentityProps = (
       });
     }
   };
-  // TODO: special cases for Crypticspire Mantis (must be at least 2)
+
   if ('card_faces' in card) {
     if (
       HCLayoutGroup.FrontIdentityLayout.includes(
@@ -99,11 +101,11 @@ export const getColorIdentityProps = (
   } else {
     addColorsFromFace(card);
   }
-  if (colorIdentity.size == 0) {
-    colorIdentity.add('C');
-  } else if (colorIdentity.size > 1 && colorIdentity.has('C')) {
-    colorIdentity.delete('C');
-  }
+  // if (colorIdentity.size == 0) {
+  //   colorIdentity.add('C');
+  // } else if (colorIdentity.size > 1 && colorIdentity.has('C')) {
+  //   colorIdentity.delete('C');
+  // }
   return {
     color_identity: Array.from(colorIdentity) as HCColors,
     color_identity_hybrid: colorIdentityHybrid
