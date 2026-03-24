@@ -1,5 +1,5 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
-import { HCCard } from '../../api-types';
+import { HCCard, HCRelatedCard } from '../../api-types';
 import tokens from '../../data/tokens.json';
 import { recursiveAdoption } from '../recursiveAdoption';
 import { getLayout } from './getLayout';
@@ -79,7 +79,7 @@ export const toCockCube = ({
     recursiveAdoption(tokenCardEntry, [name, prop, [type], setElement, tablerow]);
 
     let used = false;
-    tokenEntry.all_parts?.forEach(related => {
+    tokenEntry.all_parts?.forEach((related:HCRelatedCard) => {
       const relatedEntry = xmlDoc.createElement('reverse-related');
       relatedEntry.textContent = related.name;
       if (cards.find(entry => related.name == entry.name)?.tags?.includes('persistent-tokens')) {

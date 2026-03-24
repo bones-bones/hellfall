@@ -166,15 +166,14 @@ const DeckCon = styled.div({
   paddingLeft: '20px',
 });
 
-const ActiveCardContainer = styled.div(({ showGutter }: { showGutter: boolean }) => ({
+const ActiveCardContainer = styled.div<{ showGutter: boolean }>(({ showGutter }) => ({
   width: '380px',
   maxHeight: '900px',
   top: '50px',
   overflowY: 'scroll',
   position: 'fixed',
   right: showGutter ? '10vw' : '0px',
-}));
-const CategorySection = ({
+}));const CategorySection = ({
   cards,
   title,
   setActive,

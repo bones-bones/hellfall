@@ -109,21 +109,16 @@ export const Breakdown = () => {
 const CardColumn = styled.div({ display: 'flex', flexDirection: 'column' });
 const CMCColumn = styled.div({ width: '14vw' });
 const Container = styled.div({ display: 'flex' });
-const CardEntry = styled.div(
-  ({
-    isCreature,
-    cardColor,
-  }: {
-    isCreature: boolean;
-    cardColor: 'White' | 'Blue' | 'Black' | 'Red' | 'Green' | 'Purple' | 'Colorless' | 'Multicolor';
-  }) => ({
-    height: '40px',
-    border: '1px solid black',
-    overflow: 'hidden',
-    boxSizing: 'border-box',
-    backgroundColor: cardColor + (isCreature ? 'EE' : '99'),
-  })
-);
+const CardEntry = styled.div<{
+  isCreature: boolean;
+  cardColor: 'White' | 'Blue' | 'Black' | 'Red' | 'Green' | 'Purple' | 'Colorless' | 'Multicolor';
+}>(({ isCreature, cardColor }) => ({
+  height: '40px',
+  border: '1px solid black',
+  overflow: 'hidden',
+  boxSizing: 'border-box' as const,
+  backgroundColor: cardColor + (isCreature ? 'EE' : '99'),
+}));
 
 const hexForColor = (
   color: 'White' | 'Blue' | 'Black' | 'Red' | 'Green' | 'Colorless' | 'Purple' | 'Multicolor'
