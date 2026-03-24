@@ -37,7 +37,12 @@ import { sortFunction } from './sortFunction';
 import { canBeACommander } from './canBeACommander';
 import { debug } from 'console';
 import { toNumber } from './inputs/NumberSelector';
-import { colorCompOp } from './colorComps';
+import {
+  colorCompOp,
+  colorMiscReduce,
+  hybridColorCompOp,
+  hybridIdentityMiscReduce,
+} from './colorComps';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
@@ -306,8 +311,8 @@ export const useSearchResults = () => {
               if (
                 !(
                   'power' in entry.toFaces()[0] &&
-                  power.value <
-                    (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!)
+                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) <
+                    power.value
                 )
               ) {
                 return false;
@@ -318,8 +323,8 @@ export const useSearchResults = () => {
               if (
                 !(
                   'power' in entry.toFaces()[0] &&
-                  power.value <=
-                    (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!)
+                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) <=
+                    power.value
                 )
               ) {
                 return false;
@@ -336,8 +341,8 @@ export const useSearchResults = () => {
               if (
                 !(
                   'power' in entry.toFaces()[0] &&
-                  power.value >=
-                    (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!)
+                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) >=
+                    power.value
                 )
               ) {
                 return false;
@@ -348,8 +353,8 @@ export const useSearchResults = () => {
               if (
                 !(
                   'power' in entry.toFaces()[0] &&
-                  power.value >
-                    (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!)
+                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) >
+                    power.value
                 )
               ) {
                 return false;
@@ -364,10 +369,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'toughness' in entry.toFaces()[0] &&
-                  toughness.value <
-                    (!toNumber(entry.toFaces()[0].toughness)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].toughness)!)
+                  (!toNumber(entry.toFaces()[0].toughness)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].toughness)!) < toughness.value
                 )
               ) {
                 return false;
@@ -378,10 +382,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'toughness' in entry.toFaces()[0] &&
-                  toughness.value <=
-                    (!toNumber(entry.toFaces()[0].toughness)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].toughness)!)
+                  (!toNumber(entry.toFaces()[0].toughness)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].toughness)!) <= toughness.value
                 )
               ) {
                 return false;
@@ -398,10 +401,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'toughness' in entry.toFaces()[0] &&
-                  toughness.value >=
-                    (!toNumber(entry.toFaces()[0].toughness)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].toughness)!)
+                  (!toNumber(entry.toFaces()[0].toughness)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].toughness)!) >= toughness.value
                 )
               ) {
                 return false;
@@ -412,10 +414,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'toughness' in entry.toFaces()[0] &&
-                  toughness.value >
-                    (!toNumber(entry.toFaces()[0].toughness)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].toughness)!)
+                  (!toNumber(entry.toFaces()[0].toughness)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].toughness)!) > toughness.value
                 )
               ) {
                 return false;
@@ -430,10 +431,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'loyalty' in entry.toFaces()[0] &&
-                  loyalty.value <
-                    (!toNumber(entry.toFaces()[0].loyalty)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].loyalty)!)
+                  (!toNumber(entry.toFaces()[0].loyalty)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].loyalty)!) < loyalty.value
                 )
               ) {
                 return false;
@@ -444,10 +444,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'loyalty' in entry.toFaces()[0] &&
-                  loyalty.value <=
-                    (!toNumber(entry.toFaces()[0].loyalty)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].loyalty)!)
+                  (!toNumber(entry.toFaces()[0].loyalty)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].loyalty)!) <= loyalty.value
                 )
               ) {
                 return false;
@@ -464,10 +463,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'loyalty' in entry.toFaces()[0] &&
-                  loyalty.value >=
-                    (!toNumber(entry.toFaces()[0].loyalty)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].loyalty)!)
+                  (!toNumber(entry.toFaces()[0].loyalty)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].loyalty)!) >= loyalty.value
                 )
               ) {
                 return false;
@@ -478,10 +476,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'loyalty' in entry.toFaces()[0] &&
-                  loyalty.value >
-                    (!toNumber(entry.toFaces()[0].loyalty)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].loyalty)!)
+                  (!toNumber(entry.toFaces()[0].loyalty)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].loyalty)!) > loyalty.value
                 )
               ) {
                 return false;
@@ -496,10 +493,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'defense' in entry.toFaces()[0] &&
-                  defense.value <
-                    (!toNumber(entry.toFaces()[0].defense)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].defense)!)
+                  (!toNumber(entry.toFaces()[0].defense)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].defense)!) < defense.value
                 )
               ) {
                 return false;
@@ -510,10 +506,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'defense' in entry.toFaces()[0] &&
-                  defense.value <=
-                    (!toNumber(entry.toFaces()[0].defense)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].defense)!)
+                  (!toNumber(entry.toFaces()[0].defense)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].defense)!) <= defense.value
                 )
               ) {
                 return false;
@@ -530,10 +525,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'defense' in entry.toFaces()[0] &&
-                  defense.value >=
-                    (!toNumber(entry.toFaces()[0].defense)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].defense)!)
+                  (!toNumber(entry.toFaces()[0].defense)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].defense)!) >= defense.value
                 )
               ) {
                 return false;
@@ -544,10 +538,9 @@ export const useSearchResults = () => {
               if (
                 !(
                   'defense' in entry.toFaces()[0] &&
-                  defense.value >
-                    (!toNumber(entry.toFaces()[0].defense)
-                      ? 0
-                      : toNumber(entry.toFaces()[0].defense)!)
+                  (!toNumber(entry.toFaces()[0].defense)
+                    ? 0
+                    : toNumber(entry.toFaces()[0].defense)!) > defense.value
                 )
               ) {
                 return false;
@@ -637,20 +630,14 @@ export const useSearchResults = () => {
 
         // TODO: handle split cards/adventures/transforms/flips better
         if (searchColors.length > 0) {
-          if (!entry.colors || entry.colors.length == 0) {
+          if (!entry.colors) {
             // debugger;
             console.log('Card id:', entry.id, 'had a null color.');
             if (['=', '>=', '>'].includes(colorComparison)) {
               return false;
             }
           } else {
-            const entryColorsSet: Set<string> = new Set(
-              entry.colors.map(e => {
-                return miscColors.includes(e.toString()) ? MISC_BULLSHIT : e.toString();
-              })
-            );
-            const entryColors: string[] = Array.from(entryColorsSet);
-            if (!colorCompOp(entryColors, colorComparison, searchColors)) {
+            if (!colorCompOp(colorMiscReduce(entry.colors), colorComparison, searchColors)) {
               return false;
             }
           }
@@ -658,39 +645,29 @@ export const useSearchResults = () => {
 
         if (searchColorIdentities.length > 0) {
           if (useHybrid) {
-            // if (!('color_identity_hybrid' in entry)) {
-            //   debugger;
-            // }
             if (
-              !entry.color_identity_hybrid.every(cardColorIdentityComponent => {
-                const miscBullshitSearchColorIdentities = searchColorIdentities.includes(
-                  MISC_BULLSHIT
-                )
-                  ? [...searchColorIdentities, ...miscColors].filter(e => e != MISC_BULLSHIT)
-                  : searchColorIdentities;
-                const colorTest = (e: string) =>
-                  miscBullshitSearchColorIdentities.includes(e) || e == 'C';
-                return cardColorIdentityComponent.some(e => colorTest(e));
-              })
+              !hybridColorCompOp(
+                hybridIdentityMiscReduce(entry.color_identity_hybrid),
+                colorIdentityComparison,
+                searchColorIdentities
+              )
             ) {
               return false;
             }
           } else {
-            if (!entry.color_identity || entry.color_identity.length == 0) {
+            if (!entry.color_identity) {
               // debugger;
               console.log('Card id:', entry.id, 'had a null color identity.');
               if (['=', '>=', '>'].includes(colorIdentityComparison)) {
                 return false;
               }
             } else {
-              const entryColorIdentitiesSet: Set<string> = new Set(
-                entry.color_identity.map(e => {
-                  return miscColors.includes(e.toString()) ? MISC_BULLSHIT : e.toString();
-                })
-              );
-              const entryColorIdentities: string[] = Array.from(entryColorIdentitiesSet);
               if (
-                !colorCompOp(entryColorIdentities, colorIdentityComparison, searchColorIdentities)
+                !colorCompOp(
+                  colorMiscReduce(entry.color_identity),
+                  colorIdentityComparison,
+                  searchColorIdentities
+                )
               ) {
                 return false;
               }
@@ -759,7 +736,7 @@ export const useSearchResults = () => {
     if (activeCard !== '') {
       searchToSet.append('activeCard', activeCard);
     }
-    if (colorComparison !== '<=') {
+    if (colorComparison !== '>=') {
       searchToSet.append('colorComparison', colorComparison);
     }
     if (colorIdentityComparison !== '<=') {
