@@ -1303,7 +1303,7 @@
       ]
     },
     {
-      "filename": "mono/effects/Stab.png",
+      "filename": "mono/effects/Stab.svg",
       "symbol": "Stab",
       "english": "one red mana or deal one damage to target creature or player",
       "represents_mana": true,

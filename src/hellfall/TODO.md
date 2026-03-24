@@ -51,11 +51,6 @@ Write a script to transform the database
 - make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
 - make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
-- special cases: Scared Turtle // Snappy Turtle for flip, Ability Bingo, Bear Alignment Chart, Force of Rowan (for draft), Italic Plagiarist (italics in typeline with regular types)
-
-  - add grid (that allows root-level stuff as well as faces?)?
-  - use grid? to deal with Hell's Cube (the card), Hellscube Alignment Chart, Ancient Hexadon, Blingo, Assimilated Strategist, bear hate, Conflict in Literature, Magus of the MovieGrid.io, Gruul Plantation
-
 - switch search to text bar and make the mass of buttons hidden as advanced search
 - see if any better images are floating around for HC2 in general
 - full documentation
@@ -66,7 +61,7 @@ Write a script to transform the database
 - add general get all images method for cards?
 - figure out how to handle cards with self-draftpartner (Squadron Wastes, Playset of Squadron Hawks (On Clearance), The Squadron Hawk)
 - fix tags for cards with draft_image
-- deal with later (skipped): **\_\_\_** Balls, Revolving Wilds, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions)
+- deal with later (skipped): **\_\_\_** Balls, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions)
 - do better: evolution of the dreadmaw
 - fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
@@ -74,7 +69,7 @@ Write a script to transform the database
 - figure out how to do shadows on mana symbols in costs
 - figure out why loading from the approved db sometimes leads to empty colors
 - figure out why new entries sometimes don't get correct derived props
-- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God,
+- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff
 - ask for ruling: Armory Manufactor
 - deal with multiple creators
 - make sure mork fetches draft image where it exists
@@ -105,3 +100,19 @@ Write a script to transform the database
   - make more accessible options for multiside and flip cards (like how scryfall does it) (make sure it works on the actual search page too)
 - make links work in card text
 - indicate that IOU and Phyrexian Goblin Creature Copy are not directly draftable
+- make sure that accents don't interfere with search (test with Niccolò Machiavelli)
+- add flavor text search
+- add 
+- special cases: Scared Turtle // Snappy Turtle for flip, , Force of Rowan (for draft), Italic Plagiarist (italics in typeline with regular types)
+
+  - add grid (that allows root-level stuff as well as faces?)?
+  - use grid? (or text outside of faces) to deal with , , 4966
+  - have 2 new categories of layouts - 1 is grid and the other is disk (grid is defined by rows and columns and can have headers and labels, poly is defined by 3 or more sides in a loop, both can have face-specific on the main card)
+  - grid has additional attributes of: row_num, col_num, headers (optional but same length as col_num); labels (optional but same length as row_num);
+  - grid can be only some of the faces of a card? (Bear Alignment Chart/bear hate)
+  - 3 versions of grid: move_grid for when you move within grid, check_grid for when you check off grid squares, and split_grid for when grid functions as split card
+  - check_grid: Gruul Plantation, Magus of the MovieGrid.io, Bear Alignment Chart?, bear hate?, Lotis, Puzzle Master, Ability Bingo, HC7 B I N G O, Press Start: Mega Man
+  - move_grid: Blingo, Assimilated Strategist, Hell's Cube (the card)?
+  - split_grid: Bear Alignment Chart?, bear hate?, Hellscube Alignment Chart, Conflict in Literature
+  - poly: The Kodama Compass, Goblin Boardgamer, Ancient Hexadon, Revolving Wilds
+- add extras button for card/tokens, constructed cube, etc.
