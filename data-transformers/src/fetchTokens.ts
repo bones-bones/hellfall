@@ -47,7 +47,7 @@ export const fetchTokens = async () => {
       commander: HCLegality.NotLegal,
     } as HCLegalitiesField,
     mana_cost: '',
-    colors: [HCColor.Colorless] as HCColors,
+    colors: [] as HCColors,
     cmc: 0,
     oracle_text: '',
     color_identity: [] as HCColors,

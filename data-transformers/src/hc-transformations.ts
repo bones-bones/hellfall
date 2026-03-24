@@ -262,8 +262,8 @@ const setDerivedProps = (card: HCCard.Any) => {
       .filter(Boolean)
       .join(' ') as string;
   }
-  if (!card.colors.length) {
-    card.colors = [HCColor.Colorless] as HCColors;
+  if (card.colors.length && card.colors.includes('C')) {
+    card.colors = [] as HCColors;
   }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
   card.color_identity = color_identity;

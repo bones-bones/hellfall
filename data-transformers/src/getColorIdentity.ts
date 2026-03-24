@@ -18,13 +18,11 @@ export const getColorIdentityProps = (
     });
     if (colors && !colors.includes(HCColor.Colorless) && colors.length > 0) {
       // if the new colors do not contain some existing colorSet
-      if (
-        !colorIdentityHybrid.some(colorSet => colorSet.every(color => colors.includes(color)))
-      ) {
+      if (!colorIdentityHybrid.some(colorSet => colorSet.every(color => colors.includes(color)))) {
         for (let i = colorIdentityHybrid.length - 1; i >= 0; i--) {
           // if the new colorSet is completely inside the existing colorSet, delete the existing one
           if (colors.every(color => colorIdentityHybrid[i].includes(color))) {
-            colorIdentityHybrid.splice(i,1);
+            colorIdentityHybrid.splice(i, 1);
           }
         }
         colorIdentityHybrid.push(colors);
@@ -101,14 +99,9 @@ export const getColorIdentityProps = (
   } else {
     addColorsFromFace(card);
   }
-  // if (colorIdentity.size == 0) {
-  //   colorIdentity.add('C');
-  // } else if (colorIdentity.size > 1 && colorIdentity.has('C')) {
-  //   colorIdentity.delete('C');
-  // }
   return {
     color_identity: Array.from(colorIdentity) as HCColors,
-    color_identity_hybrid: colorIdentityHybrid
+    color_identity_hybrid: colorIdentityHybrid,
   };
 };
 

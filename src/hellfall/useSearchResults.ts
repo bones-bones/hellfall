@@ -37,7 +37,12 @@ import { sortFunction } from './sortFunction';
 import { canBeACommander } from './canBeACommander';
 import { debug } from 'console';
 import { toNumber } from './inputs/NumberSelector';
-import { colorCompOp, hybridColorCompOp, hybridIdentityMiscReduce } from './colorComps';
+import {
+  colorCompOp,
+  colorMiscReduce,
+  hybridColorCompOp,
+  hybridIdentityMiscReduce,
+} from './colorComps';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
@@ -625,20 +630,14 @@ export const useSearchResults = () => {
 
         // TODO: handle split cards/adventures/transforms/flips better
         if (searchColors.length > 0) {
-          if (!entry.colors || entry.colors.length == 0) {
+          if (!entry.colors) {
             // debugger;
             console.log('Card id:', entry.id, 'had a null color.');
             if (['=', '>=', '>'].includes(colorComparison)) {
               return false;
             }
           } else {
-            const entryColorsSet: Set<string> = new Set(
-              entry.colors.map(e => {
-                return miscColors.includes(e.toString()) ? MISC_BULLSHIT : e.toString();
-              })
-            );
-            const entryColors: string[] = Array.from(entryColorsSet);
-            if (!colorCompOp(entryColors, colorComparison, searchColors)) {
+            if (!colorCompOp(colorMiscReduce(entry.colors), colorComparison, searchColors)) {
               return false;
             }
           }
@@ -647,45 +646,28 @@ export const useSearchResults = () => {
         if (searchColorIdentities.length > 0) {
           if (useHybrid) {
             if (
-              !hybridColorCompOp(hybridIdentityMiscReduce(entry.color_identity_hybrid), colorIdentityComparison, searchColorIdentities)
+              !hybridColorCompOp(
+                hybridIdentityMiscReduce(entry.color_identity_hybrid),
+                colorIdentityComparison,
+                searchColorIdentities
+              )
             ) {
               return false;
             }
-
-            // if (!('color_identity_hybrid' in entry)) {
-            //   debugger;
-            // }
-            
-            // if (
-            //   !entry.color_identity_hybrid.every(cardColorIdentityComponent => {
-            //     const miscBullshitSearchColorIdentities = searchColorIdentities.includes(
-            //       MISC_BULLSHIT
-            //     )
-            //       ? [...searchColorIdentities, ...miscColors].filter(e => e != MISC_BULLSHIT)
-            //       : searchColorIdentities;
-            //     const colorTest = (e: string) =>
-            //       miscBullshitSearchColorIdentities.includes(e) || e == 'C';
-            //     return cardColorIdentityComponent.some(e => colorTest(e));
-            //   })
-            // ) {
-            //   return false;
-            // }
           } else {
-            if (!entry.color_identity || entry.color_identity.length == 0) {
+            if (!entry.color_identity) {
               // debugger;
               console.log('Card id:', entry.id, 'had a null color identity.');
               if (['=', '>=', '>'].includes(colorIdentityComparison)) {
                 return false;
               }
             } else {
-              const entryColorIdentitiesSet: Set<string> = new Set(
-                entry.color_identity.map(e => {
-                  return miscColors.includes(e.toString()) ? MISC_BULLSHIT : e.toString();
-                })
-              );
-              const entryColorIdentities: string[] = Array.from(entryColorIdentitiesSet);
               if (
-                !colorCompOp(entryColorIdentities, colorIdentityComparison, searchColorIdentities)
+                !colorCompOp(
+                  colorMiscReduce(entry.color_identity),
+                  colorIdentityComparison,
+                  searchColorIdentities
+                )
               ) {
                 return false;
               }
@@ -754,7 +736,7 @@ export const useSearchResults = () => {
     if (activeCard !== '') {
       searchToSet.append('activeCard', activeCard);
     }
-    if (colorComparison !== '<=') {
+    if (colorComparison !== '>=') {
       searchToSet.append('colorComparison', colorComparison);
     }
     if (colorIdentityComparison !== '<=') {

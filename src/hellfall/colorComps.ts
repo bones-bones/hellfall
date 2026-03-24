@@ -14,7 +14,6 @@ const miscColors = [
   'Grey',
 ]; //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 
-
 /**
  * Checks whether two color sets are the same colors.
  * @param hybridColors The first set of colors to compare
@@ -104,36 +103,58 @@ export const colorCompOp = (
     }
   }
 };
+
 /**
- * Reduces down a card's hybrid identity set to one compatible with search colors. 
- * @param hybridColors 
- * @returns 
+ * Reduces down a card's colors to one compatible with search colors.
+ * @param colors card's colors
+ * @returns
  */
-export const hybridIdentityMiscReduce = (hybridColors:HCColors[] | string[][]):string[][] => {
-  const newColors:string[][]=[];
-  hybridColors.map(colorSet=> {
-    if (colorSet.some(color=>miscColors.includes(color))) {
-      const newSet:string[]=[MISC_BULLSHIT];
-      colorSet.filter(color=> !miscColors.includes(color)).forEach(color => {
-        newSet.push(color)
-      })
-      return newSet;
-    } else {
-      return colorSet;
-    }
-  }).forEach(colors => {
-    if (!newColors.some(colorSet => colorSet.every(color => colors.includes(color)))) {
-      for (let i = newColors.length - 1; i >= 0; i--) {
-        // if the new colorSet is completely inside the existing colorSet, delete the existing one
-        if (colors.every(color => newColors[i].includes(color))) {
-          newColors.splice(i,1);
-        }
+export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
+  const newColors: string[] = [];
+  colors
+    .map(color => (miscColors.includes(color) ? MISC_BULLSHIT : color))
+    .forEach(color => {
+      if (!newColors.includes(color)) {
+        newColors.push(color);
       }
-      newColors.push(colors);
-    }
-  })
+    });
   return newColors;
-}
+};
+
+/**
+ * Reduces down a card's hybrid identity set to one compatible with search colors.
+ * @param hybridColors hybrid color identity
+ * @returns
+ */
+export const hybridIdentityMiscReduce = (hybridColors: HCColors[] | string[][]): string[][] => {
+  const newColors: string[][] = [];
+  hybridColors
+    .map(colorSet => {
+      if (colorSet.some(color => miscColors.includes(color))) {
+        const newSet: string[] = [MISC_BULLSHIT];
+        colorSet
+          .filter(color => !miscColors.includes(color))
+          .forEach(color => {
+            newSet.push(color);
+          });
+        return newSet;
+      } else {
+        return colorSet;
+      }
+    })
+    .forEach(colors => {
+      if (!newColors.some(colorSet => colorSet.every(color => colors.includes(color)))) {
+        for (let i = newColors.length - 1; i >= 0; i--) {
+          // if the new colorSet is completely inside the existing colorSet, delete the existing one
+          if (colors.every(color => newColors[i].includes(color))) {
+            newColors.splice(i, 1);
+          }
+        }
+        newColors.push(colors);
+      }
+    });
+  return newColors;
+};
 
 /**
  * Compares two sets of colors using an operator and returns a bool.
@@ -184,23 +205,48 @@ export const hybridColorCompOp = (
       }
     }
   } else {
-    const colorSet = []
+    const colorSet = [];
 
     switch (operator) {
       case '<': {
-        return (hybridColors as string[][]).every(colorSet => colorSet.some(color => (colors as string[]).includes(color))) && !(colors as string[]).every(color => (hybridColors as string[][]).some(colorSet => colorSet.includes(color)));
+        return (
+          (hybridColors as string[][]).every(colorSet =>
+            colorSet.some(color => (colors as string[]).includes(color))
+          ) &&
+          !(colors as string[]).every(color =>
+            (hybridColors as string[][]).some(colorSet => colorSet.includes(color))
+          )
+        );
       }
       case '<=': {
-        return (hybridColors as string[][]).every(colorSet => colorSet.some(color => (colors as string[]).includes(color)));
+        return (hybridColors as string[][]).every(colorSet =>
+          colorSet.some(color => (colors as string[]).includes(color))
+        );
       }
       case '=': {
-        return (hybridColors as string[][]).every(colorSet => colorSet.some(color => (colors as string[]).includes(color))) && (colors as string[]).every(color => (hybridColors as string[][]).some(colorSet => colorSet.includes(color)));
+        return (
+          (hybridColors as string[][]).every(colorSet =>
+            colorSet.some(color => (colors as string[]).includes(color))
+          ) &&
+          (colors as string[]).every(color =>
+            (hybridColors as string[][]).some(colorSet => colorSet.includes(color))
+          )
+        );
       }
       case '>=': {
-        return (colors as string[]).every(color => (hybridColors as string[][]).some(colorSet => colorSet.includes(color)));
+        return (colors as string[]).every(color =>
+          (hybridColors as string[][]).some(colorSet => colorSet.includes(color))
+        );
       }
       case '>': {
-        return !(hybridColors as string[][]).every(colorSet => colorSet.some(color => (colors as string[]).includes(color))) && (colors as string[]).every(color => (hybridColors as string[][]).some(colorSet => colorSet.includes(color)));
+        return (
+          !(hybridColors as string[][]).every(colorSet =>
+            colorSet.some(color => (colors as string[]).includes(color))
+          ) &&
+          (colors as string[]).every(color =>
+            (hybridColors as string[][]).some(colorSet => colorSet.includes(color))
+          )
+        );
       }
     }
   }

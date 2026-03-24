@@ -81,7 +81,7 @@ export const fetchDatabase = async () => {
       commander: HCLegality.Banned,
     } as HCLegalitiesField,
     cmc: 0,
-    colors: [HCColor.Colorless] as HCColors,
+    colors: [] as HCColors,
     keywords: [],
     set: '',
     variation: false,
@@ -90,7 +90,7 @@ export const fetchDatabase = async () => {
 
   const defaultMultiFaceProps: Record<string, any> = {
     mana_cost: '',
-    colors: [HCColor.Colorless] as HCColors,
+    colors: [] as HCColors,
     oracle_text: '',
   };
 
@@ -174,10 +174,10 @@ export const fetchDatabase = async () => {
               const colorArr = entry[i]
                 .split(';')
                 .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
-              cardObject.card_faces[face][key] =
-                entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
-              cardObject.colors =
-                entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
+              cardObject.card_faces[face][key] = colorArr;
+              // entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
+              cardObject.colors = colorArr;
+              // entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
             } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
               cardObject.card_faces[face][key] = entry[i].split(';');
             } else if (
@@ -281,9 +281,6 @@ export const fetchDatabase = async () => {
               cardObject.card_faces[0].watermark = tags
                 .filter(tag => tag.includes('watermark'))[0]
                 .split('-')[0];
-              // tags.filter(tag=>tag.includes('watermark')).forEach((tag,index)=>{
-              //   cardObject.card_faces[index].watermark=tag.split("-")[0]
-              // })
             }
           } else {
             cardObject[keys[i]] = entry[i];
@@ -497,28 +494,6 @@ export const fetchDatabase = async () => {
           cardObject.layout = HCLayout.Split;
         }
       }
-      // if (!('layout' in cardObject) && !cardObject.card_faces.at(-1)!.image) {
-      //   if (cardObject.tags?.includes('reminder-on-back')) {
-      //     cardObject.layout = HCLayout.ReminderOnBack;
-      //     cardObject.card_faces.at(-1)!.image_status = HCImageStatus.Reminder;
-      //   } else if (cardObject.tags?.includes('dungeon-on-back')) {
-      //     cardObject.layout = HCLayout.DungeonOnBack;
-      //     cardObject.card_faces.at(-1)!.image_status = HCImageStatus.Dungeon;
-      //   } else if (cardObject.tags?.includes('stickers-on-back')) {
-      //     cardObject.layout = HCLayout.StickersOnBack;
-      //     cardObject.card_faces.at(-1)!.image_status = HCImageStatus.Stickers;
-      //   } else if (cardObject.tags?.includes('token-on-back')) {
-      //     cardObject.layout = HCLayout.TokenOnBack;
-      //     cardObject.card_faces.at(-1)!.image_status = HCImageStatus.Token;
-      //   } else {
-      //     // const names = entry[1];
-      //     // entry[6] is Related Cards
-      //     cardObject.layout =
-      //       // cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
-      //       // ? HCLayout.MeldPart:
-      //       HCLayout.Multi;
-      //   }
-      // }
       return cardObject as HCCard.AnyMultiFaced;
     }
   });
