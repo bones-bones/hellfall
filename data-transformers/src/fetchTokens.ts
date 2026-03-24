@@ -56,6 +56,7 @@ export const fetchTokens = async () => {
     set: 'HCT',
     variation: false,
     image_status: HCImageStatus.HighRes,
+    draft_image_status: HCImageStatus.Inapplicable,
     isActualToken: true,
     type_line: '',
     layout: HCLayout.Token,

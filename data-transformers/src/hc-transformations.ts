@@ -694,7 +694,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [],'draft_image_status',HCImageStatus.Inapplicable,'cards') : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {

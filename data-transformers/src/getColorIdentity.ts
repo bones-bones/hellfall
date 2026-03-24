@@ -14,17 +14,15 @@ export const getColorIdentityProps = (
     colors.forEach(color => {
       colorIdentity.add(color);
     });
-    if (!colors.includes(HCColor.Colorless)) {
-      // if the new colors are not contained in some existing colorSet
+    if (colors && !colors.includes(HCColor.Colorless) && colors.length > 0) {
+      // if the new colors do not contain some existing colorSet
       if (
-        !colorIdentityHybrid.some(colorSet => {
-          colors.every(color => colorSet.includes(color));
-        })
+        !colorIdentityHybrid.some(colorSet => colorSet.every(color => colors.includes(color)))
       ) {
-        for (let i = colorIdentityHybrid.length; i >= 0; i--) {
-          // if the existing colorSet is completely inside the new colorSet, delete it
-          if (colorIdentityHybrid[i].every(color => colors.includes(color))) {
-            delete colorIdentityHybrid[i];
+        for (let i = colorIdentityHybrid.length - 1; i >= 0; i--) {
+          // if the new colorSet is completely inside the existing colorSet, delete the existing one
+          if (colors.every(color => colorIdentityHybrid[i].includes(color))) {
+            colorIdentityHybrid.splice(i,1);
           }
         }
         colorIdentityHybrid.push(colors);
@@ -91,6 +89,9 @@ export const getColorIdentityProps = (
         addColorsFromFace(entry);
       });
     } else {
+      if (card.id == '3646') {
+        const x = 1;
+      }
       card.card_faces.forEach(entry => {
         addColorsFromFace(entry);
       });
@@ -105,9 +106,7 @@ export const getColorIdentityProps = (
   }
   return {
     color_identity: Array.from(colorIdentity) as HCColors,
-    color_identity_hybrid: Array.from(colorIdentityHybrid.values()).map(
-      set => Array.from(set) as HCColors
-    ),
+    color_identity_hybrid: colorIdentityHybrid
   };
 };
 
