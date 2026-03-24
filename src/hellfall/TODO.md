@@ -43,7 +43,6 @@ Write a script to transform the database
 - use mv instead of cmc
 - make better search syntax (like allowing or)
 - tell users how to use not and/or make it easier to use not (!)
-- add reminder cards for morph and its variants (not just manifest)
 - make pagination work with browser back button and make it go back to page 1 when search changes
 - make changes in url correctly work with forward and back buttons in browser
 - make search for text (including in names) be able to ignore \* (same for hyperlinks to card names)
@@ -57,7 +56,6 @@ Write a script to transform the database
 - use draft_image for full image of multisided cards?
 - fix formatting of all sagas
 - fix formatting of em dashes (no space when it replaces a colon)
-- rework hybrid identity search to use the comparison operators
 - add general get all images method for cards?
 - figure out how to handle cards with self-draftpartner (Squadron Wastes, Playset of Squadron Hawks (On Clearance), The Squadron Hawk)
 - fix tags for cards with draft_image
@@ -66,9 +64,6 @@ Write a script to transform the database
 - fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
-- figure out how to do shadows on mana symbols in costs
-- figure out why loading from the approved db sometimes leads to empty colors
-- figure out why new entries sometimes don't get correct derived props
 - add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff
 - ask for ruling: Armory Manufactor
 - deal with multiple creators
@@ -85,7 +80,7 @@ Write a script to transform the database
 - make token search work better
 - fully implement NotMagic
 - make full images for dfcs with three+ images go to draft_image
-- deal with later: 4x Squadron Hawks, Learn from Better Designers, Liliana, Breaker of Oaths (specifically its draftpartner implementation), Urza's Will (draftpartner)
+- deal with later: 4x Squadron Hawks, Learn from Better Designers, Liliana, Urza's Will (draftpartner)
 - deal with draftable sticker sheets (Amonkhet Punchcard, Carnival Elephant Meteor, etc)
 - add reminder card for attractions
 - figure out subtypes for nontoken tokens (emblems, dungeons, etc.)
