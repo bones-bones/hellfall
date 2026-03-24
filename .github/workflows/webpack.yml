@@ -30,7 +30,7 @@ jobs:
         run: yarn fix
 
       - name: Type check
-        run: yarn tsc --noEmit --skipLibCheck | grep -v "PillSearch.tsx" || true
+        run: npx tsc --noEmit
 
       - name: Build
         run: yarn build
