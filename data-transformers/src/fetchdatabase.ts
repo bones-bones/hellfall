@@ -8,8 +8,8 @@ import { getColorIdentityProps } from './getColorIdentity';
 
 export const fetchDatabase = async (usingApproved: boolean = false) => {
   const url = usingApproved
-    ? `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`
-    : `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`;
+    ? `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
+    : `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`;
   const requestedData = await fetch(url);
   const asJson = (await requestedData.json()) as any;
   const [_garbage, _oldKeys, ...rest] = asJson.values as string[][];
@@ -214,7 +214,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             // entry[20] is tags, entry[17] is 0oracle_text, entry[6] is Related Cards
             const all_parts: HCRelatedCard[] = entry[i].split(';').map(name => {
               const base = name.replace(/\d+$/, '');
-              const useBase =
+              const shouldUseBase =
                 /\d/.test(name.at(-1)!) &&
                 !hardCardNames.includes(name) &&
                 base &&
@@ -222,14 +222,14 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
 
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
-                id: useBase ? name : '',
+                id: shouldUseBase ? name : '',
                 component:
                   entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
                     ? 'meld_part'
                     : entry[20].includes('draftpartner')
                     ? 'draft_partner'
                     : 'token_maker',
-                name: useBase ? base : name,
+                name: shouldUseBase ? base : name,
                 type_line: '',
                 set: '',
                 image: '',

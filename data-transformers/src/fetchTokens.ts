@@ -98,7 +98,7 @@ export const fetchTokens = async () => {
           tokenObject.all_parts = entry[i].split(';').map(oldName => {
             const name = oldName.replace(/\*\d+$/, '');
             const base = name.replace(/\d+$/, '');
-            const useBase =
+            const shouldUseBase =
               /\d/.test(name.at(-1)!) &&
               !hardCardNames.includes(name) &&
               base &&
@@ -106,9 +106,9 @@ export const fetchTokens = async () => {
 
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
-              id: useBase ? name : '',
+              id: shouldUseBase ? name : '',
               component: entry[6] == 'meld' ? 'meld_part' : 'token_maker',
-              name: useBase ? base : name,
+              name: shouldUseBase ? base : name,
               type_line: '',
               set: '',
               image: '',

@@ -105,7 +105,7 @@ Write a script to transform the database
   - check_grid: Gruul Plantation, Magus of the MovieGrid.io, Bear Alignment Chart?, bear hate?, Lotis, Puzzle Master, Ability Bingo, HC7 B I N G O, Press Start: Mega Man
   - move_grid: Blingo, Assimilated Strategist, Hell's Cube (the card)?
   - split_grid: Bear Alignment Chart?, bear hate?, Hellscube Alignment Chart, Conflict in Literature
-  - poly: The Kodama Compass, Goblin Boardgamer, Ancient Hexadon, Revolving Wilds
+  - poly: The Kodama Compass, Goblin Boardgamer, Ancient Hexadon, Revolving Wilds, Casio G-Shock Watchwolf?
   - some sort of flowchart thingy for Spain? or move_grid?
 
 - add hybrid color identity number search prop?
@@ -116,3 +116,7 @@ Write a script to transform the database
 - add variations to hellfallcard?
 - make usingApproved a flag on the script itself?
 - fiddle with card line spacing to look better
+- add cyan for iono.png1
+- add name override for 🂓 (domino)
+- use pip name for iono.png and associated cards/tokens
+- fix order of color words in text
