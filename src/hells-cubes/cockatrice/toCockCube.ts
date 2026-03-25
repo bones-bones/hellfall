@@ -79,7 +79,7 @@ export const toCockCube = ({
     recursiveAdoption(tokenCardEntry, [name, prop, [type], setElement, tablerow]);
 
     let used = false;
-    tokenEntry.all_parts?.forEach((related:HCRelatedCard) => {
+    tokenEntry.all_parts?.forEach((related: HCRelatedCard) => {
       const relatedEntry = xmlDoc.createElement('reverse-related');
       relatedEntry.textContent = related.name;
       if (cards.find(entry => related.name == entry.name)?.tags?.includes('persistent-tokens')) {

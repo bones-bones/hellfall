@@ -173,7 +173,8 @@ const ActiveCardContainer = styled.div<{ showGutter: boolean }>(({ showGutter })
   overflowY: 'scroll',
   position: 'fixed',
   right: showGutter ? '10vw' : '0px',
-}));const CategorySection = ({
+}));
+const CategorySection = ({
   cards,
   title,
   setActive,

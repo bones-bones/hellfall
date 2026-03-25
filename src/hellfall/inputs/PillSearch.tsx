@@ -6,7 +6,6 @@ import { styled } from '@workday/canvas-kit-react/common';
 import { TertiaryButton } from '@workday/canvas-kit-react/button';
 import { TextInput } from '@workday/canvas-kit-react/text-input';
 
-
 import { FixedSizeList } from 'react-window';
 import { Menu, useMenuModel } from '@workday/canvas-kit-react/menu';
 

@@ -59,12 +59,12 @@ Write a script to transform the database
 - add general get all images method for cards?
 - figure out how to handle cards with self-draftpartner (Squadron Wastes, Playset of Squadron Hawks (On Clearance), The Squadron Hawk)
 - fix tags for cards with draft_image
-- deal with later (skipped): **\_\_\_** Balls, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions)
+- deal with later (skipped): **\_\_\_** Balls, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions), Spain, Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones
 - do better: evolution of the dreadmaw
-- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino
+- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino, Kolaghan's Command Tower // Kolaghan's Command
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
-- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff
+- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff, public domain removal creature (colorless)
 - ask for ruling: Armory Manufactor
 - deal with multiple creators
 - make sure mork fetches draft image where it exists
@@ -106,8 +106,10 @@ Write a script to transform the database
   - move_grid: Blingo, Assimilated Strategist, Hell's Cube (the card)?
   - split_grid: Bear Alignment Chart?, bear hate?, Hellscube Alignment Chart, Conflict in Literature
   - poly: The Kodama Compass, Goblin Boardgamer, Ancient Hexadon, Revolving Wilds
+  - some sort of flowchart thingy for Spain? or move_grid?
 
 - add hybrid color identity number search prop?
 - add extras button for card/tokens, constructed cube, etc.
 - make brackets in cardnames not break anything
 - add cmc prop to faces?
+- add variations to hellfallcard?

@@ -153,7 +153,16 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'Snow',
     /**'Token', */ 'World',
   ];
-
+  const fixPhyrexianMana = (text: string) => {
+    if (text.includes('/P}')) {
+      return text
+        .split(/({[^]*?\/P})/)
+        .map(subtext => (subtext.slice(-3) == '/P}' ? '{H/' + subtext.slice(1, -3) + '}' : subtext))
+        .join('');
+    } else {
+      return text;
+    }
+  };
   const cardObject: Record<string, any> & { card_faces?: Record<string, any>[] } = {};
   Object.entries(card).forEach(([key, value]) => {
     if (key == 'card_faces') {
@@ -172,9 +181,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
           } else if (k in keyCorrespondences) {
             cardObject.card_faces![index][keyCorrespondences[k]] = v;
           } else if (italicsReplaceKeys.includes(k)) {
-            cardObject.card_faces![index][k] = (v as string)
-              .replaceAll('*', '\\*')
-              .replaceAll('\n', '\\n');
+            cardObject.card_faces![index][k] = fixPhyrexianMana(
+              (v as string).replaceAll('*', '\\*').replaceAll('\n', '\\n')
+            );
           } else if (sameKeys.includes(k)) {
             cardObject.card_faces![index][k] = v;
           }
