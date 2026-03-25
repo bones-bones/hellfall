@@ -109,7 +109,8 @@ Write a script to transform the database
   - some sort of flowchart thingy for Spain? or move_grid?
 
 - add hybrid color identity number search prop?
-- add extras button for card/tokens, constructed cube, etc.
+- add extras button for card/tokens, constructed cube, HC0, etc.
+- add community standards hider for offensive hc0s
 - make brackets in cardnames not break anything
 - add cmc prop to faces?
 - add variations to hellfallcard?

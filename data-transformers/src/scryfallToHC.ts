@@ -180,6 +180,8 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
             cardObject.card_faces![index].image_status = HCImageStatus.HighRes;
           } else if (k in keyCorrespondences) {
             cardObject.card_faces![index][keyCorrespondences[k]] = v;
+          } else if (k == 'mana_cost') {
+            cardObject.card_faces![index][k] = fixPhyrexianMana(v as string);
           } else if (italicsReplaceKeys.includes(k)) {
             cardObject.card_faces![index][k] = fixPhyrexianMana(
               (v as string).replaceAll('*', '\\*').replaceAll('\n', '\\n')
@@ -236,8 +238,10 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       });
     } else if (key in keyCorrespondences) {
       cardObject[keyCorrespondences[key]] = value;
+    } else if (key == 'mana_cost') {
+      cardObject[key] = fixPhyrexianMana(value);
     } else if (italicsReplaceKeys.includes(key)) {
-      cardObject[key] = value.replaceAll('*', '\\*').replaceAll('\n', '\\n');
+      cardObject[key] = fixPhyrexianMana(value.replaceAll('*', '\\*').replaceAll('\n', '\\n'));
     } else if (sameKeys.includes(key)) {
       cardObject[key] = value;
     }
