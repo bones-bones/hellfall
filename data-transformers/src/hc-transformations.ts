@@ -528,8 +528,7 @@ const mergeDatabases = (
   existingCards: HCCard.Any[],
   newCards: HCCard.Any[],
   existingTokens: HCCard.Any[],
-  newTokens: HCCard.Any[],
-  usingApproved: boolean = false
+  newTokens: HCCard.Any[]
 ): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[] } => {
   // const newCardMap = new Map(newCards.map(card => [card.id, card]));
   const existingCardMap = new Map(existingCards.map(card => [card.id, card]));
@@ -713,7 +712,7 @@ const main = async () => {
   if (UPDATE_MODE) {
     console.log('Running in update mode - merging with existing data...');
     const { existingCards, existingTokens } = loadExistingData();
-    const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens, false);
+    const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
     finalCards = merged.mergedCards;
     finalTokens = merged.mergedTokens as HCCard.AnySingleFaced[];
   } else {
