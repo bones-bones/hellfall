@@ -77,7 +77,7 @@ export const textEquals = (cardText: string, searchText: string) => {
 
 export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
+  const cards = useAtomValue(cardsAtom).filter(e => !['C', 'HC0'].includes(e.set));
   const set = useAtomValue(searchSetAtom);
   const cardsOrTokens = useAtomValue(searchTokenAtom);
   const costSearch = useAtomValue(costSearchAtom);
@@ -551,8 +551,7 @@ export const useSearchResults = () => {
         }
 
         if (searchColorNumber) {
-          const cardColorNumber =
-            !entry.colors || entry.colors.includes('C') ? 0 : entry.colors.length;
+          const cardColorNumber = entry.colors.length;
 
           switch (searchColorNumber.operator) {
             case '<': {
@@ -589,10 +588,7 @@ export const useSearchResults = () => {
         }
 
         if (searchColorIdentityNumber) {
-          const cardColorIdentityNumber =
-            !entry.color_identity || entry.color_identity.includes('C')
-              ? 0
-              : entry.color_identity.length;
+          const cardColorIdentityNumber = entry.color_identity.length;
 
           switch (searchColorIdentityNumber.operator) {
             case '<': {
