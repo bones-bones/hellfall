@@ -6,7 +6,6 @@ import { styled } from '@workday/canvas-kit-react/common';
 import { TertiaryButton } from '@workday/canvas-kit-react/button';
 import { TextInput } from '@workday/canvas-kit-react/text-input';
 
-// @ts-ignore
 import { FixedSizeList } from 'react-window';
 import { Menu, useMenuModel } from '@workday/canvas-kit-react/menu';
 
@@ -16,6 +15,15 @@ type Props = {
   label: string;
   onChange: (value: string[]) => void;
 };
+const FixedSizeListTyped = FixedSizeList as React.ComponentType<{
+  height: number;
+  itemCount: number;
+  itemSize: number;
+  width: string;
+  itemData: string[];
+  children: (props: { style: React.CSSProperties; data: string[]; index: number }) => React.ReactNode;
+  ref?: React.Ref<any>;
+}>;
 
 export const PillSearch = ({ possibleValues, defaultValues, label, onChange }: Props) => {
   const [menuItems, setMenuItems] = useState(possibleValues);
@@ -87,7 +95,7 @@ export const PillSearch = ({ possibleValues, defaultValues, label, onChange }: P
         />
         <Menu.Popper anchorElement={searchRef} placement="bottom">
           <StyledCard>
-            <FixedSizeList
+            <FixedSizeListTyped 
               ref={listRef}
               height={Math.min(200, filteredItems.length * 40)}
               itemCount={filteredItems.length}
@@ -106,7 +114,7 @@ export const PillSearch = ({ possibleValues, defaultValues, label, onChange }: P
                   {data[index]}
                 </DeprecatedMenuItem>
               )}
-            </FixedSizeList>
+            </FixedSizeListTyped>
           </StyledCard>
         </Menu.Popper>
 
