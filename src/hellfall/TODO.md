@@ -114,3 +114,5 @@ Write a script to transform the database
 - make brackets in cardnames not break anything
 - add cmc prop to faces?
 - add variations to hellfallcard?
+- make usingApproved a flag on the script itself?
+- fiddle with card line spacing to look better

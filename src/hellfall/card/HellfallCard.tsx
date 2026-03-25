@@ -244,7 +244,6 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     <Text typeLevel="body.medium" key="flavor">
                       {renderText(stripSemicolon(face.oracle_text).split('\\n'))}
                     </Text>
-                    <br />
                   </>
                 ))}
               {face.flavor_text &&
@@ -258,7 +257,6 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     <ItalicText typeLevel="body.medium" key="flavor">
                       {renderText(stripSemicolon(face.flavor_text).split('\\n'))}
                     </ItalicText>
-                    <br />
                   </>
                 ))}
               {face.power && (
