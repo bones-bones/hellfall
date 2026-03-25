@@ -6,10 +6,11 @@ import { HCRelatedCard } from '../../src/api-types/Card/RelatedCard';
 import { HCObject } from '../../src/api-types/Object';
 import { getColorIdentityProps } from './getColorIdentity';
 
-export const fetchDatabase = async () => {
-  const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`
-  );
+export const fetchDatabase = async (usingApproved: boolean = false) => {
+  const url = usingApproved
+    ? `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`
+    : `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`;
+  const requestedData = await fetch(url);
   const asJson = (await requestedData.json()) as any;
   const [_garbage, _oldKeys, ...rest] = asJson.values as string[][];
   const keys = [

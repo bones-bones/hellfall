@@ -18,6 +18,7 @@ import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
 import { getColorIdentityProps } from './getColorIdentity';
 import { fetchNotMagic } from './fetchNotMagic';
+const usingApproved = false;
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
@@ -278,11 +279,7 @@ const setDerivedProps = (card: HCCard.Any) => {
  * @param newCard The card from the google sheet
  * @returns
  */
-const mergeCards = (
-  existingCard: HCCard.Any,
-  newCard: HCCard.Any,
-  usingApproved: boolean = false
-): HCCard.Any => {
+const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
   if (
     usingApproved &&
     (existingCard.has_draft_partners ||
@@ -563,7 +560,7 @@ const mergeDatabases = (
       : existingCardMap.get(movedIds[newCard.id]);
     if (existingCard) {
       existingCardMap.delete(existingCard.id);
-      return mergeCards(existingCard, newCard, usingApproved);
+      return mergeCards(existingCard, newCard);
     }
     return newCard;
   });
@@ -602,7 +599,7 @@ const mergeDatabases = (
       : existingTokenMap.get(movedIds[newToken.id]);
     if (existingToken) {
       existingTokenMap.delete(existingToken.id.toLowerCase());
-      return mergeCards(existingToken, newToken, usingApproved);
+      return mergeCards(existingToken, newToken);
     }
     return newToken;
   });

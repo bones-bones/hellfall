@@ -89,9 +89,6 @@ export const getColorIdentityProps = (
         addColorsFromFace(entry);
       });
     } else {
-      if (card.id == '3646') {
-        const x = 1;
-      }
       card.card_faces.forEach(entry => {
         addColorsFromFace(entry);
       });
