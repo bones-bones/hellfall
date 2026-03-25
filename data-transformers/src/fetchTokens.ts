@@ -27,7 +27,7 @@ export const fetchTokens = async () => {
       row.push('');
     }
   });
-  const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token'];
+  const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL'];
   const typeLayouts: Record<string, HCLayout> = {
     Emblem: HCLayout.Emblem,
     'Reminder Card': HCLayout.Reminder,

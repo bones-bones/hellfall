@@ -56,6 +56,7 @@ Write a script to transform the database
 - use draft_image for full image of multisided cards?
 - fix formatting of all sagas
 - fix formatting of em dashes (no space when it replaces a colon)
+- fix formatting of dice rolls (regular dash between numbers; pipe between numbers and result)
 - add general get all images method for cards?
 - figure out how to handle cards with self-draftpartner (Squadron Wastes, Playset of Squadron Hawks (On Clearance), The Squadron Hawk)
 - fix tags for cards with draft_image
@@ -118,8 +119,8 @@ Write a script to transform the database
 - add variations to hellfallcard?
 - make usingApproved a flag on the script itself?
 - fiddle with card line spacing to look better
-- add cyan for iono.png1
 - add name override for 🂓 (domino)
 - use pip name for iono.png and associated cards/tokens
 - fix order of color words in text
 - on individual card pages, make tab name same as card name
+- use same algorithm for card name to id redirect to find related cards

@@ -276,17 +276,34 @@ export namespace HCCardFields.Gameplay {
      * The oracle text of the card itself apart from any face, if any
      */
     oracle_text?:string;
+    /** 
+     * True when the multiface card is a rotating card (excluding flip ones)
+     */
+    is_rotating?:boolean;
   };
   /**
-   * These fields are specific for multiface cards.
-   * - Root level for multiface layouts only.
+   * These fields are specific for multiface grid cards. (TODO: fully implement this)
+   * - Root level for multiface grid layouts only.
    */
-  export type GridSpecific = AllFaces & {
+  export type GridSpecific<RowCount extends number = number, ColCount extends number = number> = {
     /**
-     * The oracle text of the card itself apart from any face, if any
+     * The number of rows in the grid
      */
-    oracle_text?:string;
+    row_count: RowCount;
+    /**
+     * The number of columns in the grid
+     */
+    col_count: ColCount;
+    /**
+     * The names of the columns (the names on the top of the grid)
+     */
+    col_names?: string[] & { length: ColCount };
+    /**
+     * The names of the rows (the names on the side of the grid)
+     */
+    row_names?: string[] & { length: RowCount };
   };
+
 }
 
 export namespace HCCardFields.Print {

@@ -125,9 +125,6 @@ export const setDerivedProps = (card: HCCard.Any) => {
       type_line_list.push(face_type);
       face.cmc = getMVFromCost(face.mana_cost);
       mana_cost_list.push(face.mana_cost);
-      if (face.colors.length && face.colors.includes('C')) {
-        face.colors = [] as HCColors;
-      }
     });
     card.type_line = type_line_list.join(' // ');
     card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
@@ -138,9 +135,6 @@ export const setDerivedProps = (card: HCCard.Any) => {
     ]
       .filter(Boolean)
       .join(' ') as string;
-  }
-  if (card.colors.length && card.colors.includes('C')) {
-    card.colors = [] as HCColors;
   }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
   card.color_identity = color_identity;

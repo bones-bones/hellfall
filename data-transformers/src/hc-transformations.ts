@@ -41,6 +41,8 @@ const oneWayMergeProps = [
   'life_modifier',
   'attraction_lights',
   'watermark',
+  'colors',
+  'cmc'
 ];
 const cardBlankableProps = ['rulings', 'oracle_text', 'cmc', 'mana_cost'];
 const cardRemovableProps = [
@@ -239,41 +241,6 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
     return cardWithJSON as HCCard.Any;
   });
 };
-// const setDerivedProps = (card: HCCard.Any) => {
-//   if ('card_faces' in card) {
-//     const type_line_list: string[] = [];
-//     const mana_cost_list: string[] = [];
-//     card.card_faces.forEach(face => {
-//       const face_type = [
-//         face.supertypes?.join(' '),
-//         [face.types?.join(' '), face.subtypes?.join(' ')].filter(Boolean).join(' — '),
-//       ]
-//         .filter(Boolean)
-//         .join(' ') as string;
-//       face.type_line = face_type;
-//       type_line_list.push(face_type);
-//       mana_cost_list.push(face.mana_cost);
-//       if (face.colors.length && face.colors.includes('C')) {
-//         face.colors = [] as HCColors;
-//       }
-//     });
-//     card.type_line = type_line_list.join(' // ');
-//     card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
-//   } else {
-//     card.type_line = [
-//       card.supertypes?.join(' '),
-//       [card.types?.join(' '), card.subtypes?.join(' ')].filter(Boolean).join(' — '),
-//     ]
-//       .filter(Boolean)
-//       .join(' ') as string;
-//   }
-//   if (card.colors.length && card.colors.includes('C')) {
-//     card.colors = [] as HCColors;
-//   }
-//   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
-//   card.color_identity = color_identity;
-//   card.color_identity_hybrid = color_identity_hybrid;
-// };
 /**
  *
  * @param existingCard The card from the stored database JSON
@@ -312,11 +279,12 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
     oneWayMergeProps.forEach(prop => {
       if (prop in mergedPrelim) {
         mergedPrelim.card_faces[0][prop] = mergedPrelim[prop];
-        if (!['name', 'mana_cost', 'type_line'].includes(prop)) {
+        if (!['name', 'mana_cost', 'type_line','colors','cmc'].includes(prop)) {
           delete mergedPrelim[prop];
         }
       }
     });
+    mergedPrelim.card_faces[0]['image_status'] = HCImageStatus.Front;
     mergedPrelim.layout = newCard.layout;
   } else if ('card_faces' in existingCard && !('card_faces' in newCard)) {
     mergedPrelim = { ...existingCard } as any;
@@ -683,7 +651,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [],'cmc',0,'faces')
+    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [])
     : [];
 
   try {
@@ -694,7 +662,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [],'cmc',0,'faces') : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {
@@ -920,22 +888,6 @@ const main = async () => {
           }
         });
     });
-  // make sure all relateds are updated (TODO: figure out if this is necessary)
-  // finalCards
-  //   .filter(e => 'all_parts' in e)
-  //   .forEach(card => {
-  //     card.all_parts?.forEach(storedRelated => {
-  //       const relatedCard = finalCards.find(e => e.id == storedRelated.id);
-  //       if (relatedCard) {
-  //         storedRelated.id = relatedCard.id;
-  //         storedRelated.name = relatedCard.name;
-  //         storedRelated.type_line = relatedCard.type_line;
-  //         storedRelated.set = relatedCard.set;
-  //         storedRelated.image = relatedCard.image;
-  //       }
-  //     });
-  //   });
-  // trims duplicates and parts with components of 'token' that are missing the corresponding one from all_parts
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {

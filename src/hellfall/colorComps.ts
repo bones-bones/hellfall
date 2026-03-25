@@ -9,6 +9,7 @@ const miscColors = [
   'Teal',
   'Orange',
   'TEMU',
+  'Cyan',
   'Gold',
   'Beige',
   'Grey',

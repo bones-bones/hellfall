@@ -115,6 +115,7 @@ export const useSearchResults = () => {
     'Teal',
     'Orange',
     'TEMU',
+    'Cyan',
     'Gold',
     'Beige',
     'Grey',
