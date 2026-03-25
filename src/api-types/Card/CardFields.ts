@@ -42,6 +42,20 @@ export namespace HCCardFields.Core {
      */
     id: string;
     /**
+     * A unique oracle ID for this card in Scryfall's database, if it exists
+     * (This is for the card in general)
+     *
+     * @type UUID
+     */
+    oracle_id?: string;
+    /**
+     * A unique ID for this card in Scryfall's database, if it exists
+     * (This is for the specific printing)
+     *
+     * @type UUID
+     */
+    scryfall_id?: string;
+    /**
      * A code for this card's layout. TODO: rework
      *
      * @see {@link https://scryfall.com/docs/api/layouts}

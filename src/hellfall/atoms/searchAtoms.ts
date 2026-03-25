@@ -29,7 +29,7 @@ export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
 export const searchColorsAtom = atom(searchParams.get('colors')?.split(',') || []);
 
 export const searchColorComparisonAtom = atom(
-  (searchParams.get('colorComparison') || '=') as '<' | '<=' | '=' | '>=' | '>'
+  (searchParams.get('colorComparison') || '>=') as '<' | '<=' | '=' | '>=' | '>'
 );
 
 export const searchColorIdentitiesAtom = atom(searchParams.get('colorIdentity')?.split(',') || []);

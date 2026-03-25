@@ -35,12 +35,12 @@ export const Deck = () => {
   const resolvedMainDeck = deck.cards.main.map(resolveCard) as RenderEntry[];
 
   const resolvedSideBoard = deck.cards.sideboard.map(resolveCard) as RenderEntry[];
-  const renderTypes = (card:RenderEntry):(string[]|undefined) => {
+  const renderTypes = (card: RenderEntry): string[] | undefined => {
     if (!card.hcCard) {
-      return undefined
+      return undefined;
     }
     return 'card_faces' in card.hcCard ? card.hcCard.card_faces[0].types : card.hcCard.types;
-  }
+  };
 
   const reduddd = resolvedMainDeck.reduce<Record<string, RenderEntry[]>>((curr, next) => {
     if (renderTypes(next)?.includes('Land') || !next.hcCard) {
@@ -166,7 +166,7 @@ const DeckCon = styled.div({
   paddingLeft: '20px',
 });
 
-const ActiveCardContainer = styled.div(({ showGutter }: { showGutter: boolean }) => ({
+const ActiveCardContainer = styled.div<{ showGutter: boolean }>(({ showGutter }) => ({
   width: '380px',
   maxHeight: '900px',
   top: '50px',

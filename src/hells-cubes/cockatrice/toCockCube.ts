@@ -1,5 +1,5 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
-import { HCCard } from '../../api-types';
+import { HCCard, HCRelatedCard } from '../../api-types';
 import tokens from '../../data/tokens.json';
 import { recursiveAdoption } from '../recursiveAdoption';
 import { getLayout } from './getLayout';
@@ -40,8 +40,7 @@ export const toCockCube = ({
   ]);
 
   cards.forEach(entry => {
-    const isSplitAndLinkedLayout =
-      entry.layout === 'transform' || entry.layout === 'modal';
+    const isSplitAndLinkedLayout = entry.layout === 'transform' || entry.layout === 'modal';
     if (isSplitAndLinkedLayout) {
       // Each side is a separate card in the cube
       entry.toFaces().forEach((_, i) => {
@@ -80,7 +79,7 @@ export const toCockCube = ({
     recursiveAdoption(tokenCardEntry, [name, prop, [type], setElement, tablerow]);
 
     let used = false;
-    tokenEntry.all_parts?.forEach(related => {
+    tokenEntry.all_parts?.forEach((related: HCRelatedCard) => {
       const relatedEntry = xmlDoc.createElement('reverse-related');
       relatedEntry.textContent = related.name;
       if (cards.find(entry => related.name == entry.name)?.tags?.includes('persistent-tokens')) {
@@ -203,7 +202,11 @@ const hcCardToCockCard = ({
   }
 
   const layout = xmlDoc.createElement('layout');
-  layout.textContent = splitAndLinkedLayout ? 'normal' : sideIndex > 0 ? 'transform' : getLayout(entry);
+  layout.textContent = splitAndLinkedLayout
+    ? 'normal'
+    : sideIndex > 0
+    ? 'transform'
+    : getLayout(entry);
 
   const tablerow = xmlDoc.createElement('tablerow');
   tablerow.textContent = getTableRow(entry).toString();

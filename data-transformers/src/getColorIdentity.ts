@@ -9,14 +9,24 @@ export const getColorIdentityProps = (
   card: HCCard.Any
 ): { color_identity: HCColors; color_identity_hybrid: HCColors[] } => {
   const colorIdentity = new Set<string>();
-  const colorIdentityHybrid = new Map<string, Set<string>>();
+  const colorIdentityHybrid: HCColors[] = [];
   const addColors = (colors: HCColors) => {
     colors.forEach(color => {
-      colorIdentity.add(color);
+      if (color != HCColor.Colorless) {
+        colorIdentity.add(color);
+      }
     });
-    const key = [...new Set(colors as string[])].sort().join('');
-    if (!colorIdentityHybrid.has(key)) {
-      colorIdentityHybrid.set(key, new Set(colors));
+    if (colors && !colors.includes(HCColor.Colorless) && colors.length > 0) {
+      // if the new colors do not contain some existing colorSet
+      if (!colorIdentityHybrid.some(colorSet => colorSet.every(color => colors.includes(color)))) {
+        for (let i = colorIdentityHybrid.length - 1; i >= 0; i--) {
+          // if the new colorSet is completely inside the existing colorSet, delete the existing one
+          if (colors.every(color => colorIdentityHybrid[i].includes(color))) {
+            colorIdentityHybrid.splice(i, 1);
+          }
+        }
+        colorIdentityHybrid.push(colors);
+      }
     }
   };
   const pips = store.get(pipsAtom);
@@ -68,7 +78,7 @@ export const getColorIdentityProps = (
       });
     }
   };
-  // TODO: special cases for Crypticspire Mantis (must be at least 2)
+
   if ('card_faces' in card) {
     if (
       HCLayoutGroup.FrontIdentityLayout.includes(
@@ -86,16 +96,9 @@ export const getColorIdentityProps = (
   } else {
     addColorsFromFace(card);
   }
-  if (colorIdentity.size == 0) {
-    colorIdentity.add('C');
-  } else if (colorIdentity.size > 1 && colorIdentity.has('C')) {
-    colorIdentity.delete('C');
-  }
   return {
     color_identity: Array.from(colorIdentity) as HCColors,
-    color_identity_hybrid: Array.from(colorIdentityHybrid.values()).map(
-      set => Array.from(set) as HCColors
-    ),
+    color_identity_hybrid: colorIdentityHybrid,
   };
 };
 
@@ -125,4 +128,8 @@ const landToColorMapping = {
   Moontain: 'R',
   Forest: 'G',
   Nebula: 'P',
+  Oasis: 'Orange',
+  Mudflats: 'Brown',
+  'Gas-Station': 'Yellow',
+  Carnival: 'Pink',
 } as Record<string, HCColor>;

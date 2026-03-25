@@ -190,9 +190,11 @@ export const SearchControls = () => {
           onChange={setSearchColorIdentitiesAtom}
         >
           <StyledComponentHolder>
-            <StyledLabel htmlFor="styledManaSelect">{'Color Identity Comparison'}</StyledLabel>
+            <StyledLabel htmlFor="styledColorIdentityelect">
+              {'Color Identity Comparison'}
+            </StyledLabel>
             <StyledManaSelect
-              id="styledManaSelect"
+              id="styledColorIdentityelect"
               defaultValue={colorIdentityComparison}
               value={colorIdentityComparison}
               onChange={event => {
@@ -247,7 +249,7 @@ export const SearchControls = () => {
           onChange={setSet}
         >
           <StyledComponentHolder>
-            <StyledLabel htmlFor="styledManaSelect">{'Cards/Tokens?'}</StyledLabel>
+            <StyledLabel htmlFor="cards or tokens">{'Cards/Tokens?'}</StyledLabel>
             <StyledManaSelect
               id="cards or tokens"
               defaultValue={cardsOrTokens}

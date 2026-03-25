@@ -1151,6 +1151,16 @@
       "no_shadow": true
     },
     {
+      "filename": "mono/effects/$G.svg",
+      "symbol": "$G",
+      "english": "one green mana that doesn't empty as steps and phases end",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G"
+      ]
+    },
+    {
       "filename": "mono/effects/GE.svg",
       "symbol": "GE",
       "represents_mana": true,
@@ -1293,7 +1303,7 @@
       ]
     },
     {
-      "filename": "mono/effects/Stab.png",
+      "filename": "mono/effects/Stab.svg",
       "symbol": "Stab",
       "english": "one red mana or deal one damage to target creature or player",
       "represents_mana": true,
@@ -2866,7 +2876,7 @@
       "no_shadow": true
     },
     {
-      "filename": "symbols/additional/Coin.png",
+      "filename": "symbols/additional/Coin.svg",
       "symbol": "Coin",
       "english": "a coin counter",
       "represents_mana": false,

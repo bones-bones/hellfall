@@ -86,26 +86,18 @@ export const PillSearch = ({ possibleValues, defaultValues, label, onChange }: P
         />
         <Menu.Popper anchorElement={searchRef} placement="bottom">
           <StyledCard>
-            <FixedSizeList
-              ref={listRef}
-              height={Math.min(200, filteredItems.length * 40)}
-              itemCount={filteredItems.length}
-              itemSize={35}
-              width={'275px'}
-              itemData={filteredItems}
-            >
-              {({ style, data, index }) => (
+            <div style={{ maxHeight: '200px', overflowY: 'auto', width: '275px' }}>
+              {filteredItems.map((item, index) => (
                 <DeprecatedMenuItem
-                  style={style}
-                  value={data[index]}
+                  value={item}
                   isFocused={selectedIndex === index}
-                  key={data[index]}
-                  onClick={() => addSelection(data[index])}
+                  key={item}
+                  onClick={() => addSelection(item)}
                 >
-                  {data[index]}
+                  {item}
                 </DeprecatedMenuItem>
-              )}
-            </FixedSizeList>
+              ))}
+            </div>
           </StyledCard>
         </Menu.Popper>
 

@@ -152,7 +152,7 @@ const LandImageContainer = ({ land, onClick }: { land: Land; onClick: any }) => 
   );
 };
 
-const CardFooter = styled.div(({ rarity }: { rarity?: 'Mythic' | 'Rare' | 'Uncommon' }) => {
+const CardFooter = styled.div<{ rarity?: 'Mythic' | 'Rare' | 'Uncommon' }>(({ rarity }) => {
   let backgroundColor = 'black';
   let borderColor = 'white';
   let color = 'white';
@@ -188,7 +188,6 @@ const CardFooter = styled.div(({ rarity }: { rarity?: 'Mythic' | 'Rare' | 'Uncom
     alignItems: 'center',
   };
 });
-
 const StyledImage = styled('img')({ width: '100%' });
 const StyledHImage = styled('img')({ height: '100%' });
 

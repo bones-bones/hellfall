@@ -6,10 +6,11 @@ import { HCRelatedCard } from '../../src/api-types/Card/RelatedCard';
 import { HCObject } from '../../src/api-types/Object';
 import { getColorIdentityProps } from './getColorIdentity';
 
-export const fetchDatabase = async () => {
-  const requestedData = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
-  );
+export const fetchDatabase = async (usingApproved: boolean = false) => {
+  const url = usingApproved
+    ? `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database?alt=json&key=${sheetsKey}`
+    : `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Database+(Unapproved)?alt=json&key=${sheetsKey}`;
+  const requestedData = await fetch(url);
   const asJson = (await requestedData.json()) as any;
   const [_garbage, _oldKeys, ...rest] = asJson.values as string[][];
   const keys = [
@@ -81,7 +82,7 @@ export const fetchDatabase = async () => {
       commander: HCLegality.Banned,
     } as HCLegalitiesField,
     cmc: 0,
-    colors: [HCColor.Colorless] as HCColors,
+    colors: [] as HCColors,
     keywords: [],
     set: '',
     variation: false,
@@ -90,7 +91,7 @@ export const fetchDatabase = async () => {
 
   const defaultMultiFaceProps: Record<string, any> = {
     mana_cost: '',
-    colors: [HCColor.Colorless] as HCColors,
+    colors: [] as HCColors,
     oracle_text: '',
   };
 
@@ -120,6 +121,17 @@ export const fetchDatabase = async () => {
     aftermath: HCImageStatus.Aftermath,
     split: HCImageStatus.Split,
   };
+
+  const hardCardNames: string[] = [
+    'Crypt of u/Em9500',
+    '1d6',
+    'Avatar of BallsJr123',
+    'Sekiro for the PS4',
+    'Avatar of Discord v2',
+    'That One Time in WW1',
+    'Plagiarism by doomclaw9',
+    'Carrion Feeder from MH8',
+  ];
 
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
@@ -163,10 +175,10 @@ export const fetchDatabase = async () => {
               const colorArr = entry[i]
                 .split(';')
                 .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
-              cardObject.card_faces[face][key] =
-                entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
-              cardObject.colors =
-                entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
+              cardObject.card_faces[face][key] = colorArr;
+              // entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
+              cardObject.colors = colorArr;
+              // entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
             } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
               cardObject.card_faces[face][key] = entry[i].split(';');
             } else if (
@@ -200,22 +212,47 @@ export const fetchDatabase = async () => {
             cardObject[keys[i]] = legalities;
           } else if (keys[i] == 'related') {
             // entry[20] is tags, entry[17] is 0oracle_text, entry[6] is Related Cards
-            const all_parts: [HCRelatedCard] = [
-              {
+            const all_parts: HCRelatedCard[] = entry[i].split(';').map(name => {
+              const base = name.replace(/\d+$/, '');
+              const shouldUseBase =
+                /\d/.test(name.at(-1)!) &&
+                !hardCardNames.includes(name) &&
+                base &&
+                ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
+
+              const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
-                id: '',
+                id: shouldUseBase ? name : '',
                 component:
                   entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
                     ? 'meld_part'
                     : entry[20].includes('draftpartner')
                     ? 'draft_partner'
                     : 'token_maker',
-                name: entry[i],
+                name: shouldUseBase ? base : name,
                 type_line: '',
                 set: '',
                 image: '',
-              },
-            ];
+              };
+              return maker;
+            });
+
+            // const all_parts: [HCRelatedCard] = [
+            //   {
+            //     object: HCObject.ObjectType.RelatedCard,
+            //     id: '',
+            // component:
+            //   entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
+            //     ? 'meld_part'
+            //     : entry[20].includes('draftpartner')
+            //     ? 'draft_partner'
+            //     : 'token_maker',
+            //     name: entry[i],
+            //     type_line: '',
+            //     set: '',
+            //     image: '',
+            //   },
+            // ];
             if (
               entry[6] != 'Head of the Forbidden One' &&
               (entry[17].toLowerCase().includes('meld') ||
@@ -245,9 +282,6 @@ export const fetchDatabase = async () => {
               cardObject.card_faces[0].watermark = tags
                 .filter(tag => tag.includes('watermark'))[0]
                 .split('-')[0];
-              // tags.filter(tag=>tag.includes('watermark')).forEach((tag,index)=>{
-              //   cardObject.card_faces[index].watermark=tag.split("-")[0]
-              // })
             }
           } else {
             cardObject[keys[i]] = entry[i];
@@ -461,28 +495,6 @@ export const fetchDatabase = async () => {
           cardObject.layout = HCLayout.Split;
         }
       }
-      // if (!('layout' in cardObject) && !cardObject.card_faces.at(-1)!.image) {
-      //   if (cardObject.tags?.includes('reminder-on-back')) {
-      //     cardObject.layout = HCLayout.ReminderOnBack;
-      //     cardObject.card_faces.at(-1)!.image_status = HCImageStatus.Reminder;
-      //   } else if (cardObject.tags?.includes('dungeon-on-back')) {
-      //     cardObject.layout = HCLayout.DungeonOnBack;
-      //     cardObject.card_faces.at(-1)!.image_status = HCImageStatus.Dungeon;
-      //   } else if (cardObject.tags?.includes('stickers-on-back')) {
-      //     cardObject.layout = HCLayout.StickersOnBack;
-      //     cardObject.card_faces.at(-1)!.image_status = HCImageStatus.Stickers;
-      //   } else if (cardObject.tags?.includes('token-on-back')) {
-      //     cardObject.layout = HCLayout.TokenOnBack;
-      //     cardObject.card_faces.at(-1)!.image_status = HCImageStatus.Token;
-      //   } else {
-      //     // const names = entry[1];
-      //     // entry[6] is Related Cards
-      //     cardObject.layout =
-      //       // cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
-      //       // ? HCLayout.MeldPart:
-      //       HCLayout.Multi;
-      //   }
-      // }
       return cardObject as HCCard.AnyMultiFaced;
     }
   });

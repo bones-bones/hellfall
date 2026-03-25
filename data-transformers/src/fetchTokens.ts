@@ -3,6 +3,7 @@ import { HCCard, HCImageStatus, HCLayout, HCRelatedCard } from '../../src/api-ty
 import { HCColor, HCColors } from '../../src/api-types/Card';
 import { HCObject } from '../../src/api-types/Object';
 import { HCLegality, HCLegalitiesField } from '../../src/api-types/Card';
+import { fetchScryfallTokens } from './fetchScryfallTokens';
 
 export const fetchTokens = async () => {
   const requestedData = await fetch(
@@ -46,7 +47,7 @@ export const fetchTokens = async () => {
       commander: HCLegality.NotLegal,
     } as HCLegalitiesField,
     mana_cost: '',
-    colors: [HCColor.Colorless] as HCColors,
+    colors: [] as HCColors,
     cmc: 0,
     oracle_text: '',
     color_identity: [] as HCColors,
@@ -55,12 +56,23 @@ export const fetchTokens = async () => {
     set: 'HCT',
     variation: false,
     image_status: HCImageStatus.HighRes,
+    draft_image_status: HCImageStatus.Inapplicable,
     isActualToken: true,
     type_line: '',
     layout: HCLayout.Token,
   };
+  const hardCardNames: string[] = [
+    'Crypt of u/Em9500',
+    '1d6',
+    'Avatar of BallsJr123',
+    'Sekiro for the PS4',
+    'Avatar of Discord v2',
+    'That One Time in WW1',
+    'Plagiarism by doomclaw9',
+    'Carrion Feeder from MH8',
+  ];
 
-  const theThing = rest.map(entry => {
+  const HCTokens = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
       if (entry[i]) {
@@ -83,12 +95,20 @@ export const fetchTokens = async () => {
             tokenObject.types = typeList;
           }
         } else if (keys[i] == 'token_maker') {
-          tokenObject.all_parts = entry[i].split(';').map(name => {
+          tokenObject.all_parts = entry[i].split(';').map(oldName => {
+            const name = oldName.replace(/\*\d+$/, '');
+            const base = name.replace(/\d+$/, '');
+            const shouldUseBase =
+              /\d/.test(name.at(-1)!) &&
+              !hardCardNames.includes(name) &&
+              base &&
+              ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
+
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
-              id: '',
+              id: shouldUseBase ? name : '',
               component: entry[6] == 'meld' ? 'meld_part' : 'token_maker',
-              name: name.replace(/\*\d+$/, ''),
+              name: shouldUseBase ? base : name,
               type_line: '',
               set: '',
               image: '',
@@ -137,5 +157,6 @@ export const fetchTokens = async () => {
       });
     return tokenObject as HCCard.Any;
   });
-  return theThing;
+  const ScryfallTokens = await fetchScryfallTokens();
+  return HCTokens.concat(ScryfallTokens);
 };
