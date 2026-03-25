@@ -6,6 +6,7 @@ import { styled } from '@workday/canvas-kit-react/common';
 import { TertiaryButton } from '@workday/canvas-kit-react/button';
 import { TextInput } from '@workday/canvas-kit-react/text-input';
 
+
 import { FixedSizeList } from 'react-window';
 import { Menu, useMenuModel } from '@workday/canvas-kit-react/menu';
 
@@ -15,15 +16,6 @@ type Props = {
   label: string;
   onChange: (value: string[]) => void;
 };
-const FixedSizeListTyped = FixedSizeList as React.ComponentType<{
-  height: number;
-  itemCount: number;
-  itemSize: number;
-  width: string;
-  itemData: string[];
-  children: (props: { style: React.CSSProperties; data: string[]; index: number }) => React.ReactNode;
-  ref?: React.Ref<any>;
-}>;
 
 export const PillSearch = ({ possibleValues, defaultValues, label, onChange }: Props) => {
   const [menuItems, setMenuItems] = useState(possibleValues);
@@ -95,26 +87,18 @@ export const PillSearch = ({ possibleValues, defaultValues, label, onChange }: P
         />
         <Menu.Popper anchorElement={searchRef} placement="bottom">
           <StyledCard>
-            <FixedSizeListTyped 
-              ref={listRef}
-              height={Math.min(200, filteredItems.length * 40)}
-              itemCount={filteredItems.length}
-              itemSize={35}
-              width={'275px'}
-              itemData={filteredItems}
-            >
-              {({ style, data, index }) => (
+            <div style={{ maxHeight: '200px', overflowY: 'auto', width: '275px' }}>
+              {filteredItems.map((item, index) => (
                 <DeprecatedMenuItem
-                  style={style}
-                  value={data[index]}
+                  value={item}
                   isFocused={selectedIndex === index}
-                  key={data[index]}
-                  onClick={() => addSelection(data[index])}
+                  key={item}
+                  onClick={() => addSelection(item)}
                 >
-                  {data[index]}
+                  {item}
                 </DeprecatedMenuItem>
-              )}
-            </FixedSizeListTyped>
+              ))}
+            </div>
           </StyledCard>
         </Menu.Popper>
 
