@@ -102,6 +102,52 @@ export const getColorIdentityProps = (
   };
 };
 
+export const getMVFromCost = (cost:string):number=>{
+  const pips = store.get(pipsAtom);
+  return cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1))?.reduce((totalMV,pipName)=> {
+    const pip = pips?.find(e => e.symbol.toLowerCase() === pipName.toLowerCase());
+    return totalMV + (pip?.mana_value || 0)
+  },0) || 0;
+}
+
+export const setDerivedProps = (card: HCCard.Any) => {
+  if ('card_faces' in card) {
+    const type_line_list: string[] = [];
+    const mana_cost_list: string[] = [];
+    card.card_faces.forEach(face => {
+      const face_type = [
+        face.supertypes?.join(' '),
+        [face.types?.join(' '), face.subtypes?.join(' ')].filter(Boolean).join(' — '),
+      ]
+        .filter(Boolean)
+        .join(' ') as string;
+      face.type_line = face_type;
+      type_line_list.push(face_type);
+      face.cmc = getMVFromCost(face.mana_cost);
+      mana_cost_list.push(face.mana_cost);
+      if (face.colors.length && face.colors.includes('C')) {
+        face.colors = [] as HCColors;
+      }
+    });
+    card.type_line = type_line_list.join(' // ');
+    card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
+  } else {
+    card.type_line = [
+      card.supertypes?.join(' '),
+      [card.types?.join(' '), card.subtypes?.join(' ')].filter(Boolean).join(' — '),
+    ]
+      .filter(Boolean)
+      .join(' ') as string;
+  }
+  if (card.colors.length && card.colors.includes('C')) {
+    card.colors = [] as HCColors;
+  }
+  const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
+  card.color_identity = color_identity;
+  card.color_identity_hybrid = color_identity_hybrid;
+};
+
+
 const manaSymbolColorMatching: Record<
   string,
   | 'White'

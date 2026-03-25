@@ -137,6 +137,7 @@ export namespace HCCard {
   type MultiFace<Face extends HCCardFace.AbstractCardFace> = AbstractCard &
     HCCardFields.Gameplay.RootProperties &
     HCCardFields.Gameplay.CardSpecific &
+    HCCardFields.Gameplay.MultiSpecific &
     HCCardFields.Gameplay.CardFaces<Face> &
     HCCardFields.Print.CardSpecific;
   /**

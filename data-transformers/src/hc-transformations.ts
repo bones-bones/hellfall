@@ -16,7 +16,7 @@ import {
 import { HCObject } from '../../src/api-types/Object';
 import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
-import { getColorIdentityProps } from './getColorIdentity';
+import { getColorIdentityProps, setDerivedProps } from './derivedProps';
 import { fetchNotMagic } from './fetchNotMagic';
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -179,6 +179,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'image_status',
           'image',
           'mana_cost',
+          'cmc',
           'supertypes',
           'types',
           'subtypes',
@@ -238,41 +239,41 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
     return cardWithJSON as HCCard.Any;
   });
 };
-const setDerivedProps = (card: HCCard.Any) => {
-  if ('card_faces' in card) {
-    const type_line_list: string[] = [];
-    const mana_cost_list: string[] = [];
-    card.card_faces.forEach(face => {
-      const face_type = [
-        face.supertypes?.join(' '),
-        [face.types?.join(' '), face.subtypes?.join(' ')].filter(Boolean).join(' — '),
-      ]
-        .filter(Boolean)
-        .join(' ') as string;
-      face.type_line = face_type;
-      type_line_list.push(face_type);
-      mana_cost_list.push(face.mana_cost);
-      if (face.colors.length && face.colors.includes('C')) {
-        face.colors = [] as HCColors;
-      }
-    });
-    card.type_line = type_line_list.join(' // ');
-    card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
-  } else {
-    card.type_line = [
-      card.supertypes?.join(' '),
-      [card.types?.join(' '), card.subtypes?.join(' ')].filter(Boolean).join(' — '),
-    ]
-      .filter(Boolean)
-      .join(' ') as string;
-  }
-  if (card.colors.length && card.colors.includes('C')) {
-    card.colors = [] as HCColors;
-  }
-  const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
-  card.color_identity = color_identity;
-  card.color_identity_hybrid = color_identity_hybrid;
-};
+// const setDerivedProps = (card: HCCard.Any) => {
+//   if ('card_faces' in card) {
+//     const type_line_list: string[] = [];
+//     const mana_cost_list: string[] = [];
+//     card.card_faces.forEach(face => {
+//       const face_type = [
+//         face.supertypes?.join(' '),
+//         [face.types?.join(' '), face.subtypes?.join(' ')].filter(Boolean).join(' — '),
+//       ]
+//         .filter(Boolean)
+//         .join(' ') as string;
+//       face.type_line = face_type;
+//       type_line_list.push(face_type);
+//       mana_cost_list.push(face.mana_cost);
+//       if (face.colors.length && face.colors.includes('C')) {
+//         face.colors = [] as HCColors;
+//       }
+//     });
+//     card.type_line = type_line_list.join(' // ');
+//     card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
+//   } else {
+//     card.type_line = [
+//       card.supertypes?.join(' '),
+//       [card.types?.join(' '), card.subtypes?.join(' ')].filter(Boolean).join(' — '),
+//     ]
+//       .filter(Boolean)
+//       .join(' ') as string;
+//   }
+//   if (card.colors.length && card.colors.includes('C')) {
+//     card.colors = [] as HCColors;
+//   }
+//   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
+//   card.color_identity = color_identity;
+//   card.color_identity_hybrid = color_identity_hybrid;
+// };
 /**
  *
  * @param existingCard The card from the stored database JSON
@@ -351,7 +352,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
             const newFace = newCard.card_faces?.[index];
             Object.entries(newFace).forEach(([k, v]) => {
               if (k in face && ['name', 'oracle_text', 'flavor_text'].includes(k)) {
-                if (face[k as keyof typeof face]![0] == ';') {
+                if ((face[k as keyof typeof face] as string)[0] == ';') {
                   // TODO: store current version and print the diff if there is one
                 } else if (v || k == 'oracle_text') {
                   (face as any)[k] = v;
@@ -682,7 +683,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [])
+    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [],'cmc',0,'faces')
     : [];
 
   try {
@@ -693,7 +694,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [],'cmc',0,'faces') : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {

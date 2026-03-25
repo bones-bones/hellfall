@@ -16,6 +16,7 @@ import {
   HCColors,
   HCImageStatus,
 } from '../../src/api-types/Card';
+import { setDerivedProps } from './derivedProps';
 export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): HCCard.Any => {
   const cardLayoutCorrespondences: Record<ScryfallLayout, HCLayout> = {
     normal: HCLayout.Normal,
@@ -112,6 +113,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   };
   const defaultMultiFaceProps: Record<string, any> = {
     mana_cost: '',
+    cmc: 0,
     colors: [HCColor.Colorless] as HCColors,
     oracle_text: '',
     image_status: HCImageStatus.Split,
@@ -312,5 +314,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   if (asToken) {
     cardObject.isActualToken = true;
   }
-  return cardObject as HCCard.Any;
+  const cardFinal = cardObject as HCCard.Any;
+  setDerivedProps(cardFinal);
+  return cardFinal;
 };

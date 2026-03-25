@@ -4,7 +4,7 @@ import { HCColor, HCColors, HCImageStatus, HCLayout } from '../../src/api-types/
 import { HCLegalitiesField, HCFormat, HCLegality } from '../../src/api-types/Card/values';
 import { HCRelatedCard } from '../../src/api-types/Card/RelatedCard';
 import { HCObject } from '../../src/api-types/Object';
-import { getColorIdentityProps } from './getColorIdentity';
+import { getColorIdentityProps, setDerivedProps } from './derivedProps';
 
 export const fetchDatabase = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -83,6 +83,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     } as HCLegalitiesField,
     cmc: 0,
     colors: [] as HCColors,
+    color_identity: [] as HCColors,
+    color_identity_hybrid: [] as HCColors[],
     keywords: [],
     set: '',
     variation: false,
@@ -91,6 +93,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
 
   const defaultMultiFaceProps: Record<string, any> = {
     mana_cost: '',
+    cmc: 0,
     colors: [] as HCColors,
     oracle_text: '',
   };
@@ -373,11 +376,11 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     cardObject.type_line = type_line_list.join(' // ');
     cardObject.mana_cost = mana_cost_list.filter(e => e).join(' // ');
 
-    const { color_identity, color_identity_hybrid } = getColorIdentityProps(
-      cardObject as HCCard.AnyMultiFaced
-    );
-    cardObject.color_identity = color_identity;
-    cardObject.color_identity_hybrid = color_identity_hybrid;
+    // const { color_identity, color_identity_hybrid } = getColorIdentityProps(
+    //   cardObject as HCCard.AnyMultiFaced
+    // );
+    // cardObject.color_identity = color_identity;
+    // cardObject.color_identity_hybrid = color_identity_hybrid;
     Object.keys(defaultProps)
       .filter(key => !(key in cardObject))
       .forEach(key => {
@@ -402,13 +405,15 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
         ([k, v]) =>
-          !['name', 'type_line', 'mana_cost', 'image_status', 'colors', 'image'].includes(k)
+          !['name', 'type_line', 'mana_cost', 'cmc', 'image_status', 'colors', 'image'].includes(k)
       )) {
         cardObject[key] = value;
       }
       const { card_faces, ...singleCard } = cardObject;
       singleCard.layout = singleCard.tags?.includes('noncard') ? HCLayout.Misc : HCLayout.Normal;
-      return singleCard as HCCard.AnySingleFaced;
+      const card = singleCard as HCCard.AnySingleFaced;
+      setDerivedProps(card)
+      return card;
     } else {
       if (
         cardObject.card_faces[0].image &&
@@ -495,7 +500,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           cardObject.layout = HCLayout.Split;
         }
       }
-      return cardObject as HCCard.AnyMultiFaced;
+      const card = cardObject as HCCard.AnyMultiFaced;
+      setDerivedProps(card)
+      return card
     }
   });
 

@@ -103,10 +103,12 @@ Write a script to transform the database
   - grid can be only some of the faces of a card? (Bear Alignment Chart/bear hate)
   - 3 versions of grid: move_grid for when you move within grid, check_grid for when you check off grid squares, and split_grid for when grid functions as split card
   - check_grid: Gruul Plantation, Magus of the MovieGrid.io, Bear Alignment Chart?, bear hate?, Lotis, Puzzle Master, Ability Bingo, HC7 B I N G O, Press Start: Mega Man
-  - move_grid: Blingo, Assimilated Strategist, Hell's Cube (the card)?
+  - move_grid: Blingo, Assimilated Strategist (check?), Hell's Cube (the card)?
   - split_grid: Bear Alignment Chart?, bear hate?, Hellscube Alignment Chart, Conflict in Literature
-  - poly: The Kodama Compass, Goblin Boardgamer, Ancient Hexadon, Revolving Wilds, Casio G-Shock Watchwolf?
+  - poly: The Kodama Compass, Goblin Boardgamer, Ancient Hexadon, Revolving Wilds, Casio G-Shock Watchwolf?, Goblin Dynamo (hc)
+    - abilities only: Goblin Boardgamer, Casio G-Shock Watchwolf, Blingo, Assimilated Strategist, Revolving Wilds? (it does have multiple images though)
   - some sort of flowchart thingy for Spain? or move_grid?
+  - instead of move_grid and poly, do general graph/net datastructure
 
 - add hybrid color identity number search prop?
 - add extras button for card/tokens, constructed cube, HC0, etc.
@@ -120,3 +122,4 @@ Write a script to transform the database
 - add name override for 🂓 (domino)
 - use pip name for iono.png and associated cards/tokens
 - fix order of color words in text
+- on individual card pages, make tab name same as card name
