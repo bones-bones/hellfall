@@ -81,7 +81,7 @@ Write a script to transform the database
 - make token search work better
 - fully implement NotMagic
 - make full images for dfcs with three+ images go to draft_image
-- deal with later: 4x Squadron Hawks, Learn from Better Designers, Liliana, Urza's Will (draftpartner)
+- deal with later: 4x Squadron Hawks, Learn from Better Designers, Liliana, Urza's Will (draftpartner), Wild Magic Surge (both versions)
 - deal with draftable sticker sheets (Amonkhet Punchcard, Carnival Elephant Meteor, etc)
 - add reminder card for attractions
 - figure out subtypes for nontoken tokens (emblems, dungeons, etc.)
