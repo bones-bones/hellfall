@@ -172,8 +172,8 @@ const landToColorMapping = {
   Moontain: 'R',
   Forest: 'G',
   Nebula: 'P',
-  Oasis: 'Orange',
-  Mudflats: 'Brown',
-  'Gas-Station': 'Yellow',
-  Carnival: 'Pink',
+  // Oasis: 'Orange',
+  // Mudflats: 'Brown',
+  // 'Gas-Station': 'Yellow',
+  // Carnival: 'Pink',
 } as Record<string, HCColor>;

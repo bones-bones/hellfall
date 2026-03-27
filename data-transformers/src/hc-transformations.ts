@@ -18,6 +18,7 @@ import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps';
 import { fetchNotMagic } from './fetchNotMagic';
+import { textEquals } from './textHandling';
 const usingApproved = false;
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
@@ -115,18 +116,6 @@ const partialMergeOnlyLayouts: HCLayout[] = [
   HCLayout.RealCardMultiToken,
   HCLayout.MultiNotMagic,
 ];
-/**
- * Checks whether search text equals text from a card
- * @param cardText text from the card
- * @param searchText text to search for
- * @returns whether they are equal
- */
-export const textEquals = (cardText: string, searchText: string) => {
-  return (
-    cardText.toLowerCase() == searchText.toLowerCase() ||
-    cardText.toLowerCase().replaceAll('\\*', '') == searchText.toLowerCase().replaceAll('\\*', '')
-  );
-};
 
 const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {

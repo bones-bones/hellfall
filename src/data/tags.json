@@ -1,7 +1,6 @@
 {
 	"data": [
 		"",
-		" the sol ring tempts you>",
 		"\"bant\"-thopters-pack",
 		"1517",
 		"1984",
@@ -299,6 +298,7 @@
 		"hc3-watermark",
 		"hc4-watermark",
 		"hc6-watermark",
+		"hc8-watermark",
 		"hcf-watermark",
 		"hcj-reject",
 		"hcj-watermark",
@@ -416,7 +416,6 @@
 		"missing-pt",
 		"missing-quotation-marks",
 		"missing-token",
-		"missing-token<1/1 green elf",
 		"missing-tokens",
 		"misthollow-griffen",
 		"mixed-subtypes",

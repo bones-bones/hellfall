@@ -54,13 +54,10 @@ Write a script to transform the database
 - see if any better images are floating around for HC2 in general
 - full documentation
 - use draft_image for full image of multisided cards?
-- fix formatting of all sagas
 - fix formatting of em dashes (no space when it replaces a colon)
-- fix formatting of dice rolls (regular dash between numbers; pipe between numbers and result)
 - add general get all images method for cards?
 - figure out how to handle cards with self-draftpartner (Squadron Wastes, Playset of Squadron Hawks (On Clearance), The Squadron Hawk)
 - fix tags for cards with draft_image
-- deal with later (skipped): **\_\_\_** Balls, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions), Spain, Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones
 - do better: evolution of the dreadmaw
 - fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino, Kolaghan's Command Tower // Kolaghan's Command
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
@@ -73,7 +70,6 @@ Write a script to transform the database
 - make other cards in feel the ground quake have each other in all_parts? (Do I want to have kongming's contraptions also do this?)
 - get a your dreadmaw reminder card/token as well as dreadmaw offspring tokens
 - add sorting for colors (in HCColors arrays) (use color order on Extreme Flower Picking)
-- deal with later: Dungeon Jumper
 - switch italics to use serif font? (that way it's more distinct)
 - make search page update conditions more logical
 - implement tags based on notes column to mark spellbook tokens?
@@ -81,6 +77,8 @@ Write a script to transform the database
 - fully implement NotMagic
 - make full images for dfcs with three+ images go to draft_image
 - deal with later: 4x Squadron Hawks, Learn from Better Designers, Liliana, Urza's Will (draftpartner), Wild Magic Surge (both versions)
+- deal with later: Dungeon Jumper
+- deal with later (skipped): **\_\_\_** Balls, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions), Spain, Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones
 - deal with draftable sticker sheets (Amonkhet Punchcard, Carnival Elephant Meteor, etc)
 - add reminder card for attractions
 - figure out subtypes for nontoken tokens (emblems, dungeons, etc.)
@@ -122,7 +120,6 @@ Write a script to transform the database
 - use pip name for iono.png and associated cards/tokens
 - fix order of color words in text
 - on individual card pages, make tab name same as card name
-- use same algorithm for card name to id redirect to find related cards
 - fix window resizing issues
 - add color inference for faces
 - when adding flip, make it independent of side for Bubsy, Furred Kind
