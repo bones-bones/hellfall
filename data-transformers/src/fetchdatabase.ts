@@ -17,7 +17,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'id',
     'name',
     'image',
-    'creator',
+    'creators',
     'set',
     'legalities',
     'related',
@@ -75,7 +75,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
   const defaultProps: Record<string, any> = {
     name: '',
     rulings: '',
-    creator: '',
+    creators: [],
     legalities: {
       standard: HCLegality.Banned,
       '4cb': HCLegality.Banned,
@@ -104,6 +104,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'reminder-on-back': HCLayout.ReminderOnBack,
     'dungeon-on-back': HCLayout.DungeonOnBack,
     'token-on-back': HCLayout.TokenOnBack,
+    'token-in-inset': HCLayout.TokenInInset,
     'stickers-on-back': HCLayout.StickersOnBack,
     mdfc: HCLayout.Modal,
     transform: HCLayout.Transform,
@@ -286,6 +287,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
                 .filter(tag => tag.includes('watermark'))[0]
                 .split('-')[0];
             }
+          } else if (keys[i] == 'creators') {
+            cardObject[keys[i]] = entry[i].split(';');
           } else {
             cardObject[keys[i]] = entry[i];
           }
@@ -340,7 +343,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         ) {
           face.image_status = HCImageStatus.Stickers;
         } else if (
-          cardObject.tags?.includes('token-on-back') ||
+          cardObject.tags?.includes('token-on-back') || cardObject.tags?.includes('token-in-inset') ||
           face.supertypes?.includes('Token')
         ) {
           face.image_status = HCImageStatus.Token;
@@ -459,6 +462,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           cardObject.card_faces.at(-1)?.types?.includes('Stickers')
         ) {
           cardObject.layout = HCLayout.StickersOnBack;
+        } else if (
+          cardObject.tags?.includes('token-in-inset') ||
+          (cardObject.card_faces.at(-1)?.supertypes?.includes('Token') && !entry[19])
+        ) {
+          // entry[19] is 0image
+          cardObject.layout = HCLayout.TokenInInset;
         } else if (
           cardObject.tags?.includes('token-on-back') ||
           cardObject.card_faces.at(-1)?.supertypes?.includes('Token')

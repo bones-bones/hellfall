@@ -286,7 +286,7 @@ export const useSearchResults = () => {
             return false;
           }
         }
-        if (creators.length > 0 && !creators.includes(entry.creator)) {
+        if (creators.length > 0 && !creators.some(creator => entry.creators.includes(creator))) {
           return false;
         }
         if (

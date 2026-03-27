@@ -167,6 +167,9 @@ export namespace HCCard {
   /** A card with the TokenOnBack layout. */
   export type TokenOnBack = AnyMultiFaced & Layout<HCLayout.TokenOnBack>;
 
+  /** A card with the TokenInInset layout. */
+  export type TokenInInset = AnyMultiFaced & Layout<HCLayout.TokenInInset>;
+
   /** A card with the DungeonOnBack layout. */
   export type DungeonOnBack = AnyMultiFaced & Layout<HCLayout.DungeonOnBack>;
 

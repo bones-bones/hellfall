@@ -78,9 +78,9 @@ export namespace HCCardFields.Core {
      */
     // uri: string;
     /**
-     * The creator of this card.
+     * The creators of this card.
      */
-    creator: string;
+    creators: string[];
     /**
      * All tags of this card.
      */

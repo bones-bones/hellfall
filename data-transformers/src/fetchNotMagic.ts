@@ -32,7 +32,7 @@ export const fetchNotMagic = async () => {
     'game',
     'name',
     'image',
-    'creator',
+    'creators',
     'rulings',
     'cmc',
     'colors',
@@ -53,7 +53,7 @@ export const fetchNotMagic = async () => {
 
   const defaultProps: Record<string, any> = {
     rulings: '',
-    creator: '',
+    creators: [],
     legalities: {
       standard: HCLegality.NotLegal,
       '4cb': HCLegality.NotLegal,
@@ -85,7 +85,7 @@ export const fetchNotMagic = async () => {
             .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
           tokenObject[keys[i]] =
             entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
-        } else if (['supertypes', 'types', 'subtypes'].includes(keys[i])) {
+        } else if (['supertypes', 'types', 'subtypes','creator'].includes(keys[i])) {
           tokenObject[keys[i]] = entry[i].split(';');
         } else if (keys[i] == 'loyalty' && tokenObject['types']?.includes('Battle')) {
           tokenObject.defense = entry[i];

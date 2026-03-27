@@ -48,6 +48,8 @@ export enum HCLayout {
   DungeonOnBack = 'dungeon_on_back',
   /** Cards with a token on the back */
   TokenOnBack = 'token_on_back',
+  /** Cards with an inset token */
+  TokenInInset = 'token_in_inset',
   /** Cards with a sticker sheet on the back */
   StickersOnBack = 'stickers_on_back',
   /** The following apply if none of the other multi ones apply, and the first one to match is applied */
@@ -110,6 +112,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
+    `${HCLayout.TokenInInset}`,
     `${HCLayout.DungeonOnBack}`,
     `${HCLayout.StickersOnBack}`,
     `${HCLayout.Modal}`,
@@ -140,6 +143,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
+    `${HCLayout.TokenInInset}`,
     `${HCLayout.DungeonOnBack}`,
     `${HCLayout.StickersOnBack}`,
     `${HCLayout.Modal}`,
@@ -198,6 +202,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
+    `${HCLayout.TokenInInset}`,
     `${HCLayout.DungeonOnBack}`,
     `${HCLayout.StickersOnBack}`,
   ] as const;

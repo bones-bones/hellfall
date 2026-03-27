@@ -97,7 +97,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   };
   const defaultProps: Record<string, any> = {
     rulings: '',
-    creator: '',
+    creators: [],
     legalities: {
       standard: asToken ? HCLegality.NotLegal : HCLegality.Banned,
       '4cb': asToken ? HCLegality.NotLegal : HCLegality.Banned,

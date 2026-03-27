@@ -167,7 +167,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'has_draft_partners',
           'keywords',
           'legalities',
-          'creator',
+          'creators',
           'rulings',
           'watermark',
           'tags',
@@ -263,7 +263,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
     existingCard.set.slice(0, 2) != 'SF'
   ) {
     const merged: HCCard.Any = { ...existingCard };
-    ['image', 'creator', 'all_parts'].forEach(key => {
+    ['image', 'creators', 'all_parts'].forEach(key => {
       if (newCard[key as keyof typeof newCard]) {
         (merged as any)[key] = newCard[key as keyof typeof newCard];
       }
@@ -651,7 +651,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [])
+    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], 'creators',[],'cards')
     : [];
 
   try {
@@ -662,7 +662,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], 'creators',[],'cards') : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {
@@ -962,16 +962,18 @@ const main = async () => {
 
     const usernameMappingEntries = Object.entries(usernameMappings);
 
-    replaceLoop: for (const [replacementName, oldNames] of usernameMappingEntries) {
+    for (const [replacementName, oldNames] of usernameMappingEntries) {
       for (const oldName of oldNames) {
-        if (entry.creator.split(';').includes(oldName)) {
-          entry.creator = entry.creator.replace(oldName, replacementName);
-          break replaceLoop;
+        const oldIndex = entry.creators.indexOf(oldName)
+        if (oldIndex != -1) {
+          entry.creators[oldIndex] = replacementName;
         }
       }
     }
-
-    creatorSet.add(entry.creator);
+    
+    entry.creators.forEach(creator => {
+      creatorSet.add(creator);
+    })
 
     if ('tags' in entry) {
       entry.tags?.forEach(e => tagSet.add(e));

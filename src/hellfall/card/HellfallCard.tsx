@@ -308,9 +308,14 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <br />
             </>
           )}
-          {data.creator && (
+          {data.creators.length && data.creators.length == 1 ? (
             <>
-              <Text key="creator">Creator: {data.creator}</Text>
+              <Text key="creator">Creator: {data.creators[0]}</Text>
+              <br />
+            </>
+          ): (
+            <>
+              <Text key="creator">Creators: {data.creators.join(", ")}</Text>
               <br />
             </>
           )}
