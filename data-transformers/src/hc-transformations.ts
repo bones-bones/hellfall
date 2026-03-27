@@ -42,7 +42,7 @@ const oneWayMergeProps = [
   'attraction_lights',
   'watermark',
   'colors',
-  'cmc'
+  'cmc',
 ];
 const cardBlankableProps = ['rulings', 'oracle_text', 'cmc', 'mana_cost'];
 const cardRemovableProps = [
@@ -279,7 +279,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
     oneWayMergeProps.forEach(prop => {
       if (prop in mergedPrelim) {
         mergedPrelim.card_faces[0][prop] = mergedPrelim[prop];
-        if (!['name', 'mana_cost', 'type_line','colors','cmc'].includes(prop)) {
+        if (!['name', 'mana_cost', 'type_line', 'colors', 'cmc'].includes(prop)) {
           delete mergedPrelim[prop];
         }
       }
@@ -651,7 +651,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], 'creators',[],'cards')
+    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [])
     : [];
 
   try {
@@ -662,7 +662,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], 'creators',[],'cards') : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {
@@ -964,16 +964,72 @@ const main = async () => {
 
     for (const [replacementName, oldNames] of usernameMappingEntries) {
       for (const oldName of oldNames) {
-        const oldIndex = entry.creators.indexOf(oldName)
+        const oldIndex = entry.creators.indexOf(oldName);
         if (oldIndex != -1) {
           entry.creators[oldIndex] = replacementName;
         }
       }
     }
-    
+
     entry.creators.forEach(creator => {
       creatorSet.add(creator);
-    })
+    });
+
+    if ('tags' in entry) {
+      entry.tags?.forEach(e => tagSet.add(e));
+    }
+
+    // if (entry.Constructed) {
+    //   // @ts-expect-error not sure about this approach but hey.
+    //   entry.Constructed = entry.Constructed.split(', ');
+    // }
+
+    // if (tokenMap[entry.Name]) {
+    //   // Debug unused tokens
+    //   // (tokenMap[entry.Name] as any).used = true;
+
+    //   entry.tokens = tokenMap[entry.Name];
+
+    //   // if (["HC8.0", "HC8.1"].includes(entry.Set)) {
+    //   //   console.log(entry.Name);
+    //   // }
+    // }
+
+    // if (
+    //   entry["Text Box"]?.find((e) => e?.includes(" token")) &&
+    //   !entry.tokens &&
+    //   entry.Set === "HC6"
+    // ) {
+    //   console.log(
+    //     entry.Name +
+    //       "  " +
+    //       /[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0],
+    //   );
+    // }
+  });
+  finalTokens.forEach(entry => {
+    ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
+      [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
+        typeEntry => {
+          typeSet.add(typeEntry);
+        }
+      );
+    });
+
+    const usernameMappingEntries = Object.entries(usernameMappings);
+
+    for (const [replacementName, oldNames] of usernameMappingEntries) {
+      for (const oldName of oldNames) {
+        const oldIndex = entry.creators.indexOf(oldName);
+        if (oldIndex != -1) {
+          entry.creators[oldIndex] = replacementName;
+        }
+      }
+    }
+
+    entry.creators.forEach(creator => {
+      creatorSet.add(creator);
+    });
 
     if ('tags' in entry) {
       entry.tags?.forEach(e => tagSet.add(e));

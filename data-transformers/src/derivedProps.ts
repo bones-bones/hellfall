@@ -102,13 +102,18 @@ export const getColorIdentityProps = (
   };
 };
 
-export const getMVFromCost = (cost:string):number=>{
+export const getMVFromCost = (cost: string): number => {
   const pips = store.get(pipsAtom);
-  return cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1))?.reduce((totalMV,pipName)=> {
-    const pip = pips?.find(e => e.symbol.toLowerCase() === pipName.toLowerCase());
-    return totalMV + (pip?.mana_value || 0)
-  },0) || 0;
-}
+  return (
+    cost
+      .match(/{([^}]+)}/g)
+      ?.map(match => match.slice(1, -1))
+      ?.reduce((totalMV, pipName) => {
+        const pip = pips?.find(e => e.symbol.toLowerCase() === pipName.toLowerCase());
+        return totalMV + (pip?.mana_value || 0);
+      }, 0) || 0
+  );
+};
 
 export const setDerivedProps = (card: HCCard.Any) => {
   if ('card_faces' in card) {
@@ -140,7 +145,6 @@ export const setDerivedProps = (card: HCCard.Any) => {
   card.color_identity = color_identity;
   card.color_identity_hybrid = color_identity_hybrid;
 };
-
 
 const manaSymbolColorMatching: Record<
   string,

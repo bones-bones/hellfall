@@ -313,9 +313,9 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <Text key="creator">Creator: {data.creators[0]}</Text>
               <br />
             </>
-          ): (
+          ) : (
             <>
-              <Text key="creator">Creators: {data.creators.join(", ")}</Text>
+              <Text key="creator">Creators: {data.creators.join(', ')}</Text>
               <br />
             </>
           )}

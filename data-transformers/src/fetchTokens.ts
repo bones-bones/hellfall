@@ -40,7 +40,7 @@ export const fetchTokens = async () => {
   };
   const defaultProps: Record<string, any> = {
     rulings: '',
-    creator: '',
+    creators: [],
     legalities: {
       standard: HCLegality.NotLegal,
       '4cb': HCLegality.NotLegal,

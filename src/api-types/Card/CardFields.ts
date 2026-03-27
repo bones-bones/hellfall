@@ -166,7 +166,7 @@ export namespace HCCardFields.Gameplay {
     name: string;
     type_line: string;
     mana_cost: string;
-    cmc:number;
+    cmc: number;
   };
 
   /**
@@ -275,11 +275,11 @@ export namespace HCCardFields.Gameplay {
     /**
      * The oracle text of the card itself apart from any face, if any
      */
-    oracle_text?:string;
-    /** 
+    oracle_text?: string;
+    /**
      * True when the multiface card is a rotating card (excluding flip ones)
      */
-    is_rotating?:boolean;
+    is_rotating?: boolean;
   };
   /**
    * These fields are specific for multiface grid cards. (TODO: fully implement this)
@@ -303,7 +303,6 @@ export namespace HCCardFields.Gameplay {
      */
     row_names?: string[] & { length: RowCount };
   };
-
 }
 
 export namespace HCCardFields.Print {

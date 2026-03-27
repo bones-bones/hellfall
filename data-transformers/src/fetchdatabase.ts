@@ -343,7 +343,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         ) {
           face.image_status = HCImageStatus.Stickers;
         } else if (
-          cardObject.tags?.includes('token-on-back') || cardObject.tags?.includes('token-in-inset') ||
+          cardObject.tags?.includes('token-on-back') ||
+          cardObject.tags?.includes('token-in-inset') ||
           face.supertypes?.includes('Token')
         ) {
           face.image_status = HCImageStatus.Token;
@@ -415,7 +416,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       const { card_faces, ...singleCard } = cardObject;
       singleCard.layout = singleCard.tags?.includes('noncard') ? HCLayout.Misc : HCLayout.Normal;
       const card = singleCard as HCCard.AnySingleFaced;
-      setDerivedProps(card)
+      setDerivedProps(card);
       return card;
     } else {
       if (
@@ -510,8 +511,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         }
       }
       const card = cardObject as HCCard.AnyMultiFaced;
-      setDerivedProps(card)
-      return card
+      setDerivedProps(card);
+      return card;
     }
   });
 

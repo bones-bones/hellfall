@@ -85,7 +85,7 @@ export const fetchNotMagic = async () => {
             .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
           tokenObject[keys[i]] =
             entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
-        } else if (['supertypes', 'types', 'subtypes','creator'].includes(keys[i])) {
+        } else if (['supertypes', 'types', 'subtypes', 'creators'].includes(keys[i])) {
           tokenObject[keys[i]] = entry[i].split(';');
         } else if (keys[i] == 'loyalty' && tokenObject['types']?.includes('Battle')) {
           tokenObject.defense = entry[i];

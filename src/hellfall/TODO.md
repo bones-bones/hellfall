@@ -67,7 +67,6 @@ Write a script to transform the database
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff, public domain removal creature (colorless)
 - ask for ruling: Armory Manufactor
-- deal with multiple creators
 - make sure mork fetches draft image where it exists
 - deal with spellbooks (prop in relatedCard?)
 - figure out problems with pip clipping and shadows
