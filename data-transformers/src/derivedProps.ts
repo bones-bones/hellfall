@@ -5,14 +5,13 @@ import { HCColor, HCColors } from '../../src/api-types/Card';
 import { splitParens } from '../../src/hellfall/splitParens';
 const store = getDefaultStore();
 
-const ignoreFaceIdentityImageStatus:HCImageStatus[]= [
+const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
   HCImageStatus.Token,
   HCImageStatus.Reminder,
   HCImageStatus.Stickers,
-  HCImageStatus.DraftPartner
-]
-
+  HCImageStatus.DraftPartner,
+];
 
 export const getColorIdentityProps = (
   card: HCCard.Any
@@ -90,10 +89,17 @@ export const getColorIdentityProps = (
 
   if ('card_faces' in card) {
     // this way it ignores face 0
-    const lastImageIndex = card.card_faces.findLastIndex((face,i) => face.image && i);
+    const lastImageIndex = card.card_faces.findLastIndex((face, i) => face.image && i);
     // add each face that isn't an ignored image_status or the last image in a layout that ignores the last image
     card.card_faces.forEach((entry, i) => {
-      if (!(ignoreFaceIdentityImageStatus.includes(entry.image_status as HCImageStatus)) && !(HCLayoutGroup.FrontIdentityLayout.includes(card.layout as HCLayoutGroup.FrontIdentityLayoutType) && i == lastImageIndex)) {
+      if (
+        !ignoreFaceIdentityImageStatus.includes(entry.image_status as HCImageStatus) &&
+        !(
+          HCLayoutGroup.FrontIdentityLayout.includes(
+            card.layout as HCLayoutGroup.FrontIdentityLayoutType
+          ) && i == lastImageIndex
+        )
+      ) {
         addColorsFromFace(entry);
       }
     });

@@ -124,3 +124,5 @@ Write a script to transform the database
 - add color inference for faces
 - when adding flip, make it independent of side for Bubsy, Furred Kind
 - add ability to have color indicator pips in text (for 6246)
+- add inset dungeon layout for Azusa, Lost but Seeking the Slots Sheet, and whale belly thing (and possibly others)
+- fix face cmc inference for transform and flip backsides

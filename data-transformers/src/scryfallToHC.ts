@@ -223,7 +223,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
         });
       });
     } else if (colorProps.includes(key)) {
-      cardObject[key] = (value.length ? value : [HCColor.Colorless]) as HCColors;
+      cardObject[key] = value as HCColors;
     } else if (key == 'image_uris') {
       cardObject.image = (value as ScryfallImageUris).large;
       cardObject.image_status = HCImageStatus.HighRes;

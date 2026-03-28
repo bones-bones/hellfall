@@ -72,20 +72,20 @@ const renderCanBeItalicText = (text: string) => {
     if (index % 2 == 0) {
       return part.split('\\n').map((entry, i) => (
         <Fragment key={`line-${index}-${i}`}>
+          {i != 0 && <br />}
           <Text typeLevel="body.medium" key={`non-italic-${index}`}>
             {stringToMana(entry)}
           </Text>
-          {entry && <br />}
           {/* {i == part.split('\\n').length-1 &&<br />} */}
         </Fragment>
       ));
     } else {
       return part.split('\\n').map((entry, i) => (
         <Fragment key={`line-${index}-${i}`}>
+          {i != 0 && <br />}
           <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
             {stringToMana(entry)}
           </ItalicText>
-          {entry && <br />}
           {/* {i == part.split('\\n').length-1 &&<br />} */}
         </Fragment>
       ));
@@ -265,7 +265,10 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.oracle_text &&
                 face.oracle_text != ';' &&
                 (face.oracle_text.includes('\\*') || face.oracle_text.includes('(') ? (
-                  <span key="rules">{renderCanBeItalicText(stripSemicolon(face.oracle_text))}</span>
+                  <span key="rules">
+                    {renderCanBeItalicText(stripSemicolon(face.oracle_text))}
+                    <br />
+                  </span>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="flavor">
@@ -278,6 +281,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 (face.flavor_text.includes('\\*') ? (
                   <span key="flavor">
                     {renderCanBeNonItalicText(stripSemicolon(face.flavor_text))}
+                    <br />
                   </span>
                 ) : (
                   <>
