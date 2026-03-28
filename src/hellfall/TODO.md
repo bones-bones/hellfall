@@ -112,7 +112,6 @@ Write a script to transform the database
 - add extras button for card/tokens, constructed cube, HC0, etc.
 - add community standards hider for offensive hc0s
 - make brackets in cardnames not break anything
-- add cmc prop to faces?
 - add variations to hellfallcard?
 - make usingApproved a flag on the script itself?
 - fiddle with card line spacing to look better
@@ -124,5 +123,4 @@ Write a script to transform the database
 - add color inference for faces
 - when adding flip, make it independent of side for Bubsy, Furred Kind
 - add ability to have color indicator pips in text (for 6246)
-- add inset dungeon layout for Azusa, Lost but Seeking the Slots Sheet, and whale belly thing (and possibly others)
 - fix face cmc inference for transform and flip backsides
