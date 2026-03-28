@@ -98,34 +98,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     oracle_text: '',
   };
 
-  const multiFaceTagLayouts: Record<string, HCLayout> = {
-    meld: HCLayout.MeldPart,
-    draftpaftner: HCLayout.DraftPartner,
-    'reminder-on-back': HCLayout.ReminderOnBack,
-    'dungeon-on-back': HCLayout.DungeonOnBack,
-    'token-on-back': HCLayout.TokenOnBack,
-    'token-in-inset': HCLayout.TokenInInset,
-    'stickers-on-back': HCLayout.StickersOnBack,
-    mdfc: HCLayout.Modal,
-    transform: HCLayout.Transform,
-    flip: HCLayout.Flip,
-    inset: HCLayout.Inset,
-    aftermath: HCLayout.Aftermath,
-    split: HCLayout.Split,
-  };
-
-  const multiFaceTagImageStatuses: Record<string, HCImageStatus> = {
-    draftpaftner: HCImageStatus.DraftPartner,
-    'reminder-on-back': HCImageStatus.Reminder,
-    'dungeon-on-back': HCImageStatus.Dungeon,
-    'token-on-back': HCImageStatus.Token,
-    'stickers-on-back': HCImageStatus.Stickers,
-    flip: HCImageStatus.Flip,
-    inset: HCImageStatus.Inset,
-    aftermath: HCImageStatus.Aftermath,
-    split: HCImageStatus.Split,
-  };
-
   const hardCardNames: string[] = [
     'Crypt of u/Em9500',
     '1d6',
@@ -335,6 +307,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           face.image_status = HCImageStatus.Reminder;
         } else if (
           cardObject.tags?.includes('dungeon-on-back') ||
+          cardObject.tags?.includes('dungeon-in-inset') ||
           face.types?.includes('Dungeon')
         ) {
           face.image_status = HCImageStatus.Dungeon;
@@ -454,6 +427,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           cardObject.card_faces.at(-1)?.types?.includes('Reminder Card')
         ) {
           cardObject.layout = HCLayout.ReminderOnBack;
+        } else if (
+          cardObject.tags?.includes('dungeon-in-inset') ||
+          (cardObject.card_faces.at(-1)?.supertypes?.includes('Dungeon') && !entry[19])
+        ) {
+          // entry[19] is 0image
+          cardObject.layout = HCLayout.DungeonInInset;
         } else if (
           cardObject.tags?.includes('dungeon-on-back') ||
           cardObject.card_faces.at(-1)?.types?.includes('Dungeon')

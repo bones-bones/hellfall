@@ -173,6 +173,9 @@ export namespace HCCard {
   /** A card with the DungeonOnBack layout. */
   export type DungeonOnBack = AnyMultiFaced & Layout<HCLayout.DungeonOnBack>;
 
+  /** A card with the DungeonInInset layout. */
+  export type DungeonInInset = AnyMultiFaced & Layout<HCLayout.DungeonInInset>;
+
   /** A card with the StickersOnBack layout. */
   export type StickersOnBack = AnyMultiFaced & Layout<HCLayout.StickersOnBack>;
 }
