@@ -1,9 +1,18 @@
-import { HCCard, HCCardFace, HCLayoutGroup } from '../../src/api-types/Card';
+import { HCCard, HCCardFace, HCImageStatus, HCLayoutGroup } from '../../src/api-types/Card';
 import { pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
 import { getDefaultStore } from 'jotai';
 import { HCColor, HCColors } from '../../src/api-types/Card';
 import { splitParens } from '../../src/hellfall/splitParens';
 const store = getDefaultStore();
+
+const ignoreFaceIdentityImageStatus:HCImageStatus[]= [
+  HCImageStatus.Dungeon,
+  HCImageStatus.Token,
+  HCImageStatus.Reminder,
+  HCImageStatus.Stickers,
+  HCImageStatus.DraftPartner
+]
+
 
 export const getColorIdentityProps = (
   card: HCCard.Any
@@ -80,19 +89,14 @@ export const getColorIdentityProps = (
   };
 
   if ('card_faces' in card) {
-    if (
-      HCLayoutGroup.FrontIdentityLayout.includes(
-        card.layout as HCLayoutGroup.FrontIdentityLayoutType
-      )
-    ) {
-      card.card_faces.slice(0, -1).forEach(entry => {
+    // this way it ignores face 0
+    const lastImageIndex = card.card_faces.findLastIndex((face,i) => face.image && i);
+    // add each face that isn't an ignored image_status or the last image in a layout that ignores the last image
+    card.card_faces.forEach((entry, i) => {
+      if (!(ignoreFaceIdentityImageStatus.includes(entry.image_status as HCImageStatus)) && !(HCLayoutGroup.FrontIdentityLayout.includes(card.layout as HCLayoutGroup.FrontIdentityLayoutType) && i == lastImageIndex)) {
         addColorsFromFace(entry);
-      });
-    } else {
-      card.card_faces.forEach(entry => {
-        addColorsFromFace(entry);
-      });
-    }
+      }
+    });
   } else {
     addColorsFromFace(card);
   }
