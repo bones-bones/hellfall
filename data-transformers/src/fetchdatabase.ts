@@ -327,7 +327,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         ) {
           face.image_status = HCImageStatus.DraftPartner;
         } else if (
-          cardObject.tags?.includes('reminder-on-back') ||
+          // the inset check correctly handles mr. crime 1981
+          (cardObject.tags?.includes('reminder-on-back') && !cardObject.tags?.includes('inset')) ||
           face.types?.includes('Reminder Card') ||
           face.types?.includes('Spellbook')
         ) {
