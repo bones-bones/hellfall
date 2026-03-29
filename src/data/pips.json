@@ -2971,6 +2971,20 @@
       "english": "dreadmaw",
       "represents_mana": false,
       "no_shadow": true
+    },
+    {
+      "filename": "symbols/emoji/iono.png",
+      "symbol": "iono.png",
+      "english": "iono.png",
+      "represents_mana": false,
+      "no_shadow": true
+    },
+    {
+      "filename": "symbols/emoji/thegarfieldshowlogo.png",
+      "symbol": "thegarfieldshowlogo.png",
+      "english": "thegarfieldshowlogo.png",
+      "represents_mana": false,
+      "no_shadow": true
     }
   ]
 }
