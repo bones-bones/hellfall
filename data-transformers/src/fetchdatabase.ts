@@ -454,6 +454,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           cardObject.card_faces.at(-1)?.supertypes?.includes('Token')
         ) {
           cardObject.layout = HCLayout.TokenOnBack;
+        } else if (cardObject.tags?.includes('specialize')) {
+          cardObject.layout = HCLayout.Specialize;
         } else if (cardObject.tags?.includes('mdfc')) {
           cardObject.layout = HCLayout.Modal;
         } else if (

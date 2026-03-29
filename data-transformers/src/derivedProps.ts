@@ -1,4 +1,10 @@
-import { HCCard, HCCardFace, HCImageStatus, HCLayoutGroup } from '../../src/api-types/Card';
+import {
+  HCCard,
+  HCCardFace,
+  HCImageStatus,
+  HCLayout,
+  HCLayoutGroup,
+} from '../../src/api-types/Card';
 import { pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
 import { getDefaultStore } from 'jotai';
 import { HCColor, HCColors } from '../../src/api-types/Card';
@@ -98,7 +104,8 @@ export const getColorIdentityProps = (
           HCLayoutGroup.FrontIdentityLayout.includes(
             card.layout as HCLayoutGroup.FrontIdentityLayoutType
           ) && i == lastImageIndex
-        )
+        ) &&
+        !(card.layout == HCLayout.Specialize && i != 0)
       ) {
         addColorsFromFace(entry);
       }

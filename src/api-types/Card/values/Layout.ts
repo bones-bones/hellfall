@@ -55,6 +55,8 @@ export enum HCLayout {
   Modal = 'modal',
   /** Cards that transform */
   Transform = 'transform',
+  /** Cards that specialize */
+  Specialize = 'specialize',
   /** Cards that flip */
   Flip = 'flip',
   /** Cards with an inset */
@@ -120,6 +122,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.StickersOnBack}`,
     `${HCLayout.Modal}`,
     `${HCLayout.Transform}`,
+    `${HCLayout.Specialize}`,
     `${HCLayout.Flip}`,
     `${HCLayout.Inset}`,
     `${HCLayout.Aftermath}`,
@@ -152,6 +155,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.StickersOnBack}`,
     `${HCLayout.Modal}`,
     `${HCLayout.Transform}`,
+    `${HCLayout.Specialize}`,
     `${HCLayout.Flip}`,
     `${HCLayout.Inset}`,
     `${HCLayout.Aftermath}`,
@@ -202,6 +206,7 @@ export namespace HCLayoutGroup {
    * @see {@link FrontIdentityLayoutType} for the type of this group.
    */
   export const FrontIdentityLayout = [
+    `${HCLayout.Specialize}`,
     `${HCLayout.MeldPart}`,
     `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
