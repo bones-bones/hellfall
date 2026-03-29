@@ -116,7 +116,6 @@ Write a script to transform the database
 - make usingApproved a flag on the script itself?
 - fiddle with card line spacing to look better
 - add name override for 🂓 (domino)
-- use pip name for iono.png and associated cards/tokens
 - fix order of color words in text
 - on individual card pages, make tab name same as card name
 - fix window resizing issues
@@ -125,3 +124,4 @@ Write a script to transform the database
 - add ability to have color indicator pips in text (for 6246)
 - fix face cmc inference for transform and flip backsides
 - make sure cards with phyrexian text have tag
+- use draft image for all first images for multiface?

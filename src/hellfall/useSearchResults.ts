@@ -72,7 +72,9 @@ const isSetInResults = (set: string, setOptions: string[]) => {
 
 export const useSearchResults = () => {
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(e => !['C', 'HC0'].includes(e.set) && !e.tags?.includes('offensive'));
+  const cards = useAtomValue(cardsAtom).filter(
+    e => !['C', 'HC0'].includes(e.set) && !e.tags?.includes('offensive')
+  );
   const set = useAtomValue(searchSetAtom);
   const cardsOrTokens = useAtomValue(searchTokenAtom);
   const costSearch = useAtomValue(costSearchAtom);
