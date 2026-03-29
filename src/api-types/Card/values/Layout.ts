@@ -160,6 +160,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Inset}`,
     `${HCLayout.Aftermath}`,
     `${HCLayout.Split}`,
+    `${HCLayout.Misc}`,
   ] as const;
 
   /**
@@ -186,10 +187,10 @@ export namespace HCLayoutGroup {
     `${HCLayout.RealCardToken}`,
     `${HCLayout.RealCardMultiToken}`,
     `${HCLayout.Checklist}`,
-    `${HCLayout.Misc}`,
     `${HCLayout.MeldResult}`,
     `${HCLayout.NotMagic}`,
     `${HCLayout.MultiNotMagic}`,
+    `${HCLayout.Misc}`,
   ] as const;
 
   /**

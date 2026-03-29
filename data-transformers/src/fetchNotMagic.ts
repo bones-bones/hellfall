@@ -97,7 +97,7 @@ export const fetchNotMagic = async () => {
             })
             .join('');
         } else if (keys[i] == 'game') {
-          tokenObject.tags = [entry[i].toLowerCase().replace(' ', '-')];
+          tokenObject.tags = [entry[i].toLowerCase().replaceAll(' ', '-')];
         } else {
           tokenObject[keys[i]] = entry[i];
         }
