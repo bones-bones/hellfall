@@ -124,7 +124,5 @@ Write a script to transform the database
 - fix face cmc inference for transform and flip backsides
 - make sure cards with phyrexian text have tag
 - use draft image for all first images for multiface?
-- add all discord escape sequences (same sequence as discord except slash in front)
-  - need to fix multi-line italics back: zonatog (both versions), urza's elevator,
 - add phyrexian font
 - add code to automatically replace brackets in names with parens
