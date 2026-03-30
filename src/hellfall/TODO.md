@@ -45,7 +45,6 @@ Write a script to transform the database
 - tell users how to use not and/or make it easier to use not (!)
 - make pagination work with browser back button and make it go back to page 1 when search changes
 - make changes in url correctly work with forward and back buttons in browser
-- make search for text (including in names) be able to ignore \* (same for hyperlinks to card names)
 - implement grid type layout (has singlefaceonly attributes for overall card, but also has card_faces)
 - make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
 - make popup container wrap text to window width
@@ -125,3 +124,4 @@ Write a script to transform the database
 - fix face cmc inference for transform and flip backsides
 - make sure cards with phyrexian text have tag
 - use draft image for all first images for multiface?
+- add all discord escape sequences (same sequence as discord except slash in front)

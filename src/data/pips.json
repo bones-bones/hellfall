@@ -874,6 +874,16 @@
       ]
     },
     {
+      "filename": "mono/weirdNums/1000000000000.svg",
+      "symbol": "1000000000000",
+      "english": "one trillion generic mana",
+      "represents_mana": true,
+      "mana_value": 1000000000000,
+      "colors": [
+        "C"
+      ]
+    },
+    {
       "filename": "mono/weirdNums/HALF.svg",
       "symbol": "1/2",
       "english": "one-half generic mana",
