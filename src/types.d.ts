@@ -41,16 +41,23 @@ declare module 'simple-markdown' {
     [key: string]: any;
   }
 
-  export function parserFor(rules: Record<string, Rule>): (source: string, state?: ParserState) => any[];
-  export function reactFor(ruleOutput: (rules: Record<string, Rule>, type: string) => any): (nodes: any[], state?: ParserState) => React.ReactNode;
-  export function ruleOutput(rules: Record<string, Rule>, type: string): (rules: Record<string, Rule>, type: string) => any;
-  
+  export function parserFor(
+    rules: Record<string, Rule>
+  ): (source: string, state?: ParserState) => any[];
+  export function reactFor(
+    ruleOutput: (rules: Record<string, Rule>, type: string) => any
+  ): (nodes: any[], state?: ParserState) => React.ReactNode;
+  export function ruleOutput(
+    rules: Record<string, Rule>,
+    type: string
+  ): (rules: Record<string, Rule>, type: string) => any;
+
   // Default export
   const simpleMarkdown: {
     parserFor: typeof parserFor;
     reactFor: typeof reactFor;
     ruleOutput: typeof ruleOutput;
   };
-  
+
   export default simpleMarkdown;
 }

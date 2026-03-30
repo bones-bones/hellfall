@@ -2,52 +2,86 @@ import { Fragment, ReactNode } from 'react';
 import simpleMarkdown from 'simple-markdown';
 import { stringToMana } from './stringToMana';
 
-// Define the rules for our custom markdown parser
-// For inverted italics mode, we need a separate set of rules
+// Helper function to check if a character is escaped
+const isEscaped = (source: string, index: number): boolean => {
+  let backslashCount = 0;
+  let pos = index - 1;
+  while (pos >= 0 && source[pos] === '\\') {
+    backslashCount++;
+    pos--;
+  }
+  return backslashCount % 2 === 1;
+};
+
+// Create rules with escaped character support
 const createRules = (invertedItalics: boolean = false) => {
   const baseRules = {
     // Strong/bold formatting (**text** or __text__)
     strong: {
       order: 1,
-      match: (source: string) => /^\*\*([\s\S]+?)\*\*(?!\*)/.exec(source) ||
-                               /^__([\s\S]+?)__(?!_)/.exec(source),
+      match: (source: string) => {
+        // Check for **
+        let match = /^\*\*([\s\S]+?)\*\*(?!\*)/.exec(source);
+        if (match && !isEscaped(source, match.index)) {
+          return match;
+        }
+        // Check for __
+        match = /^__([\s\S]+?)__(?!_)/.exec(source);
+        if (match && !isEscaped(source, match.index)) {
+          return match;
+        }
+        return null;
+      },
       parse: (capture: RegExpExecArray, parse: any, state: any) => {
         return {
-          content: parse(capture[1], state)
+          content: parse(capture[1], state),
         };
       },
       react: (node: any, output: any, state: any) => {
         return <strong key={state.key}>{output(node.content, state)}</strong>;
-      }
+      },
     },
 
     // Strikethrough formatting (~~text~~)
     del: {
       order: 3,
-      match: (source: string) => /^~~([\s\S]+?)~~/.exec(source),
+      match: (source: string) => {
+        const match = /^~~([\s\S]+?)~~/.exec(source);
+        if (match && !isEscaped(source, match.index)) {
+          return match;
+        }
+        return null;
+      },
       parse: (capture: RegExpExecArray, parse: any, state: any) => {
         return {
-          content: parse(capture[1], state)
+          content: parse(capture[1], state),
         };
       },
       react: (node: any, output: any, state: any) => {
         return <del key={state.key}>{output(node.content, state)}</del>;
-      }
+      },
     },
 
-    // Plain text (fallback)
+    // Plain text (fallback) - handle escaped characters
     text: {
       order: 999,
-      match: (source: string) => /^[\s\S]+?(?=[*_~]|$)/.exec(source),
+      match: (source: string) => {
+        // Match until we hit a formatting character that's not escaped
+        const match = /^[\s\S]+?(?=(?<!\\)(?:[*_~]|$))/.exec(source);
+        return match;
+      },
       parse: (capture: RegExpExecArray) => {
+        // Unescape any escaped characters
+        let content = capture[0];
+        content = content.replace(/\\([*_~])/g, '$1');
         return {
-          content: capture[0]
+          content: content,
         };
       },
       react: (node: any, output: any, state: any) => {
         return <span key={state.key}>{stringToMana(node.content)}</span>;
-      }
-    }
+      },
+    },
   };
 
   // Define emphasis rules based on inverted italics mode
@@ -59,18 +93,33 @@ const createRules = (invertedItalics: boolean = false) => {
       ...baseRules,
       em: {
         order: 2,
-        match: (source: string) => /^\*([\s\S]+?)\*(?!\*)/.exec(source) ||
-                                 /^_([\s\S]+?)_(?!_)/.exec(source),
+        match: (source: string) => {
+          // Check for *
+          let match = /^\*([\s\S]+?)\*(?!\*)/.exec(source);
+          if (match && !isEscaped(source, match.index)) {
+            return match;
+          }
+          // Check for _
+          match = /^_([\s\S]+?)_(?!_)/.exec(source);
+          if (match && !isEscaped(source, match.index)) {
+            return match;
+          }
+          return null;
+        },
         parse: (capture: RegExpExecArray, parse: any, state: any) => {
           return {
-            content: parse(capture[1], state)
+            content: parse(capture[1], state),
           };
         },
         react: (node: any, output: any, state: any) => {
           // In inverted italics, *text* should be non-italic
-          return <span key={state.key} style={{ fontStyle: 'normal' }}>{output(node.content, state)}</span>;
-        }
-      }
+          return (
+            <span key={state.key} style={{ fontStyle: 'normal' }}>
+              {output(node.content, state)}
+            </span>
+          );
+        },
+      },
     };
   } else {
     // Normal mode: *text* makes text italic
@@ -78,17 +127,28 @@ const createRules = (invertedItalics: boolean = false) => {
       ...baseRules,
       em: {
         order: 2,
-        match: (source: string) => /^\*([\s\S]+?)\*(?!\*)/.exec(source) ||
-                                 /^_([\s\S]+?)_(?!_)/.exec(source),
+        match: (source: string) => {
+          // Check for *
+          let match = /^\*([\s\S]+?)\*(?!\*)/.exec(source);
+          if (match && !isEscaped(source, match.index)) {
+            return match;
+          }
+          // Check for _
+          match = /^_([\s\S]+?)_(?!_)/.exec(source);
+          if (match && !isEscaped(source, match.index)) {
+            return match;
+          }
+          return null;
+        },
         parse: (capture: RegExpExecArray, parse: any, state: any) => {
           return {
-            content: parse(capture[1], state)
+            content: parse(capture[1], state),
           };
         },
         react: (node: any, output: any, state: any) => {
           return <em key={state.key}>{output(node.content, state)}</em>;
-        }
-      }
+        },
+      },
     };
   }
 };
@@ -101,10 +161,10 @@ const formatLine = (line: string, invertedItalics: boolean = false): ReactNode =
     const rules = createRules(invertedItalics);
     const parser = simpleMarkdown.parserFor(rules);
     const reactOutput = simpleMarkdown.reactFor(simpleMarkdown.ruleOutput(rules, 'react'));
-    
+
     // Parse the line into an AST
     const parsed = parser(line, { inline: true });
-    
+
     if (!parsed || parsed.length === 0) {
       const content = stringToMana(line);
       if (invertedItalics) {
@@ -115,12 +175,12 @@ const formatLine = (line: string, invertedItalics: boolean = false): ReactNode =
 
     // Render the parsed nodes
     const rendered = reactOutput(parsed);
-    
+
     // If inverted italics mode, wrap the entire result in <em>
     if (invertedItalics) {
       return <em style={{ fontStyle: 'italic' }}>{rendered}</em>;
     }
-    
+
     return rendered;
   } catch (error) {
     console.error('Error parsing markdown line:', error);
@@ -137,6 +197,7 @@ const formatLine = (line: string, invertedItalics: boolean = false): ReactNode =
 /**
  * Format text with full markdown support across multiple lines
  * Handles **bold**, *italic*, and ~~strikethrough~~ formatting
+ * Use \*, \_, \~ to escape formatting characters
  * @param text - The text to format (may contain \n for line breaks)
  * @returns React nodes with formatting applied
  */
@@ -144,7 +205,7 @@ export const formatDiscordMarkdown = (text: string): ReactNode => {
   if (!text || text === ';') return null;
 
   const lines = text.split('\\n');
-  
+
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, false);
     return (
@@ -158,12 +219,13 @@ export const formatDiscordMarkdown = (text: string): ReactNode => {
 
 /**
  * Format text as inline (no line breaks) with full markdown support
+ * Use \*, \_, \~ to escape formatting characters
  * @param text - The text to format
  * @returns React nodes with formatting applied
  */
 export const formatDiscordMarkdownInline = (text: string): ReactNode => {
   if (!text || text === ';') return null;
-  
+
   const firstLine = text.split('\\n')[0];
   return formatLine(firstLine, false);
 };
@@ -171,6 +233,7 @@ export const formatDiscordMarkdownInline = (text: string): ReactNode => {
 /**
  * Format text with inverted italics - text is italic by default,
  * and *text* makes it normal (non-italic)
+ * Use \*, \_, \~ to escape formatting characters
  * @param text - The text to format (may contain \n for line breaks)
  * @returns React nodes with inverted italics formatting
  */
@@ -178,7 +241,7 @@ export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode =>
   if (!text || text === ';') return null;
 
   const lines = text.split('\\n');
-  
+
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, true);
     return (
@@ -192,6 +255,7 @@ export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode =>
 
 /**
  * Format text as inline with inverted italics (single line)
+ * Use \*, \_, \~ to escape formatting characters
  * @param text - The text to format
  * @returns React nodes with inverted italics formatting
  */

@@ -3,12 +3,154 @@
  * @param text text to remove formatting from
  * @returns clean text
  */
-export const textPrep = (text: string) => {
-  return text
-    .toLowerCase()
-    .replaceAll(/\\[n*]/g, '')
-    .replaceAll('\\(', '(')
-    .replaceAll('\\)', ')');
+// export const textPrep = (text: string) => {
+//   return text
+//     .toLowerCase()
+//     .replaceAll('\\n', '')
+//     .replaceAll('\\(', '(')
+//     .replaceAll('\\)', ')');
+// };
+/**
+ * Convert markdown text to plaintext by stripping formatting characters
+ * Handles **bold**, *italic*, ~~strikethrough~~, and respects escaped characters
+ * @param text - The markdown text to convert to plaintext
+ * @returns Plaintext version with formatting removed
+ */
+export const textPrep = (text: string): string => {
+  if (!text) return '';
+
+  let result = '';
+  let i = 0;
+  const len = text.length;
+
+  while (i < len) {
+    // Check for escaped characters
+    if (text[i] === '\\' && i + 1 < len && '[*_~]'.includes(text[i + 1])) {
+      // Remove the backslash and keep the next character as literal
+      result += text[i + 1];
+      i += 2;
+      continue;
+    }
+
+    // Check for bold (**text**)
+    if (text[i] === '*' && text[i + 1] === '*' && i + 2 < len) {
+      let end = text.indexOf('**', i + 2);
+      if (end !== -1) {
+        // Check if the opening is escaped
+        let isEscaped = false;
+        let backslashCount = 0;
+        let pos = i - 1;
+        while (pos >= 0 && text[pos] === '\\') {
+          backslashCount++;
+          pos--;
+        }
+        isEscaped = backslashCount % 2 === 1;
+
+        if (!isEscaped) {
+          // Extract the content between ** and **
+          const content = text.substring(i + 2, end);
+          // Recursively process content for nested formatting
+          result += textPrep(content);
+          i = end + 2;
+          continue;
+        }
+      }
+    }
+
+    // Check for bold (__text__)
+    if (text[i] === '_' && text[i + 1] === '_' && i + 2 < len) {
+      let end = text.indexOf('__', i + 2);
+      if (end !== -1) {
+        let isEscaped = false;
+        let backslashCount = 0;
+        let pos = i - 1;
+        while (pos >= 0 && text[pos] === '\\') {
+          backslashCount++;
+          pos--;
+        }
+        isEscaped = backslashCount % 2 === 1;
+
+        if (!isEscaped) {
+          const content = text.substring(i + 2, end);
+          result += textPrep(content);
+          i = end + 2;
+          continue;
+        }
+      }
+    }
+
+    // Check for strikethrough (~~text~~)
+    if (text[i] === '~' && text[i + 1] === '~' && i + 2 < len) {
+      let end = text.indexOf('~~', i + 2);
+      if (end !== -1) {
+        let isEscaped = false;
+        let backslashCount = 0;
+        let pos = i - 1;
+        while (pos >= 0 && text[pos] === '\\') {
+          backslashCount++;
+          pos--;
+        }
+        isEscaped = backslashCount % 2 === 1;
+
+        if (!isEscaped) {
+          const content = text.substring(i + 2, end);
+          result += textPrep(content);
+          i = end + 2;
+          continue;
+        }
+      }
+    }
+
+    // Check for italic (*text*)
+    if (text[i] === '*' && (i + 1 >= len || text[i + 1] !== '*')) {
+      let end = text.indexOf('*', i + 1);
+      if (end !== -1) {
+        let isEscaped = false;
+        let backslashCount = 0;
+        let pos = i - 1;
+        while (pos >= 0 && text[pos] === '\\') {
+          backslashCount++;
+          pos--;
+        }
+        isEscaped = backslashCount % 2 === 1;
+
+        if (!isEscaped) {
+          const content = text.substring(i + 1, end);
+          result += textPrep(content);
+          i = end + 1;
+          continue;
+        }
+      }
+    }
+
+    // Check for italic (_text_)
+    if (text[i] === '_' && (i + 1 >= len || text[i + 1] !== '_')) {
+      let end = text.indexOf('_', i + 1);
+      if (end !== -1) {
+        let isEscaped = false;
+        let backslashCount = 0;
+        let pos = i - 1;
+        while (pos >= 0 && text[pos] === '\\') {
+          backslashCount++;
+          pos--;
+        }
+        isEscaped = backslashCount % 2 === 1;
+
+        if (!isEscaped) {
+          const content = text.substring(i + 1, end);
+          result += textPrep(content);
+          i = end + 1;
+          continue;
+        }
+      }
+    }
+
+    // Regular character
+    result += text[i];
+    i++;
+  }
+
+  return result;
 };
 /**
  * Checks whether search text is in text from a card

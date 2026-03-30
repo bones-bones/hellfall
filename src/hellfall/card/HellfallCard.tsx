@@ -7,7 +7,6 @@ import { formatParens } from '../textHandling';
 import { HCCard } from '../../api-types/Card/Card';
 import { HellfallRelatedEntry } from '../HellfallEntry';
 
-
 import { Link } from 'react-router-dom';
 import { Fragment, useState } from 'react';
 import { stripSemicolon } from '../inputs/stripSemicolon';
@@ -44,7 +43,6 @@ const getImages = (card: HCCard.Any) => {
   return imagesToShow;
 };
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
-
   const [activeImageSide, setActiveImageSide] = useState(0);
 
   // TODO: add handling for flip and aftermath
@@ -139,10 +137,10 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.oracle_text &&
                 face.oracle_text != ';' &&
                 (['*', '(', '_', '~'].some(char => face.oracle_text.includes(char)) ? (
-                    <Text typeLevel="body.medium" key="rules">
-                      {formatDiscordMarkdown(formatParens(stripSemicolon(face.oracle_text)))}
-                      <br />
-                    </Text>
+                  <Text typeLevel="body.medium" key="rules">
+                    {formatDiscordMarkdown(formatParens(stripSemicolon(face.oracle_text)))}
+                    <br />
+                  </Text>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="rules">
@@ -153,10 +151,12 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.flavor_text &&
                 face.flavor_text != ';' &&
                 (['*', '_', '~'].some(char => face.flavor_text?.includes(char)) ? (
-                    <Text typeLevel="body.medium" key="flavor">
-                      {formatDiscordMarkdownInvertedItalics(formatParens(stripSemicolon(face.flavor_text)))}
-                      <br />
-                    </Text>
+                  <Text typeLevel="body.medium" key="flavor">
+                    {formatDiscordMarkdownInvertedItalics(
+                      formatParens(stripSemicolon(face.flavor_text))
+                    )}
+                    <br />
+                  </Text>
                 ) : (
                   <>
                     <ItalicText typeLevel="body.medium" key="flavor">
