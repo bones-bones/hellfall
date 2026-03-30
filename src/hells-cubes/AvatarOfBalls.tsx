@@ -58,9 +58,9 @@ export const AvatarOfBalls = () => {
               onClick={() => {
                 // void
               }}
-              onClickTitle={() => {
-                // void
-              }}
+              // onClickTitle={() => {
+              //   // void
+              // }}
             />
           ) : (
             <>MISS</>

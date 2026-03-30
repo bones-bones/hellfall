@@ -74,15 +74,15 @@ export const HellFall = () => {
                 });
               }
             }}
-            onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-              if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-              } else {
-                startTransition(() => {
-                  setActiveCardFromAtom(entry.id);
-                });
-              }
-            }}
+            // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+            //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
+            //     window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+            //   } else {
+            //     startTransition(() => {
+            //       setActiveCardFromAtom(entry.id);
+            //     });
+            //   }
+            // }}
             key={'' + entry.id + '-' + i}
             id={entry.id}
             name={stripSemicolon(entry.name)}

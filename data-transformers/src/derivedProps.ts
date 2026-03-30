@@ -8,7 +8,7 @@ import {
 import { pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
 import { getDefaultStore } from 'jotai';
 import { HCColor, HCColors } from '../../src/api-types/Card';
-import { splitParens } from '../../src/hellfall/splitParens';
+import { splitParens } from '../../src/hellfall/textHandling';
 const store = getDefaultStore();
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [

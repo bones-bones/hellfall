@@ -1,3 +1,8 @@
+/**
+ * Preps text for equality checks that ignore formatting
+ * @param text text to remove formatting from
+ * @returns clean text
+ */
 export const textPrep = (text: string) => {
   return text
     .toLowerCase()
