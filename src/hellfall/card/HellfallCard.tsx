@@ -8,7 +8,7 @@ import { HCCard } from '../../api-types/Card/Card';
 import { HellfallRelatedEntry } from '../HellfallEntry';
 
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { stripSemicolon } from '../inputs/stripSemicolon';
 const renderText = (text: string[]) => {
   return text.map(entry => {
@@ -20,8 +20,13 @@ const renderText = (text: string[]) => {
     );
   });
 };
-const renderName = (text: string) => {
-  const parenLine = splitParens(text)
+/**
+ * This renders text that is non-italic by default but can be made italic by () or \\* and is a single line
+ * @param text text to render
+ * @returns JSX elements to render
+ */
+const renderCanBeItalicLine = (text: string) => {
+  const parenText = splitParens(text)
     .map((chunk, ci) => {
       if (chunk.startsWith('(')) {
         return '\\*' + chunk + '\\*';
@@ -30,7 +35,7 @@ const renderName = (text: string) => {
       return chunk;
     })
     .join('');
-  const parts = parenLine.split('\\*');
+  const parts = parenText.split('\\*');
   return parts.map((part, index) => {
     if (index % 2 == 0) {
       return (
@@ -47,70 +52,94 @@ const renderName = (text: string) => {
     }
   });
 };
-const renderOracleLine = (text: string) => {
-  const parts = text.split('\\*');
+/**
+ * This renders text that is non-italic by default but can be made italic by () or \\*
+ * @param text text to render
+ * @returns JSX elements to render
+ */
+const renderCanBeItalicText = (text: string) => {
+  const parenText = splitParens(text)
+    .map((chunk, ci) => {
+      if (chunk.startsWith('(')) {
+        return '\\*' + chunk + '\\*';
+        // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
+      }
+      return chunk;
+    })
+    .join('');
+  const parts = parenText.split('\\*');
   return parts.map((part, index) => {
     if (index % 2 == 0) {
-      return (
-        <Text typeLevel="body.medium" key={`non-italic-${index}`}>
-          {stringToMana(part)}
-        </Text>
-      );
+      return part.split('\\n').map((entry, i) => (
+        <Fragment key={`line-${index}-${i}`}>
+          {i != 0 && <br />}
+          <Text typeLevel="body.medium" key={`non-italic-${index}`}>
+            {stringToMana(entry)}
+          </Text>
+          {/* {i == part.split('\\n').length-1 &&<br />} */}
+        </Fragment>
+      ));
     } else {
-      return (
-        <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
-          {stringToMana(part)}
-        </ItalicText>
-      );
+      return part.split('\\n').map((entry, i) => (
+        <Fragment key={`line-${index}-${i}`}>
+          {i != 0 && <br />}
+          <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+            {stringToMana(entry)}
+          </ItalicText>
+          {/* {i == part.split('\\n').length-1 &&<br />} */}
+        </Fragment>
+      ));
+      // return (
+      //   <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+      //     {stringToMana(part)}
+      //   </ItalicText>
+      // );
     }
   });
 };
-const renderOracleText = (text: string[]) => {
-  return text.map(entry => {
-    return (
-      <>
-        {renderOracleLine(
-          splitParens(entry)
-            .map((chunk, ci) => {
-              if (chunk.startsWith('(')) {
-                return '\\*' + chunk + '\\*';
-                // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
-              }
-              return chunk;
-            })
-            .join('')
-        )}
-        <br />
-      </>
-    );
-  });
-};
-const renderFlavorLine = (text: string) => {
+/**
+ * This renders text that is italic by default but can be made non-italic by \\*
+ * @param text text to render
+ * @returns JSX elements to render
+ */
+const renderCanBeNonItalicText = (text: string) => {
+  // const parenText = splitParens(text)
+  //   .map((chunk, ci) => {
+  //     if (chunk.startsWith('(')) {
+  //       return '\\*' + chunk + '\\*';
+  //       // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
+  //     }
+  //     return chunk;
+  //   })
+  //   .join('');
   const parts = text.split('\\*');
   return parts.map((part, index) => {
     if (index % 2 == 1) {
-      return (
-        <Text typeLevel="body.medium" key={`non-italic-${index}`}>
-          {stringToMana(part)}
-        </Text>
-      );
+      return part.split('\\n').map((entry, i) => (
+        <Fragment key={`line-${index}-${i}`}>
+          <Text typeLevel="body.medium" key={`non-italic-${index}`}>
+            {stringToMana(entry)}
+          </Text>
+          {entry && <br />}
+          {/* {i == part.split('\\n').length-1 &&<br />} */}
+        </Fragment>
+      ));
     } else {
-      return (
-        <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
-          {stringToMana(part)}
-        </ItalicText>
-      );
+      return part.split('\\n').map((entry, i) => (
+        <Fragment key={`line-${index}-${i}`}>
+          <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+            {stringToMana(entry)}
+          </ItalicText>
+          {entry && <br />}
+          {/* {i == part.split('\\n').length-1 &&<br />} */}
+        </Fragment>
+      ));
+      // return (
+      //   <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
+      //     {stringToMana(part)}
+      //   </ItalicText>
+      // );
     }
-  });
-};
-const renderFlavorText = (text: string[]) => {
-  return text.map(entry => {
-    return (
-      <>
-        {renderFlavorLine(entry)}
-        <br />
-      </>
-    );
   });
 };
 const getImages = (card: HCCard.Any) => {
@@ -121,6 +150,9 @@ const getImages = (card: HCCard.Any) => {
   }
   if ('card_faces' in card) {
     imagesToShow.push(...card.card_faces.filter(e => e.image).map(e => e.image!));
+    if (card.image && 'image' in card.card_faces[0]) {
+      imagesToShow.push(card.image);
+    }
   }
   if ('draft_image' in card) {
     imagesToShow.push(card.draft_image!);
@@ -177,7 +209,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     }}
                     disabled={i === activeImageSide}
                   >
-                    {i == imagesToShow.length - 1 && data.draft_image ? 'draft' : `side ${i + 1}`}
+                    {i == imagesToShow.length - 1 && data.draft_image
+                      ? 'draft'
+                      : !data.draft_image && i == imagesToShow.length - 1
+                      ? 'full'
+                      : `side ${i + 1}`}
                   </button>
                 );
               })}
@@ -193,7 +229,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.name &&
                 face.name != ';' &&
                 (face.name.includes('\\*') || face.name.includes('(') ? (
-                  <span key="name">{renderName(stripSemicolon(face.name))}</span>
+                  <span key="name">{renderCanBeItalicLine(stripSemicolon(face.name))}</span>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="name">
@@ -220,7 +256,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               )}
               {face.type_line &&
                 (face.type_line.includes('\\*') || face.type_line.includes('(') ? (
-                  <span key="type">{renderName(face.type_line)}</span>
+                  <span key="type">{renderCanBeItalicLine(face.type_line)}</span>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="type">
@@ -237,7 +273,8 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 face.oracle_text != ';' &&
                 (face.oracle_text.includes('\\*') || face.oracle_text.includes('(') ? (
                   <span key="rules">
-                    {renderOracleText(stripSemicolon(face.oracle_text).split('\\n'))}
+                    {renderCanBeItalicText(stripSemicolon(face.oracle_text))}
+                    <br />
                   </span>
                 ) : (
                   <>
@@ -250,7 +287,8 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 face.flavor_text != ';' &&
                 (face.flavor_text.includes('\\*') ? (
                   <span key="flavor">
-                    {renderFlavorText(stripSemicolon(face.flavor_text).split('\\n'))}
+                    {renderCanBeNonItalicText(stripSemicolon(face.flavor_text))}
+                    <br />
                   </span>
                 ) : (
                   <>
@@ -308,9 +346,14 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <br />
             </>
           )}
-          {data.creator && (
+          {data.creators.length && data.creators.length == 1 ? (
             <>
-              <Text key="creator">Creator: {data.creator}</Text>
+              <Text key="creator">Creator: {data.creators[0]}</Text>
+              <br />
+            </>
+          ) : (
+            <>
+              <Text key="creator">Creators: {data.creators.join(', ')}</Text>
               <br />
             </>
           )}

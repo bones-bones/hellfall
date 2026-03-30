@@ -20,14 +20,14 @@ export const fetchTokens = async () => {
     'toughness',
     'token_maker',
     'oracle_text',
-    'creator',
+    'creators',
   ];
   rest.forEach(row => {
     while (row.length < keys.length) {
       row.push('');
     }
   });
-  const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token'];
+  const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
   const typeLayouts: Record<string, HCLayout> = {
     Emblem: HCLayout.Emblem,
     'Reminder Card': HCLayout.Reminder,
@@ -40,7 +40,7 @@ export const fetchTokens = async () => {
   };
   const defaultProps: Record<string, any> = {
     rulings: '',
-    creator: '',
+    creators: [],
     legalities: {
       standard: HCLegality.NotLegal,
       '4cb': HCLegality.NotLegal,
@@ -94,6 +94,8 @@ export const fetchTokens = async () => {
           if (typeList?.length) {
             tokenObject.types = typeList;
           }
+        } else if (keys[i] == 'creators') {
+          tokenObject[keys[i]] = entry[i].split(';');
         } else if (keys[i] == 'token_maker') {
           tokenObject.all_parts = entry[i].split(';').map(oldName => {
             const name = oldName.replace(/\*\d+$/, '');

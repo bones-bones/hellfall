@@ -137,6 +137,7 @@ export namespace HCCard {
   type MultiFace<Face extends HCCardFace.AbstractCardFace> = AbstractCard &
     HCCardFields.Gameplay.RootProperties &
     HCCardFields.Gameplay.CardSpecific &
+    HCCardFields.Gameplay.MultiSpecific &
     HCCardFields.Gameplay.CardFaces<Face> &
     HCCardFields.Print.CardSpecific;
   /**
@@ -166,8 +167,14 @@ export namespace HCCard {
   /** A card with the TokenOnBack layout. */
   export type TokenOnBack = AnyMultiFaced & Layout<HCLayout.TokenOnBack>;
 
+  /** A card with the TokenInInset layout. */
+  export type TokenInInset = AnyMultiFaced & Layout<HCLayout.TokenInInset>;
+
   /** A card with the DungeonOnBack layout. */
   export type DungeonOnBack = AnyMultiFaced & Layout<HCLayout.DungeonOnBack>;
+
+  /** A card with the DungeonInInset layout. */
+  export type DungeonInInset = AnyMultiFaced & Layout<HCLayout.DungeonInInset>;
 
   /** A card with the StickersOnBack layout. */
   export type StickersOnBack = AnyMultiFaced & Layout<HCLayout.StickersOnBack>;

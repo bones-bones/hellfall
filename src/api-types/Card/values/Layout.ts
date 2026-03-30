@@ -55,10 +55,16 @@ export enum HCLayout {
   Modal = 'modal',
   /** Cards that transform */
   Transform = 'transform',
+  /** Cards that specialize */
+  Specialize = 'specialize',
   /** Cards that flip */
   Flip = 'flip',
   /** Cards with an inset */
   Inset = 'inset',
+  /** Cards with an inset token */
+  TokenInInset = 'token_in_inset',
+  /** Cards with an inset dungeon */
+  DungeonInInset = 'dungeon_in_inset',
   /** Cards with an aftermath face */
   Aftermath = 'aftermath',
   /** Split cards */
@@ -110,10 +116,13 @@ export namespace HCLayoutGroup {
     `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
+    `${HCLayout.TokenInInset}`,
     `${HCLayout.DungeonOnBack}`,
+    `${HCLayout.DungeonInInset}`,
     `${HCLayout.StickersOnBack}`,
     `${HCLayout.Modal}`,
     `${HCLayout.Transform}`,
+    `${HCLayout.Specialize}`,
     `${HCLayout.Flip}`,
     `${HCLayout.Inset}`,
     `${HCLayout.Aftermath}`,
@@ -140,14 +149,18 @@ export namespace HCLayoutGroup {
     `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
+    `${HCLayout.TokenInInset}`,
     `${HCLayout.DungeonOnBack}`,
+    `${HCLayout.DungeonInInset}`,
     `${HCLayout.StickersOnBack}`,
     `${HCLayout.Modal}`,
     `${HCLayout.Transform}`,
+    `${HCLayout.Specialize}`,
     `${HCLayout.Flip}`,
     `${HCLayout.Inset}`,
     `${HCLayout.Aftermath}`,
     `${HCLayout.Split}`,
+    `${HCLayout.Misc}`,
   ] as const;
 
   /**
@@ -174,10 +187,10 @@ export namespace HCLayoutGroup {
     `${HCLayout.RealCardToken}`,
     `${HCLayout.RealCardMultiToken}`,
     `${HCLayout.Checklist}`,
-    `${HCLayout.Misc}`,
     `${HCLayout.MeldResult}`,
     `${HCLayout.NotMagic}`,
     `${HCLayout.MultiNotMagic}`,
+    `${HCLayout.Misc}`,
   ] as const;
 
   /**
@@ -194,11 +207,14 @@ export namespace HCLayoutGroup {
    * @see {@link FrontIdentityLayoutType} for the type of this group.
    */
   export const FrontIdentityLayout = [
+    `${HCLayout.Specialize}`,
     `${HCLayout.MeldPart}`,
     `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
+    `${HCLayout.TokenInInset}`,
     `${HCLayout.DungeonOnBack}`,
+    `${HCLayout.DungeonInInset}`,
     `${HCLayout.StickersOnBack}`,
   ] as const;
 

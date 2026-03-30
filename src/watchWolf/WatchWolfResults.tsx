@@ -122,7 +122,7 @@ export const Watchwolfresults = () => {
                 }}
               >
                 <div>
-                  <strong>{card.name}</strong> [{card.creator}]
+                  <strong>{card.name}</strong> [{card.creators.join(', ')}]
                 </div>
                 <span>{entry.Winrate}%</span>
                 <span>

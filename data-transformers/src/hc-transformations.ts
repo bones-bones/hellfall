@@ -16,8 +16,9 @@ import {
 import { HCObject } from '../../src/api-types/Object';
 import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
-import { getColorIdentityProps } from './getColorIdentity';
+import { getColorIdentityProps, setDerivedProps } from './derivedProps';
 import { fetchNotMagic } from './fetchNotMagic';
+import { textEquals } from './textHandling';
 const usingApproved = false;
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
@@ -41,6 +42,8 @@ const oneWayMergeProps = [
   'life_modifier',
   'attraction_lights',
   'watermark',
+  'colors',
+  'cmc',
 ];
 const cardBlankableProps = ['rulings', 'oracle_text', 'cmc', 'mana_cost'];
 const cardRemovableProps = [
@@ -113,18 +116,6 @@ const partialMergeOnlyLayouts: HCLayout[] = [
   HCLayout.RealCardMultiToken,
   HCLayout.MultiNotMagic,
 ];
-/**
- * Checks whether search text equals text from a card
- * @param cardText text from the card
- * @param searchText text to search for
- * @returns whether they are equal
- */
-export const textEquals = (cardText: string, searchText: string) => {
-  return (
-    cardText.toLowerCase() == searchText.toLowerCase() ||
-    cardText.toLowerCase().replaceAll('\\*', '') == searchText.toLowerCase().replaceAll('\\*', '')
-  );
-};
 
 const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
@@ -165,7 +156,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'has_draft_partners',
           'keywords',
           'legalities',
-          'creator',
+          'creators',
           'rulings',
           'watermark',
           'tags',
@@ -179,6 +170,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'image_status',
           'image',
           'mana_cost',
+          'cmc',
           'supertypes',
           'types',
           'subtypes',
@@ -238,41 +230,6 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
     return cardWithJSON as HCCard.Any;
   });
 };
-const setDerivedProps = (card: HCCard.Any) => {
-  if ('card_faces' in card) {
-    const type_line_list: string[] = [];
-    const mana_cost_list: string[] = [];
-    card.card_faces.forEach(face => {
-      const face_type = [
-        face.supertypes?.join(' '),
-        [face.types?.join(' '), face.subtypes?.join(' ')].filter(Boolean).join(' — '),
-      ]
-        .filter(Boolean)
-        .join(' ') as string;
-      face.type_line = face_type;
-      type_line_list.push(face_type);
-      mana_cost_list.push(face.mana_cost);
-      if (face.colors.length && face.colors.includes('C')) {
-        face.colors = [] as HCColors;
-      }
-    });
-    card.type_line = type_line_list.join(' // ');
-    card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
-  } else {
-    card.type_line = [
-      card.supertypes?.join(' '),
-      [card.types?.join(' '), card.subtypes?.join(' ')].filter(Boolean).join(' — '),
-    ]
-      .filter(Boolean)
-      .join(' ') as string;
-  }
-  if (card.colors.length && card.colors.includes('C')) {
-    card.colors = [] as HCColors;
-  }
-  const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
-  card.color_identity = color_identity;
-  card.color_identity_hybrid = color_identity_hybrid;
-};
 /**
  *
  * @param existingCard The card from the stored database JSON
@@ -295,7 +252,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
     existingCard.set.slice(0, 2) != 'SF'
   ) {
     const merged: HCCard.Any = { ...existingCard };
-    ['image', 'creator', 'all_parts'].forEach(key => {
+    ['image', 'creators', 'all_parts'].forEach(key => {
       if (newCard[key as keyof typeof newCard]) {
         (merged as any)[key] = newCard[key as keyof typeof newCard];
       }
@@ -311,11 +268,12 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
     oneWayMergeProps.forEach(prop => {
       if (prop in mergedPrelim) {
         mergedPrelim.card_faces[0][prop] = mergedPrelim[prop];
-        if (!['name', 'mana_cost', 'type_line'].includes(prop)) {
+        if (!['name', 'mana_cost', 'type_line', 'colors', 'cmc'].includes(prop)) {
           delete mergedPrelim[prop];
         }
       }
     });
+    mergedPrelim.card_faces[0]['image_status'] = HCImageStatus.Front;
     mergedPrelim.layout = newCard.layout;
   } else if ('card_faces' in existingCard && !('card_faces' in newCard)) {
     mergedPrelim = { ...existingCard } as any;
@@ -351,7 +309,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
             const newFace = newCard.card_faces?.[index];
             Object.entries(newFace).forEach(([k, v]) => {
               if (k in face && ['name', 'oracle_text', 'flavor_text'].includes(k)) {
-                if (face[k as keyof typeof face]![0] == ';') {
+                if ((face[k as keyof typeof face] as string)[0] == ';') {
                   // TODO: store current version and print the diff if there is one
                 } else if (v || k == 'oracle_text') {
                   (face as any)[k] = v;
@@ -919,22 +877,6 @@ const main = async () => {
           }
         });
     });
-  // make sure all relateds are updated (TODO: figure out if this is necessary)
-  // finalCards
-  //   .filter(e => 'all_parts' in e)
-  //   .forEach(card => {
-  //     card.all_parts?.forEach(storedRelated => {
-  //       const relatedCard = finalCards.find(e => e.id == storedRelated.id);
-  //       if (relatedCard) {
-  //         storedRelated.id = relatedCard.id;
-  //         storedRelated.name = relatedCard.name;
-  //         storedRelated.type_line = relatedCard.type_line;
-  //         storedRelated.set = relatedCard.set;
-  //         storedRelated.image = relatedCard.image;
-  //       }
-  //     });
-  //   });
-  // trims duplicates and parts with components of 'token' that are missing the corresponding one from all_parts
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
@@ -1009,16 +951,74 @@ const main = async () => {
 
     const usernameMappingEntries = Object.entries(usernameMappings);
 
-    replaceLoop: for (const [replacementName, oldNames] of usernameMappingEntries) {
+    for (const [replacementName, oldNames] of usernameMappingEntries) {
       for (const oldName of oldNames) {
-        if (entry.creator.split(';').includes(oldName)) {
-          entry.creator = entry.creator.replace(oldName, replacementName);
-          break replaceLoop;
+        const oldIndex = entry.creators.indexOf(oldName);
+        if (oldIndex != -1) {
+          entry.creators[oldIndex] = replacementName;
         }
       }
     }
 
-    creatorSet.add(entry.creator);
+    entry.creators.forEach(creator => {
+      creatorSet.add(creator);
+    });
+
+    if ('tags' in entry) {
+      entry.tags?.forEach(e => tagSet.add(e));
+    }
+
+    // if (entry.Constructed) {
+    //   // @ts-expect-error not sure about this approach but hey.
+    //   entry.Constructed = entry.Constructed.split(', ');
+    // }
+
+    // if (tokenMap[entry.Name]) {
+    //   // Debug unused tokens
+    //   // (tokenMap[entry.Name] as any).used = true;
+
+    //   entry.tokens = tokenMap[entry.Name];
+
+    //   // if (["HC8.0", "HC8.1"].includes(entry.Set)) {
+    //   //   console.log(entry.Name);
+    //   // }
+    // }
+
+    // if (
+    //   entry["Text Box"]?.find((e) => e?.includes(" token")) &&
+    //   !entry.tokens &&
+    //   entry.Set === "HC6"
+    // ) {
+    //   console.log(
+    //     entry.Name +
+    //       "  " +
+    //       /[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0],
+    //   );
+    // }
+  });
+  finalTokens.forEach(entry => {
+    ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
+      [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
+        typeEntry => {
+          typeSet.add(typeEntry);
+        }
+      );
+    });
+
+    const usernameMappingEntries = Object.entries(usernameMappings);
+
+    for (const [replacementName, oldNames] of usernameMappingEntries) {
+      for (const oldName of oldNames) {
+        const oldIndex = entry.creators.indexOf(oldName);
+        if (oldIndex != -1) {
+          entry.creators[oldIndex] = replacementName;
+        }
+      }
+    }
+
+    entry.creators.forEach(creator => {
+      creatorSet.add(creator);
+    });
 
     if ('tags' in entry) {
       entry.tags?.forEach(e => tagSet.add(e));

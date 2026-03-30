@@ -78,9 +78,9 @@ export namespace HCCardFields.Core {
      */
     // uri: string;
     /**
-     * The creator of this card.
+     * The creators of this card.
      */
-    creator: string;
+    creators: string[];
     /**
      * All tags of this card.
      */
@@ -166,6 +166,7 @@ export namespace HCCardFields.Gameplay {
     name: string;
     type_line: string;
     mana_cost: string;
+    cmc: number;
   };
 
   /**
@@ -180,39 +181,45 @@ export namespace HCCardFields.Gameplay {
      */
     colors: HCColors;
     /**
-     * The colors in this card's color indicator, if any. A null value for this field indicates the card does not have one.
+     * The colors in this face's color indicator, if any. A null value for this field indicates the card does not have one.
      */
     color_indicator?: HCColors;
     /**
-     * Nullable 	The mana cost for this card. This value will be any empty string "" if the cost is absent. Remember that per the game rules, a missing mana cost and a mana cost of {0} are different  Multi-faced cards will report this value in card faces.
+     * Nullable 	The mana cost for this face. This value will be any empty string "" if the cost is absent. Remember that per the game rules, a missing mana cost and a mana cost of {0} are different  Multi-faced cards will report this value in card faces.
      */
     mana_cost: string;
     /**
-     * The name of this card.
+     * The face's mana value. Note that some funny cards have fractional mana costs.
+     *
+     * @type Decimal
+     */
+    cmc: number;
+    /**
+     * The name of this face.
      */
     name: string;
     /**
-     * The type line of this card.
+     * The type line of this face.
      */
     type_line: string;
     /**
-     * The supertypes of the card.
+     * The supertypes of the face.
      */
     supertypes?: string[];
     /**
-     * The types of the card.
+     * The types of the face.
      */
     types?: string[];
     /**
-     * The subtypes of the card.
+     * The subtypes of the face.
      */
     subtypes?: string[];
     /**
-     * The Oracle text for this card, if any.
+     * The Oracle text for this face, if any.
      */
     oracle_text: string;
     /**
-     * The lit Unfinity attractions lights on this card, if any.
+     * The lit Unfinity attractions lights on this face, if any.
      *
      * This will be an array of numbers ranging from 1 to 6 inclusive.
      */
@@ -259,6 +266,42 @@ export namespace HCCardFields.Gameplay {
      * The type line of this card.
      */
     type_line: string;
+  };
+  /**
+   * These fields are specific for multiface cards.
+   * - Root level for multiface layouts only.
+   */
+  export type MultiSpecific = AllFaces & {
+    /**
+     * The oracle text of the card itself apart from any face, if any
+     */
+    oracle_text?: string;
+    /**
+     * True when the multiface card is a rotating card (excluding flip ones)
+     */
+    is_rotating?: boolean;
+  };
+  /**
+   * These fields are specific for multiface grid cards. (TODO: fully implement this)
+   * - Root level for multiface grid layouts only.
+   */
+  export type GridSpecific<RowCount extends number = number, ColCount extends number = number> = {
+    /**
+     * The number of rows in the grid
+     */
+    row_count: RowCount;
+    /**
+     * The number of columns in the grid
+     */
+    col_count: ColCount;
+    /**
+     * The names of the columns (the names on the top of the grid)
+     */
+    col_names?: string[] & { length: ColCount };
+    /**
+     * The names of the rows (the names on the side of the grid)
+     */
+    row_names?: string[] & { length: RowCount };
   };
 }
 
