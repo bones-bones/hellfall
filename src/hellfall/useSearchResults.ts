@@ -671,7 +671,6 @@ export const useSearchResults = () => {
         return true;
       })
       .sort(sortFunction(sortRule, dirRule));
-
     setResultSet(tempResults);
 
     const searchToSet = new URLSearchParams();

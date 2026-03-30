@@ -45,19 +45,19 @@ export const colorCompOp = (
         return false;
       }
       case '<=': {
-        return colors1.length==0;
+        return colors1.length == 0;
       }
       case '=': {
-        return colors1.length==0;
+        return colors1.length == 0;
       }
       case '>=': {
         return true;
       }
       case '>': {
-        return colors1.length!=0;
+        return colors1.length != 0;
       }
     }
-  } else if (colors1.length==0) {
+  } else if (colors1.length == 0) {
     switch (operator) {
       case '<': {
         return true;
