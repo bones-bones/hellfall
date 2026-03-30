@@ -248,9 +248,12 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.name &&
                 face.name != ';' &&
                 (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
-                  <span key="name">
+                  <Text typeLevel="body.medium" key="name">
                     {formatDiscordMarkdownInline(formatParens(stripSemicolon(face.name)))}
-                  </span>
+                  </Text>
+                  // <span key="name">
+                  //   {formatDiscordMarkdownInline(formatParens(stripSemicolon(face.name)))}
+                  // </span>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="name">
@@ -277,9 +280,9 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               )}
               {face.type_line &&
                 (['*', '(', '_', '~'].some(char => face.type_line.includes(char)) ? (
-                  <span key="type">
+                  <Text typeLevel="body.medium" key="type">
                     {formatDiscordMarkdownInline(formatParens(face.type_line))}
-                  </span>
+                  </Text>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="type">
@@ -295,13 +298,13 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.oracle_text &&
                 face.oracle_text != ';' &&
                 (['*', '(', '_', '~'].some(char => face.oracle_text.includes(char)) ? (
-                  <span key="rules">
-                    {formatDiscordMarkdown(formatParens(stripSemicolon(face.oracle_text)))}
-                    <br />
-                  </span>
+                    <Text typeLevel="body.medium" key="rules">
+                      {formatDiscordMarkdown(formatParens(stripSemicolon(face.oracle_text)))}
+                      <br />
+                    </Text>
                 ) : (
                   <>
-                    <Text typeLevel="body.medium" key="flavor">
+                    <Text typeLevel="body.medium" key="rules">
                       {renderText(stripSemicolon(face.oracle_text).split('\\n'))}
                     </Text>
                   </>
@@ -309,10 +312,14 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.flavor_text &&
                 face.flavor_text != ';' &&
                 (['*', '_', '~'].some(char => face.flavor_text?.includes(char)) ? (
-                  <span key="flavor">
-                    {formatDiscordMarkdownInvertedItalics(stripSemicolon(face.flavor_text))}
-                    <br />
-                  </span>
+                    <Text typeLevel="body.medium" key="flavor">
+                      {formatDiscordMarkdownInvertedItalics(formatParens(stripSemicolon(face.flavor_text)))}
+                      <br />
+                    </Text>
+                  // <span key="flavor">
+                  //   {formatDiscordMarkdownInvertedItalics(stripSemicolon(face.flavor_text))}
+                  //   <br />
+                  // </span>
                 ) : (
                   <>
                     <ItalicText typeLevel="body.medium" key="flavor">

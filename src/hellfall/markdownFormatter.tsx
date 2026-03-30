@@ -3,81 +3,114 @@ import simpleMarkdown from 'simple-markdown';
 import { stringToMana } from './stringToMana';
 
 // Define the rules for our custom markdown parser
-const rules = {
-  // Strong/bold formatting (**text** or __text__)
-  strong: {
-    order: 1,
-    match: (source: string) => /^\*\*([\s\S]+?)\*\*(?!\*)/.exec(source) ||
-                             /^__([\s\S]+?)__(?!_)/.exec(source),
-    parse: (capture: RegExpExecArray, parse: any, state: any) => {
-      return {
-        content: parse(capture[1], state)
-      };
+// For inverted italics mode, we need a separate set of rules
+const createRules = (invertedItalics: boolean = false) => {
+  const baseRules = {
+    // Strong/bold formatting (**text** or __text__)
+    strong: {
+      order: 1,
+      match: (source: string) => /^\*\*([\s\S]+?)\*\*(?!\*)/.exec(source) ||
+                               /^__([\s\S]+?)__(?!_)/.exec(source),
+      parse: (capture: RegExpExecArray, parse: any, state: any) => {
+        return {
+          content: parse(capture[1], state)
+        };
+      },
+      react: (node: any, output: any, state: any) => {
+        return <strong key={state.key}>{output(node.content, state)}</strong>;
+      }
     },
-    react: (node: any, output: any, state: any) => {
-      return <strong key={state.key}>{output(node.content, state)}</strong>;
-    }
-  },
 
-  // Emphasis/italic formatting (*text* or _text_)
-  em: {
-    order: 2,
-    match: (source: string) => /^\*([\s\S]+?)\*(?!\*)/.exec(source) ||
-                             /^_([\s\S]+?)_(?!_)/.exec(source),
-    parse: (capture: RegExpExecArray, parse: any, state: any) => {
-      return {
-        content: parse(capture[1], state)
-      };
+    // Strikethrough formatting (~~text~~)
+    del: {
+      order: 3,
+      match: (source: string) => /^~~([\s\S]+?)~~/.exec(source),
+      parse: (capture: RegExpExecArray, parse: any, state: any) => {
+        return {
+          content: parse(capture[1], state)
+        };
+      },
+      react: (node: any, output: any, state: any) => {
+        return <del key={state.key}>{output(node.content, state)}</del>;
+      }
     },
-    react: (node: any, output: any, state: any) => {
-      return <em key={state.key}>{output(node.content, state)}</em>;
-    }
-  },
 
-  // Strikethrough formatting (~~text~~)
-  del: {
-    order: 3,
-    match: (source: string) => /^~~([\s\S]+?)~~/.exec(source),
-    parse: (capture: RegExpExecArray, parse: any, state: any) => {
-      return {
-        content: parse(capture[1], state)
-      };
-    },
-    react: (node: any, output: any, state: any) => {
-      return <del key={state.key}>{output(node.content, state)}</del>;
+    // Plain text (fallback)
+    text: {
+      order: 999,
+      match: (source: string) => /^[\s\S]+?(?=[*_~]|$)/.exec(source),
+      parse: (capture: RegExpExecArray) => {
+        return {
+          content: capture[0]
+        };
+      },
+      react: (node: any, output: any, state: any) => {
+        return <span key={state.key}>{stringToMana(node.content)}</span>;
+      }
     }
-  },
+  };
 
-  // Plain text (fallback)
-  text: {
-    order: 999,
-    match: (source: string) => /^[\s\S]+?(?=[*_~]|$)/.exec(source),
-    parse: (capture: RegExpExecArray) => {
-      return {
-        content: capture[0]
-      };
-    },
-    react: (node: any, output: any, state: any) => {
-      // Apply stringToMana to handle mana symbols in text
-      return <span key={state.key}>{stringToMana(node.content)}</span>;
-    }
+  // Define emphasis rules based on inverted italics mode
+  if (invertedItalics) {
+    // In inverted italics mode:
+    // - Default text is italic
+    // - *text* makes text non-italic (remove italics)
+    return {
+      ...baseRules,
+      em: {
+        order: 2,
+        match: (source: string) => /^\*([\s\S]+?)\*(?!\*)/.exec(source) ||
+                                 /^_([\s\S]+?)_(?!_)/.exec(source),
+        parse: (capture: RegExpExecArray, parse: any, state: any) => {
+          return {
+            content: parse(capture[1], state)
+          };
+        },
+        react: (node: any, output: any, state: any) => {
+          // In inverted italics, *text* should be non-italic
+          return <span key={state.key} style={{ fontStyle: 'normal' }}>{output(node.content, state)}</span>;
+        }
+      }
+    };
+  } else {
+    // Normal mode: *text* makes text italic
+    return {
+      ...baseRules,
+      em: {
+        order: 2,
+        match: (source: string) => /^\*([\s\S]+?)\*(?!\*)/.exec(source) ||
+                                 /^_([\s\S]+?)_(?!_)/.exec(source),
+        parse: (capture: RegExpExecArray, parse: any, state: any) => {
+          return {
+            content: parse(capture[1], state)
+          };
+        },
+        react: (node: any, output: any, state: any) => {
+          return <em key={state.key}>{output(node.content, state)}</em>;
+        }
+      }
+    };
   }
 };
-
-// Create the parser and output functions
-const parser = simpleMarkdown.parserFor(rules);
-const reactOutput = simpleMarkdown.reactFor(simpleMarkdown.ruleOutput(rules, 'react'));
 
 // Helper function to parse and render a single line
 const formatLine = (line: string, invertedItalics: boolean = false): ReactNode => {
   if (!line || line === ';') return null;
 
   try {
+    const rules = createRules(invertedItalics);
+    const parser = simpleMarkdown.parserFor(rules);
+    const reactOutput = simpleMarkdown.reactFor(simpleMarkdown.ruleOutput(rules, 'react'));
+    
     // Parse the line into an AST
     const parsed = parser(line, { inline: true });
     
     if (!parsed || parsed.length === 0) {
-      return stringToMana(line);
+      const content = stringToMana(line);
+      if (invertedItalics) {
+        return <em style={{ fontStyle: 'italic' }}>{content}</em>;
+      }
+      return content;
     }
 
     // Render the parsed nodes
@@ -85,7 +118,7 @@ const formatLine = (line: string, invertedItalics: boolean = false): ReactNode =
     
     // If inverted italics mode, wrap the entire result in <em>
     if (invertedItalics) {
-      return <em>{rendered}</em>;
+      return <em style={{ fontStyle: 'italic' }}>{rendered}</em>;
     }
     
     return rendered;
@@ -93,7 +126,11 @@ const formatLine = (line: string, invertedItalics: boolean = false): ReactNode =
     console.error('Error parsing markdown line:', error);
     console.error('Problematic line:', line);
     // Fallback to plain text with mana symbols
-    return stringToMana(line);
+    const content = stringToMana(line);
+    if (invertedItalics) {
+      return <em style={{ fontStyle: 'italic' }}>{content}</em>;
+    }
+    return content;
   }
 };
 
