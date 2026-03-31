@@ -1,6 +1,5 @@
 import { HCCard } from '../api-types';
 import { HCColor, HCColors } from '../api-types';
-import { stripSemicolon } from './textHandling';
 // TODO: make it possible to sort by color, then alpha, rather than color, then CMC
 // how they can combine: Alpha and ID are mutually exclusive, but none of the others are
 
@@ -25,7 +24,7 @@ export const sortFunction =
       }
 
       case 'Alpha': {
-        if (stripSemicolon(a.name) == stripSemicolon(b.name)) {
+        if (a.name == b.name) {
           if (a.isActualToken && b.isActualToken) {
             if (
               (parseInt(a.id.match(/\d+$/)?.[0] || '') || 0) >
@@ -47,7 +46,7 @@ export const sortFunction =
             }
           }
           return dirRule == 'Desc' ? -1 : 1;
-        } else if (stripSemicolon(a.name) > stripSemicolon(b.name)) {
+        } else if (a.name > b.name) {
           return dirRule == 'Desc' ? -1 : 1;
         }
         break;
@@ -78,7 +77,7 @@ const getSortString = (card: HCCard.Any) => {
       .toString()
       .padStart(8, '0') +
     (card.cmc || 0).toString().padStart(3) +
-    stripSemicolon(card.name)
+    card.name
   );
 };
 

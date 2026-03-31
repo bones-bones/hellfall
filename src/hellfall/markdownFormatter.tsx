@@ -155,7 +155,7 @@ const createRules = (invertedItalics: boolean = false) => {
 
 // Helper function to parse and render a single line
 const formatLine = (line: string, invertedItalics: boolean = false): ReactNode => {
-  if (!line || line === ';') return null;
+  if (!line) return null;
 
   try {
     const rules = createRules(invertedItalics);
@@ -202,7 +202,7 @@ const formatLine = (line: string, invertedItalics: boolean = false): ReactNode =
  * @returns React nodes with formatting applied
  */
 export const formatDiscordMarkdown = (text: string): ReactNode => {
-  if (!text || text === ';') return null;
+  if (!text) return null;
 
   const lines = text.split('\\n');
 
@@ -224,7 +224,7 @@ export const formatDiscordMarkdown = (text: string): ReactNode => {
  * @returns React nodes with formatting applied
  */
 export const formatDiscordMarkdownInline = (text: string): ReactNode => {
-  if (!text || text === ';') return null;
+  if (!text) return null;
 
   const firstLine = text.split('\\n')[0];
   return formatLine(firstLine, false);
@@ -238,7 +238,7 @@ export const formatDiscordMarkdownInline = (text: string): ReactNode => {
  * @returns React nodes with inverted italics formatting
  */
 export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode => {
-  if (!text || text === ';') return null;
+  if (!text) return null;
 
   const lines = text.split('\\n');
 
@@ -260,7 +260,7 @@ export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode =>
  * @returns React nodes with inverted italics formatting
  */
 export const formatDiscordMarkdownInvertedItalicsInline = (text: string): ReactNode => {
-  if (!text || text === ';') return null;
+  if (!text) return null;
 
   const firstLine = text.split('\\n')[0];
   return formatLine(firstLine, true);

@@ -227,21 +227,12 @@ export const formatParens = (text: string) => {
 };
 
 /**
- * Strips a leading semicolon from text, if there is one
- * @param text text to strip
- * @returns stripped text
- */
-export const stripSemicolon = (text: string) => {
-  return text.startsWith(';') ? text.slice(1) : text;
-};
-
-/**
  * Preps a name for export to draftmancer/cockatrice
  * @param name name to prep
  * @returns prepped name
  */
 export const toExportName = (name: string) => {
-  return stripSemicolon(name)
+  return name
     .replaceAll(/[\[\{}]/g, '(')
     .replaceAll(/[\]\}]/g, ')')
     .replaceAll('\\', '');

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Heading, Text } from '@workday/canvas-kit-react/text';
 import { SetLegality } from './SetLegality';
 import { colorsToIndicator, stringToMana } from '../stringToMana';
-import { formatParens, stripSemicolon } from '../textHandling';
+import { formatParens } from '../textHandling';
 import { HCCard } from '../../api-types/Card/Card';
 import { HellfallRelatedEntry } from '../HellfallEntry';
 
@@ -93,15 +93,14 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               {face.name &&
-                face.name != ';' &&
                 (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
                   <Text typeLevel="body.medium" key="name">
-                    {formatDiscordMarkdownInline(formatParens(stripSemicolon(face.name)))}
+                    {formatDiscordMarkdownInline(formatParens(face.name))}
                   </Text>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="name">
-                      {stringToMana(stripSemicolon(face.name))}
+                      {stringToMana(face.name)}
                     </Text>
                     {/* <br /> */}
                   </>
@@ -302,7 +301,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       }}
                       key={entry.id}
                       id={entry.id}
-                      name={stripSemicolon(entry.name)}
+                      name={entry.name}
                       url={entry.image!}
                     />
 

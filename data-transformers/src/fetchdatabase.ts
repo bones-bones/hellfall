@@ -278,11 +278,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       cardObject.card_faces.push({} as Record<string, any>);
     }
 
-    const name = (cardObject.tags?.includes('irregular-face-name') ? [] :(
-      cardObject.card_faces.length > 1 && cardObject.tags?.includes('masterpiece')
-        ? stripMasterpiece(entry[1])
-        : entry[1]
-    ).split(' // '));
+    const name = cardObject.tags?.includes('irregular-face-name')
+      ? []
+      : (cardObject.card_faces.length > 1 && cardObject.tags?.includes('masterpiece')
+          ? stripMasterpiece(entry[1])
+          : entry[1]
+        ).split(' // ');
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
     cardObject.card_faces.forEach((face, index) => {

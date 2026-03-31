@@ -308,9 +308,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           if (index < value.length) {
             const newFace = newCard.card_faces?.[index];
             Object.entries(newFace).forEach(([k, v]) => {
-              if (k in face && k == 'name' && face[k][0] == ';') {
-                // TODO: store current version and print the diff if there is one
-              } else if (k == 'colors') {
+              if (k == 'colors') {
                 // TODO: store current version and print the diff if there is one
               } else if (k == 'image_status' && newFace.image) {
                 // TODO: store current version and print the diff if there is one
@@ -344,7 +342,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.set == 'HCT') {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
-          // TODO: store current version and print the diff if there is one
+        // TODO: store current version and print the diff if there is one
       } else if (
         key === 'all_parts' &&
         Array.isArray(value) &&
