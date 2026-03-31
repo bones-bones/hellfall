@@ -125,4 +125,4 @@ Write a script to transform the database
 - make sure cards with phyrexian text have tag
 - use draft image for all first images for multiface?
 - add phyrexian font
-- add code to automatically replace brackets in names with parens
+- add code to automatically replace brackets in names with parens when exporting
