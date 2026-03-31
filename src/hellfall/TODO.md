@@ -127,3 +127,5 @@ Write a script to transform the database
 - add phyrexian font
 - add double url (both id and name) like scryfall?
 - add auto masterpiece variation parsing? and auto name parsing for multiface masterpieces? (try to get rid of semicolons) (also use tag to indicate front side has different name?)
+- fix bracket names in db
+- implement subtags

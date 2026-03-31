@@ -343,12 +343,8 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         }
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.set == 'HCT') {
         // TODO: store current version and print the diff if there is one
-      } else if (key in merged && ['name', 'oracle_text', 'flavor_text'].includes(key)) {
-        if ((merged[key as keyof typeof merged]! as string)[0] == ';') {
+      } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
           // TODO: store current version and print the diff if there is one
-        } else if (value) {
-          (merged as any)[key] = value;
-        }
       } else if (
         key === 'all_parts' &&
         Array.isArray(value) &&

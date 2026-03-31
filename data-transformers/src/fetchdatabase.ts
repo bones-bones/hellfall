@@ -141,7 +141,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
                 cardObject.card_faces[face + index].image_status =
                   entry[20] && entry[20].includes('low-quality')
                     ? HCImageStatus.LowRes
-                    : HCImageStatus.HighRes;
+                    : HCImageStatus.MedRes;
               }
             });
           } else {
@@ -278,11 +278,11 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       cardObject.card_faces.push({} as Record<string, any>);
     }
 
-    const name = (
+    const name = (cardObject.tags?.includes('irregular-face-name') ? [] :(
       cardObject.card_faces.length > 1 && cardObject.tags?.includes('masterpiece')
         ? stripMasterpiece(entry[1])
         : entry[1]
-    ).split(' // ');
+    ).split(' // '));
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
     cardObject.card_faces.forEach((face, index) => {
