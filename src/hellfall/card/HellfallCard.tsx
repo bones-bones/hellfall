@@ -3,13 +3,18 @@ import styled from '@emotion/styled';
 import { Heading, Text } from '@workday/canvas-kit-react/text';
 import { SetLegality } from './SetLegality';
 import { colorsToIndicator, stringToMana } from '../stringToMana';
-import { splitParens } from '../splitParens';
+import { formatParens } from '../textHandling';
 import { HCCard } from '../../api-types/Card/Card';
 import { HellfallRelatedEntry } from '../HellfallEntry';
 
 import { Link } from 'react-router-dom';
 import { Fragment, useState } from 'react';
 import { stripSemicolon } from '../inputs/stripSemicolon';
+import {
+  formatDiscordMarkdown,
+  formatDiscordMarkdownInline,
+  formatDiscordMarkdownInvertedItalics,
+} from '../markdownFormatter';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
@@ -18,128 +23,6 @@ const renderText = (text: string[]) => {
         <br />
       </>
     );
-  });
-};
-/**
- * This renders text that is non-italic by default but can be made italic by () or \\* and is a single line
- * @param text text to render
- * @returns JSX elements to render
- */
-const renderCanBeItalicLine = (text: string) => {
-  const parenText = splitParens(text)
-    .map((chunk, ci) => {
-      if (chunk.startsWith('(')) {
-        return '\\*' + chunk + '\\*';
-        // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
-      }
-      return chunk;
-    })
-    .join('');
-  const parts = parenText.split('\\*');
-  return parts.map((part, index) => {
-    if (index % 2 == 0) {
-      return (
-        <Text typeLevel="body.medium" key={`non-italic-${index}`}>
-          {stringToMana(part)}
-        </Text>
-      );
-    } else {
-      return (
-        <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
-          {stringToMana(part)}
-        </ItalicText>
-      );
-    }
-  });
-};
-/**
- * This renders text that is non-italic by default but can be made italic by () or \\*
- * @param text text to render
- * @returns JSX elements to render
- */
-const renderCanBeItalicText = (text: string) => {
-  const parenText = splitParens(text)
-    .map((chunk, ci) => {
-      if (chunk.startsWith('(')) {
-        return '\\*' + chunk + '\\*';
-        // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
-      }
-      return chunk;
-    })
-    .join('');
-  const parts = parenText.split('\\*');
-  return parts.map((part, index) => {
-    if (index % 2 == 0) {
-      return part.split('\\n').map((entry, i) => (
-        <Fragment key={`line-${index}-${i}`}>
-          {i != 0 && <br />}
-          <Text typeLevel="body.medium" key={`non-italic-${index}`}>
-            {stringToMana(entry)}
-          </Text>
-          {/* {i == part.split('\\n').length-1 &&<br />} */}
-        </Fragment>
-      ));
-    } else {
-      return part.split('\\n').map((entry, i) => (
-        <Fragment key={`line-${index}-${i}`}>
-          {i != 0 && <br />}
-          <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
-            {stringToMana(entry)}
-          </ItalicText>
-          {/* {i == part.split('\\n').length-1 &&<br />} */}
-        </Fragment>
-      ));
-      // return (
-      //   <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
-      //     {stringToMana(part)}
-      //   </ItalicText>
-      // );
-    }
-  });
-};
-/**
- * This renders text that is italic by default but can be made non-italic by \\*
- * @param text text to render
- * @returns JSX elements to render
- */
-const renderCanBeNonItalicText = (text: string) => {
-  // const parenText = splitParens(text)
-  //   .map((chunk, ci) => {
-  //     if (chunk.startsWith('(')) {
-  //       return '\\*' + chunk + '\\*';
-  //       // return <ItalicText key={ci}>{stringToMana(chunk)}</ItalicText>;
-  //     }
-  //     return chunk;
-  //   })
-  //   .join('');
-  const parts = text.split('\\*');
-  return parts.map((part, index) => {
-    if (index % 2 == 1) {
-      return part.split('\\n').map((entry, i) => (
-        <Fragment key={`line-${index}-${i}`}>
-          <Text typeLevel="body.medium" key={`non-italic-${index}`}>
-            {stringToMana(entry)}
-          </Text>
-          {entry && <br />}
-          {/* {i == part.split('\\n').length-1 &&<br />} */}
-        </Fragment>
-      ));
-    } else {
-      return part.split('\\n').map((entry, i) => (
-        <Fragment key={`line-${index}-${i}`}>
-          <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
-            {stringToMana(entry)}
-          </ItalicText>
-          {entry && <br />}
-          {/* {i == part.split('\\n').length-1 &&<br />} */}
-        </Fragment>
-      ));
-      // return (
-      //   <ItalicText typeLevel="body.medium" key={`italic-${index}`}>
-      //     {stringToMana(part)}
-      //   </ItalicText>
-      // );
-    }
   });
 };
 const getImages = (card: HCCard.Any) => {
@@ -160,26 +43,10 @@ const getImages = (card: HCCard.Any) => {
   return imagesToShow;
 };
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
-  // const faceCount = data.
-  // data['Card Type(s)']?.findLastIndex((entry: any) => entry !== null && entry != '') + 1 || 1;
-
   const [activeImageSide, setActiveImageSide] = useState(0);
 
   // TODO: add handling for flip and aftermath
   const imagesToShow = getImages(data);
-  //   'card_faces' in data
-  //     ? [
-  //         data.image,
-  //         ...data
-  //           .toFaces()
-  //           .filter(e => e.image)
-  //           .map(e => e.image),
-  //       ]
-  //     : [data.image];
-  // const draftImage = data.draft_image;
-  // if (draftImage) {
-  //   imagesToShow.push(draftImage);
-  // }
 
   return (
     <Container key={data.id}>
@@ -228,8 +95,10 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {i > 0 && <Divider />}
               {face.name &&
                 face.name != ';' &&
-                (face.name.includes('\\*') || face.name.includes('(') ? (
-                  <span key="name">{renderCanBeItalicLine(stripSemicolon(face.name))}</span>
+                (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
+                  <Text typeLevel="body.medium" key="name">
+                    {formatDiscordMarkdownInline(formatParens(stripSemicolon(face.name)))}
+                  </Text>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="name">
@@ -238,9 +107,6 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     {/* <br /> */}
                   </>
                 ))}
-              {/* <Text typeLevel="body.medium" key="name">
-                {face.name[0] == ';' ? face.name.slice(1) : face.name}
-              </Text> */}
               {'   '}
               <Text typeLevel="body.medium" key="cost">
                 {stringToMana(face.mana_cost)}
@@ -255,8 +121,10 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 </>
               )}
               {face.type_line &&
-                (face.type_line.includes('\\*') || face.type_line.includes('(') ? (
-                  <span key="type">{renderCanBeItalicLine(face.type_line)}</span>
+                (['*', '(', '_', '~'].some(char => face.type_line.includes(char)) ? (
+                  <Text typeLevel="body.medium" key="type">
+                    {formatDiscordMarkdownInline(formatParens(face.type_line))}
+                  </Text>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="type">
@@ -265,31 +133,30 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     {/* <br /> */}
                   </>
                 ))}
-              {/* <Text typeLevel="body.medium" key="type">
-                {face.type_line}
-              </Text> */}
               <br />
               {face.oracle_text &&
                 face.oracle_text != ';' &&
-                (face.oracle_text.includes('\\*') || face.oracle_text.includes('(') ? (
-                  <span key="rules">
-                    {renderCanBeItalicText(stripSemicolon(face.oracle_text))}
+                (['*', '(', '_', '~'].some(char => face.oracle_text.includes(char)) ? (
+                  <Text typeLevel="body.medium" key="rules">
+                    {formatDiscordMarkdown(formatParens(stripSemicolon(face.oracle_text)))}
                     <br />
-                  </span>
+                  </Text>
                 ) : (
                   <>
-                    <Text typeLevel="body.medium" key="flavor">
+                    <Text typeLevel="body.medium" key="rules">
                       {renderText(stripSemicolon(face.oracle_text).split('\\n'))}
                     </Text>
                   </>
                 ))}
               {face.flavor_text &&
                 face.flavor_text != ';' &&
-                (face.flavor_text.includes('\\*') ? (
-                  <span key="flavor">
-                    {renderCanBeNonItalicText(stripSemicolon(face.flavor_text))}
+                (['*', '_', '~'].some(char => face.flavor_text?.includes(char)) ? (
+                  <Text typeLevel="body.medium" key="flavor">
+                    {formatDiscordMarkdownInvertedItalics(
+                      formatParens(stripSemicolon(face.flavor_text))
+                    )}
                     <br />
-                  </span>
+                  </Text>
                 ) : (
                   <>
                     <ItalicText typeLevel="body.medium" key="flavor">
