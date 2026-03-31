@@ -240,6 +240,9 @@ export const stripSemicolon = (text: string) => {
  * @param name name to prep
  * @returns prepped name
  */
-export const toExportName = (name:string) => {
-    return stripSemicolon(name).replaceAll(/[\[\{}]/g,'(').replaceAll(/[\]\}]/g,')').replaceAll('\\','')
-}
+export const toExportName = (name: string) => {
+  return stripSemicolon(name)
+    .replaceAll(/[\[\{}]/g, '(')
+    .replaceAll(/[\]\}]/g, ')')
+    .replaceAll('\\', '');
+};

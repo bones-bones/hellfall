@@ -18,7 +18,7 @@ import { getDefaultStore } from 'jotai';
 import { loadPips, pipsAtom } from '../../src/hellfall/atoms/pipsAtom';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps';
 import { fetchNotMagic } from './fetchNotMagic';
-import { textEquals } from './textHandling';
+import { stripMasterpiece, textEquals } from './textHandling';
 const usingApproved = false;
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
@@ -936,6 +936,17 @@ const main = async () => {
         delete token.all_parts;
       }
     });
+  // automatically add variations for masterpieces
+  finalCards
+    .filter(entry => entry.tags?.includes('masterpiece') && !entry.variation)
+    .forEach(entry => {
+      const varName = stripMasterpiece(entry.name);
+      const variation_of = finalCards.find(card => textEquals(card.name, varName))?.id;
+      if (variation_of) {
+        entry.variation = true;
+        entry.variation_of = variation_of;
+      }
+    });
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
@@ -963,34 +974,6 @@ const main = async () => {
     if ('tags' in entry) {
       entry.tags?.forEach(e => tagSet.add(e));
     }
-
-    // if (entry.Constructed) {
-    //   // @ts-expect-error not sure about this approach but hey.
-    //   entry.Constructed = entry.Constructed.split(', ');
-    // }
-
-    // if (tokenMap[entry.Name]) {
-    //   // Debug unused tokens
-    //   // (tokenMap[entry.Name] as any).used = true;
-
-    //   entry.tokens = tokenMap[entry.Name];
-
-    //   // if (["HC8.0", "HC8.1"].includes(entry.Set)) {
-    //   //   console.log(entry.Name);
-    //   // }
-    // }
-
-    // if (
-    //   entry["Text Box"]?.find((e) => e?.includes(" token")) &&
-    //   !entry.tokens &&
-    //   entry.Set === "HC6"
-    // ) {
-    //   console.log(
-    //     entry.Name +
-    //       "  " +
-    //       /[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0],
-    //   );
-    // }
   });
   finalTokens.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {

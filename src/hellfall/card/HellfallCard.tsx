@@ -149,9 +149,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {face.flavor_text &&
                 (['*', '_', '~'].some(char => face.flavor_text?.includes(char)) ? (
                   <Text typeLevel="body.medium" key="flavor">
-                    {formatDiscordMarkdownInvertedItalics(
-                      formatParens(face.flavor_text)
-                    )}
+                    {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
                     <br />
                   </Text>
                 ) : (

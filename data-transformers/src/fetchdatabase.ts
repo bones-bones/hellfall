@@ -5,6 +5,7 @@ import { HCLegalitiesField, HCFormat, HCLegality } from '../../src/api-types/Car
 import { HCRelatedCard } from '../../src/api-types/Card/RelatedCard';
 import { HCObject } from '../../src/api-types/Object';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps';
+import { stripMasterpiece } from './textHandling';
 
 export const fetchDatabase = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -170,7 +171,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
               cardObject.card_faces[face].image_status =
                 entry[20] && entry[20].includes('low-quality')
                   ? HCImageStatus.LowRes
-                  : HCImageStatus.HighRes;
+                  : HCImageStatus.MedRes;
             }
           }
         } else {
@@ -277,7 +278,11 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       cardObject.card_faces.push({} as Record<string, any>);
     }
 
-    const name = entry[1].split(' // ');
+    const name = (
+      cardObject.card_faces.length > 1 && cardObject.tags?.includes('masterpiece')
+        ? stripMasterpiece(entry[1])
+        : entry[1]
+    ).split(' // ');
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
     cardObject.card_faces.forEach((face, index) => {

@@ -175,3 +175,20 @@ export const textEquals = (cardText: string, searchText: string) => {
     cardText.toLowerCase() == searchText.toLowerCase() || textPrep(cardText) == textPrep(searchText)
   );
 };
+
+/**
+ * Gets the non-masterpiece version of a masterpiece name.
+ * @param name Name to strip
+ * @returns stripped name
+ */
+export const stripMasterpiece = (name: string) => {
+  if (
+    ['HC6: ', 'HC7: ', 'HC8: ', 'HCK: ', 'HKL: ', 'HC9: ', 'CDC: ', 'HCJ: '].includes(
+      name.slice(0, 5)
+    )
+  ) {
+    return name.slice(5);
+  } else {
+    return name;
+  }
+};
