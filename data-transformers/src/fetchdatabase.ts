@@ -340,8 +340,11 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           face.image_status = HCImageStatus.Aftermath;
         } else if (
           cardObject.tags?.includes('inset') ||
-          face.subtypes?.some((sub: string) =>
-            ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub)
+          face.subtypes?.some(
+            (sub: string) =>
+              ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub) ||
+              (index == 1 &&
+                cardObject.card_faces[0].oracle_text.toLowerCase().includes('prepared'))
           )
         ) {
           face.image_status = HCImageStatus.Inset;
@@ -486,7 +489,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             face.subtypes?.some((sub: string) =>
               ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub)
             )
-          )
+          ) ||
+          cardObject.card_faces[0].oracle_text.toLowerCase().includes('prepared')
         ) {
           cardObject.layout = HCLayout.Inset;
         } else if (

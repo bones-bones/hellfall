@@ -59,7 +59,7 @@ export enum HCLayout {
   Specialize = 'specialize',
   /** Cards that flip */
   Flip = 'flip',
-  /** Cards with an inset */
+  /** Cards with an inset (adventure/omen/prepared spell) */
   Inset = 'inset',
   /** Cards with an inset token */
   TokenInInset = 'token_in_inset',
