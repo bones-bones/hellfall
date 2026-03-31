@@ -308,12 +308,8 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           if (index < value.length) {
             const newFace = newCard.card_faces?.[index];
             Object.entries(newFace).forEach(([k, v]) => {
-              if (k in face && ['name', 'oracle_text', 'flavor_text'].includes(k)) {
-                if ((face[k as keyof typeof face] as string)[0] == ';') {
-                  // TODO: store current version and print the diff if there is one
-                } else if (v || k == 'oracle_text') {
-                  (face as any)[k] = v;
-                }
+              if (k in face && k == 'name' && face[k][0] == ';') {
+                // TODO: store current version and print the diff if there is one
               } else if (k == 'colors') {
                 // TODO: store current version and print the diff if there is one
               } else if (k == 'image_status' && newFace.image) {

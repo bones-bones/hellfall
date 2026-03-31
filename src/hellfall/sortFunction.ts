@@ -1,6 +1,6 @@
 import { HCCard } from '../api-types';
 import { HCColor, HCColors } from '../api-types';
-import { stripSemicolon } from './inputs/stripSemicolon';
+import { stripSemicolon } from './textHandling';
 // TODO: make it possible to sort by color, then alpha, rather than color, then CMC
 // how they can combine: Alpha and ID are mutually exclusive, but none of the others are
 

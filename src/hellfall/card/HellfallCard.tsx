@@ -3,13 +3,12 @@ import styled from '@emotion/styled';
 import { Heading, Text } from '@workday/canvas-kit-react/text';
 import { SetLegality } from './SetLegality';
 import { colorsToIndicator, stringToMana } from '../stringToMana';
-import { formatParens } from '../textHandling';
+import { formatParens, stripSemicolon } from '../textHandling';
 import { HCCard } from '../../api-types/Card/Card';
 import { HellfallRelatedEntry } from '../HellfallEntry';
 
 import { Link } from 'react-router-dom';
 import { Fragment, useState } from 'react';
-import { stripSemicolon } from '../inputs/stripSemicolon';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
@@ -135,32 +134,30 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 ))}
               <br />
               {face.oracle_text &&
-                face.oracle_text != ';' &&
                 (['*', '(', '_', '~'].some(char => face.oracle_text.includes(char)) ? (
                   <Text typeLevel="body.medium" key="rules">
-                    {formatDiscordMarkdown(formatParens(stripSemicolon(face.oracle_text)))}
+                    {formatDiscordMarkdown(formatParens(face.oracle_text))}
                     <br />
                   </Text>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="rules">
-                      {renderText(stripSemicolon(face.oracle_text).split('\\n'))}
+                      {renderText(face.oracle_text.split('\\n'))}
                     </Text>
                   </>
                 ))}
               {face.flavor_text &&
-                face.flavor_text != ';' &&
                 (['*', '_', '~'].some(char => face.flavor_text?.includes(char)) ? (
                   <Text typeLevel="body.medium" key="flavor">
                     {formatDiscordMarkdownInvertedItalics(
-                      formatParens(stripSemicolon(face.flavor_text))
+                      formatParens(face.flavor_text)
                     )}
                     <br />
                   </Text>
                 ) : (
                   <>
                     <ItalicText typeLevel="body.medium" key="flavor">
-                      {renderText(stripSemicolon(face.flavor_text).split('\\n'))}
+                      {renderText(face.flavor_text.split('\\n'))}
                     </ItalicText>
                   </>
                 ))}

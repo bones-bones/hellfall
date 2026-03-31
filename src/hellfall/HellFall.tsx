@@ -18,7 +18,7 @@ import { CHUNK_SIZE } from './constants';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom';
 import { startTransition } from 'react';
-import { stripSemicolon } from './inputs/stripSemicolon';
+import { stripSemicolon } from './textHandling';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);

@@ -126,3 +126,5 @@ Write a script to transform the database
 - use draft image for all first images for multiface?
 - add phyrexian font
 - add code to automatically replace brackets in names with parens when exporting
+- add double url (both id and name) like scryfall?
+- add auto masterpiece variation parsing? and auto name parsing for multiface masterpieces? (try to get rid of semicolons) (also use tag to indicate front side has different name?)
