@@ -392,7 +392,15 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
         ([k, v]) =>
-          !['name', 'type_line', 'mana_cost', 'mana_value', 'image_status', 'colors', 'image'].includes(k)
+          ![
+            'name',
+            'type_line',
+            'mana_cost',
+            'mana_value',
+            'image_status',
+            'colors',
+            'image',
+          ].includes(k)
       )) {
         cardObject[key] = value;
       }

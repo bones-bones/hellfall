@@ -93,7 +93,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
-    cmc:'mana_value'
+    cmc: 'mana_value',
   };
   const defaultProps: Record<string, any> = {
     rulings: '',

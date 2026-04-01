@@ -34,7 +34,7 @@ import {
   pageAtom,
   activeCardAtom,
   // shouldPushHistoryAtom,
-  isSyncingFromUrlAtom
+  isSyncingFromUrlAtom,
 } from '../atoms/searchAtoms';
 
 import { sortFunction } from '../sortFunction';
@@ -54,7 +54,6 @@ const isSetInResults = (set: string, setOptions: string[]) => {
 export const useSearchResults = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  // const lastUrlRef = useRef<string>();
 
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
   const cards = useAtomValue(cardsAtom).filter(
@@ -759,18 +758,22 @@ export const useSearchResults = () => {
     const newUrl = `?${searchToSet.toString()}`;
     const currentUrl = location.search;
 
-    if (newUrl !== currentUrl && !isSyncingFromUrl/**&& lastUrlRef.current !=newUrl */ ) {
-      // lastUrlRef.current=newUrl;
+    if (newUrl !== currentUrl && !isSyncingFromUrl) {
       // const getParamsWithoutTextFields = (url: string) => {
       //   const params = new URLSearchParams(url.substring(1));
       //   params.delete('name');
       //   params.delete('id');
       //   return params.toString();
       // };
-    
+
       // const newWithoutText = getParamsWithoutTextFields(newUrl);
       // const currentWithoutText = getParamsWithoutTextFields(currentUrl);
-      navigate(newUrl, {replace:false} /**{ replace: newWithoutText==currentWithoutText || !shouldPushHistory }*/);
+      navigate(
+        newUrl,
+        {
+          replace: false,
+        } /**{ replace: newWithoutText==currentWithoutText || !shouldPushHistory }*/
+      );
       // if (newWithoutText!=currentWithoutText && shouldPushHistory) {
       //   setShouldPushHistory(false);
       // }

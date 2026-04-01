@@ -24,7 +24,7 @@ export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
   const escape = useKeyPress('Escape');
-  
+
   useUrlSync();
 
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);

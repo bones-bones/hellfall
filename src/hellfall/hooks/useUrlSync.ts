@@ -38,7 +38,7 @@ import {
 export const useUrlSync = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   // Get all setters
 
   const setNameSearch = useSetAtom(nameSearchAtom);
@@ -79,25 +79,10 @@ export const useUrlSync = () => {
     if (!match) return undefined;
     return {
       operator: match[1] as '<' | '<=' | '=' | '>=' | '>',
-      value: parseInt(match[2])
+      value: parseInt(match[2]),
     };
   };
-  // useEffect(() => {
-  //   if (syncTimeoutRef.current) {
-  //     clearTimeout(syncTimeoutRef.current);
-  //   }
-  //   // Set flag to prevent useSearchResults from updating URL
-  //   setIsSyncingFromUrl(true);
-    
-  //   const params = new URLSearchParams(location.search);
-  //   // ... sync all atoms ...
-    
-  //   // Use setTimeout to reset the flag after atoms have updated
-  //   setTimeout(() => {
-  //     setIsSyncingFromUrl(false);
-  //   }, 0);
-  // }, [location.search]);
-  // // Sync URL params to state when URL changes (back/forward navigation)
+  
   useEffect(() => {
     if (syncTimeoutRef.current) {
       clearTimeout(syncTimeoutRef.current);
@@ -105,7 +90,7 @@ export const useUrlSync = () => {
 
     // Set flag to prevent useSearchResults from updating URL
     setIsSyncingFromUrl(true);
-    
+
     const params = new URLSearchParams(location.search);
     // Set search inputs
     setNameSearch(params.get('name') || '');
@@ -116,7 +101,7 @@ export const useUrlSync = () => {
     setFlavorSearch(params.get('flavor')?.split(',').filter(Boolean) || []);
     setCreators(params.get('creators')?.split(',,').filter(Boolean) || []);
     setTags(params.get('tags')?.split(',').filter(Boolean) || []);
-    
+
     // Set color filters
     setSearchColors(params.get('colors')?.split(',').filter(Boolean) || []);
     setColorComparison((params.get('colorComparison') as any) || '>=');
@@ -129,7 +114,7 @@ export const useUrlSync = () => {
     // Set set/legality filters
     setSearchSet(params.get('set')?.split(',').filter(Boolean) || []);
     setSearchToken((params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards');
-    setLegality(params.get('legality')?.split(',').filter(Boolean) as LegalType[] || []);
+    setLegality((params.get('legality')?.split(',').filter(Boolean) as LegalType[]) || []);
     setIsCommander(params.get('isCommander') === 'true');
 
     // Set numeric filters
@@ -146,7 +131,7 @@ export const useUrlSync = () => {
     // Set pagination and active card
     setPage(parseInt(params.get('page') || '0'));
     setActiveCard(params.get('activeCard') || '');
-    
+
     // Reset flag after all updates are complete
     syncTimeoutRef.current = setTimeout(() => {
       setIsSyncingFromUrl(false);

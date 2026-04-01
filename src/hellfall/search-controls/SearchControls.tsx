@@ -58,7 +58,9 @@ export const SearchControls = () => {
   const [colorComparison, setColorComparison] = useAtom(colorComparisonAtom);
   const [colorNumber, setColorNumber] = useAtom(colorNumberAtom);
   const [searchColorIdentities, setSearchColorIdentities] = useAtom(searchColorIdentitiesAtom);
-  const [colorIdentityComparison, setColorIdentityComparison] = useAtom(colorIdentityComparisonAtom);
+  const [colorIdentityComparison, setColorIdentityComparison] = useAtom(
+    colorIdentityComparisonAtom
+  );
   const [hybridIdentityRule, setHybridIdentityRule] = useAtom(hybridIdentityRuleAtom);
   const [colorIdentityNumber, setColorIdentityNumber] = useAtom(colorIdentityNumberAtom);
   const [searchSet, setSearchSet] = useAtom(searchSetAtom);
@@ -72,12 +74,12 @@ export const SearchControls = () => {
   // debouncing
   const [localName, setLocalName] = useState(nameSearch);
   const [localId, setLocalId] = useState(idSearch);
- 
+
   const [activeBox, setActiveBox] = useState<'name' | 'id' | null>(null);
   // const [isFirstInteraction, setIsFirstInteraction] = useState(true);
 
   const enterPressed = useKeyPress('Enter');
-  
+
   const [debouncedName, flushName] = useDebounce(localName, 300);
   const [debouncedId, flushId] = useDebounce(localId, 300);
 
@@ -172,16 +174,32 @@ export const SearchControls = () => {
           break;
       }
     }
-  }, [enterPressed, /**activeBox, localName, localId, nameSearch, idSearch,*/ setNameSearch, setIdSearch, flushName, flushId]); 
+  }, [
+    enterPressed,
+    /**activeBox, localName, localId, nameSearch, idSearch,*/ setNameSearch,
+    setIdSearch,
+    flushName,
+    flushId,
+  ]);
 
   return (
     <SearchContainer>
       <SearchCriteriaSection>
         <FormField label="Name">
-          <TextInput value={localName} onChange={event => setLocalName(event.target.value)} onFocus={handleNameFocus} onBlur={handleNameBlur} />
+          <TextInput
+            value={localName}
+            onChange={event => setLocalName(event.target.value)}
+            onFocus={handleNameFocus}
+            onBlur={handleNameBlur}
+          />
         </FormField>
         <FormField label="Id">
-          <TextInput value={localId} onChange={event => setLocalId(event.target.value)} onFocus={handleIdFocus} onBlur={handleIdBlur} />
+          <TextInput
+            value={localId}
+            onChange={event => setLocalId(event.target.value)}
+            onFocus={handleIdFocus}
+            onBlur={handleIdBlur}
+          />
         </FormField>
         <PillSearch
           label={'Cost'}
@@ -257,11 +275,7 @@ export const SearchControls = () => {
             </StyledManaSelect>
           </StyledComponentHolder>
         </NamedCheckboxGroup>
-        <NumberSelector
-          label={'Color Number'}
-          onChange={setColorNumber}
-          value={colorNumber}
-        />
+        <NumberSelector label={'Color Number'} onChange={setColorNumber} value={colorNumber} />
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
           values={
