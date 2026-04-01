@@ -48,7 +48,7 @@ export const fetchTokens = async () => {
     } as HCLegalitiesField,
     mana_cost: '',
     colors: [] as HCColors,
-    cmc: 0,
+    mana_value: 0,
     oracle_text: '',
     color_identity: [] as HCColors,
     color_identity_hybrid: [] as HCColors[],

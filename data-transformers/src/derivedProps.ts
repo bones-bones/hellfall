@@ -145,7 +145,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
         .join(' ') as string;
       face.type_line = face_type;
       type_line_list.push(face_type);
-      face.cmc = getMVFromCost(face.mana_cost);
+      face.mana_value = getMVFromCost(face.mana_cost);
       mana_cost_list.push(face.mana_cost);
     });
     card.type_line = type_line_list.join(' // ');

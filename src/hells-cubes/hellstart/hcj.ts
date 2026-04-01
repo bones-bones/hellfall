@@ -24,7 +24,7 @@ export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
     name: `${entry.name} - ${entry.tag}`,
     image: entry.url,
     image_status: HCImageStatus.HighRes,
-    cmc: 0,
+    mana_value: 0,
     creators: [],
     set: 'HCJ',
     rulings: '',

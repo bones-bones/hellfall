@@ -219,31 +219,31 @@ export const useSearchResults = () => {
         if (manaValue) {
           switch (manaValue.operator) {
             case '<=': {
-              if (!(entry.cmc <= manaValue.value)) {
+              if (!(entry.mana_value <= manaValue.value)) {
                 return false;
               }
               break;
             }
             case '<': {
-              if (!(entry.cmc < manaValue.value)) {
+              if (!(entry.mana_value < manaValue.value)) {
                 return false;
               }
               break;
             }
             case '=': {
-              if (!(entry.cmc == manaValue.value)) {
+              if (!(entry.mana_value == manaValue.value)) {
                 return false;
               }
               break;
             }
             case '>': {
-              if (!(entry.cmc > manaValue.value)) {
+              if (!(entry.mana_value > manaValue.value)) {
                 return false;
               }
               break;
             }
             case '>=': {
-              if (!(entry.cmc >= manaValue.value)) {
+              if (!(entry.mana_value >= manaValue.value)) {
                 return false;
               }
               break;

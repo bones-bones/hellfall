@@ -87,13 +87,13 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'power',
     'toughness',
     'mana_cost',
-    'cmc',
     'watermark',
     'attraction_lights',
     'type_line',
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
+    cmc:'mana_value'
   };
   const defaultProps: Record<string, any> = {
     rulings: '',
@@ -103,7 +103,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       '4cb': asToken ? HCLegality.NotLegal : HCLegality.Banned,
       commander: asToken ? HCLegality.NotLegal : HCLegality.Banned,
     } as HCLegalitiesField,
-    cmc: 0,
+    mana_value: 0,
     colors: [HCColor.Colorless] as HCColors,
     set: asToken ? 'SFT' : 'SFC',
     variation: false,
@@ -113,7 +113,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   };
   const defaultMultiFaceProps: Record<string, any> = {
     mana_cost: '',
-    cmc: 0,
+    mana_value: 0,
     colors: [HCColor.Colorless] as HCColors,
     oracle_text: '',
     image_status: HCImageStatus.Split,

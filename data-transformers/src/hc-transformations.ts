@@ -43,9 +43,9 @@ const oneWayMergeProps = [
   'attraction_lights',
   'watermark',
   'colors',
-  'cmc',
+  'mana_value',
 ];
-const cardBlankableProps = ['rulings', 'oracle_text', 'cmc', 'mana_cost'];
+const cardBlankableProps = ['rulings', 'oracle_text', 'mana_value', 'mana_cost'];
 const cardRemovableProps = [
   'tags',
   'tag_notes',
@@ -74,7 +74,7 @@ const tokenRemovableProps = [
   'not_directly_draftable',
   'has_draft_partners',
 ];
-const notMagicBlankableProps = ['oracle_text', 'cmc'];
+const notMagicBlankableProps = ['oracle_text', 'mana_value'];
 const notMagicRemovableProps = [
   'tags',
   'defense',
@@ -132,7 +132,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'image',
           'layout',
           'mana_cost',
-          'cmc',
+          'mana_value',
           'supertypes',
           'types',
           'subtypes',
@@ -170,7 +170,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'image_status',
           'image',
           'mana_cost',
-          'cmc',
+          'mana_value',
           'supertypes',
           'types',
           'subtypes',
@@ -268,7 +268,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
     oneWayMergeProps.forEach(prop => {
       if (prop in mergedPrelim) {
         mergedPrelim.card_faces[0][prop] = mergedPrelim[prop];
-        if (!['name', 'mana_cost', 'type_line', 'colors', 'cmc'].includes(prop)) {
+        if (!['name', 'mana_cost', 'type_line', 'colors', 'mana_value'].includes(prop)) {
           delete mergedPrelim[prop];
         }
       }

@@ -14,7 +14,7 @@ const PLACEHOLDER_CARD: Omit<HCCard.Normal, 'toFaces' | 'toJSON'> = {
   name: '◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎',
   image: 'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/G/l/i/iGlik/images.png',
   image_status: HCImageStatus.Placeholder,
-  cmc: 0,
+  mana_value: 0,
   creators: ['◻︎◻︎◻︎◻︎'],
   set: 'HC5',
   rulings: '',

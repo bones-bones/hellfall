@@ -152,7 +152,7 @@ const hcCardToCockCard = ({
     : face.types?.slice(-1)[0] || '';
 
   const cmc = xmlDoc.createElement('cmc');
-  cmc.textContent = entry.cmc.toString() || '';
+  cmc.textContent = entry.mana_value.toString() || '';
 
   const type = xmlDoc.createElement('type');
   type.textContent = face.type_line;

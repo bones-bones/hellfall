@@ -1,14 +1,14 @@
 import { HCCard } from '../api-types';
 import { HCColor, HCColors } from '../api-types';
-// TODO: make it possible to sort by color, then alpha, rather than color, then CMC
+// TODO: make it possible to sort by color, then alpha, rather than color, then MV
 // how they can combine: Alpha and ID are mutually exclusive, but none of the others are
 
 export const sortFunction =
-  (sortRule: 'Alpha' | 'CMC' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>
+  (sortRule: 'Alpha' | 'Mana Value' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>
   (a: HCCard.Any, b: HCCard.Any) => {
     switch (sortRule) {
-      case 'CMC': {
-        if (a.cmc > b.cmc) {
+      case 'Mana Value': {
+        if (a.mana_value > b.mana_value) {
           return dirRule == 'Desc' ? -1 : 1;
         }
         break;
@@ -76,7 +76,7 @@ const getSortString = (card: HCCard.Any) => {
     )
       .toString()
       .padStart(8, '0') +
-    (card.cmc || 0).toString().padStart(3) +
+    (card.mana_value || 0).toString().padStart(3) +
     card.name
   );
 };
