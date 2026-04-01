@@ -9,6 +9,7 @@ import {
   idSearchAtom,
   costSearchAtom,
   rulesSearchAtom,
+  flavorSearchAtom,
   searchCmcAtom,
   searchSetAtom,
   searchTokenAtom,
@@ -42,11 +43,12 @@ export const useResetSearch = () => {
   const setNameSearch = useSetAtom(nameSearchAtom);
   const setIdSearch = useSetAtom(idSearchAtom);
   const setCostSearch = useSetAtom(costSearchAtom);
+  const setCreators = useSetAtom(creatorsAtom);
   const setRulesSearch = useSetAtom(rulesSearchAtom);
+  const setFlavorSearch = useSetAtom(flavorSearchAtom);
   const setSearchCmc = useSetAtom(searchCmcAtom);
   const setSearchSet = useSetAtom(searchSetAtom);
   const setSearchToken = useSetAtom(searchTokenAtom);
-  const setCreators = useSetAtom(creatorsAtom);
   const setTypeSearch = useSetAtom(typeSearchAtom);
   const setColorComparison = useSetAtom(searchColorComparisonAtom);
   const setSearchColors = useSetAtom(searchColorsAtom);
@@ -77,8 +79,9 @@ export const useResetSearch = () => {
       setNameSearch('');
       setIdSearch('');
       setCostSearch([]);
-      setRulesSearch([]);
       setTypeSearch([]);
+      setRulesSearch([]);
+      setFlavorSearch([]);
       setCreators([]);
       setTags([]);
 
@@ -116,8 +119,9 @@ export const useResetSearch = () => {
     setNameSearch,
     setIdSearch,
     setCostSearch,
-    setRulesSearch,
     setTypeSearch,
+    setRulesSearch,
+    setFlavorSearch,
     setCreators,
     setTags,
     setSearchSet,

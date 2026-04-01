@@ -11,6 +11,8 @@ export const costSearchAtom = atom<string[]>(searchParams.get('cost')?.split(','
 
 export const rulesSearchAtom = atom<string[]>(searchParams.get('rules')?.split(',') || []);
 
+export const flavorSearchAtom = atom<string[]>(searchParams.get('flavor')?.split(',') || []);
+
 type LegalType = 'legal' | 'banned' | '4cbLegal' | 'hellsmanderLegal';
 
 export const legalityAtom = atom<LegalType[]>(

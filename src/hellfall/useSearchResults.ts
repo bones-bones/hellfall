@@ -12,6 +12,7 @@ import {
   offsetAtom,
   costSearchAtom,
   rulesSearchAtom,
+  flavorSearchAtom,
   searchCmcAtom,
   searchColorComparisonAtom,
   searchColorsAtom,
@@ -79,6 +80,7 @@ export const useSearchResults = () => {
   const cardsOrTokens = useAtomValue(searchTokenAtom);
   const costSearch = useAtomValue(costSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
+  const flavorSearch = useAtomValue(flavorSearchAtom);
   const idSearch = useAtomValue(idSearchAtom);
   const nameSearch = useAtomValue(nameSearchAtom);
   const searchCmc = useAtomValue(searchCmcAtom);
@@ -193,6 +195,23 @@ export const useSearchResults = () => {
             const combined = entry
               .toFaces()
               .map(e => e.oracle_text || '')
+              .join();
+            if (searchTerm.startsWith('!')) {
+              return !textSearchIncludes(combined, searchTerm.substring(1));
+            } else {
+              return textSearchIncludes(combined, searchTerm);
+            }
+          })
+        ) {
+          return false;
+        }
+
+        if (
+          flavorSearch.length > 0 &&
+          !flavorSearch.every(searchTerm => {
+            const combined = entry
+              .toFaces()
+              .map(e => e.flavor_text || '')
               .join();
             if (searchTerm.startsWith('!')) {
               return !textSearchIncludes(combined, searchTerm.substring(1));
@@ -690,6 +709,9 @@ export const useSearchResults = () => {
     if (rulesSearch.length > 0) {
       searchToSet.append('rules', rulesSearch.join(','));
     }
+    if (flavorSearch.length > 0) {
+      searchToSet.append('flavor', flavorSearch.join(','));
+    }
     if (set.length > 0) {
       searchToSet.append('set', set.join(','));
     }
@@ -771,6 +793,7 @@ export const useSearchResults = () => {
   }, [
     costSearch,
     rulesSearch,
+    flavorSearch,
     set,
     cardsOrTokens,
     searchColors,

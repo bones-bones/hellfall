@@ -16,6 +16,7 @@ import {
   idSearchAtom,
   costSearchAtom,
   rulesSearchAtom,
+  flavorSearchAtom,
   searchCmcAtom,
   searchSetAtom,
   searchTokenAtom,
@@ -49,6 +50,7 @@ export const SearchControls = () => {
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
   const [costSearch, setCostSearch] = useAtom(costSearchAtom);
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
+  const [flavorSearch, setFlavorSearch] = useAtom(flavorSearchAtom);
   const [searchCmc, setSearchCmc] = useAtom(searchCmcAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -106,16 +108,22 @@ export const SearchControls = () => {
           onChange={setCostSearch}
         />
         <PillSearch
+          label={'Type'}
+          possibleValues={cardTypes.data}
+          values={typeSearch}
+          onChange={setTypeSearch}
+        />
+        <PillSearch
           label={'Text'}
           possibleValues={[]}
           values={rulesSearch}
           onChange={setRulesSearch}
         />
         <PillSearch
-          label={'Type'}
-          possibleValues={cardTypes.data}
-          values={typeSearch}
-          onChange={setTypeSearch}
+          label={'Flavor'}
+          possibleValues={[]}
+          values={flavorSearch}
+          onChange={setFlavorSearch}
         />
         <PillSearch
           label={'Creator'}
