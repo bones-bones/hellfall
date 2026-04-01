@@ -45,35 +45,39 @@ export const toNumber = (numStr: string | undefined) => {
 
 export const NumericComparatorSelector = ({
   onChange,
-  initialValue,
+  value,
   label,
 }: {
   label: string;
   onChange?: ConditionalChange;
-  initialValue?: { value: number; operator: '<' | '<=' | '=' | '>=' | '>' | '' };
+  value?: { value: number; operator: '<' | '<=' | '=' | '>=' | '>' | '' };
 }) => {
-  const [value, setValue] = useState<undefined | number>(initialValue?.value);
+  const [localValue, setLocalValue] = useState<undefined | number>(value?.value);
 
-  const [operator, setConditional] = useState<'<' | '<=' | '=' | '>=' | '>'>(
-    initialValue?.operator || '='
+  const [localOperator, setLocalOperator] = useState<'<' | '<=' | '=' | '>=' | '>'>(
+    value?.operator || '='
   );
+  useEffect(() => {
+    setLocalValue(value?.value);
+    setLocalOperator(value?.operator || '=');
+  }, [value]);
 
   useEffect(() => {
-    if (value != undefined) {
-      onChange?.({ operator, value });
+    if (localValue != undefined && localOperator) {
+      onChange?.({ operator: localOperator, value: localValue });
     } else {
       onChange?.(undefined);
     }
-  }, [value, operator]);
+  }, [localValue, localOperator, onChange]);
   return (
     <fieldset>
       <StyledLegend>{label}</StyledLegend>
       <Container>
         <StyledManaSelect
-          defaultValue={operator}
-          value={operator}
+          // defaultValue={operator}
+          value={localOperator}
           onChange={event => {
-            setConditional(event.target.value as any);
+            setLocalOperator(event.target.value as any);
           }}
         >
           {[
@@ -89,12 +93,13 @@ export const NumericComparatorSelector = ({
         </StyledManaSelect>{' '}
         <StyledNumberInput
           type="number"
-          defaultValue={initialValue?.value}
-          onBlur={event => {
+          value={localValue != undefined ? localValue : ''}
+          onChange={event => {
             if (event.target.value == '') {
-              setValue(undefined);
+              const inputValue = event.target.value;
+              setLocalValue(undefined);
             } else {
-              setValue(toNumber(event.target.value));
+              setLocalValue(toNumber(event.target.value));
             }
           }}
         />

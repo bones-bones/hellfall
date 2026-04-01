@@ -1,15 +1,29 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Heading } from '@workday/canvas-kit-react/text';
 import { styled } from '@workday/canvas-kit-react/common';
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleSearchClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname === '/') {
+      // We're already on search, force a reset by navigating with state
+      navigate('/', { state: { reset: Date.now() }, replace: true });
+    } else {
+      navigate('/');
+    }
+  };
   return (
     <>
       <StyledHeader>
         <StyledHeading size="medium"> {" > it's hellfall"}</StyledHeading>
         <Navigation>
-          <Link to={'/'}>search</Link>, <Link to={'/card/random'}>random</Link>,{' '}
-          <Link to={'/draft'}>draft</Link>, <Link to={'/deck-builder'}>deck builder</Link>,{' '}
+          <Link to={'/'} onClick={handleSearchClick}>
+            search
+          </Link>
+          , <Link to={'/draft'}>draft</Link>, <Link to={'/deck-builder'}>deck builder</Link>,{' '}
           <Link to={'/hellscubes'}>cube resources</Link>, <Link to={'/land-box'}>land box</Link>,{' '}
           <Link to={'/decks'}>constructed</Link>, <Link to={'/Watchwolfwar'}>WatchWolfWar</Link>,{' '}
           <Link to={'https://discord.gg/EWFcAnVdkX'}>discord</Link>,{' '}

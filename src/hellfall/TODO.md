@@ -127,3 +127,4 @@ Write a script to transform the database
 - add phyrexian font
 - add double url (both id and name) like scryfall?
 - implement subtags
+- fix history and browser back buttons

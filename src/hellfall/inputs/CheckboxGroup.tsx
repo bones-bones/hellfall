@@ -7,15 +7,20 @@ import { HCSearchColor } from '../../api-types';
 export const CheckboxGroup: FC<
   PropsWithChildren<{
     values: string[];
-    initialValue?: string[];
+    value?: string[];
     onChange: (values: string[]) => void;
     label: string;
   }>
-> = ({ values, onChange, initialValue, label, children }) => {
-  const [selected, setSelected] = useState<string[]>(initialValue || []);
+> = ({ values, onChange, value = [], label, children }) => {
+  const [selected, setSelected] = useState<string[]>(value);
+
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
   useEffect(() => {
     onChange(selected);
-  }, [selected]);
+  }, [selected, onChange]);
+
   return (
     <fieldset>
       <StyledLegend>{label}</StyledLegend>
@@ -50,15 +55,21 @@ export const NamedCheckboxGroup: FC<
   PropsWithChildren<{
     names: string[];
     values: string[];
-    initialValue?: string[];
+    value?: string[];
     onChange: (values: string[]) => void;
     label: string;
   }>
-> = ({ names, values, onChange, initialValue, label, children }) => {
-  const [selected, setSelected] = useState<string[]>(initialValue || []);
+> = ({ names, values, onChange, value = [], label, children }) => {
+  const [selected, setSelected] = useState<string[]>(value);
+
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
+
   useEffect(() => {
     onChange(selected);
-  }, [selected]);
+  }, [selected, onChange]);
+
   return (
     <fieldset>
       <StyledLegend>{label}</StyledLegend>

@@ -18,13 +18,17 @@ import { CHUNK_SIZE } from './constants';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom';
 import { startTransition } from 'react';
+import { useResetSearch } from './useResetSearch';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
   const escape = useKeyPress('Escape');
 
+  useResetSearch();
+
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
+  const [offset, setOffset] = useAtom(offsetAtom);
 
   const activeCard = cards.find(entry => {
     return entry.id === activeCardFromAtom;
@@ -35,7 +39,6 @@ export const HellFall = () => {
       setActiveCardFromAtom('');
     }
   }, [escape]);
-  const [offset, setOffset] = useAtom(offsetAtom);
   const resultSet = useSearchResults();
 
   return (

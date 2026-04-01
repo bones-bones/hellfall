@@ -37,6 +37,8 @@ import {
 import { StyledLabel } from '../StyledLabel';
 import { CardLegalityControls } from './CardLegalityControls';
 import { StyledComponentHolder } from '../StyledComponentHolder';
+import { useDebounce } from '../../hooks/useDebounce';
+import { useEffect, useState } from 'react';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -66,64 +68,65 @@ export const SearchControls = () => {
   const [searchColorIdentityNumber, setSearchColorIdentityNumber] = useAtom(
     searchColorIdentityNumberAtom
   );
+  // debouncing
+  const [localName, setLocalName] = useState(nameSearch);
+  const [localId, setLocalId] = useState(idSearch);
+  const debouncedName = useDebounce(localName, 300);
+  const debouncedId = useDebounce(localId, 300);
+
+  useEffect(() => {
+    setLocalName(nameSearch);
+  }, [nameSearch]);
+
+  useEffect(() => {
+    setLocalId(idSearch);
+  }, [idSearch]);
+
+  useEffect(() => {
+    setNameSearch(debouncedName);
+  }, [debouncedName, setNameSearch]);
+
+  useEffect(() => {
+    setIdSearch(debouncedId);
+  }, [debouncedId, setIdSearch]);
 
   return (
     <SearchContainer>
       <SearchCriteriaSection>
         <FormField label="Name">
-          <TextInput
-            defaultValue={nameSearch}
-            onKeyDown={event => {
-              if (event.key == 'Enter') {
-                setNameSearch((event.target as any).value);
-              }
-            }}
-            onBlur={event => {
-              setNameSearch(event.target.value);
-            }}
-          />
+          <TextInput value={localName} onChange={event => setLocalName(event.target.value)} />
         </FormField>
         <FormField label="Id">
-          <TextInput
-            defaultValue={idSearch}
-            onKeyDown={event => {
-              if (event.key == 'Enter') {
-                setIdSearch((event.target as any).value);
-              }
-            }}
-            onBlur={event => {
-              setIdSearch(event.target.value);
-            }}
-          />
+          <TextInput value={localId} onChange={event => setLocalId(event.target.value)} />
         </FormField>
         <PillSearch
           label={'Cost'}
           possibleValues={[]}
-          defaultValues={costSearch}
+          values={costSearch}
           onChange={setCostSearch}
         />
         <PillSearch
           label={'Text'}
           possibleValues={[]}
-          defaultValues={rulesSearch}
+          values={rulesSearch}
           onChange={setRulesSearch}
         />
         <PillSearch
           label={'Type'}
           possibleValues={cardTypes.data}
-          defaultValues={typeSearch}
+          values={typeSearch}
           onChange={setTypeSearch}
         />
         <PillSearch
           label={'Creator'}
           possibleValues={creators_data.data}
-          defaultValues={creators}
+          values={creators}
           onChange={setCreators}
         />
         <PillSearch
           label={'Tags'}
           possibleValues={tags_data.data}
-          defaultValues={tags}
+          values={tags}
           onChange={setTags}
         />
       </SearchCriteriaSection>
@@ -145,7 +148,7 @@ export const SearchControls = () => {
               'Misc bullshit',
             ]
           }
-          initialValue={searchColors}
+          value={searchColors}
           onChange={setSearchColors}
         >
           <StyledComponentHolder>
@@ -167,7 +170,7 @@ export const SearchControls = () => {
         <NumberSelector
           label={'Color Number'}
           onChange={setSearchColorNumber}
-          initialValue={searchColorNumber}
+          value={searchColorNumber}
         />
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
@@ -186,7 +189,7 @@ export const SearchControls = () => {
               'Misc bullshit',
             ]
           }
-          initialValue={searchColorIdentities}
+          value={searchColorIdentities}
           onChange={setSearchColorIdentitiesAtom}
         >
           <StyledComponentHolder>
@@ -221,12 +224,12 @@ export const SearchControls = () => {
         <NumberSelector
           label={'Color Identity Number'}
           onChange={setSearchColorIdentityNumber}
-          initialValue={searchColorIdentityNumber}
+          value={searchColorIdentityNumber}
         />
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup
-          initialValue={set}
+          value={set}
           label={'Set'}
           values={[
             'HLC',
@@ -266,11 +269,11 @@ export const SearchControls = () => {
           </StyledComponentHolder>
         </CheckboxGroup>
         <CardLegalityControls />
-        <NumberSelector label={'Mana value'} onChange={setSearchCmc} initialValue={searchCmc} />
-        <NumberSelector label={'Power'} onChange={setPower} initialValue={power} />
-        <NumberSelector label={'Toughness'} onChange={setToughness} initialValue={toughness} />
-        <NumberSelector label={'Loyalty'} onChange={setLoyalty} initialValue={loyalty} />
-        <NumberSelector label={'Defense'} onChange={setDefense} initialValue={defense} />
+        <NumberSelector label={'Mana value'} onChange={setSearchCmc} value={searchCmc} />
+        <NumberSelector label={'Power'} onChange={setPower} value={power} />
+        <NumberSelector label={'Toughness'} onChange={setToughness} value={toughness} />
+        <NumberSelector label={'Loyalty'} onChange={setLoyalty} value={loyalty} />
+        <NumberSelector label={'Defense'} onChange={setDefense} value={defense} />
       </SearchCriteriaSection>
     </SearchContainer>
   );
