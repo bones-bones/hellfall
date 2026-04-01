@@ -15,66 +15,71 @@ import {
   nameSearchAtom,
   idSearchAtom,
   costSearchAtom,
+  typeSearchAtom,
   rulesSearchAtom,
   flavorSearchAtom,
-  searchCmcAtom,
+  creatorsAtom,
+  tagsAtom,
+  searchColorsAtom,
+  colorComparisonAtom,
+  colorNumberAtom,
+  searchColorIdentitiesAtom,
+  colorIdentityComparisonAtom,
+  hybridIdentityRuleAtom,
+  colorIdentityNumberAtom,
   searchSetAtom,
   searchTokenAtom,
-  creatorsAtom,
-  typeSearchAtom,
-  searchColorComparisonAtom,
-  searchColorsAtom,
-  searchColorNumberAtom,
-  searchColorIdentityComparisonAtom,
-  searchColorIdentitiesAtom,
-  searchColorIdentityNumberAtom,
-  useHybridIdentityAtom,
+  manaValueAtom,
   powerAtom,
   toughnessAtom,
   loyaltyAtom,
   defenseAtom,
-  tagsAtom,
+  // shouldPushHistoryAtom
 } from '../atoms/searchAtoms';
 import { StyledLabel } from '../StyledLabel';
 import { CardLegalityControls } from './CardLegalityControls';
 import { StyledComponentHolder } from '../StyledComponentHolder';
 import { useDebounce } from '../../hooks/useDebounce';
-import { useEffect, useState } from 'react';
+import { act, useEffect, useState } from 'react';
+import { useKeyPress } from '../../hooks';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
 export const SearchControls = () => {
-  const [set, setSet] = useAtom(searchSetAtom);
-  const [cardsOrTokens, setCardsOrTokens] = useAtom(searchTokenAtom);
   const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
   const [costSearch, setCostSearch] = useAtom(costSearchAtom);
+  const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [flavorSearch, setFlavorSearch] = useAtom(flavorSearchAtom);
-  const [searchCmc, setSearchCmc] = useAtom(searchCmcAtom);
+  const [creators, setCreators] = useAtom(creatorsAtom);
+  const [tags, setTags] = useAtom(tagsAtom);
+  const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
+  const [colorComparison, setColorComparison] = useAtom(colorComparisonAtom);
+  const [colorNumber, setColorNumber] = useAtom(colorNumberAtom);
+  const [searchColorIdentities, setSearchColorIdentities] = useAtom(searchColorIdentitiesAtom);
+  const [colorIdentityComparison, setColorIdentityComparison] = useAtom(colorIdentityComparisonAtom);
+  const [hybridIdentityRule, setHybridIdentityRule] = useAtom(hybridIdentityRuleAtom);
+  const [colorIdentityNumber, setColorIdentityNumber] = useAtom(colorIdentityNumberAtom);
+  const [searchSet, setSearchSet] = useAtom(searchSetAtom);
+  const [searchToken, setSearchToken] = useAtom(searchTokenAtom);
+  const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
   const [loyalty, setLoyalty] = useAtom(loyaltyAtom);
   const [defense, setDefense] = useAtom(defenseAtom);
-  const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
-  const [creators, setCreators] = useAtom(creatorsAtom);
-  const [tags, setTags] = useAtom(tagsAtom);
-  const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
-  const [colorComparison, setColorComparison] = useAtom(searchColorComparisonAtom);
-  const [searchColorNumber, setSearchColorNumber] = useAtom(searchColorNumberAtom);
-  const [searchColorIdentities, setSearchColorIdentitiesAtom] = useAtom(searchColorIdentitiesAtom);
-  const [colorIdentityComparison, setColorIdentityComparison] = useAtom(
-    searchColorIdentityComparisonAtom
-  );
-  const [useHybrid, setUseHybrid] = useAtom(useHybridIdentityAtom);
-  const [searchColorIdentityNumber, setSearchColorIdentityNumber] = useAtom(
-    searchColorIdentityNumberAtom
-  );
+
   // debouncing
   const [localName, setLocalName] = useState(nameSearch);
   const [localId, setLocalId] = useState(idSearch);
-  const debouncedName = useDebounce(localName, 300);
-  const debouncedId = useDebounce(localId, 300);
+ 
+  const [activeBox, setActiveBox] = useState<'name' | 'id' | null>(null);
+  // const [isFirstInteraction, setIsFirstInteraction] = useState(true);
+
+  const enterPressed = useKeyPress('Enter');
+  
+  const [debouncedName, flushName] = useDebounce(localName, 300);
+  const [debouncedId, flushId] = useDebounce(localId, 300);
 
   useEffect(() => {
     setLocalName(nameSearch);
@@ -92,14 +97,91 @@ export const SearchControls = () => {
     setIdSearch(debouncedId);
   }, [debouncedId, setIdSearch]);
 
+  // useEffect(() => {
+  //   if (debouncedName !== nameSearch && activeBox === 'name') {
+  //     setNameSearch(debouncedName);
+  //     if (isFirstInteraction) {
+  //       setIsFirstInteraction(false);
+  //     }
+  //   }
+  // }, [debouncedName, nameSearch, activeBox, isFirstInteraction, setNameSearch]);
+
+  // useEffect(() => {
+  //   if (debouncedId !== idSearch && activeBox === 'id') {
+  //     setIdSearch(debouncedId);
+  //     if (isFirstInteraction) {
+  //       setIsFirstInteraction(false);
+  //     }
+  //   }
+  // }, [debouncedId, idSearch, activeBox, isFirstInteraction, setIdSearch]);
+
+  const handleNameFocus = () => {
+    if (activeBox !== 'name') {
+      setActiveBox('name');
+      // setIsFirstInteraction(true);
+    }
+  };
+
+  const handleIdFocus = () => {
+    if (activeBox !== 'id') {
+      setActiveBox('id');
+      // setIsFirstInteraction(true);
+    }
+  };
+
+  const handleNameBlur = () => {
+    flushName();
+    // if (localName !== nameSearch) {
+    //   // setShouldPushHistory(true);
+    //   setNameSearch(localName);
+    //   setIsFirstInteraction(true);
+    // }
+    if (activeBox == 'name') {
+      setActiveBox(null);
+    }
+  };
+
+  const handleIdBlur = () => {
+    flushId();
+    // if (localId !== idSearch) {
+    //   // setShouldPushHistory(true);
+    //   setIdSearch(localId);
+    //   setIsFirstInteraction(true);
+    // }
+    if (activeBox == 'id') {
+      setActiveBox(null);
+    }
+  };
+
+  useEffect(() => {
+    if (enterPressed && activeBox) {
+      // setShouldPushHistory(true);
+      // setIsFirstInteraction(true);
+      switch (activeBox) {
+        case 'name':
+          flushName();
+          // if (localName !== nameSearch) {
+          //   setNameSearch(localName);
+          // }
+          break;
+        case 'id':
+          flushId();
+          // if (localId !== idSearch) {
+          //   setIdSearch(localId);
+          // }
+          break;
+      }
+    }
+  }, [enterPressed, /**activeBox, localName, localId, nameSearch, idSearch,*/ setNameSearch, setIdSearch, flushName, flushId]); 
+
   return (
     <SearchContainer>
       <SearchCriteriaSection>
         <FormField label="Name">
-          <TextInput value={localName} onChange={event => setLocalName(event.target.value)} />
+          <TextInput value={localName} onChange={event => setLocalName(event.target.value)} onFocus={handleNameFocus} onBlur={handleNameBlur} />
         </FormField>
         <FormField label="Id">
-          <TextInput value={localId} onChange={event => setLocalId(event.target.value)} />
+          <TextInput value={localId} onChange={event => setLocalId(event.target.value)} onFocus={handleIdFocus} onBlur={handleIdBlur} />
         </FormField>
         <PillSearch
           label={'Cost'}
@@ -126,7 +208,7 @@ export const SearchControls = () => {
           onChange={setFlavorSearch}
         />
         <PillSearch
-          label={'Creator'}
+          label={'Creator(s)'}
           possibleValues={creators_data.data}
           values={creators}
           onChange={setCreators}
@@ -177,8 +259,8 @@ export const SearchControls = () => {
         </NamedCheckboxGroup>
         <NumberSelector
           label={'Color Number'}
-          onChange={setSearchColorNumber}
-          value={searchColorNumber}
+          onChange={setColorNumber}
+          value={colorNumber}
         />
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
@@ -198,7 +280,7 @@ export const SearchControls = () => {
             ]
           }
           value={searchColorIdentities}
-          onChange={setSearchColorIdentitiesAtom}
+          onChange={setSearchColorIdentities}
         >
           <StyledComponentHolder>
             <StyledLabel htmlFor="styledColorIdentityelect">
@@ -222,22 +304,22 @@ export const SearchControls = () => {
             <SearchCheckbox
               id="useHybrid"
               type="checkbox"
-              checked={useHybrid === true}
+              checked={hybridIdentityRule === true}
               onChange={event => {
-                setUseHybrid(event.target.checked);
+                setHybridIdentityRule(event.target.checked);
               }}
             />
           </StyledComponentHolder>
         </NamedCheckboxGroup>
         <NumberSelector
           label={'Color Identity Number'}
-          onChange={setSearchColorIdentityNumber}
-          value={searchColorIdentityNumber}
+          onChange={setColorIdentityNumber}
+          value={colorIdentityNumber}
         />
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <CheckboxGroup
-          value={set}
+          value={searchSet}
           label={'Set'}
           values={[
             'HLC',
@@ -258,16 +340,16 @@ export const SearchControls = () => {
             'HCJ',
             'HKL',
           ]}
-          onChange={setSet}
+          onChange={setSearchSet}
         >
           <StyledComponentHolder>
             <StyledLabel htmlFor="cards or tokens">{'Cards/Tokens?'}</StyledLabel>
             <StyledManaSelect
               id="cards or tokens"
-              defaultValue={cardsOrTokens}
-              value={cardsOrTokens}
+              defaultValue={searchToken}
+              value={searchToken}
               onChange={event => {
-                setCardsOrTokens(event.target.value as any);
+                setSearchToken(event.target.value as any);
               }}
             >
               {['Cards', 'Tokens', 'Both'].map(entry => {
@@ -277,7 +359,7 @@ export const SearchControls = () => {
           </StyledComponentHolder>
         </CheckboxGroup>
         <CardLegalityControls />
-        <NumberSelector label={'Mana value'} onChange={setSearchCmc} value={searchCmc} />
+        <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />
         <NumberSelector label={'Power'} onChange={setPower} value={power} />
         <NumberSelector label={'Toughness'} onChange={setToughness} value={toughness} />
         <NumberSelector label={'Loyalty'} onChange={setLoyalty} value={loyalty} />

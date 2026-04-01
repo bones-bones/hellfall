@@ -1,136 +1,102 @@
-import { useState, useEffect } from 'react';
-import { HCCard } from '../api-types';
-import { HCColor, HCSearchColor, HCColors } from '../api-types';
-import { cardsAtom } from './atoms/cardsAtom';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router';
+import { HCCard } from '../../api-types';
+import { HCColor, HCSearchColor, HCColors } from '../../api-types';
+import { cardsAtom } from '../atoms/cardsAtom';
 import { useAtom, useAtomValue } from 'jotai';
 import {
-  activeCardAtom,
-  creatorsAtom,
-  legalityAtom,
-  idSearchAtom,
   nameSearchAtom,
-  offsetAtom,
+  idSearchAtom,
   costSearchAtom,
+  typeSearchAtom,
   rulesSearchAtom,
   flavorSearchAtom,
-  searchCmcAtom,
-  searchColorComparisonAtom,
+  creatorsAtom,
+  tagsAtom,
   searchColorsAtom,
-  searchColorNumberAtom,
-  searchColorIdentityComparisonAtom,
+  colorComparisonAtom,
+  colorNumberAtom,
   searchColorIdentitiesAtom,
-  searchColorIdentityNumberAtom,
-  useHybridIdentityAtom,
+  colorIdentityComparisonAtom,
+  hybridIdentityRuleAtom,
+  colorIdentityNumberAtom,
   searchSetAtom,
   searchTokenAtom,
-  sortAtom,
-  typeSearchAtom,
+  legalityAtom,
   isCommanderAtom,
+  manaValueAtom,
   powerAtom,
   toughnessAtom,
   loyaltyAtom,
   defenseAtom,
-  tagsAtom,
-  extraFiltersAtom,
+  sortAtom,
   dirAtom,
-} from './atoms/searchAtoms';
-import { sortFunction } from './sortFunction';
-import { canBeACommander } from './canBeACommander';
-import { debug } from 'console';
-import { toNumber } from './inputs/NumberSelector';
+  pageAtom,
+  activeCardAtom,
+  // shouldPushHistoryAtom,
+  isSyncingFromUrlAtom
+} from '../atoms/searchAtoms';
+
+import { sortFunction } from '../sortFunction';
+import { canBeACommander } from '../canBeACommander';
+import { toNumber } from '../inputs/NumberSelector';
 import {
   colorCompOp,
   colorMiscReduce,
   hybridColorCompOp,
   hybridIdentityMiscReduce,
-} from './colorComps';
-import { textEquals, textSearchIncludes } from './textHandling';
+} from '../colorComps';
+import { textEquals, textSearchIncludes } from '../textHandling';
 
 const isSetInResults = (set: string, setOptions: string[]) => {
   return Boolean(setOptions.find(e => set.includes(e)));
 };
-// export const textPrep = (text:string) => {
-//   return text.toLowerCase().replaceAll(/\\[n*]/g, '').replaceAll('\\(','(').replaceAll('\\)',')')
-// }
-// /**
-//  * Checks whether search text is in text from a card
-//  * @param cardText text from the card
-//  * @param searchText text to search for
-//  * @returns whether there is a match
-//  */
-// export const textSearchIncludes = (cardText: string, searchText: string) => {
-//   return cardText.toLowerCase().includes(searchText.toLowerCase()) || textPrep(cardText).includes(textPrep(searchText));
-// };
-// /**
-//  * Checks whether search text equals text from a card
-//  * @param cardText text from the card
-//  * @param searchText text to search for
-//  * @returns whether they are equal
-//  */
-// export const textEquals = (cardText: string, searchText: string) => {
-//   return cardText.toLowerCase() == searchText.toLowerCase() || textPrep(cardText) == textPrep(searchText);
-// };
-
 export const useSearchResults = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // const lastUrlRef = useRef<string>();
+
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
   const cards = useAtomValue(cardsAtom).filter(
     e => !['C', 'HC0'].includes(e.set) && !e.tags?.includes('offensive')
   );
-  const set = useAtomValue(searchSetAtom);
-  const cardsOrTokens = useAtomValue(searchTokenAtom);
+  const nameSearch = useAtomValue(nameSearchAtom);
+  const idSearch = useAtomValue(idSearchAtom);
   const costSearch = useAtomValue(costSearchAtom);
+  const typeSearch = useAtomValue(typeSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const flavorSearch = useAtomValue(flavorSearchAtom);
-  const idSearch = useAtomValue(idSearchAtom);
-  const nameSearch = useAtomValue(nameSearchAtom);
-  const searchCmc = useAtomValue(searchCmcAtom);
-  const legality = useAtomValue(legalityAtom);
-  const typeSearch = useAtomValue(typeSearchAtom);
-  const sortRule = useAtomValue(sortAtom);
-  const dirRule = useAtomValue(dirAtom);
   const creators = useAtomValue(creatorsAtom);
+  const tags = useAtomValue(tagsAtom);
   const searchColors = useAtomValue(searchColorsAtom);
-  const colorComparison = useAtomValue(searchColorComparisonAtom);
-  const searchColorNumber = useAtomValue(searchColorNumberAtom);
+  const colorComparison = useAtomValue(colorComparisonAtom);
+  const colorNumber = useAtomValue(colorNumberAtom);
   const searchColorIdentities = useAtomValue(searchColorIdentitiesAtom);
-  const colorIdentityComparison = useAtomValue(searchColorIdentityComparisonAtom);
-  const searchColorIdentityNumber = useAtomValue(searchColorIdentityNumberAtom);
-  const useHybrid = useAtomValue(useHybridIdentityAtom);
-  const activeCard = useAtomValue(activeCardAtom);
+  const colorIdentityComparison = useAtomValue(colorIdentityComparisonAtom);
+  const hybridIdentityRule = useAtomValue(hybridIdentityRuleAtom);
+  const colorIdentityNumber = useAtomValue(colorIdentityNumberAtom);
+  const searchSet = useAtomValue(searchSetAtom);
+  const searchToken = useAtomValue(searchTokenAtom);
+  const legality = useAtomValue(legalityAtom);
   const isCommander = useAtomValue(isCommanderAtom);
-  const [page, setPageAtom] = useAtom(offsetAtom);
+  const manaValue = useAtomValue(manaValueAtom);
   const power = useAtomValue(powerAtom);
   const toughness = useAtomValue(toughnessAtom);
   const loyalty = useAtomValue(loyaltyAtom);
   const defense = useAtomValue(defenseAtom);
-  const tags = useAtomValue(tagsAtom);
-  const extraFilters = useAtomValue(extraFiltersAtom);
-  const MISC_BULLSHIT = 'Misc bullshit';
-  const miscColors = [
-    'Pickle',
-    'Yellow',
-    'Brown',
-    'Pink',
-    'Teal',
-    'Orange',
-    'TEMU',
-    'Cyan',
-    'Gold',
-    'Beige',
-    'Grey',
-  ]; //Object.values(HCMiscColor); /**as unknown as HCColor[] */
+  const sortRule = useAtomValue(sortAtom);
+  const dirRule = useAtomValue(dirAtom);
+  const [page, setPageAtom] = useAtom(pageAtom);
+  const activeCard = useAtomValue(activeCardAtom);
+  // const [shouldPushHistory, setShouldPushHistory] = useAtom(shouldPushHistoryAtom);
+  const [isSyncingFromUrl, setIsSyncingFromUrl] = useAtom(isSyncingFromUrlAtom);
 
   useEffect(() => {
-    // console.log('useSearchResults effect running', {
-    //   searchColors,
-    //   searchColorIdentities,
-    //   // add others
-    // });
     const tempResults = cards
       .filter(entry => {
-        switch (cardsOrTokens) {
+        switch (searchToken) {
           case 'Cards':
-            if (set.length > 0 && !isSetInResults(entry.set, set)) {
+            if (searchSet.length > 0 && !isSetInResults(entry.set, searchSet)) {
               return false;
             }
             if (entry.isActualToken) {
@@ -139,31 +105,31 @@ export const useSearchResults = () => {
             break;
           case 'Tokens':
             if (
-              set.length > 0 &&
+              searchSet.length > 0 &&
               !(
                 'all_parts' in entry &&
                 entry.all_parts
                   ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
-                  .some(part => isSetInResults(part.set, set))
+                  .some(part => isSetInResults(part.set, searchSet))
               )
             ) {
               return false;
             }
-            if (set.length == 0 && !entry.isActualToken) {
+            if (searchSet.length == 0 && !entry.isActualToken) {
               return false;
             }
             break;
           case 'Both':
-            if (set.length > 0) {
+            if (searchSet.length > 0) {
               if (
-                !isSetInResults(entry.set, set) &&
+                !isSetInResults(entry.set, searchSet) &&
                 !(
                   'all_parts' in entry &&
                   entry.all_parts
                     ?.filter(e =>
                       ['token_maker', 'meld_part', 'draft_partner'].includes(e.component)
                     )
-                    .some(part => isSetInResults(part.set, set))
+                    .some(part => isSetInResults(part.set, searchSet))
                 )
               ) {
                 return false;
@@ -250,34 +216,34 @@ export const useSearchResults = () => {
           return false;
         }
 
-        if (searchCmc) {
-          switch (searchCmc.operator) {
+        if (manaValue) {
+          switch (manaValue.operator) {
             case '<=': {
-              if (!(entry.cmc <= searchCmc.value)) {
+              if (!(entry.cmc <= manaValue.value)) {
                 return false;
               }
               break;
             }
             case '<': {
-              if (!(entry.cmc < searchCmc.value)) {
+              if (!(entry.cmc < manaValue.value)) {
                 return false;
               }
               break;
             }
             case '=': {
-              if (!(entry.cmc == searchCmc.value)) {
+              if (!(entry.cmc == manaValue.value)) {
                 return false;
               }
               break;
             }
             case '>': {
-              if (!(entry.cmc > searchCmc.value)) {
+              if (!(entry.cmc > manaValue.value)) {
                 return false;
               }
               break;
             }
             case '>=': {
-              if (!(entry.cmc >= searchCmc.value)) {
+              if (!(entry.cmc >= manaValue.value)) {
                 return false;
               }
               break;
@@ -567,36 +533,36 @@ export const useSearchResults = () => {
           }
         }
 
-        if (searchColorNumber) {
+        if (colorNumber) {
           const cardColorNumber = entry.colors.length;
 
-          switch (searchColorNumber.operator) {
+          switch (colorNumber.operator) {
             case '<': {
-              if (!(cardColorNumber < searchColorNumber.value)) {
+              if (!(cardColorNumber < colorNumber.value)) {
                 return false;
               }
               break;
             }
             case '<=': {
-              if (!(cardColorNumber <= searchColorNumber.value)) {
+              if (!(cardColorNumber <= colorNumber.value)) {
                 return false;
               }
               break;
             }
             case '=': {
-              if (cardColorNumber !== searchColorNumber.value) {
+              if (cardColorNumber !== colorNumber.value) {
                 return false;
               }
               break;
             }
             case '>=': {
-              if (!(cardColorNumber >= searchColorNumber.value)) {
+              if (!(cardColorNumber >= colorNumber.value)) {
                 return false;
               }
               break;
             }
             case '>': {
-              if (!(cardColorNumber > searchColorNumber.value)) {
+              if (!(cardColorNumber > colorNumber.value)) {
                 return false;
               }
               break;
@@ -604,36 +570,36 @@ export const useSearchResults = () => {
           }
         }
 
-        if (searchColorIdentityNumber) {
+        if (colorIdentityNumber) {
           const cardColorIdentityNumber = entry.color_identity.length;
 
-          switch (searchColorIdentityNumber.operator) {
+          switch (colorIdentityNumber.operator) {
             case '<': {
-              if (!(cardColorIdentityNumber < searchColorIdentityNumber.value)) {
+              if (!(cardColorIdentityNumber < colorIdentityNumber.value)) {
                 return false;
               }
               break;
             }
             case '<=': {
-              if (!(cardColorIdentityNumber <= searchColorIdentityNumber.value)) {
+              if (!(cardColorIdentityNumber <= colorIdentityNumber.value)) {
                 return false;
               }
               break;
             }
             case '=': {
-              if (cardColorIdentityNumber !== searchColorIdentityNumber.value) {
+              if (cardColorIdentityNumber !== colorIdentityNumber.value) {
                 return false;
               }
               break;
             }
             case '>=': {
-              if (!(cardColorIdentityNumber >= searchColorIdentityNumber.value)) {
+              if (!(cardColorIdentityNumber >= colorIdentityNumber.value)) {
                 return false;
               }
               break;
             }
             case '>': {
-              if (!(cardColorIdentityNumber > searchColorIdentityNumber.value)) {
+              if (!(cardColorIdentityNumber > colorIdentityNumber.value)) {
                 return false;
               }
               break;
@@ -657,7 +623,7 @@ export const useSearchResults = () => {
         }
 
         if (searchColorIdentities.length > 0) {
-          if (useHybrid) {
+          if (hybridIdentityRule) {
             if (
               !hybridColorCompOp(
                 hybridIdentityMiscReduce(entry.color_identity_hybrid),
@@ -700,11 +666,11 @@ export const useSearchResults = () => {
     if (idSearch != '') {
       searchToSet.append('id', idSearch);
     }
-    if (typeSearch.length > 0) {
-      searchToSet.append('type', typeSearch.join(','));
-    }
     if (costSearch.length > 0) {
       searchToSet.append('cost', costSearch.join(','));
+    }
+    if (typeSearch.length > 0) {
+      searchToSet.append('type', typeSearch.join(','));
     }
     if (rulesSearch.length > 0) {
       searchToSet.append('rules', rulesSearch.join(','));
@@ -712,50 +678,50 @@ export const useSearchResults = () => {
     if (flavorSearch.length > 0) {
       searchToSet.append('flavor', flavorSearch.join(','));
     }
-    if (set.length > 0) {
-      searchToSet.append('set', set.join(','));
+    if (creators.length > 0) {
+      searchToSet.append('creators', creators.join(',,'));
     }
-    if (cardsOrTokens != 'Cards') {
-      searchToSet.append('token', cardsOrTokens);
+    if (tags.length > 0) {
+      searchToSet.append('tags', tags.join(','));
     }
     if (searchColors.length > 0) {
       searchToSet.append('colors', searchColors.join(','));
     }
+    if (colorComparison !== '>=') {
+      searchToSet.append('colorComparison', colorComparison);
+    }
+    if (colorNumber) {
+      searchToSet.append('colorNumber', `${colorNumber.operator}${colorNumber.value}`);
+    }
     if (searchColorIdentities.length > 0) {
       searchToSet.append('colorIdentity', searchColorIdentities.join(','));
     }
-    if (searchColorNumber) {
-      searchToSet.append('colorNumber', `${searchColorNumber.operator}${searchColorNumber.value}`);
+    if (colorIdentityComparison !== '<=') {
+      searchToSet.append('colorIdentityComparison', colorIdentityComparison);
     }
-    if (searchColorIdentityNumber) {
+    if (hybridIdentityRule) {
+      searchToSet.append('hybridIdentityRule', 'true');
+    }
+    if (colorIdentityNumber) {
       searchToSet.append(
         'colorIdentityNumber',
-        `${searchColorIdentityNumber.operator}${searchColorIdentityNumber.value}`
+        `${colorIdentityNumber.operator}${colorIdentityNumber.value}`
       );
     }
-    if (useHybrid) {
-      searchToSet.append('useHybrid', 'true');
+    if (searchSet.length > 0) {
+      searchToSet.append('set', searchSet.join(','));
     }
-    if (searchCmc) {
-      searchToSet.append('manaValue', `${searchCmc.operator}${searchCmc.value}`);
+    if (searchToken != 'Cards') {
+      searchToSet.append('token', searchToken);
     }
     if (legality.length > 0) {
       searchToSet.append('legality', legality.join(','));
     }
-    if (creators.length > 0) {
-      searchToSet.append('creator', creators.join(',,'));
-    }
     if (isCommander) {
       searchToSet.append('isCommander', 'true');
     }
-    if (activeCard !== '') {
-      searchToSet.append('activeCard', activeCard);
-    }
-    if (colorComparison !== '>=') {
-      searchToSet.append('colorComparison', colorComparison);
-    }
-    if (colorIdentityComparison !== '<=') {
-      searchToSet.append('colorIdentityComparison', colorIdentityComparison);
+    if (manaValue) {
+      searchToSet.append('manaValue', `${manaValue.operator}${manaValue.value}`);
     }
     if (power) {
       searchToSet.append('p', `${power.operator}${power.value}`);
@@ -769,9 +735,6 @@ export const useSearchResults = () => {
     if (defense) {
       searchToSet.append('d', `${defense.operator}${defense.value}`);
     }
-    if (tags.length > 0) {
-      searchToSet.append('tags', tags.join(','));
-    }
     if (sortRule != 'Color') {
       searchToSet.append('order', sortRule);
     }
@@ -784,42 +747,67 @@ export const useSearchResults = () => {
     } else if (page > 0) {
       searchToSet.append('page', page.toString());
     }
+    if (activeCard !== '') {
+      searchToSet.append('activeCard', activeCard);
+    }
 
-    history.pushState(
-      undefined,
-      '',
-      location.origin + location.pathname + '?' + searchToSet.toString()
-    );
+    // history.pushState(
+    //   undefined,
+    //   '',
+    //   location.origin + location.pathname + '?' + searchToSet.toString()
+    // );
+    const newUrl = `?${searchToSet.toString()}`;
+    const currentUrl = location.search;
+
+    if (newUrl !== currentUrl && !isSyncingFromUrl/**&& lastUrlRef.current !=newUrl */ ) {
+      // lastUrlRef.current=newUrl;
+      // const getParamsWithoutTextFields = (url: string) => {
+      //   const params = new URLSearchParams(url.substring(1));
+      //   params.delete('name');
+      //   params.delete('id');
+      //   return params.toString();
+      // };
+    
+      // const newWithoutText = getParamsWithoutTextFields(newUrl);
+      // const currentWithoutText = getParamsWithoutTextFields(currentUrl);
+      navigate(newUrl, {replace:false} /**{ replace: newWithoutText==currentWithoutText || !shouldPushHistory }*/);
+      // if (newWithoutText!=currentWithoutText && shouldPushHistory) {
+      //   setShouldPushHistory(false);
+      // }
+    }
   }, [
-    costSearch,
-    rulesSearch,
-    flavorSearch,
-    set,
-    cardsOrTokens,
-    searchColors,
-    searchColorIdentities,
-    searchColorNumber,
-    searchColorIdentityNumber,
     nameSearch,
     idSearch,
-    sortRule,
-    dirRule,
+    costSearch,
     typeSearch,
-    searchCmc,
-    tags,
-    cards.length,
-    legality,
+    rulesSearch,
+    flavorSearch,
     creators,
-    useHybrid,
-    activeCard,
-    page,
+    tags,
+    searchColors,
     colorComparison,
+    colorNumber,
+    searchColorIdentities,
     colorIdentityComparison,
+    hybridIdentityRule,
+    colorIdentityNumber,
+    searchSet,
+    searchToken,
+    legality,
     isCommander,
+    manaValue,
     power,
     toughness,
     loyalty,
     defense,
+    sortRule,
+    dirRule,
+    page,
+    activeCard,
+    // shouldPushHistory,
+    // isSyncingFromUrl,
+    cards.length,
+    // location.search,
   ]);
 
   return resultSet;

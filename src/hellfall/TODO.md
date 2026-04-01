@@ -40,10 +40,8 @@ Write a script to transform the database
   ~~- mobile support~~
   ~~- Script to fetch and transform sheets directly from google doc~~
 - sort by color but not cmc
-- use mv instead of cmc
 - make better search syntax (like allowing or)
 - tell users how to use not and/or make it easier to use not (!)
-- make pagination work with browser back button and make it go back to page 1 when search changes
 - make changes in url correctly work with forward and back buttons in browser
 - implement grid type layout (has singlefaceonly attributes for overall card, but also has card_faces)
 - make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
@@ -88,9 +86,7 @@ Write a script to transform the database
   - revamp fetch function to deal better with cards that have multiple printings (use bar and set like mtgcardfetcher does; allow use of id; allow use of )
   - make more accessible options for multiside and flip cards (like how scryfall does it) (make sure it works on the actual search page too)
 - make links work in card text
-- indicate that IOU and Phyrexian Goblin Creature Copy are not directly draftable
 - make sure that accents don't interfere with search (test with Niccolò Machiavelli)
-- add flavor text search
 - special cases: Scared Turtle // Snappy Turtle for flip, , Force of Rowan (for draft), Italic Plagiarist (italics in typeline with regular types)
 
   - add grid (that allows root-level stuff as well as faces?)?
@@ -128,3 +124,8 @@ Write a script to transform the database
 - add double url (both id and name) like scryfall?
 - implement subtags
 - fix history and browser back buttons
+- make pagination work with browser back button
+<!-- - decide whether to make pagination it go back to page 1 when search changes (ask on discord) -->
+- use mv instead of cmc (do this in db too)
+- prevent search entries from filling history for text
+- fix image layout stuff (expand layout on search page to take up more space; shrink image on related cards; make window resizeable)

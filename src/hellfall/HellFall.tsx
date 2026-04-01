@@ -10,25 +10,25 @@ import { HellfallCard } from './card/HellfallCard';
 import { Card } from '@workday/canvas-kit-react/card';
 import { ToolbarIconButton } from '@workday/canvas-kit-react/button';
 import { useAtom, useAtomValue } from 'jotai';
-import { activeCardAtom, offsetAtom } from './atoms/searchAtoms';
-import { useSearchResults } from './useSearchResults';
+import { activeCardAtom, pageAtom } from './atoms/searchAtoms';
+import { useSearchResults } from './hooks/useSearchResults';
 import { SearchControls } from './search-controls/SearchControls';
 import { SortComponent } from './search-controls/SortComponent';
 import { CHUNK_SIZE } from './constants';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom';
 import { startTransition } from 'react';
-import { useResetSearch } from './useResetSearch';
+import { useUrlSync } from './hooks/useUrlSync';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
   const escape = useKeyPress('Escape');
-
-  useResetSearch();
+  
+  useUrlSync();
 
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const [offset, setOffset] = useAtom(offsetAtom);
+  const [page, setPage] = useAtom(pageAtom);
 
   const activeCard = cards.find(entry => {
     return entry.id === activeCardFromAtom;
@@ -65,7 +65,7 @@ export const HellFall = () => {
       <SortComponent />
       <ResultCount ref={containerRef}>{`${resultSet.length} card(s)`}</ResultCount>
       <Container>
-        {resultSet.slice(offset, offset + CHUNK_SIZE).map((entry, i) => (
+        {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
           <HellfallEntry
             onClick={(event: React.MouseEvent<HTMLImageElement>) => {
               if (event.button === 1 || event.metaKey || event.ctrlKey) {
@@ -98,10 +98,10 @@ export const HellFall = () => {
       </Container>
       <PaginationComponent
         onChange={val => {
-          setOffset(val);
+          setPage(val);
           containerRef.current?.scrollIntoView({ behavior: 'smooth' });
         }}
-        initialCurrentPage={offset}
+        initialCurrentPage={page}
         chunkSize={CHUNK_SIZE}
         total={resultSet.length}
       />
