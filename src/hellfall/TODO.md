@@ -123,9 +123,6 @@ Write a script to transform the database
 - add phyrexian font
 - add double url (both id and name) like scryfall?
 - implement subtags
-- fix history and browser back buttons
-- make pagination work with browser back button
 <!-- - decide whether to make pagination it go back to page 1 when search changes (ask on discord) -->
-- use mv instead of cmc (do this in db too)
 - prevent search entries from filling history for text
 - fix image layout stuff (expand layout on search page to take up more space; shrink image on related cards; make window resizeable)
