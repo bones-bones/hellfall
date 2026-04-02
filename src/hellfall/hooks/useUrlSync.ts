@@ -82,7 +82,7 @@ export const useUrlSync = () => {
       value: parseInt(match[2]),
     };
   };
-  
+
   useEffect(() => {
     if (syncTimeoutRef.current) {
       clearTimeout(syncTimeoutRef.current);

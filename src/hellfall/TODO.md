@@ -125,4 +125,4 @@ Write a script to transform the database
 - implement subtags
 <!-- - decide whether to make pagination it go back to page 1 when search changes (ask on discord) -->
 - prevent search entries from filling history for text
-- fix image layout stuff (expand layout on search page to take up more space; shrink image on related cards; make window resizeable)
+- make popup window resizeable

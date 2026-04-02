@@ -52,7 +52,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
       {imagesToShow.length === 0 ? (
         <Test>
           <ImageContainer key="image-container">
-            <img src={data.image!} height="500px" referrerPolicy="no-referrer" />
+            <img
+              src={data.image!}
+              style={{ maxHeight: '500px', maxWidth: '700px' }}
+              referrerPolicy="no-referrer"
+            />
           </ImageContainer>
         </Test>
       ) : (
@@ -60,7 +64,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           <ImageContainer key={imagesToShow[activeImageSide] || data.image}>
             <img
               src={imagesToShow[activeImageSide] || data.image!}
-              height="500px"
+              style={{ maxHeight: '500px', maxWidth: '700px' }}
               referrerPolicy="no-referrer"
             />
           </ImageContainer>
@@ -324,6 +328,8 @@ const Container = styled.div({
   alignItems: 'center',
   fontSize: '16px',
   justifyContent: 'center',
+  maxWidth: '700px',
+  width: '100%',
 });
 
 const ItalicText = styled(Text)({ fontStyle: 'italic' });
@@ -337,6 +343,16 @@ const Test = styled.div({
 const ImageContainer = styled.div({
   display: 'flex',
   overflow: 'auto',
+  height: '500px',
+  alignItems: 'center',
+  justifyContent: 'center',
+  '& img': {
+    maxHeight: '100%',
+    maxWidth: '100%',
+    width: 'auto',
+    height: 'auto',
+    objectFit: 'contain',
+  },
 });
 const StyledHeading = styled(Heading)({
   marginTop: '0px',

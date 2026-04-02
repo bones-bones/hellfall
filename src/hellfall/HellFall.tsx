@@ -65,36 +65,38 @@ export const HellFall = () => {
       <SortComponent />
       <ResultCount ref={containerRef}>{`${resultSet.length} card(s)`}</ResultCount>
       <Container>
-        {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
-          <HellfallEntry
-            onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-              if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-              } else {
-                startTransition(() => {
-                  setActiveCardFromAtom(entry.id);
-                });
+        <CardsGrid>
+          {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+            <HellfallEntry
+              onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                  window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                } else {
+                  startTransition(() => {
+                    setActiveCardFromAtom(entry.id);
+                  });
+                }
+              }}
+              // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+              //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
+              //     window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+              //   } else {
+              //     startTransition(() => {
+              //       setActiveCardFromAtom(entry.id);
+              //     });
+              //   }
+              // }}
+              key={'' + entry.id + '-' + i}
+              id={entry.id}
+              name={entry.name}
+              url={
+                'card_faces' in entry && entry.layout == 'meld_part' && entry.card_faces[0].image
+                  ? entry.card_faces[0].image
+                  : entry.image!
               }
-            }}
-            // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-            //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
-            //     window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-            //   } else {
-            //     startTransition(() => {
-            //       setActiveCardFromAtom(entry.id);
-            //     });
-            //   }
-            // }}
-            key={'' + entry.id + '-' + i}
-            id={entry.id}
-            name={entry.name}
-            url={
-              'card_faces' in entry && entry.layout == 'meld_part' && entry.card_faces[0].image
-                ? entry.card_faces[0].image
-                : entry.image!
-            }
-          />
-        ))}
+            />
+          ))}
+        </CardsGrid>
       </Container>
       <PaginationComponent
         onChange={val => {
@@ -111,8 +113,26 @@ export const HellFall = () => {
 const ResultCount = styled('h5')({ display: 'flex', justifyContent: 'center' });
 const Container = styled('div')({
   display: 'flex',
+  justifyContent: 'center',
+  // flexWrap: 'wrap',
+  width: '100%',
+  padding: '0 16px',
+});
+
+const CardsGrid = styled('div')({
+  display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
+  alignItems: 'center',
+  maxWidth: '1300px', // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
+  width: '100%',
+  gap: '0px',
+  margin: '0 auto',
+
+  // When the viewport is smaller, allow the container to shrink
+  '@media (max-width: 1300px)': {
+    maxWidth: '100%',
+  },
 });
 
 const StyledSidePanel = styled(SidePanel)({

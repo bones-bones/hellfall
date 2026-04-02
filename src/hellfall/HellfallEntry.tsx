@@ -28,16 +28,24 @@ export const HellfallEntry = ({
 };
 
 const StyledImage = styled.img({
-  maxWidth: '250px',
+  maxWidth: '500px',
   maxHeight: '340px',
 });
 
 const Container = styled.div({
-  width: '250px',
+  height: '340px',
+  // maxWidth:'500px',
   display: 'inline-block',
   padding: '5px',
   cursor: 'pointer',
   position: 'relative',
+  '& img': {
+    maxHeight: '100%',
+    maxWidth: '100%',
+    width: 'auto',
+    height: 'auto',
+    objectFit: 'contain',
+  },
 });
 
 const VisuallyHiddenSpan = styled.span({
@@ -75,13 +83,22 @@ export const HellfallRelatedEntry = ({
   );
 };
 const RelatedStyledImage = styled.img({
-  height: '500px',
+  // height: '500px',
+  maxHeight: '450px',
+  maxWidth: '320px',
 });
 
 const RelatedContainer = styled.div({
-  // width: '250px',
+  display: 'flex',
+  overflow: 'auto',
   height: '500px',
-  display: 'inline-block',
-  padding: '5px',
-  cursor: 'pointer',
+  alignItems: 'center',
+  justifyContent: 'center',
+  '& img': {
+    maxHeight: '100%',
+    maxWidth: '100%',
+    width: 'auto',
+    height: 'auto',
+    objectFit: 'contain',
+  },
 });
