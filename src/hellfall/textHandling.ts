@@ -232,8 +232,5 @@ export const formatParens = (text: string) => {
  * @returns prepped name
  */
 export const toExportName = (name: string) => {
-  return name
-    .replaceAll(/[[{]/g, '(')
-    .replaceAll(/[\]}]/g, ')')
-    .replaceAll('\\', '');
+  return name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll('\\', '');
 };

@@ -72,6 +72,39 @@ export const fetchTokens = async () => {
     'Carrion Feeder from MH8',
   ];
 
+  const tagList = [
+    'pokemon',
+    'mario',
+    'my-little-pony',
+    'barbie',
+    'super-smash-bros',
+    'dune',
+    'disney',
+    'earthworm-jim',
+    'sesame-street',
+    'pixar',
+    'wwe',
+    'universal',
+    'konami',
+    'yugioh',
+    'garfield',
+    'scooby-doo',
+    'marvel',
+    'godzilla',
+    'spongebob',
+    'star-wars',
+    'zelda',
+    'pvz',
+    'slay-the-spire',
+    'south-park',
+    'undertale',
+    'lego',
+    'final-fantasy',
+    'where-in-the-world-is-carmen-sandiego',
+    'inscryption',
+    'gaslighting',
+  ];
+
   const HCTokens = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
@@ -117,6 +150,8 @@ export const fetchTokens = async () => {
             };
             return maker;
           });
+        } else if (keys[i] == 'oracle_text' && tagList.includes(entry[i])) {
+          tokenObject.tags = [entry[i]];
         } else {
           tokenObject[keys[i]] = entry[i];
         }

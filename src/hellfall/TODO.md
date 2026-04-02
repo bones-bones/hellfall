@@ -126,3 +126,6 @@ Write a script to transform the database
 <!-- - decide whether to make pagination it go back to page 1 when search changes (ask on discord) -->
 - prevent search entries from filling history for text
 - make popup window resizeable
+- figure out how to make max row width more dynamic
+- add real-card-reference tags
+- fix uno +2/+4 names
