@@ -420,11 +420,11 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       } else if (merged.set == 'NotMagic' && key == 'rulings') {
         // TODO: store current version and print the diff if there is one
       } else if (merged.isActualToken && key == 'tags' && 'tags' in merged) {
-        value.forEach((tag:string) => {
+        value.forEach((tag: string) => {
           if (!merged.tags?.includes(tag)) {
             merged.tags?.push(tag);
           }
-        })
+        });
         // TODO: store current version and print the diff if there is one
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;

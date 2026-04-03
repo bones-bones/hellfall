@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { HellfallEntry } from './HellfallEntry';
 import { xIcon } from '@workday/canvas-system-icons-web';
 
@@ -41,6 +41,27 @@ export const HellFall = () => {
   }, [escape]);
   const resultSet = useSearchResults();
 
+  const getMaxRowWidth = () => {
+    const cardWidth = 340 / 1.4 + 10;
+    const cardNum = Math.floor((window.innerWidth - 32) / cardWidth);
+    return cardWidth * cardNum;
+  };
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const maxWidth = useMemo(() => {
+    const cardWidth = 340 / 1.4 + 10;
+    const cardNum = Math.floor(windowWidth / cardWidth);
+    debugger;
+    return cardWidth * cardNum + 5;
+  }, [windowWidth]);
+
   return (
     <div>
       <StyledSidePanel
@@ -65,7 +86,7 @@ export const HellFall = () => {
       <SortComponent />
       <ResultCount ref={containerRef}>{`${resultSet.length} card(s)`}</ResultCount>
       <Container>
-        <CardsGrid>
+        <CardsGrid $maxWidth={maxWidth}>
           {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
             <HellfallEntry
               onClick={(event: React.MouseEvent<HTMLImageElement>) => {
@@ -116,24 +137,23 @@ const Container = styled('div')({
   justifyContent: 'center',
   // flexWrap: 'wrap',
   width: '100%',
-  padding: '0 16px',
 });
 
-const CardsGrid = styled('div')({
+const CardsGrid = styled('div')<{ $maxWidth: number }>(({ $maxWidth }) => ({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
   alignItems: 'center',
-  maxWidth: '1300px', // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
+  maxWidth: $maxWidth + 'px', // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
   width: '100%',
   gap: '0px',
   margin: '0 auto',
 
-  // When the viewport is smaller, allow the container to shrink
-  '@media (max-width: 1300px)': {
-    maxWidth: '100%',
-  },
-});
+  // // When the viewport is smaller, allow the container to shrink
+  // '@media (max-width: 1300px)': {
+  //   maxWidth: '100%',
+  // },
+}));
 
 const StyledSidePanel = styled(SidePanel)({
   zIndex: 40,

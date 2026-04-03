@@ -295,14 +295,14 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                             '_blank';
                         }
                       }}
-                      onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-                        if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                          window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-                        } else {
-                          (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
-                            '_blank';
-                        }
-                      }}
+                      // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+                      //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                      //     window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                      //   } else {
+                      //     (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
+                      //       '_blank';
+                      //   }
+                      // }}
                       key={entry.id}
                       id={entry.id}
                       name={entry.name}
