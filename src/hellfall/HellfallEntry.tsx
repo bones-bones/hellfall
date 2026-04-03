@@ -95,14 +95,15 @@ const RelatedStyledImage = styled.img({
 const RelatedContainer = styled.div({
   display: 'flex',
   overflow: 'auto',
-  height: '500px',
+  maxheight: '500px',
   alignItems: 'center',
   justifyContent: 'center',
-  '& img': {
-    maxHeight: '100%',
-    maxWidth: '100%',
-    width: 'auto',
-    height: 'auto',
-    objectFit: 'contain',
-  },
+  padding: '5px',
+  // '& img': {
+  //   maxHeight: '100%',
+  //   maxWidth: '100%',
+  //   width: 'auto',
+  //   height: 'auto',
+  //   objectFit: 'contain',
+  // },
 });

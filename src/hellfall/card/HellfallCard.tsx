@@ -117,7 +117,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           </ButtonContainer>
         </>
       )}
-      <Card>
+      <Card style={{ width: '100%' }}>
         <Card.Body padding={'zero'}>
           {/* {'card_faces' in data && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading>} */}
           {data.toFaces().map((face, i) => (
@@ -355,8 +355,7 @@ const Container = styled.div({
   alignItems: 'center',
   fontSize: '16px',
   justifyContent: 'center',
-  maxWidth: '700px',
-  width: '100%',
+  // width: '100%',
 });
 
 const ItalicText = styled(Text)({ fontStyle: 'italic' });
@@ -373,6 +372,7 @@ const ImageContainer = styled.div({
   height: '500px',
   alignItems: 'center',
   justifyContent: 'center',
+  maxWidth: '700px',
   '& img': {
     maxHeight: '100%',
     maxWidth: '100%',
