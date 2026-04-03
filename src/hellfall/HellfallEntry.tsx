@@ -40,7 +40,7 @@ const Container = styled.div({
   padding: '5px',
   position: 'relative',
   '& img': {
-    maxHeight: '100%',
+    // maxHeight: '100%',
     maxWidth: '100%',
     width: 'auto',
     height: 'auto',
@@ -99,11 +99,11 @@ const RelatedContainer = styled.div({
   alignItems: 'center',
   justifyContent: 'center',
   padding: '5px',
-  // '& img': {
-  //   maxHeight: '100%',
-  //   maxWidth: '100%',
-  //   width: 'auto',
-  //   height: 'auto',
-  //   objectFit: 'contain',
-  // },
+  '& img': {
+    // maxHeight: '100%',
+    maxWidth: '100%',
+    width: 'auto',
+    height: 'auto',
+    objectFit: 'contain',
+  },
 });

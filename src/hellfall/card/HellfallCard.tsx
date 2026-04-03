@@ -310,34 +310,36 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <Divider />
               <div>
                 <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
-                {data.all_parts
-                  .filter(e => e.id != data.id)
-                  .map((entry, i) => (
-                    <HellfallRelatedEntry
-                      onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                        if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                          window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-                        } else {
-                          (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
-                            '_blank';
-                        }
-                      }}
-                      // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-                      //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                      //     window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-                      //   } else {
-                      //     (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
-                      //       '_blank';
-                      //   }
-                      // }}
-                      key={entry.id}
-                      id={entry.id}
-                      name={entry.name}
-                      url={entry.image!}
-                    />
+                <RelatedGrid>
+                  {data.all_parts
+                    .filter(e => e.id != data.id)
+                    .map((entry, i) => (
+                      <HellfallRelatedEntry
+                        onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                          if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                            window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                          } else {
+                            (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
+                              '_blank';
+                          }
+                        }}
+                        // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+                        //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                        //     window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                        //   } else {
+                        //     (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
+                        //       '_blank';
+                        //   }
+                        // }}
+                        key={entry.id}
+                        id={entry.id}
+                        name={entry.name}
+                        url={entry.image!}
+                      />
 
-                    // <img key={entry.name + i} src={entry.image} height="500px" />
-                  ))}
+                      // <img key={entry.name + i} src={entry.image} height="500px" />
+                    ))}
+                </RelatedGrid>
               </div>
             </>
           )}
@@ -393,3 +395,14 @@ const Divider = styled.div({
 });
 
 const ButtonContainer = styled.div();
+
+const RelatedGrid = styled('div')({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  alignItems: 'center',
+  // maxWidth: '700px', // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
+  width: '100%',
+  gap: '0px',
+  margin: '0 auto',
+});

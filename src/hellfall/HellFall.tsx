@@ -144,11 +144,6 @@ const CardsGrid = styled('div')<{ $maxWidth: number }>(({ $maxWidth }) => ({
   width: '100%',
   gap: '0px',
   margin: '0 auto',
-
-  // // When the viewport is smaller, allow the container to shrink
-  // '@media (max-width: 1300px)': {
-  //   maxWidth: '100%',
-  // },
 }));
 
 const StyledSidePanel = styled(SidePanel)({
