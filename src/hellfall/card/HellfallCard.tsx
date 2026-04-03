@@ -8,7 +8,7 @@ import { HCCard } from '../../api-types/Card/Card';
 import { HellfallRelatedEntry } from '../HellfallEntry';
 
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
@@ -43,18 +43,45 @@ const getImages = (card: HCCard.Any) => {
 };
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const [activeImageSide, setActiveImageSide] = useState(0);
+  const windowRef = useRef<HTMLDivElement>(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  // useEffect(() => {
+  //   const handleResize = () => setWindowWidth(window.innerWidth);
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
+
+  useEffect(() => {
+    if (!windowRef.current) return;
+    
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setWindowWidth(entry.contentRect.width);
+      }
+    });
+    
+    resizeObserver.observe(windowRef.current);
+    
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+  const maxWidth = useMemo(() => {
+    return Math.min(windowWidth-10,700)
+  }, [windowWidth]);
+  
   // TODO: add handling for flip and aftermath
   const imagesToShow = getImages(data);
 
   return (
-    <Container key={data.id}>
+    <Container ref={windowRef} key={data.id}>
       {imagesToShow.length === 0 ? (
         <Test>
           <ImageContainer key="image-container">
             <img
               src={data.image!}
-              style={{ maxHeight: '500px', maxWidth: '700px' }}
+              style={{ maxHeight: '500px', maxWidth: maxWidth+'px' }}
               referrerPolicy="no-referrer"
             />
           </ImageContainer>
@@ -64,7 +91,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           <ImageContainer key={imagesToShow[activeImageSide] || data.image}>
             <img
               src={imagesToShow[activeImageSide] || data.image!}
-              style={{ maxHeight: '500px', maxWidth: '700px' }}
+              style={{ maxHeight: '500px', maxWidth: maxWidth+'px' }}
               referrerPolicy="no-referrer"
             />
           </ImageContainer>
