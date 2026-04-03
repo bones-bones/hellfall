@@ -52,16 +52,13 @@ export const HellFall = () => {
   const maxWidth = useMemo(() => {
     const cardWidth = 340 / 1.4 + 10;
     const cardNum = Math.floor(windowWidth / cardWidth);
-    // 1512 on my computer for now
-    // debugger;
     return cardWidth * cardNum + 5;
   }, [windowWidth]);
 
   return (
     <div>
       <StyledSidePanel
-        // openWidth={window.innerWidth > 450 ? 810 : 400}
-        openWidth={windowWidth*0.535}
+        openWidth={windowWidth * 0.535}
         openDirection={SidePanelOpenDirection.Right}
         open={!!activeCard}
       >
@@ -94,15 +91,6 @@ export const HellFall = () => {
                   });
                 }
               }}
-              // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-              //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
-              //     window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-              //   } else {
-              //     startTransition(() => {
-              //       setActiveCardFromAtom(entry.id);
-              //     });
-              //   }
-              // }}
               key={'' + entry.id + '-' + i}
               id={entry.id}
               name={entry.name}

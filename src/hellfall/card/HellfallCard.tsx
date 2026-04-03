@@ -46,31 +46,25 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // useEffect(() => {
-  //   const handleResize = () => setWindowWidth(window.innerWidth);
-  //   window.addEventListener('resize', handleResize);
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
-
   useEffect(() => {
     if (!windowRef.current) return;
-    
-    const resizeObserver = new ResizeObserver((entries) => {
+
+    const resizeObserver = new ResizeObserver(entries => {
       for (const entry of entries) {
         setWindowWidth(entry.contentRect.width);
       }
     });
-    
+
     resizeObserver.observe(windowRef.current);
-    
+
     return () => {
       resizeObserver.disconnect();
     };
   }, []);
   const maxWidth = useMemo(() => {
-    return Math.min(windowWidth-10,700)
+    return Math.min(windowWidth - 10, 700);
   }, [windowWidth]);
-  
+
   // TODO: add handling for flip and aftermath
   const imagesToShow = getImages(data);
 
@@ -81,7 +75,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           <ImageContainer key="image-container">
             <img
               src={data.image!}
-              style={{ maxHeight: '500px', maxWidth: maxWidth+'px' }}
+              style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
             />
           </ImageContainer>
@@ -91,7 +85,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           <ImageContainer key={imagesToShow[activeImageSide] || data.image}>
             <img
               src={imagesToShow[activeImageSide] || data.image!}
-              style={{ maxHeight: '500px', maxWidth: maxWidth+'px' }}
+              style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
             />
           </ImageContainer>
@@ -319,25 +313,16 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                           if (event.button === 1 || event.metaKey || event.ctrlKey) {
                             window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
                           } else {
-                            (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
+                            (window.location.href =
+                              '/hellfall/card/' + encodeURIComponent(entry.id)),
                               '_blank';
                           }
                         }}
-                        // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-                        //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                        //     window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-                        //   } else {
-                        //     (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
-                        //       '_blank';
-                        //   }
-                        // }}
                         key={entry.id}
                         id={entry.id}
                         name={entry.name}
                         url={entry.image!}
                       />
-
-                      // <img key={entry.name + i} src={entry.image} height="500px" />
                     ))}
                 </RelatedGrid>
               </div>
@@ -357,7 +342,6 @@ const Container = styled.div({
   alignItems: 'center',
   fontSize: '16px',
   justifyContent: 'center',
-  // width: '100%',
 });
 
 const ItalicText = styled(Text)({ fontStyle: 'italic' });
@@ -401,7 +385,6 @@ const RelatedGrid = styled('div')({
   flexWrap: 'wrap',
   justifyContent: 'center',
   alignItems: 'center',
-  // maxWidth: '700px', // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
   width: '100%',
   gap: '0px',
   margin: '0 auto',

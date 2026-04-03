@@ -113,7 +113,6 @@ Write a script to transform the database
 - add name override for 🂓 (domino)
 - fix order of color words in text
 - on individual card pages, make tab name same as card name
-- fix window resizing issues
 - add color inference for faces
 - when adding flip, make it independent of side for Bubsy, Furred Kind
 - add ability to have color indicator pips in text (for 6246)
@@ -126,6 +125,5 @@ Write a script to transform the database
 <!-- - decide whether to make pagination it go back to page 1 when search changes (ask on discord) -->
 - prevent search entries from filling history for text
 - make popup window resizeable
-- figure out how to make max row width more dynamic
 - add real-card-reference tags
 - fix uno +2/+4 names

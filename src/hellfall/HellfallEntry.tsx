@@ -5,17 +5,15 @@ export const HellfallEntry = ({
   id,
   name,
   onClick,
-}: // onClickTitle,
-{
+}: {
   url: string;
   id: string;
   name: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
-  // onClickTitle?: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
   return (
     <Container key={id} role="button">
-      <VisuallyHiddenSpan key={id} /** onClick={onClickTitle}*/>{name}</VisuallyHiddenSpan>
+      <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
       <StyledImage
         key={id}
         src={url}
@@ -35,12 +33,10 @@ const StyledImage = styled.img({
 
 const Container = styled.div({
   height: '340px',
-  // maxWidth:'500px',
   display: 'inline-block',
   padding: '5px',
   position: 'relative',
   '& img': {
-    // maxHeight: '100%',
     maxWidth: '100%',
     width: 'auto',
     height: 'auto',
@@ -64,17 +60,15 @@ export const HellfallRelatedEntry = ({
   id,
   name,
   onClick,
-}: // onClickTitle,
-{
+}: {
   url: string;
   id: string;
   name: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
-  // onClickTitle?: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
   return (
     <RelatedContainer key={id} role="button">
-      <VisuallyHiddenSpan key={id} /** onClick={onClickTitle}*/>{name}</VisuallyHiddenSpan>
+      <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
       <RelatedStyledImage
         key={id}
         src={url}
@@ -86,7 +80,6 @@ export const HellfallRelatedEntry = ({
   );
 };
 const RelatedStyledImage = styled.img({
-  // height: '500px',
   maxHeight: '450px',
   maxWidth: '320px',
   cursor: 'pointer',
@@ -100,7 +93,6 @@ const RelatedContainer = styled.div({
   justifyContent: 'center',
   padding: '5px',
   '& img': {
-    // maxHeight: '100%',
     maxWidth: '100%',
     width: 'auto',
     height: 'auto',
