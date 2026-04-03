@@ -41,12 +41,6 @@ export const HellFall = () => {
   }, [escape]);
   const resultSet = useSearchResults();
 
-  const getMaxRowWidth = () => {
-    const cardWidth = 340 / 1.4 + 10;
-    const cardNum = Math.floor((window.innerWidth - 32) / cardWidth);
-    return cardWidth * cardNum;
-  };
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -58,18 +52,20 @@ export const HellFall = () => {
   const maxWidth = useMemo(() => {
     const cardWidth = 340 / 1.4 + 10;
     const cardNum = Math.floor(windowWidth / cardWidth);
-    debugger;
+    // 1512 on my computer for now
+    // debugger;
     return cardWidth * cardNum + 5;
   }, [windowWidth]);
 
   return (
     <div>
       <StyledSidePanel
-        openWidth={window.screen.width > 450 ? 810 : 400}
+        // openWidth={window.innerWidth > 450 ? 810 : 400}
+        openWidth={windowWidth*0.535}
         openDirection={SidePanelOpenDirection.Right}
         open={!!activeCard}
       >
-        {!!activeCard && (
+        {activeCard && (
           <Card>
             <Card.Body padding={'zero'}>
               <SPContainer>

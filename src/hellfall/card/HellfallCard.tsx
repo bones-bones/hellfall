@@ -8,7 +8,7 @@ import { HCCard } from '../../api-types/Card/Card';
 import { HellfallRelatedEntry } from '../HellfallEntry';
 
 import { Link } from 'react-router-dom';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
