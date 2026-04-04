@@ -44,10 +44,7 @@ Write a script to transform the database
 - tell users how to use not and/or make it easier to use not (!)
 - make changes in url correctly work with forward and back buttons in browser
 - implement grid type layout (has singlefaceonly attributes for overall card, but also has card_faces)
-- make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
-- make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
-- switch search to text bar and make the mass of buttons hidden as advanced search
 - see if any better images are floating around for HC2 in general
 - full documentation
 - use draft_image for full image of multisided cards?
@@ -104,7 +101,6 @@ Write a script to transform the database
   - instead of move_grid and poly, do general graph/net datastructure
 
 - add hybrid color identity number search prop?
-- add extras button for card/tokens, constructed cube, HC0, etc.
 - add community standards hider for offensive hc0s
 - make brackets in cardnames not break anything
 - add variations to hellfallcard?
@@ -128,3 +124,14 @@ Write a script to transform the database
 - add real-card-reference tags
 - fix uno +2/+4 names
 - dynamically reorder related in HellfallCard to minimize empty space while maximizing image width
+- implement smart quotes (autoconvert normal quotes to left/right quotes on page)
+- add button to expose card json? and copy/pastable card details?
+- add extras button for card/tokens, constructed cube, HC0, etc.
+- switch search to text bar and make the mass of buttons hidden as advanced search
+  - make separate filter method that takes in search keyword, operator, and search term and filters cards appropriately
+  <!-- - add `Record<string,string[]>` of equivalents for shorthand versions of search keywords (use scryfall) -->
+  - make 2 new top-level types: 1 for search terms that has props for kind of search term, equivalents, and parsing and 1 for keywords that has props for values and equivalents (`Record<string,string[]>`) (optional), default operator, search term type, and equivalent keywords
+  - add methods for other ones
+  - add handling for invalid keywords
+  - add search bar interface and move full controls to advanced search page
+  - make isCommander an option for LegalType

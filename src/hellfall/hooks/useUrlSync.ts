@@ -21,7 +21,7 @@ import {
   searchSetAtom,
   searchTokenAtom,
   legalityAtom,
-  isCommanderAtom,
+  // isCommanderAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -59,7 +59,7 @@ export const useUrlSync = () => {
   const setSearchSet = useSetAtom(searchSetAtom);
   const setSearchToken = useSetAtom(searchTokenAtom);
   const setLegality = useSetAtom(legalityAtom);
-  const setIsCommander = useSetAtom(isCommanderAtom);
+  // const setIsCommander = useSetAtom(isCommanderAtom);
   const setManaValue = useSetAtom(manaValueAtom);
   const setPower = useSetAtom(powerAtom);
   const setToughness = useSetAtom(toughnessAtom);
@@ -108,14 +108,22 @@ export const useUrlSync = () => {
     setColorNumber(parseOperatorValue(params.get('colorNumber')));
     setSearchColorIdentities(params.get('colorIdentity')?.split(',').filter(Boolean) || []);
     setColorIdentityComparison((params.get('colorIdentityComparison') as any) || '<=');
-    setHybridIdentityRule(params.get('useHybrid') === 'true');
+    setHybridIdentityRule(params.get('hybridIdentityRule') === 'true');
     setColorIdentityNumber(parseOperatorValue(params.get('colorIdentityNumber')));
 
     // Set set/legality filters
     setSearchSet(params.get('set')?.split(',').filter(Boolean) || []);
     setSearchToken((params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards');
-    setLegality((params.get('legality')?.split(',').filter(Boolean) as LegalType[]) || []);
-    setIsCommander(params.get('isCommander') === 'true');
+    setLegality(
+      (params.get('legality')?.split(',').filter(Boolean) as (
+        | 'legal'
+        | 'banned'
+        | '4cbLegal'
+        | 'hellsmanderLegal'
+        | 'isCommander'
+      )[]) || []
+    );
+    // setIsCommander(params.get('isCommander') === 'true');
 
     // Set numeric filters
     setManaValue(parseOperatorValue(params.get('manaValue')));

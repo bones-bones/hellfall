@@ -66,17 +66,27 @@ export const colorIdentityNumberAtom = atom<
 
 export const searchSetAtom = atom(searchParams.get('set')?.split(',') || []);
 
+export const includeExtraSetsAtom = atom(searchParams.get('includeExtraSets') == 'true');
+
 export const searchTokenAtom = atom(
   (searchParams.get('token') || 'Cards') as 'Cards' | 'Tokens' | 'Both'
 );
 
+export const extraSetsAtom = atom(searchParams.get('extraSets')?.split(',') || []);
+
 export type LegalType = 'legal' | 'banned' | '4cbLegal' | 'hellsmanderLegal';
 
-export const legalityAtom = atom<LegalType[]>(
-  (searchParams.get('legality')?.split(',') || []) as LegalType[]
+export const legalityAtom = atom<string[]>(
+  (searchParams.get('legality')?.split(',') || []) as (
+    | 'legal'
+    | 'banned'
+    | '4cbLegal'
+    | 'hellsmanderLegal'
+    | 'isCommander'
+  )[]
 );
 
-export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
+// export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
 
 export const manaValueAtom = atom<
   { value: number; operator: '<' | '<=' | '=' | '>=' | '>' } | undefined

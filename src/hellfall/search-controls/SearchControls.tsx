@@ -1,6 +1,12 @@
 import styled from '@emotion/styled';
 
-import { CheckboxGroup, NamedCheckboxGroup /**ColorCheckboxGroup*/ } from '../inputs';
+import {
+  CheckboxGroup,
+  NamedCheckboxGroup,
+  BoxlessCheckboxGroup,
+  SingleCheckbox,
+  NamedHiddenCheckboxGroup /**ColorCheckboxGroup*/,
+} from '../inputs';
 import { PillSearch } from '../inputs';
 import { TextInput } from '@workday/canvas-kit-react/text-input';
 import { FormField } from '@workday/canvas-kit-react/form-field';
@@ -8,7 +14,6 @@ import cardTypes from '../../data/types.json';
 import creators_data from '../../data/creators.json';
 import tags_data from '../../data/tags.json';
 import { NumberSelector } from '../inputs';
-import { SearchCheckbox } from './SearchCheckbox';
 
 import { useAtom } from 'jotai';
 import {
@@ -28,7 +33,10 @@ import {
   hybridIdentityRuleAtom,
   colorIdentityNumberAtom,
   searchSetAtom,
+  includeExtraSetsAtom,
+  extraSetsAtom,
   searchTokenAtom,
+  legalityAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -36,8 +44,7 @@ import {
   defenseAtom,
   // shouldPushHistoryAtom
 } from '../atoms/searchAtoms';
-import { StyledLabel } from '../StyledLabel';
-import { CardLegalityControls } from './CardLegalityControls';
+import { StyledLabel, StyledLegend } from '../StyledLabel';
 import { StyledComponentHolder } from '../StyledComponentHolder';
 import { useDebounce } from '../../hooks/useDebounce';
 import { act, useEffect, useState } from 'react';
@@ -64,7 +71,13 @@ export const SearchControls = () => {
   const [hybridIdentityRule, setHybridIdentityRule] = useAtom(hybridIdentityRuleAtom);
   const [colorIdentityNumber, setColorIdentityNumber] = useAtom(colorIdentityNumberAtom);
   const [searchSet, setSearchSet] = useAtom(searchSetAtom);
+  const [includeExtraSets, setIncludeExtraSets] = useAtom(includeExtraSetsAtom);
+  const [extraSets, setExtraSets] = useAtom(extraSetsAtom);
   const [searchToken, setSearchToken] = useAtom(searchTokenAtom);
+  const [open, setOpen] = useState(
+    includeExtraSets || extraSets.length > 0 || searchToken != 'Cards'
+  );
+  const [legality, setLegality] = useAtom(legalityAtom);
   const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -76,7 +89,6 @@ export const SearchControls = () => {
   const [localId, setLocalId] = useState(idSearch);
 
   const [activeBox, setActiveBox] = useState<'name' | 'id' | null>(null);
-  // const [isFirstInteraction, setIsFirstInteraction] = useState(true);
 
   const enterPressed = useKeyPress('Enter');
 
@@ -99,45 +111,20 @@ export const SearchControls = () => {
     setIdSearch(debouncedId);
   }, [debouncedId, setIdSearch]);
 
-  // useEffect(() => {
-  //   if (debouncedName !== nameSearch && activeBox === 'name') {
-  //     setNameSearch(debouncedName);
-  //     if (isFirstInteraction) {
-  //       setIsFirstInteraction(false);
-  //     }
-  //   }
-  // }, [debouncedName, nameSearch, activeBox, isFirstInteraction, setNameSearch]);
-
-  // useEffect(() => {
-  //   if (debouncedId !== idSearch && activeBox === 'id') {
-  //     setIdSearch(debouncedId);
-  //     if (isFirstInteraction) {
-  //       setIsFirstInteraction(false);
-  //     }
-  //   }
-  // }, [debouncedId, idSearch, activeBox, isFirstInteraction, setIdSearch]);
-
   const handleNameFocus = () => {
     if (activeBox !== 'name') {
       setActiveBox('name');
-      // setIsFirstInteraction(true);
     }
   };
 
   const handleIdFocus = () => {
     if (activeBox !== 'id') {
       setActiveBox('id');
-      // setIsFirstInteraction(true);
     }
   };
 
   const handleNameBlur = () => {
     flushName();
-    // if (localName !== nameSearch) {
-    //   // setShouldPushHistory(true);
-    //   setNameSearch(localName);
-    //   setIsFirstInteraction(true);
-    // }
     if (activeBox == 'name') {
       setActiveBox(null);
     }
@@ -145,11 +132,6 @@ export const SearchControls = () => {
 
   const handleIdBlur = () => {
     flushId();
-    // if (localId !== idSearch) {
-    //   // setShouldPushHistory(true);
-    //   setIdSearch(localId);
-    //   setIsFirstInteraction(true);
-    // }
     if (activeBox == 'id') {
       setActiveBox(null);
     }
@@ -157,30 +139,16 @@ export const SearchControls = () => {
 
   useEffect(() => {
     if (enterPressed && activeBox) {
-      // setShouldPushHistory(true);
-      // setIsFirstInteraction(true);
       switch (activeBox) {
         case 'name':
           flushName();
-          // if (localName !== nameSearch) {
-          //   setNameSearch(localName);
-          // }
           break;
         case 'id':
           flushId();
-          // if (localId !== idSearch) {
-          //   setIdSearch(localId);
-          // }
           break;
       }
     }
-  }, [
-    enterPressed,
-    /**activeBox, localName, localId, nameSearch, idSearch,*/ setNameSearch,
-    setIdSearch,
-    flushName,
-    flushId,
-  ]);
+  }, [enterPressed, setNameSearch, setIdSearch, flushName, flushId]);
 
   return (
     <SearchContainer>
@@ -260,9 +228,9 @@ export const SearchControls = () => {
           onChange={setSearchColors}
         >
           <StyledComponentHolder>
-            <StyledLabel htmlFor="styledManaSelect">{'Color Comparison'}</StyledLabel>
-            <StyledManaSelect
-              id="styledManaSelect"
+            <StyledLabel htmlFor="StyledDropdownSelect">{'Color Comparison'}</StyledLabel>
+            <StyledDropdownSelect
+              id="StyledDropdownSelect"
               defaultValue={colorComparison}
               value={colorComparison}
               onChange={event => {
@@ -272,10 +240,12 @@ export const SearchControls = () => {
               {['<', '<=', '=', '>=', '>'].map(entry => {
                 return <option key={entry}>{entry}</option>;
               })}
-            </StyledManaSelect>
+            </StyledDropdownSelect>
           </StyledComponentHolder>
         </NamedCheckboxGroup>
         <NumberSelector label={'Color Number'} onChange={setColorNumber} value={colorNumber} />
+      </SearchCriteriaSection>
+      <SearchCriteriaSection>
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
           values={
@@ -300,7 +270,7 @@ export const SearchControls = () => {
             <StyledLabel htmlFor="styledColorIdentityelect">
               {'Color Identity Comparison'}
             </StyledLabel>
-            <StyledManaSelect
+            <StyledDropdownSelect
               id="styledColorIdentityelect"
               defaultValue={colorIdentityComparison}
               value={colorIdentityComparison}
@@ -311,17 +281,13 @@ export const SearchControls = () => {
               {['<', '<=', '=', '>=', '>'].map(entry => {
                 return <option key={entry}>{entry}</option>;
               })}
-            </StyledManaSelect>
+            </StyledDropdownSelect>
           </StyledComponentHolder>
           <StyledComponentHolder>
-            <StyledLabel htmlFor="useHybrid">{'Use Alternate Hybrid Rule'}</StyledLabel>
-            <SearchCheckbox
-              id="useHybrid"
-              type="checkbox"
-              checked={hybridIdentityRule === true}
-              onChange={event => {
-                setHybridIdentityRule(event.target.checked);
-              }}
+            <SingleCheckbox
+              label={'Use Alternate Hybrid Rule'}
+              onChange={setHybridIdentityRule}
+              value={hybridIdentityRule}
             />
           </StyledComponentHolder>
         </NamedCheckboxGroup>
@@ -355,24 +321,76 @@ export const SearchControls = () => {
             'HKL',
           ]}
           onChange={setSearchSet}
-        >
-          <StyledComponentHolder>
-            <StyledLabel htmlFor="cards or tokens">{'Cards/Tokens?'}</StyledLabel>
-            <StyledManaSelect
-              id="cards or tokens"
-              defaultValue={searchToken}
-              value={searchToken}
-              onChange={event => {
-                setSearchToken(event.target.value as any);
+        />
+      </SearchCriteriaSection>
+      <SearchCriteriaSection>
+        <fieldset>
+          <StyledLegend>{'Extras'}</StyledLegend>
+          {open ? (
+            <>
+              {/* <StyledComponentHolder> */}
+              <SingleCheckbox
+                label={'Include Extra Sets'}
+                onChange={setIncludeExtraSets}
+                value={includeExtraSets}
+              />
+              {/* </StyledComponentHolder> */}
+              <StyledComponentHolder>
+                <BoxlessCheckboxGroup
+                  value={extraSets}
+                  label={'Extra Sets'}
+                  values={['HC0', 'HC0.1', 'HC0.2', 'C']}
+                  onChange={setExtraSets}
+                />
+              </StyledComponentHolder>
+              <StyledComponentHolder>
+                <StyledLabel htmlFor="cards or tokens">{'Cards/Tokens?'}</StyledLabel>
+                <StyledDropdownSelect
+                  id="cards or tokens"
+                  defaultValue={searchToken}
+                  value={searchToken}
+                  onChange={event => {
+                    setSearchToken(event.target.value as any);
+                  }}
+                >
+                  {['Cards', 'Tokens', 'Both'].map(entry => {
+                    return <option key={entry}>{entry}</option>;
+                  })}
+                </StyledDropdownSelect>
+              </StyledComponentHolder>
+              <br />
+              <button
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                show less
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                setOpen(true);
               }}
             >
-              {['Cards', 'Tokens', 'Both'].map(entry => {
-                return <option key={entry}>{entry}</option>;
-              })}
-            </StyledManaSelect>
-          </StyledComponentHolder>
-        </CheckboxGroup>
-        <CardLegalityControls />
+              show more
+            </button>
+          )}
+        </fieldset>
+        <NamedHiddenCheckboxGroup
+          label="Constructed Legality"
+          values={['constructedLegal', '4cbLegal', 'hellsmanderLegal', 'isCommander']}
+          names={[
+            'Standard Legal',
+            '4 Card Blind Legal',
+            'Hellsmander Legal',
+            'Can Be Your Commander',
+          ]}
+          value={legality}
+          onChange={setLegality}
+        />
+        {/* </SearchCriteriaSection>
+      <SearchCriteriaSection> */}
         <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />
         <NumberSelector label={'Power'} onChange={setPower} value={power} />
         <NumberSelector label={'Toughness'} onChange={setToughness} value={toughness} />
@@ -387,4 +405,4 @@ const SearchCriteriaSection = styled('div')({
   paddingLeft: '30px',
 });
 const SearchContainer = styled('div')({ display: 'flex', flexWrap: 'wrap' });
-const StyledManaSelect = styled('select')({ width: '100px', height: '30px' });
+const StyledDropdownSelect = styled('select')({ width: '100px', height: '30px' });

@@ -73,7 +73,7 @@ export const NumericComparatorSelector = ({
     <fieldset>
       <StyledLegend>{label}</StyledLegend>
       <Container>
-        <StyledManaSelect
+        <StyledDropdownSelect
           // defaultValue={operator}
           value={localOperator}
           onChange={event => {
@@ -90,7 +90,7 @@ export const NumericComparatorSelector = ({
           ].map(entry => (
             <option key={entry.value}>{entry.label || entry.value}</option>
           ))}
-        </StyledManaSelect>{' '}
+        </StyledDropdownSelect>{' '}
         <StyledNumberInput
           type="number"
           value={localValue != undefined ? localValue : ''}
@@ -110,7 +110,7 @@ export const NumericComparatorSelector = ({
 
 const StyledNumberInput = styled('input')({ width: '40px' });
 
-const StyledManaSelect = styled('select')({ width: '40px', height: '30px' });
+const StyledDropdownSelect = styled('select')({ width: '40px', height: '30px' });
 const Container = styled('div')({ display: 'flex' });
 
 type ConditionalChange = (

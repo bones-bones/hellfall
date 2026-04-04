@@ -21,9 +21,11 @@ import {
   hybridIdentityRuleAtom,
   colorIdentityNumberAtom,
   searchSetAtom,
+  includeExtraSetsAtom,
+  extraSetsAtom,
   searchTokenAtom,
   legalityAtom,
-  isCommanderAtom,
+  // isCommanderAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -48,17 +50,12 @@ import {
 } from '../colorComps';
 import { textEquals, textSearchIncludes } from '../textHandling';
 
-const isSetInResults = (set: string, setOptions: string[]) => {
-  return Boolean(setOptions.find(e => set.includes(e)));
-};
 export const useSearchResults = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(
-    e => !['C', 'HC0'].includes(e.set) && !e.tags?.includes('offensive')
-  );
+  const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
   const nameSearch = useAtomValue(nameSearchAtom);
   const idSearch = useAtomValue(idSearchAtom);
   const costSearch = useAtomValue(costSearchAtom);
@@ -75,9 +72,11 @@ export const useSearchResults = () => {
   const hybridIdentityRule = useAtomValue(hybridIdentityRuleAtom);
   const colorIdentityNumber = useAtomValue(colorIdentityNumberAtom);
   const searchSet = useAtomValue(searchSetAtom);
+  const includeExtraSets = useAtomValue(includeExtraSetsAtom);
+  const extraSets = useAtomValue(extraSetsAtom);
   const searchToken = useAtomValue(searchTokenAtom);
   const legality = useAtomValue(legalityAtom);
-  const isCommander = useAtomValue(isCommanderAtom);
+  // const isCommander = useAtomValue(isCommanderAtom);
   const manaValue = useAtomValue(manaValueAtom);
   const power = useAtomValue(powerAtom);
   const toughness = useAtomValue(toughnessAtom);
@@ -89,13 +88,21 @@ export const useSearchResults = () => {
   const activeCard = useAtomValue(activeCardAtom);
   // const [shouldPushHistory, setShouldPushHistory] = useAtom(shouldPushHistoryAtom);
   const [isSyncingFromUrl, setIsSyncingFromUrl] = useAtom(isSyncingFromUrlAtom);
+  const extraSetList = ['C', 'HC0', 'HC0.1', 'HC0.2'];
 
   useEffect(() => {
+    const isSetInResults = (set: string) => {
+      return searchSet.some(e => set.includes(e)) || extraSets.some(e => set.includes(e));
+    };
+
     const tempResults = cards
       .filter(entry => {
         switch (searchToken) {
           case 'Cards':
-            if (searchSet.length > 0 && !isSetInResults(entry.set, searchSet)) {
+            if (searchSet.length + extraSets.length > 0 && !isSetInResults(entry.set)) {
+              return false;
+            }
+            if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
               return false;
             }
             if (entry.isActualToken) {
@@ -104,35 +111,38 @@ export const useSearchResults = () => {
             break;
           case 'Tokens':
             if (
-              searchSet.length > 0 &&
+              searchSet.length + extraSets.length > 0 &&
               !(
                 'all_parts' in entry &&
                 entry.all_parts
                   ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
-                  .some(part => isSetInResults(part.set, searchSet))
+                  .some(part => isSetInResults(part.set))
               )
             ) {
               return false;
             }
-            if (searchSet.length == 0 && !entry.isActualToken) {
+            if (searchSet.length + extraSets.length == 0 && !entry.isActualToken) {
               return false;
             }
             break;
           case 'Both':
-            if (searchSet.length > 0) {
+            if (searchSet.length + extraSets.length > 0) {
               if (
-                !isSetInResults(entry.set, searchSet) &&
+                !isSetInResults(entry.set) &&
                 !(
                   'all_parts' in entry &&
                   entry.all_parts
                     ?.filter(e =>
                       ['token_maker', 'meld_part', 'draft_partner'].includes(e.component)
                     )
-                    .some(part => isSetInResults(part.set, searchSet))
+                    .some(part => isSetInResults(part.set))
                 )
               ) {
                 return false;
               }
+            }
+            if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
+              return false;
             }
             break;
         }
@@ -250,13 +260,13 @@ export const useSearchResults = () => {
           }
         }
 
-        if (isCommander === true) {
+        if (legality.includes('isCommander')) {
           if (!canBeACommander(entry)) {
             return false;
           }
         }
-        if (legality.length > 0) {
-          if (legality.includes('legal') && entry.legalities.standard != 'legal') {
+        if (legality.filter(e => e != 'isCommander').length > 0) {
+          if (legality.includes('constructedLegal') && entry.legalities.standard != 'legal') {
             return false;
           }
           if (legality.includes('4cbLegal') && entry.legalities['4cb'] != 'legal') {
@@ -710,15 +720,21 @@ export const useSearchResults = () => {
     if (searchSet.length > 0) {
       searchToSet.append('set', searchSet.join(','));
     }
+    if (includeExtraSets) {
+      searchToSet.append('includeExtraSets', 'true');
+    }
+    if (extraSets.length > 0) {
+      searchToSet.append('extraSets', extraSets.join(','));
+    }
     if (searchToken != 'Cards') {
       searchToSet.append('token', searchToken);
     }
     if (legality.length > 0) {
       searchToSet.append('legality', legality.join(','));
     }
-    if (isCommander) {
-      searchToSet.append('isCommander', 'true');
-    }
+    // if (isCommander) {
+    //   searchToSet.append('isCommander', 'true');
+    // }
     if (manaValue) {
       searchToSet.append('manaValue', `${manaValue.operator}${manaValue.value}`);
     }
@@ -795,9 +811,11 @@ export const useSearchResults = () => {
     hybridIdentityRule,
     colorIdentityNumber,
     searchSet,
+    includeExtraSets,
+    extraSetList,
     searchToken,
     legality,
-    isCommander,
+    // isCommander,
     manaValue,
     power,
     toughness,
