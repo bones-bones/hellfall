@@ -339,7 +339,7 @@ export const SearchControls = () => {
                 <BoxlessCheckboxGroup
                   value={extraSets}
                   label={'Extra Sets'}
-                  values={['HC0', 'HC0.1', 'HC0.2', 'C']}
+                  values={['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'C', 'HCT', 'SFT']}
                   onChange={setExtraSets}
                 />
               </StyledComponentHolder>

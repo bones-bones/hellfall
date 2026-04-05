@@ -126,7 +126,6 @@ Write a script to transform the database
 - dynamically reorder related in HellfallCard to minimize empty space while maximizing image width
 - implement smart quotes (autoconvert normal quotes to left/right quotes on page)
 - add button to expose card json? and copy/pastable card details?
-- add extras button for card/tokens, constructed cube, HC0, etc.
 - switch search to text bar and make the mass of buttons hidden as advanced search
   - make separate filter method that takes in search keyword, operator, and search term and filters cards appropriately
   <!-- - add `Record<string,string[]>` of equivalents for shorthand versions of search keywords (use scryfall) -->
@@ -134,4 +133,5 @@ Write a script to transform the database
   - add methods for other ones
   - add handling for invalid keywords
   - add search bar interface and move full controls to advanced search page
-  - make isCommander an option for LegalType
+- rework set selector to be dropdown that adds?
+- add .s for hcv

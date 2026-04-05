@@ -88,11 +88,21 @@ export const useSearchResults = () => {
   const activeCard = useAtomValue(activeCardAtom);
   // const [shouldPushHistory, setShouldPushHistory] = useAtom(shouldPushHistoryAtom);
   const [isSyncingFromUrl, setIsSyncingFromUrl] = useAtom(isSyncingFromUrlAtom);
-  const extraSetList = ['C', 'HC0', 'HC0.1', 'HC0.2'];
+  const extraSetList = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'C', 'HCT', 'SFT'];
 
   useEffect(() => {
+    /**
+     * Checks if a card's set is in the results. Also returns true if the card's set is a subset of one of the results.
+     * @param set 
+     * @returns 
+     */
     const isSetInResults = (set: string) => {
-      return searchSet.some(e => set.includes(e)) || extraSets.some(e => set.includes(e));
+      // Exclude HCV.1-4 from HCV if !includeExtraSets
+      if (!includeExtraSets && ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4',].includes(set)) {
+        return extraSets.some(e => set.includes(e));
+      } else {
+        return searchSet.some(e => set.includes(e)) || extraSets.some(e => set.includes(e));
+      }
     };
 
     const tempResults = cards
@@ -105,9 +115,9 @@ export const useSearchResults = () => {
             if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
               return false;
             }
-            if (entry.isActualToken) {
-              return false;
-            }
+            // if (entry.isActualToken) {
+            //   return false;
+            // }
             break;
           case 'Tokens':
             if (
