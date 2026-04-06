@@ -105,25 +105,27 @@ export const useSearchResults = () => {
       }
     };
 
+    const noSets = searchSet.length + extraSets.length == 0;
+
     const tempResults = cards
       .filter(e => e.set != 'NotMagic')
       .filter(entry => {
         switch (searchToken) {
           case 'Cards':
-            if (searchSet.length + extraSets.length > 0 && !isSetInResults(entry.set)) {
+            if (!noSets && !isSetInResults(entry.set)) {
               return false;
             }
             if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
               return false;
             }
             // make sure tokens are hidden when no sets are selected
-            if (entry.isActualToken && searchSet.length + extraSets.length == 0) {
+            if (noSets && entry.isActualToken) {
               return false;
             }
             break;
           case 'Tokens':
             if (
-              searchSet.length + extraSets.length > 0 &&
+              !noSets &&
               !(
                 'all_parts' in entry &&
                 entry.all_parts
@@ -133,25 +135,22 @@ export const useSearchResults = () => {
             ) {
               return false;
             }
-            if (searchSet.length + extraSets.length == 0 && !entry.isActualToken) {
+            if (noSets && !entry.isActualToken) {
               return false;
             }
             break;
           case 'Both':
-            if (searchSet.length + extraSets.length > 0) {
-              if (
-                !isSetInResults(entry.set) &&
-                !(
-                  'all_parts' in entry &&
-                  entry.all_parts
-                    ?.filter(e =>
-                      ['token_maker', 'meld_part', 'draft_partner'].includes(e.component)
-                    )
-                    .some(part => isSetInResults(part.set))
-                )
-              ) {
-                return false;
-              }
+            if (
+              !noSets &&
+              !isSetInResults(entry.set) &&
+              !(
+                'all_parts' in entry &&
+                entry.all_parts
+                  ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
+                  .some(part => isSetInResults(part.set))
+              )
+            ) {
+              return false;
             }
             if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
               return false;
