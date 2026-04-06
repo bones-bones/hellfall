@@ -93,8 +93,8 @@ export const useSearchResults = () => {
   useEffect(() => {
     /**
      * Checks if a card's set is in the results. Also returns true if the card's set is a subset of one of the results.
-     * @param set 
-     * @returns 
+     * @param set set of a card
+     * @returns if set is in results
      */
     const isSetInResults = (set: string) => {
       // Exclude HCV.1-4 from HCV if !includeExtraSets

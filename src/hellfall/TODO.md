@@ -53,7 +53,7 @@ Write a script to transform the database
 - figure out how to handle cards with self-draftpartner (Squadron Wastes, Playset of Squadron Hawks (On Clearance), The Squadron Hawk)
 - fix tags for cards with draft_image
 - do better: evolution of the dreadmaw
-- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino, Kolaghan's Command Tower // Kolaghan's Command, OBJECTS I HAVE SHOVED UP MY ARSE, Urabrask, Alone and Jobless, Blood ghast // Crip Ghast
+- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino, Kolaghan's Command Tower // Kolaghan's Command, OBJECTS I HAVE SHOVED UP MY ARSE, Urabrask, Alone and Jobless, Blood ghast // Crip Ghast, Tolarian Adjunct Professor // Tolarian Community College
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff, public domain removal creature (colorless)
@@ -135,3 +135,5 @@ Write a script to transform the database
   - add search bar interface and move full controls to advanced search page
 - rework set selector to be dropdown that adds?
 - add .s for hcv
+- separate earlier cubes into .0 and .1
+- use archetype of () as test case for making sure escaped parens work
