@@ -98,7 +98,7 @@ export const useSearchResults = () => {
      */
     const isSetInResults = (set: string) => {
       // Exclude HCV.1-4 from HCV if !includeExtraSets
-      if (!includeExtraSets && ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4',].includes(set)) {
+      if (!includeExtraSets && ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4'].includes(set)) {
         return extraSets.some(e => set.includes(e));
       } else {
         return searchSet.some(e => set.includes(e)) || extraSets.some(e => set.includes(e));

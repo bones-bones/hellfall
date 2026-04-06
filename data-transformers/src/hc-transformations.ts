@@ -694,7 +694,7 @@ const main = async () => {
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
               ? finalCards.find(card => card.id == tokenMaker.id)
-              : finalTokens.find(card => card.id == tokenMaker.id)
+              : finalTokens.find(card => textEquals(card.id, tokenMaker.id))
             : finalCards.find(card => textEquals(card.name, tokenMaker.name))
             ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
             : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
@@ -802,7 +802,7 @@ const main = async () => {
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
               ? finalCards.find(card => card.id == tokenMaker.id)
-              : finalTokens.find(card => card.id == tokenMaker.id)
+              : finalTokens.find(card => textEquals(card.id, tokenMaker.id))
             : finalCards.find(card => textEquals(card.name, tokenMaker.name))
             ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
             : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
@@ -893,18 +893,11 @@ const main = async () => {
               card.all_parts?.splice(i, 1);
             }
           } else {
-            const tok = finalTokens.find(e => e.id == part.id);
-            const pts = finalTokens.find(e => e.id == part.id)?.all_parts;
-            const rel = finalTokens
-              .find(e => e.id == part.id)
-              ?.all_parts?.find(e => e.id == card.id);
-            const comp = finalTokens
-              .find(e => e.id == part.id)
-              ?.all_parts?.find(e => e.id == card.id)?.component;
             if (
               !(
-                finalTokens.find(e => e.id == part.id)?.all_parts?.find(e => e.id == card.id)
-                  ?.component == 'token_maker'
+                finalTokens
+                  .find(e => textEquals(e.id, part.id))
+                  ?.all_parts?.find(e => e.id == card.id)?.component == 'token_maker'
               )
             ) {
               card.all_parts?.splice(i, 1);
@@ -926,8 +919,9 @@ const main = async () => {
           token.all_parts!.slice(0, i).find(e => e.id == part.id) ||
           (part.component == 'token' &&
             !(
-              finalTokens.find(e => e.id == part.id)?.all_parts?.find(e => e.id == token.id)
-                ?.component == 'token_maker'
+              finalTokens
+                .find(e => textEquals(e.id, part.id))
+                ?.all_parts?.find(e => e.id == token.id)?.component == 'token_maker'
             ))
         ) {
           token.all_parts?.splice(i, 1);

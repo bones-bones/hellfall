@@ -45,7 +45,6 @@ Write a script to transform the database
 - make changes in url correctly work with forward and back buttons in browser
 - implement grid type layout (has singlefaceonly attributes for overall card, but also has card_faces)
 - add bars internal to card entries like scryfall does
-- see if any better images are floating around for HC2 in general
 - full documentation
 - use draft_image for full image of multisided cards?
 - fix formatting of em dashes (no space when it replaces a colon)
@@ -137,3 +136,4 @@ Write a script to transform the database
 - add .s for hcv
 - separate earlier cubes into .0 and .1
 - use archetype of () as test case for making sure escaped parens work
+- check images for HC2 tokens, for HLC, and for other low-quality images
