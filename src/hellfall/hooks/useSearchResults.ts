@@ -116,9 +116,10 @@ export const useSearchResults = () => {
             if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
               return false;
             }
-            // if (entry.isActualToken) {
-            //   return false;
-            // }
+            // make sure tokens are hidden when no sets are selected
+            if (entry.isActualToken && searchSet.length + extraSets.length == 0) {
+              return false;
+            }
             break;
           case 'Tokens':
             if (
