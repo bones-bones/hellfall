@@ -5,19 +5,31 @@ export const HellfallEntry = ({
   id,
   name,
   onClick,
+  onClickTitle,
 }: {
   url: string;
   id: string;
   name: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
+  onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   return (
     <Container key={id} role="button">
-      <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+      {onClickTitle ? (
+        <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}>
+          {name}
+          <br />
+        </span>
+      ) : (
+        <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+      )}
       <StyledImage
         key={id}
         src={url}
-        onClick={onClick}
+        onClick={e => {
+          console.log('Image click fired!', id);
+          onClick(e);
+        }}
         referrerPolicy="no-referrer"
         aria-label={name}
       />
@@ -54,21 +66,32 @@ const VisuallyHiddenSpan = styled.span({
   clip: 'rect(0, 0, 0, 0)',
   whiteSpace: 'nowrap',
   border: '0',
+  pointerEvents: 'none',
 });
+
 export const HellfallRelatedEntry = ({
   url,
   id,
   name,
   onClick,
+  onClickTitle,
 }: {
   url: string;
   id: string;
   name: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
+  onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   return (
     <RelatedContainer key={id} role="button">
-      <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+      {onClickTitle ? (
+        <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}>
+          {name}
+          <br />
+        </span>
+      ) : (
+        <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+      )}
       <RelatedStyledImage
         key={id}
         src={url}

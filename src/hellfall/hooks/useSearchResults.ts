@@ -106,6 +106,7 @@ export const useSearchResults = () => {
     };
 
     const tempResults = cards
+      .filter(e => e.set != 'NotMagic')
       .filter(entry => {
         switch (searchToken) {
           case 'Cards':

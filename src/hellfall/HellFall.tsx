@@ -86,9 +86,9 @@ export const HellFall = () => {
                 if (event.button === 1 || event.metaKey || event.ctrlKey) {
                   window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
                 } else {
-                  startTransition(() => {
-                    setActiveCardFromAtom(entry.id);
-                  });
+                  // startTransition(() => {
+                  setActiveCardFromAtom(entry.id);
+                  // });
                 }
               }}
               key={'' + entry.id + '-' + i}
