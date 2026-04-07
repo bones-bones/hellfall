@@ -6,12 +6,12 @@ export const DeckConstruction = ({ cards }: { cards: HCCard.Any[] }) => {
   const [localCards, setLocalCards] = useState([...cards]);
   const [deck, setDeck] = useState<HCCard.Any[]>([]);
   const draftedCmcColumns = localCards.reduce<Record<number, HCCard.Any[]>>((curr, next) => {
-    curr[next.cmc] = curr[next.cmc] ? [...curr[next.cmc], next] : [next];
+    curr[next.mana_value] = curr[next.mana_value] ? [...curr[next.mana_value], next] : [next];
     return curr;
   }, []);
 
   const deckCmcColumns = deck.reduce<Record<number, HCCard.Any[]>>((curr, next) => {
-    curr[next.cmc] = curr[next.cmc] ? [...curr[next.cmc], next] : [next];
+    curr[next.mana_value] = curr[next.mana_value] ? [...curr[next.mana_value], next] : [next];
     return curr;
   }, []);
 

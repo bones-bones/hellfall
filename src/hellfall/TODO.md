@@ -40,17 +40,11 @@ Write a script to transform the database
   ~~- mobile support~~
   ~~- Script to fetch and transform sheets directly from google doc~~
 - sort by color but not cmc
-- use mv instead of cmc
 - make better search syntax (like allowing or)
 - tell users how to use not and/or make it easier to use not (!)
-- make pagination work with browser back button and make it go back to page 1 when search changes
 - make changes in url correctly work with forward and back buttons in browser
 - implement grid type layout (has singlefaceonly attributes for overall card, but also has card_faces)
-- make search results space and size cards dynamically to all have the same height (double size for dfcs and splits)
-- make popup container wrap text to window width
 - add bars internal to card entries like scryfall does
-- switch search to text bar and make the mass of buttons hidden as advanced search
-- see if any better images are floating around for HC2 in general
 - full documentation
 - use draft_image for full image of multisided cards?
 - fix formatting of em dashes (no space when it replaces a colon)
@@ -58,7 +52,7 @@ Write a script to transform the database
 - figure out how to handle cards with self-draftpartner (Squadron Wastes, Playset of Squadron Hawks (On Clearance), The Squadron Hawk)
 - fix tags for cards with draft_image
 - do better: evolution of the dreadmaw
-- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino, Kolaghan's Command Tower // Kolaghan's Command, OBJECTS I HAVE SHOVED UP MY ARSE, Urabrask, Alone and Jobless, Blood ghast // Crip Ghast
+- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino, Kolaghan's Command Tower // Kolaghan's Command, OBJECTS I HAVE SHOVED UP MY ARSE, Urabrask, Alone and Jobless, Blood ghast // Crip Ghast, Tolarian Adjunct Professor // Tolarian Community College
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff, public domain removal creature (colorless)
@@ -88,9 +82,7 @@ Write a script to transform the database
   - revamp fetch function to deal better with cards that have multiple printings (use bar and set like mtgcardfetcher does; allow use of id; allow use of )
   - make more accessible options for multiside and flip cards (like how scryfall does it) (make sure it works on the actual search page too)
 - make links work in card text
-- indicate that IOU and Phyrexian Goblin Creature Copy are not directly draftable
 - make sure that accents don't interfere with search (test with Niccolò Machiavelli)
-- add flavor text search
 - special cases: Scared Turtle // Snappy Turtle for flip, , Force of Rowan (for draft), Italic Plagiarist (italics in typeline with regular types)
 
   - add grid (that allows root-level stuff as well as faces?)?
@@ -108,7 +100,6 @@ Write a script to transform the database
   - instead of move_grid and poly, do general graph/net datastructure
 
 - add hybrid color identity number search prop?
-- add extras button for card/tokens, constructed cube, HC0, etc.
 - add community standards hider for offensive hc0s
 - make brackets in cardnames not break anything
 - add variations to hellfallcard?
@@ -117,7 +108,6 @@ Write a script to transform the database
 - add name override for 🂓 (domino)
 - fix order of color words in text
 - on individual card pages, make tab name same as card name
-- fix window resizing issues
 - add color inference for faces
 - when adding flip, make it independent of side for Bubsy, Furred Kind
 - add ability to have color indicator pips in text (for 6246)
@@ -125,4 +115,28 @@ Write a script to transform the database
 - make sure cards with phyrexian text have tag
 - use draft image for all first images for multiface?
 - add phyrexian font
-- add code to automatically replace brackets in names with parens
+- add double url (both id and name) like scryfall?
+- implement subtags
+<!-- - decide whether to make pagination it go back to page 1 when search changes (ask on discord) -->
+- prevent search entries from filling history for text
+- make popup window resizeable
+- add real-card-reference tags
+- fix uno +2/+4 names
+- dynamically reorder related in HellfallCard to minimize empty space while maximizing image width
+- implement smart quotes (autoconvert normal quotes to left/right quotes on page)
+- add button to expose card json? and copy/pastable card details?
+- switch search to text bar and make the mass of buttons hidden as advanced search
+  - make separate filter method that takes in search keyword, operator, and search term and filters cards appropriately
+  <!-- - add `Record<string,string[]>` of equivalents for shorthand versions of search keywords (use scryfall) -->
+  - make 2 new top-level types: 1 for search terms that has props for kind of search term, equivalents, and parsing and 1 for keywords that has props for values and equivalents (`Record<string,string[]>`) (optional), default operator, search term type, and equivalent keywords
+  - add methods for other ones
+  - add handling for invalid keywords
+  - add search bar interface and move full controls to advanced search page
+- rework set selector to be dropdown that adds?
+- add .s for hcv
+- separate earlier cubes into .0 and .1
+- use archetype of () as test case for making sure escaped parens work
+- check images for tokens (especially those for HC2), for HLC, and for other low-quality images
+- add collector numbers for sets
+- add {69}
+- make sure I didn't forget any semicolons (for hcx)

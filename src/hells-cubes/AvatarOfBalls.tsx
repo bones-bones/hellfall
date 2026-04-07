@@ -30,7 +30,7 @@ export const AvatarOfBalls = () => {
               entry.toFaces()[0].types?.includes('Creature') &&
               ((entry.name.includes('Negative') &&
                 parseInt(powerRef.current?.value || '3') == -1) ||
-                entry.cmc == parseInt(powerRef.current?.value || '3') ||
+                entry.mana_value == parseInt(powerRef.current?.value || '3') ||
                 0)
             );
           });

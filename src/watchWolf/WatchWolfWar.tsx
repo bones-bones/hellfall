@@ -97,16 +97,16 @@ export const Watchwolfwar = () => {
               setActiveCardFromAtom('');
             }
           }}
-          // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-          //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
-          //     window.open(
-          //       '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.id),
-          //       '_blank'
-          //     );
-          //   } else {
-          //     setActiveCardFromAtom(TwoCardState.LeftCard.id);
-          //   }
-          // }}
+          onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey) {
+              window.open(
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.id),
+                '_blank'
+              );
+            } else {
+              setActiveCardFromAtom(TwoCardState.LeftCard.id);
+            }
+          }}
         />
         <HellfallEntry
           id={TwoCardState.RightCard.id}
@@ -124,16 +124,16 @@ export const Watchwolfwar = () => {
               setActiveCardFromAtom('');
             }
           }}
-          // onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-          //   if (event.button === 1 || event.metaKey || event.ctrlKey) {
-          //     window.open(
-          //       '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.id),
-          //       '_blank'
-          //     );
-          //   } else {
-          //     setActiveCardFromAtom(TwoCardState.RightCard.id);
-          //   }
-          // }}
+          onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey) {
+              window.open(
+                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.id),
+                '_blank'
+              );
+            } else {
+              setActiveCardFromAtom(TwoCardState.RightCard.id);
+            }
+          }}
         />
       </CardContainer>
       <StyleComponent>

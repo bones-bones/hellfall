@@ -48,7 +48,7 @@ export const fetchTokens = async () => {
     } as HCLegalitiesField,
     mana_cost: '',
     colors: [] as HCColors,
-    cmc: 0,
+    mana_value: 0,
     oracle_text: '',
     color_identity: [] as HCColors,
     color_identity_hybrid: [] as HCColors[],
@@ -70,6 +70,39 @@ export const fetchTokens = async () => {
     'That One Time in WW1',
     'Plagiarism by doomclaw9',
     'Carrion Feeder from MH8',
+  ];
+
+  const tagList = [
+    'pokemon',
+    'mario',
+    'my-little-pony',
+    'barbie',
+    'super-smash-bros',
+    'dune',
+    'disney',
+    'earthworm-jim',
+    'sesame-street',
+    'pixar',
+    'wwe',
+    'universal',
+    'konami',
+    'yugioh',
+    'garfield',
+    'scooby-doo',
+    'marvel',
+    'godzilla',
+    'spongebob',
+    'star-wars',
+    'zelda',
+    'pvz',
+    'slay-the-spire',
+    'south-park',
+    'undertale',
+    'lego',
+    'final-fantasy',
+    'where-in-the-world-is-carmen-sandiego',
+    'inscryption',
+    'gaslighting',
   ];
 
   const HCTokens = rest.map(entry => {
@@ -117,6 +150,8 @@ export const fetchTokens = async () => {
             };
             return maker;
           });
+        } else if (keys[i] == 'oracle_text' && tagList.includes(entry[i])) {
+          tokenObject.tags = [entry[i]];
         } else {
           tokenObject[keys[i]] = entry[i];
         }

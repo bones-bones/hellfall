@@ -191,7 +191,7 @@ const CategorySection = ({
       <CatSecCon>
         {cards
           .sort((a, b) => {
-            return (a.hcCard?.cmc || 0) > (b.hcCard?.cmc || 0) ? 1 : -1;
+            return (a.hcCard?.mana_value || 0) > (b.hcCard?.mana_value || 0) ? 1 : -1;
           })
           .map(entry => {
             return (

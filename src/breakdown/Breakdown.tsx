@@ -179,11 +179,11 @@ const ColorTracker = ({ cards, color }: { cards: Record<string, HCCard.Any[]>; c
               return 1;
             })
             .filter(entry => {
-              if (!entry.cmc && index == 0) {
+              if (!entry.mana_value && index == 0) {
                 return true;
               }
 
-              return entry.cmc === index + 1 || (index + 1 == 7 && entry.cmc >= 7);
+              return entry.mana_value === index + 1 || (index + 1 == 7 && entry.mana_value >= 7);
             });
           return (
             <CMCColumn key={index}>

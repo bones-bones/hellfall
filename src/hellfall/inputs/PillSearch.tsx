@@ -11,18 +11,22 @@ import { Menu, useMenuModel } from '@workday/canvas-kit-react/menu';
 
 type Props = {
   possibleValues: string[];
-  defaultValues: string[];
+  values: string[];
   label: string;
   onChange: (value: string[]) => void;
 };
 
-export const PillSearch = ({ possibleValues, defaultValues, label, onChange }: Props) => {
+export const PillSearch = ({ possibleValues, values, label, onChange }: Props) => {
   const [menuItems, setMenuItems] = useState(possibleValues);
-  const [selectedValues, setSelectedValues] = useState(defaultValues);
+  const [selectedValues, setSelectedValues] = useState(values);
   const searchRef = useRef<HTMLInputElement>(null);
   const menuModel = useMenuModel({ returnFocusRef: searchRef });
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
   const listRef = useRef(null);
+
+  useEffect(() => {
+    setSelectedValues(values);
+  }, [values]);
 
   const [searchValue, setSearchValue] = useState('');
   if (selectedIndex && listRef.current) {

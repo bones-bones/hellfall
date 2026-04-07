@@ -166,7 +166,7 @@ export namespace HCCardFields.Gameplay {
     name: string;
     type_line: string;
     mana_cost: string;
-    cmc: number;
+    mana_value: number;
   };
 
   /**
@@ -193,7 +193,7 @@ export namespace HCCardFields.Gameplay {
      *
      * @type Decimal
      */
-    cmc: number;
+    mana_value: number;
     /**
      * The name of this face.
      */
@@ -237,7 +237,7 @@ export namespace HCCardFields.Gameplay {
      *
      * @type Decimal
      */
-    cmc: number;
+    mana_value: number;
     /**
      * The front's colors.
      */

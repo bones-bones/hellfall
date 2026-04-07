@@ -8,8 +8,7 @@ import { HCCard } from '../../api-types/Card/Card';
 import { HellfallRelatedEntry } from '../HellfallEntry';
 
 import { Link } from 'react-router-dom';
-import { Fragment, useState } from 'react';
-import { stripSemicolon } from '../inputs/stripSemicolon';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
@@ -44,16 +43,41 @@ const getImages = (card: HCCard.Any) => {
 };
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const [activeImageSide, setActiveImageSide] = useState(0);
+  const windowRef = useRef<HTMLDivElement>(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    if (!windowRef.current) return;
+
+    const resizeObserver = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        setWindowWidth(entry.contentRect.width);
+      }
+    });
+
+    resizeObserver.observe(windowRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+  const maxWidth = useMemo(() => {
+    return Math.min(windowWidth - 10, 700);
+  }, [windowWidth]);
 
   // TODO: add handling for flip and aftermath
   const imagesToShow = getImages(data);
 
   return (
-    <Container key={data.id}>
+    <Container ref={windowRef} key={data.id}>
       {imagesToShow.length === 0 ? (
         <Test>
           <ImageContainer key="image-container">
-            <img src={data.image!} height="500px" referrerPolicy="no-referrer" />
+            <img
+              src={data.image!}
+              style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
+              referrerPolicy="no-referrer"
+            />
           </ImageContainer>
         </Test>
       ) : (
@@ -61,7 +85,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           <ImageContainer key={imagesToShow[activeImageSide] || data.image}>
             <img
               src={imagesToShow[activeImageSide] || data.image!}
-              height="500px"
+              style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
             />
           </ImageContainer>
@@ -87,22 +111,21 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           </ButtonContainer>
         </>
       )}
-      <Card>
+      <Card style={{ width: '100%' }}>
         <Card.Body padding={'zero'}>
           {/* {'card_faces' in data && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading>} */}
           {data.toFaces().map((face, i) => (
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               {face.name &&
-                face.name != ';' &&
                 (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
                   <Text typeLevel="body.medium" key="name">
-                    {formatDiscordMarkdownInline(formatParens(stripSemicolon(face.name)))}
+                    {formatDiscordMarkdownInline(formatParens(face.name))}
                   </Text>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="name">
-                      {stringToMana(stripSemicolon(face.name))}
+                      {stringToMana(face.name)}
                     </Text>
                     {/* <br /> */}
                   </>
@@ -135,32 +158,28 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 ))}
               <br />
               {face.oracle_text &&
-                face.oracle_text != ';' &&
                 (['*', '(', '_', '~'].some(char => face.oracle_text.includes(char)) ? (
                   <Text typeLevel="body.medium" key="rules">
-                    {formatDiscordMarkdown(formatParens(stripSemicolon(face.oracle_text)))}
+                    {formatDiscordMarkdown(formatParens(face.oracle_text))}
                     <br />
                   </Text>
                 ) : (
                   <>
                     <Text typeLevel="body.medium" key="rules">
-                      {renderText(stripSemicolon(face.oracle_text).split('\\n'))}
+                      {renderText(face.oracle_text.split('\\n'))}
                     </Text>
                   </>
                 ))}
               {face.flavor_text &&
-                face.flavor_text != ';' &&
                 (['*', '_', '~'].some(char => face.flavor_text?.includes(char)) ? (
                   <Text typeLevel="body.medium" key="flavor">
-                    {formatDiscordMarkdownInvertedItalics(
-                      formatParens(stripSemicolon(face.flavor_text))
-                    )}
+                    {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
                     <br />
                   </Text>
                 ) : (
                   <>
                     <ItalicText typeLevel="body.medium" key="flavor">
-                      {renderText(stripSemicolon(face.flavor_text).split('\\n'))}
+                      {renderText(face.flavor_text.split('\\n'))}
                     </ItalicText>
                   </>
                 ))}
@@ -285,34 +304,27 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <Divider />
               <div>
                 <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
-                {data.all_parts
-                  .filter(e => e.id != data.id)
-                  .map((entry, i) => (
-                    <HellfallRelatedEntry
-                      onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                        if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                          window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-                        } else {
-                          (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
-                            '_blank';
-                        }
-                      }}
-                      onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
-                        if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                          window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
-                        } else {
-                          (window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id)),
-                            '_blank';
-                        }
-                      }}
-                      key={entry.id}
-                      id={entry.id}
-                      name={stripSemicolon(entry.name)}
-                      url={entry.image!}
-                    />
-
-                    // <img key={entry.name + i} src={entry.image} height="500px" />
-                  ))}
+                <RelatedGrid>
+                  {data.all_parts
+                    .filter(e => e.id != data.id)
+                    .map((entry, i) => (
+                      <HellfallRelatedEntry
+                        onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                          if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                            window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                          } else {
+                            (window.location.href =
+                              '/hellfall/card/' + encodeURIComponent(entry.id)),
+                              '_blank';
+                          }
+                        }}
+                        key={entry.id}
+                        id={entry.id}
+                        name={entry.name}
+                        url={entry.image!}
+                      />
+                    ))}
+                </RelatedGrid>
               </div>
             </>
           )}
@@ -343,6 +355,17 @@ const Test = styled.div({
 const ImageContainer = styled.div({
   display: 'flex',
   overflow: 'auto',
+  height: '500px',
+  alignItems: 'center',
+  justifyContent: 'center',
+  maxWidth: '700px',
+  '& img': {
+    maxHeight: '100%',
+    maxWidth: '100%',
+    width: 'auto',
+    height: 'auto',
+    objectFit: 'contain',
+  },
 });
 const StyledHeading = styled(Heading)({
   marginTop: '0px',
@@ -356,3 +379,13 @@ const Divider = styled.div({
 });
 
 const ButtonContainer = styled.div();
+
+const RelatedGrid = styled('div')({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  gap: '0px',
+  margin: '0 auto',
+});

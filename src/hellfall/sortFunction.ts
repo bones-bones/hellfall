@@ -1,15 +1,14 @@
 import { HCCard } from '../api-types';
 import { HCColor, HCColors } from '../api-types';
-import { stripSemicolon } from './inputs/stripSemicolon';
-// TODO: make it possible to sort by color, then alpha, rather than color, then CMC
+// TODO: make it possible to sort by color, then alpha, rather than color, then MV
 // how they can combine: Alpha and ID are mutually exclusive, but none of the others are
 
 export const sortFunction =
-  (sortRule: 'Alpha' | 'CMC' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>
+  (sortRule: 'Alpha' | 'Mana Value' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>
   (a: HCCard.Any, b: HCCard.Any) => {
     switch (sortRule) {
-      case 'CMC': {
-        if (a.cmc > b.cmc) {
+      case 'Mana Value': {
+        if (a.mana_value > b.mana_value) {
           return dirRule == 'Desc' ? -1 : 1;
         }
         break;
@@ -25,7 +24,7 @@ export const sortFunction =
       }
 
       case 'Alpha': {
-        if (stripSemicolon(a.name) == stripSemicolon(b.name)) {
+        if (a.name == b.name) {
           if (a.isActualToken && b.isActualToken) {
             if (
               (parseInt(a.id.match(/\d+$/)?.[0] || '') || 0) >
@@ -47,7 +46,7 @@ export const sortFunction =
             }
           }
           return dirRule == 'Desc' ? -1 : 1;
-        } else if (stripSemicolon(a.name) > stripSemicolon(b.name)) {
+        } else if (a.name > b.name) {
           return dirRule == 'Desc' ? -1 : 1;
         }
         break;
@@ -77,8 +76,8 @@ const getSortString = (card: HCCard.Any) => {
     )
       .toString()
       .padStart(8, '0') +
-    (card.cmc || 0).toString().padStart(3) +
-    stripSemicolon(card.name)
+    (card.mana_value || 0).toString().padStart(3) +
+    card.name
   );
 };
 

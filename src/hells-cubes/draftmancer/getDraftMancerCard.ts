@@ -1,8 +1,9 @@
 import { HCCard } from '../../api-types';
+import { toExportName } from '../../hellfall/textHandling';
 import { DraftmancerCard } from '../types';
 
 export const getDraftMancerCard = (card: HCCard.Any) => {
-  const draftmancerSafeName = card.name.replace(/[[\]]/g, '');
+  const draftmancerSafeName = toExportName(card.name);
   const cardToReturn: DraftmancerCard = {
     id: card.id + '_custom_',
     oracle_id: card.id,

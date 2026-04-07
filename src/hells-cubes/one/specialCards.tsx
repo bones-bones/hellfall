@@ -53,7 +53,7 @@ export const specialCards: Card[] = [
   {
     path: '/black-6-drop',
     name: 'A Black 6 Drop Creature',
-    component: <HellsCard queryString="color=B+cmc=6" />,
+    component: <HellsCard queryString="color=B+mana_value=6" />,
   },
   {
     path: '/puzzle-box',

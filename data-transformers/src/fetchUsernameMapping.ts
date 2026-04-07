@@ -18,7 +18,7 @@ export const fetchUsernameMappings = async () => {
   });
   return theThing.reduce<Record<string, string[]>>((curr, next) => {
     //@ts-ignore
-    curr[next['Chosen Name']] = next['; seperated alts'].split(';');
+    curr[next['Chosen Name']] = next['; separated alts'].split(';');
     return curr;
   }, {});
 };

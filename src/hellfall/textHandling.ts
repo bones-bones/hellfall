@@ -225,3 +225,12 @@ export const formatParens = (text: string) => {
     })
     .join('');
 };
+
+/**
+ * Preps a name for export to draftmancer/cockatrice
+ * @param name name to prep
+ * @returns prepped name
+ */
+export const toExportName = (name: string) => {
+  return name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll('\\', '');
+};

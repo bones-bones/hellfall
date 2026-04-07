@@ -1,6 +1,7 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { HCCard, HCRelatedCard } from '../../api-types';
 import tokens from '../../data/tokens.json';
+import { toExportName } from '../../hellfall/textHandling';
 import { recursiveAdoption } from '../recursiveAdoption';
 import { getLayout } from './getLayout';
 import { getTableRow } from './getTableRow';
@@ -130,7 +131,7 @@ const hcCardToCockCard = ({
 
   const tempCard = xmlDoc.createElement('card');
   const name = xmlDoc.createElement('name');
-  name.textContent = splitAndLinkedLayout ? face.name : entry.name;
+  name.textContent = toExportName(splitAndLinkedLayout ? face.name : entry.name);
 
   const text = xmlDoc.createElement('text');
   text.textContent = face.oracle_text.replace(/\\n/g, '\n').replace(/[{}]/g, '');
@@ -151,7 +152,7 @@ const hcCardToCockCard = ({
     : face.types?.slice(-1)[0] || '';
 
   const cmc = xmlDoc.createElement('cmc');
-  cmc.textContent = entry.cmc.toString() || '';
+  cmc.textContent = entry.mana_value.toString() || '';
 
   const type = xmlDoc.createElement('type');
   type.textContent = face.type_line;
@@ -186,7 +187,7 @@ const hcCardToCockCard = ({
     (!splitAndLinkedLayout && (sideIndex !== 0 || entry.toFaces().filter(e => e.image).length > 1))
   ) {
     const reverse = xmlDoc.createElement('reverse-related');
-    reverse.textContent = entry.toFaces()[0].name; // RIP Farsight
+    reverse.textContent = toExportName(entry.toFaces()[0].name); // RIP Farsight
     reverse.setAttribute('attach', 'transform');
     reverseElements.push(reverse);
   }
@@ -195,7 +196,7 @@ const hcCardToCockCard = ({
   if (splitAndLinkedLayout && sideIndex === 0 && entry.toFaces().length > 1) {
     for (let i = 1; i < entry.toFaces().length; i++) {
       const reverse = xmlDoc.createElement('reverse-related');
-      reverse.textContent = entry.toFaces()[i].name;
+      reverse.textContent = toExportName(entry.toFaces()[i].name);
       reverse.setAttribute('attach', 'transform');
       reverseElements.push(reverse);
     }

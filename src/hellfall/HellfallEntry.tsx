@@ -5,21 +5,31 @@ export const HellfallEntry = ({
   id,
   name,
   onClick,
-}: // onClickTitle,
-{
+  onClickTitle,
+}: {
   url: string;
   id: string;
   name: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
-  // onClickTitle?: React.MouseEventHandler<HTMLSpanElement>;
+  onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   return (
     <Container key={id} role="button">
-      <VisuallyHiddenSpan key={id} /** onClick={onClickTitle}*/>{name}</VisuallyHiddenSpan>
+      {onClickTitle ? (
+        <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}>
+          {name}
+          <br />
+        </span>
+      ) : (
+        <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+      )}
       <StyledImage
         key={id}
         src={url}
-        onClick={onClick}
+        onClick={e => {
+          console.log('Image click fired!', id);
+          onClick(e);
+        }}
         referrerPolicy="no-referrer"
         aria-label={name}
       />
@@ -28,16 +38,22 @@ export const HellfallEntry = ({
 };
 
 const StyledImage = styled.img({
-  maxWidth: '250px',
+  maxWidth: '500px',
   maxHeight: '340px',
+  cursor: 'pointer',
 });
 
 const Container = styled.div({
-  width: '250px',
+  height: '340px',
   display: 'inline-block',
   padding: '5px',
-  cursor: 'pointer',
   position: 'relative',
+  '& img': {
+    maxWidth: '100%',
+    width: 'auto',
+    height: 'auto',
+    objectFit: 'contain',
+  },
 });
 
 const VisuallyHiddenSpan = styled.span({
@@ -50,7 +66,9 @@ const VisuallyHiddenSpan = styled.span({
   clip: 'rect(0, 0, 0, 0)',
   whiteSpace: 'nowrap',
   border: '0',
+  pointerEvents: 'none',
 });
+
 export const HellfallRelatedEntry = ({
   url,
   id,
@@ -62,26 +80,45 @@ export const HellfallRelatedEntry = ({
   id: string;
   name: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
-  onClickTitle?: React.MouseEventHandler<HTMLSpanElement>;
+  onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   return (
     <RelatedContainer key={id} role="button">
-      <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap', fontSize: '1.25rem' }}>
-        {name}
-      </span>
-      <br />
-      <RelatedStyledImage key={id} src={url} onClick={onClick} referrerPolicy="no-referrer" />
+      {onClickTitle ? (
+        <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}>
+          {name}
+          <br />
+        </span>
+      ) : (
+        <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+      )}
+      <RelatedStyledImage
+        key={id}
+        src={url}
+        onClick={onClick}
+        referrerPolicy="no-referrer"
+        aria-label={name}
+      />
     </RelatedContainer>
   );
 };
 const RelatedStyledImage = styled.img({
-  height: '500px',
+  maxHeight: '450px',
+  maxWidth: '320px',
+  cursor: 'pointer',
 });
 
 const RelatedContainer = styled.div({
-  // width: '250px',
-  height: '500px',
-  display: 'inline-block',
+  display: 'flex',
+  overflow: 'auto',
+  maxheight: '500px',
+  alignItems: 'center',
+  justifyContent: 'center',
   padding: '5px',
-  cursor: 'pointer',
+  '& img': {
+    maxWidth: '100%',
+    width: 'auto',
+    height: 'auto',
+    objectFit: 'contain',
+  },
 });

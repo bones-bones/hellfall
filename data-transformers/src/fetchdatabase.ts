@@ -5,6 +5,7 @@ import { HCLegalitiesField, HCFormat, HCLegality } from '../../src/api-types/Car
 import { HCRelatedCard } from '../../src/api-types/Card/RelatedCard';
 import { HCObject } from '../../src/api-types/Object';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps';
+import { stripMasterpiece } from './textHandling';
 
 export const fetchDatabase = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -22,7 +23,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'legalities',
     'related',
     'rulings',
-    'cmc',
+    'mana_value',
     '0colors',
     '0mana_cost',
     '0supertypes',
@@ -81,7 +82,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       '4cb': HCLegality.Banned,
       commander: HCLegality.Banned,
     } as HCLegalitiesField,
-    cmc: 0,
+    mana_value: 0,
     colors: [] as HCColors,
     color_identity: [] as HCColors,
     color_identity_hybrid: [] as HCColors[],
@@ -93,7 +94,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
 
   const defaultMultiFaceProps: Record<string, any> = {
     mana_cost: '',
-    cmc: 0,
+    mana_value: 0,
     colors: [] as HCColors,
     oracle_text: '',
   };
@@ -140,7 +141,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
                 cardObject.card_faces[face + index].image_status =
                   entry[20] && entry[20].includes('low-quality')
                     ? HCImageStatus.LowRes
-                    : HCImageStatus.HighRes;
+                    : HCImageStatus.MedRes;
               }
             });
           } else {
@@ -170,11 +171,11 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
               cardObject.card_faces[face].image_status =
                 entry[20] && entry[20].includes('low-quality')
                   ? HCImageStatus.LowRes
-                  : HCImageStatus.HighRes;
+                  : HCImageStatus.MedRes;
             }
           }
         } else {
-          if (keys[i] == 'cmc') {
+          if (keys[i] == 'mana_value') {
             cardObject[keys[i]] = entry[i] != '∞' ? parseInt(entry[i]) : 9999999999999999999999999; // The Infinitoken case
           } else if (keys[i] == 'legalities') {
             const formats = entry[i].split(', ');
@@ -277,7 +278,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       cardObject.card_faces.push({} as Record<string, any>);
     }
 
-    const name = entry[1].split(' // ');
+    const name = cardObject.tags?.includes('irregular-face-name')
+      ? []
+      : (cardObject.card_faces.length > 1 && cardObject.tags?.includes('masterpiece')
+          ? stripMasterpiece(entry[1])
+          : entry[1]
+        ).split(' // ');
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
     cardObject.card_faces.forEach((face, index) => {
@@ -334,8 +340,11 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           face.image_status = HCImageStatus.Aftermath;
         } else if (
           cardObject.tags?.includes('inset') ||
-          face.subtypes?.some((sub: string) =>
-            ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub)
+          face.subtypes?.some(
+            (sub: string) =>
+              ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub) ||
+              (index == 1 &&
+                cardObject.card_faces[0].oracle_text.toLowerCase().includes('prepared'))
           )
         ) {
           face.image_status = HCImageStatus.Inset;
@@ -383,7 +392,15 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
         ([k, v]) =>
-          !['name', 'type_line', 'mana_cost', 'cmc', 'image_status', 'colors', 'image'].includes(k)
+          ![
+            'name',
+            'type_line',
+            'mana_cost',
+            'mana_value',
+            'image_status',
+            'colors',
+            'image',
+          ].includes(k)
       )) {
         cardObject[key] = value;
       }
@@ -480,7 +497,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             face.subtypes?.some((sub: string) =>
               ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub)
             )
-          )
+          ) ||
+          cardObject.card_faces[0].oracle_text.toLowerCase().includes('prepared')
         ) {
           cardObject.layout = HCLayout.Inset;
         } else if (
