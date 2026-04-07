@@ -19,6 +19,8 @@ import {
   hybridIdentityRuleAtom,
   colorIdentityNumberAtom,
   searchSetAtom,
+  includeExtraSetsAtom,
+  extraSetsAtom,
   searchTokenAtom,
   legalityAtom,
   // isCommanderAtom,
@@ -31,7 +33,6 @@ import {
   dirAtom,
   pageAtom,
   activeCardAtom,
-  isSyncingFromUrlAtom,
   LegalType,
 } from '../atoms/searchAtoms';
 
@@ -41,37 +42,37 @@ export const useUrlSync = () => {
 
   // Get all setters
 
-  const setNameSearch = useSetAtom(nameSearchAtom);
-  const setIdSearch = useSetAtom(idSearchAtom);
-  const setCostSearch = useSetAtom(costSearchAtom);
-  const setTypeSearch = useSetAtom(typeSearchAtom);
-  const setRulesSearch = useSetAtom(rulesSearchAtom);
-  const setFlavorSearch = useSetAtom(flavorSearchAtom);
-  const setCreators = useSetAtom(creatorsAtom);
-  const setTags = useSetAtom(tagsAtom);
-  const setSearchColors = useSetAtom(searchColorsAtom);
-  const setColorComparison = useSetAtom(colorComparisonAtom);
-  const setColorNumber = useSetAtom(colorNumberAtom);
-  const setSearchColorIdentities = useSetAtom(searchColorIdentitiesAtom);
-  const setColorIdentityComparison = useSetAtom(colorIdentityComparisonAtom);
-  const setHybridIdentityRule = useSetAtom(hybridIdentityRuleAtom);
-  const setColorIdentityNumber = useSetAtom(colorIdentityNumberAtom);
-  const setSearchSet = useSetAtom(searchSetAtom);
-  const setSearchToken = useSetAtom(searchTokenAtom);
-  const setLegality = useSetAtom(legalityAtom);
-  // const setIsCommander = useSetAtom(isCommanderAtom);
-  const setManaValue = useSetAtom(manaValueAtom);
-  const setPower = useSetAtom(powerAtom);
-  const setToughness = useSetAtom(toughnessAtom);
-  const setLoyalty = useSetAtom(loyaltyAtom);
-  const setDefense = useSetAtom(defenseAtom);
-  const setSortRule = useSetAtom(sortAtom);
-  const setDirRule = useSetAtom(dirAtom);
-  const setPage = useSetAtom(pageAtom);
-  const setActiveCard = useSetAtom(activeCardAtom);
-
-  const [isSyncingFromUrl, setIsSyncingFromUrl] = useAtom(isSyncingFromUrlAtom);
-  const syncTimeoutRef = useRef<NodeJS.Timeout>();
+  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
+  const [idSearch, setIdSearch] = useAtom(idSearchAtom);
+  const [costSearch, setCostSearch] = useAtom(costSearchAtom);
+  const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
+  const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
+  const [flavorSearch, setFlavorSearch] = useAtom(flavorSearchAtom);
+  const [creators, setCreators] = useAtom(creatorsAtom);
+  const [tags, setTags] = useAtom(tagsAtom);
+  const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
+  const [colorComparison, setColorComparison] = useAtom(colorComparisonAtom);
+  const [colorNumber, setColorNumber] = useAtom(colorNumberAtom);
+  const [searchColorIdentities, setSearchColorIdentities] = useAtom(searchColorIdentitiesAtom);
+  const [colorIdentityComparison, setColorIdentityComparison] = useAtom(
+    colorIdentityComparisonAtom
+  );
+  const [hybridIdentityRule, setHybridIdentityRule] = useAtom(hybridIdentityRuleAtom);
+  const [colorIdentityNumber, setColorIdentityNumber] = useAtom(colorIdentityNumberAtom);
+  const [searchSet, setSearchSet] = useAtom(searchSetAtom);
+  const [includeExtraSets, setIncludeExtraSets] = useAtom(includeExtraSetsAtom);
+  const [extraSets, setExtraSets] = useAtom(extraSetsAtom);
+  const [searchToken, setSearchToken] = useAtom(searchTokenAtom);
+  const [legality, setLegality] = useAtom(legalityAtom);
+  const [manaValue, setManaValue] = useAtom(manaValueAtom);
+  const [power, setPower] = useAtom(powerAtom);
+  const [toughness, setToughness] = useAtom(toughnessAtom);
+  const [loyalty, setLoyalty] = useAtom(loyaltyAtom);
+  const [defense, setDefense] = useAtom(defenseAtom);
+  const [sortRule, setSortRule] = useAtom(sortAtom);
+  const [dirRule, setDirRule] = useAtom(dirAtom);
+  const [page, setPage] = useAtom(pageAtom);
+  const [activeCard, setActiveCard] = useAtom(activeCardAtom);
 
   const parseOperatorValue = (str: string | null) => {
     if (!str) return undefined;
@@ -84,73 +85,128 @@ export const useUrlSync = () => {
   };
 
   useEffect(() => {
-    if (syncTimeoutRef.current) {
-      clearTimeout(syncTimeoutRef.current);
-    }
-
-    // Set flag to prevent useSearchResults from updating URL
-    setIsSyncingFromUrl(true);
+    debugger;
 
     const params = new URLSearchParams(location.search);
     // Set search inputs
-    setNameSearch(params.get('name') || '');
-    setIdSearch(params.get('id') || '');
-    setCostSearch(params.get('cost')?.split(',').filter(Boolean) || []);
-    setTypeSearch(params.get('type')?.split(',').filter(Boolean) || []);
-    setRulesSearch(params.get('rules')?.split(',').filter(Boolean) || []);
-    setFlavorSearch(params.get('flavor')?.split(',').filter(Boolean) || []);
-    setCreators(params.get('creators')?.split(',,').filter(Boolean) || []);
-    setTags(params.get('tags')?.split(',').filter(Boolean) || []);
+    if (nameSearch != params.get('name') || '') {
+      setNameSearch(params.get('name') || '');
+    }
+    if (idSearch != params.get('id') || '') {
+      setIdSearch(params.get('id') || '');
+    }
+    if (costSearch != params.get('cost')?.split(',').filter(Boolean) || []) {
+      setCostSearch(params.get('cost')?.split(',').filter(Boolean) || []);
+    }
+    if (typeSearch != params.get('type')?.split(',').filter(Boolean) || []) {
+      setTypeSearch(params.get('type')?.split(',').filter(Boolean) || []);
+    }
+    if (rulesSearch != params.get('rules')?.split(',').filter(Boolean) || []) {
+      setRulesSearch(params.get('rules')?.split(',').filter(Boolean) || []);
+    }
+    if (flavorSearch != params.get('flavor')?.split(',').filter(Boolean) || []) {
+      setFlavorSearch(params.get('flavor')?.split(',').filter(Boolean) || []);
+    }
+    if (creators != params.get('creators')?.split(',').filter(Boolean) || []) {
+      setCreators(params.get('creators')?.split(',').filter(Boolean) || []);
+    }
+    if (tags != params.get('tags')?.split(',').filter(Boolean) || []) {
+      setTags(params.get('tags')?.split(',').filter(Boolean) || []);
+    }
 
     // Set color filters
-    setSearchColors(params.get('colors')?.split(',').filter(Boolean) || []);
-    setColorComparison((params.get('colorComparison') as any) || '>=');
-    setColorNumber(parseOperatorValue(params.get('colorNumber')));
-    setSearchColorIdentities(params.get('colorIdentity')?.split(',').filter(Boolean) || []);
-    setColorIdentityComparison((params.get('colorIdentityComparison') as any) || '<=');
-    setHybridIdentityRule(params.get('hybridIdentityRule') === 'true');
-    setColorIdentityNumber(parseOperatorValue(params.get('colorIdentityNumber')));
+    if (searchColors != params.get('colors')?.split(',').filter(Boolean) || []) {
+      setSearchColors(params.get('colors')?.split(',').filter(Boolean) || []);
+    }
+    if (colorComparison != (params.get('colorComparison') as any) || '>=') {
+      setColorComparison((params.get('colorComparison') as any) || '>=');
+    }
+    if (colorNumber != parseOperatorValue(params.get('colorNumber'))) {
+      debugger;
+      setColorNumber(parseOperatorValue(params.get('colorNumber')));
+    }
+    if (searchColorIdentities != params.get('colorIdentity')?.split(',').filter(Boolean) || []) {
+      setSearchColorIdentities(params.get('colorIdentity')?.split(',').filter(Boolean) || []);
+    }
+    if (colorIdentityComparison != (params.get('colorIdentityComparison') as any) || '<=') {
+      setColorIdentityComparison((params.get('colorIdentityComparison') as any) || '<=');
+    }
+    if (hybridIdentityRule != (params.get('hybridIdentityRule') === 'true')) {
+      setHybridIdentityRule(params.get('hybridIdentityRule') === 'true');
+    }
+    if (colorIdentityNumber != parseOperatorValue(params.get('colorIdentityNumber'))) {
+      debugger;
+      setColorIdentityNumber(parseOperatorValue(params.get('colorIdentityNumber')));
+    }
 
     // Set set/legality filters
-    setSearchSet(params.get('set')?.split(',').filter(Boolean) || []);
-    setSearchToken((params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards');
-    setLegality(
-      (params.get('legality')?.split(',').filter(Boolean) as (
-        | 'legal'
-        | 'banned'
-        | '4cbLegal'
-        | 'hellsmanderLegal'
-        | 'isCommander'
-      )[]) || []
-    );
-    // setIsCommander(params.get('isCommander') === 'true');
+    if (searchSet != params.get('set')?.split(',').filter(Boolean) || []) {
+      setSearchSet(params.get('set')?.split(',').filter(Boolean) || []);
+    }
+    if (includeExtraSets != (params.get('includeExtraSets') === 'true')) {
+      setIncludeExtraSets(params.get('includeExtraSets') === 'true');
+    }
+    if (extraSets != params.get('extraSets')?.split(',').filter(Boolean) || []) {
+      setExtraSets(params.get('extraSets')?.split(',').filter(Boolean) || []);
+    }
+    if (searchToken != (params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards') {
+      setSearchToken((params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards');
+    }
+    if (
+      legality !=
+        (params.get('legality')?.split(',').filter(Boolean) as (
+          | 'legal'
+          | 'banned'
+          | '4cbLegal'
+          | 'hellsmanderLegal'
+          | 'isCommander'
+        )[]) ||
+      []
+    ) {
+      setLegality(
+        (params.get('legality')?.split(',').filter(Boolean) as (
+          | 'legal'
+          | 'banned'
+          | '4cbLegal'
+          | 'hellsmanderLegal'
+          | 'isCommander'
+        )[]) || []
+      );
+    }
 
     // Set numeric filters
-    setManaValue(parseOperatorValue(params.get('manaValue')));
-    setPower(parseOperatorValue(params.get('p')));
-    setToughness(parseOperatorValue(params.get('t')));
-    setLoyalty(parseOperatorValue(params.get('l')));
-    setDefense(parseOperatorValue(params.get('d')));
+    if (manaValue != parseOperatorValue(params.get('manaValue'))) {
+      setManaValue(parseOperatorValue(params.get('manaValue')));
+    }
+    if (power != parseOperatorValue(params.get('p'))) {
+      setPower(parseOperatorValue(params.get('p')));
+    }
+    if (toughness != parseOperatorValue(params.get('t'))) {
+      setToughness(parseOperatorValue(params.get('t')));
+    }
+    if (loyalty != parseOperatorValue(params.get('l'))) {
+      setLoyalty(parseOperatorValue(params.get('l')));
+    }
+    if (defense != parseOperatorValue(params.get('d'))) {
+      setDefense(parseOperatorValue(params.get('d')));
+    }
 
     // Set sort
-    setSortRule((params.get('order') as any) || 'Color');
-    setDirRule((params.get('dir') as any) || 'Asc');
+    if (sortRule != (params.get('order') as any) || 'Color') {
+      setSortRule((params.get('order') as any) || 'Color');
+    }
+    if (dirRule != (params.get('dir') as any) || 'Asc') {
+      setDirRule((params.get('dir') as any) || 'Asc');
+    }
 
     // Set pagination and active card
-    setPage(parseInt(params.get('page') || '0'));
-    setActiveCard(params.get('activeCard') || '');
+    if (page != parseInt(params.get('page') || '0')) {
+      setPage(parseInt(params.get('page') || '0'));
+    }
+    if (activeCard != params.get('activeCard') || '') {
+      setActiveCard(params.get('activeCard') || '');
+    }
 
-    // Reset flag after all updates are complete
-    syncTimeoutRef.current = setTimeout(() => {
-      setIsSyncingFromUrl(false);
-    }, 100);
+    // setIsCommander(params.get('isCommander') === 'true');
   }, [location.search]); // This triggers on back/forward navigation
-
-  useEffect(() => {
-    return () => {
-      if (syncTimeoutRef.current) {
-        clearTimeout(syncTimeoutRef.current);
-      }
-    };
-  }, []);
 };

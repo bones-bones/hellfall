@@ -179,5 +179,3 @@ export const pageAtom = atom(parseInt(searchParams.get('page') || '0') || 0);
 export const activeCardAtom = atom<string>(searchParams.get('activeCard') || '');
 
 // export const shouldPushHistoryAtom = atom(true);
-
-export const isSyncingFromUrlAtom = atom(false);

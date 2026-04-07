@@ -138,5 +138,5 @@ Write a script to transform the database
 - use archetype of () as test case for making sure escaped parens work
 - check images for tokens (especially those for HC2), for HLC, and for other low-quality images
 - add collector numbers for sets
-- add {69}
+- add {69}, {45}, {-2}
 - make sure I didn't forget any semicolons (for hcx)

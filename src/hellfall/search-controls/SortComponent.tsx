@@ -21,7 +21,6 @@ export const SortComponent = () => {
             { value: 'Id' },
           ]}
           onChange={ev => {
-            ev.target.value;
             setSortRule((ev as any).target.value || 'Color');
           }}
         />{' '}

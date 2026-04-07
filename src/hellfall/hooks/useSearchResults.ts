@@ -36,7 +36,6 @@ import {
   pageAtom,
   activeCardAtom,
   // shouldPushHistoryAtom,
-  isSyncingFromUrlAtom,
 } from '../atoms/searchAtoms';
 
 import { sortFunction } from '../sortFunction';
@@ -87,7 +86,6 @@ export const useSearchResults = () => {
   const [page, setPageAtom] = useAtom(pageAtom);
   const activeCard = useAtomValue(activeCardAtom);
   // const [shouldPushHistory, setShouldPushHistory] = useAtom(shouldPushHistoryAtom);
-  const [isSyncingFromUrl, setIsSyncingFromUrl] = useAtom(isSyncingFromUrlAtom);
   const extraSetList = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'C', 'HCT', 'SFT'];
 
   useEffect(() => {
@@ -785,7 +783,7 @@ export const useSearchResults = () => {
     const newUrl = `?${searchToSet.toString()}`;
     const currentUrl = location.search;
 
-    if (newUrl !== currentUrl && !isSyncingFromUrl) {
+    if (newUrl !== currentUrl) {
       // const getParamsWithoutTextFields = (url: string) => {
       //   const params = new URLSearchParams(url.substring(1));
       //   params.delete('name');
@@ -823,7 +821,7 @@ export const useSearchResults = () => {
     colorIdentityNumber,
     searchSet,
     includeExtraSets,
-    extraSetList,
+    extraSets,
     searchToken,
     legality,
     // isCommander,
@@ -837,7 +835,6 @@ export const useSearchResults = () => {
     page,
     activeCard,
     // shouldPushHistory,
-    // isSyncingFromUrl,
     cards.length,
     // location.search,
   ]);
