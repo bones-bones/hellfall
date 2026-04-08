@@ -161,6 +161,7 @@ module.exports = function (webpackEnv) {
         .filter((ext) => useTypeScript || !ext.includes("ts")),
       alias: {
         ...(modules.webpackAliases || {}),
+        '@hellfall/shared': path.resolve(__dirname, '../packages/shared/src'),
       },
     },
     module: {
