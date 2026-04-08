@@ -140,3 +140,6 @@ Write a script to transform the database
 - add collector numbers for sets
 - add {69}, {45}, {-2}
 - make sure I didn't forget any semicolons (for hcx)
+- fix draftpartners for urza's will and associated cards
+- make card name text render in hellfallentry below card (so if card doesn't render, the name will)
+- add card to plaintext function; add it as alt text to card images (do by face/all faces)

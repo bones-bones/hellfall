@@ -29,6 +29,8 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     class: HCLayout.Normal,
     saga: HCLayout.Normal,
     adventure: HCLayout.Inset,
+    // @ts-ignore
+    prepare: HCLayout.Inset,
     mutate: HCLayout.Normal,
     prototype: HCLayout.Normal,
     battle: HCLayout.Normal,
@@ -54,6 +56,8 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     class: HCLayout.RealCardToken,
     saga: HCLayout.RealCardToken,
     adventure: HCLayout.RealCardMultiToken,
+    // @ts-ignore
+    prepare: HCLayout.RealCardMultiToken,
     mutate: HCLayout.RealCardToken,
     prototype: HCLayout.RealCardToken,
     battle: HCLayout.RealCardToken,

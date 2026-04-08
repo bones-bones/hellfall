@@ -4,7 +4,7 @@
 
 // TODO: Decide whether to do array for cards that arguably fit multiple layouts
 export enum HCLayout {
-  /** A standard Magic card with one face */
+  /** A standard Magic card with one face or face */
   Normal = 'normal',
   /** A multi-faced card that doesn't fit into another category */
   Multi = 'multi',
@@ -12,7 +12,7 @@ export enum HCLayout {
   // Grid = 'grid',
   /** Cards that can meld */
   MeldPart = 'meld_part',
-  /** Cards that are the result of melding */
+  /** Cards/faces that are the result of melding */
   MeldResult = 'meld_result',
   /** Tokens */
   Token = 'token',
@@ -50,25 +50,47 @@ export enum HCLayout {
   TokenOnBack = 'token_on_back',
   /** Cards with a sticker sheet on the back */
   StickersOnBack = 'stickers_on_back',
-  /** The following apply if none of the other multi ones apply, and the first one to match is applied */
-  /** Cards that can be played on more than one face */
+  // /** The following apply if none of the other multi ones apply, and the first one to match is applied */
+  /** Cards that can be played on more than one face or modal faces of a card */
   Modal = 'modal',
-  /** Cards that transform */
+  /** Cards that transform or transformed faces */
   Transform = 'transform',
-  /** Cards that specialize */
+  /** Cards that specialize or specialized faces */
   Specialize = 'specialize',
-  /** Cards that flip */
+  /** Cards that flip or flipped faces */
   Flip = 'flip',
-  /** Cards with an inset (adventure/omen/prepared spell) */
+  /** Cards with an inset (adventure/omen/prepared spell) or inset faces */
   Inset = 'inset',
   /** Cards with an inset token */
   TokenInInset = 'token_in_inset',
   /** Cards with an inset dungeon */
   DungeonInInset = 'dungeon_in_inset',
-  /** Cards with an aftermath face */
+  /** Cards with an aftermath face or aftermath faces */
   Aftermath = 'aftermath',
-  /** Split cards */
+  /** Split cards or split faces */
   Split = 'split',
+  /** Standard front face of a multiface card */
+  Front = 'front',
+  /** Cards/faces with levels */
+  Leveler = "leveler",
+  /** Class-type enchantment cards/faces */
+  Class = "class",
+  /** Case-type enchantment cards/faces */
+  Case = "case",
+  /** Saga-type cards/faces */
+  Saga = "saga",
+  /** Cards with Mutate */
+  Mutate = "mutate",
+  /** Cards with Prototype */
+  Prototype = "prototype",
+  /** Battle-type faces */
+  Battle = "battle",
+  /** Plane and Phenomenon-type cards */
+  Planar = "planar",
+  /** Scheme-type cards */
+  Scheme = "scheme",
+  /** Vanguard-type cards */
+  Vanguard = "vanguard",
 }
 
 /**
@@ -92,6 +114,15 @@ export namespace HCLayoutGroup {
     `${HCLayout.RealCardToken}`,
     `${HCLayout.Checklist}`,
     `${HCLayout.Misc}`,
+    `${HCLayout.Leveler}`,
+    `${HCLayout.Class}`,
+    `${HCLayout.Case}`,
+    `${HCLayout.Saga}`,
+    `${HCLayout.Mutate}`,
+    `${HCLayout.Prototype}`,
+    `${HCLayout.Planar}`,
+    `${HCLayout.Scheme}`,
+    `${HCLayout.Vanguard}`,
   ] as const;
 
   /**
@@ -161,6 +192,15 @@ export namespace HCLayoutGroup {
     `${HCLayout.Aftermath}`,
     `${HCLayout.Split}`,
     `${HCLayout.Misc}`,
+    `${HCLayout.Leveler}`,
+    `${HCLayout.Class}`,
+    `${HCLayout.Case}`,
+    `${HCLayout.Saga}`,
+    `${HCLayout.Mutate}`,
+    `${HCLayout.Prototype}`,
+    `${HCLayout.Planar}`,
+    `${HCLayout.Scheme}`,
+    `${HCLayout.Vanguard}`,
   ] as const;
 
   /**
@@ -225,4 +265,47 @@ export namespace HCLayoutGroup {
    *
    */
   export type FrontIdentityLayoutType = (typeof FrontIdentityLayout)[number];
+  
+  /**
+   * All layouts that can be the layout for a face.
+   *
+   * @see {@link FaceLayoutType} for the type of this group.
+   */
+  export const FaceLayout = [
+    `${HCLayout.Front}`,
+    `${HCLayout.MeldResult}`,
+    `${HCLayout.Token}`,
+    `${HCLayout.Emblem}`,
+    `${HCLayout.Reminder}`,
+    `${HCLayout.Stickers}`,
+    `${HCLayout.Dungeon}`,
+    `${HCLayout.Checklist}`,
+    `${HCLayout.Misc}`,
+    `${HCLayout.DraftPartner}`,
+    `${HCLayout.Modal}`,
+    `${HCLayout.Transform}`,
+    `${HCLayout.Specialize}`,
+    `${HCLayout.Flip}`,
+    `${HCLayout.Inset}`,
+    `${HCLayout.Aftermath}`,
+    `${HCLayout.Split}`,
+    `${HCLayout.Leveler}`,
+    `${HCLayout.Class}`,
+    `${HCLayout.Case}`,
+    `${HCLayout.Saga}`,
+    `${HCLayout.Mutate}`,
+    `${HCLayout.Prototype}`,
+    `${HCLayout.Battle}`,
+    `${HCLayout.Planar}`,
+    `${HCLayout.Scheme}`,
+    `${HCLayout.Vanguard}`,
+  ] as const;
+
+  /**
+   * A type for all layouts that can be the layout for a face.
+   *
+   * @see {@link FaceLayout} for an array version.
+   *
+   */
+  export type FaceLayoutType = (typeof FrontIdentityLayout)[number];
 }
