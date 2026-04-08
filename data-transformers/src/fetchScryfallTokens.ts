@@ -69,8 +69,6 @@ export const fetchScryfallTokens = async () => {
         if (entry[i]) {
           if (keys[i] == 'id') {
             tokenObject.id = entry[i];
-          } else if (keys[i] == 'layout') {
-            tokenObject.layout = typeLayouts[entry[i]];
           } else if (keys[i] == 'token_maker') {
             tokenObject.all_parts = entry[i].split(';').map(name => {
               const maker: HCRelatedCard = {

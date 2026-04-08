@@ -50,7 +50,7 @@ export enum HCLayout {
   TokenOnBack = 'token_on_back',
   /** Cards with a sticker sheet on the back */
   StickersOnBack = 'stickers_on_back',
-  // /** The following apply if none of the other multi ones apply, and the first one to match is applied */
+  /** The following multi ones apply if none of the other multi ones apply, and the first one to match is applied */
   /** Cards that can be played on more than one face or modal faces of a card */
   Modal = 'modal',
   /** Cards that transform or transformed faces */
@@ -265,7 +265,7 @@ export namespace HCLayoutGroup {
    *
    */
   export type FrontIdentityLayoutType = (typeof FrontIdentityLayout)[number];
-  
+
   /**
    * All layouts that can be the layout for a face.
    *
