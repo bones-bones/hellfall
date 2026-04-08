@@ -441,7 +441,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           cardObject.layout = HCLayout.DraftPartner;
         } else if (
           cardObject.tags?.includes('reminder-on-back') ||
-          cardObject.card_faces.at(-1)?.types?.includes('Reminder Card')
+          cardObject.card_faces.at(-1)?.types?.includes('Reminder Card') ||
+          cardObject.card_faces.at(-1)?.types?.includes('QR Code')
         ) {
           cardObject.layout = HCLayout.ReminderOnBack;
         } else if (

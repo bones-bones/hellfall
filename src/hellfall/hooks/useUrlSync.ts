@@ -85,83 +85,78 @@ export const useUrlSync = () => {
   };
 
   useEffect(() => {
-    debugger;
-
     const params = new URLSearchParams(location.search);
     // Set search inputs
-    if (nameSearch != params.get('name') || '') {
+    if (nameSearch != (params.get('name') || '')) {
       setNameSearch(params.get('name') || '');
     }
-    if (idSearch != params.get('id') || '') {
+    if (idSearch != (params.get('id') || '')) {
       setIdSearch(params.get('id') || '');
     }
-    if (costSearch != params.get('cost')?.split(',').filter(Boolean) || []) {
+    if (costSearch != (params.get('cost')?.split(',').filter(Boolean) || [])) {
       setCostSearch(params.get('cost')?.split(',').filter(Boolean) || []);
     }
-    if (typeSearch != params.get('type')?.split(',').filter(Boolean) || []) {
+    if (typeSearch != (params.get('type')?.split(',').filter(Boolean) || [])) {
       setTypeSearch(params.get('type')?.split(',').filter(Boolean) || []);
     }
-    if (rulesSearch != params.get('rules')?.split(',').filter(Boolean) || []) {
+    if (rulesSearch != (params.get('rules')?.split(',').filter(Boolean) || [])) {
       setRulesSearch(params.get('rules')?.split(',').filter(Boolean) || []);
     }
-    if (flavorSearch != params.get('flavor')?.split(',').filter(Boolean) || []) {
+    if (flavorSearch != (params.get('flavor')?.split(',').filter(Boolean) || [])) {
       setFlavorSearch(params.get('flavor')?.split(',').filter(Boolean) || []);
     }
-    if (creators != params.get('creators')?.split(',').filter(Boolean) || []) {
+    if (creators != (params.get('creators')?.split(',').filter(Boolean) || [])) {
       setCreators(params.get('creators')?.split(',').filter(Boolean) || []);
     }
-    if (tags != params.get('tags')?.split(',').filter(Boolean) || []) {
+    if (tags != (params.get('tags')?.split(',').filter(Boolean) || [])) {
       setTags(params.get('tags')?.split(',').filter(Boolean) || []);
     }
 
     // Set color filters
-    if (searchColors != params.get('colors')?.split(',').filter(Boolean) || []) {
+    if (searchColors != (params.get('colors')?.split(',').filter(Boolean) || [])) {
       setSearchColors(params.get('colors')?.split(',').filter(Boolean) || []);
     }
-    if (colorComparison != (params.get('colorComparison') as any) || '>=') {
+    if (colorComparison != ((params.get('colorComparison') as any) || '>=')) {
       setColorComparison((params.get('colorComparison') as any) || '>=');
     }
     if (colorNumber != parseOperatorValue(params.get('colorNumber'))) {
-      debugger;
       setColorNumber(parseOperatorValue(params.get('colorNumber')));
     }
-    if (searchColorIdentities != params.get('colorIdentity')?.split(',').filter(Boolean) || []) {
+    if (searchColorIdentities != (params.get('colorIdentity')?.split(',').filter(Boolean) || [])) {
       setSearchColorIdentities(params.get('colorIdentity')?.split(',').filter(Boolean) || []);
     }
-    if (colorIdentityComparison != (params.get('colorIdentityComparison') as any) || '<=') {
+    if (colorIdentityComparison != ((params.get('colorIdentityComparison') as any) || '<=')) {
       setColorIdentityComparison((params.get('colorIdentityComparison') as any) || '<=');
     }
     if (hybridIdentityRule != (params.get('hybridIdentityRule') === 'true')) {
       setHybridIdentityRule(params.get('hybridIdentityRule') === 'true');
     }
     if (colorIdentityNumber != parseOperatorValue(params.get('colorIdentityNumber'))) {
-      debugger;
       setColorIdentityNumber(parseOperatorValue(params.get('colorIdentityNumber')));
     }
 
     // Set set/legality filters
-    if (searchSet != params.get('set')?.split(',').filter(Boolean) || []) {
+    if (searchSet != (params.get('set')?.split(',').filter(Boolean) || [])) {
       setSearchSet(params.get('set')?.split(',').filter(Boolean) || []);
     }
     if (includeExtraSets != (params.get('includeExtraSets') === 'true')) {
       setIncludeExtraSets(params.get('includeExtraSets') === 'true');
     }
-    if (extraSets != params.get('extraSets')?.split(',').filter(Boolean) || []) {
+    if (extraSets != (params.get('extraSets')?.split(',').filter(Boolean) || [])) {
       setExtraSets(params.get('extraSets')?.split(',').filter(Boolean) || []);
     }
-    if (searchToken != (params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards') {
+    if (searchToken != ((params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards')) {
       setSearchToken((params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards');
     }
     if (
       legality !=
-        (params.get('legality')?.split(',').filter(Boolean) as (
-          | 'legal'
-          | 'banned'
-          | '4cbLegal'
-          | 'hellsmanderLegal'
-          | 'isCommander'
-        )[]) ||
-      []
+      ((params.get('legality')?.split(',').filter(Boolean) as (
+        | 'legal'
+        | 'banned'
+        | '4cbLegal'
+        | 'hellsmanderLegal'
+        | 'isCommander'
+      )[]) || [])
     ) {
       setLegality(
         (params.get('legality')?.split(',').filter(Boolean) as (
@@ -192,10 +187,10 @@ export const useUrlSync = () => {
     }
 
     // Set sort
-    if (sortRule != (params.get('order') as any) || 'Color') {
+    if (sortRule != ((params.get('order') as any) || 'Color')) {
       setSortRule((params.get('order') as any) || 'Color');
     }
-    if (dirRule != (params.get('dir') as any) || 'Asc') {
+    if (dirRule != ((params.get('dir') as any) || 'Asc')) {
       setDirRule((params.get('dir') as any) || 'Asc');
     }
 
@@ -203,7 +198,7 @@ export const useUrlSync = () => {
     if (page != parseInt(params.get('page') || '0')) {
       setPage(parseInt(params.get('page') || '0'));
     }
-    if (activeCard != params.get('activeCard') || '') {
+    if (activeCard != (params.get('activeCard') || '')) {
       setActiveCard(params.get('activeCard') || '');
     }
 
