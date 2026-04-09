@@ -67,7 +67,6 @@
 		"Archetype",
 		"Archon",
 		"Arena",
-		"Aritfact",
 		"Arm",
 		"Army",
 		"Arrow",
@@ -1129,6 +1128,7 @@
 		"The Medium",
 		"They",
 		"Thief",
+		"Thing",
 		"This",
 		"Thocker",
 		"Thopter",
@@ -1407,7 +1407,6 @@
 		"象の",
 		"👀",
 		"💀",
-		"🦈",
 		"",
 		""
 	]

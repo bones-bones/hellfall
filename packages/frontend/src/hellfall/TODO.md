@@ -145,7 +145,9 @@ Write a script to transform the database
 - add card to plaintext function; add it as alt text to card images (do by face/all faces)
 - add code to infer new layout types
 - add layouts to faces
-- add frames (use tags & layouts?)
+- add frames (use tags & layouts?) (allow for retro search option that matches both 93 and 97)
 - add frameEffects (use tags and/or types)
 - add borderColors (use tags)
 - add finish (use tags)
+- add collections to deal with types, tags, keywords, etc.
+- switch prepared to its own layout

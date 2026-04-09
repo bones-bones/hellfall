@@ -1592,6 +1592,14 @@
       "colors": ["U", "C"]
     },
     {
+      "filename": "hybrid/nums/4P.svg",
+      "symbol": "4/P",
+      "english": "four generic mana or one purple mana",
+      "represents_mana": true,
+      "mana_value": 4,
+      "colors": ["P", "C"]
+    },
+    {
       "filename": "hybrid/nums/5INFINITY.svg",
       "symbol": "5/∞",
       "english": "five generic mana or infinite generic mana",
