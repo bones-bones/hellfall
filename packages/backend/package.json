@@ -1,0 +1,23 @@
+{
+  "name": "@hellfall/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@hellfall/shared": "^1.0.0",
+    "@scryfall/api-types": ">=1.0.0-alpha.4",
+    "jsdom": "^17.0.0",
+    "p-limit": "^7.3.0",
+    "ts-node": "^10.2.9"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^16.2.13",
+    "@types/node": "^20.12.8",
+    "typescript": "^5",
+    "xmlbuilder": "^15.1.1"
+  },
+  "scripts": {
+    "transform-hc": "npx tsx src/hc-transformations",
+    "land-box": "npx tsx src/land-box"
+  }
+}

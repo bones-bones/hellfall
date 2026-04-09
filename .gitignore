@@ -44,5 +44,4 @@ server/.env
 .yarn/install-state.gz
 .yarnrc.yml
 
-.vscode/launch.json
 .env
