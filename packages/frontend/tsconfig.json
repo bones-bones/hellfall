@@ -22,6 +22,6 @@
       "@hellfall/shared/*": ["../shared/src/*/index.ts", "../shared/src/*"]
     }
   },
-  "include": ["src", "../shared/src"],
+  "include": ["src"],
   "references": [{ "path": "../shared" }]
 }
