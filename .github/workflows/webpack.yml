@@ -26,6 +26,15 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Debug ESLint config
+        run: |
+          echo "=== ESLint config being used ==="
+          cd packages/frontend
+          npx eslint --print-config src/some-file.ts | grep -B5 -A5 eqeqeq || echo "eqeqeq rule not found in config"
+          echo "=== ESLint version ==="
+          npx eslint --version
+        continue-on-error: true  # Don't fail the workflow if debug fails
+
       - name: Lint
         run: yarn fix
 
