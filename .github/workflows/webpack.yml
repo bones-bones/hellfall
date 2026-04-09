@@ -29,6 +29,11 @@ jobs:
       - name: Lint
         run: yarn fix
 
+      - name: Build shared package
+        run: |
+          cd packages/shared
+          npx tsc --emitDeclarationOnly  # Generate .d.ts files
+
       - name: Type check
         run: |
           cd packages/frontend && npx tsc --noEmit || true
