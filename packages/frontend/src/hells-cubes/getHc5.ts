@@ -1,4 +1,13 @@
-import { HCCard, HCCardFace, HCObject, HCLayout, HCLegality, HCColor, HCColors, HCImageStatus } from '@hellfall/shared/types';
+import {
+  HCCard,
+  HCCardFace,
+  HCObject,
+  HCLayout,
+  HCLegality,
+  HCColor,
+  HCColors,
+  HCImageStatus,
+} from '@hellfall/shared/types';
 
 const PLACEHOLDER_CARD: Omit<HCCard.Normal, 'toFaces' | 'toJSON'> = {
   object: HCObject.ObjectType.Card,

@@ -3,7 +3,9 @@ import {
   HCCardFace,
   HCImageStatus,
   HCLayout,
-  HCLayoutGroup, HCColor, HCColors
+  HCLayoutGroup,
+  HCColor,
+  HCColors,
 } from '@hellfall/shared/types';
 import { splitParens } from '@hellfall/shared/utils/textHandling.ts';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';

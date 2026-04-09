@@ -5,7 +5,7 @@ import { Select } from '@workday/canvas-kit-preview-react/select';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { Area } from './Area.tsx';
 import { useAtom, useAtomValue } from 'jotai';
-import { deckAtom, draftAtom } from './draftAtom.tsx';
+import { deckAtom, draftAtom } from './draftAtom.ts';
 import { DeckConstruction } from './DeckConstruction.tsx';
 import { CARDS_PER_PACK } from './constants.ts';
 import styled from '@emotion/styled';

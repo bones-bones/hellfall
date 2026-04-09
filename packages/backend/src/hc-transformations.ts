@@ -11,7 +11,8 @@ import {
   HCRelatedCard,
   HCLayoutGroup,
   HCColor,
-  HCColors,HCObject
+  HCColors,
+  HCObject,
 } from '@hellfall/shared/types';
 // import { getDefaultStore } from 'jotai';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
@@ -630,7 +631,6 @@ const dataToCards = (
   }
 };
 const loadExistingData = () => {
-
   const databasePath = '../shared/src/data/Hellscube-Database.json';
   const tokensPath = '../shared/src/data/tokens.json';
 
@@ -658,7 +658,7 @@ const loadExistingData = () => {
 };
 const main = async () => {
   // const pips = await loadPips();
-  await loadPipsData()
+  await loadPipsData();
 
   const { data: newCards } = { data: await fetchDatabase() };
   const usernameMappings = await fetchUsernameMappings();

@@ -1406,7 +1406,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7":
+"@babel/preset-typescript@npm:^7.28.5":
   version: 7.28.5
   resolution: "@babel/preset-typescript@npm:7.28.5"
   dependencies:
@@ -1910,7 +1910,7 @@ __metadata:
     "@babel/plugin-proposal-pipeline-operator": "npm:^7.24.7"
     "@babel/preset-env": "npm:^7.25.0"
     "@babel/preset-react": "npm:^7.24.7"
-    "@babel/preset-typescript": "npm:^7"
+    "@babel/preset-typescript": "npm:^7.28.5"
     "@emotion/react": "npm:^11.1.5"
     "@emotion/styled": "npm:^11.1.5"
     "@hellfall/shared": "npm:^1.0.0"

@@ -7,7 +7,7 @@ import {
   SingleCheckbox,
   NamedHiddenCheckboxGroup /**ColorCheckboxGroup*/,
   PillSearch,
-  NumberSelector
+  NumberSelector,
 } from '../inputs';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
 import cardTypes from '@hellfall/shared/data/tags.json';

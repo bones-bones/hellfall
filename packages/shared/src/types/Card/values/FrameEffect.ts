@@ -1,54 +1,54 @@
 export enum ScryfallFrameEffect {
   /** The cards have a legendary crown */
-  Legendary = "legendary",
+  Legendary = 'legendary',
   /** The miracle frame effect */
-  Miracle = "miracle",
+  Miracle = 'miracle',
   /** The enchantment frame effect */
-  Enchantment = "enchantment",
+  Enchantment = 'enchantment',
   /** The draft-matters frame effect */
-  Draft = "draft",
+  Draft = 'draft',
   /** The Devoid frame effect */
-  Devoid = "devoid",
+  Devoid = 'devoid',
   /** The Odyssey tombstone mark */
-  Tombstone = "tombstone",
+  Tombstone = 'tombstone',
   /** A colorshifted frame */
-  Colorshifted = "colorshifted",
+  Colorshifted = 'colorshifted',
   /** The FNM-style inverted frame */
-  Inverted = "inverted",
+  Inverted = 'inverted',
   /** The sun and moon transform marks */
-  SunMoonDfc = "sunmoondfc",
+  SunMoonDfc = 'sunmoondfc',
   /** The compass and land transform marks */
-  CompassLandDfc = "compasslanddfc",
+  CompassLandDfc = 'compasslanddfc',
   /** The Origins and planeswalker transform marks */
-  OriginPwDfc = "originpwdfc",
+  OriginPwDfc = 'originpwdfc',
   /** The moon and Eldrazi transform marks */
-  MoonEldraziDfc = "mooneldrazidfc",
+  MoonEldraziDfc = 'mooneldrazidfc',
   /** The waxing and waning crescent moon transform marks */
-  WaxingAndWaningMoonDfc = "waxingandwaningmoondfc",
+  WaxingAndWaningMoonDfc = 'waxingandwaningmoondfc',
   /** A custom Showcase frame */
-  Showcase = "showcase",
+  Showcase = 'showcase',
   /** An extended art frame */
-  ExtendedArt = "extendedart",
+  ExtendedArt = 'extendedart',
   /** The cards have a companion frame */
-  Companion = "companion",
+  Companion = 'companion',
   /** The cards have an etched foil treatment */
-  Etched = "etched",
+  Etched = 'etched',
   /** The cards have the snowy frame effect */
-  Snow = "snow",
+  Snow = 'snow',
   /** The cards have the Lesson frame effect */
-  Lesson = "lesson",
+  Lesson = 'lesson',
   /** The cards have the Shattered Glass frame effect */
-  ShatteredGlass = "shatteredglass",
+  ShatteredGlass = 'shatteredglass',
   /** The cards have More Than Meets the Eye™ marks */
-  ConvertDfc = "convertdfc",
+  ConvertDfc = 'convertdfc',
   /** The cards have fan transforming marks */
-  FanDfc = "fandfc",
+  FanDfc = 'fandfc',
   /** The cards have the Upside Down transforming marks */
-  UpsidedownDfc = "upsidedowndfc",
+  UpsidedownDfc = 'upsidedowndfc',
   /** The cards have Spree asterisks */
-  Spree = "spree",
+  Spree = 'spree',
   /** The cards have generic transforming marks */
-  TransformDfc = "transformdfc",
+  TransformDfc = 'transformdfc',
   /** The cards have generic mdfc marks */
-  Mdfc = 'mdfc'
+  Mdfc = 'mdfc',
 }

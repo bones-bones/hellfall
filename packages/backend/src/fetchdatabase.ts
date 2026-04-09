@@ -1,5 +1,16 @@
 import { sheetsKey } from '../keys.ts';
-import { HCCard, HCColor, HCColors, HCImageStatus, HCLayout, HCLegalitiesField, HCFormat, HCLegality, HCRelatedCard, HCObject } from '@hellfall/shared/types';
+import {
+  HCCard,
+  HCColor,
+  HCColors,
+  HCImageStatus,
+  HCLayout,
+  HCLegalitiesField,
+  HCFormat,
+  HCLegality,
+  HCRelatedCard,
+  HCObject,
+} from '@hellfall/shared/types';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { stripMasterpiece } from '@hellfall/shared/utils/textHandling.ts';
 

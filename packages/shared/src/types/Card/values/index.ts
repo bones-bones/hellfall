@@ -1,9 +1,9 @@
-export * from "./BorderColor.ts";
+export * from './BorderColor.ts';
 export * from './Color.ts';
-export * from "./Finish.ts";
+export * from './Finish.ts';
 export * from './Format.ts';
-export * from "./Frame.ts";
-export * from "./FrameEffect.ts";
+export * from './Frame.ts';
+export * from './FrameEffect.ts';
 // export * from "./Game.ts";
 // export * from './ImageSize.ts';
 export * from './ImageStatus.ts';

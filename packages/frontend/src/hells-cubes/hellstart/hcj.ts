@@ -6,7 +6,15 @@ export type HCJPackInfo = {
   lands: { count: number; name: string }[];
 };
 
-import { HCCard, HCLayout, HCLegality, HCColor, HCColors, HCImageStatus, HCObject } from '@hellfall/shared/types';
+import {
+  HCCard,
+  HCLayout,
+  HCLegality,
+  HCColor,
+  HCColors,
+  HCImageStatus,
+  HCObject,
+} from '@hellfall/shared/types';
 import { withCardMethods } from '../getHc5.ts';
 
 /** Convert pack front metadata into an HCCard.Any with toFaces() for use in getDraftMancerCard etc. */

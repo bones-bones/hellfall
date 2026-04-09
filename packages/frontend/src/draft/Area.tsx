@@ -1,6 +1,6 @@
 import { useAtom, useSetAtom } from 'jotai';
 
-import { deckAtom, draftAtom } from './draftAtom.tsx';
+import { deckAtom, draftAtom } from './draftAtom.ts';
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { TheDraft } from './types.ts';

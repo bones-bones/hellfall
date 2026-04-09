@@ -56,7 +56,6 @@ Before you can update the database from the [google sheet](https://docs.google.c
 5. For restrictions, choose Google Sheets API. Then click create. Then click Show key to get the key.
 6. Make a copy of `keys-template.ts`, rename it to `keys.ts`, then paste the key into `sheetsKey`. Now you
 
-
 ## Updating the database
 
 run `yarn run transform-hc` (this updates all datasets)

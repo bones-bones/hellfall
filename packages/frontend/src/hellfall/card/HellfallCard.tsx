@@ -1,6 +1,5 @@
 import { Card, Heading, Text } from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
-import {  } from '@workday/canvas-kit-react/text';
 import { SetLegality } from './SetLegality.tsx';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
 import { formatParens } from '@hellfall/shared/utils/textHandling.ts';

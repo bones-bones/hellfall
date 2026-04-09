@@ -1,20 +1,31 @@
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
-const webpack = require("webpack");
-const resolve = require("resolve");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import webpack from "webpack";
+import resolve from "resolve";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "react-dev-utils/ForkTsCheckerWebpackPlugin.js";
+import typescriptFormatter from "react-dev-utils/typescriptFormatter.js";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 
-const CopyPlugin = require("copy-webpack-plugin");
-const paths = require("./paths");
-const modules = require("./modules");
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const workspaceRoot = path.resolve(__dirname, '../..'); // Go to hellfall/
+const sharedPackageSrc = path.resolve(workspaceRoot, 'packages/shared/src');
 
-const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
-const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+// Import paths and modules - these are CommonJS modules, so we need to handle them
+import pathsModule from "../../config/paths.js";
+import modulesModule from "../../config/modules.js";
+
+// Handle the imports (in case they're default exports or CommonJS)
+const paths = pathsModule.default || pathsModule;
+const modules = modulesModule.default || modulesModule;
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
@@ -31,7 +42,7 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function (webpackEnv) {
+export default function (webpackEnv) {
   const isEnvDevelopment = process.env.NODE_ENV === "development";
   const isEnvProduction = process.env.NODE_ENV === "production";
 
@@ -161,8 +172,12 @@ module.exports = function (webpackEnv) {
         .filter((ext) => useTypeScript || !ext.includes("ts")),
       alias: {
         ...(modules.webpackAliases || {}),
-        '@hellfall/shared': path.resolve(__dirname, '../packages/shared/src'),
+        '@hellfall/shared': path.resolve(__dirname, '../shared/src'),
       },
+      mainFields: ['browser', 'module', 'main'],
+      mainFiles: ['index', 'index.ts', 'index.tsx', 'index.js', 'index.jsx'], // Look for these files in folders
+      fullySpecified: false, // Don't require extensions
+      symlinks: true
     },
     module: {
       strictExportPresence: true,
@@ -183,7 +198,7 @@ module.exports = function (webpackEnv) {
             // A missing `test` is equivalent to a match.
             {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              loader: require.resolve("url-loader"),
+              loader: "url-loader",
               options: {
                 limit: imageInlineSizeLimit,
                 name: "static/media/[name].[hash:8].[ext]",
@@ -193,12 +208,21 @@ module.exports = function (webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
-              loader: require.resolve("babel-loader"),
+              include: [
+                paths.appSrc,
+                path.resolve(__dirname, '../shared/src')
+              ],
+              loader: "babel-loader",
               options: {
+                presets: [
+                  ["@babel/preset-react", {
+                    "runtime": "automatic"  // ← Add this for React 17+
+                  }],
+                  "@babel/preset-typescript"
+                ],
                 plugins: [
                   [
-                    require.resolve("babel-plugin-named-asset-import"),
+                    "babel-plugin-named-asset-import",
                     {
                       loaderMap: {
                         svg: {
@@ -209,8 +233,7 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                   // isEnvDevelopment &&
-
-                  //   require.resolve('react-refresh/babel'),
+                  //   "react-refresh/babel",
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -226,7 +249,7 @@ module.exports = function (webpackEnv) {
             {
               test: /\.(js|mjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
-              loader: require.resolve("babel-loader"),
+              loader: "babel-loader",
               options: {
                 babelrc: false,
                 configFile: false,
@@ -250,7 +273,7 @@ module.exports = function (webpackEnv) {
             // This loader doesn't use a "test" so it will catch all modules
             // that fall through the other loaders.
             {
-              loader: require.resolve("file-loader"),
+              loader: "file-loader",
               // Exclude `js` files to keep "css" loader working as it injects
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
@@ -274,7 +297,7 @@ module.exports = function (webpackEnv) {
       new CopyPlugin({
         patterns: [
           {
-            from: "src/data/Hellscube-Database.json",
+            from: path.resolve(sharedPackageSrc, 'data/Hellscube-Database.json'),
             to: "Hellscube-Database.json",
           },
           {

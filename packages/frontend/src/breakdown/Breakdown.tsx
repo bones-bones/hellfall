@@ -3,7 +3,13 @@ import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
 import styled from '@emotion/styled';
 import { xIcon } from '@workday/canvas-system-icons-web';
-import { SidePanel, SidePanelOpenDirection, Card, TertiaryButton, ToolbarIconButton } from '@workday/canvas-kit-react';
+import {
+  SidePanel,
+  SidePanelOpenDirection,
+  Card,
+  TertiaryButton,
+  ToolbarIconButton,
+} from '@workday/canvas-kit-react';
 import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
 import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
 import { canBeACommander } from '../hellfall/canBeACommander.ts';

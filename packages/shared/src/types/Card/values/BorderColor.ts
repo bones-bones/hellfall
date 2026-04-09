@@ -4,9 +4,9 @@
  * Note this is a physical description of the border, not a reference to “black border” or “silver border” gameplay.
  */
 export enum HCBorderColor {
-  Black = "black",
-  White = "white",
-  Borderless = "borderless",
-  Silver = "silver",
-  Gold = "gold",
+  Black = 'black',
+  White = 'white',
+  Borderless = 'borderless',
+  Silver = 'silver',
+  Gold = 'gold',
 }

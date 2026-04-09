@@ -18,9 +18,10 @@
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
     "paths": {
-      "@hellfall/shared/*": ["../shared/src/*"]
+      "@hellfall/shared": ["../shared/src/index.ts"],
+      "@hellfall/shared/*": ["../shared/src/*/index.ts", "../shared/src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "../shared/src"],
   "references": [{ "path": "../shared" }]
 }

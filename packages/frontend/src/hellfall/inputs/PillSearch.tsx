@@ -1,6 +1,13 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { DeprecatedMenuItem, Pill } from '@workday/canvas-kit-preview-react';
-import { FormField, styled, TertiaryButton, TextInput, Menu, useMenuModel } from '@workday/canvas-kit-react';
+import {
+  FormField,
+  styled,
+  TertiaryButton,
+  TextInput,
+  Menu,
+  useMenuModel,
+} from '@workday/canvas-kit-react';
 
 import { FixedSizeList } from 'react-window';
 

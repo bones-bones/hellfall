@@ -16,12 +16,11 @@ import { useNameToId, useIsId } from './hellfall/backCompat.ts';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 
 const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
-
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     loadPipsData();
-    setIsLoaded(true)
+    setIsLoaded(true);
   }, []);
 
   if (!isLoaded) {

@@ -2,7 +2,13 @@ import { useEffect, useRef, useState, useMemo, startTransition } from 'react';
 import { HellfallEntry } from './HellfallEntry.tsx';
 import { xIcon } from '@workday/canvas-system-icons-web';
 
-import { styled, SidePanel, SidePanelOpenDirection, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
+import {
+  styled,
+  SidePanel,
+  SidePanelOpenDirection,
+  Card,
+  ToolbarIconButton,
+} from '@workday/canvas-kit-react';
 import { PaginationComponent } from './inputs';
 
 import { HellfallCard } from './card/HellfallCard.tsx';

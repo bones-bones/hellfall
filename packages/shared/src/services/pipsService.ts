@@ -49,19 +49,19 @@ export const loadPipsData = async (): Promise<HCCardSymbol[]> => {
   if (pipsCache) {
     return pipsCache;
   }
-  
+
   // If currently loading, wait for that promise
   if (loadingPromise) {
     return loadingPromise;
   }
-  
+
   // Start loading
   loadingPromise = (async () => {
     const transformed = transformPipsData(pipsRawData.data);
     pipsCache = transformed;
     return transformed;
   })();
-  
+
   return loadingPromise;
 };
 
@@ -72,4 +72,3 @@ export const requirePipsData = (): HCCardSymbol[] => {
   }
   return pipsCache;
 };
-

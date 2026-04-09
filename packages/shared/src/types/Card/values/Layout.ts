@@ -72,25 +72,25 @@ export enum HCLayout {
   /** Standard front face of a multiface card */
   Front = 'front',
   /** Cards/faces with levels */
-  Leveler = "leveler",
+  Leveler = 'leveler',
   /** Class-type enchantment cards/faces */
-  Class = "class",
+  Class = 'class',
   /** Case-type enchantment cards/faces */
-  Case = "case",
+  Case = 'case',
   /** Saga-type cards/faces */
-  Saga = "saga",
+  Saga = 'saga',
   /** Cards with Mutate */
-  Mutate = "mutate",
+  Mutate = 'mutate',
   /** Cards with Prototype */
-  Prototype = "prototype",
+  Prototype = 'prototype',
   /** Battle-type faces */
-  Battle = "battle",
+  Battle = 'battle',
   /** Plane and Phenomenon-type cards */
-  Planar = "planar",
+  Planar = 'planar',
   /** Scheme-type cards */
-  Scheme = "scheme",
+  Scheme = 'scheme',
   /** Vanguard-type cards */
-  Vanguard = "vanguard",
+  Vanguard = 'vanguard',
 }
 
 /**
