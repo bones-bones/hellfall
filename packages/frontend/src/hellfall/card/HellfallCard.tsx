@@ -312,9 +312,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                           if (event.button === 1 || event.metaKey || event.ctrlKey) {
                             window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
                           } else {
-                            (window.location.href =
-                              '/hellfall/card/' + encodeURIComponent(entry.id)),
-                              '_blank';
+                            window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id);
                           }
                         }}
                         key={entry.id}

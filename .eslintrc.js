@@ -32,10 +32,15 @@ module.exports = {
     'react/prop-types': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/no-non-null-asserted-optional-chain': 0, // Look i know what i'm doing, honest
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/ban-ts-comment': 0, // i'm a sinner
     '@typescript-eslint/no-namespace': 0, // This is how scryfall does it and I don't want to rewrite their work more than I need to
+    'eqeqeq':'off',
+    'no-restricted-globals':'off',
+    'no-unused-vars':'off',
+    'react-hooks/exhaustive-deps':'off',
 
     'react/self-closing-comp': [
       'error',
