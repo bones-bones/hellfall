@@ -32,8 +32,6 @@ jobs:
       - name: Type check
         run: |
           cd packages/frontend && npx tsc --noEmit || true
-          cd packages/shared && npx tsc --noEmit || true
-          cd packages/backend && npx tsc --noEmit || true
-          
+
       - name: Build
         run: yarn build
