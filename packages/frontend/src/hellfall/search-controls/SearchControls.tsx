@@ -6,14 +6,13 @@ import {
   BoxlessCheckboxGroup,
   SingleCheckbox,
   NamedHiddenCheckboxGroup /**ColorCheckboxGroup*/,
+  PillSearch,
+  NumberSelector
 } from '../inputs';
-import { PillSearch } from '../inputs';
-import { TextInput } from '@workday/canvas-kit-react/text-input';
-import { FormField } from '@workday/canvas-kit-react/form-field';
+import { TextInput, FormField } from '@workday/canvas-kit-react';
 import cardTypes from '@hellfall/shared/data/tags.json';
 import creators_data from '@hellfall/shared/data/creators.json';
 import tags_data from '@hellfall/shared/data/tags.json';
-import { NumberSelector } from '../inputs';
 
 import { useAtom } from 'jotai';
 import {
@@ -43,12 +42,11 @@ import {
   loyaltyAtom,
   defenseAtom,
   // shouldPushHistoryAtom
-} from '../atoms/searchAtoms';
-import { StyledLabel, StyledLegend } from '../StyledLabel';
-import { StyledComponentHolder } from '../StyledComponentHolder';
-import { useDebounce } from '../../hooks';
+} from '../atoms/searchAtoms.ts';
+import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
+import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
+import { useDebounce, useKeyPress } from '../../hooks';
 import { act, useEffect, useState } from 'react';
-import { useKeyPress } from '../../hooks';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 

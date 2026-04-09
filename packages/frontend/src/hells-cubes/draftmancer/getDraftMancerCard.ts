@@ -1,6 +1,6 @@
 import { HCCard } from '@hellfall/shared/types';
-import { toExportName } from '@hellfall/shared/utils/textHandling';
-import { DraftmancerCard } from '../types';
+import { toExportName } from '@hellfall/shared/utils/textHandling.ts';
+import { DraftmancerCard } from '../types.ts';
 
 export const getDraftMancerCard = (card: HCCard.Any) => {
   const draftmancerSafeName = toExportName(card.name);

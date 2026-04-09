@@ -1,6 +1,5 @@
 import { atom } from 'jotai';
-import { HCCard } from '@hellfall/shared/types';
-import { HCCardFace } from '@hellfall/shared/types';
+import { HCCard, HCCardFace } from '@hellfall/shared/types';
 
 // @ts-ignore
 export const cardsAtom = atom<HCCard.Any[]>(async () => {

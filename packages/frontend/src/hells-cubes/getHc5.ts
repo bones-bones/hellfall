@@ -1,11 +1,4 @@
-import { HCCard } from '@hellfall/shared/types/Card/Card';
-import { HCCardFace } from '@hellfall/shared/types/Card/CardFace';
-import { HCObject } from '@hellfall/shared/types/Object';
-import { HCLayout } from '@hellfall/shared/types/Card/values/Layout';
-import { HCLegality } from '@hellfall/shared/types/Card/values/Legality';
-import { HCColor } from '@hellfall/shared/types/Card/values/Color';
-import type { HCColors } from '@hellfall/shared/types/Card/values/Color';
-import { HCImageStatus } from '@hellfall/shared/types/Card/values/ImageStatus';
+import { HCCard, HCCardFace, HCObject, HCLayout, HCLegality, HCColor, HCColors, HCImageStatus } from '@hellfall/shared/types';
 
 const PLACEHOLDER_CARD: Omit<HCCard.Normal, 'toFaces' | 'toJSON'> = {
   object: HCObject.ObjectType.Card,

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { useState, useEffect } from 'react';
-import { StyledLegend } from '../StyledLabel';
+import { StyledLegend } from '../StyledLabel.tsx';
 // TODO: figure out better way to deal with 5/1
 export const toNumber = (numStr: string | undefined) => {
   const zeroEquivs = ['?', 'N', 'X', 'Y', 'Z', '*', ''];

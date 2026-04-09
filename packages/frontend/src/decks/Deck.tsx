@@ -1,12 +1,12 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { cardsAtom } from '../hellfall/atoms/cardsAtom';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
 import styled from '@emotion/styled';
-import { HellfallCard } from '../hellfall/card/HellfallCard';
-import { CardEntry } from './types';
+import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
+import { CardEntry } from './types.ts';
 import { useParams } from 'react-router-dom';
-import { allDecks } from './allDecks';
-import { stringToMana } from '../hellfall/stringToMana';
+import { allDecks } from './allDecks.ts';
+import { stringToMana } from '../hellfall/stringToMana.tsx';
 
 const activeCardAtom = atom<HCCard.Any | undefined>(undefined);
 

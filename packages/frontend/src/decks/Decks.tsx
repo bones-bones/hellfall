@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router';
 
-import { Deck } from './Deck';
-import { allDecks } from './allDecks';
+import { Deck } from './Deck.tsx';
+import { allDecks } from './allDecks.ts';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { Suspense } from 'react';

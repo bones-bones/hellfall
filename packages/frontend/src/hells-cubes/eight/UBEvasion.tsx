@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BigContainer } from './components';
+import { BigContainer } from './components.tsx';
 
 export const UBEvasion = () => {
   return (

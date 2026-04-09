@@ -18,6 +18,8 @@
     "paths": {
       "@hellfall/shared/*": ["../shared/src/*"]
     },
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": true,
     "declaration": true,
     "rootDir": "./src",
     "composite": true

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useState, useEffect, PropsWithChildren, FC } from 'react';
-import { StyledLegend } from '../StyledLabel';
+import { StyledLegend } from '../StyledLabel.tsx';
 import { HCSearchColor } from '@hellfall/shared/types';
 
 export const SearchCheckbox = styled.input({

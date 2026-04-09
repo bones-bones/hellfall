@@ -1,6 +1,6 @@
-export type * from './Card';
-export * from './CardFace';
-export * from './CardFields';
-export * from './RelatedCard';
+export type * from './Card.ts';
+export * from './CardFace.ts';
+export * from './CardFields.ts';
+export * from './RelatedCard.ts';
 
 export * from './values';

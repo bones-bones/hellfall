@@ -1,4 +1,4 @@
-import { HellsCard } from '../HellsCard';
+import { HellsCard } from '../HellsCard.tsx';
 
 export const PlumberUmbra = () => {
   const stormCards = [

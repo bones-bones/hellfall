@@ -1,4 +1,4 @@
-export { PillSearch } from './PillSearch';
+export { PillSearch } from './PillSearch.tsx';
 export {
   CheckboxGroup,
   NamedCheckboxGroup,
@@ -7,5 +7,5 @@ export {
   NamedHiddenCheckboxGroup,
   HiddenCheckboxGroup /**ColorCheckboxGroup*/,
 } from './Checkboxes';
-export { NumericComparatorSelector as NumberSelector } from './NumberSelector';
-export { PaginationComponent } from './PaginationComponent';
+export { NumericComparatorSelector as NumberSelector } from './NumberSelector.tsx';
+export { PaginationComponent } from './PaginationComponent.tsx';

@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { TheDraft } from './types';
+import { TheDraft } from './types.ts';
 import { HCCard } from '@hellfall/shared/types';
 
 export const draftAtom = atom<TheDraft | undefined>(undefined);

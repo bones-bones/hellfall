@@ -34,7 +34,7 @@ import {
   pageAtom,
   activeCardAtom,
   LegalType,
-} from '../atoms/searchAtoms';
+} from '../atoms/searchAtoms.ts';
 
 export const useUrlSync = () => {
   const location = useLocation();

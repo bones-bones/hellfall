@@ -1,2 +1,2 @@
-export * from './CardSymbol';
-// export * from './ManaCost';
+export * from './CardSymbol.ts';
+// export * from './ManaCost.ts';

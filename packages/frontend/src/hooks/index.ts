@@ -1,2 +1,2 @@
-export { useKeyPress } from './useKeyPress';
-export { useDebounce } from './useDebounce';
+export { useKeyPress } from './useKeyPress.ts';
+export { useDebounce } from './useDebounce.ts';

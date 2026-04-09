@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 
 import { FormField } from '@workday/canvas-kit-react/form-field';
 import { Select } from '@workday/canvas-kit-preview-react/select';
-import { cardsAtom } from '../hellfall/atoms/cardsAtom';
-import { Area } from './Area';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
+import { Area } from './Area.tsx';
 import { useAtom, useAtomValue } from 'jotai';
-import { deckAtom, draftAtom } from './draftAtom';
-import { DeckConstruction } from './DeckConstruction';
-import { CARDS_PER_PACK } from './constants';
+import { deckAtom, draftAtom } from './draftAtom.tsx';
+import { DeckConstruction } from './DeckConstruction.tsx';
+import { CARDS_PER_PACK } from './constants.ts';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
-import { canBeACommander } from '../hellfall/canBeACommander';
+import { canBeACommander } from '../hellfall/canBeACommander.ts';
 
 export const Draft = () => {
   const [Set, setSet] = useState<'HLC' | 'HC2' | 'HC3' | 'HC4' | 'HC5' | 'HC6' | undefined>(

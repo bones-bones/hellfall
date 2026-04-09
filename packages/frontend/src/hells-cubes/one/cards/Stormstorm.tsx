@@ -1,4 +1,4 @@
-import { HellsCard } from '../HellsCard';
+import { HellsCard } from '../HellsCard.tsx';
 
 export const Stormstorm = () => {
   const stormCards = ['brainstorm', `storm+crow+type:creature`, 'stormsinger'];

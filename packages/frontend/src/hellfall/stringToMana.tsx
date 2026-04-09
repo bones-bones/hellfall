@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { sameColors } from './colorComps';
-import { getPipsData } from '@hellfall/shared/services/pipsService';
+import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
 
 export const getPipSrc = (name: string) => {
   const pips = getPipsData();

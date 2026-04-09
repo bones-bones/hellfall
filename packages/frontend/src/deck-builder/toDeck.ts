@@ -1,6 +1,6 @@
 import { HCCard } from '@hellfall/shared/types';
-import { getBaseObject } from './getBaseObject';
-import { getCard } from './getCard';
+import { getBaseObject } from './getBaseObject.ts';
+import { getCard } from './getCard.ts';
 // TODO: make dfcs work
 
 export const toDeck = (cards: HCCard.Any[]) => {

@@ -1,4 +1,4 @@
-import { DeckInfo } from './types';
+import { DeckInfo } from './types.ts';
 
 export const allDecks: DeckInfo[] = [
   {

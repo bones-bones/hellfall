@@ -1,14 +1,12 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { cardsAtom } from '../hellfall/atoms/cardsAtom';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
 import styled from '@emotion/styled';
 import { xIcon } from '@workday/canvas-system-icons-web';
-
-import { SidePanel, SidePanelOpenDirection } from '@workday/canvas-kit-react/side-panel';
-import { Card, TertiaryButton, ToolbarIconButton } from '@workday/canvas-kit-react';
-import { HellfallCard } from '../hellfall/card/HellfallCard';
-import { activeCardAtom } from '../hellfall/atoms/searchAtoms';
-import { canBeACommander } from '../hellfall/canBeACommander';
+import { SidePanel, SidePanelOpenDirection, Card, TertiaryButton, ToolbarIconButton } from '@workday/canvas-kit-react';
+import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
+import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
+import { canBeACommander } from '../hellfall/canBeACommander.ts';
 // TODO: make sure this still works
 export const Breakdown = () => {
   const cards = useAtomValue(cardsAtom).filter(e => e.set === 'HC7.0');

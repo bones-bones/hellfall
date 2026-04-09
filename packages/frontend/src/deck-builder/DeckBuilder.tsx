@@ -2,11 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
 import { HCCard } from '@hellfall/shared/types';
 import styled from '@emotion/styled';
-import { toDeck } from './toDeck';
-import { FormField } from '@workday/canvas-kit-react/form-field';
-import { TextInput } from '@workday/canvas-kit-react';
-import { ImportInstructions } from './ImportInstructions';
-import { PlaytestArea } from './playtest/PlaytestArea';
+import { toDeck } from './toDeck.ts';
+import { TextInput, FormField } from '@workday/canvas-kit-react';
+import { ImportInstructions } from './ImportInstructions.tsx';
+import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 
 const basics: Record<string, string> = {
   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',

@@ -1,8 +1,8 @@
 import fs from 'fs';
 
-import { fetchTokens } from './fetchTokens';
-import { fetchDatabase } from './fetchdatabase';
-import { fetchUsernameMappings } from './fetchUsernameMapping';
+import { fetchTokens } from './fetchTokens.ts';
+import { fetchDatabase } from './fetchdatabase.ts';
+import { fetchUsernameMappings } from './fetchUsernameMapping.ts';
 import {
   HCCard,
   HCCardFace,
@@ -11,14 +11,13 @@ import {
   HCRelatedCard,
   HCLayoutGroup,
   HCColor,
-  HCColors,
-} from '@hellfall/shared/types/Card';
-import { HCObject } from '@hellfall/shared/types/Object';
+  HCColors,HCObject
+} from '@hellfall/shared/types';
 // import { getDefaultStore } from 'jotai';
-import { getColorIdentityProps, setDerivedProps } from './derivedProps';
-import { fetchNotMagic } from './fetchNotMagic';
-import { stripMasterpiece, textEquals } from '@hellfall/shared/utils/textHandling';
-import { loadPipsData } from '@hellfall/shared/services/pipsService';
+import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
+import { fetchNotMagic } from './fetchNotMagic.ts';
+import { stripMasterpiece, textEquals } from '@hellfall/shared/utils/textHandling.ts';
+import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 const usingApproved = false;
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();

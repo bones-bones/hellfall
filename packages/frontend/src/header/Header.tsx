@@ -1,6 +1,5 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Heading } from '@workday/canvas-kit-react/text';
-import { styled } from '@workday/canvas-kit-react/common';
+import { Heading, styled } from '@workday/canvas-kit-react';
 
 export const Header = () => {
   return (

@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { HellfallEntry } from '../hellfall/HellfallEntry';
+import { HellfallEntry } from '../hellfall/HellfallEntry.tsx';
 import { useAtom, useAtomValue } from 'jotai';
-import { cardsAtom } from '../hellfall/atoms/cardsAtom';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { useRef, useState, useEffect } from 'react';
-import { TeamClock } from './TeamWolf';
+import { TeamClock } from './TeamWolf.tsx';
 import {
   SidePanelOpenDirection,
   Card,
@@ -11,8 +11,8 @@ import {
   SidePanel,
 } from '@workday/canvas-kit-react';
 import { Link } from 'react-router-dom';
-import { HellfallCard } from '../hellfall/card/HellfallCard';
-import { activeCardAtom } from '../hellfall/atoms/searchAtoms';
+import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
+import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
 import { xIcon } from '@workday/canvas-system-icons-web';
 import { HCCard } from '@hellfall/shared/types';
 import { useKeyPress } from '../hooks';

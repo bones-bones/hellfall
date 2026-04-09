@@ -20,8 +20,8 @@ import {
   // HCSecurityStamp,
 } from './values';
 
-import { HCCardFace } from './CardFace';
-import { HCRelatedCard } from './RelatedCard';
+import { HCCardFace } from './CardFace.ts';
+import { HCRelatedCard } from './RelatedCard.ts';
 // import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType';
 // import { SetType } from "../Set/values";
 

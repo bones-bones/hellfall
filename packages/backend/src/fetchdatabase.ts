@@ -1,11 +1,7 @@
-import { sheetsKey } from '../../keys';
-import { HCCard } from '@hellfall/shared/types/Card/Card';
-import { HCColor, HCColors, HCImageStatus, HCLayout } from '@hellfall/shared/types/Card/values';
-import { HCLegalitiesField, HCFormat, HCLegality } from '@hellfall/shared/types/Card/values';
-import { HCRelatedCard } from '@hellfall/shared/types/Card/RelatedCard';
-import { HCObject } from '@hellfall/shared/types/Object';
-import { getColorIdentityProps, setDerivedProps } from './derivedProps';
-import { stripMasterpiece } from '@hellfall/shared/utils/textHandling';
+import { sheetsKey } from '../keys.ts';
+import { HCCard, HCColor, HCColors, HCImageStatus, HCLayout, HCLegalitiesField, HCFormat, HCLegality, HCRelatedCard, HCObject } from '@hellfall/shared/types/';
+import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
+import { stripMasterpiece } from '@hellfall/shared/utils/textHandling.ts';
 
 export const fetchDatabase = async (usingApproved: boolean = false) => {
   const url = usingApproved

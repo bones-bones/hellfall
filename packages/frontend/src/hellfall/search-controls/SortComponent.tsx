@@ -1,9 +1,8 @@
-import { FormField } from '@workday/canvas-kit-react/form-field';
+import { FormField, space } from '@workday/canvas-kit-react';
 import { Select } from '@workday/canvas-kit-preview-react/select';
 import { useAtom } from 'jotai';
-import { sortAtom, dirAtom } from '../atoms/searchAtoms';
+import { sortAtom, dirAtom } from '../atoms/searchAtoms.ts';
 import styled from '@emotion/styled';
-import { space } from '@workday/canvas-kit-react/tokens';
 
 export const SortComponent = () => {
   const [sortRule, setSortRule] = useAtom(sortAtom);

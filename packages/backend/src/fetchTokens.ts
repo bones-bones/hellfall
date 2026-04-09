@@ -1,9 +1,6 @@
-import { sheetsKey } from '../../keys';
-import { HCCard, HCImageStatus, HCLayout, HCRelatedCard } from '@hellfall/shared/types/Card';
-import { HCColor, HCColors } from '@hellfall/shared/types/Card';
-import { HCObject } from '@hellfall/shared/types/Object';
-import { HCLegality, HCLegalitiesField } from '@hellfall/shared/types/Card';
-import { fetchScryfallTokens } from './fetchScryfallTokens';
+import { sheetsKey } from '../keys.ts';
+import { HCCard, HCImageStatus, HCLayout, HCRelatedCard, HCColor, HCColors, HCObject, HCLegality, HCLegalitiesField } from '@hellfall/shared/types/';
+import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 
 export const fetchTokens = async () => {
   const requestedData = await fetch(

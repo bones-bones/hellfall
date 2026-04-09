@@ -2,6 +2,7 @@
   "name": "@hellfall/backend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@hellfall/shared": "^1.0.0",
     "@scryfall/api-types": ">=1.0.0-alpha.4",

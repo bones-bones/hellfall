@@ -1,5 +1,5 @@
 // import { Atom, SetStateAction } from "jotai"
-// import { operator } from "./operator";
+// import { operator } from "./operator.ts";
 
 // export class searchTerm<Value> {
 //   /**

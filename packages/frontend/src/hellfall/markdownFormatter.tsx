@@ -1,6 +1,6 @@
 import { Fragment, ReactNode } from 'react';
 import simpleMarkdown from 'simple-markdown';
-import { stringToMana } from './stringToMana';
+import { stringToMana } from './stringToMana.tsx';
 
 // Helper function to check if a character is escaped
 const isEscaped = (source: string, index: number): boolean => {

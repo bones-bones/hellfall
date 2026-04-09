@@ -15,8 +15,8 @@ import {
   HCColor,
   HCColors,
   HCImageStatus,
-} from '@hellfall/shared/types/Card';
-import { setDerivedProps } from './derivedProps';
+} from '@hellfall/shared/types';
+import { setDerivedProps } from './derivedProps.ts';
 export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): HCCard.Any => {
   const cardLayoutCorrespondences: Record<ScryfallLayout, HCLayout> = {
     normal: HCLayout.Normal,

@@ -1,4 +1,4 @@
-import { BigContainer, InnerContainer } from './components';
+import { BigContainer, InnerContainer } from './components.tsx';
 
 export const SmallReanimation = () => {
   return (

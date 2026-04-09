@@ -1,7 +1,7 @@
 import { HCObject } from '../Object';
 import { HCLayout, HCLayoutGroup } from './values';
-import { HCCardFace } from './CardFace';
-import { HCCardFields } from './CardFields';
+import { HCCardFace } from './CardFace.ts';
+import { HCCardFields } from './CardFields.ts';
 
 type Layout<T extends `${HCLayout}`> = Pick<HCCardFields.Core.HCReferences, 'layout'> & {
   layout: `${T}`;

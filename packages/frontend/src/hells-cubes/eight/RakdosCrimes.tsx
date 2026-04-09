@@ -1,5 +1,5 @@
-import { BigContainer, Divider, InnerContainer, ManaSymbolSmall, StyledH3 } from './components';
-import { getPipSrc } from '../../hellfall/stringToMana';
+import { BigContainer, Divider, InnerContainer, ManaSymbolSmall, StyledH3 } from './components.tsx';
+import { getPipSrc } from '../../hellfall/stringToMana.tsx';
 import { Link } from 'react-router-dom';
 export const RakdosCrimes = () => {
   return (

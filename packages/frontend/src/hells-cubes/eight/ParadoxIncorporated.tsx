@@ -1,5 +1,5 @@
-import { BigContainer, InnerContainer, ManaSymbol, ManaSymbolSmall } from './components';
-import { getPipSrc } from '../../hellfall/stringToMana';
+import { BigContainer, InnerContainer, ManaSymbol, ManaSymbolSmall } from './components.tsx';
+import { getPipSrc } from '../../hellfall/stringToMana.tsx';
 import { Link } from 'react-router-dom';
 export const ParadoxIncorporated = () => {
   return (

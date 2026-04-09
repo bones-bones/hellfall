@@ -1,10 +1,10 @@
 import { useAtom, useSetAtom } from 'jotai';
 
-import { deckAtom, draftAtom } from './draftAtom';
+import { deckAtom, draftAtom } from './draftAtom.tsx';
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { TheDraft } from './types';
-import { CARDS_PER_PACK } from './constants';
+import { TheDraft } from './types.ts';
+import { CARDS_PER_PACK } from './constants.ts';
 import { HCCard } from '@hellfall/shared/types';
 
 export const Area = () => {

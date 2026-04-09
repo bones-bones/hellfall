@@ -16,6 +16,7 @@
     "isolatedModules": false,
     "noEmit": true,
     "types": ["node"],
+    "allowImportingTsExtensions": true,
     "paths": {
       "@hellfall/shared/*": ["../shared/src/*"]
     }

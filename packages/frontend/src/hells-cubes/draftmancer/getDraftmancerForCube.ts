@@ -1,4 +1,4 @@
-import { toDraftmancerCube } from './toDraftmancer';
+import { toDraftmancerCube } from './toDraftmancer.ts';
 import { HCCard } from '@hellfall/shared/types';
 
 export const getDraftmancerForCube = ({

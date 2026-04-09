@@ -3,11 +3,10 @@ import {
   HCCardFace,
   HCImageStatus,
   HCLayout,
-  HCLayoutGroup,
+  HCLayoutGroup, HCColor, HCColors
 } from '@hellfall/shared/types';
-import { HCColor, HCColors } from '@hellfall/shared/types/Card';
-import { splitParens } from '@hellfall/shared/utils/textHandling';
-import { getPipsData } from '@hellfall/shared/services/pipsService';
+import { splitParens } from '@hellfall/shared/utils/textHandling.ts';
+import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,

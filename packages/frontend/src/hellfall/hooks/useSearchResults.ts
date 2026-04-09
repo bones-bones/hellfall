@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import { HCCard } from '@hellfall/shared/types';
-import { HCColor, HCSearchColor, HCColors } from '@hellfall/shared/types';
-import { cardsAtom } from '../atoms/cardsAtom';
+import { HCCard, HCColor, HCSearchColor, HCColors } from '@hellfall/shared/types';
+import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   nameSearchAtom,
@@ -36,18 +35,18 @@ import {
   pageAtom,
   activeCardAtom,
   // shouldPushHistoryAtom,
-} from '../atoms/searchAtoms';
+} from '../atoms/searchAtoms.ts';
 
 import { sortFunction } from '../sortFunction';
-import { canBeACommander } from '../canBeACommander';
-import { toNumber } from '../inputs/NumberSelector';
+import { canBeACommander } from '../canBeACommander.ts';
+import { toNumber } from '../inputs/NumberSelector.tsx';
 import {
   colorCompOp,
   colorMiscReduce,
   hybridColorCompOp,
   hybridIdentityMiscReduce,
 } from '../colorComps';
-import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling';
+import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 
 export const useSearchResults = () => {
   const location = useLocation();

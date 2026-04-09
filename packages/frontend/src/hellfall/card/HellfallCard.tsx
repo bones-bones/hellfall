@@ -1,11 +1,11 @@
-import { Card } from '@workday/canvas-kit-react/card';
+import { Card, Heading, Text } from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
-import { Heading, Text } from '@workday/canvas-kit-react/text';
-import { SetLegality } from './SetLegality';
-import { colorsToIndicator, stringToMana } from '../stringToMana';
-import { formatParens } from '@hellfall/shared/utils/textHandling';
-import { HCCard } from '@hellfall/shared/types/Card/Card';
-import { HellfallRelatedEntry } from '../HellfallEntry';
+import {  } from '@workday/canvas-kit-react/text';
+import { SetLegality } from './SetLegality.tsx';
+import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
+import { formatParens } from '@hellfall/shared/utils/textHandling.ts';
+import { HCCard } from '@hellfall/shared/types';
+import { HellfallRelatedEntry } from '../HellfallEntry.tsx';
 
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useMemo, useRef } from 'react';

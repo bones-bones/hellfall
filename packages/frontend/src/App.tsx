@@ -6,14 +6,14 @@ import { Hellscubes } from './hells-cubes';
 import { DeckBuilder } from './deck-builder';
 import { Draft } from './draft';
 import { LandBox } from './land-box';
-import { SingleCard } from './hellfall/card/SingleCard';
+import { SingleCard } from './hellfall/card/SingleCard.tsx';
 import { Header } from './header';
-import { Breakdown } from './breakdown/Breakdown';
-import { Decks } from './decks/Decks';
-import { Watchwolfwar } from './watchWolf/WatchWolfWar';
-import { Watchwolfresults } from './watchWolf/WatchWolfResults';
-import { useNameToId, useIsId } from './hellfall/backCompat';
-import { loadPipsData } from '@hellfall/shared/services/pipsService';
+import { Breakdown } from './breakdown/Breakdown.tsx';
+import { Decks } from './decks/Decks.tsx';
+import { Watchwolfwar } from './watchWolf/WatchWolfWar.tsx';
+import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
+import { useNameToId, useIsId } from './hellfall/backCompat.ts';
+import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 
 const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
 

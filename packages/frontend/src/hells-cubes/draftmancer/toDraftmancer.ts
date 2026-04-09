@@ -1,8 +1,8 @@
 // https://draftmancer.com/cubeformat.html#cube
-import { canBeACommander } from '../../hellfall/canBeACommander';
+import { canBeACommander } from '../../hellfall/canBeACommander.ts';
 import { HCCard } from '@hellfall/shared/types';
-import { hcjFrontCards, packInfoToCard } from '../hellstart/hcj';
-import { getDraftMancerCard } from './getDraftMancerCard';
+import { hcjFrontCards, packInfoToCard } from '../hellstart/hcj.ts';
+import { getDraftMancerCard } from './getDraftMancerCard.ts';
 
 export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.Any[] }) => {
   cards.forEach(card => {

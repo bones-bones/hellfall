@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Land } from './types';
+import { Land } from './types.ts';
 
 export const useLands = () => {
   const [lands, setLands] = useState<Land[]>([]);

@@ -1,6 +1,6 @@
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { specialCards } from './specialCards';
+import { specialCards } from './specialCards.tsx';
 
 export const HellsCubeOne = () => {
   const val = useLocation();

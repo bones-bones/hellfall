@@ -1,1 +1,1 @@
-export * from './Object';
+export * from './Object.ts';

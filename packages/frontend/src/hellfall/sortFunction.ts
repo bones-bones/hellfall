@@ -1,5 +1,4 @@
-import { HCCard } from '@hellfall/shared/types';
-import { HCColor, HCColors } from '@hellfall/shared/types';
+import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 // TODO: make it possible to sort by color, then alpha, rather than color, then MV
 // how they can combine: Alpha and ID are mutually exclusive, but none of the others are
 

@@ -1,11 +1,8 @@
-import { sheetsKey } from '../../keys';
-import { HCCard, HCImageStatus, HCLayout, HCRelatedCard } from '@hellfall/shared/types/Card';
-import { HCColor, HCColors } from '@hellfall/shared/types/Card';
-import { HCObject } from '@hellfall/shared/types/Object';
-import { HCLegality, HCLegalitiesField } from '@hellfall/shared/types/Card';
+import { sheetsKey } from '../keys.ts';
+import { HCCard, HCImageStatus, HCLayout, HCRelatedCard, HCColor, HCColors, HCObject, HCLegality, HCLegalitiesField } from '@hellfall/shared/types/';
 import { ScryfallCard } from '@scryfall/api-types';
 import pLimit from 'p-limit';
-import { ScryfallToHC } from './scryfallToHC';
+import { ScryfallToHC } from './scryfallToHC.ts';
 
 const REQUEST_DELAY_MS = 75;
 const limiter = pLimit(1);

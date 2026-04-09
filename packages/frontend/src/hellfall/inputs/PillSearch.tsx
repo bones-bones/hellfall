@@ -1,13 +1,8 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { DeprecatedMenuItem } from '@workday/canvas-kit-preview-react/menu';
-import { Pill } from '@workday/canvas-kit-preview-react/pill';
-import { FormField } from '@workday/canvas-kit-react/form-field';
-import { styled } from '@workday/canvas-kit-react/common';
-import { TertiaryButton } from '@workday/canvas-kit-react/button';
-import { TextInput } from '@workday/canvas-kit-react/text-input';
+import { DeprecatedMenuItem, Pill } from '@workday/canvas-kit-preview-react';
+import { FormField, styled, TertiaryButton, TextInput, Menu, useMenuModel } from '@workday/canvas-kit-react';
 
 import { FixedSizeList } from 'react-window';
-import { Menu, useMenuModel } from '@workday/canvas-kit-react/menu';
 
 type Props = {
   possibleValues: string[];

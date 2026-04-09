@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { useLands } from './useLands';
-import { Land } from './types';
+import { useLands } from './useLands.ts';
+import { Land } from './types.ts';
 import { useState } from 'react';
 
 export const LandBox = () => {

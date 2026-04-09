@@ -1,11 +1,11 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
 import tokens from '@hellfall/shared/data/tokens.json';
-import { toExportName } from '@hellfall/shared/utils/textHandling';
-import { recursiveAdoption } from '../recursiveAdoption';
-import { getLayout } from './getLayout';
-import { getTableRow } from './getTableRow';
-import { getTableRowForToken } from './getTableRowForToken';
+import { toExportName } from '@hellfall/shared/utils/textHandling.ts';
+import { recursiveAdoption } from '../recursiveAdoption.ts';
+import { getLayout } from './getLayout.ts';
+import { getTableRow } from './getTableRow.ts';
+import { getTableRowForToken } from './getTableRowForToken.ts';
 import { prettifyXml } from './prettifyXml';
 export const toCockCube = ({
   name,

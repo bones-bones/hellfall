@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HellsCard } from '../HellsCard';
+import { HellsCard } from '../HellsCard.tsx';
 
 export const CurveTopper = () => {
   const [count, setCount] = useState(0);

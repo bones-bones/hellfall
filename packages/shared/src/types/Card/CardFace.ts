@@ -1,5 +1,5 @@
 import { HCObject } from '../Object';
-import { HCCardFields } from './CardFields';
+import { HCCardFields } from './CardFields.ts';
 
 /**
  * A collection of types representing card faces of each possible type.

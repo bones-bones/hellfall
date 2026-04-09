@@ -1,5 +1,5 @@
 import { HCObject } from '../Object';
-import { HCColors } from '../Card/values';
+import { HCColors } from '../Card';
 
 /**
  * Description of a card symbol.

@@ -1,8 +1,5 @@
-import { sheetsKey } from '../../keys';
-import { HCCard, HCImageStatus, HCLayout, HCRelatedCard } from '@hellfall/shared/types/Card';
-import { HCColor, HCColors } from '@hellfall/shared/types/Card';
-import { HCObject } from '@hellfall/shared/types/Object';
-import { HCLegality, HCLegalitiesField } from '@hellfall/shared/types/Card';
+import { sheetsKey } from '../keys.ts';
+import { HCCard, HCImageStatus, HCLayout, HCRelatedCard, HCColor, HCColors, HCObject, HCLegality, HCLegalitiesField } from '@hellfall/shared/types/';
 
 const discordToSymbolMatching: Record<string, string> = {
   '<:mana0:636012942243921931>': '{0}',

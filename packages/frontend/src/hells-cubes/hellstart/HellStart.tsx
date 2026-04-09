@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
-import { cardsAtom } from '../../hellfall/atoms/cardsAtom';
+import { cardsAtom } from '../../hellfall/atoms/cardsAtom.ts';
 import styled from '@emotion/styled';
-import { hcjFrontCards, HCJPackInfo } from './hcj';
+import { hcjFrontCards, HCJPackInfo } from './hcj.ts';
 
 export const HellStart = () => {
   const cards = useAtomValue(cardsAtom);

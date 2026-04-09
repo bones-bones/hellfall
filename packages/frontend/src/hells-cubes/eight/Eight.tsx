@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
-import { getPipSrc } from '../../hellfall/stringToMana';
+import { getPipSrc } from '../../hellfall/stringToMana.tsx';
 import { Routes, Route, Link } from 'react-router-dom';
-import { AzoriousHistoric } from './AzoriousHistoric';
-import { TargetingMatters } from './TargetingMatters';
-import { UBEvasion } from './UBEvasion';
-import { GolgariLandistocrats } from './GolgariLandistocrats';
-import { GruulSelfDiscard } from './GruulSelfDiscard';
-import { ParadoxIncorporated } from './ParadoxIncorporated';
-import { SmallReanimation } from './SmallReanimation';
-import { RakdosCrimes } from './RakdosCrimes';
-import { LandsLandsLands } from './LandsLandsLands';
-import { SimicAnimation } from './SimicAnimation';
+import { AzoriousHistoric } from './AzoriousHistoric.tsx';
+import { TargetingMatters } from './TargetingMatters.tsx';
+import { UBEvasion } from './UBEvasion.tsx';
+import { GolgariLandistocrats } from './GolgariLandistocrats.tsx';
+import { GruulSelfDiscard } from './GruulSelfDiscard.tsx';
+import { ParadoxIncorporated } from './ParadoxIncorporated.tsx';
+import { SmallReanimation } from './SmallReanimation.tsx';
+import { RakdosCrimes } from './RakdosCrimes.tsx';
+import { LandsLandsLands } from './LandsLandsLands.tsx';
+import { SimicAnimation } from './SimicAnimation.tsx';
 
 export const Eight = () => {
   return (

@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { toDeck } from '../deck-builder/toDeck';
-import { cardsAtom } from '../hellfall/atoms/cardsAtom';
-import { toCockCube } from './cockatrice/toCockCube';
+import { toDeck } from '../deck-builder/toDeck.ts';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
+import { toCockCube } from './cockatrice/toCockCube.ts';
 import { useAtomValue } from 'jotai';
 import { HCCard } from '@hellfall/shared/types';
 import { ReactNode } from 'react';
 import { getDraftmancerForCube } from './draftmancer';
-import { getHc5 } from './getHc5';
-import { toMPCAutofill } from './toMPCAutofill';
-import { getLands } from './getLands';
+import { getHc5 } from './getHc5.ts';
+import { toMPCAutofill } from './toMPCAutofill.ts';
+import { getLands } from './getLands.ts';
 
 type CubeSetup = {
   name: string;

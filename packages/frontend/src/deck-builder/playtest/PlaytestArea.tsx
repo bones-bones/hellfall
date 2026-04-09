@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HCCard } from '@hellfall/shared/types';
-import { HandCard } from './HandCard';
-import { PlayCard } from './PlayCard';
+import { HandCard } from './HandCard.tsx';
+import { PlayCard } from './PlayCard.tsx';
 import styled from '@emotion/styled';
 
 const PlayArea = styled.div({ border: '1px solid black' });

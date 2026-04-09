@@ -1,4 +1,5 @@
 import { atom } from 'jotai';
+
 const searchParams = new URLSearchParams(document.location.search);
 
 export const nameSearchAtom = atom<string>(searchParams.get('name') || '');

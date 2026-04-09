@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { cardsAtom } from '../atoms/cardsAtom';
-import { HellfallCard } from './HellfallCard';
+import { cardsAtom } from '../atoms/cardsAtom.ts';
+import { HellfallCard } from './HellfallCard.tsx';
 import styled from '@emotion/styled';
 
 import { useEffect } from 'react';

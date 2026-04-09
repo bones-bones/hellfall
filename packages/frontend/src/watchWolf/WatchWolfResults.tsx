@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
 import { useAtom, useAtomValue } from 'jotai';
-import { cardsAtom } from '../hellfall/atoms/cardsAtom';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { useEffect, useMemo, useState } from 'react';
-import { TeamWolf as GetCardVotes } from './TeamWolf';
+import { TeamWolf as GetCardVotes } from './TeamWolf.tsx';
 import {
   SidePanelOpenDirection,
   Card,
   ToolbarIconButton,
   SidePanel,
 } from '@workday/canvas-kit-react';
-import { HellfallCard } from '../hellfall/card/HellfallCard';
-import { activeCardAtom } from '../hellfall/atoms/searchAtoms';
+import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
+import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
 import { xIcon } from '@workday/canvas-system-icons-web';
 import { useKeyPress } from '../hooks';
 

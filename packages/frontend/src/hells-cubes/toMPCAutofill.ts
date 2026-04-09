@@ -1,4 +1,4 @@
-import { recursiveAdoption } from './recursiveAdoption';
+import { recursiveAdoption } from './recursiveAdoption.ts';
 
 const BRACKETS = [612, 504, 396, 234, 216, 198, 180, 162, 144, 126, 108, 90, 72, 55, 36, 18];
 

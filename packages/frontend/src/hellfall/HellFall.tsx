@@ -1,24 +1,20 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
-import { HellfallEntry } from './HellfallEntry';
+import { useEffect, useRef, useState, useMemo, startTransition } from 'react';
+import { HellfallEntry } from './HellfallEntry.tsx';
 import { xIcon } from '@workday/canvas-system-icons-web';
 
-import { styled } from '@workday/canvas-kit-react/common';
-import { SidePanel, SidePanelOpenDirection } from '@workday/canvas-kit-react/side-panel';
+import { styled, SidePanel, SidePanelOpenDirection, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
 import { PaginationComponent } from './inputs';
 
-import { HellfallCard } from './card/HellfallCard';
-import { Card } from '@workday/canvas-kit-react/card';
-import { ToolbarIconButton } from '@workday/canvas-kit-react/button';
+import { HellfallCard } from './card/HellfallCard.tsx';
 import { useAtom, useAtomValue } from 'jotai';
-import { activeCardAtom, pageAtom } from './atoms/searchAtoms';
-import { useSearchResults } from './hooks/useSearchResults';
-import { SearchControls } from './search-controls/SearchControls';
-import { SortComponent } from './search-controls/SortComponent';
-import { CHUNK_SIZE } from './constants';
+import { activeCardAtom, pageAtom } from './atoms/searchAtoms.ts';
+import { useSearchResults } from './hooks/useSearchResults.ts';
+import { SearchControls } from './search-controls/SearchControls.tsx';
+import { SortComponent } from './search-controls/SortComponent.tsx';
+import { CHUNK_SIZE } from './constants.ts';
 import { useKeyPress } from '../hooks';
-import { cardsAtom } from './atoms/cardsAtom';
-import { startTransition } from 'react';
-import { useUrlSync } from './hooks/useUrlSync';
+import { cardsAtom } from './atoms/cardsAtom.ts';
+import { useUrlSync } from './hooks/useUrlSync.ts';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
