@@ -27,5 +27,8 @@
     "prettier": "^2.2.1",
     "typescript": "^5",
     "yarn-deduplicate": "^6.0.2"
+  },
+  "dependencies": {
+    "tsx": "^4.21.0"
   }
 }

@@ -621,8 +621,9 @@ const dataToCards = (
   }
 };
 const loadExistingData = () => {
-  const databasePath = './src/data/Hellscube-Database.json';
-  const tokensPath = './src/data/tokens.json';
+
+  const databasePath = '@hellfall/shared/data/Hellscube-Database.json';
+  const tokensPath = '@hellfall/shared/data/tokens.json';
 
   let databaseContent = undefined;
   let tokensContent = undefined;
@@ -1065,7 +1066,7 @@ const main = async () => {
   });
 
   fs.writeFileSync(
-    './src/data/types.json',
+    '../shared/src/data/types.json',
     JSON.stringify(
       {
         data: types.sort((a, b) => {
@@ -1080,7 +1081,7 @@ const main = async () => {
     )
   );
   fs.writeFileSync(
-    './src/data/tokens.json',
+    '../shared/src/data/tokens.json',
     JSON.stringify(
       {
         data: addToJSONToCards(finalTokens),
@@ -1090,7 +1091,7 @@ const main = async () => {
     )
   );
   fs.writeFileSync(
-    './src/data/tags.json',
+    '../shared/src/data/tags.json',
     JSON.stringify(
       {
         data: tags.sort((a, b) => {
@@ -1106,7 +1107,7 @@ const main = async () => {
   );
 
   fs.writeFileSync(
-    './src/data/creators.json',
+    '../shared/src/data/creators.json',
     JSON.stringify(
       {
         data: creators.sort((a, b) => {
@@ -1122,7 +1123,7 @@ const main = async () => {
   );
 
   fs.writeFileSync(
-    './src/data/Hellscube-Database.json',
+    '../shared/src/data/Hellscube-Database.json',
     JSON.stringify(
       {
         data: addToJSONToCards(finalCards).concat(addToJSONToCards(finalTokens)),

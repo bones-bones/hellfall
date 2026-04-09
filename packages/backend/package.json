@@ -17,7 +17,7 @@
     "xmlbuilder": "^15.1.1"
   },
   "scripts": {
-    "transform-hc": "ts-node src/hc-transformations",
-    "land-box": "ts-node src/land-box"
+    "transform-hc": "npx tsx src/hc-transformations",
+    "land-box": "npx tsx src/land-box"
   }
 }

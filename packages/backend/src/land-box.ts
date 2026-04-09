@@ -31,7 +31,7 @@ const fetchLandBox = async () => {
 
 fetchLandBox().then(lands => {
   fs.writeFileSync(
-    './src/data/lands.json',
+    '../shared/src/data/lands.json',
     JSON.stringify(
       {
         data: lands.sort((a, b) => {
