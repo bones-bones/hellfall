@@ -329,6 +329,15 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         while (merged.card_faces.length < newCard.card_faces.length) {
           merged.card_faces.push(newCard.card_faces[merged.card_faces.length]);
         }
+      } else if (key == 'image_status') {
+        // TODO: store current version and print the diff if there is one
+        if (
+          merged.image_status == HCImageStatus.Missing ||
+          merged.image_status ==
+            HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
+        ) {
+          (merged as any)[key] = value;
+        }
       } else if (key == 'draft_image_status') {
         // TODO: store current version and print the diff if there is one
         if (
@@ -622,16 +631,14 @@ const dataToCards = (
 };
 const loadExistingData = () => {
 
-  const databasePath = '@hellfall/shared/data/Hellscube-Database.json';
-  const tokensPath = '@hellfall/shared/data/tokens.json';
+  const databasePath = '../shared/src/data/Hellscube-Database.json';
+  const tokensPath = '../shared/src/data/tokens.json';
 
   let databaseContent = undefined;
   let tokensContent = undefined;
 
   try {
-    if (fs.existsSync(databasePath)) {
-      databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
-    }
+    databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
   } catch (error) {
     console.warn('Could not load cards, proceeding with undefined content:', error);
   }
@@ -641,9 +648,7 @@ const loadExistingData = () => {
     : [];
 
   try {
-    if (fs.existsSync(tokensPath)) {
-      tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
-    }
+    tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
   } catch (error) {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
