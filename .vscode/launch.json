@@ -1,0 +1,65 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug transform-hc (normal)",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["--import=tsx"],
+      "args": ["${workspaceFolder}/data-transformers/src/hc-transformations.ts"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug transform-hc (with --update)",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["--import=tsx"],
+      "args": ["${workspaceFolder}/data-transformers/src/hc-transformations.ts", "--update"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug npm script: transform-hc (normal)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["transform-hc"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug npm script: transform-hc (with --update)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["transform-hc", "--update"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug land-box",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["--import=tsx"],
+      "args": ["${workspaceFolder}/data-transformers/src/land-box.ts"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug make-cubes",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["--import=tsx"],
+      "args": ["${workspaceFolder}/data-transformers/src/cubes/createCockCube.ts"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}

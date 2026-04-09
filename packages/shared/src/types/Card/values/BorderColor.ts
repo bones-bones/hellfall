@@ -1,7 +1,7 @@
 /**
  * The border color of a print.
  *
- * Note this is a physical description of the border, not a reference to “black border” or “silver border” gameplay.
+ * Note this is a physical description of the border, not a reference to "black border" or "silver border" gameplay.
  */
 export enum HCBorderColor {
   Black = 'black',

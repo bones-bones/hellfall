@@ -143,4 +143,9 @@ Write a script to transform the database
 - fix draftpartners for urza's will and associated cards
 - make card name text render in hellfallentry below card (so if card doesn't render, the name will)
 - add card to plaintext function; add it as alt text to card images (do by face/all faces)
-- add launch.json to github? (ask sixel)
+- add code to infer new layout types
+- add layouts to faces
+- add frames (use tags & layouts?)
+- add frameEffects (use tags and/or types)
+- add borderColors (use tags)
+- add finish (use tags)
