@@ -17,9 +17,13 @@ export enum HCImageStatus {
    */
   Flip = 'flip',
   /**
-   * This face is an inset (adventure/omen/prepared spell).
+   * This face is an inset (adventure/omen spell).
    */
   Inset = 'inset',
+  /**
+   * This face is a prepared spell.
+   */
+  Prepare = 'prepare',
   /**
    * This face is on a split side and isn't the first face.
    */

@@ -144,7 +144,8 @@ Write a script to transform the database
 - make card name text render in hellfallentry below card (so if card doesn't render, the name will)
 - add card to plaintext function; add it as alt text to card images (do by face/all faces)
 - add code to infer new layout types
-- switch prepared to its own layout
+- fix tag usage in fetchDatabase
+- fix watermarks
 - add layouts to faces
 - add frames (use tags & layouts?) (allow for retro search option that matches both 93 and 97)
 - add frameEffects (use tags and/or types and/or frames)

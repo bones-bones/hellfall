@@ -41,7 +41,7 @@ export enum HCLayout {
   /** Misc images that aren't actually cards */
   Misc = 'misc',
   /** Cards with faces of draftpartners */
-  DraftPartner = 'draft_partner',
+  DraftPartnerFaces = 'draft_partner_faces',
   /** Cards with a reminder on the back */
   ReminderOnBack = 'reminder_on_back',
   /** Cards with a  dungeon on the back */
@@ -150,7 +150,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.MeldPart}`,
     `${HCLayout.MultiReminder}`,
     `${HCLayout.RealCardMultiToken}`,
-    `${HCLayout.DraftPartner}`,
+    `${HCLayout.DraftPartnerFaces}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
     `${HCLayout.TokenInInset}`,
@@ -184,7 +184,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Normal}`,
     `${HCLayout.Multi}`,
     `${HCLayout.MeldPart}`,
-    `${HCLayout.DraftPartner}`,
+    `${HCLayout.DraftPartnerFaces}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
     `${HCLayout.TokenInInset}`,
@@ -262,7 +262,7 @@ export namespace HCLayoutGroup {
   export const FrontIdentityLayout = [
     `${HCLayout.Specialize}`,
     `${HCLayout.MeldPart}`,
-    `${HCLayout.DraftPartner}`,
+    `${HCLayout.DraftPartnerFaces}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
     `${HCLayout.TokenInInset}`,
@@ -294,7 +294,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Dungeon}`,
     `${HCLayout.Checklist}`,
     `${HCLayout.Misc}`,
-    `${HCLayout.DraftPartner}`,
+    `${HCLayout.DraftPartnerFaces}`,
     `${HCLayout.Modal}`,
     `${HCLayout.Transform}`,
     `${HCLayout.Specialize}`,
