@@ -120,7 +120,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
 
   const multiLayoutTags:Record<string,HCLayoutGroup.MultiFacedType> = {
     'meld':HCLayout.MeldPart,
-    'draftpartner-faces':HCLayout.DraftPartnerFaces,
+    'draftpartner-faces':HCLayout.DraftPartner,
     'reminder-on-back':HCLayout.ReminderOnBack,
     'dungeon-in-inset':HCLayout.DungeonInInset,
     'dungeon-on-back': HCLayout.DungeonOnBack,
@@ -142,6 +142,40 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'mutate-layout':HCLayout.Mutate,
     'noncard': HCLayout.Misc
   }
+
+  const multiLayoutToFaceLayout:Record<HCLayoutGroup.MultiFacedType & HCLayoutGroup.CardLayoutType, HCLayoutGroup.FaceLayoutType>= {
+   'meld_part':HCLayout.MeldResult,
+   'draft_partner':HCLayout.DraftPartner,
+   'reminder_on_back':HCLayout.Reminder,
+   'token_on_back':HCLayout.Token,
+   'token_in_inset':HCLayout.Token,
+   'dungeon_on_back':HCLayout.Dungeon,
+   'dungeon_in_inset':HCLayout.Dungeon,
+   'stickers_on_back':HCLayout.Stickers,
+   'modal':HCLayout.Modal,
+   'transform':HCLayout.Transform,
+   'specialize':HCLayout.Specialize,
+   'flip':HCLayout.Flip,
+   'inset':HCLayout.Inset,
+   'aftermath':HCLayout.Aftermath,
+   'prepare':HCLayout.Prepare,
+   'split':HCLayout.Split,
+   'multi':HCLayout.Split
+  }
+
+  const layoutToImageStatusList = [
+    'front',
+    'token',
+    'flip',
+    'inset',
+    'prepare',
+    'split',
+    'aftermath',
+    'draft_partner',
+    'dungeon',
+    'reminder',
+    'stickers'
+  ]
 
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
@@ -182,9 +216,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
                 .split(';')
                 .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
               cardObject.card_faces[face][key] = colorArr;
-              // entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
               cardObject.colors = colorArr;
-              // entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
             } else if (['supertypes', 'types', 'subtypes'].includes(key)) {
               cardObject.card_faces[face][key] = entry[i].split(';');
             } else if (
@@ -225,12 +257,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
                 id: shouldUseBase ? name : '',
-                component:
-                  // entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
-                  //   ? 'meld_part'
-                  //   : entry[20].includes('draftpartner')
-                  //   ? 'draft_partner' :
-                    'token_maker',
+                component: 'token_maker',
                 name: shouldUseBase ? base : name,
                 type_line: '',
                 set: '',
@@ -255,16 +282,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             //     image: '',
             //   },
             // ];
-            // if (
-            //   entry[keys.indexOf('related')] != 'Head of the Forbidden One' &&
-            //   (entry[17].toLowerCase().includes('meld') ||
-            //     entry[20].includes('meld') ||
-            //     entry[20].includes('draftpartner'))
-            // ) {
-            //   all_parts[0].is_draft_partner = true;
-            //   cardObject.not_directly_draftable = true;
-            //   cardObject.has_draft_partners = true;
-            // }
             cardObject.all_parts = all_parts;
           } else if (keys[i] == 'tags') {
             // now handling this at the end
@@ -274,10 +291,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             cardObject[keys[i]] = entry[i];
           }
           if (keys[i] == 'image') {
-            cardObject.image_status =
-              // entry[20] && entry[20].includes('low-quality')
-              //   ? HCImageStatus.LowRes : 
-                HCImageStatus.MedRes;
+            cardObject.image_status = HCImageStatus.MedRes;
           }
         }
       }
@@ -350,6 +364,15 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         .join(' ') as string;
       face.type_line = face_type;
       type_line_list.push(face_type);
+
+      // TODO: Expand
+      if (index == 0) {
+        face.layout = HCLayout.Front;
+      } else if ('layout' in cardObject && cardObject.layout in multiLayoutToFaceLayout) {
+        face.layout = multiLayoutToFaceLayout[cardObject.layout as keyof typeof multiLayoutToFaceLayout];
+      } else {
+        face.layout = HCLayout.Split
+      }
       if (!('image_status' in face) /**|| ['split'].includes(face.image_status)*/) {
         if (index == 0) {
           face.image_status = HCImageStatus.Front;
@@ -445,7 +468,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
 
     if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
-        ([k, v]) =>
+        ([key, value]) =>
           ![
             'name',
             'type_line',
@@ -454,7 +477,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             'image_status',
             'colors',
             'image',
-          ].includes(k)
+            'layout'
+          ].includes(key)
       )) {
         cardObject[key] = value;
       }
@@ -526,7 +550,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         //   cardObject.tags?.includes('draftpartner') ||
         //   cardObject.card_faces[0].oracle_text.toLowerCase().includes('draftpartner')
         // ) {
-        //   cardObject.layout = HCLayout.DraftPartnerFaces;
+        //   cardObject.layout = HCLayout.DraftPartner;
         // } else if (
         //   cardObject.tags?.includes('reminder-on-back') ||
         //   cardObject.card_faces.at(-1)?.types?.includes('Reminder Card') ||

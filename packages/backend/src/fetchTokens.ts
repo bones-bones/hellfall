@@ -9,6 +9,7 @@ import {
   HCObject,
   HCLegality,
   HCLegalitiesField,
+  HCLayoutGroup
 } from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 
@@ -111,6 +112,13 @@ export const fetchTokens = async () => {
     'inscryption',
     'gaslighting',
   ];
+
+  // const multiLayoutToFaceLayout:Record<HCLayoutGroup.MultiFacedType & HCLayoutGroup.TokenLayoutType, HCLayoutGroup.FaceLayoutType>= {
+  //   'multi_reminder':HCLayout.Reminder,
+  //   'multi_not_magic':HCLayout.NotMagic,
+  //   'multi_token':HCLayout.Token,
+  //   'real_card_multi_token':HCLayout.RealCardToken
+  // }
 
   const HCTokens = rest.map(entry => {
     const tokenObject: Record<string, any> = {};

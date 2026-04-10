@@ -125,6 +125,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     colors: [HCColor.Colorless] as HCColors,
     oracle_text: '',
     image_status: HCImageStatus.Split,
+    layout: HCLayout.Token
   };
   const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
   const subKeywords: Record<string, string> = {

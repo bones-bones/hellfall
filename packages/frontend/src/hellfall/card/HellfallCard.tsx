@@ -26,7 +26,7 @@ const renderText = (text: string[]) => {
 const getImages = (card: HCCard.Any) => {
   const imagesToShow: string[] = [];
 
-  if (!('card_faces' in card) || (card.card_faces.length > 1 && !('image' in card.card_faces[0]))) {
+  if (!('card_faces' in card) || !('image' in card.card_faces[0])) {
     imagesToShow.push(card.image!);
   }
   if ('card_faces' in card) {
@@ -101,7 +101,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                   >
                     {i == imagesToShow.length - 1 && data.draft_image
                       ? 'draft'
-                      : !data.draft_image && i == imagesToShow.length - 1
+                      : !data.draft_image && i == imagesToShow.length - 1 && 'card_faces' in data && !('image' in data.card_faces[0])
                       ? 'full'
                       : `side ${i + 1}`}
                   </button>

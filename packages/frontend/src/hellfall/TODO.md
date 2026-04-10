@@ -147,9 +147,10 @@ Write a script to transform the database
 - fix tag usage in fetchDatabase
 - fix watermarks
 - add layouts to faces
+- switch away from using image_status for layout stuff?
 - add frames (use tags & layouts?) (allow for retro search option that matches both 93 and 97)
 - add frameEffects (use tags and/or types and/or frames)
 - add borderColors (use tags)
 - add finish (use tags)
 - add collections to deal with types, tags, keywords, etc.
-- make layout able to be an array
+- make layout able to be an array?

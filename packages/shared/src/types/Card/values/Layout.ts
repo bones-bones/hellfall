@@ -40,8 +40,8 @@ export enum HCLayout {
   Checklist = 'checklist',
   /** Misc images that aren't actually cards */
   Misc = 'misc',
-  /** Cards with faces of draftpartners */
-  DraftPartnerFaces = 'draft_partner_faces',
+  /** Cards with faces of draftpartners and faces that are of draftpartners */
+  DraftPartner = 'draft_partner',
   /** Cards with a reminder on the back */
   ReminderOnBack = 'reminder_on_back',
   /** Cards with a  dungeon on the back */
@@ -150,7 +150,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.MeldPart}`,
     `${HCLayout.MultiReminder}`,
     `${HCLayout.RealCardMultiToken}`,
-    `${HCLayout.DraftPartnerFaces}`,
+    `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
     `${HCLayout.TokenInInset}`,
@@ -184,7 +184,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Normal}`,
     `${HCLayout.Multi}`,
     `${HCLayout.MeldPart}`,
-    `${HCLayout.DraftPartnerFaces}`,
+    `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
     `${HCLayout.TokenInInset}`,
@@ -262,7 +262,7 @@ export namespace HCLayoutGroup {
   export const FrontIdentityLayout = [
     `${HCLayout.Specialize}`,
     `${HCLayout.MeldPart}`,
-    `${HCLayout.DraftPartnerFaces}`,
+    `${HCLayout.DraftPartner}`,
     `${HCLayout.ReminderOnBack}`,
     `${HCLayout.TokenOnBack}`,
     `${HCLayout.TokenInInset}`,
@@ -279,7 +279,7 @@ export namespace HCLayoutGroup {
    */
   export type FrontIdentityLayoutType = (typeof FrontIdentityLayout)[number];
 
-  /**
+    /**
    * All layouts that can be the layout for a face.
    *
    * @see {@link FaceLayoutType} for the type of this group.
@@ -294,7 +294,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Dungeon}`,
     `${HCLayout.Checklist}`,
     `${HCLayout.Misc}`,
-    `${HCLayout.DraftPartnerFaces}`,
+    `${HCLayout.DraftPartner}`,
     `${HCLayout.Modal}`,
     `${HCLayout.Transform}`,
     `${HCLayout.Specialize}`,
@@ -314,6 +314,8 @@ export namespace HCLayoutGroup {
     `${HCLayout.Vanguard}`,
     `${HCLayout.Station}`,
     `${HCLayout.Prepare}`,
+    `${HCLayout.NotMagic}`,
+    `${HCLayout.RealCardToken}`,
   ] as const;
 
   /**
@@ -322,5 +324,30 @@ export namespace HCLayoutGroup {
    * @see {@link FaceLayout} for an array version.
    *
    */
-  export type FaceLayoutType = (typeof FrontIdentityLayout)[number];
+  export type FaceLayoutType = (typeof FaceLayout)[number];
 }
+
+  /**
+   * All face layouts that can not contribute to a card's color identity .
+   *
+   * @see {@link NoIdentityFaceLayoutType} for the type of this group.
+   */
+  export const NoIdentityFaceLayout = [
+    `${HCLayout.MeldResult}`,
+    `${HCLayout.Token}`,
+    `${HCLayout.Emblem}`,
+    `${HCLayout.Reminder}`,
+    `${HCLayout.Stickers}`,
+    `${HCLayout.Dungeon}`,
+    `${HCLayout.DraftPartner}`,
+    `${HCLayout.Specialize}`,
+  ] as const;
+
+  /**
+   * A type for all layouts that only use their front for color identity.
+   *
+   * @see {@link FrontIdentityLayout} for an array version.
+   *
+   */
+  export type NoIdentityFaceLayoutType = (typeof NoIdentityFaceLayout)[number];
+

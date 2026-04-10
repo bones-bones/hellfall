@@ -11,6 +11,7 @@ import {
   // HCImageUris,
   // HCLanguageCode,
   HCLayout,
+  HCLayoutGroup,
   HCLegalitiesField,
   // HCPrices,
   // HCPromoType,
@@ -60,7 +61,7 @@ export namespace HCCardFields.Core {
      *
      * @see {@link https://scryfall.com/docs/api/layouts}
      */
-    layout: `${HCLayout}`;
+    // layout: `${HCLayout}`;
     /**
      * All rulings for the card.
      */
@@ -93,6 +94,7 @@ export namespace HCCardFields.Core {
      * Whether this card is an actual token (TODO: replace with type-based checks)
      */
     isActualToken?: boolean;
+    layout:`${HCLayout}`;
   };
 }
 
@@ -167,6 +169,7 @@ export namespace HCCardFields.Gameplay {
     type_line: string;
     mana_cost: string;
     mana_value: number;
+    layout:`${HCLayout}`;
   };
 
   /**
@@ -224,6 +227,10 @@ export namespace HCCardFields.Gameplay {
      * This will be an array of numbers ranging from 1 to 6 inclusive.
      */
     attraction_lights?: number[];
+    /** 
+     * The layout of this face
+     */
+    layout:`${HCLayout}`;
   } & CombatStats &
     VanguardStats;
 
@@ -266,6 +273,10 @@ export namespace HCCardFields.Gameplay {
      * The type line of this card.
      */
     type_line: string;
+    /** 
+     * The layout of this card
+     */
+    layout:`${HCLayout}`;
   };
   /**
    * These fields are specific for multiface cards.
@@ -388,6 +399,10 @@ export namespace HCCardFields.Print {
      * This card's watermark, if any.
      */
     watermark?: string;
+    /**
+     * The layout of this face.
+     */
+    layout: `${HCLayout}`
   };
 
   type VariationInfo = {

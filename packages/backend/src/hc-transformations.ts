@@ -167,6 +167,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
         ];
         const facePropOrder = [
           'name',
+          'layout',
           'image_status',
           'image',
           'mana_cost',
@@ -644,7 +645,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [])
+    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], 'layout',HCLayout.Split,'faces')
     : [];
 
   try {
@@ -653,7 +654,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], 'layout',HCLayout.Token,'faces') : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {
