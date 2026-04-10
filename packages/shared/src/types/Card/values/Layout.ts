@@ -59,7 +59,7 @@ export enum HCLayout {
   Specialize = 'specialize',
   /** Cards that flip or flipped faces */
   Flip = 'flip',
-  /** Cards with an inset (adventure/omen/prepared spell) or inset faces */
+  /** Cards with an inset (adventure/omen spell) spell part */
   Inset = 'inset',
   /** Cards with an inset token */
   TokenInInset = 'token_in_inset',
@@ -83,7 +83,7 @@ export enum HCLayout {
   Mutate = 'mutate',
   /** Cards with Prototype */
   Prototype = 'prototype',
-  /** Battle-type faces */
+  /** Battle-type cards/faces */
   Battle = 'battle',
   /** Plane and Phenomenon-type cards */
   Planar = 'planar',
@@ -91,6 +91,10 @@ export enum HCLayout {
   Scheme = 'scheme',
   /** Vanguard-type cards */
   Vanguard = 'vanguard',
+  /** Cards with Station */
+  Station = 'station',
+  /** Cards with a prepared spell part */
+  Prepare = 'prepare'
 }
 
 /**
@@ -115,14 +119,16 @@ export namespace HCLayoutGroup {
     `${HCLayout.Checklist}`,
     `${HCLayout.Misc}`,
     `${HCLayout.Leveler}`,
+    `${HCLayout.Saga}`,
     `${HCLayout.Class}`,
     `${HCLayout.Case}`,
-    `${HCLayout.Saga}`,
     `${HCLayout.Mutate}`,
     `${HCLayout.Prototype}`,
     `${HCLayout.Planar}`,
     `${HCLayout.Scheme}`,
     `${HCLayout.Vanguard}`,
+    `${HCLayout.Station}`,
+    `${HCLayout.Battle}`,
   ] as const;
 
   /**
@@ -158,6 +164,7 @@ export namespace HCLayoutGroup {
     `${HCLayout.Inset}`,
     `${HCLayout.Aftermath}`,
     `${HCLayout.Split}`,
+    `${HCLayout.Prepare}`,
   ] as const;
 
   /**
@@ -169,7 +176,7 @@ export namespace HCLayoutGroup {
   export type MultiFacedType = (typeof MultiFaced)[number];
 
   /**
-   * All layouts that represent an actual card.
+   * All layouts that can be on an actual card.
    *
    * @see {@link CardLayoutType} for the type of this group.
    */
@@ -201,10 +208,16 @@ export namespace HCLayoutGroup {
     `${HCLayout.Planar}`,
     `${HCLayout.Scheme}`,
     `${HCLayout.Vanguard}`,
+    `${HCLayout.Station}`,
+    `${HCLayout.Prepare}`,
+    `${HCLayout.Dungeon}`,
+    `${HCLayout.Stickers}`,
+    `${HCLayout.Misc}`,
+    `${HCLayout.Battle}`,
   ] as const;
 
   /**
-   * A type for all layouts that represent an actual card.
+   * A type for all layouts that can be on an actual card.
    *
    * @see {@link CardLayout} for an array version.
    *
@@ -212,7 +225,7 @@ export namespace HCLayoutGroup {
   export type CardLayoutType = (typeof CardLayout)[number];
 
   /**
-   * All layouts that represent a token.
+   * All layouts that can be on a token.
    *
    * @see {@link TokenLayoutType} for the type of this group.
    */
@@ -234,7 +247,7 @@ export namespace HCLayoutGroup {
   ] as const;
 
   /**
-   * A type for all layouts that represent a token.
+   * A type for all layouts that can be on a token.
    *
    * @see {@link TokenLayout} for an array version.
    *
@@ -299,6 +312,8 @@ export namespace HCLayoutGroup {
     `${HCLayout.Planar}`,
     `${HCLayout.Scheme}`,
     `${HCLayout.Vanguard}`,
+    `${HCLayout.Station}`,
+    `${HCLayout.Prepare}`,
   ] as const;
 
   /**

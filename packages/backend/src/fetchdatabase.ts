@@ -412,7 +412,40 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         cardObject[key] = value;
       }
       const { card_faces, ...singleCard } = cardObject;
-      singleCard.layout = singleCard.tags?.includes('noncard') ? HCLayout.Misc : HCLayout.Normal;
+      if (!('layout' in singleCard)) {
+        if (singleCard.types?.includes('Stickers')) {
+          singleCard.layout = HCLayout.Stickers;
+        } else if (singleCard.types?.includes('Dungeon')) {
+          singleCard.layout = HCLayout.Dungeon;
+        } else if (singleCard.tags?.some((tag:string) => ['weird-leveler','leveler','weird-1-mana-levelers-cycle'].includes(tag))) {
+          singleCard.layout = HCLayout.Leveler;
+        } else if (singleCard.subtypes?.includes('Saga')) {
+          singleCard.layout = HCLayout.Saga;
+        } else if (singleCard.subtypes?.includes('Class')) {
+          singleCard.layout = HCLayout.Class;
+        } else if (singleCard.subtypes?.includes('Case')) {
+          singleCard.layout = HCLayout.Case;
+        } else if (singleCard.tags?.includes('mutate-layout')) {
+          singleCard.layout = HCLayout.Mutate;
+        } else if (singleCard.tags?.some((type:string) => ['Plane','Phenomenon'].includes(type))) {
+          singleCard.layout = HCLayout.Prototype;
+        } else if (singleCard.types?.includes('Plane')) {
+          singleCard.layout = HCLayout.Planar;
+        } else if (singleCard.types?.includes('Scheme')) {
+          singleCard.layout = HCLayout.Scheme;
+        } else if (singleCard.types?.includes('Vanguard')) {
+          singleCard.layout = HCLayout.Vanguard;
+        } else if (singleCard.types?.includes('Battle')) {
+          singleCard.layout = HCLayout.Battle;
+        } else if (singleCard.subtypes?.some((subtype:string) => ['Spacecraft','Watercraft','Planet'].includes(subtype)) && singleCard.oracle_text.toLowerCase().includes('station')) {
+          singleCard.layout = HCLayout.Station;
+        } else if (singleCard.tags?.includes('noncard')) {
+          singleCard.layout = HCLayout.Misc;
+        } else {
+          singleCard.layout = HCLayout.Normal;
+        }
+      }
+      // singleCard.layout = singleCard.tags?.includes('noncard') ? HCLayout.Misc : HCLayout.Normal;
       const card = singleCard as HCCard.AnySingleFaced;
       setDerivedProps(card);
       return card;
