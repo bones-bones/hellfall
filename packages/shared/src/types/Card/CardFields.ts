@@ -294,16 +294,6 @@ export namespace HCCardFields.Gameplay {
     layout: `${HCLayoutGroup.MultiFacedType}`;
   };
   /**
-   * These fields are specific for single face cards.
-   * - Root level for single face layouts only.
-   */
-  export type SingleSpecific = AllFaces & {
-    /**
-     * The layout of this card
-     */
-    layout: `${HCLayoutGroup.SingleFacedType}`;
-  };
-  /**
    * These fields are specific for multiface grid cards. (TODO: fully implement this)
    * - Root level for multiface grid layouts only.
    */
@@ -395,6 +385,40 @@ export namespace HCCardFields.Print {
     set: string;
   } & VariationInfo;
 
+  /**
+   * These print fields are specific for single face cards.
+   * - Root level for single face layouts only.
+   */
+  export type SingleSpecific = {
+    /**
+     * A computer-readable indicator for the state of this face's image. If this face doesn't have an image, this also explains why.
+     */
+    image_status: `${HCImageStatus}`;
+    /**
+     * A string with the image for this face, if any.
+     */
+    image?: string;
+    /**
+     * The flavor text, if any.
+     */
+    flavor_text?: string;
+    /**
+     * This card's watermark, if any.
+     */
+    watermark?: string;
+    /**
+     * The layout of this card.
+     */
+    layout: `${HCLayoutGroup.SingleFacedType}`;
+    /**
+     * This faces's frame effects, if any.
+     */
+    frame_effects?: `${HCFrameEffect}`[] /**
+    /**
+     * This faces's frame layout, if it is different from that of the overall card.
+     */;
+    frame?: `${HCFrame}`;
+  };
   /**
    * These print fields are specific for a card face.
    *

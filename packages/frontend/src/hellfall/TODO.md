@@ -145,8 +145,6 @@ Write a script to transform the database
 - add code to infer new layout types
 - fix tag usage in fetchDatabase
 - switch away from using image_status for layout stuff?
-- add frameEffects (use tags and/or types and/or frames and/or layouts?) (put in derived)
-- add finish (use tags) (uncomment sft line)
 - fix layouts on faces
 - add collections to deal with types, tags, keywords, etc.
 - make layout able to be an array?

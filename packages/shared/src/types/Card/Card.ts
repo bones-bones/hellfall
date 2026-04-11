@@ -98,13 +98,15 @@ export namespace HCCard {
     Layout<HCLayoutGroup.SingleFacedType> &
     HCCardFields.Gameplay.RootProperties &
     HCCardFields.Gameplay.CardSpecific &
-    HCCardFields.Gameplay.SingleSpecific &
     HCCardFields.Gameplay.CardFaceSpecific &
     HCCardFields.Print.CardSpecific &
-    HCCardFields.Print.CardFaceSpecific;
+    HCCardFields.Print.SingleSpecific;
 
   /** A card with the Normal layout. */
   export type Normal = AnySingleFaced & Layout<HCLayout.Normal>;
+
+  /** A card with the Normal layout. */
+  export type Class = AnySingleFaced & Layout<HCLayout.Class>;
 
   // /** A card with the MeldResult layout. */
   export type MeldResult = AnySingleFaced & Layout<HCLayout.MeldResult>;

@@ -35,6 +35,8 @@ const PLACEHOLDER_CARD: Omit<HCCard.Normal, 'toFaces' | 'toJSON'> = {
   draft_image_status: HCImageStatus.Inapplicable,
   variation: false,
   border_color: 'black',
+  finish: 'nonfoil',
+  frame: '2015',
 };
 
 function withCardMethods<T extends HCCard.Any>(

@@ -285,6 +285,7 @@ export namespace HCLayoutGroup {
    * @see {@link FaceLayoutType} for the type of this group.
    */
   export const FaceLayout = [
+    `${HCLayout.Normal}`,
     `${HCLayout.Front}`,
     `${HCLayout.MeldResult}`,
     `${HCLayout.Token}`,
