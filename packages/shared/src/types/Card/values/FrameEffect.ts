@@ -1,4 +1,4 @@
-export enum ScryfallFrameEffect {
+export enum HCFrameEffect {
   /** The cards have a legendary crown */
   Legendary = 'legendary',
   /** The miracle frame effect */

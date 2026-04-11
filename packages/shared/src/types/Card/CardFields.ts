@@ -3,9 +3,9 @@ import {
   HCColors,
   // HCCoreColors,
   // HCMiscColors,
-  // HCFinish,
+  HCFinish,
   HCFrame,
-  // HCFrameEffect,
+  HCFrameEffect,
   // HCGame,
   HCImageStatus,
   // HCImageUris,
@@ -339,6 +339,13 @@ export namespace HCCardFields.Print {
      */
     border_color: `${HCBorderColor}`;
     /**
+     * A computer-readable flag that indicate if this card has a foil, nonfoil, or etched finish.
+     */
+    finish: `${HCFinish}`;
+    /**
+     * This card's frame effects, if any.
+     */
+    frame_effects?: `${HCFrameEffect}`[];    /**
      * This card's frame layout.
      */
     frame: `${HCFrame}`;
@@ -403,6 +410,10 @@ export namespace HCCardFields.Print {
      * The layout of this face.
      */
     layout: `${HCLayout}`
+    /**
+     * This faces's frame effects, if any.
+     */
+    frame_effects?: `${HCFrameEffect}`[];    /**
     /**
      * This faces's frame layout, if it is different from that of the overall card.
      */

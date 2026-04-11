@@ -15,6 +15,7 @@ import {
   HCObject,
   HCBorderColor,
   HCFrame,
+  HCFinish,
 } from '@hellfall/shared/types';
 // import { getDefaultStore } from 'jotai';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
@@ -166,7 +167,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'legalities',
           'creators',
           'rulings',
-          // 'finish',
+          'finish',
           'watermark',
           'border_color',
           'frame',
@@ -661,7 +662,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], /**'frame',HCFrame.Stamp,'cards'*/)
+    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], 'finish',HCFinish.Nonfoil,'cards')
     : [];
 
   try {
@@ -670,7 +671,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], /**'frame',HCFrame.Stamp,'cards'*/) : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], 'finish',HCFinish.Nonfoil, 'cards') : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {

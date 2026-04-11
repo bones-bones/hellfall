@@ -295,7 +295,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       }
     }
   });
-  // cardObject.finish = card.finishes.includes('nonfoil') ? 'nonfoil' : 'foil';
+  cardObject.finish = card.finishes.includes('nonfoil') ? 'nonfoil' : 'foil';
   cardObject.id = card.id; // make sure to give correct ID using name for tokens
   if (card.layout == 'token' && card.type_line == 'Creature') {
     cardObject.layout = HCLayout.Reminder;

@@ -13,6 +13,7 @@ import {
   HCLayoutGroup,
   HCBorderColor,
   HCFrame,
+  HCFinish,
 } from '@hellfall/shared/types';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { stripMasterpiece } from '@hellfall/shared/utils/textHandling.ts';
@@ -101,7 +102,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     variation: false,
     draft_image_status: HCImageStatus.Inapplicable,
     border_color:HCBorderColor.Black,
-    frame:HCFrame.Stamp
+    frame:HCFrame.Stamp,
+    finish:HCFinish.Nonfoil
   };
 
   const defaultMultiFaceProps: Record<string, any> = {
@@ -269,7 +271,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             };
             cardObject[keys[i]] = legalities;
           } else if (keys[i] == 'related') {
-            // entry[20] is tags, entry[17] is 0oracle_text, entry[6] is Related Cards
             const all_parts: HCRelatedCard[] = entry[i].split(';').map(name => {
               const base = name.replace(/\d+$/, '');
               const shouldUseBase =
@@ -290,22 +291,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
               return maker;
             });
 
-            // const all_parts: [HCRelatedCard] = [
-            //   {
-            //     object: HCObject.ObjectType.RelatedCard,
-            //     id: '',
-            // component:
-            //   entry[17].toLowerCase().includes('meld') || entry[20].includes('meld')
-            //     ? 'meld_part'
-            //     : entry[20].includes('draftpartner')
-            //     ? 'draft_partner'
-            //     : 'token_maker',
-            //     name: entry[i],
-            //     type_line: '',
-            //     set: '',
-            //     image: '',
-            //   },
-            // ];
             cardObject.all_parts = all_parts;
           } else if (keys[i] == 'tags') {
             // now handling this at the end
@@ -372,9 +357,10 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         }
         if (!('border_color' in cardObject) && tag in borderColorTags) {
           cardObject.border_color=borderColorTags[tag];
-        }
-        if (!('frame' in cardObject) && tag in frameTags) {
+        } else if (!('frame' in cardObject) && tag in frameTags) {
           cardObject.frame = frameTags[tag];
+        } else if (tag == 'foil') {
+          cardObject.finish=HCFinish.Foil;
         }
       })
     }
