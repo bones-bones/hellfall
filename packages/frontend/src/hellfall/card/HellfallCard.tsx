@@ -101,7 +101,10 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                   >
                     {i == imagesToShow.length - 1 && data.draft_image
                       ? 'draft'
-                      : !data.draft_image && i == imagesToShow.length - 1 && 'card_faces' in data && !('image' in data.card_faces[0])
+                      : !data.draft_image &&
+                        i == imagesToShow.length - 1 &&
+                        'card_faces' in data &&
+                        !('image' in data.card_faces[0])
                       ? 'full'
                       : `side ${i + 1}`}
                   </button>

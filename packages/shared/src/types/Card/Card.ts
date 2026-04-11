@@ -98,6 +98,7 @@ export namespace HCCard {
     Layout<HCLayoutGroup.SingleFacedType> &
     HCCardFields.Gameplay.RootProperties &
     HCCardFields.Gameplay.CardSpecific &
+    HCCardFields.Gameplay.SingleSpecific &
     HCCardFields.Gameplay.CardFaceSpecific &
     HCCardFields.Print.CardSpecific &
     HCCardFields.Print.CardFaceSpecific;

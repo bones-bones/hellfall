@@ -14,5 +14,7 @@ export enum HCFrame {
   /** Playtest cards */
   Playtest = 'playtest',
   /** Misc frames */
-  Misc = 'misc'
+  Misc = 'misc',
 }
+export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic];
+export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.NewToken];

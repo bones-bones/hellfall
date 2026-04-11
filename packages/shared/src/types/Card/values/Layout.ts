@@ -94,7 +94,7 @@ export enum HCLayout {
   /** Cards with Station */
   Station = 'station',
   /** Cards with a prepared spell part */
-  Prepare = 'prepare'
+  Prepare = 'prepare',
 }
 
 /**
@@ -279,7 +279,7 @@ export namespace HCLayoutGroup {
    */
   export type FrontIdentityLayoutType = (typeof FrontIdentityLayout)[number];
 
-    /**
+  /**
    * All layouts that can be the layout for a face.
    *
    * @see {@link FaceLayoutType} for the type of this group.
@@ -327,27 +327,26 @@ export namespace HCLayoutGroup {
   export type FaceLayoutType = (typeof FaceLayout)[number];
 }
 
-  /**
-   * All face layouts that can not contribute to a card's color identity .
-   *
-   * @see {@link NoIdentityFaceLayoutType} for the type of this group.
-   */
-  export const NoIdentityFaceLayout = [
-    `${HCLayout.MeldResult}`,
-    `${HCLayout.Token}`,
-    `${HCLayout.Emblem}`,
-    `${HCLayout.Reminder}`,
-    `${HCLayout.Stickers}`,
-    `${HCLayout.Dungeon}`,
-    `${HCLayout.DraftPartner}`,
-    `${HCLayout.Specialize}`,
-  ] as const;
+/**
+ * All face layouts that can not contribute to a card's color identity .
+ *
+ * @see {@link NoIdentityFaceLayoutType} for the type of this group.
+ */
+export const NoIdentityFaceLayout = [
+  `${HCLayout.MeldResult}`,
+  `${HCLayout.Token}`,
+  `${HCLayout.Emblem}`,
+  `${HCLayout.Reminder}`,
+  `${HCLayout.Stickers}`,
+  `${HCLayout.Dungeon}`,
+  `${HCLayout.DraftPartner}`,
+  `${HCLayout.Specialize}`,
+] as const;
 
-  /**
-   * A type for all layouts that only use their front for color identity.
-   *
-   * @see {@link FrontIdentityLayout} for an array version.
-   *
-   */
-  export type NoIdentityFaceLayoutType = (typeof NoIdentityFaceLayout)[number];
-
+/**
+ * A type for all layouts that only use their front for color identity.
+ *
+ * @see {@link FrontIdentityLayout} for an array version.
+ *
+ */
+export type NoIdentityFaceLayoutType = (typeof NoIdentityFaceLayout)[number];

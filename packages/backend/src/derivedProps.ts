@@ -6,6 +6,10 @@ import {
   HCLayoutGroup,
   HCColor,
   HCColors,
+  HCFrameEffect,
+  TransformFrameEffects,
+  NewFrames,
+  HCFrame,
 } from '@hellfall/shared/types';
 import { splitParens } from '@hellfall/shared/utils/textHandling.ts';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
@@ -132,6 +136,59 @@ export const getMVFromCost = (cost: string): number => {
 };
 
 export const setDerivedProps = (card: HCCard.Any) => {
+  const getFrameEffectsFromFace = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced) => {
+    const effects: HCFrameEffect[] = [];
+    if (
+      face.frame
+        ? NewFrames.includes(face.frame as HCFrame)
+        : NewFrames.includes(card.frame as HCFrame)
+    ) {
+      if (
+        face.supertypes?.includes('Legendary') &&
+        !face.frame_effects?.includes(HCFrameEffect.Legendary)
+      ) {
+        effects.push(HCFrameEffect.Legendary);
+      }
+      if (face.supertypes?.includes('Snow') && !face.frame_effects?.includes(HCFrameEffect.Snow)) {
+        effects.push(HCFrameEffect.Snow);
+      }
+      if (
+        face.subtypes?.includes('Lesson') &&
+        !face.frame_effects?.includes(HCFrameEffect.Lesson)
+      ) {
+        effects.push(HCFrameEffect.Lesson);
+      }
+    }
+    if ('card_faces' in card) {
+      if (
+        face.layout == HCLayout.Front &&
+        card.layout == HCLayout.Transform &&
+        !face.frame_effects?.some(effect => TransformFrameEffects.includes(effect as HCFrameEffect))
+      ) {
+        effects.push(HCFrameEffect.TransformDfc);
+      } else if (
+        face.layout == HCLayout.Front &&
+        card.layout == HCLayout.Modal &&
+        !face.frame_effects?.includes(HCFrameEffect.Mdfc)
+      ) {
+        effects.push(HCFrameEffect.Mdfc);
+      } else if (
+        face.layout == HCLayout.Transform &&
+        !face.frame_effects?.some(effect => TransformFrameEffects.includes(effect as HCFrameEffect))
+      ) {
+        const effect = card.card_faces[0].frame_effects?.find(effect =>
+          TransformFrameEffects.includes(effect as HCFrameEffect)
+        );
+        effects.push((effect ? effect : HCFrameEffect.TransformDfc) as HCFrameEffect);
+      } else if (
+        face.layout == HCLayout.Modal &&
+        !face.frame_effects?.includes(HCFrameEffect.Mdfc)
+      ) {
+        effects.push(HCFrameEffect.Mdfc);
+      }
+    }
+    return effects;
+  };
   if ('card_faces' in card) {
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
@@ -146,6 +203,10 @@ export const setDerivedProps = (card: HCCard.Any) => {
       type_line_list.push(face_type);
       face.mana_value = getMVFromCost(face.mana_cost);
       mana_cost_list.push(face.mana_cost);
+      const effects = [...(face.frame_effects || []), ...getFrameEffectsFromFace(face)];
+      if (effects.length > 0) {
+        face.frame_effects = effects;
+      }
     });
     card.type_line = type_line_list.join(' // ');
     card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
@@ -156,6 +217,10 @@ export const setDerivedProps = (card: HCCard.Any) => {
     ]
       .filter(Boolean)
       .join(' ') as string;
+    const effects = [...(card.frame_effects || []), ...getFrameEffectsFromFace(card)];
+    if (effects.length > 0) {
+      card.frame_effects = effects;
+    }
   }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
   card.color_identity = color_identity;

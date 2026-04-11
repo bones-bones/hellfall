@@ -14,6 +14,7 @@ import {
   HCBorderColor,
   HCFrame,
   HCFinish,
+  HCFrameEffect,
 } from '@hellfall/shared/types';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { stripMasterpiece } from '@hellfall/shared/utils/textHandling.ts';
@@ -101,9 +102,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     set: '',
     variation: false,
     draft_image_status: HCImageStatus.Inapplicable,
-    border_color:HCBorderColor.Black,
-    frame:HCFrame.Stamp,
-    finish:HCFinish.Nonfoil
+    border_color: HCBorderColor.Black,
+    frame: HCFrame.Stamp,
+    finish: HCFinish.Nonfoil,
   };
 
   const defaultMultiFaceProps: Record<string, any> = {
@@ -124,50 +125,55 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'Carrion Feeder from MH8',
   ];
 
-  const multiLayoutTags:Record<string,HCLayoutGroup.MultiFacedType> = {
-    'meld':HCLayout.MeldPart,
-    'draftpartner-faces':HCLayout.DraftPartner,
-    'reminder-on-back':HCLayout.ReminderOnBack,
-    'dungeon-in-inset':HCLayout.DungeonInInset,
+  const multiLayoutTags: Record<string, HCLayoutGroup.MultiFacedType> = {
+    meld: HCLayout.MeldPart,
+    'draftpartner-faces': HCLayout.DraftPartner,
+    'reminder-on-back': HCLayout.ReminderOnBack,
+    'dungeon-in-inset': HCLayout.DungeonInInset,
     'dungeon-on-back': HCLayout.DungeonOnBack,
     'stickers-on-back': HCLayout.StickersOnBack,
     'token-in-inset': HCLayout.TokenInInset,
     'token-on-back': HCLayout.TokenOnBack,
-    'specialize': HCLayout.Specialize,
-    'mdfc':HCLayout.Modal,
-    'transform': HCLayout.Transform,
-    'flip': HCLayout.Flip,
-    'inset': HCLayout.Inset,
-    'prepare':HCLayout.Prepare,
-    'aftermath':HCLayout.Aftermath,
-    'split':HCLayout.Split
-  }
+    specialize: HCLayout.Specialize,
+    mdfc: HCLayout.Modal,
+    transform: HCLayout.Transform,
+    flip: HCLayout.Flip,
+    inset: HCLayout.Inset,
+    prepare: HCLayout.Prepare,
+    aftermath: HCLayout.Aftermath,
+    split: HCLayout.Split,
+  };
 
-  const singleLayoutTags:Record<string,HCLayoutGroup.SingleFacedType> = {
-    'weird-leveler':HCLayout.Leveler,'leveler':HCLayout.Leveler,'weird-1-mana-levelers-cycle':HCLayout.Leveler,
-    'mutate-layout':HCLayout.Mutate,
-    'noncard': HCLayout.Misc
-  }
+  const singleLayoutTags: Record<string, HCLayoutGroup.SingleFacedType> = {
+    'weird-leveler': HCLayout.Leveler,
+    leveler: HCLayout.Leveler,
+    'weird-1-mana-levelers-cycle': HCLayout.Leveler,
+    'mutate-layout': HCLayout.Mutate,
+    noncard: HCLayout.Misc,
+  };
 
-  const multiLayoutToFaceLayout:Record<HCLayoutGroup.MultiFacedType & HCLayoutGroup.CardLayoutType, HCLayoutGroup.FaceLayoutType>= {
-   'meld_part':HCLayout.MeldResult,
-   'draft_partner':HCLayout.DraftPartner,
-   'reminder_on_back':HCLayout.Reminder,
-   'token_on_back':HCLayout.Token,
-   'token_in_inset':HCLayout.Token,
-   'dungeon_on_back':HCLayout.Dungeon,
-   'dungeon_in_inset':HCLayout.Dungeon,
-   'stickers_on_back':HCLayout.Stickers,
-   'modal':HCLayout.Modal,
-   'transform':HCLayout.Transform,
-   'specialize':HCLayout.Specialize,
-   'flip':HCLayout.Flip,
-   'inset':HCLayout.Inset,
-   'aftermath':HCLayout.Aftermath,
-   'prepare':HCLayout.Prepare,
-   'split':HCLayout.Split,
-   'multi':HCLayout.Split
-  }
+  const multiLayoutToFaceLayout: Record<
+    HCLayoutGroup.MultiFacedType & HCLayoutGroup.CardLayoutType,
+    HCLayoutGroup.FaceLayoutType
+  > = {
+    meld_part: HCLayout.MeldResult,
+    draft_partner: HCLayout.DraftPartner,
+    reminder_on_back: HCLayout.Reminder,
+    token_on_back: HCLayout.Token,
+    token_in_inset: HCLayout.Token,
+    dungeon_on_back: HCLayout.Dungeon,
+    dungeon_in_inset: HCLayout.Dungeon,
+    stickers_on_back: HCLayout.Stickers,
+    modal: HCLayout.Modal,
+    transform: HCLayout.Transform,
+    specialize: HCLayout.Specialize,
+    flip: HCLayout.Flip,
+    inset: HCLayout.Inset,
+    aftermath: HCLayout.Aftermath,
+    prepare: HCLayout.Prepare,
+    split: HCLayout.Split,
+    multi: HCLayout.Split,
+  };
 
   const layoutToImageStatusList = [
     'front',
@@ -180,28 +186,46 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'draft_partner',
     'dungeon',
     'reminder',
-    'stickers'
-  ]
+    'stickers',
+  ];
 
-  const borderColorTags: Record<string,HCBorderColor> = {
-    'white-border':HCBorderColor.White,
-    'borderless':HCBorderColor.Borderless,
-    'silver-border':HCBorderColor.Silver,
-    'gold-border':HCBorderColor.Gold,
-    'yellow-border':HCBorderColor.Yellow,
-    'rainbow-border':HCBorderColor.Rainbow,
-    'blue-border':HCBorderColor.Blue,
-  }
+  const borderColorTags: Record<string, HCBorderColor> = {
+    'white-border': HCBorderColor.White,
+    borderless: HCBorderColor.Borderless,
+    'silver-border': HCBorderColor.Silver,
+    'gold-border': HCBorderColor.Gold,
+    'yellow-border': HCBorderColor.Yellow,
+    'rainbow-border': HCBorderColor.Rainbow,
+    'blue-border': HCBorderColor.Blue,
+  };
 
-  const frameTags: Record<string,HCFrame> = {
-    '1993-frame':HCFrame.Original,
-    '1997-frame':HCFrame.Classic,
-    '2003-frame':HCFrame.Modern,
-    '2020-frame':HCFrame.NewToken,
-    'future-frame':HCFrame.Future,
-    'playtest-frame':HCFrame.Playtest,
-    'misc-frame':HCFrame.Misc,
-  }
+  const frameTags: Record<string, HCFrame> = {
+    '1993-frame': HCFrame.Original,
+    '1997-frame': HCFrame.Classic,
+    '2003-frame': HCFrame.Modern,
+    '2020-frame': HCFrame.NewToken,
+    'future-frame': HCFrame.Future,
+    'playtest-frame': HCFrame.Playtest,
+    'misc-frame': HCFrame.Misc,
+  };
+  const frameEffectTags: Record<string, HCFrameEffect> = {
+    'miracle-frame': HCFrameEffect.Miracle,
+    'nyx-frame': HCFrameEffect.Enchantment,
+    'draft-frame': HCFrameEffect.Draft,
+    'devoid-frame': HCFrameEffect.Devoid,
+    tombstone: HCFrameEffect.Tombstone,
+    'colorshifted-frame': HCFrameEffect.Colorshifted,
+    'sun-moon-transform': HCFrameEffect.SunMoonDfc,
+    'compass-land-transform': HCFrameEffect.CompassLandDfc,
+    'origin-pw-transform': HCFrameEffect.OriginPwDfc,
+    'moon-eldrazi-transform': HCFrameEffect.MoonEldraziDfc,
+    'fan-transform': HCFrameEffect.FanDfc,
+    'showcase-frame': HCFrameEffect.Showcase,
+    'extended-art': HCFrameEffect.ExtendedArt,
+    'companion-frame': HCFrameEffect.Companion,
+    'etched-frame': HCFrameEffect.Etched,
+    'spree-frame': HCFrameEffect.Spree,
+  };
 
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
@@ -311,12 +335,29 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     const tagIndex = keys.indexOf('tags');
     if (entry[tagIndex]) {
       const tags = entry[tagIndex].split(';');
+
       cardObject.tags = tags.map(fullTag => {
         if (fullTag.includes('<') && fullTag.includes('>')) {
           const [tag, note] = fullTag.split('<');
-          if (tag.slice(tag.lastIndexOf('-')+1) == 'watermark') {
+          if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
             const index = parseInt(note);
-            cardObject.card_faces[!isNaN(index) && index >= 0 && index < cardObject.card_faces.length ? index : 0].watermark = tag.slice(0,tag.lastIndexOf('-'));
+            cardObject.card_faces[
+              !isNaN(index) && index >= 0 && index < cardObject.card_faces.length ? index : 0
+            ].watermark = tag.slice(0, tag.lastIndexOf('-'));
+          } else if (tag in frameTags) {
+            const index = parseInt(note);
+            cardObject.card_faces[
+              !isNaN(index) && index >= 0 && index < cardObject.card_faces.length ? index : 0
+            ].frame = frameTags[tag];
+          } else if (tag in frameEffectTags) {
+            const index = parseInt(note);
+            const faceIndex =
+              !isNaN(index) && index >= 0 && index < cardObject.card_faces.length ? index : 0;
+            if ('frame_effects' in cardObject.card_faces[faceIndex]) {
+              cardObject.card_faces[faceIndex].push(frameEffectTags[tag]);
+            } else {
+              cardObject.card_faces[faceIndex].frame_effects = [frameEffectTags[tag]];
+            }
           } else {
             if (!('tag_notes' in cardObject)) {
               cardObject.tag_notes = {} as Record<string, string>;
@@ -325,18 +366,27 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           }
           return tag;
         } else {
-          if (fullTag.slice(fullTag.lastIndexOf('-')+1) == 'watermark') {
-            cardObject.card_faces[0].watermark = fullTag.slice(0,fullTag.lastIndexOf('-'));
+          if (fullTag.slice(fullTag.lastIndexOf('-') + 1) == 'watermark') {
+            cardObject.card_faces[0].watermark = fullTag.slice(0, fullTag.lastIndexOf('-'));
+          } else if (fullTag in frameTags) {
+            cardObject.card_faces[0].frame = frameTags[fullTag];
+          } else if (fullTag in frameEffectTags) {
+            if ('frame_effects' in cardObject.card_faces[0]) {
+              cardObject.card_faces[0].push(frameEffectTags[fullTag]);
+            } else {
+              cardObject.card_faces[0].frame_effects = [frameEffectTags[fullTag]];
+            }
           }
           return fullTag;
         }
       });
       cardObject.tags = Array.from(new Set(cardObject.tags));
 
-      cardObject.tags.forEach((tag:string) => {
+      cardObject.tags.forEach((tag: string) => {
         if (tag == 'draftpartner' && cardObject.all_parts) {
           cardObject.all_parts[0].is_draft_partner = true;
-          if (cardObject.all_parts[0].component == 'token_maker') { // don't overwrite melds
+          if (cardObject.all_parts[0].component == 'token_maker') {
+            // don't overwrite melds
             cardObject.all_parts[0].component = 'draft_partner';
           }
           cardObject.not_directly_draftable = true;
@@ -345,7 +395,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           cardObject.all_parts[0].component = 'meld_part';
         }
         if (!('layout' in cardObject)) {
-          if (cardObject.card_faces.length<=1 ){
+          if (cardObject.card_faces.length <= 1) {
             if (tag in singleLayoutTags) {
               cardObject.layout = multiLayoutTags[tag];
             }
@@ -356,13 +406,13 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           }
         }
         if (!('border_color' in cardObject) && tag in borderColorTags) {
-          cardObject.border_color=borderColorTags[tag];
+          cardObject.border_color = borderColorTags[tag];
         } else if (!('frame' in cardObject) && tag in frameTags) {
           cardObject.frame = frameTags[tag];
         } else if (tag == 'foil') {
-          cardObject.finish=HCFinish.Foil;
+          cardObject.finish = HCFinish.Foil;
         }
-      })
+      });
     }
     const name = cardObject.tags?.includes('irregular-face-name')
       ? []
@@ -387,9 +437,10 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       if (index == 0) {
         face.layout = HCLayout.Front;
       } else if ('layout' in cardObject && cardObject.layout in multiLayoutToFaceLayout) {
-        face.layout = multiLayoutToFaceLayout[cardObject.layout as keyof typeof multiLayoutToFaceLayout];
+        face.layout =
+          multiLayoutToFaceLayout[cardObject.layout as keyof typeof multiLayoutToFaceLayout];
       } else {
-        face.layout = HCLayout.Split
+        face.layout = HCLayout.Split;
       }
       if (!('image_status' in face) /**|| ['split'].includes(face.image_status)*/) {
         if (index == 0) {
@@ -495,7 +546,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             'image_status',
             'colors',
             'image',
-            'layout'
+            'layout',
           ].includes(key)
       )) {
         cardObject[key] = value;
@@ -506,17 +557,19 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           singleCard.layout = HCLayout.Stickers;
         } else if (singleCard.types?.includes('Dungeon')) {
           singleCard.layout = HCLayout.Dungeon;
-        // } else if (singleCard.tags?.some((tag:string) => ['weird-leveler','leveler','weird-1-mana-levelers-cycle'].includes(tag))) {
-        //   singleCard.layout = HCLayout.Leveler;
+          // } else if (singleCard.tags?.some((tag:string) => ['weird-leveler','leveler','weird-1-mana-levelers-cycle'].includes(tag))) {
+          //   singleCard.layout = HCLayout.Leveler;
         } else if (singleCard.subtypes?.includes('Saga')) {
           singleCard.layout = HCLayout.Saga;
         } else if (singleCard.subtypes?.includes('Class')) {
           singleCard.layout = HCLayout.Class;
         } else if (singleCard.subtypes?.includes('Case')) {
           singleCard.layout = HCLayout.Case;
-        // } else if (singleCard.tags?.includes('mutate-layout')) {
-        //   singleCard.layout = HCLayout.Mutate;
-        } else if (singleCard.tags?.some((type:string) => ['Plane','Phenomenon'].includes(type))) {
+          // } else if (singleCard.tags?.includes('mutate-layout')) {
+          //   singleCard.layout = HCLayout.Mutate;
+        } else if (
+          singleCard.tags?.some((type: string) => ['Plane', 'Phenomenon'].includes(type))
+        ) {
           singleCard.layout = HCLayout.Prototype;
         } else if (singleCard.types?.includes('Plane')) {
           singleCard.layout = HCLayout.Planar;
@@ -526,10 +579,15 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           singleCard.layout = HCLayout.Vanguard;
         } else if (singleCard.types?.includes('Battle')) {
           singleCard.layout = HCLayout.Battle;
-        } else if (singleCard.subtypes?.some((subtype:string) => ['Spacecraft','Watercraft','Planet'].includes(subtype)) && singleCard.oracle_text.toLowerCase().includes('station')) {
+        } else if (
+          singleCard.subtypes?.some((subtype: string) =>
+            ['Spacecraft', 'Watercraft', 'Planet'].includes(subtype)
+          ) &&
+          singleCard.oracle_text.toLowerCase().includes('station')
+        ) {
           singleCard.layout = HCLayout.Station;
-        // } else if (singleCard.tags?.includes('noncard')) {
-        //   singleCard.layout = HCLayout.Misc;
+          // } else if (singleCard.tags?.includes('noncard')) {
+          //   singleCard.layout = HCLayout.Misc;
         } else {
           singleCard.layout = HCLayout.Normal;
         }
@@ -555,7 +613,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         cardObject.card_faces[0].image_status = 'front';
       }
       if (!('layout' in cardObject)) {
-        cardObject.layout = HCLayout.Split
+        cardObject.layout = HCLayout.Split;
       }
       const card = cardObject as HCCard.AnyMultiFaced;
       setDerivedProps(card);

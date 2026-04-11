@@ -78,7 +78,7 @@ export const fetchNotMagic = async () => {
     image_status: HCImageStatus.MedRes,
     draft_image_status: HCImageStatus.Inapplicable,
     layout: HCLayout.NotMagic,
-    border_color:HCBorderColor.Borderless
+    border_color: HCBorderColor.Borderless,
   };
 
   const theThing = rest.map(entry => {

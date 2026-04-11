@@ -25,6 +25,16 @@ export enum HCFrameEffect {
   MoonEldraziDfc = 'mooneldrazidfc',
   /** The waxing and waning crescent moon transform marks */
   WaxingAndWaningMoonDfc = 'waxingandwaningmoondfc',
+  /** The cards have More Than Meets the Eye™ marks */
+  ConvertDfc = 'convertdfc',
+  /** The cards have fan transforming marks */
+  FanDfc = 'fandfc',
+  /** The cards have the Upside Down transforming marks */
+  UpsidedownDfc = 'upsidedowndfc',
+  /** The cards have generic transforming marks */
+  TransformDfc = 'transformdfc',
+  /** The cards have generic mdfc marks */
+  Mdfc = 'mdfc',
   /** A custom Showcase frame */
   Showcase = 'showcase',
   /** An extended art frame */
@@ -39,16 +49,16 @@ export enum HCFrameEffect {
   Lesson = 'lesson',
   /** The cards have the Shattered Glass frame effect */
   ShatteredGlass = 'shatteredglass',
-  /** The cards have More Than Meets the Eye™ marks */
-  ConvertDfc = 'convertdfc',
-  /** The cards have fan transforming marks */
-  FanDfc = 'fandfc',
-  /** The cards have the Upside Down transforming marks */
-  UpsidedownDfc = 'upsidedowndfc',
   /** The cards have Spree asterisks */
   Spree = 'spree',
-  /** The cards have generic transforming marks */
-  TransformDfc = 'transformdfc',
-  /** The cards have generic mdfc marks */
-  Mdfc = 'mdfc',
 }
+export const TransformFrameEffects: HCFrameEffect[] = [
+  HCFrameEffect.SunMoonDfc,
+  HCFrameEffect.CompassLandDfc,
+  HCFrameEffect.OriginPwDfc,
+  HCFrameEffect.MoonEldraziDfc,
+  HCFrameEffect.WaxingAndWaningMoonDfc,
+  HCFrameEffect.ConvertDfc,
+  HCFrameEffect.UpsidedownDfc,
+  HCFrameEffect.TransformDfc,
+];

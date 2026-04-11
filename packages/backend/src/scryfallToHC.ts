@@ -100,7 +100,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'attraction_lights',
     'type_line',
     'border_color',
-    'frame'
+    'frame',
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
@@ -128,7 +128,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     colors: [HCColor.Colorless] as HCColors,
     oracle_text: '',
     image_status: HCImageStatus.Split,
-    layout: HCLayout.Token
+    layout: HCLayout.Token,
   };
   const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
   const subKeywords: Record<string, string> = {
@@ -256,9 +256,15 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       cardObject[key] = fixPhyrexianMana(value);
     } else if (italicsReplaceKeys.includes(key)) {
       cardObject[key] = fixPhyrexianMana(value.replaceAll('\n', '\\n'));
-    } else if (key == 'frame' && value == '2015' && card.set_type == 'token' && (card.released_at.slice(0,3) != '201' || (card.released_at.slice(0,4) == '2019' && parseInt(card.released_at.slice(5,7))>6))) {
+    } else if (
+      key == 'frame' &&
+      value == '2015' &&
+      card.set_type == 'token' &&
+      (card.released_at.slice(0, 3) != '201' ||
+        (card.released_at.slice(0, 4) == '2019' && parseInt(card.released_at.slice(5, 7)) > 6))
+    ) {
       // if it was released after June 2019, use the new token frame
-      cardObject.frame = HCFrame.NewToken
+      cardObject.frame = HCFrame.NewToken;
     } else if (sameKeys.includes(key)) {
       cardObject[key] = value;
     }

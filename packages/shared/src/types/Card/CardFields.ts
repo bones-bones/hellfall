@@ -94,7 +94,7 @@ export namespace HCCardFields.Core {
      * Whether this card is an actual token (TODO: replace with type-based checks)
      */
     isActualToken?: boolean;
-    layout:`${HCLayout}`;
+    layout: `${HCLayout}`;
   };
 }
 
@@ -169,7 +169,7 @@ export namespace HCCardFields.Gameplay {
     type_line: string;
     mana_cost: string;
     mana_value: number;
-    layout:`${HCLayout}`;
+    layout: `${HCLayout}`;
   };
 
   /**
@@ -227,10 +227,10 @@ export namespace HCCardFields.Gameplay {
      * This will be an array of numbers ranging from 1 to 6 inclusive.
      */
     attraction_lights?: number[];
-    /** 
+    /**
      * The layout of this face
      */
-    layout:`${HCLayout}`;
+    layout: `${HCLayout}`;
   } & CombatStats &
     VanguardStats;
 
@@ -273,10 +273,7 @@ export namespace HCCardFields.Gameplay {
      * The type line of this card.
      */
     type_line: string;
-    /** 
-     * The layout of this card
-     */
-    layout:`${HCLayout}`;
+    layout: `${HCLayout}`;
   };
   /**
    * These fields are specific for multiface cards.
@@ -291,6 +288,20 @@ export namespace HCCardFields.Gameplay {
      * True when the multiface card is a rotating card (excluding flip ones)
      */
     is_rotating?: boolean;
+    /**
+     * The layout of this card
+     */
+    layout: `${HCLayoutGroup.MultiFacedType}`;
+  };
+  /**
+   * These fields are specific for single face cards.
+   * - Root level for single face layouts only.
+   */
+  export type SingleSpecific = AllFaces & {
+    /**
+     * The layout of this card
+     */
+    layout: `${HCLayoutGroup.SingleFacedType}`;
   };
   /**
    * These fields are specific for multiface grid cards. (TODO: fully implement this)
@@ -345,7 +356,8 @@ export namespace HCCardFields.Print {
     /**
      * This card's frame effects, if any.
      */
-    frame_effects?: `${HCFrameEffect}`[];    /**
+    frame_effects?: `${HCFrameEffect}`[];
+    /**
      * This card's frame layout.
      */
     frame: `${HCFrame}`;
@@ -409,14 +421,14 @@ export namespace HCCardFields.Print {
     /**
      * The layout of this face.
      */
-    layout: `${HCLayout}`
+    layout: `${HCLayoutGroup.FaceLayoutType}`;
     /**
      * This faces's frame effects, if any.
      */
-    frame_effects?: `${HCFrameEffect}`[];    /**
+    frame_effects?: `${HCFrameEffect}`[] /**
     /**
      * This faces's frame layout, if it is different from that of the overall card.
-     */
+     */;
     frame?: `${HCFrame}`;
   };
 

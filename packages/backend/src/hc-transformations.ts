@@ -65,14 +65,10 @@ const cardRemovableProps = [
   'not_directly_draftable',
   'has_draft_partners',
   'watermark',
-];
-const tokenIgnoreProps = [
-  'colors',
-  'border_color',
-  'frame',
   'frame_effects',
-  'finish'
-]
+];
+const cardFaceRemovableProps = ['frame'];
+const tokenIgnoreProps = ['colors', 'border_color', 'frame', 'frame_effects', 'finish'];
 const tokenRemovableProps = [
   'power',
   'toughness',
@@ -171,7 +167,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'watermark',
           'border_color',
           'frame',
-          // 'frame_effects',
+          'frame_effects',
           'tags',
           'tag_notes',
           'variation',
@@ -202,7 +198,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'color_indicator',
           'watermark',
           'frame',
-          // 'frame_effects',
+          'frame_effects',
         ];
         const partPropOrder = [
           'id',
@@ -328,12 +324,24 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
                 // TODO: store current version and print the diff if there is one
               } else if (k == 'image_status' && newFace.image) {
                 // TODO: store current version and print the diff if there is one
-              } else if (merged.isActualToken && tokenIgnoreProps.includes(k) && merged.set!='SFT') {
+              } else if (
+                merged.isActualToken &&
+                tokenIgnoreProps.includes(k) &&
+                merged.set != 'SFT'
+              ) {
               } else if (v || (!merged.isActualToken && cardBlankableProps.includes(k))) {
                 (face as any)[k] = v;
               }
             });
             cardRemovableProps
+              .filter(prop => prop in face && !(prop in newFace))
+              .forEach(prop => {
+                if (prop == 'image') {
+                  face.image_status = newFace.image_status;
+                }
+                delete (face as any)[prop];
+              });
+            cardFaceRemovableProps
               .filter(prop => prop in face && !(prop in newFace))
               .forEach(prop => {
                 if (prop == 'image') {
@@ -369,7 +377,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
         // TODO: store current version and print the diff if there is one
-      } else if (merged.isActualToken && tokenIgnoreProps.includes(key) && merged.set!='SFT') {
+      } else if (merged.isActualToken && tokenIgnoreProps.includes(key) && merged.set != 'SFT') {
       } else if (
         key === 'all_parts' &&
         Array.isArray(value) &&
@@ -662,7 +670,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], 'finish',HCFinish.Nonfoil,'cards')
+    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [])
     : [];
 
   try {
@@ -671,7 +679,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], 'finish',HCFinish.Nonfoil, 'cards') : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {

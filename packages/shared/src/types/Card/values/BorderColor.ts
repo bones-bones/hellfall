@@ -11,5 +11,5 @@ export enum HCBorderColor {
   Gold = 'gold',
   Yellow = 'yellow',
   Rainbow = 'rainbow',
-  Blue = 'blue'
+  Blue = 'blue',
 }
