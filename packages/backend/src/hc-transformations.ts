@@ -14,6 +14,7 @@ import {
   HCColors,
   HCObject,
   HCBorderColor,
+  HCFrame,
 } from '@hellfall/shared/types';
 // import { getDefaultStore } from 'jotai';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
@@ -168,7 +169,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           // 'finish',
           'watermark',
           'border_color',
-          // 'frame',
+          'frame',
           // 'frame_effects',
           'tags',
           'tag_notes',
@@ -199,7 +200,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'colors',
           'color_indicator',
           'watermark',
-          // 'frame',
+          'frame',
           // 'frame_effects',
         ];
         const partPropOrder = [
@@ -367,6 +368,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
         // TODO: store current version and print the diff if there is one
+      } else if (merged.isActualToken && tokenIgnoreProps.includes(key) && merged.set!='SFT') {
       } else if (
         key === 'all_parts' &&
         Array.isArray(value) &&
@@ -659,7 +661,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], 'border_color',HCBorderColor.Black,'cards')
+    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], /**'frame',HCFrame.Stamp,'cards'*/)
     : [];
 
   try {
@@ -668,7 +670,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], 'border_color',HCBorderColor.Black,'cards') : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], /**'frame',HCFrame.Stamp,'cards'*/) : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {

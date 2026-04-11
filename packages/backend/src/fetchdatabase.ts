@@ -12,6 +12,7 @@ import {
   HCObject,
   HCLayoutGroup,
   HCBorderColor,
+  HCFrame,
 } from '@hellfall/shared/types';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { stripMasterpiece } from '@hellfall/shared/utils/textHandling.ts';
@@ -99,7 +100,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     set: '',
     variation: false,
     draft_image_status: HCImageStatus.Inapplicable,
-    border_color:HCBorderColor.Black
+    border_color:HCBorderColor.Black,
+    frame:HCFrame.Stamp
   };
 
   const defaultMultiFaceProps: Record<string, any> = {
@@ -187,6 +189,16 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'yellow-border':HCBorderColor.Yellow,
     'rainbow-border':HCBorderColor.Rainbow,
     'blue-border':HCBorderColor.Blue,
+  }
+
+  const frameTags: Record<string,HCFrame> = {
+    '1993-frame':HCFrame.Original,
+    '1997-frame':HCFrame.Classic,
+    '2003-frame':HCFrame.Modern,
+    '2020-frame':HCFrame.NewToken,
+    'future-frame':HCFrame.Future,
+    'playtest-frame':HCFrame.Playtest,
+    'misc-frame':HCFrame.Misc,
   }
 
   const theThing = rest.map(entry => {
@@ -360,6 +372,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         }
         if (!('border_color' in cardObject) && tag in borderColorTags) {
           cardObject.border_color=borderColorTags[tag];
+        }
+        if (!('frame' in cardObject) && tag in frameTags) {
+          cardObject.frame = frameTags[tag];
         }
       })
     }
@@ -555,90 +570,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       }
       if (!('layout' in cardObject)) {
         cardObject.layout = HCLayout.Split
-        // if (
-        //   cardObject.tags?.includes('meld') ||
-        //   cardObject.card_faces[0].oracle_text.toLowerCase().includes('meld')
-        // ) {
-        //   cardObject.layout = HCLayout.MeldPart;
-        //   if ('all_parts' in cardObject) {
-        //     cardObject.all_parts[0].component = 'meld_part';
-        //   }
-        // } else if (
-        //   cardObject.tags?.includes('draftpartner') ||
-        //   cardObject.card_faces[0].oracle_text.toLowerCase().includes('draftpartner')
-        // ) {
-        //   cardObject.layout = HCLayout.DraftPartner;
-        // } else if (
-        //   cardObject.tags?.includes('reminder-on-back') ||
-        //   cardObject.card_faces.at(-1)?.types?.includes('Reminder Card') ||
-        //   cardObject.card_faces.at(-1)?.types?.includes('QR Code')
-        // ) {
-        //   cardObject.layout = HCLayout.ReminderOnBack;
-        // } else if (
-        //   cardObject.tags?.includes('dungeon-in-inset') ||
-        //   (cardObject.card_faces.at(-1)?.supertypes?.includes('Dungeon') && !entry[19])
-        // ) {
-        //   // entry[19] is 0image
-        //   cardObject.layout = HCLayout.DungeonInInset;
-        // } else if (
-        //   cardObject.tags?.includes('dungeon-on-back') ||
-        //   cardObject.card_faces.at(-1)?.types?.includes('Dungeon')
-        // ) {
-        //   cardObject.layout = HCLayout.DungeonOnBack;
-        // } else if (
-        //   cardObject.tags?.includes('stickers-on-back') ||
-        //   cardObject.card_faces.at(-1)?.types?.includes('Stickers')
-        // ) {
-        //   cardObject.layout = HCLayout.StickersOnBack;
-        // } else if (
-        //   cardObject.tags?.includes('token-in-inset') ||
-        //   (cardObject.card_faces.at(-1)?.supertypes?.includes('Token') && !entry[19])
-        // ) {
-        //   // entry[19] is 0image
-        //   cardObject.layout = HCLayout.TokenInInset;
-        // } else if (
-        //   cardObject.tags?.includes('token-on-back') ||
-        //   cardObject.card_faces.at(-1)?.supertypes?.includes('Token')
-        // ) {
-        //   cardObject.layout = HCLayout.TokenOnBack;
-        // } else if (cardObject.tags?.includes('specialize')) {
-        //   cardObject.layout = HCLayout.Specialize;
-        // } else if (cardObject.tags?.includes('mdfc')) {
-        //   cardObject.layout = HCLayout.Modal;
-        // } else if (
-        //   cardObject.tags?.includes('transform') ||
-        //   cardObject.card_faces[0].oracle_text.toLowerCase().includes('transform')
-        // ) {
-        //   cardObject.layout = HCLayout.Transform;
-        // } else if (cardObject.card_faces.slice(1).find(e => e.image)) {
-        //   if (cardObject.card_faces.slice(1).some(face => face.mana_cost && face.image)) {
-        //     cardObject.layout = HCLayout.Modal;
-        //   } else {
-        //     cardObject.layout = HCLayout.Transform;
-        //   }
-        // } else if (
-        //   cardObject.tags?.includes('flip') ||
-        //   cardObject.card_faces[0].oracle_text.toLowerCase().includes('flip')
-        // ) {
-        //   cardObject.layout = HCLayout.Flip;
-        // } else if (
-        //   cardObject.tags?.includes('inset') ||
-        //   cardObject.card_faces.some(face =>
-        //     face.subtypes?.some((sub: string) =>
-        //       ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub)
-        //     )
-        //   ) ||
-        //   cardObject.card_faces[0].oracle_text.toLowerCase().includes('prepared')
-        // ) {
-        //   cardObject.layout = HCLayout.Inset;
-        // } else if (
-        //   cardObject.tags?.includes('aftermath') ||
-        //   cardObject.card_faces.some(face => face.oracle_text.toLowerCase().includes('aftermath'))
-        // ) {
-        //   cardObject.layout = HCLayout.Aftermath;
-        // } else {
-        //   cardObject.layout = HCLayout.Split;
-        // }
       }
       const card = cardObject as HCCard.AnyMultiFaced;
       setDerivedProps(card);

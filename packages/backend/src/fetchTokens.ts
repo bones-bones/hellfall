@@ -10,7 +10,8 @@ import {
   HCLegality,
   HCLegalitiesField,
   HCLayoutGroup,
-  HCBorderColor
+  HCBorderColor,
+  HCFrame
 } from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 
@@ -70,6 +71,7 @@ export const fetchTokens = async () => {
     type_line: '',
     layout: HCLayout.Token,
     border_color:HCBorderColor.Black,
+    frame:HCFrame.NewToken
   };
   const hardCardNames: string[] = [
     'Crypt of u/Em9500',

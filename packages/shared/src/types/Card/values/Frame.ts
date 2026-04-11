@@ -7,6 +7,8 @@ export enum HCFrame {
   Modern = '2003',
   /** The holofoil-stamp Magic card frame, introduced in Magic 2015. */
   Stamp = '2015',
+  /** The new token frame, introduced in Magic 2020. */
+  NewToken = '2020',
   /** The frame used on cards from the future */
   Future = 'future',
   /** Playtest cards */

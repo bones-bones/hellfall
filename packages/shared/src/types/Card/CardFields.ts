@@ -341,7 +341,7 @@ export namespace HCCardFields.Print {
     /**
      * This card's frame layout.
      */
-    // frame: `${HCFrame}`;
+    frame: `${HCFrame}`;
     /**
      * A computer-readable indicator for the state of this card's image.
      */
@@ -403,6 +403,10 @@ export namespace HCCardFields.Print {
      * The layout of this face.
      */
     layout: `${HCLayout}`
+    /**
+     * This faces's frame layout, if it is different from that of the overall card.
+     */
+    frame?: `${HCFrame}`;
   };
 
   type VariationInfo = {

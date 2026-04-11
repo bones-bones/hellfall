@@ -15,6 +15,7 @@ import {
   HCColor,
   HCColors,
   HCImageStatus,
+  HCFrame,
 } from '@hellfall/shared/types';
 import { setDerivedProps } from './derivedProps.ts';
 export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): HCCard.Any => {
@@ -98,7 +99,8 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'watermark',
     'attraction_lights',
     'type_line',
-    'border_color'
+    'border_color',
+    'frame'
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
@@ -254,6 +256,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       cardObject[key] = fixPhyrexianMana(value);
     } else if (italicsReplaceKeys.includes(key)) {
       cardObject[key] = fixPhyrexianMana(value.replaceAll('\n', '\\n'));
+    } else if (key == 'frame' && value == '2015' && card.set_type == 'token' && (card.released_at.slice(0,3) != '201' || (card.released_at.slice(0,4) == '2019' && parseInt(card.released_at.slice(5,7))>6))) {
+      // if it was released after June 2019, use the new token frame
+      cardObject.frame = HCFrame.NewToken
     } else if (sameKeys.includes(key)) {
       cardObject[key] = value;
     }
