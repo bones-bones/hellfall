@@ -13,6 +13,7 @@ import {
   HCColor,
   HCColors,
   HCObject,
+  HCBorderColor,
 } from '@hellfall/shared/types';
 // import { getDefaultStore } from 'jotai';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
@@ -63,7 +64,13 @@ const cardRemovableProps = [
   'has_draft_partners',
   'watermark',
 ];
-// const tokenBlankableProps = []
+const tokenIgnoreProps = [
+  'colors',
+  'border_color',
+  'frame',
+  'frame_effects',
+  'finish'
+]
 const tokenRemovableProps = [
   'power',
   'toughness',
@@ -128,9 +135,9 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'oracle_id',
           'name',
           'set',
+          'layout',
           'image_status',
           'image',
-          'layout',
           'mana_cost',
           'mana_value',
           'supertypes',
@@ -158,7 +165,11 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'legalities',
           'creators',
           'rulings',
+          // 'finish',
           'watermark',
+          'border_color',
+          // 'frame',
+          // 'frame_effects',
           'tags',
           'tag_notes',
           'variation',
@@ -188,6 +199,8 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'colors',
           'color_indicator',
           'watermark',
+          // 'frame',
+          // 'frame_effects',
         ];
         const partPropOrder = [
           'id',
@@ -313,6 +326,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
                 // TODO: store current version and print the diff if there is one
               } else if (k == 'image_status' && newFace.image) {
                 // TODO: store current version and print the diff if there is one
+              } else if (merged.isActualToken && tokenIgnoreProps.includes(k) && merged.set!='SFT') {
               } else if (v || (!merged.isActualToken && cardBlankableProps.includes(k))) {
                 (face as any)[k] = v;
               }
@@ -645,7 +659,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], 'layout',HCLayout.Split,'faces')
+    ? dataToCards(databaseContent.data.filter((e: any) => !e.isActualToken) || [], 'border_color',HCBorderColor.Black,'cards')
     : [];
 
   try {
@@ -654,7 +668,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], 'layout',HCLayout.Token,'faces') : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], 'border_color',HCBorderColor.Black,'cards') : [];
   return { existingCards, existingTokens };
 };
 const main = async () => {

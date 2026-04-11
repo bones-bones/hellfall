@@ -1,10 +1,10 @@
 import {
-  // HCBorderColor,
+  HCBorderColor,
   HCColors,
   // HCCoreColors,
   // HCMiscColors,
   // HCFinish,
-  // HCFrame,
+  HCFrame,
   // HCFrameEffect,
   // HCGame,
   HCImageStatus,
@@ -335,9 +335,9 @@ export namespace HCCardFields.Print {
      */
     // artist_ids?: string[];
     /**
-     * This card's border color: black, white, borderless, silver, or gold.
+     * This card's border color: black, white, borderless, silver, gold, yellow, blue, or rainbow.
      */
-    // border_color: `${HCBorderColor}`;
+    border_color: `${HCBorderColor}`;
     /**
      * This card's frame layout.
      */

@@ -11,6 +11,7 @@ import {
   HCRelatedCard,
   HCObject,
   HCLayoutGroup,
+  HCBorderColor,
 } from '@hellfall/shared/types';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { stripMasterpiece } from '@hellfall/shared/utils/textHandling.ts';
@@ -98,6 +99,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     set: '',
     variation: false,
     draft_image_status: HCImageStatus.Inapplicable,
+    border_color:HCBorderColor.Black
   };
 
   const defaultMultiFaceProps: Record<string, any> = {
@@ -176,6 +178,16 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'reminder',
     'stickers'
   ]
+
+  const borderColorTags: Record<string,HCBorderColor> = {
+    'white-border':HCBorderColor.White,
+    'borderless':HCBorderColor.Borderless,
+    'silver-border':HCBorderColor.Silver,
+    'gold-border':HCBorderColor.Gold,
+    'yellow-border':HCBorderColor.Yellow,
+    'rainbow-border':HCBorderColor.Rainbow,
+    'blue-border':HCBorderColor.Blue,
+  }
 
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
@@ -322,6 +334,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           return fullTag;
         }
       });
+      cardObject.tags = Array.from(new Set(cardObject.tags));
+
       cardObject.tags.forEach((tag:string) => {
         if (tag == 'draftpartner' && cardObject.all_parts) {
           cardObject.all_parts[0].is_draft_partner = true;
@@ -343,6 +357,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
               cardObject.layout = multiLayoutTags[tag];
             }
           }
+        }
+        if (!('border_color' in cardObject) && tag in borderColorTags) {
+          cardObject.border_color=borderColorTags[tag];
         }
       })
     }

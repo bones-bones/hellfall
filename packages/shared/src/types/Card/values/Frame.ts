@@ -9,4 +9,8 @@ export enum HCFrame {
   Stamp = '2015',
   /** The frame used on cards from the future */
   Future = 'future',
+  /** Playtest cards */
+  Playtest = 'playtest',
+  /** Misc frames */
+  Misc = 'misc'
 }

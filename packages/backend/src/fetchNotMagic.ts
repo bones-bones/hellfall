@@ -9,6 +9,7 @@ import {
   HCObject,
   HCLegality,
   HCLegalitiesField,
+  HCBorderColor,
 } from '@hellfall/shared/types';
 
 const discordToSymbolMatching: Record<string, string> = {
@@ -77,6 +78,7 @@ export const fetchNotMagic = async () => {
     image_status: HCImageStatus.MedRes,
     draft_image_status: HCImageStatus.Inapplicable,
     layout: HCLayout.NotMagic,
+    border_color:HCBorderColor.Borderless
   };
 
   const theThing = rest.map(entry => {
