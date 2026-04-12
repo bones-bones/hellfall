@@ -192,6 +192,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
   const borderColorTags: Record<string, HCBorderColor> = {
     'white-border': HCBorderColor.White,
     borderless: HCBorderColor.Borderless,
+    'no-border': HCBorderColor.NoBorder,
     'silver-border': HCBorderColor.Silver,
     'gold-border': HCBorderColor.Gold,
     'yellow-border': HCBorderColor.Yellow,

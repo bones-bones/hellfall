@@ -12,4 +12,5 @@ export enum HCBorderColor {
   Yellow = 'yellow',
   Rainbow = 'rainbow',
   Blue = 'blue',
+  NoBorder = 'no_border',
 }
