@@ -411,12 +411,50 @@
       ]
     },
     {
+      "filename": "colorIndicators/mono/Orange.svg",
+      "symbol": "CI_Orange",
+      "english": "Color Indicator: Orange",
+      "represents_mana": false,
+      "colors": [
+        "Orange"
+      ]
+    },
+    {
+      "filename": "colorIndicators/mono/Brown.svg",
+      "symbol": "CI_Brown",
+      "english": "Color Indicator: Brown",
+      "represents_mana": false,
+      "colors": [
+        "Brown"
+      ]
+    },
+    {
       "filename": "colorIndicators/mono/Yellow.svg",
       "symbol": "CI_Yellow",
       "english": "Color Indicator: Yellow",
       "represents_mana": false,
       "colors": [
         "Yellow"
+      ]
+    },
+    {
+      "filename": "colorIndicators/mono/Pink.svg",
+      "symbol": "CI_Pink",
+      "english": "Color Indicator: Pink",
+      "represents_mana": false,
+      "colors": [
+        "Pink"
+      ]
+    },
+    {
+      "filename": "colorIndicators/Pan.svg",
+      "symbol": "CI_Pan",
+      "english": "Color Indicator: Pan (Blue, Yellow, and Pink)",
+      "represents_mana": false,
+      "colors": [
+        "U",
+        "Yellow",
+        "Pink"
       ]
     },
     {

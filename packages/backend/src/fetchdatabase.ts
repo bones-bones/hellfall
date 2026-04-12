@@ -204,10 +204,13 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     '1993-frame': HCFrame.Original,
     '1997-frame': HCFrame.Classic,
     '2003-frame': HCFrame.Modern,
-    '2020-frame': HCFrame.NewToken,
     'future-frame': HCFrame.Future,
     'playtest-frame': HCFrame.Playtest,
     'jank-frame': HCFrame.Jank,
+    '1997-token-frame': HCFrame.ClassicToken,
+    '2003-token-frame': HCFrame.ModernToken,
+    '2015-token-frame': HCFrame.StampToken,
+    '2020-token-frame': HCFrame.NewToken,
   };
   const frameEffectTags: Record<string, HCFrameEffect> = {
     'miracle-frame': HCFrameEffect.Miracle,
@@ -226,6 +229,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'showcase-frame': HCFrameEffect.Showcase,
     'extended-art': HCFrameEffect.ExtendedArt,
     'full-art': HCFrameEffect.FullArt,
+    'vertical-art': HCFrameEffect.VerticalArt,
+    'no-art': HCFrameEffect.NoArt,
     'companion-frame': HCFrameEffect.Companion,
     'etched-frame': HCFrameEffect.Etched,
     'spree-frame': HCFrameEffect.Spree,

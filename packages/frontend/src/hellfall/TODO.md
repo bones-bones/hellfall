@@ -74,7 +74,6 @@ Write a script to transform the database
 - add reminder card for attractions
 - figure out subtypes for nontoken tokens (emblems, dungeons, etc.)
 - don't fetch SFT tokens with "token" layout from scryfall every time
-- add color indicator for Pan & Pan Harmonica (yellow/blue/pink)
 - mork:
   - add ids
   - revamp fetch function to deal better with cards that have multiple printings (use bar and set like mtgcardfetcher does; allow use of id; allow use of )

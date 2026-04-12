@@ -256,15 +256,10 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       cardObject[key] = fixPhyrexianMana(value);
     } else if (italicsReplaceKeys.includes(key)) {
       cardObject[key] = fixPhyrexianMana(value.replaceAll('\n', '\\n'));
-    } else if (
-      key == 'frame' &&
-      value == '2015' &&
-      card.set_type == 'token' &&
-      (card.released_at.slice(0, 3) != '201' ||
-        (card.released_at.slice(0, 4) == '2019' && parseInt(card.released_at.slice(5, 7)) > 6))
-    ) {
+    } else if (key == 'frame') {
       // if it was released after June 2019, use the new token frame
-      cardObject.frame = HCFrame.NewToken;
+      const isNewToken = value == '2015' && card.set_type == 'token' && (card.released_at.slice(0, 3) != '201' || (card.released_at.slice(0, 4) == '2019' && parseInt(card.released_at.slice(5, 7)) > 6))
+      cardObject.frame = (card.frame == 'token' ? 'token_' : '') + (isNewToken? '2020':value);
     } else if (sameKeys.includes(key)) {
       cardObject[key] = value;
     }

@@ -57,6 +57,11 @@ export enum HCFrameEffect {
   ShatteredGlass = 'shatteredglass',
   /** The cards have Spree asterisks */
   Spree = 'spree',
+  /** The cards have a vertical art box (e.g. sagas, cases, etc.) */
+  VerticalArt = 'verticalart',
+  /** The cards have no art box */
+  NoArt = 'noart',
+  
 }
 export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.SunMoonDfc,
