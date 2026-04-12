@@ -24,5 +24,19 @@ export enum HCFrame {
 }
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
 export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.NewToken, HCFrame.StampToken];
-export const CardFrames: HCFrame[] = [HCFrame.Original,HCFrame.Classic,HCFrame.Modern,HCFrame.Stamp,HCFrame.Future,HCFrame.Playtest,HCFrame.Jank];
-export const TokenFrames: HCFrame[] = [HCFrame.ClassicToken,HCFrame.ModernToken,HCFrame.StampToken,HCFrame.NewToken,HCFrame.Jank];
+export const CardFrames: HCFrame[] = [
+  HCFrame.Original,
+  HCFrame.Classic,
+  HCFrame.Modern,
+  HCFrame.Stamp,
+  HCFrame.Future,
+  HCFrame.Playtest,
+  HCFrame.Jank,
+];
+export const TokenFrames: HCFrame[] = [
+  HCFrame.ClassicToken,
+  HCFrame.ModernToken,
+  HCFrame.StampToken,
+  HCFrame.NewToken,
+  HCFrame.Jank,
+];

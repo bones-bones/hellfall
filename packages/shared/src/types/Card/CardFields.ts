@@ -439,6 +439,10 @@ export namespace HCCardFields.Print {
      */
     flavor_text?: string;
     /**
+     * The just-for-fun name printed on the card (such as for Godzilla series cards).
+     */
+    flavor_name?: string;
+    /**
      * This card's watermark, if any.
      */
     watermark?: string;

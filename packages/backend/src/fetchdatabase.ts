@@ -420,6 +420,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           cardObject.frame = frameTags[tag];
         } else if (tag == 'foil') {
           cardObject.finish = HCFinish.Foil;
+        } else if (
+          tag == 'has-flavor-name' &&
+          'tag_notes' in cardObject &&
+          tag in cardObject.tag_notes
+        ) {
+          cardObject.card_faces[0].flavor_name = cardObject.tag_notes[tag];
         }
       });
     }

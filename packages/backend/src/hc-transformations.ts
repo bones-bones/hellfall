@@ -133,6 +133,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'scryfall_id',
           'oracle_id',
           'name',
+          'flavor_name',
           'set',
           'layout',
           'image_status',
@@ -177,6 +178,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
         ];
         const facePropOrder = [
           'name',
+          'flavor_name',
           'layout',
           'image_status',
           'image',
@@ -605,10 +607,13 @@ const mergeDatabases = (
   } else if (NO_SCRYFALL) {
     mergedTokens.push(
       ...Array.from(
-        existingTokenMap.values().filter(token => token.set == 'SFT').map(Token => {
-          setDerivedProps(Token);
-          return Token;
-        })
+        existingTokenMap
+          .values()
+          .filter(token => token.set == 'SFT')
+          .map(Token => {
+            setDerivedProps(Token);
+            return Token;
+          })
       )
     );
   }

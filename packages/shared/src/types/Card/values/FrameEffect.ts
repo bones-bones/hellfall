@@ -61,7 +61,6 @@ export enum HCFrameEffect {
   VerticalArt = 'verticalart',
   /** The cards have no art box */
   NoArt = 'noart',
-  
 }
 export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.SunMoonDfc,
