@@ -27,6 +27,7 @@ const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
 const UPDATE_MODE = process.argv.includes('--update');
+const NO_SCRYFALL = process.argv.includes('--noscryfall');
 const oneWayMergeProps = [
   'name',
   'mana_cost',
@@ -329,6 +330,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
                 tokenIgnoreProps.includes(k) &&
                 merged.set != 'SFT'
               ) {
+                const x = 1;
               } else if (v || (!merged.isActualToken && cardBlankableProps.includes(k))) {
                 (face as any)[k] = v;
               }
@@ -378,6 +380,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
         // TODO: store current version and print the diff if there is one
       } else if (merged.isActualToken && tokenIgnoreProps.includes(key) && merged.set != 'SFT') {
+        const x = 1;
       } else if (
         key === 'all_parts' &&
         Array.isArray(value) &&
@@ -601,6 +604,15 @@ const mergeDatabases = (
         })
       )
     );
+  } else if (NO_SCRYFALL) {
+    mergedTokens.push(
+      ...Array.from(
+        existingTokenMap.values().filter(token => token.set == 'SFT').map(Token => {
+          setDerivedProps(Token);
+          return Token;
+        })
+      )
+    );
   }
 
   return { mergedCards, mergedTokens };
@@ -689,7 +701,7 @@ const main = async () => {
   const { data: newCards } = { data: await fetchDatabase() };
   const usernameMappings = await fetchUsernameMappings();
   const tokenExcludedIds = ['the first pick1'];
-  const intTokens = (await fetchTokens()).filter(e => !tokenExcludedIds.includes(e.id));
+  const intTokens = (await fetchTokens(NO_SCRYFALL)).filter(e => !tokenExcludedIds.includes(e.id));
   const intNotMagic = await fetchNotMagic();
   const newTokens = intTokens.concat(intNotMagic);
   let finalCards = newCards;

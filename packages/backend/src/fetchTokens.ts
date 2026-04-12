@@ -15,7 +15,7 @@ import {
 } from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 
-export const fetchTokens = async () => {
+export const fetchTokens = async (NO_SCRYFALL:boolean) => {
   const requestedData = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
@@ -213,6 +213,10 @@ export const fetchTokens = async () => {
       });
     return tokenObject as HCCard.Any;
   });
-  const ScryfallTokens = await fetchScryfallTokens();
-  return HCTokens.concat(ScryfallTokens);
+  if (NO_SCRYFALL) {
+    return HCTokens;
+  } else {
+    const ScryfallTokens = await fetchScryfallTokens();
+    return HCTokens.concat(ScryfallTokens);
+  }
 };
