@@ -206,7 +206,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     '2020-frame': HCFrame.NewToken,
     'future-frame': HCFrame.Future,
     'playtest-frame': HCFrame.Playtest,
-    'misc-frame': HCFrame.Misc,
+    'jank-frame': HCFrame.Jank,
   };
   const frameEffectTags: Record<string, HCFrameEffect> = {
     'miracle-frame': HCFrameEffect.Miracle,
@@ -215,6 +215,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'devoid-frame': HCFrameEffect.Devoid,
     tombstone: HCFrameEffect.Tombstone,
     'colorshifted-frame': HCFrameEffect.Colorshifted,
+    'masterpiece-frame': HCFrameEffect.Masterpiece,
+    'inverted-text': HCFrameEffect.Inverted,
     'sun-moon-transform': HCFrameEffect.SunMoonDfc,
     'compass-land-transform': HCFrameEffect.CompassLandDfc,
     'origin-pw-transform': HCFrameEffect.OriginPwDfc,
@@ -222,6 +224,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'fan-transform': HCFrameEffect.FanDfc,
     'showcase-frame': HCFrameEffect.Showcase,
     'extended-art': HCFrameEffect.ExtendedArt,
+    'full-art': HCFrameEffect.FullArt,
     'companion-frame': HCFrameEffect.Companion,
     'etched-frame': HCFrameEffect.Etched,
     'spree-frame': HCFrameEffect.Spree,
@@ -354,7 +357,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             const faceIndex =
               !isNaN(index) && index >= 0 && index < cardObject.card_faces.length ? index : 0;
             if ('frame_effects' in cardObject.card_faces[faceIndex]) {
-              cardObject.card_faces[faceIndex].push(frameEffectTags[tag]);
+              cardObject.card_faces[faceIndex].frame_effects.push(frameEffectTags[tag]);
             } else {
               cardObject.card_faces[faceIndex].frame_effects = [frameEffectTags[tag]];
             }
@@ -369,10 +372,10 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           if (fullTag.slice(fullTag.lastIndexOf('-') + 1) == 'watermark') {
             cardObject.card_faces[0].watermark = fullTag.slice(0, fullTag.lastIndexOf('-'));
           } else if (fullTag in frameTags) {
-            cardObject.card_faces[0].frame = frameTags[fullTag];
+            cardObject.frame = frameTags[fullTag];
           } else if (fullTag in frameEffectTags) {
             if ('frame_effects' in cardObject.card_faces[0]) {
-              cardObject.card_faces[0].push(frameEffectTags[fullTag]);
+              cardObject.card_faces[0].frame_effects.push(frameEffectTags[fullTag]);
             } else {
               cardObject.card_faces[0].frame_effects = [frameEffectTags[fullTag]];
             }

@@ -13,8 +13,8 @@ export enum HCFrame {
   Future = 'future',
   /** Playtest cards */
   Playtest = 'playtest',
-  /** Misc frames */
-  Misc = 'misc',
+  /** Misc/jank frames (nonmagic, weird full art, etc.) */
+  Jank = 'jank',
 }
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic];
 export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.NewToken];

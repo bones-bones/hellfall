@@ -13,7 +13,7 @@ export enum HCFrameEffect {
   Tombstone = 'tombstone',
   /** A colorshifted frame */
   Colorshifted = 'colorshifted',
-  /** The FNM-style inverted frame */
+  /** Predominantly inverted text */
   Inverted = 'inverted',
   /** The sun and moon transform marks */
   SunMoonDfc = 'sunmoondfc',
@@ -37,8 +37,12 @@ export enum HCFrameEffect {
   Mdfc = 'mdfc',
   /** A custom Showcase frame */
   Showcase = 'showcase',
+  /** A custom Masterpiece frame */
+  Masterpiece = 'masterpiece',
   /** An extended art frame */
   ExtendedArt = 'extendedart',
+  /** Art extends into text box */
+  FullArt = 'fullart',
   /** The cards have a companion frame */
   Companion = 'companion',
   /** The cards have an etched foil treatment */

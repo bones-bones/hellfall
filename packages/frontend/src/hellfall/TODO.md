@@ -145,7 +145,9 @@ Write a script to transform the database
 - add code to infer new layout types
 - fix tag usage in fetchDatabase
 - switch away from using image_status for layout stuff?
-- fix layouts on faces
 - add collections to deal with types, tags, keywords, etc.
 - make layout able to be an array?
 - allow for retro search option that matches both 93 and 97
+- fix layouts on faces
+- go through and add borders, correct face layouts, finishes, frames, and frameEffects
+  - deal with later: Horse-Sized Duck // Duck-sized Horses, Small Snake // Big Gorilla
