@@ -387,8 +387,8 @@ export const SearchControls = () => {
           value={legality}
           onChange={setLegality}
         />
-        {/* </SearchCriteriaSection>
-      <SearchCriteriaSection> */}
+      </SearchCriteriaSection>
+      <SearchCriteriaSection>
         <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />
         <NumberSelector label={'Power'} onChange={setPower} value={power} />
         <NumberSelector label={'Toughness'} onChange={setToughness} value={toughness} />

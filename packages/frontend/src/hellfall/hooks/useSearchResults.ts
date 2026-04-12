@@ -149,7 +149,12 @@ export const useSearchResults = () => {
             ) {
               return false;
             }
-            if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
+            if (
+              !entry.isActualToken &&
+              extraSets.length == 0 &&
+              !includeExtraSets &&
+              extraSetList.includes(entry.set)
+            ) {
               return false;
             }
             break;
