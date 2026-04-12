@@ -33,7 +33,6 @@ Write a script to transform the database
 - ~~make color sort not suck~~
   ~~- add coloridentity function~~
   ~~- Support Piss~~
-  ~~-Support Pickles~~
   ~~- Support B/W hybrid~~
   ~~- Enter key should submit search~~
   ~~- add guide for !~~

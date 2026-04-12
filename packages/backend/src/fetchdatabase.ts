@@ -400,7 +400,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         if (!('layout' in cardObject)) {
           if (cardObject.card_faces.length <= 1) {
             if (tag in singleLayoutTags) {
-              cardObject.layout = multiLayoutTags[tag];
+              cardObject.layout = singleLayoutTags[tag];
             }
           } else {
             if (tag in multiLayoutTags) {
@@ -537,7 +537,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         cardObject.card_faces[0].image_status = 'front';
       }
     }
-
     if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
         ([key, value]) =>

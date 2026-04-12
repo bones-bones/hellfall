@@ -88,7 +88,6 @@ const colorSortValue: Record<HCColor, number> = {
   G: 10_000,
   P: 100_000,
   C: 1_000_000,
-  Pickle: 10_000_000,
   Yellow: 10_000_000,
   Brown: 10_000_000,
   Pink: 10_000_000,

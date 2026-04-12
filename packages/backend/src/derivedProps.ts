@@ -235,7 +235,6 @@ const manaSymbolColorMatching: Record<
   | 'Blue'
   | 'Green'
   | 'Purple'
-  | 'Pickle'
   | 'Yellow'
   | 'Brown'
   | 'Pink'
