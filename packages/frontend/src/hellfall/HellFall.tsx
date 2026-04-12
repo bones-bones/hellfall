@@ -31,7 +31,6 @@ export const HellFall = () => {
   useUrlSync();
 
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const [page, setPage] = useAtom(pageAtom);
 
   const activeCard = cards.find(entry => {
     return entry.id === activeCardFromAtom;
@@ -42,7 +41,9 @@ export const HellFall = () => {
       setActiveCardFromAtom('');
     }
   }, [escape]);
-  const resultSet = useSearchResults();
+  
+  const [page, setPage] = useAtom(pageAtom);
+  const { resultSet, paginationModel } = useSearchResults();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -107,15 +108,7 @@ export const HellFall = () => {
           ))}
         </CardsGrid>
       </Container>
-      <PaginationComponent
-        onChange={val => {
-          setPage(val);
-          containerRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }}
-        initialCurrentPage={page}
-        chunkSize={CHUNK_SIZE}
-        total={resultSet.length}
-      />
+      <PaginationComponent model={paginationModel} />
     </div>
   );
 };

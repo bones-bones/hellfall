@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router';
+import { usePaginationModel, getLastPage } from '@workday/canvas-kit-react/pagination';
 import { HCCard, HCColor, HCSearchColor, HCColors } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { useAtom, useAtomValue } from 'jotai';
@@ -47,6 +48,7 @@ import {
   hybridIdentityMiscReduce,
 } from '../colorComps';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
+import { CHUNK_SIZE } from '../constants.ts';
 
 export const useSearchResults = () => {
   const location = useLocation();
@@ -86,6 +88,17 @@ export const useSearchResults = () => {
   const activeCard = useAtomValue(activeCardAtom);
   // const [shouldPushHistory, setShouldPushHistory] = useAtom(shouldPushHistoryAtom);
   const extraSetList = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'C', 'HCT', 'SFT'];
+
+  const lastPage = getLastPage(CHUNK_SIZE, resultSet.length);
+
+  const paginationModel = usePaginationModel({
+    lastPage,
+    onPageChange: (pageNumber: number) => {
+      if (pageNumber < 1) return;
+      const newPageIndex = (pageNumber - 1) * CHUNK_SIZE;
+      setPageAtom(newPageIndex);
+    },
+  });
 
   useEffect(() => {
     /**
@@ -689,6 +702,12 @@ export const useSearchResults = () => {
 
     const searchToSet = new URLSearchParams();
 
+    const currentPageNumber = Math.floor(page / CHUNK_SIZE) + 1;
+
+    if (paginationModel.state.currentPage !== currentPageNumber) {
+      paginationModel.events.goTo(currentPageNumber);
+    }
+
     if (nameSearch != '') {
       searchToSet.append('name', nameSearch);
     }
@@ -778,6 +797,7 @@ export const useSearchResults = () => {
     }
     if (tempResults.length < page && tempResults.length > 0) {
       searchToSet.append('page', '0');
+      paginationModel.events.goTo(1);
       setPageAtom(0);
     } else if (page > 0) {
       searchToSet.append('page', page.toString());
@@ -850,5 +870,5 @@ export const useSearchResults = () => {
     // location.search,
   ]);
 
-  return resultSet;
+  return { resultSet, paginationModel };
 };

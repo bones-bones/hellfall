@@ -15,7 +15,6 @@ export const HellfallEntry = ({
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
-  debugger;
   return (
     <Container key={id} role="button">
       {onClickTitle ? (
@@ -38,7 +37,7 @@ export const HellfallEntry = ({
                 <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
                   {otherName}
                 </VisuallyHiddenSpan>
-              )
+              );
             })
           ) : (
             <></>
@@ -128,7 +127,7 @@ export const HellfallRelatedEntry = ({
                 <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
                   {otherName}
                 </VisuallyHiddenSpan>
-              )
+              );
             })
           ) : (
             <></>

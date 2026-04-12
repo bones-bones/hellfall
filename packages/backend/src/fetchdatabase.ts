@@ -421,7 +421,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         } else if (tag == 'foil') {
           cardObject.finish = HCFinish.Foil;
         } else if (
-          tag == 'has-flavor-name' &&
+          tag == 'flavor-name' &&
           'tag_notes' in cardObject &&
           tag in cardObject.tag_notes
         ) {
