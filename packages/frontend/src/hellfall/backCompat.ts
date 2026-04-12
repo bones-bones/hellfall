@@ -26,9 +26,15 @@ export const useNameToId = (name: string): string | undefined => {
   return (
     cards.find(card => textEquals(card.id, name))?.id ??
     cards.find(card => textEquals(card.name, name))?.id ??
+    cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
     cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
     cards.find(
       card => 'card_faces' in card && card.card_faces.some(face => textEquals(face.name, name))
+    )?.id ??
+    cards.find(
+      card =>
+        'card_faces' in card &&
+        card.card_faces.some(face => face.flavor_name && textEquals(face.flavor_name, name))
     )?.id
   );
 };

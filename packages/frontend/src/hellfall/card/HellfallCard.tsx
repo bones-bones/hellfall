@@ -12,6 +12,7 @@ import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
   formatDiscordMarkdownInvertedItalics,
+  formatDiscordMarkdownInvertedItalicsInline,
 } from '../markdownFormatter';
 const renderText = (text: string[]) => {
   return text.map(entry => {
@@ -137,6 +138,23 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 {stringToMana(face.mana_cost)}
               </Text>
               <br />
+              {face.flavor_name &&
+                (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
+                  <>
+                    <Text typeLevel="body.medium" key="flavor-name">
+                      {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.name))}
+                    </Text>
+                    <br />
+                  </>
+                ) : (
+                  <>
+                    <ItalicText typeLevel="body.medium" key="flavor-name">
+                      {stringToMana(face.flavor_name)}
+                    </ItalicText>
+                    <br />
+                  </>
+                ))}
+              {'   '}
               {face.color_indicator && (
                 <>
                   <Text typeLevel="body.medium" key="color-indicator">

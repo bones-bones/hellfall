@@ -266,6 +266,10 @@ export namespace HCCardFields.Gameplay {
      */
     name: string;
     /**
+     * The just-for-fun name printed on the card (such as for Godzilla series cards).
+     */
+    flavor_name?: string;
+    /**
      * Colors of mana that this card could produce.
      */
     // produced_mana?: HCManaTypes;
@@ -402,6 +406,10 @@ export namespace HCCardFields.Print {
      * The flavor text, if any.
      */
     flavor_text?: string;
+    /**
+     * The just-for-fun name printed on the card (such as for Godzilla series cards).
+     */
+    flavor_name?: string;
     /**
      * This card's watermark, if any.
      */

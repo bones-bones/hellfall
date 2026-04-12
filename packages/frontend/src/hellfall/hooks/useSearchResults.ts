@@ -217,6 +217,7 @@ export const useSearchResults = () => {
 
         if (
           nameSearch !== '' &&
+          !textSearchIncludes(entry.name, nameSearch) &&
           !textSearchIncludes(
             entry
               .toFaces()
@@ -224,7 +225,13 @@ export const useSearchResults = () => {
               .join(' // '),
             nameSearch
           ) &&
-          !textSearchIncludes(entry.name, nameSearch)
+          !(entry.flavor_name && textSearchIncludes(entry.flavor_name, nameSearch)) &&
+          !(
+            'card_faces' in entry &&
+            entry.card_faces.some(
+              face => face.flavor_name && textSearchIncludes(face.flavor_name, nameSearch)
+            )
+          )
         ) {
           return false;
         }

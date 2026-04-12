@@ -21,6 +21,7 @@ import { CHUNK_SIZE } from './constants.ts';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom.ts';
 import { useUrlSync } from './hooks/useUrlSync.ts';
+import { getOtherNames } from './getOtherNames.ts';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -96,6 +97,7 @@ export const HellFall = () => {
               key={'' + entry.id + '-' + i}
               id={entry.id}
               name={entry.name}
+              otherNames={getOtherNames(entry)}
               url={
                 'card_faces' in entry && entry.layout == 'meld_part' && entry.card_faces[0].image
                   ? entry.card_faces[0].image

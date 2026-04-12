@@ -379,6 +379,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.set == 'HCT') {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
+        merged.flavor_name = value;
         // TODO: store current version and print the diff if there is one
       } else if (merged.isActualToken && tokenIgnoreProps.includes(key) && merged.set != 'SFT') {
       } else if (
