@@ -330,7 +330,6 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
                 tokenIgnoreProps.includes(k) &&
                 merged.set != 'SFT'
               ) {
-                const x = 1;
               } else if (v || (!merged.isActualToken && cardBlankableProps.includes(k))) {
                 (face as any)[k] = v;
               }
@@ -380,7 +379,6 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
         // TODO: store current version and print the diff if there is one
       } else if (merged.isActualToken && tokenIgnoreProps.includes(key) && merged.set != 'SFT') {
-        const x = 1;
       } else if (
         key === 'all_parts' &&
         Array.isArray(value) &&
