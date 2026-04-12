@@ -144,26 +144,43 @@ export const setDerivedProps = (card: HCCard.Any) => {
         : NewFrames.includes(card.frame as HCFrame)
     ) {
       if (
-        face.supertypes?.includes('Legendary') && !face.types?.includes('Planeswalker') && !card.tags?.includes('missing-legendary-frame') &&
+        face.supertypes?.includes('Legendary') &&
+        !face.types?.includes('Planeswalker') &&
+        !card.tags?.includes('missing-legend-frame') &&
         !face.frame_effects?.includes(HCFrameEffect.Legendary)
       ) {
         effects.push(HCFrameEffect.Legendary);
       }
-      if (face.supertypes?.includes('Snow') && !card.tags?.includes('missing-snow-frame') && !face.frame_effects?.includes(HCFrameEffect.Snow)) {
+      if (
+        face.supertypes?.includes('Snow') &&
+        !card.tags?.includes('missing-snow-frame') &&
+        !face.frame_effects?.includes(HCFrameEffect.Snow)
+      ) {
         effects.push(HCFrameEffect.Snow);
       }
       if (
         face.subtypes?.includes('Lesson') &&
+        !card.tags?.includes('missing-lesson-frame') &&
         !face.frame_effects?.includes(HCFrameEffect.Lesson)
       ) {
         effects.push(HCFrameEffect.Lesson);
+      }
+      if (
+        face.subtypes?.includes('Vehicle') &&
+        !card.tags?.includes('missing-vehicle-frame') &&
+        !face.frame_effects?.includes(HCFrameEffect.Vehicle)
+      ) {
+        effects.push(HCFrameEffect.Vehicle);
       }
     }
     if ('card_faces' in card) {
       if (
         face.layout == HCLayout.Front &&
         card.layout == HCLayout.Transform &&
-        !face.frame_effects?.some(effect => TransformFrameEffects.includes(effect as HCFrameEffect)) && !card.tags?.includes('missing-transform-frame')
+        !face.frame_effects?.some(effect =>
+          TransformFrameEffects.includes(effect as HCFrameEffect)
+        ) &&
+        !card.tags?.includes('missing-transform-frame')
       ) {
         effects.push(HCFrameEffect.TransformDfc);
       } else if (
@@ -174,7 +191,10 @@ export const setDerivedProps = (card: HCCard.Any) => {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         face.layout == HCLayout.Transform &&
-        !face.frame_effects?.some(effect => TransformFrameEffects.includes(effect as HCFrameEffect)) && !card.tags?.includes('missing-transform-frame')
+        !face.frame_effects?.some(effect =>
+          TransformFrameEffects.includes(effect as HCFrameEffect)
+        ) &&
+        !card.tags?.includes('missing-transform-frame')
       ) {
         const effect = card.card_faces[0].frame_effects?.find(effect =>
           TransformFrameEffects.includes(effect as HCFrameEffect)

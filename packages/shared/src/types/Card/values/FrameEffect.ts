@@ -51,6 +51,8 @@ export enum HCFrameEffect {
   Snow = 'snow',
   /** The cards have the Lesson frame effect */
   Lesson = 'lesson',
+  /** The cards have the Vehicle frame effect */
+  Vehicle = 'vehicle',
   /** The cards have the Shattered Glass frame effect */
   ShatteredGlass = 'shatteredglass',
   /** The cards have Spree asterisks */
