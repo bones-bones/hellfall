@@ -10,7 +10,7 @@ import {
   NumberSelector,
 } from '../inputs';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
-import cardTypes from '@hellfall/shared/data/tags.json';
+import cardTypes from '@hellfall/shared/data/types.json';
 import creators_data from '@hellfall/shared/data/creators.json';
 import tags_data from '@hellfall/shared/data/tags.json';
 

@@ -35,11 +35,10 @@ export enum HCFrame {
   Hearthstone = 'hearthstone',
   /** Any cards with a lorcana frame. */
   Lorcana = 'lorcana',
-  
 }
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
 export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.NewToken, HCFrame.StampToken];
-export const NonMagicFrames:HCFrame[] = [
+export const NonMagicFrames: HCFrame[] = [
   HCFrame.Pokemon,
   HCFrame.Yugioh,
   HCFrame.LegendsOfRuneterra,
@@ -47,7 +46,7 @@ export const NonMagicFrames:HCFrame[] = [
   HCFrame.Inscryption,
   HCFrame.Hearthstone,
   HCFrame.Lorcana,
-]
+];
 export const CardFrames: HCFrame[] = [
   HCFrame.Original,
   HCFrame.Classic,
@@ -56,7 +55,7 @@ export const CardFrames: HCFrame[] = [
   HCFrame.Future,
   HCFrame.Playtest,
   HCFrame.Jank,
-  ...NonMagicFrames
+  ...NonMagicFrames,
 ];
 export const TokenFrames: HCFrame[] = [
   HCFrame.ClassicToken,
@@ -64,5 +63,5 @@ export const TokenFrames: HCFrame[] = [
   HCFrame.StampToken,
   HCFrame.NewToken,
   HCFrame.Jank,
-  ...NonMagicFrames
+  ...NonMagicFrames,
 ];

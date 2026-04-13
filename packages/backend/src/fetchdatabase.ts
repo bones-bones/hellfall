@@ -229,6 +229,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'masterpiece-frame': HCFrameEffect.Masterpiece,
     'inverted-text': HCFrameEffect.Inverted,
     'sun-moon-transform': HCFrameEffect.SunMoonDfc,
+    'type-transform-marks': HCFrameEffect.TypeDfc,
     'compass-land-transform': HCFrameEffect.CompassLandDfc,
     'origin-pw-transform': HCFrameEffect.OriginPwDfc,
     'moon-eldrazi-transform': HCFrameEffect.MoonEldraziDfc,

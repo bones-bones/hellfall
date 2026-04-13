@@ -41,7 +41,7 @@ export const HellFall = () => {
       setActiveCardFromAtom('');
     }
   }, [escape]);
-  
+
   const [page, setPage] = useAtom(pageAtom);
   const { resultSet, paginationModel } = useSearchResults();
 
@@ -62,7 +62,7 @@ export const HellFall = () => {
   return (
     <div>
       <StyledSidePanel
-        openWidth={windowWidth * 0.535}
+        openWidth={Math.max(windowWidth * 0.535, 350)}
         openDirection={SidePanelOpenDirection.Right}
         open={!!activeCard}
       >
