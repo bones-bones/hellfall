@@ -133,9 +133,9 @@ export const CubeResources = () => {
     },
     {
       name: 'Normal Cube',
-      id: 'HCN',
+      id: 'NRM',
       description: 'How did that get in there?',
-      cards: cards.filter(e => e.set === 'HCN'),
+      cards: cards.filter(e => e.set === 'NRM'),
     },
     {
       name: 'Heckscube',

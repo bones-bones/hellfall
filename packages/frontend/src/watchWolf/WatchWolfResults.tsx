@@ -25,7 +25,7 @@ interface Standing {
 
 export const Watchwolfresults = () => {
   const escape = useKeyPress('Escape');
-  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'HCN');
+  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'NRM');
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = cards.find(e => e.id === activeCardFromAtom);
   useEffect(() => {

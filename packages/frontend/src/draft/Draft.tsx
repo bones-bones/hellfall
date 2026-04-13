@@ -88,7 +88,7 @@ export const Draft = () => {
               { value: 'HC4' },
               { value: 'HC5' },
               { value: 'HC6' },
-              { value: 'HCN' },
+              { value: 'NRM' },
             ]}
           />
         </FormField>
