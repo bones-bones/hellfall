@@ -45,3 +45,5 @@ server/.env
 .yarnrc.yml
 
 .env
+
+build

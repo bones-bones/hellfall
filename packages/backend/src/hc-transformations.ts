@@ -290,8 +290,8 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
     'card_faces' in existingCard == 'card_faces' in newCard
       ? { ...existingCard }
       : 'card_faces' in mergedPrelim
-      ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
-      : { ...(mergedPrelim as HCCard.AnySingleFaced) };
+        ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
+        : { ...(mergedPrelim as HCCard.AnySingleFaced) };
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     setDerivedProps(merged);
   }
@@ -344,7 +344,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         if (
           merged.draft_image_status == HCImageStatus.Missing ||
           merged.draft_image_status ==
-            HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
+          HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
         ) {
           (merged as any)[key] = value;
         }
@@ -369,8 +369,8 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           const existingPart = tokenIsMaker
             ? existingCard.all_parts?.find(e => textEquals(e.id, part.id))
             : existingCard.all_parts?.find(
-                e => textEquals(e.name, part.name) && e.name != e.id.replace(/\d+$/, '')
-              );
+              e => textEquals(e.name, part.name) && e.name != e.id.replace(/\d+$/, '')
+            );
           // const existingPart =
           //   superToken && existingCard.isActualToken
           //     ? superToken
@@ -700,8 +700,8 @@ const main = async () => {
               ? finalCards.find(card => card.id == tokenMaker.id)
               : finalTokens.find(card => textEquals(card.id, tokenMaker.id))
             : finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
+              ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
+              : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
@@ -808,8 +808,8 @@ const main = async () => {
               ? finalCards.find(card => card.id == tokenMaker.id)
               : finalTokens.find(card => textEquals(card.id, tokenMaker.id))
             : finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
+              ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
+              : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
           // const relatedCard = finalCards.find(e =>
           //   tokenMaker.id ? e.id == tokenMaker.id : textEquals(e.name, tokenMaker.name)
           // );
