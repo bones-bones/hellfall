@@ -186,7 +186,10 @@ export const setDerivedProps = (card: HCCard.Any) => {
       } else if (
         face.layout == HCLayout.Front &&
         card.layout == HCLayout.Modal &&
-        !face.frame_effects?.includes(HCFrameEffect.Mdfc)
+        !face.frame_effects?.some(effect =>
+          TransformFrameEffects.includes(effect as HCFrameEffect)
+        ) &&
+        !card.tags?.includes('missing-modal-frame')
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
@@ -202,7 +205,10 @@ export const setDerivedProps = (card: HCCard.Any) => {
         effects.push((effect ? effect : HCFrameEffect.TransformDfc) as HCFrameEffect);
       } else if (
         face.layout == HCLayout.Modal &&
-        !face.frame_effects?.includes(HCFrameEffect.Mdfc)
+        !face.frame_effects?.some(effect =>
+          TransformFrameEffects.includes(effect as HCFrameEffect)
+        ) &&
+        !card.tags?.includes('missing-modal-frame')
       ) {
         effects.push(HCFrameEffect.Mdfc);
       }

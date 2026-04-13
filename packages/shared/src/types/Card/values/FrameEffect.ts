@@ -74,4 +74,5 @@ export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.UpsidedownDfc,
   HCFrameEffect.TypeDfc,
   HCFrameEffect.TransformDfc,
+  HCFrameEffect.Mdfc
 ];
