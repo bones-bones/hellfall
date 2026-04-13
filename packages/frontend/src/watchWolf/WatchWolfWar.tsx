@@ -21,7 +21,7 @@ import { useKeyPress } from '../hooks';
 
 export const Watchwolfwar = () => {
   const escape = useKeyPress('Escape');
-  const cards = useAtomValue(cardsAtom).filter(e => e.isActualToken != true && e.set != 'C');
+  const cards = useAtomValue(cardsAtom).filter(e => e.isActualToken != true && e.set != 'HCN');
   const RandyRandom = useAtomValue(cardsAtom);
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = cards.find(entry => entry.id === activeCardFromAtom);

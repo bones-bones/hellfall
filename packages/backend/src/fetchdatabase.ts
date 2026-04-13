@@ -198,6 +198,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'yellow-border': HCBorderColor.Yellow,
     'rainbow-border': HCBorderColor.Rainbow,
     'blue-border': HCBorderColor.Blue,
+    'camo-border': HCBorderColor.Camo,
   };
 
   const frameTags: Record<string, HCFrame> = {

@@ -18,7 +18,7 @@ export const useNameToId = (name: string): string | undefined => {
   if (name in movedIds) {
     return movedIds[name];
   }
-  const filteredCards = cards.filter(e => e.set != 'C');
+  const filteredCards = cards.filter(e => e.set != 'HCN');
   if (name == 'random' && filteredCards.length > 0) {
     const theId = filteredCards[Math.floor(Math.random() * filteredCards.length)].id;
     return theId;

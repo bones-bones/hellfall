@@ -25,7 +25,7 @@ import { getOtherNames } from './getOtherNames.ts';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
+  const cards = useAtomValue(cardsAtom);
   const escape = useKeyPress('Escape');
 
   useUrlSync();

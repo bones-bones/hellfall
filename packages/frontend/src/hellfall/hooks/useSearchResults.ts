@@ -87,7 +87,7 @@ export const useSearchResults = () => {
   const [page, setPageAtom] = useAtom(pageAtom);
   const activeCard = useAtomValue(activeCardAtom);
   // const [shouldPushHistory, setShouldPushHistory] = useAtom(shouldPushHistoryAtom);
-  const extraSetList = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'C', 'HCT', 'SFT'];
+  const extraSetList = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'HCN', 'HCT', 'SFT'];
 
   const lastPage = getLastPage(CHUNK_SIZE, resultSet.length);
 
