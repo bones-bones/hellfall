@@ -211,6 +211,13 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     '2003-token-frame': HCFrame.ModernToken,
     '2015-token-frame': HCFrame.StampToken,
     '2020-token-frame': HCFrame.NewToken,
+    'pokemon-frame': HCFrame.Pokemon,
+    'yugioh-frame': HCFrame.Yugioh,
+    'legends-of-runeterra-frame': HCFrame.LegendsOfRuneterra,
+    'slay-the-spire-frame': HCFrame.SlayTheSpire,
+    'inscryption-frame': HCFrame.Inscryption,
+    'hearthstone-frame': HCFrame.Hearthstone,
+    'lorcana-frame': HCFrame.Lorcana,
   };
   const frameEffectTags: Record<string, HCFrameEffect> = {
     'miracle-frame': HCFrameEffect.Miracle,

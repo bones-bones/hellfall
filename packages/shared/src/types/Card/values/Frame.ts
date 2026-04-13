@@ -21,9 +21,33 @@ export enum HCFrame {
   StampToken = 'token_2015',
   /** The new token frame, introduced in Magic 2020. */
   NewToken = 'token_2020',
+  /** Any cards with a pokemon frame. */
+  Pokemon = 'pokemon',
+  /** Any cards with a yugioh frame. */
+  Yugioh = 'yugioh',
+  /** Any cards with a legends of runeterra frame. */
+  LegendsOfRuneterra = 'legends_of_runeterra',
+  /** Any cards with a slay the spire frame. */
+  SlayTheSpire = 'slay_the_spire',
+  /** Any cards with an inscryption frame. */
+  Inscryption = 'inscryption',
+  /** Any cards with a hearthstone frame. */
+  Hearthstone = 'hearthstone',
+  /** Any cards with a lorcana frame. */
+  Lorcana = 'lorcana',
+  
 }
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
 export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.NewToken, HCFrame.StampToken];
+export const NonMagicFrames:HCFrame[] = [
+  HCFrame.Pokemon,
+  HCFrame.Yugioh,
+  HCFrame.LegendsOfRuneterra,
+  HCFrame.SlayTheSpire,
+  HCFrame.Inscryption,
+  HCFrame.Hearthstone,
+  HCFrame.Lorcana,
+]
 export const CardFrames: HCFrame[] = [
   HCFrame.Original,
   HCFrame.Classic,
@@ -32,6 +56,7 @@ export const CardFrames: HCFrame[] = [
   HCFrame.Future,
   HCFrame.Playtest,
   HCFrame.Jank,
+  ...NonMagicFrames
 ];
 export const TokenFrames: HCFrame[] = [
   HCFrame.ClassicToken,
@@ -39,4 +64,5 @@ export const TokenFrames: HCFrame[] = [
   HCFrame.StampToken,
   HCFrame.NewToken,
   HCFrame.Jank,
+  ...NonMagicFrames
 ];

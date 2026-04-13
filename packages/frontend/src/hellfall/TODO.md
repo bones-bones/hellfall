@@ -148,5 +148,6 @@ Write a script to transform the database
 - allow for retro search option that matches both 93 and 97
 - fix layouts on faces
 - go through and add borders, correct face layouts, finishes, frames, and frameEffects
-  - deal with later: Horse-Sized Duck // Duck-sized Horses, Small Snake // Big Gorilla, Nebula5
+  - deal with later: Horse-Sized Duck // Duck-sized Horses, Small Snake // Big Gorilla, Nebula5, Opter // Shocker
 - figure out whether/how to make missing frame tags work with specific faces
+- Lamp Oil, Rope, Bombs // Morshu, Beatbox Lord
