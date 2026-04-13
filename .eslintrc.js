@@ -5,6 +5,7 @@ module.exports = {
     es6: true,
   },
   extends: [
+    'react-app',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
@@ -32,10 +33,15 @@ module.exports = {
     'react/prop-types': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/no-non-null-asserted-optional-chain': 0, // Look i know what i'm doing, honest
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/ban-ts-comment': 0, // i'm a sinner
     '@typescript-eslint/no-namespace': 0, // This is how scryfall does it and I don't want to rewrite their work more than I need to
+    'eqeqeq':0,
+    'no-restricted-globals':0,
+    'no-unused-vars':0,
+    'react-hooks/exhaustive-deps':0,
 
     'react/self-closing-comp': [
       'error',

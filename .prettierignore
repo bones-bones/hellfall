@@ -7,7 +7,7 @@ node_modules/
 *.min.js
 
 # Config files
-config/webpack.config.js
+webpack.config.js
 
 # Data files
 src/data/Hellscube-Database.json

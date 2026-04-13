@@ -49,10 +49,22 @@ You want to contribute? Great!
 1. Run `yarn run start`
 2. Write code
 
+## To connect the database
+
+Before you can update the database from the [google sheet](https://docs.google.com/spreadsheets/d/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g), you need an API key.
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/) and sign in.
+2. Click the project dropdown (select a project) in the top left, then create a new project.
+3. Click the burger menu in the top left, then go to APIs & Services, then Library, then search for and enable Sheets.
+4. Go to APIs & Services, then Credentials, then click Create Credentials, choosing API key.
+5. For restrictions, choose Google Sheets API. Then click create. Then click Show key to get the key.
+6. Make a copy of `keys-template.ts`, rename it to `keys.ts`, then paste the key into `sheetsKey`. Now you
+
 ## Updating the database
 
-1. TODO: update the rest
-2. run `yarn run transform-hc` (this extracts the type and creator datasets)
+run `yarn run transform-hc` (this updates all datasets)
+
+To run without overwriting data that can't be stored in the sheet, run `yarn run transform-hc --update`
 
 ## Committing code
 

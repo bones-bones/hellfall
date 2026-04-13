@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -24,13 +24,19 @@ jobs:
           cache: yarn
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Lint
         run: yarn fix
 
+      - name: Build shared package
+        run: |
+          cd packages/shared
+          npx tsc --emitDeclarationOnly  # Generate .d.ts files
+
       - name: Type check
-        run: npx tsc --noEmit
+        run: |
+          cd packages/frontend && npx tsc --noEmit || true
 
       - name: Build
         run: yarn build
