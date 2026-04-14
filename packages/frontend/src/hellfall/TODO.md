@@ -152,3 +152,4 @@ Write a script to transform the database
 - figure out whether/how to make missing frame tags work with specific faces
 - add minimize button next to close button on card pane (turns it into small popup at bottom with only cardname) (also add ability to store multiple like this) (use minus symbol)
 - add button in pane to open card in new tab (use box with arrow)
+- don't trigger new history on activecard change

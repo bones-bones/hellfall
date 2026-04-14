@@ -144,9 +144,9 @@ export const setDerivedProps = (card: HCCard.Any) => {
         : NewFrames.includes(card.frame as HCFrame)
     ) {
       if (
-        face.supertypes?.includes('Legendary') &&
+        ((face.supertypes?.includes('Legendary') &&
         !face.types?.includes('Planeswalker') &&
-        !card.tags?.includes('missing-legend-frame') &&
+        !card.tags?.includes('missing-legend-frame')) || card.tags?.includes('legend-frame')) &&
         !face.frame_effects?.includes(HCFrameEffect.Legendary)
       ) {
         effects.push(HCFrameEffect.Legendary);
