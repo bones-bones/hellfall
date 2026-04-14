@@ -25,7 +25,7 @@ export const textPrep = (text: string): string => {
 
   while (i < len) {
     // Check for escaped characters
-    if (text[i] === '\\' && i + 1 < len && '[*_~]'.includes(text[i + 1])) {
+    if (text[i] === '\\' && i + 1 < len && '[*_~()]'.includes(text[i + 1])) {
       // Remove the backslash and keep the next character as literal
       result += text[i + 1];
       i += 2;
@@ -223,7 +223,9 @@ export const formatParens = (text: string) => {
           .join('\\n');
       }
     })
-    .join('');
+    .join('')
+    .replaceAll('\\(', '(')
+    .replaceAll('\\)', ')');
 };
 
 /**
