@@ -67,6 +67,7 @@ const cardRemovableProps = [
   'has_draft_partners',
   'watermark',
   'frame_effects',
+  'flavor_name',
 ];
 const cardFaceRemovableProps = ['frame'];
 const tokenIgnoreProps = ['colors', 'border_color', 'frame', 'frame_effects', 'finish'];

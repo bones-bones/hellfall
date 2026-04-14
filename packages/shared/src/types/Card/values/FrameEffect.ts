@@ -37,6 +37,8 @@ export enum HCFrameEffect {
   TypeDfc = 'typedfc',
   /** The cards have generic mdfc marks */
   Mdfc = 'mdfc',
+  /** The cards have meld marks */
+  Meld = 'meld',
   /** A custom Showcase frame */
   Showcase = 'showcase',
   /** A custom Masterpiece frame */
@@ -74,5 +76,5 @@ export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.UpsidedownDfc,
   HCFrameEffect.TypeDfc,
   HCFrameEffect.TransformDfc,
-  HCFrameEffect.Mdfc
+  HCFrameEffect.Mdfc,
 ];

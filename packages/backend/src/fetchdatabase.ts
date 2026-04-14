@@ -243,6 +243,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'companion-frame': HCFrameEffect.Companion,
     'etched-frame': HCFrameEffect.Etched,
     'spree-frame': HCFrameEffect.Spree,
+    'meld-frame': HCFrameEffect.Meld,
   };
 
   const theThing = rest.map(entry => {
