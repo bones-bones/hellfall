@@ -24,7 +24,7 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses 
    - OAuth2 → Redirects: add `https://<your-auth-host>/api/discord/callback`.
    - Copy Client ID and Client Secret.
 
-2. **Environment variables** (create `.env` in `server/`, or set in your host’s config)
+2. **Environment variables** (create `.env` in `packages/server/`, or set in your host’s config)
 
    - `DISCORD_CLIENT_ID` – from Discord app
    - `DISCORD_CLIENT_SECRET` – from Discord app
@@ -41,13 +41,13 @@ From the **monorepo root**:
 ```bash
 yarn server:dev      # watch mode
 yarn server:start    # production
-yarn workspace hellfall-server <script>  # any package script
+yarn workspace @hellfall/server <script>  # any package script
 ```
 
-Or from `server/`:
+Or from `packages/server/`:
 
 ```bash
-cd server
+cd packages/server
 cp .env.example .env
 # Edit .env with real values; set FRONTEND_URL to where your React app runs (e.g. http://localhost:3003/hellfall)
 yarn install
@@ -56,14 +56,14 @@ yarn dev
 
 The server listens on port 3003 (or `PORT` if set). In the main app, set `REACT_APP_AUTH_API_URL` to `http://localhost:3003` so “Login with Discord” and `/api/me` hit this server.
 
-For production: run `yarn start` or deploy the `api/` handlers to your preferred serverless platform.
+For production: run `yarn start` or deploy the `src/api/` handlers to your preferred serverless platform.
 
 ## Docker & Google Cloud Run
 
 The server can be run in Docker and deployed to Google Cloud Run (see [google-cloud-setup.example.md](./google-cloud-setup.example.md)). Copy that file to `google-cloud-setup.md` (gitignored) for your own project-specific notes.
 
-- Build image: `docker build -t hellfall-server ./server` (from repo root).
-- GitHub Actions: pushes to `main` that change `server/` trigger a deploy to Cloud Run when `GCP_PROJECT_ID` and `GCP_SA_KEY` are set in repo secrets.
+- Build image: `docker build -t hellfall-server ./packages/server` (from repo root).
+- GitHub Actions: pushes to `main` that change `packages/server/` trigger a deploy to Cloud Run when `GCP_PROJECT_ID` and `GCP_SA_KEY` are set in repo secrets.
 
 ## Frontend usage
 

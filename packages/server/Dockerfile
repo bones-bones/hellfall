@@ -7,8 +7,7 @@ COPY package.json ./
 RUN npm install
 
 COPY tsconfig.json tsconfig.build.json ./
-COPY server.ts ./
-COPY api ./api/
+COPY src ./src/
 
 RUN npm run build:prod
 

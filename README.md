@@ -14,7 +14,7 @@ This page contains random card selectors used for various cubes to make irl draf
 
 Scripts used for extracting and transforming data
 
-## [server](./server/)
+## [server](./packages/server/)
 
 Serverless Discord OAuth login. Deploy to Cloud Run (or similar); set `REACT_APP_AUTH_API_URL` in the main app to show “Login with Discord” in the header.
 

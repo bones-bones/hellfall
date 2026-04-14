@@ -1,13 +1,13 @@
 {
-  "name": "hellfall-server",
+  "name": "@hellfall/server",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "tsc",
     "build:prod": "tsc -p tsconfig.build.json",
-    "dev": "tsx watch server.ts",
-    "start": "tsx server.ts",
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
     "start:prod": "node dist/server.js"
   },
   "dependencies": {

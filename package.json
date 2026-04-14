@@ -7,7 +7,7 @@
     "packages/frontend",
     "packages/backend",
     "packages/shared",
-    "server"
+    "packages/server"
   ],
   "scripts": {
     "start": "yarn workspace @hellfall/frontend start",
@@ -23,8 +23,8 @@
     "add:frontend": "yarn workspace @hellfall/frontend add",
     "add:backend": "yarn workspace @hellfall/backend add",
     "add:shared": "yarn workspace @hellfall/shared add",
-    "server:dev": "yarn workspace hellfall-server dev",
-    "server:start": "yarn workspace hellfall-server start"
+    "server:dev": "yarn workspace @hellfall/server dev",
+    "server:start": "yarn workspace @hellfall/server start"
   },
   "devDependencies": {
     "prettier": "^2.2.1",

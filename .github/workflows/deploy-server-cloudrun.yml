@@ -1,5 +1,5 @@
 # Deploy hellfall server to Google Cloud Run.
-# Trigger: push to main when server/ changes, or manual run.
+# Trigger: push to main when packages/server/ changes, or manual run.
 #
 # Required GitHub Secrets:
 #   GCP_PROJECT_ID  - Google Cloud project ID
@@ -15,7 +15,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'server/**'
+      - 'packages/server/**'
   workflow_dispatch:
 
 env:
@@ -48,7 +48,7 @@ jobs:
           gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev --quiet
 
       - name: Build Docker image
-        working-directory: server
+        working-directory: packages/server
         run: |
           docker build -t ${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
           docker tag ${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \

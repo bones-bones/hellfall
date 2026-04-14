@@ -89,7 +89,7 @@ gcloud run deploy hellfall-server \
 Or use Cloud Build from repo root:
 
 ```bash
-gcloud builds submit --tag REGION-docker.pkg.dev/PROJECT_ID/hellfall-server/hellfall-server:latest ./server
+gcloud builds submit --tag REGION-docker.pkg.dev/PROJECT_ID/hellfall-server/hellfall-server:latest ./packages/server
 gcloud run deploy hellfall-server --image REGION-docker.pkg.dev/PROJECT_ID/hellfall-server/hellfall-server:latest --region REGION --platform managed --allow-unauthenticated
 ```
 
