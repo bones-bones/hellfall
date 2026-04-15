@@ -2,13 +2,8 @@ import { useEffect, useRef, useState, useMemo, startTransition } from 'react';
 import { HellfallEntry } from './HellfallEntry.tsx';
 import { xIcon } from '@workday/canvas-system-icons-web';
 
-import {
-  styled,
-  SidePanel,
-  SidePanelOpenDirection,
-  Card,
-  ToolbarIconButton,
-} from '@workday/canvas-kit-react';
+import { styled, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
+import { SidePanel, useSidePanel } from '@workday/canvas-kit-preview-react/side-panel';
 import { PaginationComponent } from './inputs';
 
 import { HellfallCard } from './card/HellfallCard.tsx';
@@ -59,23 +54,27 @@ export const HellFall = () => {
     return cardWidth * cardNum + 5;
   }, [windowWidth]);
 
+  const { panelProps } = useSidePanel({
+    initialExpanded: !!activeCard,
+  });
+
   return (
     <div>
       <StyledSidePanel
-        openWidth={Math.max(windowWidth * 0.535, 350)}
-        openDirection={SidePanelOpenDirection.Right}
-        open={!!activeCard}
+        {...panelProps}
+        expanded={!!activeCard}
+        origin="right"
+        expandedWidth={Math.max(windowWidth * 0.535, 350)}
+        collapsedWidth={0}
       >
-        {activeCard && (
-          <Card>
-            <Card.Body padding={'zero'}>
-              <SPContainer>
-                <ToolbarIconButton icon={xIcon} onClick={() => setActiveCardFromAtom('')} />
-                {activeCard && <HellfallCard data={activeCard} />}
-              </SPContainer>
-            </Card.Body>
-          </Card>
-        )}
+        <Card>
+          <Card.Body padding={'zero'}>
+            <SPContainer>
+              <ToolbarIconButton icon={xIcon} onClick={() => setActiveCardFromAtom('')} />
+              {activeCard && <HellfallCard data={activeCard} />}
+            </SPContainer>
+          </Card.Body>
+        </Card>
       </StyledSidePanel>
       <br />
       <SearchControls />
@@ -136,7 +135,11 @@ const StyledSidePanel = styled(SidePanel)({
   height: '100%',
   position: 'fixed',
   backgroundColor: 'transparent',
-  top: '10px',
+  right: 0,
+  top: '35px',
+  '& > div': {
+    paddingRight: '8px !important',
+  },
 });
 const SPContainer = styled('div')({
   overflowY: 'scroll',
