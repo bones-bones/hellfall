@@ -273,7 +273,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
                 cardObject.card_faces[face + index][key] = value;
               }
               if (key == 'image') {
-                cardObject.card_faces[face + index].image_status = HCImageStatus.MedRes;
+                cardObject.card_faces[face + index].image_status = HCImageStatus.HighRes;
               }
             });
           } else {
@@ -297,7 +297,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
               cardObject.card_faces[face][key] = entry[i];
             }
             if (key == 'image') {
-              cardObject.card_faces[face].image_status = HCImageStatus.MedRes;
+              cardObject.card_faces[face].image_status = HCImageStatus.HighRes;
             }
           }
         } else {
@@ -519,6 +519,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           )
         ) {
           face.image_status = HCImageStatus.Inset;
+        } else if (cardObject.tags?.includes('prepare')) {
+          face.image_status = HCImageStatus.Prepare;
         } else {
           face.image_status = HCImageStatus.Split;
         }

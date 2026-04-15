@@ -118,7 +118,6 @@ Write a script to transform the database
 - prevent search entries from filling history for text
 - make popup window resizeable
 - add real-card-reference tags
-- fix uno +2/+4 names
 - dynamically reorder related in HellfallCard to minimize empty space while maximizing image width
 - implement smart quotes (autoconvert normal quotes to left/right quotes on page)
 - add button to expose card json? and copy/pastable card details?

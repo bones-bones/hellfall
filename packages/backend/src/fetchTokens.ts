@@ -83,6 +83,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'Plagiarism by doomclaw9',
     'Carrion Feeder from MH8',
   ];
+  const hardTokenIds: string[] = ['Clue© 19861', '+21', '+41'];
 
   const tagList = [
     'pokemon',
@@ -130,7 +131,9 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       if (entry[i]) {
         if (keys[i] == 'name') {
           tokenObject.id = entry[i];
-          const name: string = entry[i].replace(/\d+$/, '');
+          const name = hardTokenIds.includes(entry[i])
+            ? entry[i].slice(0, -1)
+            : entry[i].replace(/\d+$/, '');
           tokenObject.name = name;
           tokenObject.subtypes = name.split(' ');
         } else if (keys[i] == 'type') {
