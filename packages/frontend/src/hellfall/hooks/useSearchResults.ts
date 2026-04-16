@@ -227,7 +227,24 @@ export const useSearchResults = () => {
         if (
           tags.length > 0 &&
           !tags.every(tag => {
-            return entry.tags?.includes(tag);
+            if (tag.startsWith('!')) {
+              return !entry.tags?.includes(tag.slice(1));
+            } else {
+              return entry.tags?.includes(tag);
+            }
+          })
+        ) {
+          return false;
+        }
+        
+        if (
+          creators.length > 0 &&
+          !creators.every(creator => {
+            if (creator.startsWith('!')) {
+              return !entry.creators?.includes(creator.slice(1));
+            } else {
+              return entry.creators?.includes(creator);
+            }
           })
         ) {
           return false;
@@ -309,9 +326,6 @@ export const useSearchResults = () => {
           if (legality.includes('hellsmanderLegal') && entry.legalities.commander != 'legal') {
             return false;
           }
-        }
-        if (creators.length > 0 && !creators.some(creator => entry.creators.includes(creator))) {
-          return false;
         }
         if (
           typeSearch.length > 0 &&
