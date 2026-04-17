@@ -236,7 +236,7 @@ export const useSearchResults = () => {
         ) {
           return false;
         }
-        
+
         if (
           creators.length > 0 &&
           !creators.every(creator => {

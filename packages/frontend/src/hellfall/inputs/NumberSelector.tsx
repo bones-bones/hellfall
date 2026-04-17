@@ -20,6 +20,8 @@ export const toNumber = (numStr: string | undefined) => {
     '2.23E-308': 2.23e-308,
     '5/1': 1,
     '+2/+2': 2,
+    '0[+1]{+2}': 3,
+    '0[+1]{+7}': 8,
   };
   if (!numStr) {
     return undefined;
