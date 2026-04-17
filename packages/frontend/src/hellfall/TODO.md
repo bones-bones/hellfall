@@ -155,5 +155,5 @@ Write a script to transform the database
 - add ability to search for individual misc colors?
 - figure out if pip shadows have correct angle (should they be slightly more downward than leftward?)
 - fix the purple guy side 2 button on hellfall
-- fully update cockatrice code
+- fully update cockatrice code (I can also use the same logic as for merging to handle image rotation displays (for flip/aftermath))
 - fully update draftmancer code
