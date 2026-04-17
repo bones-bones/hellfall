@@ -16,17 +16,12 @@ const isEscaped = (source: string, index: number): boolean => {
 // Create rules with escaped character support
 const createRules = (invertedItalics: boolean = false) => {
   const baseRules = {
-    // Strong/bold formatting (**text** or __text__)
+    // Strong/bold formatting (**text**)
     strong: {
       order: 1,
       match: (source: string) => {
         // Check for **
-        let match = /^\*\*([\s\S]+?)\*\*(?!\*)/.exec(source);
-        if (match && !isEscaped(source, match.index)) {
-          return match;
-        }
-        // Check for __
-        match = /^__([\s\S]+?)__(?!_)/.exec(source);
+        const match = /^\*\*([\s\S]+?)\*\*(?!\*)/.exec(source);
         if (match && !isEscaped(source, match.index)) {
           return match;
         }
@@ -39,6 +34,27 @@ const createRules = (invertedItalics: boolean = false) => {
       },
       react: (node: any, output: any, state: any) => {
         return <strong key={state.key}>{output(node.content, state)}</strong>;
+      },
+    },
+
+    // Underline formatting (__text__)
+    under: {
+      order: 1,
+      match: (source: string) => {
+        // Check for __
+        const match = /^__([\s\S]+?)__(?!_)/.exec(source);
+        if (match && !isEscaped(source, match.index)) {
+          return match;
+        }
+        return null;
+      },
+      parse: (capture: RegExpExecArray, parse: any, state: any) => {
+        return {
+          content: parse(capture[1], state),
+        };
+      },
+      react: (node: any, output: any, state: any) => {
+        return <u key={state.key}>{output(node.content, state)}</u>;
       },
     },
 
@@ -58,7 +74,14 @@ const createRules = (invertedItalics: boolean = false) => {
         };
       },
       react: (node: any, output: any, state: any) => {
-        return <del key={state.key}>{output(node.content, state)}</del>;
+        return (
+          <del
+            key={state.key}
+            style={{ textDecorationThickness: '0.1em', textDecorationSkipInk: 'none' }}
+          >
+            {output(node.content, state)}
+          </del>
+        );
       },
     },
 

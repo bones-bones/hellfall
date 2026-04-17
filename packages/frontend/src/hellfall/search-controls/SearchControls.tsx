@@ -10,7 +10,7 @@ import {
   NumberSelector,
 } from '../inputs';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
-import cardTypes from '@hellfall/shared/data/tags.json';
+import cardTypes from '@hellfall/shared/data/types.json';
 import creators_data from '@hellfall/shared/data/creators.json';
 import tags_data from '@hellfall/shared/data/tags.json';
 
@@ -337,7 +337,7 @@ export const SearchControls = () => {
                 <BoxlessCheckboxGroup
                   value={extraSets}
                   label={'Extra Sets'}
-                  values={['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'C', 'HCT', 'SFT']}
+                  values={['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'NRM', 'HCT', 'SFT']}
                   onChange={setExtraSets}
                 />
               </StyledComponentHolder>
@@ -387,8 +387,8 @@ export const SearchControls = () => {
           value={legality}
           onChange={setLegality}
         />
-        {/* </SearchCriteriaSection>
-      <SearchCriteriaSection> */}
+      </SearchCriteriaSection>
+      <SearchCriteriaSection>
         <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />
         <NumberSelector label={'Power'} onChange={setPower} value={power} />
         <NumberSelector label={'Toughness'} onChange={setToughness} value={toughness} />

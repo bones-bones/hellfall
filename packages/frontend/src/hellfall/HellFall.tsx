@@ -2,13 +2,8 @@ import { useEffect, useRef, useState, useMemo, startTransition } from 'react';
 import { HellfallEntry } from './HellfallEntry.tsx';
 import { xIcon } from '@workday/canvas-system-icons-web';
 
-import {
-  styled,
-  SidePanel,
-  SidePanelOpenDirection,
-  Card,
-  ToolbarIconButton,
-} from '@workday/canvas-kit-react';
+import { styled, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
+import { SidePanel, useSidePanel } from '@workday/canvas-kit-preview-react/side-panel';
 import { PaginationComponent } from './inputs';
 
 import { HellfallCard } from './card/HellfallCard.tsx';
@@ -21,16 +16,16 @@ import { CHUNK_SIZE } from './constants.ts';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom.ts';
 import { useUrlSync } from './hooks/useUrlSync.ts';
+import { getOtherNames } from './getOtherNames.ts';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'C');
+  const cards = useAtomValue(cardsAtom);
   const escape = useKeyPress('Escape');
 
   useUrlSync();
 
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const [page, setPage] = useAtom(pageAtom);
 
   const activeCard = cards.find(entry => {
     return entry.id === activeCardFromAtom;
@@ -41,7 +36,9 @@ export const HellFall = () => {
       setActiveCardFromAtom('');
     }
   }, [escape]);
-  const resultSet = useSearchResults();
+
+  const [page, setPage] = useAtom(pageAtom);
+  const { resultSet, paginationModel } = useSearchResults();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -57,23 +54,27 @@ export const HellFall = () => {
     return cardWidth * cardNum + 5;
   }, [windowWidth]);
 
+  const { panelProps } = useSidePanel({
+    initialExpanded: !!activeCard,
+  });
+
   return (
     <div>
       <StyledSidePanel
-        openWidth={windowWidth * 0.535}
-        openDirection={SidePanelOpenDirection.Right}
-        open={!!activeCard}
+        {...panelProps}
+        expanded={!!activeCard}
+        origin="right"
+        expandedWidth={Math.max(windowWidth * 0.535, 350)}
+        collapsedWidth={0}
       >
-        {activeCard && (
-          <Card>
-            <Card.Body padding={'zero'}>
-              <SPContainer>
-                <ToolbarIconButton icon={xIcon} onClick={() => setActiveCardFromAtom('')} />
-                {activeCard && <HellfallCard data={activeCard} />}
-              </SPContainer>
-            </Card.Body>
-          </Card>
-        )}
+        <Card>
+          <Card.Body padding={'zero'}>
+            <SPContainer>
+              <ToolbarIconButton icon={xIcon} onClick={() => setActiveCardFromAtom('')} />
+              {activeCard && <HellfallCard data={activeCard} />}
+            </SPContainer>
+          </Card.Body>
+        </Card>
       </StyledSidePanel>
       <br />
       <SearchControls />
@@ -96,6 +97,7 @@ export const HellFall = () => {
               key={'' + entry.id + '-' + i}
               id={entry.id}
               name={entry.name}
+              otherNames={getOtherNames(entry)}
               url={
                 'card_faces' in entry && entry.layout == 'meld_part' && entry.card_faces[0].image
                   ? entry.card_faces[0].image
@@ -105,15 +107,7 @@ export const HellFall = () => {
           ))}
         </CardsGrid>
       </Container>
-      <PaginationComponent
-        onChange={val => {
-          setPage(val);
-          containerRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }}
-        initialCurrentPage={page}
-        chunkSize={CHUNK_SIZE}
-        total={resultSet.length}
-      />
+      <PaginationComponent model={paginationModel} />
     </div>
   );
 };
@@ -141,7 +135,11 @@ const StyledSidePanel = styled(SidePanel)({
   height: '100%',
   position: 'fixed',
   backgroundColor: 'transparent',
-  top: '10px',
+  right: 0,
+  top: '35px',
+  '& > div': {
+    paddingRight: '8px !important',
+  },
 });
 const SPContainer = styled('div')({
   overflowY: 'scroll',

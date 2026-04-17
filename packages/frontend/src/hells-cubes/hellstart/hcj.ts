@@ -15,6 +15,7 @@ import {
   HCImageStatus,
   HCObject,
 } from '@hellfall/shared/types';
+
 import { withCardMethods } from '../getHc5.ts';
 
 /** Convert pack front metadata into an HCCard.Any with toFaces() for use in getDraftMancerCard etc. */
@@ -44,6 +45,9 @@ export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
     color_identity_hybrid: [],
     draft_image_status: HCImageStatus.Inapplicable,
     variation: false,
+    border_color: 'black',
+    frame: '2015',
+    finish: 'nonfoil',
   };
   return withCardMethods(card as HCCard.Normal);
 }

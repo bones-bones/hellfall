@@ -4,24 +4,45 @@ export const HellfallEntry = ({
   url,
   id,
   name,
+  otherNames,
   onClick,
   onClickTitle,
 }: {
   url: string;
   id: string;
   name: string;
+  otherNames?: string[];
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   return (
     <Container key={id} role="button">
       {onClickTitle ? (
-        <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}>
-          {name}
+        <>
+          <span
+            key={id}
+            onClick={onClickTitle}
+            style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}
+          >
+            {name}
+          </span>
           <br />
-        </span>
+        </>
       ) : (
-        <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+        <>
+          <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+          {otherNames ? (
+            otherNames.map((otherName, i) => {
+              return (
+                <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
+                  {otherName}
+                </VisuallyHiddenSpan>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </>
       )}
       <StyledImage
         key={id}
@@ -73,24 +94,45 @@ export const HellfallRelatedEntry = ({
   url,
   id,
   name,
+  otherNames,
   onClick,
   onClickTitle,
 }: {
   url: string;
   id: string;
   name: string;
+  otherNames?: string[];
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   return (
     <RelatedContainer key={id} role="button">
       {onClickTitle ? (
-        <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}>
-          {name}
+        <>
+          <span
+            key={id}
+            onClick={onClickTitle}
+            style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}
+          >
+            {name}
+          </span>
           <br />
-        </span>
+        </>
       ) : (
-        <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+        <>
+          <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+          {otherNames ? (
+            otherNames.map((otherName, i) => {
+              return (
+                <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
+                  {otherName}
+                </VisuallyHiddenSpan>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </>
       )}
       <RelatedStyledImage
         key={id}

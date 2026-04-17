@@ -1,4 +1,4 @@
-export enum ScryfallFrameEffect {
+export enum HCFrameEffect {
   /** The cards have a legendary crown */
   Legendary = 'legendary',
   /** The miracle frame effect */
@@ -13,7 +13,7 @@ export enum ScryfallFrameEffect {
   Tombstone = 'tombstone',
   /** A colorshifted frame */
   Colorshifted = 'colorshifted',
-  /** The FNM-style inverted frame */
+  /** Predominantly inverted text */
   Inverted = 'inverted',
   /** The sun and moon transform marks */
   SunMoonDfc = 'sunmoondfc',
@@ -25,10 +25,28 @@ export enum ScryfallFrameEffect {
   MoonEldraziDfc = 'mooneldrazidfc',
   /** The waxing and waning crescent moon transform marks */
   WaxingAndWaningMoonDfc = 'waxingandwaningmoondfc',
+  /** The cards have More Than Meets the Eye™ marks */
+  ConvertDfc = 'convertdfc',
+  /** The cards have fan transforming marks */
+  FanDfc = 'fandfc',
+  /** The cards have the Upside Down transforming marks */
+  UpsidedownDfc = 'upsidedowndfc',
+  /** The cards have generic transforming marks */
+  TransformDfc = 'transformdfc',
+  /** The cards have type transforming marks */
+  TypeDfc = 'typedfc',
+  /** The cards have generic mdfc marks */
+  Mdfc = 'mdfc',
+  /** The cards have meld marks */
+  Meld = 'meld',
   /** A custom Showcase frame */
   Showcase = 'showcase',
+  /** A custom Masterpiece frame */
+  Masterpiece = 'masterpiece',
   /** An extended art frame */
   ExtendedArt = 'extendedart',
+  /** Art extends into text box */
+  FullArt = 'fullart',
   /** The cards have a companion frame */
   Companion = 'companion',
   /** The cards have an etched foil treatment */
@@ -37,18 +55,26 @@ export enum ScryfallFrameEffect {
   Snow = 'snow',
   /** The cards have the Lesson frame effect */
   Lesson = 'lesson',
+  /** The cards have the Vehicle frame effect */
+  Vehicle = 'vehicle',
   /** The cards have the Shattered Glass frame effect */
   ShatteredGlass = 'shatteredglass',
-  /** The cards have More Than Meets the Eye™ marks */
-  ConvertDfc = 'convertdfc',
-  /** The cards have fan transforming marks */
-  FanDfc = 'fandfc',
-  /** The cards have the Upside Down transforming marks */
-  UpsidedownDfc = 'upsidedowndfc',
   /** The cards have Spree asterisks */
   Spree = 'spree',
-  /** The cards have generic transforming marks */
-  TransformDfc = 'transformdfc',
-  /** The cards have generic mdfc marks */
-  Mdfc = 'mdfc',
+  /** The cards have a vertical art box (e.g. sagas, cases, etc.) */
+  VerticalArt = 'verticalart',
+  /** The cards have no art box */
+  NoArt = 'noart',
 }
+export const TransformFrameEffects: HCFrameEffect[] = [
+  HCFrameEffect.SunMoonDfc,
+  HCFrameEffect.CompassLandDfc,
+  HCFrameEffect.OriginPwDfc,
+  HCFrameEffect.MoonEldraziDfc,
+  HCFrameEffect.WaxingAndWaningMoonDfc,
+  HCFrameEffect.ConvertDfc,
+  HCFrameEffect.UpsidedownDfc,
+  HCFrameEffect.TypeDfc,
+  HCFrameEffect.TransformDfc,
+  HCFrameEffect.Mdfc,
+];

@@ -9,10 +9,13 @@ import {
   HCObject,
   HCLegality,
   HCLegalitiesField,
+  HCLayoutGroup,
+  HCBorderColor,
+  HCFrame,
 } from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 
-export const fetchTokens = async () => {
+export const fetchTokens = async (NO_SCRYFALL: boolean) => {
   const requestedData = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Tokens+Database+(Unapproved)?alt=json&key=${sheetsKey}`
   );
@@ -67,6 +70,8 @@ export const fetchTokens = async () => {
     isActualToken: true,
     type_line: '',
     layout: HCLayout.Token,
+    border_color: HCBorderColor.Black,
+    frame: HCFrame.NewToken,
   };
   const hardCardNames: string[] = [
     'Crypt of u/Em9500',
@@ -78,6 +83,7 @@ export const fetchTokens = async () => {
     'Plagiarism by doomclaw9',
     'Carrion Feeder from MH8',
   ];
+  const hardTokenIds: string[] = ['Clue© 19861', '+21', '+41'];
 
   const tagList = [
     'pokemon',
@@ -112,13 +118,22 @@ export const fetchTokens = async () => {
     'gaslighting',
   ];
 
+  // const multiLayoutToFaceLayout:Record<HCLayoutGroup.MultiFacedType & HCLayoutGroup.TokenLayoutType, HCLayoutGroup.FaceLayoutType>= {
+  //   'multi_reminder':HCLayout.Reminder,
+  //   'multi_not_magic':HCLayout.NotMagic,
+  //   'multi_token':HCLayout.Token,
+  //   'real_card_multi_token':HCLayout.RealCardToken
+  // }
+
   const HCTokens = rest.map(entry => {
     const tokenObject: Record<string, any> = {};
     for (let i = 0; i < keys.length; i++) {
       if (entry[i]) {
         if (keys[i] == 'name') {
           tokenObject.id = entry[i];
-          const name: string = entry[i].replace(/\d+$/, '');
+          const name = hardTokenIds.includes(entry[i])
+            ? entry[i].slice(0, -1)
+            : entry[i].replace(/\d+$/, '');
           tokenObject.name = name;
           tokenObject.subtypes = name.split(' ');
         } else if (keys[i] == 'type') {
@@ -201,6 +216,10 @@ export const fetchTokens = async () => {
       });
     return tokenObject as HCCard.Any;
   });
-  const ScryfallTokens = await fetchScryfallTokens();
-  return HCTokens.concat(ScryfallTokens);
+  if (NO_SCRYFALL) {
+    return HCTokens;
+  } else {
+    const ScryfallTokens = await fetchScryfallTokens();
+    return HCTokens.concat(ScryfallTokens);
+  }
 };

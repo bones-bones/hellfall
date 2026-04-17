@@ -2,26 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug transform-hc (normal)",
-      "type": "node",
-      "request": "launch",
-      "runtimeArgs": ["--import=tsx"],
-      "args": ["${workspaceFolder}/data-transformers/src/hc-transformations.ts"],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "name": "Debug transform-hc (with --update)",
-      "type": "node",
-      "request": "launch",
-      "runtimeArgs": ["--import=tsx"],
-      "args": ["${workspaceFolder}/data-transformers/src/hc-transformations.ts", "--update"],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
       "name": "Debug npm script: transform-hc (normal)",
       "type": "node",
       "request": "launch",
@@ -37,6 +17,16 @@
       "request": "launch",
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["transform-hc", "--update"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug npm script: transform-hc (with --update and --noscryfall)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["transform-hc", "--update", "--noscryfall"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"

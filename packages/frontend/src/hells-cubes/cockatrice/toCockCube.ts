@@ -63,19 +63,28 @@ export const toCockCube = ({
     }
   });
 
-  tokens.data.forEach(tokenEntry => {
+  (tokens.data as HCCard.Any[]).forEach(tokenEntry => {
     const tokenCardEntry = xmlDoc.createElement('card');
     const name = xmlDoc.createElement('name');
     name.textContent = tokenEntry.name.replace(/\*\d+$/, '');
 
     const setElement = xmlDoc.createElement('set');
-    setElement.setAttribute('picURL', tokenEntry.image);
+    setElement.setAttribute(
+      'picURL',
+      ('card_faces' in tokenEntry && tokenEntry.card_faces[0].image
+        ? tokenEntry.card_faces[0].image
+        : tokenEntry.image) || ''
+    );
 
     const type = xmlDoc.createElement('type');
-    type.textContent = 'Token ' + tokenEntry.types?.join(' ');
+    type.textContent =
+      'Token ' +
+      ('card_faces' in tokenEntry ? tokenEntry.card_faces[0] : tokenEntry).types?.join(' ');
 
     const tablerow = xmlDoc.createElement('tablerow');
-    tablerow.textContent = getTableRowForToken(tokenEntry.types?.join(' ') || '').toString();
+    tablerow.textContent = getTableRowForToken(
+      ('card_faces' in tokenEntry ? tokenEntry.card_faces[0] : tokenEntry).types?.join(' ') || ''
+    ).toString();
     const prop = xmlDoc.createElement('prop');
     recursiveAdoption(tokenCardEntry, [name, prop, [type], setElement, tablerow]);
 

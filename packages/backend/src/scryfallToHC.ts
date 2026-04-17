@@ -15,6 +15,7 @@ import {
   HCColor,
   HCColors,
   HCImageStatus,
+  HCFrame,
 } from '@hellfall/shared/types';
 import { setDerivedProps } from './derivedProps.ts';
 export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): HCCard.Any => {
@@ -25,18 +26,20 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     transform: HCLayout.Transform,
     modal_dfc: HCLayout.Modal,
     meld: HCLayout.MeldPart,
-    leveler: HCLayout.Normal,
-    class: HCLayout.Normal,
-    saga: HCLayout.Normal,
+    leveler: HCLayout.Leveler,
+    class: HCLayout.Class,
+    saga: HCLayout.Saga,
+    // @ts-ignore
+    case: HCLayout.Case,
     adventure: HCLayout.Inset,
     // @ts-ignore
-    prepare: HCLayout.Inset,
-    mutate: HCLayout.Normal,
-    prototype: HCLayout.Normal,
-    battle: HCLayout.Normal,
-    planar: HCLayout.Normal,
-    scheme: HCLayout.Normal,
-    vanguard: HCLayout.Normal,
+    prepare: HCLayout.Prepare,
+    mutate: HCLayout.Mutate,
+    prototype: HCLayout.Prototype,
+    battle: HCLayout.Battle,
+    planar: HCLayout.Planar,
+    scheme: HCLayout.Scheme,
+    vanguard: HCLayout.Vanguard,
     token: HCLayout.Token,
     double_faced_token: HCLayout.MultiToken,
     emblem: HCLayout.Emblem,
@@ -55,6 +58,8 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     leveler: HCLayout.RealCardToken,
     class: HCLayout.RealCardToken,
     saga: HCLayout.RealCardToken,
+    // @ts-ignore
+    case: HCLayout.RealCardToken,
     adventure: HCLayout.RealCardMultiToken,
     // @ts-ignore
     prepare: HCLayout.RealCardMultiToken,
@@ -94,6 +99,8 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'watermark',
     'attraction_lights',
     'type_line',
+    'border_color',
+    'frame',
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
@@ -121,6 +128,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     colors: [HCColor.Colorless] as HCColors,
     oracle_text: '',
     image_status: HCImageStatus.Split,
+    layout: HCLayout.Token,
   };
   const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
   const subKeywords: Record<string, string> = {
@@ -248,6 +256,14 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       cardObject[key] = fixPhyrexianMana(value);
     } else if (italicsReplaceKeys.includes(key)) {
       cardObject[key] = fixPhyrexianMana(value.replaceAll('\n', '\\n'));
+    } else if (key == 'frame') {
+      // if it was released after June 2019, use the new token frame
+      const isNewToken =
+        value == '2015' &&
+        card.set_type == 'token' &&
+        (card.released_at.slice(0, 3) != '201' ||
+          (card.released_at.slice(0, 4) == '2019' && parseInt(card.released_at.slice(5, 7)) > 6));
+      cardObject.frame = (card.set_type == 'token' ? 'token_' : '') + (isNewToken ? '2020' : value);
     } else if (sameKeys.includes(key)) {
       cardObject[key] = value;
     }
@@ -284,6 +300,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       }
     }
   });
+  cardObject.finish = card.finishes.includes('nonfoil') ? 'nonfoil' : 'foil';
   cardObject.id = card.id; // make sure to give correct ID using name for tokens
   if (card.layout == 'token' && card.type_line == 'Creature') {
     cardObject.layout = HCLayout.Reminder;

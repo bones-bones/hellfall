@@ -6,7 +6,6 @@ export enum HCColor {
   Green = 'G',
   Purple = 'P',
   Colorless = 'C',
-  Pickle = 'Pickle',
   Yellow = 'Yellow',
   Brown = 'Brown',
   Pink = 'Pink',
@@ -29,7 +28,6 @@ enum HCCoreColor {
 }
 
 enum HCMiscColor {
-  Pickle = 'Pickle',
   Yellow = 'Yellow',
   Brown = 'Brown',
   Pink = 'Pink',
@@ -66,4 +64,4 @@ export const isCoreColor = (color: HCColor): boolean => {
 export const isMiscColor = (color: HCColor): boolean => {
   return Object.values(HCMiscColor).includes(color as unknown as HCMiscColor);
 };
-// export const allMiscColors = ['Pickle', 'Yellow', 'Brown', 'Pink', 'Teal', 'Orange', 'TEMU', 'Cyan', 'Gold', 'Beige', 'Grey',] //Object.values(HCMiscColor); /**as unknown as HCColor[] */
+// export const allMiscColors = ['Yellow', 'Brown', 'Pink', 'Teal', 'Orange', 'TEMU', 'Cyan', 'Gold', 'Beige', 'Grey',] //Object.values(HCMiscColor); /**as unknown as HCColor[] */

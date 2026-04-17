@@ -38,10 +38,10 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/ban-ts-comment': 0, // i'm a sinner
     '@typescript-eslint/no-namespace': 0, // This is how scryfall does it and I don't want to rewrite their work more than I need to
-    'eqeqeq':0,
-    'no-restricted-globals':0,
-    'no-unused-vars':0,
-    'react-hooks/exhaustive-deps':0,
+    eqeqeq: 0,
+    'no-restricted-globals': 0,
+    'no-unused-vars': 0,
+    'react-hooks/exhaustive-deps': 0,
 
     'react/self-closing-comp': [
       'error',

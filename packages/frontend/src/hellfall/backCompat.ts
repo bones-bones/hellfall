@@ -18,7 +18,7 @@ export const useNameToId = (name: string): string | undefined => {
   if (name in movedIds) {
     return movedIds[name];
   }
-  const filteredCards = cards.filter(e => e.set != 'C');
+  const filteredCards = cards.filter(e => e.set != 'NRM');
   if (name == 'random' && filteredCards.length > 0) {
     const theId = filteredCards[Math.floor(Math.random() * filteredCards.length)].id;
     return theId;
@@ -26,9 +26,15 @@ export const useNameToId = (name: string): string | undefined => {
   return (
     cards.find(card => textEquals(card.id, name))?.id ??
     cards.find(card => textEquals(card.name, name))?.id ??
+    cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
     cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
     cards.find(
       card => 'card_faces' in card && card.card_faces.some(face => textEquals(face.name, name))
+    )?.id ??
+    cards.find(
+      card =>
+        'card_faces' in card &&
+        card.card_faces.some(face => face.flavor_name && textEquals(face.flavor_name, name))
     )?.id
   );
 };

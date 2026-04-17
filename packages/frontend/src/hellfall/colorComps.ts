@@ -2,7 +2,6 @@ import { colors } from '@workday/canvas-kit-react';
 import { HCColors } from '@hellfall/shared/types';
 const MISC_BULLSHIT = 'Misc bullshit';
 const miscColors = [
-  'Pickle',
   'Yellow',
   'Brown',
   'Pink',

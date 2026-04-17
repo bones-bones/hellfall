@@ -33,7 +33,6 @@ Write a script to transform the database
 - ~~make color sort not suck~~
   ~~- add coloridentity function~~
   ~~- Support Piss~~
-  ~~-Support Pickles~~
   ~~- Support B/W hybrid~~
   ~~- Enter key should submit search~~
   ~~- add guide for !~~
@@ -52,7 +51,6 @@ Write a script to transform the database
 - figure out how to handle cards with self-draftpartner (Squadron Wastes, Playset of Squadron Hawks (On Clearance), The Squadron Hawk)
 - fix tags for cards with draft_image
 - do better: evolution of the dreadmaw
-- fix after full switch: watermarks on Nusk // Norn, evolution of the dreadmaw, Siege Rhino // Siege Rhino, Thoughtsiege // Siege Rhino, Disagreement Rhino // Scuffle Rhino // Skirmish Rhino // Siege Rhino // Nuclear Bombardment Rhino, Kolaghan's Command Tower // Kolaghan's Command, OBJECTS I HAVE SHOVED UP MY ARSE, Urabrask, Alone and Jobless, Blood ghast // Crip Ghast, Tolarian Adjunct Professor // Tolarian Community College
 - add to HellfallCard: ~~color indicator, ~~ attraction lights
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff, public domain removal creature (colorless)
@@ -76,7 +74,6 @@ Write a script to transform the database
 - add reminder card for attractions
 - figure out subtypes for nontoken tokens (emblems, dungeons, etc.)
 - don't fetch SFT tokens with "token" layout from scryfall every time
-- add color indicator for Pan & Pan Harmonica (yellow/blue/pink)
 - mork:
   - add ids
   - revamp fetch function to deal better with cards that have multiple printings (use bar and set like mtgcardfetcher does; allow use of id; allow use of )
@@ -121,7 +118,6 @@ Write a script to transform the database
 - prevent search entries from filling history for text
 - make popup window resizeable
 - add real-card-reference tags
-- fix uno +2/+4 names
 - dynamically reorder related in HellfallCard to minimize empty space while maximizing image width
 - implement smart quotes (autoconvert normal quotes to left/right quotes on page)
 - add button to expose card json? and copy/pastable card details?
@@ -144,8 +140,17 @@ Write a script to transform the database
 - make card name text render in hellfallentry below card (so if card doesn't render, the name will)
 - add card to plaintext function; add it as alt text to card images (do by face/all faces)
 - add code to infer new layout types
-- add layouts to faces
-- add frames (use tags & layouts?)
-- add frameEffects (use tags and/or types)
-- add borderColors (use tags)
-- add finish (use tags)
+- fix tag usage in fetchDatabase
+- switch away from using image_status for layout stuff?
+- add collections to deal with types, tags, keywords, etc.
+- make layout able to be an array?
+- allow for retro search option that matches both 93 and 97
+- fix layouts on faces
+- go through and add borders, correct face layouts, finishes, frames, and frameEffects
+  - deal with later: Nebula5, Opter // Shocker
+- figure out whether/how to make missing frame tags work with specific faces
+- add minimize button next to close button on card pane (turns it into small popup at bottom with only cardname) (also add ability to store multiple like this) (use minus symbol)
+- add button in pane to open card in new tab (use box with arrow)
+- don't trigger new history on activecard change
+- add ability to search for individual misc colors?
+- figure out if pip shadows have correct angle (should they be slightly more downward than leftward?)
