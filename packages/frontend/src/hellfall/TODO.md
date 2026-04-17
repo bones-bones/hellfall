@@ -154,3 +154,4 @@ Write a script to transform the database
 - don't trigger new history on activecard change
 - add ability to search for individual misc colors?
 - figure out if pip shadows have correct angle (should they be slightly more downward than leftward?)
+- make sure tts gif handling works (special case for dandan? no, faces should handle it)

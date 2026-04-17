@@ -437,6 +437,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           tag in cardObject.tag_notes
         ) {
           cardObject.card_faces[0].flavor_name = cardObject.tag_notes[tag];
+        } else if (tag == 'gif' && !cardObject.tags.includes('mdfc')) {
+          const stillIndex = cardObject.card_faces.findLastIndex(face => face.image);
+          cardObject.draft_image = cardObject.card_faces[stillIndex].image;
+          cardObject.draft_image_status = HCImageStatus.HighRes;
+          delete cardObject.card_faces[stillIndex].image;
+          delete cardObject.card_faces[stillIndex].image_status;
         }
       });
     }
@@ -628,7 +634,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         cardObject.card_faces[0].image &&
         (cardObject.card_faces.filter(e => e.image).length == 1 ||
           cardObject.tags?.includes('meld') ||
-          cardObject.tags?.includes('draftpartner'))
+          cardObject.tags?.includes('draftpartner')) &&
+        !cardObject.tags?.includes('gif')
       ) {
         if ('image' in cardObject && cardObject.image) {
           cardObject.draft_image = cardObject.image;
