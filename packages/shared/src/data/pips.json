@@ -2327,6 +2327,16 @@
       ]
     },
     {
+      "filename": "hybrid/misc/2E.svg",
+      "symbol": "2/E",
+      "english": "one energy counter or two generic mana",
+      "represents_mana": true,
+      "mana_value": 2,
+      "colors": [
+        "C"
+      ]
+    },
+    {
       "filename": "hybrid/misc/BDoge.svg",
       "symbol": "B/Doge",
       "english": "one black mana or one-tenth colorless mana",

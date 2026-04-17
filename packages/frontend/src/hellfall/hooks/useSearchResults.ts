@@ -48,7 +48,8 @@ import {
   hybridIdentityMiscReduce,
 } from '../colorComps';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
-import { CHUNK_SIZE } from '../constants.ts';
+import { CHUNK_SIZE, extraSetList } from '../constants.ts';
+import { filterSet } from '../filterSet.ts';
 
 export const useSearchResults = () => {
   const location = useLocation();
@@ -87,7 +88,6 @@ export const useSearchResults = () => {
   const [page, setPageAtom] = useAtom(pageAtom);
   const activeCard = useAtomValue(activeCardAtom);
   // const [shouldPushHistory, setShouldPushHistory] = useAtom(shouldPushHistoryAtom);
-  const extraSetList = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'NRM', 'HCT', 'SFT'];
 
   const lastPage = getLastPage(CHUNK_SIZE, resultSet.length);
 
@@ -101,78 +101,14 @@ export const useSearchResults = () => {
   });
 
   useEffect(() => {
-    /**
-     * Checks if a card's set is in the results. Also returns true if the card's set is a subset of one of the results.
-     * @param set set of a card
-     * @returns if set is in results
-     */
-    const isSetInResults = (set: string) => {
-      // Exclude HCV.1-4 from HCV if !includeExtraSets
-      if (!includeExtraSets && ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4'].includes(set)) {
-        return extraSets.some(e => set.includes(e));
-      } else {
-        return searchSet.some(e => set.includes(e)) || extraSets.some(e => set.includes(e));
-      }
-    };
-
-    const noSets = searchSet.length + extraSets.length == 0;
-
-    const tempResults = cards
-      .filter(e => e.set != 'NotMagic')
+    const tempResults = filterSet(
+      cards.filter(e => e.set != 'NotMagic'),
+      searchSet,
+      extraSets,
+      includeExtraSets,
+      searchToken
+    )
       .filter(entry => {
-        switch (searchToken) {
-          case 'Cards':
-            if (!noSets && !isSetInResults(entry.set)) {
-              return false;
-            }
-            if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
-              return false;
-            }
-            // make sure tokens are hidden when no sets are selected
-            if (noSets && entry.isActualToken) {
-              return false;
-            }
-            break;
-          case 'Tokens':
-            if (
-              !noSets &&
-              !(
-                'all_parts' in entry &&
-                entry.all_parts
-                  ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
-                  .some(part => isSetInResults(part.set))
-              )
-            ) {
-              return false;
-            }
-            if (noSets && !entry.isActualToken) {
-              return false;
-            }
-            break;
-          case 'Both':
-            if (
-              !noSets &&
-              !isSetInResults(entry.set) &&
-              !(
-                'all_parts' in entry &&
-                entry.all_parts
-                  ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
-                  .some(part => isSetInResults(part.set))
-              )
-            ) {
-              return false;
-            }
-            if (
-              !entry.isActualToken &&
-              extraSets.length == 0 &&
-              !includeExtraSets &&
-              extraSetList.includes(entry.set)
-            ) {
-              return false;
-            }
-            break;
-        }
-
         if (
           costSearch.length > 0 &&
           !costSearch.every(searchTerm => {

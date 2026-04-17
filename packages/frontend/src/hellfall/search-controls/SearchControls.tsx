@@ -47,6 +47,7 @@ import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useDebounce, useKeyPress } from '../../hooks';
 import { act, useEffect, useState } from 'react';
+import { extraSetList } from '../constants.ts';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -337,7 +338,7 @@ export const SearchControls = () => {
                 <BoxlessCheckboxGroup
                   value={extraSets}
                   label={'Extra Sets'}
-                  values={['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'NRM', 'HCT', 'SFT']}
+                  values={extraSetList}
                   onChange={setExtraSets}
                 />
               </StyledComponentHolder>
