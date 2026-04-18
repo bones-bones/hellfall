@@ -315,7 +315,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             };
             cardObject[keys[i]] = legalities;
           } else if (keys[i] == 'related') {
-            const all_parts: HCRelatedCard[] = entry[i].split(';').map(name => {
+            const all_parts: HCRelatedCard[] = entry[i].split(';').map(oldName => {
+              const [name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [oldName, undefined];
               const base = name.replace(/\d+$/, '');
               const shouldUseBase =
                 /\d/.test(name.at(-1)!) &&
@@ -332,6 +333,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
                 set: '',
                 image: '',
               };
+              if (count) {
+                maker.count = count;
+              }
               return maker;
             });
 
@@ -409,7 +413,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             // don't overwrite melds
             cardObject.all_parts[0].component = 'draft_partner';
           }
-          cardObject.not_directly_draftable = true;
+          if (!tags.includes('draftpartner-with-self')) {
+            cardObject.not_directly_draftable = true;
+          }
           cardObject.has_draft_partners = true;
         } else if (tag == 'meld' && cardObject.all_parts) {
           cardObject.all_parts[0].component = 'meld_part';
@@ -468,6 +474,13 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       // TODO: Expand
       if (index == 0) {
         face.layout = HCLayout.Front;
+      } else if (
+        'layout' in cardObject &&
+        cardObject.layout != 'flip' &&
+        cardObject.tags?.includes('flip') &&
+        cardObject.layout in multiLayoutToFaceLayout
+      ) {
+        face.layout = 'flip';
       } else if ('layout' in cardObject && cardObject.layout in multiLayoutToFaceLayout) {
         face.layout =
           multiLayoutToFaceLayout[cardObject.layout as keyof typeof multiLayoutToFaceLayout];

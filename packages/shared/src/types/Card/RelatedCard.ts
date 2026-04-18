@@ -46,4 +46,8 @@ export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
    * Whether this card is draftpartners with the other card
    */
   is_draft_partner?: boolean;
+  /**
+   * Number of copies of this that are made by the other card (or x)
+   */
+  count?: string;
 };
