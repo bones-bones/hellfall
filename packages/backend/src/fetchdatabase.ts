@@ -316,7 +316,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             cardObject[keys[i]] = legalities;
           } else if (keys[i] == 'related') {
             const all_parts: HCRelatedCard[] = entry[i].split(';').map(oldName => {
-              const [name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [oldName, undefined];
+              const [, name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [, oldName, undefined];
               const base = name.replace(/\d+$/, '');
               const shouldUseBase =
                 /\d/.test(name.at(-1)!) &&
@@ -334,7 +334,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
                 image: '',
               };
               if (count) {
-                maker.count = count;
+                maker.count = count.slice(1);
               }
               return maker;
             });
@@ -478,6 +478,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         'layout' in cardObject &&
         cardObject.layout != 'flip' &&
         cardObject.tags?.includes('flip') &&
+        !face.image &&
         cardObject.layout in multiLayoutToFaceLayout
       ) {
         face.layout = 'flip';
