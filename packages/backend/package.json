@@ -18,6 +18,7 @@
   },
   "scripts": {
     "transform-hc": "npx tsx src/hc-transformations",
+    "fetch-oracle-names": "npx tsx src/fetchOracleNames",
     "land-box": "npx tsx src/land-box"
   }
 }
