@@ -154,3 +154,6 @@ Write a script to transform the database
 - don't trigger new history on activecard change
 - add ability to search for individual misc colors?
 - figure out if pip shadows have correct angle (should they be slightly more downward than leftward?)
+- fix the purple guy side 2 button on hellfall
+- fully update cockatrice code
+- fully update draftmancer code

@@ -1,20 +1,21 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
-import tokens from '@hellfall/shared/data/tokens.json';
+// import tokens from '@hellfall/shared/data/tokens.json';
 import { toExportName } from '@hellfall/shared/utils/textHandling.ts';
 import { recursiveAdoption } from '../recursiveAdoption.ts';
 import { getLayout } from './getLayout.ts';
 import { getTableRow } from './getTableRow.ts';
 import { getTableRowForToken } from './getTableRowForToken.ts';
 import { prettifyXml } from './prettifyXml';
+import { getSplitSet } from '../../hellfall/filterSet.ts';
 export const toCockCube = ({
   name,
   set,
-  cards,
+  allCards,
 }: {
   name: string;
   set: string;
-  cards: HCCard.Any[];
+  allCards: HCCard.Any[];
 }) => {
   const xmlDoc = document.implementation.createDocument(null, 'cockatrice_carddatabase');
   xmlDoc.documentElement.setAttribute('version', '4');
@@ -39,6 +40,7 @@ export const toCockCube = ({
     [setElement, [nameElement, longNameElement, setTypeElement]],
     cardsElement,
   ]);
+  const { cards, tokens } = getSplitSet(allCards, set);
 
   cards.forEach(entry => {
     const isSplitAndLinkedLayout = entry.layout === 'transform' || entry.layout === 'modal';
@@ -63,7 +65,7 @@ export const toCockCube = ({
     }
   });
 
-  (tokens.data as HCCard.Any[]).forEach(tokenEntry => {
+  tokens.forEach(tokenEntry => {
     const tokenCardEntry = xmlDoc.createElement('card');
     const name = xmlDoc.createElement('name');
     name.textContent = tokenEntry.name.replace(/\*\d+$/, '');

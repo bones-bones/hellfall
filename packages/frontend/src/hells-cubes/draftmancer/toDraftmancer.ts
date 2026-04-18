@@ -13,13 +13,13 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
   });
   // TODO: make sure this works
   const componentCards = cards.filter(card =>
-    Boolean(card.all_parts?.find(e => e.name == card.name && e.component != 'token_maker'))
+    Boolean(card.all_parts?.find(e => e.id == card.id && e.component != 'token_maker'))
   );
 
   const componentCardsAsDraftmancer = componentCards.map(getDraftMancerCard);
 
   const noComponentCards = cards.filter(
-    card => !card.all_parts?.find(e => e.name == card.name && e.component != 'token_maker')
+    card => !card.all_parts?.find(e => e.id == card.id && e.component != 'token_maker')
   );
 
   if (set === 'HC6') {
@@ -28,17 +28,17 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
     const commanderCardsToWrite = cardsToWrite.map(getDraftMancerCard);
     commanderCardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
-        e.all_parts?.find(entry => entry.name == dmCard.name)
+        e.all_parts?.find(entry => entry.id == dmCard.id)
       );
 
       if (cardsThatBelongToThis.length > 0) {
         const matchingDmCards = componentCardsAsDraftmancer.filter(e =>
-          cardsThatBelongToThis.find(secondE => secondE.name === e.name)
+          cardsThatBelongToThis.find(secondE => secondE.id === e.id)
         );
-        dmCard.related_cards = matchingDmCards.map(e => e.name);
+        dmCard.related_cards = matchingDmCards.map(e => e.id);
         dmCard.draft_effects = [
           ...(dmCard.draft_effects || []),
-          { type: 'AddCards', cards: matchingDmCards.map(e => e.name) },
+          { type: 'AddCards', cards: matchingDmCards.map(e => e.id) },
         ];
       }
     });
@@ -49,17 +49,17 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
 
     otherCardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
-        e.all_parts?.find(entry => entry.name == dmCard.name)
+        e.all_parts?.find(entry => entry.id == dmCard.id)
       );
 
       if (cardsThatBelongToThis.length > 0) {
         const matchingDmCards = componentCardsAsDraftmancer.filter(e =>
-          cardsThatBelongToThis.find(secondE => secondE.name === e.name)
+          cardsThatBelongToThis.find(secondE => secondE.id === e.id)
         );
         dmCard.related_cards = matchingDmCards.map(e => e.id);
         dmCard.draft_effects = [
           ...(dmCard.draft_effects || []),
-          { type: 'AddCards', cards: matchingDmCards.map(e => e.name) },
+          { type: 'AddCards', cards: matchingDmCards.map(e => e.id) },
         ];
       }
     });
@@ -146,18 +146,18 @@ export const toDraftmancerCube = ({ set, cards }: { set: string; cards: HCCard.A
 
     cardsToWrite.forEach(dmCard => {
       const cardsThatBelongToThis = componentCards.filter(e =>
-        e.all_parts?.find(entry => entry.name == dmCard.name)
+        e.all_parts?.find(entry => entry.id == dmCard.id)
       );
 
       if (cardsThatBelongToThis.length > 0) {
         const matchingDmCards = componentCardsAsDraftmancer.filter(e =>
-          cardsThatBelongToThis.find(secondE => secondE.name === e.name)
+          cardsThatBelongToThis.find(secondE => secondE.id === e.id)
         );
-        dmCard.related_cards = matchingDmCards.map(e => e.name);
+        dmCard.related_cards = matchingDmCards.map(e => e.id);
         dmCard.draft_effects = [
           ...(dmCard.draft_effects || []),
 
-          { type: 'AddCards', cards: matchingDmCards.map(e => e.name) },
+          { type: 'AddCards', cards: matchingDmCards.map(e => e.id) },
         ];
       }
     });

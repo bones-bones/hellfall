@@ -101,7 +101,9 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     disabled={i === activeImageSide}
                   >
                     {i == imagesToShow.length - 1 && data.draft_image
-                      ? 'draft'
+                      ? data.tags?.includes('gif')
+                        ? 'still'
+                        : 'draft'
                       : !data.draft_image &&
                         i == imagesToShow.length - 1 &&
                         'card_faces' in data &&

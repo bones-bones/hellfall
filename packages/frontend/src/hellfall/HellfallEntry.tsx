@@ -47,10 +47,7 @@ export const HellfallEntry = ({
       <StyledImage
         key={id}
         src={url}
-        onClick={e => {
-          console.log('Image click fired!', id);
-          onClick(e);
-        }}
+        onClick={onClick}
         referrerPolicy="no-referrer"
         aria-label={name}
       />
