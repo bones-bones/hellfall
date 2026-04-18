@@ -50,4 +50,8 @@ export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
    * Number of copies of this that are made by the other card (or x)
    */
   count?: string;
+  /**
+   * If the token should be persistent.
+   */
+  persistent?: boolean;
 };

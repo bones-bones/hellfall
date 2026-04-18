@@ -213,6 +213,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'component',
           'is_draft_partner',
           'count',
+          'persistent',
         ];
         propOrder.forEach(prop => {
           if (prop in this) {
@@ -753,6 +754,9 @@ const main = async () => {
             tokenMaker.type_line = relatedCard.type_line;
             tokenMaker.set = relatedCard.set;
             tokenMaker.image = relatedCard.image;
+            if (relatedCard.tags?.includes('persistent-tokens')) {
+              tokenMaker.persistent = true;
+            }
             // update relatedCard.all_parts
             if ('all_parts' in relatedCard) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == token.id);
@@ -874,6 +878,9 @@ const main = async () => {
             tokenMaker.type_line = relatedCard.type_line;
             tokenMaker.set = relatedCard.set;
             tokenMaker.image = relatedCard.image;
+            if (relatedCard.tags?.includes('persistent-tokens')) {
+              tokenMaker.persistent = true;
+            }
             if ('all_parts' in relatedCard!) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
               if (tokenIndex == -1) {
