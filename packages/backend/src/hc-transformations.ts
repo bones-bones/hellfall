@@ -721,23 +721,23 @@ const main = async () => {
   finalTokens
     .filter(e => 'all_parts' in e)
     .forEach(token => {
+      const relatedToken: HCRelatedCard = {
+        object: HCObject.ObjectType.RelatedCard,
+        id: token.id,
+        component: 'token',
+        name: token.name,
+        type_line: token.type_line,
+        set: token.set,
+        image: token.image,
+      };
       // add all tokens to all_parts
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          const relatedToken: HCRelatedCard = {
-            object: HCObject.ObjectType.RelatedCard,
-            id: token.id,
-            component: 'token',
-            name: token.name,
-            type_line: token.type_line,
-            set: token.set,
-            image: token.image,
-          };
-          if (tokenMaker.count) {
-            relatedToken.count = tokenMaker.count;
-            delete tokenMaker.count;
-          }
+          // if (tokenMaker.count) {
+          //   relatedToken.count = tokenMaker.count;
+          //   delete tokenMaker.count;
+          // }
           // goes by id if possible, but if not, it goes by name; tries to find in cards, then tries in tokens
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
@@ -842,22 +842,22 @@ const main = async () => {
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
+      const relatedToken: HCRelatedCard = {
+        object: HCObject.ObjectType.RelatedCard,
+        id: card.id,
+        component: 'token',
+        name: card.name,
+        type_line: card.type_line,
+        set: card.set,
+        image: card.image,
+      };
       card.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          const relatedToken: HCRelatedCard = {
-            object: HCObject.ObjectType.RelatedCard,
-            id: card.id,
-            component: 'token',
-            name: card.name,
-            type_line: card.type_line,
-            set: card.set,
-            image: card.image,
-          };
-          if (tokenMaker.count) {
-            relatedToken.count = tokenMaker.count;
-            delete tokenMaker.count;
-          }
+          // if (tokenMaker.count) {
+          //   relatedToken.count = tokenMaker.count;
+          //   delete tokenMaker.count;
+          // }
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
               ? finalCards.find(card => card.id == tokenMaker.id)
@@ -891,23 +891,23 @@ const main = async () => {
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
+      const relatedPartner: HCRelatedCard = {
+        object: HCObject.ObjectType.RelatedCard,
+        id: card.id,
+        component: 'draft_partner',
+        name: card.name,
+        type_line: card.type_line,
+        set: card.set,
+        image: card.image,
+        is_draft_partner: true,
+      };
       card.all_parts
         ?.filter(e => e.component == 'draft_partner')
         .forEach(partnerCard => {
-          const relatedPartner: HCRelatedCard = {
-            object: HCObject.ObjectType.RelatedCard,
-            id: card.id,
-            component: 'draft_partner',
-            name: card.name,
-            type_line: card.type_line,
-            set: card.set,
-            image: card.image,
-            is_draft_partner: true,
-          };
-          if (partnerCard.count) {
-            relatedPartner.count = partnerCard.count;
-            delete partnerCard.count;
-          }
+          // if (partnerCard.count) {
+          //   relatedPartner.count = partnerCard.count;
+          //   delete partnerCard.count;
+          // }
           const relatedCard = finalCards.find(e =>
             partnerCard.id ? e.id == partnerCard.id : textEquals(e.name, partnerCard.name)
           );
