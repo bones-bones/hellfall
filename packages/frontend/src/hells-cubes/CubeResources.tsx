@@ -168,7 +168,7 @@ export const CubeResources = () => {
       // cards: cards.filter(e => e.set.includes('HCJ')),
     },
     {
-      name: 'All Sets',
+      name: 'All Hellscube Sets',
       id: 'All',
       description: 'All sets!',
       // cards: cards.filter(e => e.set.includes('HCJ')),

@@ -15,17 +15,35 @@ export const HellfallEntry = ({
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
+  const linkUrl = `/hellfall/card/${encodeURIComponent(id)}`;
+
+  const handleClick = (
+    e: React.MouseEvent,
+    customHandler?: React.MouseEventHandler<HTMLImageElement>
+  ) => {
+    if (e.button === 1 || e.metaKey || e.ctrlKey) {
+      // Let the link handle it naturally
+      return;
+    }
+    e.preventDefault();
+    if (customHandler) {
+      customHandler(e as any);
+    } else {
+      onClick(e as any);
+    }
+  };
+
   return (
     <Container key={id} role="button">
       {onClickTitle ? (
         <>
-          <span
-            key={id}
-            onClick={onClickTitle}
-            style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}
+          <StyledTitleLink
+            key={id + '-title'}
+            href={linkUrl}
+            onClick={e => handleClick(e, onClickTitle as any)}
           >
-            {name}
-          </span>
+            <TitleText>{name}</TitleText>
+          </StyledTitleLink>
           <br />
         </>
       ) : (
@@ -44,13 +62,9 @@ export const HellfallEntry = ({
           )}
         </>
       )}
-      <StyledImage
-        key={id}
-        src={url}
-        onClick={onClick}
-        referrerPolicy="no-referrer"
-        aria-label={name}
-      />
+      <StyledImageLink href={linkUrl} onClick={e => handleClick(e)}>
+        <StyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
+      </StyledImageLink>
     </Container>
   );
 };
@@ -87,6 +101,26 @@ const VisuallyHiddenSpan = styled.span({
   pointerEvents: 'none',
 });
 
+const StyledImageLink = styled.a({
+  display: 'block',
+  textDecoration: 'none',
+  cursor: 'pointer',
+});
+
+const StyledTitleLink = styled.a({
+  display: 'inline-block',
+  textDecoration: 'none',
+  cursor: 'pointer',
+  whiteSpace: 'pre-wrap',
+});
+
+const TitleText = styled.span({
+  cursor: 'pointer',
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+});
+
 export const HellfallRelatedEntry = ({
   url,
   id,
@@ -102,17 +136,33 @@ export const HellfallRelatedEntry = ({
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
+  const linkUrl = `/hellfall/card/${encodeURIComponent(id)}`;
+
+  const handleClick = (
+    e: React.MouseEvent,
+    customHandler?: React.MouseEventHandler<HTMLImageElement>
+  ) => {
+    if (e.button === 1 || e.metaKey || e.ctrlKey) {
+      return;
+    }
+    e.preventDefault();
+    if (customHandler) {
+      customHandler(e as any);
+    } else {
+      onClick(e as any);
+    }
+  };
   return (
     <RelatedContainer key={id} role="button">
       {onClickTitle ? (
         <>
-          <span
-            key={id}
-            onClick={onClickTitle}
-            style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}
+          <StyledTitleLink
+            key={id + '-title'}
+            href={linkUrl}
+            onClick={e => handleClick(e, onClickTitle as any)}
           >
-            {name}
-          </span>
+            <TitleText>{name}</TitleText>
+          </StyledTitleLink>
           <br />
         </>
       ) : (
@@ -131,13 +181,9 @@ export const HellfallRelatedEntry = ({
           )}
         </>
       )}
-      <RelatedStyledImage
-        key={id}
-        src={url}
-        onClick={onClick}
-        referrerPolicy="no-referrer"
-        aria-label={name}
-      />
+      <RelatedStyledImageLink href={linkUrl} onClick={e => handleClick(e)}>
+        <RelatedStyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
+      </RelatedStyledImageLink>
     </RelatedContainer>
   );
 };
@@ -160,4 +206,10 @@ const RelatedContainer = styled.div({
     height: 'auto',
     objectFit: 'contain',
   },
+});
+
+const RelatedStyledImageLink = styled.a({
+  display: 'block',
+  textDecoration: 'none',
+  cursor: 'pointer',
 });
