@@ -8,9 +8,9 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
   // console.log({ cards });
   const printingBrackets: { size: number; cards: CardToFill[] }[] = [];
   while (cards.length > 0) {
-    chunking: for (const bracketSize of BRACKETS) {
+    for (const bracketSize of BRACKETS) {
       if (cards.length === 0) {
-        break chunking;
+        break;
       }
       if (cards.length > bracketSize) {
         printingBrackets.push({
@@ -18,7 +18,7 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
           cards: cards.splice(0, bracketSize),
         });
 
-        break chunking;
+        break;
       }
 
       printingBrackets.push({

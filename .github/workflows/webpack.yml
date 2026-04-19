@@ -4,7 +4,6 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
 
 jobs:
   build:
@@ -32,11 +31,11 @@ jobs:
       - name: Build shared package
         run: |
           cd packages/shared
-          npx tsc --emitDeclarationOnly  # Generate .d.ts files
+          npx tsc --emitDeclarationOnly
 
       - name: Type check
         run: |
-          cd packages/frontend && npx tsc --noEmit || true
+          cd packages/frontend && npx tsc --noEmit
 
       - name: Build
         run: yarn build

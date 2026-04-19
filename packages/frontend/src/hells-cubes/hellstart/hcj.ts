@@ -1,11 +1,3 @@
-export type HCJPackInfo = {
-  name: string;
-  url: string;
-  tag: string;
-  secondCopyOf?: string;
-  lands: { count: number; name: string }[];
-};
-
 import {
   HCCard,
   HCLayout,
@@ -17,6 +9,14 @@ import {
 } from '@hellfall/shared/types';
 
 import { withCardMethods } from '../getHc5.ts';
+
+export type HCJPackInfo = {
+  name: string;
+  url: string;
+  tag: string;
+  secondCopyOf?: string;
+  lands: { count: number; name: string }[];
+};
 
 /** Convert pack front metadata into an HCCard.Any with toFaces() for use in getDraftMancerCard etc. */
 export function packInfoToCard(entry: HCJPackInfo): HCCard.Any {
