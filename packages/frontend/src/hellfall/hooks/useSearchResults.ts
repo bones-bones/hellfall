@@ -56,7 +56,9 @@ export const useSearchResults = () => {
   const navigate = useNavigate();
 
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
+  const cards = useAtomValue(cardsAtom).filter(
+    e => !e.tags?.includes('offensive') && e.set != 'NotMagic'
+  );
   const nameSearch = useAtomValue(nameSearchAtom);
   const idSearch = useAtomValue(idSearchAtom);
   const costSearch = useAtomValue(costSearchAtom);
@@ -101,13 +103,7 @@ export const useSearchResults = () => {
   });
 
   useEffect(() => {
-    const tempResults = filterSet(
-      cards.filter(e => e.set != 'NotMagic'),
-      searchSet,
-      extraSets,
-      includeExtraSets,
-      searchToken
-    )
+    const tempResults = filterSet(cards, searchSet, extraSets, includeExtraSets, searchToken)
       .filter(entry => {
         if (
           costSearch.length > 0 &&

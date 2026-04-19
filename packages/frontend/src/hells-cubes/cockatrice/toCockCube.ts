@@ -207,15 +207,15 @@ export const toCockCube = ({
     const cockRelateds: CockRelatedProps[] = [];
     all_parts.forEach(part => {
       switch (part.component) {
-        // case 'meld_part': {
-        //   const related:CockRelatedProps={
-        //     id:part.id,
-        //     reverse:'',
-        //     attach:'transform',
-        //   };
-        //   cockRelateds.push(related);
-        //   break;
-        // }
+        case 'meld_part': {
+          const related: CockRelatedProps = {
+            id: part.id,
+            reverse: '',
+            attach: 'transform',
+          };
+          cockRelateds.push(related);
+          break;
+        }
         case 'meld_result': {
           const related: CockRelatedProps = {
             id: part.id,
@@ -225,20 +225,14 @@ export const toCockCube = ({
           cockRelateds.push(related);
           break;
         }
-        // case 'token': {
-        //   const related:CockRelatedProps={
-        //     id:part.id,
-        //     reverse:'',
-        //   };
-        // if (persistent) {
-        //   related.persistent = 'persistent'
-        // }
-        // if (part.count) {
-        //   related.count = part.count
-        // }
-        //   cockRelateds.push(related);
-        //   break;
-        // }
+        case 'token': {
+          const related: CockRelatedProps = {
+            id: part.id,
+            reverse: '',
+          };
+          cockRelateds.push(related);
+          break;
+        }
         case 'token_maker': {
           const related: CockRelatedProps = {
             id: part.id,
@@ -321,7 +315,10 @@ export const toCockCube = ({
       cockCard.related = hcAllPartsToCockRelated(card.all_parts);
     }
     // make sure names aren't taken and then store the names
-    cockCard.props.forEach(face => {
+    cockCard.props.forEach((face, i) => {
+      if (!face.name) {
+        face.name = `(${i ? 'back' : 'front'} of ${cockCard.props[1 - i].name})`;
+      }
       while (nameIsTaken(face.name)) {
         face.name += ' ';
       }
@@ -469,21 +466,29 @@ export const toCockCube = ({
           upsideDown.textContent = '1';
           maybeElements.push(upsideDown);
         }
-      } else if (entry.related) {
-        entry.related.forEach(relatedCard => {
-          const related = xmlDoc.createElement(relatedCard.reverse + 'related');
-          related.textContent = relatedCard.name || relatedCard.id;
-          if (relatedCard.count) {
-            related.setAttribute('count', relatedCard.count);
-          }
-          if (relatedCard.attach) {
-            related.setAttribute('attach', relatedCard.attach);
-          }
-          if (relatedCard.persistent) {
-            related.setAttribute('persistent', relatedCard.persistent);
-          }
+      } else {
+        if (entry.props.length > 1) {
+          const related = xmlDoc.createElement('reverse-related');
+          related.textContent = entry.props[1].name;
+          related.setAttribute('attach', 'transform');
           maybeElements.push(related);
-        });
+        }
+        if (entry.related) {
+          entry.related.forEach(relatedCard => {
+            const related = xmlDoc.createElement(relatedCard.reverse + 'related');
+            related.textContent = relatedCard.name || relatedCard.id;
+            if (relatedCard.count) {
+              related.setAttribute('count', relatedCard.count);
+            }
+            if (relatedCard.attach) {
+              related.setAttribute('attach', relatedCard.attach);
+            }
+            if (relatedCard.persistent) {
+              related.setAttribute('persistent', relatedCard.persistent);
+            }
+            maybeElements.push(related);
+          });
+        }
       }
       const mainTypeToTableRow: Record<string, number> = {
         Instant: 3,

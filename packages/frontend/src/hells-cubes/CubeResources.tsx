@@ -26,7 +26,9 @@ type CubeSetup = {
 };
 
 export const CubeResources = () => {
-  const cards = useAtomValue(cardsAtom);
+  const cards = useAtomValue(cardsAtom).filter(
+    e => !e.tags?.includes('offensive') && e.set != 'NotMagic'
+  );
   const cubeSetups: CubeSetup[] = [
     {
       name: 'Hellscube',
@@ -163,6 +165,12 @@ export const CubeResources = () => {
         </StyledLink>
       ),
       description: 'Jumpstart!',
+      // cards: cards.filter(e => e.set.includes('HCJ')),
+    },
+    {
+      name: 'All Sets',
+      id: 'All',
+      description: 'All sets!',
       // cards: cards.filter(e => e.set.includes('HCJ')),
     },
   ];
