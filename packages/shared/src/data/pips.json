@@ -632,6 +632,28 @@
       ]
     },
     {
+      "filename": "mono/misc/orangeG.png",
+      "symbol": "orangeG",
+      "english": "one orange-colored green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G"
+      ],
+      "no_shadow": true
+    },
+    {
+      "filename": "mono/misc/brownG.png",
+      "symbol": "brownG",
+      "english": "one brown-colored green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G"
+      ],
+      "no_shadow": true
+    },
+    {
       "filename": "mono/nums/0.svg",
       "symbol": "0",
       "english": "zero generic mana",

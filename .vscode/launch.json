@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug npm script: transform-hc (normal)",
+      "name": "Debug transform-hc (normal)",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "yarn",
@@ -12,7 +12,7 @@
       "internalConsoleOptions": "neverOpen"
     },
     {
-      "name": "Debug npm script: transform-hc (with --update)",
+      "name": "Debug transform-hc (with --update)",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "yarn",
@@ -22,7 +22,7 @@
       "internalConsoleOptions": "neverOpen"
     },
     {
-      "name": "Debug npm script: transform-hc (with --update and --noscryfall)",
+      "name": "Debug transform-hc (with --update and --noscryfall)",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "yarn",
@@ -32,21 +32,21 @@
       "internalConsoleOptions": "neverOpen"
     },
     {
-      "name": "Debug land-box",
+      "name": "Debug fetch-oracle-names",
       "type": "node",
       "request": "launch",
-      "runtimeArgs": ["--import=tsx"],
-      "args": ["${workspaceFolder}/data-transformers/src/land-box.ts"],
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["fetch-oracle-names"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
     {
-      "name": "Debug make-cubes",
+      "name": "Debug land-box",
       "type": "node",
       "request": "launch",
-      "runtimeArgs": ["--import=tsx"],
-      "args": ["${workspaceFolder}/data-transformers/src/cubes/createCockCube.ts"],
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["land-box"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"

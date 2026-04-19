@@ -14,6 +14,7 @@
     "fix": "yarn workspace @hellfall/frontend fix",
     "pretty": "prettier --write .",
     "transform-hc": "yarn workspace @hellfall/backend transform-hc",
+    "fetch-oracle-names": "yarn workspace @hellfall/backend fetch-oracle-names",
     "land-box": "yarn workspace @hellfall/backend land-box",
     "start:windows": "yarn workspace @hellfall/frontend start:windows",
     "install:all": "yarn install",

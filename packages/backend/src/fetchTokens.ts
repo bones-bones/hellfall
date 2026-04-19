@@ -153,7 +153,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           tokenObject[keys[i]] = entry[i].split(';');
         } else if (keys[i] == 'token_maker') {
           tokenObject.all_parts = entry[i].split(';').map(oldName => {
-            const name = oldName.replace(/\*\d+$/, '');
+            const [, name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [, oldName, undefined];
             const base = name.replace(/\d+$/, '');
             const shouldUseBase =
               /\d/.test(name.at(-1)!) &&
@@ -170,6 +170,9 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
               set: '',
               image: '',
             };
+            if (count) {
+              maker.count = count.slice(1);
+            }
             return maker;
           });
         } else if (keys[i] == 'oracle_text' && tagList.includes(entry[i])) {

@@ -32,7 +32,7 @@ export const filterSet = (
     }
   };
 
-  const noSets = sets.length + extraSets.length == 0;
+  const noSets = sets.length + extraSets.length == 0 || (sets.length == 1 && sets[0] == 'All');
 
   switch (mode) {
     case 'Cards':

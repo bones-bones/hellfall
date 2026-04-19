@@ -212,6 +212,8 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'type_line',
           'component',
           'is_draft_partner',
+          'count',
+          'persistent',
         ];
         propOrder.forEach(prop => {
           if (prop in this) {
@@ -391,12 +393,8 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         'all_parts' in newCard
       ) {
         merged.all_parts = newCard.all_parts?.map(part => {
-          // superToken is used when the card is a token and part is also a token that makes this token
-          // const superToken = existingCard.all_parts
-          //   ?.filter(e => e.name == e.id.replace(/\d+$/, ''))
-          //   .find(e => textEquals(e.id, part.name));
           // is true when the thing that makes this is itself a token
-          const tokenIsMaker = part.name && part.id;
+          const tokenIsMaker = !!(part.name && part.id);
           const existingPart = tokenIsMaker
             ? existingCard.all_parts?.find(e => textEquals(e.id, part.id))
             : existingCard.all_parts?.find(
@@ -724,7 +722,6 @@ const main = async () => {
   finalTokens
     .filter(e => 'all_parts' in e)
     .forEach(token => {
-      // add all tokens to all_parts
       const relatedToken: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: token.id,
@@ -734,9 +731,14 @@ const main = async () => {
         set: token.set,
         image: token.image,
       };
+      // add all tokens to all_parts
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
+          // if (tokenMaker.count) {
+          //   relatedToken.count = tokenMaker.count;
+          //   delete tokenMaker.count;
+          // }
           // goes by id if possible, but if not, it goes by name; tries to find in cards, then tries in tokens
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
@@ -746,11 +748,16 @@ const main = async () => {
             ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
             : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
           if (relatedCard) {
+            // update token.all_parts
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
             tokenMaker.type_line = relatedCard.type_line;
             tokenMaker.set = relatedCard.set;
             tokenMaker.image = relatedCard.image;
+            if (relatedCard.tags?.includes('persistent-tokens')) {
+              tokenMaker.persistent = true;
+            }
+            // update relatedCard.all_parts
             if ('all_parts' in relatedCard) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == token.id);
               if (tokenIndex == -1) {
@@ -789,8 +796,12 @@ const main = async () => {
             meldPart.type_line = relatedCard.type_line;
             meldPart.set = relatedCard.set;
             meldPart.image = relatedCard.image;
+            if (meldPart.count) {
+              delete meldPart.count;
+            }
             // meldPart.image =
             //   'card_faces' in relatedCard && relatedCard.card_faces[0].image ? relatedCard.card_faces[0].image : relatedCard.image;
+            // TODO: Figure out if this is still necessary
             if (token.id != 'Omnath, the Forbidden One1') {
               meldPart.is_draft_partner = true;
             }
@@ -810,6 +821,7 @@ const main = async () => {
         meldRelatedCards.push(meldResult);
         meldPartIds.forEach(id => {
           const relatedCard = finalCards.find(card => card.id == id);
+          // TODO: Figure out if this is still necessary
           if (!relatedCard?.has_draft_partners && token.id != 'Omnath, the Forbidden One1') {
             relatedCard!.has_draft_partners = true;
           }
@@ -846,6 +858,10 @@ const main = async () => {
       card.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
+          // if (tokenMaker.count) {
+          //   relatedToken.count = tokenMaker.count;
+          //   delete tokenMaker.count;
+          // }
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
               ? finalCards.find(card => card.id == tokenMaker.id)
@@ -862,6 +878,9 @@ const main = async () => {
             tokenMaker.type_line = relatedCard.type_line;
             tokenMaker.set = relatedCard.set;
             tokenMaker.image = relatedCard.image;
+            if (relatedCard.tags?.includes('persistent-tokens')) {
+              tokenMaker.persistent = true;
+            }
             if ('all_parts' in relatedCard!) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
               if (tokenIndex == -1) {
@@ -892,6 +911,10 @@ const main = async () => {
       card.all_parts
         ?.filter(e => e.component == 'draft_partner')
         .forEach(partnerCard => {
+          // if (partnerCard.count) {
+          //   relatedPartner.count = partnerCard.count;
+          //   delete partnerCard.count;
+          // }
           const relatedCard = finalCards.find(e =>
             partnerCard.id ? e.id == partnerCard.id : textEquals(e.name, partnerCard.name)
           );
