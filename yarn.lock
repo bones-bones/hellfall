@@ -2138,6 +2138,7 @@ __metadata:
     webpack: "npm:^5"
     webpack-cli: "npm:^5.1.4"
     webpack-dev-server: "npm:^5"
+    xml-formatter: "npm:^3.7.0"
     xmlbuilder: "npm:^15.1.1"
     yarn: "npm:^1.22.10"
   languageName: unknown
@@ -15023,10 +15024,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"xml-formatter@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "xml-formatter@npm:3.7.0"
+  dependencies:
+    xml-parser-xo: "npm:^4.1.5"
+  checksum: 10c0/9558493c1146d02476b5ca562d8116d56e8aa029c10c943eb8393feccd3da8c6f770274db6fa4bedfd06bc26bcfdfed82f90e2f8f8f3d9e9c5f0fb9b1bb07a0e
+  languageName: node
+  linkType: hard
+
 "xml-name-validator@npm:^3.0.0":
   version: 3.0.0
   resolution: "xml-name-validator@npm:3.0.0"
   checksum: 10c0/da310f6a7a52f8eb0fce3d04ffa1f97387ca68f47e8620ae3a259909c4e832f7003313b918e53840a6bf57fb38d5ae3c5f79f31f911b2818a7439f7898f8fbf1
+  languageName: node
+  linkType: hard
+
+"xml-parser-xo@npm:^4.1.5":
+  version: 4.1.5
+  resolution: "xml-parser-xo@npm:4.1.5"
+  checksum: 10c0/4160a031f8ccb63351321b851891c99e3faefed45daf47ce0bf4bbf3daf3b3202b9fa3a2dfe9be08de5a39a6323ae281e7ea6acc5f8b9a117baf3992add04c7a
   languageName: node
   linkType: hard
 

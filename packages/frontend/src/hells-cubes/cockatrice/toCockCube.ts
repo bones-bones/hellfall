@@ -1,6 +1,5 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { HCCard, HCCardFace, HCColors, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
-// import tokens from '@hellfall/shared/data/tokens.json';
 import { toExportName } from '@hellfall/shared/utils/textHandling.ts';
 import { recursiveAdoption } from '../recursiveAdoption.ts';
 import { prettifyXml } from './prettifyXml';
@@ -158,16 +157,20 @@ export const toCockCube = ({
         ) {
         } else if (key == 'maintype') {
         } else if (key == 'cmc') {
-          faces[0][key] += value as number;
+          if (!subLayouts.includes(value as string)) {
+            faces[0][key] += value as number;
+          }
         } else if (key == 'colors') {
-          if (faces[0].colors) {
-            (value as HCColors).forEach(color => {
-              if (!faces[0].colors?.includes(color)) {
-                faces[0].colors?.push(color);
-              }
-            });
-          } else {
-            faces[0].colors = value as HCColors;
+          if (!subLayouts.includes(value as string)) {
+            if (faces[0].colors) {
+              (value as HCColors).forEach(color => {
+                if (!faces[0].colors?.includes(color)) {
+                  faces[0].colors?.push(color);
+                }
+              });
+            } else {
+              faces[0].colors = value as HCColors;
+            }
           }
         } else if (key == 'picurl') {
           if (!faces[0][key]) {
@@ -175,14 +178,20 @@ export const toCockCube = ({
           }
         } else if (faces[0][key]) {
           if (key !== 'text') {
-            const needed = i - 1 - ((faces[0][key] as string).match(/ \\ /g)?.length || 0);
+            const needed = i - ((faces[0][key] as string).match(/ \/\/ /g)?.length || 0);
             if (needed > 0) {
+              if (face.name.slice(0, 8) == 'Urabrask') {
+                debugger;
+              }
               faces[0][key] += ' // '.repeat(needed);
             }
           }
           faces[0][key] += (key == 'text' ? '\n\n---\n\n' : ' // ') + value;
         } else {
-          faces[0][key] = ' // '.repeat(i - 1) + value;
+          if (face.name.slice(0, 8) == 'Urabrask') {
+            debugger;
+          }
+          faces[0][key] = ' // '.repeat(i) + value;
         }
       });
     });
@@ -320,7 +329,6 @@ export const toCockCube = ({
     idNames[cockCard.id] = cockCard.props.map(face => face.name);
     return cockCard;
   };
-  // make array of all cards first, then append them all
   /**
    * Adds names to all related entries
    * @param card card props to add related names to
@@ -355,6 +363,10 @@ export const toCockCube = ({
     cardsElement,
   ]);
 
+  /**
+   * Appends a cockatrice card to the document
+   * @param entry Cockatrice card to append
+   */
   const appendCockCard = (entry: CockCardProps) => {
     addRelatedNames(entry);
     entry.props.forEach((face, i) => {
@@ -448,7 +460,11 @@ export const toCockCube = ({
         reverse.textContent = entry.props[0].name;
         reverse.setAttribute('attach', 'transform');
         maybeElements.push(reverse);
-        if (!face.picurl && face.layout == 'flip') {
+        // TODO: Replace bubsy check with more general check
+        if (
+          (!face.picurl && face.layout == 'flip') ||
+          face.name == 'Bubsy, Furred Kind // Bubsy, Fractured Furry'
+        ) {
           const upsideDown = xmlDoc.createElement('upsidedown');
           upsideDown.textContent = '1';
           maybeElements.push(upsideDown);
