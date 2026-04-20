@@ -6,7 +6,7 @@ import {
   DraftmancerCustomCard,
   SimpleDraftEffectList,
 } from '../types';
-import { toExportName } from '@hellfall/shared/utils/textHandling';
+import { toExportMana, toExportName } from '@hellfall/shared/utils/textHandling';
 import { canBeACommander } from '../../hellfall/canBeACommander';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
 import { getSplitSet } from '../../hellfall/filters/filterSet';
@@ -48,7 +48,7 @@ const combineProps = ['mana_value', 'colors'];
 const overwriteProps = ['layout'];
 // these props are stored when the main face's prop doesn't exist but they do
 const addProps = ['image'];
-const dropLayouts: HCLayoutGroup.FaceLayoutType[] = ['draft_partner'];
+const dropLayouts: HCLayoutGroup.FaceLayoutType[] = ['draft_partner','meld_result'];
 const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'split',
   'aftermath',
@@ -58,6 +58,8 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'meld_result',
   'flip',
 ];
+
+const validColors = ['W','U','B','R','G']
 /**
  * merges 2 or more card faces
  * @param faces array of card faces to merge
@@ -164,14 +166,14 @@ export const HCToDraftmancer = (
         card.card_faces[0].image = card.image;
       }
       // clean the names
-      card.card_faces[0].name = toExportName(card.card_faces[0].name);
+      card.card_faces[0].name = toExportName(card.isActualToken ? card.id : ( card.card_faces[0].name ? card.card_faces[0].name : '(Front of '+ card.card_faces[1].name+')'));
       if (card.card_faces.length > 1) {
-        card.card_faces[1].name = toExportName(card.card_faces[1].name);
+        card.card_faces[1].name = toExportName(card.card_faces[1].name ? card.card_faces[1].name : '(Back of '+ card.card_faces[0].name+')');
       }
       // store the names
       idNames[card.id] = card.card_faces[0].name;
     } else {
-      card.name = toExportName(card.name);
+      card.name = toExportName(card.isActualToken ? card.id : card.name);
       idNames[card.id] = card.name;
     }
     return card;
@@ -179,13 +181,13 @@ export const HCToDraftmancer = (
 
   const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard => {
     const draftCard: DraftmancerCustomCard = {
-      name: card.name,
-      mana_cost: card.mana_cost,
+      name: card.isActualToken ? card.id : card.name,
+      mana_cost: toExportMana(card.mana_cost, true),
       type: card.type_line,
       image: card.image,
-      colors: card.colors,
+      colors: card.colors.filter(color => validColors.includes(color)),
       set: card.set,
-      oracle_text: card.oracle_text.replaceAll('\\n', '\n'),
+      oracle_text: toExportMana(card.oracle_text.replaceAll('\\n', '\n')),
     };
     if (card.subtypes) {
       draftCard.subtypes = card.subtypes;
@@ -205,13 +207,13 @@ export const HCToDraftmancer = (
   const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => {
     const face = card.card_faces[0];
     const draftCard: DraftmancerCustomCard = {
-      name: face.name,
-      mana_cost: face.mana_cost,
+      name: card.isActualToken ? card.id : face.name,
+      mana_cost: toExportMana(face.mana_cost, true),
       type: face.type_line,
       image: face.image ? face.image : card.image,
-      colors: face.colors,
+      colors: face.colors.filter(color => validColors.includes(color)),
       set: card.set,
-      oracle_text: face.oracle_text.replaceAll('\\n', '\n'),
+      oracle_text: toExportMana(face.oracle_text.replaceAll('\\n', '\n')),
     };
     if (face.subtypes) {
       draftCard.subtypes = face.subtypes;
@@ -231,10 +233,10 @@ export const HCToDraftmancer = (
   const HCFaceToDraftFace = (face: HCCardFace.MultiFaced): DraftmancerCardFace => {
     const draftFace: DraftmancerCardFace = {
       name: face.name,
-      mana_cost: face.mana_cost,
+      mana_cost: toExportMana(face.mana_cost, true),
       type: face.type_line,
       image: face.image,
-      oracle_text: face.oracle_text.replaceAll('\\n', '\n'),
+      oracle_text: toExportMana(face.oracle_text.replaceAll('\\n', '\n')),
     };
     if (face.subtypes) {
       draftFace.subtypes = face.subtypes;

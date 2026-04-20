@@ -18,6 +18,7 @@ import {
   HCFrame,
 } from '@hellfall/shared/types';
 import { setDerivedProps } from './derivedProps.ts';
+import { fromImportMana } from '@hellfall/shared/utils/textHandling.ts';
 export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): HCCard.Any => {
   const cardLayoutCorrespondences: Record<ScryfallLayout, HCLayout> = {
     normal: HCLayout.Normal,
@@ -167,16 +168,6 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'Snow',
     /**'Token', */ 'World',
   ];
-  const fixPhyrexianMana = (text: string) => {
-    if (text.includes('/P}')) {
-      return text
-        .split(/({[^]*?\/P})/)
-        .map(subtext => (subtext.slice(-3) == '/P}' ? '{H/' + subtext.slice(1, -3) + '}' : subtext))
-        .join('');
-    } else {
-      return text;
-    }
-  };
   const cardObject: Record<string, any> & { card_faces?: Record<string, any>[] } = {};
   Object.entries(card).forEach(([key, value]) => {
     if (key == 'card_faces') {
@@ -195,9 +186,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
           } else if (k in keyCorrespondences) {
             cardObject.card_faces![index][keyCorrespondences[k]] = v;
           } else if (k == 'mana_cost') {
-            cardObject.card_faces![index][k] = fixPhyrexianMana(v as string);
+            cardObject.card_faces![index][k] = fromImportMana(v as string);
           } else if (italicsReplaceKeys.includes(k)) {
-            cardObject.card_faces![index][k] = fixPhyrexianMana(
+            cardObject.card_faces![index][k] = fromImportMana(
               (v as string).replaceAll('\n', '\\n')
             );
           } else if (sameKeys.includes(k)) {
@@ -253,9 +244,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     } else if (key in keyCorrespondences) {
       cardObject[keyCorrespondences[key]] = value;
     } else if (key == 'mana_cost') {
-      cardObject[key] = fixPhyrexianMana(value);
+      cardObject[key] = fromImportMana(value);
     } else if (italicsReplaceKeys.includes(key)) {
-      cardObject[key] = fixPhyrexianMana(value.replaceAll('\n', '\\n'));
+      cardObject[key] = fromImportMana(value.replaceAll('\n', '\\n'));
     } else if (key == 'frame') {
       // if it was released after June 2019, use the new token frame
       const isNewToken =
