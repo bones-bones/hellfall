@@ -2147,7 +2147,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hellfall/shared@workspace:packages/shared"
   dependencies:
-    "@types/node": "npm:^20.12.8"
     typescript: "npm:^5"
   languageName: unknown
   linkType: soft
@@ -8513,6 +8512,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hellfall@workspace:."
   dependencies:
+    "@types/node": "npm:^20.12.8"
     prettier: "npm:^2.2.1"
     tsx: "npm:^4.21.0"
     typescript: "npm:^5"
