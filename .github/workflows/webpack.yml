@@ -35,11 +35,11 @@ jobs:
       - name: Build shared package
         run: |
           cd packages/shared
-          npx tsc --emitDeclarationOnly
+          yarn tsc --emitDeclarationOnly
 
       - name: Type check
         run: |
-          cd packages/frontend && npx tsc --noEmit
+          cd packages/frontend && yarn tsc --noEmit
 
       - name: Build
         run: yarn build
