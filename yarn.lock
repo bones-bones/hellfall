@@ -2083,6 +2083,7 @@ __metadata:
     "@workday/canvas-kit-labs-react": "npm:^9.0.21"
     "@workday/canvas-kit-preview-react": "npm:^9.0.21"
     "@workday/canvas-kit-react": "npm:^9.0.21"
+    "@workday/canvas-system-icons-web": "npm:3.0.0"
     babel-eslint: "npm:^10.1.0"
     babel-jest: "npm:^26.6.0"
     babel-loader: "npm:^8.1.0"
@@ -4361,6 +4362,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@workday/canvas-system-icons-web@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@workday/canvas-system-icons-web@npm:3.0.0"
+  dependencies:
+    "@workday/design-assets-types": "npm:0.2.8"
+  checksum: 10c0/fa62b6d40c1d16236c59b7e3623fdaf27bd00d6ac36b298be24eb705d4ec5561499b79eb81db030d411b005f32a83cc0a9838dffb9551e02b173ee2e141a54f5
+  languageName: node
+  linkType: hard
+
 "@workday/canvas-system-icons-web@npm:^3.0.0":
   version: 3.0.37
   resolution: "@workday/canvas-system-icons-web@npm:3.0.37"
@@ -4374,6 +4384,13 @@ __metadata:
   version: 0.2.10
   resolution: "@workday/design-assets-types@npm:0.2.10"
   checksum: 10c0/251a4b53d76b38ac12b2748b08ba683958ac1b5f52900e0e52d4df80ab19dc648685d9118641f93cae17f20011b5af7dd02babb8d54d7a2cb8e79d48cdce1898
+  languageName: node
+  linkType: hard
+
+"@workday/design-assets-types@npm:0.2.8":
+  version: 0.2.8
+  resolution: "@workday/design-assets-types@npm:0.2.8"
+  checksum: 10c0/a192c453a1f193b15d0c77046dd40e847ee29705e8598057ae0085b9e02a76953228f7e6137e91657b9a6a7c4f7df2dba2bc115bb4a6b64cb7da201fdce80b40
   languageName: node
   linkType: hard
 
