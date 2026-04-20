@@ -92,13 +92,13 @@
     "jest-watch-typeahead": "0.6.1",
     "webpack-cli": "^5.1.4",
     "xmlbuilder": "^15.1.1",
-    "yarn": "^1.22.10"
+    "yarn": "^4"
   },
   "scripts": {
-    "start": "NODE_ENV=development yarn webpack serve --config=webpack.config.js",
-    "build": "NODE_ENV=production yarn webpack --config=webpack.config.js",
+    "start": "NODE_ENV=development webpack serve --config=webpack.config.js",
+    "build": "NODE_ENV=production webpack --config=webpack.config.js",
     "fix": "eslint --ext .ts,.tsx --fix ./src",
-    "start:windows": "yarn webpack serve --config=webpack.config.js"
+    "start:windows": "webpack serve --config=webpack.config.js"
   },
   "jest": {
     "roots": [
