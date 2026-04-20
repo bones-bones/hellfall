@@ -156,4 +156,7 @@ Write a script to transform the database
 - figure out if pip shadows have correct angle (should they be slightly more downward than leftward?)
 - fix the purple guy side 2 button on hellfall
 - fully update draftmancer code
+- figure out if draftmancer needs deconfliction
+- add more spacing between name and cost
 - implement flip/aftermath rotation buttons (base it off of cockatrice face merge logic)
+- clean up hcj webpage

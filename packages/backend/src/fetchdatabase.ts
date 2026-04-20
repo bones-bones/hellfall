@@ -419,6 +419,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           cardObject.has_draft_partners = true;
         } else if (tag == 'meld' && cardObject.all_parts) {
           cardObject.all_parts[0].component = 'meld_part';
+        } else if (tag == 'NotDirectlyDraftable') {
+          // for Prismatic Pardner
+          cardObject.not_directly_draftable = true;
         }
         if (!('layout' in cardObject)) {
           if (cardObject.card_faces.length <= 1) {

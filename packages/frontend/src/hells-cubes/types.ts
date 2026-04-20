@@ -67,5 +67,6 @@ export type DraftmancerCustomCard = {
   oracle_text?: string; // Oracle text.
   power?: number | string; // Creature power
   toughness?: number | string; // Creature toughness
-  loyalty?: number | string; // Planeswalker loyalty
+  loyalty?: number | string; // Planeswalker loyalty/battle defense
+  canBeACommander?: boolean;
 };

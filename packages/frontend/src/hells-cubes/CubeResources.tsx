@@ -251,8 +251,8 @@ export const CubeResources = () => {
                     onClick={() => {
                       getDraftmancerForCube({
                         id: cubeSetup.id,
-                        cards: filterSet(cards, [cubeSetup.id]),
                         name: cubeSetup.name,
+                        allCards: cards,
                       });
                     }}
                   >

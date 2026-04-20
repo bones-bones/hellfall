@@ -6,6 +6,10 @@ import {
   DraftmancerCustomCard,
   SimpleDraftEffectList,
 } from '../types';
+import { toExportName } from '@hellfall/shared/utils/textHandling';
+import { canBeACommander } from '../../hellfall/canBeACommander';
+import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
+import { getSplitSet } from '../../hellfall/filters/filterSet';
 
 // make draft_image back face
 
@@ -123,12 +127,16 @@ const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.MultiFaced
 };
 
 export const HCToDraftmancer = (
-  cards: HCCard.Any[],
-  tokens: HCCard.Any[]
+  allCards: HCCard.Any[],
+  set: string
 ): { cards: DraftmancerCustomCard[]; tokens: DraftmancerCustomCard[] } => {
+  const { cards, tokens } = getSplitSet(allCards, set, true);
   const idNames: Record<string, string> = {};
-
+  const commanderIds: string[] = [];
   const compressHCCardFaces = (card: HCCard.Any) => {
+    if (set == 'HC6' && canBeACommander(card)) {
+      commanderIds.push(card.id);
+    }
     if ('card_faces' in card) {
       // compress/drop layouts that should always be compressed/dropped
       if (card.card_faces.length > 1) {
@@ -157,9 +165,15 @@ export const HCToDraftmancer = (
       } else if (!card.card_faces[0].image) {
         card.card_faces[0].image = card.image;
       }
+      // clean the names
+      card.card_faces[0].name = toExportName(card.card_faces[0].name);
+      if (card.card_faces.length > 1) {
+        card.card_faces[1].name = toExportName(card.card_faces[1].name);
+      }
       // store the names
       idNames[card.id] = card.card_faces[0].name;
     } else {
+      card.name = toExportName(card.name);
       idNames[card.id] = card.name;
     }
     return card;
@@ -173,7 +187,7 @@ export const HCToDraftmancer = (
       image: card.image,
       colors: card.colors,
       set: card.set,
-      oracle_text: card.oracle_text,
+      oracle_text: card.oracle_text.replaceAll('\\n', '\n'),
     };
     if (card.subtypes) {
       draftCard.subtypes = card.subtypes;
@@ -199,7 +213,7 @@ export const HCToDraftmancer = (
       image: face.image ? face.image : card.image,
       colors: face.colors,
       set: card.set,
-      oracle_text: face.oracle_text,
+      oracle_text: face.oracle_text.replaceAll('\\n', '\n'),
     };
     if (face.subtypes) {
       draftCard.subtypes = face.subtypes;
@@ -222,7 +236,7 @@ export const HCToDraftmancer = (
       mana_cost: face.mana_cost,
       type: face.type_line,
       image: face.image,
-      oracle_text: face.oracle_text,
+      oracle_text: face.oracle_text.replaceAll('\\n', '\n'),
     };
     if (face.subtypes) {
       draftFace.subtypes = face.subtypes;
@@ -286,6 +300,9 @@ export const HCToDraftmancer = (
 
   const HCCardToDraftmancerCard = (card: HCCard.Any): DraftmancerCustomCard => {
     const draftCard = 'card_faces' in card ? extractFrontFace(card) : convertSingleFace(card);
+    if (set == 'HC6' && commanderIds.includes(card.id)) {
+      draftCard.canBeACommander = true;
+    }
     if ('card_faces' in card && card.card_faces.length > 1) {
       draftCard.back = HCFaceToDraftFace(card.card_faces[1]);
     } else if (card.draft_image && !card.tags?.includes('gif')) {
@@ -306,6 +323,55 @@ export const HCToDraftmancer = (
     }
     return draftCard;
   };
+
+  if (set == 'HCJ') {
+    const allCompressed = cards.concat(tokens).map(card => compressHCCardFaces(card));
+    const frontCards = hcjFrontCards.map(pack => {
+      const front: DraftmancerCustomCard = {
+        name: `${pack.name} - ${pack.tag}`,
+        mana_cost: '',
+        type: 'Card',
+        image: pack.url,
+        set: 'FHCJ',
+      };
+      const cardIdList: string[] = [];
+      pack.lands.forEach(land => {
+        if (land.id) {
+          cardIdList.push(...Array(land.count).fill(land.id));
+        }
+      });
+      allCompressed
+        .filter(card => card.tags?.includes(pack.tag) && !cardIdList.includes(card.id))
+        .forEach(card => {
+          cardIdList.push(card.id);
+          if (pack.secondCopyOf && pack.secondCopyOf == card.id) {
+            cardIdList.push(card.id);
+          }
+        });
+      const cardNameList = cardIdList.map(id => idNames[id]);
+      pack.lands.forEach(land => {
+        if (land.name) {
+          cardNameList.push(...Array(land.count).fill(land.name));
+        }
+      });
+      front.draft_effects = [
+        {
+          type: 'AddCards',
+          cards: cardNameList,
+        } as AddCards,
+      ];
+
+      const relatedNameList: string[] = [];
+      cardIdList.forEach(id => {
+        if (!relatedNameList.includes(idNames[id])) {
+          relatedNameList.push(idNames[id]);
+        }
+      });
+      front.related_cards = relatedNameList;
+      return front;
+    });
+    return { cards: frontCards, tokens: allCompressed.map(card => HCCardToDraftmancerCard(card)) };
+  }
 
   const compressedCards = cards.map(card => compressHCCardFaces(card));
   const compressedTokens = tokens.map(token => compressHCCardFaces(token));
