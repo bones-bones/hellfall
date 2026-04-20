@@ -2140,7 +2140,6 @@ __metadata:
     webpack-dev-server: "npm:^5"
     xml-formatter: "npm:^3.7.0"
     xmlbuilder: "npm:^15.1.1"
-    yarn: "npm:^1.22.10"
   languageName: unknown
   linkType: soft
 
@@ -15213,16 +15212,6 @@ __metadata:
   bin:
     yarn-deduplicate: dist/cli.js
   checksum: 10c0/d06d97b8e665d4f003b40ddfb81e34d9b5101ee5e352963b1b7900aa2634f75b0effc0931839fbef1ab51211c365631e0506499ce4b4a77bfc792734412434d3
-  languageName: node
-  linkType: hard
-
-"yarn@npm:^1.22.10":
-  version: 1.22.22
-  resolution: "yarn@npm:1.22.22"
-  bin:
-    yarn: bin/yarn.js
-    yarnpkg: bin/yarn.js
-  checksum: 10c0/8c77198c93d7542e7f4e131c63b66de357b7076ecfbcfe709ec0d674115c2dd9edaa45196e5510e6e9366d368707a802579e3402071002e1c9d9a99d491478de
   languageName: node
   linkType: hard
 

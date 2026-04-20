@@ -91,8 +91,7 @@
     "jest-resolve": "26.6.0",
     "jest-watch-typeahead": "0.6.1",
     "webpack-cli": "^5.1.4",
-    "xmlbuilder": "^15.1.1",
-    "yarn": "^4"
+    "xmlbuilder": "^15.1.1"
   },
   "scripts": {
     "start": "NODE_ENV=development webpack serve --config=webpack.config.js",
