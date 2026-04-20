@@ -15,6 +15,7 @@
     "@workday/canvas-kit-labs-react": "^9.0.21",
     "@workday/canvas-kit-preview-react": "^9.0.21",
     "@workday/canvas-kit-react": "^9.0.21",
+    "@workday/canvas-system-icons-web": "3.0.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
     "babel-loader": "^8.1.0",
@@ -65,10 +66,9 @@
     "@types/jest": "^26.0.15",
     "@types/jsdom": "^16.2.13",
     "@types/motion-sensors-polyfill": "^0.3.0",
-    "@types/node": "^20.12.8",
+    "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/react-router": "^5.1.13",
     "@types/react-window": "^1.8.5",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^5",
@@ -91,14 +91,13 @@
     "jest-resolve": "26.6.0",
     "jest-watch-typeahead": "0.6.1",
     "webpack-cli": "^5.1.4",
-    "xmlbuilder": "^15.1.1",
-    "yarn": "^1.22.10"
+    "xmlbuilder": "^15.1.1"
   },
   "scripts": {
-    "start": "NODE_ENV=development yarn webpack serve --config=webpack.config.js",
-    "build": "NODE_ENV=production yarn webpack --config=webpack.config.js",
+    "start": "NODE_ENV=development webpack serve --config=webpack.config.js",
+    "build": "NODE_ENV=production webpack --config=webpack.config.js",
     "fix": "eslint --ext .ts,.tsx --fix ./src",
-    "start:windows": "yarn webpack serve --config=webpack.config.js"
+    "start:windows": "webpack serve --config=webpack.config.js"
   },
   "jest": {
     "roots": [

@@ -18,18 +18,21 @@
     "land-box": "yarn workspace @hellfall/backend land-box",
     "start:windows": "yarn workspace @hellfall/frontend start:windows",
     "install:all": "yarn install",
-    "clean:all": "yarn workspaces run clean || true && rm -rf node_modules",
-    "reinstall:all": "yarn clean:all && yarn install",
+    "clean": "rm -rf node_modules packages/*/node_modules",
+    "clean:all": "yarn workspaces run clean || true && rm -rf node_modules packages/*/node_modules",
+    "reinstall:all": "yarn clean && yarn install",
     "add:frontend": "yarn workspace @hellfall/frontend add",
     "add:backend": "yarn workspace @hellfall/backend add",
     "add:shared": "yarn workspace @hellfall/shared add"
   },
   "devDependencies": {
+    "@types/node": "^20.12.8",
     "prettier": "^2.2.1",
     "typescript": "^5",
     "yarn-deduplicate": "^6.0.2"
   },
   "dependencies": {
     "tsx": "^4.21.0"
-  }
+  },
+  "packageManager": "yarn@4.14.1"
 }
