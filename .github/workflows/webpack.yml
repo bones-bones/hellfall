@@ -33,13 +33,10 @@ jobs:
         run: yarn fix
 
       - name: Build shared package
-        run: |
-          cd packages/shared
-          yarn tsc --emitDeclarationOnly
+        run: yarn exec tsc -p packages/shared/tsconfig.json --emitDeclarationOnly
 
       - name: Type check
-        run: |
-          cd packages/frontend && yarn tsc --noEmit
+        run: yarn exec tsc -p packages/frontend/tsconfig.json --noEmit
 
       - name: Build
         run: yarn build
