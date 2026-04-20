@@ -120,7 +120,7 @@ export const toCockCube = ({
       manacost: face.mana_cost,
       cmc: face.mana_value,
     };
-    if ('id' in face && face.isActualToken) {
+    if ('id' in face && face.isActualToken && 'keywords' in face) {
       // for tokens, use their unique id as the name to prevent conflicts
       cockFace.name = face.id;
     }
@@ -201,38 +201,38 @@ export const toCockCube = ({
     const cockRelateds: CockRelatedProps[] = [];
     all_parts.forEach(part => {
       switch (part.component) {
-        case 'meld_part': {
-          const related: CockRelatedProps = {
-            id: part.id,
-            reverse: '',
-            attach: 'transform',
-          };
-          cockRelateds.push(related);
-          break;
-        }
         case 'meld_result': {
           const related: CockRelatedProps = {
             id: part.id,
-            reverse: 'reverse-',
+            reverse: '',
             attach: 'transform',
           };
           cockRelateds.push(related);
           break;
         }
-        case 'token': {
-          const related: CockRelatedProps = {
-            id: part.id,
-            reverse: '',
-          };
-          if (part.persistent) {
-            related.persistent = 'persistent';
-          }
-          if (part.count) {
-            related.count = part.count;
-          }
-          cockRelateds.push(related);
-          break;
-        }
+        // case 'meld_part': {
+        //   const related: CockRelatedProps = {
+        //     id: part.id,
+        //     reverse: 'reverse-',
+        //     attach: 'transform',
+        //   };
+        //   cockRelateds.push(related);
+        //   break;
+        // }
+        // case 'token': {
+        //   const related: CockRelatedProps = {
+        //     id: part.id,
+        //     reverse: '',
+        //   };
+        //   if (part.persistent) {
+        //     related.persistent = 'persistent';
+        //   }
+        //   if (part.count) {
+        //     related.count = part.count;
+        //   }
+        //   cockRelateds.push(related);
+        //   break;
+        // }
         case 'token_maker': {
           const related: CockRelatedProps = {
             id: part.id,
@@ -316,8 +316,15 @@ export const toCockCube = ({
     }
     // make sure names aren't taken and then store the names
     cockCard.props.forEach((face, i) => {
+      if (card.isActualToken) {
+        if (cockCard.props.length>1) {
+          face.name +='1';
+        } else {
+          face.name = card.id;
+        }
+      }
       if (!face.name) {
-        face.name = `(${i ? 'back' : 'front'} of ${cockCard.props[1 - i].name})`;
+        face.name = `(${i ? 'Back' : 'Front'} of ${cockCard.props[1 - i].name})`;
       }
       while (nameIsTaken(face.name)) {
         face.name += ' ';

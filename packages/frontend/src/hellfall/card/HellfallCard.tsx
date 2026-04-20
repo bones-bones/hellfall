@@ -36,8 +36,8 @@ const getImages = (card: HCCard.Any) => {
       imagesToShow.push(card.image);
     }
   }
-  if ('draft_image' in card) {
-    imagesToShow.push(card.draft_image!);
+  if ('full_image' in card) {
+    imagesToShow.push(card.full_image!);
   }
   return imagesToShow;
 };
@@ -100,11 +100,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     }}
                     disabled={i === activeImageSide}
                   >
-                    {i == imagesToShow.length - 1 && data.draft_image
+                    {i == imagesToShow.length - 1 && data.full_image
                       ? data.tags?.includes('gif')
                         ? 'still'
                         : 'draft'
-                      : !data.draft_image &&
+                      : !data.full_image &&
                         i == imagesToShow.length - 1 &&
                         'card_faces' in data &&
                         'image' in data.card_faces[0]

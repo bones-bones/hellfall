@@ -48,7 +48,20 @@ const combineProps = ['mana_value', 'colors'];
 const overwriteProps = ['layout'];
 // these props are stored when the main face's prop doesn't exist but they do
 const addProps = ['image'];
-const dropLayouts: HCLayoutGroup.FaceLayoutType[] = ['draft_partner','meld_result'];
+const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
+  'draft_partner',
+  'meld_result',
+];
+const conditionalDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
+  'checklist',
+  'dungeon',
+  'token',
+  'emblem',
+  'checklist',
+  'misc',
+  'stickers',
+  'dungeon',
+]
 const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'split',
   'aftermath',
@@ -138,10 +151,10 @@ export const HCToDraftmancer = (
       commanderIds.push(card.id);
     }
     if ('card_faces' in card) {
-      // compress/drop layouts that should always be compressed/dropped
+      // compress/drop layouts that should always be compressed or should be dropped
       if (card.card_faces.length > 1) {
         for (let i = card.card_faces.length - 1; i > 0; i--) {
-          if (dropLayouts.includes(card.card_faces[i].layout)) {
+          if (alwaysDropLayouts.includes(card.card_faces[i].layout) || (conditionalDropLayouts.includes(card.card_faces[i].layout) && card.all_parts && card.all_parts.some(part=> part.name == card.card_faces[i].name))) {
             card.card_faces.splice(i, 1);
           } else if (alwaysCompressLayouts.includes(card.card_faces[i].layout)) {
             card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
@@ -262,7 +275,7 @@ export const HCToDraftmancer = (
       card.all_parts
         .filter(part => part.is_draft_partner && part.id in idNames)
         .forEach(part => {
-          if (part.count && parseInt(part.count) && parseInt(part.count) > 0) {
+          if (part.count && parseInt(part.count) > 0) {
             draftpartnerNameList.push(...Array(parseInt(part.count)).fill(idNames[part.id]));
           } else {
             draftpartnerNameList.push(idNames[part.id]);
@@ -279,7 +292,7 @@ export const HCToDraftmancer = (
         cards: draftpartnerNameList,
       };
       const count = card.tag_notes?.['AddCards'];
-      if (count && parseInt(count) && parseInt(count) > 0) {
+      if (count && parseInt(count) > 0) {
         add.count = parseInt(count);
       }
       effectList.push(add);
@@ -305,12 +318,12 @@ export const HCToDraftmancer = (
     }
     if ('card_faces' in card && card.card_faces.length > 1) {
       draftCard.back = HCFaceToDraftFace(card.card_faces[1]);
-    } else if (card.draft_image && !card.tags?.includes('gif')) {
-      // gif handling for tts also uses draft_image, so don't pull those
+    } else if (card.full_image && !card.tags?.includes('gif')) {
+      // gif handling for tts also uses full_image, so don't pull those
       draftCard.back = {
         name: draftCard.name + ' Draft Image',
         type: 'Draft Image',
-        image: card.draft_image,
+        image: card.full_image,
       } as DraftmancerCardFace;
     }
     const related = getRelatedList(card);

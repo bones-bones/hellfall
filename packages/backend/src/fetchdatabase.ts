@@ -18,6 +18,7 @@ import {
 } from '@hellfall/shared/types';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { stripMasterpiece } from '@hellfall/shared/utils/textHandling.ts';
+import { error } from 'console';
 
 export const fetchDatabase = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -101,7 +102,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     keywords: [],
     set: '',
     variation: false,
-    draft_image_status: HCImageStatus.Inapplicable,
+    full_image_status: HCImageStatus.Inapplicable,
     border_color: HCBorderColor.Black,
     frame: HCFrame.Stamp,
     finish: HCFinish.Nonfoil,
@@ -247,6 +248,16 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'meld-frame': HCFrameEffect.Meld,
   };
 
+  const frontImageTagProps:Record<string,string> = {
+    'draft-image':'draft_image',
+    'rotated-draft-image':'rotated_draft_image',
+    'still-draft-image':'still_draft_image',
+  }
+  const faceImageTagProps:Record<string,string> = {
+    'rotated-image':'rotated_image',
+    'still-image':'still-image'
+  }
+
   const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
       card_faces: [],
@@ -348,7 +359,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             cardObject[keys[i]] = entry[i];
           }
           if (keys[i] == 'image') {
-            cardObject.image_status = HCImageStatus.MedRes;
+            cardObject.image_status = HCImageStatus.HighRes;
           }
         }
       }
@@ -365,23 +376,28 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           const [tag, note] = fullTag.split('<');
           if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
             const index = parseInt(note);
-            cardObject.card_faces[
-              !isNaN(index) && index >= 0 && index < cardObject.card_faces.length ? index : 0
-            ].watermark = tag.slice(0, tag.lastIndexOf('-'));
+            cardObject.card_faces[index > 0 && index < cardObject.card_faces.length ? index : 0].watermark = tag.slice(0, tag.lastIndexOf('-'));
           } else if (tag in frameTags) {
             const index = parseInt(note);
-            cardObject.card_faces[
-              !isNaN(index) && index >= 0 && index < cardObject.card_faces.length ? index : 0
-            ].frame = frameTags[tag];
+            cardObject.card_faces[index > 0 && index < cardObject.card_faces.length ? index : 0].frame = frameTags[tag];
           } else if (tag in frameEffectTags) {
             const index = parseInt(note);
-            const faceIndex =
-              !isNaN(index) && index >= 0 && index < cardObject.card_faces.length ? index : 0;
+            const faceIndex = index > 0 && index < cardObject.card_faces.length ? index : 0;
             if ('frame_effects' in cardObject.card_faces[faceIndex]) {
               cardObject.card_faces[faceIndex].frame_effects.push(frameEffectTags[tag]);
             } else {
               cardObject.card_faces[faceIndex].frame_effects = [frameEffectTags[tag]];
             }
+          } else if (tag in faceImageTagProps){
+            if (note.includes(';')) {
+              const [face, image] = [parseInt(note.split(';')[0]),note.split(';')[1]]
+              const faceToUse = face > 0 && face < cardObject.card_faces.length ? face : 0
+              cardObject.card_faces[faceToUse][faceImageTagProps[tag]] = image.slice(0,4) == 'http' ? image : 'https://lh3.googleusercontent.com/d/' + image;
+            } else {
+              cardObject[faceImageTagProps[tag]] = note.slice(0,4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
+            }
+          } else if (tag in frontImageTagProps){
+            cardObject[faceImageTagProps[tag]] = note.slice(0,4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
           } else {
             if (!('tag_notes' in cardObject)) {
               cardObject.tag_notes = {} as Record<string, string>;
@@ -446,12 +462,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           tag in cardObject.tag_notes
         ) {
           cardObject.card_faces[0].flavor_name = cardObject.tag_notes[tag];
-        } else if (tag == 'gif' && !cardObject.tags.includes('mdfc')) {
-          const stillIndex = cardObject.card_faces.findLastIndex(face => face.image);
-          cardObject.draft_image = cardObject.card_faces[stillIndex].image;
-          cardObject.draft_image_status = HCImageStatus.HighRes;
-          delete cardObject.card_faces[stillIndex].image;
-          delete cardObject.card_faces[stillIndex].image_status;
+        // } else if ((tag == 'gif' || tag == 'sideways') && cardObject.card_faces.some(face => face.image) && !cardObject.tags.includes('mdfc')) {
+        //   const stillIndex = cardObject.card_faces.findLastIndex(face => face.image);
+        //   cardObject.full_image = cardObject.card_faces[stillIndex].image;
+        //   cardObject.full_image_status = HCImageStatus.HighRes;
+        //   delete cardObject.card_faces[stillIndex].image;
+        //   delete cardObject.card_faces[stillIndex].image_status;
         }
       });
     }
@@ -576,8 +592,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     ) {
       // if ('image' in cardObject.card_faces[0] && cardObject.card_faces[0].image) {
       //   if ('image' in cardObject && cardObject.image) {
-      //     cardObject.draft_image = cardObject.image;
-      //     cardObject.draft_image_status = cardObject.image_status;
+      //     cardObject.full_image = cardObject.image;
+      //     cardObject.full_image_status = cardObject.image_status;
       //   }
       //   cardObject.image = cardObject.card_faces[0].image;
       //   cardObject.image_status = cardObject.card_faces[0].image_status;
@@ -586,15 +602,16 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       // }
     }
     if (cardObject.card_faces.length <= 1) {
-      if ('image' in cardObject.card_faces[0] && cardObject.card_faces[0].image) {
-        if ('image' in cardObject && cardObject.image) {
-          cardObject.draft_image = cardObject.image;
-          cardObject.draft_image_status = cardObject.image_status;
-        }
-        cardObject.image = cardObject.card_faces[0].image;
-        cardObject.image_status = cardObject.card_faces[0].image_status;
-        delete cardObject.card_faces[0].image;
-        cardObject.card_faces[0].image_status = 'front';
+      if (cardObject.card_faces[0].image) {
+        throw error;
+        // if (cardObject.image) {
+        //   cardObject.full_image = cardObject.image;
+        //   cardObject.full_image_status = cardObject.image_status;
+        // }
+        // cardObject.image = cardObject.card_faces[0].image;
+        // cardObject.image_status = cardObject.card_faces[0].image_status;
+        // delete cardObject.card_faces[0].image;
+        // cardObject.card_faces[0].image_status = 'front';
       }
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
         ([key, value]) =>
@@ -664,8 +681,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         !cardObject.tags?.includes('gif')
       ) {
         if ('image' in cardObject && cardObject.image) {
-          cardObject.draft_image = cardObject.image;
-          cardObject.draft_image_status = cardObject.image_status;
+          cardObject.full_image = cardObject.image;
+          cardObject.full_image_status = cardObject.image_status;
         }
         cardObject.image = cardObject.card_faces[0].image;
         cardObject.image_status = cardObject.card_faces[0].image_status;

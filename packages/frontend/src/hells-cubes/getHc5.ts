@@ -32,7 +32,7 @@ const PLACEHOLDER_CARD: Omit<HCCard.Normal, 'toFaces' | 'toJSON'> = {
     commander: HCLegality.Legal,
   },
   color_identity_hybrid: [],
-  draft_image_status: HCImageStatus.Inapplicable,
+  full_image_status: HCImageStatus.Inapplicable,
   variation: false,
   border_color: 'black',
   finish: 'nonfoil',

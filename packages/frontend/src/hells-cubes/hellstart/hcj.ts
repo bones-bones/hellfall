@@ -45,7 +45,7 @@ import { DraftmancerCustomCard } from '../types.ts';
 //       commander: HCLegality.Legal,
 //     },
 //     color_identity_hybrid: [],
-//     draft_image_status: HCImageStatus.Inapplicable,
+//     full_image_status: HCImageStatus.Inapplicable,
 //     variation: false,
 //     border_color: 'black',
 //     frame: '2015',

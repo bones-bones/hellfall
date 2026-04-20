@@ -18,6 +18,8 @@ export const filterSet = (
   includeExtraSets: boolean = false,
   mode: 'Cards' | 'Tokens' | 'Both' = 'Cards'
 ): HCCard.Any[] => {
+  const noSets = sets.length + extraSets.length == 0 || (sets.length == 1 && sets[0] == 'All');
+
   /**
    * Checks if a card's set is in the results. Also returns true if the card's set is a subset of one of the results.
    * @param set set of a card
@@ -27,12 +29,12 @@ export const filterSet = (
     // Exclude HCV.1-4 from HCV if !includeExtraSets
     if (!includeExtraSets && ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4'].includes(set)) {
       return extraSets.some(e => set.includes(e));
-    } else {
+    } else if (!noSets) {
       return sets.some(e => set.includes(e)) || extraSets.some(e => set.includes(e));
+    } else {
+      return true;
     }
   };
-
-  const noSets = sets.length + extraSets.length == 0 || (sets.length == 1 && sets[0] == 'All');
 
   switch (mode) {
     case 'Cards':
@@ -113,7 +115,7 @@ export const getSplitSet = (
     allCards,
     extraSetList.includes(set) ? [] : [set],
     extraSetList.includes(set) ? [set] : [],
-    false,
+    true,
     'Both'
   );
   const cards = filteredCards.filter(

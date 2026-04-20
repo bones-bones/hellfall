@@ -78,7 +78,7 @@ export const fetchNotMagic = async () => {
     variation: false,
     isActualToken: true,
     image_status: HCImageStatus.MedRes,
-    draft_image_status: HCImageStatus.Inapplicable,
+    full_image_status: HCImageStatus.Inapplicable,
     layout: HCLayout.NotMagic,
     border_color: HCBorderColor.Borderless,
     frame: HCFrame.Jank,

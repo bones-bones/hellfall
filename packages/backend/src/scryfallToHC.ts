@@ -120,7 +120,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     set: asToken ? 'SFT' : 'SFC',
     variation: false,
     image_status: HCImageStatus.HighRes,
-    draft_image_status: HCImageStatus.Inapplicable,
+    full_image_status: HCImageStatus.Inapplicable,
     mana_cost: '',
   };
   const defaultMultiFaceProps: Record<string, any> = {

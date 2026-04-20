@@ -13,8 +13,8 @@ export const toDeck = (cards: HCCard.Any[]) => {
       FaceURL:
         'card_faces' in entry && entry.card_faces[0].image
           ? entry.card_faces[0].image
-          : entry.tags?.includes('gif') && entry.draft_image
-          ? entry.draft_image
+          : entry.tags?.includes('gif') && entry.full_image
+          ? entry.full_image
           : entry.image,
       BackURL:
         'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
