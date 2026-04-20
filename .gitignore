@@ -42,7 +42,7 @@ server/.env
 
 # yarn
 .yarn/install-state.gz
-.yarnrc.yml
+
 
 .env
 
