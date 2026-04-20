@@ -6,7 +6,6 @@
   "types": "./src/index.ts",
   "type": "module",
   "devDependencies": {
-    "@types/node": "^20.12.8",
     "typescript": "^5"
   },
   "exports": {

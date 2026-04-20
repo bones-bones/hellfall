@@ -27,6 +27,7 @@
   "devDependencies": {
     "prettier": "^2.2.1",
     "typescript": "^5",
+    "@types/node": "^20.12.8",
     "yarn-deduplicate": "^6.0.2"
   },
   "dependencies": {
