@@ -124,18 +124,16 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {i > 0 && <Divider />}
               {face.name &&
                 (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
-                  <Text typeLevel="body.medium" key="name">
+                  <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
                     {formatDiscordMarkdownInline(formatParens(face.name))}
                   </Text>
                 ) : (
                   <>
-                    <Text typeLevel="body.medium" key="name">
+                    <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
                       {stringToMana(face.name)}
                     </Text>
-                    {/* <br /> */}
                   </>
                 ))}
-              {'   '}
               <Text typeLevel="body.medium" key="cost">
                 {stringToMana(face.mana_cost)}
               </Text>

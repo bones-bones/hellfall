@@ -495,52 +495,52 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         if (index == 0) {
           face.image_status = HCImageStatus.Front;
         } else if (
-          cardObject.tags?.includes('draftpartner') ||
-          cardObject.card_faces[0].oracle_text?.toLowerCase().includes('draftpartner')
+          cardObject.tags?.includes('draftpartner-faces')
+          // || cardObject.card_faces[0].oracle_text?.toLowerCase().includes('draftpartner')
         ) {
           face.image_status = HCImageStatus.DraftPartner;
         } else if (
           // the inset check correctly handles mr. crime 1981
-          (cardObject.tags?.includes('reminder-on-back') && !cardObject.tags?.includes('inset')) ||
-          face.types?.includes('Reminder Card') ||
-          face.types?.includes('Spellbook')
+          cardObject.tags?.includes('reminder-on-back') &&
+          !cardObject.tags?.includes('inset')
+          // || face.types?.includes('Reminder Card') || face.types?.includes('Spellbook')
         ) {
           face.image_status = HCImageStatus.Reminder;
         } else if (
           cardObject.tags?.includes('dungeon-on-back') ||
-          cardObject.tags?.includes('dungeon-in-inset') ||
-          face.types?.includes('Dungeon')
+          cardObject.tags?.includes('dungeon-in-inset')
+          // || face.types?.includes('Dungeon')
         ) {
           face.image_status = HCImageStatus.Dungeon;
         } else if (
-          cardObject.tags?.includes('stickers-on-back') ||
-          face.types?.includes('Stickers')
+          cardObject.tags?.includes('stickers-on-back')
+          // || face.types?.includes('Stickers')
         ) {
           face.image_status = HCImageStatus.Stickers;
         } else if (
           cardObject.tags?.includes('token-on-back') ||
-          cardObject.tags?.includes('token-in-inset') ||
-          face.supertypes?.includes('Token')
+          cardObject.tags?.includes('token-in-inset')
+          // || face.supertypes?.includes('Token')
         ) {
           face.image_status = HCImageStatus.Token;
         } else if (
-          cardObject.tags?.includes('flip') ||
-          cardObject.card_faces[0].oracle_text?.toLowerCase().includes('flip')
+          cardObject.tags?.includes('flip')
+          // || cardObject.card_faces[0].oracle_text?.toLowerCase().includes('flip')
         ) {
           face.image_status = HCImageStatus.Flip;
         } else if (
-          cardObject.tags?.includes('aftermath') ||
-          face.oracle_text?.toLowerCase().includes('aftermath')
+          cardObject.tags?.includes('aftermath')
+          // || face.oracle_text?.toLowerCase().includes('aftermath')
         ) {
           face.image_status = HCImageStatus.Aftermath;
         } else if (
-          cardObject.tags?.includes('inset') ||
-          face.subtypes?.some(
-            (sub: string) =>
-              ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub) ||
-              (index == 1 &&
-                cardObject.card_faces[0].oracle_text.toLowerCase().includes('prepared'))
-          )
+          cardObject.tags?.includes('inset')
+          // || face.subtypes?.some(
+          //   (sub: string) =>
+          //     ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub) ||
+          //     (index == 1 &&
+          //       cardObject.card_faces[0].oracle_text.toLowerCase().includes('prepared'))
+          // )
         ) {
           face.image_status = HCImageStatus.Inset;
         } else if (cardObject.tags?.includes('prepare')) {
@@ -571,9 +571,21 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         cardObject[key] = defaultProps[key];
       });
     if (
-      cardObject.card_faces.length <= 1 ||
-      cardObject.card_faces[0]?.oracle_text?.toLowerCase().includes('draftpartner')
+      cardObject.card_faces.length <= 1
+      // || cardObject.card_faces[0]?.oracle_text?.toLowerCase().includes('draftpartner')
     ) {
+      // if ('image' in cardObject.card_faces[0] && cardObject.card_faces[0].image) {
+      //   if ('image' in cardObject && cardObject.image) {
+      //     cardObject.draft_image = cardObject.image;
+      //     cardObject.draft_image_status = cardObject.image_status;
+      //   }
+      //   cardObject.image = cardObject.card_faces[0].image;
+      //   cardObject.image_status = cardObject.card_faces[0].image_status;
+      //   delete cardObject.card_faces[0].image;
+      //   cardObject.card_faces[0].image_status = 'front';
+      // }
+    }
+    if (cardObject.card_faces.length <= 1) {
       if ('image' in cardObject.card_faces[0] && cardObject.card_faces[0].image) {
         if ('image' in cardObject && cardObject.image) {
           cardObject.draft_image = cardObject.image;
@@ -584,8 +596,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         delete cardObject.card_faces[0].image;
         cardObject.card_faces[0].image_status = 'front';
       }
-    }
-    if (cardObject.card_faces.length <= 1) {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
         ([key, value]) =>
           ![
@@ -650,8 +660,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       if (
         cardObject.card_faces[0].image &&
         (cardObject.card_faces.filter(e => e.image).length == 1 ||
-          cardObject.tags?.includes('meld') ||
-          cardObject.tags?.includes('draftpartner')) &&
+          cardObject.tags?.includes('draft-image')) &&
         !cardObject.tags?.includes('gif')
       ) {
         if ('image' in cardObject && cardObject.image) {

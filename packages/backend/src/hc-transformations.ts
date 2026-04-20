@@ -80,6 +80,7 @@ const tokenRemovableProps = [
   'draft_image',
   'not_directly_draftable',
   'has_draft_partners',
+  'all_parts',
 ];
 const notMagicBlankableProps = ['oracle_text', 'mana_value'];
 const notMagicRemovableProps = [
@@ -486,7 +487,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         }
         delete (merged as any)[key];
       });
-  } else if (merged.set == 'HCT') {
+  } else if (merged.set != 'NotMagic') {
     tokenRemovableProps
       .filter(key => key in merged && !(key in newCard))
       .forEach(key => {
@@ -765,7 +766,11 @@ const main = async () => {
             if (
               (token.type_line.includes('Stickers') &&
                 relatedCard.tags?.includes('draftpartner')) ||
-              relatedCard.tags?.includes('AddCards')
+              (relatedCard.tags?.includes('AddCards') &&
+                token.id != 'Ticket Counter1' &&
+                (!relatedCard.tag_notes?.['AddCards'] ||
+                  parseInt(relatedCard.tag_notes['AddCards']) ||
+                  relatedCard.tag_notes['AddCards'] == token.id))
             ) {
               relatedCard.has_draft_partners = true;
               token.has_draft_partners = true;
@@ -795,8 +800,7 @@ const main = async () => {
             }
             // meldPart.image =
             //   'card_faces' in relatedCard && relatedCard.card_faces[0].image ? relatedCard.card_faces[0].image : relatedCard.image;
-            // TODO: Figure out if this is still necessary
-            if (token.id != 'Omnath, the Forbidden One1') {
+            if (relatedCard.tags?.includes('draftpartner')) {
               meldPart.is_draft_partner = true;
             }
             meldRelatedCards.push(meldPart);
@@ -936,6 +940,7 @@ const main = async () => {
           }
         });
     });
+
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {

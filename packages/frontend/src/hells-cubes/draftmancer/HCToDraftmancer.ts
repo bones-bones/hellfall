@@ -11,8 +11,6 @@ import { canBeACommander } from '../../hellfall/canBeACommander';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
 import { getSplitSet } from '../../hellfall/filters/filterSet';
 
-// make draft_image back face
-
 const subLayouts = [
   'token',
   'emblem',
