@@ -10,7 +10,7 @@ import { getDraftmancerForCube } from './draftmancer';
 import { getHc5 } from './getHc5.ts';
 import { toMPCAutofill } from './toMPCAutofill.ts';
 import { getLands } from './getLands.ts';
-import { filterSet, getSplitSet } from '../hellfall/filterSet.ts';
+import { filterSet, getSplitSet } from '../hellfall/filters/filterSet.ts';
 
 type CubeSetup = {
   name: string;

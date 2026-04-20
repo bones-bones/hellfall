@@ -1,6 +1,6 @@
 import { HCCard } from '@hellfall/shared/types';
-import { extraSetList } from './constants';
-import { getHc5 } from '../hells-cubes/getHc5';
+import { extraSetList } from '../constants';
+import { getHc5 } from '../../hells-cubes/getHc5';
 
 /**
  * Filters cards based on specified sets
@@ -94,9 +94,17 @@ export const filterSet = (
   }
 };
 
+/**
+ * Get a set split into cards and tokens.
+ * @param allCards The list of all cards
+ * @param set The set to get
+ * @param moveNonDraftablesToTokens Whether to move cards that aren't directly draftable to the tokens section
+ * @returns
+ */
 export const getSplitSet = (
   allCards: HCCard.Any[],
-  set: string
+  set: string,
+  moveNonDraftablesToTokens: boolean = false
 ): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
   if (set == 'HC5') {
     return { cards: getHc5(), tokens: [] };
@@ -108,13 +116,13 @@ export const getSplitSet = (
     false,
     'Both'
   );
-  const cards = filteredCards.filter(entry => entry.set.includes(set));
+  const cards = filteredCards.filter(
+    entry =>
+      entry.set.includes(set) && (moveNonDraftablesToTokens ? !entry.not_directly_draftable : true)
+  );
   const tokens = filteredCards.filter(
     entry =>
-      !entry.set.includes(set) ||
-      entry.all_parts?.filter(e =>
-        ['token_maker', 'meld_part', 'draft_partner'].includes(e.component)
-      )
+      !entry.set.includes(set) || (moveNonDraftablesToTokens ? entry.not_directly_draftable : false)
   );
   return { cards, tokens };
 };

@@ -49,7 +49,7 @@ import {
 } from '../colorComps';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 import { CHUNK_SIZE, extraSetList } from '../constants.ts';
-import { filterSet } from '../filterSet.ts';
+import { filterSet } from '../filters/filterSet.ts';
 
 export const useSearchResults = () => {
   const location = useLocation();

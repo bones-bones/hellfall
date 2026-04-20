@@ -89,7 +89,7 @@ export const getColorIdentityProps = (
       }
     });
 
-    if ('color_indicator' in face) {
+    if (face.color_indicator) {
       face.color_indicator?.forEach(color => {
         addColors([color]);
       });

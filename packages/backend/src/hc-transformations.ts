@@ -385,13 +385,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         merged.flavor_name = value;
         // TODO: store current version and print the diff if there is one
       } else if (merged.isActualToken && tokenIgnoreProps.includes(key) && merged.set != 'SFT') {
-      } else if (
-        key === 'all_parts' &&
-        Array.isArray(value) &&
-        'all_parts' in merged &&
-        'all_parts' in existingCard &&
-        'all_parts' in newCard
-      ) {
+      } else if (key == 'all_parts' && existingCard.all_parts && newCard.all_parts) {
         merged.all_parts = newCard.all_parts?.map(part => {
           // is true when the thing that makes this is itself a token
           const tokenIsMaker = !!(part.name && part.id);
@@ -722,23 +716,22 @@ const main = async () => {
   finalTokens
     .filter(e => 'all_parts' in e)
     .forEach(token => {
-      const relatedToken: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: token.id,
-        component: 'token',
-        name: token.name,
-        type_line: token.type_line,
-        set: token.set,
-        image: token.image,
-      };
       // add all tokens to all_parts
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          // if (tokenMaker.count) {
-          //   relatedToken.count = tokenMaker.count;
-          //   delete tokenMaker.count;
-          // }
+          const relatedToken: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: token.id,
+            component: 'token',
+            name: token.name,
+            type_line: token.type_line,
+            set: token.set,
+            image: token.image,
+          };
+          if (tokenMaker.count) {
+            relatedToken.count = tokenMaker.count;
+          }
           // goes by id if possible, but if not, it goes by name; tries to find in cards, then tries in tokens
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
@@ -768,10 +761,11 @@ const main = async () => {
             } else {
               relatedCard.all_parts = [relatedToken];
             }
-            // if stickers, add draftpartner props
+            // if stickers or AddCards, add draftpartner props
             if (
-              token.type_line.includes('Stickers') &&
-              relatedCard.tags?.includes('draftpartner')
+              (token.type_line.includes('Stickers') &&
+                relatedCard.tags?.includes('draftpartner')) ||
+              relatedCard.tags?.includes('AddCards')
             ) {
               relatedCard.has_draft_partners = true;
               token.has_draft_partners = true;
@@ -846,22 +840,21 @@ const main = async () => {
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
-      const relatedToken: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: card.id,
-        component: 'token',
-        name: card.name,
-        type_line: card.type_line,
-        set: card.set,
-        image: card.image,
-      };
       card.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          // if (tokenMaker.count) {
-          //   relatedToken.count = tokenMaker.count;
-          //   delete tokenMaker.count;
-          // }
+          const relatedToken: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: card.id,
+            component: 'token',
+            name: card.name,
+            type_line: card.type_line,
+            set: card.set,
+            image: card.image,
+          };
+          if (tokenMaker.count) {
+            relatedToken.count = tokenMaker.count;
+          }
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
               ? finalCards.find(card => card.id == tokenMaker.id)
@@ -898,23 +891,22 @@ const main = async () => {
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
-      const relatedPartner: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: card.id,
-        component: 'draft_partner',
-        name: card.name,
-        type_line: card.type_line,
-        set: card.set,
-        image: card.image,
-        is_draft_partner: true,
-      };
       card.all_parts
         ?.filter(e => e.component == 'draft_partner')
         .forEach(partnerCard => {
-          // if (partnerCard.count) {
-          //   relatedPartner.count = partnerCard.count;
-          //   delete partnerCard.count;
-          // }
+          const relatedPartner: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: card.id,
+            component: 'draft_partner',
+            name: card.name,
+            type_line: card.type_line,
+            set: card.set,
+            image: card.image,
+            is_draft_partner: true,
+          };
+          if (partnerCard.count) {
+            relatedPartner.count = partnerCard.count;
+          }
           const relatedCard = finalCards.find(e =>
             partnerCard.id ? e.id == partnerCard.id : textEquals(e.name, partnerCard.name)
           );
