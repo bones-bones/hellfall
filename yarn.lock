@@ -2147,6 +2147,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hellfall/shared@workspace:packages/shared"
   dependencies:
+    "@types/node": "npm:^20.12.8"
     typescript: "npm:^5"
   languageName: unknown
   linkType: soft
