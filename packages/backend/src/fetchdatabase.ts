@@ -317,23 +317,20 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           } else if (keys[i] == 'legalities') {
             const formats = entry[i].split(', ');
             const legalities: HCLegalitiesField = {
-              standard:
-                formats.includes('Banned')
+              standard: formats.includes('Banned')
                 ? cardObject.set.includes('HCV')
-                ? HCLegality.NotLegal
-                : HCLegality.Banned
+                  ? HCLegality.NotLegal
+                  : HCLegality.Banned
                 : HCLegality.Legal,
-              '4cb':
-                formats.includes('Banned (4CB)')
+              '4cb': formats.includes('Banned (4CB)')
                 ? cardObject.set.includes('HCV')
-                ? HCLegality.NotLegal
-                : HCLegality.Banned
+                  ? HCLegality.NotLegal
+                  : HCLegality.Banned
                 : HCLegality.Legal,
-              commander:
-                formats.includes('Banned (Commander)')
+              commander: formats.includes('Banned (Commander)')
                 ? cardObject.set.includes('HCV')
-                ? HCLegality.NotLegal
-                : HCLegality.Banned
+                  ? HCLegality.NotLegal
+                  : HCLegality.Banned
                 : HCLegality.Legal,
             };
             cardObject[keys[i]] = legalities;

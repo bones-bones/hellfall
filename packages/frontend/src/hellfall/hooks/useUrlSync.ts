@@ -1,4 +1,3 @@
-// hooks/useUrlSync.ts
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSetAtom, useAtom } from 'jotai';

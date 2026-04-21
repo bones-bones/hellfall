@@ -721,6 +721,7 @@ export const useSearchResults = () => {
     //   searchToSet.append('legality', legality.join(','));
     // }
     if (standardLegality) {
+      debugger;
       searchToSet.append('standard', standardLegality);
     }
     if (fourcbLegality) {
@@ -772,7 +773,7 @@ export const useSearchResults = () => {
     const newUrl = `?${searchToSet.toString()}`;
     const currentUrl = location.search;
 
-    if (newUrl !== currentUrl) {
+    if (newUrl != currentUrl && ![newUrl, currentUrl].every(url => ['', '?'].includes(url))) {
       // const getParamsWithoutTextFields = (url: string) => {
       //   const params = new URLSearchParams(url.substring(1));
       //   params.delete('name');
