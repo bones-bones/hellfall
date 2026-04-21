@@ -161,5 +161,5 @@ Write a script to transform the database
 - clean up hcj webpage
 - decide whether to include draft_images in draftmancer export
 - clean up todos
-- assign names for images in hellfallcard when filling image array
+- rework tts
 - put buttons for switching to rotated/still on top later

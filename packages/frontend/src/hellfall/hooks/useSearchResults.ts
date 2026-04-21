@@ -24,8 +24,11 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  legalityAtom,
-  // isCommanderAtom,
+  // legalityAtom,
+  standardLegalityAtom,
+  fourcbLegalityAtom,
+  commanderLegalityAtom,
+  isCommanderAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -78,8 +81,11 @@ export const useSearchResults = () => {
   const includeExtraSets = useAtomValue(includeExtraSetsAtom);
   const extraSets = useAtomValue(extraSetsAtom);
   const searchToken = useAtomValue(searchTokenAtom);
-  const legality = useAtomValue(legalityAtom);
-  // const isCommander = useAtomValue(isCommanderAtom);
+  // const legality = useAtomValue(legalityAtom);
+  const standardLegality = useAtomValue(standardLegalityAtom);
+  const fourcbLegality = useAtomValue(fourcbLegalityAtom);
+  const commanderLegality = useAtomValue(commanderLegalityAtom);
+  const isCommander = useAtomValue(isCommanderAtom);
   const manaValue = useAtomValue(manaValueAtom);
   const power = useAtomValue(powerAtom);
   const toughness = useAtomValue(toughnessAtom);
@@ -242,22 +248,19 @@ export const useSearchResults = () => {
           }
         }
 
-        if (legality.includes('isCommander')) {
+        if (isCommander) {
           if (!canBeACommander(entry)) {
             return false;
           }
         }
-        if (legality.filter(e => e != 'isCommander').length > 0) {
-          if (legality.includes('constructedLegal') && entry.legalities.standard != 'legal') {
-            return false;
-          }
-          if (legality.includes('4cbLegal') && entry.legalities['4cb'] != 'legal') {
-            return false;
-          }
-
-          if (legality.includes('hellsmanderLegal') && entry.legalities.commander != 'legal') {
-            return false;
-          }
+        if (standardLegality && entry.legalities.standard != standardLegality) {
+          return false
+        }
+        if (fourcbLegality && entry.legalities['4cb'] != fourcbLegality) {
+          return false
+        }
+        if (commanderLegality && entry.legalities.commander != commanderLegality) {
+          return false
         }
         if (
           typeSearch.length > 0 &&
@@ -714,12 +717,21 @@ export const useSearchResults = () => {
     if (searchToken != 'Cards') {
       searchToSet.append('token', searchToken);
     }
-    if (legality.length > 0) {
-      searchToSet.append('legality', legality.join(','));
-    }
-    // if (isCommander) {
-    //   searchToSet.append('isCommander', 'true');
+    // if (legality.length > 0) {
+    //   searchToSet.append('legality', legality.join(','));
     // }
+    if (standardLegality) {
+      searchToSet.append('standard',standardLegality)
+    }
+    if (fourcbLegality) {
+      searchToSet.append('4cb',fourcbLegality)
+    }
+    if (commanderLegality) {
+      searchToSet.append('commander',commanderLegality)
+    }
+    if (isCommander) {
+      searchToSet.append('isCommander', 'true');
+    }
     if (manaValue) {
       searchToSet.append('manaValue', `${manaValue.operator}${manaValue.value}`);
     }
@@ -800,8 +812,11 @@ export const useSearchResults = () => {
     includeExtraSets,
     extraSets,
     searchToken,
-    legality,
-    // isCommander,
+    // legality,
+    standardLegality,
+    fourcbLegality,
+    commanderLegality,
+    isCommander,
     manaValue,
     power,
     toughness,

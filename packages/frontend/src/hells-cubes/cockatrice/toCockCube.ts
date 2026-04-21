@@ -317,8 +317,8 @@ export const toCockCube = ({
     // make sure names aren't taken and then store the names
     cockCard.props.forEach((face, i) => {
       if (card.isActualToken) {
-        if (cockCard.props.length>1) {
-          face.name +='1';
+        if (cockCard.props.length > 1) {
+          face.name += '1';
         } else {
           face.name = card.id;
         }

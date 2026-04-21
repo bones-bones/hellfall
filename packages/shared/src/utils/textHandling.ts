@@ -259,7 +259,7 @@ export const toExportName = (name: string) => {
  * @param text text to import
  * @returns imported text
  */
-export const fromImportMana = (text:string) => {
+export const fromImportMana = (text: string) => {
   if (text.includes('/P}')) {
     return text
       .split(/({\w+(?:\/\w+)?\/P})/g)
@@ -268,62 +268,67 @@ export const fromImportMana = (text:string) => {
   } else {
     return text;
   }
-}
+};
 
-const costSubstitutes: [RegExp|string,string][] = [
-  ['?','0'],
-  ['9/3','3'],
-  ['-1','0'],
-  ['Orange/U','U'],
-  ['Pickle','0'],
-  ['U/BB','U/B'],
-  ['BB/P','B}{B'],
-  ['UU/P','U}{U'],
-  ['TEMU','0'],
-  ['G/Yellow/P','G'],
-  [/^H\/([WUBRGC](?:\/[WUBRGC])?)$/,'$1/P'],
-  [/([WUBRGC]\/[WUBRGC])\/[WUBRGC]$/,'$1'],
-  [/^H\/\w+$/,'C/P'],
-  ['Blood','0'],
-  ['Discard your hand/RR','R}{R'],
-  [/^2\/(?![WUBRG]$)\w+$/,'2'],
-  [/^[34]\/([WUBRGC])$/,'$1'],
-  [/^([0134])\/\w+$/,'$1'],
-  ['5/∞','5'],
-  ['∞/U','U'],
-  [/^Yellow|Brown|Orange|Pink$/,'1'],
-  ['U/W','W/U'],
-  ['G/R','R/G']
-]
+const costSubstitutes: [RegExp | string, string][] = [
+  ['?', '0'],
+  ['9/3', '3'],
+  ['-1', '0'],
+  ['Orange/U', 'U'],
+  ['Pickle', '0'],
+  ['U/BB', 'U/B'],
+  ['BB/P', 'B}{B'],
+  ['UU/P', 'U}{U'],
+  ['TEMU', '0'],
+  ['G/Yellow/P', 'G'],
+  [/^H\/([WUBRGC](?:\/[WUBRGC])?)$/, '$1/P'],
+  [/([WUBRGC]\/[WUBRGC])\/[WUBRGC]$/, '$1'],
+  [/^H\/\w+$/, 'C/P'],
+  ['Blood', '0'],
+  ['Discard your hand/RR', 'R}{R'],
+  [/^2\/(?![WUBRG]$)\w+$/, '2'],
+  [/^[34]\/([WUBRGC])$/, '$1'],
+  [/^([0134])\/\w+$/, '$1'],
+  ['5/∞', '5'],
+  ['∞/U', 'U'],
+  [/^Yellow|Brown|Orange|Pink$/, '1'],
+  ['U/W', 'W/U'],
+  ['G/R', 'R/G'],
+];
 /**
  * Preps text containing mana for export to draftmancer/cockatrice
  * @param text text to prep
  * @param isCost whether this is a mana cost or not
  * @returns prepped text
  */
-export const toExportMana = (text: string, isCost:boolean=false) => {
+export const toExportMana = (text: string, isCost: boolean = false) => {
   if (text.includes('{')) {
-    return text.split(/({[\w -\.\?\/]+})/g).map(subtext => {
-      if (!subtext.includes('{')) {
-        return subtext
-      } else {
-        for (const [rule,sub] of costSubstitutes) {
-          if (typeof rule == 'string') {
-            if (subtext.slice(1,-1) == rule) {
-              debugger;
-              return isCost ? '{' + sub + '}' : subtext//.slice(1,-1)
-            }
-          } else {
-            if (rule.test(subtext.slice(1,-1))) {
-              debugger;
-              return (isCost || sub == '$1/P') ? '{' + subtext.slice(1,-1).replace(rule,sub) + '}' : subtext//.slice(1,-1)
+    return text
+      .split(/({[\w -\.\?\/]+})/g)
+      .map(subtext => {
+        if (!subtext.includes('{')) {
+          return subtext;
+        } else {
+          for (const [rule, sub] of costSubstitutes) {
+            if (typeof rule == 'string') {
+              if (subtext.slice(1, -1) == rule) {
+                debugger;
+                return isCost ? '{' + sub + '}' : subtext; //.slice(1,-1)
+              }
+            } else {
+              if (rule.test(subtext.slice(1, -1))) {
+                debugger;
+                return isCost || sub == '$1/P'
+                  ? '{' + subtext.slice(1, -1).replace(rule, sub) + '}'
+                  : subtext; //.slice(1,-1)
+              }
             }
           }
+          return subtext;
         }
-        return subtext
-      }
-    }).join('')
+      })
+      .join('');
   } else {
-    return text
+    return text;
   }
 };

@@ -62,7 +62,12 @@ const cardRemovableProps = [
   'subtypes',
   'flavor_text',
   'image',
-  'full_image',
+  'draft_image',
+  'draft_image_status',
+  'rotated_image',
+  'rotated_draft_image',
+  'still_image',
+  'still_draft_image',
   'not_directly_draftable',
   'has_draft_partners',
   'watermark',
@@ -77,7 +82,6 @@ const tokenRemovableProps = [
   'supertypes',
   'types',
   'image',
-  'full_image',
   'not_directly_draftable',
   'has_draft_partners',
   'all_parts',
@@ -94,7 +98,6 @@ const notMagicRemovableProps = [
   'subtypes',
   'flavor_text',
   'image',
-  'full_image',
   'not_directly_draftable',
   'has_draft_partners',
 ];
@@ -140,6 +143,8 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'layout',
           'image_status',
           'image',
+          'rotated_image',
+          'still_image',
           'mana_cost',
           'mana_value',
           'supertypes',
@@ -159,8 +164,10 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'color_indicator',
           'color_identity',
           'color_identity_hybrid',
-          'full_image_status',
-          'full_image',
+          'draft_image_status',
+          'draft_image',
+          'rotated_draft_image',
+          'still_draft_image',
           'not_directly_draftable',
           'has_draft_partners',
           'keywords',
@@ -184,6 +191,8 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'layout',
           'image_status',
           'image',
+          'rotated_image',
+          'still_image',
           'mana_cost',
           'mana_value',
           'supertypes',
@@ -238,7 +247,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           //   return faceNames.includes(part.name) || ['meld_part','meld_result','draft_partner'].includes(part.component)
           // }
           // const sortedParts = 'card_faces' in this ?  [...this.all_parts].sort((a: Record<string, any>, b: Record<string, any>) => shouldBeAtTop(b)-shouldBeAtTop(a)) : this.all_parts;
-          
+
           ordered.all_parts = this.all_parts.map((part: Record<string, any>) => {
             const orderedPart: Record<string, any> = {};
             partPropOrder.forEach(prop => {
@@ -262,6 +271,9 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
  * @returns
  */
 const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
+  if (existingCard.id == '1780') {
+    const x = 1;
+  }
   if (
     usingApproved &&
     (existingCard.has_draft_partners ||
@@ -377,15 +389,8 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         ) {
           (merged as any)[key] = value;
         }
-      } else if (key == 'full_image_status') {
+      } else if (key == 'draft_image_status') {
         // TODO: store current version and print the diff if there is one
-        if (
-          merged.full_image_status == HCImageStatus.Missing ||
-          merged.full_image_status ==
-            HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
-        ) {
-          (merged as any)[key] = value;
-        }
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.set == 'HCT') {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
@@ -488,8 +493,8 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       .forEach(key => {
         if (key == 'image') {
           merged.image_status = newCard.image_status;
-        } else if (key == 'full_image') {
-          merged.full_image_status = newCard.full_image_status;
+        } else if (key == 'draft_image') {
+          delete merged.draft_image_status;
         }
         delete (merged as any)[key];
       });
@@ -756,7 +761,7 @@ const main = async () => {
             tokenMaker.image = relatedCard.image;
             if (relatedCard.tags?.includes('persistent-tokens')) {
               tokenMaker.persistent = true;
-              relatedToken.persistent = true
+              relatedToken.persistent = true;
             }
             // update relatedCard.all_parts
             if ('all_parts' in relatedCard) {
@@ -884,7 +889,7 @@ const main = async () => {
             tokenMaker.image = relatedCard.image;
             if (relatedCard.tags?.includes('persistent-tokens')) {
               tokenMaker.persistent = true;
-              relatedToken.persistent = true
+              relatedToken.persistent = true;
             }
             if ('all_parts' in relatedCard!) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);

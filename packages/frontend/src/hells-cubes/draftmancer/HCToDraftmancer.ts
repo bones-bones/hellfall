@@ -48,10 +48,7 @@ const combineProps = ['mana_value', 'colors'];
 const overwriteProps = ['layout'];
 // these props are stored when the main face's prop doesn't exist but they do
 const addProps = ['image'];
-const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
-  'draft_partner',
-  'meld_result',
-];
+const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = ['draft_partner', 'meld_result'];
 const conditionalDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'checklist',
   'dungeon',
@@ -61,7 +58,7 @@ const conditionalDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'misc',
   'stickers',
   'dungeon',
-]
+];
 const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'split',
   'aftermath',
@@ -72,7 +69,7 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'flip',
 ];
 
-const validColors = ['W','U','B','R','G']
+const validColors = ['W', 'U', 'B', 'R', 'G'];
 /**
  * merges 2 or more card faces
  * @param faces array of card faces to merge
@@ -154,7 +151,12 @@ export const HCToDraftmancer = (
       // compress/drop layouts that should always be compressed or should be dropped
       if (card.card_faces.length > 1) {
         for (let i = card.card_faces.length - 1; i > 0; i--) {
-          if (alwaysDropLayouts.includes(card.card_faces[i].layout) || (conditionalDropLayouts.includes(card.card_faces[i].layout) && card.all_parts && card.all_parts.some(part=> part.name == card.card_faces[i].name))) {
+          if (
+            alwaysDropLayouts.includes(card.card_faces[i].layout) ||
+            (conditionalDropLayouts.includes(card.card_faces[i].layout) &&
+              card.all_parts &&
+              card.all_parts.some(part => part.name == card.card_faces[i].name))
+          ) {
             card.card_faces.splice(i, 1);
           } else if (alwaysCompressLayouts.includes(card.card_faces[i].layout)) {
             card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
@@ -179,9 +181,19 @@ export const HCToDraftmancer = (
         card.card_faces[0].image = card.image;
       }
       // clean the names
-      card.card_faces[0].name = toExportName(card.isActualToken ? card.id : ( card.card_faces[0].name ? card.card_faces[0].name : '(Front of '+ card.card_faces[1].name+')'));
+      card.card_faces[0].name = toExportName(
+        card.isActualToken
+          ? card.id
+          : card.card_faces[0].name
+          ? card.card_faces[0].name
+          : '(Front of ' + card.card_faces[1].name + ')'
+      );
       if (card.card_faces.length > 1) {
-        card.card_faces[1].name = toExportName(card.card_faces[1].name ? card.card_faces[1].name : '(Back of '+ card.card_faces[0].name+')');
+        card.card_faces[1].name = toExportName(
+          card.card_faces[1].name
+            ? card.card_faces[1].name
+            : '(Back of ' + card.card_faces[0].name + ')'
+        );
       }
       // store the names
       idNames[card.id] = card.card_faces[0].name;
@@ -318,14 +330,15 @@ export const HCToDraftmancer = (
     }
     if ('card_faces' in card && card.card_faces.length > 1) {
       draftCard.back = HCFaceToDraftFace(card.card_faces[1]);
-    } else if (card.full_image && !card.tags?.includes('gif')) {
-      // gif handling for tts also uses full_image, so don't pull those
-      draftCard.back = {
-        name: draftCard.name + ' Draft Image',
-        type: 'Draft Image',
-        image: card.full_image,
-      } as DraftmancerCardFace;
     }
+    // else if (card.full_image && !card.tags?.includes('gif')) {
+    //   // gif handling for tts also uses full_image, so don't pull those
+    //   draftCard.back = {
+    //     name: draftCard.name + ' Draft Image',
+    //     type: 'Draft Image',
+    //     image: card.full_image,
+    //   } as DraftmancerCardFace;
+    // }
     const related = getRelatedList(card);
     if (related) {
       draftCard.related_cards = related;

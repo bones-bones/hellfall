@@ -437,10 +437,10 @@ export namespace HCCardFields.Print {
     /**
      * This faces's frame effects, if any.
      */
-    frame_effects?: `${HCFrameEffect}`[]
+    frame_effects?: `${HCFrameEffect}`[];
     /**
      * This faces's frame layout, if it is different from that of the overall card.
-     */;
+     */
     frame?: `${HCFrame}`;
   };
   /**

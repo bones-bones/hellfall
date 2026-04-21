@@ -102,7 +102,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     keywords: [],
     set: '',
     variation: false,
-    full_image_status: HCImageStatus.Inapplicable,
     border_color: HCBorderColor.Black,
     frame: HCFrame.Stamp,
     finish: HCFinish.Nonfoil,
@@ -248,17 +247,17 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'meld-frame': HCFrameEffect.Meld,
   };
 
-  const frontImageTagProps:Record<string,string> = {
-    'draft-image':'draft_image',
-    'rotated-draft-image':'rotated_draft_image',
-    'still-draft-image':'still_draft_image',
-  }
-  const faceImageTagProps:Record<string,string> = {
-    'rotated-image':'rotated_image',
-    'still-image':'still-image'
-  }
+  const frontImageTagProps: Record<string, string> = {
+    'draft-image': 'draft_image',
+    'rotated-draft-image': 'rotated_draft_image',
+    'still-draft-image': 'still_draft_image',
+  };
+  const faceImageTagProps: Record<string, string> = {
+    'rotated-image': 'rotated_image',
+    'still-image': 'still_image',
+  };
 
-  const theThing = rest.map(entry => {
+  const theThing = rest.slice(0, 7298).map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
       card_faces: [],
     };
@@ -318,9 +317,22 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           } else if (keys[i] == 'legalities') {
             const formats = entry[i].split(', ');
             const legalities: HCLegalitiesField = {
-              standard: formats.includes('Banned') ? HCLegality.Banned : HCLegality.Legal,
-              '4cb': formats.includes('Banned (4CB)') ? HCLegality.Banned : HCLegality.Legal,
-              commander: formats.includes('Banned (Commander)')
+              standard:
+                // cardObject.set.includes('HCV')
+                // ? HCLegality.NotLegal :
+                formats.includes('Banned')
+                ? HCLegality.Banned
+                : HCLegality.Legal,
+              '4cb':
+                // cardObject.set.includes('HCV')
+                // ? HCLegality.NotLegal :
+                formats.includes('Banned (4CB)')
+                ? HCLegality.Banned
+                : HCLegality.Legal,
+              commander:
+                // cardObject.set.includes('HCV')
+                // ? HCLegality.NotLegal :
+                formats.includes('Banned (Commander)')
                 ? HCLegality.Banned
                 : HCLegality.Legal,
             };
@@ -373,36 +385,48 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
 
       cardObject.tags = tags.map(fullTag => {
         if (fullTag.includes('<') && fullTag.includes('>')) {
-          const [tag, note] = fullTag.split('<');
+          const [tag, note] = [fullTag.split('<')[0],fullTag.split('<')[1].slice(0,-1)];
           if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
             const index = parseInt(note);
-            cardObject.card_faces[index > 0 && index < cardObject.card_faces.length ? index : 0].watermark = tag.slice(0, tag.lastIndexOf('-'));
+            cardObject.card_faces[
+              index > 0 && index < cardObject.card_faces.length ? index : 0
+            ].watermark = tag.slice(0, tag.lastIndexOf('-'));
           } else if (tag in frameTags) {
             const index = parseInt(note);
-            cardObject.card_faces[index > 0 && index < cardObject.card_faces.length ? index : 0].frame = frameTags[tag];
+            cardObject.card_faces[
+              index >= 0 && index < cardObject.card_faces.length ? index : 0
+            ].frame = frameTags[tag];
           } else if (tag in frameEffectTags) {
             const index = parseInt(note);
-            const faceIndex = index > 0 && index < cardObject.card_faces.length ? index : 0;
+            const faceIndex = index >= 0 && index < cardObject.card_faces.length ? index : 0;
             if ('frame_effects' in cardObject.card_faces[faceIndex]) {
               cardObject.card_faces[faceIndex].frame_effects.push(frameEffectTags[tag]);
             } else {
               cardObject.card_faces[faceIndex].frame_effects = [frameEffectTags[tag]];
             }
-          } else if (tag in faceImageTagProps){
+          } else if (tag in faceImageTagProps) {
             if (note.includes(';')) {
-              const [face, image] = [parseInt(note.split(';')[0]),note.split(';')[1]]
-              const faceToUse = face > 0 && face < cardObject.card_faces.length ? face : 0
-              cardObject.card_faces[faceToUse][faceImageTagProps[tag]] = image.slice(0,4) == 'http' ? image : 'https://lh3.googleusercontent.com/d/' + image;
+              const [face, image] = [parseInt(note.split(';')[0]), note.split(';')[1]];
+              const faceToUse = face > 0 && face < cardObject.card_faces.length ? face : 0;
+              cardObject.card_faces[faceToUse][faceImageTagProps[tag]] =
+                image.slice(0, 4) == 'http'
+                  ? image
+                  : 'https://lh3.googleusercontent.com/d/' + image;
             } else {
-              cardObject[faceImageTagProps[tag]] = note.slice(0,4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
+              cardObject[faceImageTagProps[tag]] =
+                note.slice(0, 4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
             }
-          } else if (tag in frontImageTagProps){
-            cardObject[faceImageTagProps[tag]] = note.slice(0,4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
+          } else if (tag in frontImageTagProps) {
+            cardObject[frontImageTagProps[tag]] =
+              note.slice(0, 4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
+            if (tag == 'draft-image') {
+              cardObject.draft_image_status = HCImageStatus.HighRes;
+            }
           } else {
             if (!('tag_notes' in cardObject)) {
               cardObject.tag_notes = {} as Record<string, string>;
             }
-            cardObject.tag_notes[tag] = note.slice(0, -1);
+            cardObject.tag_notes[tag] = note;
           }
           return tag;
         } else {
@@ -452,8 +476,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         }
         if (!('border_color' in cardObject) && tag in borderColorTags) {
           cardObject.border_color = borderColorTags[tag];
-        } else if (!('frame' in cardObject) && tag in frameTags) {
-          cardObject.frame = frameTags[tag];
+        // } else if (!('frame' in cardObject) && tag in frameTags) {
+        //   cardObject.frame = frameTags[tag];
         } else if (tag == 'foil') {
           cardObject.finish = HCFinish.Foil;
         } else if (
@@ -462,12 +486,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           tag in cardObject.tag_notes
         ) {
           cardObject.card_faces[0].flavor_name = cardObject.tag_notes[tag];
-        // } else if ((tag == 'gif' || tag == 'sideways') && cardObject.card_faces.some(face => face.image) && !cardObject.tags.includes('mdfc')) {
-        //   const stillIndex = cardObject.card_faces.findLastIndex(face => face.image);
-        //   cardObject.full_image = cardObject.card_faces[stillIndex].image;
-        //   cardObject.full_image_status = HCImageStatus.HighRes;
-        //   delete cardObject.card_faces[stillIndex].image;
-        //   delete cardObject.card_faces[stillIndex].image_status;
+          // } else if ((tag == 'gif' || tag == 'sideways') && cardObject.card_faces.some(face => face.image) && !cardObject.tags.includes('mdfc')) {
+          //   const stillIndex = cardObject.card_faces.findLastIndex(face => face.image);
+          //   cardObject.full_image = cardObject.card_faces[stillIndex].image;
+          //   cardObject.full_image_status = HCImageStatus.HighRes;
+          //   delete cardObject.card_faces[stillIndex].image;
+          //   delete cardObject.card_faces[stillIndex].image_status;
         }
       });
     }
@@ -674,21 +698,21 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       setDerivedProps(card);
       return card;
     } else {
-      if (
-        cardObject.card_faces[0].image &&
-        (cardObject.card_faces.filter(e => e.image).length == 1 ||
-          cardObject.tags?.includes('draft-image')) &&
-        !cardObject.tags?.includes('gif')
-      ) {
-        if ('image' in cardObject && cardObject.image) {
-          cardObject.full_image = cardObject.image;
-          cardObject.full_image_status = cardObject.image_status;
-        }
-        cardObject.image = cardObject.card_faces[0].image;
-        cardObject.image_status = cardObject.card_faces[0].image_status;
-        delete cardObject.card_faces[0].image;
-        cardObject.card_faces[0].image_status = 'front';
-      }
+      // if (
+      //   cardObject.card_faces[0].image &&
+      //   (cardObject.card_faces.filter(e => e.image).length == 1 ||
+      //     cardObject.tags?.includes('draft-image')) &&
+      //   !cardObject.tags?.includes('gif')
+      // ) {
+      //   if ('image' in cardObject && cardObject.image) {
+      //     cardObject.full_image = cardObject.image;
+      //     cardObject.full_image_status = cardObject.image_status;
+      //   }
+      //   cardObject.image = cardObject.card_faces[0].image;
+      //   cardObject.image_status = cardObject.card_faces[0].image_status;
+      //   delete cardObject.card_faces[0].image;
+      //   cardObject.card_faces[0].image_status = 'front';
+      // }
       if (!('layout' in cardObject)) {
         cardObject.layout = HCLayout.Split;
       }
