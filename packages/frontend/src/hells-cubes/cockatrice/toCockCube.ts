@@ -325,6 +325,8 @@ export const toCockCube = ({
       }
       if (!face.name) {
         face.name = `(${i ? 'Back' : 'Front'} of ${cockCard.props[1 - i].name})`;
+      } else if (i && face.name == cockCard.props[0].name) {
+        face.name += ' (Back)';
       }
       while (nameIsTaken(face.name)) {
         face.name += ' ';

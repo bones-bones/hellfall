@@ -40,22 +40,39 @@ const getImages = (card: HCCard.Any) => {
           imagesToShow.push(face.image);
           imageNames.push(`side ${i + 1}`);
         }
+        if (face.still_image) {
+          imagesToShow.push(face.still_image);
+          imageNames.push(`side ${i + 1} still`);
+        }
+        if (face.rotated_image) {
+          imagesToShow.push(face.rotated_image);
+          imageNames.push(`side ${i + 1} rotated`);
+        }
       });
     if (card.image && 'image' in card.card_faces[0]) {
       imagesToShow.push(card.image);
       imageNames.push('full');
     }
   }
+  if (card.still_image) {
+    imagesToShow.push(card.still_image);
+    imageNames.push('still');
+  }
+  if (card.rotated_image) {
+    imagesToShow.push(card.rotated_image);
+    imageNames.push('rotated');
+  }
   if (card.draft_image) {
     imagesToShow.push(card.draft_image);
     imageNames.push('draft');
   }
-  if (card.still_image) {
-    imagesToShow.push(card.still_image);
-    imageNames.push('still');
-  } else if (card.still_draft_image) {
+  if (card.still_draft_image) {
     imagesToShow.push(card.still_draft_image);
-    imageNames.push('still');
+    imageNames.push('still draft');
+  }
+  if (card.rotated_draft_image) {
+    imagesToShow.push(card.rotated_draft_image);
+    imageNames.push('rotated draft');
   }
   return { images: imagesToShow, names: imageNames };
 };

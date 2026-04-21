@@ -163,3 +163,6 @@ Write a script to transform the database
 - clean up todos
 - rework tts
 - put buttons for switching to rotated/still on top later
+- add rotations for images that are upright by default
+- move token tags to sheet
+- add token ids

@@ -175,20 +175,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     multi: HCLayout.Split,
   };
 
-  const layoutToImageStatusList = [
-    'front',
-    'token',
-    'flip',
-    'inset',
-    'prepare',
-    'split',
-    'aftermath',
-    'draft_partner',
-    'dungeon',
-    'reminder',
-    'stickers',
-  ];
-
   const borderColorTags: Record<string, HCBorderColor> = {
     'white-border': HCBorderColor.White,
     borderless: HCBorderColor.Borderless,
