@@ -78,14 +78,14 @@ export const extraSetsAtom = atom(searchParams.get('extraSets')?.split(',') || [
 // export type LegalType = 'legal' | 'banned' | '4cbLegal' | 'hellsmanderLegal';
 
 export const standardLegalityAtom = atom(
-  (searchParams.get('standard') || '') as '' | 'legal' | 'not-legal' | 'banned'
+  (searchParams.get('standard') || '') as '' | 'legal' | 'not_legal' | 'banned'
 );
 
 export const fourcbLegalityAtom = atom(
-  (searchParams.get('4cb') || '') as '' | 'legal' | 'not-legal' | 'banned'
+  (searchParams.get('4cb') || '') as '' | 'legal' | 'not_legal' | 'banned'
 );
 export const commanderLegalityAtom = atom(
-  (searchParams.get('commander') || '') as '' | 'legal' | 'not-legal' | 'banned'
+  (searchParams.get('commander') || '') as '' | 'legal' | 'not_legal' | 'banned'
 );
 
 // export const legalityAtom = atom<string[]>(

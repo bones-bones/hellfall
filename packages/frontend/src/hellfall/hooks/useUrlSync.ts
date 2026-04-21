@@ -155,19 +155,19 @@ export const useUrlSync = () => {
       setSearchToken((params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards');
     }
     if (
-      standardLegality != ((params.get('standard') as '' | 'legal' | 'not-legal' | 'banned') || '')
+      standardLegality != ((params.get('standard') as '' | 'legal' | 'not_legal' | 'banned') || '')
     ) {
-      setStandardLegality((params.get('standard') as '' | 'legal' | 'not-legal' | 'banned') || '');
+      setStandardLegality((params.get('standard') as '' | 'legal' | 'not_legal' | 'banned') || '');
     }
-    if (fourcbLegality != ((params.get('4cb') as '' | 'legal' | 'not-legal' | 'banned') || '')) {
-      set4cbLegality((params.get('4cb') as '' | 'legal' | 'not-legal' | 'banned') || '');
+    if (fourcbLegality != ((params.get('4cb') as '' | 'legal' | 'not_legal' | 'banned') || '')) {
+      set4cbLegality((params.get('4cb') as '' | 'legal' | 'not_legal' | 'banned') || '');
     }
     if (
       commanderLegality !=
-      ((params.get('commander') as '' | 'legal' | 'not-legal' | 'banned') || '')
+      ((params.get('commander') as '' | 'legal' | 'not_legal' | 'banned') || '')
     ) {
       setCommanderLegality(
-        (params.get('commander') as '' | 'legal' | 'not-legal' | 'banned') || ''
+        (params.get('commander') as '' | 'legal' | 'not_legal' | 'banned') || ''
       );
     }
     if (isCommander != (params.get('isCommander') === 'true')) {

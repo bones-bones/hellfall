@@ -400,7 +400,7 @@ export const SearchControls = () => {
                     setStandardLegality(event.target.value as any);
                   }}
                 >
-                  {['', 'legal', 'not-legal', 'banned'].map(entry => {
+                  {['', 'legal', 'not_legal', 'banned'].map(entry => {
                     return <option key={entry}>{entry}</option>;
                   })}
                 </StyledDropdownSelect>
@@ -415,7 +415,7 @@ export const SearchControls = () => {
                     set4cbLegality(event.target.value as any);
                   }}
                 >
-                  {['', 'legal', 'not-legal', 'banned'].map(entry => {
+                  {['', 'legal', 'not_legal', 'banned'].map(entry => {
                     return <option key={entry}>{entry}</option>;
                   })}
                 </StyledDropdownSelect>
@@ -430,7 +430,7 @@ export const SearchControls = () => {
                     setCommanderLegality(event.target.value as any);
                   }}
                 >
-                  {['', 'legal', 'not-legal', 'banned'].map(entry => {
+                  {['', 'legal', 'not_legal', 'banned'].map(entry => {
                     return <option key={entry}>{entry}</option>;
                   })}
                 </StyledDropdownSelect>
