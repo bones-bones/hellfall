@@ -254,13 +254,13 @@ export const useSearchResults = () => {
           }
         }
         if (standardLegality && entry.legalities.standard != standardLegality) {
-          return false
+          return false;
         }
         if (fourcbLegality && entry.legalities['4cb'] != fourcbLegality) {
-          return false
+          return false;
         }
         if (commanderLegality && entry.legalities.commander != commanderLegality) {
-          return false
+          return false;
         }
         if (
           typeSearch.length > 0 &&
@@ -721,13 +721,13 @@ export const useSearchResults = () => {
     //   searchToSet.append('legality', legality.join(','));
     // }
     if (standardLegality) {
-      searchToSet.append('standard',standardLegality)
+      searchToSet.append('standard', standardLegality);
     }
     if (fourcbLegality) {
-      searchToSet.append('4cb',fourcbLegality)
+      searchToSet.append('4cb', fourcbLegality);
     }
     if (commanderLegality) {
-      searchToSet.append('commander',commanderLegality)
+      searchToSet.append('commander', commanderLegality);
     }
     if (isCommander) {
       searchToSet.append('isCommander', 'true');

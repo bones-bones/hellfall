@@ -318,22 +318,22 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             const formats = entry[i].split(', ');
             const legalities: HCLegalitiesField = {
               standard:
-                // cardObject.set.includes('HCV')
-                // ? HCLegality.NotLegal :
                 formats.includes('Banned')
-                ? HCLegality.Banned
+                ? cardObject.set.includes('HCV')
+                ? HCLegality.NotLegal
+                : HCLegality.Banned
                 : HCLegality.Legal,
               '4cb':
-                // cardObject.set.includes('HCV')
-                // ? HCLegality.NotLegal :
                 formats.includes('Banned (4CB)')
-                ? HCLegality.Banned
+                ? cardObject.set.includes('HCV')
+                ? HCLegality.NotLegal
+                : HCLegality.Banned
                 : HCLegality.Legal,
               commander:
-                // cardObject.set.includes('HCV')
-                // ? HCLegality.NotLegal :
                 formats.includes('Banned (Commander)')
-                ? HCLegality.Banned
+                ? cardObject.set.includes('HCV')
+                ? HCLegality.NotLegal
+                : HCLegality.Banned
                 : HCLegality.Legal,
             };
             cardObject[keys[i]] = legalities;
@@ -385,7 +385,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
 
       cardObject.tags = tags.map(fullTag => {
         if (fullTag.includes('<') && fullTag.includes('>')) {
-          const [tag, note] = [fullTag.split('<')[0],fullTag.split('<')[1].slice(0,-1)];
+          const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
           if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
             const index = parseInt(note);
             cardObject.card_faces[
@@ -476,8 +476,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         }
         if (!('border_color' in cardObject) && tag in borderColorTags) {
           cardObject.border_color = borderColorTags[tag];
-        // } else if (!('frame' in cardObject) && tag in frameTags) {
-        //   cardObject.frame = frameTags[tag];
+          // } else if (!('frame' in cardObject) && tag in frameTags) {
+          //   cardObject.frame = frameTags[tag];
         } else if (tag == 'foil') {
           cardObject.finish = HCFinish.Foil;
         } else if (

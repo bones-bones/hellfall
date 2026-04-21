@@ -243,10 +243,19 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
         }
         if ('all_parts' in this) {
           const faceNames = (this.card_faces || []).map((face: Record<string, any>) => face.name);
-          const shouldBeAtTop = (part:Record<string, any>):number =>{
-            return faceNames.includes(part.name) || ['meld_part','meld_result','draft_partner'].includes(part.component)
-          }
-          const sortedParts = 'card_faces' in this ?  [...this.all_parts].sort((a: Record<string, any>, b: Record<string, any>) => shouldBeAtTop(b)-shouldBeAtTop(a)) : this.all_parts;
+          const shouldBeAtTop = (part: Record<string, any>): number => {
+            return (
+              faceNames.includes(part.name) ||
+              ['meld_part', 'meld_result', 'draft_partner'].includes(part.component)
+            );
+          };
+          const sortedParts =
+            'card_faces' in this
+              ? [...this.all_parts].sort(
+                  (a: Record<string, any>, b: Record<string, any>) =>
+                    shouldBeAtTop(b) - shouldBeAtTop(a)
+                )
+              : this.all_parts;
 
           ordered.all_parts = sortedParts.map((part: Record<string, any>) => {
             const orderedPart: Record<string, any> = {};
