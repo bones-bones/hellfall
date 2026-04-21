@@ -242,13 +242,13 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           });
         }
         if ('all_parts' in this) {
-          // const faceNames = (this.card_faces || []).map((face: Record<string, any>) => face.name);
-          // const shouldBeAtTop = (part:Record<string, any>):number =>{
-          //   return faceNames.includes(part.name) || ['meld_part','meld_result','draft_partner'].includes(part.component)
-          // }
-          // const sortedParts = 'card_faces' in this ?  [...this.all_parts].sort((a: Record<string, any>, b: Record<string, any>) => shouldBeAtTop(b)-shouldBeAtTop(a)) : this.all_parts;
+          const faceNames = (this.card_faces || []).map((face: Record<string, any>) => face.name);
+          const shouldBeAtTop = (part:Record<string, any>):number =>{
+            return faceNames.includes(part.name) || ['meld_part','meld_result','draft_partner'].includes(part.component)
+          }
+          const sortedParts = 'card_faces' in this ?  [...this.all_parts].sort((a: Record<string, any>, b: Record<string, any>) => shouldBeAtTop(b)-shouldBeAtTop(a)) : this.all_parts;
 
-          ordered.all_parts = this.all_parts.map((part: Record<string, any>) => {
+          ordered.all_parts = sortedParts.map((part: Record<string, any>) => {
             const orderedPart: Record<string, any> = {};
             partPropOrder.forEach(prop => {
               if (prop in part) {
@@ -271,9 +271,6 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
  * @returns
  */
 const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
-  if (existingCard.id == '1780') {
-    const x = 1;
-  }
   if (
     usingApproved &&
     (existingCard.has_draft_partners ||
@@ -1077,34 +1074,6 @@ const main = async () => {
     if ('tags' in entry) {
       entry.tags?.forEach(e => tagSet.add(e));
     }
-
-    // if (entry.Constructed) {
-    //   // @ts-expect-error not sure about this approach but hey.
-    //   entry.Constructed = entry.Constructed.split(', ');
-    // }
-
-    // if (tokenMap[entry.Name]) {
-    //   // Debug unused tokens
-    //   // (tokenMap[entry.Name] as any).used = true;
-
-    //   entry.tokens = tokenMap[entry.Name];
-
-    //   // if (["HC8.0", "HC8.1"].includes(entry.Set)) {
-    //   //   console.log(entry.Name);
-    //   // }
-    // }
-
-    // if (
-    //   entry["Text Box"]?.find((e) => e?.includes(" token")) &&
-    //   !entry.tokens &&
-    //   entry.Set === "HC6"
-    // ) {
-    //   console.log(
-    //     entry.Name +
-    //       "  " +
-    //       /[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0],
-    //   );
-    // }
   });
 
   const types = Array.from(typeSet);
