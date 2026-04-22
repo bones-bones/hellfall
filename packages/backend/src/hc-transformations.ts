@@ -85,13 +85,13 @@ const tokenRemovableProps = [
   'not_directly_draftable',
   'has_draft_partners',
   'all_parts',
-  // 'tags',
-  // 'tag_notes',
+  'tags',
+  'tag_notes',
   'rotated_image',
   'still_image',
   'watermark',
   'frame_effects',
-  'flavor_name'
+  'flavor_name',
 ];
 const notMagicBlankableProps = ['oracle_text', 'mana_value'];
 const notMagicRemovableProps = [
@@ -476,8 +476,8 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         }
       } else if (merged.set == 'NotMagic' && key == 'rulings') {
         // TODO: store current version and print the diff if there is one
-      } else if (merged.isActualToken && key == 'tags_notes') {
-      } else if (merged.isActualToken && key == 'tags' /**&& 'tags' in merged*/) {
+        // } else if (merged.isActualToken && key == 'tags_notes') {
+        // } else if (merged.isActualToken && key == 'tags' /**&& 'tags' in merged*/) {
         // value.forEach((tag: string) => {
         //   if (!merged.tags?.includes(tag)) {
         //     merged.tags?.push(tag);

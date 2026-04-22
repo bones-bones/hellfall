@@ -311,10 +311,10 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           if (tag in singleLayoutTags) {
             tokenObject.layout = singleLayoutTags[tag];
           }
-            // } else {
-            //   if (tag in multiLayoutTags) {
-            //     tokenObject.layout = multiLayoutTags[tag];
-            //   }
+          // } else {
+          //   if (tag in multiLayoutTags) {
+          //     tokenObject.layout = multiLayoutTags[tag];
+          //   }
         }
         if (!('border_color' in tokenObject) && tag in borderColorTags) {
           tokenObject.border_color = borderColorTags[tag];
