@@ -184,7 +184,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'yellow-border': HCBorderColor.Yellow,
     'rainbow-border': HCBorderColor.Rainbow,
     'blue-border': HCBorderColor.Blue,
-    'camo-border': HCBorderColor.Camo,
+    'unique-border': HCBorderColor.Unique,
     'orange-border': HCBorderColor.Orange,
   };
 
@@ -243,7 +243,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'still-image': 'still_image',
   };
 
-  const theThing = rest.slice(0, 7298).map(entry => {
+  const theThing = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
       card_faces: [],
     };

@@ -123,7 +123,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'yellow-border': HCBorderColor.Yellow,
     'rainbow-border': HCBorderColor.Rainbow,
     'blue-border': HCBorderColor.Blue,
-    'camo-border': HCBorderColor.Camo,
+    'unique-border': HCBorderColor.Unique,
     'orange-border': HCBorderColor.Orange,
   };
 
