@@ -58,7 +58,9 @@ export const filterSet = (
           !(
             'all_parts' in entry &&
             entry.all_parts
-              ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
+              ?.filter(e =>
+                ['token_maker', 'meld_part', 'meld_result', 'draft_partner'].includes(e.component)
+              )
               .some(part => isSetInResults(part.set))
           )
         ) {
@@ -77,7 +79,9 @@ export const filterSet = (
           !(
             'all_parts' in entry &&
             entry.all_parts
-              ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
+              ?.filter(e =>
+                ['token_maker', 'meld_part', 'meld_result', 'draft_partner'].includes(e.component)
+              )
               .some(part => isSetInResults(part.set))
           )
         ) {

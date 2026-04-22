@@ -5,7 +5,7 @@ export type DraftmancerCardFace = {
   name: string;
   image?: string;
   type: string;
-  subtypes?: Array<string>;
+  // subtypes?: Array<string>;
   mana_cost?: string; // Mana cost.
   oracle_text?: string; // Oracle text.
   power?: number | string; // Creature power.
@@ -57,7 +57,7 @@ export type DraftmancerCustomCard = {
   set?: string;
   // collector_number?: string;
   // rarity?: string;
-  subtypes?: Array<string>;
+  // subtypes?: Array<string>;
   rating?: number; // A rating of the strength of the card in a vacuum, between 0 and 5. This may help bots navigate drafts when they don't know any cards :^)
   layout?: string; // Possible values are: 'split', 'flip' and 'split-left'
   back?: DraftmancerCardFace;

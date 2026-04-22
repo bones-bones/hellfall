@@ -221,13 +221,13 @@ export const HCToDraftmancer = (
       oracle_text: toExportMana(card.oracle_text.replaceAll('\\n', '\n')),
     };
     if (card.tags?.includes('rotate-left')) {
-      draftCard.layout = 'rotate-left';
+      draftCard.layout = 'split-left';
     } else if (card.tags?.includes('rotate') || card.rotated_image) {
-      draftCard.layout = 'rotate';
+      draftCard.layout = 'split';
     }
-    if (card.subtypes) {
-      draftCard.subtypes = card.subtypes;
-    }
+    // if (card.subtypes) {
+    //   draftCard.subtypes = card.subtypes;
+    // }
     if (card.power) {
       draftCard.power = card.power;
     }
@@ -252,15 +252,15 @@ export const HCToDraftmancer = (
       oracle_text: toExportMana(face.oracle_text.replaceAll('\\n', '\n')),
     };
     if (card.tags?.includes('rotate-left') || face.layout == 'aftermath') {
-      draftCard.layout = 'rotate-left';
+      draftCard.layout = 'split-left';
     } else if (card.tags?.includes('rotate') || card.rotated_image) {
-      draftCard.layout = 'rotate';
+      draftCard.layout = 'split';
     } else if (face.layout == 'flip') {
       draftCard.layout = 'flip';
     }
-    if (face.subtypes) {
-      draftCard.subtypes = face.subtypes;
-    }
+    // if (face.subtypes) {
+    //   draftCard.subtypes = face.subtypes;
+    // }
     if (face.power) {
       draftCard.power = face.power;
     }
@@ -282,15 +282,15 @@ export const HCToDraftmancer = (
       oracle_text: toExportMana(face.oracle_text.replaceAll('\\n', '\n')),
     };
     if (face.layout == 'aftermath') {
-      draftFace.layout = 'rotate-left';
+      draftFace.layout = 'split-left';
     } else if (face.rotated_image) {
-      draftFace.layout = 'rotate';
+      draftFace.layout = 'split';
     } else if (face.layout == 'flip') {
       draftFace.layout = 'flip';
     }
-    if (face.subtypes) {
-      draftFace.subtypes = face.subtypes;
-    }
+    // if (face.subtypes) {
+    //   draftFace.subtypes = face.subtypes;
+    // }
     if (face.power) {
       draftFace.power = face.power;
     }
