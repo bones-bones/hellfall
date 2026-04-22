@@ -11,7 +11,7 @@ export type DraftmancerCardFace = {
   power?: number | string; // Creature power.
   toughness?: number | string; // Creature toughness.
   loyalty?: number | string; // Planeswalker loyalty.
-  // layout?: string; // Possible values are: 'split' and 'split-left'. 'flip' is not supported for card backs.
+  layout?: string; // Possible values are: 'split' and 'split-left'. 'flip' is not supported for card backs.
 };
 
 export const SimpleDraftEffectList = [
@@ -59,7 +59,7 @@ export type DraftmancerCustomCard = {
   // rarity?: string;
   subtypes?: Array<string>;
   rating?: number; // A rating of the strength of the card in a vacuum, between 0 and 5. This may help bots navigate drafts when they don't know any cards :^)
-  // layout?: string; // Possible values are: 'split', 'flip' and 'split-left'
+  layout?: string; // Possible values are: 'split', 'flip' and 'split-left'
   back?: DraftmancerCardFace;
   related_cards?: Array<string | DraftmancerCardFace>; // You can use this field to display some related cards when right clicking on the card. CardID can be the name of another custom card, or a Scryfall ID.
   draft_effects?: Array<DraftEffect>; // See the list of valid effects bellow.

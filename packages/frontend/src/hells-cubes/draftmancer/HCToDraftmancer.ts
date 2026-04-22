@@ -177,8 +177,14 @@ export const HCToDraftmancer = (
       if (card.card_faces.length > 2) {
         card.card_faces = [mergeHCCardFaces(card.card_faces)];
         card.card_faces[0].image = card.image;
+        if (card.rotated_image) {
+          card.card_faces[0].rotated_image = card.rotated_image;
+        }
       } else if (!card.card_faces[0].image) {
         card.card_faces[0].image = card.image;
+        if (!card.card_faces[0].rotated_image && card.rotated_image) {
+          card.card_faces[0].rotated_image = card.rotated_image;
+        }
       }
       // clean the names
       card.card_faces[0].name = toExportName(
@@ -209,11 +215,16 @@ export const HCToDraftmancer = (
       name: card.isActualToken ? card.id : card.name,
       mana_cost: toExportMana(card.mana_cost, true),
       type: card.type_line,
-      image: card.image,
+      image: card.rotated_image || card.image,
       colors: card.colors.filter(color => validColors.includes(color)),
       set: card.set,
       oracle_text: toExportMana(card.oracle_text.replaceAll('\\n', '\n')),
     };
+    if (card.tags?.includes('rotate-left')) {
+      draftCard.layout = 'rotate-left';
+    } else if (card.tags?.includes('rotate') || card.rotated_image) {
+      draftCard.layout = 'rotate';
+    }
     if (card.subtypes) {
       draftCard.subtypes = card.subtypes;
     }
@@ -235,11 +246,18 @@ export const HCToDraftmancer = (
       name: card.isActualToken ? card.id : face.name,
       mana_cost: toExportMana(face.mana_cost, true),
       type: face.type_line,
-      image: face.image ? face.image : card.image,
+      image: face.rotated_image || face.image || card.rotated_image || card.image,
       colors: face.colors.filter(color => validColors.includes(color)),
       set: card.set,
       oracle_text: toExportMana(face.oracle_text.replaceAll('\\n', '\n')),
     };
+    if (card.tags?.includes('rotate-left') || face.layout == 'aftermath') {
+      draftCard.layout = 'rotate-left';
+    } else if (card.tags?.includes('rotate') || card.rotated_image) {
+      draftCard.layout = 'rotate';
+    } else if (face.layout == 'flip') {
+      draftCard.layout = 'flip';
+    }
     if (face.subtypes) {
       draftCard.subtypes = face.subtypes;
     }
@@ -260,9 +278,16 @@ export const HCToDraftmancer = (
       name: face.name,
       mana_cost: toExportMana(face.mana_cost, true),
       type: face.type_line,
-      image: face.image,
+      image: face.rotated_image || face.image,
       oracle_text: toExportMana(face.oracle_text.replaceAll('\\n', '\n')),
     };
+    if (face.layout == 'aftermath') {
+      draftFace.layout = 'rotate-left';
+    } else if (face.rotated_image) {
+      draftFace.layout = 'rotate';
+    } else if (face.layout == 'flip') {
+      draftFace.layout = 'flip';
+    }
     if (face.subtypes) {
       draftFace.subtypes = face.subtypes;
     }

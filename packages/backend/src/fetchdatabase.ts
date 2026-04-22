@@ -388,8 +388,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
               cardObject.card_faces[faceIndex].frame_effects = [frameEffectTags[tag]];
             }
           } else if (tag in faceImageTagProps) {
-            if (note.includes(';')) {
-              const [face, image] = [parseInt(note.split(';')[0]), note.split(';')[1]];
+            if (note.includes('|')) {
+              const [face, image] = [parseInt(note.split('|')[0]), note.split('|')[1]];
               const faceToUse = face > 0 && face < cardObject.card_faces.length ? face : 0;
               cardObject.card_faces[faceToUse][faceImageTagProps[tag]] =
                 image.slice(0, 4) == 'http'

@@ -654,6 +654,16 @@
       "no_shadow": true
     },
     {
+      "filename": "mono/misc/Church.png",
+      "symbol": "Church",
+      "english": "one church (white) mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W"
+      ]
+    },
+    {
       "filename": "mono/nums/0.svg",
       "symbol": "0",
       "english": "zero generic mana",

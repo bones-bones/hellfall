@@ -253,8 +253,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         if (fullTag.includes('<') && fullTag.includes('>')) {
           const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
           if (tag in imageTagProps) {
-            if (note.includes(';')) {
-              const [face, image] = [parseInt(note.split(';')[0]), note.split(';')[1]];
+            if (note.includes('|')) {
+              const [face, image] = [parseInt(note.split('|')[0]), note.split('|')[1]];
               tokenObject[imageTagProps[tag]] =
                 image.slice(0, 4) == 'http'
                   ? image
