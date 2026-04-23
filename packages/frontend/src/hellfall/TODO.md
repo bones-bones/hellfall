@@ -68,7 +68,6 @@ Write a script to transform the database
 - fully implement NotMagic
 - make full images for dfcs with three+ images go to draft_image
 - deal with later: 4x Squadron Hawks, Learn from Better Designers, Liliana, Urza's Will (draftpartner), Wild Magic Surge (both versions)
-- deal with later: Dungeon Jumper
 - deal with later (skipped): **\_\_\_** Balls, Playset of Squadron Hawks (On Clearance), Half-Thriving \_**\_ Half-Thriving \_\_**, Hell's Cube (both versions), Spain, Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones
 - deal with draftable sticker sheets (Amonkhet Punchcard, Carnival Elephant Meteor, etc)
 - add reminder card for attractions
@@ -156,4 +155,16 @@ Write a script to transform the database
 - figure out if pip shadows have correct angle (should they be slightly more downward than leftward?)
 - fix the purple guy side 2 button on hellfall
 - fully update draftmancer code
+- figure out if draftmancer needs deconfliction
+- add more spacing between name and cost
 - implement flip/aftermath rotation buttons (base it off of cockatrice face merge logic)
+- clean up hcj webpage
+- decide whether to include draft_images in draftmancer export
+- clean up todos
+- rework tts
+- put buttons for switching to rotated/still on top later
+- add rotations for images that are upright by default
+- move token tags to sheet
+- add token ids
+- add hcp draft
+- add cost autofill for search

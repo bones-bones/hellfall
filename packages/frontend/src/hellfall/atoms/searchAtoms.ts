@@ -75,19 +75,30 @@ export const searchTokenAtom = atom(
 
 export const extraSetsAtom = atom(searchParams.get('extraSets')?.split(',') || []);
 
-export type LegalType = 'legal' | 'banned' | '4cbLegal' | 'hellsmanderLegal';
+// export type LegalType = 'legal' | 'banned' | '4cbLegal' | 'hellsmanderLegal';
 
-export const legalityAtom = atom<string[]>(
-  (searchParams.get('legality')?.split(',') || []) as (
-    | 'legal'
-    | 'banned'
-    | '4cbLegal'
-    | 'hellsmanderLegal'
-    | 'isCommander'
-  )[]
+export const standardLegalityAtom = atom(
+  (searchParams.get('standard') || '') as '' | 'legal' | 'not_legal' | 'banned'
 );
 
-// export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
+export const fourcbLegalityAtom = atom(
+  (searchParams.get('4cb') || '') as '' | 'legal' | 'not_legal' | 'banned'
+);
+export const commanderLegalityAtom = atom(
+  (searchParams.get('commander') || '') as '' | 'legal' | 'not_legal' | 'banned'
+);
+
+// export const legalityAtom = atom<string[]>(
+//   (searchParams.get('legality')?.split(',') || []) as (
+//     | 'legal'
+//     | 'banned'
+//     | '4cbLegal'
+//     | 'hellsmanderLegal'
+//     | 'isCommander'
+//   )[]
+// );
+
+export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
 
 export const manaValueAtom = atom<
   { value: number; operator: '<' | '<=' | '=' | '>=' | '>' } | undefined

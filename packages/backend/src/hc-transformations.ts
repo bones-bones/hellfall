@@ -63,6 +63,11 @@ const cardRemovableProps = [
   'flavor_text',
   'image',
   'draft_image',
+  'draft_image_status',
+  'rotated_image',
+  'rotated_draft_image',
+  'still_image',
+  'still_draft_image',
   'not_directly_draftable',
   'has_draft_partners',
   'watermark',
@@ -70,16 +75,23 @@ const cardRemovableProps = [
   'flavor_name',
 ];
 const cardFaceRemovableProps = ['frame'];
-const tokenIgnoreProps = ['colors', 'border_color', 'frame', 'frame_effects', 'finish'];
+const tokenIgnoreProps = ['colors'];
 const tokenRemovableProps = [
   'power',
   'toughness',
   'supertypes',
   'types',
   'image',
-  'draft_image',
   'not_directly_draftable',
   'has_draft_partners',
+  'all_parts',
+  'tags',
+  'tag_notes',
+  'rotated_image',
+  'still_image',
+  'watermark',
+  'frame_effects',
+  'flavor_name',
 ];
 const notMagicBlankableProps = ['oracle_text', 'mana_value'];
 const notMagicRemovableProps = [
@@ -93,7 +105,6 @@ const notMagicRemovableProps = [
   'subtypes',
   'flavor_text',
   'image',
-  'draft_image',
   'not_directly_draftable',
   'has_draft_partners',
 ];
@@ -139,6 +150,8 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'layout',
           'image_status',
           'image',
+          'rotated_image',
+          'still_image',
           'mana_cost',
           'mana_value',
           'supertypes',
@@ -160,6 +173,8 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'color_identity_hybrid',
           'draft_image_status',
           'draft_image',
+          'rotated_draft_image',
+          'still_draft_image',
           'not_directly_draftable',
           'has_draft_partners',
           'keywords',
@@ -183,6 +198,8 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'layout',
           'image_status',
           'image',
+          'rotated_image',
+          'still_image',
           'mana_cost',
           'mana_value',
           'supertypes',
@@ -232,7 +249,22 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           });
         }
         if ('all_parts' in this) {
-          ordered.all_parts = this.all_parts.map((part: Record<string, any>) => {
+          const faceNames = (this.card_faces || []).map((face: Record<string, any>) => face.name);
+          const shouldBeAtTop = (part: Record<string, any>): number => {
+            return (
+              faceNames.includes(part.name) ||
+              ['meld_part', 'meld_result', 'draft_partner'].includes(part.component)
+            );
+          };
+          const sortedParts =
+            'card_faces' in this
+              ? [...this.all_parts].sort(
+                  (a: Record<string, any>, b: Record<string, any>) =>
+                    shouldBeAtTop(b) - shouldBeAtTop(a)
+                )
+              : this.all_parts;
+
+          ordered.all_parts = sortedParts.map((part: Record<string, any>) => {
             const orderedPart: Record<string, any> = {};
             partPropOrder.forEach(prop => {
               if (prop in part) {
@@ -372,26 +404,13 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         }
       } else if (key == 'draft_image_status') {
         // TODO: store current version and print the diff if there is one
-        if (
-          merged.draft_image_status == HCImageStatus.Missing ||
-          merged.draft_image_status ==
-            HCImageStatus.Inapplicable /*  || face.image_status == HCImageStatus.Split */
-        ) {
-          (merged as any)[key] = value;
-        }
       } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.set == 'HCT') {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
         merged.flavor_name = value;
         // TODO: store current version and print the diff if there is one
       } else if (merged.isActualToken && tokenIgnoreProps.includes(key) && merged.set != 'SFT') {
-      } else if (
-        key === 'all_parts' &&
-        Array.isArray(value) &&
-        'all_parts' in merged &&
-        'all_parts' in existingCard &&
-        'all_parts' in newCard
-      ) {
+      } else if (key == 'all_parts' && existingCard.all_parts && newCard.all_parts) {
         merged.all_parts = newCard.all_parts?.map(part => {
           // is true when the thing that makes this is itself a token
           const tokenIsMaker = !!(part.name && part.id);
@@ -457,12 +476,13 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         }
       } else if (merged.set == 'NotMagic' && key == 'rulings') {
         // TODO: store current version and print the diff if there is one
-      } else if (merged.isActualToken && key == 'tags' && 'tags' in merged) {
-        value.forEach((tag: string) => {
-          if (!merged.tags?.includes(tag)) {
-            merged.tags?.push(tag);
-          }
-        });
+        // } else if (merged.isActualToken && key == 'tags_notes') {
+        // } else if (merged.isActualToken && key == 'tags' /**&& 'tags' in merged*/) {
+        // value.forEach((tag: string) => {
+        //   if (!merged.tags?.includes(tag)) {
+        //     merged.tags?.push(tag);
+        //   }
+        // });
         // TODO: store current version and print the diff if there is one
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;
@@ -488,11 +508,11 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         if (key == 'image') {
           merged.image_status = newCard.image_status;
         } else if (key == 'draft_image') {
-          merged.draft_image_status = newCard.draft_image_status;
+          delete merged.draft_image_status;
         }
         delete (merged as any)[key];
       });
-  } else if (merged.set == 'HCT') {
+  } else if (merged.set != 'NotMagic') {
     tokenRemovableProps
       .filter(key => key in merged && !(key in newCard))
       .forEach(key => {
@@ -722,23 +742,22 @@ const main = async () => {
   finalTokens
     .filter(e => 'all_parts' in e)
     .forEach(token => {
-      const relatedToken: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: token.id,
-        component: 'token',
-        name: token.name,
-        type_line: token.type_line,
-        set: token.set,
-        image: token.image,
-      };
       // add all tokens to all_parts
       token.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          // if (tokenMaker.count) {
-          //   relatedToken.count = tokenMaker.count;
-          //   delete tokenMaker.count;
-          // }
+          const relatedToken: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: token.id,
+            component: 'token',
+            name: token.name,
+            type_line: token.type_line,
+            set: token.set,
+            image: token.image,
+          };
+          if (tokenMaker.count) {
+            relatedToken.count = tokenMaker.count;
+          }
           // goes by id if possible, but if not, it goes by name; tries to find in cards, then tries in tokens
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
@@ -756,6 +775,7 @@ const main = async () => {
             tokenMaker.image = relatedCard.image;
             if (relatedCard.tags?.includes('persistent-tokens')) {
               tokenMaker.persistent = true;
+              relatedToken.persistent = true;
             }
             // update relatedCard.all_parts
             if ('all_parts' in relatedCard) {
@@ -768,10 +788,15 @@ const main = async () => {
             } else {
               relatedCard.all_parts = [relatedToken];
             }
-            // if stickers, add draftpartner props
+            // if stickers or AddCards, add draftpartner props
             if (
-              token.type_line.includes('Stickers') &&
-              relatedCard.tags?.includes('draftpartner')
+              (token.type_line.includes('Stickers') &&
+                relatedCard.tags?.includes('draftpartner')) ||
+              (relatedCard.tags?.includes('AddCards') &&
+                token.id != 'Ticket Counter1' &&
+                (!relatedCard.tag_notes?.['AddCards'] ||
+                  parseInt(relatedCard.tag_notes['AddCards']) ||
+                  relatedCard.tag_notes['AddCards'] == token.id))
             ) {
               relatedCard.has_draft_partners = true;
               token.has_draft_partners = true;
@@ -801,8 +826,7 @@ const main = async () => {
             }
             // meldPart.image =
             //   'card_faces' in relatedCard && relatedCard.card_faces[0].image ? relatedCard.card_faces[0].image : relatedCard.image;
-            // TODO: Figure out if this is still necessary
-            if (token.id != 'Omnath, the Forbidden One1') {
+            if (relatedCard.tags?.includes('draftpartner')) {
               meldPart.is_draft_partner = true;
             }
             meldRelatedCards.push(meldPart);
@@ -846,22 +870,21 @@ const main = async () => {
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
-      const relatedToken: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: card.id,
-        component: 'token',
-        name: card.name,
-        type_line: card.type_line,
-        set: card.set,
-        image: card.image,
-      };
       card.all_parts
         ?.filter(e => e.component == 'token_maker')
         .forEach(tokenMaker => {
-          // if (tokenMaker.count) {
-          //   relatedToken.count = tokenMaker.count;
-          //   delete tokenMaker.count;
-          // }
+          const relatedToken: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: card.id,
+            component: 'token',
+            name: card.name,
+            type_line: card.type_line,
+            set: card.set,
+            image: card.image,
+          };
+          if (tokenMaker.count) {
+            relatedToken.count = tokenMaker.count;
+          }
           const relatedCard = tokenMaker.id
             ? finalCards.find(card => card.id == tokenMaker.id)
               ? finalCards.find(card => card.id == tokenMaker.id)
@@ -880,6 +903,7 @@ const main = async () => {
             tokenMaker.image = relatedCard.image;
             if (relatedCard.tags?.includes('persistent-tokens')) {
               tokenMaker.persistent = true;
+              relatedToken.persistent = true;
             }
             if ('all_parts' in relatedCard!) {
               const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
@@ -898,23 +922,22 @@ const main = async () => {
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
-      const relatedPartner: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: card.id,
-        component: 'draft_partner',
-        name: card.name,
-        type_line: card.type_line,
-        set: card.set,
-        image: card.image,
-        is_draft_partner: true,
-      };
       card.all_parts
         ?.filter(e => e.component == 'draft_partner')
         .forEach(partnerCard => {
-          // if (partnerCard.count) {
-          //   relatedPartner.count = partnerCard.count;
-          //   delete partnerCard.count;
-          // }
+          const relatedPartner: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: card.id,
+            component: 'draft_partner',
+            name: card.name,
+            type_line: card.type_line,
+            set: card.set,
+            image: card.image,
+            is_draft_partner: true,
+          };
+          if (partnerCard.count) {
+            relatedPartner.count = partnerCard.count;
+          }
           const relatedCard = finalCards.find(e =>
             partnerCard.id ? e.id == partnerCard.id : textEquals(e.name, partnerCard.name)
           );
@@ -944,6 +967,7 @@ const main = async () => {
           }
         });
     });
+
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
@@ -1067,34 +1091,6 @@ const main = async () => {
     if ('tags' in entry) {
       entry.tags?.forEach(e => tagSet.add(e));
     }
-
-    // if (entry.Constructed) {
-    //   // @ts-expect-error not sure about this approach but hey.
-    //   entry.Constructed = entry.Constructed.split(', ');
-    // }
-
-    // if (tokenMap[entry.Name]) {
-    //   // Debug unused tokens
-    //   // (tokenMap[entry.Name] as any).used = true;
-
-    //   entry.tokens = tokenMap[entry.Name];
-
-    //   // if (["HC8.0", "HC8.1"].includes(entry.Set)) {
-    //   //   console.log(entry.Name);
-    //   // }
-    // }
-
-    // if (
-    //   entry["Text Box"]?.find((e) => e?.includes(" token")) &&
-    //   !entry.tokens &&
-    //   entry.Set === "HC6"
-    // ) {
-    //   console.log(
-    //     entry.Name +
-    //       "  " +
-    //       /[^ ]+ [^ ]+ token/.exec(entry["Text Box"].join(","))![0],
-    //   );
-    // }
   });
 
   const types = Array.from(typeSet);

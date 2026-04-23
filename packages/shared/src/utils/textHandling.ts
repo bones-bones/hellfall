@@ -253,3 +253,104 @@ export const stripMasterpiece = (name: string) => {
 export const toExportName = (name: string) => {
   return name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll('\\', '');
 };
+
+/**
+ * Converts mana from import from scryfall
+ * @param text text to import
+ * @returns imported text
+ */
+export const fromImportMana = (text: string) => {
+  if (text.includes('/P}')) {
+    return text
+      .split(/({\w+(?:\/\w+)?\/P})/g)
+      .map(subtext => (subtext.slice(-3) == '/P}' ? '{H/' + subtext.slice(1, -3) + '}' : subtext))
+      .join('');
+  } else {
+    return text;
+  }
+};
+
+const costSubstitutes: [RegExp | string, string][] = [
+  ['?', '0'],
+  ['9/3', '3'],
+  ['-1', '0'],
+  ['Orange/U', 'U'],
+  ['Pickle', '0'],
+  ['U/BB', 'U/B'],
+  ['BB/P', 'B}{B'],
+  ['UU/P', 'U}{U'],
+  ['TEMU', '0'],
+  ['G/Yellow/P', 'G'],
+  ['W/C/G', 'G/W'],
+  ['U/W', 'W/U'],
+  ['G/R', 'R/G'],
+  ['W/U/B/R/G', '1'],
+  ['G/X', 'X'],
+  ['W/Y', 'Y'],
+  ['U/Z', 'Z'],
+  ['B/W', 'W/B'],
+  ['B/U', 'U/B'],
+  ['27', '20}{7'],
+  ['69', '20}{20}{20}{9'],
+  ['orangeG', 'G'],
+  ['brownG', 'G'],
+  ['Cross', 'W'],
+  ['G/G', 'G'],
+  ['U/U', 'U'],
+  ['P/W', 'W'],
+  ['P/G', 'G'],
+  ['UFO', '1'],
+  ['HU', 'U'],
+  ['HG', 'G'],
+  ['HB', 'B'],
+  ['Sacrifice a creature:', '0'],
+  ['600000', 'G}{G}{G}{G}{G}{G'],
+  [/^H\/([WUBRGC](?:\/[WUBRGC])?)$/, '$1/P'],
+  [/^([WUBRGC]\/[WUBRGC])\/[WUBRGC]$/, '$1'],
+  [/^H\/\w+$/, 'C/P'],
+  [/^Chris|Lois|Stewie|Meg|Peter$/, '0'],
+  ['Blood', '0'],
+  ['Discard your hand/RR', 'R}{R'],
+  [/^2\/(?![WUBRG]$)\w+$/, '2'],
+  [/^[34]\/([WUBRGC])$/, '$1'],
+  [/^([0134])\/\w+$/, '$1'],
+  ['5/∞', '5'],
+  ['∞/U', 'U'],
+  [/^Yellow|Brown|Orange|Pink$/, '1'],
+];
+/**
+ * Preps text containing mana for export to draftmancer/cockatrice
+ * @param text text to prep
+ * @param isCost whether this is a mana cost or not
+ * @returns prepped text
+ */
+export const toExportMana = (text: string, isCost: boolean = false) => {
+  if (text.includes('{')) {
+    return text
+      .split(/({[\w -\.\?\/]+})/g)
+      .map(subtext => {
+        if (!subtext.includes('{')) {
+          return subtext;
+        } else {
+          for (const [rule, sub] of costSubstitutes) {
+            if (typeof rule == 'string') {
+              if (subtext.slice(1, -1) == rule) {
+                return isCost ? '{' + sub + '}' : subtext; //.slice(1,-1)
+              }
+            } else {
+              if (rule.test(subtext.slice(1, -1))) {
+                return isCost || sub == '$1/P'
+                  ? '{' + subtext.slice(1, -1).replace(rule, sub) + '}'
+                  : subtext; //.slice(1,-1)
+              }
+            }
+          }
+          return subtext;
+        }
+      })
+      .join('')
+      .replaceAll(':[', ':(');
+  } else {
+    return text.replaceAll(':[', ':(');
+  }
+};

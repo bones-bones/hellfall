@@ -62,7 +62,7 @@ export const fetchScryfallTokens = async () => {
   const asJson = (await requestedData.json()) as any;
 
   const [_oldkeys, ...rest] = asJson.values as string[][];
-  const keys = ['id', 'scryfall_id', 'layout', 'token_maker'];
+  const keys = ['id', 'scryfall_id', 'layout', 'token_maker', 'notes', 'tags'];
   rest.forEach(row => {
     while (row.length < keys.length) {
       row.push('');
@@ -109,6 +109,21 @@ export const fetchScryfallTokens = async () => {
               }
               return maker;
             });
+          } else if (keys[i] == 'tags') {
+            const tags = entry[i].split(';');
+            tokenObject.tags = tags.map(fullTag => {
+              if (fullTag.includes('<') && fullTag.includes('>')) {
+                const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
+                if (!tokenObject.tag_notes) {
+                  tokenObject.tag_notes = {} as Record<string, string>;
+                }
+                tokenObject.tag_notes[tag] = note;
+                return tag;
+              } else {
+                return fullTag;
+              }
+            });
+            tokenObject.tags = Array.from(new Set(tokenObject.tags));
           }
         }
       }

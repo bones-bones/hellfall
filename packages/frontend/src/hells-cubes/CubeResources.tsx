@@ -10,7 +10,7 @@ import { getDraftmancerForCube } from './draftmancer';
 import { getHc5 } from './getHc5.ts';
 import { toMPCAutofill } from './toMPCAutofill.ts';
 import { getLands } from './getLands.ts';
-import { filterSet, getSplitSet } from '../hellfall/filterSet.ts';
+import { filterSet, getSplitSet } from '../hellfall/filters/filterSet.ts';
 
 type CubeSetup = {
   name: string;
@@ -117,6 +117,13 @@ export const CubeResources = () => {
     {
       name: 'Hells Chase Posse',
       id: 'HCP',
+      quickLink: (
+        <StyledLink
+          to={'https://docs.google.com/document/d/16xpTpyr_bQEgjyEcXHP62766IcVCVtK-mSvh2kYflTE'}
+        >
+          Rules
+        </StyledLink>
+      ),
       // readyForAutofill: true,
       description: 'Planes and Phenomena for some sick planechase action',
       // cards: cards.filter(e => e.set.includes('HCP')),
@@ -167,6 +174,12 @@ export const CubeResources = () => {
       description: 'Jumpstart!',
       // cards: cards.filter(e => e.set.includes('HCJ')),
     },
+    // {
+    //   name: 'Heckscube 2: Hecklands',
+    //   id: 'HKL',
+    //   description: 'TODO',
+    //   // cards: cards.filter(e => e.set.includes('HC7')),
+    // },
     {
       name: 'All Hellscube Sets',
       id: 'All',
@@ -251,8 +264,8 @@ export const CubeResources = () => {
                     onClick={() => {
                       getDraftmancerForCube({
                         id: cubeSetup.id,
-                        cards: filterSet(cards, [cubeSetup.id]),
                         name: cubeSetup.name,
+                        allCards: cards,
                       });
                     }}
                   >

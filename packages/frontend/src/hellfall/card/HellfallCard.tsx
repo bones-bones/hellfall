@@ -26,20 +26,55 @@ const renderText = (text: string[]) => {
 };
 const getImages = (card: HCCard.Any) => {
   const imagesToShow: string[] = [];
+  const imageNames: string[] = [];
 
   if (!('card_faces' in card) || !('image' in card.card_faces[0])) {
     imagesToShow.push(card.image!);
+    imageNames.push('side 1');
   }
   if ('card_faces' in card) {
-    imagesToShow.push(...card.card_faces.filter(e => e.image).map(e => e.image!));
+    card.card_faces
+      .filter((face, i) => face.image || !i)
+      .forEach((face, i) => {
+        if (face.image) {
+          imagesToShow.push(face.image);
+          imageNames.push(`side ${i + 1}`);
+        }
+        if (face.still_image) {
+          imagesToShow.push(face.still_image);
+          imageNames.push(`side ${i + 1} still`);
+        }
+        if (face.rotated_image) {
+          imagesToShow.push(face.rotated_image);
+          imageNames.push(`side ${i + 1} rotated`);
+        }
+      });
     if (card.image && 'image' in card.card_faces[0]) {
       imagesToShow.push(card.image);
+      imageNames.push('full');
     }
   }
-  if ('draft_image' in card) {
-    imagesToShow.push(card.draft_image!);
+  if (card.still_image) {
+    imagesToShow.push(card.still_image);
+    imageNames.push('still');
   }
-  return imagesToShow;
+  if (card.rotated_image) {
+    imagesToShow.push(card.rotated_image);
+    imageNames.push('rotated');
+  }
+  if (card.draft_image) {
+    imagesToShow.push(card.draft_image);
+    imageNames.push('draft');
+  }
+  if (card.still_draft_image) {
+    imagesToShow.push(card.still_draft_image);
+    imageNames.push('still draft');
+  }
+  if (card.rotated_draft_image) {
+    imagesToShow.push(card.rotated_draft_image);
+    imageNames.push('rotated draft');
+  }
+  return { images: imagesToShow, names: imageNames };
 };
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const [activeImageSide, setActiveImageSide] = useState(0);
@@ -66,7 +101,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   }, [windowWidth]);
 
   // TODO: add handling for flip and aftermath
-  const imagesToShow = getImages(data);
+  const { images: imagesToShow, names: imageNames } = getImages(data);
 
   return (
     <Container ref={windowRef} key={data.id}>
@@ -100,16 +135,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     }}
                     disabled={i === activeImageSide}
                   >
-                    {i == imagesToShow.length - 1 && data.draft_image
-                      ? data.tags?.includes('gif')
-                        ? 'still'
-                        : 'draft'
-                      : !data.draft_image &&
-                        i == imagesToShow.length - 1 &&
-                        'card_faces' in data &&
-                        'image' in data.card_faces[0]
-                      ? 'full'
-                      : `side ${i + 1}`}
+                    {imageNames[i]}
                   </button>
                 );
               })}
@@ -124,18 +150,16 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {i > 0 && <Divider />}
               {face.name &&
                 (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
-                  <Text typeLevel="body.medium" key="name">
+                  <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
                     {formatDiscordMarkdownInline(formatParens(face.name))}
                   </Text>
                 ) : (
                   <>
-                    <Text typeLevel="body.medium" key="name">
+                    <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
                       {stringToMana(face.name)}
                     </Text>
-                    {/* <br /> */}
                   </>
                 ))}
-              {'   '}
               <Text typeLevel="body.medium" key="cost">
                 {stringToMana(face.mana_cost)}
               </Text>
@@ -250,7 +274,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           <Divider />
           {data.set && (
             <>
-              <Text typeLevel="body.medium">Set: {data.set}</Text>
+              <Text typeLevel="body.medium">Set: {data.set == 'HCV.CDC' ? 'CDC' : data.set}</Text>
               <br />
             </>
           )}
@@ -273,11 +297,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           )}
           {
             <>
-              Constructed <SetLegality banned={Boolean(data.legalities.standard != 'legal')} />
+              Constructed <SetLegality legality={data.legalities.standard} />
               <br />
-              4CB <SetLegality banned={Boolean(data.legalities['4cb'] != 'legal')} />
+              4CB <SetLegality legality={data.legalities['4cb']} />
               <br />
-              Hellsmander <SetLegality banned={Boolean(data.legalities.commander != 'legal')} />
+              Hellsmander <SetLegality legality={data.legalities.commander} />
               <br />
             </>
           }

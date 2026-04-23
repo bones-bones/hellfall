@@ -4,15 +4,15 @@ import { HCCard } from '@hellfall/shared/types';
 export const getDraftmancerForCube = ({
   id,
   name,
-  cards,
+  allCards,
 }: {
   id: string;
   name: string;
-  cards: HCCard.Any[];
+  allCards: HCCard.Any[];
 }) => {
   const val = toDraftmancerCube({
     set: id,
-    cards: cards,
+    allCards: allCards,
   });
 
   const url = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(val)));

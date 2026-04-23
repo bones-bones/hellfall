@@ -35,7 +35,11 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  legalityAtom,
+  // legalityAtom,
+  standardLegalityAtom,
+  fourcbLegalityAtom,
+  commanderLegalityAtom,
+  isCommanderAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -48,6 +52,7 @@ import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useDebounce, useKeyPress } from '../../hooks';
 import { act, useEffect, useState } from 'react';
 import { extraSetList } from '../constants.ts';
+import { HCSearchColors } from '@hellfall/shared/types';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -73,10 +78,16 @@ export const SearchControls = () => {
   const [includeExtraSets, setIncludeExtraSets] = useAtom(includeExtraSetsAtom);
   const [extraSets, setExtraSets] = useAtom(extraSetsAtom);
   const [searchToken, setSearchToken] = useAtom(searchTokenAtom);
-  const [open, setOpen] = useState(
+  const [extrasOpen, setExtrasOpen] = useState(
     includeExtraSets || extraSets.length > 0 || searchToken != 'Cards'
   );
-  const [legality, setLegality] = useAtom(legalityAtom);
+  const [standardLegality, setStandardLegality] = useAtom(standardLegalityAtom);
+  const [fourcbLegality, set4cbLegality] = useAtom(fourcbLegalityAtom);
+  const [commanderLegality, setCommanderLegality] = useAtom(commanderLegalityAtom);
+  const [isCommander, setIsCommander] = useAtom(isCommanderAtom);
+  const [legalityOpen, setLegalityOpen] = useState(
+    Boolean(standardLegality || fourcbLegality || commanderLegality || isCommander)
+  );
   const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -208,21 +219,8 @@ export const SearchControls = () => {
       <SearchCriteriaSection>
         <NamedCheckboxGroup
           label="Colors"
-          values={
-            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
-          }
-          names={
-            /**Object.keys(HCSearchColor)*/ [
-              'White',
-              'Blue',
-              'Black',
-              'Red',
-              'Green',
-              'Purple',
-              'Colorless',
-              'Misc bullshit',
-            ]
-          }
+          values={HCSearchColors}
+          names={['White', 'Blue', 'Black', 'Red', 'Green', 'Purple', 'Colorless', 'Misc bullshit']}
           value={searchColors}
           onChange={setSearchColors}
         >
@@ -247,21 +245,8 @@ export const SearchControls = () => {
       <SearchCriteriaSection>
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
-          values={
-            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
-          }
-          names={
-            /**Object.keys(HCSearchColor)*/ [
-              'White',
-              'Blue',
-              'Black',
-              'Red',
-              'Green',
-              'Purple',
-              'Colorless',
-              'Misc bullshit',
-            ]
-          }
+          values={HCSearchColors}
+          names={['White', 'Blue', 'Black', 'Red', 'Green', 'Purple', 'Colorless', 'Misc bullshit']}
           value={searchColorIdentities}
           onChange={setSearchColorIdentities}
         >
@@ -325,7 +310,7 @@ export const SearchControls = () => {
       <SearchCriteriaSection>
         <fieldset>
           <StyledLegend>{'Extras'}</StyledLegend>
-          {open ? (
+          {extrasOpen ? (
             <>
               {/* <StyledComponentHolder> */}
               <SingleCheckbox
@@ -360,7 +345,7 @@ export const SearchControls = () => {
               <br />
               <button
                 onClick={() => {
-                  setOpen(false);
+                  setExtrasOpen(false);
                 }}
               >
                 show less
@@ -369,14 +354,87 @@ export const SearchControls = () => {
           ) : (
             <button
               onClick={() => {
-                setOpen(true);
+                setExtrasOpen(true);
               }}
             >
               show more
             </button>
           )}
         </fieldset>
-        <NamedHiddenCheckboxGroup
+        <fieldset>
+          <StyledLegend>{'Constructed Legality'}</StyledLegend>
+          {legalityOpen ? (
+            <>
+              <StyledComponentHolder>
+                <StyledLabel htmlFor="standard">{'Standard'}</StyledLabel>
+                <StyledDropdownSelect
+                  id="standard"
+                  defaultValue={standardLegality}
+                  value={standardLegality}
+                  onChange={event => {
+                    setStandardLegality(event.target.value as any);
+                  }}
+                >
+                  {['', 'legal', 'not_legal', 'banned'].map(entry => {
+                    return <option key={entry}>{entry}</option>;
+                  })}
+                </StyledDropdownSelect>
+              </StyledComponentHolder>
+              <StyledComponentHolder>
+                <StyledLabel htmlFor="4cb">{'4 Card Blind'}</StyledLabel>
+                <StyledDropdownSelect
+                  id="4cb"
+                  defaultValue={fourcbLegality}
+                  value={fourcbLegality}
+                  onChange={event => {
+                    set4cbLegality(event.target.value as any);
+                  }}
+                >
+                  {['', 'legal', 'not_legal', 'banned'].map(entry => {
+                    return <option key={entry}>{entry}</option>;
+                  })}
+                </StyledDropdownSelect>
+              </StyledComponentHolder>
+              <StyledComponentHolder>
+                <StyledLabel htmlFor="commander">{'Hellsmander'}</StyledLabel>
+                <StyledDropdownSelect
+                  id="commander"
+                  defaultValue={commanderLegality}
+                  value={commanderLegality}
+                  onChange={event => {
+                    setCommanderLegality(event.target.value as any);
+                  }}
+                >
+                  {['', 'legal', 'not_legal', 'banned'].map(entry => {
+                    return <option key={entry}>{entry}</option>;
+                  })}
+                </StyledDropdownSelect>
+              </StyledComponentHolder>
+              <SingleCheckbox
+                label={'Can Be Your Commander'}
+                onChange={setIsCommander}
+                value={isCommander}
+              />
+              <br />
+              <button
+                onClick={() => {
+                  setLegalityOpen(false);
+                }}
+              >
+                show less
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                setLegalityOpen(true);
+              }}
+            >
+              show more
+            </button>
+          )}
+        </fieldset>
+        {/* <NamedHiddenCheckboxGroup
           label="Constructed Legality"
           values={['constructedLegal', '4cbLegal', 'hellsmanderLegal', 'isCommander']}
           names={[
@@ -387,7 +445,7 @@ export const SearchControls = () => {
           ]}
           value={legality}
           onChange={setLegality}
-        />
+        /> */}
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />

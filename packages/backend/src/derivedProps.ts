@@ -13,6 +13,7 @@ import {
 } from '@hellfall/shared/types';
 import { splitParens } from '@hellfall/shared/utils/textHandling.ts';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
+import { orderColors } from '@hellfall/shared/utils/ordercolors';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -89,7 +90,7 @@ export const getColorIdentityProps = (
       }
     });
 
-    if ('color_indicator' in face) {
+    if (face.color_indicator) {
       face.color_indicator?.forEach(color => {
         addColors([color]);
       });
@@ -220,6 +221,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
     card.card_faces.forEach(face => {
+      face.colors = orderColors(face.colors) as HCColors;
       const face_type = [
         face.supertypes?.join(' '),
         [face.types?.join(' '), face.subtypes?.join(' ')].filter(Boolean).join(' — '),
@@ -250,6 +252,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
     }
   }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
+  card.colors = orderColors(card.colors) as HCColors;
   card.color_identity = color_identity;
   card.color_identity_hybrid = color_identity_hybrid;
 };

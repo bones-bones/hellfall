@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState, useEffect, PropsWithChildren, FC } from 'react';
 import { StyledLegend } from '../StyledLabel.tsx';
-import { HCSearchColor } from '@hellfall/shared/types';
+import { HCSearchColors } from '@hellfall/shared/types';
 
 export const SearchCheckbox = styled.input({
   height: '18px',
@@ -332,51 +332,6 @@ export const SingleCheckbox = ({
     </div>
   );
 };
-
-// TODO: figure out how to do this without sending the site into an infinite loop
-// export const ColorCheckboxGroup: FC<
-//   PropsWithChildren<{
-//     names: string[];
-//     values: HCSearchColor[];
-//     initialValue?: HCSearchColor[];
-//     onChange: (values: HCSearchColor[]) => void;
-//     label: string;
-//   }>
-// > = ({ names, values, onChange, initialValue, label, children }) => {
-//   const [selected, setSelected] = useState<HCSearchColor[]>(initialValue || []);
-//   useEffect(() => {
-//     onChange(selected);
-//   }, [selected]);
-//   return (
-//     <fieldset>
-//       <StyledLegend>{label}</StyledLegend>
-
-//       <Container>
-//         {values.map((entry, index) => {
-//           const name = names[index];
-//           return (
-//             <CheckEntry key={entry}>
-//               <SearchCheckbox
-//                 id={label + entry + 'label' + 'checkbox'}
-//                 type="checkbox"
-//                 checked={selected.includes(entry)}
-//                 onChange={event => {
-//                   if (event.target.checked) {
-//                     setSelected([entry, ...selected]);
-//                   } else {
-//                     setSelected(selected.filter(selectedEntry => selectedEntry != entry));
-//                   }
-//                 }}
-//               />
-//               <StyledLabel htmlFor={label + entry + 'label' + 'checkbox'}>{name}</StyledLabel>
-//             </CheckEntry>
-//           );
-//         })}
-//       </Container>
-//       {children}
-//     </fieldset>
-//   );
-// };
 
 const Container = styled.div({ display: 'flex', flexDirection: 'column' });
 

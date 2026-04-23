@@ -1,9 +1,10 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { HCCard, HCCardFace, HCColors, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
 import { toExportName } from '@hellfall/shared/utils/textHandling.ts';
+import { orderColors } from '@hellfall/shared/utils/orderColors.ts';
 import { recursiveAdoption } from '../recursiveAdoption.ts';
 import { prettifyXml } from './prettifyXml';
-import { getSplitSet } from '../../hellfall/filterSet.ts';
+import { getSplitSet } from '../../hellfall/filters/filterSet.ts';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 
 const hcToCockLayout: Record<HCLayout, string> = {
@@ -11,7 +12,7 @@ const hcToCockLayout: Record<HCLayout, string> = {
   multi: 'split',
   inset: 'adventure',
   prepare: 'prepare',
-  token: 'normal',
+  token: 'token',
   token_in_inset: 'normal',
   token_on_back: 'normal',
   split: 'split',
@@ -52,8 +53,8 @@ const hcToCockLayout: Record<HCLayout, string> = {
   vanguard: 'normal',
   station: 'normal',
 };
-const subLayouts = ['token', 'dungeon'];
-const dropLayouts = ['meld', 'draft_partner'];
+const subLayouts = ['token'];
+const dropLayouts = ['meld_result', 'draft_partner', 'specialize'];
 const alwaysCompressLayouts = ['split', 'aftermath', 'prepare', 'adventure', 'token'];
 
 type CockFaceProps = Record<string, string | number | HCColors> & {
@@ -64,7 +65,7 @@ type CockFaceProps = Record<string, string | number | HCColors> & {
   maintype: string;
   manacost: string;
   cmc: number;
-  colors?: HCColors;
+  colors?: string[];
   pt?: string;
   loyalty?: string;
   picurl?: string;
@@ -120,12 +121,12 @@ export const toCockCube = ({
       manacost: face.mana_cost,
       cmc: face.mana_value,
     };
-    if ('id' in face && face.isActualToken) {
+    if ('id' in face && face.isActualToken && 'keywords' in face) {
       // for tokens, use their unique id as the name to prevent conflicts
       cockFace.name = face.id;
     }
     if (face.colors.length) {
-      cockFace.colors = face.colors;
+      cockFace.colors = orderColors(face.colors);
     }
     if (face.image) {
       cockFace.picurl = face.image;
@@ -146,10 +147,10 @@ export const toCockCube = ({
    */
   const mergeCockFaceProps = (faces: CockFaceProps[], goingBackwards?: boolean): CockFaceProps => {
     faces.slice(1).forEach((face, i) => {
-      Object.entries(face).forEach(([key, value]) => {
+      Object.keys(face).forEach(key => {
         if (key == 'layout') {
-          if (!subLayouts.includes(value as string) || goingBackwards) {
-            faces[0][key] = value as string;
+          if (!subLayouts.includes(face[key]) || goingBackwards) {
+            faces[0][key] = face[key];
           }
         } else if (
           ['adventure', 'prepare'].includes(face.layout) &&
@@ -157,41 +158,35 @@ export const toCockCube = ({
         ) {
         } else if (key == 'maintype') {
         } else if (key == 'cmc') {
-          if (!subLayouts.includes(value as string)) {
-            faces[0][key] += value as number;
+          if (!subLayouts.includes(face.layout)) {
+            faces[0][key] += face[key];
           }
         } else if (key == 'colors') {
-          if (!subLayouts.includes(value as string)) {
-            if (faces[0].colors) {
-              (value as HCColors).forEach(color => {
+          if (!subLayouts.includes(face.layout)) {
+            if (faces[0].colors && face[key]) {
+              face[key].forEach(color => {
                 if (!faces[0].colors?.includes(color)) {
                   faces[0].colors?.push(color);
                 }
               });
-            } else {
-              faces[0].colors = value as HCColors;
+            } else if (face[key]) {
+              faces[0].colors = face[key];
             }
           }
         } else if (key == 'picurl') {
-          if (!faces[0][key]) {
-            faces[0][key] = value as string;
+          if (!faces[0][key] && face[key]) {
+            faces[0][key] = face[key];
           }
         } else if (faces[0][key]) {
           if (key !== 'text') {
             const needed = i - ((faces[0][key] as string).match(/ \/\/ /g)?.length || 0);
             if (needed > 0) {
-              if (face.name.slice(0, 8) == 'Urabrask') {
-                debugger;
-              }
               faces[0][key] += ' // '.repeat(needed);
             }
           }
-          faces[0][key] += (key == 'text' ? '\n\n---\n\n' : ' // ') + value;
+          faces[0][key] += (key == 'text' ? '\n\n---\n\n' : ' // ') + face[key];
         } else {
-          if (face.name.slice(0, 8) == 'Urabrask') {
-            debugger;
-          }
-          faces[0][key] = ' // '.repeat(i) + value;
+          faces[0][key] = ' // '.repeat(i + 1) + face[key];
         }
       });
     });
@@ -207,32 +202,38 @@ export const toCockCube = ({
     const cockRelateds: CockRelatedProps[] = [];
     all_parts.forEach(part => {
       switch (part.component) {
-        case 'meld_part': {
-          const related: CockRelatedProps = {
-            id: part.id,
-            reverse: '',
-            attach: 'transform',
-          };
-          cockRelateds.push(related);
-          break;
-        }
         case 'meld_result': {
           const related: CockRelatedProps = {
             id: part.id,
-            reverse: 'reverse-',
+            reverse: '',
             attach: 'transform',
           };
           cockRelateds.push(related);
           break;
         }
-        case 'token': {
-          const related: CockRelatedProps = {
-            id: part.id,
-            reverse: '',
-          };
-          cockRelateds.push(related);
-          break;
-        }
+        // case 'meld_part': {
+        //   const related: CockRelatedProps = {
+        //     id: part.id,
+        //     reverse: 'reverse-',
+        //     attach: 'transform',
+        //   };
+        //   cockRelateds.push(related);
+        //   break;
+        // }
+        // case 'token': {
+        //   const related: CockRelatedProps = {
+        //     id: part.id,
+        //     reverse: '',
+        //   };
+        //   if (part.persistent) {
+        //     related.persistent = 'persistent';
+        //   }
+        //   if (part.count) {
+        //     related.count = part.count;
+        //   }
+        //   cockRelateds.push(related);
+        //   break;
+        // }
         case 'token_maker': {
           const related: CockRelatedProps = {
             id: part.id,
@@ -268,7 +269,7 @@ export const toCockCube = ({
     }
     Object.entries(card.legalities).forEach(([key, value]) => {
       if (value == 'legal') {
-        cockCard['format-' + (key as string)] = 'legal';
+        cockCard['format-' + key] = 'legal';
       }
     });
     if ('card_faces' in card) {
@@ -316,8 +317,17 @@ export const toCockCube = ({
     }
     // make sure names aren't taken and then store the names
     cockCard.props.forEach((face, i) => {
+      if (card.isActualToken) {
+        if (cockCard.props.length > 1) {
+          face.name += '1';
+        } else {
+          face.name = card.id;
+        }
+      }
       if (!face.name) {
-        face.name = `(${i ? 'back' : 'front'} of ${cockCard.props[1 - i].name})`;
+        face.name = `(${i ? 'Back' : 'Front'} of ${cockCard.props[1 - i].name})`;
+      } else if (i && face.name == cockCard.props[0].name) {
+        face.name += ' (Back)';
       }
       while (nameIsTaken(face.name)) {
         face.name += ' ';

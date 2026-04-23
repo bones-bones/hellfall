@@ -1,4 +1,3 @@
-// hooks/useUrlSync.ts
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSetAtom, useAtom } from 'jotai';
@@ -22,8 +21,11 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  legalityAtom,
-  // isCommanderAtom,
+  // legalityAtom,
+  standardLegalityAtom,
+  fourcbLegalityAtom,
+  commanderLegalityAtom,
+  isCommanderAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -33,7 +35,7 @@ import {
   dirAtom,
   pageAtom,
   activeCardAtom,
-  LegalType,
+  // LegalType,
 } from '../atoms/searchAtoms.ts';
 
 export const useUrlSync = () => {
@@ -63,7 +65,11 @@ export const useUrlSync = () => {
   const [includeExtraSets, setIncludeExtraSets] = useAtom(includeExtraSetsAtom);
   const [extraSets, setExtraSets] = useAtom(extraSetsAtom);
   const [searchToken, setSearchToken] = useAtom(searchTokenAtom);
-  const [legality, setLegality] = useAtom(legalityAtom);
+  // const [legality, setLegality] = useAtom(legalityAtom);
+  const [standardLegality, setStandardLegality] = useAtom(standardLegalityAtom);
+  const [fourcbLegality, set4cbLegality] = useAtom(fourcbLegalityAtom);
+  const [commanderLegality, setCommanderLegality] = useAtom(commanderLegalityAtom);
+  const [isCommander, setIsCommander] = useAtom(isCommanderAtom);
   const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -149,25 +155,44 @@ export const useUrlSync = () => {
       setSearchToken((params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards');
     }
     if (
-      legality !=
-      ((params.get('legality')?.split(',').filter(Boolean) as (
-        | 'legal'
-        | 'banned'
-        | '4cbLegal'
-        | 'hellsmanderLegal'
-        | 'isCommander'
-      )[]) || [])
+      standardLegality != ((params.get('standard') as '' | 'legal' | 'not_legal' | 'banned') || '')
     ) {
-      setLegality(
-        (params.get('legality')?.split(',').filter(Boolean) as (
-          | 'legal'
-          | 'banned'
-          | '4cbLegal'
-          | 'hellsmanderLegal'
-          | 'isCommander'
-        )[]) || []
+      setStandardLegality((params.get('standard') as '' | 'legal' | 'not_legal' | 'banned') || '');
+    }
+    if (fourcbLegality != ((params.get('4cb') as '' | 'legal' | 'not_legal' | 'banned') || '')) {
+      set4cbLegality((params.get('4cb') as '' | 'legal' | 'not_legal' | 'banned') || '');
+    }
+    if (
+      commanderLegality !=
+      ((params.get('commander') as '' | 'legal' | 'not_legal' | 'banned') || '')
+    ) {
+      setCommanderLegality(
+        (params.get('commander') as '' | 'legal' | 'not_legal' | 'banned') || ''
       );
     }
+    if (isCommander != (params.get('isCommander') === 'true')) {
+      setIsCommander(params.get('isCommander') === 'true');
+    }
+    // if (
+    //   legality !=
+    //   ((params.get('legality')?.split(',').filter(Boolean) as (
+    //     | 'legal'
+    //     | 'banned'
+    //     | '4cbLegal'
+    //     | 'hellsmanderLegal'
+    //     | 'isCommander'
+    //   )[]) || [])
+    // ) {
+    //   setLegality(
+    //     (params.get('legality')?.split(',').filter(Boolean) as (
+    //       | 'legal'
+    //       | 'banned'
+    //       | '4cbLegal'
+    //       | 'hellsmanderLegal'
+    //       | 'isCommander'
+    //     )[]) || []
+    //   );
+    // }
 
     // Set numeric filters
     if (manaValue != parseOperatorValue(params.get('manaValue'))) {

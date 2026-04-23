@@ -364,13 +364,29 @@ export namespace HCCardFields.Print {
      */
     image?: string;
     /**
-     * A computer-readable indicator for the state of this card's draft image.
-     */
-    draft_image_status: `${HCImageStatus}`;
-    /**
      * A string with the draft image.
      */
     draft_image?: string;
+    /**
+     * A computer-readable indicator for the state of this card's draft image.
+     */
+    draft_image_status?: `${HCImageStatus}`;
+    /**
+     * A string with the rotated image for this card.
+     */
+    rotated_image?: string;
+    /**
+     * A string with the rotated draft image for this card.
+     */
+    rotated_draft_image?: string;
+    /**
+     * A string with the still image for this card.
+     */
+    still_image?: string;
+    /**
+     * A string with the still draft image for this card.
+     */
+    still_draft_image?: string;
     /**
      * A list of ids to add to the draft pool when this is drafted.
      */
@@ -421,10 +437,10 @@ export namespace HCCardFields.Print {
     /**
      * This faces's frame effects, if any.
      */
-    frame_effects?: `${HCFrameEffect}`[] /**
+    frame_effects?: `${HCFrameEffect}`[];
     /**
      * This faces's frame layout, if it is different from that of the overall card.
-     */;
+     */
     frame?: `${HCFrame}`;
   };
   /**
@@ -442,6 +458,14 @@ export namespace HCCardFields.Print {
      * A string with the image for this face, if any.
      */
     image?: string;
+    /**
+     * A string with the rotated image for this card.
+     */
+    rotated_image?: string;
+    /**
+     * A string with the still image for this card.
+     */
+    still_image?: string;
     /**
      * The flavor text, if any.
      */
