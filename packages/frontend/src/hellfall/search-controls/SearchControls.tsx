@@ -52,6 +52,7 @@ import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useDebounce, useKeyPress } from '../../hooks';
 import { act, useEffect, useState } from 'react';
 import { extraSetList } from '../constants.ts';
+import { HCSearchColors } from '@hellfall/shared/types';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -219,7 +220,8 @@ export const SearchControls = () => {
         <NamedCheckboxGroup
           label="Colors"
           values={
-            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
+            HCSearchColors
+            // /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
           }
           names={
             /**Object.keys(HCSearchColor)*/ [
@@ -258,7 +260,8 @@ export const SearchControls = () => {
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
           values={
-            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
+            HCSearchColors
+            // /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
           }
           names={
             /**Object.keys(HCSearchColor)*/ [

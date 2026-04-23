@@ -281,8 +281,17 @@ const costSubstitutes: [RegExp | string, string][] = [
   ['UU/P', 'U}{U'],
   ['TEMU', '0'],
   ['G/Yellow/P', 'G'],
+  ['W/C/G','G/W'],
+  ['U/W', 'W/U'],
+  ['G/R', 'R/G'],
+  ['W/U/B/R/G','1'],
+  ['G/X','X'],
+  ['W/Y','Y'],
+  ['U/Z','Z'],
+  ['B/W','W/B'],
+  ['Sacrifice a creature:','0'],
   [/^H\/([WUBRGC](?:\/[WUBRGC])?)$/, '$1/P'],
-  [/([WUBRGC]\/[WUBRGC])\/[WUBRGC]$/, '$1'],
+  [/^([WUBRGC]\/[WUBRGC])\/[WUBRGC]$/, '$1'],
   [/^H\/\w+$/, 'C/P'],
   ['Blood', '0'],
   ['Discard your hand/RR', 'R}{R'],
@@ -292,8 +301,6 @@ const costSubstitutes: [RegExp | string, string][] = [
   ['5/∞', '5'],
   ['∞/U', 'U'],
   [/^Yellow|Brown|Orange|Pink$/, '1'],
-  ['U/W', 'W/U'],
-  ['G/R', 'R/G'],
 ];
 /**
  * Preps text containing mana for export to draftmancer/cockatrice

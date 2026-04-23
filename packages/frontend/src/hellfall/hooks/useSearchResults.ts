@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { usePaginationModel, getLastPage } from '@workday/canvas-kit-react/pagination';
-import { HCCard, HCColor, HCSearchColor, HCColors } from '@hellfall/shared/types';
+import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { useAtom, useAtomValue } from 'jotai';
 import {

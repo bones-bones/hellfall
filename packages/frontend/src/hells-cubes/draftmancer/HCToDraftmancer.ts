@@ -216,11 +216,23 @@ export const HCToDraftmancer = (
       while (nameIsTaken(card.card_faces[0].name)) {
         card.card_faces[0].name += '_';
       }
+      while (card.card_faces[0].name[0] == ' ') {
+        card.card_faces[0].name = card.card_faces[0].name.slice(1);
+      }
+      if (card.card_faces[0].name[0] == '0' || parseInt(card.card_faces[0].name[0])) {
+        card.card_faces[0].name = '_' + card.card_faces[0].name;
+      }
       idNames[card.id] = card.card_faces[0].name;
     } else {
       card.name = toExportName(card.isActualToken ? card.id : card.name);
       while (nameIsTaken(card.name)) {
         card.name += '_';
+      }
+      while (card.name[0] == ' ') {
+        card.name = card.name.slice(1);
+      }
+      if (card.name[0] == '0' || parseInt(card.name[0])) {
+        card.name = '_' + card.name;
       }
       idNames[card.id] = card.name;
     }
