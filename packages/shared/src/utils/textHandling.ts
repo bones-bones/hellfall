@@ -281,18 +281,34 @@ const costSubstitutes: [RegExp | string, string][] = [
   ['UU/P', 'U}{U'],
   ['TEMU', '0'],
   ['G/Yellow/P', 'G'],
-  ['W/C/G','G/W'],
+  ['W/C/G', 'G/W'],
   ['U/W', 'W/U'],
   ['G/R', 'R/G'],
-  ['W/U/B/R/G','1'],
-  ['G/X','X'],
-  ['W/Y','Y'],
-  ['U/Z','Z'],
-  ['B/W','W/B'],
-  ['Sacrifice a creature:','0'],
+  ['W/U/B/R/G', '1'],
+  ['G/X', 'X'],
+  ['W/Y', 'Y'],
+  ['U/Z', 'Z'],
+  ['B/W', 'W/B'],
+  ['B/U', 'U/B'],
+  ['27', '20}{7'],
+  ['69', '20}{20}{20}{9'],
+  ['orangeG', 'G'],
+  ['brownG', 'G'],
+  ['Cross', 'W'],
+  ['G/G', 'G'],
+  ['U/U', 'U'],
+  ['P/W', 'W'],
+  ['P/G', 'G'],
+  ['UFO', '1'],
+  ['HU', 'U'],
+  ['HG', 'G'],
+  ['HB', 'B'],
+  ['Sacrifice a creature:', '0'],
+  ['600000', 'G}{G}{G}{G}{G}{G'],
   [/^H\/([WUBRGC](?:\/[WUBRGC])?)$/, '$1/P'],
   [/^([WUBRGC]\/[WUBRGC])\/[WUBRGC]$/, '$1'],
   [/^H\/\w+$/, 'C/P'],
+  [/^Chris|Lois|Stewie|Meg|Peter$/, '0'],
   ['Blood', '0'],
   ['Discard your hand/RR', 'R}{R'],
   [/^2\/(?![WUBRG]$)\w+$/, '2'],
@@ -319,12 +335,10 @@ export const toExportMana = (text: string, isCost: boolean = false) => {
           for (const [rule, sub] of costSubstitutes) {
             if (typeof rule == 'string') {
               if (subtext.slice(1, -1) == rule) {
-                debugger;
                 return isCost ? '{' + sub + '}' : subtext; //.slice(1,-1)
               }
             } else {
               if (rule.test(subtext.slice(1, -1))) {
-                debugger;
                 return isCost || sub == '$1/P'
                   ? '{' + subtext.slice(1, -1).replace(rule, sub) + '}'
                   : subtext; //.slice(1,-1)
@@ -334,8 +348,9 @@ export const toExportMana = (text: string, isCost: boolean = false) => {
           return subtext;
         }
       })
-      .join('');
+      .join('')
+      .replaceAll(':[', ':(');
   } else {
-    return text;
+    return text.replaceAll(':[', ':(');
   }
 };

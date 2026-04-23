@@ -54,7 +54,7 @@ const hcToCockLayout: Record<HCLayout, string> = {
   station: 'normal',
 };
 const subLayouts = ['token'];
-const dropLayouts = ['meld', 'draft_partner'];
+const dropLayouts = ['meld_result', 'draft_partner', 'specialize'];
 const alwaysCompressLayouts = ['split', 'aftermath', 'prepare', 'adventure', 'token'];
 
 type CockFaceProps = Record<string, string | number | HCColors> & {

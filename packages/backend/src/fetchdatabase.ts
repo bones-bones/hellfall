@@ -405,6 +405,14 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             if (tag == 'draft-image') {
               cardObject.draft_image_status = HCImageStatus.HighRes;
             }
+          } else if (tag == 'flavor-name') {
+            if (note.includes('|')) {
+              const [face, flavor_name] = [parseInt(note.split('|')[0]), note.split('|')[1]];
+              const faceToUse = face > 0 && face < cardObject.card_faces.length ? face : 0;
+              cardObject.card_faces[faceToUse].flavor_name = flavor_name;
+            } else {
+              cardObject.flavor_name = note;
+            }
           } else {
             if (!('tag_notes' in cardObject)) {
               cardObject.tag_notes = {} as Record<string, string>;
@@ -463,12 +471,6 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           //   cardObject.frame = frameTags[tag];
         } else if (tag == 'foil') {
           cardObject.finish = HCFinish.Foil;
-        } else if (
-          tag == 'flavor-name' &&
-          'tag_notes' in cardObject &&
-          tag in cardObject.tag_notes
-        ) {
-          cardObject.card_faces[0].flavor_name = cardObject.tag_notes[tag];
           // } else if ((tag == 'gif' || tag == 'sideways') && cardObject.card_faces.some(face => face.image) && !cardObject.tags.includes('mdfc')) {
           //   const stillIndex = cardObject.card_faces.findLastIndex(face => face.image);
           //   cardObject.full_image = cardObject.card_faces[stillIndex].image;
@@ -509,8 +511,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       ) {
         face.layout = 'flip';
       } else if ('layout' in cardObject && cardObject.layout in multiLayoutToFaceLayout) {
-        face.layout =
-          multiLayoutToFaceLayout[cardObject.layout as keyof typeof multiLayoutToFaceLayout];
+        if (index == 1 && cardObject.layout == 'specialize') {
+          face.layout == 'reminder';
+        } else {
+          face.layout =
+            multiLayoutToFaceLayout[cardObject.layout as keyof typeof multiLayoutToFaceLayout];
+        }
       } else {
         face.layout = HCLayout.Split;
       }

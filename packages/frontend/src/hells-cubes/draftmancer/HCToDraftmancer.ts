@@ -49,13 +49,18 @@ const combineProps = ['mana_value', 'colors'];
 const overwriteProps = ['layout'];
 // these props are stored when the main face's prop doesn't exist but they do
 const addProps = ['image'];
-const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = ['draft_partner', 'meld_result'];
+const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
+  'draft_partner',
+  'meld_result',
+  'specialize',
+];
 const conditionalDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'checklist',
   'dungeon',
   'token',
   'emblem',
   'checklist',
+  'reminder',
   'misc',
   'stickers',
   'dungeon',
@@ -83,7 +88,7 @@ const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.MultiFaced
         // Object.keys(face).filter(key => !(subProps.includes(key) && subLayouts.includes(face.layout)) && !dropLayouts.includes(face.layout)).forEach(key => {
         if (face[key as keyof typeof face]) {
           if (overwriteProps.includes(key)) {
-            if (key == 'layout') {
+            if (key == 'layout' && !(value == 'flip' && faces[0].layout == 'transform')) {
               faces[0][key] = face[key];
             }
           } else if (combineProps.includes(key)) {
@@ -169,7 +174,10 @@ export const HCToDraftmancer = (
               ]);
               card.card_faces.splice(i, 1);
             }
-          } else if (alwaysCompressLayouts.includes(card.card_faces[i].layout)) {
+          } else if (
+            alwaysCompressLayouts.includes(card.card_faces[i].layout) ||
+            card.tags?.includes('compress-faces')
+          ) {
             card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
             card.card_faces.splice(i, 1);
           }
@@ -222,6 +230,13 @@ export const HCToDraftmancer = (
       if (card.card_faces[0].name[0] == '0' || parseInt(card.card_faces[0].name[0])) {
         card.card_faces[0].name = '_' + card.card_faces[0].name;
       }
+      if (
+        card.card_faces[0].name.length > 4 &&
+        card.card_faces[0].name.at(-1) == ')' &&
+        (card.card_faces[0].name.at(-5) == '(' || card.card_faces[0].name.at(-4) == '(')
+      ) {
+        card.card_faces[0].name += '_';
+      }
       idNames[card.id] = card.card_faces[0].name;
     } else {
       card.name = toExportName(card.isActualToken ? card.id : card.name);
@@ -233,6 +248,13 @@ export const HCToDraftmancer = (
       }
       if (card.name[0] == '0' || parseInt(card.name[0])) {
         card.name = '_' + card.name;
+      }
+      if (
+        card.name.length > 4 &&
+        card.name.at(-1) == ')' &&
+        (card.name.at(-5) == '(' || card.name.at(-4) == '(')
+      ) {
+        card.name += '_';
       }
       idNames[card.id] = card.name;
     }
@@ -282,7 +304,7 @@ export const HCToDraftmancer = (
     };
     if (card.tags?.includes('rotate-left') || face.layout == 'aftermath') {
       draftCard.layout = 'split-left';
-    } else if (card.tags?.includes('rotate') || card.rotated_image) {
+    } else if (card.tags?.includes('rotate') || card.rotated_image || face.rotated_image) {
       draftCard.layout = 'split';
     } else if (face.layout == 'flip') {
       draftCard.layout = 'flip';

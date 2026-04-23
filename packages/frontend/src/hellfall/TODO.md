@@ -167,3 +167,4 @@ Write a script to transform the database
 - move token tags to sheet
 - add token ids
 - add hcp draft
+- add cost autofill for search

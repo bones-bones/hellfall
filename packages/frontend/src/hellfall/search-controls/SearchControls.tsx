@@ -219,22 +219,8 @@ export const SearchControls = () => {
       <SearchCriteriaSection>
         <NamedCheckboxGroup
           label="Colors"
-          values={
-            HCSearchColors
-            // /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
-          }
-          names={
-            /**Object.keys(HCSearchColor)*/ [
-              'White',
-              'Blue',
-              'Black',
-              'Red',
-              'Green',
-              'Purple',
-              'Colorless',
-              'Misc bullshit',
-            ]
-          }
+          values={HCSearchColors}
+          names={['White', 'Blue', 'Black', 'Red', 'Green', 'Purple', 'Colorless', 'Misc bullshit']}
           value={searchColors}
           onChange={setSearchColors}
         >
@@ -259,22 +245,8 @@ export const SearchControls = () => {
       <SearchCriteriaSection>
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
-          values={
-            HCSearchColors
-            // /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
-          }
-          names={
-            /**Object.keys(HCSearchColor)*/ [
-              'White',
-              'Blue',
-              'Black',
-              'Red',
-              'Green',
-              'Purple',
-              'Colorless',
-              'Misc bullshit',
-            ]
-          }
+          values={HCSearchColors}
+          names={['White', 'Blue', 'Black', 'Red', 'Green', 'Purple', 'Colorless', 'Misc bullshit']}
           value={searchColorIdentities}
           onChange={setSearchColorIdentities}
         >

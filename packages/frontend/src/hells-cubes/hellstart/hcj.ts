@@ -104,7 +104,7 @@ export const hcjFrontCards: HCJPackInfo[] = [
 
     secondCopyOf: '5807',
     lands: [
-      { count: 6, name: '5921' },
+      { count: 6, id: '5921' },
       { count: 1, name: 'Thriving Heath' },
     ],
   },

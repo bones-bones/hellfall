@@ -333,7 +333,6 @@ export const SingleCheckbox = ({
   );
 };
 
-
 const Container = styled.div({ display: 'flex', flexDirection: 'column' });
 
 const CheckEntry = styled.div({

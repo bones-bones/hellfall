@@ -721,7 +721,6 @@ export const useSearchResults = () => {
     //   searchToSet.append('legality', legality.join(','));
     // }
     if (standardLegality) {
-      debugger;
       searchToSet.append('standard', standardLegality);
     }
     if (fourcbLegality) {
