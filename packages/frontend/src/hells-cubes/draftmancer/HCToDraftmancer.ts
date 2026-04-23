@@ -10,6 +10,7 @@ import { toExportMana, toExportName } from '@hellfall/shared/utils/textHandling'
 import { canBeACommander } from '../../hellfall/canBeACommander';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
 import { getSplitSet } from '../../hellfall/filters/filterSet';
+import { orderColors } from '@hellfall/shared/utils/orderColors';
 
 const subLayouts = [
   'token',
@@ -65,7 +66,6 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'prepare',
   'inset',
   'token',
-  'meld_result',
   'flip',
 ];
 
@@ -142,6 +142,9 @@ export const HCToDraftmancer = (
 ): { cards: DraftmancerCustomCard[]; tokens: DraftmancerCustomCard[] } => {
   const { cards, tokens } = getSplitSet(allCards, set, true);
   const idNames: Record<string, string> = {};
+  const nameIsTaken = (name: string): boolean => {
+    return Object.values(idNames).includes(name);
+  };
   const commanderIds: string[] = [];
   const compressHCCardFaces = (card: HCCard.Any) => {
     if (set == 'HC6' && canBeACommander(card)) {
@@ -151,13 +154,21 @@ export const HCToDraftmancer = (
       // compress/drop layouts that should always be compressed or should be dropped
       if (card.card_faces.length > 1) {
         for (let i = card.card_faces.length - 1; i > 0; i--) {
-          if (
-            alwaysDropLayouts.includes(card.card_faces[i].layout) ||
-            (conditionalDropLayouts.includes(card.card_faces[i].layout) &&
-              card.all_parts &&
-              card.all_parts.some(part => part.name == card.card_faces[i].name))
-          ) {
+          if (alwaysDropLayouts.includes(card.card_faces[i].layout)) {
             card.card_faces.splice(i, 1);
+          } else if (conditionalDropLayouts.includes(card.card_faces[i].layout)) {
+            if (
+              card.all_parts &&
+              card.all_parts.some(part => part.name == card.card_faces[i].name)
+            ) {
+              card.card_faces.splice(i, 1);
+            } else if (!card.card_faces[i].image) {
+              card.card_faces[i - 1] = mergeHCCardFaces([
+                card.card_faces[i - 1],
+                card.card_faces[i],
+              ]);
+              card.card_faces.splice(i, 1);
+            }
           } else if (alwaysCompressLayouts.includes(card.card_faces[i].layout)) {
             card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
             card.card_faces.splice(i, 1);
@@ -202,9 +213,15 @@ export const HCToDraftmancer = (
         );
       }
       // store the names
+      while (nameIsTaken(card.card_faces[0].name)) {
+        card.card_faces[0].name += '_';
+      }
       idNames[card.id] = card.card_faces[0].name;
     } else {
       card.name = toExportName(card.isActualToken ? card.id : card.name);
+      while (nameIsTaken(card.name)) {
+        card.name += '_';
+      }
       idNames[card.id] = card.name;
     }
     return card;
@@ -212,11 +229,11 @@ export const HCToDraftmancer = (
 
   const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard => {
     const draftCard: DraftmancerCustomCard = {
-      name: card.isActualToken ? card.id : card.name,
+      name: card.name,
       mana_cost: toExportMana(card.mana_cost, true),
       type: card.type_line,
       image: card.rotated_image || card.image,
-      colors: card.colors.filter(color => validColors.includes(color)),
+      colors: orderColors(card.colors.filter(color => validColors.includes(color))),
       set: card.set,
       oracle_text: toExportMana(card.oracle_text.replaceAll('\\n', '\n')),
     };
@@ -243,11 +260,11 @@ export const HCToDraftmancer = (
   const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => {
     const face = card.card_faces[0];
     const draftCard: DraftmancerCustomCard = {
-      name: card.isActualToken ? card.id : face.name,
+      name: face.name,
       mana_cost: toExportMana(face.mana_cost, true),
       type: face.type_line,
       image: face.rotated_image || face.image || card.rotated_image || card.image,
-      colors: face.colors.filter(color => validColors.includes(color)),
+      colors: orderColors(face.colors.filter(color => validColors.includes(color))),
       set: card.set,
       oracle_text: toExportMana(face.oracle_text.replaceAll('\\n', '\n')),
     };

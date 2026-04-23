@@ -47,3 +47,4 @@ server/.env
 .env
 
 build
+.vscode/settings.json

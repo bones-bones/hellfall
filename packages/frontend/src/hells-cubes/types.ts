@@ -53,7 +53,7 @@ export type DraftmancerCustomCard = {
   mana_cost: string;
   type: string;
   image?: string;
-  colors?: HCColors;
+  colors?: string[];
   set?: string;
   // collector_number?: string;
   // rarity?: string;

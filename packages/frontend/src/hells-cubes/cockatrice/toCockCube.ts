@@ -1,6 +1,7 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { HCCard, HCCardFace, HCColors, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
 import { toExportName } from '@hellfall/shared/utils/textHandling.ts';
+import { orderColors } from '@hellfall/shared/utils/orderColors.ts';
 import { recursiveAdoption } from '../recursiveAdoption.ts';
 import { prettifyXml } from './prettifyXml';
 import { getSplitSet } from '../../hellfall/filters/filterSet.ts';
@@ -64,7 +65,7 @@ type CockFaceProps = Record<string, string | number | HCColors> & {
   maintype: string;
   manacost: string;
   cmc: number;
-  colors?: HCColors;
+  colors?: string[];
   pt?: string;
   loyalty?: string;
   picurl?: string;
@@ -125,7 +126,7 @@ export const toCockCube = ({
       cockFace.name = face.id;
     }
     if (face.colors.length) {
-      cockFace.colors = face.colors;
+      cockFace.colors = orderColors(face.colors);
     }
     if (face.image) {
       cockFace.picurl = face.image;

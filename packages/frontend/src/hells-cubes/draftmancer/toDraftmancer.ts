@@ -30,6 +30,7 @@ export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HC
 
     const formatted = `[Settings]
 {
+    "name": "HC6",
     "colorBalance": false,
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA",
     "boosterSettings": [
@@ -63,6 +64,7 @@ export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HC
     // get 4, pick 1, pick 1, burn 2
     const formatted = `[Settings]
 {
+    "name": "HCJ",
     "colorBalance": false,
     "boostersPerPlayer": 1,
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA",
@@ -81,6 +83,7 @@ export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HC
   } else {
     const formatted = `[Settings]
 {
+    "name": "${set}",
     "colorBalance": false,
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA"
 }
