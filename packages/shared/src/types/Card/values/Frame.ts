@@ -11,7 +11,7 @@ export enum HCFrame {
   Future = 'future',
   /** Playtest cards */
   Playtest = 'playtest',
-  /** Misc/jank frames (nonmagic, weird full art, etc.) */
+  /** Misc/jank frames (notmagic, weird full art, etc.) */
   Jank = 'jank',
   /** The updated classic token frame starting from Mirage block */
   ClassicToken = 'token_1997',
@@ -35,10 +35,14 @@ export enum HCFrame {
   Hearthstone = 'hearthstone',
   /** Any cards with a lorcana frame. */
   Lorcana = 'lorcana',
+  /** Any cards with a notmagic game frame that isn't covered by another frame. */
+  NotMagic = 'notmagic',
+  /** Any cards with a website frame. */
+  Website = 'website',
 }
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
 export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.NewToken, HCFrame.StampToken];
-export const NonMagicFrames: HCFrame[] = [
+export const NotMagicFrames: HCFrame[] = [
   HCFrame.Pokemon,
   HCFrame.Yugioh,
   HCFrame.LegendsOfRuneterra,
@@ -46,6 +50,7 @@ export const NonMagicFrames: HCFrame[] = [
   HCFrame.Inscryption,
   HCFrame.Hearthstone,
   HCFrame.Lorcana,
+  HCFrame.NotMagic,
 ];
 export const CardFrames: HCFrame[] = [
   HCFrame.Original,
@@ -55,7 +60,7 @@ export const CardFrames: HCFrame[] = [
   HCFrame.Future,
   HCFrame.Playtest,
   HCFrame.Jank,
-  ...NonMagicFrames,
+  ...NotMagicFrames,
 ];
 export const TokenFrames: HCFrame[] = [
   HCFrame.ClassicToken,
@@ -63,5 +68,5 @@ export const TokenFrames: HCFrame[] = [
   HCFrame.StampToken,
   HCFrame.NewToken,
   HCFrame.Jank,
-  ...NonMagicFrames,
+  ...NotMagicFrames,
 ];

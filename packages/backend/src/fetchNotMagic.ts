@@ -80,7 +80,7 @@ export const fetchNotMagic = async () => {
     image_status: HCImageStatus.HighRes,
     layout: HCLayout.NotMagic,
     border_color: HCBorderColor.Borderless,
-    frame: HCFrame.Jank,
+    frame: HCFrame.NotMagic,
     finish: HCFinish.Nonfoil,
   };
 

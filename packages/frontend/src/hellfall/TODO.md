@@ -168,3 +168,4 @@ Write a script to transform the database
 - add token ids
 - add hcp draft
 - add cost autofill for search
+- add cube builder utility for exporting custom cubes to draftmancer

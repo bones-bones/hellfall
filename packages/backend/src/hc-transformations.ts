@@ -218,6 +218,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'colors',
           'color_indicator',
           'watermark',
+          'border_color',
           'frame',
           'frame_effects',
         ];

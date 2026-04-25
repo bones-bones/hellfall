@@ -46,7 +46,7 @@ export const filterSet = (
           return false;
         }
         // make sure tokens are hidden when no sets are selected
-        if (noSets && entry.isActualToken) {
+        if (noSets && entry.isActualToken && !includeExtraSets) {
           return false;
         }
         return true;

@@ -65,6 +65,10 @@ export enum HCFrameEffect {
   VerticalArt = 'verticalart',
   /** The cards have no art box */
   NoArt = 'noart',
+  /** The card is in a slab */
+  Slab = 'slab',
+  /** The card has an arena frame */
+  Arena = 'arena',
 }
 export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.SunMoonDfc,
@@ -76,5 +80,6 @@ export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.UpsidedownDfc,
   HCFrameEffect.TypeDfc,
   HCFrameEffect.TransformDfc,
+  HCFrameEffect.FanDfc,
   HCFrameEffect.Mdfc,
 ];

@@ -15,4 +15,5 @@ export enum HCBorderColor {
   NoBorder = 'no_border',
   Unique = 'unique',
   Orange = 'orange',
+  Red = 'red',
 }

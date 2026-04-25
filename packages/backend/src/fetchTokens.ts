@@ -145,6 +145,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'inscryption-frame': HCFrame.Inscryption,
     'hearthstone-frame': HCFrame.Hearthstone,
     'lorcana-frame': HCFrame.Lorcana,
+    'notmagic-frame': HCFrame.NotMagic,
+    'website-frame': HCFrame.Website,
   };
   const frameEffectTags: Record<string, HCFrameEffect> = {
     'miracle-frame': HCFrameEffect.Miracle,
@@ -157,6 +159,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'inverted-text': HCFrameEffect.Inverted,
     'sun-moon-transform': HCFrameEffect.SunMoonDfc,
     'type-transform-marks': HCFrameEffect.TypeDfc,
+    'generic-transform-marks': HCFrameEffect.TransformDfc,
+    'generic-mdfc-marks': HCFrameEffect.Mdfc,
     'compass-land-transform': HCFrameEffect.CompassLandDfc,
     'origin-pw-transform': HCFrameEffect.OriginPwDfc,
     'moon-eldrazi-transform': HCFrameEffect.MoonEldraziDfc,
@@ -170,6 +174,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'etched-frame': HCFrameEffect.Etched,
     'spree-frame': HCFrameEffect.Spree,
     'meld-frame': HCFrameEffect.Meld,
+    'slab-frame': HCFrameEffect.Slab,
+    'arena-frame': HCFrameEffect.Arena,
   };
 
   const imageTagProps: Record<string, string> = {

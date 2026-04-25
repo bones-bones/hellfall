@@ -161,6 +161,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                   </>
                 ))}
               <Text typeLevel="body.medium" key="cost">
+                {' '}
                 {stringToMana(face.mana_cost)}
               </Text>
               <br />
@@ -186,7 +187,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                   <Text typeLevel="body.medium" key="color-indicator">
                     {colorsToIndicator(face.color_indicator)}
                   </Text>
-                  {'   '}
+                  {' '}
                 </>
               )}
               {face.type_line &&
