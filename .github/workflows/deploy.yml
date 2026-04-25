@@ -48,6 +48,18 @@ jobs:
             '{projects: {default: $pid}, targets: {($pid): {hosting: {($target): [$sid]}}}}' \
             > .firebaserc
 
+      - name: Debug hosting config (safe)
+        run: |
+          echo "firebase.json"
+          jq '.' firebase.json
+          echo ".firebaserc"
+          jq '.' .firebaserc
+          echo "env summary"
+          echo "GCP_PROJECT_ID=${GCP_PROJECT_ID}"
+          echo "FIREBASE_HOSTING_TARGET=${FIREBASE_HOSTING_TARGET}"
+          echo "FIREBASE_HOSTING_SITE_ID=${FIREBASE_HOSTING_SITE_ID}"
+          echo "FIREBASE_HOSTING_PUBLIC=${FIREBASE_HOSTING_PUBLIC}"
+
       - name: Authenticate with Firebase
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}' > "$RUNNER_TEMP/sa_key.json"
