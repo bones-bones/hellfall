@@ -377,7 +377,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
   }
 
   const merged: HCCard.Any = { ...existingCard };
-  
+
   Object.entries(newCard).forEach(([key, value]) => {
     if (value) {
       if (
@@ -1064,21 +1064,21 @@ const main = async () => {
     return -1;
   });
   finalTokens.sort((a, b) => {
-    if (a.layout != b.layout) {
-      if (
-        HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) >
-        HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
-      ) {
-        return 1;
-      }
-      return -1;
+    // if (a.layout != b.layout) {
+    //   if (
+    //     HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) >
+    //     HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
+    //   ) {
+    //     return 1;
+    //   }
+    //   return -1;
+    // }
+    if (a.set != b.set) {
+      return Math.sign(allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set))
     }
-    // if (a.set != b.set) {
-    //   return Math.sign(allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set))
-    // }
-    // if (a.collector_number && b.collector_number) {
-    //   return Math.sign(parseInt(a.collector_number) - parseInt(b.collector_number))
-    // }
+    if (a.collector_number && b.collector_number) {
+      return Math.sign(parseInt(a.collector_number) - parseInt(b.collector_number))
+    }
     if (a.name == b.name) {
       if (
         (parseInt(a.id.match(/\d+$/)?.[0] || '') || 0) >
