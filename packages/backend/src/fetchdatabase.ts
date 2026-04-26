@@ -406,9 +406,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       }
       const addTag = (tag:string,note?:string,prop?:string, value?:Record<string,any>|string, options?:{replaceNote?:boolean, push?:boolean,useRootOnly?:boolean, useUrl?:boolean}) => {
         if (note) {
-          if (options?.useRootOnly) {
-            const useBoth = note.includes('|');
-            const noteIsNum = parseInt(note) || note == '0';
+          // if (!options?.useRootOnly) {
+            const useBoth = note.includes('|') && !options?.useRootOnly;
+            const noteIsNum = Number.isInteger(Number(note)) && !options?.useRootOnly;
             const [face, subnote] = [useBoth ? parseInt(note.split('|')[0]) : noteIsNum? parseInt(note) : undefined, useBoth ? note.split('|')[1]:noteIsNum ? undefined : note];
             const tagUrl = options?.useUrl && subnote ? subnote.slice(0, 4) == 'http' ? subnote : 'https://lh3.googleusercontent.com/d/' + subnote : undefined
             if (face != undefined) {
@@ -416,8 +416,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
                 addTagToFace(face,prop!,value, options?.push);
               } else if (value) {
                 addTagToFace(face,prop!,value[tag], options?.push);
-              } else if (prop) {
-                addTagToFace(face,prop,options?.useUrl ? tagUrl!:note, options?.push);
+              } else if (prop && subnote) {
+                addTagToFace(face,prop,options?.useUrl ? tagUrl!:subnote, options?.push);
               }
             } else {
               if (typeof value == 'string') {
@@ -431,9 +431,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             if (subnote && !options?.useUrl) {
               addTagNote(tag, subnote, options?.replaceNote);
             }
-          } else if (prop) {
-            addTagNote(tag, note, options?.replaceNote);
-          }
+          // } else if (prop) {
+          //   addTagNote(tag, note, options?.replaceNote);
+          // }
         } else {
           if (typeof value == 'string') {
             addTagToRoot(prop!,value, options?.push);
@@ -456,6 +456,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       const tags = entry[tagIndex].split(';');
 
       cardObject.tags = tags.map(fullTag => {
+        if (cardObject.id == '2525') {
+          const x =1;
+        }
         if (fullTag.includes('<') && fullTag.includes('>')) {
           const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
           if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
@@ -504,12 +507,14 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             //     note.slice(0, 4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
             // }
           } else if (tag in frontImageTagProps) {
-            addTag(tag,note,faceImageTagProps[tag],undefined,{useUrl:true,useRootOnly:true})
+            addTag(tag,note,frontImageTagProps[tag],undefined,{useUrl:true,useRootOnly:true})
             // cardObject[frontImageTagProps[tag]] =
             //   note.slice(0, 4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
             if (tag == 'draft-image') {
               cardObject.draft_image_status = HCImageStatus.HighRes;
             }
+          } else if (tag in borderColorTags) {
+            addTag(tag,note,'border_color',borderColorTags);
           } else if (tag == 'flavor-name') {
             addTag(tag,note,'flavor_name');
             // if (note.includes('|')) {
@@ -520,7 +525,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             //   cardObject.flavor_name = note;
             // }
           } else {
-            addTag(tag,note);
+            addTag(tag,note,undefined,undefined,{useRootOnly:true});
             // if (!cardObject.tag_notes) {
             //   cardObject.tag_notes = {} as Record<string, string>;
             // }
@@ -538,6 +543,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             } else {
               cardObject.card_faces[0].frame_effects = [frameEffectTags[fullTag]];
             }
+          } else if (fullTag in borderColorTags) {
+            addTag(fullTag,undefined,'border_color',borderColorTags);
           }
           return fullTag;
         }
@@ -572,11 +579,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             }
           }
         }
-        if (!('border_color' in cardObject) && tag in borderColorTags) {
-          cardObject.border_color = borderColorTags[tag];
+        // if (!('border_color' in cardObject) && tag in borderColorTags) {
+        //   cardObject.border_color = borderColorTags[tag];
           // } else if (!('frame' in cardObject) && tag in frameTags) {
           //   cardObject.frame = frameTags[tag];
-        } else if (tag == 'foil') {
+        // } else 
+        if (tag == 'foil') {
           cardObject.finish = HCFinish.Foil;
           // } else if ((tag == 'gif' || tag == 'sideways') && cardObject.card_faces.some(face => face.image) && !cardObject.tags.includes('mdfc')) {
           //   const stillIndex = cardObject.card_faces.findLastIndex(face => face.image);
