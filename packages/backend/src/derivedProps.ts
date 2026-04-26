@@ -275,9 +275,8 @@ const manaSymbolColorMatching: Record<
 const landToColorMapping = {
   Plains: 'W',
   Ploons: 'W',
-  Swamp: 'B',
   Island: 'U',
-  // IslandGX: 'Blue', // TODO: I have sinned
+  Swamp: 'B',
   Mountain: 'R',
   Moontain: 'R',
   Forest: 'G',

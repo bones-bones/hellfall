@@ -186,8 +186,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 <>
                   <Text typeLevel="body.medium" key="color-indicator">
                     {colorsToIndicator(face.color_indicator)}
-                  </Text>
-                  {' '}
+                  </Text>{' '}
                 </>
               )}
               {face.type_line &&

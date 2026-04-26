@@ -21,7 +21,6 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  // legalityAtom,
   standardLegalityAtom,
   fourcbLegalityAtom,
   commanderLegalityAtom,
@@ -35,7 +34,6 @@ import {
   dirAtom,
   pageAtom,
   activeCardAtom,
-  // LegalType,
 } from '../atoms/searchAtoms.ts';
 
 export const useUrlSync = () => {
@@ -65,7 +63,6 @@ export const useUrlSync = () => {
   const [includeExtraSets, setIncludeExtraSets] = useAtom(includeExtraSetsAtom);
   const [extraSets, setExtraSets] = useAtom(extraSetsAtom);
   const [searchToken, setSearchToken] = useAtom(searchTokenAtom);
-  // const [legality, setLegality] = useAtom(legalityAtom);
   const [standardLegality, setStandardLegality] = useAtom(standardLegalityAtom);
   const [fourcbLegality, set4cbLegality] = useAtom(fourcbLegalityAtom);
   const [commanderLegality, setCommanderLegality] = useAtom(commanderLegalityAtom);
@@ -173,26 +170,6 @@ export const useUrlSync = () => {
     if (isCommander != (params.get('isCommander') === 'true')) {
       setIsCommander(params.get('isCommander') === 'true');
     }
-    // if (
-    //   legality !=
-    //   ((params.get('legality')?.split(',').filter(Boolean) as (
-    //     | 'legal'
-    //     | 'banned'
-    //     | '4cbLegal'
-    //     | 'hellsmanderLegal'
-    //     | 'isCommander'
-    //   )[]) || [])
-    // ) {
-    //   setLegality(
-    //     (params.get('legality')?.split(',').filter(Boolean) as (
-    //       | 'legal'
-    //       | 'banned'
-    //       | '4cbLegal'
-    //       | 'hellsmanderLegal'
-    //       | 'isCommander'
-    //     )[]) || []
-    //   );
-    // }
 
     // Set numeric filters
     if (manaValue != parseOperatorValue(params.get('manaValue'))) {
@@ -227,6 +204,5 @@ export const useUrlSync = () => {
       setActiveCard(params.get('activeCard') || '');
     }
 
-    // setIsCommander(params.get('isCommander') === 'true');
   }, [location.search]); // This triggers on back/forward navigation
 };

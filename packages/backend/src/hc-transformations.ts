@@ -420,18 +420,11 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
             : existingCard.all_parts?.find(
                 e => textEquals(e.name, part.name) && e.name != e.id.replace(/\d+$/, '')
               );
-          // const existingPart =
-          //   superToken && existingCard.isActualToken
-          //     ? superToken
-          //     : existingCard.all_parts?.find(e => textEquals(e.name, part.name) );
           if (existingPart) {
             // if there is already a part, update it
             Object.entries(existingPart).forEach(([k, v]) => {
               if (!['name', 'component' /**,'is_draft_partner'*/].includes(k) && v) {
                 (part as any)[k] = v;
-                // } else if (k == 'id' && tokenIsMaker) {
-                //   part.id = v as string;
-                //   part.name = (v as string).replace(/\*\d+$/, '');
               }
             });
           }
@@ -465,25 +458,9 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           merged.layout != HCLayout.RealCardMultiToken
         ) {
           merged.layout = value as typeof newCard.layout;
-          // if (
-          //   merged.layout != HCLayout.Multi &&
-          //   !merged.card_faces.at(-1)!.image &&
-          //   [HCImageStatus.Split, HCImageStatus.DraftPartner].includes(
-          //     merged.card_faces[1].image_status as HCImageStatus
-          //   )
-          // ) {
-          //   merged.card_faces.at(-1)!.image_status = newCard.card_faces.at(-1)!.image_status;
-          // }
         }
       } else if (merged.set == 'NotMagic' && key == 'rulings') {
         // TODO: store current version and print the diff if there is one
-        // } else if (merged.isActualToken && key == 'tags_notes') {
-        // } else if (merged.isActualToken && key == 'tags' /**&& 'tags' in merged*/) {
-        // value.forEach((tag: string) => {
-        //   if (!merged.tags?.includes(tag)) {
-        //     merged.tags?.push(tag);
-        //   }
-        // });
         // TODO: store current version and print the diff if there is one
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;
@@ -549,24 +526,6 @@ const mergeDatabases = (
   // const newTokenMap = new Map(newTokens.map(token => [token.id, token]));
   const existingTokenMap = new Map(existingTokens.map(token => [token.id.toLowerCase(), token]));
 
-  // const mergedCards = existingCards.map(existingCard => {
-  //   const newCard = !(existingCard.id in movedIds)
-  //     ? newCardMap.get(existingCard.id)
-  //     : newCardMap.get(movedIds[existingCard.id]);
-  //   if (newCard) {
-  //     newCardMap.delete(newCard.id);
-  //     return mergeCards(existingCard, newCard, usingApproved);
-  //   }
-  //   return existingCard;
-  // });
-  // mergedCards.push(
-  //   ...Array.from(
-  //     newCardMap.values().map(card => {
-  //       setDerivedProps(card);
-  //       return card;
-  //     })
-  //   )
-  // );
   const mergedCards = newCards.map(newCard => {
     const existingCard = !(newCard.id in movedIds)
       ? existingCardMap.get(newCard.id)
@@ -588,24 +547,6 @@ const mergeDatabases = (
     );
   }
 
-  // const mergedTokens = existingTokens.map(existingToken => {
-  //   const newToken = !(existingToken.id in movedIds)
-  //     ? newTokenMap.get(existingToken.id)
-  //     : newTokenMap.get(movedIds[existingToken.id]);
-  //   if (newToken) {
-  //     newTokenMap.delete(newToken.id);
-  //     return mergeCards(existingToken, newToken);
-  //   }
-  //   return existingToken;
-  // });
-  // mergedTokens.push(
-  //   ...Array.from(
-  //     newTokenMap.values().map(token => {
-  //       setDerivedProps(token);
-  //       return token;
-  //     })
-  //   )
-  // );
   const mergedTokens = newTokens.map(newToken => {
     const existingToken = !(newToken.id in movedIds)
       ? existingTokenMap.get(newToken.id?.toLowerCase())
@@ -825,8 +766,6 @@ const main = async () => {
             if (meldPart.count) {
               delete meldPart.count;
             }
-            // meldPart.image =
-            //   'card_faces' in relatedCard && relatedCard.card_faces[0].image ? relatedCard.card_faces[0].image : relatedCard.image;
             if (relatedCard.tags?.includes('draftpartner')) {
               meldPart.is_draft_partner = true;
             }
@@ -846,10 +785,6 @@ const main = async () => {
         meldRelatedCards.push(meldResult);
         meldPartIds.forEach(id => {
           const relatedCard = finalCards.find(card => card.id == id);
-          // TODO: Figure out if this is still necessary
-          if (!relatedCard?.has_draft_partners && token.id != 'Omnath, the Forbidden One1') {
-            relatedCard!.has_draft_partners = true;
-          }
           meldRelatedCards
             .filter(e => e.id != id)
             .forEach(meldPart => {
@@ -893,9 +828,6 @@ const main = async () => {
             : finalCards.find(card => textEquals(card.name, tokenMaker.name))
             ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
             : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
-          // const relatedCard = finalCards.find(e =>
-          //   tokenMaker.id ? e.id == tokenMaker.id : textEquals(e.name, tokenMaker.name)
-          // );
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;

@@ -345,19 +345,19 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         tokenObject.types.shift();
       }
     }
-    // if ('types' in tokenObject || 'supertypes' in tokenObject) {
-    //   tokenObject.type_line = [
-    //     tokenObject.supertypes?.join(' '),
-    //     [tokenObject.types?.join(' '), tokenObject.subtypes?.join(' ')].filter(Boolean).join(' — '),
-    //   ]
-    //     .filter(Boolean)
-    //     .join(' ') as string;
-    // } else {
-    //   if ('subtypes' in tokenObject) {
-    //     delete tokenObject.subtypes;
-    //   }
-    //   tokenObject.type_line = '';
-    // }
+    if ('types' in tokenObject || 'supertypes' in tokenObject) {
+      tokenObject.type_line = [
+        tokenObject.supertypes?.join(' '),
+        [tokenObject.types?.join(' '), tokenObject.subtypes?.join(' ')].filter(Boolean).join(' — '),
+      ]
+        .filter(Boolean)
+        .join(' ') as string;
+    } else {
+      if ('subtypes' in tokenObject) {
+        delete tokenObject.subtypes;
+      }
+      tokenObject.type_line = '';
+    }
     Object.keys(defaultProps)
       .filter(key => !(key in tokenObject))
       .forEach(key => {

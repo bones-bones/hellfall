@@ -102,7 +102,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'type_line',
     'border_color',
     'frame',
-    'frame_effects'
+    'frame_effects',
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
@@ -293,9 +293,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   });
   if (card.full_art) {
     if (cardObject.frameEffects) {
-      cardObject.frameEffects.push('fullart')
+      cardObject.frameEffects.push('fullart');
     } else {
-      cardObject.frameEffects = ['fullart']
+      cardObject.frameEffects = ['fullart'];
     }
   }
   cardObject.finish = card.finishes.includes('nonfoil') ? 'nonfoil' : 'foil';

@@ -24,7 +24,6 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  // legalityAtom,
   standardLegalityAtom,
   fourcbLegalityAtom,
   commanderLegalityAtom,
@@ -81,7 +80,6 @@ export const useSearchResults = () => {
   const includeExtraSets = useAtomValue(includeExtraSetsAtom);
   const extraSets = useAtomValue(extraSetsAtom);
   const searchToken = useAtomValue(searchTokenAtom);
-  // const legality = useAtomValue(legalityAtom);
   const standardLegality = useAtomValue(standardLegalityAtom);
   const fourcbLegality = useAtomValue(fourcbLegalityAtom);
   const commanderLegality = useAtomValue(commanderLegalityAtom);
@@ -601,7 +599,6 @@ export const useSearchResults = () => {
         // TODO: handle split cards/adventures/transforms/flips better
         if (searchColors.length > 0) {
           if (!entry.colors) {
-            // debugger;
             console.log('Card id:', entry.id, 'had a null color.');
             if (['=', '>=', '>'].includes(colorComparison)) {
               return false;
@@ -626,7 +623,6 @@ export const useSearchResults = () => {
             }
           } else {
             if (!entry.color_identity) {
-              // debugger;
               console.log('Card id:', entry.id, 'had a null color identity.');
               if (['=', '>=', '>'].includes(colorIdentityComparison)) {
                 return false;
@@ -717,9 +713,6 @@ export const useSearchResults = () => {
     if (searchToken != 'Cards') {
       searchToSet.append('token', searchToken);
     }
-    // if (legality.length > 0) {
-    //   searchToSet.append('legality', legality.join(','));
-    // }
     if (standardLegality) {
       searchToSet.append('standard', standardLegality);
     }
@@ -812,7 +805,6 @@ export const useSearchResults = () => {
     includeExtraSets,
     extraSets,
     searchToken,
-    // legality,
     standardLegality,
     fourcbLegality,
     commanderLegality,

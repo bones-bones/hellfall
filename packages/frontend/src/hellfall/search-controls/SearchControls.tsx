@@ -434,18 +434,6 @@ export const SearchControls = () => {
             </button>
           )}
         </fieldset>
-        {/* <NamedHiddenCheckboxGroup
-          label="Constructed Legality"
-          values={['constructedLegal', '4cbLegal', 'hellsmanderLegal', 'isCommander']}
-          names={[
-            'Standard Legal',
-            '4 Card Blind Legal',
-            'Hellsmander Legal',
-            'Can Be Your Commander',
-          ]}
-          value={legality}
-          onChange={setLegality}
-        /> */}
       </SearchCriteriaSection>
       <SearchCriteriaSection>
         <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />

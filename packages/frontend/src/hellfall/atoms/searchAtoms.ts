@@ -75,8 +75,6 @@ export const searchTokenAtom = atom(
 
 export const extraSetsAtom = atom(searchParams.get('extraSets')?.split(',') || []);
 
-// export type LegalType = 'legal' | 'banned' | '4cbLegal' | 'hellsmanderLegal';
-
 export const standardLegalityAtom = atom(
   (searchParams.get('standard') || '') as '' | 'legal' | 'not_legal' | 'banned'
 );
@@ -87,16 +85,6 @@ export const fourcbLegalityAtom = atom(
 export const commanderLegalityAtom = atom(
   (searchParams.get('commander') || '') as '' | 'legal' | 'not_legal' | 'banned'
 );
-
-// export const legalityAtom = atom<string[]>(
-//   (searchParams.get('legality')?.split(',') || []) as (
-//     | 'legal'
-//     | 'banned'
-//     | '4cbLegal'
-//     | 'hellsmanderLegal'
-//     | 'isCommander'
-//   )[]
-// );
 
 export const isCommanderAtom = atom(searchParams.get('isCommander') == 'true');
 

@@ -250,7 +250,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'still-image': 'still_image',
   };
 
-  const theThing = rest.map(entry => {
+  const allCards = rest.map(entry => {
     const cardObject: Record<string, any> & { card_faces: Record<string, any>[] } = {
       card_faces: [],
     };
@@ -371,7 +371,14 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     }
     const tagIndex = keys.indexOf('tags');
     if (entry[tagIndex]) {
-      const addTagToFace=(face:number, prop:string, value:string, push?:boolean) => {
+      /**
+       * Adds a tag to a specific face
+       * @param face face number (defaults to 0 if the face number is invalid)
+       * @param prop prop to set/push the value to
+       * @param value value to set/push
+       * @param push whether to push the value (use true when the prop is an array)
+       */
+      const addTagToFace = (face: number, prop: string, value: string, push?: boolean) => {
         const faceIndex = face > 0 && face < cardObject.card_faces.length ? face : 0;
         if (push) {
           if (cardObject.card_faces[faceIndex][prop]) {
@@ -380,10 +387,16 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             cardObject.card_faces[faceIndex][prop] = [value];
           }
         } else {
-          cardObject.card_faces[faceIndex][prop] = value
+          cardObject.card_faces[faceIndex][prop] = value;
         }
-      }
-      const addTagToRoot=(prop:string, value:string, push?:boolean) => {
+      };
+      /**
+       * Adds a tag to the card root
+       * @param prop prop to set/push the value to
+       * @param value value to set/push
+       * @param push whether to push the value (use true when the prop is an array)
+       */
+      const addTagToRoot = (prop: string, value: string, push?: boolean) => {
         if (push) {
           if (cardObject[prop]) {
             cardObject[prop].push(value);
@@ -391,160 +404,123 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             cardObject[prop] = [value];
           }
         } else {
-          cardObject[prop] = value
+          cardObject[prop] = value;
         }
-      }
-      const addTagNote = (tag:string,note:string, replaceNote?:boolean) => {
+      };
+      /**
+       * Adds a tag note
+       * @param tag tag to add note to
+       * @param note note to add
+       * @param replaceNote whether to replace the note; if not true, will concat with '; '
+       */
+      const addTagNote = (tag: string, note: string, replaceNote?: boolean) => {
         if (!replaceNote && cardObject.tag_notes && cardObject.tag_notes[tag]) {
-          cardObject.tag_notes[tag] += '; ' + note
+          cardObject.tag_notes[tag] += '; ' + note;
         } else {
           if (!cardObject.tag_notes) {
             cardObject.tag_notes = {} as Record<string, string>;
           }
           cardObject.tag_notes[tag] = note;
         }
-      }
-      const addTag = (tag:string,note?:string,prop?:string, value?:Record<string,any>|string, options?:{replaceNote?:boolean, push?:boolean,useRootOnly?:boolean, useUrl?:boolean}) => {
+      };
+      
+      /**
+       * Adds a tag
+       * @param tag tag to add
+       * @param note tag note
+       * @param prop prop to set
+       * @param value value to set the prop to, or record to access with the tag to get the value
+       * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
+       */
+      const addTag = (
+        tag: string,
+        note?: string,
+        prop?: string,
+        value?: Record<string, any> | string,
+        options?: { replaceNote?: boolean; push?: boolean; useRootOnly?: boolean; useUrl?: boolean }
+      ) => {
         if (note) {
-          // if (!options?.useRootOnly) {
-            const useBoth = note.includes('|') && !options?.useRootOnly;
-            const noteIsNum = Number.isInteger(Number(note)) && !options?.useRootOnly;
-            const [face, subnote] = [useBoth ? parseInt(note.split('|')[0]) : noteIsNum? parseInt(note) : undefined, useBoth ? note.split('|')[1]:noteIsNum ? undefined : note];
-            const tagUrl = options?.useUrl && subnote ? subnote.slice(0, 4) == 'http' ? subnote : 'https://lh3.googleusercontent.com/d/' + subnote : undefined
-            if (face != undefined) {
-              if (typeof value == 'string') {
-                addTagToFace(face,prop!,value, options?.push);
-              } else if (value) {
-                addTagToFace(face,prop!,value[tag], options?.push);
-              } else if (prop && subnote) {
-                addTagToFace(face,prop,options?.useUrl ? tagUrl!:subnote, options?.push);
-              }
-            } else {
-              if (typeof value == 'string') {
-                addTagToRoot(prop!,value, options?.push);
-              } else if (value) {
-                addTagToRoot(prop!,value[tag], options?.push);
-              } else if (prop) {
-                addTagToRoot(prop,options?.useUrl ? tagUrl!:note, options?.push);
-              }
+          const useBoth = note.includes('|') && !options?.useRootOnly;
+          const noteIsNum = Number.isInteger(Number(note)) && !options?.useRootOnly;
+          const [face, subnote] = [
+            useBoth ? parseInt(note.split('|')[0]) : noteIsNum ? parseInt(note) : undefined,
+            useBoth ? note.split('|')[1] : noteIsNum ? undefined : note,
+          ];
+          const tagUrl =
+            options?.useUrl && subnote
+              ? subnote.slice(0, 4) == 'http'
+                ? subnote
+                : 'https://lh3.googleusercontent.com/d/' + subnote
+              : undefined;
+          if (face != undefined) {
+            if (typeof value == 'string') {
+              addTagToFace(face, prop!, value, options?.push);
+            } else if (value) {
+              addTagToFace(face, prop!, value[tag], options?.push);
+            } else if (prop && subnote) {
+              addTagToFace(face, prop, options?.useUrl ? tagUrl! : subnote, options?.push);
             }
-            if (subnote && !options?.useUrl) {
-              addTagNote(tag, subnote, options?.replaceNote);
+          } else {
+            if (typeof value == 'string') {
+              addTagToRoot(prop!, value, options?.push);
+            } else if (value) {
+              addTagToRoot(prop!, value[tag], options?.push);
+            } else if (prop) {
+              addTagToRoot(prop, options?.useUrl ? tagUrl! : note, options?.push);
             }
-          // } else if (prop) {
-          //   addTagNote(tag, note, options?.replaceNote);
-          // }
+          }
+          if (subnote && !options?.useUrl) {
+            addTagNote(tag, subnote, options?.replaceNote);
+          }
         } else {
           if (typeof value == 'string') {
-            addTagToRoot(prop!,value, options?.push);
+            addTagToRoot(prop!, value, options?.push);
           } else if (value) {
-            addTagToRoot(prop!,value[tag], options?.push);
+            addTagToRoot(prop!, value[tag], options?.push);
           }
         }
-      }
-      // const addFullTag = (fullTag:string,prop?:string, value?:Record<string,any>|string, options?:{replaceNote?:boolean, push?:boolean,useRootOnly?:boolean, useUrl?:boolean}) => {
-      //   if (fullTag.includes('<') && fullTag.includes('>')) {
-      //     const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
-      //     addTag(tag,note,)
-      //   }
-      // }
-      // const addTag = (tag:string,note?:string,prop?:string, value?:Record<string,any>, options:{concat:boolean, push:boolean,useFaces:boolean, useUrl:boolean}={concat:false, push:false,useFaces:true,useUrl:false}) => {
-        
-      // }
-
-      // const addFrameEffect =(tag:string,)
+      };
       const tags = entry[tagIndex].split(';');
 
       cardObject.tags = tags.map(fullTag => {
         if (cardObject.id == '2525') {
-          const x =1;
+          const x = 1;
         }
         if (fullTag.includes('<') && fullTag.includes('>')) {
           const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
           if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
-            addTag(tag,note,'watermark',tag.slice(0, tag.lastIndexOf('-')))
-            // const index = parseInt(note);
-            // cardObject.card_faces[
-            //   index > 0 && index < cardObject.card_faces.length ? index : 0
-            // ].watermark = tag.slice(0, tag.lastIndexOf('-'));
+            addTag(tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
           } else if (tag in frameTags) {
-            addTag(tag,note,'frame',frameTags);
-            // const index = parseInt(note);
-            // cardObject.card_faces[
-            //   index >= 0 && index < cardObject.card_faces.length ? index : 0
-            // ].frame = frameTags[tag];
+            addTag(tag, note, 'frame', frameTags);
           } else if (tag in frameEffectTags) {
-            addTag(tag,note,'frame_effects',frameEffectTags,{push:true});
-            // if (note.includes('|')) {
-            //   const [face, subnote] = [parseInt(note.split('|')[0]), note.split('|')[1]];
-            //   const faceIndex = face > 0 && face < cardObject.card_faces.length ? face : 0;
-            //   if ('frame_effects' in cardObject.card_faces[faceIndex]) {
-            //     cardObject.card_faces[faceIndex].frame_effects.push(frameEffectTags[tag]);
-            //   } else {
-            //     cardObject.card_faces[faceIndex].frame_effects = [frameEffectTags[tag]];
-            //   }
-            //   addTagNote(tag,subnote)
-            // } else if (parseInt(note) || note == '0') {
-            //   const index = parseInt(note);
-            //   const faceIndex = index >= 0 && index < cardObject.card_faces.length ? index : 0;
-            //   if ('frame_effects' in cardObject.card_faces[faceIndex]) {
-            //     cardObject.card_faces[faceIndex].frame_effects.push(frameEffectTags[tag]);
-            //   } else {
-            //     cardObject.card_faces[faceIndex].frame_effects = [frameEffectTags[tag]];
-            //   }
-            // }
+            addTag(tag, note, 'frame_effects', frameEffectTags, { push: true });
           } else if (tag in faceImageTagProps) {
-            addTag(tag,note,faceImageTagProps[tag],undefined,{useUrl:true})
-            // if (note.includes('|')) {
-            //   const [face, image] = [parseInt(note.split('|')[0]), note.split('|')[1]];
-            //   const faceIndex = face > 0 && face < cardObject.card_faces.length ? face : 0;
-            //   cardObject.card_faces[faceIndex][faceImageTagProps[tag]] =
-            //     image.slice(0, 4) == 'http'
-            //       ? image
-            //       : 'https://lh3.googleusercontent.com/d/' + image;
-            // } else {
-            //   cardObject[faceImageTagProps[tag]] =
-            //     note.slice(0, 4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
-            // }
+            addTag(tag, note, faceImageTagProps[tag], undefined, { useUrl: true });
           } else if (tag in frontImageTagProps) {
-            addTag(tag,note,frontImageTagProps[tag],undefined,{useUrl:true,useRootOnly:true})
-            // cardObject[frontImageTagProps[tag]] =
-            //   note.slice(0, 4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
+            addTag(tag, note, frontImageTagProps[tag], undefined, {
+              useUrl: true,
+              useRootOnly: true,
+            });
             if (tag == 'draft-image') {
               cardObject.draft_image_status = HCImageStatus.HighRes;
             }
           } else if (tag in borderColorTags) {
-            addTag(tag,note,'border_color',borderColorTags);
+            addTag(tag, note, 'border_color', borderColorTags);
           } else if (tag == 'flavor-name') {
-            addTag(tag,note,'flavor_name');
-            // if (note.includes('|')) {
-            //   const [face, flavor_name] = [parseInt(note.split('|')[0]), note.split('|')[1]];
-            //   const faceIndex = face > 0 && face < cardObject.card_faces.length ? face : 0;
-            //   cardObject.card_faces[faceIndex].flavor_name = flavor_name;
-            // } else {
-            //   cardObject.flavor_name = note;
-            // }
+            addTag(tag, note, 'flavor_name');
           } else {
-            addTag(tag,note,undefined,undefined,{useRootOnly:true});
-            // if (!cardObject.tag_notes) {
-            //   cardObject.tag_notes = {} as Record<string, string>;
-            // }
-            // cardObject.tag_notes[tag] = note;
+            addTag(tag, note, undefined, undefined, { useRootOnly: true });
           }
           return tag;
         } else {
           if (fullTag.slice(fullTag.lastIndexOf('-') + 1) == 'watermark') {
-            cardObject.card_faces[0].watermark = fullTag.slice(0, fullTag.lastIndexOf('-'));
+            addTag(fullTag, undefined, 'watermark', fullTag.slice(0, fullTag.lastIndexOf('-')));
           } else if (fullTag in frameTags) {
-            cardObject.frame = frameTags[fullTag];
+            addTag(fullTag, undefined, 'frame', frameTags);
           } else if (fullTag in frameEffectTags) {
-            if ('frame_effects' in cardObject.card_faces[0]) {
-              cardObject.card_faces[0].frame_effects.push(frameEffectTags[fullTag]);
-            } else {
-              cardObject.card_faces[0].frame_effects = [frameEffectTags[fullTag]];
-            }
+            addTag(fullTag, '0', 'frame_effects', frameEffectTags, { push: true });
           } else if (fullTag in borderColorTags) {
-            addTag(fullTag,undefined,'border_color',borderColorTags);
+            addTag(fullTag, undefined, 'border_color', borderColorTags);
           }
           return fullTag;
         }
@@ -579,19 +555,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             }
           }
         }
-        // if (!('border_color' in cardObject) && tag in borderColorTags) {
-        //   cardObject.border_color = borderColorTags[tag];
-          // } else if (!('frame' in cardObject) && tag in frameTags) {
-          //   cardObject.frame = frameTags[tag];
-        // } else 
         if (tag == 'foil') {
           cardObject.finish = HCFinish.Foil;
-          // } else if ((tag == 'gif' || tag == 'sideways') && cardObject.card_faces.some(face => face.image) && !cardObject.tags.includes('mdfc')) {
-          //   const stillIndex = cardObject.card_faces.findLastIndex(face => face.image);
-          //   cardObject.full_image = cardObject.card_faces[stillIndex].image;
-          //   cardObject.full_image_status = HCImageStatus.HighRes;
-          //   delete cardObject.card_faces[stillIndex].image;
-          //   delete cardObject.card_faces[stillIndex].image_status;
         }
       });
     }
@@ -625,6 +590,14 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         cardObject.layout in multiLayoutToFaceLayout
       ) {
         face.layout = 'flip';
+      } else if (
+        'layout' in cardObject &&
+        cardObject.layout != 'inset' &&
+        cardObject.tags?.includes('inset') &&
+        !face.image &&
+        cardObject.layout in multiLayoutToFaceLayout
+      ) {
+        face.layout = 'inset';
       } else if ('layout' in cardObject && cardObject.layout in multiLayoutToFaceLayout) {
         if (index == 1 && cardObject.layout == 'specialize') {
           face.layout == 'reminder';
@@ -638,54 +611,31 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       if (!('image_status' in face) /**|| ['split'].includes(face.image_status)*/) {
         if (index == 0) {
           face.image_status = HCImageStatus.Front;
-        } else if (
-          cardObject.tags?.includes('draftpartner-faces')
-          // || cardObject.card_faces[0].oracle_text?.toLowerCase().includes('draftpartner')
-        ) {
+        } else if (cardObject.tags?.includes('draftpartner-faces')) {
           face.image_status = HCImageStatus.DraftPartner;
         } else if (
           // the inset check correctly handles mr. crime 1981
           cardObject.tags?.includes('reminder-on-back') &&
           !cardObject.tags?.includes('inset')
-          // || face.types?.includes('Reminder Card') || face.types?.includes('Spellbook')
         ) {
           face.image_status = HCImageStatus.Reminder;
         } else if (
           cardObject.tags?.includes('dungeon-on-back') ||
           cardObject.tags?.includes('dungeon-in-inset')
-          // || face.types?.includes('Dungeon')
         ) {
           face.image_status = HCImageStatus.Dungeon;
-        } else if (
-          cardObject.tags?.includes('stickers-on-back')
-          // || face.types?.includes('Stickers')
-        ) {
+        } else if (cardObject.tags?.includes('stickers-on-back')) {
           face.image_status = HCImageStatus.Stickers;
         } else if (
           cardObject.tags?.includes('token-on-back') ||
           cardObject.tags?.includes('token-in-inset')
-          // || face.supertypes?.includes('Token')
         ) {
           face.image_status = HCImageStatus.Token;
-        } else if (
-          cardObject.tags?.includes('flip')
-          // || cardObject.card_faces[0].oracle_text?.toLowerCase().includes('flip')
-        ) {
+        } else if (cardObject.tags?.includes('flip')) {
           face.image_status = HCImageStatus.Flip;
-        } else if (
-          cardObject.tags?.includes('aftermath')
-          // || face.oracle_text?.toLowerCase().includes('aftermath')
-        ) {
+        } else if (cardObject.tags?.includes('aftermath')) {
           face.image_status = HCImageStatus.Aftermath;
-        } else if (
-          cardObject.tags?.includes('inset')
-          // || face.subtypes?.some(
-          //   (sub: string) =>
-          //     ['Adventure', 'Omen', 'Departure', 'Odyssey', 'Return'].includes(sub) ||
-          //     (index == 1 &&
-          //       cardObject.card_faces[0].oracle_text.toLowerCase().includes('prepared'))
-          // )
-        ) {
+        } else if (cardObject.tags?.includes('inset')) {
           face.image_status = HCImageStatus.Inset;
         } else if (cardObject.tags?.includes('prepare')) {
           face.image_status = HCImageStatus.Prepare;
@@ -704,42 +654,15 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     cardObject.type_line = type_line_list.join(' // ');
     cardObject.mana_cost = mana_cost_list.filter(e => e).join(' // ');
 
-    // const { color_identity, color_identity_hybrid } = getColorIdentityProps(
-    //   cardObject as HCCard.AnyMultiFaced
-    // );
-    // cardObject.color_identity = color_identity;
-    // cardObject.color_identity_hybrid = color_identity_hybrid;
     Object.keys(defaultProps)
       .filter(key => !(key in cardObject))
       .forEach(key => {
         cardObject[key] = defaultProps[key];
       });
-    if (
-      cardObject.card_faces.length <= 1
-      // || cardObject.card_faces[0]?.oracle_text?.toLowerCase().includes('draftpartner')
-    ) {
-      // if ('image' in cardObject.card_faces[0] && cardObject.card_faces[0].image) {
-      //   if ('image' in cardObject && cardObject.image) {
-      //     cardObject.full_image = cardObject.image;
-      //     cardObject.full_image_status = cardObject.image_status;
-      //   }
-      //   cardObject.image = cardObject.card_faces[0].image;
-      //   cardObject.image_status = cardObject.card_faces[0].image_status;
-      //   delete cardObject.card_faces[0].image;
-      //   cardObject.card_faces[0].image_status = 'front';
-      // }
-    }
     if (cardObject.card_faces.length <= 1) {
       if (cardObject.card_faces[0].image) {
+        // this should never happen. If it does, it means that an image needs to be moved to an image tag
         throw error;
-        // if (cardObject.image) {
-        //   cardObject.full_image = cardObject.image;
-        //   cardObject.full_image_status = cardObject.image_status;
-        // }
-        // cardObject.image = cardObject.card_faces[0].image;
-        // cardObject.image_status = cardObject.card_faces[0].image_status;
-        // delete cardObject.card_faces[0].image;
-        // cardObject.card_faces[0].image_status = 'front';
       }
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
         ([key, value]) =>
@@ -762,16 +685,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           singleCard.layout = HCLayout.Stickers;
         } else if (singleCard.types?.includes('Dungeon')) {
           singleCard.layout = HCLayout.Dungeon;
-          // } else if (singleCard.tags?.some((tag:string) => ['weird-leveler','leveler','weird-1-mana-levelers-cycle'].includes(tag))) {
-          //   singleCard.layout = HCLayout.Leveler;
         } else if (singleCard.subtypes?.includes('Saga')) {
           singleCard.layout = HCLayout.Saga;
         } else if (singleCard.subtypes?.includes('Class')) {
           singleCard.layout = HCLayout.Class;
         } else if (singleCard.subtypes?.includes('Case')) {
           singleCard.layout = HCLayout.Case;
-          // } else if (singleCard.tags?.includes('mutate-layout')) {
-          //   singleCard.layout = HCLayout.Mutate;
         } else if (
           singleCard.tags?.some((type: string) => ['Plane', 'Phenomenon'].includes(type))
         ) {
@@ -791,32 +710,14 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           singleCard.oracle_text.toLowerCase().includes('station')
         ) {
           singleCard.layout = HCLayout.Station;
-          // } else if (singleCard.tags?.includes('noncard')) {
-          //   singleCard.layout = HCLayout.Misc;
         } else {
           singleCard.layout = HCLayout.Normal;
         }
       }
-      // singleCard.layout = singleCard.tags?.includes('noncard') ? HCLayout.Misc : HCLayout.Normal;
       const card = singleCard as HCCard.AnySingleFaced;
       setDerivedProps(card);
       return card;
     } else {
-      // if (
-      //   cardObject.card_faces[0].image &&
-      //   (cardObject.card_faces.filter(e => e.image).length == 1 ||
-      //     cardObject.tags?.includes('draft-image')) &&
-      //   !cardObject.tags?.includes('gif')
-      // ) {
-      //   if ('image' in cardObject && cardObject.image) {
-      //     cardObject.full_image = cardObject.image;
-      //     cardObject.full_image_status = cardObject.image_status;
-      //   }
-      //   cardObject.image = cardObject.card_faces[0].image;
-      //   cardObject.image_status = cardObject.card_faces[0].image_status;
-      //   delete cardObject.card_faces[0].image;
-      //   cardObject.card_faces[0].image_status = 'front';
-      // }
       if (!('layout' in cardObject)) {
         cardObject.layout = HCLayout.Split;
       }
@@ -826,5 +727,5 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     }
   });
 
-  return theThing; //.filter((e) => e.Set != "C");
+  return allCards;
 };
