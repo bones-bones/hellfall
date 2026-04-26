@@ -50,7 +50,8 @@ import {
   hybridIdentityMiscReduce,
 } from '../colorComps';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
-import { CHUNK_SIZE, extraSetList } from '../constants.ts';
+import { CHUNK_SIZE } from '../constants.ts';
+import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import { filterSet } from '../filters/filterSet.ts';
 
 export const useSearchResults = () => {

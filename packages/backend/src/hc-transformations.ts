@@ -17,6 +17,7 @@ import {
   HCFrame,
   HCFinish,
 } from '@hellfall/shared/types';
+import { allSetsList} from '@hellfall/shared/data/sets.ts'
 // import { getDefaultStore } from 'jotai';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
@@ -73,6 +74,7 @@ const cardRemovableProps = [
   'watermark',
   'frame_effects',
   'flavor_name',
+  'collector_number',
 ];
 const cardFaceRemovableProps = ['frame'];
 const tokenIgnoreProps = ['colors'];
@@ -92,6 +94,7 @@ const tokenRemovableProps = [
   'watermark',
   'frame_effects',
   'flavor_name',
+  'collector_number',
 ];
 const notMagicBlankableProps = ['oracle_text', 'mana_value'];
 const notMagicRemovableProps = [
@@ -147,6 +150,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'name',
           'flavor_name',
           'set',
+          'collector_number',
           'layout',
           'image_status',
           'image',
@@ -430,6 +434,9 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           }
           return part;
         });
+        if (newCard.id == '6366') {
+          const x = 1;
+        }
         existingCard.all_parts
           ?.filter(
             part =>
@@ -1001,7 +1008,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry);
+          typeSet.add(typeEntry.replaceAll(/[[\]{}*_~]/g,''));
         }
       );
     });
@@ -1041,14 +1048,18 @@ const main = async () => {
     return -1;
   });
   finalTokens.sort((a, b) => {
-    if (a.layout != b.layout) {
-      if (
-        HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) >
-        HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
-      ) {
-        return 1;
-      }
-      return -1;
+    if (a.set != b.set) {
+      return Math.sign(allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set))
+      // if (
+      //   allSetsList.indexOf(a.set) >
+      //   HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
+      // ) {
+      //   return 1;
+      // }
+      // return -1;
+    }
+    if (a.collector_number && b.collector_number) {
+      return Math.sign(parseInt(a.collector_number) - parseInt(b.collector_number))
     }
     if (a.name == b.name) {
       if (

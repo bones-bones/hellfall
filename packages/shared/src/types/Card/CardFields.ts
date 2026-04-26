@@ -403,6 +403,10 @@ export namespace HCCardFields.Print {
      * This card's set code.
      */
     set: string;
+    /**
+     * This card's collector number within the set.
+     */
+    collector_number?: string;
   } & VariationInfo;
 
   /**

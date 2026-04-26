@@ -51,7 +51,7 @@ import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useDebounce, useKeyPress } from '../../hooks';
 import { act, useEffect, useState } from 'react';
-import { extraSetList } from '../constants.ts';
+import { extraSetList } from '@hellfall/shared/data/sets.ts'; 
 import { HCSearchColors } from '@hellfall/shared/types';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)

@@ -486,7 +486,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         if (cardObject.id == '2525') {
           const x = 1;
         }
-        if (fullTag.includes('<') && fullTag.includes('>')) {
+        if (fullTag.includes('<') && fullTag.endsWith('>')) {
           const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
           if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
             addTag(tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
@@ -508,6 +508,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             addTag(tag, note, 'border_color', borderColorTags);
           } else if (tag == 'flavor-name') {
             addTag(tag, note, 'flavor_name');
+          } else if (tag.toLowerCase() == cardObject.set.toLowerCase()) {
+            addTag(tag,undefined,'collector_number',note)
           } else {
             addTag(tag, note, undefined, undefined, { useRootOnly: true });
           }

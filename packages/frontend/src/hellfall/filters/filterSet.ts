@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { extraSetList } from '../constants';
+import { extraSetList } from '@hellfall/shared/data/sets';
 import { getHc5 } from '../../hells-cubes/getHc5';
 
 /**
