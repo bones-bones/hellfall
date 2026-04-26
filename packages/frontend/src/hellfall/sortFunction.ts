@@ -1,14 +1,16 @@
+import { allSetsList } from '@hellfall/shared/data/sets';
 import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 // TODO: make it possible to sort by color, then alpha, rather than color, then MV
 // how they can combine: Alpha and ID are mutually exclusive, but none of the others are
 
 export const sortFunction =
-  (sortRule: 'Alpha' | 'Mana Value' | 'Color' | 'Id', dirRule: 'Asc' | 'Desc') =>
+  (sortRule: 'Name' | 'Id' | 'Set/Number' | 'Color' | 'Mana Value', dirRule: 'Asc' | 'Desc') =>
   (a: HCCard.Any, b: HCCard.Any) => {
+    const dirMult = dirRule == 'Desc' ? -1 : 1;
     switch (sortRule) {
       case 'Mana Value': {
         if (a.mana_value > b.mana_value) {
-          return dirRule == 'Desc' ? -1 : 1;
+          return dirMult;
         }
         break;
       }
@@ -17,49 +19,63 @@ export const sortFunction =
         const bString = getSortString(b);
 
         if (aString > bString) {
-          return dirRule == 'Desc' ? -1 : 1;
+          return dirMult;
         }
         break;
       }
 
-      case 'Alpha': {
+      case 'Name': {
         if (a.name == b.name) {
           if (a.isActualToken && b.isActualToken) {
             if (
               (parseInt(a.id.match(/\d+$/)?.[0] || '') || 0) >
               (parseInt(b.id.match(/\d+$/)?.[0] || '') || 0)
             ) {
-              return dirRule == 'Desc' ? -1 : 1;
+              return dirMult;
             }
           } else if (a.isActualToken != b.isActualToken) {
             if (a.isActualToken) {
-              return dirRule == 'Desc' ? -1 : 1;
+              return dirMult;
             }
           } else {
             if (parseInt(a.id) == parseInt(b.id)) {
               if (a.id > b.id) {
-                return dirRule == 'Desc' ? -1 : 1;
+                return dirMult;
               }
             } else if (parseInt(a.id) > parseInt(b.id)) {
-              return dirRule == 'Desc' ? -1 : 1;
+              return dirMult;
             }
           }
-          return dirRule == 'Desc' ? -1 : 1;
+          return dirMult;
         } else if (a.name > b.name) {
-          return dirRule == 'Desc' ? -1 : 1;
+          return dirMult;
         }
         break;
       }
 
       case 'Id': {
         if (parseInt(a.id) == parseInt(b.id)) {
-          if (a.id > b.id) {
-            return dirRule == 'Desc' ? -1 : 1;
+          return (a.id.charCodeAt(-1) - b.id.charCodeAt(-1)) * dirMult
+        } 
+        return (parseInt(a.id) - parseInt(b.id)) * dirMult
+      }
+      case 'Set/Number': {
+        if (a.set == b.set) {
+          if (!a.collector_number && !b.collector_number) {
+            if (parseInt(a.id) == parseInt(b.id)) {
+              return (a.id.charCodeAt(-1) - b.id.charCodeAt(-1)) * dirMult
+            } 
+            return (parseInt(a.id) - parseInt(b.id)) * dirMult 
           }
-        } else if (parseInt(a.id) > parseInt(b.id)) {
-          return dirRule == 'Desc' ? -1 : 1;
+          if ('collector_number' in a != 'collector_number' in b) {
+            return 'collector_number' in a ? -dirMult : dirMult
+          }
+          if (parseInt(a.id) == parseInt(b.id)) {
+            return (a.id.charCodeAt(-1) - b.id.charCodeAt(-1)) * dirMult
+          }
+          return (parseInt(a.collector_number!) - parseInt(b.collector_number!)) * dirMult
         }
-        break;
+        return (allSetsList.indexOf(a.set)-allSetsList.indexOf(b.set)) * dirMult
       }
     }
 

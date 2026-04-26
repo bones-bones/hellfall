@@ -1074,10 +1074,10 @@ const main = async () => {
     //   return -1;
     // }
     if (a.set != b.set) {
-      return Math.sign(allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set))
+      return allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set)
     }
     if (a.collector_number && b.collector_number) {
-      return Math.sign(parseInt(a.collector_number) - parseInt(b.collector_number))
+      return parseInt(a.collector_number) - parseInt(b.collector_number)
     }
     if (a.name == b.name) {
       if (

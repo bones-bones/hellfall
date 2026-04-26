@@ -170,7 +170,7 @@ export const defenseAtom = atom<
 );
 
 export const sortAtom = atom(
-  (searchParams.get('order') || 'Color') as 'Alpha' | 'Mana Value' | 'Color' | 'Id'
+  (searchParams.get('order') || 'Color') as 'Name' | 'Id' | 'Set/Number' | 'Color' | 'Mana Value' 
 );
 export const dirAtom = atom((searchParams.get('dir') || 'Asc') as 'Asc' | 'Desc');
 
