@@ -505,8 +505,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             addTag(tag, note, 'border_color', borderColorTags);
           } else if (tag == 'flavor-name') {
             addTag(tag, note, 'flavor_name');
-          // } else if (tag.toLowerCase() == cardObject.set.toLowerCase()) {
-          //   addTag(tag,undefined,'collector_number',note)
+          } else if (tag.toLowerCase() == cardObject.set.toLowerCase()) {
+            addTag(tag,undefined,'collector_number',note)
           } else {
             addTag(tag, note, undefined, undefined, { useRootOnly: true });
           }

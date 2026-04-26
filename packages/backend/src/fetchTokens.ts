@@ -34,7 +34,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'oracle_text',
     'creators',
     'tags',
-    // 'collector_number'
+    'collector_number'
   ];
   rest.forEach(row => {
     while (row.length < keys.length) {
