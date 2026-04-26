@@ -75,6 +75,7 @@ const cardRemovableProps = [
   'frame_effects',
   'flavor_name',
   'collector_number',
+  'all_parts'
 ];
 const cardFaceRemovableProps = ['frame'];
 const tokenIgnoreProps = ['colors'];
@@ -980,7 +981,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry);
+          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g,''));
         }
       );
     });
@@ -1008,7 +1009,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry.replaceAll(/[[\]{}*_~]/g,''));
+          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g,''));
         }
       );
     });
@@ -1048,16 +1049,18 @@ const main = async () => {
     return -1;
   });
   finalTokens.sort((a, b) => {
-    if (a.set != b.set) {
-      return Math.sign(allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set))
-      // if (
-      //   allSetsList.indexOf(a.set) >
-      //   HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
-      // ) {
-      //   return 1;
-      // }
-      // return -1;
+    if (a.layout != b.layout) {
+      if (
+        HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) >
+        HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
+      ) {
+        return 1;
+      }
+      return -1;
     }
+    // if (a.set != b.set) {
+    //   return Math.sign(allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set))
+    // }
     if (a.collector_number && b.collector_number) {
       return Math.sign(parseInt(a.collector_number) - parseInt(b.collector_number))
     }
