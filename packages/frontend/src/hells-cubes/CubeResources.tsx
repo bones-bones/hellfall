@@ -34,7 +34,6 @@ export const CubeResources = () => {
       name: 'Hellscube',
       id: 'HLC',
       description: 'A refined version of the cube that started it all',
-      // cards: cards.filter(e => e.set.includes('HLC')),
       quickLink: <StyledLink to="one">Rules and macros</StyledLink>,
       printLink: (
         <StyledLink to="https://drive.google.com/file/d/1U2Ww7WElGpA95BTOwb2E2sQ0bir4FJHt/view">
@@ -51,13 +50,11 @@ export const CubeResources = () => {
       name: 'Hellscube 2',
       id: 'HC2',
       description: 'The second cube, trades purple for clear archetypes.',
-      // cards: cards.filter(e => e.set.includes('HC2')),
     },
     {
       name: 'Hellscube 3',
       id: 'HC3',
       description: "At least it's not HC2",
-      // cards: cards.filter(e => e.set.includes('HC3')),
       printLink: (
         <StyledLink to={'https://drive.google.com/file/d/1SuXpECOkcCpIcCD-KKGyNjkT9NfeLrEH/view'}>
           PDF of 3.0 by Jumberlack
@@ -73,7 +70,6 @@ export const CubeResources = () => {
       name: 'Hellscube 4',
       id: 'HC4',
       description: 'A Vintage power cube. A rip-roaring good time',
-      // cards: cards.filter(e => e.set.includes('HC4')),
       includeLands: true,
       // readyForAutofill: true,
       printLink: (
@@ -86,19 +82,16 @@ export const CubeResources = () => {
       name: 'Hellscube 5',
       id: 'HC5',
       description: 'L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ',
-      // cards: getHc5(),
     },
     {
       name: 'Hellscube V(eto)',
       id: 'HCV',
       description: `Here's where vetoed, slotsed, and seasonal cards go. Not suitable for play.`,
-      // cards: cards.filter(e => e.set.includes('HCV')),
     },
     {
       name: 'Hellscube 6',
       id: 'HC6',
       description: 'The Commander Cube',
-      // cards: cards.filter(e => e.set.includes('HC6')),
       // readyForAutofill: true,
       includeLands: true,
       printLink: (
@@ -112,7 +105,6 @@ export const CubeResources = () => {
       id: 'HCC',
       // readyForAutofill: true,
       description: 'Cards that are legal in constructed, but are not in any cube',
-      // cards: cards.filter(e => e.set.includes('HCC')),
     },
     {
       name: 'Hells Chase Posse',
@@ -126,7 +118,6 @@ export const CubeResources = () => {
       ),
       // readyForAutofill: true,
       description: 'Planes and Phenomena for some sick planechase action',
-      // cards: cards.filter(e => e.set.includes('HCP')),
       printLink: (
         <StyledLink
           to={'https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing'}
@@ -139,13 +130,11 @@ export const CubeResources = () => {
       name: 'Hellscube 7',
       id: 'HC7',
       description: 'The 7th cube, purple abounds.',
-      // cards: cards.filter(e => e.set.includes('HC7')),
     },
     {
       name: 'Normal Cube',
       id: 'NRM',
       description: 'How did that get in there?',
-      // cards: cards.filter(e => e.set.includes('NRM')),
     },
     {
       name: 'Heckscube',
@@ -154,14 +143,12 @@ export const CubeResources = () => {
       includeLands: true,
       description:
         'This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC\'s first forays into "beginner-friendly" Magic all the way back in \'97.',
-      // cards: cards.filter(e => e.set.includes('HCK')),
     },
     {
       name: 'Hellscube 8',
       id: 'HC8',
       quickLink: <StyledLink to="/hellscubes/eight">Archetype documents</StyledLink>,
       description: "The 8th cube, we've got archetypes",
-      // cards: cards.filter(e => e.set.includes('HC8')),
     },
     {
       name: 'Hellscube Jumpstart',
@@ -172,19 +159,16 @@ export const CubeResources = () => {
         </StyledLink>
       ),
       description: 'Jumpstart!',
-      // cards: cards.filter(e => e.set.includes('HCJ')),
     },
-    // {
-    //   name: 'Heckscube 2: Hecklands',
-    //   id: 'HKL',
-    //   description: 'TODO',
-    //   // cards: cards.filter(e => e.set.includes('HC7')),
-    // },
+    {
+      name: 'Heckscube 2: Hecklands',
+      id: 'HKL',
+      description: 'Heckscube 2: Hecklands is a return to classic 90\'s Magic: the Gathering. This minicube includes cards roughly of the caliber and quality of Homelands, everyone\'s favorite Magic set.',
+    },
     {
       name: 'All Hellscube Sets',
       id: 'All',
       description: 'All sets!',
-      // cards: cards.filter(e => e.set.includes('HCJ')),
     },
   ];
   return (
