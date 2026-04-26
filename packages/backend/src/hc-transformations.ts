@@ -435,18 +435,6 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           }
           return part;
         });
-        if (newCard.id == '6366') {
-          const x = 1;
-        }
-        existingCard.all_parts
-          ?.filter(
-            part =>
-              !['token_maker'].includes(part.component) &&
-              !merged.all_parts?.some(e => e.id == part.id)
-          )
-          .forEach(part => {
-            merged.all_parts?.push(part);
-          });
       } else if (key == 'image_status') {
         // TODO: store current version and print the diff if there is one
         if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {

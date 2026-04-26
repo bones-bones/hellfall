@@ -311,7 +311,9 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
 
       tokenObject.tags.forEach((tag: string) => {
         if (tag == 'meld') {
-          tokenObject.all_parts[0].component = 'meld_result';
+          tokenObject.all_parts?.forEach((part:HCRelatedCard) => {
+            part.component = 'meld_part';
+          });
           tokenObject.layout = 'meld_result';
         }
         if (!('layout' in tokenObject)) {
