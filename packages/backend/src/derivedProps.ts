@@ -13,7 +13,7 @@ import {
 } from '@hellfall/shared/types';
 import { splitParens } from '@hellfall/shared/utils/textHandling.ts';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
-import { orderColors } from '@hellfall/shared/utils/ordercolors';
+import { orderColors } from '@hellfall/shared/utils/orderColors.ts';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,

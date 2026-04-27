@@ -13,6 +13,18 @@
     "./types": {
       "types": "./src/types/index.ts",
       "import": "./src/types/index.ts"
+    },
+    "./data/*": {
+      "types": "./src/data/*",
+      "import": "./src/data/*"
+    },
+    "./services/*": {
+      "types": "./src/services/*",
+      "import": "./src/services/*"
+    },
+    "./utils/*": {
+      "types": "./src/utils/*",
+      "import": "./src/utils/*"
     }
   }
 }
