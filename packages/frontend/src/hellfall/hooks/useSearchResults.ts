@@ -444,7 +444,6 @@ export const useSearchResults = () => {
       searchToSet.append('dir', dirRule);
     }
     if (tempResults.length < page && tempResults.length > 0) {
-      searchToSet.append('page', '0');
       paginationModel.events.goTo(1);
       setPageAtom(0);
     } else if (page > 0) {

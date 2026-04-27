@@ -130,3 +130,4 @@ Write a script to transform the database
 - add cube builder utility for exporting custom cubes to draftmancer
 - figure out whether/how to make missing frame tags work with specific faces
 - use to title case for adding types to types.json
+- subdivide showcase-frame

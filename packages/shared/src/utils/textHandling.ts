@@ -150,7 +150,10 @@ export const textPrep = (text: string): string => {
     i++;
   }
 
-  return result;
+  return result
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
 };
 /**
  * Checks whether search text is in text from a card
