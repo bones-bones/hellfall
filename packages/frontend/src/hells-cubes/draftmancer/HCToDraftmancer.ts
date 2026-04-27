@@ -85,7 +85,6 @@ const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.MultiFaced
     Object.entries(face)
       .filter(([key, value]) => !(subProps.includes(key) && subLayouts.includes(face.layout)))
       .forEach(([key, value]) => {
-        // Object.keys(face).filter(key => !(subProps.includes(key) && subLayouts.includes(face.layout)) && !dropLayouts.includes(face.layout)).forEach(key => {
         if (face[key as keyof typeof face]) {
           if (overwriteProps.includes(key)) {
             if (key == 'layout' && !(value == 'flip' && faces[0].layout == 'transform')) {
@@ -276,9 +275,6 @@ export const HCToDraftmancer = (
     } else if (card.tags?.includes('rotate') || card.rotated_image) {
       draftCard.layout = 'split';
     }
-    // if (card.subtypes) {
-    //   draftCard.subtypes = card.subtypes;
-    // }
     if (card.power) {
       draftCard.power = card.power;
     }
@@ -309,9 +305,6 @@ export const HCToDraftmancer = (
     } else if (face.layout == 'flip') {
       draftCard.layout = 'flip';
     }
-    // if (face.subtypes) {
-    //   draftCard.subtypes = face.subtypes;
-    // }
     if (face.power) {
       draftCard.power = face.power;
     }
@@ -339,9 +332,6 @@ export const HCToDraftmancer = (
     } else if (face.layout == 'flip') {
       draftFace.layout = 'flip';
     }
-    // if (face.subtypes) {
-    //   draftFace.subtypes = face.subtypes;
-    // }
     if (face.power) {
       draftFace.power = face.power;
     }
@@ -407,14 +397,6 @@ export const HCToDraftmancer = (
     if ('card_faces' in card && card.card_faces.length > 1) {
       draftCard.back = HCFaceToDraftFace(card.card_faces[1]);
     }
-    // else if (card.full_image && !card.tags?.includes('gif')) {
-    //   // gif handling for tts also uses full_image, so don't pull those
-    //   draftCard.back = {
-    //     name: draftCard.name + ' Draft Image',
-    //     type: 'Draft Image',
-    //     image: card.full_image,
-    //   } as DraftmancerCardFace;
-    // }
     const related = getRelatedList(card);
     if (related) {
       draftCard.related_cards = related;
@@ -483,6 +465,7 @@ export const HCToDraftmancer = (
   };
 };
 
+// this is for \_\_\_\_\_\_\_ Balls
 export const StickerSheetScryfallIds = [
   '34c3979d-60e7-44b5-bb9f-1b6b0f2b70c3',
   '016bf660-16c3-41b7-a988-211921c21eb8',

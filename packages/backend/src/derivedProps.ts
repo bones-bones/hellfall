@@ -147,6 +147,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
       if (
         ((face.supertypes?.includes('Legendary') &&
           !face.types?.includes('Planeswalker') &&
+          !face.types?.includes('Player') &&
           !card.tags?.includes('missing-legend-frame')) ||
           card.tags?.includes('legend-frame')) &&
         !face.frame_effects?.includes(HCFrameEffect.Legendary)
@@ -275,9 +276,8 @@ const manaSymbolColorMatching: Record<
 const landToColorMapping = {
   Plains: 'W',
   Ploons: 'W',
-  Swamp: 'B',
   Island: 'U',
-  // IslandGX: 'Blue', // TODO: I have sinned
+  Swamp: 'B',
   Mountain: 'R',
   Moontain: 'R',
   Forest: 'G',

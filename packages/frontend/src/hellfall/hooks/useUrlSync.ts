@@ -21,11 +21,11 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  // legalityAtom,
   standardLegalityAtom,
   fourcbLegalityAtom,
   commanderLegalityAtom,
   isCommanderAtom,
+  collectorNumberAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -35,7 +35,7 @@ import {
   dirAtom,
   pageAtom,
   activeCardAtom,
-  // LegalType,
+  parseOperatorValue,
 } from '../atoms/searchAtoms.ts';
 
 export const useUrlSync = () => {
@@ -65,11 +65,11 @@ export const useUrlSync = () => {
   const [includeExtraSets, setIncludeExtraSets] = useAtom(includeExtraSetsAtom);
   const [extraSets, setExtraSets] = useAtom(extraSetsAtom);
   const [searchToken, setSearchToken] = useAtom(searchTokenAtom);
-  // const [legality, setLegality] = useAtom(legalityAtom);
   const [standardLegality, setStandardLegality] = useAtom(standardLegalityAtom);
   const [fourcbLegality, set4cbLegality] = useAtom(fourcbLegalityAtom);
   const [commanderLegality, setCommanderLegality] = useAtom(commanderLegalityAtom);
   const [isCommander, setIsCommander] = useAtom(isCommanderAtom);
+  const [collectorNumber, setCollectorNumber] = useAtom(collectorNumberAtom);
   const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -79,16 +79,6 @@ export const useUrlSync = () => {
   const [dirRule, setDirRule] = useAtom(dirAtom);
   const [page, setPage] = useAtom(pageAtom);
   const [activeCard, setActiveCard] = useAtom(activeCardAtom);
-
-  const parseOperatorValue = (str: string | null) => {
-    if (!str) return undefined;
-    const match = str.match(/^([<>]=?|=)(.+)$/);
-    if (!match) return undefined;
-    return {
-      operator: match[1] as '<' | '<=' | '=' | '>=' | '>',
-      value: parseInt(match[2]),
-    };
-  };
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -173,28 +163,11 @@ export const useUrlSync = () => {
     if (isCommander != (params.get('isCommander') === 'true')) {
       setIsCommander(params.get('isCommander') === 'true');
     }
-    // if (
-    //   legality !=
-    //   ((params.get('legality')?.split(',').filter(Boolean) as (
-    //     | 'legal'
-    //     | 'banned'
-    //     | '4cbLegal'
-    //     | 'hellsmanderLegal'
-    //     | 'isCommander'
-    //   )[]) || [])
-    // ) {
-    //   setLegality(
-    //     (params.get('legality')?.split(',').filter(Boolean) as (
-    //       | 'legal'
-    //       | 'banned'
-    //       | '4cbLegal'
-    //       | 'hellsmanderLegal'
-    //       | 'isCommander'
-    //     )[]) || []
-    //   );
-    // }
 
     // Set numeric filters
+    if (collectorNumber != parseOperatorValue(params.get('cn'))) {
+      setCollectorNumber(parseOperatorValue(params.get('cn')));
+    }
     if (manaValue != parseOperatorValue(params.get('manaValue'))) {
       setManaValue(parseOperatorValue(params.get('manaValue')));
     }
@@ -226,7 +199,5 @@ export const useUrlSync = () => {
     if (activeCard != (params.get('activeCard') || '')) {
       setActiveCard(params.get('activeCard') || '');
     }
-
-    // setIsCommander(params.get('isCommander') === 'true');
   }, [location.search]); // This triggers on back/forward navigation
 };

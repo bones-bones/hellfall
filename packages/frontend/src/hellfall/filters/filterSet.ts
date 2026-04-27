@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { extraSetList } from '../constants';
+import { extraSetList } from '@hellfall/shared/data/sets';
 import { getHc5 } from '../../hells-cubes/getHc5';
 
 /**
@@ -46,7 +46,7 @@ export const filterSet = (
           return false;
         }
         // make sure tokens are hidden when no sets are selected
-        if (noSets && entry.isActualToken) {
+        if (noSets && entry.isActualToken && !includeExtraSets) {
           return false;
         }
         return true;

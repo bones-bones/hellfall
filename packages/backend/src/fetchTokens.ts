@@ -34,6 +34,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'oracle_text',
     'creators',
     'tags',
+    'collector_number',
   ];
   rest.forEach(row => {
     while (row.length < keys.length) {
@@ -145,6 +146,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'inscryption-frame': HCFrame.Inscryption,
     'hearthstone-frame': HCFrame.Hearthstone,
     'lorcana-frame': HCFrame.Lorcana,
+    'notmagic-frame': HCFrame.NotMagic,
+    'website-frame': HCFrame.Website,
   };
   const frameEffectTags: Record<string, HCFrameEffect> = {
     'miracle-frame': HCFrameEffect.Miracle,
@@ -157,6 +160,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'inverted-text': HCFrameEffect.Inverted,
     'sun-moon-transform': HCFrameEffect.SunMoonDfc,
     'type-transform-marks': HCFrameEffect.TypeDfc,
+    'generic-transform-marks': HCFrameEffect.TransformDfc,
+    'generic-mdfc-marks': HCFrameEffect.Mdfc,
     'compass-land-transform': HCFrameEffect.CompassLandDfc,
     'origin-pw-transform': HCFrameEffect.OriginPwDfc,
     'moon-eldrazi-transform': HCFrameEffect.MoonEldraziDfc,
@@ -170,6 +175,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'etched-frame': HCFrameEffect.Etched,
     'spree-frame': HCFrameEffect.Spree,
     'meld-frame': HCFrameEffect.Meld,
+    'slab-frame': HCFrameEffect.Slab,
+    'arena-frame': HCFrameEffect.Arena,
   };
 
   const imageTagProps: Record<string, string> = {
@@ -304,7 +311,9 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
 
       tokenObject.tags.forEach((tag: string) => {
         if (tag == 'meld') {
-          tokenObject.all_parts[0].component = 'meld_result';
+          tokenObject.all_parts?.forEach((part: HCRelatedCard) => {
+            part.component = 'meld_part';
+          });
           tokenObject.layout = 'meld_result';
         }
         if (!('layout' in tokenObject)) {
@@ -339,19 +348,19 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         tokenObject.types.shift();
       }
     }
-    // if ('types' in tokenObject || 'supertypes' in tokenObject) {
-    //   tokenObject.type_line = [
-    //     tokenObject.supertypes?.join(' '),
-    //     [tokenObject.types?.join(' '), tokenObject.subtypes?.join(' ')].filter(Boolean).join(' — '),
-    //   ]
-    //     .filter(Boolean)
-    //     .join(' ') as string;
-    // } else {
-    //   if ('subtypes' in tokenObject) {
-    //     delete tokenObject.subtypes;
-    //   }
-    //   tokenObject.type_line = '';
-    // }
+    if ('types' in tokenObject || 'supertypes' in tokenObject) {
+      tokenObject.type_line = [
+        tokenObject.supertypes?.join(' '),
+        [tokenObject.types?.join(' '), tokenObject.subtypes?.join(' ')].filter(Boolean).join(' — '),
+      ]
+        .filter(Boolean)
+        .join(' ') as string;
+    } else {
+      if ('subtypes' in tokenObject) {
+        delete tokenObject.subtypes;
+      }
+      tokenObject.type_line = '';
+    }
     Object.keys(defaultProps)
       .filter(key => !(key in tokenObject))
       .forEach(key => {

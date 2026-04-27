@@ -403,6 +403,10 @@ export namespace HCCardFields.Print {
      * This card's set code.
      */
     set: string;
+    /**
+     * This card's collector number within the set.
+     */
+    collector_number?: string;
   } & VariationInfo;
 
   /**
@@ -490,6 +494,10 @@ export namespace HCCardFields.Print {
      * This faces's frame layout, if it is different from that of the overall card.
      */;
     frame?: `${HCFrame}`;
+    /**
+     * This card's border color: black, white, borderless, silver, gold, yellow, blue, or rainbow.
+     */
+    border_color: `${HCBorderColor}`;
   };
 
   type VariationInfo = {

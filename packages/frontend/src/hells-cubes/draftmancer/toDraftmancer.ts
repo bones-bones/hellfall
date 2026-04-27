@@ -1,28 +1,9 @@
 // https://draftmancer.com/cubeformat.html#cube
 import { HCCard } from '@hellfall/shared/types';
-// import { getDraftMancerCard } from './getDraftMancerCard.ts';
 import { HCToDraftmancer } from './HCToDraftmancer.ts';
-import { DraftmancerCustomCard } from '../types.ts';
 
 export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HCCard.Any[] }) => {
-  // cards.forEach(card => {
-  //   card.name = card.name
-  //     .replace(/\[/g, 'OPENBRACKET')
-  //     .replace(/\]/g, 'CLOSEBRACKET')
-  //     .replace(/^ /g, 'SPACE');
-  // });
-  // TODO: make sure this works
-  // const componentCards = cards.filter(card =>
-  //   Boolean(card.all_parts?.find(e => e.id == card.id && e.component != 'token_maker'))
-  // );
-
-  // const componentCardsAsDraftmancer = componentCards.map(getDraftMancerCard);
-
   const { cards: cards, tokens: tokens } = HCToDraftmancer(allCards, set);
-
-  // const noComponentCards = cards.filter(
-  //   card => !card.all_parts?.find(e => e.id == card.id && e.component != 'token_maker')
-  // );
 
   if (set === 'HC6') {
     const commanderCards = cards.filter(card => card.canBeACommander);

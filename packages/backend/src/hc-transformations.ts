@@ -17,6 +17,7 @@ import {
   HCFrame,
   HCFinish,
 } from '@hellfall/shared/types';
+import { allSetsList } from '@hellfall/shared/data/sets.ts';
 // import { getDefaultStore } from 'jotai';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
@@ -48,6 +49,12 @@ const oneWayMergeProps = [
   'watermark',
   'colors',
   'mana_value',
+  'tags',
+  'tag_notes',
+  'frames',
+  'frame_effects',
+  'collector_number',
+  'set',
 ];
 const cardBlankableProps = ['rulings', 'oracle_text', 'mana_value', 'mana_cost'];
 const cardRemovableProps = [
@@ -73,6 +80,8 @@ const cardRemovableProps = [
   'watermark',
   'frame_effects',
   'flavor_name',
+  'collector_number',
+  'all_parts',
 ];
 const cardFaceRemovableProps = ['frame'];
 const tokenIgnoreProps = ['colors'];
@@ -92,6 +101,7 @@ const tokenRemovableProps = [
   'watermark',
   'frame_effects',
   'flavor_name',
+  'collector_number',
 ];
 const notMagicBlankableProps = ['oracle_text', 'mana_value'];
 const notMagicRemovableProps = [
@@ -134,7 +144,41 @@ const partialMergeOnlyLayouts: HCLayout[] = [
   HCLayout.RealCardMultiToken,
   HCLayout.MultiNotMagic,
 ];
-
+const cardUninferrableProps = [
+  'scryfall_id',
+  'oracle_id',
+  'image_status',
+  'draft_image_status',
+  'keywords',
+  'variation',
+  'variation_of',
+];
+const cardMoveProps = ['attraction_lights', 'colors', 'color_indicator'];
+const tokenInferrableProps = [
+  'id',
+  'name',
+  'flavor_name',
+  'set',
+  'collector_number',
+  'image',
+  'rotated_image',
+  'still_image',
+  'draft_image',
+  'rotated_draft_image',
+  'still_draft_image',
+  'not_directly_draftable',
+  'has_draft_partners',
+  'legalities',
+  'creators',
+  'finish',
+  'watermark',
+  'border_color',
+  'frame',
+  'frame_effects',
+  'tags',
+  'tag_notes',
+];
+const tokenInferrableFaceProps = ['supertypes', 'types', 'power', 'toughness'];
 const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
     const cardWithJSON = Object.assign({}, card, {
@@ -147,6 +191,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'name',
           'flavor_name',
           'set',
+          'collector_number',
           'layout',
           'image_status',
           'image',
@@ -218,6 +263,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
           'colors',
           'color_indicator',
           'watermark',
+          'border_color',
           'frame',
           'frame_effects',
         ];
@@ -296,55 +342,45 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
     setDerivedProps(existingCard);
     return existingCard;
   }
-  // TODO: replace with actual type checking
-  if (
-    partialMergeOnlyLayouts.includes(existingCard.layout as HCLayout) &&
-    existingCard.set.slice(0, 2) != 'SF'
-  ) {
-    const merged: HCCard.Any = { ...existingCard };
-    ['image', 'creators', 'all_parts'].forEach(key => {
-      if (newCard[key as keyof typeof newCard]) {
-        (merged as any)[key] = newCard[key as keyof typeof newCard];
-      }
-    });
-    setDerivedProps(merged);
-    return merged;
-  }
-
-  let mergedPrelim: any = undefined;
-  if (!('card_faces' in existingCard) && 'card_faces' in newCard) {
-    mergedPrelim = { ...existingCard } as any;
-    mergedPrelim.card_faces = [{}] as HCCardFace.MultiFaced[];
-    oneWayMergeProps.forEach(prop => {
-      if (prop in mergedPrelim) {
-        mergedPrelim.card_faces[0][prop] = mergedPrelim[prop];
-        if (!['name', 'mana_cost', 'type_line', 'colors', 'mana_value'].includes(prop)) {
-          delete mergedPrelim[prop];
-        }
-      }
-    });
-    mergedPrelim.card_faces[0]['image_status'] = HCImageStatus.Front;
-    mergedPrelim.layout = newCard.layout;
-  } else if ('card_faces' in existingCard && !('card_faces' in newCard)) {
-    mergedPrelim = { ...existingCard } as any;
-    oneWayMergeProps.forEach(prop => {
-      if (prop in mergedPrelim.card_faces[0]) {
-        mergedPrelim[prop] = mergedPrelim.card_faces[0][prop];
-      }
-    });
-    delete mergedPrelim.card_faces;
-    mergedPrelim.layout = newCard.layout;
-  }
-
-  const merged: HCCard.Any =
-    'card_faces' in existingCard == 'card_faces' in newCard
-      ? { ...existingCard }
-      : 'card_faces' in mergedPrelim
-      ? { ...(mergedPrelim as HCCard.AnyMultiFaced) }
-      : { ...(mergedPrelim as HCCard.AnySingleFaced) };
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
-    setDerivedProps(merged);
+    if (existingCard.isActualToken) {
+      const merged: HCCard.Any =
+        'card_faces' in existingCard ? { ...existingCard } : { ...newCard };
+      if ('card_faces' in merged) {
+        Object.entries(newCard)
+          .filter(([key, value]) => tokenInferrableProps.includes(key))
+          .forEach(([key, value]) => ((merged as any)[key] = value));
+        Object.entries(newCard)
+          .filter(([key, value]) => tokenInferrableFaceProps.includes(key))
+          .forEach(([key, value]) => ((merged.card_faces[0] as any)[key] = value));
+      }
+      setDerivedProps(merged);
+      return merged;
+    } else {
+      const merged: HCCard.Any = { ...newCard };
+      if ('card_faces' in merged) {
+        Object.entries(existingCard)
+          .filter(([key, value]) => cardUninferrableProps.includes(key))
+          .forEach(([key, value]) => ((merged as any)[key] = value));
+        Object.entries(existingCard)
+          .filter(([key, value]) => cardMoveProps.includes(key))
+          .forEach(([key, value]) => ((merged.card_faces[0] as any)[key] = value));
+      } else if ('card_faces' in existingCard) {
+        Object.entries(existingCard)
+          .filter(([key, value]) => cardUninferrableProps.includes(key))
+          .forEach(([key, value]) => ((merged as any)[key] = value));
+        Object.entries(existingCard.card_faces[0])
+          .filter(([key, value]) => cardMoveProps.includes(key))
+          .forEach(([key, value]) => ((merged as any)[key] = value));
+      }
+
+      setDerivedProps(merged);
+      return merged;
+    }
   }
+
+  const merged: HCCard.Any = { ...existingCard };
+
   Object.entries(newCard).forEach(([key, value]) => {
     if (value) {
       if (
@@ -419,32 +455,16 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
             : existingCard.all_parts?.find(
                 e => textEquals(e.name, part.name) && e.name != e.id.replace(/\d+$/, '')
               );
-          // const existingPart =
-          //   superToken && existingCard.isActualToken
-          //     ? superToken
-          //     : existingCard.all_parts?.find(e => textEquals(e.name, part.name) );
           if (existingPart) {
             // if there is already a part, update it
             Object.entries(existingPart).forEach(([k, v]) => {
               if (!['name', 'component' /**,'is_draft_partner'*/].includes(k) && v) {
                 (part as any)[k] = v;
-                // } else if (k == 'id' && tokenIsMaker) {
-                //   part.id = v as string;
-                //   part.name = (v as string).replace(/\*\d+$/, '');
               }
             });
           }
           return part;
         });
-        existingCard.all_parts
-          ?.filter(
-            part =>
-              !['token_maker'].includes(part.component) &&
-              !merged.all_parts?.some(e => e.id == part.id)
-          )
-          .forEach(part => {
-            merged.all_parts?.push(part);
-          });
       } else if (key == 'image_status') {
         // TODO: store current version and print the diff if there is one
         if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {
@@ -464,25 +484,9 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           merged.layout != HCLayout.RealCardMultiToken
         ) {
           merged.layout = value as typeof newCard.layout;
-          // if (
-          //   merged.layout != HCLayout.Multi &&
-          //   !merged.card_faces.at(-1)!.image &&
-          //   [HCImageStatus.Split, HCImageStatus.DraftPartner].includes(
-          //     merged.card_faces[1].image_status as HCImageStatus
-          //   )
-          // ) {
-          //   merged.card_faces.at(-1)!.image_status = newCard.card_faces.at(-1)!.image_status;
-          // }
         }
       } else if (merged.set == 'NotMagic' && key == 'rulings') {
         // TODO: store current version and print the diff if there is one
-        // } else if (merged.isActualToken && key == 'tags_notes') {
-        // } else if (merged.isActualToken && key == 'tags' /**&& 'tags' in merged*/) {
-        // value.forEach((tag: string) => {
-        //   if (!merged.tags?.includes(tag)) {
-        //     merged.tags?.push(tag);
-        //   }
-        // });
         // TODO: store current version and print the diff if there is one
       } else if (!['keywords', 'variation'].includes(key)) {
         (merged as any)[key] = value;
@@ -548,24 +552,6 @@ const mergeDatabases = (
   // const newTokenMap = new Map(newTokens.map(token => [token.id, token]));
   const existingTokenMap = new Map(existingTokens.map(token => [token.id.toLowerCase(), token]));
 
-  // const mergedCards = existingCards.map(existingCard => {
-  //   const newCard = !(existingCard.id in movedIds)
-  //     ? newCardMap.get(existingCard.id)
-  //     : newCardMap.get(movedIds[existingCard.id]);
-  //   if (newCard) {
-  //     newCardMap.delete(newCard.id);
-  //     return mergeCards(existingCard, newCard, usingApproved);
-  //   }
-  //   return existingCard;
-  // });
-  // mergedCards.push(
-  //   ...Array.from(
-  //     newCardMap.values().map(card => {
-  //       setDerivedProps(card);
-  //       return card;
-  //     })
-  //   )
-  // );
   const mergedCards = newCards.map(newCard => {
     const existingCard = !(newCard.id in movedIds)
       ? existingCardMap.get(newCard.id)
@@ -587,24 +573,6 @@ const mergeDatabases = (
     );
   }
 
-  // const mergedTokens = existingTokens.map(existingToken => {
-  //   const newToken = !(existingToken.id in movedIds)
-  //     ? newTokenMap.get(existingToken.id)
-  //     : newTokenMap.get(movedIds[existingToken.id]);
-  //   if (newToken) {
-  //     newTokenMap.delete(newToken.id);
-  //     return mergeCards(existingToken, newToken);
-  //   }
-  //   return existingToken;
-  // });
-  // mergedTokens.push(
-  //   ...Array.from(
-  //     newTokenMap.values().map(token => {
-  //       setDerivedProps(token);
-  //       return token;
-  //     })
-  //   )
-  // );
   const mergedTokens = newTokens.map(newToken => {
     const existingToken = !(newToken.id in movedIds)
       ? existingTokenMap.get(newToken.id?.toLowerCase())
@@ -824,8 +792,6 @@ const main = async () => {
             if (meldPart.count) {
               delete meldPart.count;
             }
-            // meldPart.image =
-            //   'card_faces' in relatedCard && relatedCard.card_faces[0].image ? relatedCard.card_faces[0].image : relatedCard.image;
             if (relatedCard.tags?.includes('draftpartner')) {
               meldPart.is_draft_partner = true;
             }
@@ -845,10 +811,6 @@ const main = async () => {
         meldRelatedCards.push(meldResult);
         meldPartIds.forEach(id => {
           const relatedCard = finalCards.find(card => card.id == id);
-          // TODO: Figure out if this is still necessary
-          if (!relatedCard?.has_draft_partners && token.id != 'Omnath, the Forbidden One1') {
-            relatedCard!.has_draft_partners = true;
-          }
           meldRelatedCards
             .filter(e => e.id != id)
             .forEach(meldPart => {
@@ -892,9 +854,6 @@ const main = async () => {
             : finalCards.find(card => textEquals(card.name, tokenMaker.name))
             ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
             : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
-          // const relatedCard = finalCards.find(e =>
-          //   tokenMaker.id ? e.id == tokenMaker.id : textEquals(e.name, tokenMaker.name)
-          // );
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
@@ -1040,7 +999,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry);
+          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''));
         }
       );
     });
@@ -1068,7 +1027,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry);
+          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''));
         }
       );
     });
@@ -1108,14 +1067,20 @@ const main = async () => {
     return -1;
   });
   finalTokens.sort((a, b) => {
-    if (a.layout != b.layout) {
-      if (
-        HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) >
-        HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
-      ) {
-        return 1;
-      }
-      return -1;
+    // if (a.layout != b.layout) {
+    //   if (
+    //     HCLayoutGroup.TokenLayout.indexOf(a.layout as HCLayoutGroup.TokenLayoutType) >
+    //     HCLayoutGroup.TokenLayout.indexOf(b.layout as HCLayoutGroup.TokenLayoutType)
+    //   ) {
+    //     return 1;
+    //   }
+    //   return -1;
+    // }
+    if (a.set != b.set) {
+      return allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set);
+    }
+    if (a.collector_number && b.collector_number) {
+      return parseInt(a.collector_number) - parseInt(b.collector_number);
     }
     if (a.name == b.name) {
       if (

@@ -161,6 +161,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                   </>
                 ))}
               <Text typeLevel="body.medium" key="cost">
+                {' '}
                 {stringToMana(face.mana_cost)}
               </Text>
               <br />
@@ -185,8 +186,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 <>
                   <Text typeLevel="body.medium" key="color-indicator">
                     {colorsToIndicator(face.color_indicator)}
-                  </Text>
-                  {'   '}
+                  </Text>{' '}
                 </>
               )}
               {face.type_line &&
@@ -274,7 +274,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           <Divider />
           {data.set && (
             <>
-              <Text typeLevel="body.medium">Set: {data.set == 'HCV.CDC' ? 'CDC' : data.set}</Text>
+              <Text typeLevel="body.medium">
+                Set:{' '}
+                {(data.set == 'HCV.CDC' ? 'CDC' : data.set) +
+                  (data.collector_number ? ' #' + data.collector_number : '')}
+              </Text>
               <br />
             </>
           )}

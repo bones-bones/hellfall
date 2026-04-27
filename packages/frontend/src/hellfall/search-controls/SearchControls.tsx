@@ -40,6 +40,7 @@ import {
   fourcbLegalityAtom,
   commanderLegalityAtom,
   isCommanderAtom,
+  collectorNumberAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -51,7 +52,7 @@ import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useDebounce, useKeyPress } from '../../hooks';
 import { act, useEffect, useState } from 'react';
-import { extraSetList } from '../constants.ts';
+import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import { HCSearchColors } from '@hellfall/shared/types';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
@@ -88,6 +89,7 @@ export const SearchControls = () => {
   const [legalityOpen, setLegalityOpen] = useState(
     Boolean(standardLegality || fourcbLegality || commanderLegality || isCommander)
   );
+  const [collectorNumber, setCollectorNumber] = useAtom(collectorNumberAtom);
   const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -434,20 +436,13 @@ export const SearchControls = () => {
             </button>
           )}
         </fieldset>
-        {/* <NamedHiddenCheckboxGroup
-          label="Constructed Legality"
-          values={['constructedLegal', '4cbLegal', 'hellsmanderLegal', 'isCommander']}
-          names={[
-            'Standard Legal',
-            '4 Card Blind Legal',
-            'Hellsmander Legal',
-            'Can Be Your Commander',
-          ]}
-          value={legality}
-          onChange={setLegality}
-        /> */}
       </SearchCriteriaSection>
       <SearchCriteriaSection>
+        <NumberSelector
+          label={'Collector number'}
+          onChange={setCollectorNumber}
+          value={collectorNumber}
+        />
         <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />
         <NumberSelector label={'Power'} onChange={setPower} value={power} />
         <NumberSelector label={'Toughness'} onChange={setToughness} value={toughness} />

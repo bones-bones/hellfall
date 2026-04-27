@@ -24,11 +24,11 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  // legalityAtom,
   standardLegalityAtom,
   fourcbLegalityAtom,
   commanderLegalityAtom,
   isCommanderAtom,
+  collectorNumberAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -49,9 +49,11 @@ import {
   colorMiscReduce,
   hybridColorCompOp,
   hybridIdentityMiscReduce,
-} from '../colorComps';
+  numCompOp,
+} from '../opComps.ts';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
-import { CHUNK_SIZE, extraSetList } from '../constants.ts';
+import { CHUNK_SIZE } from '../constants.ts';
+import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import { filterSet } from '../filters/filterSet.ts';
 
 export const useSearchResults = () => {
@@ -81,11 +83,11 @@ export const useSearchResults = () => {
   const includeExtraSets = useAtomValue(includeExtraSetsAtom);
   const extraSets = useAtomValue(extraSetsAtom);
   const searchToken = useAtomValue(searchTokenAtom);
-  // const legality = useAtomValue(legalityAtom);
   const standardLegality = useAtomValue(standardLegalityAtom);
   const fourcbLegality = useAtomValue(fourcbLegalityAtom);
   const commanderLegality = useAtomValue(commanderLegalityAtom);
   const isCommander = useAtomValue(isCommanderAtom);
+  const collectorNumber = useAtomValue(collectorNumberAtom);
   const manaValue = useAtomValue(manaValueAtom);
   const power = useAtomValue(powerAtom);
   const toughness = useAtomValue(toughnessAtom);
@@ -213,41 +215,6 @@ export const useSearchResults = () => {
           return false;
         }
 
-        if (manaValue) {
-          switch (manaValue.operator) {
-            case '<=': {
-              if (!(entry.mana_value <= manaValue.value)) {
-                return false;
-              }
-              break;
-            }
-            case '<': {
-              if (!(entry.mana_value < manaValue.value)) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (!(entry.mana_value == manaValue.value)) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (!(entry.mana_value > manaValue.value)) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (!(entry.mana_value >= manaValue.value)) {
-                return false;
-              }
-              break;
-            }
-          }
-        }
-
         if (isCommander) {
           if (!canBeACommander(entry)) {
             return false;
@@ -279,329 +246,53 @@ export const useSearchResults = () => {
         ) {
           return false;
         }
+        if (collectorNumber) {
+          if (!numCompOp(entry.collector_number, collectorNumber[1], collectorNumber[0])) {
+            return false;
+          }
+        }
+        if (manaValue) {
+          if (!numCompOp(entry.mana_value, manaValue[1], manaValue[0])) {
+            return false;
+          }
+        }
         if (power) {
-          switch (power.operator) {
-            case '<': {
-              if (
-                !(
-                  'power' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) <
-                    power.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (
-                !(
-                  'power' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) <=
-                    power.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (toNumber(entry.toFaces()[0].power) !== power.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (
-                !(
-                  'power' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) >=
-                    power.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (
-                !(
-                  'power' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) >
-                    power.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.toFaces()[0].power, power[1], power[0])) {
+            return false;
           }
         }
         if (toughness) {
-          switch (toughness.operator) {
-            case '<': {
-              if (
-                !(
-                  'toughness' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].toughness)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].toughness)!) < toughness.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (
-                !(
-                  'toughness' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].toughness)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].toughness)!) <= toughness.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (toNumber(entry.toFaces()[0].toughness) !== toughness.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (
-                !(
-                  'toughness' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].toughness)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].toughness)!) >= toughness.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (
-                !(
-                  'toughness' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].toughness)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].toughness)!) > toughness.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.toFaces()[0].toughness, toughness[1], toughness[0])) {
+            return false;
           }
         }
         if (loyalty) {
-          switch (loyalty.operator) {
-            case '<': {
-              if (
-                !(
-                  'loyalty' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].loyalty)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].loyalty)!) < loyalty.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (
-                !(
-                  'loyalty' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].loyalty)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].loyalty)!) <= loyalty.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (toNumber(entry.toFaces()[0].loyalty) !== loyalty.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (
-                !(
-                  'loyalty' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].loyalty)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].loyalty)!) >= loyalty.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (
-                !(
-                  'loyalty' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].loyalty)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].loyalty)!) > loyalty.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.toFaces()[0].loyalty, loyalty[1], loyalty[0])) {
+            return false;
           }
         }
         if (defense) {
-          switch (defense.operator) {
-            case '<': {
-              if (
-                !(
-                  'defense' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].defense)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].defense)!) < defense.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (
-                !(
-                  'defense' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].defense)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].defense)!) <= defense.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (toNumber(entry.toFaces()[0].defense) !== defense.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (
-                !(
-                  'defense' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].defense)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].defense)!) >= defense.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (
-                !(
-                  'defense' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].defense)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].defense)!) > defense.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.toFaces()[0].defense, defense[1], defense[0])) {
+            return false;
           }
         }
 
         if (colorNumber) {
-          const cardColorNumber = entry.colors.length;
-
-          switch (colorNumber.operator) {
-            case '<': {
-              if (!(cardColorNumber < colorNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (!(cardColorNumber <= colorNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (cardColorNumber !== colorNumber.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (!(cardColorNumber >= colorNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (!(cardColorNumber > colorNumber.value)) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.colors.length, colorNumber[1], colorNumber[0])) {
+            return false;
           }
         }
-
         if (colorIdentityNumber) {
-          const cardColorIdentityNumber = entry.color_identity.length;
-
-          switch (colorIdentityNumber.operator) {
-            case '<': {
-              if (!(cardColorIdentityNumber < colorIdentityNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (!(cardColorIdentityNumber <= colorIdentityNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (cardColorIdentityNumber !== colorIdentityNumber.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (!(cardColorIdentityNumber >= colorIdentityNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (!(cardColorIdentityNumber > colorIdentityNumber.value)) {
-                return false;
-              }
-              break;
-            }
+          if (
+            !numCompOp(entry.color_identity.length, colorIdentityNumber[1], colorIdentityNumber[0])
+          ) {
+            return false;
           }
         }
 
         // TODO: handle split cards/adventures/transforms/flips better
         if (searchColors.length > 0) {
           if (!entry.colors) {
-            // debugger;
             console.log('Card id:', entry.id, 'had a null color.');
             if (['=', '>=', '>'].includes(colorComparison)) {
               return false;
@@ -626,7 +317,6 @@ export const useSearchResults = () => {
             }
           } else {
             if (!entry.color_identity) {
-              // debugger;
               console.log('Card id:', entry.id, 'had a null color identity.');
               if (['=', '>=', '>'].includes(colorIdentityComparison)) {
                 return false;
@@ -688,7 +378,7 @@ export const useSearchResults = () => {
       searchToSet.append('colorComparison', colorComparison);
     }
     if (colorNumber) {
-      searchToSet.append('colorNumber', `${colorNumber.operator}${colorNumber.value}`);
+      searchToSet.append('colorNumber', `${colorNumber[1]}${colorNumber[0]}`);
     }
     if (searchColorIdentities.length > 0) {
       searchToSet.append('colorIdentity', searchColorIdentities.join(','));
@@ -702,7 +392,7 @@ export const useSearchResults = () => {
     if (colorIdentityNumber) {
       searchToSet.append(
         'colorIdentityNumber',
-        `${colorIdentityNumber.operator}${colorIdentityNumber.value}`
+        `${colorIdentityNumber[1]}${colorIdentityNumber[0]}`
       );
     }
     if (searchSet.length > 0) {
@@ -717,9 +407,6 @@ export const useSearchResults = () => {
     if (searchToken != 'Cards') {
       searchToSet.append('token', searchToken);
     }
-    // if (legality.length > 0) {
-    //   searchToSet.append('legality', legality.join(','));
-    // }
     if (standardLegality) {
       searchToSet.append('standard', standardLegality);
     }
@@ -732,20 +419,23 @@ export const useSearchResults = () => {
     if (isCommander) {
       searchToSet.append('isCommander', 'true');
     }
+    if (collectorNumber) {
+      searchToSet.append('cn', `${collectorNumber[1]}${collectorNumber[0]}`);
+    }
     if (manaValue) {
-      searchToSet.append('manaValue', `${manaValue.operator}${manaValue.value}`);
+      searchToSet.append('manaValue', `${manaValue[1]}${manaValue[0]}`);
     }
     if (power) {
-      searchToSet.append('p', `${power.operator}${power.value}`);
+      searchToSet.append('p', `${power[1]}${power[0]}`);
     }
     if (toughness) {
-      searchToSet.append('t', `${toughness.operator}${toughness.value}`);
+      searchToSet.append('t', `${toughness[1]}${toughness[0]}`);
     }
     if (loyalty) {
-      searchToSet.append('l', `${loyalty.operator}${loyalty.value}`);
+      searchToSet.append('l', `${loyalty[1]}${loyalty[0]}`);
     }
     if (defense) {
-      searchToSet.append('d', `${defense.operator}${defense.value}`);
+      searchToSet.append('d', `${defense[1]}${defense[0]}`);
     }
     if (sortRule != 'Color') {
       searchToSet.append('order', sortRule);
@@ -812,11 +502,11 @@ export const useSearchResults = () => {
     includeExtraSets,
     extraSets,
     searchToken,
-    // legality,
     standardLegality,
     fourcbLegality,
     commanderLegality,
     isCommander,
+    collectorNumber,
     manaValue,
     power,
     toughness,
