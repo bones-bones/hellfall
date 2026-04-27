@@ -1,4 +1,4 @@
-import { sheetsKey } from '../keys.ts';
+import { sheetsKey } from './env.ts';
 import {
   HCCard,
   HCImageStatus,
@@ -14,7 +14,7 @@ import { ScryfallCard } from '@scryfall/api-types';
 import pLimit from 'p-limit';
 import { ScryfallToHC } from './scryfallToHC.ts';
 
-const REQUEST_DELAY_MS = 75;
+const REQUEST_DELAY_MS = 125;
 const limiter = pLimit(1);
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
