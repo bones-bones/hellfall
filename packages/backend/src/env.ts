@@ -8,7 +8,7 @@ config({ path: join(backendRoot, '.env') });
 const key = process.env.GOOGLE_SHEETS_API_KEY?.trim();
 if (!key) {
   throw new Error(
-    'GOOGLE_SHEETS_API_KEY is not set. Copy packages/backend/.env.example to packages/backend/.env, or export the variable (e.g. in GitHub Actions secrets).',
+    'GOOGLE_SHEETS_API_KEY is not set. Copy packages/backend/.env.example to packages/backend/.env, or export the variable (e.g. in GitHub Actions secrets).'
   );
 }
 

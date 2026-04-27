@@ -2,6 +2,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug transform-hc (with --noupdate)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["transform-hc", "--noupdate"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
       "name": "Debug transform-hc (normal)",
       "type": "node",
       "request": "launch",
@@ -12,21 +22,11 @@
       "internalConsoleOptions": "neverOpen"
     },
     {
-      "name": "Debug transform-hc (with --update)",
+      "name": "Debug transform-hc (with -noscryfall)",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "yarn",
-      "runtimeArgs": ["transform-hc", "--update"],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "name": "Debug transform-hc (with --update and --noscryfall)",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "yarn",
-      "runtimeArgs": ["transform-hc", "--update", "--noscryfall"],
+      "runtimeArgs": ["transform-hc", "--noscryfall"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
