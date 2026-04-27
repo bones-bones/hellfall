@@ -55,27 +55,27 @@ export const sortFunction =
 
       case 'Id': {
         if (parseInt(a.id) == parseInt(b.id)) {
-          return (a.id.charCodeAt(-1) - b.id.charCodeAt(-1)) * dirMult
-        } 
-        return (parseInt(a.id) - parseInt(b.id)) * dirMult
+          return (a.id.charCodeAt(-1) - b.id.charCodeAt(-1)) * dirMult;
+        }
+        return (parseInt(a.id) - parseInt(b.id)) * dirMult;
       }
       case 'Set/Number': {
         if (a.set == b.set) {
           if (!a.collector_number && !b.collector_number) {
             if (parseInt(a.id) == parseInt(b.id)) {
-              return (a.id.charCodeAt(-1) - b.id.charCodeAt(-1)) * dirMult
-            } 
-            return (parseInt(a.id) - parseInt(b.id)) * dirMult 
+              return (a.id.charCodeAt(-1) - b.id.charCodeAt(-1)) * dirMult;
+            }
+            return (parseInt(a.id) - parseInt(b.id)) * dirMult;
           }
           if ('collector_number' in a != 'collector_number' in b) {
-            return 'collector_number' in a ? -dirMult : dirMult
+            return 'collector_number' in a ? -dirMult : dirMult;
           }
           if (parseInt(a.id) == parseInt(b.id)) {
-            return (a.id.charCodeAt(-1) - b.id.charCodeAt(-1)) * dirMult
+            return (a.id.charCodeAt(-1) - b.id.charCodeAt(-1)) * dirMult;
           }
-          return (parseInt(a.collector_number!) - parseInt(b.collector_number!)) * dirMult
+          return (parseInt(a.collector_number!) - parseInt(b.collector_number!)) * dirMult;
         }
-        return (allSetsList.indexOf(a.set)-allSetsList.indexOf(b.set)) * dirMult
+        return (allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set)) * dirMult;
       }
     }
 

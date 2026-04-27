@@ -163,7 +163,8 @@ export const CubeResources = () => {
     {
       name: 'Heckscube 2: Hecklands',
       id: 'HKL',
-      description: 'Heckscube 2: Hecklands is a return to classic 90\'s Magic: the Gathering. This minicube includes cards roughly of the caliber and quality of Homelands, everyone\'s favorite Magic set.',
+      description:
+        "Heckscube 2: Hecklands is a return to classic 90's Magic: the Gathering. This minicube includes cards roughly of the caliber and quality of Homelands, everyone's favorite Magic set.",
     },
     {
       name: 'All Hellscube Sets',

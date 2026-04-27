@@ -250,14 +250,14 @@ export const hybridColorCompOp = (
  * @returns boolean of whether the comparison is true
  */
 export const numCompOp = (
-  num1: string|number|undefined,
+  num1: string | number | undefined,
   operator: '<' | '<=' | '=' | '>=' | '>',
-  num2: string|number|undefined
+  num2: string | number | undefined
 ) => {
-  const numToUse1 = typeof num1 == 'string' ? toNumber(num1):num1;
-  const numToUse2 = typeof num2 == 'string' ? toNumber(num2):num2;
+  const numToUse1 = typeof num1 == 'string' ? toNumber(num1) : num1;
+  const numToUse2 = typeof num2 == 'string' ? toNumber(num2) : num2;
   if (numToUse1 == undefined || numToUse2 == undefined) {
-    return false
+    return false;
   }
   switch (operator) {
     case '<': {

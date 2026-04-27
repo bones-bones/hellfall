@@ -51,8 +51,8 @@ export const NumericComparatorSelector = ({
   label,
 }: {
   label: string;
-  onChange?: (e:[number,'<' | '<=' | '=' | '>=' | '>']|undefined)=>void;
-  value?: [number,'<' | '<=' | '=' | '>=' | '>'];
+  onChange?: (e: [number, '<' | '<=' | '=' | '>=' | '>'] | undefined) => void;
+  value?: [number, '<' | '<=' | '=' | '>=' | '>'];
 }) => {
   const [localValue, setLocalValue] = useState<undefined | number>(value?.[0]);
 
@@ -66,7 +66,7 @@ export const NumericComparatorSelector = ({
 
   useEffect(() => {
     if (localValue != undefined && localOperator) {
-      onChange?.([localValue,localOperator]);
+      onChange?.([localValue, localOperator]);
     } else {
       onChange?.(undefined);
     }

@@ -423,7 +423,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           cardObject.tag_notes[tag] = note;
         }
       };
-      
+
       /**
        * Adds a tag
        * @param tag tag to add
@@ -506,7 +506,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           } else if (tag == 'flavor-name') {
             addTag(tag, note, 'flavor_name');
           } else if (tag.toLowerCase() == cardObject.set.toLowerCase()) {
-            addTag(tag,undefined,'collector_number',note)
+            addTag(tag, undefined, 'collector_number', note);
           } else {
             addTag(tag, note, undefined, undefined, { useRootOnly: true });
           }

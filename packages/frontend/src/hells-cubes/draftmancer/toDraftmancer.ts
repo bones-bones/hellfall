@@ -5,7 +5,6 @@ import { HCToDraftmancer } from './HCToDraftmancer.ts';
 export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HCCard.Any[] }) => {
   const { cards: cards, tokens: tokens } = HCToDraftmancer(allCards, set);
 
-
   if (set === 'HC6') {
     const commanderCards = cards.filter(card => card.canBeACommander);
     const nonCommanderCards = cards.filter(card => !card.canBeACommander);

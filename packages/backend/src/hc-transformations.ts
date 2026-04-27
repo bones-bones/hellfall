@@ -17,7 +17,7 @@ import {
   HCFrame,
   HCFinish,
 } from '@hellfall/shared/types';
-import { allSetsList} from '@hellfall/shared/data/sets.ts'
+import { allSetsList } from '@hellfall/shared/data/sets.ts';
 // import { getDefaultStore } from 'jotai';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
@@ -54,8 +54,7 @@ const oneWayMergeProps = [
   'frames',
   'frame_effects',
   'collector_number',
-  'set'
-
+  'set',
 ];
 const cardBlankableProps = ['rulings', 'oracle_text', 'mana_value', 'mana_cost'];
 const cardRemovableProps = [
@@ -82,7 +81,7 @@ const cardRemovableProps = [
   'frame_effects',
   'flavor_name',
   'collector_number',
-  'all_parts'
+  'all_parts',
 ];
 const cardFaceRemovableProps = ['frame'];
 const tokenIgnoreProps = ['colors'];
@@ -153,12 +152,8 @@ const cardUninferrableProps = [
   'keywords',
   'variation',
   'variation_of',
-]
-const cardMoveProps = [
-  'attraction_lights',
-  'colors',
-  'color_indicator',
-]
+];
+const cardMoveProps = ['attraction_lights', 'colors', 'color_indicator'];
 const tokenInferrableProps = [
   'id',
   'name',
@@ -182,13 +177,8 @@ const tokenInferrableProps = [
   'frame_effects',
   'tags',
   'tag_notes',
-]
-const tokenInferrableFaceProps = [
-  'supertypes',
-  'types',
-  'power',
-  'toughness',
-]
+];
+const tokenInferrableFaceProps = ['supertypes', 'types', 'power', 'toughness'];
 const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
   return cards.map(card => {
     const cardWithJSON = Object.assign({}, card, {
@@ -354,24 +344,37 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
   }
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     if (existingCard.isActualToken) {
-      const merged: HCCard.Any='card_faces' in existingCard ?{...existingCard} : {...newCard}
+      const merged: HCCard.Any =
+        'card_faces' in existingCard ? { ...existingCard } : { ...newCard };
       if ('card_faces' in merged) {
-        Object.entries(newCard).filter(([key, value]) => tokenInferrableProps.includes(key)).forEach(([key, value]) => (merged as any)[key] = value)
-        Object.entries(newCard).filter(([key, value]) => tokenInferrableFaceProps.includes(key)).forEach(([key, value]) => (merged.card_faces[0] as any)[key] = value)
+        Object.entries(newCard)
+          .filter(([key, value]) => tokenInferrableProps.includes(key))
+          .forEach(([key, value]) => ((merged as any)[key] = value));
+        Object.entries(newCard)
+          .filter(([key, value]) => tokenInferrableFaceProps.includes(key))
+          .forEach(([key, value]) => ((merged.card_faces[0] as any)[key] = value));
       }
-      setDerivedProps(merged)
+      setDerivedProps(merged);
       return merged;
     } else {
-      const merged: HCCard.Any={...newCard}
+      const merged: HCCard.Any = { ...newCard };
       if ('card_faces' in merged) {
-        Object.entries(existingCard).filter(([key, value]) => cardUninferrableProps.includes(key)).forEach(([key, value]) => (merged as any)[key] = value)
-        Object.entries(existingCard).filter(([key, value]) => cardMoveProps.includes(key)).forEach(([key, value]) => (merged.card_faces[0] as any)[key] = value)
+        Object.entries(existingCard)
+          .filter(([key, value]) => cardUninferrableProps.includes(key))
+          .forEach(([key, value]) => ((merged as any)[key] = value));
+        Object.entries(existingCard)
+          .filter(([key, value]) => cardMoveProps.includes(key))
+          .forEach(([key, value]) => ((merged.card_faces[0] as any)[key] = value));
       } else if ('card_faces' in existingCard) {
-        Object.entries(existingCard).filter(([key, value]) => cardUninferrableProps.includes(key)).forEach(([key, value]) => (merged as any)[key] = value)
-        Object.entries(existingCard.card_faces[0]).filter(([key, value]) => cardMoveProps.includes(key)).forEach(([key, value]) => (merged as any)[key] = value)
+        Object.entries(existingCard)
+          .filter(([key, value]) => cardUninferrableProps.includes(key))
+          .forEach(([key, value]) => ((merged as any)[key] = value));
+        Object.entries(existingCard.card_faces[0])
+          .filter(([key, value]) => cardMoveProps.includes(key))
+          .forEach(([key, value]) => ((merged as any)[key] = value));
       }
 
-      setDerivedProps(merged)
+      setDerivedProps(merged);
       return merged;
     }
   }
@@ -996,7 +999,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g,''));
+          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''));
         }
       );
     });
@@ -1024,7 +1027,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g,''));
+          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''));
         }
       );
     });
@@ -1074,10 +1077,10 @@ const main = async () => {
     //   return -1;
     // }
     if (a.set != b.set) {
-      return allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set)
+      return allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set);
     }
     if (a.collector_number && b.collector_number) {
-      return parseInt(a.collector_number) - parseInt(b.collector_number)
+      return parseInt(a.collector_number) - parseInt(b.collector_number);
     }
     if (a.name == b.name) {
       if (

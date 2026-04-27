@@ -60,6 +60,7 @@ Write a script to transform the database
   - make more accessible options for multiside and flip cards (like how scryfall does it) (make sure it works on the actual search page too)
 - make links work in card text
 - make sure that accents don't interfere with search (test with Niccolò Machiavelli)
+
   - add grid (that allows root-level stuff as well as faces?)?
   - use grid? (or text outside of faces) to deal with , , 4966
   - have 2 new categories of layouts - 1 is grid and the other is disk (grid is defined by rows and columns and can have headers and labels, poly is defined by 3 or more sides in a loop, both can have face-specific on the main card)

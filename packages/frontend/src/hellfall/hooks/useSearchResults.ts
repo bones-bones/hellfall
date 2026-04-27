@@ -247,44 +247,46 @@ export const useSearchResults = () => {
           return false;
         }
         if (collectorNumber) {
-          if (!numCompOp(entry.collector_number,collectorNumber[1],collectorNumber[0])) {
-            return false
+          if (!numCompOp(entry.collector_number, collectorNumber[1], collectorNumber[0])) {
+            return false;
           }
         }
         if (manaValue) {
-          if (!numCompOp(entry.mana_value,manaValue[1],manaValue[0])) {
-            return false
+          if (!numCompOp(entry.mana_value, manaValue[1], manaValue[0])) {
+            return false;
           }
         }
         if (power) {
-          if (!numCompOp(entry.toFaces()[0].power,power[1],power[0])) {
-            return false
+          if (!numCompOp(entry.toFaces()[0].power, power[1], power[0])) {
+            return false;
           }
         }
         if (toughness) {
-          if (!numCompOp(entry.toFaces()[0].toughness,toughness[1],toughness[0])) {
-            return false
+          if (!numCompOp(entry.toFaces()[0].toughness, toughness[1], toughness[0])) {
+            return false;
           }
         }
         if (loyalty) {
-          if (!numCompOp(entry.toFaces()[0].loyalty,loyalty[1],loyalty[0])) {
-            return false
+          if (!numCompOp(entry.toFaces()[0].loyalty, loyalty[1], loyalty[0])) {
+            return false;
           }
         }
         if (defense) {
-          if (!numCompOp(entry.toFaces()[0].defense,defense[1],defense[0])) {
-            return false
+          if (!numCompOp(entry.toFaces()[0].defense, defense[1], defense[0])) {
+            return false;
           }
         }
 
         if (colorNumber) {
-          if (!numCompOp(entry.colors.length,colorNumber[1],colorNumber[0])) {
-            return false
+          if (!numCompOp(entry.colors.length, colorNumber[1], colorNumber[0])) {
+            return false;
           }
         }
         if (colorIdentityNumber) {
-          if (!numCompOp(entry.color_identity.length,colorIdentityNumber[1],colorIdentityNumber[0])) {
-            return false
+          if (
+            !numCompOp(entry.color_identity.length, colorIdentityNumber[1], colorIdentityNumber[0])
+          ) {
+            return false;
           }
         }
 

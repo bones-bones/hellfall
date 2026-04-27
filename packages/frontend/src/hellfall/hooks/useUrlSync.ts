@@ -80,7 +80,6 @@ export const useUrlSync = () => {
   const [page, setPage] = useAtom(pageAtom);
   const [activeCard, setActiveCard] = useAtom(activeCardAtom);
 
-
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     // Set search inputs
@@ -166,12 +165,7 @@ export const useUrlSync = () => {
     }
 
     // Set numeric filters
-    // const cn = parseOperatorValue(params.get('cn'));
-    // if (collectorNumber?.value != cn?.value || collectorNumber?.operator != cn?.operator) {
-    //   setCollectorNumber(cn);
-    // }
     if (collectorNumber != parseOperatorValue(params.get('cn'))) {
-      debugger;
       setCollectorNumber(parseOperatorValue(params.get('cn')));
     }
     if (manaValue != parseOperatorValue(params.get('manaValue'))) {
@@ -205,6 +199,5 @@ export const useUrlSync = () => {
     if (activeCard != (params.get('activeCard') || '')) {
       setActiveCard(params.get('activeCard') || '');
     }
-
   }, [location.search]); // This triggers on back/forward navigation
 };
