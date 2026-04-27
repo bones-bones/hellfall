@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    if: github.actor == 'bones-bones'
+    # if: github.actor == 'bones-bones'
     runs-on: ubuntu-latest
 
     steps:
