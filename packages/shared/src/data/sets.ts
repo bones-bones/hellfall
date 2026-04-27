@@ -1,2 +1,2 @@
 export const extraSetList = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'NRM', 'HCT', 'SFT'];
-export const allSetsList = ['HLC','HLC.0','HLC.1','HLC.2','HCV.1','HC2','HC2.0','HC2.1','HCV.2','HC3','HC3.0','HC3.1','HCV.3','HC4','HC4.0','HC4.1','HCV.4','HC6','HC6.0','HC6.1','HCC','HCV.6','HCP','HC7','HC7.0','HC7.1','HCV.7','HCK','HCV.K','HC8','HC8.0','HC8.1','HCV.8','HCJ','HCV.J','HKL','HCV.L','NRM','HCT','SFT','NotMagic']
+export const allSetsList = ['HLC','HLC.0','HLC.1','HLC.2','HCV.1','HC2','HC2.0','HC2.1','HCV.2','HC3','HC3.0','HC3.1','HCV.3','HC4','HC4.0','HC4.1','HCV.4','HC6','HC6.0','HC6.1','HCC','HCV.6','HCP','HCV.P','HC7','HC7.0','HC7.1','HCV.7','HCV.CDC','HCK','HCV.K','HC8','HC8.0','HC8.1','HCV.8','HCJ','HCV.J','HKL','HCV.L','NRM','HCT','SFT','NotMagic']

@@ -40,6 +40,7 @@ import {
   fourcbLegalityAtom,
   commanderLegalityAtom,
   isCommanderAtom,
+  collectorNumberAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -88,6 +89,7 @@ export const SearchControls = () => {
   const [legalityOpen, setLegalityOpen] = useState(
     Boolean(standardLegality || fourcbLegality || commanderLegality || isCommander)
   );
+  const [collectorNumber, setCollectorNumber] = useAtom(collectorNumberAtom);
   const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -436,6 +438,7 @@ export const SearchControls = () => {
         </fieldset>
       </SearchCriteriaSection>
       <SearchCriteriaSection>
+        <NumberSelector label={'Collector number'} onChange={setCollectorNumber} value={collectorNumber} />
         <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />
         <NumberSelector label={'Power'} onChange={setPower} value={power} />
         <NumberSelector label={'Toughness'} onChange={setToughness} value={toughness} />

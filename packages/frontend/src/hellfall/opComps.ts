@@ -1,4 +1,5 @@
 import { HCColors, HCMiscColors } from '@hellfall/shared/types';
+import { toNumber } from './inputs/NumberSelector';
 const MISC_BULLSHIT = 'Misc bullshit';
 //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 
@@ -236,6 +237,43 @@ export const hybridColorCompOp = (
           )
         );
       }
+    }
+  }
+};
+
+/**
+ * Compares two numbers using an operator and returns a bool.
+ * @param num1 The first number to compare
+ * @param operator The operator
+ * @param num2 The second number to compare
+ * @param parseAsCN whether to parse the number as a collector number
+ * @returns boolean of whether the comparison is true
+ */
+export const numCompOp = (
+  num1: string|number|undefined,
+  operator: '<' | '<=' | '=' | '>=' | '>',
+  num2: string|number|undefined
+) => {
+  const numToUse1 = typeof num1 == 'string' ? toNumber(num1):num1;
+  const numToUse2 = typeof num2 == 'string' ? toNumber(num2):num2;
+  if (numToUse1 == undefined || numToUse2 == undefined) {
+    return false
+  }
+  switch (operator) {
+    case '<': {
+      return numToUse1 < numToUse2;
+    }
+    case '<=': {
+      return numToUse1 <= numToUse2;
+    }
+    case '=': {
+      return numToUse1 == numToUse2;
+    }
+    case '>=': {
+      return numToUse1 >= numToUse2;
+    }
+    case '>': {
+      return numToUse1 > numToUse2;
     }
   }
 };

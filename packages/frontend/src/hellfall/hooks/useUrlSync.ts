@@ -25,6 +25,7 @@ import {
   fourcbLegalityAtom,
   commanderLegalityAtom,
   isCommanderAtom,
+  collectorNumberAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -34,6 +35,7 @@ import {
   dirAtom,
   pageAtom,
   activeCardAtom,
+  parseOperatorValue,
 } from '../atoms/searchAtoms.ts';
 
 export const useUrlSync = () => {
@@ -67,6 +69,7 @@ export const useUrlSync = () => {
   const [fourcbLegality, set4cbLegality] = useAtom(fourcbLegalityAtom);
   const [commanderLegality, setCommanderLegality] = useAtom(commanderLegalityAtom);
   const [isCommander, setIsCommander] = useAtom(isCommanderAtom);
+  const [collectorNumber, setCollectorNumber] = useAtom(collectorNumberAtom);
   const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -77,15 +80,6 @@ export const useUrlSync = () => {
   const [page, setPage] = useAtom(pageAtom);
   const [activeCard, setActiveCard] = useAtom(activeCardAtom);
 
-  const parseOperatorValue = (str: string | null) => {
-    if (!str) return undefined;
-    const match = str.match(/^([<>]=?|=)(.+)$/);
-    if (!match) return undefined;
-    return {
-      operator: match[1] as '<' | '<=' | '=' | '>=' | '>',
-      value: parseInt(match[2]),
-    };
-  };
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -172,6 +166,14 @@ export const useUrlSync = () => {
     }
 
     // Set numeric filters
+    // const cn = parseOperatorValue(params.get('cn'));
+    // if (collectorNumber?.value != cn?.value || collectorNumber?.operator != cn?.operator) {
+    //   setCollectorNumber(cn);
+    // }
+    if (collectorNumber != parseOperatorValue(params.get('cn'))) {
+      debugger;
+      setCollectorNumber(parseOperatorValue(params.get('cn')));
+    }
     if (manaValue != parseOperatorValue(params.get('manaValue'))) {
       setManaValue(parseOperatorValue(params.get('manaValue')));
     }

@@ -51,22 +51,22 @@ export const NumericComparatorSelector = ({
   label,
 }: {
   label: string;
-  onChange?: ConditionalChange;
-  value?: { value: number; operator: '<' | '<=' | '=' | '>=' | '>' | '' };
+  onChange?: (e:[number,'<' | '<=' | '=' | '>=' | '>']|undefined)=>void;
+  value?: [number,'<' | '<=' | '=' | '>=' | '>'];
 }) => {
-  const [localValue, setLocalValue] = useState<undefined | number>(value?.value);
+  const [localValue, setLocalValue] = useState<undefined | number>(value?.[0]);
 
   const [localOperator, setLocalOperator] = useState<'<' | '<=' | '=' | '>=' | '>'>(
-    value?.operator || '='
+    value?.[1] || '='
   );
   useEffect(() => {
-    setLocalValue(value?.value);
-    setLocalOperator(value?.operator || '=');
+    setLocalValue(value?.[0]);
+    setLocalOperator(value?.[1] || '=');
   }, [value]);
 
   useEffect(() => {
     if (localValue != undefined && localOperator) {
-      onChange?.({ operator: localOperator, value: localValue });
+      onChange?.([localValue,localOperator]);
     } else {
       onChange?.(undefined);
     }
@@ -115,11 +115,11 @@ const StyledNumberInput = styled('input')({ width: '40px' });
 const StyledDropdownSelect = styled('select')({ width: '40px', height: '30px' });
 const Container = styled('div')({ display: 'flex' });
 
-type ConditionalChange = (
-  value:
-    | {
-        operator: '<' | '<=' | '=' | '>=' | '>';
-        value: number;
-      }
-    | undefined
-) => void;
+// type ConditionalChange = (
+//   value:
+//     | {
+//         operator: '<' | '<=' | '=' | '>=' | '>';
+//         value: number;
+//       }
+//     | undefined
+// ) => void;
