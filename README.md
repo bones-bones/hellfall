@@ -60,7 +60,7 @@ Before you can update the database from the [google sheet](https://docs.google.c
 
 run `yarn run transform-hc` (this updates all datasets)
 
-To run without overwriting data that can't be stored in the sheet, run `yarn run transform-hc --update`
+To run while overwriting data that can't be stored in the sheet, run `yarn run transform-hc --noupdate`
 
 ## Committing code
 

@@ -23,11 +23,11 @@ import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import { stripMasterpiece, textEquals } from '@hellfall/shared/utils/textHandling.ts';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
-const usingApproved = false;
+const usingApproved = true;
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
-const UPDATE_MODE = process.argv.includes('--update');
+const NO_UPDATE_MODE = process.argv.includes('--noupdate');
 const NO_SCRYFALL = process.argv.includes('--noscryfall');
 const oneWayMergeProps = [
   'name',
@@ -697,7 +697,7 @@ const main = async () => {
   const newTokens = intTokens.concat(intNotMagic);
   let finalCards = newCards;
   let finalTokens = newTokens;
-  if (UPDATE_MODE) {
+  if (!NO_UPDATE_MODE) {
     console.log('Running in update mode - merging with existing data...');
     const { existingCards, existingTokens } = loadExistingData();
     const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
