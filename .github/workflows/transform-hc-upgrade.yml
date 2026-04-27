@@ -8,6 +8,7 @@ permissions:
 
 jobs:
   transform-upgrade:
+    if: github.actor == 'bones-bones'
     runs-on: ubuntu-latest
 
     steps:
