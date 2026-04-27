@@ -21,7 +21,7 @@ import { allSetsList } from '@hellfall/shared/data/sets.ts';
 // import { getDefaultStore } from 'jotai';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
-import { stripMasterpiece, textEquals } from '@hellfall/shared/utils/textHandling.ts';
+import { stripMasterpiece, textEquals, textPrep } from '@hellfall/shared/utils/textHandling.ts';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -999,7 +999,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''));
+          typeSet.add(textPrep(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''), true));
         }
       );
     });
@@ -1027,7 +1027,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''));
+          typeSet.add(textPrep(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''), true));
         }
       );
     });
@@ -1052,9 +1052,30 @@ const main = async () => {
     }
   });
 
-  const types = Array.from(typeSet);
+  const types = Array.from(typeSet).sort((a, b) => {
+    if (a > b) {
+      return 1;
+    }
+    return -1;
+  });
+  const reducedTypes: string[] = [];
+  const preferLower = ['a', 'an', 'and', 'in', 'of', 'the'];
+  const preferUpper = ['EVIL', 'HELL', 'WET'];
+  types.forEach(type => {
+    const index = reducedTypes.findIndex(e => e.toLowerCase() == type.toLowerCase());
+    if (index == -1) {
+      reducedTypes.push(type);
+    } else if (
+      preferLower.includes(type) ||
+      (type[0].toUpperCase() == type[0] && !preferUpper.includes(reducedTypes[index]))
+    ) {
+      reducedTypes.splice(index, 1);
+      reducedTypes.push(type);
+    }
+  });
   const creators = Array.from(creatorSet);
   const tags = Array.from(tagSet);
+
   finalCards.sort((a, b) => {
     if (parseInt(a.id) == parseInt(b.id)) {
       if (a.id > b.id) {
@@ -1099,28 +1120,11 @@ const main = async () => {
 
   fs.writeFileSync(
     '../shared/src/data/types.json',
-    JSON.stringify(
-      {
-        data: types.sort((a, b) => {
-          if (a > b) {
-            return 1;
-          }
-          return -1;
-        }),
-      },
-      null,
-      '\t'
-    )
+    JSON.stringify({ data: reducedTypes }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tokens.json',
-    JSON.stringify(
-      {
-        data: addToJSONToCards(finalTokens),
-      },
-      null,
-      '\t'
-    )
+    JSON.stringify({ data: addToJSONToCards(finalTokens) }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tags.json',

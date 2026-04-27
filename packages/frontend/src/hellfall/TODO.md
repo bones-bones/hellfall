@@ -131,3 +131,4 @@ Write a script to transform the database
 - figure out whether/how to make missing frame tags work with specific faces
 - use to title case for adding types to types.json
 - subdivide showcase-frame
+- make it possible to properly search for markup characters

@@ -16,7 +16,7 @@
  * @param text - The markdown text to convert to plaintext
  * @returns Plaintext version with formatting removed
  */
-export const textPrep = (text: string): string => {
+export const textPrep = (text: string, preserveCaps: boolean = false): string => {
   if (!text) return '';
 
   let result = '';
@@ -150,10 +150,11 @@ export const textPrep = (text: string): string => {
     i++;
   }
 
-  return result
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
+  const normalized = result.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (preserveCaps) {
+    return normalized;
+  }
+  return normalized.toLowerCase();
 };
 /**
  * Checks whether search text is in text from a card
