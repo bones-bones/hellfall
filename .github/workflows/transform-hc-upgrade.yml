@@ -30,6 +30,8 @@ jobs:
         run: yarn install --immutable
 
       - name: Run transform upgrade
+        env:
+          GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
         run: yarn run transform-hc --upgrade
 
       - name: Commit and push changes

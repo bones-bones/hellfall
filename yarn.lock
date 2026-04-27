@@ -2043,6 +2043,7 @@ __metadata:
     "@scryfall/api-types": "npm:>=1.0.0-alpha.4"
     "@types/jsdom": "npm:^16.2.13"
     "@types/node": "npm:^20.12.8"
+    dotenv: "npm:^16.4.5"
     jsdom: "npm:^17.0.0"
     p-limit: "npm:^7.3.0"
     ts-node: "npm:^10.2.9"
@@ -6610,6 +6611,13 @@ __metadata:
   version: 8.2.0
   resolution: "dotenv@npm:8.2.0"
   checksum: 10c0/b6a07a2c400b13ad4e59c34e4682256e6bb846469781a3963b36861ee608ed312e6125c4a7635a9edcf957bb294a6966e218f0e26b82ff0bda9184211d4bc141
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.4.5":
+  version: 16.6.1
+  resolution: "dotenv@npm:16.6.1"
+  checksum: 10c0/15ce56608326ea0d1d9414a5c8ee6dcf0fffc79d2c16422b4ac2268e7e2d76ff5a572d37ffe747c377de12005f14b3cc22361e79fc7f1061cce81f77d2c973dc
   languageName: node
   linkType: hard
 

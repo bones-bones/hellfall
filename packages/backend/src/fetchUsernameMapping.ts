@@ -1,4 +1,4 @@
-import { sheetsKey } from '../keys.ts';
+import { sheetsKey } from './env.ts';
 
 export const fetchUsernameMappings = async () => {
   const requestedData = await fetch(
