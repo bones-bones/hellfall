@@ -11,7 +11,7 @@ jobs:
       GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
       FIREBASE_HOSTING_SITE_ID: ${{ vars.FIREBASE_HOSTING_SITE_ID }}
       FIREBASE_HOSTING_TARGET: ${{ vars.FIREBASE_HOSTING_TARGET }}
-      FIREBASE_HOSTING_PUBLIC: ${{ vars.FIREBASE_HOSTING_PUBLIC }}
+      FIREBASE_HOSTING_PUBLIC: packages/build
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
           jq -n \
             --arg t "$FIREBASE_HOSTING_TARGET" \
             --arg p "$FIREBASE_HOSTING_PUBLIC" \
-            '{hosting: [{target: $t, public: $p, ignore: ["firebase.json", "**/.*", "**/node_modules/**"]}]}' \
+            '{hosting: [{target: $t, public: $p, ignore: ["firebase.json", "**/.*", "**/node_modules/**"], rewrites: [{source: "**", destination: "/index.html"}]}]}' \
             > firebase.json
           jq -n \
             --arg pid "$GCP_PROJECT_ID" \
