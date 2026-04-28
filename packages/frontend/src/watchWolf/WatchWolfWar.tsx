@@ -16,6 +16,7 @@ import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
 import { xIcon } from '@workday/canvas-system-icons-web';
 import { HCCard } from '@hellfall/shared/types';
 import { useKeyPress } from '../hooks';
+import { withBasePath } from '../basePath.ts';
 
 //TODO: make results use Id natively on the backend
 
@@ -88,7 +89,7 @@ export const Watchwolfwar = () => {
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.id),
+                withBasePath('/card/' + encodeURIComponent(TwoCardState.LeftCard.id)),
                 '_blank'
               );
             } else {
@@ -100,7 +101,7 @@ export const Watchwolfwar = () => {
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.id),
+                withBasePath('/card/' + encodeURIComponent(TwoCardState.LeftCard.id)),
                 '_blank'
               );
             } else {
@@ -115,7 +116,7 @@ export const Watchwolfwar = () => {
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.id),
+                withBasePath('/card/' + encodeURIComponent(TwoCardState.RightCard.id)),
                 '_blank'
               );
             } else {
@@ -127,7 +128,7 @@ export const Watchwolfwar = () => {
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.id),
+                withBasePath('/card/' + encodeURIComponent(TwoCardState.RightCard.id)),
                 '_blank'
               );
             } else {

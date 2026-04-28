@@ -8,6 +8,7 @@ import { HellfallRelatedEntry } from '../HellfallEntry.tsx';
 
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useMemo, useRef } from 'react';
+import { withBasePath } from '../../basePath.ts';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
@@ -361,9 +362,9 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       <HellfallRelatedEntry
                         onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                           if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                            window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                            window.open(withBasePath('/card/' + encodeURIComponent(entry.id)), '_blank');
                           } else {
-                            window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id);
+                            window.location.href = withBasePath('/card/' + encodeURIComponent(entry.id));
                           }
                         }}
                         key={entry.id}

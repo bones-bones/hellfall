@@ -14,6 +14,7 @@ import { Watchwolfwar } from './watchWolf/WatchWolfWar.tsx';
 import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
 import { useNameToId, useIsId } from './hellfall/backCompat.ts';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
+import { getBasePath } from './basePath.ts';
 
 const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -72,8 +73,10 @@ const ApplicationRoutes = () => {
   ]);
 };
 export const App = () => {
+  const basePath = getBasePath();
+
   return (
-    <BrowserRouter basename="hellfall">
+    <BrowserRouter basename={basePath || undefined}>
       <Header />
       <PipsInitializer>
         <ApplicationRoutes />

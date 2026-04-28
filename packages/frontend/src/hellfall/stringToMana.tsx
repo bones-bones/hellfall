@@ -2,18 +2,19 @@ import styled from '@emotion/styled';
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { sameColors } from './opComps';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
+import { withBasePath } from '../basePath.ts';
 
 export const getPipSrc = (name: string) => {
   const pips = getPipsData();
   const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-  return icon ? '/hellfall/pips/' + icon.filename : undefined;
+  return icon ? withBasePath('/pips/' + icon.filename) : undefined;
 };
 export const getPip = (name: string) => {
   const pips = getPipsData();
   return pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
 };
 export const pipToSrc = (pip: HCCardSymbol) => {
-  return '/hellfall/pips/' + pip.filename;
+  return withBasePath('/pips/' + pip.filename);
 };
 const getClipPath = (pip: HCCardSymbol) => {
   if (!pip.clip_type) {
@@ -71,7 +72,7 @@ export const colorsToIndicator = (colors: HCColors) => {
     e => !e.represents_mana && 'colors' in e && sameColors(e.colors!, colors)
   );
 
-  // const loc = icon ? '/hellfall/pips/' + icon.filename : undefined;
+  // const loc = icon ? withBasePath('/pips/' + icon.filename) : undefined;
   return icon ? (
     <PipContainer>
       <PipSymbol src={pipToSrc(icon)} alt={icon?.symbol} title={icon.english} />

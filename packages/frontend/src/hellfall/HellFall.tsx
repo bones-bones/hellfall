@@ -17,6 +17,7 @@ import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom.ts';
 import { useUrlSync } from './hooks/useUrlSync.ts';
 import { getOtherNames } from './getOtherNames.ts';
+import { withBasePath } from '../basePath.ts';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -87,7 +88,7 @@ export const HellFall = () => {
             <HellfallEntry
               onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                 if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                  window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                  window.open(withBasePath('/card/' + encodeURIComponent(entry.id)), '_blank');
                 } else {
                   // startTransition(() => {
                   setActiveCardFromAtom(entry.id);

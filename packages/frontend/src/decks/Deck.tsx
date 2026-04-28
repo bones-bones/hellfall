@@ -7,6 +7,7 @@ import { CardEntry } from './types.ts';
 import { useParams } from 'react-router-dom';
 import { allDecks } from './allDecks.ts';
 import { stringToMana } from '../hellfall/stringToMana.tsx';
+import { withBasePath } from '../basePath.ts';
 
 const activeCardAtom = atom<HCCard.Any | undefined>(undefined);
 
@@ -198,7 +199,9 @@ const CategorySection = ({
               <CardLineContainer key={entry.name}>
                 <CardColumn onMouseOver={() => setActive(entry.hcCard)}>
                   {entry.count}{' '}
-                  <BoldSpan href={'/hellfall/card/' + entry.hcCard?.name}>{entry.name}</BoldSpan>{' '}
+                  <BoldSpan href={withBasePath('/card/' + (entry.hcCard?.name || ''))}>
+                    {entry.name}
+                  </BoldSpan>{' '}
                 </CardColumn>{' '}
                 <CostColumn>{stringToMana(entry.hcCard?.mana_cost || '')}</CostColumn>
                 <MoneyColumn key={entry.name + 'cash'}>{getPrice(entry.name)}</MoneyColumn>
