@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { withBasePath } from '../basePath.ts';
 
 export const HellfallEntry = ({
   url,
@@ -15,7 +16,7 @@ export const HellfallEntry = ({
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
-  const linkUrl = `/hellfall/card/${encodeURIComponent(id)}`;
+  const linkUrl = withBasePath(`/card/${encodeURIComponent(id)}`);
 
   const handleClick = (
     e: React.MouseEvent,
@@ -136,7 +137,7 @@ export const HellfallRelatedEntry = ({
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
-  const linkUrl = `/hellfall/card/${encodeURIComponent(id)}`;
+  const linkUrl = withBasePath(`/card/${encodeURIComponent(id)}`);
 
   const handleClick = (
     e: React.MouseEvent,

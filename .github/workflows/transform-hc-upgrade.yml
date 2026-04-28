@@ -34,14 +34,14 @@ jobs:
       - name: Run transform upgrade
         env:
           GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
-        run: yarn run transform-hc --upgrade
+        run: yarn run transform-hc
 
       - name: Create pull request with changes
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: 'chore: run transform-hc --upgrade'
-          title: 'chore: run transform-hc --upgrade'
+          commit-message: 'chore: run transform-hc'
+          title: 'chore: run transform-hc'
           body: |
-            Automated updates from `transform-hc --upgrade`.
+            Automated updates from `transform-hc`.
           branch: chore/transform-hc-upgrade
           delete-branch: true
