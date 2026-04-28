@@ -163,6 +163,9 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
  * @returns whether there is a match
  */
 export const textSearchIncludes = (cardText: string, searchText: string) => {
+  if (!!cardText != !!searchText) {
+    return false
+  }
   return (
     cardText.toLowerCase().includes(searchText.toLowerCase()) ||
     textPrep(cardText).includes(textPrep(searchText))
@@ -175,6 +178,9 @@ export const textSearchIncludes = (cardText: string, searchText: string) => {
  * @returns whether they are equal
  */
 export const textEquals = (cardText: string, searchText: string) => {
+  if (!!cardText != !!searchText) {
+    return false
+  }
   return (
     cardText.toLowerCase() == searchText.toLowerCase() || textPrep(cardText) == textPrep(searchText)
   );

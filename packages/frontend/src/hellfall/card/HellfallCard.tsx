@@ -362,9 +362,14 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       <HellfallRelatedEntry
                         onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                           if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                            window.open(withBasePath('/card/' + encodeURIComponent(entry.id)), '_blank');
+                            window.open(
+                              withBasePath('/card/' + encodeURIComponent(entry.id)),
+                              '_blank'
+                            );
                           } else {
-                            window.location.href = withBasePath('/card/' + encodeURIComponent(entry.id));
+                            window.location.href = withBasePath(
+                              '/card/' + encodeURIComponent(entry.id)
+                            );
                           }
                         }}
                         key={entry.id}

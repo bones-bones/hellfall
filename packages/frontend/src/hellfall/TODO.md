@@ -131,3 +131,6 @@ Write a script to transform the database
 - use to title case for adding types to types.json
 - subdivide showcase-frame
 - make it possible to properly search for markup characters
+- unify deconfliction methods between cockatrice and draftmancer
+  - precalculate export names in setDerivedProps.ts and set them as props
+  - have face prop for whether it should be dropped or whether some of its props should be ignored

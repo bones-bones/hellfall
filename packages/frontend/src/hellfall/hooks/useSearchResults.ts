@@ -113,82 +113,8 @@ export const useSearchResults = () => {
   useEffect(() => {
     const tempResults = filterSet(cards, searchSet, extraSets, includeExtraSets, searchToken)
       .filter(entry => {
-        if (
-          costSearch.length > 0 &&
-          !costSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.mana_cost)
-              .join();
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          rulesSearch.length > 0 &&
-          !rulesSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.oracle_text || '')
-              .join();
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          flavorSearch.length > 0 &&
-          !flavorSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.flavor_text || '')
-              .join();
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          tags.length > 0 &&
-          !tags.every(tag => {
-            if (tag.startsWith('!')) {
-              return !entry.tags?.includes(tag.slice(1));
-            } else {
-              return entry.tags?.includes(tag);
-            }
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          creators.length > 0 &&
-          !creators.every(creator => {
-            if (creator.startsWith('!')) {
-              return !entry.creators?.includes(creator.slice(1));
-            } else {
-              return entry.creators?.includes(creator);
-            }
-          })
-        ) {
-          return false;
-        }
+        let usingOr = false;
+        let matchesSomeOr = false;
 
         if (
           nameSearch !== '' &&
@@ -210,8 +136,178 @@ export const useSearchResults = () => {
         ) {
           return false;
         }
+
         // TODO: decide if this should use includes instead of equals
         if (idSearch !== '' && !textEquals(entry.id, idSearch)) {
+          return false;
+        }
+
+        if (
+          costSearch.length > 0 &&
+          !costSearch.every(searchTerm => {
+            const combined = entry
+              .toFaces()
+              .map(e => e.mana_cost)
+              .join();
+            if (searchTerm.startsWith('!')) {
+              return !textSearchIncludes(combined, searchTerm.substring(1));
+            } else if (searchTerm.startsWith('~')) {
+              if (!usingOr) {
+                usingOr = true;
+              }
+              if (textSearchIncludes(combined, searchTerm.substring(1))) {
+                matchesSomeOr = true;
+              }
+              return true;
+            } else {
+              return textSearchIncludes(combined, searchTerm);
+            }
+          })
+        ) {
+          return false;
+        }
+
+        if (
+          typeSearch.length > 0 &&
+          !typeSearch.every(searchTerm => {
+            const combined = [
+              ...entry.toFaces().map(e => e.supertypes || ''),
+              ...entry.toFaces().map(e => e.types || ''),
+              ...entry.toFaces().map(e => e.subtypes || ''),
+              ...entry.toFaces().map(e => e.type_line),
+            ].join(',');
+            if (searchTerm.startsWith('!')) {
+              return !textSearchIncludes(combined, searchTerm.substring(1));
+            } else if (searchTerm.startsWith('~')) {
+              if (!usingOr) {
+                usingOr = true;
+              }
+              if (textSearchIncludes(combined, searchTerm.substring(1))) {
+                matchesSomeOr = true;
+              }
+              return true;
+            } else {
+              return textSearchIncludes(combined, searchTerm);
+            }
+          })
+        ) {
+          return false;
+        }
+
+        if (
+          rulesSearch.length > 0 &&
+          !rulesSearch.every(searchTerm => {
+            const combined = entry
+              .toFaces()
+              .map(e => e.oracle_text || '')
+              .join();
+            if (searchTerm.startsWith('!')) {
+              return !textSearchIncludes(combined, searchTerm.substring(1));
+            } else if (searchTerm.startsWith('~')) {
+              if (!usingOr) {
+                usingOr = true;
+              }
+              if (textSearchIncludes(combined, searchTerm.substring(1))) {
+                matchesSomeOr = true;
+              }
+              return true;
+            } else {
+              return textSearchIncludes(combined, searchTerm);
+            }
+          })
+        ) {
+          return false;
+        }
+
+        if (
+          flavorSearch.length > 0 &&
+          !flavorSearch.every(searchTerm => {
+            const combined = entry
+              .toFaces()
+              .map(e => e.flavor_text || '')
+              .join();
+            if (searchTerm.startsWith('!')) {
+              return !textSearchIncludes(combined, searchTerm.substring(1));
+            } else if (searchTerm.startsWith('~')) {
+              if (!usingOr) {
+                usingOr = true;
+              }
+              if (textSearchIncludes(combined, searchTerm.substring(1))) {
+                matchesSomeOr = true;
+              }
+              return true;
+            } else {
+              return textSearchIncludes(combined, searchTerm);
+            }
+          })
+        ) {
+          return false;
+        }
+
+        if (
+          tags.length > 0 &&
+          !tags.every(tag => {
+            if (tag.startsWith('!')) {
+              if (tag.endsWith('<')) {
+                return !(entry.tag_notes && tag.slice(1,-1) in entry.tag_notes)
+              }
+              if (tag.endsWith('>') && tag.includes('<')) {
+                const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
+                return !(entry.tag_notes && textEquals(entry.tag_notes[subtag],note));
+              }
+              return !entry.tags?.includes(tag.slice(1));
+            } else if (tag.startsWith('~')) {
+              if (!usingOr) {
+                usingOr = true;
+              }
+              if (tag.endsWith('<')) {
+                if (entry.tag_notes && tag.slice(1,-1) in entry.tag_notes) {
+                  matchesSomeOr = true;
+                }
+              } else if (tag.endsWith('>') && tag.includes('<')) {
+                const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
+                if (entry.tag_notes && textEquals(entry.tag_notes[subtag],note)) {
+                  matchesSomeOr = true;
+                }
+              } else {
+                if (entry.tags?.includes(tag.slice(1))) {
+                  matchesSomeOr = true;
+                }
+              }
+              return true;
+            } else {
+              if (tag.endsWith('<')) {
+                return (entry.tag_notes && tag.slice(0,-1) in entry.tag_notes)
+              }
+              if (tag.endsWith('>') && tag.includes('<')) {
+                const [subtag, note] = [tag.split('<')[0], tag.split('<')[1].slice(0, -1)];
+                return (entry.tag_notes && textEquals(entry.tag_notes[subtag],note));
+              }
+              return entry.tags?.includes(tag);
+            }
+          })
+        ) {
+          return false;
+        }
+
+        if (
+          creators.length > 0 &&
+          !creators.every(creator => {
+            if (creator.startsWith('!')) {
+              return !entry.creators?.includes(creator.slice(1));
+            } else if (creator.startsWith('~')) {
+              if (!usingOr) {
+                usingOr = true;
+              }
+              if (entry.creators?.includes(creator.slice(1))) {
+                matchesSomeOr = true;
+              }
+              return true;
+            } else {
+              return entry.creators?.includes(creator);
+            }
+          })
+        ) {
           return false;
         }
 
@@ -227,23 +323,6 @@ export const useSearchResults = () => {
           return false;
         }
         if (commanderLegality && entry.legalities.commander != commanderLegality) {
-          return false;
-        }
-        if (
-          typeSearch.length > 0 &&
-          !typeSearch.every(searchTerm => {
-            const combined = [
-              ...entry.toFaces().map(e => e.supertypes || ''),
-              ...entry.toFaces().map(e => e.types || ''),
-              ...entry.toFaces().map(e => e.subtypes || ''),
-            ].join(',');
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
           return false;
         }
         if (collectorNumber) {
@@ -333,6 +412,9 @@ export const useSearchResults = () => {
               }
             }
           }
+        }
+        if (usingOr && !matchesSomeOr) {
+          return false;
         }
         return true;
       })
