@@ -59,7 +59,6 @@ Write a script to transform the database
   - revamp fetch function to deal better with cards that have multiple printings (use bar and set like mtgcardfetcher does; allow use of id; allow use of )
   - make more accessible options for multiside and flip cards (like how scryfall does it) (make sure it works on the actual search page too)
 - make links work in card text
-- make sure that accents don't interfere with search (test with Niccolò Machiavelli)
 
   - add grid (that allows root-level stuff as well as faces?)?
   - use grid? (or text outside of faces) to deal with , , 4966

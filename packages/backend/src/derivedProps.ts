@@ -254,7 +254,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
   }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
   card.colors = orderColors(card.colors) as HCColors;
-  card.color_identity = color_identity;
+  card.color_identity = orderColors(color_identity) as HCColors;
   card.color_identity_hybrid = color_identity_hybrid;
 };
 
