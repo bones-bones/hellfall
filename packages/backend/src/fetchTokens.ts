@@ -147,7 +147,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'hearthstone-frame': HCFrame.Hearthstone,
     'lorcana-frame': HCFrame.Lorcana,
     'notmagic-frame': HCFrame.NotMagic,
-    'website-frame': HCFrame.Website,
+    'website-app-frame': HCFrame.WebsiteApp,
+    'shattered-frame': HCFrame.Shattered,
   };
   const frameEffectTags: Record<string, HCFrameEffect> = {
     'miracle-frame': HCFrameEffect.Miracle,

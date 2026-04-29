@@ -39,7 +39,7 @@ export enum HCFrameEffect {
   Mdfc = 'mdfc',
   /** The cards have meld marks */
   Meld = 'meld',
-  /** A custom Showcase frame */
+  /** A custom Showcase frame (See https://mtg.wiki/page/Showcase/Showcase_by_variant for examples) */
   Showcase = 'showcase',
   /** A custom Masterpiece frame */
   Masterpiece = 'masterpiece',

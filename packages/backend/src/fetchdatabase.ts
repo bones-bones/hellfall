@@ -208,7 +208,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'hearthstone-frame': HCFrame.Hearthstone,
     'lorcana-frame': HCFrame.Lorcana,
     'notmagic-frame': HCFrame.NotMagic,
-    'website-frame': HCFrame.Website,
+    'website-app-frame': HCFrame.WebsiteApp,
+    'shattered-frame': HCFrame.Shattered,
   };
   const frameEffectTags: Record<string, HCFrameEffect> = {
     'miracle-frame': HCFrameEffect.Miracle,
@@ -504,7 +505,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           } else if (tag in borderColorTags) {
             addTag(tag, note, 'border_color', borderColorTags);
           } else if (tag == 'flavor-name') {
-            addTag(tag, note, 'flavor_name');
+            addTag(tag, undefined, 'flavor_name', note);
           } else if (tag.toLowerCase() == cardObject.set.toLowerCase()) {
             addTag(tag, undefined, 'collector_number', note);
           } else {

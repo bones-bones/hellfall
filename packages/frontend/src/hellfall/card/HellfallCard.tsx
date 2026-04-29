@@ -167,10 +167,10 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               </Text>
               <br />
               {face.flavor_name &&
-                (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
+                (['*', '(', '_', '~'].some(char => face.flavor_name!.includes(char)) ? (
                   <>
                     <Text typeLevel="body.medium" key="flavor-name">
-                      {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.name))}
+                      {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.flavor_name))}
                     </Text>
                     <br />
                   </>
