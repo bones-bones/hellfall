@@ -1004,19 +1004,13 @@ const main = async () => {
       );
     });
 
-    const usernameMappingEntries = Object.entries(usernameMappings);
-
-    for (const [replacementName, oldNames] of usernameMappingEntries) {
-      for (const oldName of oldNames) {
-        const oldIndex = entry.creators.indexOf(oldName);
-        if (oldIndex != -1) {
-          entry.creators[oldIndex] = replacementName;
-        }
+    entry.creators = entry.creators.map(creator => {
+      if (creator in usernameMappings) {
+        creatorSet.add(usernameMappings[creator]);
+        return usernameMappings[creator];
       }
-    }
-
-    entry.creators.forEach(creator => {
       creatorSet.add(creator);
+      return creator;
     });
 
     if ('tags' in entry) {
@@ -1032,19 +1026,13 @@ const main = async () => {
       );
     });
 
-    const usernameMappingEntries = Object.entries(usernameMappings);
-
-    for (const [replacementName, oldNames] of usernameMappingEntries) {
-      for (const oldName of oldNames) {
-        const oldIndex = entry.creators.indexOf(oldName);
-        if (oldIndex != -1) {
-          entry.creators[oldIndex] = replacementName;
-        }
+    entry.creators = entry.creators.map(creator => {
+      if (creator in usernameMappings) {
+        creatorSet.add(usernameMappings[creator]);
+        return usernameMappings[creator];
       }
-    }
-
-    entry.creators.forEach(creator => {
       creatorSet.add(creator);
+      return creator;
     });
 
     if ('tags' in entry) {

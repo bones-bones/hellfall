@@ -249,11 +249,11 @@ export const useSearchResults = () => {
           !tags.every(tag => {
             if (tag.startsWith('!')) {
               if (tag.endsWith('<')) {
-                return !(entry.tag_notes && tag.slice(1,-1) in entry.tag_notes)
+                return !(entry.tag_notes && tag.slice(1, -1) in entry.tag_notes);
               }
               if (tag.endsWith('>') && tag.includes('<')) {
                 const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
-                return !(entry.tag_notes && textEquals(entry.tag_notes[subtag],note));
+                return !(entry.tag_notes && textEquals(entry.tag_notes[subtag], note));
               }
               return !entry.tags?.includes(tag.slice(1));
             } else if (tag.startsWith('~')) {
@@ -261,12 +261,12 @@ export const useSearchResults = () => {
                 usingOr = true;
               }
               if (tag.endsWith('<')) {
-                if (entry.tag_notes && tag.slice(1,-1) in entry.tag_notes) {
+                if (entry.tag_notes && tag.slice(1, -1) in entry.tag_notes) {
                   matchesSomeOr = true;
                 }
               } else if (tag.endsWith('>') && tag.includes('<')) {
                 const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
-                if (entry.tag_notes && textEquals(entry.tag_notes[subtag],note)) {
+                if (entry.tag_notes && textEquals(entry.tag_notes[subtag], note)) {
                   matchesSomeOr = true;
                 }
               } else {
@@ -277,11 +277,11 @@ export const useSearchResults = () => {
               return true;
             } else {
               if (tag.endsWith('<')) {
-                return (entry.tag_notes && tag.slice(0,-1) in entry.tag_notes)
+                return entry.tag_notes && tag.slice(0, -1) in entry.tag_notes;
               }
               if (tag.endsWith('>') && tag.includes('<')) {
                 const [subtag, note] = [tag.split('<')[0], tag.split('<')[1].slice(0, -1)];
-                return (entry.tag_notes && textEquals(entry.tag_notes[subtag],note));
+                return entry.tag_notes && textEquals(entry.tag_notes[subtag], note);
               }
               return entry.tags?.includes(tag);
             }
