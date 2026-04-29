@@ -145,9 +145,9 @@ export const setDerivedProps = (card: HCCard.Any) => {
         : NewFrames.includes(card.frame as HCFrame)
     ) {
       if (
-        ((face.supertypes?.includes('Legendary') &&
-          !face.types?.includes('Planeswalker') &&
-          !face.types?.includes('Player') &&
+        ((face.supertypes?.some(type => type.toLowerCase() == 'legendary') &&
+          !face.types?.some(type => type.toLowerCase() == 'planeswalker') &&
+          !face.types?.some(type => type.toLowerCase() == 'player') &&
           !card.tags?.includes('missing-legend-frame')) ||
           card.tags?.includes('legend-frame')) &&
         !face.frame_effects?.includes(HCFrameEffect.Legendary)
@@ -155,21 +155,21 @@ export const setDerivedProps = (card: HCCard.Any) => {
         effects.push(HCFrameEffect.Legendary);
       }
       if (
-        face.supertypes?.includes('Snow') &&
+        face.supertypes?.some(type => type.toLowerCase() == 'snow') &&
         !card.tags?.includes('missing-snow-frame') &&
         !face.frame_effects?.includes(HCFrameEffect.Snow)
       ) {
         effects.push(HCFrameEffect.Snow);
       }
       if (
-        face.subtypes?.includes('Lesson') &&
+        face.subtypes?.some(type => type.toLowerCase() == 'lesson') &&
         !card.tags?.includes('missing-lesson-frame') &&
         !face.frame_effects?.includes(HCFrameEffect.Lesson)
       ) {
         effects.push(HCFrameEffect.Lesson);
       }
       if (
-        face.subtypes?.includes('Vehicle') &&
+        face.subtypes?.some(type => type.toLowerCase() == 'vehicle') &&
         !card.tags?.includes('missing-vehicle-frame') &&
         !face.frame_effects?.includes(HCFrameEffect.Vehicle)
       ) {

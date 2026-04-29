@@ -83,7 +83,6 @@ Write a script to transform the database
 - on individual card pages, make tab name same as card name
 - add color inference for faces
 - when adding flip, make it independent of side for Bubsy, Furred Kind
-- add ability to have color indicator pips in text (for 6246)
 - fix face cmc inference for transform and flip backsides
 - make sure cards with phyrexian text have tag
 - add phyrexian font
@@ -123,9 +122,7 @@ Write a script to transform the database
 - rework tts
 - put buttons for switching to rotated/still on top later
 - add rotations for images that are upright by default
-- add token ids
 - add hcp draft
-- add cost autofill for search
 - add cube builder utility for exporting custom cubes to draftmancer
 - figure out whether/how to make missing frame tags work with specific faces
 - use to title case for adding types to types.json

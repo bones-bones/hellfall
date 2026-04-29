@@ -139,6 +139,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     '1997-frame': HCFrame.ClassicToken,
     '2003-frame': HCFrame.ModernToken,
     '2015-frame': HCFrame.StampToken,
+    '2020-frame': HCFrame.NewToken,
     'pokemon-frame': HCFrame.Pokemon,
     'yugioh-frame': HCFrame.Yugioh,
     'legends-of-runeterra-frame': HCFrame.LegendsOfRuneterra,

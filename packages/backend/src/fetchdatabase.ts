@@ -193,6 +193,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     '1993-frame': HCFrame.Original,
     '1997-frame': HCFrame.Classic,
     '2003-frame': HCFrame.Modern,
+    '2015-frame': HCFrame.Stamp,
     'future-frame': HCFrame.Future,
     'playtest-frame': HCFrame.Playtest,
     'jank-frame': HCFrame.Jank,
@@ -681,31 +682,33 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       }
       const { card_faces, ...singleCard } = cardObject;
       if (!('layout' in singleCard)) {
-        if (singleCard.types?.includes('Stickers')) {
+        if (singleCard.types?.some((type: string) => type.toLowerCase() == 'stickers')) {
           singleCard.layout = HCLayout.Stickers;
-        } else if (singleCard.types?.includes('Dungeon')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'dungeon')) {
           singleCard.layout = HCLayout.Dungeon;
-        } else if (singleCard.subtypes?.includes('Saga')) {
+        } else if (singleCard.subtypes?.some((type: string) => type.toLowerCase() == 'saga')) {
           singleCard.layout = HCLayout.Saga;
-        } else if (singleCard.subtypes?.includes('Class')) {
+        } else if (singleCard.subtypes?.some((type: string) => type.toLowerCase() == 'class')) {
           singleCard.layout = HCLayout.Class;
-        } else if (singleCard.subtypes?.includes('Case')) {
+        } else if (singleCard.subtypes?.some((type: string) => type.toLowerCase() == 'case')) {
           singleCard.layout = HCLayout.Case;
         } else if (
-          singleCard.tags?.some((type: string) => ['Plane', 'Phenomenon'].includes(type))
+          singleCard.tags?.some((type: string) =>
+            ['plane', 'phenomenon'].includes(type.toLowerCase())
+          )
         ) {
           singleCard.layout = HCLayout.Prototype;
-        } else if (singleCard.types?.includes('Plane')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'plane')) {
           singleCard.layout = HCLayout.Planar;
-        } else if (singleCard.types?.includes('Scheme')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'scheme')) {
           singleCard.layout = HCLayout.Scheme;
-        } else if (singleCard.types?.includes('Vanguard')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'vanguard')) {
           singleCard.layout = HCLayout.Vanguard;
-        } else if (singleCard.types?.includes('Battle')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'battle')) {
           singleCard.layout = HCLayout.Battle;
         } else if (
           singleCard.subtypes?.some((subtype: string) =>
-            ['Spacecraft', 'Watercraft', 'Planet'].includes(subtype)
+            ['spacecraft', 'watercraft', 'planet'].includes(subtype.toLowerCase())
           ) &&
           singleCard.oracle_text.toLowerCase().includes('station')
         ) {

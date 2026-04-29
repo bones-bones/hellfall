@@ -501,14 +501,16 @@ export const toCockCube = ({
         }
       }
       const mainTypeToTableRow: Record<string, number> = {
-        Instant: 3,
-        Sorcery: 3,
-        Creature: 2,
-        Land: 0,
+        instant: 3,
+        sorcery: 3,
+        creature: 2,
+        land: 0,
       };
       const tablerow = xmlDoc.createElement('tablerow');
       tablerow.textContent = (
-        face.maintype in mainTypeToTableRow ? mainTypeToTableRow[face.maintype] : 1
+        face.maintype.toLowerCase() in mainTypeToTableRow
+          ? mainTypeToTableRow[face.maintype.toLowerCase()]
+          : 1
       ).toString();
 
       recursiveAdoption(tempCard, [name, text, setElement, tablerow, prop, ...maybeElements]);

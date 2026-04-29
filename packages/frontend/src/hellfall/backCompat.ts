@@ -3,7 +3,7 @@ import { cardsAtom } from './atoms/cardsAtom.ts';
 import { textEquals } from '@hellfall/shared/utils/textHandling.ts';
 import { HCCard } from '@hellfall/shared/types';
 
-export const useNameToId = (name: string,inCards?:HCCard.Any[]): string | undefined => {
+export const useNameToId = (name: string, inCards?: HCCard.Any[]): string | undefined => {
   const cards = inCards || useAtomValue(cardsAtom);
   const movedIds: Record<string, string> = {
     '219': '6727',

@@ -5,11 +5,8 @@ import pipsRawData from '../data/pips.json';
 let pipsCache: HCCardSymbol[] | null = null;
 let loadingPromise: Promise<HCCardSymbol[]> | null = null;
 
-// Transform function (moved from your atom)
 const transformPipsData = (data: any[]): HCCardSymbol[] => {
   return data.map(item => {
-    let manaValue: number;
-
     if (typeof item.mana_value === 'number') {
       return {
         ...item,
@@ -63,12 +60,4 @@ export const loadPipsData = async (): Promise<HCCardSymbol[]> => {
   })();
 
   return loadingPromise;
-};
-
-// Sync loader (throws if not loaded yet)
-export const requirePipsData = (): HCCardSymbol[] => {
-  if (!pipsCache) {
-    throw new Error('Pips data not loaded. Call loadPipsData() first.');
-  }
-  return pipsCache;
 };

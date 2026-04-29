@@ -56,30 +56,30 @@ export const DeckBuilder = () => {
 
   const toCardArr = (value: string): [number, string] => {
     const index = /^(?!0+\s)\d+\s/.test(value) ? value.indexOf(' ') : 0;
-    const count = index ? parseInt(value.slice(0, index)):1;
-    const rest = index ? value.slice(index + 1):value;
+    const count = index ? parseInt(value.slice(0, index)) : 1;
+    const rest = index ? value.slice(index + 1) : value;
     if (!count) {
-      return [1,''];
+      return [1, ''];
     }
     if (!rest) {
-      return [count,''];
+      return [count, ''];
     }
 
     if (rest[0] == '%') {
       // handle ids
-      return cards.find(card=>card.id == rest.slice(1)) ? [count, rest.slice(1)]:[count,'']
+      return cards.find(card => card.id == rest.slice(1)) ? [count, rest.slice(1)] : [count, ''];
     }
     if (/^\d+$/.test(rest)) {
       // handle card names that are all digits
-      const id = cards.find(card=>card.name == rest)?.id
-      return id ? [count,id]:[count,'']
+      const id = cards.find(card => card.name == rest)?.id;
+      return id ? [count, id] : [count, ''];
     }
     if (rest.toLowerCase() in basics) {
       // handle basics
-      return [count,rest.toLowerCase()]
+      return [count, rest.toLowerCase()];
     }
 
-    return [count,rest]
+    return [count, rest];
   };
 
   useEffect(() => {
@@ -97,13 +97,15 @@ export const DeckBuilder = () => {
           } as unknown as HCCard.Any;
           return Array(count).fill(card);
         } else {
-          const id = useNameToId(rest,cards);
-          const card = id ? cards.find(card=>card.id == id) : {
-            image: [
-              'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
-            ],
-            name: name + ' - not found',
-          } as unknown as HCCard.Any;
+          const id = useNameToId(rest, cards);
+          const card = id
+            ? cards.find(card => card.id == id)
+            : ({
+                image: [
+                  'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
+                ],
+                name: name + ' - not found',
+              } as unknown as HCCard.Any);
           return Array(count).fill(card);
         }
       });
