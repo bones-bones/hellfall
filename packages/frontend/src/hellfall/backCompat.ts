@@ -1,9 +1,10 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { cardsAtom } from './atoms/cardsAtom.ts';
 import { textEquals } from '@hellfall/shared/utils/textHandling.ts';
+import { HCCard } from '@hellfall/shared/types';
 
-export const useNameToId = (name: string): string | undefined => {
-  const cards = useAtomValue(cardsAtom);
+export const useNameToId = (name: string,inCards?:HCCard.Any[]): string | undefined => {
+  const cards = inCards || useAtomValue(cardsAtom);
   const movedIds: Record<string, string> = {
     '219': '6727',
     '219b': '6728',
