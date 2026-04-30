@@ -131,3 +131,5 @@ Write a script to transform the database
 - unify deconfliction methods between cockatrice and draftmancer
   - precalculate export names in setDerivedProps.ts and set them as props
   - have face prop for whether it should be dropped or whether some of its props should be ignored
+  - add func in derivedProps that takes a card and a list of taken names and then adds the necessary props
+- add .json for cost autofill (only using pips that appear in costs)?

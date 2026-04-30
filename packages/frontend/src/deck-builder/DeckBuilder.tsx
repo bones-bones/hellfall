@@ -6,7 +6,7 @@ import { toDeck } from './toDeck.ts';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
-import { useNameToId } from '../hellfall/backCompat.ts';
+import { nameToId } from '../hellfall/hooks/useNameToId.ts';
 
 const basics: Record<string, string> = {
   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -97,7 +97,7 @@ export const DeckBuilder = () => {
           } as unknown as HCCard.Any;
           return Array(count).fill(card);
         } else {
-          const id = useNameToId(rest, cards);
+          const id = nameToId(rest, cards);
           const card = id
             ? cards.find(card => card.id == id)
             : ({
