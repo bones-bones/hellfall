@@ -23,39 +23,14 @@ import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import { stripMasterpiece, textEquals, textPrep } from '@hellfall/shared/utils/textHandling.ts';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
+import { error } from 'console';
+
 const usingApproved = false;
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
 const NO_UPDATE_MODE = process.argv.includes('--noupdate');
 const NO_SCRYFALL = process.argv.includes('--noscryfall');
-const oneWayMergeProps = [
-  'name',
-  'mana_cost',
-  'color_indicator',
-  'supertypes',
-  'types',
-  'type_line',
-  'subtypes',
-  'oracle_text',
-  'flavor_text',
-  'power',
-  'toughness',
-  'loyalty',
-  'defense',
-  'hand_modifier',
-  'life_modifier',
-  'attraction_lights',
-  'watermark',
-  'colors',
-  'mana_value',
-  'tags',
-  'tag_notes',
-  'frames',
-  'frame_effects',
-  'collector_number',
-  'set',
-];
 const cardBlankableProps = ['rulings', 'oracle_text', 'mana_value', 'mana_cost'];
 const cardRemovableProps = [
   'tags',
@@ -380,7 +355,6 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
   }
 
   const merged: HCCard.Any = { ...existingCard };
-
   Object.entries(newCard).forEach(([key, value]) => {
     if (value) {
       if (
@@ -926,7 +900,6 @@ const main = async () => {
           }
         });
     });
-
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
@@ -995,6 +968,47 @@ const main = async () => {
         entry.variation_of = variation_of;
       }
     });
+  // automatically add collector numbers
+  const collectorNumberAutofillSets:Record<string,number> = {
+    'HCV.2':0,
+    'HCV.3':0,
+    'HCV.4':0,
+    'HCV.6':0,
+    'HCV.7':0,
+    'HCV.8':0,
+    'HCV.9':0,
+    'HC9.0':0,
+    'HC9':0,
+    'HCV.J':0,
+    'HCV.K':0,
+    'HCV.L':0,
+    'HCV.P':0,
+    'HCV.CDC':0,
+    'NRM':0,
+    'HCJ':0,
+    'NotMagic':0,
+    'SFT':0,
+  }
+  finalCards.forEach(entry => {
+    if (!entry.collector_number) {
+      if (entry.set in collectorNumberAutofillSets) {
+        collectorNumberAutofillSets[entry.set] +=1;
+        entry.collector_number = collectorNumberAutofillSets[entry.set].toString()
+      } else {
+        throw error;
+      }
+    }
+  })
+  finalTokens.forEach(entry => {
+    if (!entry.collector_number) {
+      if (entry.set in collectorNumberAutofillSets) {
+        collectorNumberAutofillSets[entry.set] +=1;
+        entry.collector_number = collectorNumberAutofillSets[entry.set].toString()
+      } else {
+        throw error;
+      }
+    }
+  })
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(

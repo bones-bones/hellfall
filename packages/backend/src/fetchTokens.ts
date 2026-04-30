@@ -35,6 +35,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'creators',
     'tags',
     'collector_number',
+    'artists'
   ];
   rest.forEach(row => {
     while (row.length < keys.length) {
@@ -217,7 +218,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           if (typeList?.length) {
             tokenObject.types = typeList;
           }
-        } else if (keys[i] == 'creators') {
+        } else if (keys[i] == 'creators' || keys[i] == 'artists') {
           tokenObject[keys[i]] = entry[i].split(';');
         } else if (keys[i] == 'token_maker') {
           tokenObject.all_parts = entry[i].split(';').map(oldName => {

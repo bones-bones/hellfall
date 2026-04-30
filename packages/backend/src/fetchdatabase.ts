@@ -47,6 +47,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     '0loyalty',
     '0oracle_text',
     '0flavor_text',
+    'artists',
     '0image',
     'tags',
     '1mana_cost',
@@ -357,7 +358,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             cardObject.all_parts = all_parts;
           } else if (keys[i] == 'tags') {
             // now handling this at the end
-          } else if (keys[i] == 'creators') {
+          } else if (keys[i] == 'creators' || keys[i] == 'artists') {
             cardObject[keys[i]] = entry[i].split(';');
           } else {
             cardObject[keys[i]] = entry[i];
@@ -507,7 +508,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             addTag(tag, note, 'border_color', borderColorTags);
           } else if (tag == 'flavor-name') {
             addTag(tag, undefined, 'flavor_name', note);
-          } else if (tag.toLowerCase() == cardObject.set.toLowerCase()) {
+          } else if (tag.toLowerCase() == cardObject.set.toLowerCase() || (['hc1.0','hc1.1','hc1.2'].includes(tag) && (cardObject.set.slice(0,3) == 'HLC' || cardObject.set == 'HCV.1'))) {
             addTag(tag, undefined, 'collector_number', note);
           } else {
             addTag(tag, note, undefined, undefined, { useRootOnly: true });

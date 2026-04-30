@@ -275,6 +275,9 @@ export const HCToDraftmancer = (
     } else if (card.tags?.includes('rotate') || card.rotated_image) {
       draftCard.layout = 'split';
     }
+    if (card.collector_number) {
+      draftCard.collector_number = card.collector_number;
+    }
     if (card.power) {
       draftCard.power = card.power;
     }
@@ -304,6 +307,9 @@ export const HCToDraftmancer = (
       draftCard.layout = 'split';
     } else if (face.layout == 'flip') {
       draftCard.layout = 'flip';
+    }
+    if (card.collector_number) {
+      draftCard.collector_number = card.collector_number;
     }
     if (face.power) {
       draftCard.power = face.power;

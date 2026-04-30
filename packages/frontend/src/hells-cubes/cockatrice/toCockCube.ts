@@ -80,6 +80,7 @@ type CockCardProps = Record<string, string | CockFaceProps[]> & {
   related?: CockRelatedProps[];
   token?: '1';
   set: string;
+  collector_number?:string;
 };
 type CockRelatedProps = Record<string, string> & {
   id: string;
@@ -264,6 +265,9 @@ export const toCockCube = ({
       props: [],
       set: card.set,
     };
+    if (card.collector_number) {
+      cockCard.collector_number = card.collector_number;
+    }
     if (card.isActualToken) {
       cockCard.token = '1';
     }
@@ -330,7 +334,7 @@ export const toCockCube = ({
         face.name += ' (Back)';
       }
       while (nameIsTaken(face.name)) {
-        face.name += ' ';
+        face.name += '_';
       }
     });
     idNames[cockCard.id] = cockCard.props.map(face => face.name);
@@ -389,6 +393,9 @@ export const toCockCube = ({
       setElement.setAttribute('rarity', 'common');
       setElement.setAttribute('picURL', face.picurl || entry.props[0].picurl || '');
       setElement.setAttribute('muid', 'hc' + entry.id + (i ? 'b' : ''));
+      if (entry.collector_number) {
+        setElement.setAttribute('num', entry.collector_number);
+      }
       setElement.textContent = entry.set;
 
       const prop = xmlDoc.createElement('prop');
