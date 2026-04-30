@@ -196,6 +196,15 @@ export const setDerivedProps = (card: HCCard.Any) => {
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
+        face.layout == HCLayout.Front &&
+        card.layout == HCLayout.Specialize &&
+        !face.frame_effects?.some(effect =>
+          TransformFrameEffects.includes(effect as HCFrameEffect)
+        ) &&
+        !card.tags?.includes('missing-specialize-frame')
+      ) {
+        effects.push(HCFrameEffect.Specialize);
+      } else if (
         face.layout == HCLayout.Transform &&
         !face.frame_effects?.some(effect =>
           TransformFrameEffects.includes(effect as HCFrameEffect)
@@ -214,6 +223,14 @@ export const setDerivedProps = (card: HCCard.Any) => {
         !card.tags?.includes('missing-modal-frame')
       ) {
         effects.push(HCFrameEffect.Mdfc);
+      } else if (
+        face.layout == HCLayout.Specialize &&
+        !face.frame_effects?.some(effect =>
+          TransformFrameEffects.includes(effect as HCFrameEffect)
+        ) &&
+        !card.tags?.includes('missing-specialize-frame')
+      ) {
+        effects.push(HCFrameEffect.Specialize);
       }
     }
     return effects;
@@ -239,6 +256,12 @@ export const setDerivedProps = (card: HCCard.Any) => {
       }
     });
     card.type_line = type_line_list.join(' // ');
+    if (card.tags?.includes('italic-typeline')) {
+      card.type_line = '*' + card.type_line + '*';
+    }
+    if (card.tags?.includes('underlined-typeline')) {
+      card.type_line = '__' + card.type_line + '__';
+    }
     card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
   } else {
     card.type_line = [
@@ -252,6 +275,12 @@ export const setDerivedProps = (card: HCCard.Any) => {
       card.frame_effects = effects;
     }
   }
+    if (card.tags?.includes('italic-typeline')) {
+      card.type_line = '*' + card.type_line + '*';
+    }
+    if (card.tags?.includes('underlined-typeline')) {
+      card.type_line = '__' + card.type_line + '__';
+    }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
   card.colors = orderColors(card.colors) as HCColors;
   card.color_identity = orderColors(color_identity) as HCColors;
