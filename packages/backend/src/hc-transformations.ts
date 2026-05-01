@@ -60,7 +60,7 @@ const cardRemovableProps = [
   'collector_number',
   'all_parts',
 ];
-const cardFaceRemovableProps = ['frame','compress_face'];
+const cardFaceRemovableProps = ['frame', 'compress_face'];
 const tokenIgnoreProps = ['colors'];
 const tokenRemovableProps = [
   'export_name',
@@ -156,7 +156,14 @@ const tokenInferrableProps = [
   'tags',
   'tag_notes',
 ];
-const tokenInferrableFaceProps = ['supertypes', 'types', 'power', 'toughness', 'compress_face','drop_face'];
+const tokenInferrableFaceProps = [
+  'supertypes',
+  'types',
+  'power',
+  'toughness',
+  'compress_face',
+  'drop_face',
+];
 const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
   const propOrder = [
     'object',
@@ -245,7 +252,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
     'frame',
     'frame_effects',
     'compress_face',
-    'drop_face'
+    'drop_face',
   ];
   const partPropOrder = [
     'object',
@@ -259,7 +266,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
     'count',
     'persistent',
   ];
-  const ignoreLeftovers = ['toJSON','card_faces','all_parts']
+  const ignoreLeftovers = ['toJSON', 'card_faces', 'all_parts'];
   return cards.map(card => {
     const cardWithJSON = Object.assign({}, card, {
       toJSON(this: Record<string, any>) {
@@ -269,10 +276,12 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
             ordered[prop] = this[prop];
           }
         });
-        const leftovers = Object.keys(this).filter(prop=>!propOrder.includes(prop) && !ignoreLeftovers.includes(prop));
+        const leftovers = Object.keys(this).filter(
+          prop => !propOrder.includes(prop) && !ignoreLeftovers.includes(prop)
+        );
         if (leftovers.length) {
           // You forgot a prop.
-          throw error("You forgot one or more props");
+          throw error('You forgot one or more props');
         }
         if ('card_faces' in this) {
           ordered.card_faces = this.card_faces.map((face: Record<string, any>) => {
@@ -282,10 +291,12 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
                 orderedFace[prop] = face[prop];
               }
             });
-            const leftoverProps = Object.keys(face).filter(prop=>!facePropOrder.includes(prop) && !ignoreLeftovers.includes(prop));
+            const leftoverProps = Object.keys(face).filter(
+              prop => !facePropOrder.includes(prop) && !ignoreLeftovers.includes(prop)
+            );
             if (leftoverProps.length) {
               // You forgot a prop.
-              throw error("You forgot one or more props");
+              throw error('You forgot one or more props');
             }
             return orderedFace;
           });
@@ -313,10 +324,12 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
                 orderedPart[prop] = part[prop];
               }
             });
-            const leftoverProps = Object.keys(part).filter(prop=>!partPropOrder.includes(prop) && !ignoreLeftovers.includes(prop));
+            const leftoverProps = Object.keys(part).filter(
+              prop => !partPropOrder.includes(prop) && !ignoreLeftovers.includes(prop)
+            );
             if (leftoverProps.length) {
               // You forgot a prop.
-              throw error("You forgot one or more props");
+              throw error('You forgot one or more props');
             }
             return orderedPart;
           });
@@ -995,49 +1008,49 @@ const main = async () => {
       }
     });
   // automatically add collector numbers and export props
-  const collectorNumberAutofillSets:Record<string,number> = {
-    'HCV.2':0,
-    'HCV.3':0,
-    'HCV.4':0,
-    'HCV.6':0,
-    'HCV.7':0,
-    'HCV.8':0,
-    'HCV.9':0,
-    'HC9.0':0,
-    'HC9':0,
-    'HCV.J':0,
-    'HCV.K':0,
-    'HCV.L':0,
-    'HCV.P':0,
-    'HCV.CDC':0,
-    'NRM':0,
-    'HCJ':0,
-    'NotMagic':0,
-    'SFT':0,
-  }
+  const collectorNumberAutofillSets: Record<string, number> = {
+    'HCV.2': 0,
+    'HCV.3': 0,
+    'HCV.4': 0,
+    'HCV.6': 0,
+    'HCV.7': 0,
+    'HCV.8': 0,
+    'HCV.9': 0,
+    'HC9.0': 0,
+    HC9: 0,
+    'HCV.J': 0,
+    'HCV.K': 0,
+    'HCV.L': 0,
+    'HCV.P': 0,
+    'HCV.CDC': 0,
+    NRM: 0,
+    HCJ: 0,
+    NotMagic: 0,
+    SFT: 0,
+  };
   const takenNames = namesRawData.data;
   finalCards.forEach(entry => {
-    setExportProps(entry,takenNames)
+    setExportProps(entry, takenNames);
     if (!entry.collector_number) {
       if (entry.set in collectorNumberAutofillSets) {
-        collectorNumberAutofillSets[entry.set] +=1;
-        entry.collector_number = collectorNumberAutofillSets[entry.set].toString()
+        collectorNumberAutofillSets[entry.set] += 1;
+        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
       } else {
         throw error;
       }
     }
-  })
+  });
   finalTokens.forEach(entry => {
-    setExportProps(entry,takenNames)
+    setExportProps(entry, takenNames);
     if (!entry.collector_number) {
       if (entry.set in collectorNumberAutofillSets) {
-        collectorNumberAutofillSets[entry.set] +=1;
-        entry.collector_number = collectorNumberAutofillSets[entry.set].toString()
+        collectorNumberAutofillSets[entry.set] += 1;
+        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
       } else {
         throw error;
       }
     }
-  })
+  });
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(

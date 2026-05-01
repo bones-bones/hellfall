@@ -35,7 +35,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'creators',
     'tags',
     'collector_number',
-    'artists'
+    'artists',
   ];
   rest.forEach(row => {
     while (row.length < keys.length) {

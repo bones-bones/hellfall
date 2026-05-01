@@ -170,7 +170,7 @@ export namespace HCCardFields.Gameplay {
     mana_cost: string;
     mana_value: number;
     layout: `${HCLayout}`;
-    export_name?:string;
+    export_name?: string;
   };
 
   /**
@@ -235,15 +235,15 @@ export namespace HCCardFields.Gameplay {
     /**
      * Whether this face should be compressed on export
      */
-    compress_face?:boolean;
+    compress_face?: boolean;
     /**
      * Whether this face should be dropped on export
      */
-    drop_face?:boolean;
+    drop_face?: boolean;
     /**
      * What name to use when exporting this face
      */
-    export_name?:string;
+    export_name?: string;
   } & CombatStats &
     VanguardStats;
 
@@ -294,7 +294,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * What name to use when exporting this face
      */
-    export_name?:string;
+    export_name?: string;
   };
   /**
    * These fields are specific for multiface cards.

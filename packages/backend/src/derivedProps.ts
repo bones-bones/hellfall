@@ -275,12 +275,12 @@ export const setDerivedProps = (card: HCCard.Any) => {
       card.frame_effects = effects;
     }
   }
-    if (card.tags?.includes('italic-typeline')) {
-      card.type_line = '*' + card.type_line + '*';
-    }
-    if (card.tags?.includes('underlined-typeline')) {
-      card.type_line = '__' + card.type_line + '__';
-    }
+  if (card.tags?.includes('italic-typeline')) {
+    card.type_line = '*' + card.type_line + '*';
+  }
+  if (card.tags?.includes('underlined-typeline')) {
+    card.type_line = '__' + card.type_line + '__';
+  }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
   card.colors = orderColors(card.colors) as HCColors;
   card.color_identity = orderColors(color_identity) as HCColors;
@@ -311,53 +311,57 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'flip',
 ];
 
-export const setExportProps = (card:HCCard.Any,takenNames:string[])=> {
+export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
   if ('card_faces' in card) {
-    const toFinalExportName = (name:string) => {
-      let exportName = toExportName(name)
+    const toFinalExportName = (name: string) => {
+      let exportName = toExportName(name);
       if (card.isActualToken) {
-        let i = 1
+        let i = 1;
         while (takenNames.includes(exportName + i)) {
           i++;
         }
         exportName += i;
       }
-      while (/\(.{2,3}\)$/.test(exportName) ||takenNames.includes(exportName) || parseInt(exportName).toString() == exportName) {
-        exportName +='_';
+      while (
+        /\(.{2,3}\)$/.test(exportName) ||
+        takenNames.includes(exportName) ||
+        parseInt(exportName).toString() == exportName
+      ) {
+        exportName += '_';
       }
       return exportName;
-    }
+    };
     // deal with simple flips
     if (card.card_faces.length == 2 && card.layout == 'flip') {
-      const fullName = card.card_faces.map((face,index) => {
+      const fullName = card.card_faces.map((face, index) => {
         let name = face.name;
         if (!face.name) {
-          name = `(${index ? 'Bottom':'Top'} of ${card.card_faces[1-index].name})`;
+          name = `(${index ? 'Bottom' : 'Top'} of ${card.card_faces[1 - index].name})`;
         } else if (index && face.name == card.card_faces[0].name) {
           name += ' (Bottom)';
         }
 
         const exportName = toFinalExportName(name);
-        
+
         if (exportName != face.name && exportName != card.name) {
           face.export_name = exportName;
         }
-        takenNames.push(exportName)
+        takenNames.push(exportName);
         if (index) {
           face.compress_face = true;
         }
         return exportName;
-      })
+      });
       const exportName = toFinalExportName(fullName[0] + ' // ' + fullName[1]);
       if (exportName != card.name) {
         card.export_name = exportName;
       }
-      takenNames.push(exportName)
-      return
+      takenNames.push(exportName);
+      return;
     }
 
     // compress/drop layouts that should always be compressed or should be dropped
-    card.card_faces.forEach((face,index)=> {
+    card.card_faces.forEach((face, index) => {
       if (alwaysDropLayouts.includes(face.layout)) {
         face.drop_face = true;
       } else if (conditionalDropLayouts.includes(face.layout)) {
@@ -366,57 +370,81 @@ export const setExportProps = (card:HCCard.Any,takenNames:string[])=> {
         } else if (!face.image) {
           face.compress_face = true;
         }
-      } else if (alwaysCompressLayouts.includes(face.layout) || card.tags?.includes('compress-faces')) {
+      } else if (
+        alwaysCompressLayouts.includes(face.layout) ||
+        card.tags?.includes('compress-faces')
+      ) {
         face.compress_face = true;
       }
-    })
+    });
     // compress down to 1 side and use front image if there are still too many sides
-    if (card.card_faces.filter(face=>!face.compress_face && !face.drop_face).length > 2) {
-      card.card_faces.forEach((face,index) => {
+    if (card.card_faces.filter(face => !face.compress_face && !face.drop_face).length > 2) {
+      card.card_faces.forEach((face, index) => {
         if (index && !face.compress_face && !face.drop_face) {
           face.compress_face = true;
         }
-      })
+      });
     }
-    card.card_faces.forEach((face,index)=> {
+    card.card_faces.forEach((face, index) => {
       if (!face.compress_face && !face.drop_face) {
         let faceName = face.name;
-        for (let i = index+1;i<card.card_faces.length && (card.card_faces[i].compress_face || card.card_faces[i].drop_face);i++) {
-          if (card.card_faces[i].compress_face && !(conditionalDropLayouts.includes(card.card_faces[i].layout) && !index)) {
+        for (
+          let i = index + 1;
+          i < card.card_faces.length &&
+          (card.card_faces[i].compress_face || card.card_faces[i].drop_face);
+          i++
+        ) {
+          if (
+            card.card_faces[i].compress_face &&
+            !(conditionalDropLayouts.includes(card.card_faces[i].layout) && !index)
+          ) {
             faceName += ' // ' + card.card_faces[i].name;
           }
         }
         let exportName = toExportName(faceName);
         if (!exportName) {
-          const otherIndex = card.card_faces.findIndex((other,i)=> !other.compress_face && !other.drop_face && i !=index)
-          const otherName = card.card_faces[otherIndex].export_name || toExportName(card.card_faces[otherIndex].name)
-          exportName = `(${index > otherIndex ? 'Back':'Front'} of ${otherName})`;
+          const otherIndex = card.card_faces.findIndex(
+            (other, i) => !other.compress_face && !other.drop_face && i != index
+          );
+          const otherName =
+            card.card_faces[otherIndex].export_name ||
+            toExportName(card.card_faces[otherIndex].name);
+          exportName = `(${index > otherIndex ? 'Back' : 'Front'} of ${otherName})`;
         } else {
-          const otherIndex = card.card_faces.findIndex((other,i)=> i <index && !other.compress_face && !other.drop_face && (exportName == other.export_name || exportName == toExportName(other.name)))
+          const otherIndex = card.card_faces.findIndex(
+            (other, i) =>
+              i < index &&
+              !other.compress_face &&
+              !other.drop_face &&
+              (exportName == other.export_name || exportName == toExportName(other.name))
+          );
           if (otherIndex != -1 && exportName == toExportName(card.card_faces[0].name)) {
             exportName += ' (Back)';
           }
         }
         exportName = toFinalExportName(exportName);
-        
+
         if (exportName != face.name && exportName != card.name && exportName != faceName) {
           face.export_name = exportName;
         }
-        takenNames.push(exportName)
+        takenNames.push(exportName);
       }
-    })
-
+    });
   } else {
-    let exportName = toExportName(card.isActualToken?card.id:card.name)
-    while (/\(.{2,3}\)$/.test(exportName) ||takenNames.includes(exportName) || parseInt(exportName).toString() == exportName) {
-      exportName +='_';
+    let exportName = toExportName(card.isActualToken ? card.id : card.name);
+    while (
+      /\(.{2,3}\)$/.test(exportName) ||
+      takenNames.includes(exportName) ||
+      parseInt(exportName).toString() == exportName
+    ) {
+      exportName += '_';
     }
-    if (exportName != (card.isActualToken?card.id:card.name)) {
+    if (exportName != (card.isActualToken ? card.id : card.name)) {
       card.export_name = exportName;
     }
-    takenNames.push(exportName)
+    takenNames.push(exportName);
   }
-}
+};
 
 const manaSymbolColorMatching: Record<
   string,

@@ -90,8 +90,11 @@ export const HCToDraftmancer = (
     if (set == 'HC6' && canBeACommander(card)) {
       commanderIds.push(card.id);
     }
-    if ('card_faces' in card) {      
-      const goingToCompressAll = Boolean(card.card_faces.length > 2 && card.card_faces.filter(face=>face.compress_face || face.drop_face).length == 1)
+    if ('card_faces' in card) {
+      const goingToCompressAll = Boolean(
+        card.card_faces.length > 2 &&
+          card.card_faces.filter(face => face.compress_face || face.drop_face).length == 1
+      );
       for (let i = card.card_faces.length - 1; i > 0; i--) {
         if (card.card_faces[i].compress_face) {
           card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
@@ -123,7 +126,7 @@ export const HCToDraftmancer = (
 
   const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard => {
     const draftCard: DraftmancerCustomCard = {
-      name: card.name,
+      name: card.isActualToken ? card.id : card.name,
       mana_cost: toExportMana(card.mana_cost, true),
       type: card.type_line,
       image: card.rotated_image || card.image,

@@ -442,7 +442,13 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         note?: string,
         prop?: string,
         value?: Record<string, any> | string,
-        options?: { dontAddNote?: boolean; replaceNote?:boolean, push?: boolean; useRootOnly?: boolean; useUrl?: boolean }
+        options?: {
+          dontAddNote?: boolean;
+          replaceNote?: boolean;
+          push?: boolean;
+          useRootOnly?: boolean;
+          useUrl?: boolean;
+        }
       ) => {
         if (note) {
           const useBoth = note.includes('|') && !options?.useRootOnly;
@@ -509,8 +515,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           } else if (tag in borderColorTags) {
             addTag(tag, note, 'border_color', borderColorTags);
           } else if (tag == 'flavor-name') {
-            addTag(tag, note, 'flavor_name', undefined,{dontAddNote:true});
-          } else if (tag.toLowerCase() == cardObject.set.toLowerCase() || (['hc1.0','hc1.1','hc1.2'].includes(tag) && (cardObject.set.slice(0,3) == 'HLC' || cardObject.set == 'HCV.1'))) {
+            addTag(tag, note, 'flavor_name', undefined, { dontAddNote: true });
+          } else if (
+            tag.toLowerCase() == cardObject.set.toLowerCase() ||
+            (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
+              (cardObject.set.slice(0, 3) == 'HLC' || cardObject.set == 'HCV.1'))
+          ) {
             addTag(tag, undefined, 'collector_number', note);
           } else {
             addTag(tag, note, undefined, undefined, { useRootOnly: true });

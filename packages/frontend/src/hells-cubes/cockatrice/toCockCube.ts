@@ -81,7 +81,7 @@ type CockCardProps = Record<string, string | CockFaceProps[]> & {
   related?: CockRelatedProps[];
   token?: '1';
   set: string;
-  collector_number?:string;
+  collector_number?: string;
 };
 type CockRelatedProps = Record<string, string> & {
   id: string;
@@ -122,6 +122,9 @@ export const toCockCube = ({
       manacost: face.mana_cost,
       cmc: face.mana_value,
     };
+    // if (!face.export_name && face.object == 'card' && face.isActualToken) {
+    //   cockFace.name = face.id;
+    // }
     if (face.colors.length) {
       cockFace.colors = orderColors(face.colors);
     }
@@ -129,24 +132,24 @@ export const toCockCube = ({
       cockFace.picurl = face.image;
     }
     if (face.power || face.toughness) {
-      const [powers,toughnesses] = [face.power?.split(' // '),face.toughness?.split(' // ')]
+      const [powers, toughnesses] = [face.power?.split(' // '), face.toughness?.split(' // ')];
 
       cockFace.pt = (powers?.[0] || '') + '/' + (toughnesses?.[0] || '');
       if (powers && toughnesses) {
-        if (powers.length>1 || toughnesses.length > 1) {
-          for (let i = 1;i<Math.max(powers.length,toughnesses.length);i++) {
+        if (powers.length > 1 || toughnesses.length > 1) {
+          for (let i = 1; i < Math.max(powers.length, toughnesses.length); i++) {
             cockFace.pt += ` // ${powers[i] || ''}/${toughnesses[i] || ''}`;
           }
         }
       } else if (powers) {
-        if (powers.length>1) {
-          for (let i = 1;i<powers.length;i++) {
+        if (powers.length > 1) {
+          for (let i = 1; i < powers.length; i++) {
             cockFace.pt += ` // ${powers[i] || ''}/`;
           }
         }
       } else {
-        if (toughnesses!.length>1) {
-          for (let i = 1;i<toughnesses!.length;i++) {
+        if (toughnesses!.length > 1) {
+          for (let i = 1; i < toughnesses!.length; i++) {
             cockFace.pt += ` // /${toughnesses![i] || ''}`;
           }
         }
@@ -271,11 +274,14 @@ export const toCockCube = ({
     return cockRelateds;
   };
   const compressHCCardFaces = (card: HCCard.Any) => {
-    if ('card_faces' in card) {      
-      const goingToCompressAll = Boolean(card.card_faces.length > 2 && card.card_faces.filter(face=>face.compress_face || face.drop_face).length == 1)
+    if ('card_faces' in card) {
+      const goingToCompressAll = Boolean(
+        card.card_faces.length > 2 &&
+          card.card_faces.filter(face => face.compress_face || face.drop_face).length == 1
+      );
       for (let i = card.card_faces.length - 1; i > 0; i--) {
         if (i == 3 && card.card_faces[2].layout == 'transform') {
-          card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i], card.card_faces[i-1]]);
+          card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i], card.card_faces[i - 1]]);
           card.card_faces.splice(i, 1);
         } else if (card.card_faces[i].compress_face) {
           card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
@@ -289,7 +295,6 @@ export const toCockCube = ({
       if (goingToCompressAll || !card.card_faces[0].image) {
         card.card_faces[0].image = card.image;
       }
-
     }
     return card;
   };
@@ -319,6 +324,9 @@ export const toCockCube = ({
     });
     if ('card_faces' in card) {
       card.card_faces.forEach(face => cockCard.props.push(hcFaceToCockProps(face)));
+      if (card.isActualToken && card.card_faces.length == 1 && !card.card_faces[0].export_name) {
+        cockCard.props[0].name = card.id;
+      }
     } else {
       cockCard.props.push(hcFaceToCockProps(card));
     }

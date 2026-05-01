@@ -262,12 +262,12 @@ export const stripMasterpiece = (name: string) => {
  */
 export const toExportName = (name: string) => {
   const retName = name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll('\\', '');
-  return retName.slice(0,2) == '  ' ? retName.trimStart() : retName;
+  return retName.slice(0, 2) == '  ' ? retName.trimStart() : retName;
 };
 
-export const stripSingleSlashes = (text:string)=> {
-  return text.replaceAll(/([^\/])\/([^\/])/g,'$1$2');
-}
+export const stripSingleSlashes = (text: string) => {
+  return text.replaceAll(/([^\/])\/([^\/])/g, '$1$2');
+};
 /**
  * Converts mana from import from scryfall
  * @param text text to import

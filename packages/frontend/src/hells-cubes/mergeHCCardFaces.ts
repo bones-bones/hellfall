@@ -1,4 +1,3 @@
-
 import { HCCard, HCCardFace, HCLayout, HCLayoutGroup } from '@hellfall/shared/types';
 const subLayouts = [
   'token',
@@ -37,6 +36,7 @@ const combineProps = ['mana_value', 'colors'];
 const overwriteProps = ['layout'];
 // these props are stored when the main face's prop doesn't exist but they do
 const addProps = ['image'];
+const removeProps = ['compress_face'];
 /**
  * merges 2 or more card faces
  * @param faces array of card faces to merge
@@ -98,6 +98,11 @@ export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.Mul
           }
         }
       });
+  });
+  removeProps.forEach(prop => {
+    if (prop in faces[0]) {
+      delete (faces[0] as any)[prop];
+    }
   });
   return faces[0];
 };
