@@ -11,134 +11,73 @@ import { canBeACommander } from '../../hellfall/canBeACommander';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
 import { getSplitSet } from '../../hellfall/filters/filterSet';
 import { orderColors } from '@hellfall/shared/utils/orderColors';
-
-const subLayouts = [
-  'token',
-  'emblem',
-  'checklist',
-  'misc',
-  'stickers',
-  'dungeon',
-  'meld_result',
-  'inset',
-  'prepare',
-  'reminder',
-];
-// these props are ignored when the merging face is a sublayout
-const subProps = ['mana_value', 'colors', 'layout'];
-
-// Any prop not in one of the following lists is always ignored from the merging faces
-// these props are concatenated, separated by ' // '
-const concatProps = [
-  'name',
-  'flavor_name',
-  'mana_cost',
-  'type_line',
-  'power',
-  'toughness',
-  'loyalty',
-  'defense',
-  'hand_modifier',
-  'life_modifier',
-];
-// these props are concatenated, separated by '\\n\\n---\\n\\n'
-const multiLineConcatProps = ['oracle_text', 'flavor_text'];
-// these props are combined in some other way
-const combineProps = ['mana_value', 'colors'];
-// these props always overwrite the main face when they exist
-const overwriteProps = ['layout'];
-// these props are stored when the main face's prop doesn't exist but they do
-const addProps = ['image'];
-const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
-  'draft_partner',
-  'meld_result',
-  'specialize',
-];
-const conditionalDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
-  'checklist',
-  'dungeon',
-  'token',
-  'emblem',
-  'checklist',
-  'reminder',
-  'misc',
-  'stickers',
-  'dungeon',
-];
-const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
-  'split',
-  'aftermath',
-  'prepare',
-  'inset',
-  'token',
-  'flip',
-];
+import { mergeHCCardFaces } from '../mergeHCCardFaces';
 
 const validColors = ['W', 'U', 'B', 'R', 'G'];
-/**
- * merges 2 or more card faces
- * @param faces array of card faces to merge
- * @returns merged card face
- */
-const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.MultiFaced => {
-  faces.slice(1).forEach((face, i) => {
-    Object.entries(face)
-      .filter(([key, value]) => !(subProps.includes(key) && subLayouts.includes(face.layout)))
-      .forEach(([key, value]) => {
-        if (face[key as keyof typeof face]) {
-          if (overwriteProps.includes(key)) {
-            if (key == 'layout' && !(value == 'flip' && faces[0].layout == 'transform')) {
-              faces[0][key] = face[key];
-            }
-          } else if (combineProps.includes(key)) {
-            switch (key) {
-              case 'mana_value': {
-                faces[0][key] += face[key];
-                break;
-              }
-              case 'colors': {
-                face[key].forEach(color => {
-                  if (!faces[0].colors?.includes(color)) {
-                    faces[0].colors?.push(color);
-                  }
-                });
-                break;
-              }
-            }
-          } else if (addProps.includes(key)) {
-            if (key == 'image' && !faces[0][key]) {
-              faces[0][key] = face[key];
-              faces[0].image_status = face.image_status;
-            }
-          } else if (concatProps.includes(key)) {
-            if (key in faces[0]) {
-              const needed =
-                i +
-                1 -
-                ((faces[0][key as keyof HCCardFace.MultiFaced] as string)?.match(/ \/\/ /g)
-                  ?.length || 0);
-              (faces[0] as any)[key] += ' // '.repeat(needed > 0 ? needed : 1) + value;
-            } else {
-              (faces[0] as any)[key] = ' // '.repeat(i + 1) + value;
-            }
-          } else if (multiLineConcatProps.includes(key)) {
-            if (key in faces[0]) {
-              const needed =
-                i +
-                1 -
-                ((faces[0][key as keyof HCCardFace.MultiFaced] as string)?.match(
-                  /\\\\n\\\\n---\\\\n\\\\n/g
-                )?.length || 0);
-              (faces[0] as any)[key] += '\\n\\n---\\n\\n'.repeat(needed > 0 ? needed : 1) + value;
-            } else {
-              (faces[0] as any)[key] = '\\n\\n---\\n\\n'.repeat(i + 1) + value;
-            }
-          }
-        }
-      });
-  });
-  return faces[0];
-};
+// /**
+//  * merges 2 or more card faces
+//  * @param faces array of card faces to merge
+//  * @returns merged card face
+//  */
+// export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.MultiFaced => {
+//   faces.slice(1).forEach((face, i) => {
+//     Object.entries(face)
+//       .filter(([key, value]) => !(subProps.includes(key) && subLayouts.includes(face.layout)))
+//       .forEach(([key, value]) => {
+//         if (face[key as keyof typeof face]) {
+//           if (overwriteProps.includes(key)) {
+//             if (key == 'layout' && !(value == 'flip' && faces[0].layout == 'transform')) {
+//               faces[0][key] = face[key];
+//             }
+//           } else if (combineProps.includes(key)) {
+//             switch (key) {
+//               case 'mana_value': {
+//                 faces[0][key] += face[key];
+//                 break;
+//               }
+//               case 'colors': {
+//                 face[key].forEach(color => {
+//                   if (!faces[0].colors?.includes(color)) {
+//                     faces[0].colors?.push(color);
+//                   }
+//                 });
+//                 break;
+//               }
+//             }
+//           } else if (addProps.includes(key)) {
+//             if (key == 'image' && !faces[0][key]) {
+//               faces[0][key] = face[key];
+//               faces[0].image_status = face.image_status;
+//             }
+//           } else if (concatProps.includes(key)) {
+//             if (key in faces[0]) {
+//               const needed =
+//                 i +
+//                 1 -
+//                 ((faces[0][key as keyof HCCardFace.MultiFaced] as string)?.match(/ \/\/ /g)
+//                   ?.length || 0);
+//               (faces[0] as any)[key] += ' // '.repeat(needed > 0 ? needed : 1) + value;
+//             } else {
+//               (faces[0] as any)[key] = ' // '.repeat(i + 1) + value;
+//             }
+//           } else if (multiLineConcatProps.includes(key)) {
+//             if (key in faces[0]) {
+//               const needed =
+//                 i +
+//                 1 -
+//                 ((faces[0][key as keyof HCCardFace.MultiFaced] as string)?.match(
+//                   /\\\\n\\\\n---\\\\n\\\\n/g
+//                 )?.length || 0);
+//               (faces[0] as any)[key] += '\\n\\n---\\n\\n'.repeat(needed > 0 ? needed : 1) + value;
+//             } else {
+//               (faces[0] as any)[key] = '\\n\\n---\\n\\n'.repeat(i + 1) + value;
+//             }
+//           }
+//         }
+//       });
+//   });
+//   return faces[0];
+// };
 
 export const HCToDraftmancer = (
   allCards: HCCard.Any[],
@@ -146,54 +85,24 @@ export const HCToDraftmancer = (
 ): { cards: DraftmancerCustomCard[]; tokens: DraftmancerCustomCard[] } => {
   const { cards, tokens } = getSplitSet(allCards, set, true);
   const idNames: Record<string, string> = {};
-  const nameIsTaken = (name: string): boolean => {
-    return Object.values(idNames).includes(name);
-  };
   const commanderIds: string[] = [];
   const compressHCCardFaces = (card: HCCard.Any) => {
     if (set == 'HC6' && canBeACommander(card)) {
       commanderIds.push(card.id);
     }
-    if ('card_faces' in card) {
-      // compress/drop layouts that should always be compressed or should be dropped
-      if (card.card_faces.length > 1) {
-        for (let i = card.card_faces.length - 1; i > 0; i--) {
-          if (alwaysDropLayouts.includes(card.card_faces[i].layout)) {
-            card.card_faces.splice(i, 1);
-          } else if (conditionalDropLayouts.includes(card.card_faces[i].layout)) {
-            if (
-              card.all_parts &&
-              card.all_parts.some(part => part.name == card.card_faces[i].name)
-            ) {
-              card.card_faces.splice(i, 1);
-            } else if (!card.card_faces[i].image) {
-              card.card_faces[i - 1] = mergeHCCardFaces([
-                card.card_faces[i - 1],
-                card.card_faces[i],
-              ]);
-              card.card_faces.splice(i, 1);
-            }
-          } else if (
-            alwaysCompressLayouts.includes(card.card_faces[i].layout) ||
-            card.tags?.includes('compress-faces')
-          ) {
-            card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
-            card.card_faces.splice(i, 1);
-          }
+    if ('card_faces' in card) {      
+      const goingToCompressAll = Boolean(card.card_faces.length > 2 && card.card_faces.filter(face=>face.compress_face || face.drop_face).length == 1)
+      for (let i = card.card_faces.length - 1; i > 0; i--) {
+        if (card.card_faces[i].compress_face) {
+          card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
+          card.card_faces.splice(i, 1);
+        } else if (card.card_faces[i].drop_face) {
+          card.card_faces.splice(i, 1);
         }
       }
-      // compress flips if necessary
-      if (card.card_faces.length > 2 && card.tags?.includes('flip')) {
-        for (let i = card.card_faces.length - 1; i > 0; i--) {
-          if (card.card_faces[i].layout == 'flip') {
-            card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
-            card.card_faces.splice(i, 1);
-          }
-        }
-      }
+
       // compress down to 1 side and use front image if there are still too many sides
-      if (card.card_faces.length > 2) {
-        card.card_faces = [mergeHCCardFaces(card.card_faces)];
+      if (goingToCompressAll) {
         card.card_faces[0].image = card.image;
         if (card.rotated_image) {
           card.card_faces[0].rotated_image = card.rotated_image;
@@ -204,58 +113,10 @@ export const HCToDraftmancer = (
           card.card_faces[0].rotated_image = card.rotated_image;
         }
       }
-      // clean the names
-      card.card_faces[0].name = toExportName(
-        card.isActualToken
-          ? card.id
-          : card.card_faces[0].name
-          ? card.card_faces[0].name
-          : '(Front of ' + card.card_faces[1].name + ')'
-      );
-      if (card.card_faces.length > 1) {
-        card.card_faces[1].name = toExportName(
-          card.card_faces[1].name
-            ? card.card_faces[1].name
-            : '(Back of ' + card.card_faces[0].name + ')'
-        );
-      }
       // store the names
-      while (nameIsTaken(card.card_faces[0].name)) {
-        card.card_faces[0].name += '_';
-      }
-      while (card.card_faces[0].name[0] == ' ') {
-        card.card_faces[0].name = card.card_faces[0].name.slice(1);
-      }
-      if (card.card_faces[0].name[0] == '0' || parseInt(card.card_faces[0].name[0])) {
-        card.card_faces[0].name = '_' + card.card_faces[0].name;
-      }
-      if (
-        card.card_faces[0].name.length > 4 &&
-        card.card_faces[0].name.at(-1) == ')' &&
-        (card.card_faces[0].name.at(-5) == '(' || card.card_faces[0].name.at(-4) == '(')
-      ) {
-        card.card_faces[0].name += '_';
-      }
-      idNames[card.id] = card.card_faces[0].name;
+      idNames[card.id] = card.card_faces[0].export_name || card.card_faces[0].name;
     } else {
-      card.name = toExportName(card.isActualToken ? card.id : card.name);
-      while (nameIsTaken(card.name)) {
-        card.name += '_';
-      }
-      while (card.name[0] == ' ') {
-        card.name = card.name.slice(1);
-      }
-      if (card.name[0] == '0' || parseInt(card.name[0])) {
-        card.name = '_' + card.name;
-      }
-      if (
-        card.name.length > 4 &&
-        card.name.at(-1) == ')' &&
-        (card.name.at(-5) == '(' || card.name.at(-4) == '(')
-      ) {
-        card.name += '_';
-      }
-      idNames[card.id] = card.name;
+      idNames[card.id] = card.export_name || card.name;
     }
     return card;
   };

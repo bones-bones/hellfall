@@ -322,7 +322,7 @@ export const setExportProps = (card:HCCard.Any,takenNames:string[])=> {
         }
         exportName += i;
       }
-      while (/\(.{2,3}\)$/.test(exportName) ||takenNames.includes(exportName)) {
+      while (/\(.{2,3}\)$/.test(exportName) ||takenNames.includes(exportName) || parseInt(exportName).toString() == exportName) {
         exportName +='_';
       }
       return exportName;
@@ -330,14 +330,14 @@ export const setExportProps = (card:HCCard.Any,takenNames:string[])=> {
     // deal with simple flips
     if (card.card_faces.length == 2 && card.layout == 'flip') {
       const fullName = card.card_faces.map((face,index) => {
-        let exportName = toExportName(face.name);
+        let name = face.name;
         if (!face.name) {
-          exportName = `(${index ? 'Bottom':'Top'} of ${toExportName(card.card_faces[1-index].name)})`;
+          name = `(${index ? 'Bottom':'Top'} of ${card.card_faces[1-index].name})`;
         } else if (index && face.name == card.card_faces[0].name) {
-          exportName += ' (Bottom)';
+          name += ' (Bottom)';
         }
 
-        exportName = toFinalExportName(exportName);
+        const exportName = toFinalExportName(name);
         
         if (exportName != face.name && exportName != card.name) {
           face.export_name = exportName;
@@ -399,7 +399,7 @@ export const setExportProps = (card:HCCard.Any,takenNames:string[])=> {
         }
         exportName = toFinalExportName(exportName);
         
-        if (exportName != face.name && exportName != card.name) {
+        if (exportName != face.name && exportName != card.name && exportName != faceName) {
           face.export_name = exportName;
         }
         takenNames.push(exportName)
@@ -408,7 +408,7 @@ export const setExportProps = (card:HCCard.Any,takenNames:string[])=> {
 
   } else {
     let exportName = toExportName(card.isActualToken?card.id:card.name)
-    while (/\(.{2,3}\)$/.test(exportName) ||takenNames.includes(exportName)) {
+    while (/\(.{2,3}\)$/.test(exportName) ||takenNames.includes(exportName) || parseInt(exportName).toString() == exportName) {
       exportName +='_';
     }
     if (exportName != (card.isActualToken?card.id:card.name)) {

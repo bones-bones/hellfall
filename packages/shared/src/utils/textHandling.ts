@@ -261,7 +261,8 @@ export const stripMasterpiece = (name: string) => {
  * @returns prepped name
  */
 export const toExportName = (name: string) => {
-  return name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll('\\', '');
+  const retName = name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll('\\', '');
+  return retName.slice(0,2) == '  ' ? retName.trimStart() : retName;
 };
 
 export const stripSingleSlashes = (text:string)=> {
