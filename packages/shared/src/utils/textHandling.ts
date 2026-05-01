@@ -266,7 +266,7 @@ export const toExportName = (name: string) => {
 };
 
 export const stripSingleSlashes = (text: string) => {
-  return text.replaceAll(/([^\/])\/([^\/])/g, '$1$2');
+  return text.replaceAll(/([^\/])\/([^\/])/g, '$1$2').replaceAll('|','');
 };
 /**
  * Converts mana from import from scryfall

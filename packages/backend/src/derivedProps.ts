@@ -322,8 +322,14 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
         }
         exportName += i;
       }
+      if (exportName.startsWith('(')) {
+        exportName = '_' + exportName;
+      }
+      if (exportName.endsWith(')')) {
+        exportName += '_';
+      }
       while (
-        /\(.{2,3}\)$/.test(exportName) ||
+        // /\(.{2,3}\)$/.test(exportName) ||
         takenNames.includes(exportName) ||
         parseInt(exportName).toString() == exportName
       ) {
@@ -432,8 +438,14 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     });
   } else {
     let exportName = toExportName(card.isActualToken ? card.id : card.name);
+    if (exportName.startsWith('(')) {
+      exportName = '_' + exportName;
+    }
+    if (exportName.endsWith(')')) {
+      exportName += '_';
+    }
     while (
-      /\(.{2,3}\)$/.test(exportName) ||
+      // /\(.{2,3}\)$/.test(exportName) ||
       takenNames.includes(exportName) ||
       parseInt(exportName).toString() == exportName
     ) {
