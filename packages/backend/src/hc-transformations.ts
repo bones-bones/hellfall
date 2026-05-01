@@ -159,7 +159,7 @@ const tokenInferrableProps = [
 const tokenInferrableFaceProps = ['supertypes', 'types', 'power', 'toughness', 'compress_face','drop_face'];
 const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
   const propOrder = [
-    // 'object',
+    'object',
     'id',
     'scryfall_id',
     'oracle_id',
@@ -214,7 +214,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
     'isActualToken',
   ];
   const facePropOrder = [
-    // 'object',
+    'object',
     'name',
     'flavor_name',
     'export_name',
@@ -244,11 +244,11 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
     'border_color',
     'frame',
     'frame_effects',
-    // 'compress_face',
-    // 'drop_face'
+    'compress_face',
+    'drop_face'
   ];
   const partPropOrder = [
-    // 'object',
+    'object',
     'id',
     'name',
     'set',
@@ -259,7 +259,7 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
     'count',
     'persistent',
   ];
-  const ignoreLeftovers = ['toJSON','card_faces','all_parts','object', 'compress_face','drop_face', 'export_name']
+  const ignoreLeftovers = ['toJSON','card_faces','all_parts']
   return cards.map(card => {
     const cardWithJSON = Object.assign({}, card, {
       toJSON(this: Record<string, any>) {
