@@ -44,6 +44,9 @@ const removeProps = ['compress_face'];
  */
 export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.MultiFaced => {
   faces.slice(1).forEach((face, i) => {
+    if (faces[0].compress_face && !face.compress_face) {
+      delete faces[0].compress_face;
+    }
     Object.entries(face)
       .filter(([key, value]) => !(subProps.includes(key) && subLayouts.includes(face.layout)))
       .forEach(([key, value]) => {
@@ -98,11 +101,6 @@ export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.Mul
           }
         }
       });
-  });
-  removeProps.forEach(prop => {
-    if (prop in faces[0]) {
-      delete (faces[0] as any)[prop];
-    }
   });
   return faces[0];
 };
