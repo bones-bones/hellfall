@@ -35,6 +35,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'creators',
     'tags',
     'collector_number',
+    'artists',
   ];
   rest.forEach(row => {
     while (row.length < keys.length) {
@@ -53,6 +54,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     Checklist: HCLayout.Checklist,
   };
   const defaultProps: Record<string, any> = {
+    object: HCObject.ObjectType.Card,
     rulings: '',
     creators: [],
     legalities: {
@@ -139,6 +141,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     '1997-frame': HCFrame.ClassicToken,
     '2003-frame': HCFrame.ModernToken,
     '2015-frame': HCFrame.StampToken,
+    '2020-frame': HCFrame.NewToken,
     'pokemon-frame': HCFrame.Pokemon,
     'yugioh-frame': HCFrame.Yugioh,
     'legends-of-runeterra-frame': HCFrame.LegendsOfRuneterra,
@@ -147,7 +150,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'hearthstone-frame': HCFrame.Hearthstone,
     'lorcana-frame': HCFrame.Lorcana,
     'notmagic-frame': HCFrame.NotMagic,
-    'website-frame': HCFrame.Website,
+    'website-app-frame': HCFrame.WebsiteApp,
+    'shattered-frame': HCFrame.Shattered,
   };
   const frameEffectTags: Record<string, HCFrameEffect> = {
     'miracle-frame': HCFrameEffect.Miracle,
@@ -215,7 +219,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           if (typeList?.length) {
             tokenObject.types = typeList;
           }
-        } else if (keys[i] == 'creators') {
+        } else if (keys[i] == 'creators' || keys[i] == 'artists') {
           tokenObject[keys[i]] = entry[i].split(';');
         } else if (keys[i] == 'token_maker') {
           tokenObject.all_parts = entry[i].split(';').map(oldName => {

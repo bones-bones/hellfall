@@ -13,6 +13,7 @@ import { TextInput, FormField } from '@workday/canvas-kit-react';
 import cardTypes from '@hellfall/shared/data/types.json';
 import creators_data from '@hellfall/shared/data/creators.json';
 import tags_data from '@hellfall/shared/data/tags.json';
+import pips from '@hellfall/shared/data/pips.json';
 
 import { useAtom } from 'jotai';
 import {
@@ -161,6 +162,10 @@ export const SearchControls = () => {
       }
     }
   }, [enterPressed, setNameSearch, setIdSearch, flushName, flushId]);
+  const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
+  const pipList = pips.data
+    .filter(pip => !excludeFiles.some(file => pip.filename.includes(file)))
+    .map(pip => '{' + pip.symbol + '}');
 
   return (
     <SearchContainer>
@@ -183,7 +188,7 @@ export const SearchControls = () => {
         </FormField>
         <PillSearch
           label={'Cost'}
-          possibleValues={[]}
+          possibleValues={pipList}
           values={costSearch}
           onChange={setCostSearch}
         />

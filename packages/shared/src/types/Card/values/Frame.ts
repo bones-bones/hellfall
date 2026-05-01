@@ -37,8 +37,10 @@ export enum HCFrame {
   Lorcana = 'lorcana',
   /** Any cards with a notmagic game frame that isn't covered by another frame. */
   NotMagic = 'notmagic',
-  /** Any cards with a website frame. */
-  Website = 'website',
+  /** Any cards with a website or app frame. */
+  WebsiteApp = 'website_app',
+  /** Any cards with a shattered frame. */
+  Shattered = 'shattered',
 }
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
 export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.NewToken, HCFrame.StampToken];

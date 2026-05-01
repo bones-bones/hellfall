@@ -37,9 +37,11 @@ export enum HCFrameEffect {
   TypeDfc = 'typedfc',
   /** The cards have generic mdfc marks */
   Mdfc = 'mdfc',
+  /** The cards have generic specialize marks */
+  Specialize = 'specialize',
   /** The cards have meld marks */
   Meld = 'meld',
-  /** A custom Showcase frame */
+  /** A custom Showcase frame (See https://mtg.wiki/page/Showcase/Showcase_by_variant for examples) */
   Showcase = 'showcase',
   /** A custom Masterpiece frame */
   Masterpiece = 'masterpiece',
@@ -82,4 +84,5 @@ export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.TransformDfc,
   HCFrameEffect.FanDfc,
   HCFrameEffect.Mdfc,
+  HCFrameEffect.Specialize,
 ];

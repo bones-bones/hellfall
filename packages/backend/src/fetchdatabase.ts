@@ -47,6 +47,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     '0loyalty',
     '0oracle_text',
     '0flavor_text',
+    'artists',
     '0image',
     'tags',
     '1mana_cost',
@@ -87,6 +88,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
   });
 
   const defaultProps: Record<string, any> = {
+    object: HCObject.ObjectType.Card,
     name: '',
     rulings: '',
     creators: [],
@@ -107,7 +109,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     finish: HCFinish.Nonfoil,
   };
 
-  const defaultMultiFaceProps: Record<string, any> = {
+  const defaultFaceProps: Record<string, any> = {
+    object: HCObject.ObjectType.CardFace,
     mana_cost: '',
     mana_value: 0,
     colors: [] as HCColors,
@@ -193,6 +196,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     '1993-frame': HCFrame.Original,
     '1997-frame': HCFrame.Classic,
     '2003-frame': HCFrame.Modern,
+    '2015-frame': HCFrame.Stamp,
     'future-frame': HCFrame.Future,
     'playtest-frame': HCFrame.Playtest,
     'jank-frame': HCFrame.Jank,
@@ -208,7 +212,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     'hearthstone-frame': HCFrame.Hearthstone,
     'lorcana-frame': HCFrame.Lorcana,
     'notmagic-frame': HCFrame.NotMagic,
-    'website-frame': HCFrame.Website,
+    'website-app-frame': HCFrame.WebsiteApp,
+    'shattered-frame': HCFrame.Shattered,
   };
   const frameEffectTags: Record<string, HCFrameEffect> = {
     'miracle-frame': HCFrameEffect.Miracle,
@@ -355,7 +360,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             cardObject.all_parts = all_parts;
           } else if (keys[i] == 'tags') {
             // now handling this at the end
-          } else if (keys[i] == 'creators') {
+          } else if (keys[i] == 'creators' || keys[i] == 'artists') {
             cardObject[keys[i]] = entry[i].split(';');
           } else {
             cardObject[keys[i]] = entry[i];
@@ -437,7 +442,13 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         note?: string,
         prop?: string,
         value?: Record<string, any> | string,
-        options?: { replaceNote?: boolean; push?: boolean; useRootOnly?: boolean; useUrl?: boolean }
+        options?: {
+          dontAddNote?: boolean;
+          replaceNote?: boolean;
+          push?: boolean;
+          useRootOnly?: boolean;
+          useUrl?: boolean;
+        }
       ) => {
         if (note) {
           const useBoth = note.includes('|') && !options?.useRootOnly;
@@ -469,7 +480,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
               addTagToRoot(prop, options?.useUrl ? tagUrl! : note, options?.push);
             }
           }
-          if (subnote && !options?.useUrl) {
+          if (subnote && !options?.useUrl && !options?.dontAddNote) {
             addTagNote(tag, subnote, options?.replaceNote);
           }
         } else {
@@ -504,8 +515,12 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           } else if (tag in borderColorTags) {
             addTag(tag, note, 'border_color', borderColorTags);
           } else if (tag == 'flavor-name') {
-            addTag(tag, note, 'flavor_name');
-          } else if (tag.toLowerCase() == cardObject.set.toLowerCase()) {
+            addTag(tag, note, 'flavor_name', undefined, { dontAddNote: true });
+          } else if (
+            tag.toLowerCase() == cardObject.set.toLowerCase() ||
+            (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
+              (cardObject.set.slice(0, 3) == 'HLC' || cardObject.set == 'HCV.1'))
+          ) {
             addTag(tag, undefined, 'collector_number', note);
           } else {
             addTag(tag, note, undefined, undefined, { useRootOnly: true });
@@ -642,10 +657,10 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           face.image_status = HCImageStatus.Split;
         }
       }
-      Object.keys(defaultMultiFaceProps)
+      Object.keys(defaultFaceProps)
         .filter(key => !(key in face))
         .forEach(key => {
-          face[key] = defaultMultiFaceProps[key];
+          face[key] = defaultFaceProps[key];
         });
       mana_cost_list.push(face.mana_cost);
     });
@@ -666,6 +681,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
         ([key, value]) =>
           ![
+            'object',
             'name',
             'type_line',
             'mana_cost',
@@ -680,31 +696,33 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       }
       const { card_faces, ...singleCard } = cardObject;
       if (!('layout' in singleCard)) {
-        if (singleCard.types?.includes('Stickers')) {
+        if (singleCard.types?.some((type: string) => type.toLowerCase() == 'stickers')) {
           singleCard.layout = HCLayout.Stickers;
-        } else if (singleCard.types?.includes('Dungeon')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'dungeon')) {
           singleCard.layout = HCLayout.Dungeon;
-        } else if (singleCard.subtypes?.includes('Saga')) {
+        } else if (singleCard.subtypes?.some((type: string) => type.toLowerCase() == 'saga')) {
           singleCard.layout = HCLayout.Saga;
-        } else if (singleCard.subtypes?.includes('Class')) {
+        } else if (singleCard.subtypes?.some((type: string) => type.toLowerCase() == 'class')) {
           singleCard.layout = HCLayout.Class;
-        } else if (singleCard.subtypes?.includes('Case')) {
+        } else if (singleCard.subtypes?.some((type: string) => type.toLowerCase() == 'case')) {
           singleCard.layout = HCLayout.Case;
         } else if (
-          singleCard.tags?.some((type: string) => ['Plane', 'Phenomenon'].includes(type))
+          singleCard.tags?.some((type: string) =>
+            ['plane', 'phenomenon'].includes(type.toLowerCase())
+          )
         ) {
           singleCard.layout = HCLayout.Prototype;
-        } else if (singleCard.types?.includes('Plane')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'plane')) {
           singleCard.layout = HCLayout.Planar;
-        } else if (singleCard.types?.includes('Scheme')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'scheme')) {
           singleCard.layout = HCLayout.Scheme;
-        } else if (singleCard.types?.includes('Vanguard')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'vanguard')) {
           singleCard.layout = HCLayout.Vanguard;
-        } else if (singleCard.types?.includes('Battle')) {
+        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'battle')) {
           singleCard.layout = HCLayout.Battle;
         } else if (
           singleCard.subtypes?.some((subtype: string) =>
-            ['Spacecraft', 'Watercraft', 'Planet'].includes(subtype)
+            ['spacecraft', 'watercraft', 'planet'].includes(subtype.toLowerCase())
           ) &&
           singleCard.oracle_text.toLowerCase().includes('station')
         ) {

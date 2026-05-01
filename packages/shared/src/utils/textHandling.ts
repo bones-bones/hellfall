@@ -16,7 +16,7 @@
  * @param text - The markdown text to convert to plaintext
  * @returns Plaintext version with formatting removed
  */
-export const textPrep = (text: string): string => {
+export const textPrep = (text: string, preserveCaps: boolean = false): string => {
   if (!text) return '';
 
   let result = '';
@@ -150,10 +150,11 @@ export const textPrep = (text: string): string => {
     i++;
   }
 
-  return result
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
+  const normalized = result.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (preserveCaps) {
+    return normalized;
+  }
+  return normalized.toLowerCase();
 };
 /**
  * Checks whether search text is in text from a card
@@ -162,6 +163,9 @@ export const textPrep = (text: string): string => {
  * @returns whether there is a match
  */
 export const textSearchIncludes = (cardText: string, searchText: string) => {
+  if (!!cardText != !!searchText) {
+    return false;
+  }
   return (
     cardText.toLowerCase().includes(searchText.toLowerCase()) ||
     textPrep(cardText).includes(textPrep(searchText))
@@ -174,6 +178,9 @@ export const textSearchIncludes = (cardText: string, searchText: string) => {
  * @returns whether they are equal
  */
 export const textEquals = (cardText: string, searchText: string) => {
+  if (!!cardText != !!searchText) {
+    return false;
+  }
   return (
     cardText.toLowerCase() == searchText.toLowerCase() || textPrep(cardText) == textPrep(searchText)
   );
@@ -254,9 +261,17 @@ export const stripMasterpiece = (name: string) => {
  * @returns prepped name
  */
 export const toExportName = (name: string) => {
-  return name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll('\\', '');
+  const retName = name
+    .replaceAll(/[[{]/g, '(')
+    .replaceAll(/[\]}]/g, ')')
+    .replaceAll('\\', '')
+    .replaceAll(/\((\d+)\)/g, '$1');
+  return retName.slice(0, 2) == '  ' ? retName.trimStart() : retName;
 };
 
+export const stripSingleSlashes = (text: string) => {
+  return text.replaceAll(/([^\/])\/([^\/])/g, '$1$2').replaceAll('|', '');
+};
 /**
  * Converts mana from import from scryfall
  * @param text text to import

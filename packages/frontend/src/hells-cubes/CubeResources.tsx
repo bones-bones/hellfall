@@ -153,6 +153,13 @@ export const CubeResources = () => {
     {
       name: 'Hellscube Jumpstart',
       id: 'HCJ',
+      quickLink: (
+        <StyledLink
+          to={'https://docs.google.com/spreadsheets/d/1agtuvnH4VlFT6ygud8nNrhQg7wF6HptbwZXQdjxxYuQ'}
+        >
+          Primer & Packs
+        </StyledLink>
+      ),
       printLink: (
         <StyledLink to={'https://drive.google.com/file/d/1CGJXmtv1Z9LBm7IkEkCxz0-R9AFoO7_i/view'}>
           PDF by g0m

@@ -59,7 +59,6 @@ Write a script to transform the database
   - revamp fetch function to deal better with cards that have multiple printings (use bar and set like mtgcardfetcher does; allow use of id; allow use of )
   - make more accessible options for multiside and flip cards (like how scryfall does it) (make sure it works on the actual search page too)
 - make links work in card text
-- make sure that accents don't interfere with search (test with Niccolò Machiavelli)
 
   - add grid (that allows root-level stuff as well as faces?)?
   - use grid? (or text outside of faces) to deal with , , 4966
@@ -84,7 +83,6 @@ Write a script to transform the database
 - on individual card pages, make tab name same as card name
 - add color inference for faces
 - when adding flip, make it independent of side for Bubsy, Furred Kind
-- add ability to have color indicator pips in text (for 6246)
 - fix face cmc inference for transform and flip backsides
 - make sure cards with phyrexian text have tag
 - add phyrexian font
@@ -124,10 +122,16 @@ Write a script to transform the database
 - rework tts
 - put buttons for switching to rotated/still on top later
 - add rotations for images that are upright by default
-- add token ids
 - add hcp draft
-- add cost autofill for search
 - add cube builder utility for exporting custom cubes to draftmancer
 - figure out whether/how to make missing frame tags work with specific faces
 - use to title case for adding types to types.json
 - subdivide showcase-frame
+- make it possible to properly search for markup characters
+- unify deconfliction methods between cockatrice and draftmancer
+  - precalculate export names in setDerivedProps.ts and set them as props
+  - have face prop for whether it should be dropped or whether some of its props should be ignored
+  - add func in derivedProps that takes a card and a list of taken names and then adds the necessary props
+- add .json for cost autofill (only using pips that appear in costs)?
+- add artist and lore search
+- add artists to HellfallCard

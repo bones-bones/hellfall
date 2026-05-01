@@ -55,7 +55,7 @@ export type DraftmancerCustomCard = {
   image?: string;
   colors?: string[];
   set?: string;
-  // collector_number?: string;
+  collector_number?: string;
   // rarity?: string;
   // subtypes?: Array<string>;
   rating?: number; // A rating of the strength of the card in a vacuum, between 0 and 5. This may help bots navigate drafts when they don't know any cards :^)

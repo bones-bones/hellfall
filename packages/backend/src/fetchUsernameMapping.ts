@@ -6,19 +6,13 @@ export const fetchUsernameMappings = async () => {
   );
   const asJson = (await requestedData.json()) as any;
 
-  const [keys, ...rest] = asJson.values as any[];
+  const [_keys, ...rest] = asJson.values as string[][];
 
-  const theThing = rest.map(entry => {
-    const ob = {};
-    for (let i = 0; i < keys.length; i++) {
-      // @ts-ignore
-      ob[keys[i]] = entry[i];
-    }
-    return ob;
+  const mappings: Record<string, string> = {};
+  rest.forEach(entry => {
+    entry[1].split(';').forEach(alt => {
+      mappings[alt] = entry[0];
+    });
   });
-  return theThing.reduce<Record<string, string[]>>((curr, next) => {
-    //@ts-ignore
-    curr[next['Chosen Name']] = next['; separated alts'].split(';');
-    return curr;
-  }, {});
+  return mappings;
 };

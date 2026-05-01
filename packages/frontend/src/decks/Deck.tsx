@@ -40,26 +40,28 @@ export const Deck = () => {
     if (!card.hcCard) {
       return undefined;
     }
-    return 'card_faces' in card.hcCard ? card.hcCard.card_faces[0].types : card.hcCard.types;
+    return 'card_faces' in card.hcCard
+      ? card.hcCard.card_faces[0].types?.map(type => type.toLowerCase())
+      : card.hcCard.types?.map(types => types.toLowerCase());
   };
 
   const reduddd = resolvedMainDeck.reduce<Record<string, RenderEntry[]>>((curr, next) => {
-    if (renderTypes(next)?.includes('Land') || !next.hcCard) {
-      curr['Land'] = (curr['Land'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Creature')) {
-      curr['Creature'] = (curr['Creature'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Planeswalker')) {
-      curr['Planeswalker'] = (curr['Planeswalker'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Instant')) {
-      curr['Instant'] = (curr['Instant'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Sorcery')) {
-      curr['Sorcery'] = (curr['Sorcery'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Artifact')) {
-      curr['Artifact'] = (curr['Artifact'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Enchantment')) {
-      curr['Enchantment'] = (curr['Enchantment'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Battle')) {
-      curr['Battle'] = (curr['Battle'] ?? []).concat(next);
+    if (renderTypes(next)?.includes('land') || !next.hcCard) {
+      curr['land'] = (curr['land'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('creature')) {
+      curr['creature'] = (curr['creature'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('planeswalker')) {
+      curr['planeswalker'] = (curr['planeswalker'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('instant')) {
+      curr['instant'] = (curr['instant'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('sorcery')) {
+      curr['sorcery'] = (curr['sorcery'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('artifact')) {
+      curr['artifact'] = (curr['artifact'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('enchantment')) {
+      curr['enchantment'] = (curr['enchantment'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('battle')) {
+      curr['battle'] = (curr['battle'] ?? []).concat(next);
     } else {
       curr[renderTypes(next)?.join() || '????'] = (
         curr[renderTypes(next)?.join() || '????'] ?? []
@@ -69,22 +71,22 @@ export const Deck = () => {
     return curr;
   }, {});
   const redudddS = resolvedSideBoard.reduce<Record<string, RenderEntry[]>>((curr, next) => {
-    if (renderTypes(next)?.includes('Creature')) {
-      curr['Creature'] = (curr['Creature'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Planeswalker')) {
-      curr['Planeswalker'] = (curr['Planeswalker'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Instant')) {
-      curr['Instant'] = (curr['Instant'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Sorcery')) {
-      curr['Sorcery'] = (curr['Sorcery'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Artifact')) {
-      curr['Artifact'] = (curr['Artifact'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Enchantment')) {
-      curr['Enchantment'] = (curr['Enchantment'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Battle')) {
-      curr['Battle'] = (curr['Battle'] ?? []).concat(next);
-    } else if (renderTypes(next)?.includes('Land') || !next.hcCard) {
-      curr['Land'] = (curr['Land'] ?? []).concat(next);
+    if (renderTypes(next)?.includes('creature')) {
+      curr['creature'] = (curr['creature'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('planeswalker')) {
+      curr['planeswalker'] = (curr['planeswalker'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('instant')) {
+      curr['instant'] = (curr['instant'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('sorcery')) {
+      curr['sorcery'] = (curr['sorcery'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('artifact')) {
+      curr['artifact'] = (curr['artifact'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('enchantment')) {
+      curr['enchantment'] = (curr['enchantment'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('battle')) {
+      curr['battle'] = (curr['battle'] ?? []).concat(next);
+    } else if (renderTypes(next)?.includes('land') || !next.hcCard) {
+      curr['land'] = (curr['land'] ?? []).concat(next);
     } else {
       curr[renderTypes(next)?.join() || '????'] = (
         curr[renderTypes(next)?.join() || '????'] ?? []

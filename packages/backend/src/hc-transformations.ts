@@ -19,45 +19,22 @@ import {
 } from '@hellfall/shared/types';
 import { allSetsList } from '@hellfall/shared/data/sets.ts';
 // import { getDefaultStore } from 'jotai';
-import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
+import { getColorIdentityProps, setDerivedProps, setExportProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
-import { stripMasterpiece, textEquals } from '@hellfall/shared/utils/textHandling.ts';
+import { stripMasterpiece, textEquals, textPrep } from '@hellfall/shared/utils/textHandling.ts';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
+import { error } from 'console';
+import namesRawData from '@hellfall/shared/data/oracle-names.json';
+
 const usingApproved = false;
 const typeSet = new Set<string>();
 const creatorSet = new Set<string>();
 const tagSet = new Set<string>();
 const NO_UPDATE_MODE = process.argv.includes('--noupdate');
 const NO_SCRYFALL = process.argv.includes('--noscryfall');
-const oneWayMergeProps = [
-  'name',
-  'mana_cost',
-  'color_indicator',
-  'supertypes',
-  'types',
-  'type_line',
-  'subtypes',
-  'oracle_text',
-  'flavor_text',
-  'power',
-  'toughness',
-  'loyalty',
-  'defense',
-  'hand_modifier',
-  'life_modifier',
-  'attraction_lights',
-  'watermark',
-  'colors',
-  'mana_value',
-  'tags',
-  'tag_notes',
-  'frames',
-  'frame_effects',
-  'collector_number',
-  'set',
-];
 const cardBlankableProps = ['rulings', 'oracle_text', 'mana_value', 'mana_cost'];
 const cardRemovableProps = [
+  'export_name',
   'tags',
   'tag_notes',
   'defense',
@@ -83,9 +60,10 @@ const cardRemovableProps = [
   'collector_number',
   'all_parts',
 ];
-const cardFaceRemovableProps = ['frame'];
+const cardFaceRemovableProps = ['frame', 'compress_face'];
 const tokenIgnoreProps = ['colors'];
 const tokenRemovableProps = [
+  'export_name',
   'power',
   'toughness',
   'supertypes',
@@ -178,111 +156,133 @@ const tokenInferrableProps = [
   'tags',
   'tag_notes',
 ];
-const tokenInferrableFaceProps = ['supertypes', 'types', 'power', 'toughness'];
+const tokenInferrableFaceProps = [
+  'supertypes',
+  'types',
+  'power',
+  'toughness',
+  'compress_face',
+  'drop_face',
+];
 const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
+  const propOrder = [
+    'object',
+    'id',
+    'scryfall_id',
+    'oracle_id',
+    'name',
+    'flavor_name',
+    'export_name',
+    'set',
+    'collector_number',
+    'layout',
+    'image_status',
+    'image',
+    'rotated_image',
+    'still_image',
+    'mana_cost',
+    'mana_value',
+    'supertypes',
+    'types',
+    'subtypes',
+    'type_line',
+    'oracle_text',
+    'flavor_text',
+    'power',
+    'toughness',
+    'loyalty',
+    'defense',
+    'hand_modifier',
+    'life_modifier',
+    'attraction_lights',
+    'colors',
+    'color_indicator',
+    'color_identity',
+    'color_identity_hybrid',
+    'draft_image_status',
+    'draft_image',
+    'rotated_draft_image',
+    'still_draft_image',
+    'not_directly_draftable',
+    'has_draft_partners',
+    'keywords',
+    'legalities',
+    'creators',
+    'rulings',
+    'finish',
+    'watermark',
+    'border_color',
+    'frame',
+    'frame_effects',
+    'tags',
+    'tag_notes',
+    'variation',
+    'variation_of',
+    'isActualToken',
+  ];
+  const facePropOrder = [
+    'object',
+    'name',
+    'flavor_name',
+    'export_name',
+    'layout',
+    'image_status',
+    'image',
+    'rotated_image',
+    'still_image',
+    'mana_cost',
+    'mana_value',
+    'supertypes',
+    'types',
+    'subtypes',
+    'type_line',
+    'oracle_text',
+    'flavor_text',
+    'power',
+    'toughness',
+    'loyalty',
+    'defense',
+    'hand_modifier',
+    'life_modifier',
+    'attraction_lights',
+    'colors',
+    'color_indicator',
+    'watermark',
+    'border_color',
+    'frame',
+    'frame_effects',
+    'compress_face',
+    'drop_face',
+  ];
+  const partPropOrder = [
+    'object',
+    'id',
+    'name',
+    'set',
+    'image',
+    'type_line',
+    'component',
+    'is_draft_partner',
+    'count',
+    'persistent',
+  ];
+  const ignoreLeftovers = ['toJSON', 'card_faces', 'all_parts'];
   return cards.map(card => {
     const cardWithJSON = Object.assign({}, card, {
       toJSON(this: Record<string, any>) {
         const ordered: Record<string, any> = {};
-        const propOrder = [
-          'id',
-          'scryfall_id',
-          'oracle_id',
-          'name',
-          'flavor_name',
-          'set',
-          'collector_number',
-          'layout',
-          'image_status',
-          'image',
-          'rotated_image',
-          'still_image',
-          'mana_cost',
-          'mana_value',
-          'supertypes',
-          'types',
-          'subtypes',
-          'type_line',
-          'oracle_text',
-          'flavor_text',
-          'power',
-          'toughness',
-          'loyalty',
-          'defense',
-          'hand_modifier',
-          'life_modifier',
-          'attraction_lights',
-          'colors',
-          'color_indicator',
-          'color_identity',
-          'color_identity_hybrid',
-          'draft_image_status',
-          'draft_image',
-          'rotated_draft_image',
-          'still_draft_image',
-          'not_directly_draftable',
-          'has_draft_partners',
-          'keywords',
-          'legalities',
-          'creators',
-          'rulings',
-          'finish',
-          'watermark',
-          'border_color',
-          'frame',
-          'frame_effects',
-          'tags',
-          'tag_notes',
-          'variation',
-          'variation_of',
-          'isActualToken',
-        ];
-        const facePropOrder = [
-          'name',
-          'flavor_name',
-          'layout',
-          'image_status',
-          'image',
-          'rotated_image',
-          'still_image',
-          'mana_cost',
-          'mana_value',
-          'supertypes',
-          'types',
-          'subtypes',
-          'type_line',
-          'oracle_text',
-          'flavor_text',
-          'power',
-          'toughness',
-          'loyalty',
-          'defense',
-          'hand_modifier',
-          'life_modifier',
-          'attraction_lights',
-          'colors',
-          'color_indicator',
-          'watermark',
-          'border_color',
-          'frame',
-          'frame_effects',
-        ];
-        const partPropOrder = [
-          'id',
-          'name',
-          'set',
-          'image',
-          'type_line',
-          'component',
-          'is_draft_partner',
-          'count',
-          'persistent',
-        ];
         propOrder.forEach(prop => {
           if (prop in this) {
             ordered[prop] = this[prop];
           }
         });
+        const leftovers = Object.keys(this).filter(
+          prop => !propOrder.includes(prop) && !ignoreLeftovers.includes(prop)
+        );
+        if (leftovers.length) {
+          // You forgot a prop.
+          throw error('You forgot one or more props');
+        }
         if ('card_faces' in this) {
           ordered.card_faces = this.card_faces.map((face: Record<string, any>) => {
             const orderedFace: Record<string, any> = {};
@@ -291,6 +291,13 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
                 orderedFace[prop] = face[prop];
               }
             });
+            const leftoverProps = Object.keys(face).filter(
+              prop => !facePropOrder.includes(prop) && !ignoreLeftovers.includes(prop)
+            );
+            if (leftoverProps.length) {
+              // You forgot a prop.
+              throw error('You forgot one or more props');
+            }
             return orderedFace;
           });
         }
@@ -317,6 +324,13 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
                 orderedPart[prop] = part[prop];
               }
             });
+            const leftoverProps = Object.keys(part).filter(
+              prop => !partPropOrder.includes(prop) && !ignoreLeftovers.includes(prop)
+            );
+            if (leftoverProps.length) {
+              // You forgot a prop.
+              throw error('You forgot one or more props');
+            }
             return orderedPart;
           });
         }
@@ -380,7 +394,6 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
   }
 
   const merged: HCCard.Any = { ...existingCard };
-
   Object.entries(newCard).forEach(([key, value]) => {
     if (value) {
       if (
@@ -926,7 +939,6 @@ const main = async () => {
           }
         });
     });
-
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
@@ -995,28 +1007,66 @@ const main = async () => {
         entry.variation_of = variation_of;
       }
     });
+  // automatically add collector numbers and export props
+  const collectorNumberAutofillSets: Record<string, number> = {
+    'HCV.2': 0,
+    'HCV.3': 0,
+    'HCV.4': 0,
+    'HCV.6': 0,
+    'HCV.7': 0,
+    'HCV.8': 0,
+    'HCV.9': 0,
+    'HC9.0': 0,
+    HC9: 0,
+    'HCV.J': 0,
+    'HCV.K': 0,
+    'HCV.L': 0,
+    'HCV.P': 0,
+    'HCV.CDC': 0,
+    NRM: 0,
+    HCJ: 0,
+    NotMagic: 0,
+    SFT: 0,
+  };
+  const takenNames = namesRawData.data;
+  finalCards.forEach(entry => {
+    setExportProps(entry, takenNames);
+    if (!entry.collector_number) {
+      if (entry.set in collectorNumberAutofillSets) {
+        collectorNumberAutofillSets[entry.set] += 1;
+        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
+      } else {
+        throw error;
+      }
+    }
+  });
+  finalTokens.forEach(entry => {
+    setExportProps(entry, takenNames);
+    if (!entry.collector_number) {
+      if (entry.set in collectorNumberAutofillSets) {
+        collectorNumberAutofillSets[entry.set] += 1;
+        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
+      } else {
+        throw error;
+      }
+    }
+  });
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''));
+          typeSet.add(textPrep(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''), true));
         }
       );
     });
 
-    const usernameMappingEntries = Object.entries(usernameMappings);
-
-    for (const [replacementName, oldNames] of usernameMappingEntries) {
-      for (const oldName of oldNames) {
-        const oldIndex = entry.creators.indexOf(oldName);
-        if (oldIndex != -1) {
-          entry.creators[oldIndex] = replacementName;
-        }
+    entry.creators = entry.creators.map(creator => {
+      if (creator in usernameMappings) {
+        creatorSet.add(usernameMappings[creator]);
+        return usernameMappings[creator];
       }
-    }
-
-    entry.creators.forEach(creator => {
       creatorSet.add(creator);
+      return creator;
     });
 
     if ('tags' in entry) {
@@ -1027,24 +1077,18 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''));
+          typeSet.add(textPrep(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''), true));
         }
       );
     });
 
-    const usernameMappingEntries = Object.entries(usernameMappings);
-
-    for (const [replacementName, oldNames] of usernameMappingEntries) {
-      for (const oldName of oldNames) {
-        const oldIndex = entry.creators.indexOf(oldName);
-        if (oldIndex != -1) {
-          entry.creators[oldIndex] = replacementName;
-        }
+    entry.creators = entry.creators.map(creator => {
+      if (creator in usernameMappings) {
+        creatorSet.add(usernameMappings[creator]);
+        return usernameMappings[creator];
       }
-    }
-
-    entry.creators.forEach(creator => {
       creatorSet.add(creator);
+      return creator;
     });
 
     if ('tags' in entry) {
@@ -1052,9 +1096,30 @@ const main = async () => {
     }
   });
 
-  const types = Array.from(typeSet);
+  const types = Array.from(typeSet).sort((a, b) => {
+    if (a > b) {
+      return 1;
+    }
+    return -1;
+  });
+  const reducedTypes: string[] = [];
+  const preferLower = ['a', 'an', 'and', 'in', 'of', 'the'];
+  const preferUpper = ['EVIL', 'HELL', 'WET'];
+  types.forEach(type => {
+    const index = reducedTypes.findIndex(e => e.toLowerCase() == type.toLowerCase());
+    if (index == -1) {
+      reducedTypes.push(type);
+    } else if (
+      preferLower.includes(type) ||
+      (type[0].toUpperCase() == type[0] && !preferUpper.includes(reducedTypes[index]))
+    ) {
+      reducedTypes.splice(index, 1);
+      reducedTypes.push(type);
+    }
+  });
   const creators = Array.from(creatorSet);
   const tags = Array.from(tagSet);
+
   finalCards.sort((a, b) => {
     if (parseInt(a.id) == parseInt(b.id)) {
       if (a.id > b.id) {
@@ -1099,28 +1164,11 @@ const main = async () => {
 
   fs.writeFileSync(
     '../shared/src/data/types.json',
-    JSON.stringify(
-      {
-        data: types.sort((a, b) => {
-          if (a > b) {
-            return 1;
-          }
-          return -1;
-        }),
-      },
-      null,
-      '\t'
-    )
+    JSON.stringify({ data: reducedTypes }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tokens.json',
-    JSON.stringify(
-      {
-        data: addToJSONToCards(finalTokens),
-      },
-      null,
-      '\t'
-    )
+    JSON.stringify({ data: addToJSONToCards(finalTokens) }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tags.json',

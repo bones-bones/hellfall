@@ -2,330 +2,362 @@
   "data": [
     {
       "filename": "colorIndicators/mono/W.svg",
-      "symbol": "CI_W",
+      "symbol": "CI-W",
       "english": "Color Indicator: White",
       "represents_mana": false,
       "colors": [
         "W"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/U.svg",
-      "symbol": "CI_U",
+      "symbol": "CI-U",
       "english": "Color Indicator: Blue",
       "represents_mana": false,
       "colors": [
         "U"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/B.svg",
-      "symbol": "CI_B",
+      "symbol": "CI-B",
       "english": "Color Indicator: Black",
       "represents_mana": false,
       "colors": [
         "B"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/R.svg",
-      "symbol": "CI_R",
+      "symbol": "CI-R",
       "english": "Color Indicator: Red",
       "represents_mana": false,
       "colors": [
         "R"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/G.svg",
-      "symbol": "CI_G",
+      "symbol": "CI-G",
       "english": "Color Indicator: Green",
       "represents_mana": false,
       "colors": [
         "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/P.svg",
-      "symbol": "CI_P",
+      "symbol": "CI-P",
       "english": "Color Indicator: Purple",
       "represents_mana": false,
       "colors": [
         "P"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/C.svg",
-      "symbol": "CI_C",
+      "symbol": "CI-C",
       "english": "Color Indicator: Colorless",
       "represents_mana": false,
       "colors": [
         "C"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/WU.svg",
-      "symbol": "CI_WU",
+      "symbol": "CI-WU",
       "english": "Color Indicator: White and Blue",
       "represents_mana": false,
       "colors": [
         "W",
         "U"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/UB.svg",
-      "symbol": "CI_UB",
+      "symbol": "CI-UB",
       "english": "Color Indicator: Blue and Black",
       "represents_mana": false,
       "colors": [
         "U",
         "B"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/BR.svg",
-      "symbol": "CI_BR",
+      "symbol": "CI-BR",
       "english": "Color Indicator: Black and Red",
       "represents_mana": false,
       "colors": [
         "B",
         "R"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/RG.svg",
-      "symbol": "CI_RG",
+      "symbol": "CI-RG",
       "english": "Color Indicator: Red and Green",
       "represents_mana": false,
       "colors": [
         "R",
         "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/GW.svg",
-      "symbol": "CI_GW",
+      "symbol": "CI-GW",
       "english": "Color Indicator: Green and White",
       "represents_mana": false,
       "colors": [
         "G",
         "W"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/WB.svg",
-      "symbol": "CI_WB",
+      "symbol": "CI-WB",
       "english": "Color Indicator: White and Black",
       "represents_mana": false,
       "colors": [
         "W",
         "B"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/BG.svg",
-      "symbol": "CI_BG",
+      "symbol": "CI-BG",
       "english": "Color Indicator: Black and Green",
       "represents_mana": false,
       "colors": [
         "B",
         "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/GU.svg",
-      "symbol": "CI_GU",
+      "symbol": "CI-GU",
       "english": "Color Indicator: Green and Blue",
       "represents_mana": false,
       "colors": [
         "G",
         "U"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/UR.svg",
-      "symbol": "CI_UR",
+      "symbol": "CI-UR",
       "english": "Color Indicator: Blue and Red",
       "represents_mana": false,
       "colors": [
         "U",
         "R"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/RW.svg",
-      "symbol": "CI_RW",
+      "symbol": "CI-RW",
       "english": "Color Indicator: Red and White",
       "represents_mana": false,
       "colors": [
         "R",
         "W"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/WP.svg",
-      "symbol": "CI_WP",
+      "symbol": "CI-WP",
       "english": "Color Indicator: White and Purple",
       "represents_mana": false,
       "colors": [
         "W",
         "P"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/UP.svg",
-      "symbol": "CI_UP",
+      "symbol": "CI-UP",
       "english": "Color Indicator: Blue and Purple",
       "represents_mana": false,
       "colors": [
         "U",
         "P"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/PB.svg",
-      "symbol": "CI_PB",
+      "symbol": "CI-PB",
       "english": "Color Indicator: Purple and Black",
       "represents_mana": false,
       "colors": [
         "P",
         "B"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/PR.svg",
-      "symbol": "CI_PR",
+      "symbol": "CI-PR",
       "english": "Color Indicator: Purple and Red",
       "represents_mana": false,
       "colors": [
         "P",
         "R"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/hybrid/PG.svg",
-      "symbol": "CI_PG",
+      "symbol": "CI-PG",
       "english": "Color Indicator: Purple and Green",
       "represents_mana": false,
       "colors": [
         "P",
         "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/GWU.svg",
-      "symbol": "CI_GWU",
+      "symbol": "CI-GWU",
       "english": "Color Indicator: Green, White, and Blue",
       "represents_mana": false,
       "colors": [
         "G",
         "W",
         "U"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/WUB.svg",
-      "symbol": "CI_WUB",
+      "symbol": "CI-WUB",
       "english": "Color Indicator: White, Blue, and Black",
       "represents_mana": false,
       "colors": [
         "W",
         "U",
         "B"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/UBR.svg",
-      "symbol": "CI_UBR",
+      "symbol": "CI-UBR",
       "english": "Color Indicator: Blue, Black, and Red",
       "represents_mana": false,
       "colors": [
         "U",
         "B",
         "R"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/BRG.svg",
-      "symbol": "CI_BRG",
+      "symbol": "CI-BRG",
       "english": "Color Indicator: Black, Red, and Green",
       "represents_mana": false,
       "colors": [
         "B",
         "R",
         "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/RGW.svg",
-      "symbol": "CI_RGW",
+      "symbol": "CI-RGW",
       "english": "Color Indicator: Red, Green, and White",
       "represents_mana": false,
       "colors": [
         "R",
         "G",
         "W"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/WBG.svg",
-      "symbol": "CI_WBG",
+      "symbol": "CI-WBG",
       "english": "Color Indicator: White, Black, and Green",
       "represents_mana": false,
       "colors": [
         "W",
         "B",
         "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/URW.svg",
-      "symbol": "CI_URW",
+      "symbol": "CI-URW",
       "english": "Color Indicator: Blue, Red, and White",
       "represents_mana": false,
       "colors": [
         "U",
         "R",
         "W"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/BGU.svg",
-      "symbol": "CI_BGU",
+      "symbol": "CI-BGU",
       "english": "Color Indicator: Black, Green, and Blue",
       "represents_mana": false,
       "colors": [
         "B",
         "G",
         "U"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/RWB.svg",
-      "symbol": "CI_RWB",
+      "symbol": "CI-RWB",
       "english": "Color Indicator: Red, White, and Black",
       "represents_mana": false,
       "colors": [
         "R",
         "W",
         "B"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/tribrid/GUR.svg",
-      "symbol": "CI_GUR",
+      "symbol": "CI-GUR",
       "english": "Color Indicator: Green, Blue, and Red",
       "represents_mana": false,
       "colors": [
         "G",
         "U",
         "R"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/quad/UBRG.svg",
-      "symbol": "CI_UBRG",
+      "symbol": "CI-UBRG",
       "english": "Color Indicator: Blue, Black, Red, and Green",
       "represents_mana": false,
       "colors": [
@@ -333,11 +365,12 @@
         "B",
         "R",
         "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/quad/BRGW.svg",
-      "symbol": "CI_BRGW",
+      "symbol": "CI-BRGW",
       "english": "Color Indicator: Black, Red, Green, and White",
       "represents_mana": false,
       "colors": [
@@ -345,11 +378,12 @@
         "R",
         "G",
         "W"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/quad/RGWU.svg",
-      "symbol": "CI_RGWU",
+      "symbol": "CI-RGWU",
       "english": "Color Indicator: Red, Green, White, and Blue",
       "represents_mana": false,
       "colors": [
@@ -357,11 +391,12 @@
         "G",
         "W",
         "U"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/quad/GWUB.svg",
-      "symbol": "CI_GWUB",
+      "symbol": "CI-GWUB",
       "english": "Color Indicator: Green, White, Blue, and Black",
       "represents_mana": false,
       "colors": [
@@ -369,11 +404,12 @@
         "W",
         "U",
         "B"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/quad/WUBR.svg",
-      "symbol": "CI_WUBR",
+      "symbol": "CI-WUBR",
       "english": "Color Indicator: White, Blue, Black, and Red",
       "represents_mana": false,
       "colors": [
@@ -381,11 +417,12 @@
         "U",
         "B",
         "R"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/WUBRG.svg",
-      "symbol": "CI_WUBRG",
+      "symbol": "CI-WUBRG",
       "english": "Color Indicator: White, Blue, Black, Red, and Green",
       "represents_mana": false,
       "colors": [
@@ -394,11 +431,12 @@
         "B",
         "R",
         "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/WUPBRG.svg",
-      "symbol": "CI_WUPBRG",
+      "symbol": "CI-WUPBRG",
       "english": "Color Indicator: White, Blue, Purple, Black, Red, and Green",
       "represents_mana": false,
       "colors": [
@@ -408,68 +446,60 @@
         "B",
         "R",
         "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/Orange.svg",
-      "symbol": "CI_Orange",
+      "symbol": "CI-Orange",
       "english": "Color Indicator: Orange",
       "represents_mana": false,
       "colors": [
         "Orange"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/Brown.svg",
-      "symbol": "CI_Brown",
+      "symbol": "CI-Brown",
       "english": "Color Indicator: Brown",
       "represents_mana": false,
       "colors": [
         "Brown"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/Yellow.svg",
-      "symbol": "CI_Yellow",
+      "symbol": "CI-Yellow",
       "english": "Color Indicator: Yellow",
       "represents_mana": false,
       "colors": [
         "Yellow"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/mono/Pink.svg",
-      "symbol": "CI_Pink",
+      "symbol": "CI-Pink",
       "english": "Color Indicator: Pink",
       "represents_mana": false,
       "colors": [
         "Pink"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "colorIndicators/Pan.svg",
-      "symbol": "CI_Pan",
+      "symbol": "CI-Pan",
       "english": "Color Indicator: Pan (Blue, Yellow, and Pink)",
       "represents_mana": false,
       "colors": [
         "U",
         "Yellow",
         "Pink"
-      ]
-    },
-    {
-      "filename": "WUBRG.svg",
-      "symbol": "W/U/B/R/G",
-      "english": "one white, blue, black, red, or green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W",
-        "U",
-        "B",
-        "R",
-        "G"
-      ]
+      ],
+      "no_shadow": true
     },
     {
       "filename": "mono/colors/W.svg",
@@ -2599,6 +2629,20 @@
         "G",
         "Yellow",
         "P"
+      ]
+    },
+    {
+      "filename": "WUBRG.svg",
+      "symbol": "W/U/B/R/G",
+      "english": "one white, blue, black, red, or green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "U",
+        "B",
+        "R",
+        "G"
       ]
     },
     {

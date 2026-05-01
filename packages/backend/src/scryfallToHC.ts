@@ -89,6 +89,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   };
   const italicsReplaceKeys: string[] = ['name', 'flavor_text', 'oracle_text'];
   const sameKeys: string[] = [
+    'object',
     'oracle_id',
     'hand_modifier',
     'life_modifier',
@@ -292,10 +293,10 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     }
   });
   if (card.full_art) {
-    if (cardObject.frameEffects) {
-      cardObject.frameEffects.push('fullart');
+    if (cardObject.frame_effects) {
+      cardObject.frame_effects.push('fullart');
     } else {
-      cardObject.frameEffects = ['fullart'];
+      cardObject.frame_effects = ['fullart'];
     }
   }
   cardObject.finish = card.finishes.includes('nonfoil') ? 'nonfoil' : 'foil';

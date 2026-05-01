@@ -62,6 +62,7 @@ export const fetchNotMagic = async () => {
   });
 
   const defaultProps: Record<string, any> = {
+    object: HCObject.ObjectType.Card,
     rulings: '',
     creators: [],
     legalities: {

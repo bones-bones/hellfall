@@ -6,6 +6,7 @@ import { toDeck } from './toDeck.ts';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
+import { nameToId } from '../hellfall/hooks/useNameToId.ts';
 
 const basics: Record<string, string> = {
   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -54,35 +55,31 @@ export const DeckBuilder = () => {
   }, [textAreaValue, deckName]);
 
   const toCardArr = (value: string): [number, string] => {
-    if (/^(?!0+\s)\d+\s/.test(value)) {
-      // if string starts with digits followed by a space
-      const index = value.indexOf(' ');
-
-      const [count, rest] = [value.slice(0, index), value.slice(index + 1)];
-
-      // prettier-ignore
-      if ((rest == "%" && rest[1] && cards.find((entry) => entry.id === rest.slice(1)) || rest.toLowerCase() in basics)) {
-        // if second part of string is % followed by digits or is basic name (have to put ignore or prettier moves parens)
-        return [parseInt(count), rest];
-      }
-      const foundCard = cards.find(entry => entry.name.toLowerCase() === rest.toLowerCase());
-      if (foundCard) {
-        //if string is digits then a space then card name
-        return [parseInt(count), '%' + foundCard.id];
-      }
+    const index = /^(?!0+\s)\d+\s/.test(value) ? value.indexOf(' ') : 0;
+    const count = index ? parseInt(value.slice(0, index)) : 1;
+    const rest = index ? value.slice(index + 1) : value;
+    if (!count) {
+      return [1, ''];
+    }
+    if (!rest) {
+      return [count, ''];
     }
 
-    // prettier-ignore
-    if ((value[0] == "%" && value[1] && cards.find((entry) => entry.id === value.slice(1)) || value.toLowerCase() in basics)) {
-      // if second part of string is % followed by digits or is basic name (have to put ignore or prettier moves parens)
-      return [1, value];
+    if (rest[0] == '%') {
+      // handle ids
+      return cards.find(card => card.id == rest.slice(1)) ? [count, rest.slice(1)] : [count, ''];
     }
-    const foundCard = cards.find(entry => entry.name.toLowerCase() === value.toLowerCase());
-    if (foundCard) {
-      //if string is digits then a space then card name
-      return [1, '%' + foundCard.id];
+    if (/^\d+$/.test(rest)) {
+      // handle card names that are all digits
+      const id = cards.find(card => card.name == rest)?.id;
+      return id ? [count, id] : [count, ''];
     }
-    return [1, ''];
+    if (rest.toLowerCase() in basics) {
+      // handle basics
+      return [count, rest.toLowerCase()];
+    }
+
+    return [count, rest];
   };
 
   useEffect(() => {
@@ -93,31 +90,24 @@ export const DeckBuilder = () => {
       .filter(entry => entry != '' && !entry.startsWith('# '))
       .flatMap(name => {
         const [count, rest] = toCardArr(name);
-        const responseObject = [];
-        if (rest[0] == '%') {
-          for (let i = 0; i < count; i++) {
-            const card = cards.find(entry => entry.id == rest.slice(1))!;
-            responseObject.push(card);
-          }
-        } else if (rest) {
-          for (let i = 0; i < count; i++) {
-            const card = {
-              image: [basics[rest.toLowerCase()]],
-              name: rest,
-            } as unknown as HCCard.Any;
-            responseObject.push(card);
-          }
-        }
-        if (responseObject.length == 0) {
+        if (rest in basics) {
           const card = {
-            image: [
-              'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
-            ],
-            name: name + ' - not found',
+            image: [basics[rest]],
+            name: rest,
           } as unknown as HCCard.Any;
-          responseObject.push(card);
+          return Array(count).fill(card);
+        } else {
+          const id = nameToId(rest, cards);
+          const card = id
+            ? cards.find(card => card.id == id)
+            : ({
+                image: [
+                  'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
+                ],
+                name: name + ' - not found',
+              } as unknown as HCCard.Any);
+          return Array(count).fill(card);
         }
-        return responseObject;
       });
     setRenderCards(images);
   }, [toRender, cards]);

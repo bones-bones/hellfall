@@ -12,7 +12,7 @@ import { Breakdown } from './breakdown/Breakdown.tsx';
 import { Decks } from './decks/Decks.tsx';
 import { Watchwolfwar } from './watchWolf/WatchWolfWar.tsx';
 import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
-import { useNameToId, useIsId } from './hellfall/backCompat.ts';
+import { useNameToId, useIsId } from './hellfall/hooks/useNameToId.ts';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 import { getBasePath } from './basePath.ts';
 
