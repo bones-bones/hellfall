@@ -17,13 +17,14 @@ import pips from '@hellfall/shared/data/pips.json';
 
 import { useAtom } from 'jotai';
 import {
-  nameSearchAtom,
   idSearchAtom,
+  nameSearchAtom,
   costSearchAtom,
   typeSearchAtom,
   rulesSearchAtom,
   flavorSearchAtom,
   creatorsAtom,
+  artistsAtom,
   tagsAtom,
   searchColorsAtom,
   colorComparisonAtom,
@@ -59,13 +60,14 @@ import { HCSearchColors } from '@hellfall/shared/types';
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
 export const SearchControls = () => {
-  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
+  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [costSearch, setCostSearch] = useAtom(costSearchAtom);
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [flavorSearch, setFlavorSearch] = useAtom(flavorSearchAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
+  const [artists, setArtists] = useAtom(artistsAtom);
   const [tags, setTags] = useAtom(tagsAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [colorComparison, setColorComparison] = useAtom(colorComparisonAtom);
@@ -170,14 +172,14 @@ export const SearchControls = () => {
   return (
     <SearchContainer>
       <SearchCriteriaSection>
-        <FormField label="Name">
+        {/* <FormField label="Name">
           <TextInput
             value={localName}
             onChange={event => setLocalName(event.target.value)}
             onFocus={handleNameFocus}
             onBlur={handleNameBlur}
           />
-        </FormField>
+        </FormField> */}
         <FormField label="Id">
           <TextInput
             value={localId}
@@ -186,6 +188,12 @@ export const SearchControls = () => {
             onBlur={handleIdBlur}
           />
         </FormField>
+        <PillSearch
+          label={'Name'}
+          possibleValues={[]}
+          values={nameSearch}
+          onChange={setNameSearch}
+        />
         <PillSearch
           label={'Cost'}
           possibleValues={pipList}

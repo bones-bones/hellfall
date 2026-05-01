@@ -2,13 +2,14 @@ import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSetAtom, useAtom } from 'jotai';
 import {
-  nameSearchAtom,
   idSearchAtom,
+  nameSearchAtom,
   costSearchAtom,
   typeSearchAtom,
   rulesSearchAtom,
   flavorSearchAtom,
   creatorsAtom,
+  artistsAtom,
   tagsAtom,
   searchColorsAtom,
   colorComparisonAtom,
@@ -44,13 +45,14 @@ export const useUrlSync = () => {
 
   // Get all setters
 
-  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
+  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [costSearch, setCostSearch] = useAtom(costSearchAtom);
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [flavorSearch, setFlavorSearch] = useAtom(flavorSearchAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
+  const [artists, setArtists] = useAtom(artistsAtom);
   const [tags, setTags] = useAtom(tagsAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [colorComparison, setColorComparison] = useAtom(colorComparisonAtom);
@@ -83,29 +85,32 @@ export const useUrlSync = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     // Set search inputs
-    if (nameSearch != (params.get('name') || '')) {
-      setNameSearch(params.get('name') || '');
-    }
     if (idSearch != (params.get('id') || '')) {
       setIdSearch(params.get('id') || '');
     }
-    if (costSearch != (params.get('cost')?.split(',').filter(Boolean) || [])) {
-      setCostSearch(params.get('cost')?.split(',').filter(Boolean) || []);
+    if (nameSearch != (params.getAll('name').filter(Boolean) || [])) {
+      setNameSearch(params.getAll('name').filter(Boolean) || []);
     }
-    if (typeSearch != (params.get('type')?.split(',').filter(Boolean) || [])) {
-      setTypeSearch(params.get('type')?.split(',').filter(Boolean) || []);
+    if (costSearch != (params.getAll('cost').filter(Boolean) || [])) {
+      setCostSearch(params.getAll('cost').filter(Boolean) || []);
     }
-    if (rulesSearch != (params.get('rules')?.split(',').filter(Boolean) || [])) {
-      setRulesSearch(params.get('rules')?.split(',').filter(Boolean) || []);
+    if (typeSearch != (params.getAll('type').filter(Boolean) || [])) {
+      setTypeSearch(params.getAll('type').filter(Boolean) || []);
     }
-    if (flavorSearch != (params.get('flavor')?.split(',').filter(Boolean) || [])) {
-      setFlavorSearch(params.get('flavor')?.split(',').filter(Boolean) || []);
+    if (rulesSearch != (params.getAll('rules').filter(Boolean) || [])) {
+      setRulesSearch(params.getAll('rules').filter(Boolean) || []);
     }
-    if (creators != (params.get('creators')?.split(',').filter(Boolean) || [])) {
-      setCreators(params.get('creators')?.split(',').filter(Boolean) || []);
+    if (flavorSearch != (params.getAll('flavor').filter(Boolean) || [])) {
+      setFlavorSearch(params.getAll('flavor').filter(Boolean) || []);
     }
-    if (tags != (params.get('tags')?.split(',').filter(Boolean) || [])) {
-      setTags(params.get('tags')?.split(',').filter(Boolean) || []);
+    if (creators != (params.getAll('creator').filter(Boolean) || [])) {
+      setCreators(params.getAll('creator').filter(Boolean) || []);
+    }
+    if (artists != (params.getAll('artist').filter(Boolean) || [])) {
+      setArtists(params.getAll('artist').filter(Boolean) || []);
+    }
+    if (tags != (params.getAll('tag').filter(Boolean) || [])) {
+      setTags(params.getAll('tag').filter(Boolean) || []);
     }
 
     // Set color filters

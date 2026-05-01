@@ -1,0 +1,23 @@
+import { HCCard } from '@hellfall/shared/types';
+
+export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
+export type looseOpType = ':' | opType;
+
+export interface cardFilter<T = any, S = any> {
+  (value1: T, operator: looseOpType, value2: S): boolean;
+  defaultOp: opType;
+}
+export interface textFilter extends cardFilter<string, string> {}
+export interface textListFilter extends cardFilter<string[], string> {}
+export interface textRecordFilter extends cardFilter<Record<string,string>, [string,string]> {}
+const invertedOps: Record<opType, opType> = {
+  '<': '>=',
+  '<=': '>',
+  '=': '!=',
+  '>=': '<',
+  '>': '<=',
+  '!=': '=',
+};
+export const invertOp = (op: opType) => {
+  return invertedOps[op];
+};

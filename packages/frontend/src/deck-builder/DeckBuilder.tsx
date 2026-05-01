@@ -201,7 +201,7 @@ Cock and Balls to Torture and Abuse"
             id: 'Custom',
             name: deckName,
             allCards: cards,
-            cardIds: renderCards.map(card => card.id),
+            cardIds: renderCards.filter(card => card.id).map(card => card.id),
           });
         }}
       >

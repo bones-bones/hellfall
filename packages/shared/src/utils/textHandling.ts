@@ -10,6 +10,9 @@
 //     .replaceAll('\\(', '(')
 //     .replaceAll('\\)', ')');
 // };
+
+import { allSetsList } from '../data/sets';
+
 /**
  * Convert markdown text to plaintext by stripping formatting characters
  * Handles **bold**, *italic*, ~~strikethrough~~, and respects escaped characters
@@ -244,15 +247,41 @@ export const formatParens = (text: string) => {
  * @returns stripped name
  */
 export const stripMasterpiece = (name: string) => {
-  if (
-    ['HC6: ', 'HC7: ', 'HC8: ', 'HCK: ', 'HKL: ', 'HC9: ', 'CDC: ', 'HCJ: '].includes(
-      name.slice(0, 5)
-    )
-  ) {
-    return name.slice(5);
-  } else {
-    return name;
-  }
+  const start = ['HC6: ', 'HC7: ', 'HC8: ', 'HCK: ', 'HKL: ', 'HC9: ', 'CDC: ', 'HCJ: '].find(set =>
+    name.startsWith(set)
+  );
+  return start ? name.slice(start.length) : name;
+};
+/**
+ * Gets the masterpiece set code of a masterpiece name.
+ * @param name Name to get masterpiece from
+ * @returns masterpiece code
+ */
+export const getMasterpiece = (name: string) => {
+  const start = ['HC6: ', 'HC7: ', 'HC8: ', 'HCK: ', 'HKL: ', 'HC9: ', 'CDC: ', 'HCJ: '].find(set =>
+    name.startsWith(set)
+  );
+  return start;
+};
+
+/**
+ * Gets the bare version of a name that ends with a set code.
+ * @param name Name to strip
+ * @returns stripped name
+ */
+export const stripSetCode = (name: string) => {
+  const ending = [...allSetsList, 'HC'].find(set => name.endsWith(` (${set})`));
+  return ending ? name.slice(0, -ending.length - 3) : name;
+};
+
+/**
+ * Gets the set code from a name that ends with a set code.
+ * @param name Name to strip
+ * @returns stripped name
+ */
+export const getSetCode = (name: string) => {
+  const ending = [...allSetsList, 'HC'].find(set => name.endsWith(` (${set})`));
+  return ending ? ` (${ending})` : undefined;
 };
 
 /**

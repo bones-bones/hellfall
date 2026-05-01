@@ -132,3 +132,5 @@ Write a script to transform the database
 - add artist and lore search
 - add artists to HellfallCard
 - exact search
+- use spoiler feature to allow cockatrice auto-update?
+- use flatmaps to replace .filter.map
