@@ -336,7 +336,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
       const fullName = card.card_faces.map((face, index) => {
         let name = face.name;
         if (!face.name) {
-          name = `(${index ? 'Bottom' : 'Top'} of ${card.card_faces[1 - index].name})`;
+          name = `${index ? 'Bottom' : 'Top'} of ${card.card_faces[1 - index].name}`;
         } else if (index && face.name == card.card_faces[0].name) {
           name += ' (Bottom)';
         }

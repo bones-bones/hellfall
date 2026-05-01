@@ -329,6 +329,9 @@ export const toCockCube = ({
       }
     } else {
       cockCard.props.push(hcFaceToCockProps(card));
+      if (card.isActualToken && !card.export_name) {
+        cockCard.props[0].name = card.id;
+      }
     }
     if (card.all_parts) {
       cockCard.related = hcAllPartsToCockRelated(card.all_parts);
