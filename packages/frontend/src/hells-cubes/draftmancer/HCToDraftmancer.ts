@@ -6,7 +6,7 @@ import {
   DraftmancerCustomCard,
   SimpleDraftEffectList,
 } from '../types';
-import { stripSingleSlashes, toExportMana, toExportName } from '@hellfall/shared/utils/textHandling';
+import { stripSingleSlashes, toExportMana } from '@hellfall/shared/utils/textHandling';
 import { canBeACommander } from '../../hellfall/canBeACommander';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
 import { getSplitSet } from '../../hellfall/filters/filterSet';
@@ -14,70 +14,6 @@ import { orderColors } from '@hellfall/shared/utils/orderColors';
 import { mergeHCCardFaces } from '../mergeHCCardFaces';
 
 const validColors = ['W', 'U', 'B', 'R', 'G'];
-// /**
-//  * merges 2 or more card faces
-//  * @param faces array of card faces to merge
-//  * @returns merged card face
-//  */
-// export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.MultiFaced => {
-//   faces.slice(1).forEach((face, i) => {
-//     Object.entries(face)
-//       .filter(([key, value]) => !(subProps.includes(key) && subLayouts.includes(face.layout)))
-//       .forEach(([key, value]) => {
-//         if (face[key as keyof typeof face]) {
-//           if (overwriteProps.includes(key)) {
-//             if (key == 'layout' && !(value == 'flip' && faces[0].layout == 'transform')) {
-//               faces[0][key] = face[key];
-//             }
-//           } else if (combineProps.includes(key)) {
-//             switch (key) {
-//               case 'mana_value': {
-//                 faces[0][key] += face[key];
-//                 break;
-//               }
-//               case 'colors': {
-//                 face[key].forEach(color => {
-//                   if (!faces[0].colors?.includes(color)) {
-//                     faces[0].colors?.push(color);
-//                   }
-//                 });
-//                 break;
-//               }
-//             }
-//           } else if (addProps.includes(key)) {
-//             if (key == 'image' && !faces[0][key]) {
-//               faces[0][key] = face[key];
-//               faces[0].image_status = face.image_status;
-//             }
-//           } else if (concatProps.includes(key)) {
-//             if (key in faces[0]) {
-//               const needed =
-//                 i +
-//                 1 -
-//                 ((faces[0][key as keyof HCCardFace.MultiFaced] as string)?.match(/ \/\/ /g)
-//                   ?.length || 0);
-//               (faces[0] as any)[key] += ' // '.repeat(needed > 0 ? needed : 1) + value;
-//             } else {
-//               (faces[0] as any)[key] = ' // '.repeat(i + 1) + value;
-//             }
-//           } else if (multiLineConcatProps.includes(key)) {
-//             if (key in faces[0]) {
-//               const needed =
-//                 i +
-//                 1 -
-//                 ((faces[0][key as keyof HCCardFace.MultiFaced] as string)?.match(
-//                   /\\\\n\\\\n---\\\\n\\\\n/g
-//                 )?.length || 0);
-//               (faces[0] as any)[key] += '\\n\\n---\\n\\n'.repeat(needed > 0 ? needed : 1) + value;
-//             } else {
-//               (faces[0] as any)[key] = '\\n\\n---\\n\\n'.repeat(i + 1) + value;
-//             }
-//           }
-//         }
-//       });
-//   });
-//   return faces[0];
-// };
 
 export const HCToDraftmancer = (
   allCards: HCCard.Any[],
@@ -117,16 +53,21 @@ export const HCToDraftmancer = (
         }
       }
       // store the names
-      idNames[card.id] = stripSingleSlashes(card.card_faces[0].export_name || card.card_faces[0].name);
+      idNames[card.id] = stripSingleSlashes(
+        card.card_faces[0].export_name ||
+          (card.isActualToken && card.set != 'SFT' ? card.id : card.card_faces[0].name)
+      );
     } else {
-      idNames[card.id] = stripSingleSlashes(card.export_name || card.name);
+      idNames[card.id] = stripSingleSlashes(
+        card.export_name || (card.isActualToken ? card.id : card.name)
+      );
     }
     return card;
   };
 
   const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard => {
     const draftCard: DraftmancerCustomCard = {
-      name: stripSingleSlashes(card.isActualToken ? card.id : card.export_name || card.name),
+      name: stripSingleSlashes(card.export_name || (card.isActualToken ? card.id : card.name)),
       mana_cost: toExportMana(card.mana_cost, true),
       type: card.type_line,
       image: card.rotated_image || card.image,

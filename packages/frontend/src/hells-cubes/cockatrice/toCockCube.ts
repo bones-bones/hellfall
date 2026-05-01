@@ -122,9 +122,6 @@ export const toCockCube = ({
       manacost: face.mana_cost,
       cmc: face.mana_value,
     };
-    // if (!face.export_name && face.object == 'card' && face.isActualToken) {
-    //   cockFace.name = face.id;
-    // }
     if (face.colors.length) {
       cockFace.colors = orderColors(face.colors);
     }
