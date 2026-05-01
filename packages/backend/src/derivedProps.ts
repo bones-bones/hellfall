@@ -400,10 +400,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
           (card.card_faces[i].compress_face || card.card_faces[i].drop_face);
           i++
         ) {
-          if (
-            card.card_faces[i].compress_face &&
-            !(conditionalDropLayouts.includes(card.card_faces[i].layout) && !index)
-          ) {
+          if (card.card_faces[i].compress_face) {
             faceName += ' // ' + card.card_faces[i].name;
           }
         }

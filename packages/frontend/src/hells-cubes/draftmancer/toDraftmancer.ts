@@ -2,8 +2,18 @@
 import { HCCard } from '@hellfall/shared/types';
 import { HCToDraftmancer } from './HCToDraftmancer.ts';
 
-export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HCCard.Any[] }) => {
-  const { cards: cards, tokens: tokens } = HCToDraftmancer(allCards, set);
+export const toDraftmancerCube = ({
+  set,
+  allCards,
+  name,
+  cardIds,
+}: {
+  set: string;
+  allCards: HCCard.Any[];
+  name: string;
+  cardIds?: string[];
+}) => {
+  const { cards: cards, tokens: tokens } = HCToDraftmancer(allCards, set, cardIds);
 
   if (set === 'HC6') {
     const commanderCards = cards.filter(card => card.canBeACommander);
@@ -11,7 +21,7 @@ export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HC
 
     const formatted = `[Settings]
 {
-    "name": "HC6",
+    "name": "${name}",
     "colorBalance": false,
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA",
     "boosterSettings": [
@@ -45,7 +55,7 @@ export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HC
     // get 4, pick 1, pick 1, burn 2
     const formatted = `[Settings]
 {
-    "name": "HCJ",
+    "name": "${name}",
     "colorBalance": false,
     "boostersPerPlayer": 1,
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA",
@@ -64,7 +74,7 @@ export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HC
   } else if (set == 'All') {
     const formatted = `[Settings]
 {
-    "name": "${set}",
+    "name": "${name}",
     "colorBalance": false,
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA"
 }

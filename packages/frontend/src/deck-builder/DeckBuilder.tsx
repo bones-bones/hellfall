@@ -7,6 +7,7 @@ import { TextInput, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { nameToId } from '../hellfall/hooks/useNameToId.ts';
+import { getDraftmancerForCube } from '../hells-cubes/draftmancer/getDraftmancerForCube.ts';
 
 const basics: Record<string, string> = {
   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -177,6 +178,18 @@ Cock and Balls to Torture and Abuse"
         }}
       >
         Download for TTS
+      </button>{' '}
+      <button
+        onClick={() => {
+          getDraftmancerForCube({
+            id: 'Custom',
+            name: deckName,
+            allCards: cards,
+            cardIds: renderCards.map(card => card.id),
+          });
+        }}
+      >
+        Download for Draftmancer
       </button>{' '}
       Cards in deck {renderCards.length}
       <br />

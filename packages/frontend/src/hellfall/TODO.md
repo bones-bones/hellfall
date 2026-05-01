@@ -128,10 +128,7 @@ Write a script to transform the database
 - use to title case for adding types to types.json
 - subdivide showcase-frame
 - make it possible to properly search for markup characters
-- unify deconfliction methods between cockatrice and draftmancer
-  - precalculate export names in setDerivedProps.ts and set them as props
-  - have face prop for whether it should be dropped or whether some of its props should be ignored
-  - add func in derivedProps that takes a card and a list of taken names and then adds the necessary props
 - add .json for cost autofill (only using pips that appear in costs)?
 - add artist and lore search
 - add artists to HellfallCard
+- exact search

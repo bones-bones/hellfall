@@ -132,3 +132,23 @@ export const getSplitSet = (
   );
   return { cards, tokens };
 };
+
+/**
+ * Get a list of cards and their tokens.
+ * @param allCards The list of all cards
+ * @param cardIds The list of card ids to get
+ * @returns
+ */
+export const getCustomCardlist = (
+  allCards: HCCard.Any[],
+  cardIds: string[]
+): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
+  const cards = allCards.filter(entry => cardIds.includes(entry.id));
+
+  const tokens = allCards.filter(
+    entry =>
+      !cardIds.includes(entry.id) &&
+      cards.some(card => card.all_parts?.some(part => part.id == entry.id))
+  );
+  return { cards, tokens };
+};
