@@ -22,9 +22,9 @@ export const ImportInstructions = () => {
         <li>Enter a cube name</li>
         <li>
           Fill out the box below. Use # followed by a space to hide a card. Use % followed by a card
-          ID to specify the version. You can also paste a cardlist directly from Cockatrice (
-          {'Use Deck Editor > Save deck to clipboard > Not Annotated (No set info)'}).
+          ID to specify the version.
         </li>
+        <li>You can also paste a cardlist directly from Cockatrice ({'Use Deck Editor > Save deck to clipboard > Not Annotated (No set info)'}).</li>
         <li>Click Generate Deck Image or Set Deck</li>
         <li>Click Download for Draftmancer</li>
         <li>In Draftmancer, click Upload a Custom Card List, then choose the file.</li>
