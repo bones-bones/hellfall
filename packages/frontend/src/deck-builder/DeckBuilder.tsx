@@ -30,6 +30,7 @@ export const DeckBuilder = () => {
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') || 'your deck name goes here');
   const [renderCards, setRenderCards] = useState<HCCard.Any[]>([]);
   const [playtesting, setPlaytesthing] = useState(false);
+  const [showImage, setShowImage] = useState(true);
 
   useEffect(() => {
     import('@hellfall/shared/data/Hellscube-Database.json').then(({ data }: any) => {
@@ -146,12 +147,27 @@ Cock and Balls to Torture and Abuse"
       <br />
       <button
         onClick={() => {
+          if (!showImage) {
+            setShowImage(true);
+          }
           if (textAreaRef.current) {
             setTextAreaValue(textAreaRef.current.value);
           }
         }}
       >
         generate deck image
+      </button>
+      <button
+        onClick={() => {
+          if (showImage) {
+            setShowImage(false);
+          }
+          if (textAreaRef.current) {
+            setTextAreaValue(textAreaRef.current.value);
+          }
+        }}
+      >
+        set deck (no image)
       </button>
       <button
         disabled={!toRender}
@@ -193,19 +209,21 @@ Cock and Balls to Torture and Abuse"
       </button>{' '}
       Cards in deck {renderCards.length}
       <br />
-      <DeckContainer ref={ref}>
-        {renderCards?.map((entry, i) => {
-          return (
-            <Card
-              width="250px"
-              title={entry.name}
-              key={entry.name + i}
-              src={entry.draft_image ? entry.draft_image : entry.image}
-              crossOrigin="anonymous"
-            />
-          );
-        })}
-      </DeckContainer>
+      {showImage && (
+        <DeckContainer ref={ref}>
+          {renderCards?.map((entry, i) => {
+            return (
+              <Card
+                width="250px"
+                title={entry.name}
+                key={entry.name + i}
+                src={entry.draft_image ? entry.draft_image : entry.image}
+                crossOrigin="anonymous"
+              />
+            );
+          })}
+        </DeckContainer>
+      )}
     </div>
   );
 };
