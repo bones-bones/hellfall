@@ -6,7 +6,7 @@ import {
   DraftmancerCustomCard,
   SimpleDraftEffectList,
 } from '../types';
-import { toExportMana, toExportName } from '@hellfall/shared/utils/textHandling';
+import { stripSingleSlashes, toExportMana, toExportName } from '@hellfall/shared/utils/textHandling';
 import { canBeACommander } from '../../hellfall/canBeACommander';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
 import { getSplitSet } from '../../hellfall/filters/filterSet';
@@ -117,16 +117,16 @@ export const HCToDraftmancer = (
         }
       }
       // store the names
-      idNames[card.id] = card.card_faces[0].export_name || card.card_faces[0].name;
+      idNames[card.id] = stripSingleSlashes(card.card_faces[0].export_name || card.card_faces[0].name);
     } else {
-      idNames[card.id] = card.export_name || card.name;
+      idNames[card.id] = stripSingleSlashes(card.export_name || card.name);
     }
     return card;
   };
 
   const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard => {
     const draftCard: DraftmancerCustomCard = {
-      name: card.isActualToken ? card.id : card.name,
+      name: stripSingleSlashes(card.isActualToken ? card.id : card.export_name || card.name),
       mana_cost: toExportMana(card.mana_cost, true),
       type: card.type_line,
       image: card.rotated_image || card.image,
@@ -157,7 +157,7 @@ export const HCToDraftmancer = (
   const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => {
     const face = card.card_faces[0];
     const draftCard: DraftmancerCustomCard = {
-      name: face.name,
+      name: stripSingleSlashes(face.export_name || face.name),
       mana_cost: toExportMana(face.mana_cost, true),
       type: face.type_line,
       image: face.rotated_image || face.image || card.rotated_image || card.image,
@@ -189,7 +189,7 @@ export const HCToDraftmancer = (
 
   const HCFaceToDraftFace = (face: HCCardFace.MultiFaced): DraftmancerCardFace => {
     const draftFace: DraftmancerCardFace = {
-      name: face.name,
+      name: stripSingleSlashes(face.export_name || face.name),
       mana_cost: toExportMana(face.mana_cost, true),
       type: face.type_line,
       image: face.rotated_image || face.image,

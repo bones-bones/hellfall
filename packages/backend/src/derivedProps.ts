@@ -409,7 +409,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
           const otherName =
             card.card_faces[otherIndex].export_name ||
             toExportName(card.card_faces[otherIndex].name);
-          exportName = `(${index > otherIndex ? 'Back' : 'Front'} of ${otherName})`;
+          exportName = `${index > otherIndex ? 'Back' : 'Front'} of ${otherName}`;
         } else {
           const otherIndex = card.card_faces.findIndex(
             (other, i) =>

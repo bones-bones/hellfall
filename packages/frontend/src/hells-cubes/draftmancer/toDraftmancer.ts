@@ -61,6 +61,18 @@ export const toDraftmancerCube = ({ set, allCards }: { set: string; allCards: HC
       .join('\n')}`;
 
     return formatted;
+  } else if (set == 'All') {
+    const formatted = `[Settings]
+{
+    "name": "${set}",
+    "colorBalance": false,
+    "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA"
+}
+[CustomCards]\n${JSON.stringify([...cards, ...tokens], null, '\t')}\n[MainSlot]\n${tokens
+      .map(e => `1 ${e.name}`)
+      .join('\n')}`;
+
+    return formatted;
   } else {
     const formatted = `[Settings]
 {
