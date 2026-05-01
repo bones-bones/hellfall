@@ -264,6 +264,9 @@ export const toExportName = (name: string) => {
   return name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll('\\', '');
 };
 
+export const stripSingleSlashes = (text:string)=> {
+  return text.replaceAll(/([^\/])\/([^\/])/g,'$1$2');
+}
 /**
  * Converts mana from import from scryfall
  * @param text text to import

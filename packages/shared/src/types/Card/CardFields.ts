@@ -170,6 +170,7 @@ export namespace HCCardFields.Gameplay {
     mana_cost: string;
     mana_value: number;
     layout: `${HCLayout}`;
+    export_name?:string;
   };
 
   /**
@@ -231,6 +232,18 @@ export namespace HCCardFields.Gameplay {
      * The layout of this face
      */
     layout: `${HCLayout}`;
+    /**
+     * Whether this face should be compressed on export
+     */
+    compress_face?:boolean;
+    /**
+     * Whether this face should be dropped on export
+     */
+    drop_face?:boolean;
+    /**
+     * What name to use when exporting this face
+     */
+    export_name?:string;
   } & CombatStats &
     VanguardStats;
 
@@ -278,6 +291,10 @@ export namespace HCCardFields.Gameplay {
      */
     type_line: string;
     layout: `${HCLayout}`;
+    /**
+     * What name to use when exporting this face
+     */
+    export_name?:string;
   };
   /**
    * These fields are specific for multiface cards.
@@ -330,9 +347,9 @@ export namespace HCCardFields.Print {
    */
   export type CardSpecific = {
     /**
-     * The name of the illustrator of this card. Newly spoiled cards may not have this field yet.
+     * The name of the illustrators of this card. Newly spoiled cards may not have this field yet.
      */
-    // artist?: string;
+    artists?: string[];
     /**
      * The IDs of the artists that illustrated this card. Newly spoiled cards may not have this field yet.
      *

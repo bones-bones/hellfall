@@ -11,7 +11,7 @@ import {
   NewFrames,
   HCFrame,
 } from '@hellfall/shared/types';
-import { splitParens } from '@hellfall/shared/utils/textHandling.ts';
+import { splitParens, toExportName } from '@hellfall/shared/utils/textHandling.ts';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
 import { orderColors } from '@hellfall/shared/utils/orderColors.ts';
 
@@ -286,6 +286,137 @@ export const setDerivedProps = (card: HCCard.Any) => {
   card.color_identity = orderColors(color_identity) as HCColors;
   card.color_identity_hybrid = color_identity_hybrid;
 };
+const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
+  'draft_partner',
+  'meld_result',
+  'specialize',
+];
+const conditionalDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
+  'checklist',
+  'dungeon',
+  'token',
+  'emblem',
+  'checklist',
+  'reminder',
+  'misc',
+  'stickers',
+  'dungeon',
+];
+const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
+  'split',
+  'aftermath',
+  'prepare',
+  'inset',
+  'token',
+  'flip',
+];
+
+export const setExportProps = (card:HCCard.Any,takenNames:string[])=> {
+  if ('card_faces' in card) {
+    const toFinalExportName = (name:string) => {
+      let exportName = toExportName(name)
+      if (card.isActualToken) {
+        let i = 1
+        while (takenNames.includes(exportName + i)) {
+          i++;
+        }
+        exportName += i;
+      }
+      while (/\(.{2,3}\)$/.test(exportName) ||takenNames.includes(exportName)) {
+        exportName +='_';
+      }
+      return exportName;
+    }
+    // deal with simple flips
+    if (card.card_faces.length == 2 && card.layout == 'flip') {
+      const fullName = card.card_faces.map((face,index) => {
+        let exportName = toExportName(face.name);
+        if (!face.name) {
+          exportName = `(${index ? 'Bottom':'Top'} of ${toExportName(card.card_faces[1-index].name)})`;
+        } else if (index && face.name == card.card_faces[0].name) {
+          exportName += ' (Bottom)';
+        }
+
+        exportName = toFinalExportName(exportName);
+        
+        if (exportName != face.name && exportName != card.name) {
+          face.export_name = exportName;
+        }
+        takenNames.push(exportName)
+        if (index) {
+          face.compress_face = true;
+        }
+        return exportName;
+      })
+      const exportName = toFinalExportName(fullName[0] + ' // ' + fullName[1]);
+      if (exportName != card.name) {
+        card.export_name = exportName;
+      }
+      takenNames.push(exportName)
+      return
+    }
+
+    // compress/drop layouts that should always be compressed or should be dropped
+    card.card_faces.forEach((face,index)=> {
+      if (alwaysDropLayouts.includes(face.layout)) {
+        face.drop_face = true;
+      } else if (conditionalDropLayouts.includes(face.layout)) {
+        if (card.all_parts && card.all_parts.some(part => part.name == face.name)) {
+          face.drop_face = true;
+        } else if (!face.image) {
+          face.compress_face = true;
+        }
+      } else if (alwaysCompressLayouts.includes(face.layout) || card.tags?.includes('compress-faces')) {
+        face.compress_face = true;
+      }
+    })
+    // compress down to 1 side and use front image if there are still too many sides
+    if (card.card_faces.filter(face=>!face.compress_face && !face.drop_face).length > 2) {
+      card.card_faces.forEach((face,index) => {
+        if (index && !face.compress_face && !face.drop_face) {
+          face.compress_face = true;
+        }
+      })
+    }
+    card.card_faces.forEach((face,index)=> {
+      if (!face.compress_face && !face.drop_face) {
+        let faceName = face.name;
+        for (let i = index+1;i<card.card_faces.length && (card.card_faces[i].compress_face || card.card_faces[i].drop_face);i++) {
+          if (card.card_faces[i].compress_face && !(conditionalDropLayouts.includes(card.card_faces[i].layout) && !index)) {
+            faceName += ' // ' + card.card_faces[i].name;
+          }
+        }
+        let exportName = toExportName(faceName);
+        if (!exportName) {
+          const otherIndex = card.card_faces.findIndex((other,i)=> !other.compress_face && !other.drop_face && i !=index)
+          const otherName = card.card_faces[otherIndex].export_name || toExportName(card.card_faces[otherIndex].name)
+          exportName = `(${index > otherIndex ? 'Back':'Front'} of ${otherName})`;
+        } else {
+          const otherIndex = card.card_faces.findIndex((other,i)=> i <index && !other.compress_face && !other.drop_face && (exportName == other.export_name || exportName == toExportName(other.name)))
+          if (otherIndex != -1 && exportName == toExportName(card.card_faces[0].name)) {
+            exportName += ' (Back)';
+          }
+        }
+        exportName = toFinalExportName(exportName);
+        
+        if (exportName != face.name && exportName != card.name) {
+          face.export_name = exportName;
+        }
+        takenNames.push(exportName)
+      }
+    })
+
+  } else {
+    let exportName = toExportName(card.isActualToken?card.id:card.name)
+    while (/\(.{2,3}\)$/.test(exportName) ||takenNames.includes(exportName)) {
+      exportName +='_';
+    }
+    if (exportName != (card.isActualToken?card.id:card.name)) {
+      card.export_name = exportName;
+    }
+    takenNames.push(exportName)
+  }
+}
 
 const manaSymbolColorMatching: Record<
   string,

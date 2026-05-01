@@ -54,6 +54,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     Checklist: HCLayout.Checklist,
   };
   const defaultProps: Record<string, any> = {
+    object: HCObject.ObjectType.Card,
     rulings: '',
     creators: [],
     legalities: {

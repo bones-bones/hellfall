@@ -88,6 +88,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
   });
 
   const defaultProps: Record<string, any> = {
+    object: HCObject.ObjectType.Card,
     name: '',
     rulings: '',
     creators: [],
@@ -108,7 +109,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     finish: HCFinish.Nonfoil,
   };
 
-  const defaultMultiFaceProps: Record<string, any> = {
+  const defaultFaceProps: Record<string, any> = {
+    object: HCObject.ObjectType.CardFace,
     mana_cost: '',
     mana_value: 0,
     colors: [] as HCColors,
@@ -440,7 +442,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         note?: string,
         prop?: string,
         value?: Record<string, any> | string,
-        options?: { replaceNote?: boolean; push?: boolean; useRootOnly?: boolean; useUrl?: boolean }
+        options?: { dontAddNote?: boolean; replaceNote?:boolean, push?: boolean; useRootOnly?: boolean; useUrl?: boolean }
       ) => {
         if (note) {
           const useBoth = note.includes('|') && !options?.useRootOnly;
@@ -472,7 +474,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
               addTagToRoot(prop, options?.useUrl ? tagUrl! : note, options?.push);
             }
           }
-          if (subnote && !options?.useUrl) {
+          if (subnote && !options?.useUrl && !options?.dontAddNote) {
             addTagNote(tag, subnote, options?.replaceNote);
           }
         } else {
@@ -507,7 +509,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           } else if (tag in borderColorTags) {
             addTag(tag, note, 'border_color', borderColorTags);
           } else if (tag == 'flavor-name') {
-            addTag(tag, undefined, 'flavor_name', note);
+            addTag(tag, note, 'flavor_name', undefined,{dontAddNote:true});
           } else if (tag.toLowerCase() == cardObject.set.toLowerCase() || (['hc1.0','hc1.1','hc1.2'].includes(tag) && (cardObject.set.slice(0,3) == 'HLC' || cardObject.set == 'HCV.1'))) {
             addTag(tag, undefined, 'collector_number', note);
           } else {
@@ -645,10 +647,10 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           face.image_status = HCImageStatus.Split;
         }
       }
-      Object.keys(defaultMultiFaceProps)
+      Object.keys(defaultFaceProps)
         .filter(key => !(key in face))
         .forEach(key => {
-          face[key] = defaultMultiFaceProps[key];
+          face[key] = defaultFaceProps[key];
         });
       mana_cost_list.push(face.mana_cost);
     });
@@ -669,6 +671,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
         ([key, value]) =>
           ![
+            'object',
             'name',
             'type_line',
             'mana_cost',
