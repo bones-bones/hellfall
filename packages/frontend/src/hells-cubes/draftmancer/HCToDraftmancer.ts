@@ -9,7 +9,7 @@ import {
 import { stripSingleSlashes, toExportMana } from '@hellfall/shared/utils/textHandling';
 import { canBeACommander } from '../../hellfall/canBeACommander';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
-import { getSplitSet } from '../../hellfall/filters/filterSet';
+import { getCustomCardlist, getSplitSet } from '../../hellfall/filters/filterSet';
 import { orderColors } from '@hellfall/shared/utils/orderColors';
 import { mergeHCCardFaces } from '../mergeHCCardFaces';
 
@@ -17,9 +17,12 @@ const validColors = ['W', 'U', 'B', 'R', 'G'];
 
 export const HCToDraftmancer = (
   allCards: HCCard.Any[],
-  set: string
+  set: string,
+  cardIds?: string[]
 ): { cards: DraftmancerCustomCard[]; tokens: DraftmancerCustomCard[] } => {
-  const { cards, tokens } = getSplitSet(allCards, set, true);
+  const { cards, tokens } = cardIds
+    ? getCustomCardlist(allCards, cardIds)
+    : getSplitSet(allCards, set, true);
   const idNames: Record<string, string> = {};
   const commanderIds: string[] = [];
   const compressHCCardFaces = (card: HCCard.Any) => {

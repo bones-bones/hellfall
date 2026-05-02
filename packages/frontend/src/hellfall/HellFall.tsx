@@ -16,7 +16,7 @@ import { CHUNK_SIZE } from './constants.ts';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom.ts';
 import { useUrlSync } from './hooks/useUrlSync.ts';
-import { getOtherNames } from './getOtherNames.ts';
+import { getOtherNames } from './getNames.ts';
 import { withBasePath } from '../basePath.ts';
 
 export const HellFall = () => {

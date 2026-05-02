@@ -2,21 +2,23 @@ import { atom } from 'jotai';
 
 const searchParams = new URLSearchParams(document.location.search);
 
-export const nameSearchAtom = atom<string>(searchParams.get('name') || '');
-
 export const idSearchAtom = atom<string>(searchParams.get('id') || '');
 
-export const costSearchAtom = atom<string[]>(searchParams.get('cost')?.split(',') || []);
+export const nameSearchAtom = atom<string[]>(searchParams.getAll('name'));
 
-export const typeSearchAtom = atom<string[]>(searchParams.get('type')?.split(',') || []);
+export const costSearchAtom = atom<string[]>(searchParams.getAll('cost'));
 
-export const rulesSearchAtom = atom<string[]>(searchParams.get('rules')?.split(',') || []);
+export const typeSearchAtom = atom<string[]>(searchParams.getAll('type'));
 
-export const flavorSearchAtom = atom<string[]>(searchParams.get('flavor')?.split(',') || []);
+export const rulesSearchAtom = atom<string[]>(searchParams.getAll('rules'));
 
-export const creatorsAtom = atom(searchParams.get('creators')?.split(',,') || []);
+export const flavorSearchAtom = atom<string[]>(searchParams.getAll('flavor'));
 
-export const tagsAtom = atom(searchParams.get('tags')?.split(',') || []);
+export const creatorsAtom = atom<string[]>(searchParams.getAll('creator'));
+
+export const artistsAtom = atom<string[]>(searchParams.getAll('artist'));
+
+export const tagsAtom = atom<string[]>(searchParams.getAll('tag'));
 
 export const searchColorsAtom = atom(searchParams.get('colors')?.split(',') || []);
 

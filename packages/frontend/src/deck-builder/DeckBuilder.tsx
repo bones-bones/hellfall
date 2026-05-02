@@ -7,6 +7,7 @@ import { TextInput, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { nameToId } from '../hellfall/hooks/useNameToId.ts';
+import { getDraftmancerForCube } from '../hells-cubes/draftmancer/getDraftmancerForCube.ts';
 
 const basics: Record<string, string> = {
   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -29,6 +30,7 @@ export const DeckBuilder = () => {
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') || 'your deck name goes here');
   const [renderCards, setRenderCards] = useState<HCCard.Any[]>([]);
   const [playtesting, setPlaytesthing] = useState(false);
+  const [showImage, setShowImage] = useState(true);
 
   useEffect(() => {
     import('@hellfall/shared/data/Hellscube-Database.json').then(({ data }: any) => {
@@ -145,12 +147,27 @@ Cock and Balls to Torture and Abuse"
       <br />
       <button
         onClick={() => {
+          if (!showImage) {
+            setShowImage(true);
+          }
           if (textAreaRef.current) {
             setTextAreaValue(textAreaRef.current.value);
           }
         }}
       >
         generate deck image
+      </button>
+      <button
+        onClick={() => {
+          if (showImage) {
+            setShowImage(false);
+          }
+          if (textAreaRef.current) {
+            setTextAreaValue(textAreaRef.current.value);
+          }
+        }}
+      >
+        set deck (no image)
       </button>
       <button
         disabled={!toRender}
@@ -178,21 +195,35 @@ Cock and Balls to Torture and Abuse"
       >
         Download for TTS
       </button>{' '}
+      <button
+        onClick={() => {
+          getDraftmancerForCube({
+            id: 'Custom',
+            name: deckName,
+            allCards: cards,
+            cardIds: renderCards.filter(card => card.id).map(card => card.id),
+          });
+        }}
+      >
+        Download for Draftmancer
+      </button>{' '}
       Cards in deck {renderCards.length}
       <br />
-      <DeckContainer ref={ref}>
-        {renderCards?.map((entry, i) => {
-          return (
-            <Card
-              width="250px"
-              title={entry.name}
-              key={entry.name + i}
-              src={entry.draft_image ? entry.draft_image : entry.image}
-              crossOrigin="anonymous"
-            />
-          );
-        })}
-      </DeckContainer>
+      {showImage && (
+        <DeckContainer ref={ref}>
+          {renderCards?.map((entry, i) => {
+            return (
+              <Card
+                width="250px"
+                title={entry.name}
+                key={entry.name + i}
+                src={entry.draft_image ? entry.draft_image : entry.image}
+                crossOrigin="anonymous"
+              />
+            );
+          })}
+        </DeckContainer>
+      )}
     </div>
   );
 };

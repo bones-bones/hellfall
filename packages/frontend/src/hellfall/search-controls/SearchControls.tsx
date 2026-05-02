@@ -17,13 +17,14 @@ import pips from '@hellfall/shared/data/pips.json';
 
 import { useAtom } from 'jotai';
 import {
-  nameSearchAtom,
   idSearchAtom,
+  nameSearchAtom,
   costSearchAtom,
   typeSearchAtom,
   rulesSearchAtom,
   flavorSearchAtom,
   creatorsAtom,
+  artistsAtom,
   tagsAtom,
   searchColorsAtom,
   colorComparisonAtom,
@@ -59,13 +60,14 @@ import { HCSearchColors } from '@hellfall/shared/types';
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
 export const SearchControls = () => {
-  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
+  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [costSearch, setCostSearch] = useAtom(costSearchAtom);
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [flavorSearch, setFlavorSearch] = useAtom(flavorSearchAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
+  const [artists, setArtists] = useAtom(artistsAtom);
   const [tags, setTags] = useAtom(tagsAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [colorComparison, setColorComparison] = useAtom(colorComparisonAtom);
@@ -98,37 +100,37 @@ export const SearchControls = () => {
   const [defense, setDefense] = useAtom(defenseAtom);
 
   // debouncing
-  const [localName, setLocalName] = useState(nameSearch);
+  // const [localName, setLocalName] = useState(nameSearch);
   const [localId, setLocalId] = useState(idSearch);
 
-  const [activeBox, setActiveBox] = useState<'name' | 'id' | null>(null);
+  const [activeBox, setActiveBox] = useState</**'name' |*/ 'id' | null>(null);
 
   const enterPressed = useKeyPress('Enter');
 
-  const [debouncedName, flushName] = useDebounce(localName, 300);
+  // const [debouncedName, flushName] = useDebounce(localName, 300);
   const [debouncedId, flushId] = useDebounce(localId, 300);
 
-  useEffect(() => {
-    setLocalName(nameSearch);
-  }, [nameSearch]);
+  // useEffect(() => {
+  //   setLocalName(nameSearch);
+  // }, [nameSearch]);
 
   useEffect(() => {
     setLocalId(idSearch);
   }, [idSearch]);
 
-  useEffect(() => {
-    setNameSearch(debouncedName);
-  }, [debouncedName, setNameSearch]);
+  // useEffect(() => {
+  //   setNameSearch(debouncedName);
+  // }, [debouncedName, setNameSearch]);
 
   useEffect(() => {
     setIdSearch(debouncedId);
   }, [debouncedId, setIdSearch]);
 
-  const handleNameFocus = () => {
-    if (activeBox !== 'name') {
-      setActiveBox('name');
-    }
-  };
+  // const handleNameFocus = () => {
+  //   if (activeBox !== 'name') {
+  //     setActiveBox('name');
+  //   }
+  // };
 
   const handleIdFocus = () => {
     if (activeBox !== 'id') {
@@ -136,12 +138,12 @@ export const SearchControls = () => {
     }
   };
 
-  const handleNameBlur = () => {
-    flushName();
-    if (activeBox == 'name') {
-      setActiveBox(null);
-    }
-  };
+  // const handleNameBlur = () => {
+  //   flushName();
+  //   if (activeBox == 'name') {
+  //     setActiveBox(null);
+  //   }
+  // };
 
   const handleIdBlur = () => {
     flushId();
@@ -153,15 +155,15 @@ export const SearchControls = () => {
   useEffect(() => {
     if (enterPressed && activeBox) {
       switch (activeBox) {
-        case 'name':
-          flushName();
-          break;
+        // case 'name':
+        //   flushName();
+        //   break;
         case 'id':
           flushId();
           break;
       }
     }
-  }, [enterPressed, setNameSearch, setIdSearch, flushName, flushId]);
+  }, [enterPressed, setNameSearch, setIdSearch, /** flushName,  */ flushId]);
   const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
   const pipList = pips.data
     .filter(pip => !excludeFiles.some(file => pip.filename.includes(file)))
@@ -170,14 +172,14 @@ export const SearchControls = () => {
   return (
     <SearchContainer>
       <SearchCriteriaSection>
-        <FormField label="Name">
+        {/* <FormField label="Name">
           <TextInput
             value={localName}
             onChange={event => setLocalName(event.target.value)}
             onFocus={handleNameFocus}
             onBlur={handleNameBlur}
           />
-        </FormField>
+        </FormField> */}
         <FormField label="Id">
           <TextInput
             value={localId}
@@ -186,6 +188,12 @@ export const SearchControls = () => {
             onBlur={handleIdBlur}
           />
         </FormField>
+        <PillSearch
+          label={'Name'}
+          possibleValues={[]}
+          values={nameSearch}
+          onChange={setNameSearch}
+        />
         <PillSearch
           label={'Cost'}
           possibleValues={pipList}
@@ -215,6 +223,12 @@ export const SearchControls = () => {
           possibleValues={creators_data.data}
           values={creators}
           onChange={setCreators}
+        />
+        <PillSearch
+          label={'Artist(s)'}
+          possibleValues={[]}
+          values={artists}
+          onChange={setArtists}
         />
         <PillSearch
           label={'Tags'}

@@ -39,6 +39,34 @@ export const useNameToId = (name: string): string | undefined => {
     )?.id
   );
 };
+
+const getFrontExportName = (card: HCCard.Any) => {
+  if (card.export_name) {
+    return card.export_name;
+  }
+  if ('card_faces' in card) {
+    if (card.card_faces[0].export_name) {
+      return card.card_faces[0].export_name;
+    }
+    if (!card.card_faces[1].compress_face && !card.card_faces[1].drop_face) {
+      return card.card_faces[0].name;
+    }
+    let faceName = card.card_faces[0].name;
+    for (
+      let i = 1;
+      i < card.card_faces.length &&
+      (card.card_faces[i].compress_face || card.card_faces[i].drop_face);
+      i++
+    ) {
+      if (card.card_faces[i].compress_face) {
+        faceName += ' // ' + card.card_faces[i].name;
+      }
+    }
+    return faceName;
+  }
+  return card.name;
+};
+
 export const nameToId = (name: string, cards: HCCard.Any[]): string | undefined => {
   const movedIds: Record<string, string> = {
     '219': '6727',
@@ -60,6 +88,14 @@ export const nameToId = (name: string, cards: HCCard.Any[]): string | undefined 
     return theId;
   }
   return (
+    cards.find(card => card.export_name && textEquals(card.export_name, name))?.id ??
+    cards.find(
+      card =>
+        'card_faces' in card &&
+        card.card_faces[0].export_name &&
+        textEquals(card.card_faces[0].export_name, name)
+    )?.id ??
+    cards.find(card => 'card_faces' in card && textEquals(getFrontExportName(card), name))?.id ??
     cards.find(card => textEquals(card.id, name))?.id ??
     cards.find(card => textEquals(card.name, name))?.id ??
     cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??

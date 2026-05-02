@@ -5,13 +5,14 @@ import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { useAtom, useAtomValue } from 'jotai';
 import {
-  nameSearchAtom,
   idSearchAtom,
+  nameSearchAtom,
   costSearchAtom,
   typeSearchAtom,
   rulesSearchAtom,
   flavorSearchAtom,
   creatorsAtom,
+  artistsAtom,
   tagsAtom,
   searchColorsAtom,
   colorComparisonAtom,
@@ -50,11 +51,14 @@ import {
   hybridColorCompOp,
   hybridIdentityMiscReduce,
   numCompOp,
-} from '../opComps.ts';
+} from '../filters/opComps.ts';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 import { CHUNK_SIZE } from '../constants.ts';
 import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import { filterSet } from '../filters/filterSet.ts';
+import { filterText, filterTextList } from '../filters/filterText.ts';
+import { looseOpType, opType } from '../filters/types.ts';
+import { getAllNames } from '../getNames.ts';
 
 export const useSearchResults = () => {
   const location = useLocation();
@@ -64,13 +68,14 @@ export const useSearchResults = () => {
   const cards = useAtomValue(cardsAtom).filter(
     e => !e.tags?.includes('offensive') && e.set != 'NotMagic'
   );
-  const nameSearch = useAtomValue(nameSearchAtom);
   const idSearch = useAtomValue(idSearchAtom);
+  const nameSearch = useAtomValue(nameSearchAtom);
   const costSearch = useAtomValue(costSearchAtom);
   const typeSearch = useAtomValue(typeSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const flavorSearch = useAtomValue(flavorSearchAtom);
   const creators = useAtomValue(creatorsAtom);
+  const artists = useAtomValue(artistsAtom);
   const tags = useAtomValue(tagsAtom);
   const searchColors = useAtomValue(searchColorsAtom);
   const colorComparison = useAtomValue(colorComparisonAtom);
@@ -110,140 +115,107 @@ export const useSearchResults = () => {
     },
   });
 
+  const textToOps: Record<string, opType> = {
+    '!': '<',
+    '?': '=',
+    '!?': '!=',
+    '?!': '!=',
+  };
+  const splitOp = (text: string): [looseOpType, string] => {
+    if (text.slice(0, 2) in textToOps) {
+      return [textToOps[text.slice(0, 2)], text.slice(2)];
+    }
+    if (text.slice(0, 1) in textToOps) {
+      return [textToOps[text.slice(0, 1)], text.slice(1)];
+    }
+    return [':', text];
+  };
   useEffect(() => {
     const tempResults = filterSet(cards, searchSet, extraSets, includeExtraSets, searchToken)
       .filter(entry => {
         let usingOr = false;
         let matchesSomeOr = false;
-
-        if (
-          nameSearch !== '' &&
-          !textSearchIncludes(entry.name, nameSearch) &&
-          !textSearchIncludes(
-            entry
-              .toFaces()
-              .map(e => e.name || '')
-              .join(' // '),
-            nameSearch
-          ) &&
-          !(entry.flavor_name && textSearchIncludes(entry.flavor_name, nameSearch)) &&
-          !(
-            'card_faces' in entry &&
-            entry.card_faces.some(
-              face => face.flavor_name && textSearchIncludes(face.flavor_name, nameSearch)
-            )
-          )
-        ) {
-          return false;
-        }
-
-        // TODO: decide if this should use includes instead of equals
-        if (idSearch !== '' && !textEquals(entry.id, idSearch)) {
-          return false;
-        }
-
-        if (
-          costSearch.length > 0 &&
-          !costSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.mana_cost)
-              .join();
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else if (searchTerm.startsWith('~')) {
-              if (!usingOr) {
-                usingOr = true;
-              }
-              if (textSearchIncludes(combined, searchTerm.substring(1))) {
-                matchesSomeOr = true;
-              }
-              return true;
-            } else {
-              return textSearchIncludes(combined, searchTerm);
+        const filterTextListAllowingOr = (combined: string[], searchTerm: string) => {
+          if (searchTerm.startsWith('~')) {
+            if (!usingOr) {
+              usingOr = true;
             }
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          typeSearch.length > 0 &&
-          !typeSearch.every(searchTerm => {
-            const combined = [
-              ...entry.toFaces().map(e => e.supertypes || ''),
-              ...entry.toFaces().map(e => e.types || ''),
-              ...entry.toFaces().map(e => e.subtypes || ''),
-              ...entry.toFaces().map(e => e.type_line),
-            ].join(',');
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else if (searchTerm.startsWith('~')) {
-              if (!usingOr) {
-                usingOr = true;
-              }
-              if (textSearchIncludes(combined, searchTerm.substring(1))) {
-                matchesSomeOr = true;
-              }
-              return true;
-            } else {
-              return textSearchIncludes(combined, searchTerm);
+            const split = splitOp(searchTerm.slice(1));
+            if (filterTextList(combined, split[0], split[1])) {
+              matchesSomeOr = true;
             }
-          })
-        ) {
+            return true;
+          } else {
+            const split = splitOp(searchTerm);
+            return filterTextList(combined, split[0], split[1]);
+          }
+        };
+        const everySearchTermMatchesListAllowingOr = (
+          combined: string[],
+          searchTerms: string[]
+        ) => {
+          return searchTerms.every(searchTerm => filterTextListAllowingOr(combined, searchTerm));
+        };
+        // TODO: decide if this should use <= instead of =
+        if (idSearch !== '' && !filterText(entry.id, '=', idSearch)) {
           return false;
         }
 
-        if (
-          rulesSearch.length > 0 &&
-          !rulesSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.oracle_text || '')
-              .join();
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else if (searchTerm.startsWith('~')) {
-              if (!usingOr) {
-                usingOr = true;
-              }
-              if (textSearchIncludes(combined, searchTerm.substring(1))) {
-                matchesSomeOr = true;
-              }
-              return true;
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
-          return false;
+        if (nameSearch.length) {
+          const combined = getAllNames(entry);
+          if (!everySearchTermMatchesListAllowingOr(combined, nameSearch)) {
+            return false;
+          }
         }
 
-        if (
-          flavorSearch.length > 0 &&
-          !flavorSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.flavor_text || '')
-              .join();
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else if (searchTerm.startsWith('~')) {
-              if (!usingOr) {
-                usingOr = true;
-              }
-              if (textSearchIncludes(combined, searchTerm.substring(1))) {
-                matchesSomeOr = true;
-              }
-              return true;
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
-          return false;
+        if (costSearch.length) {
+          const combined = entry.toFaces().map(e => e.mana_cost);
+          if (!everySearchTermMatchesListAllowingOr(combined, costSearch)) {
+            return false;
+          }
         }
 
+        if (typeSearch.length) {
+          const combined = [
+            ...entry.toFaces().flatMap(e => e.supertypes || []),
+            ...entry.toFaces().flatMap(e => e.types || []),
+            ...entry.toFaces().flatMap(e => e.subtypes || []),
+            ...entry.toFaces().map(e => e.type_line),
+          ];
+          if (!everySearchTermMatchesListAllowingOr(combined, typeSearch)) {
+            return false;
+          }
+        }
+
+        if (rulesSearch.length) {
+          const combined = entry.toFaces().map(e => e.oracle_text);
+          if (!everySearchTermMatchesListAllowingOr(combined, rulesSearch)) {
+            return false;
+          }
+        }
+
+        if (flavorSearch.length) {
+          const combined = entry.toFaces().flatMap(e => e.flavor_text ?? []);
+          if (!everySearchTermMatchesListAllowingOr(combined, flavorSearch)) {
+            return false;
+          }
+        }
+
+        if (creators.length) {
+          const combined = entry.creators ?? [];
+          if (!everySearchTermMatchesListAllowingOr(combined, creators)) {
+            return false;
+          }
+        }
+
+        if (artists.length) {
+          const combined = entry.artists ?? [];
+          if (!everySearchTermMatchesListAllowingOr(combined, artists)) {
+            return false;
+          }
+        }
+
+        // todo: rework tag search to line up with others
         if (
           tags.length > 0 &&
           !tags.every(tag => {
@@ -284,27 +256,6 @@ export const useSearchResults = () => {
                 return entry.tag_notes && textEquals(entry.tag_notes[subtag], note);
               }
               return entry.tags?.includes(tag);
-            }
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          creators.length > 0 &&
-          !creators.every(creator => {
-            if (creator.startsWith('!')) {
-              return !entry.creators?.includes(creator.slice(1));
-            } else if (creator.startsWith('~')) {
-              if (!usingOr) {
-                usingOr = true;
-              }
-              if (entry.creators?.includes(creator.slice(1))) {
-                matchesSomeOr = true;
-              }
-              return true;
-            } else {
-              return entry.creators?.includes(creator);
             }
           })
         ) {
@@ -429,30 +380,25 @@ export const useSearchResults = () => {
       paginationModel.events.goTo(currentPageNumber);
     }
 
-    if (nameSearch != '') {
-      searchToSet.append('name', nameSearch);
-    }
     if (idSearch != '') {
       searchToSet.append('id', idSearch);
     }
-    if (costSearch.length > 0) {
-      searchToSet.append('cost', costSearch.join(','));
-    }
-    if (typeSearch.length > 0) {
-      searchToSet.append('type', typeSearch.join(','));
-    }
-    if (rulesSearch.length > 0) {
-      searchToSet.append('rules', rulesSearch.join(','));
-    }
-    if (flavorSearch.length > 0) {
-      searchToSet.append('flavor', flavorSearch.join(','));
-    }
-    if (creators.length > 0) {
-      searchToSet.append('creators', creators.join(',,'));
-    }
-    if (tags.length > 0) {
-      searchToSet.append('tags', tags.join(','));
-    }
+    nameSearch.forEach(entry => searchToSet.append('name', entry));
+
+    costSearch.forEach(entry => searchToSet.append('cost', entry));
+
+    typeSearch.forEach(entry => searchToSet.append('type', entry));
+
+    rulesSearch.forEach(entry => searchToSet.append('rules', entry));
+
+    flavorSearch.forEach(entry => searchToSet.append('flavor', entry));
+
+    creators.forEach(entry => searchToSet.append('creator', entry));
+
+    artists.forEach(entry => searchToSet.append('artist', entry));
+
+    tags.forEach(entry => searchToSet.append('tag', entry));
+
     if (searchColors.length > 0) {
       searchToSet.append('colors', searchColors.join(','));
     }
@@ -564,13 +510,14 @@ export const useSearchResults = () => {
       // }
     }
   }, [
-    nameSearch,
     idSearch,
+    nameSearch,
     costSearch,
     typeSearch,
     rulesSearch,
     flavorSearch,
     creators,
+    artists,
     tags,
     searchColors,
     colorComparison,

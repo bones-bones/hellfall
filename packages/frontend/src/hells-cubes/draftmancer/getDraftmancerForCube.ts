@@ -5,14 +5,18 @@ export const getDraftmancerForCube = ({
   id,
   name,
   allCards,
+  cardIds,
 }: {
   id: string;
   name: string;
   allCards: HCCard.Any[];
+  cardIds?: string[];
 }) => {
   const val = toDraftmancerCube({
     set: id,
     allCards: allCards,
+    name: name,
+    cardIds: cardIds,
   });
 
   const url = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(val)));
