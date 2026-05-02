@@ -48,3 +48,5 @@ server/.env
 
 build
 .vscode/settings.json
+
+LESSONS_LEARNED.md

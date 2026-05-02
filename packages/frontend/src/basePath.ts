@@ -1,5 +1,6 @@
 const HELLFALL_BASE_PATH = '/hellfall';
 
+// This is currently need because we serve hellfall as a subdomain and a path
 export const getBasePath = () => {
   if (typeof window === 'undefined') {
     return HELLFALL_BASE_PATH;

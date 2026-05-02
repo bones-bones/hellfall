@@ -305,14 +305,12 @@ export const CubeResources = () => {
                           return e.Cardname == tokenEntry;
                         });
 
-                        const returnEntry = {
+                        return {
                           cardName: tokenEntry,
                           sides: matches.map(matchEntry => ({
                             id: matchEntry.Url.replace('https://lh3.googleusercontent.com/d/', ''),
                           })),
                         };
-
-                        return returnEntry;
                       });
 
                       const printableCards = intCards.map(cardEntry => {
@@ -353,10 +351,7 @@ export const CubeResources = () => {
   );
 };
 
-const StyledLink = styled(Link)({
-  // textDecoration: "none",
-  //color: "black",
-});
+const StyledLink = styled(Link)({});
 const Container = styled.div({ padding: '10px' });
 
 const StyledTable = styled('table')({
@@ -368,5 +363,3 @@ const StyledRow = styled('tr')({
 });
 const StyledTableHeader = styled('th')({ textAlign: 'start' });
 const StyledTD = styled('td')({ overflowY: 'hidden' });
-
-// ...existing code...
