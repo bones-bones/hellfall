@@ -49,4 +49,3 @@ export const filterTextList: textListFilter = Object.assign(
   },
   { defaultOp: '>=' as opType }
 );
-

@@ -9,7 +9,7 @@ export interface cardFilter<T = any, S = any> {
 }
 export interface textFilter extends cardFilter<string, string> {}
 export interface textListFilter extends cardFilter<string[], string> {}
-export interface textRecordFilter extends cardFilter<Record<string,string>, [string,string]> {}
+export interface textRecordFilter extends cardFilter<Record<string, string>, [string, string]> {}
 const invertedOps: Record<opType, opType> = {
   '<': '>=',
   '<=': '>',

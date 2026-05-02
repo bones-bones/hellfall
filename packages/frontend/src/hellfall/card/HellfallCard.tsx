@@ -294,6 +294,17 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <br />
             </>
           )}
+          {data.artists?.length && data.artists.length == 1 ? (
+            <>
+              <Text key="artist">Artist: {data.artists[0]}</Text>
+              <br />
+            </>
+          ) : (
+            <>
+              <Text key="artist">Artists: {data.artists?.join(', ')}</Text>
+              <br />
+            </>
+          )}
           {data.id && (
             <>
               <Text key="id">Id: {data.id}</Text>
