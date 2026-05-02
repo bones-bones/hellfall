@@ -1,5 +1,5 @@
 import { HCColors, HCMiscColors } from '@hellfall/shared/types';
-import { toNumber } from './inputs/NumberSelector';
+import { toNumber } from '../inputs/NumberSelector';
 const MISC_BULLSHIT = 'Misc bullshit';
 //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 

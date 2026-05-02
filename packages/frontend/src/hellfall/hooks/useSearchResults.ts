@@ -51,7 +51,7 @@ import {
   hybridColorCompOp,
   hybridIdentityMiscReduce,
   numCompOp,
-} from '../opComps.ts';
+} from '../filters/opComps.ts';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 import { CHUNK_SIZE } from '../constants.ts';
 import { extraSetList } from '@hellfall/shared/data/sets.ts';
