@@ -1,4 +1,4 @@
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, HCColors } from '@hellfall/shared/types';
 
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
 export type looseOpType = ':' | opType;
@@ -21,3 +21,6 @@ const invertedOps: Record<opType, opType> = {
 export const invertOp = (op: opType) => {
   return invertedOps[op];
 };
+export interface numFilter extends cardFilter<number, number> {}
+export interface numStringFilter extends cardFilter<number|string|undefined, number|string> {}
+export interface colorFilter extends cardFilter<HCColors|string[], HCColors|string[]> {}

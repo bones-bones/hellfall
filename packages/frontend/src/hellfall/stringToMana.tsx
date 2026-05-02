@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
-import { sameColors } from './filters/opComps.ts';
+import { sameColors } from './filters/filterColors.ts';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
 import { withBasePath } from '../basePath.ts';
 

@@ -14,6 +14,7 @@ import {
 import { splitParens, toExportName } from '@hellfall/shared/utils/textHandling.ts';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
 import { orderColors } from '@hellfall/shared/utils/orderColors.ts';
+import { isInteger } from '@hellfall/shared/utils/isInt';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -328,11 +329,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
       if (exportName.endsWith(')')) {
         exportName += '_';
       }
-      while (
-        // /\(.{2,3}\)$/.test(exportName) ||
-        takenNames.includes(exportName) ||
-        parseInt(exportName).toString() == exportName
-      ) {
+      while (takenNames.includes(exportName) || isInteger(exportName)) {
         exportName += '_';
       }
       return exportName;
@@ -441,11 +438,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     if (exportName.endsWith(')')) {
       exportName += '_';
     }
-    while (
-      // /\(.{2,3}\)$/.test(exportName) ||
-      takenNames.includes(exportName) ||
-      parseInt(exportName).toString() == exportName
-    ) {
+    while (takenNames.includes(exportName) || isInteger(exportName)) {
       exportName += '_';
     }
     if (exportName != (card.isActualToken ? card.id : card.name)) {
