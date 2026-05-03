@@ -1,5 +1,5 @@
 import { HCColors, HCMiscColors } from '@hellfall/shared/types';
-import { toNumber } from '../inputs/NumberSelector';
+import { colorFilter, hybridFilter, looseOpType, opType } from './types';
 const MISC_BULLSHIT = 'Misc bullshit';
 //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 
@@ -12,86 +12,83 @@ const MISC_BULLSHIT = 'Misc bullshit';
 export const sameColors = (colors1: HCColors | string[], colors2: HCColors | string[]) => {
   return (
     colors1.length == colors2.length &&
-    (colors1 as string[]).every(color => (colors2 as string[]).includes(color))
+    (colors1 as string[]).every(c => (colors2 as string[]).includes(c))
   );
 };
+const contains = (set1: string[], set2: string[]) => set2.every(c => set1.includes(c));
 /**
  * Compares two sets of colors using an operator and returns a bool.
- * @param colors1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
+ * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
  * @param operator The operator
- * @param colors2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
+ * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
  * @returns boolean of whether the comparison is true
  */
-export const colorCompOp = (
-  colors1: HCColors | string[],
-  operator: '<' | '<=' | '=' | '>=' | '>',
-  colors2: HCColors | string[]
-) => {
-  if (colors2.includes('C')) {
-    switch (operator) {
-      case '<': {
-        return false;
+export const filterColors: colorFilter = Object.assign(
+  (value1: string[], operator: looseOpType, value2: string[]) => {
+    const actualOp = operator === ':' ? filterColors.defaultOp : operator;
+    if (value2.includes('C')) {
+      switch (actualOp) {
+        case '<': {
+          return false;
+        }
+        case '<=': {
+          return value1.length == 0;
+        }
+        case '=': {
+          return value1.length == 0;
+        }
+        case '>=': {
+          return true;
+        }
+        case '>': {
+          return value1.length != 0;
+        }
+        case '!=': {
+          return value1.length != 0;
+        }
       }
-      case '<=': {
-        return colors1.length == 0;
-      }
-      case '=': {
-        return colors1.length == 0;
-      }
-      case '>=': {
-        return true;
-      }
-      case '>': {
-        return colors1.length != 0;
-      }
-    }
-  } else if (colors1.length == 0) {
-    switch (operator) {
-      case '<': {
-        return true;
-      }
-      case '<=': {
-        return true;
-      }
-      case '=': {
-        return false;
-      }
-      case '>=': {
-        return false;
-      }
-      case '>': {
-        return false;
-      }
-    }
-  } else {
-    switch (operator) {
-      case '<': {
-        return (
-          colors1.length < colors2.length &&
-          (colors1 as string[]).every(color => (colors2 as string[]).includes(color))
-        );
-      }
-      case '<=': {
-        return (colors1 as string[]).every(color => (colors2 as string[]).includes(color));
-      }
-      case '=': {
-        return (
-          colors1.length == colors2.length &&
-          (colors1 as string[]).every(color => (colors2 as string[]).includes(color))
-        );
-      }
-      case '>=': {
-        return (colors2 as string[]).every(color => (colors1 as string[]).includes(color));
-      }
-      case '>': {
-        return (
-          colors1.length > colors2.length &&
-          (colors2 as string[]).every(color => (colors1 as string[]).includes(color))
-        );
+    } else {
+      switch (actualOp) {
+        case '<': {
+          return !contains(value1, value2) && contains(value2, value1);
+        }
+        case '<=': {
+          return contains(value2, value1);
+        }
+        case '=': {
+          return contains(value1, value2) && contains(value2, value1);
+        }
+        case '>=': {
+          return contains(value1, value2);
+        }
+        case '>': {
+          return contains(value1, value2) && !contains(value2, value1);
+        }
+        case '!=': {
+          return !contains(value1, value2) || !contains(value2, value1);
+        }
       }
     }
+  },
+  { defaultOp: '>=' as opType }
+);
+
+/**
+ * Compares two sets of colors for a identity search using an operator and returns a bool.
+ * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
+ * @param operator The operator
+ * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
+ * @returns boolean of whether the comparison is true
+ */
+export const filterColorIdentity: colorFilter = Object.assign(
+  (value1: string[], operator: looseOpType, value2: string[]) => {
+    const actualOp = operator === ':' ? filterColorIdentity.defaultOp : operator;
+    return filterColors(value1, actualOp, value2);
+  },
+  {
+    defaultOp: '<=' as opType,
   }
-};
+);
 
 /**
  * Reduces down a card's colors to one compatible with search colors.
@@ -101,14 +98,46 @@ export const colorCompOp = (
 export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
   const newColors: string[] = [];
   colors
-    .map(color => (HCMiscColors.includes(color) ? MISC_BULLSHIT : color))
-    .forEach(color => {
-      if (!newColors.includes(color)) {
-        newColors.push(color);
+    .map(c => (HCMiscColors.includes(c) ? MISC_BULLSHIT : c))
+    .forEach(c => {
+      if (!newColors.includes(c)) {
+        newColors.push(c);
       }
     });
   return newColors;
 };
+/**
+ * Compares two sets of colors converting to misc using an operator and returns a bool.
+ * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
+ * @param operator The operator
+ * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
+ * @returns boolean of whether the comparison is true
+ */
+export const filterColorsMisc: colorFilter = Object.assign(
+  (value1: string[], operator: looseOpType, value2: string[]) => {
+    const actualOp = operator === ':' ? filterColorsMisc.defaultOp : operator;
+    return filterColors(colorMiscReduce(value1), actualOp, value2);
+  },
+  {
+    defaultOp: '>=' as opType,
+  }
+);
+/**
+ * Compares two sets of colors for a identity search converting to misc using an operator and returns a bool.
+ * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
+ * @param operator The operator
+ * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
+ * @returns boolean of whether the comparison is true
+ */
+export const filterColorIdentityMisc: colorFilter = Object.assign(
+  (value1: string[], operator: looseOpType, value2: string[]) => {
+    const actualOp = operator === ':' ? filterColorIdentityMisc.defaultOp : operator;
+    return filterColors(colorMiscReduce(value1), actualOp, value2);
+  },
+  {
+    defaultOp: '<=' as opType,
+  }
+);
 
 /**
  * Reduces down a card's hybrid identity set to one compatible with search colors.
@@ -118,24 +147,24 @@ export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
 export const hybridIdentityMiscReduce = (hybridColors: HCColors[] | string[][]): string[][] => {
   const newColors: string[][] = [];
   hybridColors
-    .map(colorSet => {
-      if (colorSet.some(color => HCMiscColors.includes(color))) {
+    .map(set => {
+      if (set.some(c => HCMiscColors.includes(c))) {
         const newSet: string[] = [MISC_BULLSHIT];
-        colorSet
-          .filter(color => !HCMiscColors.includes(color))
-          .forEach(color => {
-            newSet.push(color);
+        set
+          .filter(c => !HCMiscColors.includes(c))
+          .forEach(c => {
+            newSet.push(c);
           });
         return newSet;
       } else {
-        return colorSet;
+        return set;
       }
     })
     .forEach(colors => {
-      if (!newColors.some(colorSet => colorSet.every(color => colors.includes(color)))) {
+      if (!newColors.some(set => set.every(c => colors.includes(c)))) {
         for (let i = newColors.length - 1; i >= 0; i--) {
-          // if the new colorSet is completely inside the existing colorSet, delete the existing one
-          if (colors.every(color => newColors[i].includes(color))) {
+          // if the new set is completely inside the existing set, delete the existing one
+          if (colors.every(c => newColors[i].includes(c))) {
             newColors.splice(i, 1);
           }
         }
@@ -145,134 +174,88 @@ export const hybridIdentityMiscReduce = (hybridColors: HCColors[] | string[][]):
   return newColors;
 };
 
+const canContain = <T extends string[][] | string[]>(
+  set1: T,
+  set2: Exclude<string[][] | string[], T>
+) => {
+  if (set1.length && typeof set1[0] != 'string') {
+    return (set2 as string[]).every(c => set1.some(set => (set as string[]).includes(c)));
+  }
+  if (set2.length && typeof set2[0] != 'string') {
+    return (set2 as string[][]).every(set => set.some(c => (set1 as string[]).includes(c)));
+  }
+  return contains(set1 as string[], set2 as string[]);
+};
 /**
  * Compares two sets of colors using an operator and returns a bool.
- * @param hybridColors The set of hybrid colors to compare (must not include 'C'; can be empty)
+ * @param value1 The set of hybrid colors to compare (must not include 'C'; can be empty)
  * @param operator The operator
- * @param colors The set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
+ * @param value2 The set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
  * @returns boolean of whether the comparison is true
  */
-export const hybridColorCompOp = (
-  hybridColors: HCColors[] | string[][],
-  operator: '<' | '<=' | '=' | '>=' | '>',
-  colors: HCColors | string[]
-) => {
-  if (colors.includes('C')) {
-    switch (operator) {
-      case '<': {
-        return false;
+export const filterHybridIdentity: hybridFilter = Object.assign(
+  (value1: string[][], operator: looseOpType, value2: string[]) => {
+    const actualOp = operator === ':' ? filterColors.defaultOp : operator;
+    if (value2.includes('C')) {
+      switch (actualOp) {
+        case '<': {
+          return false;
+        }
+        case '<=': {
+          return value1.length == 0;
+        }
+        case '=': {
+          return value1.length == 0;
+        }
+        case '>=': {
+          return true;
+        }
+        case '>': {
+          return value1.length != 0;
+        }
+        case '!=': {
+          return value1.length != 0;
+        }
       }
-      case '<=': {
-        return hybridColors.length == 0;
-      }
-      case '=': {
-        return hybridColors.length == 0;
-      }
-      case '>=': {
-        return true;
-      }
-      case '>': {
-        return hybridColors.length != 0;
-      }
-    }
-  } else if (hybridColors.length == 0) {
-    switch (operator) {
-      case '<': {
-        return true;
-      }
-      case '<=': {
-        return true;
-      }
-      case '=': {
-        return false;
-      }
-      case '>=': {
-        return false;
-      }
-      case '>': {
-        return false;
-      }
-    }
-  } else {
-    const colorSet = [];
-
-    switch (operator) {
-      case '<': {
-        return (
-          (hybridColors as string[][]).every(colorSet =>
-            colorSet.some(color => (colors as string[]).includes(color))
-          ) &&
-          !(colors as string[]).every(color =>
-            (hybridColors as string[][]).some(colorSet => colorSet.includes(color))
-          )
-        );
-      }
-      case '<=': {
-        return (hybridColors as string[][]).every(colorSet =>
-          colorSet.some(color => (colors as string[]).includes(color))
-        );
-      }
-      case '=': {
-        return (
-          (hybridColors as string[][]).every(colorSet =>
-            colorSet.some(color => (colors as string[]).includes(color))
-          ) &&
-          (colors as string[]).every(color =>
-            (hybridColors as string[][]).some(colorSet => colorSet.includes(color))
-          )
-        );
-      }
-      case '>=': {
-        return (colors as string[]).every(color =>
-          (hybridColors as string[][]).some(colorSet => colorSet.includes(color))
-        );
-      }
-      case '>': {
-        return (
-          !(hybridColors as string[][]).every(colorSet =>
-            colorSet.some(color => (colors as string[]).includes(color))
-          ) &&
-          (colors as string[]).every(color =>
-            (hybridColors as string[][]).some(colorSet => colorSet.includes(color))
-          )
-        );
+    } else {
+      switch (actualOp) {
+        case '<': {
+          return !canContain(value1, value2) && canContain(value2, value1);
+        }
+        case '<=': {
+          return canContain(value2, value1);
+        }
+        case '=': {
+          return canContain(value1, value2) && canContain(value2, value1);
+        }
+        case '>=': {
+          return canContain(value1, value2);
+        }
+        case '>': {
+          return canContain(value1, value2) && !canContain(value2, value1);
+        }
+        case '!=': {
+          return !canContain(value1, value2) || !canContain(value2, value1);
+        }
       }
     }
-  }
-};
+  },
+  { defaultOp: '<=' as opType }
+);
 
 /**
- * Compares two numbers using an operator and returns a bool.
- * @param num1 The first number to compare
+ * Compares two sets of colors using an operator and returns a bool.
+ * @param value1 The set of hybrid colors to compare (must not include 'C'; can be empty)
  * @param operator The operator
- * @param num2 The second number to compare
+ * @param value2 The set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
  * @returns boolean of whether the comparison is true
  */
-export const numCompOp = (
-  num1: string | number | undefined,
-  operator: '<' | '<=' | '=' | '>=' | '>',
-  num2: string | number | undefined
-) => {
-  const numToUse1 = typeof num1 == 'string' ? toNumber(num1) : num1;
-  const numToUse2 = typeof num2 == 'string' ? toNumber(num2) : num2;
-  if (numToUse1 == undefined || numToUse2 == undefined) {
-    return false;
+export const filterHybridIdentityMisc: hybridFilter = Object.assign(
+  (value1: string[][], operator: looseOpType, value2: string[]) => {
+    const actualOp = operator === ':' ? filterHybridIdentityMisc.defaultOp : operator;
+    return filterHybridIdentity(hybridIdentityMiscReduce(value1), actualOp, value2);
+  },
+  {
+    defaultOp: '<=' as opType,
   }
-  switch (operator) {
-    case '<': {
-      return numToUse1 < numToUse2;
-    }
-    case '<=': {
-      return numToUse1 <= numToUse2;
-    }
-    case '=': {
-      return numToUse1 == numToUse2;
-    }
-    case '>=': {
-      return numToUse1 >= numToUse2;
-    }
-    case '>': {
-      return numToUse1 > numToUse2;
-    }
-  }
-};
+);

@@ -22,5 +22,6 @@ export const invertOp = (op: opType) => {
   return invertedOps[op];
 };
 export interface numFilter extends cardFilter<number, number> {}
-export interface numStringFilter extends cardFilter<number|string|undefined, number|string> {}
-export interface colorFilter extends cardFilter<HCColors|string[], HCColors|string[]> {}
+export interface numStringFilter extends cardFilter<number | string | undefined, number | string> {}
+export interface colorFilter extends cardFilter<string[], string[]> {}
+export interface hybridFilter extends cardFilter<string[][], string[]> {}

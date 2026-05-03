@@ -6,16 +6,16 @@ export const filterText: textFilter = Object.assign(
     const actualOp = operator === ':' ? filterText.defaultOp : operator;
 
     switch (actualOp) {
-      case '>=':
-        return textSearchIncludes(value1, value2);
-      case '>':
-        return textSearchIncludes(value1, value2) && !textEquals(value1, value2);
-      case '=':
-        return textEquals(value1, value2);
       case '<':
         return !textSearchIncludes(value1, value2);
       case '<=':
         return !textSearchIncludes(value1, value2) || textEquals(value1, value2);
+      case '=':
+        return textEquals(value1, value2);
+      case '>=':
+        return textSearchIncludes(value1, value2);
+      case '>':
+        return textSearchIncludes(value1, value2) && !textEquals(value1, value2);
       case '!=':
         return !textEquals(value1, value2);
     }
@@ -27,21 +27,21 @@ export const filterTextList: textListFilter = Object.assign(
     const actualOp = operator === ':' ? filterText.defaultOp : operator;
 
     switch (actualOp) {
-      case '>=':
-        return value1.some(text => textSearchIncludes(text, value2));
-      case '>':
-        return (
-          value1.some(text => textSearchIncludes(text, value2)) &&
-          !value1.some(text => textEquals(text, value2))
-        );
-      case '=':
-        return value1.some(text => textEquals(text, value2));
       case '<':
         return !value1.some(text => textSearchIncludes(text, value2));
       case '<=':
         return (
           !value1.some(text => textSearchIncludes(text, value2)) ||
           value1.some(text => textEquals(text, value2))
+        );
+      case '=':
+        return value1.some(text => textEquals(text, value2));
+      case '>=':
+        return value1.some(text => textSearchIncludes(text, value2));
+      case '>':
+        return (
+          value1.some(text => textSearchIncludes(text, value2)) &&
+          !value1.some(text => textEquals(text, value2))
         );
       case '!=':
         return !value1.some(text => textEquals(text, value2));

@@ -46,10 +46,9 @@ import { sortFunction } from '../sortFunction';
 import { canBeACommander } from '../canBeACommander.ts';
 import { toNumber } from '../inputs/NumberSelector.tsx';
 import {
-  colorCompOp,
-  colorMiscReduce,
-  hybridColorCompOp,
-  hybridIdentityMiscReduce,
+  filterColorIdentityMisc,
+  filterColorsMisc,
+  filterHybridIdentityMisc,
 } from '../filters/filterColors.ts';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 import { CHUNK_SIZE } from '../constants.ts';
@@ -314,31 +313,28 @@ export const useSearchResults = () => {
         }
         if (colorIdentityNumber) {
           if (
-            !filterNumber(entry.color_identity.length, colorIdentityNumber[1], colorIdentityNumber[0])
+            !filterNumber(
+              entry.color_identity.length,
+              colorIdentityNumber[1],
+              colorIdentityNumber[0]
+            )
           ) {
             return false;
           }
         }
 
         // TODO: handle split cards/adventures/transforms/flips better
-        if (searchColors.length > 0) {
-          if (!entry.colors) {
-            console.log('Card id:', entry.id, 'had a null color.');
-            if (['=', '>=', '>'].includes(colorComparison)) {
-              return false;
-            }
-          } else {
-            if (!colorCompOp(colorMiscReduce(entry.colors), colorComparison, searchColors)) {
-              return false;
-            }
+        if (searchColors.length) {
+          if (!filterColorsMisc(entry.colors, colorComparison, searchColors)) {
+            return false;
           }
         }
 
-        if (searchColorIdentities.length > 0) {
+        if (searchColorIdentities.length) {
           if (hybridIdentityRule) {
             if (
-              !hybridColorCompOp(
-                hybridIdentityMiscReduce(entry.color_identity_hybrid),
+              !filterHybridIdentityMisc(
+                entry.color_identity_hybrid,
                 colorIdentityComparison,
                 searchColorIdentities
               )
@@ -346,21 +342,14 @@ export const useSearchResults = () => {
               return false;
             }
           } else {
-            if (!entry.color_identity) {
-              console.log('Card id:', entry.id, 'had a null color identity.');
-              if (['=', '>=', '>'].includes(colorIdentityComparison)) {
-                return false;
-              }
-            } else {
-              if (
-                !colorCompOp(
-                  colorMiscReduce(entry.color_identity),
-                  colorIdentityComparison,
-                  searchColorIdentities
-                )
-              ) {
-                return false;
-              }
+            if (
+              !filterColorIdentityMisc(
+                entry.color_identity,
+                colorIdentityComparison,
+                searchColorIdentities
+              )
+            ) {
+              return false;
             }
           }
         }
