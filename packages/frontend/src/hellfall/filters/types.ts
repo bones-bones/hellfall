@@ -25,3 +25,7 @@ export interface numFilter extends cardFilter<number, number> {}
 export interface numStringFilter extends cardFilter<number | string | undefined, number | string> {}
 export interface colorFilter extends cardFilter<string[], string[]> {}
 export interface hybridFilter extends cardFilter<string[][], string[]> {}
+// export interface setFilter extends cardFilter<string[],HCCard.Any> {}
+export interface setFilter extends cardFilter<string[], HCCard.Any> {
+  (value1: string[], operator: looseOpType, value2: HCCard.Any, includeExtraSets: boolean): boolean;
+}

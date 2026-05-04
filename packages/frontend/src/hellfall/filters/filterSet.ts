@@ -1,6 +1,107 @@
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
 import { extraSetList } from '@hellfall/shared/data/sets';
 import { getHc5 } from '../../hells-cubes/getHc5';
+import { looseOpType, opType, setFilter } from './types';
+
+const excludeExtras = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4'];
+export const filterSetCard: setFilter = Object.assign(
+  (value1: string[], operator: looseOpType, value2: HCCard.Any, includeExtraSets:boolean=false) => {
+    const actualOp = operator === ':' ? filterSetCard.defaultOp : operator;
+    const shouldExclude = (set:string) => {
+      return excludeExtras.includes(set) && !includeExtraSets && !value1.includes(set)
+    }
+    /**
+     * Checks if a card's set is in the results. Also returns true if the card's set is a subset of one of the results.
+     * @param set set of a card
+     * @returns if set is in results
+     */
+    const isSetInResults = (set: string) => {
+      if (value1.length) {
+        return value1.some(e => set.includes(e) && !shouldExclude(set));
+      } else if (!includeExtraSets) {
+        return !extraSetList.some(e => set.includes(e));
+      }
+      return true;
+    };
+    const cardInSet = (card:HCCard.Any):boolean => {
+      return !(value1.length && !isSetInResults(card.set))
+    }
+    switch (actualOp) {
+      case '<':
+        return !isSetInResults(value2.set);
+      case '<=':
+        return isSetInResults(value2.set);
+      case '=':
+        return isSetInResults(value2.set);
+      case '>=':
+        return isSetInResults(value2.set);
+      case '>':
+        return !isSetInResults(value2.set);
+      case '!=':
+        return !isSetInResults(value2.set);
+    }
+  },
+  { defaultOp: '=' as opType }
+);
+const includeComponent = (part:HCRelatedCard) => {
+  return ['token_maker', 'draft_partner'].includes(part.component);
+}
+export const filterSetToken: setFilter = Object.assign(
+  (value1: string[], operator: looseOpType, value2: HCCard.Any, includeExtraSets:boolean=false) => {
+    const actualOp = operator === ':' ? filterSetCard.defaultOp : operator;
+    const shouldExclude = (set:string) => {
+      return excludeExtras.includes(set) && !includeExtraSets && !value1.includes(set)
+    }
+    /**
+     * Checks if a card's set is in the results. Also returns true if the card's set is a subset of one of the results.
+     * @param set set of a card
+     * @returns if set is in results
+     */
+    const isSetInResults = (set: string) => {
+      if (value1.length) {
+        return value1.some(e => set.includes(e) && !shouldExclude(set));
+      } else if (!includeExtraSets) {
+        return !extraSetList.some(e => set.includes(e));
+      }
+      return true;
+    };
+    const shouldIncludeMeld = (part:HCRelatedCard, set:string) => {
+      return part.component == 'meld_part' && part.set!=set;
+    }
+    const tokenInSet = (token:HCCard.Any):boolean => {
+      if (value1.length && value2.all_parts) {
+        if (value2.all_parts.filter(part=>isSetInResults(part.set)).some(part => includeComponent(part) || shouldIncludeMeld(part,value2.set))) {
+          return true
+        }
+      }
+      return Boolean(!value1.length && token.isActualToken);
+    }
+    switch (actualOp) {
+      case '<':
+        return !tokenInSet(value2);
+      case '<=':
+        return tokenInSet(value2);
+      case '=':
+        return tokenInSet(value2);
+      case '>=':
+        return tokenInSet(value2);
+      case '>':
+        return !tokenInSet(value2);
+      case '!=':
+        return !tokenInSet(value2);
+    }
+  },
+  { defaultOp: '=' as opType }
+);
+
+export const filterSetBoth: setFilter = Object.assign(
+  (value1: string[], operator: looseOpType, value2: HCCard.Any, includeExtraSets:boolean=false) => {
+    const actualOp = operator === ':' ? filterSetCard.defaultOp : operator;
+    return filterSetCard(value1,actualOp,value2,includeExtraSets) || filterSetToken(value1,actualOp,value2,includeExtraSets)
+  },
+  { defaultOp: '=' as opType }
+);
+
 
 /**
  * Filters cards based on specified sets
@@ -11,7 +112,7 @@ import { getHc5 } from '../../hells-cubes/getHc5';
  * @param mode whether to fetch only cards in the sets, only tokens made by cards in the sets, or both
  * @returns
  */
-export const filterSet = (
+export const getFilteredSet = (
   cards: HCCard.Any[],
   sets: string[] = [],
   extraSets: string[] = [],
@@ -115,7 +216,7 @@ export const getSplitSet = (
   if (set == 'HC5') {
     return { cards: getHc5(), tokens: [] };
   }
-  const filteredCards = filterSet(
+  const filteredCards = getFilteredSet(
     allCards,
     extraSetList.includes(set) ? [] : [set],
     extraSetList.includes(set) ? [set] : [],
