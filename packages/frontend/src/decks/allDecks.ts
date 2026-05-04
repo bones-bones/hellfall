@@ -2,7 +2,7 @@ import { DeckInfo } from './types.ts';
 
 export const allDecks: DeckInfo[] = [
   {
-    author: 'Requim',
+    author: 'Requiem',
     title: 'HC8.0 constructed: union percent',
     text: 'HC8.0',
     cards: {
