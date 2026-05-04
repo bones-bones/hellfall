@@ -1,5 +1,5 @@
 import { HCColors, HCMiscColors } from '@hellfall/shared/types';
-import { colorFilter, hybridFilter, looseOpType, opType } from './types';
+import { colorFilter, containsOp, hybridFilter, looseOpType, opType } from './types';
 const MISC_BULLSHIT = 'Misc bullshit';
 //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 
@@ -48,26 +48,7 @@ export const filterColors: colorFilter = Object.assign(
         }
       }
     } else {
-      switch (actualOp) {
-        case '<': {
-          return !contains(value1, value2) && contains(value2, value1);
-        }
-        case '<=': {
-          return contains(value2, value1);
-        }
-        case '=': {
-          return contains(value1, value2) && contains(value2, value1);
-        }
-        case '>=': {
-          return contains(value1, value2);
-        }
-        case '>': {
-          return contains(value1, value2) && !contains(value2, value1);
-        }
-        case '!=': {
-          return !contains(value1, value2) || !contains(value2, value1);
-        }
-      }
+      return containsOp(actualOp, contains, value1, value2);
     }
   },
   { defaultOp: '>=' as opType }
@@ -218,26 +199,12 @@ export const filterHybridIdentity: hybridFilter = Object.assign(
         }
       }
     } else {
-      switch (actualOp) {
-        case '<': {
-          return !canContain(value1, value2) && canContain(value2, value1);
-        }
-        case '<=': {
-          return canContain(value2, value1);
-        }
-        case '=': {
-          return canContain(value1, value2) && canContain(value2, value1);
-        }
-        case '>=': {
-          return canContain(value1, value2);
-        }
-        case '>': {
-          return canContain(value1, value2) && !canContain(value2, value1);
-        }
-        case '!=': {
-          return !canContain(value1, value2) || !canContain(value2, value1);
-        }
-      }
+      return containsOp(
+        actualOp,
+        canContain as (value1: any, value2: any) => boolean,
+        value1,
+        value2
+      );
     }
   },
   { defaultOp: '<=' as opType }

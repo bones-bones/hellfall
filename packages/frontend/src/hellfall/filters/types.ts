@@ -29,3 +29,79 @@ export interface hybridFilter extends cardFilter<string[][], string[]> {}
 export interface setFilter extends cardFilter<string[], HCCard.Any> {
   (value1: string[], operator: looseOpType, value2: HCCard.Any, includeExtraSets: boolean): boolean;
 }
+export interface tagFilter extends cardFilter<string[], string> {
+  (
+    value1: string[],
+    operator: looseOpType,
+    value2: string,
+    tag_notes?: Record<string, string>
+  ): boolean;
+}
+
+/**
+ * To use in filters when need to check an inclusion function and an equality function
+ * @param op operation to use
+ * @param includes inclusion function
+ * @param equals equality function
+ * @param value1 the first value to check
+ * @param value2 the second value to check
+ * @returns
+ */
+export const includeEqualsOp = (
+  op: opType,
+  includes: (value1: any, value2: any) => boolean,
+  equals: (value1: any, value2: any) => boolean,
+  value1: any,
+  value2: any
+) => {
+  switch (op) {
+    case '<':
+      return !includes(value1, value2) && !equals(value1, value2);
+    case '<=':
+      return !includes(value1, value2) || equals(value1, value2);
+    case '=':
+      return includes(value1, value2) && equals(value1, value2);
+    case '>=':
+      return includes(value1, value2) || equals(value1, value2);
+    case '>':
+      return includes(value1, value2) && !equals(value1, value2);
+    case '!=':
+      return !includes(value1, value2) || !equals(value1, value2);
+  }
+};
+/**
+ * To use in filters when need to check a containment function
+ * @param op operation to use
+ * @param includes inclusion function
+ * @param equals equality function
+ * @param value1 the first value to check
+ * @param value2 the second value to check
+ * @returns
+ */
+export const containsOp = (
+  op: opType,
+  contains: (value1: any, value2: any) => boolean,
+  value1: any,
+  value2: any
+) => {
+  switch (op) {
+    case '<': {
+      return !contains(value1, value2) && contains(value2, value1);
+    }
+    case '<=': {
+      return contains(value2, value1);
+    }
+    case '=': {
+      return contains(value1, value2) && contains(value2, value1);
+    }
+    case '>=': {
+      return contains(value1, value2);
+    }
+    case '>': {
+      return contains(value1, value2) && !contains(value2, value1);
+    }
+    case '!=': {
+      return !contains(value1, value2) || !contains(value2, value1);
+    }
+  }
+};

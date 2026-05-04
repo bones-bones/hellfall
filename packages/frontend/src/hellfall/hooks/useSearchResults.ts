@@ -44,7 +44,6 @@ import {
 
 import { sortFunction } from '../sortFunction';
 import { canBeACommander } from '../canBeACommander.ts';
-import { toNumber } from '../inputs/NumberSelector.tsx';
 import {
   filterColorIdentityMisc,
   filterColorsMisc,
@@ -52,14 +51,8 @@ import {
 } from '../filters/filterColors.ts';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 import { CHUNK_SIZE } from '../constants.ts';
-import { extraSetList } from '@hellfall/shared/data/sets.ts';
-import {
-  filterSetBoth,
-  filterSetCard,
-  filterSetToken,
-  getFilteredSet,
-} from '../filters/filterSet.ts';
-import { filterText, filterTextList } from '../filters/filterText.ts';
+import { filterSetBoth, filterSetCard, filterSetToken } from '../filters/filterSet.ts';
+import { filterTag, filterText, filterTextList } from '../filters/filterText.ts';
 import { looseOpType, opType } from '../filters/types.ts';
 import { getAllNames } from '../getNames.ts';
 import { filterNumber, filterNumberString } from '../filters/filterNumber.ts';
@@ -158,12 +151,6 @@ export const useSearchResults = () => {
             break;
           }
         }
-        // if (searchToken != 'Tokens' && !filterSetCard(searchSet.concat(extraSets),'=',entry,includeExtraSets)) {
-        //   return false;
-        // }
-        // if (searchToken != 'Cards' && !filterSetToken(searchSet.concat(extraSets),'=',entry,includeExtraSets)) {
-        //   return false;
-        // }
         let usingOr = false;
         let matchesSomeOr = false;
         const filterTextListAllowingOr = (combined: string[], searchTerm: string) => {
@@ -181,11 +168,48 @@ export const useSearchResults = () => {
             return filterTextList(combined, split[0], split[1]);
           }
         };
+        // const tagMatches = (searchTerm: string) => {
+        //   if (searchTerm.startsWith('~')) {
+        //     if (!usingOr) {
+        //       usingOr = true;
+        //     }
+        //     const split = splitOp(searchTerm.slice(1));
+        //     if (filterTextList(combined, split[0], split[1])) {
+        //       matchesSomeOr = true;
+        //     }
+        //     return true;
+        //   } else {
+        //     const split = splitOp(searchTerm);
+        //     return filterTextList(combined, split[0], split[1]);
+        //   }
+        // };
         const everySearchTermMatchesListAllowingOr = (
           combined: string[],
           searchTerms: string[]
         ) => {
           return searchTerms.every(searchTerm => filterTextListAllowingOr(combined, searchTerm));
+        };
+        const filterTagListAllowingOr = (tags: string[], searchTerm: string,tag_notes:Record<string,string>|undefined) => {
+          if (searchTerm.startsWith('~')) {
+            if (!usingOr) {
+              usingOr = true;
+            }
+            const split = splitOp(searchTerm.slice(1));
+            if (filterTag(tags, split[0], split[1],tag_notes)) {
+              matchesSomeOr = true;
+            }
+            return true;
+          } else {
+            const split = splitOp(searchTerm);
+            return filterTag(tags, split[0], split[1],tag_notes);
+          }
+        };
+        const everyTagMatches = (
+          tags: string[],
+          searchTerms: string[],
+          tag_notes:Record<string,string>|undefined
+        ) => {
+          return searchTerms.every(searchTerm => filterTagListAllowingOr(tags, searchTerm,tag_notes));
         };
         // TODO: decide if this should use <= instead of =
         if (idSearch !== '' && !filterText(entry.id, '=', idSearch)) {
@@ -246,51 +270,10 @@ export const useSearchResults = () => {
           }
         }
 
-        // todo: rework tag search to line up with others
-        if (
-          tags.length > 0 &&
-          !tags.every(tag => {
-            if (tag.startsWith('!')) {
-              if (tag.endsWith('<')) {
-                return !(entry.tag_notes && tag.slice(1, -1) in entry.tag_notes);
-              }
-              if (tag.endsWith('>') && tag.includes('<')) {
-                const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
-                return !(entry.tag_notes && textEquals(entry.tag_notes[subtag], note));
-              }
-              return !entry.tags?.includes(tag.slice(1));
-            } else if (tag.startsWith('~')) {
-              if (!usingOr) {
-                usingOr = true;
-              }
-              if (tag.endsWith('<')) {
-                if (entry.tag_notes && tag.slice(1, -1) in entry.tag_notes) {
-                  matchesSomeOr = true;
-                }
-              } else if (tag.endsWith('>') && tag.includes('<')) {
-                const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
-                if (entry.tag_notes && textEquals(entry.tag_notes[subtag], note)) {
-                  matchesSomeOr = true;
-                }
-              } else {
-                if (entry.tags?.includes(tag.slice(1))) {
-                  matchesSomeOr = true;
-                }
-              }
-              return true;
-            } else {
-              if (tag.endsWith('<')) {
-                return entry.tag_notes && tag.slice(0, -1) in entry.tag_notes;
-              }
-              if (tag.endsWith('>') && tag.includes('<')) {
-                const [subtag, note] = [tag.split('<')[0], tag.split('<')[1].slice(0, -1)];
-                return entry.tag_notes && textEquals(entry.tag_notes[subtag], note);
-              }
-              return entry.tags?.includes(tag);
-            }
-          })
-        ) {
-          return false;
+        if (tags) {
+          if (!everyTagMatches(entry.tags ?? [],tags,entry.tag_notes)) {
+            return false;
+          }
         }
 
         if (isCommander) {
