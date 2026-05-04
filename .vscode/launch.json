@@ -2,27 +2,17 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug transform-hc (with --noupdate)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["transform-hc", "--noupdate"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
       "name": "Debug transform-hc (normal)",
-      "type": "node",
-      "request": "launch",
-      "runtimeArgs": ["--import=tsx"],
-      "args": ["${workspaceFolder}/data-transformers/src/hc-transformations.ts"],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "name": "Debug transform-hc (with --update)",
-      "type": "node",
-      "request": "launch",
-      "runtimeArgs": ["--import=tsx"],
-      "args": ["${workspaceFolder}/data-transformers/src/hc-transformations.ts", "--update"],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "name": "Debug npm script: transform-hc (normal)",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "yarn",
@@ -32,11 +22,21 @@
       "internalConsoleOptions": "neverOpen"
     },
     {
-      "name": "Debug npm script: transform-hc (with --update)",
+      "name": "Debug transform-hc (with -noscryfall)",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "yarn",
-      "runtimeArgs": ["transform-hc", "--update"],
+      "runtimeArgs": ["transform-hc", "--noscryfall"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug fetch-oracle-names",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["fetch-oracle-names"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
@@ -45,18 +45,8 @@
       "name": "Debug land-box",
       "type": "node",
       "request": "launch",
-      "runtimeArgs": ["--import=tsx"],
-      "args": ["${workspaceFolder}/data-transformers/src/land-box.ts"],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "name": "Debug make-cubes",
-      "type": "node",
-      "request": "launch",
-      "runtimeArgs": ["--import=tsx"],
-      "args": ["${workspaceFolder}/data-transformers/src/cubes/createCockCube.ts"],
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["land-box"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"

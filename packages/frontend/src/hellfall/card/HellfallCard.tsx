@@ -11,10 +11,12 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../useCardTagOverrides.ts';
 import tagsData from '@hellfall/shared/data/tags.json';
+import { withBasePath } from '../../basePath.ts';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
   formatDiscordMarkdownInvertedItalics,
+  formatDiscordMarkdownInvertedItalicsInline,
 } from '../markdownFormatter.tsx';
 const renderText = (text: string[]) => {
   return text.map(entry => {
@@ -28,20 +30,55 @@ const renderText = (text: string[]) => {
 };
 const getImages = (card: HCCard.Any) => {
   const imagesToShow: string[] = [];
+  const imageNames: string[] = [];
 
-  if (!('card_faces' in card) || (card.card_faces.length > 1 && !('image' in card.card_faces[0]))) {
+  if (!('card_faces' in card) || !('image' in card.card_faces[0])) {
     imagesToShow.push(card.image!);
+    imageNames.push('side 1');
   }
   if ('card_faces' in card) {
-    imagesToShow.push(...card.card_faces.filter(e => e.image).map(e => e.image!));
+    card.card_faces
+      .filter((face, i) => face.image || !i)
+      .forEach((face, i) => {
+        if (face.image) {
+          imagesToShow.push(face.image);
+          imageNames.push(`side ${i + 1}`);
+        }
+        if (face.still_image) {
+          imagesToShow.push(face.still_image);
+          imageNames.push(`side ${i + 1} still`);
+        }
+        if (face.rotated_image) {
+          imagesToShow.push(face.rotated_image);
+          imageNames.push(`side ${i + 1} rotated`);
+        }
+      });
     if (card.image && 'image' in card.card_faces[0]) {
       imagesToShow.push(card.image);
+      imageNames.push('full');
     }
   }
-  if ('draft_image' in card) {
-    imagesToShow.push(card.draft_image!);
+  if (card.still_image) {
+    imagesToShow.push(card.still_image);
+    imageNames.push('still');
   }
-  return imagesToShow;
+  if (card.rotated_image) {
+    imagesToShow.push(card.rotated_image);
+    imageNames.push('rotated');
+  }
+  if (card.draft_image) {
+    imagesToShow.push(card.draft_image);
+    imageNames.push('draft');
+  }
+  if (card.still_draft_image) {
+    imagesToShow.push(card.still_draft_image);
+    imageNames.push('still draft');
+  }
+  if (card.rotated_draft_image) {
+    imagesToShow.push(card.rotated_draft_image);
+    imageNames.push('rotated draft');
+  }
+  return { images: imagesToShow, names: imageNames };
 };
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const { user } = useAuth();
@@ -75,7 +112,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   }, [windowWidth]);
 
   // TODO: add handling for flip and aftermath
-  const imagesToShow = getImages(data);
+  const { images: imagesToShow, names: imageNames } = getImages(data);
 
   return (
     <Container ref={windowRef} key={data.id}>
@@ -109,11 +146,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     }}
                     disabled={i === activeImageSide}
                   >
-                    {i == imagesToShow.length - 1 && data.draft_image
-                      ? 'draft'
-                      : !data.draft_image && i == imagesToShow.length - 1
-                      ? 'full'
-                      : `side ${i + 1}`}
+                    {imageNames[i]}
                   </button>
                 );
               })}
@@ -128,28 +161,43 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               {i > 0 && <Divider />}
               {face.name &&
                 (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
-                  <Text typeLevel="body.medium" key="name">
+                  <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
                     {formatDiscordMarkdownInline(formatParens(face.name))}
                   </Text>
                 ) : (
                   <>
-                    <Text typeLevel="body.medium" key="name">
+                    <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
                       {stringToMana(face.name)}
                     </Text>
-                    {/* <br /> */}
                   </>
                 ))}
-              {'   '}
               <Text typeLevel="body.medium" key="cost">
+                {' '}
                 {stringToMana(face.mana_cost)}
               </Text>
               <br />
+              {face.flavor_name &&
+                (['*', '(', '_', '~'].some(char => face.flavor_name!.includes(char)) ? (
+                  <>
+                    <Text typeLevel="body.medium" key="flavor-name">
+                      {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.flavor_name))}
+                    </Text>
+                    <br />
+                  </>
+                ) : (
+                  <>
+                    <ItalicText typeLevel="body.medium" key="flavor-name">
+                      {stringToMana(face.flavor_name)}
+                    </ItalicText>
+                    <br />
+                  </>
+                ))}
+              {'   '}
               {face.color_indicator && (
                 <>
                   <Text typeLevel="body.medium" key="color-indicator">
                     {colorsToIndicator(face.color_indicator)}
-                  </Text>
-                  {'   '}
+                  </Text>{' '}
                 </>
               )}
               {face.type_line &&
@@ -237,7 +285,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           <Divider />
           {data.set && (
             <>
-              <Text typeLevel="body.medium">Set: {data.set}</Text>
+              <Text typeLevel="body.medium">
+                Set:{' '}
+                {(data.set == 'HCV.CDC' ? 'CDC' : data.set) +
+                  (data.collector_number ? ' #' + data.collector_number : '')}
+              </Text>
               <br />
             </>
           )}
@@ -252,6 +304,17 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <br />
             </>
           )}
+          {data.artists?.length && data.artists.length == 1 ? (
+            <>
+              <Text key="artist">Artist: {data.artists[0]}</Text>
+              <br />
+            </>
+          ) : (
+            <>
+              <Text key="artist">Artists: {data.artists?.join(', ')}</Text>
+              <br />
+            </>
+          )}
           {data.id && (
             <>
               <Text key="id">Id: {data.id}</Text>
@@ -260,11 +323,11 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           )}
           {
             <>
-              Constructed <SetLegality banned={Boolean(data.legalities.standard != 'legal')} />
+              Constructed <SetLegality legality={data.legalities.standard} />
               <br />
-              4CB <SetLegality banned={Boolean(data.legalities['4cb'] != 'legal')} />
+              4CB <SetLegality legality={data.legalities['4cb']} />
               <br />
-              Hellsmander <SetLegality banned={Boolean(data.legalities.commander != 'legal')} />
+              Hellsmander <SetLegality legality={data.legalities.commander} />
               <br />
             </>
           }
@@ -397,9 +460,14 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       <HellfallRelatedEntry
                         onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                           if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                            window.open('/hellfall/card/' + encodeURIComponent(entry.id), '_blank');
+                            window.open(
+                              withBasePath('/card/' + encodeURIComponent(entry.id)),
+                              '_blank'
+                            );
                           } else {
-                            window.location.href = '/hellfall/card/' + encodeURIComponent(entry.id);
+                            window.location.href = withBasePath(
+                              '/card/' + encodeURIComponent(entry.id)
+                            );
                           }
                         }}
                         key={entry.id}

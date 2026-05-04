@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import { Deck } from './Deck.tsx';
 import { allDecks } from './allDecks.ts';

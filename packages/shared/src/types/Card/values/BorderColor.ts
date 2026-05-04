@@ -9,4 +9,11 @@ export enum HCBorderColor {
   Borderless = 'borderless',
   Silver = 'silver',
   Gold = 'gold',
+  Yellow = 'yellow',
+  Rainbow = 'rainbow',
+  Blue = 'blue',
+  NoBorder = 'no_border',
+  Unique = 'unique',
+  Orange = 'orange',
+  Red = 'red',
 }

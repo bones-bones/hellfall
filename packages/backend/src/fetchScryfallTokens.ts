@@ -1,4 +1,4 @@
-import { sheetsKey } from '../keys.ts';
+import { sheetsKey } from './env.ts';
 import {
   HCCard,
   HCImageStatus,
@@ -14,10 +14,20 @@ import { ScryfallCard } from '@scryfall/api-types';
 import pLimit from 'p-limit';
 import { ScryfallToHC } from './scryfallToHC.ts';
 
-const REQUEST_DELAY_MS = 75;
+const REQUEST_DELAY_MS = 125;
 const limiter = pLimit(1);
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const hardCardNames: string[] = [
+  'Crypt of u/Em9500',
+  '1d6',
+  'Avatar of BallsJr123',
+  'Sekiro for the PS4',
+  'Avatar of Discord v2',
+  'That One Time in WW1',
+  'Plagiarism by doomclaw9',
+  'Carrion Feeder from MH8',
+];
 
 async function fetchCardById(cardId: string): Promise<ScryfallCard.Any> {
   return limiter(async () => {
@@ -52,7 +62,7 @@ export const fetchScryfallTokens = async () => {
   const asJson = (await requestedData.json()) as any;
 
   const [_oldkeys, ...rest] = asJson.values as string[][];
-  const keys = ['id', 'scryfall_id', 'layout', 'token_maker'];
+  const keys = ['id', 'scryfall_id', 'layout', 'token_maker', 'notes', 'tags'];
   rest.forEach(row => {
     while (row.length < keys.length) {
       row.push('');
@@ -77,18 +87,43 @@ export const fetchScryfallTokens = async () => {
           if (keys[i] == 'id') {
             tokenObject.id = entry[i];
           } else if (keys[i] == 'token_maker') {
-            tokenObject.all_parts = entry[i].split(';').map(name => {
+            tokenObject.all_parts = entry[i].split(';').map(oldName => {
+              const [, name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [, oldName, undefined];
+              const base = name.replace(/\d+$/, '');
+              const shouldUseBase =
+                /\d/.test(name.at(-1)!) &&
+                !hardCardNames.includes(name) &&
+                base &&
+                ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
-                id: '',
+                id: shouldUseBase ? name : '',
                 component: 'token_maker',
-                name: name.replace(/\*\d+$/, ''),
+                name: shouldUseBase ? base : name,
                 type_line: '',
                 set: '',
                 image: '',
               };
+              if (count) {
+                maker.count = count.slice(1);
+              }
               return maker;
             });
+          } else if (keys[i] == 'tags') {
+            const tags = entry[i].split(';');
+            tokenObject.tags = tags.map(fullTag => {
+              if (fullTag.includes('<') && fullTag.includes('>')) {
+                const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
+                if (!tokenObject.tag_notes) {
+                  tokenObject.tag_notes = {} as Record<string, string>;
+                }
+                tokenObject.tag_notes[tag] = note;
+                return tag;
+              } else {
+                return fullTag;
+              }
+            });
+            tokenObject.tags = Array.from(new Set(tokenObject.tags));
           }
         }
       }

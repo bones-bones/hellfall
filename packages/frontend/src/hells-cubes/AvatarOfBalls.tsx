@@ -70,5 +70,3 @@ export const AvatarOfBalls = () => {
     </>
   );
 };
-
-// https://scryfall.com/random?q=type%3Acreature++cmc%3D3

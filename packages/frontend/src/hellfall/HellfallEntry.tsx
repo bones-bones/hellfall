@@ -1,38 +1,71 @@
 import styled from '@emotion/styled';
+import { withBasePath } from '../basePath.ts';
 
 export const HellfallEntry = ({
   url,
   id,
   name,
+  otherNames,
   onClick,
   onClickTitle,
 }: {
   url: string;
   id: string;
   name: string;
+  otherNames?: string[];
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
+  const linkUrl = withBasePath(`/card/${encodeURIComponent(id)}`);
+
+  const handleClick = (
+    e: React.MouseEvent,
+    customHandler?: React.MouseEventHandler<HTMLImageElement>
+  ) => {
+    if (e.button === 1 || e.metaKey || e.ctrlKey) {
+      // Let the link handle it naturally
+      return;
+    }
+    e.preventDefault();
+    if (customHandler) {
+      customHandler(e as any);
+    } else {
+      onClick(e as any);
+    }
+  };
+
   return (
     <Container key={id} role="button">
       {onClickTitle ? (
-        <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}>
-          {name}
+        <>
+          <StyledTitleLink
+            key={id + '-title'}
+            href={linkUrl}
+            onClick={e => handleClick(e, onClickTitle as any)}
+          >
+            <TitleText>{name}</TitleText>
+          </StyledTitleLink>
           <br />
-        </span>
+        </>
       ) : (
-        <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+        <>
+          <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+          {otherNames ? (
+            otherNames.map((otherName, i) => {
+              return (
+                <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
+                  {otherName}
+                </VisuallyHiddenSpan>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </>
       )}
-      <StyledImage
-        key={id}
-        src={url}
-        onClick={e => {
-          console.log('Image click fired!', id);
-          onClick(e);
-        }}
-        referrerPolicy="no-referrer"
-        aria-label={name}
-      />
+      <StyledImageLink href={linkUrl} onClick={e => handleClick(e)}>
+        <StyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
+      </StyledImageLink>
     </Container>
   );
 };
@@ -69,36 +102,89 @@ const VisuallyHiddenSpan = styled.span({
   pointerEvents: 'none',
 });
 
+const StyledImageLink = styled.a({
+  display: 'block',
+  textDecoration: 'none',
+  cursor: 'pointer',
+});
+
+const StyledTitleLink = styled.a({
+  display: 'inline-block',
+  textDecoration: 'none',
+  cursor: 'pointer',
+  whiteSpace: 'pre-wrap',
+});
+
+const TitleText = styled.span({
+  cursor: 'pointer',
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+});
+
 export const HellfallRelatedEntry = ({
   url,
   id,
   name,
+  otherNames,
   onClick,
   onClickTitle,
 }: {
   url: string;
   id: string;
   name: string;
+  otherNames?: string[];
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
+  const linkUrl = withBasePath(`/card/${encodeURIComponent(id)}`);
+
+  const handleClick = (
+    e: React.MouseEvent,
+    customHandler?: React.MouseEventHandler<HTMLImageElement>
+  ) => {
+    if (e.button === 1 || e.metaKey || e.ctrlKey) {
+      return;
+    }
+    e.preventDefault();
+    if (customHandler) {
+      customHandler(e as any);
+    } else {
+      onClick(e as any);
+    }
+  };
   return (
     <RelatedContainer key={id} role="button">
       {onClickTitle ? (
-        <span key={id} onClick={onClickTitle} style={{ whiteSpace: 'pre-wrap', cursor: 'pointer' }}>
-          {name}
+        <>
+          <StyledTitleLink
+            key={id + '-title'}
+            href={linkUrl}
+            onClick={e => handleClick(e, onClickTitle as any)}
+          >
+            <TitleText>{name}</TitleText>
+          </StyledTitleLink>
           <br />
-        </span>
+        </>
       ) : (
-        <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+        <>
+          <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
+          {otherNames ? (
+            otherNames.map((otherName, i) => {
+              return (
+                <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
+                  {otherName}
+                </VisuallyHiddenSpan>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </>
       )}
-      <RelatedStyledImage
-        key={id}
-        src={url}
-        onClick={onClick}
-        referrerPolicy="no-referrer"
-        aria-label={name}
-      />
+      <RelatedStyledImageLink href={linkUrl} onClick={e => handleClick(e)}>
+        <RelatedStyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
+      </RelatedStyledImageLink>
     </RelatedContainer>
   );
 };
@@ -121,4 +207,10 @@ const RelatedContainer = styled.div({
     height: 'auto',
     objectFit: 'contain',
   },
+});
+
+const RelatedStyledImageLink = styled.a({
+  display: 'block',
+  textDecoration: 'none',
+  cursor: 'pointer',
 });

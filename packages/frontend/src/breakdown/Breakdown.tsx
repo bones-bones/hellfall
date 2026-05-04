@@ -168,14 +168,14 @@ const ColorTracker = ({ cards, color }: { cards: Record<string, HCCard.Any[]>; c
           const uhh = cards[color]
             .sort((a, b) => {
               if (
-                a.toFaces()[0].types?.includes('Creature') &&
-                b.toFaces()[0].types?.includes('Creature')
+                a.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature') &&
+                b.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature')
               ) {
                 return a.toFaces()[0].name > b.toFaces()[0].name ? 1 : -1;
               }
               if (
-                a.toFaces()[0].types?.includes('Creature') &&
-                !b.toFaces()[0].types?.includes('Creature')
+                a.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature') &&
+                !b.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature')
               ) {
                 return -1;
               }
@@ -198,7 +198,9 @@ const ColorTracker = ({ cards, color }: { cards: Record<string, HCCard.Any[]>; c
                 {uhh.map(e => (
                   <CardEntry
                     key={e.name}
-                    isCreature={Boolean(e.toFaces()[0].types?.includes('Creature'))}
+                    isCreature={Boolean(
+                      e.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature')
+                    )}
                     cardColor={
                       hexForColor(
                         (e.toFaces()[0].colors == undefined

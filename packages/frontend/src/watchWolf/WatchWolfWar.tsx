@@ -16,12 +16,13 @@ import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
 import { xIcon } from '@workday/canvas-system-icons-web';
 import { HCCard } from '@hellfall/shared/types';
 import { useKeyPress } from '../hooks';
+import { withBasePath } from '../basePath.ts';
 
 //TODO: make results use Id natively on the backend
 
 export const WatchwolfWar = () => {
   const escape = useKeyPress('Escape');
-  const cards = useAtomValue(cardsAtom).filter(e => e.isActualToken != true && e.set != 'C');
+  const cards = useAtomValue(cardsAtom).filter(e => e.isActualToken != true && e.set != 'NRM');
   const RandyRandom = useAtomValue(cardsAtom);
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = cards.find(entry => entry.id === activeCardFromAtom);
@@ -88,7 +89,7 @@ export const WatchwolfWar = () => {
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.id),
+                withBasePath('/card/' + encodeURIComponent(TwoCardState.LeftCard.id)),
                 '_blank'
               );
             } else {
@@ -100,7 +101,7 @@ export const WatchwolfWar = () => {
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.LeftCard.id),
+                withBasePath('/card/' + encodeURIComponent(TwoCardState.LeftCard.id)),
                 '_blank'
               );
             } else {
@@ -115,7 +116,7 @@ export const WatchwolfWar = () => {
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.id),
+                withBasePath('/card/' + encodeURIComponent(TwoCardState.RightCard.id)),
                 '_blank'
               );
             } else {
@@ -127,7 +128,7 @@ export const WatchwolfWar = () => {
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(
-                '/hellfall/card/' + encodeURIComponent(TwoCardState.RightCard.id),
+                withBasePath('/card/' + encodeURIComponent(TwoCardState.RightCard.id)),
                 '_blank'
               );
             } else {

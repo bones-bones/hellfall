@@ -1,4 +1,4 @@
-import { sheetsKey } from '../keys.ts';
+import { sheetsKey } from './env.ts';
 import {
   HCCard,
   HCImageStatus,
@@ -9,6 +9,9 @@ import {
   HCObject,
   HCLegality,
   HCLegalitiesField,
+  HCBorderColor,
+  HCFrame,
+  HCFinish,
 } from '@hellfall/shared/types';
 
 const discordToSymbolMatching: Record<string, string> = {
@@ -59,6 +62,7 @@ export const fetchNotMagic = async () => {
   });
 
   const defaultProps: Record<string, any> = {
+    object: HCObject.ObjectType.Card,
     rulings: '',
     creators: [],
     legalities: {
@@ -74,9 +78,11 @@ export const fetchNotMagic = async () => {
     set: 'NotMagic',
     variation: false,
     isActualToken: true,
-    image_status: HCImageStatus.MedRes,
-    draft_image_status: HCImageStatus.Inapplicable,
+    image_status: HCImageStatus.HighRes,
     layout: HCLayout.NotMagic,
+    border_color: HCBorderColor.Borderless,
+    frame: HCFrame.NotMagic,
+    finish: HCFinish.Nonfoil,
   };
 
   const theThing = rest.map(entry => {

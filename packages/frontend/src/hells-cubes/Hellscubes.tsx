@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router';
+import { Routes, Route } from 'react-router-dom';
 import { HellsCube } from './one';
 
 import { CubeResources } from './CubeResources.tsx';

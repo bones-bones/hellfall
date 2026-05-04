@@ -14,7 +14,7 @@ export const Header = () => {
             <Link to={'/'}>search</Link>,{' '}
             <Link to={'/card/random'}>random</Link>,{' '}
             <Link to={'/draft'}>draft</Link>,{' '}
-            <Link to={'/deck-builder'}>deck builder</Link>,{' '}
+            <Link to={'/deck-builder'}>deck/cube builder</Link>,{' '}
             <Link to={'/hellscubes'}>cube resources</Link>,{' '}
             <Link to={'https://discord.com/channels/631288872814247966/1237418389480407061'}>
               rules

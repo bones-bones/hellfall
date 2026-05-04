@@ -1,16 +1,17 @@
 import {
-  // HCBorderColor,
+  HCBorderColor,
   HCColors,
   // HCCoreColors,
   // HCMiscColors,
-  // HCFinish,
-  // HCFrame,
-  // HCFrameEffect,
+  HCFinish,
+  HCFrame,
+  HCFrameEffect,
   // HCGame,
   HCImageStatus,
   // HCImageUris,
   // HCLanguageCode,
   HCLayout,
+  HCLayoutGroup,
   HCLegalitiesField,
   // HCPrices,
   // HCPromoType,
@@ -60,7 +61,7 @@ export namespace HCCardFields.Core {
      *
      * @see {@link https://scryfall.com/docs/api/layouts}
      */
-    layout: `${HCLayout}`;
+    // layout: `${HCLayout}`;
     /**
      * All rulings for the card.
      */
@@ -93,6 +94,7 @@ export namespace HCCardFields.Core {
      * Whether this card is an actual token (TODO: replace with type-based checks)
      */
     isActualToken?: boolean;
+    layout: `${HCLayout}`;
   };
 }
 
@@ -167,6 +169,8 @@ export namespace HCCardFields.Gameplay {
     type_line: string;
     mana_cost: string;
     mana_value: number;
+    layout: `${HCLayout}`;
+    export_name?: string;
   };
 
   /**
@@ -224,6 +228,22 @@ export namespace HCCardFields.Gameplay {
      * This will be an array of numbers ranging from 1 to 6 inclusive.
      */
     attraction_lights?: number[];
+    /**
+     * The layout of this face
+     */
+    layout: `${HCLayout}`;
+    /**
+     * Whether this face should be compressed on export
+     */
+    compress_face?: boolean;
+    /**
+     * Whether this face should be dropped on export
+     */
+    drop_face?: boolean;
+    /**
+     * What name to use when exporting this face
+     */
+    export_name?: string;
   } & CombatStats &
     VanguardStats;
 
@@ -259,6 +279,10 @@ export namespace HCCardFields.Gameplay {
      */
     name: string;
     /**
+     * The just-for-fun name printed on the card (such as for Godzilla series cards).
+     */
+    flavor_name?: string;
+    /**
      * Colors of mana that this card could produce.
      */
     // produced_mana?: HCManaTypes;
@@ -266,6 +290,11 @@ export namespace HCCardFields.Gameplay {
      * The type line of this card.
      */
     type_line: string;
+    layout: `${HCLayout}`;
+    /**
+     * What name to use when exporting this face
+     */
+    export_name?: string;
   };
   /**
    * These fields are specific for multiface cards.
@@ -280,6 +309,10 @@ export namespace HCCardFields.Gameplay {
      * True when the multiface card is a rotating card (excluding flip ones)
      */
     is_rotating?: boolean;
+    /**
+     * The layout of this card
+     */
+    layout: `${HCLayoutGroup.MultiFacedType}`;
   };
   /**
    * These fields are specific for multiface grid cards. (TODO: fully implement this)
@@ -314,9 +347,9 @@ export namespace HCCardFields.Print {
    */
   export type CardSpecific = {
     /**
-     * The name of the illustrator of this card. Newly spoiled cards may not have this field yet.
+     * The name of the illustrators of this card. Newly spoiled cards may not have this field yet.
      */
-    // artist?: string;
+    artists?: string[];
     /**
      * The IDs of the artists that illustrated this card. Newly spoiled cards may not have this field yet.
      *
@@ -324,13 +357,21 @@ export namespace HCCardFields.Print {
      */
     // artist_ids?: string[];
     /**
-     * This card's border color: black, white, borderless, silver, or gold.
+     * This card's border color: black, white, borderless, silver, gold, yellow, blue, or rainbow.
      */
-    // border_color: `${HCBorderColor}`;
+    border_color: `${HCBorderColor}`;
+    /**
+     * A computer-readable flag that indicate if this card has a foil, nonfoil, or etched finish.
+     */
+    finish: `${HCFinish}`;
+    /**
+     * This card's frame effects, if any.
+     */
+    frame_effects?: `${HCFrameEffect}`[];
     /**
      * This card's frame layout.
      */
-    // frame: `${HCFrame}`;
+    frame: `${HCFrame}`;
     /**
      * A computer-readable indicator for the state of this card's image.
      */
@@ -340,13 +381,29 @@ export namespace HCCardFields.Print {
      */
     image?: string;
     /**
-     * A computer-readable indicator for the state of this card's draft image.
-     */
-    draft_image_status: `${HCImageStatus}`;
-    /**
      * A string with the draft image.
      */
     draft_image?: string;
+    /**
+     * A computer-readable indicator for the state of this card's draft image.
+     */
+    draft_image_status?: `${HCImageStatus}`;
+    /**
+     * A string with the rotated image for this card.
+     */
+    rotated_image?: string;
+    /**
+     * A string with the rotated draft image for this card.
+     */
+    rotated_draft_image?: string;
+    /**
+     * A string with the still image for this card.
+     */
+    still_image?: string;
+    /**
+     * A string with the still draft image for this card.
+     */
+    still_draft_image?: string;
     /**
      * A list of ids to add to the draft pool when this is drafted.
      */
@@ -363,8 +420,50 @@ export namespace HCCardFields.Print {
      * This card's set code.
      */
     set: string;
+    /**
+     * This card's collector number within the set.
+     */
+    collector_number?: string;
   } & VariationInfo;
 
+  /**
+   * These print fields are specific for single face cards.
+   * - Root level for single face layouts only.
+   */
+  export type SingleSpecific = {
+    /**
+     * A computer-readable indicator for the state of this face's image. If this face doesn't have an image, this also explains why.
+     */
+    image_status: `${HCImageStatus}`;
+    /**
+     * A string with the image for this face, if any.
+     */
+    image?: string;
+    /**
+     * The flavor text, if any.
+     */
+    flavor_text?: string;
+    /**
+     * The just-for-fun name printed on the card (such as for Godzilla series cards).
+     */
+    flavor_name?: string;
+    /**
+     * This card's watermark, if any.
+     */
+    watermark?: string;
+    /**
+     * The layout of this card.
+     */
+    layout: `${HCLayoutGroup.SingleFacedType}`;
+    /**
+     * This faces's frame effects, if any.
+     */
+    frame_effects?: `${HCFrameEffect}`[];
+    /**
+     * This faces's frame layout, if it is different from that of the overall card.
+     */
+    frame?: `${HCFrame}`;
+  };
   /**
    * These print fields are specific for a card face.
    *
@@ -381,13 +480,41 @@ export namespace HCCardFields.Print {
      */
     image?: string;
     /**
+     * A string with the rotated image for this card.
+     */
+    rotated_image?: string;
+    /**
+     * A string with the still image for this card.
+     */
+    still_image?: string;
+    /**
      * The flavor text, if any.
      */
     flavor_text?: string;
     /**
+     * The just-for-fun name printed on the card (such as for Godzilla series cards).
+     */
+    flavor_name?: string;
+    /**
      * This card's watermark, if any.
      */
     watermark?: string;
+    /**
+     * The layout of this face.
+     */
+    layout: `${HCLayoutGroup.FaceLayoutType}`;
+    /**
+     * This faces's frame effects, if any.
+     */
+    frame_effects?: `${HCFrameEffect}`[] /**
+    /**
+     * This faces's frame layout, if it is different from that of the overall card.
+     */;
+    frame?: `${HCFrame}`;
+    /**
+     * This card's border color: black, white, borderless, silver, gold, yellow, blue, or rainbow.
+     */
+    border_color: `${HCBorderColor}`;
   };
 
   type VariationInfo = {

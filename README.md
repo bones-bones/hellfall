@@ -58,13 +58,13 @@ Before you can update the database from the [google sheet](https://docs.google.c
 3. Click the burger menu in the top left, then go to APIs & Services, then Library, then search for and enable Sheets.
 4. Go to APIs & Services, then Credentials, then click Create Credentials, choosing API key.
 5. For restrictions, choose Google Sheets API. Then click create. Then click Show key to get the key.
-6. Make a copy of `keys-template.ts`, rename it to `keys.ts`, then paste the key into `sheetsKey`. Now you
+6. Copy `packages/backend/.env.example` to `packages/backend/.env` and set `GOOGLE_SHEETS_API_KEY` to your API key.
 
 ## Updating the database
 
-run `yarn run transform-hc` (this updates all datasets)
+Run `yarn run transform-hc` (this updates all datasets)
 
-To run without overwriting data that can't be stored in the sheet, run `yarn run transform-hc --update`
+To run while overwriting data that can't be stored in the sheet, run `yarn run transform-hc --noupdate`
 
 ## Committing code
 

@@ -6,6 +6,7 @@
   "dependencies": {
     "@hellfall/shared": "^1.0.0",
     "@scryfall/api-types": ">=1.0.0-alpha.4",
+    "dotenv": "^16.4.5",
     "jsdom": "^17.0.0",
     "p-limit": "^7.3.0",
     "ts-node": "^10.2.9"
@@ -18,6 +19,7 @@
   },
   "scripts": {
     "transform-hc": "npx tsx src/hc-transformations",
+    "fetch-oracle-names": "npx tsx src/fetchOracleNames",
     "land-box": "npx tsx src/land-box"
   }
 }

@@ -1,0 +1,47 @@
+name: Transform HC Upgrade
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  transform-upgrade:
+    if: github.actor == 'bones-bones'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Enable Corepack and Yarn 4
+        run: |
+          corepack enable
+          corepack prepare yarn@4.14.1 --activate
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run transform upgrade
+        env:
+          GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
+        run: yarn run transform-hc
+
+      - name: Create pull request with changes
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'chore: run transform-hc'
+          title: 'chore: run transform-hc'
+          body: |
+            Automated updates from `transform-hc`.
+          branch: chore/transform-hc-upgrade
+          delete-branch: true

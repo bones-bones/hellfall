@@ -78,13 +78,8 @@ export default function (webpackEnv) {
       static: {
         directory: path.join(__dirname, "../public"),
       },
-      open: ["/hellfall"],
-
-      historyApiFallback: { index: "/hellfall" },
-
-      devMiddleware: {
-        publicPath: "/hellfall",
-      },
+      open: ["/"],
+      historyApiFallback: true,
     },
     output: {
       // The build folder.

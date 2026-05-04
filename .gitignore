@@ -40,8 +40,11 @@ packages/server/.env
 
 # yarn
 .yarn/install-state.gz
-.yarnrc.yml
+
 
 .env
 
 build
+.vscode/settings.json
+
+LESSONS_LEARNED.md

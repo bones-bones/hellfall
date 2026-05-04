@@ -1,4 +1,4 @@
-import { sheetsKey } from '../keys.ts';
+import { sheetsKey } from './env.ts';
 import fs from 'fs';
 const fetchLandBox = async () => {
   const requestedData = await fetch(

@@ -27,7 +27,9 @@ export const Draft = () => {
     const draft = [];
     if (Set) {
       if (Set === 'HC6') {
-        const filtered = cards.filter(({ set }) => set == Set);
+        const filtered = cards.filter(
+          card => card.set.includes(Set) && !card.not_directly_draftable
+        );
         const commanders = filtered.filter(canBeACommander);
         const nonManders = filtered.filter(e => !canBeACommander(e));
         const shuffledManders = commanders.sort(() => (Math.random() > Math.random() ? 1 : -1));
@@ -45,7 +47,7 @@ export const Draft = () => {
         }
         setDraft(draft as any);
       } else {
-        const filtered = cards.filter(e => e.set === Set);
+        const filtered = cards.filter(e => e.set.includes(Set) && !e.not_directly_draftable);
         const shuffled = filtered.sort(() => (Math.random() > Math.random() ? 1 : -1));
 
         for (let i = 0; i < 3; i++) {
@@ -88,7 +90,11 @@ export const Draft = () => {
               { value: 'HC4' },
               { value: 'HC5' },
               { value: 'HC6' },
-              { value: 'C' },
+              { value: 'HC7' },
+              { value: 'HCK' },
+              { value: 'HC8' },
+              { value: 'HKL' },
+              { value: 'NRM' },
             ]}
           />
         </FormField>

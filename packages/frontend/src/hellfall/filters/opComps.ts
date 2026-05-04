@@ -1,19 +1,7 @@
-import { colors } from '@workday/canvas-kit-react';
-import { HCColors } from '@hellfall/shared/types';
+import { HCColors, HCMiscColors } from '@hellfall/shared/types';
+import { toNumber } from '../inputs/NumberSelector';
 const MISC_BULLSHIT = 'Misc bullshit';
-const miscColors = [
-  'Pickle',
-  'Yellow',
-  'Brown',
-  'Pink',
-  'Teal',
-  'Orange',
-  'TEMU',
-  'Cyan',
-  'Gold',
-  'Beige',
-  'Grey',
-]; //Object.values(HCMiscColor); /**as unknown as HCColor[] */
+//Object.values(HCMiscColor); /**as unknown as HCColor[] */
 
 /**
  * Checks whether two color sets are the same colors.
@@ -113,7 +101,7 @@ export const colorCompOp = (
 export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
   const newColors: string[] = [];
   colors
-    .map(color => (miscColors.includes(color) ? MISC_BULLSHIT : color))
+    .map(color => (HCMiscColors.includes(color) ? MISC_BULLSHIT : color))
     .forEach(color => {
       if (!newColors.includes(color)) {
         newColors.push(color);
@@ -131,10 +119,10 @@ export const hybridIdentityMiscReduce = (hybridColors: HCColors[] | string[][]):
   const newColors: string[][] = [];
   hybridColors
     .map(colorSet => {
-      if (colorSet.some(color => miscColors.includes(color))) {
+      if (colorSet.some(color => HCMiscColors.includes(color))) {
         const newSet: string[] = [MISC_BULLSHIT];
         colorSet
-          .filter(color => !miscColors.includes(color))
+          .filter(color => !HCMiscColors.includes(color))
           .forEach(color => {
             newSet.push(color);
           });
@@ -249,6 +237,43 @@ export const hybridColorCompOp = (
           )
         );
       }
+    }
+  }
+};
+
+/**
+ * Compares two numbers using an operator and returns a bool.
+ * @param num1 The first number to compare
+ * @param operator The operator
+ * @param num2 The second number to compare
+ * @param parseAsCN whether to parse the number as a collector number
+ * @returns boolean of whether the comparison is true
+ */
+export const numCompOp = (
+  num1: string | number | undefined,
+  operator: '<' | '<=' | '=' | '>=' | '>',
+  num2: string | number | undefined
+) => {
+  const numToUse1 = typeof num1 == 'string' ? toNumber(num1) : num1;
+  const numToUse2 = typeof num2 == 'string' ? toNumber(num2) : num2;
+  if (numToUse1 == undefined || numToUse2 == undefined) {
+    return false;
+  }
+  switch (operator) {
+    case '<': {
+      return numToUse1 < numToUse2;
+    }
+    case '<=': {
+      return numToUse1 <= numToUse2;
+    }
+    case '=': {
+      return numToUse1 == numToUse2;
+    }
+    case '>=': {
+      return numToUse1 >= numToUse2;
+    }
+    case '>': {
+      return numToUse1 > numToUse2;
     }
   }
 };

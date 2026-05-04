@@ -14,10 +14,11 @@ export const SortComponent = () => {
         <Select
           value={sortRule}
           options={[
-            { value: 'Alpha' },
-            { value: 'Mana Value' },
-            { value: 'Color' },
+            { value: 'Name' },
             { value: 'Id' },
+            { value: 'Set/Number' },
+            { value: 'Color' },
+            { value: 'Mana Value' },
           ]}
           onChange={ev => {
             setSortRule((ev as any).target.value || 'Color');

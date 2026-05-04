@@ -1,19 +1,20 @@
 import styled from '@emotion/styled';
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
-import { sameColors } from './colorComps';
+import { sameColors } from './filters/opComps.ts';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
+import { withBasePath } from '../basePath.ts';
 
 export const getPipSrc = (name: string) => {
   const pips = getPipsData();
   const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-  return icon ? '/hellfall/pips/' + icon.filename : undefined;
+  return icon ? withBasePath('/pips/' + icon.filename) : undefined;
 };
 export const getPip = (name: string) => {
   const pips = getPipsData();
   return pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
 };
 export const pipToSrc = (pip: HCCardSymbol) => {
-  return '/hellfall/pips/' + pip.filename;
+  return withBasePath('/pips/' + pip.filename);
 };
 const getClipPath = (pip: HCCardSymbol) => {
   if (!pip.clip_type) {
@@ -30,11 +31,6 @@ const getClipPath = (pip: HCCardSymbol) => {
       return undefined;
   }
 };
-export const isNoShadow = (name: string) => {
-  const pips = getPipsData();
-  const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-  return icon?.no_shadow as boolean;
-};
 
 export const stringToMana = (text: string) => {
   return text
@@ -43,7 +39,6 @@ export const stringToMana = (text: string) => {
     .map(entry => {
       if (entry.startsWith('{') && entry.endsWith('}')) {
         const icon = getPip(entry.slice(1, -1));
-        const noShadow = isNoShadow(entry.slice(1, -1));
         return icon ? (
           <PipContainer
             style={
@@ -71,7 +66,7 @@ export const colorsToIndicator = (colors: HCColors) => {
     e => !e.represents_mana && 'colors' in e && sameColors(e.colors!, colors)
   );
 
-  // const loc = icon ? '/hellfall/pips/' + icon.filename : undefined;
+  // const loc = icon ? withBasePath('/pips/' + icon.filename) : undefined;
   return icon ? (
     <PipContainer>
       <PipSymbol src={pipToSrc(icon)} alt={icon?.symbol} title={icon.english} />

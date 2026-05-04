@@ -1,16 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router';
-import { HCCard, HCColor, HCSearchColor, HCColors } from '@hellfall/shared/types';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { usePaginationModel, getLastPage } from '@workday/canvas-kit-react/pagination';
+import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { useAtom, useAtomValue } from 'jotai';
 import {
-  nameSearchAtom,
   idSearchAtom,
+  nameSearchAtom,
   costSearchAtom,
   typeSearchAtom,
   rulesSearchAtom,
   flavorSearchAtom,
   creatorsAtom,
+  artistsAtom,
   tagsAtom,
   searchColorsAtom,
   colorComparisonAtom,
@@ -23,8 +25,11 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  legalityAtom,
-  // isCommanderAtom,
+  standardLegalityAtom,
+  fourcbLegalityAtom,
+  commanderLegalityAtom,
+  isCommanderAtom,
+  collectorNumberAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -45,22 +50,32 @@ import {
   colorMiscReduce,
   hybridColorCompOp,
   hybridIdentityMiscReduce,
-} from '../colorComps';
+  numCompOp,
+} from '../filters/opComps.ts';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
+import { CHUNK_SIZE } from '../constants.ts';
+import { extraSetList } from '@hellfall/shared/data/sets.ts';
+import { filterSet } from '../filters/filterSet.ts';
+import { filterText, filterTextList } from '../filters/filterText.ts';
+import { looseOpType, opType } from '../filters/types.ts';
+import { getAllNames } from '../getNames.ts';
 
 export const useSearchResults = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
-  const nameSearch = useAtomValue(nameSearchAtom);
+  const cards = useAtomValue(cardsAtom).filter(
+    e => !e.tags?.includes('offensive') && e.set != 'NotMagic'
+  );
   const idSearch = useAtomValue(idSearchAtom);
+  const nameSearch = useAtomValue(nameSearchAtom);
   const costSearch = useAtomValue(costSearchAtom);
   const typeSearch = useAtomValue(typeSearchAtom);
   const rulesSearch = useAtomValue(rulesSearchAtom);
   const flavorSearch = useAtomValue(flavorSearchAtom);
   const creators = useAtomValue(creatorsAtom);
+  const artists = useAtomValue(artistsAtom);
   const tags = useAtomValue(tagsAtom);
   const searchColors = useAtomValue(searchColorsAtom);
   const colorComparison = useAtomValue(colorComparisonAtom);
@@ -73,8 +88,11 @@ export const useSearchResults = () => {
   const includeExtraSets = useAtomValue(includeExtraSetsAtom);
   const extraSets = useAtomValue(extraSetsAtom);
   const searchToken = useAtomValue(searchTokenAtom);
-  const legality = useAtomValue(legalityAtom);
-  // const isCommander = useAtomValue(isCommanderAtom);
+  const standardLegality = useAtomValue(standardLegalityAtom);
+  const fourcbLegality = useAtomValue(fourcbLegalityAtom);
+  const commanderLegality = useAtomValue(commanderLegalityAtom);
+  const isCommander = useAtomValue(isCommanderAtom);
+  const collectorNumber = useAtomValue(collectorNumberAtom);
   const manaValue = useAtomValue(manaValueAtom);
   const power = useAtomValue(powerAtom);
   const toughness = useAtomValue(toughnessAtom);
@@ -85,549 +103,226 @@ export const useSearchResults = () => {
   const [page, setPageAtom] = useAtom(pageAtom);
   const activeCard = useAtomValue(activeCardAtom);
   // const [shouldPushHistory, setShouldPushHistory] = useAtom(shouldPushHistoryAtom);
-  const extraSetList = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'C', 'HCT', 'SFT'];
 
+  const lastPage = getLastPage(CHUNK_SIZE, resultSet.length);
+
+  const paginationModel = usePaginationModel({
+    lastPage,
+    onPageChange: (pageNumber: number) => {
+      if (pageNumber < 1) return;
+      const newPageIndex = (pageNumber - 1) * CHUNK_SIZE;
+      setPageAtom(newPageIndex);
+    },
+  });
+
+  const textToOps: Record<string, opType> = {
+    '!': '<',
+    '?': '=',
+    '!?': '!=',
+    '?!': '!=',
+  };
+  const splitOp = (text: string): [looseOpType, string] => {
+    if (text.slice(0, 2) in textToOps) {
+      return [textToOps[text.slice(0, 2)], text.slice(2)];
+    }
+    if (text.slice(0, 1) in textToOps) {
+      return [textToOps[text.slice(0, 1)], text.slice(1)];
+    }
+    return [':', text];
+  };
   useEffect(() => {
-    /**
-     * Checks if a card's set is in the results. Also returns true if the card's set is a subset of one of the results.
-     * @param set set of a card
-     * @returns if set is in results
-     */
-    const isSetInResults = (set: string) => {
-      // Exclude HCV.1-4 from HCV if !includeExtraSets
-      if (!includeExtraSets && ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4'].includes(set)) {
-        return extraSets.some(e => set.includes(e));
-      } else {
-        return searchSet.some(e => set.includes(e)) || extraSets.some(e => set.includes(e));
-      }
-    };
-
-    const noSets = searchSet.length + extraSets.length == 0;
-
-    const tempResults = cards
-      .filter(e => e.set != 'NotMagic')
+    const tempResults = filterSet(cards, searchSet, extraSets, includeExtraSets, searchToken)
       .filter(entry => {
-        switch (searchToken) {
-          case 'Cards':
-            if (!noSets && !isSetInResults(entry.set)) {
-              return false;
+        let usingOr = false;
+        let matchesSomeOr = false;
+        const filterTextListAllowingOr = (combined: string[], searchTerm: string) => {
+          if (searchTerm.startsWith('~')) {
+            if (!usingOr) {
+              usingOr = true;
             }
-            if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
-              return false;
+            const split = splitOp(searchTerm.slice(1));
+            if (filterTextList(combined, split[0], split[1])) {
+              matchesSomeOr = true;
             }
-            // make sure tokens are hidden when no sets are selected
-            if (noSets && entry.isActualToken) {
-              return false;
-            }
-            break;
-          case 'Tokens':
-            if (
-              !noSets &&
-              !(
-                'all_parts' in entry &&
-                entry.all_parts
-                  ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
-                  .some(part => isSetInResults(part.set))
-              )
-            ) {
-              return false;
-            }
-            if (noSets && !entry.isActualToken) {
-              return false;
-            }
-            break;
-          case 'Both':
-            if (
-              !noSets &&
-              !isSetInResults(entry.set) &&
-              !(
-                'all_parts' in entry &&
-                entry.all_parts
-                  ?.filter(e => ['token_maker', 'meld_part', 'draft_partner'].includes(e.component))
-                  .some(part => isSetInResults(part.set))
-              )
-            ) {
-              return false;
-            }
-            if (extraSets.length == 0 && !includeExtraSets && extraSetList.includes(entry.set)) {
-              return false;
-            }
-            break;
-        }
-
-        if (
-          costSearch.length > 0 &&
-          !costSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.mana_cost)
-              .join();
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
+            return true;
+          } else {
+            const split = splitOp(searchTerm);
+            return filterTextList(combined, split[0], split[1]);
+          }
+        };
+        const everySearchTermMatchesListAllowingOr = (
+          combined: string[],
+          searchTerms: string[]
+        ) => {
+          return searchTerms.every(searchTerm => filterTextListAllowingOr(combined, searchTerm));
+        };
+        // TODO: decide if this should use <= instead of =
+        if (idSearch !== '' && !filterText(entry.id, '=', idSearch)) {
           return false;
         }
 
-        if (
-          rulesSearch.length > 0 &&
-          !rulesSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.oracle_text || '')
-              .join();
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          flavorSearch.length > 0 &&
-          !flavorSearch.every(searchTerm => {
-            const combined = entry
-              .toFaces()
-              .map(e => e.flavor_text || '')
-              .join();
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          tags.length > 0 &&
-          !tags.every(tag => {
-            return entry.tags?.includes(tag);
-          })
-        ) {
-          return false;
-        }
-
-        if (
-          nameSearch !== '' &&
-          !textSearchIncludes(
-            entry
-              .toFaces()
-              .map(e => e.name || '')
-              .join(' // '),
-            nameSearch
-          ) &&
-          !textSearchIncludes(entry.name, nameSearch)
-        ) {
-          return false;
-        }
-        // TODO: decide if this should use includes instead of equals
-        if (idSearch !== '' && !textEquals(entry.id, idSearch)) {
-          return false;
-        }
-
-        if (manaValue) {
-          switch (manaValue.operator) {
-            case '<=': {
-              if (!(entry.mana_value <= manaValue.value)) {
-                return false;
-              }
-              break;
-            }
-            case '<': {
-              if (!(entry.mana_value < manaValue.value)) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (!(entry.mana_value == manaValue.value)) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (!(entry.mana_value > manaValue.value)) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (!(entry.mana_value >= manaValue.value)) {
-                return false;
-              }
-              break;
-            }
+        if (nameSearch.length) {
+          const combined = getAllNames(entry);
+          if (!everySearchTermMatchesListAllowingOr(combined, nameSearch)) {
+            return false;
           }
         }
 
-        if (legality.includes('isCommander')) {
+        if (costSearch.length) {
+          const combined = entry.toFaces().map(e => e.mana_cost);
+          if (!everySearchTermMatchesListAllowingOr(combined, costSearch)) {
+            return false;
+          }
+        }
+
+        if (typeSearch.length) {
+          const combined = [
+            ...entry.toFaces().flatMap(e => e.supertypes || []),
+            ...entry.toFaces().flatMap(e => e.types || []),
+            ...entry.toFaces().flatMap(e => e.subtypes || []),
+            ...entry.toFaces().map(e => e.type_line),
+          ];
+          if (!everySearchTermMatchesListAllowingOr(combined, typeSearch)) {
+            return false;
+          }
+        }
+
+        if (rulesSearch.length) {
+          const combined = entry.toFaces().map(e => e.oracle_text);
+          if (!everySearchTermMatchesListAllowingOr(combined, rulesSearch)) {
+            return false;
+          }
+        }
+
+        if (flavorSearch.length) {
+          const combined = entry.toFaces().flatMap(e => e.flavor_text ?? []);
+          if (!everySearchTermMatchesListAllowingOr(combined, flavorSearch)) {
+            return false;
+          }
+        }
+
+        if (creators.length) {
+          const combined = entry.creators ?? [];
+          if (!everySearchTermMatchesListAllowingOr(combined, creators)) {
+            return false;
+          }
+        }
+
+        if (artists.length) {
+          const combined = entry.artists ?? [];
+          if (!everySearchTermMatchesListAllowingOr(combined, artists)) {
+            return false;
+          }
+        }
+
+        // todo: rework tag search to line up with others
+        if (
+          tags.length > 0 &&
+          !tags.every(tag => {
+            if (tag.startsWith('!')) {
+              if (tag.endsWith('<')) {
+                return !(entry.tag_notes && tag.slice(1, -1) in entry.tag_notes);
+              }
+              if (tag.endsWith('>') && tag.includes('<')) {
+                const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
+                return !(entry.tag_notes && textEquals(entry.tag_notes[subtag], note));
+              }
+              return !entry.tags?.includes(tag.slice(1));
+            } else if (tag.startsWith('~')) {
+              if (!usingOr) {
+                usingOr = true;
+              }
+              if (tag.endsWith('<')) {
+                if (entry.tag_notes && tag.slice(1, -1) in entry.tag_notes) {
+                  matchesSomeOr = true;
+                }
+              } else if (tag.endsWith('>') && tag.includes('<')) {
+                const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
+                if (entry.tag_notes && textEquals(entry.tag_notes[subtag], note)) {
+                  matchesSomeOr = true;
+                }
+              } else {
+                if (entry.tags?.includes(tag.slice(1))) {
+                  matchesSomeOr = true;
+                }
+              }
+              return true;
+            } else {
+              if (tag.endsWith('<')) {
+                return entry.tag_notes && tag.slice(0, -1) in entry.tag_notes;
+              }
+              if (tag.endsWith('>') && tag.includes('<')) {
+                const [subtag, note] = [tag.split('<')[0], tag.split('<')[1].slice(0, -1)];
+                return entry.tag_notes && textEquals(entry.tag_notes[subtag], note);
+              }
+              return entry.tags?.includes(tag);
+            }
+          })
+        ) {
+          return false;
+        }
+
+        if (isCommander) {
           if (!canBeACommander(entry)) {
             return false;
           }
         }
-        if (legality.filter(e => e != 'isCommander').length > 0) {
-          if (legality.includes('constructedLegal') && entry.legalities.standard != 'legal') {
-            return false;
-          }
-          if (legality.includes('4cbLegal') && entry.legalities['4cb'] != 'legal') {
-            return false;
-          }
-
-          if (legality.includes('hellsmanderLegal') && entry.legalities.commander != 'legal') {
+        if (standardLegality && entry.legalities.standard != standardLegality) {
+          return false;
+        }
+        if (fourcbLegality && entry.legalities['4cb'] != fourcbLegality) {
+          return false;
+        }
+        if (commanderLegality && entry.legalities.commander != commanderLegality) {
+          return false;
+        }
+        if (collectorNumber) {
+          if (!numCompOp(entry.collector_number, collectorNumber[1], collectorNumber[0])) {
             return false;
           }
         }
-        if (creators.length > 0 && !creators.some(creator => entry.creators.includes(creator))) {
-          return false;
-        }
-        if (
-          typeSearch.length > 0 &&
-          !typeSearch.every(searchTerm => {
-            const combined = [
-              ...entry.toFaces().map(e => e.supertypes || ''),
-              ...entry.toFaces().map(e => e.types || ''),
-              ...entry.toFaces().map(e => e.subtypes || ''),
-            ].join(',');
-            if (searchTerm.startsWith('!')) {
-              return !textSearchIncludes(combined, searchTerm.substring(1));
-            } else {
-              return textSearchIncludes(combined, searchTerm);
-            }
-          })
-        ) {
-          return false;
+        if (manaValue) {
+          if (!numCompOp(entry.mana_value, manaValue[1], manaValue[0])) {
+            return false;
+          }
         }
         if (power) {
-          switch (power.operator) {
-            case '<': {
-              if (
-                !(
-                  'power' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) <
-                    power.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (
-                !(
-                  'power' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) <=
-                    power.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (toNumber(entry.toFaces()[0].power) !== power.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (
-                !(
-                  'power' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) >=
-                    power.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (
-                !(
-                  'power' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].power) ? 0 : toNumber(entry.toFaces()[0].power)!) >
-                    power.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.toFaces()[0].power, power[1], power[0])) {
+            return false;
           }
         }
         if (toughness) {
-          switch (toughness.operator) {
-            case '<': {
-              if (
-                !(
-                  'toughness' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].toughness)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].toughness)!) < toughness.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (
-                !(
-                  'toughness' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].toughness)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].toughness)!) <= toughness.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (toNumber(entry.toFaces()[0].toughness) !== toughness.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (
-                !(
-                  'toughness' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].toughness)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].toughness)!) >= toughness.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (
-                !(
-                  'toughness' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].toughness)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].toughness)!) > toughness.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.toFaces()[0].toughness, toughness[1], toughness[0])) {
+            return false;
           }
         }
         if (loyalty) {
-          switch (loyalty.operator) {
-            case '<': {
-              if (
-                !(
-                  'loyalty' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].loyalty)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].loyalty)!) < loyalty.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (
-                !(
-                  'loyalty' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].loyalty)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].loyalty)!) <= loyalty.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (toNumber(entry.toFaces()[0].loyalty) !== loyalty.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (
-                !(
-                  'loyalty' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].loyalty)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].loyalty)!) >= loyalty.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (
-                !(
-                  'loyalty' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].loyalty)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].loyalty)!) > loyalty.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.toFaces()[0].loyalty, loyalty[1], loyalty[0])) {
+            return false;
           }
         }
         if (defense) {
-          switch (defense.operator) {
-            case '<': {
-              if (
-                !(
-                  'defense' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].defense)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].defense)!) < defense.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (
-                !(
-                  'defense' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].defense)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].defense)!) <= defense.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (toNumber(entry.toFaces()[0].defense) !== defense.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (
-                !(
-                  'defense' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].defense)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].defense)!) >= defense.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (
-                !(
-                  'defense' in entry.toFaces()[0] &&
-                  (!toNumber(entry.toFaces()[0].defense)
-                    ? 0
-                    : toNumber(entry.toFaces()[0].defense)!) > defense.value
-                )
-              ) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.toFaces()[0].defense, defense[1], defense[0])) {
+            return false;
           }
         }
 
         if (colorNumber) {
-          const cardColorNumber = entry.colors.length;
-
-          switch (colorNumber.operator) {
-            case '<': {
-              if (!(cardColorNumber < colorNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (!(cardColorNumber <= colorNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (cardColorNumber !== colorNumber.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (!(cardColorNumber >= colorNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (!(cardColorNumber > colorNumber.value)) {
-                return false;
-              }
-              break;
-            }
+          if (!numCompOp(entry.colors.length, colorNumber[1], colorNumber[0])) {
+            return false;
           }
         }
-
         if (colorIdentityNumber) {
-          const cardColorIdentityNumber = entry.color_identity.length;
-
-          switch (colorIdentityNumber.operator) {
-            case '<': {
-              if (!(cardColorIdentityNumber < colorIdentityNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '<=': {
-              if (!(cardColorIdentityNumber <= colorIdentityNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '=': {
-              if (cardColorIdentityNumber !== colorIdentityNumber.value) {
-                return false;
-              }
-              break;
-            }
-            case '>=': {
-              if (!(cardColorIdentityNumber >= colorIdentityNumber.value)) {
-                return false;
-              }
-              break;
-            }
-            case '>': {
-              if (!(cardColorIdentityNumber > colorIdentityNumber.value)) {
-                return false;
-              }
-              break;
-            }
+          if (
+            !numCompOp(entry.color_identity.length, colorIdentityNumber[1], colorIdentityNumber[0])
+          ) {
+            return false;
           }
         }
 
         // TODO: handle split cards/adventures/transforms/flips better
         if (searchColors.length > 0) {
           if (!entry.colors) {
-            // debugger;
             console.log('Card id:', entry.id, 'had a null color.');
             if (['=', '>=', '>'].includes(colorComparison)) {
               return false;
@@ -652,7 +347,6 @@ export const useSearchResults = () => {
             }
           } else {
             if (!entry.color_identity) {
-              // debugger;
               console.log('Card id:', entry.id, 'had a null color identity.');
               if (['=', '>=', '>'].includes(colorIdentityComparison)) {
                 return false;
@@ -670,6 +364,9 @@ export const useSearchResults = () => {
             }
           }
         }
+        if (usingOr && !matchesSomeOr) {
+          return false;
+        }
         return true;
       })
       .sort(sortFunction(sortRule, dirRule));
@@ -677,30 +374,31 @@ export const useSearchResults = () => {
 
     const searchToSet = new URLSearchParams();
 
-    if (nameSearch != '') {
-      searchToSet.append('name', nameSearch);
+    const currentPageNumber = Math.floor(page / CHUNK_SIZE) + 1;
+
+    if (paginationModel.state.currentPage !== currentPageNumber) {
+      paginationModel.events.goTo(currentPageNumber);
     }
+
     if (idSearch != '') {
       searchToSet.append('id', idSearch);
     }
-    if (costSearch.length > 0) {
-      searchToSet.append('cost', costSearch.join(','));
-    }
-    if (typeSearch.length > 0) {
-      searchToSet.append('type', typeSearch.join(','));
-    }
-    if (rulesSearch.length > 0) {
-      searchToSet.append('rules', rulesSearch.join(','));
-    }
-    if (flavorSearch.length > 0) {
-      searchToSet.append('flavor', flavorSearch.join(','));
-    }
-    if (creators.length > 0) {
-      searchToSet.append('creators', creators.join(',,'));
-    }
-    if (tags.length > 0) {
-      searchToSet.append('tags', tags.join(','));
-    }
+    nameSearch.forEach(entry => searchToSet.append('name', entry));
+
+    costSearch.forEach(entry => searchToSet.append('cost', entry));
+
+    typeSearch.forEach(entry => searchToSet.append('type', entry));
+
+    rulesSearch.forEach(entry => searchToSet.append('rules', entry));
+
+    flavorSearch.forEach(entry => searchToSet.append('flavor', entry));
+
+    creators.forEach(entry => searchToSet.append('creator', entry));
+
+    artists.forEach(entry => searchToSet.append('artist', entry));
+
+    tags.forEach(entry => searchToSet.append('tag', entry));
+
     if (searchColors.length > 0) {
       searchToSet.append('colors', searchColors.join(','));
     }
@@ -708,7 +406,7 @@ export const useSearchResults = () => {
       searchToSet.append('colorComparison', colorComparison);
     }
     if (colorNumber) {
-      searchToSet.append('colorNumber', `${colorNumber.operator}${colorNumber.value}`);
+      searchToSet.append('colorNumber', `${colorNumber[1]}${colorNumber[0]}`);
     }
     if (searchColorIdentities.length > 0) {
       searchToSet.append('colorIdentity', searchColorIdentities.join(','));
@@ -722,7 +420,7 @@ export const useSearchResults = () => {
     if (colorIdentityNumber) {
       searchToSet.append(
         'colorIdentityNumber',
-        `${colorIdentityNumber.operator}${colorIdentityNumber.value}`
+        `${colorIdentityNumber[1]}${colorIdentityNumber[0]}`
       );
     }
     if (searchSet.length > 0) {
@@ -737,26 +435,35 @@ export const useSearchResults = () => {
     if (searchToken != 'Cards') {
       searchToSet.append('token', searchToken);
     }
-    if (legality.length > 0) {
-      searchToSet.append('legality', legality.join(','));
+    if (standardLegality) {
+      searchToSet.append('standard', standardLegality);
     }
-    // if (isCommander) {
-    //   searchToSet.append('isCommander', 'true');
-    // }
+    if (fourcbLegality) {
+      searchToSet.append('4cb', fourcbLegality);
+    }
+    if (commanderLegality) {
+      searchToSet.append('commander', commanderLegality);
+    }
+    if (isCommander) {
+      searchToSet.append('isCommander', 'true');
+    }
+    if (collectorNumber) {
+      searchToSet.append('cn', `${collectorNumber[1]}${collectorNumber[0]}`);
+    }
     if (manaValue) {
-      searchToSet.append('manaValue', `${manaValue.operator}${manaValue.value}`);
+      searchToSet.append('manaValue', `${manaValue[1]}${manaValue[0]}`);
     }
     if (power) {
-      searchToSet.append('p', `${power.operator}${power.value}`);
+      searchToSet.append('p', `${power[1]}${power[0]}`);
     }
     if (toughness) {
-      searchToSet.append('t', `${toughness.operator}${toughness.value}`);
+      searchToSet.append('t', `${toughness[1]}${toughness[0]}`);
     }
     if (loyalty) {
-      searchToSet.append('l', `${loyalty.operator}${loyalty.value}`);
+      searchToSet.append('l', `${loyalty[1]}${loyalty[0]}`);
     }
     if (defense) {
-      searchToSet.append('d', `${defense.operator}${defense.value}`);
+      searchToSet.append('d', `${defense[1]}${defense[0]}`);
     }
     if (sortRule != 'Color') {
       searchToSet.append('order', sortRule);
@@ -765,7 +472,7 @@ export const useSearchResults = () => {
       searchToSet.append('dir', dirRule);
     }
     if (tempResults.length < page && tempResults.length > 0) {
-      searchToSet.append('page', '0');
+      paginationModel.events.goTo(1);
       setPageAtom(0);
     } else if (page > 0) {
       searchToSet.append('page', page.toString());
@@ -782,7 +489,7 @@ export const useSearchResults = () => {
     const newUrl = `?${searchToSet.toString()}`;
     const currentUrl = location.search;
 
-    if (newUrl !== currentUrl) {
+    if (newUrl != currentUrl && ![newUrl, currentUrl].every(url => ['', '?'].includes(url))) {
       // const getParamsWithoutTextFields = (url: string) => {
       //   const params = new URLSearchParams(url.substring(1));
       //   params.delete('name');
@@ -803,13 +510,14 @@ export const useSearchResults = () => {
       // }
     }
   }, [
-    nameSearch,
     idSearch,
+    nameSearch,
     costSearch,
     typeSearch,
     rulesSearch,
     flavorSearch,
     creators,
+    artists,
     tags,
     searchColors,
     colorComparison,
@@ -822,8 +530,11 @@ export const useSearchResults = () => {
     includeExtraSets,
     extraSets,
     searchToken,
-    legality,
-    // isCommander,
+    standardLegality,
+    fourcbLegality,
+    commanderLegality,
+    isCommander,
+    collectorNumber,
     manaValue,
     power,
     toughness,
@@ -838,5 +549,5 @@ export const useSearchResults = () => {
     // location.search,
   ]);
 
-  return resultSet;
+  return { resultSet, paginationModel };
 };

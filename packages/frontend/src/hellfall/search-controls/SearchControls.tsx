@@ -10,19 +10,21 @@ import {
   NumberSelector,
 } from '../inputs';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
-import cardTypes from '@hellfall/shared/data/tags.json';
+import cardTypes from '@hellfall/shared/data/types.json';
 import creators_data from '@hellfall/shared/data/creators.json';
 import tags_data from '@hellfall/shared/data/tags.json';
+import pips from '@hellfall/shared/data/pips.json';
 
 import { useAtom } from 'jotai';
 import {
-  nameSearchAtom,
   idSearchAtom,
+  nameSearchAtom,
   costSearchAtom,
   typeSearchAtom,
   rulesSearchAtom,
   flavorSearchAtom,
   creatorsAtom,
+  artistsAtom,
   tagsAtom,
   searchColorsAtom,
   colorComparisonAtom,
@@ -35,7 +37,12 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  legalityAtom,
+  // legalityAtom,
+  standardLegalityAtom,
+  fourcbLegalityAtom,
+  commanderLegalityAtom,
+  isCommanderAtom,
+  collectorNumberAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -47,17 +54,20 @@ import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useDebounce, useKeyPress } from '../../hooks';
 import { act, useEffect, useState } from 'react';
+import { extraSetList } from '@hellfall/shared/data/sets.ts';
+import { HCSearchColors } from '@hellfall/shared/types';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
 export const SearchControls = () => {
-  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
+  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [costSearch, setCostSearch] = useAtom(costSearchAtom);
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [flavorSearch, setFlavorSearch] = useAtom(flavorSearchAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
+  const [artists, setArtists] = useAtom(artistsAtom);
   const [tags, setTags] = useAtom(tagsAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [colorComparison, setColorComparison] = useAtom(colorComparisonAtom);
@@ -72,10 +82,17 @@ export const SearchControls = () => {
   const [includeExtraSets, setIncludeExtraSets] = useAtom(includeExtraSetsAtom);
   const [extraSets, setExtraSets] = useAtom(extraSetsAtom);
   const [searchToken, setSearchToken] = useAtom(searchTokenAtom);
-  const [open, setOpen] = useState(
+  const [extrasOpen, setExtrasOpen] = useState(
     includeExtraSets || extraSets.length > 0 || searchToken != 'Cards'
   );
-  const [legality, setLegality] = useAtom(legalityAtom);
+  const [standardLegality, setStandardLegality] = useAtom(standardLegalityAtom);
+  const [fourcbLegality, set4cbLegality] = useAtom(fourcbLegalityAtom);
+  const [commanderLegality, setCommanderLegality] = useAtom(commanderLegalityAtom);
+  const [isCommander, setIsCommander] = useAtom(isCommanderAtom);
+  const [legalityOpen, setLegalityOpen] = useState(
+    Boolean(standardLegality || fourcbLegality || commanderLegality || isCommander)
+  );
+  const [collectorNumber, setCollectorNumber] = useAtom(collectorNumberAtom);
   const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -83,37 +100,37 @@ export const SearchControls = () => {
   const [defense, setDefense] = useAtom(defenseAtom);
 
   // debouncing
-  const [localName, setLocalName] = useState(nameSearch);
+  // const [localName, setLocalName] = useState(nameSearch);
   const [localId, setLocalId] = useState(idSearch);
 
-  const [activeBox, setActiveBox] = useState<'name' | 'id' | null>(null);
+  const [activeBox, setActiveBox] = useState</**'name' |*/ 'id' | null>(null);
 
   const enterPressed = useKeyPress('Enter');
 
-  const [debouncedName, flushName] = useDebounce(localName, 300);
+  // const [debouncedName, flushName] = useDebounce(localName, 300);
   const [debouncedId, flushId] = useDebounce(localId, 300);
 
-  useEffect(() => {
-    setLocalName(nameSearch);
-  }, [nameSearch]);
+  // useEffect(() => {
+  //   setLocalName(nameSearch);
+  // }, [nameSearch]);
 
   useEffect(() => {
     setLocalId(idSearch);
   }, [idSearch]);
 
-  useEffect(() => {
-    setNameSearch(debouncedName);
-  }, [debouncedName, setNameSearch]);
+  // useEffect(() => {
+  //   setNameSearch(debouncedName);
+  // }, [debouncedName, setNameSearch]);
 
   useEffect(() => {
     setIdSearch(debouncedId);
   }, [debouncedId, setIdSearch]);
 
-  const handleNameFocus = () => {
-    if (activeBox !== 'name') {
-      setActiveBox('name');
-    }
-  };
+  // const handleNameFocus = () => {
+  //   if (activeBox !== 'name') {
+  //     setActiveBox('name');
+  //   }
+  // };
 
   const handleIdFocus = () => {
     if (activeBox !== 'id') {
@@ -121,12 +138,12 @@ export const SearchControls = () => {
     }
   };
 
-  const handleNameBlur = () => {
-    flushName();
-    if (activeBox == 'name') {
-      setActiveBox(null);
-    }
-  };
+  // const handleNameBlur = () => {
+  //   flushName();
+  //   if (activeBox == 'name') {
+  //     setActiveBox(null);
+  //   }
+  // };
 
   const handleIdBlur = () => {
     flushId();
@@ -138,27 +155,31 @@ export const SearchControls = () => {
   useEffect(() => {
     if (enterPressed && activeBox) {
       switch (activeBox) {
-        case 'name':
-          flushName();
-          break;
+        // case 'name':
+        //   flushName();
+        //   break;
         case 'id':
           flushId();
           break;
       }
     }
-  }, [enterPressed, setNameSearch, setIdSearch, flushName, flushId]);
+  }, [enterPressed, setNameSearch, setIdSearch, /** flushName,  */ flushId]);
+  const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
+  const pipList = pips.data
+    .filter(pip => !excludeFiles.some(file => pip.filename.includes(file)))
+    .map(pip => '{' + pip.symbol + '}');
 
   return (
     <SearchContainer>
       <SearchCriteriaSection>
-        <FormField label="Name">
+        {/* <FormField label="Name">
           <TextInput
             value={localName}
             onChange={event => setLocalName(event.target.value)}
             onFocus={handleNameFocus}
             onBlur={handleNameBlur}
           />
-        </FormField>
+        </FormField> */}
         <FormField label="Id">
           <TextInput
             value={localId}
@@ -168,8 +189,14 @@ export const SearchControls = () => {
           />
         </FormField>
         <PillSearch
-          label={'Cost'}
+          label={'Name'}
           possibleValues={[]}
+          values={nameSearch}
+          onChange={setNameSearch}
+        />
+        <PillSearch
+          label={'Cost'}
+          possibleValues={pipList}
           values={costSearch}
           onChange={setCostSearch}
         />
@@ -198,6 +225,12 @@ export const SearchControls = () => {
           onChange={setCreators}
         />
         <PillSearch
+          label={'Artist(s)'}
+          possibleValues={[]}
+          values={artists}
+          onChange={setArtists}
+        />
+        <PillSearch
           label={'Tags'}
           possibleValues={tags_data.data}
           values={tags}
@@ -207,21 +240,8 @@ export const SearchControls = () => {
       <SearchCriteriaSection>
         <NamedCheckboxGroup
           label="Colors"
-          values={
-            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
-          }
-          names={
-            /**Object.keys(HCSearchColor)*/ [
-              'White',
-              'Blue',
-              'Black',
-              'Red',
-              'Green',
-              'Purple',
-              'Colorless',
-              'Misc bullshit',
-            ]
-          }
+          values={HCSearchColors}
+          names={['White', 'Blue', 'Black', 'Red', 'Green', 'Purple', 'Colorless', 'Misc bullshit']}
           value={searchColors}
           onChange={setSearchColors}
         >
@@ -246,21 +266,8 @@ export const SearchControls = () => {
       <SearchCriteriaSection>
         <NamedCheckboxGroup
           label="Color Identity (Commander)"
-          values={
-            /**Object.values(HCSearchColor)*/ ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit']
-          }
-          names={
-            /**Object.keys(HCSearchColor)*/ [
-              'White',
-              'Blue',
-              'Black',
-              'Red',
-              'Green',
-              'Purple',
-              'Colorless',
-              'Misc bullshit',
-            ]
-          }
+          values={HCSearchColors}
+          names={['White', 'Blue', 'Black', 'Red', 'Green', 'Purple', 'Colorless', 'Misc bullshit']}
           value={searchColorIdentities}
           onChange={setSearchColorIdentities}
         >
@@ -324,7 +331,7 @@ export const SearchControls = () => {
       <SearchCriteriaSection>
         <fieldset>
           <StyledLegend>{'Extras'}</StyledLegend>
-          {open ? (
+          {extrasOpen ? (
             <>
               {/* <StyledComponentHolder> */}
               <SingleCheckbox
@@ -337,7 +344,7 @@ export const SearchControls = () => {
                 <BoxlessCheckboxGroup
                   value={extraSets}
                   label={'Extra Sets'}
-                  values={['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4', 'C', 'HCT', 'SFT']}
+                  values={extraSetList}
                   onChange={setExtraSets}
                 />
               </StyledComponentHolder>
@@ -359,7 +366,7 @@ export const SearchControls = () => {
               <br />
               <button
                 onClick={() => {
-                  setOpen(false);
+                  setExtrasOpen(false);
                 }}
               >
                 show less
@@ -368,27 +375,93 @@ export const SearchControls = () => {
           ) : (
             <button
               onClick={() => {
-                setOpen(true);
+                setExtrasOpen(true);
               }}
             >
               show more
             </button>
           )}
         </fieldset>
-        <NamedHiddenCheckboxGroup
-          label="Constructed Legality"
-          values={['constructedLegal', '4cbLegal', 'hellsmanderLegal', 'isCommander']}
-          names={[
-            'Standard Legal',
-            '4 Card Blind Legal',
-            'Hellsmander Legal',
-            'Can Be Your Commander',
-          ]}
-          value={legality}
-          onChange={setLegality}
+        <fieldset>
+          <StyledLegend>{'Constructed Legality'}</StyledLegend>
+          {legalityOpen ? (
+            <>
+              <StyledComponentHolder>
+                <StyledLabel htmlFor="standard">{'Standard'}</StyledLabel>
+                <StyledDropdownSelect
+                  id="standard"
+                  defaultValue={standardLegality}
+                  value={standardLegality}
+                  onChange={event => {
+                    setStandardLegality(event.target.value as any);
+                  }}
+                >
+                  {['', 'legal', 'not_legal', 'banned'].map(entry => {
+                    return <option key={entry}>{entry}</option>;
+                  })}
+                </StyledDropdownSelect>
+              </StyledComponentHolder>
+              <StyledComponentHolder>
+                <StyledLabel htmlFor="4cb">{'4 Card Blind'}</StyledLabel>
+                <StyledDropdownSelect
+                  id="4cb"
+                  defaultValue={fourcbLegality}
+                  value={fourcbLegality}
+                  onChange={event => {
+                    set4cbLegality(event.target.value as any);
+                  }}
+                >
+                  {['', 'legal', 'not_legal', 'banned'].map(entry => {
+                    return <option key={entry}>{entry}</option>;
+                  })}
+                </StyledDropdownSelect>
+              </StyledComponentHolder>
+              <StyledComponentHolder>
+                <StyledLabel htmlFor="commander">{'Hellsmander'}</StyledLabel>
+                <StyledDropdownSelect
+                  id="commander"
+                  defaultValue={commanderLegality}
+                  value={commanderLegality}
+                  onChange={event => {
+                    setCommanderLegality(event.target.value as any);
+                  }}
+                >
+                  {['', 'legal', 'not_legal', 'banned'].map(entry => {
+                    return <option key={entry}>{entry}</option>;
+                  })}
+                </StyledDropdownSelect>
+              </StyledComponentHolder>
+              <SingleCheckbox
+                label={'Can Be Your Commander'}
+                onChange={setIsCommander}
+                value={isCommander}
+              />
+              <br />
+              <button
+                onClick={() => {
+                  setLegalityOpen(false);
+                }}
+              >
+                show less
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                setLegalityOpen(true);
+              }}
+            >
+              show more
+            </button>
+          )}
+        </fieldset>
+      </SearchCriteriaSection>
+      <SearchCriteriaSection>
+        <NumberSelector
+          label={'Collector number'}
+          onChange={setCollectorNumber}
+          value={collectorNumber}
         />
-        {/* </SearchCriteriaSection>
-      <SearchCriteriaSection> */}
         <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />
         <NumberSelector label={'Power'} onChange={setPower} value={power} />
         <NumberSelector label={'Toughness'} onChange={setToughness} value={toughness} />

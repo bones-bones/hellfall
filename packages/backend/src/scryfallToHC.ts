@@ -15,8 +15,10 @@ import {
   HCColor,
   HCColors,
   HCImageStatus,
+  HCFrame,
 } from '@hellfall/shared/types';
 import { setDerivedProps } from './derivedProps.ts';
+import { fromImportMana } from '@hellfall/shared/utils/textHandling.ts';
 export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): HCCard.Any => {
   const cardLayoutCorrespondences: Record<ScryfallLayout, HCLayout> = {
     normal: HCLayout.Normal,
@@ -25,18 +27,20 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     transform: HCLayout.Transform,
     modal_dfc: HCLayout.Modal,
     meld: HCLayout.MeldPart,
-    leveler: HCLayout.Normal,
-    class: HCLayout.Normal,
-    saga: HCLayout.Normal,
+    leveler: HCLayout.Leveler,
+    class: HCLayout.Class,
+    saga: HCLayout.Saga,
+    // @ts-ignore
+    case: HCLayout.Case,
     adventure: HCLayout.Inset,
     // @ts-ignore
-    prepare: HCLayout.Inset,
-    mutate: HCLayout.Normal,
-    prototype: HCLayout.Normal,
-    battle: HCLayout.Normal,
-    planar: HCLayout.Normal,
-    scheme: HCLayout.Normal,
-    vanguard: HCLayout.Normal,
+    prepare: HCLayout.Prepare,
+    mutate: HCLayout.Mutate,
+    prototype: HCLayout.Prototype,
+    battle: HCLayout.Battle,
+    planar: HCLayout.Planar,
+    scheme: HCLayout.Scheme,
+    vanguard: HCLayout.Vanguard,
     token: HCLayout.Token,
     double_faced_token: HCLayout.MultiToken,
     emblem: HCLayout.Emblem,
@@ -55,6 +59,8 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     leveler: HCLayout.RealCardToken,
     class: HCLayout.RealCardToken,
     saga: HCLayout.RealCardToken,
+    // @ts-ignore
+    case: HCLayout.RealCardToken,
     adventure: HCLayout.RealCardMultiToken,
     // @ts-ignore
     prepare: HCLayout.RealCardMultiToken,
@@ -83,6 +89,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   };
   const italicsReplaceKeys: string[] = ['name', 'flavor_text', 'oracle_text'];
   const sameKeys: string[] = [
+    'object',
     'oracle_id',
     'hand_modifier',
     'life_modifier',
@@ -94,6 +101,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'watermark',
     'attraction_lights',
     'type_line',
+    'border_color',
+    'frame',
+    'frame_effects',
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
@@ -112,7 +122,6 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     set: asToken ? 'SFT' : 'SFC',
     variation: false,
     image_status: HCImageStatus.HighRes,
-    draft_image_status: HCImageStatus.Inapplicable,
     mana_cost: '',
   };
   const defaultMultiFaceProps: Record<string, any> = {
@@ -121,6 +130,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     colors: [HCColor.Colorless] as HCColors,
     oracle_text: '',
     image_status: HCImageStatus.Split,
+    layout: HCLayout.Token,
   };
   const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
   const subKeywords: Record<string, string> = {
@@ -159,16 +169,6 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'Snow',
     /**'Token', */ 'World',
   ];
-  const fixPhyrexianMana = (text: string) => {
-    if (text.includes('/P}')) {
-      return text
-        .split(/({[^]*?\/P})/)
-        .map(subtext => (subtext.slice(-3) == '/P}' ? '{H/' + subtext.slice(1, -3) + '}' : subtext))
-        .join('');
-    } else {
-      return text;
-    }
-  };
   const cardObject: Record<string, any> & { card_faces?: Record<string, any>[] } = {};
   Object.entries(card).forEach(([key, value]) => {
     if (key == 'card_faces') {
@@ -187,9 +187,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
           } else if (k in keyCorrespondences) {
             cardObject.card_faces![index][keyCorrespondences[k]] = v;
           } else if (k == 'mana_cost') {
-            cardObject.card_faces![index][k] = fixPhyrexianMana(v as string);
+            cardObject.card_faces![index][k] = fromImportMana(v as string);
           } else if (italicsReplaceKeys.includes(k)) {
-            cardObject.card_faces![index][k] = fixPhyrexianMana(
+            cardObject.card_faces![index][k] = fromImportMana(
               (v as string).replaceAll('\n', '\\n')
             );
           } else if (sameKeys.includes(k)) {
@@ -245,9 +245,17 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     } else if (key in keyCorrespondences) {
       cardObject[keyCorrespondences[key]] = value;
     } else if (key == 'mana_cost') {
-      cardObject[key] = fixPhyrexianMana(value);
+      cardObject[key] = fromImportMana(value);
     } else if (italicsReplaceKeys.includes(key)) {
-      cardObject[key] = fixPhyrexianMana(value.replaceAll('\n', '\\n'));
+      cardObject[key] = fromImportMana(value.replaceAll('\n', '\\n'));
+    } else if (key == 'frame') {
+      // if it was released after June 2019, use the new token frame
+      const isNewToken =
+        value == '2015' &&
+        card.set_type == 'token' &&
+        (card.released_at.slice(0, 3) != '201' ||
+          (card.released_at.slice(0, 4) == '2019' && parseInt(card.released_at.slice(5, 7)) > 6));
+      cardObject.frame = (card.set_type == 'token' ? 'token_' : '') + (isNewToken ? '2020' : value);
     } else if (sameKeys.includes(key)) {
       cardObject[key] = value;
     }
@@ -284,6 +292,14 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       }
     }
   });
+  if (card.full_art) {
+    if (cardObject.frame_effects) {
+      cardObject.frame_effects.push('fullart');
+    } else {
+      cardObject.frame_effects = ['fullart'];
+    }
+  }
+  cardObject.finish = card.finishes.includes('nonfoil') ? 'nonfoil' : 'foil';
   cardObject.id = card.id; // make sure to give correct ID using name for tokens
   if (card.layout == 'token' && card.type_line == 'Creature') {
     cardObject.layout = HCLayout.Reminder;

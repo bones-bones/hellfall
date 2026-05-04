@@ -1,15 +1,15 @@
-// hooks/useUrlSync.ts
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSetAtom, useAtom } from 'jotai';
 import {
-  nameSearchAtom,
   idSearchAtom,
+  nameSearchAtom,
   costSearchAtom,
   typeSearchAtom,
   rulesSearchAtom,
   flavorSearchAtom,
   creatorsAtom,
+  artistsAtom,
   tagsAtom,
   searchColorsAtom,
   colorComparisonAtom,
@@ -22,8 +22,11 @@ import {
   includeExtraSetsAtom,
   extraSetsAtom,
   searchTokenAtom,
-  legalityAtom,
-  // isCommanderAtom,
+  standardLegalityAtom,
+  fourcbLegalityAtom,
+  commanderLegalityAtom,
+  isCommanderAtom,
+  collectorNumberAtom,
   manaValueAtom,
   powerAtom,
   toughnessAtom,
@@ -33,7 +36,7 @@ import {
   dirAtom,
   pageAtom,
   activeCardAtom,
-  LegalType,
+  parseOperatorValue,
 } from '../atoms/searchAtoms.ts';
 
 export const useUrlSync = () => {
@@ -42,13 +45,14 @@ export const useUrlSync = () => {
 
   // Get all setters
 
-  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [idSearch, setIdSearch] = useAtom(idSearchAtom);
+  const [nameSearch, setNameSearch] = useAtom(nameSearchAtom);
   const [costSearch, setCostSearch] = useAtom(costSearchAtom);
   const [typeSearch, setTypeSearch] = useAtom(typeSearchAtom);
   const [rulesSearch, setRulesSearch] = useAtom(rulesSearchAtom);
   const [flavorSearch, setFlavorSearch] = useAtom(flavorSearchAtom);
   const [creators, setCreators] = useAtom(creatorsAtom);
+  const [artists, setArtists] = useAtom(artistsAtom);
   const [tags, setTags] = useAtom(tagsAtom);
   const [searchColors, setSearchColors] = useAtom(searchColorsAtom);
   const [colorComparison, setColorComparison] = useAtom(colorComparisonAtom);
@@ -63,7 +67,11 @@ export const useUrlSync = () => {
   const [includeExtraSets, setIncludeExtraSets] = useAtom(includeExtraSetsAtom);
   const [extraSets, setExtraSets] = useAtom(extraSetsAtom);
   const [searchToken, setSearchToken] = useAtom(searchTokenAtom);
-  const [legality, setLegality] = useAtom(legalityAtom);
+  const [standardLegality, setStandardLegality] = useAtom(standardLegalityAtom);
+  const [fourcbLegality, set4cbLegality] = useAtom(fourcbLegalityAtom);
+  const [commanderLegality, setCommanderLegality] = useAtom(commanderLegalityAtom);
+  const [isCommander, setIsCommander] = useAtom(isCommanderAtom);
+  const [collectorNumber, setCollectorNumber] = useAtom(collectorNumberAtom);
   const [manaValue, setManaValue] = useAtom(manaValueAtom);
   const [power, setPower] = useAtom(powerAtom);
   const [toughness, setToughness] = useAtom(toughnessAtom);
@@ -74,42 +82,35 @@ export const useUrlSync = () => {
   const [page, setPage] = useAtom(pageAtom);
   const [activeCard, setActiveCard] = useAtom(activeCardAtom);
 
-  const parseOperatorValue = (str: string | null) => {
-    if (!str) return undefined;
-    const match = str.match(/^([<>]=?|=)(.+)$/);
-    if (!match) return undefined;
-    return {
-      operator: match[1] as '<' | '<=' | '=' | '>=' | '>',
-      value: parseInt(match[2]),
-    };
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     // Set search inputs
-    if (nameSearch != (params.get('name') || '')) {
-      setNameSearch(params.get('name') || '');
-    }
     if (idSearch != (params.get('id') || '')) {
       setIdSearch(params.get('id') || '');
     }
-    if (costSearch != (params.get('cost')?.split(',').filter(Boolean) || [])) {
-      setCostSearch(params.get('cost')?.split(',').filter(Boolean) || []);
+    if (nameSearch != (params.getAll('name').filter(Boolean) || [])) {
+      setNameSearch(params.getAll('name').filter(Boolean) || []);
     }
-    if (typeSearch != (params.get('type')?.split(',').filter(Boolean) || [])) {
-      setTypeSearch(params.get('type')?.split(',').filter(Boolean) || []);
+    if (costSearch != (params.getAll('cost').filter(Boolean) || [])) {
+      setCostSearch(params.getAll('cost').filter(Boolean) || []);
     }
-    if (rulesSearch != (params.get('rules')?.split(',').filter(Boolean) || [])) {
-      setRulesSearch(params.get('rules')?.split(',').filter(Boolean) || []);
+    if (typeSearch != (params.getAll('type').filter(Boolean) || [])) {
+      setTypeSearch(params.getAll('type').filter(Boolean) || []);
     }
-    if (flavorSearch != (params.get('flavor')?.split(',').filter(Boolean) || [])) {
-      setFlavorSearch(params.get('flavor')?.split(',').filter(Boolean) || []);
+    if (rulesSearch != (params.getAll('rules').filter(Boolean) || [])) {
+      setRulesSearch(params.getAll('rules').filter(Boolean) || []);
     }
-    if (creators != (params.get('creators')?.split(',').filter(Boolean) || [])) {
-      setCreators(params.get('creators')?.split(',').filter(Boolean) || []);
+    if (flavorSearch != (params.getAll('flavor').filter(Boolean) || [])) {
+      setFlavorSearch(params.getAll('flavor').filter(Boolean) || []);
     }
-    if (tags != (params.get('tags')?.split(',').filter(Boolean) || [])) {
-      setTags(params.get('tags')?.split(',').filter(Boolean) || []);
+    if (creators != (params.getAll('creator').filter(Boolean) || [])) {
+      setCreators(params.getAll('creator').filter(Boolean) || []);
+    }
+    if (artists != (params.getAll('artist').filter(Boolean) || [])) {
+      setArtists(params.getAll('artist').filter(Boolean) || []);
+    }
+    if (tags != (params.getAll('tag').filter(Boolean) || [])) {
+      setTags(params.getAll('tag').filter(Boolean) || []);
     }
 
     // Set color filters
@@ -149,27 +150,29 @@ export const useUrlSync = () => {
       setSearchToken((params.get('token') as 'Cards' | 'Tokens' | 'Both') || 'Cards');
     }
     if (
-      legality !=
-      ((params.get('legality')?.split(',').filter(Boolean) as (
-        | 'legal'
-        | 'banned'
-        | '4cbLegal'
-        | 'hellsmanderLegal'
-        | 'isCommander'
-      )[]) || [])
+      standardLegality != ((params.get('standard') as '' | 'legal' | 'not_legal' | 'banned') || '')
     ) {
-      setLegality(
-        (params.get('legality')?.split(',').filter(Boolean) as (
-          | 'legal'
-          | 'banned'
-          | '4cbLegal'
-          | 'hellsmanderLegal'
-          | 'isCommander'
-        )[]) || []
+      setStandardLegality((params.get('standard') as '' | 'legal' | 'not_legal' | 'banned') || '');
+    }
+    if (fourcbLegality != ((params.get('4cb') as '' | 'legal' | 'not_legal' | 'banned') || '')) {
+      set4cbLegality((params.get('4cb') as '' | 'legal' | 'not_legal' | 'banned') || '');
+    }
+    if (
+      commanderLegality !=
+      ((params.get('commander') as '' | 'legal' | 'not_legal' | 'banned') || '')
+    ) {
+      setCommanderLegality(
+        (params.get('commander') as '' | 'legal' | 'not_legal' | 'banned') || ''
       );
+    }
+    if (isCommander != (params.get('isCommander') === 'true')) {
+      setIsCommander(params.get('isCommander') === 'true');
     }
 
     // Set numeric filters
+    if (collectorNumber != parseOperatorValue(params.get('cn'))) {
+      setCollectorNumber(parseOperatorValue(params.get('cn')));
+    }
     if (manaValue != parseOperatorValue(params.get('manaValue'))) {
       setManaValue(parseOperatorValue(params.get('manaValue')));
     }
@@ -201,7 +204,5 @@ export const useUrlSync = () => {
     if (activeCard != (params.get('activeCard') || '')) {
       setActiveCard(params.get('activeCard') || '');
     }
-
-    // setIsCommander(params.get('isCommander') === 'true');
   }, [location.search]); // This triggers on back/forward navigation
 };
