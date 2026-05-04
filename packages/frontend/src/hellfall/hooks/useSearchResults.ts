@@ -53,7 +53,12 @@ import {
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 import { CHUNK_SIZE } from '../constants.ts';
 import { extraSetList } from '@hellfall/shared/data/sets.ts';
-import { filterSetBoth, filterSetCard, filterSetToken, getFilteredSet } from '../filters/filterSet.ts';
+import {
+  filterSetBoth,
+  filterSetCard,
+  filterSetToken,
+  getFilteredSet,
+} from '../filters/filterSet.ts';
 import { filterText, filterTextList } from '../filters/filterText.ts';
 import { looseOpType, opType } from '../filters/types.ts';
 import { getAllNames } from '../getNames.ts';
@@ -131,24 +136,24 @@ export const useSearchResults = () => {
   };
   useEffect(() => {
     const tempResults = cards
-    // getFilteredSet(cards, searchSet, extraSets, includeExtraSets, searchToken)
+      // getFilteredSet(cards, searchSet, extraSets, includeExtraSets, searchToken)
       .filter(entry => {
-        switch(searchToken) {
+        switch (searchToken) {
           case 'Cards': {
-            if (!filterSetCard(searchSet.concat(extraSets),'=',entry,includeExtraSets)) {
-              return false
+            if (!filterSetCard(searchSet.concat(extraSets), '=', entry, includeExtraSets)) {
+              return false;
             }
             break;
           }
           case 'Tokens': {
-            if (!filterSetToken(searchSet.concat(extraSets),'=',entry,includeExtraSets)) {
-              return false
+            if (!filterSetToken(searchSet.concat(extraSets), '=', entry, includeExtraSets)) {
+              return false;
             }
             break;
           }
           case 'Both': {
-            if (!filterSetBoth(searchSet.concat(extraSets),'=',entry,includeExtraSets)) {
-              return false
+            if (!filterSetBoth(searchSet.concat(extraSets), '=', entry, includeExtraSets)) {
+              return false;
             }
             break;
           }

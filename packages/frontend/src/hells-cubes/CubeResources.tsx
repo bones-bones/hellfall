@@ -207,7 +207,7 @@ export const CubeResources = () => {
                 {cubeSetup.tts || (
                   <button
                     onClick={() => {
-                      const filtered = getFilteredSet(cards, [cubeSetup.id]);
+                      const filtered = getFilteredSet(cards, cubeSetup.id);
 
                       const val = toDeck(filtered);
                       const url =
