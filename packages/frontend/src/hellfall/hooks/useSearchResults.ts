@@ -56,6 +56,8 @@ import { filterTag, filterText, filterTextList } from '../filters/filterText.ts'
 import { looseOpType, opType } from '../filters/types.ts';
 import { getAllNames } from '../getNames.ts';
 import { filterNumber, filterNumberString } from '../filters/filterNumber.ts';
+import { filterLegality } from '../filters/filterLegality.ts';
+import { filterIs } from '../filters/filterIs.ts';
 
 export const useSearchResults = () => {
   const location = useLocation();
@@ -283,17 +285,20 @@ export const useSearchResults = () => {
         }
 
         if (isCommander) {
-          if (!canBeACommander(entry)) {
+          if (!filterIs(entry, '=', 'commander')) {
             return false;
           }
         }
-        if (standardLegality && entry.legalities.standard != standardLegality) {
+        if (standardLegality && !filterLegality(entry.legalities.standard, '=', standardLegality)) {
           return false;
         }
-        if (fourcbLegality && entry.legalities['4cb'] != fourcbLegality) {
+        if (fourcbLegality && !filterLegality(entry.legalities['4cb'], '=', fourcbLegality)) {
           return false;
         }
-        if (commanderLegality && entry.legalities.commander != commanderLegality) {
+        if (
+          commanderLegality &&
+          !filterLegality(entry.legalities.commander, '=', commanderLegality)
+        ) {
           return false;
         }
         if (collectorNumber) {

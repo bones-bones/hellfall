@@ -1,4 +1,4 @@
-import { HCCard, HCColors } from '@hellfall/shared/types';
+import { HCCard, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
 
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
 export type looseOpType = ':' | opType;
@@ -39,9 +39,11 @@ export interface hybridFilter extends cardFilter<string[][], string[] | number> 
 export interface setFilter extends cardFilter<HCCard.Any, string> {
   (value1: HCCard.Any, operator: looseOpType, value2: string, includeExtraSets: boolean): boolean;
 }
+export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
 export interface setListFilter extends cardFilter<HCCard.Any, string[]> {
   (value1: HCCard.Any, operator: looseOpType, value2: string[], includeExtraSets: boolean): boolean;
 }
+export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
 export interface tagFilter extends cardFilter<string[], string> {
   (
     value1: string[],
@@ -57,7 +59,7 @@ export interface tagFilter extends cardFilter<string[], string> {
  * @param value the value to check
  * @returns
  */
-export const funcOp = (op: opType, func: (value: any) => boolean, value: any) => {
+export const funcOp = <T>(op: opType, func: (value: T) => boolean, value: T) => {
   switch (op) {
     case '<':
       return !func(value);
@@ -83,12 +85,12 @@ export const funcOp = (op: opType, func: (value: any) => boolean, value: any) =>
  * @param value2 the second value to check
  * @returns
  */
-export const includeEqualsOp = (
+export const includeEqualsOp = <T, S>(
   op: opType,
-  includes: (value1: any, value2: any) => boolean,
-  equals: (value1: any, value2: any) => boolean,
-  value1: any,
-  value2: any
+  includes: (value1: T, value2: S) => boolean,
+  equals: (value1: T, value2: S) => boolean,
+  value1: T,
+  value2: S
 ) => {
   switch (op) {
     case '<':
@@ -114,11 +116,11 @@ export const includeEqualsOp = (
  * @param value2 the second value to check
  * @returns
  */
-export const containsOp = (
+export const containsOp = <T>(
   op: opType,
-  contains: (value1: any, value2: any) => boolean,
-  value1: any,
-  value2: any
+  contains: (value1: T, value2: T) => boolean,
+  value1: T,
+  value2: T
 ) => {
   switch (op) {
     case '<': {

@@ -66,7 +66,7 @@ export const filterSetToken: setFilter = Object.assign(
       }
       return Boolean(!value2.length && token.isActualToken);
     };
-    return funcOp(actualOp, tokenInSet, value1.set);
+    return funcOp(actualOp, tokenInSet, value1);
   },
   { defaultOp: '=' as opType }
 );
@@ -82,7 +82,7 @@ export const filterSetListToken: setListFilter = Object.assign(
     if (value2.length) {
       return value2.some(set => filterSetToken(value1, actualOp, set, includeExtraSets));
     }
-    return funcOp(actualOp, card => card.isActualToken, value1);
+    return funcOp(actualOp, card => Boolean(card.isActualToken), value1);
   },
   { defaultOp: '=' as opType }
 );

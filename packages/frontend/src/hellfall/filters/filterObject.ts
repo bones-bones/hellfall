@@ -1,5 +1,13 @@
-import { HCCard } from '@hellfall/shared/types';
-import { cardFilter, looseOpType, opType, setFilter, tagFilter } from './types';
+import { HCCard, HCFormat } from '@hellfall/shared/types';
+import {
+  cardFilter,
+  cardStringFilter,
+  legalFilter,
+  looseOpType,
+  opType,
+  setFilter,
+  tagFilter,
+} from './types';
 
 export interface filterInterface<T = any, S = any> {
   queryName: string;
@@ -75,5 +83,22 @@ export class SetFilter extends filterObject<HCCard.Any, string> {
       this.op == ':' ? this.defaultOp : this.op,
       this.value,
       this.includeExtras
+    );
+}
+export class CardStringFilter extends filterObject<HCCard.Any, string> {
+  constructor(
+    queryName: string,
+    public filter: cardStringFilter,
+    value: string,
+    op: looseOpType,
+    defaultOp: opType
+  ) {
+    super(queryName, filter, value, op, defaultOp, card => card);
+  }
+  cardPassesFilter = (card: HCCard.Any) =>
+    this.filter(
+      this.getValueToCompare(card),
+      this.op == ':' ? this.defaultOp : this.op,
+      this.value
     );
 }

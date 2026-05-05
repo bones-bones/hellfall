@@ -1,3 +1,4 @@
+import { HCCard, HCLegalitiesField } from '@hellfall/shared/types';
 import { getAllNames } from '../getNames';
 import {
   filterColorIdentity,
@@ -6,10 +7,12 @@ import {
   filterHybridIdentity,
 } from './filterColors';
 import { filterNumberString, filterNumberStringList } from './filterNumber';
-import { filterObject, SetFilter } from './filterObject';
+import { filterObject, CardStringFilter, SetFilter } from './filterObject';
 import { filterSetBoth, filterSetCard, filterSetToken } from './filterSet';
 import { filterId, filterTag, filterText, filterTextList } from './filterText';
 import { looseOpType } from './types';
+import { filterBanned, filterLegal, filterNotLegal } from './filterLegality';
+import { filterIs } from './filterIs';
 
 export const equivNames: Record<string, string> = {
   s: 'set',
@@ -265,4 +268,38 @@ export const makeHybridFilter = (value: string[] | number, op: looseOpType) => {
     '=',
     card => card.color_identity_hybrid
   );
+};
+
+export const makeLegalFilter = (value: string, op: looseOpType) => {
+  return new filterObject<HCLegalitiesField, string>(
+    'legal',
+    filterLegal,
+    value,
+    op,
+    '=',
+    card => card.legalities
+  );
+};
+export const makeNotLegalFilter = (value: string, op: looseOpType) => {
+  return new filterObject<HCLegalitiesField, string>(
+    'notlegal',
+    filterNotLegal,
+    value,
+    op,
+    '=',
+    card => card.legalities
+  );
+};
+export const makeBannedFilter = (value: string, op: looseOpType) => {
+  return new filterObject<HCLegalitiesField, string>(
+    'banned',
+    filterBanned,
+    value,
+    op,
+    '=',
+    card => card.legalities
+  );
+};
+export const makeIsFilter = (value: string, op: looseOpType) => {
+  return new CardStringFilter('is', filterIs, value, op, '=');
 };
