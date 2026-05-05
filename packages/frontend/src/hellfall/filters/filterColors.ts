@@ -1,5 +1,16 @@
 import { HCColors, HCMiscColors } from '@hellfall/shared/types';
-import { colorFilter, containsOp, hybridFilter, looseOpType, opType } from './types';
+import {
+  colorContentFilter,
+  colorContentListFilter,
+  colorFilter,
+  colorListFilter,
+  containsOp,
+  hybridContentFilter,
+  hybridFilter,
+  looseOpType,
+  opType,
+} from './types';
+import { filterNumber } from './filterNumber';
 const MISC_BULLSHIT = 'Misc bullshit';
 //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 
@@ -10,10 +21,8 @@ const MISC_BULLSHIT = 'Misc bullshit';
  * @returns boolean of whether the sets are the same colors.
  */
 export const sameColors = (colors1: HCColors | string[], colors2: HCColors | string[]) => {
-  return (
-    colors1.length == colors2.length &&
-    (colors1 as string[]).every(c => (colors2 as string[]).includes(c))
-  );
+  const colorsToUse = colors1.filter(c => c != 'C') as string[];
+  contains(colorsToUse, colors2) && contains(colors2, colorsToUse);
 };
 const contains = (set1: string[], set2: string[]) => set2.every(c => set1.includes(c));
 /**
@@ -23,9 +32,9 @@ const contains = (set1: string[], set2: string[]) => set2.every(c => set1.includ
  * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
  * @returns boolean of whether the comparison is true
  */
-export const filterColors: colorFilter = Object.assign(
+export const filterColorContents: colorContentFilter = Object.assign(
   (value1: string[], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColors.defaultOp : operator;
+    const actualOp = operator === ':' ? filterColorContents.defaultOp : operator;
     if (value2.includes('C')) {
       switch (actualOp) {
         case '<': {
@@ -55,20 +64,83 @@ export const filterColors: colorFilter = Object.assign(
 );
 
 /**
+ * Compares two sets of colors using an operator and returns a bool.
+ * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
+ * @param operator The operator
+ * @param value2 The second set or number of colors to compare
+ * @returns boolean of whether the comparison is true
+ */
+export const filterColors: colorFilter = Object.assign(
+  (value1: string[], operator: looseOpType, value2: string[] | number) => {
+    if (typeof value2 == 'number') {
+      return filterNumber(value1.length, operator, value2);
+    } else {
+      return filterColorContents(value1, operator, value2);
+    }
+  },
+  { defaultOp: '>=' as opType }
+);
+
+/**
  * Compares two sets of colors for a identity search using an operator and returns a bool.
  * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
  * @param operator The operator
  * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
  * @returns boolean of whether the comparison is true
  */
-export const filterColorIdentity: colorFilter = Object.assign(
+export const filterColorIdentityContents: colorContentFilter = Object.assign(
   (value1: string[], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColorIdentity.defaultOp : operator;
-    return filterColors(value1, actualOp, value2);
+    const actualOp = operator === ':' ? filterColorIdentityContents.defaultOp : operator;
+    return filterColorContents(value1, actualOp, value2);
   },
   {
     defaultOp: '<=' as opType,
   }
+);
+
+export const filterColorContentsList: colorContentListFilter = Object.assign(
+  (value1: string[][] | undefined, operator: looseOpType, value2: string[]) => {
+    if (!value1) {
+      return false;
+    }
+    const actualOp = operator === ':' ? filterColorIdentityContents.defaultOp : operator;
+    return value1.some(set => filterColorContents(set, actualOp, value2));
+  },
+  {
+    defaultOp: '=' as opType,
+  }
+);
+
+/**
+ * Compares two sets of colors for an identity search using an operator and returns a bool.
+ * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
+ * @param operator The operator
+ * @param value2 The second set or number of colors to compare
+ * @returns boolean of whether the comparison is true
+ */
+export const filterColorIdentity: colorFilter = Object.assign(
+  (value1: string[], operator: looseOpType, value2: string[] | number) => {
+    if (typeof value2 == 'number') {
+      return filterNumber(value1.length, operator, value2);
+    } else {
+      return filterColorIdentityContents(value1, operator, value2);
+    }
+  },
+  { defaultOp: '<=' as opType }
+);
+
+export const filterColorList: colorListFilter = Object.assign(
+  (value1: string[][] | undefined, operator: looseOpType, value2: string[] | number) => {
+    if (!value1) {
+      return false;
+    }
+    if (typeof value2 == 'number') {
+      return value1.some(set => filterNumber(set.length, operator, value2));
+    } else {
+      return filterColorContentsList(value1, operator, value2);
+    }
+  },
+  { defaultOp: '=' as opType }
 );
 
 /**
@@ -94,15 +166,16 @@ export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
  * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
  * @returns boolean of whether the comparison is true
  */
-export const filterColorsMisc: colorFilter = Object.assign(
+export const filterColorContentsMisc: colorContentFilter = Object.assign(
   (value1: string[], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColorsMisc.defaultOp : operator;
-    return filterColors(colorMiscReduce(value1), actualOp, value2);
+    const actualOp = operator === ':' ? filterColorContentsMisc.defaultOp : operator;
+    return filterColorContents(colorMiscReduce(value1), actualOp, value2);
   },
   {
     defaultOp: '>=' as opType,
   }
 );
+
 /**
  * Compares two sets of colors for a identity search converting to misc using an operator and returns a bool.
  * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
@@ -110,10 +183,10 @@ export const filterColorsMisc: colorFilter = Object.assign(
  * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
  * @returns boolean of whether the comparison is true
  */
-export const filterColorIdentityMisc: colorFilter = Object.assign(
+export const filterColorIdentityContentsMisc: colorContentFilter = Object.assign(
   (value1: string[], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColorIdentityMisc.defaultOp : operator;
-    return filterColors(colorMiscReduce(value1), actualOp, value2);
+    const actualOp = operator === ':' ? filterColorIdentityContentsMisc.defaultOp : operator;
+    return filterColorContents(colorMiscReduce(value1), actualOp, value2);
   },
   {
     defaultOp: '<=' as opType,
@@ -174,9 +247,9 @@ const canContain = <T extends string[][] | string[]>(
  * @param value2 The set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
  * @returns boolean of whether the comparison is true
  */
-export const filterHybridIdentity: hybridFilter = Object.assign(
+export const filterHybridIdentityContents: hybridContentFilter = Object.assign(
   (value1: string[][], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColors.defaultOp : operator;
+    const actualOp = operator === ':' ? filterColorContents.defaultOp : operator;
     if (value2.includes('C')) {
       switch (actualOp) {
         case '<': {
@@ -217,12 +290,68 @@ export const filterHybridIdentity: hybridFilter = Object.assign(
  * @param value2 The set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
  * @returns boolean of whether the comparison is true
  */
-export const filterHybridIdentityMisc: hybridFilter = Object.assign(
+export const filterHybridIdentityContentsMisc: hybridContentFilter = Object.assign(
   (value1: string[][], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterHybridIdentityMisc.defaultOp : operator;
-    return filterHybridIdentity(hybridIdentityMiscReduce(value1), actualOp, value2);
+    const actualOp = operator === ':' ? filterHybridIdentityContentsMisc.defaultOp : operator;
+    return filterHybridIdentityContents(hybridIdentityMiscReduce(value1), actualOp, value2);
   },
   {
     defaultOp: '<=' as opType,
   }
+);
+
+const getSubsets = (set: string[], len: number): string[][] => {
+  const result: string[][] = [];
+
+  const backtrack = (start: number, current: string[]) => {
+    if (current.length === len) {
+      result.push([...current]);
+      return;
+    }
+
+    for (let i = start; i < set.length; i++) {
+      current.push(set[i]);
+      backtrack(i + 1, current);
+      current.pop();
+    }
+  };
+
+  backtrack(0, []);
+  return result;
+};
+const findMinNum = (hybridColors: string[][]): number => {
+  const allColors = Array.from(new Set(hybridColors.flat()));
+  if (!allColors.length) {
+    return 0;
+  }
+  const isMatch = (colors: string[]) => hybridColors.every(s => colors.some(c => s.includes(c)));
+  for (let i = 1; i < allColors.length; i++) {
+    if (getSubsets(allColors, i).some(subset => isMatch(subset))) {
+      return i;
+    }
+  }
+  return allColors.length;
+};
+export const getHybridColorNumber = (hybrid: string[][]) => {
+  const monoList = hybrid.flatMap(colors => (colors.length == 1 ? colors : []));
+  const hybridColors = hybrid.filter(colors => colors.length > 1);
+  return monoList.length + findMinNum(hybridColors);
+};
+
+/**
+ * Compares two sets of colors using an operator and returns a bool.
+ * @param value1 The set of hybrid colors to compare (must not include 'C'; can be empty)
+ * @param operator The operator
+ * @param value2 The second set or number of colors to compare
+ * @returns boolean of whether the comparison is true
+ */
+export const filterHybridIdentity: hybridFilter = Object.assign(
+  (value1: string[][], operator: looseOpType, value2: string[] | number) => {
+    if (typeof value2 == 'number') {
+      return filterNumber(getHybridColorNumber(value1), operator, value2);
+    } else {
+      return filterHybridIdentityContents(value1, operator, value2);
+    }
+  },
+  { defaultOp: '<=' as opType }
 );

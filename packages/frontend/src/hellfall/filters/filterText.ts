@@ -8,6 +8,19 @@ import {
   textListFilter,
   textRecordFilter,
 } from './types';
+import { isNumber } from '@hellfall/shared/utils/isInt';
+import { filterNumber } from './filterNumber';
+
+export const filterId: textFilter = Object.assign(
+  (value1: string, operator: looseOpType, value2: string) => {
+    const actualOp = operator === ':' ? filterText.defaultOp : operator;
+    if (isNumber(value2)) {
+      return isNumber(value1) ? filterNumber(parseInt(value1), operator, parseInt(value2)) : false;
+    }
+    return includeEqualsOp(actualOp, textSearchIncludes, textEquals, value1, value2);
+  },
+  { defaultOp: '>=' as opType }
+);
 
 export const filterText: textFilter = Object.assign(
   (value1: string, operator: looseOpType, value2: string) => {

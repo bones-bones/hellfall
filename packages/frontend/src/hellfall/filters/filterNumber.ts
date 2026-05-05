@@ -1,5 +1,12 @@
 import { toNumber } from '../inputs/NumberSelector';
-import { looseOpType, numFilter, numStringFilter, opType, textFilter } from './types';
+import {
+  looseOpType,
+  numFilter,
+  numStringFilter,
+  numStringListFilter,
+  opType,
+  textFilter,
+} from './types';
 import { isNumber } from '@hellfall/shared/utils/isInt.ts';
 
 export const filterNumber: numFilter = Object.assign(
@@ -37,6 +44,17 @@ export const filterNumberString: numStringFilter = Object.assign(
       return false;
     }
     return filterNumber(num1, actualOp, num2);
+  },
+  { defaultOp: '=' as opType }
+);
+export const filterNumberStringList: numStringListFilter = Object.assign(
+  (
+    value1: (number | string | undefined)[],
+    operator: looseOpType,
+    value2: number | string | undefined
+  ) => {
+    const actualOp = operator === ':' ? filterNumberString.defaultOp : operator;
+    return value1.some(value => filterNumberString(value, actualOp, value2));
   },
   { defaultOp: '=' as opType }
 );

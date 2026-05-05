@@ -45,13 +45,13 @@ import {
 import { sortFunction } from '../sortFunction';
 import { canBeACommander } from '../canBeACommander.ts';
 import {
-  filterColorIdentityMisc,
-  filterColorsMisc,
-  filterHybridIdentityMisc,
+  filterColorIdentityContentsMisc,
+  filterColorContentsMisc,
+  filterHybridIdentityContentsMisc,
 } from '../filters/filterColors.ts';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 import { CHUNK_SIZE } from '../constants.ts';
-import { filterSetBoth, filterSetCard, filterSetToken } from '../filters/filterSet.ts';
+import { filterSetListBoth, filterSetListCard, filterSetListToken } from '../filters/filterSet.ts';
 import { filterTag, filterText, filterTextList } from '../filters/filterText.ts';
 import { looseOpType, opType } from '../filters/types.ts';
 import { getAllNames } from '../getNames.ts';
@@ -133,19 +133,19 @@ export const useSearchResults = () => {
       .filter(entry => {
         switch (searchToken) {
           case 'Cards': {
-            if (!filterSetCard(searchSet.concat(extraSets), '=', entry, includeExtraSets)) {
+            if (!filterSetListCard(entry, '=', searchSet.concat(extraSets), includeExtraSets)) {
               return false;
             }
             break;
           }
           case 'Tokens': {
-            if (!filterSetToken(searchSet.concat(extraSets), '=', entry, includeExtraSets)) {
+            if (!filterSetListToken(entry, '=', searchSet.concat(extraSets), includeExtraSets)) {
               return false;
             }
             break;
           }
           case 'Both': {
-            if (!filterSetBoth(searchSet.concat(extraSets), '=', entry, includeExtraSets)) {
+            if (!filterSetListBoth(entry, '=', searchSet.concat(extraSets), includeExtraSets)) {
               return false;
             }
             break;
@@ -189,27 +189,33 @@ export const useSearchResults = () => {
         ) => {
           return searchTerms.every(searchTerm => filterTextListAllowingOr(combined, searchTerm));
         };
-        const filterTagListAllowingOr = (tags: string[], searchTerm: string,tag_notes:Record<string,string>|undefined) => {
+        const filterTagListAllowingOr = (
+          tags: string[],
+          searchTerm: string,
+          tag_notes: Record<string, string> | undefined
+        ) => {
           if (searchTerm.startsWith('~')) {
             if (!usingOr) {
               usingOr = true;
             }
             const split = splitOp(searchTerm.slice(1));
-            if (filterTag(tags, split[0], split[1],tag_notes)) {
+            if (filterTag(tags, split[0], split[1], tag_notes)) {
               matchesSomeOr = true;
             }
             return true;
           } else {
             const split = splitOp(searchTerm);
-            return filterTag(tags, split[0], split[1],tag_notes);
+            return filterTag(tags, split[0], split[1], tag_notes);
           }
         };
         const everyTagMatches = (
           tags: string[],
           searchTerms: string[],
-          tag_notes:Record<string,string>|undefined
+          tag_notes: Record<string, string> | undefined
         ) => {
-          return searchTerms.every(searchTerm => filterTagListAllowingOr(tags, searchTerm,tag_notes));
+          return searchTerms.every(searchTerm =>
+            filterTagListAllowingOr(tags, searchTerm, tag_notes)
+          );
         };
         // TODO: decide if this should use <= instead of =
         if (idSearch !== '' && !filterText(entry.id, '=', idSearch)) {
@@ -271,7 +277,7 @@ export const useSearchResults = () => {
         }
 
         if (tags) {
-          if (!everyTagMatches(entry.tags ?? [],tags,entry.tag_notes)) {
+          if (!everyTagMatches(entry.tags ?? [], tags, entry.tag_notes)) {
             return false;
           }
         }
@@ -340,7 +346,7 @@ export const useSearchResults = () => {
 
         // TODO: handle split cards/adventures/transforms/flips better
         if (searchColors.length) {
-          if (!filterColorsMisc(entry.colors, colorComparison, searchColors)) {
+          if (!filterColorContentsMisc(entry.colors, colorComparison, searchColors)) {
             return false;
           }
         }
@@ -348,7 +354,7 @@ export const useSearchResults = () => {
         if (searchColorIdentities.length) {
           if (hybridIdentityRule) {
             if (
-              !filterHybridIdentityMisc(
+              !filterHybridIdentityContentsMisc(
                 entry.color_identity_hybrid,
                 colorIdentityComparison,
                 searchColorIdentities
@@ -358,7 +364,7 @@ export const useSearchResults = () => {
             }
           } else {
             if (
-              !filterColorIdentityMisc(
+              !filterColorIdentityContentsMisc(
                 entry.color_identity,
                 colorIdentityComparison,
                 searchColorIdentities

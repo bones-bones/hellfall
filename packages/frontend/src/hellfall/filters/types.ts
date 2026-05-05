@@ -3,6 +3,9 @@ import { HCCard, HCColors } from '@hellfall/shared/types';
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
 export type looseOpType = ':' | opType;
 
+/**
+ * The first type is the type of the entry. The second type is the type from the search query.
+ */
 export interface cardFilter<T = any, S = any> {
   (value1: T, operator: looseOpType, value2: S): boolean;
   defaultOp: opType;
@@ -22,12 +25,22 @@ export const invertOp = (op: opType) => {
   return invertedOps[op];
 };
 export interface numFilter extends cardFilter<number, number> {}
-export interface numStringFilter extends cardFilter<number | string | undefined, number | string> {}
-export interface colorFilter extends cardFilter<string[], string[]> {}
-export interface hybridFilter extends cardFilter<string[][], string[]> {}
+export interface numStringFilter
+  extends cardFilter<number | string | undefined, number | string | undefined> {}
+export interface numStringListFilter
+  extends cardFilter<(number | string | undefined)[], number | string> {}
+export interface colorContentFilter extends cardFilter<string[], string[]> {}
+export interface colorFilter extends cardFilter<string[], string[] | number> {}
+export interface colorContentListFilter extends cardFilter<string[][] | undefined, string[]> {}
+export interface colorListFilter extends cardFilter<string[][] | undefined, string[] | number> {}
+export interface hybridContentFilter extends cardFilter<string[][], string[]> {}
+export interface hybridFilter extends cardFilter<string[][], string[] | number> {}
 // export interface setFilter extends cardFilter<string[],HCCard.Any> {}
-export interface setFilter extends cardFilter<string[], HCCard.Any> {
-  (value1: string[], operator: looseOpType, value2: HCCard.Any, includeExtraSets: boolean): boolean;
+export interface setFilter extends cardFilter<HCCard.Any, string> {
+  (value1: HCCard.Any, operator: looseOpType, value2: string, includeExtraSets: boolean): boolean;
+}
+export interface setListFilter extends cardFilter<HCCard.Any, string[]> {
+  (value1: HCCard.Any, operator: looseOpType, value2: string[], includeExtraSets: boolean): boolean;
 }
 export interface tagFilter extends cardFilter<string[], string> {
   (
@@ -37,6 +50,29 @@ export interface tagFilter extends cardFilter<string[], string> {
     tag_notes?: Record<string, string>
   ): boolean;
 }
+/**
+ * To use in filters when need to check a function
+ * @param op operation to use
+ * @param func function
+ * @param value the value to check
+ * @returns
+ */
+export const funcOp = (op: opType, func: (value: any) => boolean, value: any) => {
+  switch (op) {
+    case '<':
+      return !func(value);
+    case '<=':
+      return func(value);
+    case '=':
+      return func(value);
+    case '>=':
+      return func(value);
+    case '>':
+      return !func(value);
+    case '!=':
+      return !func(value);
+  }
+};
 
 /**
  * To use in filters when need to check an inclusion function and an equality function
