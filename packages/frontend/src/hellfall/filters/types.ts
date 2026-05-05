@@ -1,4 +1,5 @@
 import { HCCard, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
+import { filterObject, SetFilter } from './filterObject';
 
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
 export type looseOpType = ':' | opType;
@@ -21,8 +22,8 @@ const invertedOps: Record<opType, opType> = {
   '>': '<=',
   '!=': '=',
 };
-export const invertOp = (op: opType) => {
-  return invertedOps[op];
+export const invertOp = (op: looseOpType) => {
+  return op == ':' ? op : invertedOps[op];
 };
 export interface numFilter extends cardFilter<number, number> {}
 export interface numStringFilter
@@ -79,7 +80,8 @@ export const funcOp = <T>(op: opType, func: (value: T) => boolean, value: T) => 
  * To use in filters when need to check a function with two values
  * @param op operation to use
  * @param func function
- * @param value the value to check
+ * @param value1 the first value to check
+ * @param value2 the second value to check
  * @returns
  */
 export const funcOpTwo = <T, S>(
@@ -171,3 +173,45 @@ export const containsOp = <T>(
     }
   }
 };
+
+const share = (value1: string | string[], value2: string | string[]) => {
+  if (Array.isArray(value1) && Array.isArray(value2)) {
+    return value1.some(value => value2.includes(value));
+  } else if (Array.isArray(value1) && typeof value2 == 'string') {
+    return value1.includes(value2);
+  } else if (Array.isArray(value2) && typeof value1 == 'string') {
+    return value2.includes(value1);
+  } else {
+    return value1 == value2;
+  }
+};
+
+/**
+ * To use in filters when need to check if two lists share a value
+ * @param op operation to use
+ * @param value1 the first value to check
+ * @param value2 the second value to check
+ * @returns
+ */
+export const shareOp = (op: opType, value1: string | string[], value2: string | string[]) => {
+  switch (op) {
+    case '<':
+      return !share(value1, value2);
+    case '<=':
+      return share(value1, value2);
+    case '=':
+      return share(value1, value2);
+    case '>=':
+      return share(value1, value2);
+    case '>':
+      return !share(value1, value2);
+    case '!=':
+      return !share(value1, value2);
+  }
+};
+export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
+export type setFilterMaker = (value: string, op: looseOpType, includeExtras: boolean) => SetFilter;
+export type colorFilterMaker = (
+  value: string[] | number,
+  op: looseOpType
+) => filterObject<any, string[] | number>;

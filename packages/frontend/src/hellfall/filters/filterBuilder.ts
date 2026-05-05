@@ -10,84 +10,57 @@ import { filterNumberString, filterNumberStringList } from './filterNumber';
 import { filterObject, CardStringFilter, SetFilter } from './filterObject';
 import { filterSetBoth, filterSetCard, filterSetToken } from './filterSet';
 import { filterId, filterLore, filterTag, filterText, filterTextList } from './filterText';
-import { looseOpType } from './types';
+import { colorFilterMaker, filterMaker, invertOp, looseOpType, setFilterMaker } from './types';
 import { filterBanned, filterLegal, filterNotLegal } from './filterLegality';
 import { filterHas, filterIs } from './filterIs';
-import { filterAnyLayout, filterCardLayout, filterFaceLayout } from './filterPropValue';
+import { filterAnyLayout, filterCardLayout, filterFaceLayout } from './values/filterLayout';
+import { filterBorder } from './values/filterBorder';
+import {
+  filterCardFrame,
+  filterFrame,
+  filterFrameEffect,
+  filterShowcase,
+} from './values/filterFrame';
 
-export const equivNames: Record<string, string> = {
-  s: 'set',
-  ts: 'tokenset',
-  b: 'block',
-  cardid: 'id',
-  name: 'n',
-  m: 'mana',
-  cost: 'mana',
-  manacost: 'mana',
-  t: 'type',
-  o: 'oracle',
-  ft: 'flavor',
-  oracletext: 'oracle',
-  flavortext: 'flavor',
-  creators: 'creator',
-  artists: 'artist',
-  otag: 'tag',
-  oracletag: 'tag',
-  cn: 'number',
-  collector: 'number',
-  collectornumber: 'number',
-  mv: 'manavalue',
-  pow: 'power',
-  tou: 'toughness',
-  tough: 'toughness',
-  loy: 'loyalty',
-  def: 'defense',
-  c: 'color',
-  colors: 'color',
-  colorindicator: 'indicator',
-  ci: 'identity',
-  cidentity: 'identity',
-  colorid: 'identity',
-  cid: 'identity',
-  hi: 'hybrid',
-  hci: 'hybrid',
-  hid: 'hybrid',
-  hcid: 'hybrid',
-  hybridid: 'hybrid',
-  hybrididentity: 'hybrid',
-  hybridcoloridentity: 'hybrid',
-  kw: 'keyword',
-  // powtou:'pt',
-  cardlayout: 'layout',
-};
-
-export const makeSetFilter = (value: string, op: looseOpType, includeExtras: boolean) => {
+export const makeSetFilter: setFilterMaker = (
+  value: string,
+  op: looseOpType,
+  includeExtras: boolean
+) => {
   return new SetFilter('set', filterSetCard, value, op, '=', includeExtras);
 };
-export const makeTokenSetFilter = (value: string, op: looseOpType, includeExtras: boolean) => {
+export const makeTokenSetFilter: setFilterMaker = (
+  value: string,
+  op: looseOpType,
+  includeExtras: boolean
+) => {
   return new SetFilter('tokenset', filterSetToken, value, op, '=', includeExtras);
 };
-export const makeBlockFilter = (value: string, op: looseOpType, includeExtras: boolean) => {
+export const makeBlockFilter: setFilterMaker = (
+  value: string,
+  op: looseOpType,
+  includeExtras: boolean
+) => {
   return new SetFilter('block', filterSetBoth, value, op, '=', includeExtras);
 };
 
-export const makeIDFilter = (value: string, op: looseOpType) => {
+export const makeIDFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string, string>('id', filterId, value, op, '>=', card => card.id);
 };
 
-export const makeNameFilter = (value: string, op: looseOpType) => {
+export const makeNameFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>('name', filterTextList, value, op, '>=', card =>
     getAllNames(card)
   );
 };
 // TODO: Make cost search act more like number than string (and more like scryfall)
-export const makeCostFilter = (value: string, op: looseOpType) => {
+export const makeCostFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>('mana', filterTextList, value, op, '>=', card =>
     card.toFaces().map(e => e.mana_cost)
   );
 };
 
-export const makeTypeFilter = (value: string, op: looseOpType) => {
+export const makeTypeFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>('type', filterTextList, value, op, '>=', card => [
     ...card.toFaces().flatMap(e => e.supertypes || []),
     ...card.toFaces().flatMap(e => e.types || []),
@@ -95,7 +68,7 @@ export const makeTypeFilter = (value: string, op: looseOpType) => {
     ...card.toFaces().map(e => e.type_line),
   ]);
 };
-export const makeSupertypeFilter = (value: string, op: looseOpType) => {
+export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>('supertype', filterTextList, value, op, '>=', card =>
     card
       .toFaces()
@@ -105,7 +78,7 @@ export const makeSupertypeFilter = (value: string, op: looseOpType) => {
       ])
   );
 };
-export const makeMaintypeFilter = (value: string, op: looseOpType) => {
+export const makeMaintypeFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>('maintype', filterTextList, value, op, '>=', card =>
     card
       .toFaces()
@@ -115,7 +88,7 @@ export const makeMaintypeFilter = (value: string, op: looseOpType) => {
       ])
   );
 };
-export const makeSubtypeFilter = (value: string, op: looseOpType) => {
+export const makeSubtypeFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>('subtype', filterTextList, value, op, '>=', card =>
     card
       .toFaces()
@@ -125,21 +98,21 @@ export const makeSubtypeFilter = (value: string, op: looseOpType) => {
       ])
   );
 };
-export const makeOracleFilter = (value: string, op: looseOpType) => {
+export const makeOracleFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>('oracle', filterTextList, value, op, '>=', card =>
     card.toFaces().map(e => e.oracle_text)
   );
 };
-export const makeFlavorFilter = (value: string, op: looseOpType) => {
+export const makeFlavorFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>('flavor', filterTextList, value, op, '>=', card =>
     card.toFaces().flatMap(e => e.flavor_text ?? [])
   );
 };
-export const makeLoreFilter = (value: string, op: looseOpType) => {
+export const makeLoreFilter: filterMaker = (value: string, op: looseOpType) => {
   return new CardStringFilter('lore', filterLore, value, op, '=');
 };
 
-export const makeCreatorFilter = (value: string, op: looseOpType) => {
+export const makeCreatorFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>(
     'creator',
     filterTextList,
@@ -149,7 +122,7 @@ export const makeCreatorFilter = (value: string, op: looseOpType) => {
     card => card.creators ?? []
   );
 };
-export const makeArtistFilter = (value: string, op: looseOpType) => {
+export const makeArtistFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>(
     'artist',
     filterTextList,
@@ -159,7 +132,7 @@ export const makeArtistFilter = (value: string, op: looseOpType) => {
     card => card.artists ?? []
   );
 };
-export const makeKeywordFilter = (value: string, op: looseOpType) => {
+export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>(
     'creator',
     filterTextList,
@@ -169,7 +142,7 @@ export const makeKeywordFilter = (value: string, op: looseOpType) => {
     card => card.keywords
   );
 };
-export const makeTagFilter = (value: string, op: looseOpType) => {
+export const makeTagFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>(
     'tag',
     filterTag,
@@ -179,7 +152,7 @@ export const makeTagFilter = (value: string, op: looseOpType) => {
     card => card.tags ?? []
   );
 };
-export const makeCollectorNumberFilter = (value: string, op: looseOpType) => {
+export const makeCollectorNumberFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string | undefined, string>(
     'number',
     filterNumberString,
@@ -189,7 +162,7 @@ export const makeCollectorNumberFilter = (value: string, op: looseOpType) => {
     card => card.collector_number
   );
 };
-export const makeManaValueFilter = (value: string, op: looseOpType) => {
+export const makeManaValueFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<number, string>(
     'manavalue',
     filterNumberString,
@@ -199,7 +172,7 @@ export const makeManaValueFilter = (value: string, op: looseOpType) => {
     card => card.mana_value
   );
 };
-export const makePowerFilter = (value: string, op: looseOpType) => {
+export const makePowerFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<(string | undefined)[], string>(
     'power',
     filterNumberStringList,
@@ -209,7 +182,7 @@ export const makePowerFilter = (value: string, op: looseOpType) => {
     card => card.toFaces().flatMap(e => e.power ?? [])
   );
 };
-export const makeToughnessFilter = (value: string, op: looseOpType) => {
+export const makeToughnessFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<(string | undefined)[], string>(
     'toughness',
     filterNumberStringList,
@@ -220,7 +193,7 @@ export const makeToughnessFilter = (value: string, op: looseOpType) => {
   );
 };
 
-export const makeLoyaltyFilter = (value: string, op: looseOpType) => {
+export const makeLoyaltyFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<(string | undefined)[], string>(
     'loyalty',
     filterNumberStringList,
@@ -231,7 +204,7 @@ export const makeLoyaltyFilter = (value: string, op: looseOpType) => {
   );
 };
 
-export const makeDefenseFilter = (value: string, op: looseOpType) => {
+export const makeDefenseFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<(string | undefined)[], string>(
     'defense',
     filterNumberStringList,
@@ -242,7 +215,7 @@ export const makeDefenseFilter = (value: string, op: looseOpType) => {
   );
 };
 
-export const makeColorFilter = (value: string[] | number, op: looseOpType) => {
+export const makeColorFilter: colorFilterMaker = (value: string[] | number, op: looseOpType) => {
   return new filterObject<string[], string[] | number>(
     'color',
     filterColors,
@@ -252,7 +225,10 @@ export const makeColorFilter = (value: string[] | number, op: looseOpType) => {
     card => card.colors
   );
 };
-export const makeIndicatorFilter = (value: string[] | number, op: looseOpType) => {
+export const makeIndicatorFilter: colorFilterMaker = (
+  value: string[] | number,
+  op: looseOpType
+) => {
   return new filterObject<string[][] | undefined, string[] | number>(
     'indicator',
     filterColorList,
@@ -267,7 +243,7 @@ export const makeIndicatorFilter = (value: string[] | number, op: looseOpType) =
         .map(face => face.color_indicator!)
   );
 };
-export const makeIdentityFilter = (value: string[] | number, op: looseOpType) => {
+export const makeIdentityFilter: colorFilterMaker = (value: string[] | number, op: looseOpType) => {
   return new filterObject<string[], string[] | number>(
     'identity',
     filterColorIdentity,
@@ -277,7 +253,7 @@ export const makeIdentityFilter = (value: string[] | number, op: looseOpType) =>
     card => card.color_identity
   );
 };
-export const makeHybridFilter = (value: string[] | number, op: looseOpType) => {
+export const makeHybridFilter: colorFilterMaker = (value: string[] | number, op: looseOpType) => {
   return new filterObject<string[][], string[] | number>(
     'hybrid',
     filterHybridIdentity,
@@ -288,7 +264,7 @@ export const makeHybridFilter = (value: string[] | number, op: looseOpType) => {
   );
 };
 
-export const makeLegalFilter = (value: string, op: looseOpType) => {
+export const makeLegalFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<HCLegalitiesField, string>(
     'legal',
     filterLegal,
@@ -298,7 +274,7 @@ export const makeLegalFilter = (value: string, op: looseOpType) => {
     card => card.legalities
   );
 };
-export const makeNotLegalFilter = (value: string, op: looseOpType) => {
+export const makeNotLegalFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<HCLegalitiesField, string>(
     'notlegal',
     filterNotLegal,
@@ -308,7 +284,7 @@ export const makeNotLegalFilter = (value: string, op: looseOpType) => {
     card => card.legalities
   );
 };
-export const makeBannedFilter = (value: string, op: looseOpType) => {
+export const makeBannedFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<HCLegalitiesField, string>(
     'banned',
     filterBanned,
@@ -318,18 +294,43 @@ export const makeBannedFilter = (value: string, op: looseOpType) => {
     card => card.legalities
   );
 };
-export const makeIsFilter = (value: string, op: looseOpType) => {
+export const makeIsFilter: filterMaker = (value: string, op: looseOpType) => {
   return new CardStringFilter('is', filterIs, value, op, '=');
 };
-export const makeHasFilter = (value: string, op: looseOpType) => {
+export const makeNotFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new CardStringFilter('is', filterIs, value, invertOp(op), '!=');
+};
+export const makeHasFilter: filterMaker = (value: string, op: looseOpType) => {
   return new CardStringFilter('has', filterHas, value, op, '=');
 };
-export const makeCardLayoutFilter = (value: string, op: looseOpType) => {
+export const makeCardLayoutFilter: filterMaker = (value: string, op: looseOpType) => {
   return new CardStringFilter('layout', filterCardLayout, value, op, '=');
 };
-export const makeFaceLayoutFilter = (value: string, op: looseOpType) => {
+export const makeFaceLayoutFilter: filterMaker = (value: string, op: looseOpType) => {
   return new CardStringFilter('facelayout', filterFaceLayout, value, op, '=');
 };
-export const makeAnyLayoutFilter = (value: string, op: looseOpType) => {
+export const makeAnyLayoutFilter: filterMaker = (value: string, op: looseOpType) => {
   return new CardStringFilter('anylayout', filterAnyLayout, value, op, '=');
+};
+export const makeBorderFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new filterObject<string, string>(
+    'border',
+    filterBorder,
+    value,
+    op,
+    '>=',
+    card => card.border_color
+  );
+};
+export const makeCardFrameFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new CardStringFilter('cardframe', filterCardFrame, value, op, '=');
+};
+export const makeFrameEffectFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new CardStringFilter('frameeffect', filterFrameEffect, value, op, '=');
+};
+export const makeFrameFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new CardStringFilter('frame', filterFrame, value, op, '=');
+};
+export const makeShowcaseFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new CardStringFilter('showcase', filterShowcase, value, op, '=');
 };

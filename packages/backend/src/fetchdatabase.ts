@@ -214,7 +214,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     '1997-token-frame': HCFrame.ClassicToken,
     '2003-token-frame': HCFrame.ModernToken,
     '2015-token-frame': HCFrame.StampToken,
-    '2020-token-frame': HCFrame.NewToken,
+    '2020-token-frame': HCFrame.FullToken,
     'pokemon-frame': HCFrame.Pokemon,
     'yugioh-frame': HCFrame.Yugioh,
     'legends-of-runeterra-frame': HCFrame.LegendsOfRuneterra,
@@ -326,17 +326,23 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           } else if (keys[i] == 'legalities') {
             const formats = entry[i].split(', ');
             const legalities: HCLegalitiesField = {
-              standard: formats.includes('Banned')
+              standard: formats.includes('Not Legal')
+                ? HCLegality.NotLegal
+                : formats.includes('Banned')
                 ? cardObject.set.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
                 : HCLegality.Legal,
-              '4cb': formats.includes('Banned (4CB)')
+              '4cb': formats.includes('Not Legal')
+                ? HCLegality.NotLegal
+                : formats.includes('Banned (4CB)')
                 ? cardObject.set.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
                 : HCLegality.Legal,
-              commander: formats.includes('Banned (Commander)')
+              commander: formats.includes('Not Legal')
+                ? HCLegality.NotLegal
+                : formats.includes('Banned (Commander)')
                 ? cardObject.set.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
@@ -744,7 +750,11 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             'layout',
           ].includes(key)
       )) {
-        cardObject[key] = value;
+        if (key == 'frame_effects' && cardObject[key]) {
+          cardObject[key].push(...value);
+        } else {
+          cardObject[key] = value;
+        }
       }
       const { card_faces, ...singleCard } = cardObject;
       if (!('layout' in singleCard)) {

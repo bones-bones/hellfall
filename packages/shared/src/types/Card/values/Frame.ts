@@ -11,6 +11,8 @@ export enum HCFrame {
   Future = 'future',
   /** Playtest cards */
   Playtest = 'playtest',
+  /** Any cards with a shattered frame. */
+  Shattered = 'shattered',
   /** Misc/jank frames (notmagic, weird full art, etc.) */
   Jank = 'jank',
   /** The updated classic token frame starting from Mirage block */
@@ -19,8 +21,8 @@ export enum HCFrame {
   ModernToken = 'token_2003',
   /** The holofoil-stamp Magic card frame, introduced in Magic 2015. */
   StampToken = 'token_2015',
-  /** The new token frame, introduced in Magic 2020. */
-  NewToken = 'token_2020',
+  /** The new full-art token frame, introduced in Magic 2020. */
+  FullToken = 'token_2020',
   /** Any cards with a pokemon frame. */
   Pokemon = 'pokemon',
   /** Any cards with a yugioh frame. */
@@ -39,11 +41,9 @@ export enum HCFrame {
   NotMagic = 'notmagic',
   /** Any cards with a website or app frame. */
   WebsiteApp = 'website_app',
-  /** Any cards with a shattered frame. */
-  Shattered = 'shattered',
 }
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
-export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.NewToken, HCFrame.StampToken];
+export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.FullToken, HCFrame.StampToken];
 export const NotMagicFrames: HCFrame[] = [
   HCFrame.Pokemon,
   HCFrame.Yugioh,
@@ -68,7 +68,7 @@ export const TokenFrames: HCFrame[] = [
   HCFrame.ClassicToken,
   HCFrame.ModernToken,
   HCFrame.StampToken,
-  HCFrame.NewToken,
+  HCFrame.FullToken,
   HCFrame.Jank,
   ...NotMagicFrames,
 ];
