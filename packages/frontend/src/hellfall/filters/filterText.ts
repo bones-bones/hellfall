@@ -1,5 +1,6 @@
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling';
 import {
+  cardStringFilter,
   includeEqualsOp,
   looseOpType,
   opType,
@@ -10,6 +11,8 @@ import {
 } from './types';
 import { isNumber } from '@hellfall/shared/utils/isInt';
 import { filterNumber } from './filterNumber';
+import { HCCard } from '@hellfall/shared/types';
+import { getAllNames } from '../getNames';
 
 export const filterId: textFilter = Object.assign(
   (value1: string, operator: looseOpType, value2: string) => {
@@ -57,6 +60,25 @@ export const filterTag: tagFilter = Object.assign(
       return includeEqualsOp(actualOp, textSearchIncludes, textEquals, tag_notes[tag], note);
     }
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, value1, value2);
+  },
+  { defaultOp: '>=' as opType }
+);
+
+const getLore = (card: HCCard.Any) => {
+  return [
+    ...getAllNames(card),
+    ...card.toFaces().flatMap(e => e.supertypes || []),
+    ...card.toFaces().flatMap(e => e.types || []),
+    ...card.toFaces().flatMap(e => e.subtypes || []),
+    ...card.toFaces().map(e => e.type_line),
+    ...card.toFaces().map(e => e.oracle_text),
+    ...card.toFaces().flatMap(e => e.flavor_text ?? []),
+  ];
+};
+export const filterLore: cardStringFilter = Object.assign(
+  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
+    const actualOp = operator === ':' ? filterLore.defaultOp : operator;
+    return includeEqualsOp(actualOp, textListIncludes, textListEquals, getLore(value1), value2);
   },
   { defaultOp: '>=' as opType }
 );

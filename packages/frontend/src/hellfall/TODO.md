@@ -134,3 +134,5 @@ Write a script to transform the database
 - exact search
 - use spoiler feature to allow cockatrice auto-update?
 - use flatmaps to replace .filter.map
+- add error handling for search (i.e. if the search term is invalid, tell the user like scryfall does)
+- add search summary

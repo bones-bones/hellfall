@@ -287,6 +287,7 @@ export namespace HCLayoutGroup {
   export const FaceLayout = [
     `${HCLayout.Normal}`,
     `${HCLayout.Front}`,
+    `${HCLayout.MeldPart}`,
     `${HCLayout.MeldResult}`,
     `${HCLayout.Token}`,
     `${HCLayout.Emblem}`,

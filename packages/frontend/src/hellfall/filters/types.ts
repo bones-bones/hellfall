@@ -53,7 +53,7 @@ export interface tagFilter extends cardFilter<string[], string> {
   ): boolean;
 }
 /**
- * To use in filters when need to check a function
+ * To use in filters when need to check a function with one value
  * @param op operation to use
  * @param func function
  * @param value the value to check
@@ -73,6 +73,34 @@ export const funcOp = <T>(op: opType, func: (value: T) => boolean, value: T) => 
       return !func(value);
     case '!=':
       return !func(value);
+  }
+};
+/**
+ * To use in filters when need to check a function with two values
+ * @param op operation to use
+ * @param func function
+ * @param value the value to check
+ * @returns
+ */
+export const funcOpTwo = <T, S>(
+  op: opType,
+  func: (value1: T, value2: S) => boolean,
+  value1: T,
+  value2: S
+) => {
+  switch (op) {
+    case '<':
+      return !func(value1, value2);
+    case '<=':
+      return func(value1, value2);
+    case '=':
+      return func(value1, value2);
+    case '>=':
+      return func(value1, value2);
+    case '>':
+      return !func(value1, value2);
+    case '!=':
+      return !func(value1, value2);
   }
 };
 

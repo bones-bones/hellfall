@@ -9,10 +9,11 @@ import {
 import { filterNumberString, filterNumberStringList } from './filterNumber';
 import { filterObject, CardStringFilter, SetFilter } from './filterObject';
 import { filterSetBoth, filterSetCard, filterSetToken } from './filterSet';
-import { filterId, filterTag, filterText, filterTextList } from './filterText';
+import { filterId, filterLore, filterTag, filterText, filterTextList } from './filterText';
 import { looseOpType } from './types';
 import { filterBanned, filterLegal, filterNotLegal } from './filterLegality';
-import { filterIs } from './filterIs';
+import { filterHas, filterIs } from './filterIs';
+import { filterAnyLayout, filterCardLayout, filterFaceLayout } from './filterPropValue';
 
 export const equivNames: Record<string, string> = {
   s: 'set',
@@ -55,6 +56,9 @@ export const equivNames: Record<string, string> = {
   hybridid: 'hybrid',
   hybrididentity: 'hybrid',
   hybridcoloridentity: 'hybrid',
+  kw: 'keyword',
+  // powtou:'pt',
+  cardlayout: 'layout',
 };
 
 export const makeSetFilter = (value: string, op: looseOpType, includeExtras: boolean) => {
@@ -131,6 +135,10 @@ export const makeFlavorFilter = (value: string, op: looseOpType) => {
     card.toFaces().flatMap(e => e.flavor_text ?? [])
   );
 };
+export const makeLoreFilter = (value: string, op: looseOpType) => {
+  return new CardStringFilter('lore', filterLore, value, op, '=');
+};
+
 export const makeCreatorFilter = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>(
     'creator',
@@ -149,6 +157,16 @@ export const makeArtistFilter = (value: string, op: looseOpType) => {
     op,
     '>=',
     card => card.artists ?? []
+  );
+};
+export const makeKeywordFilter = (value: string, op: looseOpType) => {
+  return new filterObject<string[], string>(
+    'creator',
+    filterTextList,
+    value,
+    op,
+    '=',
+    card => card.keywords
   );
 };
 export const makeTagFilter = (value: string, op: looseOpType) => {
@@ -302,4 +320,16 @@ export const makeBannedFilter = (value: string, op: looseOpType) => {
 };
 export const makeIsFilter = (value: string, op: looseOpType) => {
   return new CardStringFilter('is', filterIs, value, op, '=');
+};
+export const makeHasFilter = (value: string, op: looseOpType) => {
+  return new CardStringFilter('has', filterHas, value, op, '=');
+};
+export const makeCardLayoutFilter = (value: string, op: looseOpType) => {
+  return new CardStringFilter('layout', filterCardLayout, value, op, '=');
+};
+export const makeFaceLayoutFilter = (value: string, op: looseOpType) => {
+  return new CardStringFilter('facelayout', filterFaceLayout, value, op, '=');
+};
+export const makeAnyLayoutFilter = (value: string, op: looseOpType) => {
+  return new CardStringFilter('anylayout', filterAnyLayout, value, op, '=');
 };
