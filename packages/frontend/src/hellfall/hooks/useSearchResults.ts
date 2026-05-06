@@ -48,7 +48,7 @@ import {
   filterColorIdentityContentsMisc,
   filterColorContentsMisc,
   filterHybridIdentityContentsMisc,
-} from '../filters/filterColors.ts';
+} from '../filters/values/filterColors.ts';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 import { CHUNK_SIZE } from '../constants.ts';
 import { filterSetListBoth, filterSetListCard, filterSetListToken } from '../filters/filterSet.ts';
@@ -56,7 +56,7 @@ import { filterTag, filterText, filterTextList } from '../filters/filterText.ts'
 import { looseOpType, opType } from '../filters/types.ts';
 import { getAllNames } from '../getNames.ts';
 import { filterNumber, filterNumberString } from '../filters/filterNumber.ts';
-import { filterLegality } from '../filters/filterLegality.ts';
+import { filterLegality } from '../filters/values/filterLegality.ts';
 import { filterIs } from '../filters/filterIs.ts';
 
 export const useSearchResults = () => {

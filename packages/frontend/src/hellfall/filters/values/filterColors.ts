@@ -11,8 +11,8 @@ import {
   looseOpType,
   NOPRINT,
   opType,
-} from './types';
-import { filterNumber } from './filterNumber';
+} from '../types';
+import { filterNumber } from '../filterNumber';
 const MISC_BULLSHIT = 'Misc bullshit';
 //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 

@@ -27,7 +27,7 @@ export interface filterInterface<T = any, S = any> {
    * @returns
    */
   getValueToCompare: (card: HCCard.Any) => T;
-  toSummary:(value:S,op:looseOpType)=>string;
+  toSummary: (value: S, op: looseOpType) => string;
   cardPassesFilter: (card: HCCard.Any) => boolean;
 }
 
@@ -39,7 +39,7 @@ export class filterObject<T, S> implements filterInterface {
     public op: looseOpType,
     public defaultOp: opType,
     public getValueToCompare: (card: HCCard.Any) => T,
-    public toSummary: (value:S,op:looseOpType) => string
+    public toSummary: (value: S, op: looseOpType) => string
   ) {}
   cardPassesFilter = (card: HCCard.Any) =>
     this.filter(
@@ -48,22 +48,22 @@ export class filterObject<T, S> implements filterInterface {
       this.value
     );
 }
-export class PassThroughSummaryFilter<T,S> extends filterObject<T, S> {
+export class PassThroughSummaryFilter<T, S> extends filterObject<T, S> {
   constructor(
     queryName: string,
-    public filter: cardFilter<T,S>,
+    public filter: cardFilter<T, S>,
     value: S,
     op: looseOpType,
     defaultOp: opType,
     getValueToCompare: (card: HCCard.Any) => T
   ) {
-    super(queryName, filter, value, op, defaultOp, getValueToCompare,filter.toSummary);
+    super(queryName, filter, value, op, defaultOp, getValueToCompare, filter.toSummary);
   }
   cardPassesFilter = (card: HCCard.Any) =>
     this.filter(
       this.getValueToCompare(card),
       this.op == ':' ? this.defaultOp : this.op,
-      this.value,
+      this.value
     );
 }
 
@@ -112,7 +112,7 @@ export class CardStringFilter extends filterObject<HCCard.Any, string> {
     public filter: cardStringFilter,
     value: string,
     op: looseOpType,
-    defaultOp: opType,
+    defaultOp: opType
   ) {
     super(queryName, filter, value, op, defaultOp, card => card, filter.toSummary);
   }

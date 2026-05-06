@@ -8,7 +8,7 @@ import {
   getActualOp,
   opToNot,
   NOPRINT,
-} from './types';
+} from '../types';
 
 export const filterLegal: legalFilter = Object.assign(
   function (this: legalFilter, value1: HCLegalitiesField, operator: looseOpType, value2: string) {

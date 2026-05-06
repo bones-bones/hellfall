@@ -1,5 +1,14 @@
 import { HCCard } from '@hellfall/shared/types';
-import { funcOp, cardStringFilter, looseOpType, opType, getActualOp, opToNot, opIsNegative, opToDont } from './types';
+import {
+  funcOp,
+  cardStringFilter,
+  looseOpType,
+  opType,
+  getActualOp,
+  opToNot,
+  opIsNegative,
+  opToDont,
+} from './types';
 import { canBeACommander } from '../canBeACommander';
 import {
   filterCardLayout,
@@ -46,26 +55,30 @@ export const filterIs: cardStringFilter = Object.assign(
     };
     return funcOp(actualOp, resolveIs, value2);
   },
-  { defaultOp: '=' as opType, toSummary: (value:string,op:looseOpType) => {
-    const actualOp = getActualOp(filterIs, op);
-    if (cardFramesToParse.includes(value)) {
-      return filterCardFrame.toSummary(value, actualOp);
-    }
-    if (frameEffectsToParse.includes(value)) {
-      return filterFrameEffect.toSummary(value, actualOp);
-    }
-    if (value in toCardLayout) {
-      return filterCardLayout.toSummary(value, actualOp);
-    }
-    switch (value) {
-      case 'foil':
-        return `the card is ${opToNot(actualOp)} foil`;
-      case 'nonfoil':
-        return `the card is ${opToNot(actualOp)} nonfoil`;
-      case 'commander':
-        return `the card can${opIsNegative(actualOp)?"'t":''} be your commander`;
-    }
-    return '!';}}
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, op: looseOpType) => {
+      const actualOp = getActualOp(filterIs, op);
+      if (cardFramesToParse.includes(value)) {
+        return filterCardFrame.toSummary(value, actualOp);
+      }
+      if (frameEffectsToParse.includes(value)) {
+        return filterFrameEffect.toSummary(value, actualOp);
+      }
+      if (value in toCardLayout) {
+        return filterCardLayout.toSummary(value, actualOp);
+      }
+      switch (value) {
+        case 'foil':
+          return `the card is ${opToNot(actualOp)} foil`;
+        case 'nonfoil':
+          return `the card is ${opToNot(actualOp)} nonfoil`;
+        case 'commander':
+          return `the card can${opIsNegative(actualOp) ? "'t" : ''} be your commander`;
+      }
+      return '!';
+    },
+  }
 );
 export const filterHas: cardStringFilter = Object.assign(
   function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
@@ -96,28 +109,32 @@ export const filterHas: cardStringFilter = Object.assign(
     };
     return funcOp(actualOp, resolveHas, value2);
   },
-  { defaultOp: '=' as opType, toSummary: (value:string,op:looseOpType) => {
-    const actualOp = getActualOp(filterIs, op);
-    if (cardFramesToParse.includes(value)) {
-      return filterCardFrame.toSummary(value, actualOp);
-    }
-    if (frameEffectsToParse.includes(value)) {
-      return filterFrameEffect.toSummary(value, actualOp);
-    }
-    if (value in toCardLayout) {
-      return filterCardLayout.toSummary(value, actualOp);
-    }
-    switch (value) {
-      case 'foil':
-        return `the card is ${opToNot(actualOp)} foil`;
-      case 'nonfoil':
-        return `the card is ${opToNot(actualOp)} nonfoil`;
-      case 'indicator':
-        return `the cards ${opToDont} have a color indicator`;
-      case 'frameeffect':
-        return `the cards ${opToDont} have a frame effect`;
-      case 'frameeffects':
-        return `the cards ${opToDont} have a frame effect`;
-    }
-    return '!';}}
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, op: looseOpType) => {
+      const actualOp = getActualOp(filterIs, op);
+      if (cardFramesToParse.includes(value)) {
+        return filterCardFrame.toSummary(value, actualOp);
+      }
+      if (frameEffectsToParse.includes(value)) {
+        return filterFrameEffect.toSummary(value, actualOp);
+      }
+      if (value in toCardLayout) {
+        return filterCardLayout.toSummary(value, actualOp);
+      }
+      switch (value) {
+        case 'foil':
+          return `the card is ${opToNot(actualOp)} foil`;
+        case 'nonfoil':
+          return `the card is ${opToNot(actualOp)} nonfoil`;
+        case 'indicator':
+          return `the cards ${opToDont} have a color indicator`;
+        case 'frameeffect':
+          return `the cards ${opToDont} have a frame effect`;
+        case 'frameeffects':
+          return `the cards ${opToDont} have a frame effect`;
+      }
+      return '!';
+    },
+  }
 );
