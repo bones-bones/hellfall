@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { funcOp, cardStringFilter, looseOpType, opType } from './types';
+import { funcOp, cardStringFilter, looseOpType, opType, getActualOp } from './types';
 import { canBeACommander } from '../canBeACommander';
 import {
   filterCardLayout,
@@ -22,8 +22,8 @@ const frameEffectsToParse = [
 ];
 
 export const filterIs: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterIs.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     const resolveIs = (criteria: string) => {
       if (cardFramesToParse.includes(value2)) {
         return filterCardFrame(value1, actualOp, value2);
@@ -49,8 +49,8 @@ export const filterIs: cardStringFilter = Object.assign(
   { defaultOp: '=' as opType }
 );
 export const filterHas: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterHas.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     const resolveHas = (criteria: string) => {
       if (cardFramesToParse.includes(value2)) {
         return filterCardFrame(value1, actualOp, value2);

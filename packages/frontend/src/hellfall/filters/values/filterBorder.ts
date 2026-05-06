@@ -1,5 +1,5 @@
 import { HCBorderColor, HCCard } from '@hellfall/shared/types';
-import { funcOp, cardStringFilter, looseOpType, opType, textFilter } from '../types';
+import { funcOp, cardStringFilter, looseOpType, opType, textFilter, getActualOp } from '../types';
 const toBorder: Record<string, HCBorderColor> = {
   black: HCBorderColor.Black,
   white: HCBorderColor.White,
@@ -17,8 +17,8 @@ const toBorder: Record<string, HCBorderColor> = {
   red: HCBorderColor.Red,
 };
 export const filterBorder: textFilter = Object.assign(
-  (value1: string, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterBorder.defaultOp : operator;
+  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     return funcOp(
       actualOp,
       border => (border in toBorder ? value1 == toBorder[border] : false),

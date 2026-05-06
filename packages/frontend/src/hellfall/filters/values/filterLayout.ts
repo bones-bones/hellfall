@@ -1,5 +1,5 @@
 import { HCCard, HCLayout, HCLayoutGroup } from '@hellfall/shared/types';
-import { cardStringFilter, looseOpType, opType, shareOp } from '../types';
+import { cardStringFilter, getActualOp, looseOpType, opType, shareOp } from '../types';
 export const toCardLayout: Record<string, HCLayout | HCLayout[]> = {
   normal: HCLayout.Normal,
   meldpart: HCLayout.MeldPart,
@@ -133,8 +133,8 @@ export const toFaceLayout: Record<
 };
 
 export const filterCardLayout: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterCardLayout.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     if (!(value2 in toCardLayout)) {
       return false;
     }
@@ -143,8 +143,8 @@ export const filterCardLayout: cardStringFilter = Object.assign(
   { defaultOp: '=' as opType }
 );
 export const filterFaceLayout: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterFaceLayout.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     if (!(value2 in toFaceLayout)) {
       return false;
     }
@@ -157,8 +157,8 @@ export const filterFaceLayout: cardStringFilter = Object.assign(
   { defaultOp: '=' as opType }
 );
 export const filterAnyLayout: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterAnyLayout.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     return filterCardLayout(value1, actualOp, value2) || filterFaceLayout(value1, actualOp, value2);
   },
   { defaultOp: '=' as opType }

@@ -1,5 +1,5 @@
 import { HCCard, HCFrame, HCFrameEffect } from '@hellfall/shared/types';
-import { cardStringFilter, looseOpType, opType, shareOp } from '../types';
+import { cardStringFilter, getActualOp, looseOpType, opType, shareOp } from '../types';
 const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
   '93': HCFrame.Original,
@@ -327,8 +327,8 @@ const toShowcaseFrame: Record<string, string | string[]> = {
 };
 
 export const filterCardFrame: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterCardFrame.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     if (!(value2 in toCardFrame)) {
       return false;
     }
@@ -341,8 +341,8 @@ export const filterCardFrame: cardStringFilter = Object.assign(
   { defaultOp: '=' as opType }
 );
 export const filterFrameEffect: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterFrameEffect.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     if (!(value2 in toFrameEffect)) {
       return false;
     }
@@ -356,16 +356,16 @@ export const filterFrameEffect: cardStringFilter = Object.assign(
 );
 
 export const filterFrame: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterFrame.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     return filterCardFrame(value1, actualOp, value2) || filterFrameEffect(value1, actualOp, value2);
   },
   { defaultOp: '=' as opType }
 );
 
 export const filterShowcase: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterShowcase.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     if (!(value2 in toShowcaseFrame && value1.tag_notes?.['showcase-frame'])) {
       return false;
     }

@@ -1,5 +1,6 @@
 import { toNumber } from '../inputs/NumberSelector';
 import {
+  getActualOp,
   looseOpType,
   numFilter,
   numStringFilter,
@@ -10,8 +11,8 @@ import {
 import { isNumber } from '@hellfall/shared/utils/isInt.ts';
 
 export const filterNumber: numFilter = Object.assign(
-  (value1: number, operator: looseOpType, value2: number) => {
-    const actualOp = operator === ':' ? filterNumber.defaultOp : operator;
+  function (this: numFilter, value1: number, operator: looseOpType, value2: number) {
+    const actualOp = getActualOp(this, operator);
 
     switch (actualOp) {
       case '<':
@@ -32,12 +33,13 @@ export const filterNumber: numFilter = Object.assign(
 );
 
 export const filterNumberString: numStringFilter = Object.assign(
-  (
+  function (
+    this: numStringFilter,
     value1: number | string | undefined,
     operator: looseOpType,
     value2: number | string | undefined
-  ) => {
-    const actualOp = operator === ':' ? filterNumberString.defaultOp : operator;
+  ) {
+    const actualOp = getActualOp(this, operator);
     const num1 = typeof value1 == 'string' ? toNumber(value1) : value1;
     const num2 = typeof value2 == 'string' ? toNumber(value2) : value2;
     if (num1 == undefined || num2 == undefined) {
@@ -48,19 +50,20 @@ export const filterNumberString: numStringFilter = Object.assign(
   { defaultOp: '=' as opType }
 );
 export const filterNumberStringList: numStringListFilter = Object.assign(
-  (
+  function (
+    this: numStringListFilter,
     value1: (number | string | undefined)[],
     operator: looseOpType,
     value2: number | string | undefined
-  ) => {
-    const actualOp = operator === ':' ? filterNumberString.defaultOp : operator;
+  ) {
+    const actualOp = getActualOp(this, operator);
     return value1.some(value => filterNumberString(value, actualOp, value2));
   },
   { defaultOp: '=' as opType }
 );
 export const filterCollectorNumber: textFilter = Object.assign(
-  (value1: string, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterCollectorNumber.defaultOp : operator;
+  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     // if (actualOp == '=' && (!isNumber(value1) || !isNumber(value2))) {
     //   return value1 == value2
     // }

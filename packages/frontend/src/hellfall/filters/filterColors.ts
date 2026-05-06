@@ -5,6 +5,7 @@ import {
   colorFilter,
   colorListFilter,
   containsOp,
+  getActualOp,
   hybridContentFilter,
   hybridFilter,
   looseOpType,
@@ -33,8 +34,8 @@ const contains = (set1: string[], set2: string[]) => set2.every(c => set1.includ
  * @returns boolean of whether the comparison is true
  */
 export const filterColorContents: colorContentFilter = Object.assign(
-  (value1: string[], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColorContents.defaultOp : operator;
+  function (this: colorContentFilter, value1: string[], operator: looseOpType, value2: string[]) {
+    const actualOp = getActualOp(this, operator);
     if (value2.includes('C')) {
       switch (actualOp) {
         case '<': {
@@ -89,8 +90,8 @@ export const filterColors: colorFilter = Object.assign(
  * @returns boolean of whether the comparison is true
  */
 export const filterColorIdentityContents: colorContentFilter = Object.assign(
-  (value1: string[], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColorIdentityContents.defaultOp : operator;
+  function (this: colorContentFilter, value1: string[], operator: looseOpType, value2: string[]) {
+    const actualOp = getActualOp(this, operator);
     return filterColorContents(value1, actualOp, value2);
   },
   {
@@ -167,8 +168,8 @@ export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
  * @returns boolean of whether the comparison is true
  */
 export const filterColorContentsMisc: colorContentFilter = Object.assign(
-  (value1: string[], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColorContentsMisc.defaultOp : operator;
+  function (this: colorContentFilter, value1: string[], operator: looseOpType, value2: string[]) {
+    const actualOp = getActualOp(this, operator);
     return filterColorContents(colorMiscReduce(value1), actualOp, value2);
   },
   {
@@ -184,8 +185,8 @@ export const filterColorContentsMisc: colorContentFilter = Object.assign(
  * @returns boolean of whether the comparison is true
  */
 export const filterColorIdentityContentsMisc: colorContentFilter = Object.assign(
-  (value1: string[], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColorIdentityContentsMisc.defaultOp : operator;
+  function (this: colorContentFilter, value1: string[], operator: looseOpType, value2: string[]) {
+    const actualOp = getActualOp(this, operator);
     return filterColorContents(colorMiscReduce(value1), actualOp, value2);
   },
   {
@@ -248,8 +249,13 @@ const canContain = <T extends string[][] | string[]>(
  * @returns boolean of whether the comparison is true
  */
 export const filterHybridIdentityContents: hybridContentFilter = Object.assign(
-  (value1: string[][], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterColorContents.defaultOp : operator;
+  function (
+    this: hybridContentFilter,
+    value1: string[][],
+    operator: looseOpType,
+    value2: string[]
+  ) {
+    const actualOp = getActualOp(this, operator);
     if (value2.includes('C')) {
       switch (actualOp) {
         case '<': {
@@ -291,8 +297,13 @@ export const filterHybridIdentityContents: hybridContentFilter = Object.assign(
  * @returns boolean of whether the comparison is true
  */
 export const filterHybridIdentityContentsMisc: hybridContentFilter = Object.assign(
-  (value1: string[][], operator: looseOpType, value2: string[]) => {
-    const actualOp = operator === ':' ? filterHybridIdentityContentsMisc.defaultOp : operator;
+  function (
+    this: hybridContentFilter,
+    value1: string[][],
+    operator: looseOpType,
+    value2: string[]
+  ) {
+    const actualOp = getActualOp(this, operator);
     return filterHybridIdentityContents(hybridIdentityMiscReduce(value1), actualOp, value2);
   },
   {

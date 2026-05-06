@@ -2,8 +2,32 @@ import { HCCard, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
 import { filterObject, SetFilter } from './filterObject';
 
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
-export type looseOpType = ':' | opType;
+export const looseOpList = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
+export type looseOpType = ':' | '!:' | opType;
+const invertedOps: Record<looseOpType, looseOpType> = {
+  '<': '>=',
+  '<=': '>',
+  '=': '!=',
+  ':': '!:',
+  '>=': '<',
+  '>': '<=',
+  '!=': '=',
+  '!:': ':',
+};
 
+export const invertOp = (op: looseOpType) => {
+  return invertedOps[op];
+};
+
+export const getActualOp = (filter: cardFilter, operator: looseOpType): opType => {
+  if (operator == ':') {
+    return filter.defaultOp;
+  }
+  if (operator == '!:') {
+    return invertOp(filter.defaultOp) as opType;
+  }
+  return operator;
+};
 /**
  * The first type is the type of the entry. The second type is the type from the search query.
  */
@@ -14,17 +38,6 @@ export interface cardFilter<T = any, S = any> {
 export interface textFilter extends cardFilter<string, string> {}
 export interface textListFilter extends cardFilter<string[], string> {}
 export interface textRecordFilter extends cardFilter<Record<string, string>, [string, string]> {}
-const invertedOps: Record<opType, opType> = {
-  '<': '>=',
-  '<=': '>',
-  '=': '!=',
-  '>=': '<',
-  '>': '<=',
-  '!=': '=',
-};
-export const invertOp = (op: looseOpType) => {
-  return op == ':' ? op : invertedOps[op];
-};
 export interface numFilter extends cardFilter<number, number> {}
 export interface numStringFilter
   extends cardFilter<number | string | undefined, number | string | undefined> {}

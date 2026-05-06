@@ -1,6 +1,7 @@
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling';
 import {
   cardStringFilter,
+  getActualOp,
   includeEqualsOp,
   looseOpType,
   opType,
@@ -14,9 +15,23 @@ import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
 import { getAllNames } from '../getNames';
 
-export const filterId: textFilter = Object.assign(
+export const filterEmpty: textFilter = Object.assign(
   (value1: string, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterText.defaultOp : operator;
+    return operator == '=';
+  },
+  { defaultOp: '=' as opType }
+);
+
+// export const filterInclude: textFilter = Object.assign(
+//   (value1: string, operator: looseOpType, value2: string) => {
+//    return true;
+//   },
+//   { defaultOp: '=' as opType }
+// );
+
+export const filterId: textFilter = Object.assign(
+  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     if (isNumber(value2)) {
       return isNumber(value1) ? filterNumber(parseInt(value1), operator, parseInt(value2)) : false;
     }
@@ -26,8 +41,8 @@ export const filterId: textFilter = Object.assign(
 );
 
 export const filterText: textFilter = Object.assign(
-  (value1: string, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterText.defaultOp : operator;
+  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     return includeEqualsOp(actualOp, textSearchIncludes, textEquals, value1, value2);
   },
   { defaultOp: '>=' as opType }
@@ -37,15 +52,21 @@ const textListIncludes = (value1: string[], value2: string) =>
 const textListEquals = (value1: string[], value2: string) =>
   value1.some(text => textEquals(text, value2));
 export const filterTextList: textListFilter = Object.assign(
-  (value1: string[], operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterText.defaultOp : operator;
+  function (this: textListFilter, value1: string[], operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, value1, value2);
   },
   { defaultOp: '>=' as opType }
 );
 export const filterTag: tagFilter = Object.assign(
-  (value1: string[], operator: looseOpType, value2: string, tag_notes?: Record<string, string>) => {
-    const actualOp = operator === ':' ? filterText.defaultOp : operator;
+  function (
+    this: tagFilter,
+    value1: string[],
+    operator: looseOpType,
+    value2: string,
+    tag_notes?: Record<string, string>
+  ) {
+    const actualOp = getActualOp(this, operator);
     if (value2.endsWith('<')) {
       const tag = value2.slice(0, -1);
       return Boolean(tag_notes && filterTextList(Object.keys(tag_notes), actualOp, tag));
@@ -76,8 +97,8 @@ const getLore = (card: HCCard.Any) => {
   ];
 };
 export const filterLore: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: looseOpType, value2: string) => {
-    const actualOp = operator === ':' ? filterLore.defaultOp : operator;
+  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, getLore(value1), value2);
   },
   { defaultOp: '>=' as opType }
