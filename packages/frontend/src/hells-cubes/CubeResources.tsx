@@ -10,7 +10,7 @@ import { getDraftmancerForCube } from './draftmancer';
 import { getHc5 } from './getHc5.ts';
 import { toMPCAutofill } from './toMPCAutofill.ts';
 import { getLands } from './getLands.ts';
-import { filterSet, getSplitSet } from '../hellfall/filters/filterSet.ts';
+import { getFilteredSet, getSplitSet } from '../hellfall/filters/filterSet.ts';
 
 type CubeSetup = {
   name: string;
@@ -207,7 +207,7 @@ export const CubeResources = () => {
                 {cubeSetup.tts || (
                   <button
                     onClick={() => {
-                      const filtered = filterSet(cards, [cubeSetup.id]);
+                      const filtered = getFilteredSet(cards, cubeSetup.id);
 
                       const val = toDeck(filtered);
                       const url =

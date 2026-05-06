@@ -14,6 +14,7 @@ import {
 import { splitParens, toExportName } from '@hellfall/shared/utils/textHandling.ts';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
 import { orderColors } from '@hellfall/shared/utils/orderColors.ts';
+import { isInteger } from '@hellfall/shared/utils/isInt';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -137,7 +138,10 @@ export const getMVFromCost = (cost: string): number => {
 };
 
 export const setDerivedProps = (card: HCCard.Any) => {
-  const getFrameEffectsFromFace = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced) => {
+  const getFrameEffectsFromFace = (
+    face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,
+    i: number
+  ) => {
     const effects: HCFrameEffect[] = [];
     if (
       face.frame
@@ -178,7 +182,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
     }
     if ('card_faces' in card) {
       if (
-        face.layout == HCLayout.Front &&
+        !i &&
         card.layout == HCLayout.Transform &&
         !face.frame_effects?.some(effect =>
           TransformFrameEffects.includes(effect as HCFrameEffect)
@@ -187,7 +191,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
       ) {
         effects.push(HCFrameEffect.TransformDfc);
       } else if (
-        face.layout == HCLayout.Front &&
+        !i &&
         card.layout == HCLayout.Modal &&
         !face.frame_effects?.some(effect =>
           TransformFrameEffects.includes(effect as HCFrameEffect)
@@ -196,7 +200,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
-        face.layout == HCLayout.Front &&
+        !i &&
         card.layout == HCLayout.Specialize &&
         !face.frame_effects?.some(effect =>
           TransformFrameEffects.includes(effect as HCFrameEffect)
@@ -238,7 +242,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
   if ('card_faces' in card) {
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
-    card.card_faces.forEach(face => {
+    card.card_faces.forEach((face, i) => {
       face.colors = orderColors(face.colors) as HCColors;
       const face_type = [
         face.supertypes?.join(' '),
@@ -250,7 +254,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
       type_line_list.push(face_type);
       face.mana_value = getMVFromCost(face.mana_cost);
       mana_cost_list.push(face.mana_cost);
-      const effects = [...(face.frame_effects || []), ...getFrameEffectsFromFace(face)];
+      const effects = [...(face.frame_effects || []), ...getFrameEffectsFromFace(face, i)];
       if (effects.length > 0) {
         face.frame_effects = effects;
       }
@@ -270,7 +274,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
     ]
       .filter(Boolean)
       .join(' ') as string;
-    const effects = [...(card.frame_effects || []), ...getFrameEffectsFromFace(card)];
+    const effects = [...(card.frame_effects || []), ...getFrameEffectsFromFace(card, 0)];
     if (effects.length > 0) {
       card.frame_effects = effects;
     }
@@ -328,11 +332,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
       if (exportName.endsWith(')')) {
         exportName += '_';
       }
-      while (
-        // /\(.{2,3}\)$/.test(exportName) ||
-        takenNames.includes(exportName) ||
-        parseInt(exportName).toString() == exportName
-      ) {
+      while (takenNames.includes(exportName) || isInteger(exportName)) {
         exportName += '_';
       }
       return exportName;
@@ -367,7 +367,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     }
 
     // compress/drop layouts that should always be compressed or should be dropped
-    card.card_faces.forEach((face, index) => {
+    card.card_faces.slice(1).forEach(face => {
       if (alwaysDropLayouts.includes(face.layout)) {
         face.drop_face = true;
       } else if (conditionalDropLayouts.includes(face.layout)) {
@@ -385,8 +385,8 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     });
     // compress down to 1 side and use front image if there are still too many sides
     if (card.card_faces.filter(face => !face.compress_face && !face.drop_face).length > 2) {
-      card.card_faces.forEach((face, index) => {
-        if (index && !face.compress_face && !face.drop_face) {
+      card.card_faces.slice(1).forEach(face => {
+        if (!face.compress_face && !face.drop_face) {
           face.compress_face = true;
         }
       });
@@ -441,11 +441,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     if (exportName.endsWith(')')) {
       exportName += '_';
     }
-    while (
-      // /\(.{2,3}\)$/.test(exportName) ||
-      takenNames.includes(exportName) ||
-      parseInt(exportName).toString() == exportName
-    ) {
+    while (takenNames.includes(exportName) || isInteger(exportName)) {
       exportName += '_';
     }
     if (exportName != (card.isActualToken ? card.id : card.name)) {

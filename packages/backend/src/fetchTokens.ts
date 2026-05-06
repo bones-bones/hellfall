@@ -76,7 +76,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     type_line: '',
     layout: HCLayout.Token,
     border_color: HCBorderColor.Black,
-    frame: HCFrame.NewToken,
+    frame: HCFrame.FullToken,
   };
   const hardCardNames: string[] = [
     'Crypt of u/Em9500',
@@ -141,7 +141,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     '1997-frame': HCFrame.ClassicToken,
     '2003-frame': HCFrame.ModernToken,
     '2015-frame': HCFrame.StampToken,
-    '2020-frame': HCFrame.NewToken,
+    '2020-frame': HCFrame.FullToken,
     'pokemon-frame': HCFrame.Pokemon,
     'yugioh-frame': HCFrame.Yugioh,
     'legends-of-runeterra-frame': HCFrame.LegendsOfRuneterra,
