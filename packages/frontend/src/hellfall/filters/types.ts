@@ -1,6 +1,6 @@
 import { HCCard, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
 import { filterObject, SetFilter } from './filterObject';
-
+export const NOPRINT = 'This should not ever print. Please report this as a bug on discord.';
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
 export const looseOpList = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
 export type looseOpType = ':' | '!:' | opType;
@@ -28,13 +28,48 @@ export const getActualOp = (filter: cardFilter, operator: looseOpType): opType =
   }
   return operator;
 };
+export const opIsNegative = (op: looseOpType) => ['<', '>', '!=', '!:'].includes(op);
+export const opToNot = (op: looseOpType) => (opIsNegative(op) ? 'not' : '');
+export const opToDont = (op: looseOpType) => (opIsNegative(op) ? "don't" : '');
+export const opToIncludeSingular: Record<looseOpType, string> = {
+  '<': 'excludes',
+  '!:': 'excludes',
+  '<=': 'excludes or equals',
+  '=': 'equals',
+  '>=': 'includes',
+  ':': 'includes',
+  '>': "includes but doesn't equal",
+  '!=': "doesn't equal",
+};
+export const opToIncludePlural: Record<looseOpType, string> = {
+  '<': 'exclude',
+  '!:': 'exclude',
+  '<=': 'exclude or include exactly',
+  '=': 'include exactly',
+  '>=': 'include',
+  ':': 'include',
+  '>': 'include but not exactly',
+  '!=': 'exclude exactly',
+};
+export const opToTagged: Record<looseOpType, string> = {
+  '<': 'not tagged',
+  '!:': 'not tagged',
+  '<=': 'not tagged or tagged exactly',
+  '=': 'tagged exactly',
+  '>=': 'tagged',
+  ':': 'tagged',
+  '>': 'tagged but not exactly',
+  '!=': 'not tagged exactly',
+};
 /**
  * The first type is the type of the entry. The second type is the type from the search query.
  */
 export interface cardFilter<T = any, S = any> {
   (value1: T, operator: looseOpType, value2: S): boolean;
   defaultOp: opType;
+  toSummary: (value: S, operator: looseOpType) => string;
 }
+
 export interface textFilter extends cardFilter<string, string> {}
 export interface textListFilter extends cardFilter<string[], string> {}
 export interface textRecordFilter extends cardFilter<Record<string, string>, [string, string]> {}
@@ -222,6 +257,21 @@ export const shareOp = (op: opType, value1: string | string[], value2: string | 
       return !share(value1, value2);
   }
 };
+
+export const equals = <T = any>(value1: T | T[], value2: T | T[]) => {
+  if (Array.isArray(value1) && Array.isArray(value2)) {
+    return (
+      value1.every(value => value2.includes(value)) && value2.every(value => value1.includes(value))
+    );
+  } else if (Array.isArray(value1)) {
+    return value1.every(value => value == value2);
+  } else if (Array.isArray(value2)) {
+    return value2.every(value => value == value1);
+  } else {
+    return value1 == value2;
+  }
+};
+
 export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
 export type setFilterMaker = (value: string, op: looseOpType, includeExtras: boolean) => SetFilter;
 export type colorFilterMaker = (

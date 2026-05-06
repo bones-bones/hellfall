@@ -1,5 +1,13 @@
 import { HCCard, HCLayout, HCLayoutGroup } from '@hellfall/shared/types';
-import { cardStringFilter, getActualOp, looseOpType, opType, shareOp } from '../types';
+import {
+  cardStringFilter,
+  getActualOp,
+  looseOpType,
+  opToDont,
+  opToNot,
+  opType,
+  shareOp,
+} from '../types';
 export const toCardLayout: Record<string, HCLayout | HCLayout[]> = {
   normal: HCLayout.Normal,
   meldpart: HCLayout.MeldPart,
@@ -140,7 +148,24 @@ export const filterCardLayout: cardStringFilter = Object.assign(
     }
     return shareOp(actualOp, value1.layout, toCardLayout[value2]);
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) => {
+      if (!(value in toCardLayout)) {
+        return '!';
+      }
+      const layout = toCardLayout[value];
+      if (Array.isArray(layout)) {
+        return `the card layout is ${opToNot(operator)} ${layout
+          .map(e => `"${e.replaceAll('_', ' ')}"`)
+          .join(' or ')}`;
+      } else if (layout) {
+        return `the card layout is ${opToNot(operator)} "${layout.replaceAll('_', ' ')}"`;
+      } else {
+        return '!';
+      }
+    },
+  }
 );
 export const filterFaceLayout: cardStringFilter = Object.assign(
   function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
@@ -154,12 +179,36 @@ export const filterFaceLayout: cardStringFilter = Object.assign(
       toFaceLayout[value2]
     );
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) => {
+      if (!(value in toFaceLayout)) {
+        return '!';
+      }
+      const layout = toFaceLayout[value];
+      if (Array.isArray(layout)) {
+        return `the cards ${opToDont} have a face with layout ${layout
+          .map(e => `"${e.replaceAll('_', ' ')}"`)
+          .join(' or ')}`;
+      } else if (layout) {
+        return `the cards ${opToDont} have a face with layout "${layout.replaceAll('_', ' ')}"`;
+      } else {
+        return '!';
+      }
+    },
+  }
 );
 export const filterAnyLayout: cardStringFilter = Object.assign(
   function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
     const actualOp = getActualOp(this, operator);
     return filterCardLayout(value1, actualOp, value2) || filterFaceLayout(value1, actualOp, value2);
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) => {
+      const cardSum = filterCardLayout.toSummary(value, operator);
+      const faceSum = filterFaceLayout.toSummary(value, operator);
+      return cardSum[0] != '!' ? cardSum : faceSum;
+    },
+  }
 );

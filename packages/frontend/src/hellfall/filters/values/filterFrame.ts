@@ -1,5 +1,15 @@
 import { HCCard, HCFrame, HCFrameEffect } from '@hellfall/shared/types';
-import { cardStringFilter, getActualOp, looseOpType, opType, shareOp } from '../types';
+import {
+  cardStringFilter,
+  equals,
+  getActualOp,
+  looseOpType,
+  opToDont,
+  opToNot,
+  opType,
+  shareOp,
+} from '../types';
+
 const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
   '93': HCFrame.Original,
@@ -51,6 +61,7 @@ const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   '20': HCFrame.FullToken,
   "'20": HCFrame.FullToken,
   full: HCFrame.FullToken,
+  stamporfull: [HCFrame.Stamp, HCFrame.StampToken, HCFrame.FullToken],
   '2020token': HCFrame.FullToken,
   '20token': HCFrame.FullToken,
   "'20token": HCFrame.FullToken,
@@ -68,6 +79,8 @@ const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
     HCFrame.StampToken,
     HCFrame.FullToken,
   ],
+  newcard: [HCFrame.Modern, HCFrame.Stamp, HCFrame.Future, HCFrame.Playtest, HCFrame.Shattered],
+  newtoken: [HCFrame.ModernToken, HCFrame.StampToken, HCFrame.FullToken],
   card: [
     HCFrame.Original,
     HCFrame.Classic,
@@ -137,6 +150,102 @@ const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   website: HCFrame.WebsiteApp,
   app: HCFrame.WebsiteApp,
 };
+const frameNames: [HCFrame[], string][] = [
+  [[HCFrame.Original], "the '93 Original"],
+  [[HCFrame.Classic, HCFrame.ClassicToken], "the '97 Classic"],
+  [[HCFrame.Classic], "the '97 Classic card"],
+  [[HCFrame.ClassicToken], "the '97 Classic token"],
+  [[HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken], "the '93/97"],
+  [[HCFrame.Original, HCFrame.Classic], "the '93/97 card"],
+  [[HCFrame.Modern, HCFrame.ModernToken], 'the Modern'],
+  [[HCFrame.Modern], 'the Modern card'],
+  [[HCFrame.ModernToken], 'the Modern token'],
+  [[HCFrame.Stamp, HCFrame.StampToken], 'the 2015 Stamp'],
+  [[HCFrame.Stamp], 'the 2015 Stamp card'],
+  [[HCFrame.StampToken], 'the 2015 Stamp token'],
+  [[HCFrame.Stamp, HCFrame.StampToken, HCFrame.FullToken], 'the 2015 Stamp or 2020 token'],
+  [[HCFrame.FullToken], 'the 2020 token'],
+  [[HCFrame.Future], 'the Future'],
+  [[HCFrame.Playtest], 'the Platest'],
+  [[HCFrame.Shattered], 'a shattered'],
+  [
+    [
+      HCFrame.Modern,
+      HCFrame.Stamp,
+      HCFrame.Future,
+      HCFrame.Playtest,
+      HCFrame.Shattered,
+      HCFrame.ModernToken,
+      HCFrame.StampToken,
+      HCFrame.FullToken,
+    ],
+    'a new',
+  ],
+  [
+    [HCFrame.Modern, HCFrame.Stamp, HCFrame.Future, HCFrame.Playtest, HCFrame.Shattered],
+    'a new card',
+  ],
+  [[HCFrame.ModernToken, HCFrame.StampToken, HCFrame.FullToken], 'a new token'],
+  [
+    [
+      HCFrame.Original,
+      HCFrame.Classic,
+      HCFrame.Modern,
+      HCFrame.Stamp,
+      HCFrame.Future,
+      HCFrame.Playtest,
+      HCFrame.Shattered,
+    ],
+    'a card',
+  ],
+  [[HCFrame.ClassicToken, HCFrame.ModernToken, HCFrame.StampToken, HCFrame.FullToken], 'a token'],
+  [
+    [
+      HCFrame.Original,
+      HCFrame.Classic,
+      HCFrame.Modern,
+      HCFrame.Stamp,
+      HCFrame.Future,
+      HCFrame.Playtest,
+      HCFrame.Shattered,
+      HCFrame.ClassicToken,
+      HCFrame.ModernToken,
+      HCFrame.StampToken,
+      HCFrame.FullToken,
+    ],
+    'a Magic: The Gathering',
+  ],
+  [[HCFrame.Jank], 'a jank'],
+  [[HCFrame.NotMagic], 'a nonmagic game'],
+  [[HCFrame.Pokemon], 'a Pokèmon TCG'],
+  [[HCFrame.Yugioh], 'a Yu-Gi-Oh!'],
+  [[HCFrame.LegendsOfRuneterra], 'a Legends of Runeterra'],
+  [[HCFrame.SlayTheSpire], 'a Slay the Spire'],
+  [[HCFrame.Inscryption], 'an Inscryption'],
+  [[HCFrame.Hearthstone], 'a Hearthstone'],
+  [[HCFrame.Lorcana], 'a Lorcana'],
+  [
+    [
+      HCFrame.NotMagic,
+      HCFrame.Pokemon,
+      HCFrame.Yugioh,
+      HCFrame.LegendsOfRuneterra,
+      HCFrame.SlayTheSpire,
+      HCFrame.Inscryption,
+      HCFrame.Hearthstone,
+      HCFrame.Lorcana,
+    ],
+    'any nonmagic game',
+  ],
+  [[HCFrame.WebsiteApp], 'a website or app'],
+];
+const getFrameName = (text: string) => {
+  if (text in toCardFrame) {
+    return frameNames.find(frames => equals(frames[0], toCardFrame[text]))?.[1];
+  }
+  return undefined;
+};
+
 const toFrameEffect: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   sunmoondfc: HCFrameEffect.SunMoonDfc,
   sunmoontransform: HCFrameEffect.SunMoonDfc,
@@ -174,6 +283,7 @@ const toFrameEffect: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   origindfc: HCFrameEffect.OriginPwDfc,
   origintransform: HCFrameEffect.OriginPwDfc,
   origin: HCFrameEffect.OriginPwDfc,
+  origins: HCFrameEffect.OriginPwDfc,
   pwdfc: HCFrameEffect.OriginPwDfc,
   pwtransform: HCFrameEffect.OriginPwDfc,
   pw: HCFrameEffect.OriginPwDfc,
@@ -213,12 +323,14 @@ const toFrameEffect: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   legend: HCFrameEffect.Legendary,
   companion: HCFrameEffect.Companion,
   snow: HCFrameEffect.Snow,
+  snowy: HCFrameEffect.Snow,
   enchantment: HCFrameEffect.Enchantment,
   nyx: HCFrameEffect.Enchantment,
   lesson: HCFrameEffect.Lesson,
   vehicle: HCFrameEffect.Vehicle,
   miracle: HCFrameEffect.Miracle,
   draft: HCFrameEffect.Draft,
+  draftmatters: HCFrameEffect.Draft,
   conspiracy: HCFrameEffect.Draft,
   devoid: HCFrameEffect.Devoid,
   spree: HCFrameEffect.Spree,
@@ -240,6 +352,77 @@ const toFrameEffect: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   slab: HCFrameEffect.Slab,
   slabbed: HCFrameEffect.Slab,
   arena: HCFrameEffect.Arena,
+};
+const frameEffectNames: [HCFrameEffect[], string][] = [
+  [
+    [HCFrameEffect.SunMoonDfc, HCFrameEffect.MoonEldraziDfc],
+    'the sun and moon or moon and Eldrazi transform marks',
+  ],
+  [[HCFrameEffect.SunMoonDfc], 'the sun and moon transform marks'],
+  [[HCFrameEffect.MoonEldraziDfc], 'the moon and Eldrazi transform marks'],
+  [[HCFrameEffect.FanDfc], 'fan transforming marks'],
+  [[HCFrameEffect.CompassLandDfc], 'the compass and land transform marks'],
+  [[HCFrameEffect.OriginPwDfc], 'the Origins and planeswalker transform marks'],
+  [[HCFrameEffect.TypeDfc], 'type transforming marks'],
+  [[HCFrameEffect.TransformDfc], 'generic transforming marks'],
+  [[HCFrameEffect.Mdfc], 'mdfc marks'],
+  [[HCFrameEffect.Meld], 'meld marks'],
+  [[HCFrameEffect.Specialize], 'specialize marks'],
+  [
+    [
+      HCFrameEffect.SunMoonDfc,
+      HCFrameEffect.CompassLandDfc,
+      HCFrameEffect.OriginPwDfc,
+      HCFrameEffect.MoonEldraziDfc,
+      HCFrameEffect.FanDfc,
+      HCFrameEffect.TypeDfc,
+      HCFrameEffect.TransformDfc,
+    ],
+    'any transform marks',
+  ],
+  [
+    [
+      HCFrameEffect.SunMoonDfc,
+      HCFrameEffect.CompassLandDfc,
+      HCFrameEffect.OriginPwDfc,
+      HCFrameEffect.MoonEldraziDfc,
+      HCFrameEffect.FanDfc,
+      HCFrameEffect.TypeDfc,
+      HCFrameEffect.TransformDfc,
+      HCFrameEffect.Mdfc,
+      HCFrameEffect.Specialize,
+      HCFrameEffect.Meld,
+    ],
+    'any dfc marks',
+  ],
+  [[HCFrameEffect.Legendary], 'a legendary crown'],
+  [[HCFrameEffect.Companion], 'a companion frame'],
+  [[HCFrameEffect.Snow], 'the snowy frame effect'],
+  [[HCFrameEffect.Enchantment], 'the enchantment frame effect'],
+  [[HCFrameEffect.Lesson], 'the Lesson frame effect'],
+  [[HCFrameEffect.Vehicle], 'the Vehicle frame effect'],
+  [[HCFrameEffect.Miracle], 'the miracle frame effect'],
+  [[HCFrameEffect.Draft], 'the draft-matters frame effect'],
+  [[HCFrameEffect.Devoid], 'the Devoid frame effect'],
+  [[HCFrameEffect.Spree], 'Spree asterisks'],
+  [[HCFrameEffect.Tombstone], 'the Odyssey tombstone mark'],
+  [[HCFrameEffect.Colorshifted], 'a colorshifted frame'],
+  [[HCFrameEffect.Inverted], 'predominantly inverted text'],
+  [[HCFrameEffect.Showcase], 'a custom Showcase frame'],
+  [[HCFrameEffect.Masterpiece], 'a masterpiece frame'],
+  [[HCFrameEffect.FullArt], 'a full art frame'],
+  [[HCFrameEffect.ExtendedArt], 'an extended art frame'],
+  [[HCFrameEffect.VerticalArt], 'a vertical art frame'],
+  [[HCFrameEffect.NoArt], 'a no-art frame'],
+  [[HCFrameEffect.Etched], 'an etched foil treatment'],
+  [[HCFrameEffect.Slab], 'a slabbed frame'],
+  [[HCFrameEffect.Arena], 'an Arena frame'],
+];
+const getFrameEffectName = (text: string) => {
+  if (text in toFrameEffect) {
+    return frameEffectNames.find(frames => equals(frames[0], toFrameEffect[text]))?.[1];
+  }
+  return undefined;
 };
 
 const toShowcaseFrame: Record<string, string | string[]> = {
@@ -338,7 +521,17 @@ export const filterCardFrame: cardStringFilter = Object.assign(
       toCardFrame[value2]
     );
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) => {
+      const frame = getFrameName(value);
+      if (frame) {
+        return `the cards ${opToDont(operator)} have ${frame} frame`;
+      } else {
+        return '!';
+      }
+    },
+  }
 );
 export const filterFrameEffect: cardStringFilter = Object.assign(
   function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
@@ -352,7 +545,17 @@ export const filterFrameEffect: cardStringFilter = Object.assign(
       toFrameEffect[value2]
     );
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) => {
+      const frame = getFrameEffectName(value);
+      if (frame) {
+        return `the cards ${opToDont(operator)} have ${frame}`;
+      } else {
+        return '!';
+      }
+    },
+  }
 );
 
 export const filterFrame: cardStringFilter = Object.assign(
@@ -360,7 +563,20 @@ export const filterFrame: cardStringFilter = Object.assign(
     const actualOp = getActualOp(this, operator);
     return filterCardFrame(value1, actualOp, value2) || filterFrameEffect(value1, actualOp, value2);
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) => {
+      const frame = getFrameName(value);
+      const frameEffect = getFrameEffectName(value);
+      if (frame) {
+        return `the cards ${opToDont(operator)} have ${frame} frame`;
+      } else if (frameEffect) {
+        return `the cards ${opToDont(operator)} have ${frameEffect}`;
+      } else {
+        return '!';
+      }
+    },
+  }
 );
 
 export const filterShowcase: cardStringFilter = Object.assign(
@@ -375,5 +591,22 @@ export const filterShowcase: cardStringFilter = Object.assign(
       toShowcaseFrame[value2]
     );
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) => {
+      if (!(value in toShowcaseFrame)) {
+        return '!';
+      }
+      const frame = toShowcaseFrame[value];
+      if (Array.isArray(frame)) {
+        return `the cards ${opToDont(operator)} have a ${frame
+          .map(e => `"${e}"`)
+          .join(' or ')} showcase frame`;
+      } else if (frame) {
+        return `the cards ${opToDont(operator)} have a "${frame}" showcase frame`;
+      } else {
+        return '!';
+      }
+    },
+  }
 );

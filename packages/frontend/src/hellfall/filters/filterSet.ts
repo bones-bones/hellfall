@@ -1,7 +1,16 @@
 import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
 import { extraSetList } from '@hellfall/shared/data/sets';
 import { getHc5 } from '../../hells-cubes/getHc5';
-import { funcOp, getActualOp, looseOpType, opType, setFilter, setListFilter } from './types';
+import {
+  funcOp,
+  getActualOp,
+  looseOpType,
+  NOPRINT,
+  opToNot,
+  opType,
+  setFilter,
+  setListFilter,
+} from './types';
 
 const excludeExtras = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4'];
 export const filterSetCard: setFilter = Object.assign(
@@ -19,7 +28,11 @@ export const filterSetCard: setFilter = Object.assign(
     const isSetInResults = (set: string) => set.includes(value2) && !shouldExclude(set);
     return funcOp(actualOp, isSetInResults, value1.set);
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) =>
+      `the set is ${opToNot(operator)} "${value}"`,
+  }
 );
 
 export const filterSetListCard: setListFilter = Object.assign(
@@ -36,7 +49,7 @@ export const filterSetListCard: setListFilter = Object.assign(
     }
     return funcOp(actualOp, set => !extraSetList.includes(set) || includeExtraSets, value1.set);
   },
-  { defaultOp: '=' as opType }
+  { defaultOp: '=' as opType, toSummary: (value: string[], operator: looseOpType) => NOPRINT }
 );
 const includeComponent = (part: HCRelatedCard) => {
   return ['token_maker', 'draft_partner'].includes(part.component);
@@ -71,7 +84,11 @@ export const filterSetToken: setFilter = Object.assign(
     };
     return funcOp(actualOp, tokenInSet, value1);
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) =>
+      `the token set is ${opToNot(operator)} "${value}"`,
+  }
 );
 
 export const filterSetListToken: setListFilter = Object.assign(
@@ -88,7 +105,7 @@ export const filterSetListToken: setListFilter = Object.assign(
     }
     return funcOp(actualOp, card => Boolean(card.isActualToken), value1);
   },
-  { defaultOp: '=' as opType }
+  { defaultOp: '=' as opType, toSummary: (value: string[], operator: looseOpType) => NOPRINT }
 );
 export const filterSetBoth: setFilter = Object.assign(
   function (
@@ -104,7 +121,11 @@ export const filterSetBoth: setFilter = Object.assign(
       filterSetToken(value1, actualOp, value2, includeExtraSets)
     );
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) =>
+      `the block is ${opToNot(operator)} "${value}"`,
+  }
 );
 
 export const filterSetListBoth: setListFilter = Object.assign(
@@ -121,7 +142,7 @@ export const filterSetListBoth: setListFilter = Object.assign(
       filterSetListToken(value1, actualOp, value2, includeExtraSets)
     );
   },
-  { defaultOp: '=' as opType }
+  { defaultOp: '=' as opType, toSummary: (value: string[], operator: looseOpType) => NOPRINT }
 );
 
 /**

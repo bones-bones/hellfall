@@ -3,7 +3,7 @@ import { getAllNames } from '../getNames';
 import {
   colorMiscReduce,
   filterColorIdentity,
-  filterColorList,
+  filterColorIndicator,
   filterColors,
   filterHybridIdentity,
   hybridIdentityMiscReduce,
@@ -101,8 +101,8 @@ export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType)
       ])
   );
 };
-export const makeMaintypeFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new filterObject<string[], string>('maintype', filterTextList, value, op, '>=', card =>
+export const makeCardtypeFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new filterObject<string[], string>('cardtype', filterTextList, value, op, '>=', card =>
     card
       .toFaces()
       .flatMap(e => [
@@ -254,7 +254,7 @@ export const makeIndicatorFilter: colorFilterMaker = (
 ) => {
   return new filterObject<string[][] | undefined, string[] | number>(
     'indicator',
-    filterColorList,
+    filterColorIndicator,
     value,
     op,
     '=',
@@ -307,7 +307,7 @@ export const makeMiscIndicatorFilter: colorFilterMaker = (
 ) => {
   return new filterObject<string[][] | undefined, string[] | number>(
     'miscindicator',
-    filterColorList,
+    filterColorIndicator,
     value,
     op,
     '=',
@@ -426,6 +426,12 @@ export const equivFilterNames: Record<string, string> = {
   manacost: 'mana',
   t: 'type',
   o: 'oracle',
+  super: 'supertype',
+  supert: 'supertype',
+  ct: 'cardtype',
+  ctype: 'cardtype',
+  sub: 'subtype',
+  subt: 'subtype',
   ft: 'flavor',
   oracletext: 'oracle',
   flavortext: 'flavor',
@@ -456,7 +462,7 @@ export const filters: Record<string, filterMaker> = {
   mana: makeCostFilter,
   type: makeTypeFilter,
   supertype: makeSupertypeFilter,
-  maintype: makeMaintypeFilter,
+  cardtype: makeCardtypeFilter,
   subtype: makeSubtypeFilter,
   oracle: makeOracleFilter,
   flavor: makeFlavorFilter,
@@ -709,3 +715,4 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
 };
 
 // TODO: add include:extras handling in the end (going to use checkmark under bar for now)
+// todo: add a toSummary method prop to filterObject

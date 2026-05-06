@@ -2,6 +2,7 @@ import { toNumber } from '../inputs/NumberSelector';
 import {
   getActualOp,
   looseOpType,
+  NOPRINT,
   numFilter,
   numStringFilter,
   numStringListFilter,
@@ -29,7 +30,11 @@ export const filterNumber: numFilter = Object.assign(
         return value1 != value2;
     }
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: number, operator: looseOpType) =>
+      `${getActualOp(filterNumber, operator)} ${value}`,
+  }
 );
 
 export const filterNumberString: numStringFilter = Object.assign(
@@ -47,7 +52,16 @@ export const filterNumberString: numStringFilter = Object.assign(
     }
     return filterNumber(num1, actualOp, num2);
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: number | string | undefined, operator: looseOpType) => {
+      const num = typeof value == 'string' ? toNumber(value) : value;
+      if (num == undefined) {
+        return '!';
+      }
+      return `${getActualOp(filterNumber, operator)} ${num}`;
+    },
+  }
 );
 export const filterNumberStringList: numStringListFilter = Object.assign(
   function (
@@ -59,7 +73,16 @@ export const filterNumberStringList: numStringListFilter = Object.assign(
     const actualOp = getActualOp(this, operator);
     return value1.some(value => filterNumberString(value, actualOp, value2));
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: number | string | undefined, operator: looseOpType) => {
+      const num = typeof value == 'string' ? toNumber(value) : value;
+      if (num == undefined) {
+        return '!';
+      }
+      return `${getActualOp(filterNumber, operator)} ${num}`;
+    },
+  }
 );
 export const filterCollectorNumber: textFilter = Object.assign(
   function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
@@ -72,5 +95,5 @@ export const filterCollectorNumber: textFilter = Object.assign(
     // }
     return filterNumberString(value1, actualOp, value2);
   },
-  { defaultOp: '=' as opType }
+  { defaultOp: '=' as opType, toSummary: (value: string, operator: looseOpType) => NOPRINT }
 );

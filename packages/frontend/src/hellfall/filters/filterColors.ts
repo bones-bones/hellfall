@@ -9,6 +9,7 @@ import {
   hybridContentFilter,
   hybridFilter,
   looseOpType,
+  NOPRINT,
   opType,
 } from './types';
 import { filterNumber } from './filterNumber';
@@ -61,7 +62,11 @@ export const filterColorContents: colorContentFilter = Object.assign(
       return containsOp(actualOp, contains, value1, value2);
     }
   },
-  { defaultOp: '>=' as opType }
+  {
+    defaultOp: '>=' as opType,
+    toSummary: (value: string[], operator: looseOpType) =>
+      `the colors are ${getActualOp(filterColorContents, operator)} ${value.join('')}`,
+  }
 );
 
 /**
@@ -79,7 +84,16 @@ export const filterColors: colorFilter = Object.assign(
       return filterColorContents(value1, operator, value2);
     }
   },
-  { defaultOp: '>=' as opType }
+  {
+    defaultOp: '>=' as opType,
+    toSummary: (value: string[] | number, operator: looseOpType) => {
+      if (Array.isArray(value)) {
+        return filterColorContents.toSummary(value, operator);
+      } else {
+        return `the number of colors is ${filterNumber.toSummary(value, operator)}`;
+      }
+    },
+  }
 );
 
 /**
@@ -96,6 +110,10 @@ export const filterColorIdentityContents: colorContentFilter = Object.assign(
   },
   {
     defaultOp: '<=' as opType,
+    toSummary: (value: string[], operator: looseOpType) =>
+      `the color identity is ${getActualOp(filterColorIdentityContents, operator)} ${value.join(
+        ''
+      )}`,
   }
 );
 
@@ -109,6 +127,7 @@ export const filterColorContentsList: colorContentListFilter = Object.assign(
   },
   {
     defaultOp: '=' as opType,
+    toSummary: (value: string[], operator: looseOpType) => NOPRINT,
   }
 );
 
@@ -127,10 +146,19 @@ export const filterColorIdentity: colorFilter = Object.assign(
       return filterColorIdentityContents(value1, operator, value2);
     }
   },
-  { defaultOp: '<=' as opType }
+  {
+    defaultOp: '<=' as opType,
+    toSummary: (value: string[] | number, operator: looseOpType) => {
+      if (Array.isArray(value)) {
+        return filterColorIdentityContents.toSummary(value, operator);
+      } else {
+        return `the number of identity colors is ${filterNumber.toSummary(value, operator)}`;
+      }
+    },
+  }
 );
 
-export const filterColorList: colorListFilter = Object.assign(
+export const filterColorIndicator: colorListFilter = Object.assign(
   (value1: string[][] | undefined, operator: looseOpType, value2: string[] | number) => {
     if (!value1) {
       return false;
@@ -141,7 +169,18 @@ export const filterColorList: colorListFilter = Object.assign(
       return filterColorContentsList(value1, operator, value2);
     }
   },
-  { defaultOp: '=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string[] | number, operator: looseOpType) => {
+      if (Array.isArray(value)) {
+        return `the color indicator is ${getActualOp(filterColorIndicator, operator)} ${value.join(
+          ''
+        )}`;
+      } else {
+        return `the number of indicator colors is ${filterNumber.toSummary(value, operator)}`;
+      }
+    },
+  }
 );
 
 /**
@@ -174,6 +213,7 @@ export const filterColorContentsMisc: colorContentFilter = Object.assign(
   },
   {
     defaultOp: '>=' as opType,
+    toSummary: (value: string[], operator: looseOpType) => NOPRINT,
   }
 );
 
@@ -191,6 +231,7 @@ export const filterColorIdentityContentsMisc: colorContentFilter = Object.assign
   },
   {
     defaultOp: '<=' as opType,
+    toSummary: (value: string[], operator: looseOpType) => NOPRINT,
   }
 );
 
@@ -286,7 +327,14 @@ export const filterHybridIdentityContents: hybridContentFilter = Object.assign(
       );
     }
   },
-  { defaultOp: '<=' as opType }
+  {
+    defaultOp: '<=' as opType,
+    toSummary: (value: string[], operator: looseOpType) =>
+      `the hybrid color identity is ${getActualOp(
+        filterHybridIdentityContents,
+        operator
+      )} ${value.join('')}`,
+  }
 );
 
 /**
@@ -308,6 +356,7 @@ export const filterHybridIdentityContentsMisc: hybridContentFilter = Object.assi
   },
   {
     defaultOp: '<=' as opType,
+    toSummary: (value: string[], operator: looseOpType) => NOPRINT,
   }
 );
 
@@ -364,5 +413,14 @@ export const filterHybridIdentity: hybridFilter = Object.assign(
       return filterHybridIdentityContents(value1, operator, value2);
     }
   },
-  { defaultOp: '<=' as opType }
+  {
+    defaultOp: '<=' as opType,
+    toSummary: (value: string[] | number, operator: looseOpType) => {
+      if (Array.isArray(value)) {
+        return filterHybridIdentityContents.toSummary(value, operator);
+      } else {
+        return `the number of hybrid identity colors is ${filterNumber.toSummary(value, operator)}`;
+      }
+    },
+  }
 );

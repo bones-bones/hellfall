@@ -4,6 +4,10 @@ import {
   getActualOp,
   includeEqualsOp,
   looseOpType,
+  NOPRINT,
+  opToIncludeSingular,
+  opToNot,
+  opToTagged,
   opType,
   tagFilter,
   textFilter,
@@ -19,7 +23,7 @@ export const filterEmpty: textFilter = Object.assign(
   (value1: string, operator: looseOpType, value2: string) => {
     return operator == '=';
   },
-  { defaultOp: '=' as opType }
+  { defaultOp: '=' as opType, toSummary: (value: string, operator: looseOpType) => '!' }
 );
 
 // export const filterInclude: textFilter = Object.assign(
@@ -37,7 +41,15 @@ export const filterId: textFilter = Object.assign(
     }
     return includeEqualsOp(actualOp, textSearchIncludes, textEquals, value1, value2);
   },
-  { defaultOp: '>=' as opType }
+  {
+    defaultOp: '=' as opType,
+    toSummary: (value: string, operator: looseOpType) => {
+      if (isNumber(value)) {
+        return `the id ${filterNumber.toSummary(parseInt(value), operator)}`;
+      }
+      return `the id is ${opToNot(operator)} "${value}"`;
+    },
+  }
 );
 
 export const filterText: textFilter = Object.assign(
@@ -45,7 +57,7 @@ export const filterText: textFilter = Object.assign(
     const actualOp = getActualOp(this, operator);
     return includeEqualsOp(actualOp, textSearchIncludes, textEquals, value1, value2);
   },
-  { defaultOp: '>=' as opType }
+  { defaultOp: '>=' as opType, toSummary: (value: string, operator: looseOpType) => NOPRINT }
 );
 const textListIncludes = (value1: string[], value2: string) =>
   value1.some(text => textSearchIncludes(text, value2));
@@ -56,7 +68,7 @@ export const filterTextList: textListFilter = Object.assign(
     const actualOp = getActualOp(this, operator);
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, value1, value2);
   },
-  { defaultOp: '>=' as opType }
+  { defaultOp: '>=' as opType, toSummary: (value: string, operator: looseOpType) => NOPRINT }
 );
 export const filterTag: tagFilter = Object.assign(
   function (
@@ -82,7 +94,11 @@ export const filterTag: tagFilter = Object.assign(
     }
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, value1, value2);
   },
-  { defaultOp: '>=' as opType }
+  {
+    defaultOp: '>=' as opType,
+    toSummary: (value: string, operator: looseOpType) =>
+      `the card is ${opToTagged[operator]} "${value}"`,
+  }
 );
 
 const getLore = (card: HCCard.Any) => {
@@ -101,5 +117,9 @@ export const filterLore: cardStringFilter = Object.assign(
     const actualOp = getActualOp(this, operator);
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, getLore(value1), value2);
   },
-  { defaultOp: '>=' as opType }
+  {
+    defaultOp: '>=' as opType,
+    toSummary: (value: string, operator: looseOpType) =>
+      `the lore ${opToIncludeSingular[operator]} "${value}"`,
+  }
 );
