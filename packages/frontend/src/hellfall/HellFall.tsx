@@ -78,8 +78,8 @@ export const HellFall = () => {
         </Card>
       </StyledSidePanel>
       <br />
-      <SearchControls />
-      <br />
+      {/* <SearchControls />
+      <br /> */}
       <SortComponent />
       <ResultCount ref={containerRef}>{`${resultSet.length} card(s)`}</ResultCount>
       <Container>

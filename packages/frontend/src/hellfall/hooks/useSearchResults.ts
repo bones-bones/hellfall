@@ -278,7 +278,7 @@ export const useSearchResults = () => {
           }
         }
 
-        if (tags) {
+        if (tags.length) {
           if (!everyTagMatches(entry.tags ?? [], tags, entry.tag_notes)) {
             return false;
           }

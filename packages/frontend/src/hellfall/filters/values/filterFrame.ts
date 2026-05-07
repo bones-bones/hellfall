@@ -3,6 +3,7 @@ import {
   cardStringFilter,
   equals,
   getActualOp,
+  invertOptionType,
   looseOpType,
   opToDont,
   opToNot,
@@ -522,8 +523,9 @@ export const filterCardFrame: cardStringFilter = Object.assign(
     );
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string) => {
       const frame = getFrameName(value);
       if (frame) {
         return `the cards ${opToDont(operator)} have ${frame} frame`;
@@ -546,8 +548,9 @@ export const filterFrameEffect: cardStringFilter = Object.assign(
     );
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string) => {
       const frame = getFrameEffectName(value);
       if (frame) {
         return `the cards ${opToDont(operator)} have ${frame}`;
@@ -564,8 +567,9 @@ export const filterFrame: cardStringFilter = Object.assign(
     return filterCardFrame(value1, actualOp, value2) || filterFrameEffect(value1, actualOp, value2);
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string) => {
       const frame = getFrameName(value);
       const frameEffect = getFrameEffectName(value);
       if (frame) {
@@ -592,8 +596,9 @@ export const filterShowcase: cardStringFilter = Object.assign(
     );
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string) => {
       if (!(value in toShowcaseFrame)) {
         return '!';
       }

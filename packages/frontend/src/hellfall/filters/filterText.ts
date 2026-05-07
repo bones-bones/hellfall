@@ -3,6 +3,7 @@ import {
   cardStringFilter,
   getActualOp,
   includeEqualsOp,
+  invertOptionType,
   looseOpType,
   NOPRINT,
   opToIncludeSingular,
@@ -23,7 +24,11 @@ export const filterEmpty: textFilter = Object.assign(
   (value1: string, operator: looseOpType, value2: string) => {
     return operator == '=';
   },
-  { defaultOp: '=' as opType, toSummary: (value: string, operator: looseOpType) => '!' }
+  {
+    invertOption: 'ignore' as invertOptionType,
+    defaultOp: '=' as opType,
+    toSummary: (operator: looseOpType, value: string) => '!',
+  }
 );
 
 // export const filterInclude: textFilter = Object.assign(
@@ -33,32 +38,42 @@ export const filterEmpty: textFilter = Object.assign(
 //   { defaultOp: '=' as opType }
 // );
 
+export const filterText: textFilter = Object.assign(
+  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(this, operator);
+    return includeEqualsOp(actualOp, textSearchIncludes, textEquals, value1, value2);
+  },
+  {
+    invertOption: 'negate' as invertOptionType,
+    defaultOp: '>=' as opType,
+    toSummary: (operator: looseOpType, value: string) => NOPRINT,
+  }
+);
+
 export const filterId: textFilter = Object.assign(
   function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
     const actualOp = getActualOp(this, operator);
     if (isNumber(value2)) {
       return isNumber(value1) ? filterNumber(parseInt(value1), operator, parseInt(value2)) : false;
     }
-    return includeEqualsOp(actualOp, textSearchIncludes, textEquals, value1, value2);
+    return filterText(value1, actualOp, value2);
   },
   {
+    invertOption: 'negate' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string, invert?: boolean) => {
       if (isNumber(value)) {
-        return `the id ${filterNumber.toSummary(parseInt(value), operator)}`;
+        return `the id is ${filterNumber.toSummary(operator, parseInt(value), invert)}`;
       }
-      return `the id is ${opToNot(operator)} "${value}"`;
+      return `the id ${opToIncludeSingular(
+        getActualOp(filterId, operator),
+        value,
+        invert
+      )} "${value}"`;
     },
   }
 );
 
-export const filterText: textFilter = Object.assign(
-  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    return includeEqualsOp(actualOp, textSearchIncludes, textEquals, value1, value2);
-  },
-  { defaultOp: '>=' as opType, toSummary: (value: string, operator: looseOpType) => NOPRINT }
-);
 const textListIncludes = (value1: string[], value2: string) =>
   value1.some(text => textSearchIncludes(text, value2));
 const textListEquals = (value1: string[], value2: string) =>
@@ -68,7 +83,11 @@ export const filterTextList: textListFilter = Object.assign(
     const actualOp = getActualOp(this, operator);
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, value1, value2);
   },
-  { defaultOp: '>=' as opType, toSummary: (value: string, operator: looseOpType) => NOPRINT }
+  {
+    invertOption: 'negate' as invertOptionType,
+    defaultOp: '>=' as opType,
+    toSummary: (operator: looseOpType, value: string) => NOPRINT,
+  }
 );
 export const filterTag: tagFilter = Object.assign(
   function (
@@ -95,9 +114,10 @@ export const filterTag: tagFilter = Object.assign(
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, value1, value2);
   },
   {
+    invertOption: 'negate' as invertOptionType,
     defaultOp: '>=' as opType,
-    toSummary: (value: string, operator: looseOpType) =>
-      `the card is ${opToTagged[operator]} "${value}"`,
+    toSummary: (operator: looseOpType, value: string, invert?: boolean) =>
+      `the card is ${opToTagged(operator, value, invert)} "${value}"`,
   }
 );
 
@@ -118,8 +138,9 @@ export const filterLore: cardStringFilter = Object.assign(
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, getLore(value1), value2);
   },
   {
+    invertOption: 'negate' as invertOptionType,
     defaultOp: '>=' as opType,
-    toSummary: (value: string, operator: looseOpType) =>
-      `the lore ${opToIncludeSingular[operator]} "${value}"`,
+    toSummary: (operator: looseOpType, value: string, invert?: boolean) =>
+      `the lore ${opToIncludeSingular(operator, value, invert)} "${value}"`,
   }
 );

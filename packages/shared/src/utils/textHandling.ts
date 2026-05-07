@@ -153,7 +153,11 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
     i++;
   }
 
-  const normalized = result.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const normalized = result
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replaceAll(/[‘’]/g, "'")
+    .replaceAll(/[“”]/g, '"');
   if (preserveCaps) {
     return normalized;
   }

@@ -1,6 +1,7 @@
 import { toNumber } from '../inputs/NumberSelector';
 import {
   getActualOp,
+  invertOptionType,
   looseOpType,
   NOPRINT,
   numFilter,
@@ -31,9 +32,10 @@ export const filterNumber: numFilter = Object.assign(
     }
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: number, operator: looseOpType) =>
-      `${getActualOp(filterNumber, operator)} ${value}`,
+    toSummary: (operator: looseOpType, value: number, invert?: boolean) =>
+      `${invert ? 'not' : ''} ${getActualOp(filterNumber, operator)} ${value}`,
   }
 );
 
@@ -53,13 +55,14 @@ export const filterNumberString: numStringFilter = Object.assign(
     return filterNumber(num1, actualOp, num2);
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: number | string | undefined, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: number | string | undefined, invert?: boolean) => {
       const num = typeof value == 'string' ? toNumber(value) : value;
       if (num == undefined) {
         return '!';
       }
-      return `${getActualOp(filterNumber, operator)} ${num}`;
+      return `${invert ? 'not' : ''} ${getActualOp(filterNumberString, operator)} ${num}`;
     },
   }
 );
@@ -74,26 +77,14 @@ export const filterNumberStringList: numStringListFilter = Object.assign(
     return value1.some(value => filterNumberString(value, actualOp, value2));
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: number | string | undefined, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: number | string | undefined, invert?: boolean) => {
       const num = typeof value == 'string' ? toNumber(value) : value;
       if (num == undefined) {
         return '!';
       }
-      return `${getActualOp(filterNumber, operator)} ${num}`;
+      return `${invert ? 'not' : ''} ${getActualOp(filterNumberStringList, operator)} ${num}`;
     },
   }
-);
-export const filterCollectorNumber: textFilter = Object.assign(
-  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    // if (actualOp == '=' && (!isNumber(value1) || !isNumber(value2))) {
-    //   return value1 == value2
-    // }
-    // if (actualOp == '!=' && (!isNumber(value1) || !isNumber(value2))) {
-    //   return value1 != value2
-    // }
-    return filterNumberString(value1, actualOp, value2);
-  },
-  { defaultOp: '=' as opType, toSummary: (value: string, operator: looseOpType) => NOPRINT }
 );

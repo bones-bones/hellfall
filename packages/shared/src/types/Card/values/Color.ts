@@ -31,7 +31,7 @@ export const HCMiscColors = [
   'Beige',
   'Grey',
 ];
-export const HCSearchColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc bullshit'];
+export const HCSearchColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc'];
 // export type HCColor = HCCoreColor | HCMiscColor;
 
 // export type HCCoreColors = `${HCCoreColor}`[];

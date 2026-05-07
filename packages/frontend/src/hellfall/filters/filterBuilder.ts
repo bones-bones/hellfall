@@ -14,6 +14,7 @@ import {
   CardStringFilter,
   SetFilter,
   PassThroughSummaryFilter,
+  sortObject,
 } from './filterObject';
 import { filterSetBoth, filterSetCard, filterSetToken } from './filterSet';
 import {
@@ -26,13 +27,18 @@ import {
 } from './filterText';
 import {
   colorFilterMaker,
+  dirType,
   filterMaker,
+  getActualOp,
   invertOp,
+  invertOptionType,
   looseOpList,
   looseOpType,
   opToIncludePlural,
   opToIncludeSingular,
   setFilterMaker,
+  sortMaker,
+  sortType,
 } from './types';
 import { filterBanned, filterLegal, filterNotLegal } from './values/filterLegality';
 import { filterHas, filterIs } from './filterIs';
@@ -45,6 +51,7 @@ import {
   filterShowcase,
 } from './values/filterFrame';
 import { isInteger, isNumber } from '@hellfall/shared/utils/isInt';
+import { filterSort } from './sortRule';
 
 export const makeSetFilter: setFilterMaker = (
   value: string,
@@ -66,6 +73,17 @@ export const makeBlockFilter: setFilterMaker = (
   includeExtras: boolean
 ) => {
   return new SetFilter('block', filterSetBoth, value, op, '=', includeExtras);
+};
+export const makeInvalidFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new filterObject<string, string>(
+    'invalid',
+    filterEmpty,
+    value,
+    op,
+    '>=',
+    card => '',
+    (op: looseOpType, value: string) => '!'
+  );
 };
 export const makeTrueFilter: filterMaker = (value: string, op: looseOpType) => {
   return new PassThroughSummaryFilter<string, string>(
@@ -107,7 +125,8 @@ export const makeNameFilter: filterMaker = (value: string, op: looseOpType) => {
     op,
     '>=',
     card => getAllNames(card),
-    (value: string, op: looseOpType) => `the name ${opToIncludeSingular[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the name ${opToIncludeSingular(op, value, invert)}`
   );
 };
 // TODO: Make cost search act more like number than string (and more like scryfall)
@@ -119,7 +138,8 @@ export const makeCostFilter: filterMaker = (value: string, op: looseOpType) => {
     op,
     '>=',
     card => card.toFaces().map(e => e.mana_cost),
-    (value: string, op: looseOpType) => `the cost ${opToIncludeSingular[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the cost ${opToIncludeSingular(op, value, invert)}`
   );
 };
 
@@ -136,7 +156,8 @@ export const makeTypeFilter: filterMaker = (value: string, op: looseOpType) => {
       ...card.toFaces().flatMap(e => e.subtypes || []),
       ...card.toFaces().map(e => e.type_line),
     ],
-    (value: string, op: looseOpType) => `the types ${opToIncludePlural[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the types ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -153,7 +174,8 @@ export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType)
           ...(e.supertypes || []),
           ...(e.supertypes && e.supertypes.length > 1 ? [e.supertypes.join(' ')] : []),
         ]),
-    (value: string, op: looseOpType) => `the supertypes ${opToIncludePlural[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the supertypes ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeCardtypeFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -170,7 +192,8 @@ export const makeCardtypeFilter: filterMaker = (value: string, op: looseOpType) 
           ...(e.types || []),
           ...(e.types && e.types.length > 1 ? [e.types.join(' ')] : []),
         ]),
-    (value: string, op: looseOpType) => `the card types ${opToIncludePlural[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the card types ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeSubtypeFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -187,7 +210,8 @@ export const makeSubtypeFilter: filterMaker = (value: string, op: looseOpType) =
           ...(e.subtypes || []),
           ...(e.subtypes && e.subtypes.length > 1 ? [e.subtypes.join(' ')] : []),
         ]),
-    (value: string, op: looseOpType) => `the subtypes ${opToIncludePlural[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the subtypes ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeOracleFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -198,7 +222,8 @@ export const makeOracleFilter: filterMaker = (value: string, op: looseOpType) =>
     op,
     '>=',
     card => card.toFaces().map(e => e.oracle_text),
-    (value: string, op: looseOpType) => `the oracle text ${opToIncludeSingular[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the oracle text ${opToIncludeSingular(op, value, invert)}`
   );
 };
 export const makeFlavorFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -209,7 +234,8 @@ export const makeFlavorFilter: filterMaker = (value: string, op: looseOpType) =>
     op,
     '>=',
     card => card.toFaces().flatMap(e => e.flavor_text ?? []),
-    (value: string, op: looseOpType) => `the flavor text ${opToIncludeSingular[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the flavor text ${opToIncludeSingular(op, value, invert)}`
   );
 };
 export const makeLoreFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -224,7 +250,8 @@ export const makeCreatorFilter: filterMaker = (value: string, op: looseOpType) =
     op,
     '>=',
     card => card.creators ?? [],
-    (value: string, op: looseOpType) => `the creators ${opToIncludePlural[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the creators ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeArtistFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -235,7 +262,8 @@ export const makeArtistFilter: filterMaker = (value: string, op: looseOpType) =>
     op,
     '>=',
     card => card.artists ?? [],
-    (value: string, op: looseOpType) => `the artists ${opToIncludePlural[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the artists ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -246,7 +274,8 @@ export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) =
     op,
     '=',
     card => card.keywords,
-    (value: string, op: looseOpType) => `the keywords ${opToIncludePlural[op]} "${value}"`
+    (op: looseOpType, value: string, invert?: boolean) =>
+      `the keywords ${opToIncludePlural(getActualOp(filterId, op), value, invert)}`
   );
 };
 export const makeTagFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -267,8 +296,8 @@ export const makeCollectorNumberFilter: filterMaker = (value: string, op: looseO
     op,
     '=',
     card => card.collector_number,
-    (value: string | undefined, op: looseOpType) => {
-      const num = filterNumberString.toSummary(value, op);
+    (op: looseOpType, value: string | undefined) => {
+      const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
       }
@@ -284,8 +313,8 @@ export const makeManaValueFilter: filterMaker = (value: string, op: looseOpType)
     op,
     '=',
     card => card.mana_value,
-    (value: string | undefined, op: looseOpType) => {
-      const num = filterNumberString.toSummary(value, op);
+    (op: looseOpType, value: string | undefined) => {
+      const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
       }
@@ -301,8 +330,8 @@ export const makePowerFilter: filterMaker = (value: string, op: looseOpType) => 
     op,
     '=',
     card => card.toFaces().flatMap(e => e.power ?? []),
-    (value: string | undefined, op: looseOpType) => {
-      const num = filterNumberString.toSummary(value, op);
+    (op: looseOpType, value: string | undefined) => {
+      const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
       }
@@ -318,8 +347,8 @@ export const makeToughnessFilter: filterMaker = (value: string, op: looseOpType)
     op,
     '=',
     card => card.toFaces().flatMap(e => e.toughness ?? []),
-    (value: string | undefined, op: looseOpType) => {
-      const num = filterNumberString.toSummary(value, op);
+    (op: looseOpType, value: string | undefined) => {
+      const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
       }
@@ -336,8 +365,8 @@ export const makeLoyaltyFilter: filterMaker = (value: string, op: looseOpType) =
     op,
     '=',
     card => card.toFaces().flatMap(e => e.loyalty ?? []),
-    (value: string | undefined, op: looseOpType) => {
-      const num = filterNumberString.toSummary(value, op);
+    (op: looseOpType, value: string | undefined) => {
+      const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
       }
@@ -354,8 +383,8 @@ export const makeDefenseFilter: filterMaker = (value: string, op: looseOpType) =
     op,
     '=',
     card => card.toFaces().flatMap(e => e.defense ?? []),
-    (value: string | undefined, op: looseOpType) => {
-      const num = filterNumberString.toSummary(value, op);
+    (op: looseOpType, value: string | undefined) => {
+      const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
       }
@@ -544,6 +573,10 @@ export const makeShowcaseFilter: filterMaker = (value: string, op: looseOpType) 
   return new CardStringFilter('showcase', filterShowcase, value, op, '=');
 };
 
+export const makeSort: sortMaker = (sort: sortType, dir: dirType) => {
+  return new sortObject('sort', filterSort, sort, dir);
+};
+
 export const equivFilterNames: Record<string, string> = {
   cardid: 'id',
   name: 'n',
@@ -552,6 +585,9 @@ export const equivFilterNames: Record<string, string> = {
   manacost: 'mana',
   t: 'type',
   o: 'oracle',
+  oracletext: 'oracle',
+  rules: 'oracle',
+  rulestext: 'oracle',
   super: 'supertype',
   supert: 'supertype',
   ct: 'cardtype',
@@ -559,7 +595,6 @@ export const equivFilterNames: Record<string, string> = {
   sub: 'subtype',
   subt: 'subtype',
   ft: 'flavor',
-  oracletext: 'oracle',
   flavortext: 'flavor',
   creators: 'creator',
   artists: 'artist',
@@ -581,6 +616,11 @@ export const equivFilterNames: Record<string, string> = {
   format: 'legal',
   bordercolor: 'border',
   frameeffects: 'frameeffect',
+  include: 'invalid',
+  sort: 'invalid',
+  order: 'invalid',
+  dir: 'invalid',
+  direction: 'invalid',
 };
 export const filters: Record<string, filterMaker> = {
   id: makeIDFilter,
@@ -617,6 +657,7 @@ export const filters: Record<string, filterMaker> = {
   frameeffect: makeFrameEffectFilter,
   frame: makeFrameFilter,
   showcase: makeShowcaseFilter,
+  invalid: makeInvalidFilter,
 };
 export const equivSetFilterNames: Record<string, string> = {
   s: 'set',
@@ -688,22 +729,24 @@ export const textIsQuote = (text: string) =>
   ['"', "'"].includes(text[0]) &&
   text.charAt(-2) != '\\';
 export const unescapeText = (text: string) => {
-  const strippedText = textIsQuote(text) ? text.replaceAll(/[_-]/g, '') : text;
+  const strippedText = textIsQuote(text) ? text : text.replaceAll(/[_-]/g, '');
   return strippedText
     .replaceAll(/^['"]/g, '')
     .replaceAll(/(?<!\\)['"]/g, '')
     .replaceAll(/\\(['"])/g, '$1');
 };
-const splitOnFirstOp = (text: string): { keyword: string; op: looseOpType; term: string } => {
+export const splitOnFirstOp = (
+  text: string
+): { keyword: string; op: looseOpType; term: string } => {
   for (let i = 1; i < text.length - 1; i++) {
-    if (looseOpList.includes(text.slice(i, i + 2)) && i < text.length - 2) {
+    if (looseOpList.includes(text.slice(i, i + 2) as looseOpType) && i < text.length - 2) {
       return {
         keyword: unescapeText(text.slice(0, i)),
         op: text.slice(i, i + 2) as looseOpType,
         term: unescapeText(text.slice(i + 2)),
       };
     }
-    if (looseOpList.includes(text.charAt(i))) {
+    if (looseOpList.includes(text.charAt(i) as looseOpType)) {
       return {
         keyword: unescapeText(text.slice(0, i)),
         op: text.charAt(i) as looseOpType,
@@ -800,8 +843,19 @@ const parseColorText = (text: string): string[] | number | undefined => {
 };
 // make sure the thing doesn't strip quotes when passing text in to this from start and end of string when
 export const parseFilter = (text: string, invert: boolean = false): filterObject<any, any> => {
-  const fop = (op: looseOpType) => {
-    return invert ? invertOp(op) : op;
+  const correctOp = (filter: filterObject<any, any>) => {
+    if (invert) {
+      switch (filter.filter.invertOption) {
+        case 'flip': {
+          filter.op = invertOp(filter.op);
+          break;
+        }
+        case 'negate': {
+          filter.inverted = !filter.inverted;
+        }
+      }
+    }
+    return filter;
   };
   if (!text) {
     return makeTrueFilter('', '=');
@@ -810,16 +864,16 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
     return parseFilter(text.slice(1), !invert);
   }
   if (text[0] == '"' || text[0] == "'" || !looseOpList.some(op => text.includes(op))) {
-    return makeNameFilter(unescapeText(text), fop(':'));
+    return correctOp(makeNameFilter(unescapeText(text), ':'));
   }
   const { keyword, op, term } = splitOnFirstOp(text);
   if (keyword in equivFilterNames || keyword in filters) {
     const correctKeyword = keyword in filters ? keyword : equivFilterNames[keyword];
-    return filters[correctKeyword](term, fop(op));
+    return correctOp(filters[correctKeyword](term, op));
   }
   if (keyword in equivSetFilterNames || keyword in setFilters) {
     const correctKeyword = keyword in setFilters ? keyword : equivSetFilterNames[keyword];
-    return setFilters[correctKeyword](term, fop(op), false);
+    return correctOp(setFilters[correctKeyword](term, op, false));
   }
   if (keyword in equivColorFilterNames || keyword in colorFilters) {
     const correctKeyword = keyword in colorFilters ? keyword : equivColorFilterNames[keyword];
@@ -833,11 +887,11 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
       correctKeyword.slice(0, 4) != 'misc' &&
       parsedColors.includes('Misc')
     ) {
-      return colorFilters['misc' + correctKeyword](parsedColors, fop(op));
+      return correctOp(colorFilters['misc' + correctKeyword](parsedColors, op));
     }
-    return colorFilters[correctKeyword](parsedColors, fop(op));
+    return correctOp(colorFilters[correctKeyword](parsedColors, op));
   }
-  return makeNameFilter(unescapeText(text), fop(':'));
+  return correctOp(makeNameFilter(unescapeText(text), ':'));
 };
 
 // TODO: add include:extras handling in the end (going to use checkmark under bar for now)

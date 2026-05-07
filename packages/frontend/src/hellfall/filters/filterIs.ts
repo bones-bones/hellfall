@@ -8,6 +8,7 @@ import {
   opToNot,
   opIsNegative,
   opToDont,
+  invertOptionType,
 } from './types';
 import { canBeACommander } from '../canBeACommander';
 import {
@@ -56,17 +57,18 @@ export const filterIs: cardStringFilter = Object.assign(
     return funcOp(actualOp, resolveIs, value2);
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, op: looseOpType) => {
-      const actualOp = getActualOp(filterIs, op);
+    toSummary: (operator: looseOpType, value: string) => {
+      const actualOp = getActualOp(filterIs, operator);
       if (cardFramesToParse.includes(value)) {
-        return filterCardFrame.toSummary(value, actualOp);
+        return filterCardFrame.toSummary(actualOp, value);
       }
       if (frameEffectsToParse.includes(value)) {
-        return filterFrameEffect.toSummary(value, actualOp);
+        return filterFrameEffect.toSummary(actualOp, value);
       }
       if (value in toCardLayout) {
-        return filterCardLayout.toSummary(value, actualOp);
+        return filterCardLayout.toSummary(actualOp, value);
       }
       switch (value) {
         case 'foil':
@@ -110,17 +112,18 @@ export const filterHas: cardStringFilter = Object.assign(
     return funcOp(actualOp, resolveHas, value2);
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, op: looseOpType) => {
-      const actualOp = getActualOp(filterIs, op);
+    toSummary: (operator: looseOpType, value: string) => {
+      const actualOp = getActualOp(filterIs, operator);
       if (cardFramesToParse.includes(value)) {
-        return filterCardFrame.toSummary(value, actualOp);
+        return filterCardFrame.toSummary(actualOp, value);
       }
       if (frameEffectsToParse.includes(value)) {
-        return filterFrameEffect.toSummary(value, actualOp);
+        return filterFrameEffect.toSummary(actualOp, value);
       }
       if (value in toCardLayout) {
-        return filterCardLayout.toSummary(value, actualOp);
+        return filterCardLayout.toSummary(actualOp, value);
       }
       switch (value) {
         case 'foil':

@@ -7,6 +7,7 @@ import {
   textFilter,
   getActualOp,
   opToNot,
+  invertOptionType,
 } from '../types';
 const toBorder: Record<string, HCBorderColor> = {
   black: HCBorderColor.Black,
@@ -34,8 +35,9 @@ export const filterBorder: textFilter = Object.assign(
     );
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string) => {
       if (value in toBorder) {
         // TODO: Make sure this doesn't cause double spaces
         return `the border color is ${opToNot(operator)} "${toBorder[value]}"`;

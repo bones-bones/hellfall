@@ -8,6 +8,7 @@ import {
   getActualOp,
   hybridContentFilter,
   hybridFilter,
+  invertOptionType,
   looseOpType,
   NOPRINT,
   opType,
@@ -63,9 +64,13 @@ export const filterColorContents: colorContentFilter = Object.assign(
     }
   },
   {
+    invertOption: 'negate' as invertOptionType,
     defaultOp: '>=' as opType,
-    toSummary: (value: string[], operator: looseOpType) =>
-      `the colors are ${getActualOp(filterColorContents, operator)} ${value.join('')}`,
+    toSummary: (operator: looseOpType, value: string[], invert?: boolean) =>
+      `the colors are ${invert ? 'not' : ''} ${getActualOp(
+        filterColorContents,
+        operator
+      )} ${value.join('')}`,
   }
 );
 
@@ -85,12 +90,13 @@ export const filterColors: colorFilter = Object.assign(
     }
   },
   {
+    invertOption: 'negate' as invertOptionType,
     defaultOp: '>=' as opType,
-    toSummary: (value: string[] | number, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string[] | number, invert?: boolean) => {
       if (Array.isArray(value)) {
-        return filterColorContents.toSummary(value, operator);
+        return filterColorContents.toSummary(operator, value, invert);
       } else {
-        return `the number of colors is ${filterNumber.toSummary(value, operator)}`;
+        return `the number of colors is ${filterNumber.toSummary(operator, value, invert)}`;
       }
     },
   }
@@ -109,28 +115,15 @@ export const filterColorIdentityContents: colorContentFilter = Object.assign(
     return filterColorContents(value1, actualOp, value2);
   },
   {
+    invertOption: 'negate' as invertOptionType,
     defaultOp: '<=' as opType,
-    toSummary: (value: string[], operator: looseOpType) =>
-      `the color identity is ${getActualOp(filterColorIdentityContents, operator)} ${value.join(
-        ''
-      )}`,
+    toSummary: (operator: looseOpType, value: string[], invert?: boolean) =>
+      `the color identity is ${invert ? 'not' : ''} ${getActualOp(
+        filterColorIdentityContents,
+        operator
+      )} ${value.join('')}`,
   }
 );
-
-export const filterColorContentsList: colorContentListFilter = Object.assign(
-  (value1: string[][] | undefined, operator: looseOpType, value2: string[]) => {
-    if (!value1) {
-      return false;
-    }
-    const actualOp = operator === ':' ? filterColorIdentityContents.defaultOp : operator;
-    return value1.some(set => filterColorContents(set, actualOp, value2));
-  },
-  {
-    defaultOp: '=' as opType,
-    toSummary: (value: string[], operator: looseOpType) => NOPRINT,
-  }
-);
-
 /**
  * Compares two sets of colors for an identity search using an operator and returns a bool.
  * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
@@ -147,14 +140,34 @@ export const filterColorIdentity: colorFilter = Object.assign(
     }
   },
   {
+    invertOption: 'negate' as invertOptionType,
     defaultOp: '<=' as opType,
-    toSummary: (value: string[] | number, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string[] | number, invert?: boolean) => {
       if (Array.isArray(value)) {
-        return filterColorIdentityContents.toSummary(value, operator);
+        return filterColorIdentityContents.toSummary(operator, value, invert);
       } else {
-        return `the number of identity colors is ${filterNumber.toSummary(value, operator)}`;
+        return `the number of identity colors is ${filterNumber.toSummary(
+          operator,
+          value,
+          invert
+        )}`;
       }
     },
+  }
+);
+
+export const filterColorContentsList: colorContentListFilter = Object.assign(
+  (value1: string[][] | undefined, operator: looseOpType, value2: string[]) => {
+    if (!value1) {
+      return false;
+    }
+    const actualOp = operator === ':' ? filterColorIdentityContents.defaultOp : operator;
+    return value1.some(set => filterColorContents(set, actualOp, value2));
+  },
+  {
+    invertOption: 'negate' as invertOptionType,
+    defaultOp: '=' as opType,
+    toSummary: (operator: looseOpType, value: string[]) => NOPRINT,
   }
 );
 
@@ -170,14 +183,20 @@ export const filterColorIndicator: colorListFilter = Object.assign(
     }
   },
   {
+    invertOption: 'negate' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string[] | number, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string[] | number, invert?: boolean) => {
       if (Array.isArray(value)) {
-        return `the color indicator is ${getActualOp(filterColorIndicator, operator)} ${value.join(
-          ''
-        )}`;
+        return `the color indicator is ${invert ? 'not' : ''} ${getActualOp(
+          filterColorIndicator,
+          operator
+        )} ${value.join('')}`;
       } else {
-        return `the number of indicator colors is ${filterNumber.toSummary(value, operator)}`;
+        return `the number of indicator colors is ${filterNumber.toSummary(
+          operator,
+          value,
+          invert
+        )}`;
       }
     },
   }
@@ -199,42 +218,6 @@ export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
     });
   return newColors;
 };
-/**
- * Compares two sets of colors converting to misc using an operator and returns a bool.
- * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
- * @param operator The operator
- * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
- * @returns boolean of whether the comparison is true
- */
-export const filterColorContentsMisc: colorContentFilter = Object.assign(
-  function (this: colorContentFilter, value1: string[], operator: looseOpType, value2: string[]) {
-    const actualOp = getActualOp(this, operator);
-    return filterColorContents(colorMiscReduce(value1), actualOp, value2);
-  },
-  {
-    defaultOp: '>=' as opType,
-    toSummary: (value: string[], operator: looseOpType) => NOPRINT,
-  }
-);
-
-/**
- * Compares two sets of colors for a identity search converting to misc using an operator and returns a bool.
- * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
- * @param operator The operator
- * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
- * @returns boolean of whether the comparison is true
- */
-export const filterColorIdentityContentsMisc: colorContentFilter = Object.assign(
-  function (this: colorContentFilter, value1: string[], operator: looseOpType, value2: string[]) {
-    const actualOp = getActualOp(this, operator);
-    return filterColorContents(colorMiscReduce(value1), actualOp, value2);
-  },
-  {
-    defaultOp: '<=' as opType,
-    toSummary: (value: string[], operator: looseOpType) => NOPRINT,
-  }
-);
-
 /**
  * Reduces down a card's hybrid identity set to one compatible with search colors.
  * @param hybridColors hybrid color identity
@@ -328,35 +311,13 @@ export const filterHybridIdentityContents: hybridContentFilter = Object.assign(
     }
   },
   {
+    invertOption: 'negate' as invertOptionType,
     defaultOp: '<=' as opType,
-    toSummary: (value: string[], operator: looseOpType) =>
-      `the hybrid color identity is ${getActualOp(
+    toSummary: (operator: looseOpType, value: string[], invert?: boolean) =>
+      `the hybrid color identity is ${invert ? 'not' : ''} ${getActualOp(
         filterHybridIdentityContents,
         operator
       )} ${value.join('')}`,
-  }
-);
-
-/**
- * Compares two sets of colors using an operator and returns a bool.
- * @param value1 The set of hybrid colors to compare (must not include 'C'; can be empty)
- * @param operator The operator
- * @param value2 The set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
- * @returns boolean of whether the comparison is true
- */
-export const filterHybridIdentityContentsMisc: hybridContentFilter = Object.assign(
-  function (
-    this: hybridContentFilter,
-    value1: string[][],
-    operator: looseOpType,
-    value2: string[]
-  ) {
-    const actualOp = getActualOp(this, operator);
-    return filterHybridIdentityContents(hybridIdentityMiscReduce(value1), actualOp, value2);
-  },
-  {
-    defaultOp: '<=' as opType,
-    toSummary: (value: string[], operator: looseOpType) => NOPRINT,
   }
 );
 
@@ -414,13 +375,84 @@ export const filterHybridIdentity: hybridFilter = Object.assign(
     }
   },
   {
+    invertOption: 'negate' as invertOptionType,
+
     defaultOp: '<=' as opType,
-    toSummary: (value: string[] | number, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string[] | number, invert?: boolean) => {
       if (Array.isArray(value)) {
-        return filterHybridIdentityContents.toSummary(value, operator);
+        return filterHybridIdentityContents.toSummary(operator, value, invert);
       } else {
-        return `the number of hybrid identity colors is ${filterNumber.toSummary(value, operator)}`;
+        return `the number of hybrid identity colors is ${filterNumber.toSummary(
+          operator,
+          value,
+          invert
+        )}`;
       }
     },
+  }
+);
+
+/**
+ * Compares two sets of colors converting to misc using an operator and returns a bool.
+ * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
+ * @param operator The operator
+ * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
+ * @returns boolean of whether the comparison is true
+ * @deprecated Only used in old search logic.
+ */
+export const filterColorContentsMisc: colorContentFilter = Object.assign(
+  function (this: colorContentFilter, value1: string[], operator: looseOpType, value2: string[]) {
+    const actualOp = getActualOp(this, operator);
+    return filterColorContents(colorMiscReduce(value1), actualOp, value2);
+  },
+  {
+    invertOption: 'negate' as invertOptionType,
+    defaultOp: '>=' as opType,
+    toSummary: (operator: looseOpType, value: string[]) => NOPRINT,
+  }
+);
+
+/**
+ * Compares two sets of colors for a identity search converting to misc using an operator and returns a bool.
+ * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
+ * @param operator The operator
+ * @param value2 The second set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
+ * @returns boolean of whether the comparison is true
+ * @deprecated Only used in old search logic.
+ */
+export const filterColorIdentityContentsMisc: colorContentFilter = Object.assign(
+  function (this: colorContentFilter, value1: string[], operator: looseOpType, value2: string[]) {
+    const actualOp = getActualOp(this, operator);
+    return filterColorContents(colorMiscReduce(value1), actualOp, value2);
+  },
+  {
+    invertOption: 'negate' as invertOptionType,
+    defaultOp: '<=' as opType,
+    toSummary: (operator: looseOpType, value: string[]) => NOPRINT,
+  }
+);
+
+/**
+ * Compares two sets of colors using an operator and returns a bool.
+ * @param value1 The set of hybrid colors to compare (must not include 'C'; can be empty)
+ * @param operator The operator
+ * @param value2 The set of colors to compare (can include 'C' alongside other members, in which case 'C' is treated as the only member; must not be empty)
+ * @returns boolean of whether the comparison is true
+ * @deprecated Only used in old search logic.
+ */
+export const filterHybridIdentityContentsMisc: hybridContentFilter = Object.assign(
+  function (
+    this: hybridContentFilter,
+    value1: string[][],
+    operator: looseOpType,
+    value2: string[]
+  ) {
+    const actualOp = getActualOp(this, operator);
+    return filterHybridIdentityContents(hybridIdentityMiscReduce(value1), actualOp, value2);
+  },
+  {
+    invertOption: 'negate' as invertOptionType,
+    defaultOp: '<=' as opType,
+    toSummary: (operator: looseOpType, value: string[]) => NOPRINT,
   }
 );

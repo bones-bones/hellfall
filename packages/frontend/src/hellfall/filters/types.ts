@@ -1,8 +1,8 @@
 import { HCCard, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
-import { filterObject, SetFilter } from './filterObject';
+import { filterObject, SetFilter, sortObject } from './filterObject';
 export const NOPRINT = 'This should not ever print. Please report this as a bug on discord.';
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
-export const looseOpList = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
+export const looseOpList: looseOpType[] = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
 export type looseOpType = ':' | '!:' | opType;
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',
@@ -31,7 +31,7 @@ export const getActualOp = (filter: cardFilter, operator: looseOpType): opType =
 export const opIsNegative = (op: looseOpType) => ['<', '>', '!=', '!:'].includes(op);
 export const opToNot = (op: looseOpType) => (opIsNegative(op) ? 'not' : '');
 export const opToDont = (op: looseOpType) => (opIsNegative(op) ? "don't" : '');
-export const opToIncludeSingular: Record<looseOpType, string> = {
+export const opToIncludeSingularRecord: Record<looseOpType, string> = {
   '<': 'excludes',
   '!:': 'excludes',
   '<=': 'excludes or equals',
@@ -41,7 +41,10 @@ export const opToIncludeSingular: Record<looseOpType, string> = {
   '>': "includes but doesn't equal",
   '!=': "doesn't equal",
 };
-export const opToIncludePlural: Record<looseOpType, string> = {
+export const opToIncludeSingular = (op: looseOpType, value: string, invert?: boolean) => {
+  return `${opToIncludeSingularRecord[(invert ? invertOp(op) : op) as opType]} ${value}`;
+};
+export const opToIncludePluralRecord: Record<looseOpType, string> = {
   '<': 'exclude',
   '!:': 'exclude',
   '<=': 'exclude or include exactly',
@@ -51,7 +54,10 @@ export const opToIncludePlural: Record<looseOpType, string> = {
   '>': 'include but not exactly',
   '!=': 'exclude exactly',
 };
-export const opToTagged: Record<looseOpType, string> = {
+export const opToIncludePlural = (op: looseOpType, value: string, invert?: boolean) => {
+  return `${opToIncludePluralRecord[(invert ? invertOp(op) : op) as opType]} ${value}`;
+};
+export const opToTaggedRecord: Record<looseOpType, string> = {
   '<': 'not tagged',
   '!:': 'not tagged',
   '<=': 'not tagged or tagged exactly',
@@ -61,46 +67,9 @@ export const opToTagged: Record<looseOpType, string> = {
   '>': 'tagged but not exactly',
   '!=': 'not tagged exactly',
 };
-/**
- * The first type is the type of the entry. The second type is the type from the search query.
- */
-export interface cardFilter<T = any, S = any> {
-  (value1: T, operator: looseOpType, value2: S): boolean;
-  defaultOp: opType;
-  toSummary: (value: S, operator: looseOpType) => string;
-}
-
-export interface textFilter extends cardFilter<string, string> {}
-export interface textListFilter extends cardFilter<string[], string> {}
-export interface textRecordFilter extends cardFilter<Record<string, string>, [string, string]> {}
-export interface numFilter extends cardFilter<number, number> {}
-export interface numStringFilter
-  extends cardFilter<number | string | undefined, number | string | undefined> {}
-export interface numStringListFilter
-  extends cardFilter<(number | string | undefined)[], number | string> {}
-export interface colorContentFilter extends cardFilter<string[], string[]> {}
-export interface colorFilter extends cardFilter<string[], string[] | number> {}
-export interface colorContentListFilter extends cardFilter<string[][] | undefined, string[]> {}
-export interface colorListFilter extends cardFilter<string[][] | undefined, string[] | number> {}
-export interface hybridContentFilter extends cardFilter<string[][], string[]> {}
-export interface hybridFilter extends cardFilter<string[][], string[] | number> {}
-// export interface setFilter extends cardFilter<string[],HCCard.Any> {}
-export interface setFilter extends cardFilter<HCCard.Any, string> {
-  (value1: HCCard.Any, operator: looseOpType, value2: string, includeExtraSets: boolean): boolean;
-}
-export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
-export interface setListFilter extends cardFilter<HCCard.Any, string[]> {
-  (value1: HCCard.Any, operator: looseOpType, value2: string[], includeExtraSets: boolean): boolean;
-}
-export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
-export interface tagFilter extends cardFilter<string[], string> {
-  (
-    value1: string[],
-    operator: looseOpType,
-    value2: string,
-    tag_notes?: Record<string, string>
-  ): boolean;
-}
+export const opToTagged = (op: looseOpType, value: string, invert?: boolean) => {
+  return `${opToTaggedRecord[(invert ? invertOp(op) : op) as opType]} ${value}`;
+};
 /**
  * To use in filters when need to check a function with one value
  * @param op operation to use
@@ -271,6 +240,71 @@ export const equals = <T = any>(value1: T | T[], value2: T | T[]) => {
     return value1 == value2;
   }
 };
+export const invertOptions = ['ignore', 'flip', 'negate'] as const;
+/**
+ * ignore: object ignores the inversion operator
+ *
+ * flip: object inverts the operator before passing it in
+ *
+ * negate: object negates the filter's output; filter requires `invert` to be passed to summary function
+ */
+export type invertOptionType = (typeof invertOptions)[number];
+/**
+ * The first type is the type of the entry. The second type is the type from the search query.
+ */
+export interface anyFilter<T = any, S = any> {
+  (value1: T, operator: looseOpType, value2: S): number | boolean;
+  invertOption: invertOptionType;
+  toSummary: (operator: looseOpType, value: S, invert?: boolean) => string;
+}
+export interface cardFilter<T = any, S = any> extends anyFilter {
+  (value1: T, operator: looseOpType, value2: S): boolean;
+  defaultOp: opType;
+  invertOption: invertOptionType;
+  toSummary: (operator: looseOpType, value: S, invert?: boolean) => string;
+}
+export const dirs = ['asc', 'desc', 'auto'] as const;
+export type dirType = (typeof dirs)[number];
+export const sorts = ['set', 'color', 'manavalue', 'name', 'id', 'number', 'auto'] as const;
+export type sortType = (typeof sorts)[number];
+
+export interface sortFilter extends anyFilter<HCCard.Any, HCCard.Any> {
+  (value1: HCCard.Any, operator: looseOpType, value2: HCCard.Any): number;
+  sort: sortType;
+  dir: dirType;
+}
+
+export interface textFilter extends cardFilter<string, string> {}
+export interface textListFilter extends cardFilter<string[], string> {}
+export interface textRecordFilter extends cardFilter<Record<string, string>, [string, string]> {}
+export interface numFilter extends cardFilter<number, number> {}
+export interface numStringFilter
+  extends cardFilter<number | string | undefined, number | string | undefined> {}
+export interface numStringListFilter
+  extends cardFilter<(number | string | undefined)[], number | string> {}
+export interface colorContentFilter extends cardFilter<string[], string[]> {}
+export interface colorFilter extends cardFilter<string[], string[] | number> {}
+export interface colorContentListFilter extends cardFilter<string[][] | undefined, string[]> {}
+export interface colorListFilter extends cardFilter<string[][] | undefined, string[] | number> {}
+export interface hybridContentFilter extends cardFilter<string[][], string[]> {}
+export interface hybridFilter extends cardFilter<string[][], string[] | number> {}
+// export interface setFilter extends cardFilter<string[],HCCard.Any> {}
+export interface setFilter extends cardFilter<HCCard.Any, string> {
+  (value1: HCCard.Any, operator: looseOpType, value2: string, includeExtraSets: boolean): boolean;
+}
+export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
+export interface setListFilter extends cardFilter<HCCard.Any, string[]> {
+  (value1: HCCard.Any, operator: looseOpType, value2: string[], includeExtraSets: boolean): boolean;
+}
+export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
+export interface tagFilter extends cardFilter<string[], string> {
+  (
+    value1: string[],
+    operator: looseOpType,
+    value2: string,
+    tag_notes?: Record<string, string>
+  ): boolean;
+}
 
 export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
 export type setFilterMaker = (value: string, op: looseOpType, includeExtras: boolean) => SetFilter;
@@ -278,3 +312,4 @@ export type colorFilterMaker = (
   value: string[] | number,
   op: looseOpType
 ) => filterObject<any, string[] | number>;
+export type sortMaker = (sort: sortType, dir: dirType) => sortObject;

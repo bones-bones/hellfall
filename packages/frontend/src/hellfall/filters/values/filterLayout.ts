@@ -2,6 +2,7 @@ import { HCCard, HCLayout, HCLayoutGroup } from '@hellfall/shared/types';
 import {
   cardStringFilter,
   getActualOp,
+  invertOptionType,
   looseOpType,
   opToDont,
   opToNot,
@@ -149,8 +150,9 @@ export const filterCardLayout: cardStringFilter = Object.assign(
     return shareOp(actualOp, value1.layout, toCardLayout[value2]);
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string) => {
       if (!(value in toCardLayout)) {
         return '!';
       }
@@ -180,18 +182,22 @@ export const filterFaceLayout: cardStringFilter = Object.assign(
     );
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    toSummary: (operator: looseOpType, value: string) => {
       if (!(value in toFaceLayout)) {
         return '!';
       }
       const layout = toFaceLayout[value];
       if (Array.isArray(layout)) {
-        return `the cards ${opToDont} have a face with layout ${layout
+        return `the cards ${opToDont(operator)} have a face with layout ${layout
           .map(e => `"${e.replaceAll('_', ' ')}"`)
           .join(' or ')}`;
       } else if (layout) {
-        return `the cards ${opToDont} have a face with layout "${layout.replaceAll('_', ' ')}"`;
+        return `the cards ${opToDont(operator)} have a face with layout "${layout.replaceAll(
+          '_',
+          ' '
+        )}"`;
       } else {
         return '!';
       }
@@ -204,10 +210,11 @@ export const filterAnyLayout: cardStringFilter = Object.assign(
     return filterCardLayout(value1, actualOp, value2) || filterFaceLayout(value1, actualOp, value2);
   },
   {
+    invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
-      const cardSum = filterCardLayout.toSummary(value, operator);
-      const faceSum = filterFaceLayout.toSummary(value, operator);
+    toSummary: (operator: looseOpType, value: string) => {
+      const cardSum = filterCardLayout.toSummary(operator, value);
+      const faceSum = filterFaceLayout.toSummary(operator, value);
       return cardSum[0] != '!' ? cardSum : faceSum;
     },
   }

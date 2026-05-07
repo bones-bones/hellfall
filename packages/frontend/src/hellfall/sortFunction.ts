@@ -1,7 +1,9 @@
 import { allSetsList } from '@hellfall/shared/data/sets';
 import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 // TODO: make it possible to sort by color, then alpha, rather than color, then MV
-// how they can combine: Alpha and ID are mutually exclusive, but none of the others are
+// bucketers (ones that can give equality): set, color, mana value
+// individuals: name, id, number (requires set)
+// options: []
 
 export const sortFunction =
   (sortRule: 'Name' | 'Id' | 'Set/Number' | 'Color' | 'Mana Value', dirRule: 'Asc' | 'Desc') =>

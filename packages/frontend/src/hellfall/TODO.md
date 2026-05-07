@@ -137,3 +137,5 @@ Write a script to transform the database
 - add error handling for search (i.e. if the search term is invalid, tell the user like scryfall does)
 - add search summary
 - add ability to have multiple showcases (Ian in Ixalan, Wizard Who Only Knows Fireball)
+- decide whether to have `-` invert result instead of inverting op
+- figure out if i need more specific extras handling if no sets are selected
