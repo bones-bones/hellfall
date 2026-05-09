@@ -20,10 +20,10 @@ import { HCCard } from '@hellfall/shared/types';
 import { getAllNames } from '../getNames';
 
 export const filterEmpty: textFilter = Object.assign(
-  (value1: string, operator: looseOpType, value2: string) => {
+  (_value1: string, operator: looseOpType, _value2: string) => {
     return operator == '=';
   },
-  { defaultOp: '=' as opType, toSummary: (value: string, operator: looseOpType) => '!' }
+  { defaultOp: '=' as opType, toSummary: (_value: string, _operator: looseOpType) => '!' }
 );
 
 // export const filterInclude: textFilter = Object.assign(
@@ -64,21 +64,20 @@ const textListIncludes = (value1: string[], value2: string) =>
 const textListEquals = (value1: string[], value2: string) =>
   value1.some(text => textEquals(text, value2));
 export const filterTextList: textListFilter = Object.assign(
-  function (this: textListFilter, value1: string[], operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
+  function (value1: string[], operator: looseOpType, value2: string) {
+    const actualOp = getActualOp(filterTextList, operator);
     return includeEqualsOp(actualOp, textListIncludes, textListEquals, value1, value2);
   },
   { defaultOp: '>=' as opType, toSummary: (value: string, operator: looseOpType) => NOPRINT }
 );
 export const filterTag: tagFilter = Object.assign(
   function (
-    this: tagFilter,
     value1: string[],
     operator: looseOpType,
     value2: string,
     tag_notes?: Record<string, string>
   ) {
-    const actualOp = getActualOp(this, operator);
+    const actualOp = getActualOp(filterTag, operator);
     if (value2.endsWith('<')) {
       const tag = value2.slice(0, -1);
       return Boolean(tag_notes && filterTextList(Object.keys(tag_notes), actualOp, tag));
