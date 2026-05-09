@@ -177,7 +177,18 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     split: HCLayout.Split,
     multi: HCLayout.Split,
   };
-
+  const frontIgnoreMultiLayouts: HCLayout[] = [
+    HCLayout.MeldPart,
+    HCLayout.DraftPartner,
+    HCLayout.ReminderOnBack,
+    HCLayout.TokenOnBack,
+    HCLayout.TokenInInset,
+    HCLayout.DungeonOnBack,
+    HCLayout.DungeonInInset,
+    HCLayout.StickersOnBack,
+    HCLayout.Inset,
+    HCLayout.Prepare,
+  ];
   const borderColorTags: Record<string, HCBorderColor> = {
     'white-border': HCBorderColor.White,
     borderless: HCBorderColor.Borderless,
@@ -203,7 +214,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     '1997-token-frame': HCFrame.ClassicToken,
     '2003-token-frame': HCFrame.ModernToken,
     '2015-token-frame': HCFrame.StampToken,
-    '2020-token-frame': HCFrame.NewToken,
+    '2020-token-frame': HCFrame.FullToken,
     'pokemon-frame': HCFrame.Pokemon,
     'yugioh-frame': HCFrame.Yugioh,
     'legends-of-runeterra-frame': HCFrame.LegendsOfRuneterra,
@@ -315,17 +326,23 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           } else if (keys[i] == 'legalities') {
             const formats = entry[i].split(', ');
             const legalities: HCLegalitiesField = {
-              standard: formats.includes('Banned')
+              standard: formats.includes('Not Legal')
+                ? HCLegality.NotLegal
+                : formats.includes('Banned')
                 ? cardObject.set.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
                 : HCLegality.Legal,
-              '4cb': formats.includes('Banned (4CB)')
+              '4cb': formats.includes('Not Legal')
+                ? HCLegality.NotLegal
+                : formats.includes('Banned (4CB)')
                 ? cardObject.set.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
                 : HCLegality.Legal,
-              commander: formats.includes('Banned (Commander)')
+              commander: formats.includes('Not Legal')
+                ? HCLegality.NotLegal
+                : formats.includes('Banned (Commander)')
                 ? cardObject.set.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
@@ -582,6 +599,38 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         ).split(' // ');
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
+    const getFrontLayout = (front: any) => {
+      if (front.types?.some((type: string) => type.toLowerCase() == 'stickers')) {
+        return HCLayout.Stickers;
+      } else if (front.types?.some((type: string) => type.toLowerCase() == 'dungeon')) {
+        return HCLayout.Dungeon;
+      } else if (front.subtypes?.some((type: string) => type.toLowerCase() == 'saga')) {
+        return HCLayout.Saga;
+      } else if (front.subtypes?.some((type: string) => type.toLowerCase() == 'class')) {
+        return HCLayout.Class;
+      } else if (front.subtypes?.some((type: string) => type.toLowerCase() == 'case')) {
+        return HCLayout.Case;
+      } else if (
+        front.tags?.some((type: string) => ['plane', 'phenomenon'].includes(type.toLowerCase()))
+      ) {
+        return HCLayout.Prototype;
+      } else if (front.types?.some((type: string) => type.toLowerCase() == 'plane')) {
+        return HCLayout.Planar;
+      } else if (front.types?.some((type: string) => type.toLowerCase() == 'scheme')) {
+        return HCLayout.Scheme;
+      } else if (front.types?.some((type: string) => type.toLowerCase() == 'vanguard')) {
+        return HCLayout.Vanguard;
+      } else if (front.types?.some((type: string) => type.toLowerCase() == 'battle')) {
+        return HCLayout.Battle;
+      } else if (
+        front.subtypes?.some((subtype: string) =>
+          ['spacecraft', 'watercraft', 'planet'].includes(subtype.toLowerCase())
+        ) &&
+        front.oracle_text.toLowerCase().includes('station')
+      ) {
+        return HCLayout.Station;
+      }
+    };
     cardObject.card_faces.forEach((face, index) => {
       face.name = name.length > 0 ? name.shift() : '';
       const face_type = [
@@ -594,8 +643,15 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
       type_line_list.push(face_type);
 
       // TODO: Expand
-      if (index == 0) {
-        face.layout = HCLayout.Front;
+      // if (index == 0) {
+      //   face.layout = HCLayout.Front;
+      // } else
+
+      const shouldPullLayout =
+        cardObject.layout in multiLayoutToFaceLayout &&
+        !(frontIgnoreMultiLayouts.includes(cardObject.layout) && !index);
+      if (cardObject.layout == 'meld_part') {
+        face.layout = index ? 'meld_result' : 'meld_part';
       } else if (
         'layout' in cardObject &&
         cardObject.layout != 'flip' &&
@@ -612,13 +668,15 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
         cardObject.layout in multiLayoutToFaceLayout
       ) {
         face.layout = 'inset';
-      } else if ('layout' in cardObject && cardObject.layout in multiLayoutToFaceLayout) {
+      } else if ('layout' in cardObject && shouldPullLayout) {
         if (index == 1 && cardObject.layout == 'specialize') {
           face.layout == 'reminder';
         } else {
           face.layout =
             multiLayoutToFaceLayout[cardObject.layout as keyof typeof multiLayoutToFaceLayout];
         }
+      } else if (!index && !face.layout) {
+        face.layout = getFrontLayout(face) || HCLayout.Front;
       } else {
         face.layout = HCLayout.Split;
       }
@@ -692,44 +750,15 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             'layout',
           ].includes(key)
       )) {
-        cardObject[key] = value;
+        if (key == 'frame_effects' && cardObject[key]) {
+          cardObject[key].push(...value);
+        } else {
+          cardObject[key] = value;
+        }
       }
       const { card_faces, ...singleCard } = cardObject;
       if (!('layout' in singleCard)) {
-        if (singleCard.types?.some((type: string) => type.toLowerCase() == 'stickers')) {
-          singleCard.layout = HCLayout.Stickers;
-        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'dungeon')) {
-          singleCard.layout = HCLayout.Dungeon;
-        } else if (singleCard.subtypes?.some((type: string) => type.toLowerCase() == 'saga')) {
-          singleCard.layout = HCLayout.Saga;
-        } else if (singleCard.subtypes?.some((type: string) => type.toLowerCase() == 'class')) {
-          singleCard.layout = HCLayout.Class;
-        } else if (singleCard.subtypes?.some((type: string) => type.toLowerCase() == 'case')) {
-          singleCard.layout = HCLayout.Case;
-        } else if (
-          singleCard.tags?.some((type: string) =>
-            ['plane', 'phenomenon'].includes(type.toLowerCase())
-          )
-        ) {
-          singleCard.layout = HCLayout.Prototype;
-        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'plane')) {
-          singleCard.layout = HCLayout.Planar;
-        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'scheme')) {
-          singleCard.layout = HCLayout.Scheme;
-        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'vanguard')) {
-          singleCard.layout = HCLayout.Vanguard;
-        } else if (singleCard.types?.some((type: string) => type.toLowerCase() == 'battle')) {
-          singleCard.layout = HCLayout.Battle;
-        } else if (
-          singleCard.subtypes?.some((subtype: string) =>
-            ['spacecraft', 'watercraft', 'planet'].includes(subtype.toLowerCase())
-          ) &&
-          singleCard.oracle_text.toLowerCase().includes('station')
-        ) {
-          singleCard.layout = HCLayout.Station;
-        } else {
-          singleCard.layout = HCLayout.Normal;
-        }
+        singleCard.layout = getFrontLayout(singleCard) || HCLayout.Normal;
       }
       const card = singleCard as HCCard.AnySingleFaced;
       setDerivedProps(card);

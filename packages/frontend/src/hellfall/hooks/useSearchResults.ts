@@ -44,21 +44,20 @@ import {
 
 import { sortFunction } from '../sortFunction';
 import { canBeACommander } from '../canBeACommander.ts';
-import { toNumber } from '../inputs/NumberSelector.tsx';
 import {
-  colorCompOp,
-  colorMiscReduce,
-  hybridColorCompOp,
-  hybridIdentityMiscReduce,
-  numCompOp,
-} from '../filters/opComps.ts';
+  filterColorIdentityContentsMisc,
+  filterColorContentsMisc,
+  filterHybridIdentityContentsMisc,
+} from '../filters/values/filterColors.ts';
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling.ts';
 import { CHUNK_SIZE } from '../constants.ts';
-import { extraSetList } from '@hellfall/shared/data/sets.ts';
-import { filterSet } from '../filters/filterSet.ts';
-import { filterText, filterTextList } from '../filters/filterText.ts';
+import { filterSetListBoth, filterSetListCard, filterSetListToken } from '../filters/filterSet.ts';
+import { filterTag, filterText, filterTextList } from '../filters/filterText.ts';
 import { looseOpType, opType } from '../filters/types.ts';
 import { getAllNames } from '../getNames.ts';
+import { filterNumber, filterNumberString } from '../filters/filterNumber.ts';
+import { filterLegality } from '../filters/values/filterLegality.ts';
+import { filterIs } from '../filters/filterIs.ts';
 
 export const useSearchResults = () => {
   const location = useLocation();
@@ -131,8 +130,29 @@ export const useSearchResults = () => {
     return [':', text];
   };
   useEffect(() => {
-    const tempResults = filterSet(cards, searchSet, extraSets, includeExtraSets, searchToken)
+    const tempResults = cards
+      // getFilteredSet(cards, searchSet, extraSets, includeExtraSets, searchToken)
       .filter(entry => {
+        switch (searchToken) {
+          case 'Cards': {
+            if (!filterSetListCard(entry, '=', searchSet.concat(extraSets), includeExtraSets)) {
+              return false;
+            }
+            break;
+          }
+          case 'Tokens': {
+            if (!filterSetListToken(entry, '=', searchSet.concat(extraSets), includeExtraSets)) {
+              return false;
+            }
+            break;
+          }
+          case 'Both': {
+            if (!filterSetListBoth(entry, '=', searchSet.concat(extraSets), includeExtraSets)) {
+              return false;
+            }
+            break;
+          }
+        }
         let usingOr = false;
         let matchesSomeOr = false;
         const filterTextListAllowingOr = (combined: string[], searchTerm: string) => {
@@ -150,11 +170,54 @@ export const useSearchResults = () => {
             return filterTextList(combined, split[0], split[1]);
           }
         };
+        // const tagMatches = (searchTerm: string) => {
+        //   if (searchTerm.startsWith('~')) {
+        //     if (!usingOr) {
+        //       usingOr = true;
+        //     }
+        //     const split = splitOp(searchTerm.slice(1));
+        //     if (filterTextList(combined, split[0], split[1])) {
+        //       matchesSomeOr = true;
+        //     }
+        //     return true;
+        //   } else {
+        //     const split = splitOp(searchTerm);
+        //     return filterTextList(combined, split[0], split[1]);
+        //   }
+        // };
         const everySearchTermMatchesListAllowingOr = (
           combined: string[],
           searchTerms: string[]
         ) => {
           return searchTerms.every(searchTerm => filterTextListAllowingOr(combined, searchTerm));
+        };
+        const filterTagListAllowingOr = (
+          tags: string[],
+          searchTerm: string,
+          tag_notes: Record<string, string> | undefined
+        ) => {
+          if (searchTerm.startsWith('~')) {
+            if (!usingOr) {
+              usingOr = true;
+            }
+            const split = splitOp(searchTerm.slice(1));
+            if (filterTag(tags, split[0], split[1], tag_notes)) {
+              matchesSomeOr = true;
+            }
+            return true;
+          } else {
+            const split = splitOp(searchTerm);
+            return filterTag(tags, split[0], split[1], tag_notes);
+          }
+        };
+        const everyTagMatches = (
+          tags: string[],
+          searchTerms: string[],
+          tag_notes: Record<string, string> | undefined
+        ) => {
+          return searchTerms.every(searchTerm =>
+            filterTagListAllowingOr(tags, searchTerm, tag_notes)
+          );
         };
         // TODO: decide if this should use <= instead of =
         if (idSearch !== '' && !filterText(entry.id, '=', idSearch)) {
@@ -215,130 +278,89 @@ export const useSearchResults = () => {
           }
         }
 
-        // todo: rework tag search to line up with others
-        if (
-          tags.length > 0 &&
-          !tags.every(tag => {
-            if (tag.startsWith('!')) {
-              if (tag.endsWith('<')) {
-                return !(entry.tag_notes && tag.slice(1, -1) in entry.tag_notes);
-              }
-              if (tag.endsWith('>') && tag.includes('<')) {
-                const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
-                return !(entry.tag_notes && textEquals(entry.tag_notes[subtag], note));
-              }
-              return !entry.tags?.includes(tag.slice(1));
-            } else if (tag.startsWith('~')) {
-              if (!usingOr) {
-                usingOr = true;
-              }
-              if (tag.endsWith('<')) {
-                if (entry.tag_notes && tag.slice(1, -1) in entry.tag_notes) {
-                  matchesSomeOr = true;
-                }
-              } else if (tag.endsWith('>') && tag.includes('<')) {
-                const [subtag, note] = [tag.split('<')[0].slice(1), tag.split('<')[1].slice(0, -1)];
-                if (entry.tag_notes && textEquals(entry.tag_notes[subtag], note)) {
-                  matchesSomeOr = true;
-                }
-              } else {
-                if (entry.tags?.includes(tag.slice(1))) {
-                  matchesSomeOr = true;
-                }
-              }
-              return true;
-            } else {
-              if (tag.endsWith('<')) {
-                return entry.tag_notes && tag.slice(0, -1) in entry.tag_notes;
-              }
-              if (tag.endsWith('>') && tag.includes('<')) {
-                const [subtag, note] = [tag.split('<')[0], tag.split('<')[1].slice(0, -1)];
-                return entry.tag_notes && textEquals(entry.tag_notes[subtag], note);
-              }
-              return entry.tags?.includes(tag);
-            }
-          })
-        ) {
-          return false;
-        }
-
-        if (isCommander) {
-          if (!canBeACommander(entry)) {
+        if (tags) {
+          if (!everyTagMatches(entry.tags ?? [], tags, entry.tag_notes)) {
             return false;
           }
         }
-        if (standardLegality && entry.legalities.standard != standardLegality) {
+
+        if (isCommander) {
+          if (!filterIs(entry, '=', 'commander')) {
+            return false;
+          }
+        }
+        if (standardLegality && !filterLegality(entry.legalities.standard, '=', standardLegality)) {
           return false;
         }
-        if (fourcbLegality && entry.legalities['4cb'] != fourcbLegality) {
+        if (fourcbLegality && !filterLegality(entry.legalities['4cb'], '=', fourcbLegality)) {
           return false;
         }
-        if (commanderLegality && entry.legalities.commander != commanderLegality) {
+        if (
+          commanderLegality &&
+          !filterLegality(entry.legalities.commander, '=', commanderLegality)
+        ) {
           return false;
         }
         if (collectorNumber) {
-          if (!numCompOp(entry.collector_number, collectorNumber[1], collectorNumber[0])) {
+          if (!filterNumberString(entry.collector_number, collectorNumber[1], collectorNumber[0])) {
             return false;
           }
         }
         if (manaValue) {
-          if (!numCompOp(entry.mana_value, manaValue[1], manaValue[0])) {
+          if (!filterNumberString(entry.mana_value, manaValue[1], manaValue[0])) {
             return false;
           }
         }
         if (power) {
-          if (!numCompOp(entry.toFaces()[0].power, power[1], power[0])) {
+          if (!filterNumberString(entry.toFaces()[0].power, power[1], power[0])) {
             return false;
           }
         }
         if (toughness) {
-          if (!numCompOp(entry.toFaces()[0].toughness, toughness[1], toughness[0])) {
+          if (!filterNumberString(entry.toFaces()[0].toughness, toughness[1], toughness[0])) {
             return false;
           }
         }
         if (loyalty) {
-          if (!numCompOp(entry.toFaces()[0].loyalty, loyalty[1], loyalty[0])) {
+          if (!filterNumberString(entry.toFaces()[0].loyalty, loyalty[1], loyalty[0])) {
             return false;
           }
         }
         if (defense) {
-          if (!numCompOp(entry.toFaces()[0].defense, defense[1], defense[0])) {
+          if (!filterNumberString(entry.toFaces()[0].defense, defense[1], defense[0])) {
             return false;
           }
         }
 
         if (colorNumber) {
-          if (!numCompOp(entry.colors.length, colorNumber[1], colorNumber[0])) {
+          if (!filterNumber(entry.colors.length, colorNumber[1], colorNumber[0])) {
             return false;
           }
         }
         if (colorIdentityNumber) {
           if (
-            !numCompOp(entry.color_identity.length, colorIdentityNumber[1], colorIdentityNumber[0])
+            !filterNumber(
+              entry.color_identity.length,
+              colorIdentityNumber[1],
+              colorIdentityNumber[0]
+            )
           ) {
             return false;
           }
         }
 
         // TODO: handle split cards/adventures/transforms/flips better
-        if (searchColors.length > 0) {
-          if (!entry.colors) {
-            console.log('Card id:', entry.id, 'had a null color.');
-            if (['=', '>=', '>'].includes(colorComparison)) {
-              return false;
-            }
-          } else {
-            if (!colorCompOp(colorMiscReduce(entry.colors), colorComparison, searchColors)) {
-              return false;
-            }
+        if (searchColors.length) {
+          if (!filterColorContentsMisc(entry.colors, colorComparison, searchColors)) {
+            return false;
           }
         }
 
-        if (searchColorIdentities.length > 0) {
+        if (searchColorIdentities.length) {
           if (hybridIdentityRule) {
             if (
-              !hybridColorCompOp(
-                hybridIdentityMiscReduce(entry.color_identity_hybrid),
+              !filterHybridIdentityContentsMisc(
+                entry.color_identity_hybrid,
                 colorIdentityComparison,
                 searchColorIdentities
               )
@@ -346,21 +368,14 @@ export const useSearchResults = () => {
               return false;
             }
           } else {
-            if (!entry.color_identity) {
-              console.log('Card id:', entry.id, 'had a null color identity.');
-              if (['=', '>=', '>'].includes(colorIdentityComparison)) {
-                return false;
-              }
-            } else {
-              if (
-                !colorCompOp(
-                  colorMiscReduce(entry.color_identity),
-                  colorIdentityComparison,
-                  searchColorIdentities
-                )
-              ) {
-                return false;
-              }
+            if (
+              !filterColorIdentityContentsMisc(
+                entry.color_identity,
+                colorIdentityComparison,
+                searchColorIdentities
+              )
+            ) {
+              return false;
             }
           }
         }

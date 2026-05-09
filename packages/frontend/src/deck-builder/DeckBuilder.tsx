@@ -94,7 +94,7 @@ export const DeckBuilder = () => {
         const [count, rest] = toCardArr(name);
         if (rest in basics) {
           const card = {
-            image: [basics[rest]],
+            image: basics[rest],
             name: rest,
           } as unknown as HCCard.Any;
           return Array(count).fill(card);
@@ -103,9 +103,8 @@ export const DeckBuilder = () => {
           const card = id
             ? cards.find(card => card.id == id)
             : ({
-                image: [
+                image:
                   'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
-                ],
                 name: name + ' - not found',
               } as unknown as HCCard.Any);
           return Array(count).fill(card);
