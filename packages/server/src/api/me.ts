@@ -44,11 +44,14 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
   }
   console.log(payload);
 
-  let guild: { nick: string | null; roles: string[]; joined_at: string | null } | null = null;
+  let guild: { nick: string | null; roles: string[]; } | null = null;
   const guildId = env.DISCORD_GUILD_ID;
   const discordAccessToken = payload.discord_access_token;
   if (guildId && discordAccessToken) {
-    guild = await getUserAsGuildMember(discordAccessToken, guildId);
+    const gm = await getUserAsGuildMember(discordAccessToken, guildId);
+    if (gm.kind === "member") {
+      guild = { nick: gm.nick, roles: gm.roles, };
+    }
   }
   console.log(guild);
 

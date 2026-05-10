@@ -40,11 +40,9 @@ export const cardTagsHandler = async (
     return;
   }
 
-  const auth = await requireTagAuth(req, res);
-  if (!auth) return;
-
   const docRef = collection.doc(cardId);
 
+  // Public read so the catalog can merge overrides without Discord role checks. Writes still use requireTagAuth.
   if (req.method === "GET") {
     const snap = await docRef.get();
     const data = snap.data() as CardTagOverrides | undefined;
@@ -54,6 +52,9 @@ export const cardTagsHandler = async (
     res.end(JSON.stringify({ added, removed }));
     return;
   }
+
+  const auth = await requireTagAuth(req, res);
+  if (!auth) return;
 
   if (req.method === "POST") {
     const body = (await readJsonBody(req)) as { tag?: string };

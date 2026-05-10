@@ -42,6 +42,11 @@ export const env = {
   get DISCORD_GUILD_ID(): string | undefined {
     return process.env.DISCORD_GUILD_ID;
   },
+  /** Override contributor role snowflake for tag APIs (defaults to constant in discord/constants.ts). */
+  get DISCORD_DATABASE_CONTRIBUTOR_ROLE_ID(): string | undefined {
+    const v = process.env.DISCORD_TAG_ROLE_ID?.trim();
+    return v || undefined;
+  },
   /** Role ID required for /api/tag. Set when ready. */
   get DISCORD_TAG_ROLE_ID(): string | undefined {
     return process.env.DISCORD_TAG_ROLE_ID;

@@ -45,14 +45,21 @@ export async function requireTagAuth(
     return null;
   }
 
+  const candidateRoleId = env.DISCORD_TAG_ROLE_ID ?? roleId;
+
   const guild = await getUserAsGuildMember(discordAccessToken, guildId);
-  if (!guild) {
+  if (guild.kind === "oauth_invalid") {
+    res.statusCode = 401;
+    res.end(JSON.stringify({ ok: false, reason: "discord_oauth_expired" }));
+    return null;
+  }
+  if (guild.kind === "not_member") {
     res.statusCode = 403;
     res.end(JSON.stringify({ ok: false, reason: "not_in_guild" }));
     return null;
   }
 
-  if (!guild.roles.includes(roleId)) {
+  if (!guild.roles.includes(candidateRoleId)) {
     res.statusCode = 403;
     res.end(JSON.stringify({ ok: false, reason: "missing_role" }));
     return null;

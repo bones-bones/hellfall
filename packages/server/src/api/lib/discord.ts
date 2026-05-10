@@ -59,27 +59,35 @@ export async function getDiscordUser(accessToken: string) {
   return res.json() as Promise<DiscordUser>;
 }
 
-/** Requires OAuth scope guilds.members.read. Returns current user's member info for the guild. */
-export async function getUserAsGuildMember(
-  accessToken: string,
-  guildId: string,
-): Promise<{ nick: string | null; roles: string[]; joined_at: string | null } | null> {
+/** Result of looking up the current user in a guild (OAuth token is short-lived; JWT session is longer). */
+export type GuildMemberLookup =
+  | { kind: "member"; nick: string | null; roles: string[]; }
+  | { kind: "not_member" }
+  /** Discord rejected the bearer token (expired/revoked) — user should log in again. */
+  | { kind: "oauth_invalid" };
+
+/** Requires OAuth scope guilds.members.read. */
+export async function getUserAsGuildMember(accessToken: string, guildId: string): Promise<GuildMemberLookup> {
   const res = await fetch(`${DISCORD_API}/users/@me/guilds/${guildId}/member`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
-
-  if (res.status === 404) { return null; }
+  if (res.status === 404) return { kind: "not_member" };
+  if (res.status === 401 || res.status === 403) {
+    const text = await res.text();
+    console.error("Discord guild member: OAuth token invalid:", res.status, text);
+    return { kind: "oauth_invalid" };
+  }
   if (!res.ok) {
     const text = await res.text();
     console.error("Discord guild member fetch failed:", res.status, text);
-    return null;
+    return { kind: "not_member" };
   }
-  const data = (await res.json()) as { nick?: string | null; roles: string[]; joined_at?: string | null };
+  const data = (await res.json()) as { nick?: string | null; roles: string[] };
   return {
+    kind: "member",
     nick: data.nick ?? null,
     roles: data.roles ?? [],
-    joined_at: data.joined_at ?? null,
   };
 }
 

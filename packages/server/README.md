@@ -11,7 +11,7 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses 
 | `/api/me` | GET | Returns current user from session cookie (or `{ user: null }`) |
 | `/api/logout` | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL` |
 | `/api/tag` | GET | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags |
-| `/api/cards/:cardId/tags` | GET | Tag overrides for a card (added/removed). Requires auth + role. Uses Firestore default DB, collection `card_tags`. |
+| `/api/cards/:cardId/tags` | GET | Tag overrides for a card (added/removed). Public (no auth). Uses Firestore default DB, collection `card_tags`. |
 | `/api/cards/:cardId/tags` | POST | Add a tag (body: `{ tag: string }`). Requires auth + role. |
 | `/api/cards/:cardId/tags/:tag` | DELETE | Remove a tag. Requires auth + role. |
 | `/api/watchwolf` | GET | Returns WatchWolfWar card standings from Firestore |
