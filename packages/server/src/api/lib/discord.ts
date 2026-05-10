@@ -1,5 +1,27 @@
 const DISCORD_API = "https://discord.com/api";
 
+/** Logs every outbound Discord REST call for diagnosing rate limits. */
+async function discordApiFetch(url: string, init?: RequestInit): Promise<Response> {
+  const method = (init?.method ?? "GET").toUpperCase();
+  const pathForLog = url.startsWith(DISCORD_API) ? url.slice(DISCORD_API.length) : url;
+  const start = Date.now();
+  const res = await fetch(url, init);
+  const ms = Date.now() - start;
+  const remaining = res.headers.get("x-ratelimit-remaining");
+  const limit = res.headers.get("x-ratelimit-limit");
+  const resetAfter = res.headers.get("x-ratelimit-reset-after");
+  const scope = res.headers.get("x-ratelimit-scope");
+  const retryAfter = res.headers.get("retry-after");
+  const parts = [`[discord-api] ${method} ${pathForLog} -> ${res.status} ${ms}ms`];
+  if (limit != null) parts.push(`limit=${limit}`);
+  if (remaining != null) parts.push(`remaining=${remaining}`);
+  if (resetAfter != null) parts.push(`resetAfter=${resetAfter}s`);
+  if (scope != null) parts.push(`scope=${scope}`);
+  if (retryAfter != null) parts.push(`retryAfter=${retryAfter}`);
+  console.log(parts.join(" "));
+  return res;
+}
+
 export interface DiscordTokenResponse {
   access_token: string;
   token_type: string;
@@ -32,7 +54,7 @@ export async function exchangeCodeForToken(
     redirect_uri: redirectUri,
   });
 
-  const res = await fetch(`${DISCORD_API}/oauth2/token`, {
+  const res = await discordApiFetch(`${DISCORD_API}/oauth2/token`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: body.toString(),
@@ -47,7 +69,7 @@ export async function exchangeCodeForToken(
 }
 
 export async function getDiscordUser(accessToken: string) {
-  const res = await fetch(`${DISCORD_API}/users/@me`, {
+  const res = await discordApiFetch(`${DISCORD_API}/users/@me`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
@@ -68,8 +90,8 @@ export type GuildMemberLookup =
 
 /** Requires OAuth scope guilds.members.read. */
 export async function getUserAsGuildMember(accessToken: string, guildId: string): Promise<GuildMemberLookup> {
-  const res = await fetch(`${DISCORD_API}/users/@me/guilds/${guildId}/member`, {
-    headers: { Authorization: `Bearer ${accessToken}` },
+  const res = await discordApiFetch(`${DISCORD_API}/users/@me/guilds/${guildId}/member`, {
+    headers: { authorization: `Bearer ${accessToken}` },
   });
 
   if (res.status === 404) return { kind: "not_member" };

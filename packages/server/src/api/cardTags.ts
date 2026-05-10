@@ -17,13 +17,6 @@ async function getOrSeedCardTagsDoc(docRef: DocumentReference): Promise<Document
   return snap;
 }
 
-function isFirestoreNotFound(err: unknown): boolean {
-  if (typeof err !== "object" || err === null) return false;
-  const code = (err as { code?: unknown }).code;
-  if (code === 5 || code === "NOT_FOUND") return true;
-  const msg = err instanceof Error ? err.message : String(err);
-  return /NOT_FOUND/i.test(msg);
-}
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -143,11 +136,7 @@ export const cardTagsHandler = async (
     res.end();
   } catch (err) {
     console.error("cardTagsHandler", err);
-    if (isFirestoreNotFound(err)) {
-      console.error(
-        "card_tags Firestore NOT_FOUND: check database id and collection env (defaults: hellscube / cards)."
-      );
-    }
+
     if (res.writableEnded) return;
     res.statusCode = 500;
     res.end(JSON.stringify({ ok: false, reason: "server_error" }));
