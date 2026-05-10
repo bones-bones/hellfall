@@ -1,5 +1,5 @@
 # Deploy hellfall server to Google Cloud Run.
-# Trigger: push to main when packages/server/ changes, or manual run.
+# Trigger: push to main when server, this workflow, or deploy env changes; or manual run.
 #
 # Required GitHub Secrets:
 #   GCP_PROJECT_ID  - Google Cloud project ID
@@ -8,6 +8,8 @@
 #
 # Optional (set in Cloud Run console instead if you prefer):
 #   DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, JWT_SECRET, FRONTEND_URL, AUTH_SERVER_URL
+#
+# Region and image/repo name live in .github/env/deploy-server-cloudrun.env
 
 name: Deploy server to Cloud Run
 
@@ -16,11 +18,9 @@ on:
     branches: [main]
     paths:
       - 'packages/server/**'
+      - '.github/env/deploy-server-cloudrun.env'
+      - '.github/workflows/deploy-server-cloudrun.yml'
   workflow_dispatch:
-
-env:
-  GCP_REGION: us-central1
-  IMAGE_NAME: hellfall-server
 
 jobs:
   deploy:
@@ -32,6 +32,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Load deploy env
+        run: |
+          grep -v '^[[:space:]]*#' .github/env/deploy-server-cloudrun.env | grep -v '^[[:space:]]*$' >> "$GITHUB_ENV"
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2

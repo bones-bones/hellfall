@@ -4,6 +4,8 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import webpack from "webpack";
+import dotenv from "dotenv";
+import dotenvExpand from "dotenv-expand";
 import resolve from "resolve";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
@@ -31,6 +33,42 @@ import modulesModule from "../../config/modules.js";
 const paths = pathsModule.default || pathsModule;
 const modules = modulesModule.default || modulesModule;
 
+/** Load CRA-style env files into process.env (used by DefinePlugin below). */
+function loadClientEnvFiles(basePath) {
+  if (!basePath) {
+    return;
+  }
+  const nodeEnv = process.env.NODE_ENV || "development";
+  const files = [
+    basePath,
+    `${basePath}.local`,
+    `${basePath}.${nodeEnv}`,
+    `${basePath}.${nodeEnv}.local`,
+  ];
+  for (const file of files) {
+    if (fs.existsSync(file)) {
+      const cfg = dotenv.config({ path: file });
+      if (cfg.parsed) {
+        dotenvExpand(cfg);
+      }
+    }
+  }
+}
+
+/** Env keys exposed to browser bundles (Webpack 5 does not define process). */
+function getBrowserProcessEnv() {
+  const env = {
+    NODE_ENV: process.env.NODE_ENV || "development",
+    PUBLIC_URL: process.env.PUBLIC_URL || "",
+  };
+  for (const key of Object.keys(process.env)) {
+    if (key.startsWith("REACT_APP_")) {
+      env[key] = process.env[key];
+    }
+  }
+  return env;
+}
+
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
 
@@ -49,6 +87,11 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 export default function (webpackEnv) {
   const isEnvDevelopment = process.env.NODE_ENV === "development";
   const isEnvProduction = process.env.NODE_ENV === "production";
+
+  // paths.dotenv is cwd-relative (packages/frontend/.env when `yarn workspace` runs the script).
+  // Also load repo-root .env so REACT_APP_* can live next to the workspace root package.json.
+  loadClientEnvFiles(paths.dotenv);
+  loadClientEnvFiles(path.join(workspaceRoot, ".env"));
 
   // Variable used for enabling profiling in Production
   // passed into alias object. Uses a flag if passed into the build command
@@ -287,6 +330,9 @@ export default function (webpackEnv) {
       ],
     },
     plugins: [
+      new webpack.DefinePlugin({
+        "process.env": JSON.stringify(getBrowserProcessEnv()),
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin({
         filename: "index.html",

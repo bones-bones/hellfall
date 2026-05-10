@@ -11,30 +11,47 @@ export const Header = () => {
         <StyledHeading size="medium">{" > it's hellfall"}</StyledHeading>
         <NavRow>
           <Navigation>
-            <Link to={'/'}>search</Link>,{' '}
-            <Link to={'/card/random'}>random</Link>,{' '}
-            <Link to={'/draft'}>draft</Link>,{' '}
-            <Link to={'/deck-builder'}>deck/cube builder</Link>,{' '}
-            <Link to={'/hellscubes'}>cube resources</Link>,{' '}
+            <Link to={'/'}>search</Link>
+            <NavDivider>|</NavDivider>
+            <Link to={'/card/random'}>random</Link>
+            <NavDivider>|</NavDivider>
+            <Link to={'/draft'}>draft</Link>
+            <NavDivider>|</NavDivider>
+            <Link to={'/deck-builder'}>deck/cube builder</Link>
+            <NavDivider>|</NavDivider>
+            <Link to={'/hellscubes'}>cube resources</Link>
+            <NavDivider>|</NavDivider>
             <Link to={'https://discord.com/channels/631288872814247966/1237418389480407061'}>
               rules
             </Link>
-            ,{' '}
-            <Link to={'/land-box'}>land box</Link>,{' '}
-            <Link to={'/decks'}>constructed</Link>, <Link to={'/Watchwolfwar'}>WatchWolfWar</Link>,{' '}
-            <Link to={'https://discord.gg/EWFcAnVdkX'}>discord</Link>,{' '}
+            <NavDivider>|</NavDivider>
+            <Link to={'/land-box'}>land box</Link>
+            <NavDivider>|</NavDivider>
+            <Link to={'/decks'}>constructed</Link>
+            <NavDivider>|</NavDivider>
+            <Link to={'/Watchwolfwar'}>WatchWolfWar</Link>
+            <NavDivider>|</NavDivider>
+            <Link to={'https://discord.gg/EWFcAnVdkX'}>discord</Link>
+            <NavDivider>|</NavDivider>
             <Link to={'https://www.reddit.com/r/HellsCube/'}>reddit</Link>
+            {!user ? (
+              <>
+                <NavDivider>|</NavDivider>
+                {loginUrl ? (
+                  <a href={loginUrl}>login</a>
+                ) : (
+                  <Link to="/login">login</Link>
+                )}
+              </>
+            ) : null}
           </Navigation>
           {user && logoutUrl ? (
             <AuthBlock>
               <span title={user.email ?? undefined} data-logged-in>
                 {user.username}
               </span>
-              , <a href={logoutUrl}>logout</a>
-            </AuthBlock>
-          ) : loginUrl ? (
-            <AuthBlock>
-              <a href={loginUrl}>login</a>
+              <NavDivider>|</NavDivider>
+              <a href={logoutUrl}>logout</a>
             </AuthBlock>
           ) : null}
         </NavRow>
@@ -64,6 +81,7 @@ const NavRow = styled('div')({
   justifyContent: 'space-between',
   display: 'flex',
   width: '100%',
+  fontWeight: 'normal',
 });
 const Navigation = styled('nav')({
   display: 'flex',
@@ -74,3 +92,7 @@ const Navigation = styled('nav')({
   paddingLeft: '10px',
 });
 const AuthBlock = styled('span')({ paddingRight: '10px' });
+
+const NavDivider = styled('span')({
+  padding: '0 2px',
+});
