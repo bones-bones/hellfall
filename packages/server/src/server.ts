@@ -79,11 +79,15 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
     await loader(req as HandlerRequest, res as HandlerResponse);
   } catch (err) {
     console.error(err);
-    if (!res.headersSent) {
+    if (res.writableEnded) return;
+    try {
       const headers = withCors({ "Content-Type": "application/json" }, req);
       Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
       res.statusCode = 500;
       res.end(JSON.stringify({ error: "Internal server error" }));
+    } catch (sendErr) {
+      console.error("failed to send 500 response", sendErr);
+      res.destroy();
     }
   }
 }).listen(PORT, () => {

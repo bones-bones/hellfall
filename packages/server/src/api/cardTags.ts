@@ -34,76 +34,99 @@ export const cardTagsHandler = async (
     return;
   }
 
-  if (!cardId || cardId.length > 200) {
-    res.statusCode = 400;
-    res.end(JSON.stringify({ ok: false, reason: "invalid_card_id" }));
-    return;
-  }
-
-  const docRef = collection.doc(cardId);
-
-  // Public read so the catalog can merge overrides without Discord role checks. Writes still use requireTagAuth.
-  if (req.method === "GET") {
-    const snap = await docRef.get();
-    const data = snap.data() as CardTagOverrides | undefined;
-    const added = Array.isArray(data?.added) ? data.added : [];
-    const removed = Array.isArray(data?.removed) ? data.removed : [];
-    res.statusCode = 200;
-    res.end(JSON.stringify({ added, removed }));
-    return;
-  }
-
-  const auth = await requireTagAuth(req, res);
-  if (!auth) return;
-
-  if (req.method === "POST") {
-    const body = (await readJsonBody(req)) as { tag?: string };
-    const tag = body.tag != null ? String(body.tag) : "";
-    const norm = normalizeTag(tag);
-    if (!norm) {
+  try {
+    if (!cardId || cardId.length > 200) {
       res.statusCode = 400;
-      res.end(JSON.stringify({ ok: false, reason: "tag_required" }));
+      res.end(JSON.stringify({ ok: false, reason: "invalid_card_id" }));
       return;
     }
-    const snap = await docRef.get();
-    const data = snap.data() as CardTagOverrides | undefined;
-    const added = Array.isArray(data?.added) ? [...data.added] : [];
-    const removed = Array.isArray(data?.removed) ? [...data.removed] : [];
-    if (removed.includes(norm)) {
-      removed.splice(removed.indexOf(norm), 1);
-    } else if (!added.includes(norm)) {
-      added.push(norm);
-    }
-    await docRef.set({ added, removed });
-    res.statusCode = 200;
-    res.end(JSON.stringify({ ok: true, added, removed }));
-    return;
-  }
 
-  if (req.method === "DELETE") {
-    const tag = tagFromPath != null ? decodeURIComponent(tagFromPath) : "";
-    const norm = normalizeTag(tag);
-    if (!norm) {
-      res.statusCode = 400;
-      res.end(JSON.stringify({ ok: false, reason: "tag_required" }));
+    const docRef = collection.doc(cardId);
+
+    // Public read so the catalog can merge overrides without Discord role checks. Writes still use requireTagAuth.
+    if (req.method === "GET") {
+      const snap = await docRef.get();
+      const data = snap.data() as CardTagOverrides | undefined;
+      const added = Array.isArray(data?.added) ? data.added.map(String) : [];
+      const removed = Array.isArray(data?.removed) ? data.removed.map(String) : [];
+      const payload = { added, removed };
+      let body: string;
+      try {
+        body = JSON.stringify(payload);
+      } catch {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, reason: "invalid_stored_data" }));
+        return;
+      }
+      res.statusCode = 200;
+      res.end(body);
       return;
     }
-    const snap = await docRef.get();
-    const data = snap.data() as CardTagOverrides | undefined;
-    let added = Array.isArray(data?.added) ? [...data.added] : [];
-    let removed = Array.isArray(data?.removed) ? [...data.removed] : [];
-    if (added.includes(norm)) {
-      added = added.filter(t => t !== norm);
-    } else {
-      removed.push(norm);
-    }
-    await docRef.set({ added, removed });
-    res.statusCode = 200;
-    res.end(JSON.stringify({ ok: true, added, removed }));
-    return;
-  }
 
-  res.statusCode = 405;
-  res.setHeader("Allow", "GET, POST, DELETE");
-  res.end();
+    const auth = await requireTagAuth(req, res);
+    if (!auth) return;
+
+    if (req.method === "POST") {
+      let body: { tag?: string };
+      try {
+        body = (await readJsonBody(req)) as { tag?: string };
+      } catch {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, reason: "invalid_json" }));
+        return;
+      }
+      const tag = body.tag != null ? String(body.tag) : "";
+      const norm = normalizeTag(tag);
+      if (!norm) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, reason: "tag_required" }));
+        return;
+      }
+      const snap = await docRef.get();
+      const data = snap.data() as CardTagOverrides | undefined;
+      const added = Array.isArray(data?.added) ? [...data.added] : [];
+      const removed = Array.isArray(data?.removed) ? [...data.removed] : [];
+      if (removed.includes(norm)) {
+        removed.splice(removed.indexOf(norm), 1);
+      } else if (!added.includes(norm)) {
+        added.push(norm);
+      }
+      await docRef.set({ added, removed });
+      res.statusCode = 200;
+      res.end(JSON.stringify({ ok: true, added, removed }));
+      return;
+    }
+
+    if (req.method === "DELETE") {
+      const tag = tagFromPath != null ? decodeURIComponent(tagFromPath) : "";
+      const norm = normalizeTag(tag);
+      if (!norm) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, reason: "tag_required" }));
+        return;
+      }
+      const snap = await docRef.get();
+      const data = snap.data() as CardTagOverrides | undefined;
+      let added = Array.isArray(data?.added) ? [...data.added] : [];
+      let removed = Array.isArray(data?.removed) ? [...data.removed] : [];
+      if (added.includes(norm)) {
+        added = added.filter(t => t !== norm);
+      } else {
+        removed.push(norm);
+      }
+      await docRef.set({ added, removed });
+      res.statusCode = 200;
+      res.end(JSON.stringify({ ok: true, added, removed }));
+      return;
+    }
+
+    res.statusCode = 405;
+    res.setHeader("Allow", "GET, POST, DELETE");
+    res.end();
+  } catch (err) {
+    console.error("cardTagsHandler", err);
+    if (res.writableEnded) return;
+    res.statusCode = 500;
+    res.end(JSON.stringify({ ok: false, reason: "server_error" }));
+  }
 };
