@@ -9,8 +9,9 @@ import { SingleCard } from './hellfall/card/SingleCard.tsx';
 import { Header } from './header';
 import { Breakdown } from './breakdown/Breakdown.tsx';
 import { Decks } from './decks/Decks.tsx';
-import { Watchwolfwar } from './watchWolf/WatchWolfWar.tsx';
+import { WatchwolfWar } from './watchWolf/WatchWolfWar.tsx';
 import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
+import { Login } from './auth/Login.tsx';
 import { useNameToId, useIsId } from './hellfall/hooks/useNameToId.ts';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 import { getBasePath } from './basePath.ts';
@@ -67,7 +68,8 @@ const ApplicationRoutes = () => {
       element: <CardRoute />,
     },
     { path: '/breakdown', element: <Breakdown /> },
-    { path: '/Watchwolfwar', element: <Watchwolfwar /> },
+    { path: '/login', element: <Login /> },
+    { path: '/Watchwolfwar', element: <WatchwolfWar /> },
     { path: '/Watchwolfresults', element: <Watchwolfresults /> },
   ]);
 };

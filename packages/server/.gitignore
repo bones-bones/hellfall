@@ -1,0 +1,7 @@
+node_modules
+.env
+.env.local
+dist
+*.log
+# Local copy of setup notes (template is google-cloud-setup.example.md)
+google-cloud-setup.md
