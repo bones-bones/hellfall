@@ -72,4 +72,4 @@ The server can be run in Docker and deployed to Google Cloud Run (see [google-cl
 - **Current user:** `fetch(`${AUTH_SERVER_URL}/api/me`, { credentials: 'include' })` → `{ user: { id, username, avatar, email } }` or `{ user: null }`.
 - **Logout:** Navigate or `fetch` `{AUTH_SERVER_URL}/api/logout` (with credentials) or open in same tab; user is redirected after cookie is cleared.
 
-Session cookie is `HttpOnly`, `SameSite=Lax`, and set on the auth server’s domain; the browser sends it only when the frontend calls the auth server with `credentials: 'include'`. CORS is set to allow `FRONTEND_URL`’s origin with credentials.
+Session cookie is `HttpOnly`, `SameSite=Lax`, and set on the auth server’s domain; the browser sends it only when the frontend calls the auth server with `credentials: 'include'`. CORS allows `FRONTEND_URL`’s origin, fixed production origins for skeleton.club (`hellfall` + `api`), and reflected localhost HTTP origins for local dev (see `src/api/lib/cors.ts`).
