@@ -1,7 +1,7 @@
 import { env } from "./lib/env.js";
 import { verifySessionToken } from "./lib/jwt.js";
 import { withCors } from "./lib/cors.js";
-import { getUserAsGuildMember } from "./lib/discord.js";
+import { getUserAsGuildMember } from "./lib/discord/discord.js";
 import type { HandlerRequest, HandlerResponse } from "./lib/types.js";
 
 function getCookie(req: HandlerRequest, name: string): string | null {
@@ -42,7 +42,6 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
     res.end(JSON.stringify({ user: null }));
     return;
   }
-  console.log(payload);
 
   let guild: { nick: string | null; roles: string[]; } | null = null;
   const guildId = env.DISCORD_GUILD_ID;

@@ -1,7 +1,7 @@
 import type { HandlerRequest, HandlerResponse } from "./types.js";
 import { env } from "./env.js";
 import { verifySessionToken } from "./jwt.js";
-import { getUserAsGuildMember } from "./discord.js";
+import { getUserAsGuildMember } from "./discord/discord.js";
 import { DATABASE_CONTRIBUTOR } from "../discord/constants.js";
 
 function getCookie(req: HandlerRequest, name: string): string | null {

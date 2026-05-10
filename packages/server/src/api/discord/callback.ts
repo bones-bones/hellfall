@@ -1,4 +1,4 @@
-import { exchangeCodeForToken, getDiscordUser } from "../lib/discord.js";
+import { exchangeCodeForToken, getDiscordUser } from "../lib/discord/discord.js";
 import { env } from "../lib/env.js";
 import { createSessionToken } from "../lib/jwt.js";
 import { withCors } from "../lib/cors.js";

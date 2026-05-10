@@ -13,8 +13,8 @@ async function discordApiFetch(url: string, init?: RequestInit): Promise<Respons
   const scope = res.headers.get("x-ratelimit-scope");
   const retryAfter = res.headers.get("retry-after");
   const parts = [`[discord-api] ${method} ${pathForLog} -> ${res.status} ${ms}ms`];
-  if (limit != null) parts.push(`limit=${limit}`);
-  if (remaining != null) parts.push(`remaining=${remaining}`);
+  if (limit != null) { parts.push(`limit=${limit}`) }
+  if (remaining != null) { parts.push(`remaining=${remaining}`) }
   if (resetAfter != null) parts.push(`resetAfter=${resetAfter}s`);
   if (scope != null) parts.push(`scope=${scope}`);
   if (retryAfter != null) parts.push(`retryAfter=${retryAfter}`);
@@ -22,7 +22,7 @@ async function discordApiFetch(url: string, init?: RequestInit): Promise<Respons
   return res;
 }
 
-export interface DiscordTokenResponse {
+interface DiscordTokenResponse {
   access_token: string;
   token_type: string;
   expires_in: number;
@@ -30,7 +30,7 @@ export interface DiscordTokenResponse {
   scope: string;
 }
 
-export interface DiscordUser {
+interface DiscordUser {
   id: string;
   username: string;
   avatar: string | null;
@@ -82,7 +82,7 @@ export async function getDiscordUser(accessToken: string) {
 }
 
 /** Result of looking up the current user in a guild (OAuth token is short-lived; JWT session is longer). */
-export type GuildMemberLookup =
+type GuildMemberLookup =
   | { kind: "member"; nick: string | null; roles: string[]; }
   | { kind: "not_member" }
   /** Discord rejected the bearer token (expired/revoked) — user should log in again. */
@@ -94,7 +94,7 @@ export async function getUserAsGuildMember(accessToken: string, guildId: string)
     headers: { authorization: `Bearer ${accessToken}` },
   });
 
-  if (res.status === 404) return { kind: "not_member" };
+  if (res.status === 404) { return { kind: "not_member" } };
   if (res.status === 401 || res.status === 403) {
     const text = await res.text();
     console.error("Discord guild member: OAuth token invalid:", res.status, text);
