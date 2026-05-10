@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { parse as parseUrl } from "node:url";
+import { withCors } from "./api/lib/cors.js";
 import type { HandlerRequest, HandlerResponse } from "./api/lib/types.js";
 import { meHandler } from "./api/me.js";
 import { logoutHandler } from "./api/logout.js";
@@ -49,31 +50,42 @@ function parseQuery(search: string | null): Record<string, string | string[]> {
 }
 
 createServer(async (req: IncomingMessage, res: ServerResponse) => {
-  const { pathname, search } = parseUrl(req.url ?? "/", true);
-  const path = pathname ?? "/";
+  try {
+    const { pathname, search } = parseUrl(req.url ?? "/", true);
+    const path = pathname ?? "/";
 
-  const cardTagsParams = parseCardTagsPath(path);
-  if (cardTagsParams) {
+    const cardTagsParams = parseCardTagsPath(path);
+    if (cardTagsParams) {
+      (req as HandlerRequest).query = parseQuery(search);
+      await cardTagsHandler(
+        req as HandlerRequest,
+        res as HandlerResponse,
+        cardTagsParams.cardId,
+        cardTagsParams.tag
+      );
+      return;
+    }
+
+    const loader = routes[path];
+    if (!loader) {
+      const headers = withCors({ "Content-Type": "application/json" }, req);
+      Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
+      res.statusCode = 404;
+      res.end(JSON.stringify({ error: "Not found" }));
+      return;
+    }
+
     (req as HandlerRequest).query = parseQuery(search);
-    await cardTagsHandler(
-      req as HandlerRequest,
-      res as HandlerResponse,
-      cardTagsParams.cardId,
-      cardTagsParams.tag
-    );
-    return;
+    await loader(req as HandlerRequest, res as HandlerResponse);
+  } catch (err) {
+    console.error(err);
+    if (!res.headersSent) {
+      const headers = withCors({ "Content-Type": "application/json" }, req);
+      Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
+      res.statusCode = 500;
+      res.end(JSON.stringify({ error: "Internal server error" }));
+    }
   }
-
-  const loader = routes[path];
-  if (!loader) {
-    res.statusCode = 404;
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({ error: "Not found" }));
-    return;
-  }
-
-  (req as HandlerRequest).query = parseQuery(search);
-  await loader(req as HandlerRequest, res as HandlerResponse);
 }).listen(PORT, () => {
   console.log(`Server at http://localhost:${PORT}`);
 });
