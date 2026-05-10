@@ -63,7 +63,7 @@ For production: run `yarn start` or deploy the `src/api/` handlers to your prefe
 The server can be run in Docker and deployed to Google Cloud Run (see [google-cloud-setup.example.md](./google-cloud-setup.example.md)). Copy that file to `google-cloud-setup.md` (gitignored) for your own project-specific notes.
 
 - Build image: `docker build -t hellfall-server ./packages/server` (from repo root).
-- GitHub Actions: pushes to `main` that change `packages/server/` trigger a deploy to Cloud Run when `GCP_PROJECT_ID` and `GCP_SA_KEY` are set in repo secrets.
+- GitHub Actions: run **Manual Deploy Server (Cloud Run)** (`.github/workflows/deploy-auth-cloud-run.yml`) from the Actions tab; configure repo variables and `GCP_CLOUD_RUN_AUTH_SERVICE_ACCOUNT_JSON` — see [google-cloud-setup.example.md](./google-cloud-setup.example.md).
 
 ## Frontend usage
 
