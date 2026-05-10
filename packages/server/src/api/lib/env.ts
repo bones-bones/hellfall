@@ -51,4 +51,14 @@ export const env = {
   get DISCORD_TAG_ROLE_ID(): string | undefined {
     return process.env.DISCORD_TAG_ROLE_ID;
   },
+
+  /** Firestore database for Hellscube card docs (tag overrides use `added` / `removed` on each card). */
+  get FIRESTORE_HELLSCUBE_DATABASE_ID(): string {
+    return process.env.FIRESTORE_HELLSCUBE_DATABASE_ID?.trim() || "hellscube";
+  },
+
+  /** Collection holding card documents (document id = card id). */
+  get FIRESTORE_CARDS_COLLECTION(): string {
+    return process.env.FIRESTORE_CARDS_COLLECTION?.trim() || "cards";
+  },
 };

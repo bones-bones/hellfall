@@ -11,7 +11,7 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses 
 | `/api/me` | GET | Returns current user from session cookie (or `{ user: null }`) |
 | `/api/logout` | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL` |
 | `/api/tag` | GET | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags |
-| `/api/cards/:cardId/tags` | GET | Tag overrides for a card (added/removed). Public (no auth). Uses Firestore default DB, collection `card_tags`. |
+| `/api/cards/:cardId/tags` | GET | Tag overrides from Firestore doc `cards/{cardId}` (`added` / `removed`). DB id defaults to `hellscube`. |
 | `/api/cards/:cardId/tags` | POST | Add a tag (body: `{ tag: string }`). Requires auth + role. |
 | `/api/cards/:cardId/tags/:tag` | DELETE | Remove a tag. Requires auth + role. |
 | `/api/watchwolf` | GET | Returns WatchWolfWar card standings from Firestore |
@@ -31,8 +31,8 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses 
    - `JWT_SECRET` – random string (e.g. `openssl rand -base64 32`)
    - `FRONTEND_URL` – where the React app lives (e.g. `https://user.github.io/hellfall`)
    - Optional: `AUTH_SERVER_URL` (defaults to `http://localhost:3003` when unset), `COOKIE_NAME`, `COOKIE_DOMAIN`, `JWT_ISSUER`
-   - **Card tags:** Uses the **default** Firestore database (not the WatchWolf named DB). Ensure Firestore is enabled and the default database exists. Collection: `card_tags`, document ID = card ID, fields: `added` (string[]), `removed` (string[]).
-   - WatchWolf: `GOOGLE_APPLICATION_CREDENTIALS` (path to service account JSON) for Firestore
+   - **Card tags:** Firestore database **`hellscube`** (override: `FIRESTORE_HELLSCUBE_DATABASE_ID`), collection **`cards`** (`FIRESTORE_CARDS_COLLECTION`). Each card document may include `added` and `removed` string arrays; writes use **merge** so other fields are preserved.
+   - WatchWolf: `GOOGLE_APPLICATION_CREDENTIALS` (path to service account JSON) for Firestore (local dev; Cloud Run uses the service identity)
 
 ## Running the server
 

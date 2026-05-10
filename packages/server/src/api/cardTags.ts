@@ -1,10 +1,29 @@
-import { Firestore } from "@google-cloud/firestore";
+import { Firestore, type DocumentReference, type DocumentSnapshot } from "@google-cloud/firestore";
 import { withCors } from "./lib/cors.js";
+import { env } from "./lib/env.js";
 import type { HandlerRequest, HandlerResponse } from "./lib/types.js";
 import { requireTagAuth } from "./lib/requireTagAuth.js";
 
-const db = new Firestore();
-const collection = db.collection("card_tags");
+const db = new Firestore({ databaseId: env.FIRESTORE_HELLSCUBE_DATABASE_ID });
+const collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
+
+/** If `cards/{id}` is missing, create it with empty tag overrides (merge-safe). Returns latest snapshot. */
+async function getOrSeedCardTagsDoc(docRef: DocumentReference): Promise<DocumentSnapshot> {
+  let snap = await docRef.get();
+  if (!snap.exists) {
+    await docRef.set({ added: [], removed: [] }, { merge: true });
+    snap = await docRef.get();
+  }
+  return snap;
+}
+
+function isFirestoreNotFound(err: unknown): boolean {
+  if (typeof err !== "object" || err === null) return false;
+  const code = (err as { code?: unknown }).code;
+  if (code === 5 || code === "NOT_FOUND") return true;
+  const msg = err instanceof Error ? err.message : String(err);
+  return /NOT_FOUND/i.test(msg);
+}
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -43,13 +62,12 @@ export const cardTagsHandler = async (
 
     const docRef = collection.doc(cardId);
 
-    // Public read so the catalog can merge overrides without Discord role checks. Writes still use requireTagAuth.
     if (req.method === "GET") {
-      const snap = await docRef.get();
+      const snap = await getOrSeedCardTagsDoc(docRef);
       const data = snap.data() as CardTagOverrides | undefined;
       const added = Array.isArray(data?.added) ? data.added.map(String) : [];
       const removed = Array.isArray(data?.removed) ? data.removed.map(String) : [];
-      const payload = { added, removed };
+      const payload = { added, removed, persistEnabled: true as const };
       let body: string;
       try {
         body = JSON.stringify(payload);
@@ -82,16 +100,16 @@ export const cardTagsHandler = async (
         res.end(JSON.stringify({ ok: false, reason: "tag_required" }));
         return;
       }
-      const snap = await docRef.get();
+      const snap = await getOrSeedCardTagsDoc(docRef);
       const data = snap.data() as CardTagOverrides | undefined;
-      const added = Array.isArray(data?.added) ? [...data.added] : [];
-      const removed = Array.isArray(data?.removed) ? [...data.removed] : [];
+      const added = Array.isArray(data?.added) ? [...data.added.map(String)] : [];
+      const removed = Array.isArray(data?.removed) ? [...data.removed.map(String)] : [];
       if (removed.includes(norm)) {
         removed.splice(removed.indexOf(norm), 1);
       } else if (!added.includes(norm)) {
         added.push(norm);
       }
-      await docRef.set({ added, removed });
+      await docRef.set({ added, removed }, { merge: true });
       res.statusCode = 200;
       res.end(JSON.stringify({ ok: true, added, removed }));
       return;
@@ -105,26 +123,31 @@ export const cardTagsHandler = async (
         res.end(JSON.stringify({ ok: false, reason: "tag_required" }));
         return;
       }
-      const snap = await docRef.get();
+      const snap = await getOrSeedCardTagsDoc(docRef);
       const data = snap.data() as CardTagOverrides | undefined;
-      let added = Array.isArray(data?.added) ? [...data.added] : [];
-      let removed = Array.isArray(data?.removed) ? [...data.removed] : [];
+      let added = Array.isArray(data?.added) ? [...data.added.map(String)] : [];
+      let removed = Array.isArray(data?.removed) ? [...data.removed.map(String)] : [];
       if (added.includes(norm)) {
         added = added.filter(t => t !== norm);
       } else {
         removed.push(norm);
       }
-      await docRef.set({ added, removed });
+      await docRef.set({ added, removed }, { merge: true });
       res.statusCode = 200;
       res.end(JSON.stringify({ ok: true, added, removed }));
       return;
     }
 
     res.statusCode = 405;
-    res.setHeader("Allow", "GET, POST, DELETE");
+    res.setHeader("Allow", "GET, POST, DELETE, OPTIONS");
     res.end();
   } catch (err) {
     console.error("cardTagsHandler", err);
+    if (isFirestoreNotFound(err)) {
+      console.error(
+        "card_tags Firestore NOT_FOUND: check database id and collection env (defaults: hellscube / cards)."
+      );
+    }
     if (res.writableEnded) return;
     res.statusCode = 500;
     res.end(JSON.stringify({ ok: false, reason: "server_error" }));

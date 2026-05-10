@@ -82,7 +82,7 @@ const getImages = (card: HCCard.Any) => {
 };
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const { user } = useAuth();
-  const [displayTags, addTag, removeTag, tagsLoading, tagsError] = useCardTagOverrides(
+  const [displayTags, addTag, removeTag, tagsLoading, tagsError, tagsPersistEnabled] = useCardTagOverrides(
     data.id,
     data.tags
   );
@@ -359,7 +359,10 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 Tags:{' '}
                 {displayTags.map((tagEntry, i, ar) => (
                   <span key={tagEntry}>
-                    <Link to={'/?tags=' + tagEntry} target="_blank">
+                    <Link
+                      to={`/?${new URLSearchParams([['tag', tagEntry]]).toString()}`}
+                      target="_blank"
+                    >
                       {tagEntry}
                     </Link>
                     {data.tag_notes &&
@@ -375,7 +378,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                           <Text> ({data.tag_notes[tagEntry]})</Text>
                         </>
                       ))}
-                    {user && (
+                    {user && tagsPersistEnabled && (
                       <TagRemoveButton
                         type="button"
                         onClick={async () => {
@@ -396,7 +399,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                   </span>
                 ))}
               </Text>
-              {user && (
+              {user && tagsPersistEnabled && (
                 <TagAddRow>
                   <input
                     type="text"
