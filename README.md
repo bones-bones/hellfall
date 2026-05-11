@@ -14,6 +14,10 @@ This page contains random card selectors used for various cubes to make irl draf
 
 Scripts used for extracting and transforming data
 
+## [server](./packages/server/)
+
+Serverless Discord OAuth login. Deploy to Cloud Run (or similar); set `REACT_APP_AUTH_API_URL` in the main app to show “Login with Discord” in the header.
+
 ## [deck-builder](./src/deck-builder/)
 
 This pages contains tools to help with building a deck then exporting it to tabletop simulator (or other formats)

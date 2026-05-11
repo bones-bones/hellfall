@@ -36,9 +36,7 @@ pics/
 pics.zip
 keys.ts
 
-.notes.md
-
-server/.env
+packages/server/.env
 
 # yarn
 .yarn/install-state.gz

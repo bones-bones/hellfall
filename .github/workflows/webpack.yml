@@ -10,6 +10,8 @@ jobs:
   build:
     # if: github.actor == 'bones-bones'
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_AUTH_API_URL: ${{ vars.REACT_APP_AUTH_API_URL }}
 
     steps:
       - uses: actions/checkout@v4

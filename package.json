@@ -6,7 +6,8 @@
   "workspaces": [
     "packages/frontend",
     "packages/backend",
-    "packages/shared"
+    "packages/shared",
+    "packages/server"
   ],
   "scripts": {
     "start": "yarn workspace @hellfall/frontend start",
@@ -23,7 +24,9 @@
     "reinstall:all": "yarn clean && yarn install",
     "add:frontend": "yarn workspace @hellfall/frontend add",
     "add:backend": "yarn workspace @hellfall/backend add",
-    "add:shared": "yarn workspace @hellfall/shared add"
+    "add:shared": "yarn workspace @hellfall/shared add",
+    "server:dev": "yarn workspace @hellfall/server dev",
+    "server:start": "yarn workspace @hellfall/server start"
   },
   "devDependencies": {
     "@types/node": "^20.12.8",

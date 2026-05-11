@@ -62,10 +62,10 @@ export const specialCards: Card[] = [
       <>
         {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(entry => {
           return (
-            <>
+            <div key={entry}>
               <h3>{entry + 1}</h3>
               <HellsCard queryString="t:instant+or+t:sorcery" />
-            </>
+            </div>
           );
         })}
       </>

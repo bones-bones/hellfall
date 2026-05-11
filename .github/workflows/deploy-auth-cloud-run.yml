@@ -1,0 +1,41 @@
+name: Manual Deploy Server (Cloud Run)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: github.actor == 'bones-bones'
+    runs-on: ubuntu-latest
+    env:
+      GCP_AUTH_SERVER_PROJECT_ID: ${{ vars.GCP_AUTH_SERVER_PROJECT_ID }}
+      AUTH_CLOUD_RUN_SERVICE_NAME: ${{ vars.AUTH_CLOUD_RUN_SERVICE_NAME }}
+      AUTH_CLOUD_RUN_REGION: ${{ vars.AUTH_CLOUD_RUN_REGION }}
+      CLOUD_RUN_SOURCE_DIR: ${{ vars.CLOUD_RUN_SOURCE_DIR || 'packages/server' }}
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CLOUD_RUN_AUTH_SERVICE_ACCOUNT_JSON }}
+
+      - name: Set up gcloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.GCP_AUTH_SERVER_PROJECT_ID }}
+
+      - name: Deploy auth server to Cloud Run
+        run: |
+          gcloud run deploy "$AUTH_CLOUD_RUN_SERVICE_NAME" \
+            --source "$CLOUD_RUN_SOURCE_DIR" \
+            --project "$GCP_AUTH_SERVER_PROJECT_ID" \
+            --region "$AUTH_CLOUD_RUN_REGION" \
+            --platform managed \
+            --allow-unauthenticated \
+            --quiet
