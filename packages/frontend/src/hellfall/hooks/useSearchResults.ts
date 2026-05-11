@@ -23,6 +23,7 @@ import {
   searchCards,
   winnowSortObjects,
 } from '../filters/parseSearchBar.ts';
+import { makeSort } from '../filters/filterBuilder.ts';
 
 export const useSearchResults = () => {
   const location = useLocation();
@@ -65,6 +66,9 @@ export const useSearchResults = () => {
     setQuerySortNum(sortObjects.length);
     const { sortList, newInputs } = combineAndWinnowSorts(sortObjects, parseSorts(inputSorts));
     setSortRules(sortList);
+    if (!sortList.length) {
+      sortList.push(makeSort('auto', 'auto'));
+    }
 
     for (let i = sortList.length - 1; i >= 0; i--) {
       tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortList[i].filter(a, ':', b));

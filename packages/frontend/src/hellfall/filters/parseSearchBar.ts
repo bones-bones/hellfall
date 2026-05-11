@@ -410,7 +410,7 @@ export const parseSearchQuery = (
         invalids.push([token, filter]);
         return parseTerm();
       }
-      if (summaries.at(-1) != ' or ' && summaries.at(-1) != '(') {
+      if (summaries.at(-1) != ' or ' && summaries.at(-1) != '(' && summaries.at(-1) != ' and ') {
         summaries.push(' and ');
       }
       summaries.push(summary);
@@ -438,7 +438,9 @@ export const parseSearchQuery = (
           leftNode = { type: 'or', children: [leftNode, rightNode] };
         }
       } else {
-        summaries.push(' and ');
+        if (summaries.at(-1) != ' or ' && summaries.at(-1) != '(' && summaries.at(-1) != ' and ') {
+          summaries.push(' and ');
+        }
         const rightNode = parseTerm();
         if (rightNode) {
           leftNode = { type: 'and', children: [leftNode, rightNode] };
@@ -450,10 +452,13 @@ export const parseSearchQuery = (
   const { tokens, sortList, includeExtras } = tokenize(query);
   const { node } = parseTokens(tokens, 0);
   const { sortList: sortObjects, winnowed } = winnowSortObjects(parseSorts(sortList));
-  if ([' not ', ' and ', ' or '].includes(summaries.at(-1) ?? '')) {
+  while ([' not ', ' and ', ' or '].includes(summaries.at(-1) ?? '')) {
     summaries.pop();
   }
-  const summary = summaries.join('');
+  while ([' and ', ' or '].includes(summaries.at(0) ?? '')) {
+    summaries.shift();
+  }
+  const summary = trimLeading(summaries.join(''));
   return { node, sortObjects, invalids, summary, winnowed, includeExtras };
 };
 
@@ -487,6 +492,16 @@ export const setIncludeExtras = (node: FilterNode, includeExtras: boolean) => {
   }
 };
 
+const trimLeading = (text: string) => {
+  let ret = text;
+  // while (ret.startsWith('and ')) {
+  //   ret = ret.replace('and ','')
+  // }
+  // while (ret.startsWith('or ')) {
+  //   ret = ret.replace('or ','')
+  // }
+  return ret;
+};
 export const searchCards = (
   cards: HCCard.Any[],
   query: string,

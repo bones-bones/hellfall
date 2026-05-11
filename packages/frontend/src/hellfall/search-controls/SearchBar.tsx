@@ -34,7 +34,7 @@ export const SearchBar = () => {
   return (
     <>
       <Container>
-        <TextInput
+        <SearchBox
           width={maxWidth}
           placeholder="Search for Hellscube cards..."
           value={localQuery}
@@ -44,4 +44,13 @@ export const SearchBar = () => {
     </>
   );
 };
-const Container = styled('div')({ paddingLeft: space.l, paddingRight: space.l, width: '100%' });
+const Container = styled('div')({
+  paddingLeft: space.l,
+  paddingRight: space.l,
+  width: '100%',
+  marginTop: '-10px',
+  marginBottom: '0px',
+});
+const SearchBox = styled(TextInput)({
+  // border: 'none',
+});

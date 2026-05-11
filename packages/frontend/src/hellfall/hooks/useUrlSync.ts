@@ -41,6 +41,18 @@ import {
   // parseOperatorValue,
 } from '../atoms/searchAtoms.ts';
 
+const listsAreEqual = (value1: string[], value2: string[]): boolean => {
+  if (value1.length != value2.length) {
+    return false;
+  }
+  value1.forEach((value, i) => {
+    if (value != value2[i]) {
+      return false;
+    }
+  });
+  return true;
+};
+
 export const useUrlSync = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -196,8 +208,7 @@ export const useUrlSync = () => {
     }
 
     // Set sort
-    // TODO: make sure this doesn't cause a loop
-    if (inputSorts != params.getAll('order')) {
+    if (!listsAreEqual(inputSorts, params.getAll('order'))) {
       setInputSorts(params.getAll('order'));
     }
     // if (dirRule != ((params.get('dir') as any) || 'Asc')) {

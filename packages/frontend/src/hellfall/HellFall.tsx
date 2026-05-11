@@ -2,13 +2,13 @@ import { useEffect, useRef, useState, useMemo, startTransition } from 'react';
 import { HellfallEntry } from './HellfallEntry.tsx';
 import { xIcon } from '@workday/canvas-system-icons-web';
 
-import { styled, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
+import { styled, Card, ToolbarIconButton, space } from '@workday/canvas-kit-react';
 import { SidePanel, useSidePanel } from '@workday/canvas-kit-preview-react/side-panel';
 import { PaginationComponent } from './inputs';
 
 import { HellfallCard } from './card/HellfallCard.tsx';
 import { useAtom, useAtomValue } from 'jotai';
-import { activeCardAtom, pageAtom } from './atoms/searchAtoms.ts';
+import { activeCardAtom, invalidAtom, pageAtom, summaryAtom } from './atoms/searchAtoms.ts';
 import { useSearchResults } from './hooks/useSearchResults.ts';
 import { SearchControls } from './search-controls/SearchControls.tsx';
 import { SortComponent } from './search-controls/SortComponent.tsx';
@@ -23,6 +23,8 @@ import { SearchBar } from './search-controls/SearchBar.tsx';
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cards = useAtomValue(cardsAtom);
+  const summary = useAtomValue(summaryAtom);
+  const invalids = useAtomValue(invalidAtom);
   const escape = useKeyPress('Escape');
 
   useUrlSync();
@@ -82,9 +84,26 @@ export const HellFall = () => {
       <br />
       {/* <SearchControls /> */}
       <SearchBar />
-      <br />
+      <Separator />
       <SortComponent />
-      <ResultCount ref={containerRef}>{`${resultSet.length} card(s)`}</ResultCount>
+      <SortSeparator />
+
+      <Summary ref={containerRef}>
+        <strong>{`${
+          resultSet.length > CHUNK_SIZE ? `${page + 1} - ${page + CHUNK_SIZE} of ` : ''
+        } ${resultSet.length} card${resultSet.length > 1 ? 's' : ''}`}</strong>
+        {summary && ` where ${summary}`}
+      </Summary>
+      <Separator />
+      {invalids.map(invalid => {
+        return (
+          <>
+            <Invalid>{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</Invalid>
+            <Separator />
+          </>
+        );
+      })}
+
       <Container>
         <CardsGrid $maxWidth={maxWidth}>
           {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
@@ -115,7 +134,23 @@ export const HellFall = () => {
     </div>
   );
 };
-const ResultCount = styled('h5')({ display: 'flex', justifyContent: 'center' });
+const SortSeparator = styled('hr')({
+  height: '1px',
+  backgroundColor: '#ccc',
+  border: 'none',
+  marginTop: '-20px',
+});
+const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+const Summary = styled('div')({
+  display: 'inline-block',
+  paddingLeft: space.l,
+  paddingRight: space.l,
+});
+const Invalid = styled('div')({
+  display: 'inline-block',
+  paddingLeft: space.l,
+  paddingRight: space.l,
+});
 const Container = styled('div')({
   display: 'flex',
   justifyContent: 'center',

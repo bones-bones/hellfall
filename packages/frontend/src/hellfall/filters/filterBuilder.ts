@@ -932,7 +932,7 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
     return correctOp(colorFilters[correctKeyword](parsedColors, op));
   }
   if (term) {
-    return makeInvalidFilter(keyword, ':');
+    return makeInvalidKeywordFilter(keyword, ':');
   }
   return correctOp(makeNameFilter(unescapeText(text), ':'));
 };

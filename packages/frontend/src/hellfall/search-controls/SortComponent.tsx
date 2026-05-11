@@ -31,8 +31,8 @@ const DIR_OPTIONS: Array<{ label: string; value: dirType }> = [
   { label: 'Asc', value: 'asc' },
   { label: 'Desc', value: 'desc' },
 ];
-const parseSort = (order: string): sortType => order.split(',')[0] as sortType;
-const parseDir = (order: string): dirType => order.split(',')[1] as dirType;
+const parseSort = (order: string): sortType => order?.split(',')[0] as sortType;
+const parseDir = (order: string): dirType => order?.split(',')[1] as dirType;
 export const SortComponent = () => {
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const querySortNum = useAtomValue(querySortNumAtom);
@@ -62,7 +62,7 @@ export const SortComponent = () => {
     setInputSorts(newInputs);
   };
   useEffect(() => {
-    setCanAddInput(Boolean(getAvailableOptions(inputSorts.length).length));
+    setCanAddInput(Boolean(getAvailableOptions(inputSorts.length).length && inputSorts.length));
   }, [inputSorts, sortRules]);
 
   const handleAddInput = () => {
@@ -175,7 +175,11 @@ export const SortComponent = () => {
   );
 };
 
-const Container = styled('div')({ paddingLeft: space.l, alignItems: 'center' });
+const Container = styled('div')({
+  paddingLeft: space.l,
+  paddingRight: space.l,
+  alignItems: 'center',
+});
 const StyledSelect = styled(Select)({
   verticalAlign: 'top',
   display: 'inline-block',

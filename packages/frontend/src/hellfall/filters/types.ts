@@ -43,7 +43,7 @@ export const opToIncludeSingularRecord: Record<looseOpType, string> = {
   '!=': "doesn't equal",
 };
 export const opToIncludeSingular = (op: looseOpType, value: string, invert?: boolean) => {
-  return `${opToIncludeSingularRecord[(invert ? invertOp(op) : op) as opType]} ${value}`;
+  return `${opToIncludeSingularRecord[(invert ? invertOp(op) : op) as opType]} "${value}"`;
 };
 export const opToIncludePluralRecord: Record<looseOpType, string> = {
   '<': 'exclude',
@@ -56,7 +56,7 @@ export const opToIncludePluralRecord: Record<looseOpType, string> = {
   '!=': 'exclude exactly',
 };
 export const opToIncludePlural = (op: looseOpType, value: string, invert?: boolean) => {
-  return `${opToIncludePluralRecord[(invert ? invertOp(op) : op) as opType]} ${value}`;
+  return `${opToIncludePluralRecord[(invert ? invertOp(op) : op) as opType]} "${value}"`;
 };
 export const opToTaggedRecord: Record<looseOpType, string> = {
   '<': 'not tagged',
@@ -69,7 +69,7 @@ export const opToTaggedRecord: Record<looseOpType, string> = {
   '!=': 'not tagged exactly',
 };
 export const opToTagged = (op: looseOpType, value: string, invert?: boolean) => {
-  return `${opToTaggedRecord[(invert ? invertOp(op) : op) as opType]} ${value}`;
+  return `${opToTaggedRecord[(invert ? invertOp(op) : op) as opType]} "${value}"`;
 };
 /**
  * To use in filters when need to check a function with one value
