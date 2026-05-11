@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { usePaginationModel, getLastPage } from '@workday/canvas-kit-react/pagination';
 import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
   queryAtom,
   querySortNumAtom,
@@ -11,6 +11,8 @@ import {
   sortAtom,
   pageAtom,
   activeCardAtom,
+  summaryAtom,
+  invalidAtom,
   // shouldPushHistoryAtom,
 } from '../atoms/searchAtoms.ts';
 
@@ -31,9 +33,12 @@ export const useSearchResults = () => {
     e => !e.tags?.includes('offensive') && e.set != 'NotMagic'
   );
   const query = useAtomValue(queryAtom);
-  const [querySortNum, setQuerySortNum] = useAtom(querySortNumAtom);
+  const setQuerySortNum = useSetAtom(querySortNumAtom);
   const inputSorts = useAtomValue(inputSortAtom);
-  const [sortRules, setSortRules] = useAtom(sortAtom);
+  const setSortRules = useSetAtom(sortAtom);
+  const setSummary = useSetAtom(summaryAtom);
+  const setInvalids = useSetAtom(invalidAtom);
+
   const [page, setPageAtom] = useAtom(pageAtom);
   const activeCard = useAtomValue(activeCardAtom);
 
@@ -55,6 +60,7 @@ export const useSearchResults = () => {
       summary,
       winnowed,
       invalids,
+      // allWereIgnored
     } = searchCards(cards, query);
     setQuerySortNum(sortObjects.length);
     const { sortList, newInputs } = combineAndWinnowSorts(sortObjects, parseSorts(inputSorts));
@@ -64,6 +70,8 @@ export const useSearchResults = () => {
       tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortList[i].filter(a, ':', b));
     }
     setResultSet(tempResults);
+    setSummary(summary);
+    setInvalids(invalids.map(invalid => [invalid[0], invalid[1].toSummary().slice(1)]));
 
     const searchToSet = new URLSearchParams();
 

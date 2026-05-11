@@ -60,7 +60,7 @@ export const filterNumberString: numStringFilter = Object.assign(
     toSummary: (operator: looseOpType, value: number | string | undefined, invert?: boolean) => {
       const num = typeof value == 'string' ? toNumber(value) : value;
       if (num == undefined) {
-        return '!';
+        return `!The value must be a number (or convertible to one)`;
       }
       return `${invert ? 'not' : ''} ${getActualOp(filterNumberString, operator)} ${num}`;
     },
@@ -82,7 +82,7 @@ export const filterNumberStringList: numStringListFilter = Object.assign(
     toSummary: (operator: looseOpType, value: number | string | undefined, invert?: boolean) => {
       const num = typeof value == 'string' ? toNumber(value) : value;
       if (num == undefined) {
-        return '!';
+        return `!The value must be a number (or convertible to one)`;
       }
       return `${invert ? 'not' : ''} ${getActualOp(filterNumberStringList, operator)} ${num}`;
     },

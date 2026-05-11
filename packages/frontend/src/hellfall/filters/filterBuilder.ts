@@ -82,27 +82,52 @@ export const makeInvalidFilter: filterMaker = (value: string, op: looseOpType) =
     op,
     '>=',
     card => '',
-    (op: looseOpType, value: string) => '!'
+    () => `!Unknown "${value}"`
   );
 };
-export const makeTrueFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter<string, string>(
-    'true',
+export const makeInvalidSortFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new filterObject<string, string>(
+    'invalidsort',
     filterEmpty,
     value,
     op,
-    '=',
-    card => ''
+    '>=',
+    card => '',
+    () => `!Unknown sort choice "${value}"`
   );
 };
-export const makeFalseFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter<string, string>(
-    'false',
+export const makeInvalidKeywordFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new filterObject<string, string>(
+    'invalidkeyword',
     filterEmpty,
     value,
     op,
-    '!=',
-    card => ''
+    '>=',
+    card => '',
+    () => `!Unknown keyword "${value}"`
+  );
+};
+export const makeInvalidColorFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new filterObject<string, string>(
+    'invalidcolor',
+    filterEmpty,
+    value,
+    op,
+    '>=',
+    card => '',
+    () => `!Unknown color "${value}"`
+  );
+};
+
+export const makeInvalidIncludeFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new filterObject<string, string>(
+    'invalidinclude',
+    filterEmpty,
+    value,
+    op,
+    '>=',
+    card => '',
+    () => `!Unknown include "${value}"`
   );
 };
 
@@ -125,8 +150,7 @@ export const makeNameFilter: filterMaker = (value: string, op: looseOpType) => {
     op,
     '>=',
     card => getAllNames(card),
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the name ${opToIncludeSingular(op, value, invert)}`
+    (invert?: boolean) => `the name ${opToIncludeSingular(op, value, invert)}`
   );
 };
 // TODO: Make cost search act more like number than string (and more like scryfall)
@@ -138,8 +162,7 @@ export const makeCostFilter: filterMaker = (value: string, op: looseOpType) => {
     op,
     '>=',
     card => card.toFaces().map(e => e.mana_cost),
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the cost ${opToIncludeSingular(op, value, invert)}`
+    (invert?: boolean) => `the cost ${opToIncludeSingular(op, value, invert)}`
   );
 };
 
@@ -156,8 +179,7 @@ export const makeTypeFilter: filterMaker = (value: string, op: looseOpType) => {
       ...card.toFaces().flatMap(e => e.subtypes || []),
       ...card.toFaces().map(e => e.type_line),
     ],
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the types ${opToIncludePlural(op, value, invert)}`
+    (invert?: boolean) => `the types ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -174,8 +196,7 @@ export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType)
           ...(e.supertypes || []),
           ...(e.supertypes && e.supertypes.length > 1 ? [e.supertypes.join(' ')] : []),
         ]),
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the supertypes ${opToIncludePlural(op, value, invert)}`
+    (invert?: boolean) => `the supertypes ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeCardtypeFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -192,8 +213,7 @@ export const makeCardtypeFilter: filterMaker = (value: string, op: looseOpType) 
           ...(e.types || []),
           ...(e.types && e.types.length > 1 ? [e.types.join(' ')] : []),
         ]),
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the card types ${opToIncludePlural(op, value, invert)}`
+    (invert?: boolean) => `the card types ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeSubtypeFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -210,8 +230,7 @@ export const makeSubtypeFilter: filterMaker = (value: string, op: looseOpType) =
           ...(e.subtypes || []),
           ...(e.subtypes && e.subtypes.length > 1 ? [e.subtypes.join(' ')] : []),
         ]),
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the subtypes ${opToIncludePlural(op, value, invert)}`
+    (invert?: boolean) => `the subtypes ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeOracleFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -222,8 +241,7 @@ export const makeOracleFilter: filterMaker = (value: string, op: looseOpType) =>
     op,
     '>=',
     card => card.toFaces().map(e => e.oracle_text),
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the oracle text ${opToIncludeSingular(op, value, invert)}`
+    (invert?: boolean) => `the oracle text ${opToIncludeSingular(op, value, invert)}`
   );
 };
 export const makeFlavorFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -234,8 +252,7 @@ export const makeFlavorFilter: filterMaker = (value: string, op: looseOpType) =>
     op,
     '>=',
     card => card.toFaces().flatMap(e => e.flavor_text ?? []),
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the flavor text ${opToIncludeSingular(op, value, invert)}`
+    (invert?: boolean) => `the flavor text ${opToIncludeSingular(op, value, invert)}`
   );
 };
 export const makeLoreFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -250,8 +267,7 @@ export const makeCreatorFilter: filterMaker = (value: string, op: looseOpType) =
     op,
     '>=',
     card => card.creators ?? [],
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the creators ${opToIncludePlural(op, value, invert)}`
+    (invert?: boolean) => `the creators ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeArtistFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -262,8 +278,7 @@ export const makeArtistFilter: filterMaker = (value: string, op: looseOpType) =>
     op,
     '>=',
     card => card.artists ?? [],
-    (op: looseOpType, value: string, invert?: boolean) =>
-      `the artists ${opToIncludePlural(op, value, invert)}`
+    (invert?: boolean) => `the artists ${opToIncludePlural(op, value, invert)}`
   );
 };
 export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -274,7 +289,7 @@ export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) =
     op,
     '=',
     card => card.keywords,
-    (op: looseOpType, value: string, invert?: boolean) =>
+    (invert?: boolean) =>
       `the keywords ${opToIncludePlural(getActualOp(filterId, op), value, invert)}`
   );
 };
@@ -296,7 +311,7 @@ export const makeCollectorNumberFilter: filterMaker = (value: string, op: looseO
     op,
     '=',
     card => card.collector_number,
-    (op: looseOpType, value: string | undefined) => {
+    () => {
       const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
@@ -313,7 +328,7 @@ export const makeManaValueFilter: filterMaker = (value: string, op: looseOpType)
     op,
     '=',
     card => card.mana_value,
-    (op: looseOpType, value: string | undefined) => {
+    () => {
       const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
@@ -330,7 +345,7 @@ export const makePowerFilter: filterMaker = (value: string, op: looseOpType) => 
     op,
     '=',
     card => card.toFaces().flatMap(e => e.power ?? []),
-    (op: looseOpType, value: string | undefined) => {
+    () => {
       const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
@@ -347,7 +362,7 @@ export const makeToughnessFilter: filterMaker = (value: string, op: looseOpType)
     op,
     '=',
     card => card.toFaces().flatMap(e => e.toughness ?? []),
-    (op: looseOpType, value: string | undefined) => {
+    () => {
       const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
@@ -365,7 +380,7 @@ export const makeLoyaltyFilter: filterMaker = (value: string, op: looseOpType) =
     op,
     '=',
     card => card.toFaces().flatMap(e => e.loyalty ?? []),
-    (op: looseOpType, value: string | undefined) => {
+    () => {
       const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
@@ -383,7 +398,7 @@ export const makeDefenseFilter: filterMaker = (value: string, op: looseOpType) =
     op,
     '=',
     card => card.toFaces().flatMap(e => e.defense ?? []),
-    (op: looseOpType, value: string | undefined) => {
+    () => {
       const num = filterNumberString.toSummary(op, value);
       if (num.charAt(0) == '!') {
         return num;
@@ -403,6 +418,7 @@ export const makeColorFilter: colorFilterMaker = (value: string[] | number, op: 
     card => card.colors
   );
 };
+
 export const makeIndicatorFilter: colorFilterMaker = (
   value: string[] | number,
   op: looseOpType
@@ -421,6 +437,7 @@ export const makeIndicatorFilter: colorFilterMaker = (
         .map(face => face.color_indicator!)
   );
 };
+
 export const makeIdentityFilter: colorFilterMaker = (value: string[] | number, op: looseOpType) => {
   return new PassThroughSummaryFilter<string[], string[] | number>(
     'identity',
@@ -431,6 +448,7 @@ export const makeIdentityFilter: colorFilterMaker = (value: string[] | number, o
     card => card.color_identity
   );
 };
+
 export const makeHybridFilter: colorFilterMaker = (value: string[] | number, op: looseOpType) => {
   return new PassThroughSummaryFilter<string[][], string[] | number>(
     'hybrid',
@@ -488,6 +506,7 @@ export const makeMiscIdentityFilter: colorFilterMaker = (
     card => colorMiscReduce(card.color_identity)
   );
 };
+
 export const makeMiscHybridFilter: colorFilterMaker = (
   value: string[] | number,
   op: looseOpType
@@ -512,6 +531,7 @@ export const makeLegalFilter: filterMaker = (value: string, op: looseOpType) => 
     card => card.legalities
   );
 };
+
 export const makeNotLegalFilter: filterMaker = (value: string, op: looseOpType) => {
   return new PassThroughSummaryFilter<HCLegalitiesField, string>(
     'notlegal',
@@ -522,6 +542,7 @@ export const makeNotLegalFilter: filterMaker = (value: string, op: looseOpType) 
     card => card.legalities
   );
 };
+
 export const makeBannedFilter: filterMaker = (value: string, op: looseOpType) => {
   return new PassThroughSummaryFilter<HCLegalitiesField, string>(
     'banned',
@@ -532,6 +553,7 @@ export const makeBannedFilter: filterMaker = (value: string, op: looseOpType) =>
     card => card.legalities
   );
 };
+
 export const makeIsFilter: filterMaker = (value: string, op: looseOpType) => {
   return new CardStringFilter('is', filterIs, value, op, '=');
 };
@@ -550,6 +572,7 @@ export const makeFaceLayoutFilter: filterMaker = (value: string, op: looseOpType
 export const makeAnyLayoutFilter: filterMaker = (value: string, op: looseOpType) => {
   return new CardStringFilter('anylayout', filterAnyLayout, value, op, '=');
 };
+
 export const makeBorderFilter: filterMaker = (value: string, op: looseOpType) => {
   return new PassThroughSummaryFilter<string, string>(
     'border',
@@ -658,6 +681,10 @@ export const filters: Record<string, filterMaker> = {
   frame: makeFrameFilter,
   showcase: makeShowcaseFilter,
   invalid: makeInvalidFilter,
+  invalidsort: makeInvalidSortFilter,
+  invalidkeyword: makeInvalidKeywordFilter,
+  invalidcolor: makeInvalidColorFilter,
+  invalidinclude: makeInvalidIncludeFilter,
 };
 export const equivSetFilterNames: Record<string, string> = {
   s: 'set',
@@ -846,6 +873,13 @@ const parseColorText = (text: string): string[] | number | undefined => {
   }
   return colorList;
 };
+
+export const filterIsInverted = (text: string, invert: boolean = false): boolean => {
+  if (text[0] == '-') {
+    return filterIsInverted(text.slice(1), !invert);
+  }
+  return false;
+};
 // make sure the thing doesn't strip quotes when passing text in to this from start and end of string when
 export const parseFilter = (text: string, invert: boolean = false): filterObject<any, any> => {
   const correctOp = (filter: filterObject<any, any>) => {
@@ -857,13 +891,14 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
         }
         case 'negate': {
           filter.inverted = !filter.inverted;
+          break;
         }
       }
     }
     return filter;
   };
   if (!text) {
-    return makeTrueFilter('', '=');
+    return makeInvalidFilter('', '=');
   }
   if (text[0] == '-') {
     return parseFilter(text.slice(1), !invert);
@@ -884,7 +919,7 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
     const correctKeyword = keyword in colorFilters ? keyword : equivColorFilterNames[keyword];
     const parsedColors = parseColorText(term);
     if (parsedColors == undefined) {
-      return makeTrueFilter('', '=');
+      return makeInvalidColorFilter(term, ':');
     }
     // using misc as a color automatically shunts the color search into a misc search
     if (
@@ -897,7 +932,7 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
     return correctOp(colorFilters[correctKeyword](parsedColors, op));
   }
   if (term) {
-    return correctOp(makeInvalidFilter(unescapeText(text), ':'));
+    return makeInvalidFilter(keyword, ':');
   }
   return correctOp(makeNameFilter(unescapeText(text), ':'));
 };

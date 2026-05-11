@@ -14,7 +14,7 @@ import {
   opType,
 } from '../types';
 import { filterNumber } from '../filterNumber';
-const MISC_BULLSHIT = 'Misc bullshit';
+const MISC_BULLSHIT = 'Misc';
 //Object.values(HCMiscColor); /**as unknown as HCColor[] */
 
 /**

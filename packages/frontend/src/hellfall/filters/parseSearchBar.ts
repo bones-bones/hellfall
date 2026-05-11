@@ -1,6 +1,12 @@
 import { HCCard } from '@hellfall/shared/types';
 import { filterObject, SetFilter, sortObject } from './filterObject';
-import { makeSort, parseFilter, splitOnFirstOp, unescapeText } from './filterBuilder';
+import {
+  filterIsInverted,
+  makeSort,
+  parseFilter,
+  splitOnFirstOp,
+  unescapeText,
+} from './filterBuilder';
 import { dirType, dirs, invertOp, sorts, sortType, getActualOp } from './types';
 
 const sortRedirects: Record<string, sortType> = {
@@ -158,7 +164,7 @@ const tokenize = (
       if (sortIsValid(token)) {
         sortList.unshift(splitOnFirstOp(tokens.splice(i, 1)[0]).term);
       } else {
-        tokens[i] = `invalid:"${token}"`;
+        tokens[i] = `invalidsort:"${splitOnFirstOp(token).term}"`;
       }
     }
     if (isInclude(token)) {
@@ -166,7 +172,7 @@ const tokenize = (
         includeExtras = true;
         tokens.splice(i, 1);
       } else {
-        tokens[i] = `invalid:"${token}"`;
+        tokens[i] = `invalidinclude:"${splitOnFirstOp(token).term}"`;
       }
     }
   }
@@ -354,12 +360,12 @@ export const parseSearchQuery = (
 ): {
   node: FilterNode;
   sortObjects: sortObject[];
-  invalids: filterObject<any, any>[];
+  invalids: [string, filterObject<any, any>][];
   summary: string;
   winnowed: sortObject[];
   includeExtras: boolean;
 } => {
-  const invalids: filterObject<any, any>[] = [];
+  const invalids: [string, filterObject<any, any>][] = [];
   const summaries: string[] = [];
   const parseTokens = (
     tokens: string[],
@@ -399,9 +405,9 @@ export const parseSearchQuery = (
       // Regular filter term
       const filter = parseFilter(token);
       i++;
-      const summary = filter.toSummary(getActualOp(filter.filter, filter.op), filter.value);
-      if (summary.charAt(0) == '!' || filter.queryName == 'invalid') {
-        invalids.push(filter);
+      const summary = filter.toSummary(filterIsInverted(token));
+      if (summary.charAt(0) == '!' || filter.queryName.startsWith('invalid')) {
+        invalids.push([token, filter]);
         return parseTerm();
       }
       if (summaries.at(-1) != ' or ' && summaries.at(-1) != '(') {
@@ -489,7 +495,7 @@ export const searchCards = (
   cards: HCCard.Any[];
   sortObjects: sortObject[];
   summary: string;
-  invalids: filterObject<any, any>[];
+  invalids: [string, filterObject<any, any>][];
   winnowed: sortObject[];
 } => {
   const { node, sortObjects, invalids, summary, winnowed, includeExtras } = parseSearchQuery(query);

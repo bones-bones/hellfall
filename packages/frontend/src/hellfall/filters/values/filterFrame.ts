@@ -530,7 +530,7 @@ export const filterCardFrame: cardStringFilter = Object.assign(
       if (frame) {
         return `the cards ${opToDont(operator)} have ${frame} frame`;
       } else {
-        return '!';
+        return `!Unknown card frame "${value}"`;
       }
     },
   }
@@ -555,7 +555,7 @@ export const filterFrameEffect: cardStringFilter = Object.assign(
       if (frame) {
         return `the cards ${opToDont(operator)} have ${frame}`;
       } else {
-        return '!';
+        return `!Unknown frame effect "${value}"`;
       }
     },
   }
@@ -577,7 +577,7 @@ export const filterFrame: cardStringFilter = Object.assign(
       } else if (frameEffect) {
         return `the cards ${opToDont(operator)} have ${frameEffect}`;
       } else {
-        return '!';
+        return `!Unknown frame "${value}"`;
       }
     },
   }
@@ -600,7 +600,7 @@ export const filterShowcase: cardStringFilter = Object.assign(
     defaultOp: '=' as opType,
     toSummary: (operator: looseOpType, value: string) => {
       if (!(value in toShowcaseFrame)) {
-        return '!';
+        return `!Unknown showcase frame "${value}"`;
       }
       const frame = toShowcaseFrame[value];
       if (Array.isArray(frame)) {
@@ -610,7 +610,7 @@ export const filterShowcase: cardStringFilter = Object.assign(
       } else if (frame) {
         return `the cards ${opToDont(operator)} have a "${frame}" showcase frame`;
       } else {
-        return '!';
+        return `!Unknown  "${value}"`;
       }
     },
   }

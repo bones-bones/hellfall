@@ -15,6 +15,10 @@ export const pageAtom = atom(parseInt(searchParams.get('page') || '0') || 0);
 
 export const activeCardAtom = atom<string>(searchParams.get('activeCard') || '');
 
+export const summaryAtom = atom<string>('');
+
+export const invalidAtom = atom<[string, string][]>([]);
+
 // export const includeExtraSetsAtom = atom(searchParams.get('includeExtraSets') == 'true');
 
 // export const idSearchAtom = atom<string>(searchParams.get('id') || '');

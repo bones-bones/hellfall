@@ -1,4 +1,4 @@
-import { HCFormat, HCLegalitiesField } from '@hellfall/shared/types';
+import { formatList, HCFormat, HCLegalitiesField } from '@hellfall/shared/types';
 import {
   funcOp,
   legalFilter,
@@ -19,7 +19,10 @@ export const filterLegal: legalFilter = Object.assign(
   {
     invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string) => `it's ${opToNot} legal in ${value}`,
+    toSummary: (operator: looseOpType, value: string) =>
+      formatList.includes(value)
+        ? `it's ${opToNot(operator)} legal in ${value}`
+        : `!Unknown format "${value}"`,
   }
 );
 export const filterBanned: legalFilter = Object.assign(
@@ -30,7 +33,10 @@ export const filterBanned: legalFilter = Object.assign(
   {
     invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string) => `it's ${opToNot} banned in ${value}`,
+    toSummary: (operator: looseOpType, value: string) =>
+      formatList.includes(value)
+        ? `it's ${opToNot(operator)} banned in ${value}`
+        : `!Unknown format "${value}"`,
   }
 );
 export const filterNotLegal: legalFilter = Object.assign(
@@ -41,7 +47,10 @@ export const filterNotLegal: legalFilter = Object.assign(
   {
     invertOption: 'flip' as invertOptionType,
     defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string) => `it's ${opToNot} notlegal in ${value}`,
+    toSummary: (operator: looseOpType, value: string) =>
+      formatList.includes(value)
+        ? `it's ${opToNot(operator)} notlegal in ${value}`
+        : `!Unknown format "${value}"`,
   }
 );
 /**

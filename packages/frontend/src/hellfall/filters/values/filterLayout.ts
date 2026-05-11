@@ -154,7 +154,7 @@ export const filterCardLayout: cardStringFilter = Object.assign(
     defaultOp: '=' as opType,
     toSummary: (operator: looseOpType, value: string) => {
       if (!(value in toCardLayout)) {
-        return '!';
+        return `!Unknown card layout "${value}"`;
       }
       const layout = toCardLayout[value];
       if (Array.isArray(layout)) {
@@ -164,7 +164,7 @@ export const filterCardLayout: cardStringFilter = Object.assign(
       } else if (layout) {
         return `the card layout is ${opToNot(operator)} "${layout.replaceAll('_', ' ')}"`;
       } else {
-        return '!';
+        return `!There was an error fetching the layout for "${value}"`;
       }
     },
   }
@@ -186,7 +186,7 @@ export const filterFaceLayout: cardStringFilter = Object.assign(
     defaultOp: '=' as opType,
     toSummary: (operator: looseOpType, value: string) => {
       if (!(value in toFaceLayout)) {
-        return '!';
+        return `!Unknown face layout "${value}"`;
       }
       const layout = toFaceLayout[value];
       if (Array.isArray(layout)) {
@@ -199,7 +199,7 @@ export const filterFaceLayout: cardStringFilter = Object.assign(
           ' '
         )}"`;
       } else {
-        return '!';
+        return `!There was an error fetching the layout for "${value}"`;
       }
     },
   }
@@ -215,7 +215,11 @@ export const filterAnyLayout: cardStringFilter = Object.assign(
     toSummary: (operator: looseOpType, value: string) => {
       const cardSum = filterCardLayout.toSummary(operator, value);
       const faceSum = filterFaceLayout.toSummary(operator, value);
-      return cardSum[0] != '!' ? cardSum : faceSum;
+      return cardSum[0] != '!'
+        ? cardSum
+        : faceSum[0] != '!'
+        ? faceSum
+        : `!Unknown layout "${value}"`;
     },
   }
 );

@@ -88,6 +88,7 @@ export const filterSort: sortFilter = Object.assign(
         }
         return value1.id < value2.id ? -dirMult : dirMult;
       }
+      case 'auto':
       case 'name': {
         if (value1.name == value2.name) {
           return 0;
@@ -96,7 +97,6 @@ export const filterSort: sortFilter = Object.assign(
       }
       case 'set':
         return (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
-      case 'auto':
       case 'setnumber':
         const set = (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
         if (!set) {

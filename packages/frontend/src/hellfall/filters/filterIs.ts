@@ -78,7 +78,7 @@ export const filterIs: cardStringFilter = Object.assign(
         case 'commander':
           return `the card can${opIsNegative(actualOp) ? "'t" : ''} be your commander`;
       }
-      return '!';
+      return `!Checking if cards are "${value}" is not supported`;
     },
   }
 );
@@ -137,7 +137,7 @@ export const filterHas: cardStringFilter = Object.assign(
         case 'frameeffects':
           return `the cards ${opToDont} have a frame effect`;
       }
-      return '!';
+      return `!Checking if cards are "${value}" is not supported`;
     },
   }
 );
