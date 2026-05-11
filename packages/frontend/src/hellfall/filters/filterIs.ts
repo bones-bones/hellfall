@@ -1,49 +1,11 @@
 import { HCCard } from '@hellfall/shared/types';
-import {
-  funcOp,
-  cardStringFilter,
-  looseOpType,
-  opType,
-  getActualOp,
-  opToNot,
-  opIsNegative,
-  opToDont,
-  invertOptionType,
-} from './types';
+import { cardStringFilter, opType, invertOptionType } from './types';
+import { funcOp, opIsNegative, opToNot, opToDont } from './filterUtils';
 import { canBeACommander } from '../canBeACommander';
-import {
-  filterCardLayout,
-  filterFaceLayout,
-  toCardLayout,
-  toFaceLayout,
-} from './values/filterLayout';
-import { filterCardFrame, filterFrame, filterFrameEffect } from './values/filterFrame';
-
-const cardFramesToParse = ['old', 'new'];
-const frameEffectsToParse = [
-  'full',
-  'fullart',
-  'extended',
-  'extendedart',
-  'vertical',
-  'verticalart',
-  'showcase',
-  'etched',
-];
 
 export const filterIs: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
+  (value1: HCCard.Any, operator: opType, value2: string) => {
     const resolveIs = (criteria: string) => {
-      if (cardFramesToParse.includes(value2)) {
-        return filterCardFrame(value1, actualOp, value2);
-      }
-      if (frameEffectsToParse.includes(value2)) {
-        return filterFrameEffect(value1, actualOp, value2);
-      }
-      if (value2 in toCardLayout) {
-        return filterCardLayout(value1, actualOp, value2);
-      }
       switch (criteria) {
         case 'foil':
           return value1.finish == 'foil';
@@ -54,47 +16,26 @@ export const filterIs: cardStringFilter = Object.assign(
       }
       return false;
     };
-    return funcOp(actualOp, resolveIs, value2);
+    return funcOp(operator, resolveIs, value2);
   },
   {
     invertOption: 'flip' as invertOptionType,
-    defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string) => {
-      const actualOp = getActualOp(filterIs, operator);
-      if (cardFramesToParse.includes(value)) {
-        return filterCardFrame.toSummary(actualOp, value);
-      }
-      if (frameEffectsToParse.includes(value)) {
-        return filterFrameEffect.toSummary(actualOp, value);
-      }
-      if (value in toCardLayout) {
-        return filterCardLayout.toSummary(actualOp, value);
-      }
+    toSummary: (operator: opType, value: string) => {
       switch (value) {
         case 'foil':
-          return `the card is ${opToNot(actualOp)} foil`;
+          return `the card is ${opToNot(operator)} foil`;
         case 'nonfoil':
-          return `the card is ${opToNot(actualOp)} nonfoil`;
+          return `the card is ${opToNot(operator)} nonfoil`;
         case 'commander':
-          return `the card can${opIsNegative(actualOp) ? "'t" : ''} be your commander`;
+          return `the card can${opIsNegative(operator) ? "'t" : ''} be your commander`;
       }
-      return `!Checking if cards are "${value}" is not supported`;
+      return `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`;
     },
   }
 );
 export const filterHas: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
+  (value1: HCCard.Any, operator: opType, value2: string) => {
     const resolveHas = (criteria: string) => {
-      if (cardFramesToParse.includes(value2)) {
-        return filterCardFrame(value1, actualOp, value2);
-      }
-      if (frameEffectsToParse.includes(value2)) {
-        return filterFrameEffect(value1, actualOp, value2);
-      }
-      if (value2 in toFaceLayout) {
-        return filterFaceLayout(value1, actualOp, value2);
-      }
       switch (criteria) {
         case 'foil':
           return value1.finish == 'foil';
@@ -109,27 +50,16 @@ export const filterHas: cardStringFilter = Object.assign(
       }
       return false;
     };
-    return funcOp(actualOp, resolveHas, value2);
+    return funcOp(operator, resolveHas, value2);
   },
   {
     invertOption: 'flip' as invertOptionType,
-    defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string) => {
-      const actualOp = getActualOp(filterIs, operator);
-      if (cardFramesToParse.includes(value)) {
-        return filterCardFrame.toSummary(actualOp, value);
-      }
-      if (frameEffectsToParse.includes(value)) {
-        return filterFrameEffect.toSummary(actualOp, value);
-      }
-      if (value in toCardLayout) {
-        return filterCardLayout.toSummary(actualOp, value);
-      }
+    toSummary: (operator: opType, value: string) => {
       switch (value) {
         case 'foil':
-          return `the card is ${opToNot(actualOp)} foil`;
+          return `the card is ${opToNot(operator)} foil`;
         case 'nonfoil':
-          return `the card is ${opToNot(actualOp)} nonfoil`;
+          return `the card is ${opToNot(operator)} nonfoil`;
         case 'indicator':
           return `the cards ${opToDont} have a color indicator`;
         case 'frameeffect':
@@ -137,7 +67,7 @@ export const filterHas: cardStringFilter = Object.assign(
         case 'frameeffects':
           return `the cards ${opToDont} have a frame effect`;
       }
-      return `!Checking if cards are "${value}" is not supported`;
+      return `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`;
     },
   }
 );

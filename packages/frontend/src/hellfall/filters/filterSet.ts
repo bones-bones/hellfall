@@ -2,54 +2,53 @@ import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
 import { extraSetList } from '@hellfall/shared/data/sets';
 import { getHc5 } from '../../hells-cubes/getHc5';
 import {
-  funcOp,
-  getActualOp,
+  includeFilter,
+  inclusionOptions,
+  inclusionType,
   invertOptionType,
-  looseOpType,
-  NOPRINT,
-  opToNot,
   opType,
-  setFilter,
-  setListFilter,
+  cardStringFilter,
 } from './types';
+import { funcOp, opIsNegative, opToNot } from './filterUtils';
 
-const excludeExtras = ['HCV.1', 'HCV.2', 'HCV.3', 'HCV.4'];
-export const filterSetCard: setFilter = Object.assign(
-  function (
-    this: setFilter,
-    value1: HCCard.Any,
-    operator: looseOpType,
-    value2: string,
-    includeExtraSets: boolean = false
-  ) {
-    const actualOp = getActualOp(this, operator);
-    const shouldExclude = (set: string) => {
-      return excludeExtras.includes(set) && !includeExtraSets && !value2.includes(set);
-    };
-    const isSetInResults = (set: string) => set.includes(value2) && !shouldExclude(set);
-    return funcOp(actualOp, isSetInResults, value1.set);
+export const filterIncludeExtras: includeFilter = Object.assign(
+  (value1: HCCard.Any, operator: opType, value2: string) => {
+    switch (value2) {
+      case 'all':
+        return !opIsNegative(operator);
+      case 'extras':
+        return opIsNegative(operator) ? !extraSetList.includes(value1.set) : true;
+      case 'nonextras':
+        return opIsNegative(operator) ? extraSetList.includes(value1.set) : true;
+    }
+    return true;
   },
   {
     invertOption: 'flip' as invertOptionType,
-    defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string) =>
-      `the set is ${opToNot(operator)} "${value}"`,
+    toSummary: (operator: opType, value: string) =>
+      inclusionOptions.includes(value as inclusionType)
+        ? ` and ${opIsNegative(operator) ? 'excluding' : 'including'} ${value} ${
+            value == 'all' ? 'cards' : ''
+          }`
+        : `!Unknown inclusion option ${value}`,
   }
 );
 
-export const filterSetToken: setFilter = Object.assign(
-  function (
-    this: setFilter,
-    value1: HCCard.Any,
-    operator: looseOpType,
-    value2: string,
-    includeExtraSets: boolean = false
-  ) {
-    const actualOp = getActualOp(this, operator);
-    const shouldExclude = (set: string) => {
-      return excludeExtras.includes(set) && !includeExtraSets && !value2.includes(set);
-    };
-    const isSetInResults = (set: string) => set.includes(value2) && !shouldExclude(set);
+export const filterSetCard: cardStringFilter = Object.assign(
+  (value1: HCCard.Any, operator: opType, value2: string) =>
+    funcOp(operator, (set: string) => set.includes(value2), value1.set),
+  {
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) => `the set is ${opToNot(operator)} "${value}"`,
+  }
+);
+
+const includeComponent = (part: HCRelatedCard) =>
+  ['token_maker', 'draft_partner'].includes(part.component);
+
+export const filterSetToken: cardStringFilter = Object.assign(
+  (value1: HCCard.Any, operator: opType, value2: string) => {
+    const isSetInResults = (set: string) => set.includes(value2);
     const shouldIncludeMeld = (part: HCRelatedCard, set: string) => {
       return part.component == 'meld_part' && part.set != set;
     };
@@ -65,101 +64,21 @@ export const filterSetToken: setFilter = Object.assign(
       }
       return Boolean(!value2.length && token.isActualToken);
     };
-    return funcOp(actualOp, tokenInSet, value1);
+    return funcOp(operator, tokenInSet, value1);
   },
   {
     invertOption: 'flip' as invertOptionType,
-    defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string) =>
+    toSummary: (operator: opType, value: string) =>
       `the token set is ${opToNot(operator)} "${value}"`,
   }
 );
 
-export const filterSetBoth: setFilter = Object.assign(
-  function (
-    this: setFilter,
-    value1: HCCard.Any,
-    operator: looseOpType,
-    value2: string,
-    includeExtraSets: boolean = false
-  ) {
-    const actualOp = getActualOp(this, operator);
-    return (
-      filterSetCard(value1, actualOp, value2, includeExtraSets) ||
-      filterSetToken(value1, actualOp, value2, includeExtraSets)
-    );
-  },
+export const filterSetBoth: cardStringFilter = Object.assign(
+  (value1: HCCard.Any, operator: opType, value2: string) =>
+    filterSetCard(value1, operator, value2) || filterSetToken(value1, operator, value2),
   {
     invertOption: 'flip' as invertOptionType,
-    defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string) =>
-      `the block is ${opToNot(operator)} "${value}"`,
-  }
-);
-
-export const filterSetListCard: setListFilter = Object.assign(
-  function (
-    this: setListFilter,
-    value1: HCCard.Any,
-    operator: looseOpType,
-    value2: string[],
-    includeExtraSets: boolean = false
-  ) {
-    const actualOp = getActualOp(this, operator);
-    if (value2.length) {
-      return value2.some(set => filterSetCard(value1, actualOp, set, includeExtraSets));
-    }
-    return funcOp(actualOp, set => !extraSetList.includes(set) || includeExtraSets, value1.set);
-  },
-  {
-    invertOption: 'flip' as invertOptionType,
-    defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string[]) => NOPRINT,
-  }
-);
-const includeComponent = (part: HCRelatedCard) => {
-  return ['token_maker', 'draft_partner'].includes(part.component);
-};
-
-export const filterSetListToken: setListFilter = Object.assign(
-  function (
-    this: setListFilter,
-    value1: HCCard.Any,
-    operator: looseOpType,
-    value2: string[],
-    includeExtraSets: boolean = false
-  ) {
-    const actualOp = getActualOp(this, operator);
-    if (value2.length) {
-      return value2.some(set => filterSetToken(value1, actualOp, set, includeExtraSets));
-    }
-    return funcOp(actualOp, card => Boolean(card.isActualToken), value1);
-  },
-  {
-    invertOption: 'flip' as invertOptionType,
-    defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string[]) => NOPRINT,
-  }
-);
-
-export const filterSetListBoth: setListFilter = Object.assign(
-  function (
-    this: setListFilter,
-    value1: HCCard.Any,
-    operator: looseOpType,
-    value2: string[],
-    includeExtraSets: boolean = false
-  ) {
-    const actualOp = getActualOp(this, operator);
-    return (
-      filterSetListCard(value1, actualOp, value2, includeExtraSets) ||
-      filterSetListToken(value1, actualOp, value2, includeExtraSets)
-    );
-  },
-  {
-    invertOption: 'flip' as invertOptionType,
-    defaultOp: '=' as opType,
-    toSummary: (operator: looseOpType, value: string[]) => NOPRINT,
+    toSummary: (operator: opType, value: string) => `the block is ${opToNot(operator)} "${value}"`,
   }
 );
 
@@ -173,7 +92,7 @@ export const filterSetListBoth: setListFilter = Object.assign(
  * @returns
  */
 export const getFilteredSet = (cards: HCCard.Any[], set: string): HCCard.Any[] => {
-  return cards.filter(card => filterSetListCard(card, '=', [set]));
+  return cards.filter(card => filterSetCard(card, '=', set));
 };
 
 /**
@@ -192,7 +111,7 @@ export const getSplitSet = (
     return { cards: getHc5(), tokens: [] };
   }
   const filteredCards = allCards.filter(card =>
-    filterSetListBoth(card, '=', set == 'All' ? [] : [set], true)
+    set == 'All' ? true : filterSetBoth(card, '=', set)
   );
   const cards = filteredCards.filter(
     entry =>

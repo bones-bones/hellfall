@@ -15,6 +15,7 @@ import { Login } from './auth/Login.tsx';
 import { useNameToId, useIsId } from './hellfall/hooks/useNameToId.ts';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 import { getBasePath } from './basePath.ts';
+import { AdvancedSearch } from './hellfall/search-controls/AdvancedSearch.tsx';
 
 const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -63,6 +64,7 @@ const ApplicationRoutes = () => {
     { path: '/land-box', element: <LandBox /> },
     { path: '/decks/*', element: <Decks /> },
     { path: '/', element: <HellFall /> },
+    { path: '/advanced', element: <AdvancedSearch /> },
     {
       path: '/card/*',
       element: <CardRoute />,

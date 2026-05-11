@@ -1,13 +1,15 @@
 import { HCCard } from '@hellfall/shared/types';
-import { filterObject, SetFilter, sortObject } from './filterObject';
+import { filterObject, IncludeFilter, sortObject } from './filterObject';
 import {
   filterIsInverted,
+  makeIncludeFilter,
   makeSort,
   parseFilter,
   splitOnFirstOp,
   unescapeText,
 } from './filterBuilder';
-import { dirType, dirs, invertOp, sorts, sortType, getActualOp } from './types';
+import { dirType, dirs, sorts, sortType, inclusionOptions } from './types';
+import { filterIncludeExtras } from './filterSet';
 
 const sortRedirects: Record<string, sortType> = {
   mv: 'manavalue',
@@ -63,15 +65,13 @@ const isInclude = (text: string): boolean => {
     return isInclude(text.slice(1));
   }
   const { keyword } = splitOnFirstOp(text);
-  return keyword == 'include';
+  return keyword == 'include' || keyword == 'exclude';
 };
 const includeIsValid = (text: string): boolean => {
   const { term } = splitOnFirstOp(text);
-  return term == 'extras';
+  return term in inclusionOptions;
 };
-const tokenize = (
-  query: string
-): { tokens: string[]; sortList: string[]; includeExtras: boolean } => {
+const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
   const tokens: string[] = [];
   const len = query.length;
   let currentTerm = '';
@@ -85,7 +85,7 @@ const tokenize = (
       i++;
       continue;
     }
-    if (char == '-' && (i == 0 || charBreakList.includes(query[i - 1]))) {
+    if (char == '-' && (i == query.length - 1 || charBreakList.includes(query[i + 1]))) {
       tokens.push(char);
       i++;
       continue;
@@ -157,7 +157,6 @@ const tokenize = (
     tokens.push(currentTerm);
   }
   const sortList: string[] = [];
-  let includeExtras = false;
   for (let i = tokens.length - 1; i >= 0; i--) {
     const token = tokens[i];
     if (isSortFilter(token)) {
@@ -167,16 +166,11 @@ const tokenize = (
         tokens[i] = `invalidsort:"${splitOnFirstOp(token).term}"`;
       }
     }
-    if (isInclude(token)) {
-      if (includeIsValid(token)) {
-        includeExtras = true;
-        tokens.splice(i, 1);
-      } else {
-        tokens[i] = `invalidinclude:"${splitOnFirstOp(token).term}"`;
-      }
-    }
+    // if (isInclude(token)) {
+    //   includeList.unshift(splitOnFirstOp(tokens.splice(i, 1)[0]).term);
+    // }
   }
-  return { tokens, sortList, includeExtras };
+  return { tokens, sortList };
 };
 
 const correctSort = (text: string): sortType => {
@@ -360,19 +354,20 @@ export const parseSearchQuery = (
 ): {
   node: FilterNode;
   sortObjects: sortObject[];
+  includeList: IncludeFilter[];
   invalids: [string, filterObject<any, any>][];
   summary: string;
   winnowed: sortObject[];
-  includeExtras: boolean;
+  autoFilterExtras: boolean;
 } => {
   const invalids: [string, filterObject<any, any>][] = [];
   const summaries: string[] = [];
+  const includeList: IncludeFilter[] = [];
+  let autoFilterExtras = true;
   const parseTokens = (
     tokens: string[],
     start: number = 0
   ): { node: FilterNode; nextPos: number } => {
-    // const children: FilterNode[] = [];
-    // let currentMode: 'and' | 'or' = 'and';
     let i = start;
     let leftNode: FilterNode | null = null;
     const parseTerm = (): FilterNode | null => {
@@ -404,10 +399,18 @@ export const parseSearchQuery = (
 
       // Regular filter term
       const filter = parseFilter(token);
+      if (['set', 'tokenset', 'block'].includes(filter.queryName)) {
+        autoFilterExtras = false;
+      }
       i++;
       const summary = filter.toSummary(filterIsInverted(token));
       if (summary.charAt(0) == '!' || filter.queryName.startsWith('invalid')) {
         invalids.push([token, filter]);
+        return parseTerm();
+      }
+      if (filter.queryName == 'includes') {
+        autoFilterExtras = false;
+        includeList.push(filter);
         return parseTerm();
       }
       if (summaries.at(-1) != ' or ' && summaries.at(-1) != '(' && summaries.at(-1) != ' and ') {
@@ -449,7 +452,7 @@ export const parseSearchQuery = (
     }
     return { node: leftNode || { type: 'and', children: [] }, nextPos: i };
   };
-  const { tokens, sortList, includeExtras } = tokenize(query);
+  const { tokens, sortList } = tokenize(query);
   const { node } = parseTokens(tokens, 0);
   const { sortList: sortObjects, winnowed } = winnowSortObjects(parseSorts(sortList));
   while ([' not ', ' and ', ' or '].includes(summaries.at(-1) ?? '')) {
@@ -458,8 +461,9 @@ export const parseSearchQuery = (
   while ([' and ', ' or '].includes(summaries.at(0) ?? '')) {
     summaries.shift();
   }
-  const summary = trimLeading(summaries.join(''));
-  return { node, sortObjects, invalids, summary, winnowed, includeExtras };
+  includeList.forEach(filter => summaries.push(filter.toSummary()));
+  const summary = summaries.join('');
+  return { node, sortObjects, includeList, invalids, summary, winnowed, autoFilterExtras };
 };
 
 export const evaluateFilter = (node: FilterNode, card: HCCard.Any): boolean => {
@@ -475,37 +479,9 @@ export const evaluateFilter = (node: FilterNode, card: HCCard.Any): boolean => {
   }
 };
 
-export const setIncludeExtras = (node: FilterNode, includeExtras: boolean) => {
-  switch (node.type) {
-    case 'filter':
-      if (node.filter instanceof SetFilter) {
-        node.filter.includeExtras = includeExtras;
-      }
-      break;
-    case 'not':
-      setIncludeExtras(node.child, includeExtras);
-      break;
-    case 'and':
-    case 'or':
-      node.children.forEach(child => setIncludeExtras(child, includeExtras));
-      break;
-  }
-};
-
-const trimLeading = (text: string) => {
-  let ret = text;
-  // while (ret.startsWith('and ')) {
-  //   ret = ret.replace('and ','')
-  // }
-  // while (ret.startsWith('or ')) {
-  //   ret = ret.replace('or ','')
-  // }
-  return ret;
-};
 export const searchCards = (
   cards: HCCard.Any[],
-  query: string,
-  includeExtrasIn: boolean = false
+  query: string
 ): {
   cards: HCCard.Any[];
   sortObjects: sortObject[];
@@ -513,13 +489,19 @@ export const searchCards = (
   invalids: [string, filterObject<any, any>][];
   winnowed: sortObject[];
 } => {
-  const { node, sortObjects, invalids, summary, winnowed, includeExtras } = parseSearchQuery(query);
-  if (includeExtrasIn || includeExtras) {
-    setIncludeExtras(node, true);
-  }
+  const { node, sortObjects, includeList, invalids, summary, winnowed, autoFilterExtras } =
+    parseSearchQuery(query);
+  const newCardsWithExtras = cards.filter(
+    card => evaluateFilter(node, card) && includeList.every(filter => filter.cardPassesFilter(card))
+  );
+  const excludeExtras = makeIncludeFilter('extras', '!:');
+  const newCardsWithoutExtras = newCardsWithExtras.filter(card =>
+    excludeExtras.cardPassesFilter(card)
+  );
 
   return {
-    cards: cards.filter(card => evaluateFilter(node, card)),
+    cards:
+      autoFilterExtras && newCardsWithoutExtras.length ? newCardsWithoutExtras : newCardsWithExtras,
     sortObjects,
     summary,
     invalids,

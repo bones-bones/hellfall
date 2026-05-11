@@ -122,6 +122,7 @@ export const SortComponent = () => {
               <StyledSelect
                 style={{ width: '135px' }}
                 value={'auto'}
+                // TODO: Change cursor and alt text when disabled
                 disabled={false}
                 options={ALL_SORT_OPTIONS}
                 onChange={e => handleSortChange(0, e.target.value as sortType)}

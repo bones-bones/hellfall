@@ -71,7 +71,7 @@ export const useSearchResults = () => {
     }
 
     for (let i = sortList.length - 1; i >= 0; i--) {
-      tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortList[i].filter(a, ':', b));
+      tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortList[i].filter(a, '=', b));
     }
     setResultSet(tempResults);
     setSummary(summary);

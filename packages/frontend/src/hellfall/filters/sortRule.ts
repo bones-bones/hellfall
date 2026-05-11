@@ -11,19 +11,6 @@ import {
 } from './types';
 import { allSetsList } from '@hellfall/shared/data/sets';
 
-// const getSortString = (card: HCCard.Any) => {
-//   const cardColors = card.toFaces()[0]?.colors || [];
-//   return (
-//     (cardColors.length == 0
-//       ? 1_000_000
-//       : cardColors.reduce((curr, next) => curr + (colorSortValue[next] || 10_000_000), 0)
-//     )
-//       .toString()
-//       .padStart(8, '0') +
-//     (card.mana_value || 0).toString().padStart(3) +
-//     card.name
-//   );
-// };
 const colorSortValue: Record<HCColor, number> = {
   W: 1,
   U: 10,
@@ -120,9 +107,8 @@ export const filterSort: sortFilter = Object.assign(
   },
   {
     invertOption: 'ignore' as invertOptionType,
-    defaultOp: '=' as opType,
     sort: 'id' as sortType,
     dir: 'asc' as dirType,
-    toSummary: (operator: looseOpType, value: HCCard.Any) => NOPRINT,
+    toSummary: (operator: opType, value: HCCard.Any) => NOPRINT,
   }
 );

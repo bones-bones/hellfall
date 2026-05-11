@@ -1,14 +1,6 @@
-import { HCBorderColor, HCCard } from '@hellfall/shared/types';
-import {
-  funcOp,
-  cardStringFilter,
-  looseOpType,
-  opType,
-  textFilter,
-  getActualOp,
-  opToNot,
-  invertOptionType,
-} from '../types';
+import { HCBorderColor } from '@hellfall/shared/types';
+import { opType, textFilter, invertOptionType } from '../types';
+import { funcOp, opToNot } from '../filterUtils';
 const toBorder: Record<string, HCBorderColor> = {
   black: HCBorderColor.Black,
   white: HCBorderColor.White,
@@ -26,21 +18,15 @@ const toBorder: Record<string, HCBorderColor> = {
   red: HCBorderColor.Red,
 };
 export const filterBorder: textFilter = Object.assign(
-  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    return funcOp(
-      actualOp,
-      border => (border in toBorder ? value1 == toBorder[border] : false),
+  (value1: string, operator: opType, value2: string) =>
+    funcOp(
+      operator,
+      (border: string) => (border in toBorder ? value1 == toBorder[border] : false),
       value2
-    );
-  },
+    ),
   {
     invertOption: 'flip' as invertOptionType,
-    defaultOp: '=' as opType,
-    toString: () => {
-      ('');
-    },
-    toSummary: (operator: looseOpType, value: string) => {
+    toSummary: (operator: opType, value: string) => {
       if (value in toBorder) {
         // TODO: Make sure this doesn't cause double spaces
         return `the border color is ${opToNot(operator)} "${toBorder[value]}"`;
