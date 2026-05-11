@@ -24,11 +24,7 @@ export const Header = () => {
           </Navigation>
           {!user ? (
             <AuthBlock>
-              {loginUrl ? (
-                <a href={loginUrl}>login</a>
-              ) : (
-                <Link to="/login">login</Link>
-              )}
+              {loginUrl ? <a href={loginUrl}>login</a> : <Link to="/login">login</Link>}
             </AuthBlock>
           ) : user && logoutUrl ? (
             <AuthBlock>

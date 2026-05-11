@@ -21,7 +21,8 @@ async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchRes
     credentials: 'include',
   });
   if (!res.ok) {
-    if (res.status === 401 || res.status === 403) return { added: [], removed: [], persistEnabled: false };
+    if (res.status === 401 || res.status === 403)
+      return { added: [], removed: [], persistEnabled: false };
     throw new Error('Failed to load tag overrides');
   }
   const data = (await res.json()) as {
@@ -49,7 +50,7 @@ export function useCardTagOverrides(
   (tag: string) => Promise<void>,
   boolean,
   Error | null,
-  boolean,
+  boolean
 ] {
   const baseUrl = getAuthApiUrl();
   const [overrides, setOverrides] = React.useState<CardTagOverrides | null>(null);

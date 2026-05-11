@@ -49,7 +49,7 @@ export const SortComponent = () => {
     if (!sortRules.length) {
       handleAddInput();
     }
-    const newInputs = sortRules.length ? [...inputSorts]:['auto,auto'];
+    const newInputs = sortRules.length ? [...inputSorts] : ['auto,auto'];
     newInputs[index] = `${newSort},${parseDir(inputSorts[index] ?? 'auto')}`;
     setInputSorts(newInputs);
   };
@@ -57,7 +57,7 @@ export const SortComponent = () => {
     if (!sortRules.length) {
       handleAddInput();
     }
-    const newInputs = sortRules.length ? [...inputSorts]:['auto,auto'];
+    const newInputs = sortRules.length ? [...inputSorts] : ['auto,auto'];
     newInputs[index] = `${parseSort(inputSorts[index] ?? 'auto')},${newDir}`;
     setInputSorts(newInputs);
   };
@@ -91,67 +91,122 @@ export const SortComponent = () => {
 
   return (
     <Container>
-      <FormField label="Sort By" style={{ whiteSpace: 'nowrap' }}>
-        {sortRules.length ? (
-          sortRules.map((rule, i) => {
-            const available = getAvailableOptions(i);
-            return (
-              <>
-                <Select
-                  style={{ width: '135px' }}
-                  value={rule.sort}
-                  disabled={sortIsOverriden(i)}
-                  options={ALL_SORT_OPTIONS.filter(opt => available.includes(opt.value))}
-                  onChange={e => handleSortChange(i, e.target.value as sortType)}
-                />
-                <span> : </span>
-                <Select
-                  style={{ width: '85px' }}
-                  value={rule.dir}
-                  disabled={dirIsOverriden(i)}
-                  options={DIR_OPTIONS}
-                  onChange={e => handleDirChange(i, e.target.value as dirType)}
-                />
-                {i != sortRules.length - 1 && <span> then </span>}
-              </>
-            );
-          })
-        ) : (
+      <FormField label="Sort By">
+        <SortElements>
+          {sortRules.length ? (
+            sortRules.map((rule, i) => {
+              const available = getAvailableOptions(i);
+              return (
+                <>
+                  <StyledSelect
+                    style={{ width: '135px' }}
+                    value={rule.sort}
+                    disabled={sortIsOverriden(i)}
+                    options={ALL_SORT_OPTIONS.filter(opt => available.includes(opt.value))}
+                    onChange={e => handleSortChange(i, e.target.value as sortType)}
+                  />
+                  <span> : </span>
+                  <StyledSelect
+                    style={{ width: '85px' }}
+                    value={rule.dir}
+                    disabled={dirIsOverriden(i)}
+                    options={DIR_OPTIONS}
+                    onChange={e => handleDirChange(i, e.target.value as dirType)}
+                  />
+                  {i != sortRules.length - 1 && <span> then </span>}
+                </>
+              );
+            })
+          ) : (
+            <>
+              <StyledSelect
+                style={{ width: '135px' }}
+                value={'auto'}
+                disabled={false}
+                options={ALL_SORT_OPTIONS}
+                onChange={e => handleSortChange(0, e.target.value as sortType)}
+              />
+              <span> : </span>
+              <StyledSelect
+                style={{ width: '85px' }}
+                value={'auto'}
+                disabled={false}
+                options={DIR_OPTIONS}
+                onChange={e => handleDirChange(0, e.target.value as dirType)}
+              />
+            </>
+          )}
           <>
-            <Select
-              style={{ width: '135px' }}
-              value={'auto'}
-              disabled={false}
-              options={ALL_SORT_OPTIONS}
-              onChange={e => handleSortChange(0, e.target.value as sortType)}
-            />
-            <span> : </span>
-            <Select
-              style={{ width: '85px' }}
-              value={'auto'}
-              disabled={false}
-              options={DIR_OPTIONS}
-              onChange={e => handleDirChange(0, e.target.value as dirType)}
-            />
-          </>
-        )}
-        <>
-          <SecondaryButton
+            {/* <SecondaryButton
             icon={plusIcon}
             aria-label="Add sort rule"
             onClick={handleAddInput}
             disabled={!canAddInput}
+            marginX='4px'
+            borderRadius='m'
+            verticalAlign='top'
           />
           <SecondaryButton
             icon={minusIcon}
             aria-label="Remove sort rule"
             onClick={handleDelInput}
             disabled={!canDelInput}
-          />
-        </>
+            borderRadius='m'
+            verticalAlign='top'
+          /> */}
+            <ButtonGroup>
+              <CompactButton
+                icon={plusIcon}
+                aria-label="Add sort rule"
+                onClick={handleAddInput}
+                disabled={!canAddInput}
+              />
+              <CompactButton
+                icon={minusIcon}
+                aria-label="Remove sort rule"
+                onClick={handleDelInput}
+                disabled={!canDelInput}
+              />
+            </ButtonGroup>
+          </>
+        </SortElements>
       </FormField>
     </Container>
   );
 };
 
-const Container = styled('div')({ paddingLeft: space.l, width: '20px' });
+const Container = styled('div')({ paddingLeft: space.l, alignItems: 'center' });
+const StyledSelect = styled(Select)({
+  verticalAlign: 'top',
+  display: 'inline-block',
+});
+const SortElements = styled('div')({ lineHeight: '45px', verticalAlign: 'top' });
+const CompactButton = styled(SecondaryButton)({
+  width: '20px', // Fixed small width
+  height: '20px', // Fixed small height
+  minWidth: '20px', // Override any min-width
+  padding: 0, // Remove padding
+  display: 'block',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: '4px',
+  verticalAlign: 'top',
+
+  svg: {
+    width: '14px', // Smaller icon
+    height: '14px',
+    display: 'block',
+    margin: '2px 0px 0px 2px',
+    alignSelf: 'center',
+    verticalAlign: 'top',
+  },
+});
+const ButtonGroup = styled('div')({
+  display: 'inline-block',
+  flexDirection: 'column', // Stack vertically
+  // gap: '4px',               // Space between buttons
+  marginLeft: '4px', // Optional spacing from the selectors
+  verticalAlign: 'top',
+});
+
+// const AlignedButton = styled(SecondaryButton)({ display: 'block', transform: 'scale(0.5)', alignItems:'center',verticalAlign:'top',svg:{verticalAlign:'middle', display: 'inline-block'}})

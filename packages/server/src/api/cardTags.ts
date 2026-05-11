@@ -1,8 +1,8 @@
-import { Firestore, type DocumentReference, type DocumentSnapshot } from "@google-cloud/firestore";
-import { withCors } from "./lib/cors.js";
-import { env } from "./lib/env.js";
-import type { HandlerRequest, HandlerResponse } from "./lib/types.js";
-import { requireTagAuth } from "./lib/requireTagAuth.js";
+import { Firestore, type DocumentReference, type DocumentSnapshot } from '@google-cloud/firestore';
+import { withCors } from './lib/cors.js';
+import { env } from './lib/env.js';
+import type { HandlerRequest, HandlerResponse } from './lib/types.js';
+import { requireTagAuth } from './lib/requireTagAuth.js';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_HELLSCUBE_DATABASE_ID });
 const collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
@@ -17,11 +17,10 @@ async function getOrSeedCardTagsDoc(docRef: DocumentReference): Promise<Document
   return snap;
 }
 
-
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
   for await (const chunk of req) chunks.push(chunk);
-  const body = Buffer.concat(chunks).toString("utf-8");
+  const body = Buffer.concat(chunks).toString('utf-8');
   return body ? JSON.parse(body) : {};
 }
 
@@ -37,10 +36,10 @@ export const cardTagsHandler = async (
   cardId: string,
   tagFromPath: string | null
 ): Promise<void> => {
-  const headers = withCors({ "Content-Type": "application/json" }, req);
+  const headers = withCors({ 'Content-Type': 'application/json' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     res.statusCode = 204;
     res.end();
     return;
@@ -49,13 +48,13 @@ export const cardTagsHandler = async (
   try {
     if (!cardId || cardId.length > 200) {
       res.statusCode = 400;
-      res.end(JSON.stringify({ ok: false, reason: "invalid_card_id" }));
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_card_id' }));
       return;
     }
 
     const docRef = collection.doc(cardId);
 
-    if (req.method === "GET") {
+    if (req.method === 'GET') {
       const snap = await getOrSeedCardTagsDoc(docRef);
       const data = snap.data() as CardTagOverrides | undefined;
       const added = Array.isArray(data?.added) ? data.added.map(String) : [];
@@ -66,7 +65,7 @@ export const cardTagsHandler = async (
         body = JSON.stringify(payload);
       } catch {
         res.statusCode = 500;
-        res.end(JSON.stringify({ ok: false, reason: "invalid_stored_data" }));
+        res.end(JSON.stringify({ ok: false, reason: 'invalid_stored_data' }));
         return;
       }
       res.statusCode = 200;
@@ -77,20 +76,20 @@ export const cardTagsHandler = async (
     const auth = await requireTagAuth(req, res);
     if (!auth) return;
 
-    if (req.method === "POST") {
+    if (req.method === 'POST') {
       let body: { tag?: string };
       try {
         body = (await readJsonBody(req)) as { tag?: string };
       } catch {
         res.statusCode = 400;
-        res.end(JSON.stringify({ ok: false, reason: "invalid_json" }));
+        res.end(JSON.stringify({ ok: false, reason: 'invalid_json' }));
         return;
       }
-      const tag = body.tag != null ? String(body.tag) : "";
+      const tag = body.tag != null ? String(body.tag) : '';
       const norm = normalizeTag(tag);
       if (!norm) {
         res.statusCode = 400;
-        res.end(JSON.stringify({ ok: false, reason: "tag_required" }));
+        res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
         return;
       }
       const snap = await getOrSeedCardTagsDoc(docRef);
@@ -108,12 +107,12 @@ export const cardTagsHandler = async (
       return;
     }
 
-    if (req.method === "DELETE") {
-      const tag = tagFromPath != null ? decodeURIComponent(tagFromPath) : "";
+    if (req.method === 'DELETE') {
+      const tag = tagFromPath != null ? decodeURIComponent(tagFromPath) : '';
       const norm = normalizeTag(tag);
       if (!norm) {
         res.statusCode = 400;
-        res.end(JSON.stringify({ ok: false, reason: "tag_required" }));
+        res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
         return;
       }
       const snap = await getOrSeedCardTagsDoc(docRef);
@@ -132,13 +131,13 @@ export const cardTagsHandler = async (
     }
 
     res.statusCode = 405;
-    res.setHeader("Allow", "GET, POST, DELETE, OPTIONS");
+    res.setHeader('Allow', 'GET, POST, DELETE, OPTIONS');
     res.end();
   } catch (err) {
-    console.error("cardTagsHandler", err);
+    console.error('cardTagsHandler', err);
 
     if (res.writableEnded) return;
     res.statusCode = 500;
-    res.end(JSON.stringify({ ok: false, reason: "server_error" }));
+    res.end(JSON.stringify({ ok: false, reason: 'server_error' }));
   }
 };

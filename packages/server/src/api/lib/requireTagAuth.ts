@@ -1,8 +1,8 @@
-import type { HandlerRequest, HandlerResponse } from "./types.js";
-import { env } from "./env.js";
-import { verifySessionToken } from "./jwt.js";
-import { getUserAsGuildMember } from "./discord/discord.js";
-import { DATABASE_CONTRIBUTOR } from "../discord/constants.js";
+import type { HandlerRequest, HandlerResponse } from './types.js';
+import { env } from './env.js';
+import { verifySessionToken } from './jwt.js';
+import { getUserAsGuildMember } from './discord/discord.js';
+import { DATABASE_CONTRIBUTOR } from '../discord/constants.js';
 
 function getCookie(req: HandlerRequest, name: string): string | null {
   const raw = req.headers.cookie;
@@ -19,21 +19,21 @@ export async function requireTagAuth(
   const token = getCookie(req, env.COOKIE_NAME);
   if (!token) {
     res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: "invalid_session" }));
+    res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
     return null;
   }
 
   const payload = await verifySessionToken(token);
   if (!payload) {
     res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: "invalid_session" }));
+    res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
     return null;
   }
 
   const roleId = DATABASE_CONTRIBUTOR;
   if (!roleId) {
     res.statusCode = 500;
-    res.end(JSON.stringify({ ok: false, reason: "role_not_configured" }));
+    res.end(JSON.stringify({ ok: false, reason: 'role_not_configured' }));
     return null;
   }
 
@@ -41,27 +41,27 @@ export async function requireTagAuth(
   const discordAccessToken = payload.discord_access_token as string | undefined;
   if (!guildId || !discordAccessToken) {
     res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: "invalid_session" }));
+    res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
     return null;
   }
 
   const candidateRoleId = env.DISCORD_TAG_ROLE_ID ?? roleId;
 
   const guild = await getUserAsGuildMember(discordAccessToken, guildId);
-  if (guild.kind === "oauth_invalid") {
+  if (guild.kind === 'oauth_invalid') {
     res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: "discord_oauth_expired" }));
+    res.end(JSON.stringify({ ok: false, reason: 'discord_oauth_expired' }));
     return null;
   }
-  if (guild.kind === "not_member") {
+  if (guild.kind === 'not_member') {
     res.statusCode = 403;
-    res.end(JSON.stringify({ ok: false, reason: "not_in_guild" }));
+    res.end(JSON.stringify({ ok: false, reason: 'not_in_guild' }));
     return null;
   }
 
   if (!guild.roles.includes(candidateRoleId)) {
     res.statusCode = 403;
-    res.end(JSON.stringify({ ok: false, reason: "missing_role" }));
+    res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
     return null;
   }
 

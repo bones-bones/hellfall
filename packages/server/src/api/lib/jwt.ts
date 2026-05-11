@@ -1,5 +1,5 @@
-import * as jose from "jose";
-import { env } from "./env.js";
+import * as jose from 'jose';
+import { env } from './env.js';
 
 export interface SessionPayload {
   sub: string; // Discord user id
@@ -12,9 +12,11 @@ export interface SessionPayload {
   iss?: string;
 }
 
-const ALG = "HS256";
+const ALG = 'HS256';
 
-export async function createSessionToken(payload: Omit<SessionPayload, "iat" | "exp" | "iss">): Promise<string> {
+export async function createSessionToken(
+  payload: Omit<SessionPayload, 'iat' | 'exp' | 'iss'>
+): Promise<string> {
   const secret = new TextEncoder().encode(env.JWT_SECRET);
   const claims: Record<string, unknown> = {
     sub: payload.sub,
@@ -28,7 +30,7 @@ export async function createSessionToken(payload: Omit<SessionPayload, "iat" | "
     .setIssuer(env.JWT_ISSUER)
     .setSubject(payload.sub)
     .setIssuedAt()
-    .setExpirationTime("7d")
+    .setExpirationTime('7d')
     .sign(secret);
 }
 
@@ -40,7 +42,7 @@ export async function verifySessionToken(token: string): Promise<SessionPayload 
     });
     return {
       sub: payload.sub as string,
-      username: (payload.username as string) ?? "",
+      username: (payload.username as string) ?? '',
       avatar: (payload.avatar as string | null) ?? null,
       email: (payload.email as string | null) ?? null,
       discord_access_token: payload.discord_access_token as string | undefined,
