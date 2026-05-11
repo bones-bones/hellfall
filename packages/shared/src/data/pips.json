@@ -684,9 +684,9 @@
       "no_shadow": true
     },
     {
-      "filename": "mono/misc/Church.png",
-      "symbol": "Church",
-      "english": "one church (white) mana",
+      "filename": "mono/misc/Cross.png",
+      "symbol": "Cross",
+      "english": "one cross (white) mana",
       "represents_mana": true,
       "mana_value": 1,
       "colors": [

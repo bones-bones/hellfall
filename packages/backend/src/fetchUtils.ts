@@ -11,12 +11,19 @@ import { setDerivedProps } from './derivedProps';
 
 export type propType = keyof HCCard.Any;
 export type valueType<K extends propType> = HCCard.Any[K];
-export type arrayElementType<K extends propType> = HCCard.Any[K] extends Array<infer U> ? U : never;
+export type arrayElementType<K extends keyof HCCard.Any> = Exclude<
+  HCCard.Any[K],
+  undefined
+> extends Array<infer U>
+  ? U
+  : never;
+// not working with optional arguments. why not?
 export type facePropType = keyof HCCardFace.MultiFaced;
 export type faceValueType<K extends facePropType> = HCCardFace.MultiFaced[K];
-export type faceArrayElementType<K extends facePropType> = HCCardFace.MultiFaced[K] extends Array<
-  infer U
->
+export type faceArrayElementType<K extends keyof HCCardFace.MultiFaced> = Exclude<
+  HCCardFace.MultiFaced[K],
+  undefined
+> extends Array<infer U>
   ? U
   : never;
 // export type cardObjectType = Record<propType, valueType<propType>> & { card_faces: Record<facePropType, faceValueType<facePropType>>[], all_parts?: Record<partPropType, partValueType<partPropType>>[]}

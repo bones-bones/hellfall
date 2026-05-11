@@ -102,9 +102,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     }
   });
 
-  const defaultProps: {
-    [P in propType]?: valueType<P>;
-  } = {
+  const defaultProps: { [P in propType]?: valueType<P> } = {
     object: HCObject.ObjectType.Card,
     name: '',
     set: '',
@@ -128,9 +126,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     variation: false,
   };
 
-  const defaultFaceProps: {
-    [P in facePropType]?: faceValueType<P>;
-  } = {
+  const defaultFaceProps: { [P in facePropType]?: faceValueType<P> } = {
     object: HCObject.ObjectType.CardFace,
     mana_cost: '',
     mana_value: 0,

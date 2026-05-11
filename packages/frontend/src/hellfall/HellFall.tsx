@@ -18,6 +18,7 @@ import { cardsAtom } from './atoms/cardsAtom.ts';
 import { useUrlSync } from './hooks/useUrlSync.ts';
 import { getOtherNames } from './getNames.ts';
 import { withBasePath } from '../basePath.ts';
+import { SearchBar } from './search-controls/SearchBar.tsx';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,6 +38,7 @@ export const HellFall = () => {
       setActiveCardFromAtom('');
     }
   }, [escape]);
+  useEffect(() => {});
 
   const [page, setPage] = useAtom(pageAtom);
   const { resultSet, paginationModel } = useSearchResults();
@@ -78,8 +80,9 @@ export const HellFall = () => {
         </Card>
       </StyledSidePanel>
       <br />
-      {/* <SearchControls />
-      <br /> */}
+      {/* <SearchControls /> */}
+      <SearchBar />
+      <br />
       <SortComponent />
       <ResultCount ref={containerRef}>{`${resultSet.length} card(s)`}</ResultCount>
       <Container>

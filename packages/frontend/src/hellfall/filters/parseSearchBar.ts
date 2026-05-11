@@ -3,6 +3,25 @@ import { filterObject, SetFilter, sortObject } from './filterObject';
 import { makeSort, parseFilter, splitOnFirstOp, unescapeText } from './filterBuilder';
 import { dirType, dirs, invertOp, sorts, sortType, getActualOp } from './types';
 
+const sortRedirects: Record<string, sortType> = {
+  mv: 'manavalue',
+  cmc: 'manavalue',
+  cn: 'number',
+  num: 'number',
+  setcn: 'setnumber',
+  setnum: 'setnumber',
+  colormv: 'colormanavalue',
+  colorcmc: 'colormanavalue',
+  setreview: 'colormanavalue',
+};
+const dirRedirects: Record<string, dirType> = {
+  a: 'asc',
+  up: 'asc',
+  u: 'asc',
+  d: 'desc',
+  down: 'desc',
+};
+
 export type FilterNode =
   | { type: 'filter'; filter: filterObject<any, any> }
   | { type: 'not'; child: FilterNode }
@@ -11,33 +30,37 @@ export type FilterNode =
 const tokenList = ['(', ')', 'or', '-'];
 const charBreakList = ['(', ')', ' '];
 
-const isSort = (text: string): boolean => {
+const isSortFilter = (text: string): boolean => {
   if (text.charAt(0) == '-') {
-    return isSort(text.slice(1));
+    return isSortFilter(text.slice(1));
   }
-  const { keyword } = splitOnFirstOp(unescapeText(text));
+  const { keyword } = splitOnFirstOp(text);
   return ['sort', 'order', 'dir', 'direction'].includes(keyword);
 };
+
+const isSort = (text: string): boolean => sorts.includes(text as sortType) || text in sortRedirects;
+const isDir = (text: string): boolean => dirs.includes(text as dirType) || text in dirRedirects;
 const sortIsValid = (text: string): boolean => {
-  const { term } = splitOnFirstOp(unescapeText(text));
-  if (term.includes(',')) {
-    const [sort, dir] = term.split(',', 2);
-    return sorts.includes(sort as sortType) && dirs.includes(dir as dirType);
-  }
-  if (term == 'auto') {
+  const { term } = splitOnFirstOp(text);
+  // TODO: add multi in one term option?
+  if (term.includes('auto')) {
     return false;
   }
-  return sorts.includes(term as sortType) && dirs.includes(term as dirType);
+  if (term.includes(',')) {
+    const [sort, dir] = term.split(',', 2);
+    return isSort(sort) && isDir(dir);
+  }
+  return isSort(term) || isDir(term);
 };
 const isInclude = (text: string): boolean => {
   if (text.charAt(0) == '-') {
-    return isSort(text.slice(1));
+    return isInclude(text.slice(1));
   }
-  const { keyword } = splitOnFirstOp(unescapeText(text));
+  const { keyword } = splitOnFirstOp(text);
   return keyword == 'include';
 };
 const includeIsValid = (text: string): boolean => {
-  const { term } = splitOnFirstOp(unescapeText(text));
+  const { term } = splitOnFirstOp(text);
   return term == 'extras';
 };
 const tokenize = (
@@ -127,13 +150,13 @@ const tokenize = (
   if (currentTerm) {
     tokens.push(currentTerm);
   }
-  const sortList = [];
+  const sortList: string[] = [];
   let includeExtras = false;
   for (let i = tokens.length - 1; i >= 0; i--) {
     const token = tokens[i];
-    if (isSort(token)) {
+    if (isSortFilter(token)) {
       if (sortIsValid(token)) {
-        sortList.unshift(...tokens.splice(i, 1));
+        sortList.unshift(splitOnFirstOp(tokens.splice(i, 1)[0]).term);
       } else {
         tokens[i] = `invalid:"${token}"`;
       }
@@ -150,29 +173,182 @@ const tokenize = (
   return { tokens, sortList, includeExtras };
 };
 
-const parseSorts = (sortList: string[]): sortObject[] => {
+const correctSort = (text: string): sortType => {
+  if (text in sortRedirects) {
+    return sortRedirects[text];
+  }
+  return text as sortType;
+};
+const correctDir = (text: string): dirType => {
+  if (text in dirRedirects) {
+    return dirRedirects[text];
+  }
+  return text as dirType;
+};
+export const parseSorts = (sortList: string[]): sortObject[] => {
   const sortObs: sortObject[] = [];
   for (let i = 0; i < sortList.length; i++) {
-    const { term } = splitOnFirstOp(unescapeText(sortList[i]));
+    const term = sortList[i];
     if (term.includes(',')) {
       const [sort, dir] = term.split(',', 2);
-      sortObs.push(makeSort(sort as sortType, dir as dirType));
-    } else if (sorts.includes(term as sortType)) {
+      sortObs.push(makeSort(correctSort(sort), correctDir(dir)));
+    } else if (isSort(term)) {
       if (i < sortList.length - 1) {
-        const { term: dir } = splitOnFirstOp(unescapeText(sortList[i + 1]));
-        if (dirs.includes(dir as dirType)) {
-          sortObs.push(makeSort(term as sortType, dir as dirType));
+        const dir = sortList[i + 1];
+        if (isDir(dir)) {
+          sortObs.push(makeSort(correctSort(term), correctDir(dir)));
           i++;
           continue;
         }
       }
-      sortObs.push(makeSort(term as sortType, 'auto'));
+      sortObs.push(makeSort(correctSort(term), 'auto'));
     } else {
-      sortObs.push(makeSort('auto', term as dirType));
+      if (i < sortList.length - 1) {
+        const sort = sortList[i + 1];
+        if (isSort(sort)) {
+          sortObs.push(makeSort(correctSort(sort), correctDir(term)));
+          i++;
+          continue;
+        }
+      }
+      sortObs.push(makeSort('auto', correctDir(term)));
     }
   }
   return sortObs;
 };
+
+const bucketers = ['set', 'color', 'manavalue', 'colormanavalue'];
+export const winnowSortObjects = (
+  sortList: sortObject[]
+): { sortList: sortObject[]; winnowed: sortObject[] } => {
+  const winnowed: sortObject[] = [];
+  const winnow = (index: number) => winnowed.unshift(...sortList.splice(index, 1));
+  const hasConflict = (index: number) => {
+    const sort = sortList[index].sort;
+    if (!sorts.includes(sort) || !dirs.includes(sortList[index].dir)) {
+      return true;
+    }
+    for (let i = index - 1; i >= 0; i--) {
+      const other = sortList[i].sort;
+      if (other == 'auto') {
+        continue;
+      }
+      if (
+        sort == other ||
+        sort.slice(0, 3) == other.slice(0, 3) ||
+        sort.slice(0, 5) == other.slice(0, 5) ||
+        sort.slice(-6) == other.slice(-6) ||
+        sort.slice(-9) == other.slice(-9)
+      ) {
+        return true;
+      }
+      if (!bucketers.includes(other)) {
+        return true;
+      }
+    }
+    return false;
+  };
+  for (let i = sortList.length - 1; i >= 0; i--) {
+    const sort = sortList[i].sort;
+    if ((sort == 'auto' && sortList.length > 1) || hasConflict(i)) {
+      winnow(i);
+    }
+  }
+  return { sortList, winnowed };
+};
+
+export const getWinnowedSortOptions = (sortList: sortObject[]): sortType[] => {
+  const sortst = sortList;
+  const options = [...sorts];
+  const hasConflict = (sort: string, other: string) => {
+    if (
+      sort == other ||
+      sort.slice(0, 3) == other.slice(0, 3) ||
+      sort.slice(0, 5) == other.slice(0, 5) ||
+      sort.slice(-6) == other.slice(-6) ||
+      sort.slice(-9) == other.slice(-9)
+    ) {
+      return true;
+    }
+    if (!bucketers.includes(sort)) {
+      return true;
+    }
+    return false;
+  };
+  sortList.forEach(obj => {
+    const sort = obj.sort;
+    for (let i = options.length - 1; i >= 0; i--) {
+      if (hasConflict(sort, options[i])) {
+        options.splice(i, 1);
+      }
+    }
+  });
+  return options;
+};
+
+export const combineAndWinnowSorts = (
+  querySorts: sortObject[],
+  inputSorts: sortObject[]
+): { sortList: sortObject[]; newInputs: sortObject[] } => {
+  const newInputs: sortObject[] = [];
+  const sortList: sortObject[] = [];
+  for (let i = 0; i < Math.max(querySorts.length, inputSorts.length); i++) {
+    if (i >= inputSorts.length) {
+      sortList.push(querySorts[i]);
+      newInputs.push(makeSort('auto', 'auto'));
+      continue;
+    }
+    const input =
+      sorts.includes(inputSorts[i].sort) && dirs.includes(inputSorts[i].dir)
+        ? inputSorts[i]
+        : makeSort(
+            isSort(inputSorts[i].sort) ? correctSort(inputSorts[i].sort) : 'auto',
+            isDir(inputSorts[i].dir) ? correctDir(inputSorts[i].dir) : 'auto'
+          );
+    newInputs.push(input);
+    if (i >= querySorts.length) {
+      sortList.push(input);
+      continue;
+    }
+    const sort = (querySorts[i].sort == 'auto' ? input : querySorts[i]).sort;
+    const dir = (querySorts[i].dir == 'auto' ? input : querySorts[i]).dir;
+    sortList.push(makeSort(sort, dir));
+  }
+  const hasConflict = (index: number) => {
+    const sort = sortList[index].sort;
+    if (!sorts.includes(sort) || !dirs.includes(sortList[index].dir)) {
+      return true;
+    }
+    for (let i = index - 1; i >= 0; i--) {
+      const other = sortList[i].sort;
+      if (
+        sort == other ||
+        sort.slice(0, 3) == other.slice(0, 3) ||
+        sort.slice(0, 5) == other.slice(0, 5) ||
+        sort.slice(-6) == other.slice(-6) ||
+        sort.slice(-9) == other.slice(-9)
+      ) {
+        return true;
+      }
+      if (!bucketers.includes(other)) {
+        return true;
+      }
+    }
+    return false;
+  };
+  for (let i = sortList.length - 1; i >= 0; i--) {
+    const sort = sortList[i].sort;
+    if (/* (sort == 'auto' && sortList.length> 1 ) || */ hasConflict(i)) {
+      const winnowed = sortList.splice(i, 1)[0];
+      if (i == newInputs.length - 1 && newInputs[i].sort == winnowed.sort) {
+        newInputs.splice(i, 1);
+      }
+    }
+  }
+
+  return { sortList, newInputs };
+};
+
 export const parseSearchQuery = (
   query: string
 ): {
@@ -180,6 +356,7 @@ export const parseSearchQuery = (
   sortObjects: sortObject[];
   invalids: filterObject<any, any>[];
   summary: string;
+  winnowed: sortObject[];
   includeExtras: boolean;
 } => {
   const invalids: filterObject<any, any>[] = [];
@@ -266,12 +443,12 @@ export const parseSearchQuery = (
   };
   const { tokens, sortList, includeExtras } = tokenize(query);
   const { node } = parseTokens(tokens, 0);
-  const sortObjects = parseSorts(sortList);
+  const { sortList: sortObjects, winnowed } = winnowSortObjects(parseSorts(sortList));
   if ([' not ', ' and ', ' or '].includes(summaries.at(-1) ?? '')) {
     summaries.pop();
   }
   const summary = summaries.join('');
-  return { node, sortObjects, invalids, summary, includeExtras };
+  return { node, sortObjects, invalids, summary, winnowed, includeExtras };
 };
 
 export const evaluateFilter = (node: FilterNode, card: HCCard.Any): boolean => {
@@ -313,8 +490,9 @@ export const searchCards = (
   sortObjects: sortObject[];
   summary: string;
   invalids: filterObject<any, any>[];
+  winnowed: sortObject[];
 } => {
-  const { node, sortObjects, invalids, summary, includeExtras } = parseSearchQuery(query);
+  const { node, sortObjects, invalids, summary, winnowed, includeExtras } = parseSearchQuery(query);
   if (includeExtrasIn || includeExtras) {
     setIncludeExtras(node, true);
   }
@@ -324,5 +502,6 @@ export const searchCards = (
     sortObjects,
     summary,
     invalids,
+    winnowed,
   };
 };

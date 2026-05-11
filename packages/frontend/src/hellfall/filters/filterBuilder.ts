@@ -735,6 +735,11 @@ export const unescapeText = (text: string) => {
     .replaceAll(/(?<!\\)['"]/g, '')
     .replaceAll(/\\(['"])/g, '$1');
 };
+/**
+ * Splits a search term on its first operator
+ * @param text search term to split
+ * @returns keyword, op, and term, all with unescapeText applied. Defaults to returning a name search.
+ */
 export const splitOnFirstOp = (
   text: string
 ): { keyword: string; op: looseOpType; term: string } => {
@@ -890,6 +895,9 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
       return correctOp(colorFilters['misc' + correctKeyword](parsedColors, op));
     }
     return correctOp(colorFilters[correctKeyword](parsedColors, op));
+  }
+  if (term) {
+    return correctOp(makeInvalidFilter(unescapeText(text), ':'));
   }
   return correctOp(makeNameFilter(unescapeText(text), ':'));
 };

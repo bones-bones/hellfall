@@ -56,9 +56,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       row.push('');
     }
   });
-  const defaultProps: {
-    [P in propType]?: valueType<P>;
-  } = {
+  const defaultProps: { [P in propType]?: valueType<P> } = {
     object: HCObject.ObjectType.Card,
     set: 'HCT',
     mana_cost: '',
@@ -82,17 +80,15 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     variation: false,
     isActualToken: true,
   };
-  const defaultFaceProps: {
-    [P in facePropType]?: faceValueType<P>;
-  } = {
+  const defaultFaceProps: { [P in facePropType]?: faceValueType<P> } = {
     object: HCObject.ObjectType.CardFace,
     name: '',
+    image_status: HCImageStatus.Token,
     mana_cost: '',
     mana_value: 0,
     type_line: '',
     oracle_text: '',
     colors: [] as HCColors,
-    image_status: HCImageStatus.Token,
   };
   const hardCardNames: string[] = [
     'Crypt of u/Em9500',

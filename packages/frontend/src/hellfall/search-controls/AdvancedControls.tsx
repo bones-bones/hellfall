@@ -17,38 +17,39 @@ import pips from '@hellfall/shared/data/pips.json';
 
 import { useAtom } from 'jotai';
 import {
-  idSearchAtom,
-  nameSearchAtom,
-  costSearchAtom,
-  typeSearchAtom,
-  rulesSearchAtom,
-  flavorSearchAtom,
-  creatorsAtom,
-  artistsAtom,
-  tagsAtom,
-  searchColorsAtom,
-  colorComparisonAtom,
-  colorNumberAtom,
-  searchColorIdentitiesAtom,
-  colorIdentityComparisonAtom,
-  hybridIdentityRuleAtom,
-  colorIdentityNumberAtom,
-  searchSetAtom,
-  includeExtraSetsAtom,
-  extraSetsAtom,
-  searchTokenAtom,
-  // legalityAtom,
-  standardLegalityAtom,
-  fourcbLegalityAtom,
-  commanderLegalityAtom,
-  isCommanderAtom,
-  collectorNumberAtom,
-  manaValueAtom,
-  powerAtom,
-  toughnessAtom,
-  loyaltyAtom,
-  defenseAtom,
-  // shouldPushHistoryAtom
+  // idSearchAtom,
+  // nameSearchAtom,
+  // costSearchAtom,
+  // typeSearchAtom,
+  // rulesSearchAtom,
+  // flavorSearchAtom,
+  // creatorsAtom,
+  // artistsAtom,
+  // tagsAtom,
+  // searchColorsAtom,
+  // colorComparisonAtom,
+  // colorNumberAtom,
+  // searchColorIdentitiesAtom,
+  // colorIdentityComparisonAtom,
+  // hybridIdentityRuleAtom,
+  // colorIdentityNumberAtom,
+  // searchSetAtom,
+  // includeExtraSetsAtom,
+  // extraSetsAtom,
+  // searchTokenAtom,
+  // // legalityAtom,
+  // standardLegalityAtom,
+  // fourcbLegalityAtom,
+  // commanderLegalityAtom,
+  // isCommanderAtom,
+  // collectorNumberAtom,
+  // manaValueAtom,
+  // powerAtom,
+  // toughnessAtom,
+  // loyaltyAtom,
+  // defenseAtom,
+  // shouldPushHistoryAtom,
+  queryAtom,
 } from '../atoms/searchAtoms.ts';
 import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
@@ -105,6 +106,8 @@ export const SearchControls = () => {
   const [toughness, setToughness] = useState<[number | undefined, looseOpType]>([undefined, ':']);
   const [loyalty, setLoyalty] = useState<[number | undefined, looseOpType]>([undefined, ':']);
   const [defense, setDefense] = useState<[number | undefined, looseOpType]>([undefined, ':']);
+
+  const [query, setQuery] = useAtom(queryAtom);
 
   const textToOps: Record<string, looseOpType> = {
     '!': '!:',
@@ -187,12 +190,6 @@ export const SearchControls = () => {
     }
     if (tags.length) {
       addAllHandlingOr('tag', tags);
-    }
-    if (nameSearch.length) {
-      addAllHandlingOr('name', nameSearch);
-    }
-    if (nameSearch.length) {
-      addAllHandlingOr('name', nameSearch);
     }
     if (isCommander) {
       filters.push('is:commander');

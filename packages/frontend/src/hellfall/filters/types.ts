@@ -1,6 +1,7 @@
 import { HCCard, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
 import { filterObject, SetFilter, sortObject } from './filterObject';
-export const NOPRINT = 'This should not ever print. Please report this as a bug on discord.';
+export const NOPRINT =
+  'This should not ever print. Please report this as a bug on discord along with the search terms you used.';
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
 export const looseOpList: looseOpType[] = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
 export type looseOpType = ':' | '!:' | opType;
@@ -265,7 +266,17 @@ export interface cardFilter<T = any, S = any> extends anyFilter {
 }
 export const dirs = ['asc', 'desc', 'auto'] as const;
 export type dirType = (typeof dirs)[number];
-export const sorts = ['set', 'color', 'manavalue', 'name', 'id', 'number', 'auto'] as const;
+export const sorts = [
+  'set',
+  'color',
+  'manavalue',
+  'name',
+  'id',
+  'number',
+  'setnumber',
+  'colormanavalue',
+  'auto',
+] as const;
 export type sortType = (typeof sorts)[number];
 
 export interface sortFilter extends anyFilter<HCCard.Any, HCCard.Any> {

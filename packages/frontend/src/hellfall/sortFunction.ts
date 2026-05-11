@@ -5,6 +5,13 @@ import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 // individuals: name, id, number (requires set)
 // options: []
 
+/**
+ *
+ * @param sortRule
+ * @param dirRule
+ * @returns
+ * @deprecated Now handled by sortRule.ts
+ */
 export const sortFunction =
   (sortRule: 'Name' | 'Id' | 'Set/Number' | 'Color' | 'Mana Value', dirRule: 'Asc' | 'Desc') =>
   (a: HCCard.Any, b: HCCard.Any) => {

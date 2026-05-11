@@ -57,6 +57,13 @@ export const filterSort: sortFilter = Object.assign(
         return (toColorNumber(value1) - toColorNumber(value2)) * dirMult;
       case 'manavalue':
         return (value1.mana_value - value2.mana_value) * dirMult;
+      case 'colormanavalue': {
+        const color = (toColorNumber(value1) - toColorNumber(value2)) * dirMult;
+        if (color) {
+          return color;
+        }
+        return (value1.mana_value - value2.mana_value) * dirMult;
+      }
       case 'number': {
         if (!value1.collector_number && !value2.collector_number) {
           if (parseInt(value1.id) == parseInt(value2.id)) {
@@ -89,6 +96,25 @@ export const filterSort: sortFilter = Object.assign(
       }
       case 'set':
         return (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
+      case 'auto':
+      case 'setnumber':
+        const set = (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
+        if (!set) {
+          if (!value1.collector_number && !value2.collector_number) {
+            if (parseInt(value1.id) == parseInt(value2.id)) {
+              return (value1.id.charCodeAt(-1) - value2.id.charCodeAt(-1)) * dirMult;
+            }
+            return (parseInt(value1.id) - parseInt(value2.id)) * dirMult;
+          }
+          if ('collector_number' in value1 != 'collector_number' in value2) {
+            return 'collector_number' in value1 ? -dirMult : dirMult;
+          }
+          return (
+            (parseInt(value1.collector_number!) - parseInt(value2.collector_number!)) * dirMult
+          );
+        } else {
+          return set;
+        }
     }
     return 0; // just in case
   },
