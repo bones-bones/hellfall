@@ -12,6 +12,7 @@ import { opToIncludeSingular, opToTagged, includeEqualsOp, opIsNegative } from '
 import { isNumber } from '@hellfall/shared/utils/isInt';
 import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
+import { prepTag } from './parseSearchBar';
 
 export const filterEmpty: textFilter = Object.assign(
   (value1: string, operator: looseOpType, value2: string) => true,
@@ -93,7 +94,13 @@ export const filterTag: tagFilter = Object.assign(
       );
     }
     return value1.tags
-      ? includeEqualsOp(operator, textListIncludes, textListEquals, value1.tags, value2)
+      ? includeEqualsOp(
+          operator,
+          textListIncludes,
+          textListEquals,
+          value1.tags.map(tag => prepTag(tag)),
+          prepTag(value2)
+        )
       : false;
   },
   {
