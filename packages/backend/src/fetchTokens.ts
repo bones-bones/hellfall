@@ -100,7 +100,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'Plagiarism by doomclaw9',
     'Carrion Feeder from MH8',
   ];
-  const hardTokenIds: string[] = ['Clue© 19861', '+21', '+41'];
+  const hardTokenIds: string[] = ['Clue© 19861', '+21', '+41', 'AKKI-471', 'Bolt M41', 'Rock 191'];
 
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
 

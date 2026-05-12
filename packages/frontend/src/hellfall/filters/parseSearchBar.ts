@@ -484,9 +484,10 @@ export const parseSearchQuery = (
   while ([' and ', ' or '].includes(summaries.at(0) ?? '')) {
     summaries.shift();
   }
-  const summary = summaries.length ?
-    ('where ' + summaries.join('')).trimEnd() +
-    (includeList.length ? `, ${includeList.map(filter => filter.toSummary()).join(' and ')}` : ''):'';
+  const summary = summaries.length
+    ? ('where ' + summaries.join('')).trimEnd() +
+      (includeList.length ? `, ${includeList.map(filter => filter.toSummary()).join(' and ')}` : '')
+    : '';
   return { node, sortObjects, includeList, invalids, summary, winnowed, autoFilterExtras };
 };
 
