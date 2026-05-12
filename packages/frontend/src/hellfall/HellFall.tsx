@@ -10,7 +10,6 @@ import { HellfallCard } from './card/HellfallCard.tsx';
 import { useAtom, useAtomValue } from 'jotai';
 import { activeCardAtom, invalidAtom, pageAtom, summaryAtom } from './atoms/searchAtoms.ts';
 import { useSearchResults } from './hooks/useSearchResults.ts';
-import { SearchControls } from './search-controls/SearchControls.tsx';
 import { SortComponent } from './search-controls/SortComponent.tsx';
 import { CHUNK_SIZE } from './constants.ts';
 import { useKeyPress } from '../hooks';
@@ -82,7 +81,6 @@ export const HellFall = () => {
         </Card>
       </StyledSidePanel>
       <br />
-      {/* <SearchControls /> */}
       <SearchBar />
       <Separator />
       <SortComponent />
@@ -92,7 +90,7 @@ export const HellFall = () => {
         <strong>{`${
           resultSet.length > CHUNK_SIZE ? `${page + 1} - ${page + CHUNK_SIZE} of ` : ''
         } ${resultSet.length} card${resultSet.length > 1 ? 's' : ''}`}</strong>
-        {summary && ` where ${summary}`}
+        {summary && ` ${summary}`}
       </Summary>
       <Separator />
       {invalids.map(invalid => {

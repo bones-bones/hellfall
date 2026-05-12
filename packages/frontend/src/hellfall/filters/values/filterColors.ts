@@ -4,12 +4,17 @@ import {
   colorContentListFilter,
   colorNumFilter,
   colorNumListFilter,
+  colorShortFilter,
+  colorShortListFilter,
   hybridContentFilter,
   hybridNumFilter,
+  hybridShortFilter,
   invertOptionType,
   opType,
+  shorthandType,
+  shortToNum,
 } from '../types';
-import { containsOp } from '../filterUtils';
+import { containsOp, opToShorthand } from '../filterUtils';
 import { filterNumber } from '../filterNumber';
 const MISC_BULLSHIT = 'Misc';
 
@@ -32,32 +37,8 @@ const contains = (set1: string[], set2: string[]) => set2.every(c => set1.includ
  * @returns boolean of whether the comparison is true
  */
 export const filterColorContents: colorContentFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string[]) => {
-    if (value2.includes('C')) {
-      switch (operator) {
-        case '<': {
-          return false;
-        }
-        case '<=': {
-          return value1.length == 0;
-        }
-        case '=': {
-          return value1.length == 0;
-        }
-        case '>=': {
-          return true;
-        }
-        case '>': {
-          return value1.length != 0;
-        }
-        case '!=': {
-          return value1.length != 0;
-        }
-      }
-    } else {
-      return containsOp(operator, contains, value1, value2);
-    }
-  },
+  (value1: string[], operator: opType, value2: string[]) =>
+    containsOp(operator, contains, value1, value2),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string[], invert?: boolean) =>
@@ -72,6 +53,35 @@ export const filterColorNumber: colorNumFilter = Object.assign(
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string[] | number, invert?: boolean) =>
       `the number of colors is ${filterNumber.toSummary(operator, value, invert)}`,
+  }
+);
+
+export const evalShortNum = (value1: number, operator: opType, value2: shorthandType): boolean => {
+  const shortNum = shortToNum(operator, value2);
+  if (value2 == 'c') {
+    return filterNumber(value1, operator, shortNum);
+  } else {
+    switch (operator) {
+      case '<':
+      case '!=':
+        return filterNumber(value1, '<', shortNum);
+      case '<=':
+        return true;
+      case '=':
+      case '>=':
+        return filterNumber(value1, '>=', shortNum);
+      case '>':
+        return filterNumber(value1, operator, shortNum);
+    }
+  }
+};
+export const filterColorShort: colorShortFilter = Object.assign(
+  (value1: string[], operator: opType, value2: shorthandType) =>
+    evalShortNum(value1.length, operator, value2),
+  {
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: shorthandType, invert?: boolean) =>
+      `the cards are${invert ? "n't" : ''} ${opToShorthand(operator, value)}`,
   }
 );
 
@@ -102,6 +112,18 @@ export const filterColorIdentityNumber: colorNumFilter = Object.assign(
   }
 );
 
+export const filterColorIdentityShort: colorShortFilter = Object.assign(
+  (value1: string[], operator: opType, value2: shorthandType) =>
+    evalShortNum(value1.length, operator, value2),
+  {
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: shorthandType, invert?: boolean) =>
+      `the cards ${invert ? "don't" : ''} have ${
+        opToShorthand(operator, value) == 'any color' ? '' : 'a'
+      } ${opToShorthand(operator, value)} identity`,
+  }
+);
+
 export const filterColorIndicatorContents: colorContentListFilter = Object.assign(
   (value1: string[][], operator: opType, value2: string[]) =>
     value1.some(set => filterColorContents(set, operator, value2)),
@@ -119,6 +141,18 @@ export const filterColorIndicatorNumber: colorNumListFilter = Object.assign(
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string[] | number, invert?: boolean) =>
       `the number of indicator colors is ${filterNumber.toSummary(operator, value, invert)}`,
+  }
+);
+
+export const filterColorIndicatorShort: colorShortListFilter = Object.assign(
+  (value1: string[][], operator: opType, value2: shorthandType) =>
+    value1.some(set => evalShortNum(set.length, operator, value2)),
+  {
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: shorthandType, invert?: boolean) =>
+      `the cards ${invert ? "don't" : ''} have ${
+        opToShorthand(operator, value) == 'any color' ? '' : 'a'
+      } ${opToShorthand(operator, value)} indicator`,
   }
 );
 
@@ -224,6 +258,18 @@ export const filterHybridIdentityNumber: hybridNumFilter = Object.assign(
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string[] | number, invert?: boolean) =>
       `the number of hybrid identity colors is ${filterNumber.toSummary(operator, value, invert)}`,
+  }
+);
+
+export const filterHybridIdentityShort: hybridShortFilter = Object.assign(
+  (value1: string[][], operator: opType, value2: shorthandType) =>
+    evalShortNum(getHybridColorNumber(value1), operator, value2),
+  {
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: shorthandType, invert?: boolean) =>
+      `the cards ${invert ? "don't" : ''} have ${
+        opToShorthand(operator, value) == 'any color' ? '' : 'a'
+      } ${opToShorthand(operator, value)} hybrid identity`,
   }
 );
 

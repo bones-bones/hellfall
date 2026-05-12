@@ -162,8 +162,8 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
     if (isSortFilter(token)) {
       if (sortIsValid(token)) {
         sortList.unshift(splitOnFirstOp(tokens.splice(i, 1)[0]).term);
-      } else {
-        tokens[i] = `invalidsort:"${splitOnFirstOp(token).term}"`;
+        // } else {
+        //   tokens[i] = `invalidsort:${token}`;
       }
     }
     // if (isInclude(token)) {
@@ -408,7 +408,7 @@ export const parseSearchQuery = (
         invalids.push([token, filter]);
         return parseTerm();
       }
-      if (filter.queryName == 'includes') {
+      if (filter.queryName == 'include') {
         autoFilterExtras = false;
         includeList.push(filter);
         return parseTerm();
@@ -461,8 +461,9 @@ export const parseSearchQuery = (
   while ([' and ', ' or '].includes(summaries.at(0) ?? '')) {
     summaries.shift();
   }
-  includeList.forEach(filter => summaries.push(filter.toSummary()));
-  const summary = summaries.join('');
+  const summary =
+    ('where ' + summaries.join('')).trimEnd() +
+    (includeList.length ? `, ${includeList.map(filter => filter.toSummary()).join(' and ')}` : '');
   return { node, sortObjects, includeList, invalids, summary, winnowed, autoFilterExtras };
 };
 

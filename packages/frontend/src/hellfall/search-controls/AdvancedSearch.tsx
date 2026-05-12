@@ -22,7 +22,7 @@ import tags_data from '@hellfall/shared/data/tags.json';
 import pips from '@hellfall/shared/data/pips.json';
 
 import { useAtom, useAtomValue } from 'jotai';
-import { inputSortAtom, queryAtom } from '../atoms/searchAtoms.ts';
+import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useDebounce, useKeyPress } from '../../hooks/index.ts';
@@ -32,6 +32,7 @@ import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType } from '../filters/types.ts';
 import { SortComponent } from './SortComponent.tsx';
 import { useNavigate } from 'react-router-dom';
+import { parseSorts } from '../filters/parseSearchBar.ts';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -82,7 +83,8 @@ export const AdvancedSearch = () => {
   const [loyalty, setLoyalty] = useState<[number | undefined, looseOpType]>([undefined, ':']);
   const [defense, setDefense] = useState<[number | undefined, looseOpType]>([undefined, ':']);
 
-  const inputSorts = useAtomValue(inputSortAtom);
+  const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
+  const [sortRules, setSortRules] = useAtom(sortAtom);
 
   const [query, setQuery] = useAtom(queryAtom);
 
@@ -101,6 +103,13 @@ export const AdvancedSearch = () => {
     }
     return `:"${text}"`;
   };
+  useEffect(() => {
+    setInputSorts([]);
+    setSortRules([]);
+  }, []);
+  useEffect(() => {
+    setSortRules(parseSorts(inputSorts));
+  }, [inputSorts]);
 
   const toQueryString = () => {
     const filters: string[] = [];
@@ -226,7 +235,12 @@ export const AdvancedSearch = () => {
     }
     // TODO: make sure this works
     inputSorts.forEach(input => {
-      filters.push(`sort:${input}`);
+      const [sort, dir] = input.split(',', 2);
+      if (sort != 'auto' && dir != 'auto') {
+        filters.push(`sort:${input}`);
+      } else if (sort != dir) {
+        filters.push(`sort:${dir == 'auto' ? sort : dir}`);
+      }
     });
     return filters.join(' ');
   };
@@ -535,6 +549,9 @@ export const AdvancedSearch = () => {
         borderRadius="m"
         onClick={() => {
           const query = toQueryString();
+          setQuery(query);
+          setInputSorts([]);
+          setSortRules([]);
           navigate(`/?q=${query}`);
         }}
       >

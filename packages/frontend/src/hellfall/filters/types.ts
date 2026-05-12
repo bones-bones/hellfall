@@ -1,4 +1,4 @@
-import { HCCard, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
+import { HCCard, HCColor, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
 import { filterObject, IncludeFilter, sortObject } from './filterObject';
 export const NOPRINT =
   'This should not ever print. Please report this as a bug on discord along with the search terms you used.';
@@ -55,12 +55,36 @@ export interface numStringFilter
   extends cardFilter<number | string | undefined, number | string | undefined> {}
 export interface numStringListFilter
   extends cardFilter<(number | string | undefined)[], number | string> {}
+export const shorthandList = ['c', 'm'] as const;
+export type shorthandType = (typeof shorthandList)[number];
+const multiOpToNum: Record<opType, number> = {
+  '<': 2,
+  '<=': 0,
+  '=': 2,
+  '>=': 2,
+  '>': 5,
+  '!=': 2,
+};
+export const shortToNum = (op: opType, value: shorthandType) => {
+  if (value == 'c') {
+    return 0;
+  } else {
+    return multiOpToNum[op];
+  }
+};
+export const shortToOp: Record<shorthandType, opType> = {
+  c: '=',
+  m: '>=',
+};
 export interface colorContentFilter extends cardFilter<string[], string[]> {}
 export interface colorNumFilter extends cardFilter<string[], number> {}
+export interface colorShortFilter extends cardFilter<string[], shorthandType> {}
 export interface colorContentListFilter extends cardFilter<string[][], string[]> {}
 export interface colorNumListFilter extends cardFilter<string[][], number> {}
+export interface colorShortListFilter extends cardFilter<string[][], shorthandType> {}
 export interface hybridContentFilter extends cardFilter<string[][], string[]> {}
 export interface hybridNumFilter extends cardFilter<string[][], number> {}
+export interface hybridShortFilter extends cardFilter<string[][], shorthandType> {}
 // export interface setFilter extends cardFilter<string[],HCCard.Any> {}
 export const inclusionOptions = ['extras', 'nonextras', 'all'] as const;
 export type inclusionType = (typeof inclusionOptions)[number];
@@ -76,7 +100,7 @@ export interface tagFilter extends cardFilter<string[], string> {
 export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
 export type includeFilterMaker = (value: string, op: looseOpType) => IncludeFilter;
 export type colorFilterMaker = (
-  value: string[] | number,
+  value: string[] | number | shorthandType,
   op: looseOpType
-) => filterObject<any, string[]> | filterObject<any, number>;
+) => filterObject<any, string[]> | filterObject<any, number> | filterObject<any, shorthandType>;
 export type sortMaker = (sort: sortType, dir: dirType) => sortObject;

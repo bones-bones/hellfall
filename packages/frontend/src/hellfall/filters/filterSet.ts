@@ -27,7 +27,7 @@ export const filterIncludeExtras: includeFilter = Object.assign(
     invertOption: 'flip' as invertOptionType,
     toSummary: (operator: opType, value: string) =>
       inclusionOptions.includes(value as inclusionType)
-        ? ` and ${opIsNegative(operator) ? 'excluding' : 'including'} ${value} ${
+        ? `${opIsNegative(operator) ? 'excluding' : 'including'} ${value} ${
             value == 'all' ? 'cards' : ''
           }`
         : `!Unknown inclusion option ${value}`,

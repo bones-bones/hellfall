@@ -5,11 +5,15 @@ import {
   filterColorContents,
   filterColorIdentityContents,
   filterColorIdentityNumber,
+  filterColorIdentityShort,
   filterColorIndicatorContents,
   filterColorIndicatorNumber,
+  filterColorIndicatorShort,
   filterColorNumber,
+  filterColorShort,
   filterHybridIdentityContents,
   filterHybridIdentityNumber,
+  filterHybridIdentityShort,
   hybridIdentityMiscReduce,
 } from './values/filterColors';
 import { filterNumberString, filterNumberStringList } from './filterNumber';
@@ -31,6 +35,7 @@ import {
   includeFilterMaker,
   looseOpList,
   looseOpType,
+  shorthandType,
   sortMaker,
   sortType,
 } from './types';
@@ -391,7 +396,10 @@ export const makeDefenseFilter: filterMaker = (value: string, op: looseOpType) =
   );
 };
 
-export const makeColorFilter: colorFilterMaker = (value: string[] | number, op: looseOpType) => {
+export const makeColorFilter: colorFilterMaker = (
+  value: string[] | number | shorthandType,
+  op: looseOpType
+) => {
   if (Array.isArray(value)) {
     return new PassThroughSummaryFilter<string[], string[]>(
       'color',
@@ -401,7 +409,7 @@ export const makeColorFilter: colorFilterMaker = (value: string[] | number, op: 
       '>=',
       card => card.colors
     );
-  } else {
+  } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[], number>(
       'color',
       filterColorNumber,
@@ -410,10 +418,22 @@ export const makeColorFilter: colorFilterMaker = (value: string[] | number, op: 
       '=',
       card => card.colors
     );
+  } else {
+    return new PassThroughSummaryFilter<string[], shorthandType>(
+      'color',
+      filterColorShort,
+      value,
+      op,
+      '=',
+      card => card.colors
+    );
   }
 };
 
-export const makeIdentityFilter: colorFilterMaker = (value: string[] | number, op: looseOpType) => {
+export const makeIdentityFilter: colorFilterMaker = (
+  value: string[] | number | shorthandType,
+  op: looseOpType
+) => {
   if (Array.isArray(value)) {
     return new PassThroughSummaryFilter<string[], string[]>(
       'identity',
@@ -423,10 +443,19 @@ export const makeIdentityFilter: colorFilterMaker = (value: string[] | number, o
       '<=',
       card => card.color_identity
     );
-  } else {
+  } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[], number>(
       'identity',
       filterColorIdentityNumber,
+      value,
+      op,
+      '=',
+      card => card.color_identity
+    );
+  } else {
+    return new PassThroughSummaryFilter<string[], shorthandType>(
+      'identity',
+      filterColorIdentityShort,
       value,
       op,
       '=',
@@ -436,7 +465,7 @@ export const makeIdentityFilter: colorFilterMaker = (value: string[] | number, o
 };
 
 export const makeIndicatorFilter: colorFilterMaker = (
-  value: string[] | number,
+  value: string[] | number | shorthandType,
   op: looseOpType
 ) => {
   if (Array.isArray(value)) {
@@ -452,7 +481,7 @@ export const makeIndicatorFilter: colorFilterMaker = (
           .filter(e => e.color_indicator)
           .map(e => e.color_indicator!)
     );
-  } else {
+  } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[][], number>(
       'indicator',
       filterColorIndicatorNumber,
@@ -465,10 +494,26 @@ export const makeIndicatorFilter: colorFilterMaker = (
           .filter(e => e.color_indicator)
           .map(e => e.color_indicator!)
     );
+  } else {
+    return new PassThroughSummaryFilter<string[][], shorthandType>(
+      'indicator',
+      filterColorIndicatorShort,
+      value,
+      op,
+      '=',
+      card =>
+        card
+          .toFaces()
+          .filter(e => e.color_indicator)
+          .map(e => e.color_indicator!)
+    );
   }
 };
 
-export const makeHybridFilter: colorFilterMaker = (value: string[] | number, op: looseOpType) => {
+export const makeHybridFilter: colorFilterMaker = (
+  value: string[] | number | shorthandType,
+  op: looseOpType
+) => {
   if (Array.isArray(value)) {
     return new PassThroughSummaryFilter<string[][], string[]>(
       'hybrid',
@@ -478,7 +523,7 @@ export const makeHybridFilter: colorFilterMaker = (value: string[] | number, op:
       '<=',
       card => card.color_identity_hybrid
     );
-  } else {
+  } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[][], number>(
       'hybrid',
       filterHybridIdentityNumber,
@@ -487,10 +532,19 @@ export const makeHybridFilter: colorFilterMaker = (value: string[] | number, op:
       '=',
       card => card.color_identity_hybrid
     );
+  } else {
+    return new PassThroughSummaryFilter<string[][], shorthandType>(
+      'hybrid',
+      filterHybridIdentityShort,
+      value,
+      op,
+      '=',
+      card => card.color_identity_hybrid
+    );
   }
 };
 export const makeMiscColorFilter: colorFilterMaker = (
-  value: string[] | number,
+  value: string[] | number | shorthandType,
   op: looseOpType
 ) => {
   if (Array.isArray(value)) {
@@ -502,10 +556,19 @@ export const makeMiscColorFilter: colorFilterMaker = (
       '>=',
       card => colorMiscReduce(card.colors)
     );
-  } else {
+  } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[], number>(
       'misccolor',
       filterColorNumber,
+      value,
+      op,
+      '=',
+      card => colorMiscReduce(card.colors)
+    );
+  } else {
+    return new PassThroughSummaryFilter<string[], shorthandType>(
+      'misccolor',
+      filterColorShort,
       value,
       op,
       '=',
@@ -515,7 +578,7 @@ export const makeMiscColorFilter: colorFilterMaker = (
 };
 
 export const makeMiscIdentityFilter: colorFilterMaker = (
-  value: string[] | number,
+  value: string[] | number | shorthandType,
   op: looseOpType
 ) => {
   if (Array.isArray(value)) {
@@ -527,10 +590,19 @@ export const makeMiscIdentityFilter: colorFilterMaker = (
       '<=',
       card => colorMiscReduce(card.color_identity)
     );
-  } else {
+  } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[], number>(
       'miscidentity',
       filterColorIdentityNumber,
+      value,
+      op,
+      '=',
+      card => colorMiscReduce(card.color_identity)
+    );
+  } else {
+    return new PassThroughSummaryFilter<string[], shorthandType>(
+      'miscidentity',
+      filterColorIdentityShort,
       value,
       op,
       '=',
@@ -540,7 +612,7 @@ export const makeMiscIdentityFilter: colorFilterMaker = (
 };
 
 export const makeMiscIndicatorFilter: colorFilterMaker = (
-  value: string[] | number,
+  value: string[] | number | shorthandType,
   op: looseOpType
 ) => {
   if (Array.isArray(value)) {
@@ -556,10 +628,23 @@ export const makeMiscIndicatorFilter: colorFilterMaker = (
           .filter(e => e.color_indicator)
           .map(e => colorMiscReduce(e.color_indicator!))
     );
-  } else {
+  } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[][], number>(
       'miscindicator',
       filterColorIndicatorNumber,
+      value,
+      op,
+      '=',
+      card =>
+        card
+          .toFaces()
+          .filter(e => e.color_indicator)
+          .map(e => colorMiscReduce(e.color_indicator!))
+    );
+  } else {
+    return new PassThroughSummaryFilter<string[][], shorthandType>(
+      'miscindicator',
+      filterColorIndicatorShort,
       value,
       op,
       '=',
@@ -573,7 +658,7 @@ export const makeMiscIndicatorFilter: colorFilterMaker = (
 };
 
 export const makeMiscHybridFilter: colorFilterMaker = (
-  value: string[] | number,
+  value: string[] | number | shorthandType,
   op: looseOpType
 ) => {
   if (Array.isArray(value)) {
@@ -585,10 +670,19 @@ export const makeMiscHybridFilter: colorFilterMaker = (
       '<=',
       card => hybridIdentityMiscReduce(card.color_identity_hybrid)
     );
-  } else {
+  } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[][], number>(
       'mischybrid',
       filterHybridIdentityNumber,
+      value,
+      op,
+      '=',
+      card => hybridIdentityMiscReduce(card.color_identity_hybrid)
+    );
+  } else {
+    return new PassThroughSummaryFilter<string[][], shorthandType>(
+      'mischybrid',
+      filterHybridIdentityShort,
       value,
       op,
       '=',
@@ -767,10 +861,10 @@ export const equivFilterNames: Record<string, string> = {
   format: 'legal',
   bordercolor: 'border',
   frameeffects: 'frameeffect',
-  sort: 'invalid',
-  order: 'invalid',
-  dir: 'invalid',
-  direction: 'invalid',
+  sort: 'invalidsort',
+  order: 'invalidsort',
+  dir: 'invalidsort',
+  direction: 'invalidsort',
   s: 'set',
   ts: 'tokenset',
   b: 'block',
@@ -920,8 +1014,12 @@ export const splitOnFirstOp = (
   }
   return { keyword: 'name', op: ':', term: unescapeText(text) };
 };
+const shorthands: Record<string, shorthandType> = {
+  colorless: 'c',
+  multicolored: 'm',
+  multi: 'm',
+};
 const colorNicknames: Record<string, string> = {
-  colorless: 'C',
   white: 'W',
   blue: 'U',
   black: 'B',
@@ -970,9 +1068,15 @@ const colorNicknames: Record<string, string> = {
   artifice: 'WUBR',
 };
 
-const parseColorText = (text: string): string[] | number | undefined => {
+const parseColorText = (text: string): string[] | number | shorthandType | undefined => {
   if (isInteger(text)) {
     return parseInt(text);
+  }
+  if (text.toLowerCase() in shorthands) {
+    return shorthands[text.toLowerCase()];
+  }
+  if (Object.values(shorthands).includes(text.toLowerCase() as shorthandType)) {
+    return text.toLowerCase() as shorthandType;
   }
   const colorList: string[] = [];
   let currentText = text.toLowerCase();
@@ -991,7 +1095,7 @@ const parseColorText = (text: string): string[] | number | undefined => {
     }
   }
   const finalText = currentText.toUpperCase();
-  const validColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C'];
+  const validColors = ['W', 'U', 'B', 'R', 'G', 'P'];
   for (const color of finalText) {
     if (!validColors.includes(color)) {
       return undefined;

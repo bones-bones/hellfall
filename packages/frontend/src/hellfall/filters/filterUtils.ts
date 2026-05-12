@@ -1,4 +1,4 @@
-import { cardFilter, looseOpType, opType } from './types';
+import { cardFilter, looseOpType, opType, shorthandType } from './types';
 
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',
@@ -59,6 +59,27 @@ export const opToTaggedRecord: Record<opType, string> = {
 };
 export const opToTagged = (op: opType, value: string, invert?: boolean) => {
   return `${opToTaggedRecord[(invert ? invertOp(op) : op) as opType]} "${value}"`;
+};
+
+export const opToMRecord: Record<opType, string> = {
+  '<': 'monocolored',
+  '<=': 'any color',
+  '=': 'multicolored',
+  '>=': 'multicolored',
+  '>': 'supermulticolored',
+  '!=': 'monocolored',
+};
+export const opToCRecord: Record<opType, string> = {
+  '<': 'negative color',
+  '<=': 'colorless',
+  '=': 'colorless',
+  '>=': 'any color',
+  '>': 'colored',
+  '!=': 'colored',
+};
+
+export const opToShorthand = (op: opType, value: shorthandType) => {
+  return value == 'c' ? opToCRecord[op] : opToMRecord[op];
 };
 /**
  * To use in filters when need to check a function with one value

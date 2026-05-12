@@ -42,15 +42,15 @@ export const SortComponent = () => {
   const getAvailableOptions = (index: number): sortType[] =>
     getWinnowedSortOptions(sortRules.slice(0, index));
   const sortIsOverriden = (index: number): boolean =>
-    parseSort(inputSorts[index]) != sortRules[index].sort;
+    index < inputSorts.length && parseSort(inputSorts[index]) != sortRules[index].sort;
   const dirIsOverriden = (index: number): boolean =>
-    parseDir(inputSorts[index]) != sortRules[index].dir;
+    index < inputSorts.length && parseDir(inputSorts[index]) != sortRules[index].dir;
   const handleSortChange = (index: number, newSort: sortType) => {
     if (!sortRules.length) {
       handleAddInput();
     }
     const newInputs = sortRules.length ? [...inputSorts] : ['auto,auto'];
-    newInputs[index] = `${newSort},${parseDir(inputSorts[index] ?? 'auto')}`;
+    newInputs[index] = `${newSort},${parseDir(inputSorts[index] ?? 'auto,auto')}`;
     setInputSorts(newInputs);
   };
   const handleDirChange = (index: number, newDir: dirType) => {
@@ -58,11 +58,11 @@ export const SortComponent = () => {
       handleAddInput();
     }
     const newInputs = sortRules.length ? [...inputSorts] : ['auto,auto'];
-    newInputs[index] = `${parseSort(inputSorts[index] ?? 'auto')},${newDir}`;
+    newInputs[index] = `${parseSort(inputSorts[index] ?? 'auto,auto')},${newDir}`;
     setInputSorts(newInputs);
   };
   useEffect(() => {
-    setCanAddInput(Boolean(getAvailableOptions(inputSorts.length).length && inputSorts.length));
+    setCanAddInput(Boolean(getAvailableOptions(sortRules.length).length));
   }, [inputSorts, sortRules]);
 
   const handleAddInput = () => {
