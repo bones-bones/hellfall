@@ -47,6 +47,10 @@ export const filterHas: cardStringFilter = Object.assign(
           return value1.toFaces().some(face => face.frame_effects) || Boolean(value1.frame_effects);
         case 'frameeffects':
           return value1.toFaces().some(face => face.frame_effects) || Boolean(value1.frame_effects);
+        case 'watermark':
+          return value1.toFaces().some(face => face.watermark);
+        case 'wm':
+          return value1.toFaces().some(face => face.watermark);
       }
       return false;
     };

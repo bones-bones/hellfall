@@ -1,6 +1,5 @@
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling';
 import {
-  cardStringFilter,
   invertOptionType,
   looseOpType,
   NOPRINT,
@@ -8,23 +7,11 @@ import {
   tagFilter,
   textFilter,
   textListFilter,
-  textRecordFilter,
 } from './types';
-import {
-  funcOp,
-  getActualOp,
-  invertOp,
-  opToIncludePlural,
-  opToIncludeSingular,
-  opIsNegative,
-  opToNot,
-  opToTagged,
-  includeEqualsOp,
-} from './filterUtils';
+import { opToIncludeSingular, opToTagged, includeEqualsOp, opIsNegative } from './filterUtils';
 import { isNumber } from '@hellfall/shared/utils/isInt';
 import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
-import { getAllNames } from '../getNames';
 
 export const filterEmpty: textFilter = Object.assign(
   (value1: string, operator: looseOpType, value2: string) => true,
@@ -73,25 +60,53 @@ export const filterTextList: textListFilter = Object.assign(
     toSummary: (operator: opType, value: string) => NOPRINT,
   }
 );
+
+export const parseTag = (text: string): { tag: string; note?: boolean | string } => {
+  if (text.endsWith('<')) {
+    return { tag: text.slice(0, -1), note: true };
+  }
+  if (text.endsWith('>') && text.includes('<')) {
+    const [tag, note] = [text.split('<')[0], text.split('<')[1].slice(0, -1)];
+    return { tag, note };
+  }
+  return { tag: text };
+};
+
 export const filterTag: tagFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string, tag_notes?: Record<string, string>) => {
-    if (value2.endsWith('<')) {
+  (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string) => {
+    if (note && typeof note != 'string') {
       const tag = value2.slice(0, -1);
-      return Boolean(tag_notes && filterTextList(Object.keys(tag_notes), operator, tag));
+      return Boolean(
+        value1.tag_notes && filterTextList(Object.keys(value1.tag_notes), operator, tag)
+      );
     }
-    if (value2.endsWith('>') && value2.includes('<')) {
-      if (!tag_notes) {
+    if (note) {
+      if (!value1.tag_notes) {
         return false;
       }
-      const [tag, note] = [value2.split('<')[0], value2.split('<')[1].slice(0, -1)];
-      // return tag_notes && textEquals(tag_notes[tag], note);
-      return includeEqualsOp(operator, textSearchIncludes, textEquals, tag_notes[tag], note);
+      return includeEqualsOp(
+        operator,
+        textSearchIncludes,
+        textEquals,
+        value1.tag_notes[value2],
+        note
+      );
     }
-    return includeEqualsOp(operator, textListIncludes, textListEquals, value1, value2);
+    return value1.tags
+      ? includeEqualsOp(operator, textListIncludes, textListEquals, value1.tags, value2)
+      : false;
   },
   {
     invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string, invert?: boolean) =>
-      `the card is ${opToTagged(operator, value, invert)}`,
+    toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) =>
+      `the card is ${opToTagged(operator, value, invert)} ${
+        note
+          ? ` and that tag${
+              typeof note == 'string'
+                ? `'s note ${opToIncludeSingular(operator, note, invert)}`
+                : ` ${opIsNegative(operator) ? 'does not have' : 'has'} a note`
+            }`
+          : ''
+      }`,
   }
 );

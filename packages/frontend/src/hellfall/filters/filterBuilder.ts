@@ -25,6 +25,7 @@ import {
   IncludeFilter,
   StringPropSummaryFilter,
   NumberPropSummaryFilter,
+  TagFilter,
 } from './filterObject';
 import { filterIncludeExtras, filterSetBoth, filterSetCard, filterSetToken } from './filterSet';
 import { filterEmpty, filterId, filterTag, filterTextList } from './filterText';
@@ -38,8 +39,15 @@ import {
   shorthandType,
   sortMaker,
   sortType,
+  stringOrNumFilterMaker,
 } from './types';
-import { invertOp, opToIncludePlural, opToIncludeSingular } from './filterUtils';
+import {
+  invertOp,
+  opIsNegative,
+  opToDont,
+  opToIncludePlural,
+  opToIncludeSingular,
+} from './filterUtils';
 import { filterBanned, filterLegal, filterNotLegal } from './values/filterLegality';
 import { filterHas, filterIs } from './filterIs';
 import {
@@ -47,6 +55,7 @@ import {
   filterCardLayout,
   filterFaceLayout,
   toCardLayout,
+  toFaceLayout,
 } from './values/filterLayout';
 import { filterBorder } from './values/filterBorder';
 import {
@@ -281,28 +290,63 @@ export const makeLoreFilter: filterMaker = (value: string, op: looseOpType) => {
   );
 };
 
-export const makeCreatorFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'creator',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card => card.creators ?? [],
-    'the creators',
-    opToIncludePlural
-  );
+export const makeCreatorFilter: stringOrNumFilterMaker = (value: string, op: looseOpType) => {
+  if (!isNumber(value)) {
+    return new StringPropSummaryFilter<string[], string>(
+      'creator',
+      filterTextList,
+      value,
+      op,
+      '>=',
+      card => card.creators,
+      'the artists',
+      opToIncludePlural
+    );
+  } else {
+    return new NumberPropSummaryFilter<number, string>(
+      'creator',
+      filterNumberString,
+      value,
+      op,
+      '=',
+      card => card.creators.length,
+      'the number of creators'
+    );
+  }
 };
-export const makeArtistFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'artist',
+export const makeArtistFilter: stringOrNumFilterMaker = (value: string, op: looseOpType) => {
+  if (!isNumber(value)) {
+    return new StringPropSummaryFilter<string[], string>(
+      'artist',
+      filterTextList,
+      value,
+      op,
+      '>=',
+      card => card.artists ?? [],
+      'the artists',
+      opToIncludePlural
+    );
+  } else {
+    return new NumberPropSummaryFilter<number, string>(
+      'artist',
+      filterNumberString,
+      value,
+      op,
+      '=',
+      card => card.artists?.length ?? 0,
+      'the number of artists'
+    );
+  }
+};
+export const makeWatermarkFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new filterObject<string[], string>(
+    'watermark',
     filterTextList,
     value,
-    op,
-    '>=',
-    card => card.artists ?? [],
-    'the artists',
-    opToIncludePlural
+    opIsNegative(op) ? '=' : '!=',
+    '=',
+    card => card.toFaces().flatMap(e => e.watermark ?? []),
+    () => `the cards ${opToDont(op)} have the "${value}" watermark`
   );
 };
 export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -318,14 +362,7 @@ export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) =
   );
 };
 export const makeTagFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter<string[], string>(
-    'tag',
-    filterTag,
-    value,
-    op,
-    '>=',
-    card => card.tags ?? []
-  );
+  return new TagFilter('tag', filterTag, value, op, '>=', card => card);
 };
 export const makeCollectorNumberFilter: filterMaker = (value: string, op: looseOpType) => {
   return new NumberPropSummaryFilter<string | undefined, string>(
@@ -732,8 +769,11 @@ const frameEffectsToParse = [
   'extendedart',
   'vertical',
   'verticalart',
+  'noart',
   'showcase',
   'etched',
+  'borderless',
+  'colorshifted',
 ];
 
 export const makeIsFilter: filterMaker = (value: string, op: looseOpType) => {
@@ -755,7 +795,7 @@ export const makeHasFilter: filterMaker = (value: string, op: looseOpType) => {
   if (frameEffectsToParse.includes(value)) {
     return makeFrameEffectFilter(value, op);
   }
-  if (value in toCardLayout) {
+  if (value in toFaceLayout) {
     return makeFaceLayoutFilter(value, op);
   }
   return new CardStringFilter('has', filterHas, value, op, '=');
@@ -830,6 +870,7 @@ export const equivFilterNames: Record<string, string> = {
   manacost: 'mana',
   t: 'type',
   o: 'oracle',
+  text: 'oracle',
   oracletext: 'oracle',
   rules: 'oracle',
   rulestext: 'oracle',
@@ -842,9 +883,11 @@ export const equivFilterNames: Record<string, string> = {
   ft: 'flavor',
   flavortext: 'flavor',
   creators: 'creator',
+  a: 'artist',
   artists: 'artist',
   otag: 'tag',
   oracletag: 'tag',
+  function: 'tag',
   cn: 'number',
   collector: 'number',
   collectornumber: 'number',
@@ -867,6 +910,7 @@ export const equivFilterNames: Record<string, string> = {
   direction: 'invalidsort',
   s: 'set',
   ts: 'tokenset',
+  tset: 'tokenset',
   b: 'block',
 };
 
@@ -974,10 +1018,7 @@ export const colorFilters: Record<string, colorFilterMaker> = {
   mischybrid: makeMiscHybridFilter,
 };
 export const textIsQuote = (text: string) =>
-  text.length > 1 &&
-  text[0] == text.charAt(-1) &&
-  ['"', "'"].includes(text[0]) &&
-  text.charAt(-2) != '\\';
+  text.length > 1 && text[0] == text.at(-1) && ['"', "'"].includes(text[0]) && text.at(-2) != '\\';
 export const unescapeText = (text: string) => {
   const strippedText = textIsQuote(text) ? text : text.replaceAll(/[_-]/g, '');
   return strippedText
@@ -1001,14 +1042,14 @@ export const splitOnFirstOp = (
         term: unescapeText(text.slice(i + 2)),
       };
     }
-    if (looseOpList.includes(text.charAt(i) as looseOpType)) {
+    if (looseOpList.includes(text.at(i) as looseOpType)) {
       return {
         keyword: unescapeText(text.slice(0, i)),
-        op: text.charAt(i) as looseOpType,
+        op: text.at(i) as looseOpType,
         term: unescapeText(text.slice(i + 1)),
       };
     }
-    if (text.charAt(i) == '"' || text.charAt(i) == "'") {
+    if (text.at(i) == '"' || text.at(i) == "'") {
       break;
     }
   }

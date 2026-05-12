@@ -39,7 +39,7 @@ const tokenList = ['(', ')', 'or', '-'];
 const charBreakList = ['(', ')', ' '];
 
 const isSortFilter = (text: string): boolean => {
-  if (text.charAt(0) == '-') {
+  if (text.at(0) == '-') {
     return isSortFilter(text.slice(1));
   }
   const { keyword } = splitOnFirstOp(text);
@@ -61,7 +61,7 @@ const sortIsValid = (text: string): boolean => {
   return isSort(term) || isDir(term);
 };
 const isInclude = (text: string): boolean => {
-  if (text.charAt(0) == '-') {
+  if (text.at(0) == '-') {
     return isInclude(text.slice(1));
   }
   const { keyword } = splitOnFirstOp(text);
@@ -118,7 +118,7 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
         continue;
       }
     }
-    if ((char === '"' || char === "'") && query.charAt(i - 1) != '\\') {
+    if ((char === '"' || char === "'") && query.at(i - 1) != '\\') {
       const quoteStart = i;
       let foundQuote = false;
       const quoteChar = char;
@@ -286,6 +286,29 @@ export const getWinnowedSortOptions = (sortList: sortObject[]): sortType[] => {
   return options;
 };
 
+const prepTag = (tag: string) => tag.replaceAll(/[\/\\'"\- _\.]/g, '').toLowerCase();
+
+export const fixTags = (node: FilterNode, tagList: string[]) => {
+  switch (node.type) {
+    case 'filter':
+      if (node.filter.queryName == 'tag') {
+        const tag = prepTag(node.filter.value);
+        const correctedTag = tagList.find(fixed => prepTag(fixed) == tag);
+        if (correctedTag) {
+          node.filter.value = correctedTag;
+        }
+      }
+      break;
+    case 'not':
+      fixTags(node.child, tagList);
+      break;
+    case 'and':
+    case 'or':
+      node.children.forEach(child => fixTags(child, tagList));
+      break;
+  }
+};
+
 export const combineAndWinnowSorts = (
   querySorts: sortObject[],
   inputSorts: sortObject[]
@@ -404,7 +427,7 @@ export const parseSearchQuery = (
       }
       i++;
       const summary = filter.toSummary(filterIsInverted(token));
-      if (summary.charAt(0) == '!' || filter.queryName.startsWith('invalid')) {
+      if (summary.at(0) == '!' || filter.queryName.startsWith('invalid')) {
         invalids.push([token, filter]);
         return parseTerm();
       }
@@ -461,9 +484,9 @@ export const parseSearchQuery = (
   while ([' and ', ' or '].includes(summaries.at(0) ?? '')) {
     summaries.shift();
   }
-  const summary =
+  const summary = summaries.length ?
     ('where ' + summaries.join('')).trimEnd() +
-    (includeList.length ? `, ${includeList.map(filter => filter.toSummary()).join(' and ')}` : '');
+    (includeList.length ? `, ${includeList.map(filter => filter.toSummary()).join(' and ')}` : ''):'';
   return { node, sortObjects, includeList, invalids, summary, winnowed, autoFilterExtras };
 };
 
@@ -482,7 +505,8 @@ export const evaluateFilter = (node: FilterNode, card: HCCard.Any): boolean => {
 
 export const searchCards = (
   cards: HCCard.Any[],
-  query: string
+  query: string,
+  tagList: string[]
 ): {
   cards: HCCard.Any[];
   sortObjects: sortObject[];
@@ -492,6 +516,7 @@ export const searchCards = (
 } => {
   const { node, sortObjects, includeList, invalids, summary, winnowed, autoFilterExtras } =
     parseSearchQuery(query);
+  fixTags(node, tagList);
   const newCardsWithExtras = cards.filter(
     card => evaluateFilter(node, card) && includeList.every(filter => filter.cardPassesFilter(card))
   );

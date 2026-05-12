@@ -93,8 +93,9 @@ export interface includeFilter extends cardFilter<HCCard.Any, string> {
 }
 export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
 export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
-export interface tagFilter extends cardFilter<string[], string> {
-  (value1: string[], operator: opType, value2: string, tag_notes?: Record<string, string>): boolean;
+export interface tagFilter extends cardFilter<HCCard.Any, string> {
+  (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string): boolean;
+  toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) => string;
 }
 
 export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
@@ -103,4 +104,5 @@ export type colorFilterMaker = (
   value: string[] | number | shorthandType,
   op: looseOpType
 ) => filterObject<any, string[]> | filterObject<any, number> | filterObject<any, shorthandType>;
+export type stringOrNumFilterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
 export type sortMaker = (sort: sortType, dir: dirType) => sortObject;

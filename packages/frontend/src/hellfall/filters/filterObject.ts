@@ -15,6 +15,7 @@ import {
 } from './types';
 import { getActualOp } from './filterUtils';
 import { filterNumberString } from './filterNumber';
+import { parseTag } from './filterText';
 
 export interface anyFilterInterface<T = any, S = any> {
   queryName: string;
@@ -148,7 +149,7 @@ export class NumberPropSummaryFilter<T, S> extends filterObject<T, S> {
       getValueToCompare,
       () => {
         const num = filterNumberString.toSummary(this.getOp(), this.value);
-        if (num.charAt(0) == '!') {
+        if (num.at(0) == '!') {
           return num;
         }
         return `${this.summaryStart} ${num}`;
@@ -157,32 +158,32 @@ export class NumberPropSummaryFilter<T, S> extends filterObject<T, S> {
     );
   }
 }
-
-export class TagFilter extends filterObject<string[], string> {
+export class TagFilter extends filterObject<HCCard.Any, string> {
+  note?: boolean | string;
   constructor(
     queryName: string,
     public filter: tagFilter,
     value: string,
     op: looseOpType,
     defaultOp: opType,
-    getValueToCompare: (card: HCCard.Any) => string[],
+    getValueToCompare: (card: HCCard.Any) => HCCard.Any,
     inverted?: boolean
   ) {
+    const { tag, note } = parseTag(value);
     super(
       queryName,
       filter,
-      value,
+      tag,
       op,
       defaultOp,
       getValueToCompare,
-      (invert?: boolean) => this.filter.toSummary(this.getOp(), this.value, invert),
+      (invert?: boolean) => this.filter.toSummary(this.getOp(), this.value, invert, this.note),
       inverted
     );
+    this.note = note;
   }
-  getNotes = (card: HCCard.Any) => card.tag_notes;
   cardPassesFilter = (card: HCCard.Any) =>
-    !this.inverted ==
-    this.filter(this.getValueToCompare(card), this.getOp(), this.value, this.getNotes(card));
+    !this.inverted == this.filter(card, this.getOp(), this.value, this.note);
 }
 export class IncludeFilter extends filterObject<HCCard.Any, string> {
   constructor(

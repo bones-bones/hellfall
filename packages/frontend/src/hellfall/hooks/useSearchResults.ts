@@ -15,6 +15,7 @@ import {
   invalidAtom,
   // shouldPushHistoryAtom,
 } from '../atoms/searchAtoms.ts';
+import tags_data from '@hellfall/shared/data/tags.json';
 
 import { CHUNK_SIZE } from '../constants.ts';
 import {
@@ -62,7 +63,7 @@ export const useSearchResults = () => {
       winnowed,
       invalids,
       // allWereIgnored
-    } = searchCards(cards, query);
+    } = searchCards(cards, query, tags_data.data);
     setQuerySortNum(sortObjects.length);
     const { sortList, newInputs } = combineAndWinnowSorts(sortObjects, parseSorts(inputSorts));
     setSortRules(sortList);
