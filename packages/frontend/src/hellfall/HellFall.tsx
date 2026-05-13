@@ -26,8 +26,6 @@ export const HellFall = () => {
   const invalids = useAtomValue(invalidAtom);
   const escape = useKeyPress('Escape');
 
-  useUrlSync();
-
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
 
   const activeCard = cards.find(entry => {

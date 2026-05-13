@@ -86,7 +86,7 @@ export class filterObject<T, S> implements filterInterface {
 export class PassThroughSummaryFilter<T, S> extends filterObject<T, S> {
   constructor(
     queryName: string,
-    public filter: cardFilter<T, S>,
+    filter: cardFilter<T, S>,
     value: S,
     op: looseOpType,
     defaultOp: opType,
@@ -103,6 +103,29 @@ export class PassThroughSummaryFilter<T, S> extends filterObject<T, S> {
       (invert?: boolean) => this.filter.toSummary(this.getOp(), this.value, invert),
       inverted
     );
+  }
+}
+export class CompFilter extends filterObject<HCCard.Any, string> {
+  constructor(
+    queryName: string,
+    filter: cardStringFilter,
+    value1: string,
+    op: looseOpType,
+    value2: string,
+    defaultOp: opType,
+    inverted?: boolean
+  ) {
+    super(
+      queryName,
+      filter,
+      '',
+      op,
+      defaultOp,
+      (card: HCCard.Any) => card,
+      () => this.filter.toSummary(this.getOp(), this.value),
+      inverted
+    );
+    this.value = `${value1}${this.getOp()}${value2}`;
   }
 }
 export class StringPropSummaryFilter<T, S> extends filterObject<T, S> {

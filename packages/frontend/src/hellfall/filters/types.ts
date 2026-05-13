@@ -1,5 +1,5 @@
 import { HCCard, HCColor, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
-import { filterObject, IncludeFilter, sortObject } from './filterObject';
+import { CompFilter, filterObject, IncludeFilter, sortObject } from './filterObject';
 export const NOPRINT =
   'This should not ever print. Please report this as a bug on discord along with the search terms you used.';
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
@@ -99,6 +99,7 @@ export interface tagFilter extends cardFilter<HCCard.Any, string> {
 }
 
 export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
+export type compFilterMaker = (value1: string, op: looseOpType, value2: string) => CompFilter;
 export type includeFilterMaker = (value: string, op: looseOpType) => IncludeFilter;
 export type colorFilterMaker = (
   value: string[] | number | shorthandType,

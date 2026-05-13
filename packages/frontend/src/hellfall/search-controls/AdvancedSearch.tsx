@@ -33,6 +33,7 @@ import { looseOpList, looseOpType } from '../filters/types.ts';
 import { SortComponent } from './SortComponent.tsx';
 import { useNavigate } from 'react-router-dom';
 import { parseSorts } from '../filters/parseSearchBar.ts';
+import { useSyncToURL } from '../hooks/useUrlSync.ts';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -87,6 +88,8 @@ export const AdvancedSearch = () => {
   const [sortRules, setSortRules] = useAtom(sortAtom);
 
   const [query, setQuery] = useAtom(queryAtom);
+
+  const syncToURL = useSyncToURL();
 
   const textToOps: Record<string, looseOpType> = {
     '!': '!:',
@@ -232,6 +235,9 @@ export const AdvancedSearch = () => {
       } else {
         filters.push(`(${orFilters.join(' or ')})`);
       }
+    }
+    if (includeExtraSets) {
+      filters.push('include:extras');
     }
     // TODO: make sure this works
     inputSorts.forEach(input => {
@@ -382,7 +388,6 @@ export const AdvancedSearch = () => {
               'HC2',
               'HC3',
               'HC4',
-              'HCV',
               'HC6',
               'HCC',
               'HCP',
@@ -548,11 +553,11 @@ export const AdvancedSearch = () => {
         colors={inputButtonColors}
         borderRadius="m"
         onClick={() => {
-          const query = toQueryString();
-          setQuery(query);
+          const newQuery = toQueryString();
+          setQuery(newQuery);
           setInputSorts([]);
           setSortRules([]);
-          navigate(`/?q=${query}`);
+          syncToURL(newQuery, [], undefined, undefined, undefined, undefined, { newPathname: '/' });
         }}
       >
         Search with these options

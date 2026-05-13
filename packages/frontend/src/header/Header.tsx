@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Heading, styled } from '@workday/canvas-kit-react';
 import { useAuth } from '../auth';
+import { useUrlSync } from '../hellfall/hooks/useUrlSync';
 
 export const Header = () => {
+  useUrlSync();
   const { user, logoutUrl, loginUrl } = useAuth();
 
   return (

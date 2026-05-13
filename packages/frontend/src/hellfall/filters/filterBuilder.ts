@@ -16,7 +16,13 @@ import {
   filterHybridIdentityShort,
   hybridIdentityMiscReduce,
 } from './values/filterColors';
-import { filterNumberString, filterNumberStringList } from './filterNumber';
+import {
+  filterComp,
+  filterNumberString,
+  filterNumberStringList,
+  invertCompOp,
+  isCompKeyword,
+} from './filterNumber';
 import {
   filterObject,
   CardStringFilter,
@@ -26,11 +32,13 @@ import {
   StringPropSummaryFilter,
   NumberPropSummaryFilter,
   TagFilter,
+  CompFilter,
 } from './filterObject';
 import { filterIncludeExtras, filterSetBoth, filterSetCard, filterSetToken } from './filterSet';
 import { filterEmpty, filterId, filterTag, filterTextList } from './filterText';
 import {
   colorFilterMaker,
+  compFilterMaker,
   dirType,
   filterMaker,
   includeFilterMaker,
@@ -66,6 +74,7 @@ import {
 } from './values/filterFrame';
 import { isInteger, isNumber } from '@hellfall/shared/utils/isInt';
 import { filterSort } from './sortRule';
+import { toNumber } from '../inputs/NumberSelector';
 
 export const makeIncludeFilter: includeFilterMaker = (value: string, op: looseOpType) => {
   return new IncludeFilter('include', filterIncludeExtras, value, op, '=');
@@ -375,6 +384,15 @@ export const makeCollectorNumberFilter: filterMaker = (value: string, op: looseO
     'the collector number'
   );
 };
+
+export const makeCompFilter: compFilterMaker = (
+  value1: string,
+  op: looseOpType,
+  value2: string
+) => {
+  return new CompFilter('comp', filterComp, value1, op, value2, '=');
+};
+
 export const makeManaValueFilter: filterMaker = (value: string, op: looseOpType) => {
   return new NumberPropSummaryFilter<number, string>(
     'manavalue',
@@ -406,6 +424,23 @@ export const makeToughnessFilter: filterMaker = (value: string, op: looseOpType)
     '=',
     card => card.toFaces().flatMap(e => e.toughness ?? []),
     'the toughness'
+  );
+};
+
+export const makePTFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new NumberPropSummaryFilter<(number | undefined)[], string>(
+    'pt',
+    filterNumberStringList,
+    value,
+    op,
+    '=',
+    card =>
+      card
+        .toFaces()
+        .flatMap(e =>
+          !e.power && !e.toughness ? [] : (toNumber(e.power) ?? 0) + (toNumber(e.toughness) ?? 0)
+        ),
+    'the sum of power and toughness'
   );
 };
 
@@ -898,7 +933,7 @@ export const equivFilterNames: Record<string, string> = {
   loy: 'loyalty',
   def: 'defense',
   kw: 'keyword',
-  // powtou:'pt',
+  powtou: 'pt',
   cardlayout: 'layout',
   f: 'legal',
   format: 'legal',
@@ -933,6 +968,7 @@ export const filters: Record<string, filterMaker> = {
   manavalue: makeManaValueFilter,
   power: makePowerFilter,
   toughness: makeToughnessFilter,
+  pt: makePTFilter,
   loyalty: makeLoyaltyFilter,
   defense: makeDefenseFilter,
   legal: makeLegalFilter,
@@ -1160,6 +1196,9 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
     if (invert) {
       switch (filter.filter.invertOption) {
         case 'flip': {
+          if (filter.queryName == 'comp') {
+            filter.value = invertCompOp(filter.value);
+          }
           filter.op = invertOp(filter.op);
           break;
         }
@@ -1181,6 +1220,9 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
     return correctOp(makeNameFilter(unescapeText(text), ':'));
   }
   const { keyword, op, term } = splitOnFirstOp(text);
+  if (isCompKeyword(keyword) && isCompKeyword(term)) {
+    return correctOp(makeCompFilter(keyword, op, term));
+  }
   if (keyword in equivFilterNames || keyword in filters) {
     const correctKeyword = keyword in filters ? keyword : equivFilterNames[keyword];
     return correctOp(filters[correctKeyword](term, op));

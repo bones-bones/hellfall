@@ -2,7 +2,7 @@ import { FormField, space } from '@workday/canvas-kit-react';
 import { Select } from '@workday/canvas-kit-preview-react/select';
 import { SecondaryButton, TertiaryButton, PrimaryButton } from '@workday/canvas-kit-react/button';
 import { useAtom, useAtomValue } from 'jotai';
-import { inputSortAtom, queryAtom, querySortNumAtom, sortAtom } from '../atoms/searchAtoms.ts';
+import { inputSortAtom, queryAtom, querySortAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import styled from '@emotion/styled';
 import { sorts, dirs, sortType, dirType } from '../filters/types.ts';
 import {
@@ -35,7 +35,7 @@ const parseSort = (order: string): sortType => order?.split(',')[0] as sortType;
 const parseDir = (order: string): dirType => order?.split(',')[1] as dirType;
 export const SortComponent = () => {
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
-  const querySortNum = useAtomValue(querySortNumAtom);
+  const querySorts = useAtomValue(querySortAtom);
   const [sortRules, setSortRules] = useAtom(sortAtom);
   const [canAddInput, setCanAddInput] = useState<boolean>();
   const [canDelInput, setCanDelInput] = useState<boolean>();
@@ -70,23 +70,23 @@ export const SortComponent = () => {
     const newInputs = [...inputSorts];
     newInputs.push('auto,auto');
     setInputSorts(newInputs);
-    const newSortRules = [...sortRules];
-    newSortRules.push(makeSort('auto', 'auto'));
-    setSortRules(newSortRules);
+    // const newSortRules = [...sortRules];
+    // newSortRules.push(makeSort('auto', 'auto'));
+    // setSortRules(newSortRules);
   };
 
   useEffect(() => {
-    setCanDelInput(inputSorts.length > querySortNum && inputSorts.length > 1);
-  }, [inputSorts, querySortNum]);
+    setCanDelInput(inputSorts.length > querySorts.length && inputSorts.length > 1);
+  }, [inputSorts, querySorts]);
 
   const handleDelInput = () => {
     if (!canDelInput) return;
     const newInputs = [...inputSorts];
     newInputs.pop();
     setInputSorts(newInputs);
-    const newSortRules = [...sortRules];
-    newSortRules.pop();
-    setSortRules(newSortRules);
+    // const newSortRules = [...sortRules];
+    // newSortRules.pop();
+    // setSortRules(newSortRules);
   };
 
   return (

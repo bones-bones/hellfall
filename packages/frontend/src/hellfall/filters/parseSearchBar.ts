@@ -311,24 +311,25 @@ export const fixTags = (node: FilterNode, tagList: string[]) => {
 
 export const combineAndWinnowSorts = (
   querySorts: sortObject[],
-  inputSorts: sortObject[]
-): { sortList: sortObject[]; newInputs: sortObject[] } => {
-  const newInputs: sortObject[] = [];
+  inputSorts: string[]
+): { sortList: sortObject[]; newInputs: string[] } => {
+  const inputs = parseSorts(inputSorts);
+  const newInputList: sortObject[] = [];
   const sortList: sortObject[] = [];
-  for (let i = 0; i < Math.max(querySorts.length, inputSorts.length); i++) {
-    if (i >= inputSorts.length) {
+  for (let i = 0; i < Math.max(querySorts.length, inputs.length); i++) {
+    if (i >= inputs.length) {
       sortList.push(querySorts[i]);
-      newInputs.push(makeSort('auto', 'auto'));
+      newInputList.push(makeSort('auto', 'auto'));
       continue;
     }
     const input =
-      sorts.includes(inputSorts[i].sort) && dirs.includes(inputSorts[i].dir)
-        ? inputSorts[i]
+      sorts.includes(inputs[i].sort) && dirs.includes(inputs[i].dir)
+        ? inputs[i]
         : makeSort(
-            isSort(inputSorts[i].sort) ? correctSort(inputSorts[i].sort) : 'auto',
-            isDir(inputSorts[i].dir) ? correctDir(inputSorts[i].dir) : 'auto'
+            isSort(inputs[i].sort) ? correctSort(inputs[i].sort) : 'auto',
+            isDir(inputs[i].dir) ? correctDir(inputs[i].dir) : 'auto'
           );
-    newInputs.push(input);
+    newInputList.push(input);
     if (i >= querySorts.length) {
       sortList.push(input);
       continue;
@@ -360,15 +361,15 @@ export const combineAndWinnowSorts = (
     return false;
   };
   for (let i = sortList.length - 1; i >= 0; i--) {
-    const sort = sortList[i].sort;
+    // const sort = sortList[i].sort;
     if (/* (sort == 'auto' && sortList.length> 1 ) || */ hasConflict(i)) {
       const winnowed = sortList.splice(i, 1)[0];
-      if (i == newInputs.length - 1 && newInputs[i].sort == winnowed.sort) {
-        newInputs.splice(i, 1);
+      if (i == newInputList.length - 1 && newInputList[i].sort == winnowed.sort) {
+        newInputList.splice(i, 1);
       }
     }
   }
-
+  const newInputs = newInputList.map(input => `${input.sort},${input.dir}`);
   return { sortList, newInputs };
 };
 
@@ -378,12 +379,12 @@ export const parseSearchQuery = (
   node: FilterNode;
   sortObjects: sortObject[];
   includeList: IncludeFilter[];
-  invalids: [string, filterObject<any, any>][];
+  invalids: [string, string][];
   summary: string;
   winnowed: sortObject[];
   autoFilterExtras: boolean;
 } => {
-  const invalids: [string, filterObject<any, any>][] = [];
+  const invalids: [string, string][] = [];
   const summaries: string[] = [];
   const includeList: IncludeFilter[] = [];
   let autoFilterExtras = true;
@@ -428,7 +429,7 @@ export const parseSearchQuery = (
       i++;
       const summary = filter.toSummary(filterIsInverted(token));
       if (summary.at(0) == '!' || filter.queryName.startsWith('invalid')) {
-        invalids.push([token, filter]);
+        invalids.push([token, filter.toSummary().slice(1)]);
         return parseTerm();
       }
       if (filter.queryName == 'include') {
@@ -511,12 +512,8 @@ export const searchCards = (
 ): {
   cards: HCCard.Any[];
   sortObjects: sortObject[];
-  summary: string;
-  invalids: [string, filterObject<any, any>][];
-  winnowed: sortObject[];
 } => {
-  const { node, sortObjects, includeList, invalids, summary, winnowed, autoFilterExtras } =
-    parseSearchQuery(query);
+  const { node, sortObjects, includeList, autoFilterExtras } = parseSearchQuery(query);
   fixTags(node, tagList);
   const newCardsWithExtras = cards.filter(
     card => evaluateFilter(node, card) && includeList.every(filter => filter.cardPassesFilter(card))
@@ -530,8 +527,5 @@ export const searchCards = (
     cards:
       autoFilterExtras && newCardsWithoutExtras.length ? newCardsWithoutExtras : newCardsWithExtras,
     sortObjects,
-    summary,
-    invalids,
-    winnowed,
   };
 };

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { FC, PropsWithChildren } from 'react';
 import { HCBorderColor, HCMiscColors } from '@hellfall/shared/types';
-import { sorts } from './filters/types.ts';
+import { looseOpList, sorts } from './filters/types.ts';
 
 const mapListToCodeAnd = (textList: string[]) =>
   textList.map((text, i) => (
@@ -87,10 +87,47 @@ export const Syntax = () => {
         </div>
         <h2>Numbers</h2>
         <div>
-          <code>manavalue:</code>, <code>power:</code>, <code>toughness:</code>,{' '}
+          <code>manavalue:</code>, <code>power:</code>, <code>toughness:</code>, <code>pt:</code>,
           <code>loyalty:</code>, <code>defense:</code>/<code>def:</code>, and <code>cn:</code> all
-          work as keywords, but <code>pt:</code> isn't implemented yet, and neither is the ability
-          to compare between these (such as doing <code>pow{'>'}tou</code>).{' '}
+          work as keywords.
+        </div>
+        <br />
+        <div>
+          You can use numeric expressions ({mapListToCodeAnd(looseOpList)}) to compare a numeric
+          keyword (one of the ones listed above, or a color search keyword (
+          {mapListToCodeOr(['color', 'identity', 'indicator', 'hybrid'])})) to either another
+          numeric keyword or to a number.
+        </div>
+        <br />
+        <div>
+          <code>:</code> is interpreted as the default for that keyword, and <code>!:</code> as its
+          inverse. You can also use these operators for any other keyword, and it will try to
+          interpret them as logically as possible, though it might default to simply treating{' '}
+          {mapListToCodeAnd(['<=', '=', '>='])} as equivalent to <code>:</code> and treating{' '}
+          {mapListToCodeAnd(['>', '!=', '<', '!:'])} as equivalent to negating the search term.
+        </div>
+        <h2>Logic/Conditions</h2>
+        <div>
+          Instead of using <code>!</code> before a name to get the exact name, use <code>=</code>{' '}
+          instead. This will match all cards with that exact name (including flavor names and names
+          of faces). This also works for all other text components of cards, as well as for{' '}
+          <code>lore:</code>.
+        </div>
+        <br />
+        <div>
+          Everything from Scryfall's{' '}
+          <Link to={'https://scryfall.com/docs/syntax#negating'}>Negating Conditions</Link> section
+          applies, except that <code>include:</code> can also be inverted to turn it into{' '}
+          <code>exclude:</code>, and vice versa.
+        </div>
+        <br />
+        <div>Regex hasn't been implemented yet.</div>
+        <br />
+        <div>
+          Everything from Scryfall's{' '}
+          <Link to={'https://scryfall.com/docs/syntax#or'}>Using "Or"</Link> and{' '}
+          <Link to={'https://scryfall.com/docs/syntax#nesting'}>Nesting Conditions</Link> sections
+          also applies.
         </div>
         <h2>Sets and Blocks</h2>
         <div>
@@ -207,29 +244,6 @@ export const Syntax = () => {
             tag:x{'<'}y{'>'}
           </code>{' '}
           to search for <code>y</code> in the notes for tag <code>x</code>.
-        </div>
-        <h2>Logic/Conditions</h2>
-        <div>
-          Instead of using <code>!</code> before a name to get the exact name, use <code>=</code>{' '}
-          instead. This will match all cards with that exact name (including flavor names and names
-          of faces). This also works for all other text components of cards, as well as for{' '}
-          <code>lore:</code>.
-        </div>
-        <br />
-        <div>
-          Everything from Scryfall's{' '}
-          <Link to={'https://scryfall.com/docs/syntax#negating'}>Negating Conditions</Link> section
-          applies, except that <code>include:</code> can also be inverted to turn it into{' '}
-          <code>exclude:</code>, and vice versa.
-        </div>
-        <br />
-        <div>Regex hasn't been implemented yet.</div>
-        <br />
-        <div>
-          Everything from Scryfall's{' '}
-          <Link to={'https://scryfall.com/docs/syntax#or'}>Using "Or"</Link> and{' '}
-          <Link to={'https://scryfall.com/docs/syntax#nesting'}>Nesting Conditions</Link> sections
-          also applies.
         </div>
         <h2>Display/Sort</h2>
         <div>

@@ -47,10 +47,11 @@ export const SearchBar = () => {
 const Container = styled('div')({
   paddingLeft: space.l,
   paddingRight: space.l,
-  width: '100%',
   marginTop: '-10px',
   marginBottom: '0px',
+  overflow: 'hidden',
 });
 const SearchBox = styled(TextInput)({
+  overflow: 'hidden',
   // border: 'none',
 });

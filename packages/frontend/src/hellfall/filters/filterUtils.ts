@@ -202,7 +202,7 @@ export const containsOp = <T>(
   }
 };
 
-const share = (value1: string | string[], value2: string | string[]) => {
+const share = <T = any>(value1: T | T[], value2: T | T[]) => {
   if (Array.isArray(value1) && Array.isArray(value2)) {
     return value1.some(value => value2.includes(value));
   } else if (Array.isArray(value1) && typeof value2 == 'string') {
@@ -221,7 +221,7 @@ const share = (value1: string | string[], value2: string | string[]) => {
  * @param value2 the second value to check
  * @returns
  */
-export const shareOp = (op: opType, value1: string | string[], value2: string | string[]) => {
+export const shareOp = <T = any>(op: opType, value1: T | T[], value2: T | T[]) => {
   switch (op) {
     case '<':
       return !share(value1, value2);
