@@ -3,6 +3,7 @@ import { useAtom } from 'jotai';
 import { queryAtom } from '../atoms/searchAtoms';
 import { useEffect, useMemo, useState } from 'react';
 import { useKeyPress } from '../../hooks';
+import { Link } from 'react-router-dom';
 
 export const SearchBar = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -40,10 +41,15 @@ export const SearchBar = () => {
           value={localQuery}
           onChange={event => setLocalQuery(event.target.value)}
         />
+        <Spacer />
+        <Link to={'/syntax'}>search syntax</Link>
       </Container>
     </>
   );
 };
+const Spacer = styled('div')({
+  height: '5px',
+});
 const Container = styled('div')({
   paddingLeft: space.l,
   paddingRight: space.l,
