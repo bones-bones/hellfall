@@ -75,6 +75,7 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
   const tokens: string[] = [];
   const len = query.length;
   let currentTerm = '';
+
   for (let i = 0; i < len; ) {
     const char = query[i];
     if (char == ' ') {
@@ -373,6 +374,8 @@ export const combineAndWinnowSorts = (
   return { sortList, newInputs };
 };
 
+const noAndList = [' or ', '(', ' and ', ' not ('];
+const consumeList = [' or ', '(', ' and ', ' not (', ')'];
 export const parseSearchQuery = (
   query: string
 ): {
@@ -405,11 +408,21 @@ export const parseSearchQuery = (
       }
       const token = tokens[i];
 
+      if (token === '(' && tokens.at(i + 1) === ')') {
+        i += 2;
+        return null; // Skip empty parentheses entirely
+      }
       if (token === '(') {
         summaries.push(token);
         const { node, nextPos } = parseTokens(tokens, i + 1, summaries);
         i = nextPos;
+        if (i < tokens.length && tokens[i] === ')') {
+          i++;
+        }
         summaries.push(')');
+        if ((node.type == 'and' || node.type == 'or') && !node.children.length) {
+          return null;
+        }
         return node;
       }
 
@@ -418,14 +431,20 @@ export const parseSearchQuery = (
       }
 
       if (token === '-' && tokens.at(i + 1) == '(') {
-        if (summaries.at(-1) != ' or ' && summaries.at(-1) != '(') {
+        if (summaries.length && !noAndList.includes(summaries.at(-1)!)) {
           summaries.push(' and ');
         }
         summaries.push(' not (');
         i++;
         const { node, nextPos } = parseTokens(tokens, i + 1, summaries);
         i = nextPos;
+        if (i < tokens.length && tokens[i] === ')') {
+          i++;
+        }
         summaries.push(')');
+        if ((node.type == 'and' || node.type == 'or') && !node.children.length) {
+          return null;
+        }
         return { type: 'not', child: node };
       }
 
@@ -438,14 +457,20 @@ export const parseSearchQuery = (
       const summary = filter.toSummary(filterIsInverted(token));
       if (summary.at(0) == '!' || filter.queryName.startsWith('invalid')) {
         invalids.push([token, filter.toSummary().slice(1)]);
-        return parseTerm();
+        // while (summaries.length && consumeList.includes(summaries.at(-1)!)) {
+        //   summaries.pop()
+        // }
+        return null;
       }
       if (filter.queryName == 'include') {
         autoFilterExtras = false;
         includeList.push(filter);
-        return parseTerm();
+        // while (summaries.length && consumeList.includes(summaries.at(-1)!)) {
+        //   summaries.pop()
+        // }
+        return null;
       }
-      if (summaries.length && ![' or ', '(', ' and ', ' not ('].includes(summaries.at(-1)!)) {
+      if (summaries.length && !noAndList.includes(summaries.at(-1)!)) {
         summaries.push(' and ');
       }
       summaries.push(summary);
@@ -454,35 +479,54 @@ export const parseSearchQuery = (
     leftNode = parseTerm();
 
     if (!leftNode) {
+      // Try parsing more terms until we find a valid one or hit ')'
+      while (i < tokens.length && tokens[i] !== ')') {
+        const nextNode = parseTerm();
+        if (nextNode) {
+          leftNode = nextNode;
+          break;
+        }
+      }
+    }
+
+    if (!leftNode) {
       return { node: { type: 'and', children: [] }, nextPos: i, summaries };
     }
 
     while (i < tokens.length) {
       const token = tokens[i];
       if (token == ')') {
-        i++;
         break;
       }
+
       if (token == 'or') {
         while (i < tokens.length && tokens[i] === 'or') {
           i++;
         }
         if (i >= tokens.length) break;
+
         summaries.push(` ${token} `);
         const rightNode = parseTerm();
         if (rightNode) {
-          leftNode = { type: 'or', children: [leftNode, rightNode] };
+          if (leftNode) {
+            leftNode = { type: 'or', children: [leftNode, rightNode] };
+          } else {
+            leftNode = rightNode;
+          }
         }
-      } else if (token != '(') {
-        if (summaries.length && ![' or ', '(', ' and ', ' not ('].includes(summaries.at(-1)!)) {
+        continue;
+      } else {
+        if (summaries.length && !noAndList.includes(summaries.at(-1)!)) {
           summaries.push(' and ');
         }
         const rightNode = parseTerm();
         if (rightNode) {
-          leftNode = { type: 'and', children: [leftNode, rightNode] };
+          if (leftNode) {
+            leftNode = { type: 'and', children: [leftNode, rightNode] };
+          } else {
+            leftNode = rightNode;
+          }
         }
-      } else {
-        i++;
       }
     }
     return { node: leftNode || { type: 'and', children: [] }, nextPos: i, summaries };
