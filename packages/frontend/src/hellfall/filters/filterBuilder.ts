@@ -190,9 +190,9 @@ export const makeTypeFilter: filterMaker = (value: string, op: looseOpType) => {
     op,
     '>=',
     card => [
-      ...card.toFaces().flatMap(e => e.supertypes || []),
-      ...card.toFaces().flatMap(e => e.types || []),
-      ...card.toFaces().flatMap(e => e.subtypes || []),
+      ...card.toFaces().flatMap(e => e.supertypes ?? []),
+      ...card.toFaces().flatMap(e => e.types ?? []),
+      ...card.toFaces().flatMap(e => e.subtypes ?? []),
       ...card.toFaces().map(e => e.type_line),
     ],
     'the types',
@@ -210,7 +210,7 @@ export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType)
       card
         .toFaces()
         .flatMap(e => [
-          ...(e.supertypes || []),
+          ...(e.supertypes ?? []),
           ...(e.supertypes && e.supertypes.length > 1 ? [e.supertypes.join(' ')] : []),
         ]),
     'the supertypes',
@@ -228,7 +228,7 @@ export const makeCardtypeFilter: filterMaker = (value: string, op: looseOpType) 
       card
         .toFaces()
         .flatMap(e => [
-          ...(e.types || []),
+          ...(e.types ?? []),
           ...(e.types && e.types.length > 1 ? [e.types.join(' ')] : []),
         ]),
     'the card types',
@@ -246,7 +246,7 @@ export const makeSubtypeFilter: filterMaker = (value: string, op: looseOpType) =
       card
         .toFaces()
         .flatMap(e => [
-          ...(e.subtypes || []),
+          ...(e.subtypes ?? []),
           ...(e.subtypes && e.subtypes.length > 1 ? [e.subtypes.join(' ')] : []),
         ]),
     'the subtypes',
@@ -287,9 +287,9 @@ export const makeLoreFilter: filterMaker = (value: string, op: looseOpType) => {
     '>=',
     card => [
       ...getAllNames(card),
-      ...card.toFaces().flatMap(e => e.supertypes || []),
-      ...card.toFaces().flatMap(e => e.types || []),
-      ...card.toFaces().flatMap(e => e.subtypes || []),
+      ...card.toFaces().flatMap(e => e.supertypes ?? []),
+      ...card.toFaces().flatMap(e => e.types ?? []),
+      ...card.toFaces().flatMap(e => e.subtypes ?? []),
       ...card.toFaces().map(e => e.type_line),
       ...card.toFaces().map(e => e.oracle_text),
       ...card.toFaces().flatMap(e => e.flavor_text ?? []),

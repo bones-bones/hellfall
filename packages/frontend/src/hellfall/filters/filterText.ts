@@ -49,10 +49,12 @@ export const filterId: textFilter = Object.assign(
   }
 );
 
-const textListIncludes = (value1: string[], value2: string) =>
+export const textListIncludes = (value1: string[], value2: string) =>
   value1.some(text => textSearchIncludes(text, value2));
-const textListEquals = (value1: string[], value2: string) =>
+export const textListEquals = (value1: string[], value2: string) =>
   value1.some(text => textEquals(text, value2));
+export const textListShares = (value1: string[], value2: string[]) =>
+  value1.some(text1 => value2.some(text2 => textEquals(text1, text2)));
 export const filterTextList: textListFilter = Object.assign(
   (value1: string[], operator: opType, value2: string) =>
     includeEqualsOp(operator, textListIncludes, textListEquals, value1, value2),

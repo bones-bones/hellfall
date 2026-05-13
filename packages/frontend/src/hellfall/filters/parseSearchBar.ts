@@ -385,15 +385,17 @@ export const parseSearchQuery = (
   autoFilterExtras: boolean;
 } => {
   const invalids: [string, string][] = [];
-  const summaries: string[] = [];
   const includeList: IncludeFilter[] = [];
   let autoFilterExtras = true;
+
   const parseTokens = (
     tokens: string[],
-    start: number = 0
-  ): { node: FilterNode; nextPos: number } => {
+    start: number = 0,
+    summaries: string[]
+  ): { node: FilterNode; nextPos: number; summaries: string[] } => {
     let i = start;
     let leftNode: FilterNode | null = null;
+
     const parseTerm = (): FilterNode | null => {
       while (i < tokens.length && tokens[i] === 'or') {
         i++;
@@ -404,20 +406,26 @@ export const parseSearchQuery = (
       const token = tokens[i];
 
       if (token === '(') {
-        const { node, nextPos } = parseTokens(tokens, i + 1);
-        i = nextPos;
         summaries.push(token);
+        const { node, nextPos } = parseTokens(tokens, i + 1, summaries);
+        i = nextPos;
+        summaries.push(')');
         return node;
+      }
+
+      if (token === ')') {
+        return null;
       }
 
       if (token === '-' && tokens.at(i + 1) == '(') {
         if (summaries.at(-1) != ' or ' && summaries.at(-1) != '(') {
           summaries.push(' and ');
         }
-        summaries.push(' not ');
+        summaries.push(' not (');
         i++;
-        const { node, nextPos } = parseTokens(tokens, i + 1);
+        const { node, nextPos } = parseTokens(tokens, i + 1, summaries);
         i = nextPos;
+        summaries.push(')');
         return { type: 'not', child: node };
       }
 
@@ -437,7 +445,7 @@ export const parseSearchQuery = (
         includeList.push(filter);
         return parseTerm();
       }
-      if (summaries.at(-1) != ' or ' && summaries.at(-1) != '(' && summaries.at(-1) != ' and ') {
+      if (summaries.length && ![' or ', '(', ' and ', ' not ('].includes(summaries.at(-1)!)) {
         summaries.push(' and ');
       }
       summaries.push(summary);
@@ -446,12 +454,13 @@ export const parseSearchQuery = (
     leftNode = parseTerm();
 
     if (!leftNode) {
-      return { node: { type: 'and', children: [] }, nextPos: i };
+      return { node: { type: 'and', children: [] }, nextPos: i, summaries };
     }
+
     while (i < tokens.length) {
       const token = tokens[i];
       if (token == ')') {
-        summaries.push(token);
+        i++;
         break;
       }
       if (token == 'or') {
@@ -464,22 +473,24 @@ export const parseSearchQuery = (
         if (rightNode) {
           leftNode = { type: 'or', children: [leftNode, rightNode] };
         }
-      } else {
-        if (summaries.at(-1) != ' or ' && summaries.at(-1) != '(' && summaries.at(-1) != ' and ') {
+      } else if (token != '(') {
+        if (summaries.length && ![' or ', '(', ' and ', ' not ('].includes(summaries.at(-1)!)) {
           summaries.push(' and ');
         }
         const rightNode = parseTerm();
         if (rightNode) {
           leftNode = { type: 'and', children: [leftNode, rightNode] };
         }
+      } else {
+        i++;
       }
     }
-    return { node: leftNode || { type: 'and', children: [] }, nextPos: i };
+    return { node: leftNode || { type: 'and', children: [] }, nextPos: i, summaries };
   };
   const { tokens, sortList } = tokenize(query);
-  const { node } = parseTokens(tokens, 0);
+  const { node, summaries } = parseTokens(tokens, 0, []);
   const { sortList: sortObjects, winnowed } = winnowSortObjects(parseSorts(sortList));
-  while ([' not ', ' and ', ' or '].includes(summaries.at(-1) ?? '')) {
+  while ([' not ', ' and ', ' or ', '('].includes(summaries.at(-1) ?? '')) {
     summaries.pop();
   }
   while ([' and ', ' or '].includes(summaries.at(0) ?? '')) {

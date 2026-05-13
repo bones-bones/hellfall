@@ -27,6 +27,7 @@ export const getActualOp = (operator: looseOpType, defaultOp: opType): opType =>
 export const opIsNegative = (op: looseOpType) => ['<', '>', '!=', '!:'].includes(op);
 export const opToNot = (op: looseOpType) => (opIsNegative(op) ? 'not' : '');
 export const opToDont = (op: looseOpType) => (opIsNegative(op) ? "don't" : '');
+export const opToNt = (op: looseOpType) => (opIsNegative(op) ? "n't" : '');
 export const opToIncludeSingularRecord: Record<opType, string> = {
   '<': 'excludes',
   '<=': 'excludes or equals',

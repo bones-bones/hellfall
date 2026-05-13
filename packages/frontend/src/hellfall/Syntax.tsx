@@ -1,4 +1,3 @@
-import { getPipSrc } from './stringToMana.tsx';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { FC, PropsWithChildren } from 'react';
@@ -62,6 +61,8 @@ export const Syntax = () => {
         <div>
           Using <code>~</code> as a placeholder for the card's name doesn't work yet.
         </div>
+        <br />
+        <div>You can also use {mapListToCodeAnd(['is:historic', 'is:party', 'is:outlaw'])}.</div>
         <h2>Creators & Artists</h2>
         <div>
           You can use all the scryfall search terms for artists, and you can use{' '}
@@ -70,20 +71,14 @@ export const Syntax = () => {
         <h2>Mana Costs</h2>
         <div>
           A lot of the functionality of the scryfall mana search hasn't been added yet, so{' '}
-          <code>mana:</code> currently acts like a regular text search term.
+          <code>mana:</code> currently acts like a regular text search term, though{' '}
+          <code>is:hybrid</code> and <code>is:phyrexian</code> do work.
         </div>
         <br />
         <div>
           {' '}
-          {mapListToCodeAnd([
-            'manavalue:even',
-            'manavalue:odd',
-            'is:hybrid',
-            'is:phyrexian',
-            'devotion:',
-            'produces:',
-          ])}{' '}
-          haven't been implemented yet.{' '}
+          {mapListToCodeAnd(['manavalue:even', 'manavalue:odd', 'devotion:', 'produces:'])} haven't
+          been implemented yet.{' '}
         </div>
         <h2>Numbers</h2>
         <div>
@@ -279,9 +274,6 @@ export const Syntax = () => {
           {mapListToCodeAnd([
             'is:spell',
             'is:permanent',
-            'is:historic',
-            'is:party',
-            'is:outlaw',
             'is:modal',
             'is:vanilla',
             'is:frenchvanilla',
