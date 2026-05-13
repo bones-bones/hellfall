@@ -1,38 +1,39 @@
-import "dotenv/config";
-import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
-import { parse as parseUrl } from "node:url";
-import { withCors } from "./api/lib/cors.js";
-import type { HandlerRequest, HandlerResponse } from "./api/lib/types.js";
-import { meHandler } from "./api/me.js";
-import { logoutHandler } from "./api/logout.js";
-import { tagHandler } from "./api/tag.js";
-import { watchwolfHandler } from "./api/watchwolf.js";
-import { loginHandler } from "./api/discord/login.js";
-import { callbackHandler } from "./api/discord/callback.js";
-import { doneHandler } from "./api/discord/done.js";
-import { cardTagsHandler } from "./api/cardTags.js";
+import 'dotenv/config';
+import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
+import { parse as parseUrl } from 'node:url';
+import { withCors } from './api/lib/cors.js';
+import type { HandlerRequest, HandlerResponse } from './api/lib/types.js';
+import { meHandler } from './api/me.js';
+import { logoutHandler } from './api/logout.js';
+import { tagHandler } from './api/tag.js';
+import { watchwolfHandler } from './api/watchwolf.js';
+import { loginHandler } from './api/discord/login.js';
+import { callbackHandler } from './api/discord/callback.js';
+import { doneHandler } from './api/discord/done.js';
+import { cardTagsHandler } from './api/cardTags.js';
 
 const PORT = Number(process.env.PORT) || 3003;
 
-const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void | Promise<void>> = {
-  "/api/me": meHandler,
-  "/api/logout": logoutHandler,
-  "/api/tag": tagHandler,
-  "/api/watchwolf": watchwolfHandler,
-  "/api/discord/login": loginHandler,
-  "/api/discord/callback": callbackHandler,
-  "/api/discord/done": doneHandler
-};
+const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void | Promise<void>> =
+  {
+    '/api/me': meHandler,
+    '/api/logout': logoutHandler,
+    '/api/tag': tagHandler,
+    '/api/watchwolf': watchwolfHandler,
+    '/api/discord/login': loginHandler,
+    '/api/discord/callback': callbackHandler,
+    '/api/discord/done': doneHandler,
+  };
 
-const CARD_TAGS_PREFIX = "/api/cards/";
+const CARD_TAGS_PREFIX = '/api/cards/';
 
 function parseCardTagsPath(path: string): { cardId: string; tag: string | null } | null {
   if (!path.startsWith(CARD_TAGS_PREFIX)) return null;
   const rest = path.slice(CARD_TAGS_PREFIX.length);
-  const parts = rest.split("/");
-  if (parts.length < 2 || parts[0] === "" || parts[1] !== "tags") return null;
+  const parts = rest.split('/');
+  if (parts.length < 2 || parts[0] === '' || parts[1] !== 'tags') return null;
   const cardId = parts[0];
-  const tag = parts.length >= 3 && parts[2] !== "" ? parts[2] : null;
+  const tag = parts.length >= 3 && parts[2] !== '' ? parts[2] : null;
   return { cardId, tag };
 }
 
@@ -42,8 +43,9 @@ function parseQuery(search: string | null): Record<string, string | string[]> {
   const out: Record<string, string | string[]> = {};
   for (const [key, values] of params) {
     const prev = out[key];
-    if (prev === undefined) { out[key] = values }
-    else if (Array.isArray(prev)) prev.push(values);
+    if (prev === undefined) {
+      out[key] = values;
+    } else if (Array.isArray(prev)) prev.push(values);
     else out[key] = [prev, values];
   }
   return out;
@@ -51,8 +53,8 @@ function parseQuery(search: string | null): Record<string, string | string[]> {
 
 createServer(async (req: IncomingMessage, res: ServerResponse) => {
   try {
-    const { pathname, search } = parseUrl(req.url ?? "/", true);
-    const path = pathname ?? "/";
+    const { pathname, search } = parseUrl(req.url ?? '/', true);
+    const path = pathname ?? '/';
 
     const cardTagsParams = parseCardTagsPath(path);
     if (cardTagsParams) {
@@ -68,10 +70,10 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
 
     const loader = routes[path];
     if (!loader) {
-      const headers = withCors({ "Content-Type": "application/json" }, req);
+      const headers = withCors({ 'Content-Type': 'application/json' }, req);
       Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
       res.statusCode = 404;
-      res.end(JSON.stringify({ error: "Not found" }));
+      res.end(JSON.stringify({ error: 'Not found' }));
       return;
     }
 
@@ -81,12 +83,12 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
     console.error(err);
     if (res.writableEnded) return;
     try {
-      const headers = withCors({ "Content-Type": "application/json" }, req);
+      const headers = withCors({ 'Content-Type': 'application/json' }, req);
       Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
       res.statusCode = 500;
-      res.end(JSON.stringify({ error: "Internal server error" }));
+      res.end(JSON.stringify({ error: 'Internal server error' }));
     } catch (sendErr) {
-      console.error("failed to send 500 response", sendErr);
+      console.error('failed to send 500 response', sendErr);
       res.destroy();
     }
   }

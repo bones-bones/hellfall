@@ -1,73 +1,50 @@
-import { HCCard, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
-import { filterObject, SetFilter } from './filterObject';
-export const NOPRINT = 'This should not ever print. Please report this as a bug on discord.';
+import { HCCard, HCColor, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
+import { CompFilter, filterObject, IncludeFilter, sortObject } from './filterObject';
+export const NOPRINT =
+  'This should not ever print. Please report this as a bug on discord along with the search terms you used.';
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
-export const looseOpList = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
+export const looseOpList: looseOpType[] = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
 export type looseOpType = ':' | '!:' | opType;
-const invertedOps: Record<looseOpType, looseOpType> = {
-  '<': '>=',
-  '<=': '>',
-  '=': '!=',
-  ':': '!:',
-  '>=': '<',
-  '>': '<=',
-  '!=': '=',
-  '!:': ':',
-};
+export const invertOptions = ['ignore', 'flip', 'negate'] as const;
+/**
+ * ignore: object ignores the inversion operator
+ *
+ * flip: object inverts the operator before passing it in
+ *
+ * negate: object negates the filter's output; filter requires `invert` to be passed to summary function
+ */
+export type invertOptionType = (typeof invertOptions)[number];
+export interface anyFilter<T = any, S = any> {
+  (value1: T, operator: opType, value2: S): number | boolean;
+  invertOption: invertOptionType;
+  toSummary: (operator: opType, value: S, invert?: boolean) => string;
+}
+export const dirs = ['asc', 'desc', 'auto'] as const;
+export type dirType = (typeof dirs)[number];
+export const sorts = [
+  'set',
+  'color',
+  'manavalue',
+  'name',
+  'id',
+  'number',
+  'setnumber',
+  'colormanavalue',
+  'auto',
+] as const;
+export type sortType = (typeof sorts)[number];
 
-export const invertOp = (op: looseOpType) => {
-  return invertedOps[op];
-};
+export interface sortFilter extends anyFilter<HCCard.Any, HCCard.Any> {
+  (value1: HCCard.Any, operator: opType, value2: HCCard.Any): number;
+  sort: sortType;
+  dir: dirType;
+}
 
-export const getActualOp = (filter: cardFilter, operator: looseOpType): opType => {
-  if (operator == ':') {
-    return filter.defaultOp;
-  }
-  if (operator == '!:') {
-    return invertOp(filter.defaultOp) as opType;
-  }
-  return operator;
-};
-export const opIsNegative = (op: looseOpType) => ['<', '>', '!=', '!:'].includes(op);
-export const opToNot = (op: looseOpType) => (opIsNegative(op) ? 'not' : '');
-export const opToDont = (op: looseOpType) => (opIsNegative(op) ? "don't" : '');
-export const opToIncludeSingular: Record<looseOpType, string> = {
-  '<': 'excludes',
-  '!:': 'excludes',
-  '<=': 'excludes or equals',
-  '=': 'equals',
-  '>=': 'includes',
-  ':': 'includes',
-  '>': "includes but doesn't equal",
-  '!=': "doesn't equal",
-};
-export const opToIncludePlural: Record<looseOpType, string> = {
-  '<': 'exclude',
-  '!:': 'exclude',
-  '<=': 'exclude or include exactly',
-  '=': 'include exactly',
-  '>=': 'include',
-  ':': 'include',
-  '>': 'include but not exactly',
-  '!=': 'exclude exactly',
-};
-export const opToTagged: Record<looseOpType, string> = {
-  '<': 'not tagged',
-  '!:': 'not tagged',
-  '<=': 'not tagged or tagged exactly',
-  '=': 'tagged exactly',
-  '>=': 'tagged',
-  ':': 'tagged',
-  '>': 'tagged but not exactly',
-  '!=': 'not tagged exactly',
-};
 /**
  * The first type is the type of the entry. The second type is the type from the search query.
  */
-export interface cardFilter<T = any, S = any> {
-  (value1: T, operator: looseOpType, value2: S): boolean;
-  defaultOp: opType;
-  toSummary: (value: S, operator: looseOpType) => string;
+export interface cardFilter<T = any, S = any> extends anyFilter {
+  (value1: T, operator: opType, value2: S): boolean;
 }
 
 export interface textFilter extends cardFilter<string, string> {}
@@ -78,203 +55,55 @@ export interface numStringFilter
   extends cardFilter<number | string | undefined, number | string | undefined> {}
 export interface numStringListFilter
   extends cardFilter<(number | string | undefined)[], number | string> {}
+export const shorthandList = ['c', 'm'] as const;
+export type shorthandType = (typeof shorthandList)[number];
+const multiOpToNum: Record<opType, number> = {
+  '<': 2,
+  '<=': 0,
+  '=': 2,
+  '>=': 2,
+  '>': 5,
+  '!=': 2,
+};
+export const shortToNum = (op: opType, value: shorthandType) => {
+  if (value == 'c') {
+    return 0;
+  } else {
+    return multiOpToNum[op];
+  }
+};
+export const shortToOp: Record<shorthandType, opType> = {
+  c: '=',
+  m: '>=',
+};
 export interface colorContentFilter extends cardFilter<string[], string[]> {}
-export interface colorFilter extends cardFilter<string[], string[] | number> {}
-export interface colorContentListFilter extends cardFilter<string[][] | undefined, string[]> {}
-export interface colorListFilter extends cardFilter<string[][] | undefined, string[] | number> {}
+export interface colorNumFilter extends cardFilter<string[], number> {}
+export interface colorShortFilter extends cardFilter<string[], shorthandType> {}
+export interface colorContentListFilter extends cardFilter<string[][], string[]> {}
+export interface colorNumListFilter extends cardFilter<string[][], number> {}
+export interface colorShortListFilter extends cardFilter<string[][], shorthandType> {}
 export interface hybridContentFilter extends cardFilter<string[][], string[]> {}
-export interface hybridFilter extends cardFilter<string[][], string[] | number> {}
+export interface hybridNumFilter extends cardFilter<string[][], number> {}
+export interface hybridShortFilter extends cardFilter<string[][], shorthandType> {}
 // export interface setFilter extends cardFilter<string[],HCCard.Any> {}
-export interface setFilter extends cardFilter<HCCard.Any, string> {
-  (value1: HCCard.Any, operator: looseOpType, value2: string, includeExtraSets: boolean): boolean;
+export const inclusionOptions = ['extras', 'nonextras', 'all'] as const;
+export type inclusionType = (typeof inclusionOptions)[number];
+export interface includeFilter extends cardFilter<HCCard.Any, string> {
+  (value1: HCCard.Any, operator: opType, value2: string): boolean;
 }
 export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
-export interface setListFilter extends cardFilter<HCCard.Any, string[]> {
-  (value1: HCCard.Any, operator: looseOpType, value2: string[], includeExtraSets: boolean): boolean;
-}
 export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
-export interface tagFilter extends cardFilter<string[], string> {
-  (
-    value1: string[],
-    operator: looseOpType,
-    value2: string,
-    tag_notes?: Record<string, string>
-  ): boolean;
+export interface tagFilter extends cardFilter<HCCard.Any, string> {
+  (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string): boolean;
+  toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) => string;
 }
-/**
- * To use in filters when need to check a function with one value
- * @param op operation to use
- * @param func function
- * @param value the value to check
- * @returns
- */
-export const funcOp = <T>(op: opType, func: (value: T) => boolean, value: T) => {
-  switch (op) {
-    case '<':
-      return !func(value);
-    case '<=':
-      return func(value);
-    case '=':
-      return func(value);
-    case '>=':
-      return func(value);
-    case '>':
-      return !func(value);
-    case '!=':
-      return !func(value);
-  }
-};
-/**
- * To use in filters when need to check a function with two values
- * @param op operation to use
- * @param func function
- * @param value1 the first value to check
- * @param value2 the second value to check
- * @returns
- */
-export const funcOpTwo = <T, S>(
-  op: opType,
-  func: (value1: T, value2: S) => boolean,
-  value1: T,
-  value2: S
-) => {
-  switch (op) {
-    case '<':
-      return !func(value1, value2);
-    case '<=':
-      return func(value1, value2);
-    case '=':
-      return func(value1, value2);
-    case '>=':
-      return func(value1, value2);
-    case '>':
-      return !func(value1, value2);
-    case '!=':
-      return !func(value1, value2);
-  }
-};
-
-/**
- * To use in filters when need to check an inclusion function and an equality function
- * @param op operation to use
- * @param includes inclusion function
- * @param equals equality function
- * @param value1 the first value to check
- * @param value2 the second value to check
- * @returns
- */
-export const includeEqualsOp = <T, S>(
-  op: opType,
-  includes: (value1: T, value2: S) => boolean,
-  equals: (value1: T, value2: S) => boolean,
-  value1: T,
-  value2: S
-) => {
-  switch (op) {
-    case '<':
-      return !includes(value1, value2) && !equals(value1, value2);
-    case '<=':
-      return !includes(value1, value2) || equals(value1, value2);
-    case '=':
-      return includes(value1, value2) && equals(value1, value2);
-    case '>=':
-      return includes(value1, value2) || equals(value1, value2);
-    case '>':
-      return includes(value1, value2) && !equals(value1, value2);
-    case '!=':
-      return !includes(value1, value2) || !equals(value1, value2);
-  }
-};
-/**
- * To use in filters when need to check a containment function
- * @param op operation to use
- * @param includes inclusion function
- * @param equals equality function
- * @param value1 the first value to check
- * @param value2 the second value to check
- * @returns
- */
-export const containsOp = <T>(
-  op: opType,
-  contains: (value1: T, value2: T) => boolean,
-  value1: T,
-  value2: T
-) => {
-  switch (op) {
-    case '<': {
-      return !contains(value1, value2) && contains(value2, value1);
-    }
-    case '<=': {
-      return contains(value2, value1);
-    }
-    case '=': {
-      return contains(value1, value2) && contains(value2, value1);
-    }
-    case '>=': {
-      return contains(value1, value2);
-    }
-    case '>': {
-      return contains(value1, value2) && !contains(value2, value1);
-    }
-    case '!=': {
-      return !contains(value1, value2) || !contains(value2, value1);
-    }
-  }
-};
-
-const share = (value1: string | string[], value2: string | string[]) => {
-  if (Array.isArray(value1) && Array.isArray(value2)) {
-    return value1.some(value => value2.includes(value));
-  } else if (Array.isArray(value1) && typeof value2 == 'string') {
-    return value1.includes(value2);
-  } else if (Array.isArray(value2) && typeof value1 == 'string') {
-    return value2.includes(value1);
-  } else {
-    return value1 == value2;
-  }
-};
-
-/**
- * To use in filters when need to check if two lists share a value
- * @param op operation to use
- * @param value1 the first value to check
- * @param value2 the second value to check
- * @returns
- */
-export const shareOp = (op: opType, value1: string | string[], value2: string | string[]) => {
-  switch (op) {
-    case '<':
-      return !share(value1, value2);
-    case '<=':
-      return share(value1, value2);
-    case '=':
-      return share(value1, value2);
-    case '>=':
-      return share(value1, value2);
-    case '>':
-      return !share(value1, value2);
-    case '!=':
-      return !share(value1, value2);
-  }
-};
-
-export const equals = <T = any>(value1: T | T[], value2: T | T[]) => {
-  if (Array.isArray(value1) && Array.isArray(value2)) {
-    return (
-      value1.every(value => value2.includes(value)) && value2.every(value => value1.includes(value))
-    );
-  } else if (Array.isArray(value1)) {
-    return value1.every(value => value == value2);
-  } else if (Array.isArray(value2)) {
-    return value2.every(value => value == value1);
-  } else {
-    return value1 == value2;
-  }
-};
 
 export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
-export type setFilterMaker = (value: string, op: looseOpType, includeExtras: boolean) => SetFilter;
+export type compFilterMaker = (value1: string, op: looseOpType, value2: string) => CompFilter;
+export type includeFilterMaker = (value: string, op: looseOpType) => IncludeFilter;
 export type colorFilterMaker = (
-  value: string[] | number,
+  value: string[] | number | shorthandType,
   op: looseOpType
-) => filterObject<any, string[] | number>;
+) => filterObject<any, string[]> | filterObject<any, number> | filterObject<any, shorthandType>;
+export type stringOrNumFilterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
+export type sortMaker = (sort: sortType, dir: dirType) => sortObject;

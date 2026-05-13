@@ -16,6 +16,20 @@ import {
   HCFinish,
 } from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
+import {
+  addProp,
+  addPropToFace,
+  cardFaceType,
+  cardObjectType,
+  facePropType,
+  faceValueType,
+  fillFacesTo,
+  propType,
+  valueType,
+  addTag,
+  toSingleCard,
+} from './fetchUtils.ts';
+import { setDerivedProps } from './derivedProps.ts';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
   const requestedData = await fetch(
@@ -27,11 +41,11 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
   const keys = [
     'name',
     'image',
-    'type',
+    'types',
     'power',
     'toughness',
     'token_maker',
-    'oracle_text',
+    'rulings',
     'creators',
     'tags',
     'collector_number',
@@ -42,41 +56,39 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       row.push('');
     }
   });
-  const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
-  const typeLayouts: Record<string, HCLayout> = {
-    Emblem: HCLayout.Emblem,
-    'Reminder Card': HCLayout.Reminder,
-    Stickers: HCLayout.Stickers,
-    Dungeon: HCLayout.Dungeon,
-    'Real Card': HCLayout.RealCardToken,
-    'Ad Card': HCLayout.Misc,
-    Misc: HCLayout.Misc,
-    Checklist: HCLayout.Checklist,
-  };
-  const defaultProps: Record<string, any> = {
+  const defaultProps: { [P in propType]?: valueType<P> } = {
     object: HCObject.ObjectType.Card,
-    rulings: '',
-    creators: [],
+    set: 'HCT',
+    mana_cost: '',
+    mana_value: 0,
+    type_line: '',
+    oracle_text: '',
+    colors: [] as HCColors,
+    color_identity: [] as HCColors,
+    color_identity_hybrid: [] as HCColors[],
+    keywords: [],
     legalities: {
       standard: HCLegality.NotLegal,
       '4cb': HCLegality.NotLegal,
       commander: HCLegality.NotLegal,
     } as HCLegalitiesField,
-    mana_cost: '',
-    colors: [] as HCColors,
-    mana_value: 0,
-    oracle_text: '',
-    color_identity: [] as HCColors,
-    color_identity_hybrid: [] as HCColors[],
-    keywords: [],
-    set: 'HCT',
-    variation: false,
-    image_status: HCImageStatus.HighRes,
-    isActualToken: true,
-    type_line: '',
-    layout: HCLayout.Token,
+    creators: [],
+    rulings: '',
+    finish: HCFinish.Nonfoil,
     border_color: HCBorderColor.Black,
     frame: HCFrame.FullToken,
+    variation: false,
+    isActualToken: true,
+  };
+  const defaultFaceProps: { [P in facePropType]?: faceValueType<P> } = {
+    object: HCObject.ObjectType.CardFace,
+    name: '',
+    image_status: HCImageStatus.Token,
+    mana_cost: '',
+    mana_value: 0,
+    type_line: '',
+    oracle_text: '',
+    colors: [] as HCColors,
   };
   const hardCardNames: string[] = [
     'Crypt of u/Em9500',
@@ -88,33 +100,35 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'Plagiarism by doomclaw9',
     'Carrion Feeder from MH8',
   ];
-  const hardTokenIds: string[] = ['Clue© 19861', '+21', '+41'];
+  const hardTokenIds: string[] = ['Clue© 19861', '+21', '+41', 'AKKI-471', 'Bolt M41', 'Rock 191'];
 
-  // const multiLayoutTags: Record<string, HCLayoutGroup.MultiFacedType> = {
-  //   'draftpartner-faces': HCLayout.DraftPartner,
-  //   'reminder-on-back': HCLayout.ReminderOnBack,
-  //   'dungeon-in-inset': HCLayout.DungeonInInset,
-  //   'dungeon-on-back': HCLayout.DungeonOnBack,
-  //   'stickers-on-back': HCLayout.StickersOnBack,
-  //   'token-in-inset': HCLayout.TokenInInset,
-  //   'token-on-back': HCLayout.TokenOnBack,
-  //   specialize: HCLayout.Specialize,
-  //   mdfc: HCLayout.Modal,
-  //   transform: HCLayout.Transform,
-  //   flip: HCLayout.Flip,
-  //   inset: HCLayout.Inset,
-  //   prepare: HCLayout.Prepare,
-  //   aftermath: HCLayout.Aftermath,
-  //   split: HCLayout.Split,
-  // };
+  const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
 
-  const singleLayoutTags: Record<string, HCLayout> = {
+  const typeLayouts: Record<string, HCLayoutGroup.SingleFacedType> = {
+    Emblem: HCLayout.Emblem,
+    // 'Reminder Card': HCLayout.Reminder,
+    Stickers: HCLayout.Stickers,
+    Dungeon: HCLayout.Dungeon,
+    // 'Real Card': HCLayout.RealCardToken,
+    'Ad Card': HCLayout.Misc,
+    Misc: HCLayout.Misc,
+    Checklist: HCLayout.Checklist,
+  };
+
+  const multiLayoutTags: Record<string, HCLayoutGroup.MultiFacedType> = {
+    'reminder-card': HCLayout.MultiReminder,
+    // 'real-card': HCLayout.RealCardMultiToken,
+  };
+
+  const singleLayoutTags: Record<string, HCLayoutGroup.SingleFacedType> = {
     meld: HCLayout.MeldResult,
     'weird-leveler': HCLayout.Leveler,
     leveler: HCLayout.Leveler,
     'weird-1-mana-levelers-cycle': HCLayout.Leveler,
     'mutate-layout': HCLayout.Mutate,
     noncard: HCLayout.Misc,
+    'reminder-card': HCLayout.Reminder,
+    // 'real-card': HCLayout.RealCardToken,
   };
 
   const borderColorTags: Record<string, HCBorderColor> = {
@@ -183,46 +197,66 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'arena-frame': HCFrameEffect.Arena,
   };
 
-  const imageTagProps: Record<string, string> = {
+  const frontImageTagProps: Record<string, string> = {
+    'draft-image': 'draft_image',
+    'rotated-draft-image': 'rotated_draft_image',
+    'still-draft-image': 'still_draft_image',
+  };
+  const faceImageTagProps: Record<string, facePropType> = {
     'rotated-image': 'rotated_image',
     'still-image': 'still_image',
   };
 
-  // const multiLayoutToFaceLayout:Record<HCLayoutGroup.MultiFacedType & HCLayoutGroup.TokenLayoutType, HCLayoutGroup.FaceLayoutType>= {
-  //   'multi_reminder':HCLayout.Reminder,
-  //   'multi_not_magic':HCLayout.NotMagic,
-  //   'multi_token':HCLayout.Token,
-  //   'real_card_multi_token':HCLayout.RealCardToken
-  // }
+  const multiLayoutToFaceLayout: Record<
+    HCLayoutGroup.MultiFacedType & HCLayoutGroup.TokenLayoutType,
+    HCLayoutGroup.FaceLayoutType & HCLayoutGroup.SingleFacedType
+  > = {
+    multi_reminder: HCLayout.Reminder,
+    multi_not_magic: HCLayout.NotMagic,
+    multi_token: HCLayout.Token,
+    real_card_multi_token: HCLayout.RealCardToken,
+  };
 
   const HCTokens = rest.map(entry => {
-    const tokenObject: Record<string, any> = {};
+    const tokenObject: cardObjectType = { card_faces: [] as cardFaceType[] } as cardObjectType;
+    if (entry[keys.indexOf('collector_number')] == '340') {
+      const x = 1;
+    }
     for (let i = 0; i < keys.length; i++) {
       if (entry[i]) {
         if (keys[i] == 'name') {
           tokenObject.id = entry[i];
-          const name = hardTokenIds.includes(entry[i])
+          tokenObject.name = hardTokenIds.includes(entry[i])
             ? entry[i].slice(0, -1)
             : entry[i].replace(/\d+$/, '');
-          tokenObject.name = name;
-          tokenObject.subtypes = name.split(' ');
-        } else if (keys[i] == 'type') {
-          const typesAndSupertypes = entry[i].split(';');
-          const superList: string[] = [];
-          const typeList: string[] = [];
-          typesAndSupertypes.forEach(e => {
-            supers.includes(e) ? superList.push(e) : typeList.push(e);
+        }
+        if (['name', 'types', 'power', 'toughness'].includes(keys[i])) {
+          const entryList = (keys[i] == 'name' ? tokenObject.name! : entry[i]).split(' // ');
+          entryList.forEach((value, index) => {
+            if (keys[i] == 'name') {
+              addPropToFace(tokenObject, index, 'name', value);
+              addPropToFace(tokenObject, index, 'subtypes', value.split(' '));
+            } else if (keys[i] == 'types') {
+              const typesAndSupertypes = value.split(';');
+              const superList: string[] = [];
+              const typeList: string[] = [];
+              typesAndSupertypes.forEach(e => {
+                supers.includes(e) ? superList.push(e) : typeList.push(e);
+              });
+              if (superList?.length) {
+                addPropToFace(tokenObject, index, 'supertypes', superList);
+              }
+              if (typeList?.length) {
+                addPropToFace(tokenObject, index, 'types', typeList);
+              }
+            } else if (['power', 'toughness'].includes(keys[i])) {
+              addPropToFace(tokenObject, index, keys[i] as 'power' | 'toughness', value);
+            }
           });
-          if (superList?.length) {
-            tokenObject.supertypes = superList;
-          }
-          if (typeList?.length) {
-            tokenObject.types = typeList;
-          }
         } else if (keys[i] == 'creators' || keys[i] == 'artists') {
-          tokenObject[keys[i]] = entry[i].split(';');
+          addProp(tokenObject, keys[i] as 'creators' | 'artists', entry[i].split(';'));
         } else if (keys[i] == 'token_maker') {
-          tokenObject.all_parts = entry[i].split(';').map(oldName => {
+          const all_parts = entry[i].split(';').map(oldName => {
             const [, name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [, oldName, undefined];
             const base = name.replace(/\d+$/, '');
             const shouldUseBase =
@@ -230,13 +264,10 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
               !hardCardNames.includes(name) &&
               base &&
               ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
-
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: shouldUseBase ? name : '',
-              component:
-                // entry[6] == 'meld' ? 'meld_part' :
-                'token_maker',
+              component: 'token_maker',
               name: shouldUseBase ? base : name,
               type_line: '',
               set: '',
@@ -247,12 +278,14 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
             }
             return maker;
           });
-          // } else if (keys[i] == 'oracle_text' && tagList.includes(entry[i])) {
-          //   tokenObject.tags = [entry[i]];
+          addProp(tokenObject, 'all_parts', all_parts);
         } else if (keys[i] == 'tags') {
           // now handling this at the end
         } else {
-          tokenObject[keys[i]] = entry[i];
+          addProp(tokenObject, keys[i] as propType, entry[i]);
+        }
+        if (keys[i] == 'image') {
+          addProp(tokenObject, 'image_status', HCImageStatus.HighRes);
         }
       }
     }
@@ -261,55 +294,57 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       const tags = entry[tagIndex].split(';');
 
       tokenObject.tags = tags.map(fullTag => {
-        if (fullTag.includes('<') && fullTag.includes('>')) {
-          const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
-          if (tag in imageTagProps) {
-            if (note.includes('|')) {
-              const [face, image] = [parseInt(note.split('|')[0]), note.split('|')[1]];
-              tokenObject[imageTagProps[tag]] =
-                image.slice(0, 4) == 'http'
-                  ? image
-                  : 'https://lh3.googleusercontent.com/d/' + image;
-              if (!('tag_notes' in tokenObject)) {
-                tokenObject.tag_notes = {} as Record<string, string>;
-              }
-              tokenObject.tag_notes[tag] = face;
-            } else {
-              tokenObject[imageTagProps[tag]] =
-                note.slice(0, 4) == 'http' ? note : 'https://lh3.googleusercontent.com/d/' + note;
+        const hasNote = fullTag.includes('<') && fullTag.endsWith('>');
+        const [tag, note] = [
+          hasNote ? fullTag.split('<')[0] : fullTag,
+          hasNote ? fullTag.split('<')[1].slice(0, -1) : undefined,
+        ];
+        if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
+          addTag(tokenObject, tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
+        } else if (tag in frameTags) {
+          addTag(tokenObject, tag, note, 'frame', frameTags);
+        } else if (tag in frameEffectTags) {
+          addTag(tokenObject, tag, note || '0', 'frame_effects', frameEffectTags, { push: true });
+        } else if (tag in faceImageTagProps) {
+          addTag(tokenObject, tag, note, faceImageTagProps[tag], undefined, { useUrl: true });
+        } else if (tag in borderColorTags) {
+          addTag(tokenObject, tag, note, 'border_color', borderColorTags);
+        } else if (
+          tag in singleLayoutTags &&
+          !tokenObject.layout &&
+          tokenObject.card_faces.length <= 1
+        ) {
+          addTag(tokenObject, tag, note, 'layout', singleLayoutTags);
+        } else if (tag in multiLayoutTags && !tokenObject.layout) {
+          addTag(tokenObject, tag, note, 'layout', multiLayoutTags, { useRootOnly: true });
+        } else if (tag == 'foil') {
+          addTag(tokenObject, tag, note, 'finish', HCFinish.Foil);
+        } else if (note) {
+          if (tag in frontImageTagProps) {
+            addTag(tokenObject, tag, note, frontImageTagProps[tag] as propType, undefined, {
+              useUrl: true,
+              useRootOnly: true,
+            });
+            if (tag == 'draft-image') {
+              addProp(tokenObject, 'draft_image_status', HCImageStatus.HighRes);
             }
+          } else if (tag == 'back-image') {
+            // TODO: make sure both of these work
+            addTag(tokenObject, tag, note, 'image', undefined, {
+              useUrl: true,
+              defaultToBack: true,
+            });
+            addTag(tokenObject, tag, note, 'image_status', HCImageStatus.HighRes, {
+              defaultToBack: true,
+              dontAddNote: true,
+            });
+          } else if (tag == 'flavor-name') {
+            addTag(tokenObject, tag, note, 'flavor_name', undefined, { dontAddNote: true });
           } else {
-            if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
-              tokenObject.watermark = tag.slice(0, tag.lastIndexOf('-'));
-            } else if (tag in frameTags) {
-              tokenObject.frame = frameTags[tag];
-            } else if (tag in frameEffectTags) {
-              if (tokenObject.frame_effects) {
-                tokenObject.frame_effects.push(frameEffectTags[tag]);
-              } else {
-                tokenObject.frame_effects = [frameEffectTags[tag]];
-              }
-            }
-            if (!('tag_notes' in tokenObject)) {
-              tokenObject.tag_notes = {} as Record<string, string>;
-            }
-            tokenObject.tag_notes[tag] = note;
+            addTag(tokenObject, tag, note, undefined, undefined, { useRootOnly: true });
           }
-          return tag;
-        } else {
-          if (fullTag.slice(fullTag.lastIndexOf('-') + 1) == 'watermark') {
-            tokenObject.watermark = fullTag.slice(0, fullTag.lastIndexOf('-'));
-          } else if (fullTag in frameTags) {
-            tokenObject.frame = frameTags[fullTag];
-          } else if (fullTag in frameEffectTags) {
-            if ('frame_effects' in tokenObject) {
-              tokenObject.frame_effects.push(frameEffectTags[fullTag]);
-            } else {
-              tokenObject.frame_effects = [frameEffectTags[fullTag]];
-            }
-          }
-          return fullTag;
         }
+        return tag;
       });
       tokenObject.tags = Array.from(new Set(tokenObject.tags));
 
@@ -320,57 +355,61 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           });
           tokenObject.layout = 'meld_result';
         }
-        if (!('layout' in tokenObject)) {
-          if (tag in singleLayoutTags) {
-            tokenObject.layout = singleLayoutTags[tag];
-          }
-          // } else {
-          //   if (tag in multiLayoutTags) {
-          //     tokenObject.layout = multiLayoutTags[tag];
-          //   }
-        }
-        if (!('border_color' in tokenObject) && tag in borderColorTags) {
-          tokenObject.border_color = borderColorTags[tag];
-          // } else if (!('frame' in tokenObject) && tag in frameTags) {
-          //   tokenObject.frame = frameTags[tag];
-        } else if (tag == 'foil') {
-          tokenObject.finish = HCFinish.Foil;
-        } else if (
-          tag == 'flavor-name' &&
-          'tag_notes' in tokenObject &&
-          tag in tokenObject.tag_notes
-        ) {
-          tokenObject.flavor_name = tokenObject.tag_notes[tag];
-        }
+        // if (!('layout' in tokenObject)) {
+        //   if (tag in singleLayoutTags) {
+        //     tokenObject.layout = singleLayoutTags[tag];
+        //   }
+        // } else {
+        //   if (tag in multiLayoutTags) {
+        //     tokenObject.layout = multiLayoutTags[tag];
+        //   }
+        // }
       });
     }
     if (tokenObject.tags?.includes('meld')) {
       tokenObject.layout = HCLayout.MeldResult;
-    } else if ('types' in tokenObject && tokenObject.types[0] in typeLayouts) {
-      tokenObject.layout = typeLayouts[tokenObject.types[0]];
-      if (tokenObject.types.length > 1) {
-        tokenObject.types.shift();
-      }
+    } else if (
+      tokenObject.card_faces[0].types &&
+      tokenObject.card_faces[0].types[0] in typeLayouts
+    ) {
+      addPropToFace(tokenObject, 0, 'layout', typeLayouts[tokenObject.card_faces[0].types[0]]);
     }
-    if ('types' in tokenObject || 'supertypes' in tokenObject) {
-      tokenObject.type_line = [
-        tokenObject.supertypes?.join(' '),
-        [tokenObject.types?.join(' '), tokenObject.subtypes?.join(' ')].filter(Boolean).join(' — '),
-      ]
-        .filter(Boolean)
-        .join(' ') as string;
-    } else {
-      if ('subtypes' in tokenObject) {
-        delete tokenObject.subtypes;
+    tokenObject.card_faces.forEach((face, index) => {
+      if (tokenObject.layout && tokenObject.layout in multiLayoutToFaceLayout) {
+        addPropToFace(
+          tokenObject,
+          index,
+          'layout',
+          multiLayoutToFaceLayout[tokenObject.layout as keyof typeof multiLayoutToFaceLayout]
+        );
+      } else if (!face.layout) {
+        addPropToFace(tokenObject, index, 'layout', HCLayout.Token);
       }
-      tokenObject.type_line = '';
-    }
-    Object.keys(defaultProps)
-      .filter(key => !(key in tokenObject))
+      (Object.keys(defaultFaceProps) as facePropType[])
+        .filter(key => !face[key])
+        .forEach(key => {
+          addPropToFace(tokenObject, index, key, defaultFaceProps[key]);
+        });
+    });
+    (Object.keys(defaultProps) as propType[])
+      .filter(key => !tokenObject[key])
       .forEach(key => {
-        tokenObject[key] = defaultProps[key];
+        addProp(tokenObject, key, defaultProps[key]);
       });
-    return tokenObject as HCCard.Any;
+    if (tokenObject.card_faces.length <= 1) {
+      const layout =
+        tokenObject.layout && tokenObject.layout in multiLayoutToFaceLayout
+          ? multiLayoutToFaceLayout[tokenObject.layout as keyof typeof multiLayoutToFaceLayout]
+          : tokenObject.card_faces[0].layout;
+      return toSingleCard(tokenObject);
+    } else {
+      if (!tokenObject.layout) {
+        tokenObject.layout = HCLayout.MultiToken;
+      }
+      const card = tokenObject as HCCard.AnyMultiFaced;
+      setDerivedProps(card);
+      return card;
+    }
   });
   if (NO_SCRYFALL) {
     return HCTokens;

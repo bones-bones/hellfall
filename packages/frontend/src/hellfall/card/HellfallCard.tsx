@@ -82,10 +82,8 @@ const getImages = (card: HCCard.Any) => {
 };
 export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const { user } = useAuth();
-  const [displayTags, addTag, removeTag, tagsLoading, tagsError, tagsPersistEnabled] = useCardTagOverrides(
-    data.id,
-    data.tags
-  );
+  const [displayTags, addTag, removeTag, tagsLoading, tagsError, tagsPersistEnabled] =
+    useCardTagOverrides(data.id, data.tags);
   const [activeImageSide, setActiveImageSide] = useState(0);
   const [newTagInput, setNewTagInput] = useState('');
   const [tagActionError, setTagActionError] = useState<string | null>(null);

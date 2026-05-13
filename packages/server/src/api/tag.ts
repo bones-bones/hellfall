@@ -1,20 +1,20 @@
-import { withCors } from "./lib/cors.js";
-import { requireTagAuth } from "./lib/requireTagAuth.js";
-import type { HandlerRequest, HandlerResponse } from "./lib/types.js";
+import { withCors } from './lib/cors.js';
+import { requireTagAuth } from './lib/requireTagAuth.js';
+import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 
 export const tagHandler = async (req: HandlerRequest, res: HandlerResponse): Promise<void> => {
-  const headers = withCors({ "Content-Type": "application/json" }, req);
+  const headers = withCors({ 'Content-Type': 'application/json' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     res.statusCode = 204;
     res.end();
     return;
   }
 
-  if (req.method !== "GET") {
+  if (req.method !== 'GET') {
     res.statusCode = 405;
-    res.setHeader("Allow", "GET");
+    res.setHeader('Allow', 'GET');
     res.end();
     return;
   }

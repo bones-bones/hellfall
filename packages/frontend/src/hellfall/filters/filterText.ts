@@ -1,124 +1,121 @@
 import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling';
 import {
-  cardStringFilter,
-  getActualOp,
-  includeEqualsOp,
+  invertOptionType,
   looseOpType,
   NOPRINT,
-  opToIncludeSingular,
-  opToNot,
-  opToTagged,
   opType,
   tagFilter,
   textFilter,
   textListFilter,
-  textRecordFilter,
 } from './types';
+import { opToIncludeSingular, opToTagged, includeEqualsOp, opIsNegative } from './filterUtils';
 import { isNumber } from '@hellfall/shared/utils/isInt';
 import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
-import { getAllNames } from '../getNames';
+import { prepTag } from './parseSearchBar';
 
 export const filterEmpty: textFilter = Object.assign(
-  (_value1: string, operator: looseOpType, _value2: string) => {
-    return operator == '=';
-  },
-  { defaultOp: '=' as opType, toSummary: (_value: string, _operator: looseOpType) => '!' }
-);
-
-// export const filterInclude: textFilter = Object.assign(
-//   (value1: string, operator: looseOpType, value2: string) => {
-//    return true;
-//   },
-//   { defaultOp: '=' as opType }
-// );
-
-export const filterId: textFilter = Object.assign(
-  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    if (isNumber(value2)) {
-      return isNumber(value1) ? filterNumber(parseInt(value1), operator, parseInt(value2)) : false;
-    }
-    return includeEqualsOp(actualOp, textSearchIncludes, textEquals, value1, value2);
-  },
+  (value1: string, operator: looseOpType, value2: string) => true,
   {
-    defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
-      if (isNumber(value)) {
-        return `the id ${filterNumber.toSummary(parseInt(value), operator)}`;
-      }
-      return `the id is ${opToNot(operator)} "${value}"`;
-    },
+    invertOption: 'ignore' as invertOptionType,
+    toSummary: (operator: opType, value: string) => '!',
   }
 );
 
 export const filterText: textFilter = Object.assign(
-  function (this: textFilter, value1: string, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    return includeEqualsOp(actualOp, textSearchIncludes, textEquals, value1, value2);
-  },
-  { defaultOp: '>=' as opType, toSummary: (value: string, operator: looseOpType) => NOPRINT }
-);
-const textListIncludes = (value1: string[], value2: string) =>
-  value1.some(text => textSearchIncludes(text, value2));
-const textListEquals = (value1: string[], value2: string) =>
-  value1.some(text => textEquals(text, value2));
-export const filterTextList: textListFilter = Object.assign(
-  function (value1: string[], operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(filterTextList, operator);
-    return includeEqualsOp(actualOp, textListIncludes, textListEquals, value1, value2);
-  },
-  { defaultOp: '>=' as opType, toSummary: (value: string, operator: looseOpType) => NOPRINT }
-);
-export const filterTag: tagFilter = Object.assign(
-  function (
-    value1: string[],
-    operator: looseOpType,
-    value2: string,
-    tag_notes?: Record<string, string>
-  ) {
-    const actualOp = getActualOp(filterTag, operator);
-    if (value2.endsWith('<')) {
-      const tag = value2.slice(0, -1);
-      return Boolean(tag_notes && filterTextList(Object.keys(tag_notes), actualOp, tag));
-    }
-
-    if (value2.endsWith('>') && value2.includes('<')) {
-      if (!tag_notes) {
-        return false;
-      }
-      const [tag, note] = [value2.split('<')[0], value2.split('<')[1].slice(0, -1)];
-      // return tag_notes && textEquals(tag_notes[tag], note);
-      return includeEqualsOp(actualOp, textSearchIncludes, textEquals, tag_notes[tag], note);
-    }
-    return includeEqualsOp(actualOp, textListIncludes, textListEquals, value1, value2);
-  },
+  (value1: string, operator: opType, value2: string) =>
+    includeEqualsOp(operator, textSearchIncludes, textEquals, value1, value2),
   {
-    defaultOp: '>=' as opType,
-    toSummary: (value: string, operator: looseOpType) =>
-      `the card is ${opToTagged[operator]} "${value}"`,
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: string) => NOPRINT,
   }
 );
 
-const getLore = (card: HCCard.Any) => {
-  return [
-    ...getAllNames(card),
-    ...card.toFaces().flatMap(e => e.supertypes || []),
-    ...card.toFaces().flatMap(e => e.types || []),
-    ...card.toFaces().flatMap(e => e.subtypes || []),
-    ...card.toFaces().map(e => e.type_line),
-    ...card.toFaces().map(e => e.oracle_text),
-    ...card.toFaces().flatMap(e => e.flavor_text ?? []),
-  ];
-};
-export const filterLore: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    return includeEqualsOp(actualOp, textListIncludes, textListEquals, getLore(value1), value2);
+export const filterId: textFilter = Object.assign(
+  (value1: string, operator: opType, value2: string) => {
+    if (isNumber(value2)) {
+      return isNumber(value1) ? filterNumber(parseInt(value1), operator, parseInt(value2)) : false;
+    }
+    return filterText(value1, operator, value2);
   },
   {
-    defaultOp: '>=' as opType,
-    toSummary: (value: string, operator: looseOpType) =>
-      `the lore ${opToIncludeSingular[operator]} "${value}"`,
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: string, invert?: boolean) => {
+      if (isNumber(value)) {
+        return `the id is ${filterNumber.toSummary(operator, parseInt(value), invert)}`;
+      }
+      return `the id ${opToIncludeSingular(operator, value, invert)}`;
+    },
+  }
+);
+
+export const textListIncludes = (value1: string[], value2: string) =>
+  value1.some(text => textSearchIncludes(text, value2));
+export const textListEquals = (value1: string[], value2: string) =>
+  value1.some(text => textEquals(text, value2));
+export const textListShares = (value1: string[], value2: string[]) =>
+  value1.some(text1 => value2.some(text2 => textEquals(text1, text2)));
+export const filterTextList: textListFilter = Object.assign(
+  (value1: string[], operator: opType, value2: string) =>
+    includeEqualsOp(operator, textListIncludes, textListEquals, value1, value2),
+  {
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: string) => NOPRINT,
+  }
+);
+
+export const parseTag = (text: string): { tag: string; note?: boolean | string } => {
+  if (text.endsWith('<')) {
+    return { tag: text.slice(0, -1), note: true };
+  }
+  if (text.endsWith('>') && text.includes('<')) {
+    const [tag, note] = [text.split('<')[0], text.split('<')[1].slice(0, -1)];
+    return { tag, note };
+  }
+  return { tag: text };
+};
+
+export const filterTag: tagFilter = Object.assign(
+  (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string) => {
+    if (note && typeof note != 'string') {
+      const tag = value2.slice(0, -1);
+      return Boolean(
+        value1.tag_notes && filterTextList(Object.keys(value1.tag_notes), operator, tag)
+      );
+    }
+    if (note) {
+      if (!value1.tag_notes) {
+        return false;
+      }
+      return includeEqualsOp(
+        operator,
+        textSearchIncludes,
+        textEquals,
+        value1.tag_notes[value2],
+        note
+      );
+    }
+    return value1.tags
+      ? includeEqualsOp(
+          operator,
+          textListIncludes,
+          textListEquals,
+          value1.tags.map(tag => prepTag(tag)),
+          prepTag(value2)
+        )
+      : false;
+  },
+  {
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) =>
+      `the card is ${opToTagged(operator, value, invert)} ${
+        note
+          ? ` and that tag${
+              typeof note == 'string'
+                ? `'s note ${opToIncludeSingular(operator, note, invert)}`
+                : ` ${opIsNegative(operator) ? 'does not have' : 'has'} a note`
+            }`
+          : ''
+      }`,
   }
 );

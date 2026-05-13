@@ -1,14 +1,6 @@
-import { HCCard, HCFrame, HCFrameEffect } from '@hellfall/shared/types';
-import {
-  cardStringFilter,
-  equals,
-  getActualOp,
-  looseOpType,
-  opToDont,
-  opToNot,
-  opType,
-  shareOp,
-} from '../types';
+import { HCFrame, HCFrameEffect } from '@hellfall/shared/types';
+import { invertOptionType, opType, textListFilter } from '../types';
+import { equals, shareOp, opToDont } from '../filterUtils';
 
 const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
@@ -509,63 +501,43 @@ const toShowcaseFrame: Record<string, string | string[]> = {
   album: 'Album',
 };
 
-export const filterCardFrame: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    if (!(value2 in toCardFrame)) {
-      return false;
-    }
-    return shareOp(
-      actualOp,
-      [...value1.toFaces().flatMap(e => e.frame ?? []), ...(value1.frame ?? [])],
-      toCardFrame[value2]
-    );
-  },
+export const filterCardFrame: textListFilter = Object.assign(
+  (value1: string[], operator: opType, value2: string) =>
+    value2 in toCardFrame ? shareOp(operator, value1, toCardFrame[value2]) : false,
   {
-    defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
-      const frame = getFrameName(value);
-      if (frame) {
-        return `the cards ${opToDont(operator)} have ${frame} frame`;
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) => {
+      const frameName = getFrameName(value);
+      if (frameName) {
+        return `the cards ${opToDont(operator)} have ${frameName} frame`;
       } else {
-        return '!';
+        return `!Unknown card frame "${value}"`;
       }
     },
   }
 );
-export const filterFrameEffect: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    if (!(value2 in toFrameEffect)) {
-      return false;
-    }
-    return shareOp(
-      actualOp,
-      [...value1.toFaces().flatMap(e => e.frame_effects ?? []), ...(value1.frame_effects ?? [])],
-      toFrameEffect[value2]
-    );
-  },
+export const filterFrameEffect: textListFilter = Object.assign(
+  (value1: string[], operator: opType, value2: string) =>
+    value2 in toFrameEffect ? shareOp(operator, value1, toFrameEffect[value2]) : false,
   {
-    defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
-      const frame = getFrameEffectName(value);
-      if (frame) {
-        return `the cards ${opToDont(operator)} have ${frame}`;
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) => {
+      const frameName = getFrameEffectName(value);
+      if (frameName) {
+        return `the cards ${opToDont(operator)} have ${frameName}`;
       } else {
-        return '!';
+        return `!Unknown frame effect "${value}"`;
       }
     },
   }
 );
 
-export const filterFrame: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    return filterCardFrame(value1, actualOp, value2) || filterFrameEffect(value1, actualOp, value2);
-  },
+export const filterFrame: textListFilter = Object.assign(
+  (value1: string[], operator: opType, value2: string) =>
+    filterCardFrame(value1, operator, value2) || filterFrameEffect(value1, operator, value2),
   {
-    defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) => {
       const frame = getFrameName(value);
       const frameEffect = getFrameEffectName(value);
       if (frame) {
@@ -573,29 +545,20 @@ export const filterFrame: cardStringFilter = Object.assign(
       } else if (frameEffect) {
         return `the cards ${opToDont(operator)} have ${frameEffect}`;
       } else {
-        return '!';
+        return `!Unknown frame "${value}"`;
       }
     },
   }
 );
 
-export const filterShowcase: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    if (!(value2 in toShowcaseFrame && value1.tag_notes?.['showcase-frame'])) {
-      return false;
-    }
-    return shareOp(
-      actualOp,
-      value1.tag_notes['showcase-frame'].split(', '),
-      toShowcaseFrame[value2]
-    );
-  },
+export const filterShowcase: textListFilter = Object.assign(
+  (value1: string[], operator: opType, value2: string) =>
+    value2 in toShowcaseFrame ? shareOp(operator, value1, toShowcaseFrame[value2]) : false,
   {
-    defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) => {
       if (!(value in toShowcaseFrame)) {
-        return '!';
+        return `!Unknown showcase frame "${value}"`;
       }
       const frame = toShowcaseFrame[value];
       if (Array.isArray(frame)) {
@@ -605,7 +568,7 @@ export const filterShowcase: cardStringFilter = Object.assign(
       } else if (frame) {
         return `the cards ${opToDont(operator)} have a "${frame}" showcase frame`;
       } else {
-        return '!';
+        return `!Unknown "${value}"`;
       }
     },
   }

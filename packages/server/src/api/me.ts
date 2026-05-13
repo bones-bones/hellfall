@@ -1,36 +1,38 @@
-import { env } from "./lib/env.js";
-import { verifySessionToken } from "./lib/jwt.js";
-import { withCors } from "./lib/cors.js";
-import { getUserAsGuildMember } from "./lib/discord/discord.js";
-import type { HandlerRequest, HandlerResponse } from "./lib/types.js";
+import { env } from './lib/env.js';
+import { verifySessionToken } from './lib/jwt.js';
+import { withCors } from './lib/cors.js';
+import { getUserAsGuildMember } from './lib/discord/discord.js';
+import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 
 function getCookie(req: HandlerRequest, name: string): string | null {
   const raw = req.headers.cookie;
-  if (!raw) { return null };
+  if (!raw) {
+    return null;
+  }
   const match = raw.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`));
   return match ? decodeURIComponent(match[1]) : null;
 }
 
 export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Promise<void> => {
-  const headers = withCors({ "Content-Type": "application/json" }, req);
+  const headers = withCors({ 'Content-Type': 'application/json' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     res.statusCode = 204;
     res.end();
     return;
   }
 
-  if (req.method !== "GET") {
+  if (req.method !== 'GET') {
     res.statusCode = 405;
-    res.setHeader("Allow", "GET");
+    res.setHeader('Allow', 'GET');
     res.end();
     return;
   }
 
   const token = getCookie(req, env.COOKIE_NAME);
   if (!token) {
-    console.log("No token");
+    console.log('No token');
     res.statusCode = 200;
     res.end(JSON.stringify({ user: null }));
     return;
@@ -43,13 +45,13 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
     return;
   }
 
-  let guild: { nick: string | null; roles: string[]; } | null = null;
+  let guild: { nick: string | null; roles: string[] } | null = null;
   const guildId = env.DISCORD_GUILD_ID;
   const discordAccessToken = payload.discord_access_token;
   if (guildId && discordAccessToken) {
     const gm = await getUserAsGuildMember(discordAccessToken, guildId);
-    if (gm.kind === "member") {
-      guild = { nick: gm.nick, roles: gm.roles, };
+    if (gm.kind === 'member') {
+      guild = { nick: gm.nick, roles: gm.roles };
     }
   }
   console.log(guild);
@@ -60,9 +62,9 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
       user: {
         id: payload.sub,
         username: payload.username,
-        avatar: payload.avatar
+        avatar: payload.avatar,
       },
       guild: guild ?? undefined,
     })
   );
-}
+};

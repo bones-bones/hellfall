@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Heading, styled } from '@workday/canvas-kit-react';
 import { useAuth } from '../auth';
+import { useUrlSync } from '../hellfall/hooks/useUrlSync';
 
 export const Header = () => {
+  useUrlSync();
   const { user, logoutUrl, loginUrl } = useAuth();
 
   return (
@@ -11,7 +13,8 @@ export const Header = () => {
         <StyledHeading size="medium">{" > it's hellfall"}</StyledHeading>
         <NavRow>
           <Navigation>
-            <Link to={'/'}>search</Link>, <Link to={'/card/random'}>random</Link>,{' '}
+            <Link to={'/'}>search</Link>, <Link to={'/advanced'}>advanced</Link>,{' '}
+            <Link to={'/syntax'}>syntax</Link>, <Link to={'/card/random'}>random</Link>,{' '}
             <Link to={'/draft'}>draft</Link>, <Link to={'/deck-builder'}>deck/cube builder</Link>,{' '}
             <Link to={'/hellscubes'}>cube resources</Link>,{' '}
             <Link to={'https://discord.com/channels/631288872814247966/1237418389480407061'}>
@@ -24,11 +27,7 @@ export const Header = () => {
           </Navigation>
           {!user ? (
             <AuthBlock>
-              {loginUrl ? (
-                <a href={loginUrl}>login</a>
-              ) : (
-                <Link to="/login">login</Link>
-              )}
+              {loginUrl ? <a href={loginUrl}>login</a> : <Link to="/login">login</Link>}
             </AuthBlock>
           ) : user && logoutUrl ? (
             <AuthBlock>

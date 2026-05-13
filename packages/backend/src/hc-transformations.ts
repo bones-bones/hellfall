@@ -61,7 +61,14 @@ const cardRemovableProps = [
   'all_parts',
 ];
 const cardFaceRemovableProps = ['frame', 'compress_face'];
-const tokenIgnoreProps = ['colors'];
+const tokenIgnoreProps = [
+  'colors',
+  'mana_cost',
+  'mana_value',
+  'subtypes',
+  'oracle_text',
+  'rulings',
+];
 const tokenRemovableProps = [
   'export_name',
   'power',
@@ -81,6 +88,7 @@ const tokenRemovableProps = [
   'flavor_name',
   'collector_number',
 ];
+const tokenFaceRemovableProps = ['frame'];
 const notMagicBlankableProps = ['oracle_text', 'mana_value'];
 const notMagicRemovableProps = [
   'tags',
@@ -108,20 +116,6 @@ const movedIds: Record<string, string> = {
   '2035': '6734',
   '2035b': '6735',
 };
-const stayUnapprovedLayouts: HCLayout[] = [
-  HCLayout.MeldPart,
-  HCLayout.MeldResult,
-  HCLayout.MultiToken,
-  HCLayout.MultiReminder,
-  HCLayout.RealCardMultiToken,
-  HCLayout.MultiNotMagic,
-];
-const partialMergeOnlyLayouts: HCLayout[] = [
-  HCLayout.MultiToken,
-  HCLayout.MultiReminder,
-  HCLayout.RealCardMultiToken,
-  HCLayout.MultiNotMagic,
-];
 const cardUninferrableProps = [
   'scryfall_id',
   'oracle_id',
@@ -349,15 +343,6 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
  * @returns
  */
 const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
-  if (
-    usingApproved &&
-    (existingCard.has_draft_partners ||
-      stayUnapprovedLayouts.includes(existingCard.layout as HCLayout) ||
-      ('card_faces' in existingCard && existingCard.card_faces.length > 4))
-  ) {
-    setDerivedProps(existingCard);
-    return existingCard;
-  }
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     if (existingCard.isActualToken) {
       const merged: HCCard.Any =
@@ -422,22 +407,41 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
                 (face as any)[k] = v;
               }
             });
-            cardRemovableProps
-              .filter(prop => prop in face && !(prop in newFace))
-              .forEach(prop => {
-                if (prop == 'image') {
-                  face.image_status = newFace.image_status;
-                }
-                delete (face as any)[prop];
-              });
-            cardFaceRemovableProps
-              .filter(prop => prop in face && !(prop in newFace))
-              .forEach(prop => {
-                if (prop == 'image') {
-                  face.image_status = newFace.image_status;
-                }
-                delete (face as any)[prop];
-              });
+            if (merged.isActualToken && merged.set == 'HCT') {
+              tokenRemovableProps
+                .filter(prop => prop in face && !(prop in newFace))
+                .forEach(prop => {
+                  if (prop == 'image') {
+                    face.image_status = newFace.image_status;
+                  }
+                  delete (face as any)[prop];
+                });
+              tokenFaceRemovableProps
+                .filter(prop => prop in face && !(prop in newFace))
+                .forEach(prop => {
+                  if (prop == 'image') {
+                    face.image_status = newFace.image_status;
+                  }
+                  delete (face as any)[prop];
+                });
+            } else {
+              cardRemovableProps
+                .filter(prop => prop in face && !(prop in newFace))
+                .forEach(prop => {
+                  if (prop == 'image') {
+                    face.image_status = newFace.image_status;
+                  }
+                  delete (face as any)[prop];
+                });
+              cardFaceRemovableProps
+                .filter(prop => prop in face && !(prop in newFace))
+                .forEach(prop => {
+                  if (prop == 'image') {
+                    face.image_status = newFace.image_status;
+                  }
+                  delete (face as any)[prop];
+                });
+            }
           }
           return face;
         });
@@ -454,8 +458,6 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           (merged as any)[key] = value;
         }
       } else if (key == 'draft_image_status') {
-        // TODO: store current version and print the diff if there is one
-      } else if (['subtypes', 'oracle_text', 'colors'].includes(key) && merged.set == 'HCT') {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
         merged.flavor_name = value;
@@ -493,11 +495,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           (merged.layout == HCLayout.Normal || merged.layout == HCLayout.Token)*/
         ) {
           merged.layout = value as typeof newCard.layout;
-        } else if (
-          'card_faces' in merged &&
-          'card_faces' in newCard &&
-          merged.layout != HCLayout.RealCardMultiToken
-        ) {
+        } else if ('card_faces' in merged && 'card_faces' in newCard) {
           merged.layout = value as typeof newCard.layout;
         }
       } else if (merged.set == 'NotMagic' && key == 'rulings') {

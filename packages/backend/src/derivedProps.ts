@@ -104,13 +104,14 @@ export const getColorIdentityProps = (
     // add each face that isn't an ignored image_status or the last image in a layout that ignores the last image
     card.card_faces.forEach((entry, i) => {
       if (
-        !ignoreFaceIdentityImageStatus.includes(entry.image_status as HCImageStatus) &&
-        !(
-          HCLayoutGroup.FrontIdentityLayout.includes(
-            card.layout as HCLayoutGroup.FrontIdentityLayoutType
-          ) && i == lastImageIndex
-        ) &&
-        !(card.layout == HCLayout.Specialize && i != 0)
+        card.isActualToken ||
+        (!ignoreFaceIdentityImageStatus.includes(entry.image_status as HCImageStatus) &&
+          !(
+            HCLayoutGroup.FrontIdentityLayout.includes(
+              card.layout as HCLayoutGroup.FrontIdentityLayoutType
+            ) && i == lastImageIndex
+          ) &&
+          !(card.layout == HCLayout.Specialize && i != 0))
       ) {
         addColorsFromFace(entry);
       }

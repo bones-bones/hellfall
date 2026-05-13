@@ -4,22 +4,23 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses 
 
 ## Endpoints
 
-| Path | Method | Description |
-|------|--------|-------------|
-| `/api/discord/login` | GET | Redirects to Discord OAuth; after auth, Discord redirects to callback |
-| `/api/discord/callback` | GET | Exchanges code for token, creates session cookie, redirects to frontend |
-| `/api/me` | GET | Returns current user from session cookie (or `{ user: null }`) |
-| `/api/logout` | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL` |
-| `/api/tag` | GET | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags |
-| `/api/cards/:cardId/tags` | GET | Tag overrides from Firestore doc `cards/{cardId}` (`added` / `removed`). DB id defaults to `hellscube`. |
-| `/api/cards/:cardId/tags` | POST | Add a tag (body: `{ tag: string }`). Requires auth + role. |
-| `/api/cards/:cardId/tags/:tag` | DELETE | Remove a tag. Requires auth + role. |
-| `/api/watchwolf` | GET | Returns WatchWolfWar card standings from Firestore |
-| `/api/watchwolf` | POST | Submit a win/lose (body: `{ WinId, LoseId }`) |
+| Path                           | Method   | Description                                                                                             |
+| ------------------------------ | -------- | ------------------------------------------------------------------------------------------------------- |
+| `/api/discord/login`           | GET      | Redirects to Discord OAuth; after auth, Discord redirects to callback                                   |
+| `/api/discord/callback`        | GET      | Exchanges code for token, creates session cookie, redirects to frontend                                 |
+| `/api/me`                      | GET      | Returns current user from session cookie (or `{ user: null }`)                                          |
+| `/api/logout`                  | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL`                                   |
+| `/api/tag`                     | GET      | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags       |
+| `/api/cards/:cardId/tags`      | GET      | Tag overrides from Firestore doc `cards/{cardId}` (`added` / `removed`). DB id defaults to `hellscube`. |
+| `/api/cards/:cardId/tags`      | POST     | Add a tag (body: `{ tag: string }`). Requires auth + role.                                              |
+| `/api/cards/:cardId/tags/:tag` | DELETE   | Remove a tag. Requires auth + role.                                                                     |
+| `/api/watchwolf`               | GET      | Returns WatchWolfWar card standings from Firestore                                                      |
+| `/api/watchwolf`               | POST     | Submit a win/lose (body: `{ WinId, LoseId }`)                                                           |
 
 ## Setup
 
 1. **Discord Application**
+
    - Go to [Discord Developer Portal](https://discord.com/developers/applications) → New Application.
    - OAuth2 → Redirects: add `https://<your-auth-host>/api/discord/callback`.
    - Copy Client ID and Client Secret.

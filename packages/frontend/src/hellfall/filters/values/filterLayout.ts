@@ -1,13 +1,6 @@
-import { HCCard, HCLayout, HCLayoutGroup } from '@hellfall/shared/types';
-import {
-  cardStringFilter,
-  getActualOp,
-  looseOpType,
-  opToDont,
-  opToNot,
-  opType,
-  shareOp,
-} from '../types';
+import { HCLayout, HCLayoutGroup } from '@hellfall/shared/types';
+import { invertOptionType, opType, textListFilter } from '../types';
+import { shareOp, opToNot, opToDont } from '../filterUtils';
 export const toCardLayout: Record<string, HCLayout | HCLayout[]> = {
   normal: HCLayout.Normal,
   meldpart: HCLayout.MeldPart,
@@ -140,19 +133,14 @@ export const toFaceLayout: Record<
   planet: HCLayout.Station,
 };
 
-export const filterCardLayout: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    if (!(value2 in toCardLayout)) {
-      return false;
-    }
-    return shareOp(actualOp, value1.layout, toCardLayout[value2]);
-  },
+export const filterCardLayout: textListFilter = Object.assign(
+  (value1: string[], operator: opType, value2: string) =>
+    value2 in toCardLayout ? shareOp(operator, value1, toCardLayout[value2]) : false,
   {
-    defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) => {
       if (!(value in toCardLayout)) {
-        return '!';
+        return `!Unknown card layout "${value}"`;
       }
       const layout = toCardLayout[value];
       if (Array.isArray(layout)) {
@@ -162,53 +150,49 @@ export const filterCardLayout: cardStringFilter = Object.assign(
       } else if (layout) {
         return `the card layout is ${opToNot(operator)} "${layout.replaceAll('_', ' ')}"`;
       } else {
-        return '!';
+        return `!There was an error fetching the layout for "${value}"`;
       }
     },
   }
 );
-export const filterFaceLayout: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    if (!(value2 in toFaceLayout)) {
-      return false;
-    }
-    return shareOp(
-      actualOp,
-      value1.toFaces().map(e => e.layout),
-      toFaceLayout[value2]
-    );
-  },
+export const filterFaceLayout: textListFilter = Object.assign(
+  (value1: string[], operator: opType, value2: string) =>
+    value2 in toFaceLayout ? shareOp(operator, value1, toFaceLayout[value2]) : false,
   {
-    defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) => {
       if (!(value in toFaceLayout)) {
-        return '!';
+        return `!Unknown face layout "${value}"`;
       }
       const layout = toFaceLayout[value];
       if (Array.isArray(layout)) {
-        return `the cards ${opToDont} have a face with layout ${layout
+        return `the cards ${opToDont(operator)} have a face with layout ${layout
           .map(e => `"${e.replaceAll('_', ' ')}"`)
           .join(' or ')}`;
       } else if (layout) {
-        return `the cards ${opToDont} have a face with layout "${layout.replaceAll('_', ' ')}"`;
+        return `the cards ${opToDont(operator)} have a face with layout "${layout.replaceAll(
+          '_',
+          ' '
+        )}"`;
       } else {
-        return '!';
+        return `!There was an error fetching the layout for "${value}"`;
       }
     },
   }
 );
-export const filterAnyLayout: cardStringFilter = Object.assign(
-  function (this: cardStringFilter, value1: HCCard.Any, operator: looseOpType, value2: string) {
-    const actualOp = getActualOp(this, operator);
-    return filterCardLayout(value1, actualOp, value2) || filterFaceLayout(value1, actualOp, value2);
-  },
+export const filterAnyLayout: textListFilter = Object.assign(
+  (value1: string[], operator: opType, value2: string) =>
+    filterCardLayout(value1, operator, value2) || filterFaceLayout(value1, operator, value2),
   {
-    defaultOp: '=' as opType,
-    toSummary: (value: string, operator: looseOpType) => {
-      const cardSum = filterCardLayout.toSummary(value, operator);
-      const faceSum = filterFaceLayout.toSummary(value, operator);
-      return cardSum[0] != '!' ? cardSum : faceSum;
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) => {
+      const cardSum = filterCardLayout.toSummary(operator, value);
+      const faceSum = filterFaceLayout.toSummary(operator, value);
+      return cardSum[0] != '!'
+        ? cardSum
+        : faceSum[0] != '!'
+        ? faceSum
+        : `!Unknown layout "${value}"`;
     },
   }
 );
