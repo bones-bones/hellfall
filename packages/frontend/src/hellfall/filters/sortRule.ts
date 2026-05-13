@@ -44,6 +44,7 @@ export const filterSort: sortFilter = Object.assign(
         return (toColorNumber(value1) - toColorNumber(value2)) * dirMult;
       case 'manavalue':
         return (value1.mana_value - value2.mana_value) * dirMult;
+      case 'auto':
       case 'colormanavalue': {
         const color = (toColorNumber(value1) - toColorNumber(value2)) * dirMult;
         if (color) {
@@ -75,7 +76,6 @@ export const filterSort: sortFilter = Object.assign(
         }
         return value1.id < value2.id ? -dirMult : dirMult;
       }
-      case 'auto':
       case 'name': {
         if (value1.name == value2.name) {
           return 0;

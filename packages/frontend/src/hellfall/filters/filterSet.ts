@@ -10,33 +10,69 @@ import {
   cardStringFilter,
 } from './types';
 import { funcOp, opIsNegative, opToNot } from './filterUtils';
+import { textSearchIncludes } from '@hellfall/shared/utils/textHandling';
+
+export const inclusionNicknames: Record<string, inclusionType> = {
+  a: 'all',
+  e: 'extras',
+  extra: 'extras',
+  ec: 'extracards',
+  extracard: 'extracards',
+  t: 'tokens',
+  token: 'tokens',
+  ne: 'nonextras',
+  nonextra: 'nonextras',
+  v: 'vetoed',
+  veto: 'vetoed',
+};
+
+const includeToSummary: Record<inclusionType, string> = {
+  all: 'all cards',
+  extras: 'all extras',
+  extracards: 'extra cards',
+  tokens: 'tokens',
+  nonextras: 'nonextras',
+  vetoed: 'vetoed cards',
+};
 
 export const filterIncludeExtras: includeFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {
     switch (value2) {
       case 'all':
-        return !opIsNegative(operator);
+        return true;
       case 'extras':
-        return opIsNegative(operator) ? !extraSetList.includes(value1.set) : true;
+        return extraSetList.includes(value1.set);
+      case 'extracards':
+        return extraSetList.includes(value1.set) && !value1.isActualToken;
+      case 'tokens':
+        return !!value1.isActualToken;
       case 'nonextras':
-        return opIsNegative(operator) ? extraSetList.includes(value1.set) : true;
+        return !extraSetList.includes(value1.set);
+      case 'vetoed':
+        return value1.set.includes('HCV');
     }
     return true;
   },
   {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) =>
-      inclusionOptions.includes(value as inclusionType)
-        ? `${opIsNegative(operator) ? 'excluding' : 'including'} ${value} ${
-            value == 'all' ? 'cards' : ''
-          }`
-        : `!Unknown inclusion option ${value}`,
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: string, invert?: boolean) => {
+      const correctValue: inclusionType | undefined =
+        value in inclusionNicknames
+          ? inclusionNicknames[value]
+          : inclusionOptions.includes(value as inclusionType)
+          ? (value as inclusionType)
+          : undefined;
+      if (!correctValue) {
+        return `!Unknown ${invert ? 'ex' : 'in'}clusion option "${value}"`;
+      }
+      return `${invert ? 'ex' : 'in'}cluding ${includeToSummary[correctValue]}`;
+    },
   }
 );
 
 export const filterSetCard: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) =>
-    funcOp(operator, (set: string) => set.includes(value2), value1.set),
+    funcOp(operator, (set: string) => textSearchIncludes(set, value2), value1.set),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: (operator: opType, value: string) => `the set is ${opToNot(operator)} "${value}"`,
@@ -48,7 +84,7 @@ const includeComponent = (part: HCRelatedCard) =>
 
 export const filterSetToken: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {
-    const isSetInResults = (set: string) => set.includes(value2);
+    const isSetInResults = (set: string) => textSearchIncludes(set, value2);
     const shouldIncludeMeld = (part: HCRelatedCard, set: string) => {
       return part.component == 'meld_part' && part.set != set;
     };

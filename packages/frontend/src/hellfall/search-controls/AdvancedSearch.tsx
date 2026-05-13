@@ -33,7 +33,7 @@ import { looseOpList, looseOpType } from '../filters/types.ts';
 import { SortComponent } from './SortComponent.tsx';
 import { useNavigate } from 'react-router-dom';
 import { parseSorts } from '../filters/parseSearchBar.ts';
-import { useSyncToURL } from '../hooks/useUrlSync.ts';
+import { useNavToSearch } from '../hooks/useUrlSync.ts';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -89,7 +89,7 @@ export const AdvancedSearch = () => {
 
   const [query, setQuery] = useAtom(queryAtom);
 
-  const syncToURL = useSyncToURL();
+  const navToSearch = useNavToSearch();
 
   const textToOps: Record<string, looseOpType> = {
     '!': '!:',
@@ -557,7 +557,7 @@ export const AdvancedSearch = () => {
           setQuery(newQuery);
           setInputSorts([]);
           setSortRules([]);
-          syncToURL(newQuery, [], undefined, undefined, undefined, undefined, { newPathname: '/' });
+          navToSearch(newQuery);
         }}
       >
         Search with these options

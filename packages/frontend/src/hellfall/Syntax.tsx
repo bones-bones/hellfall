@@ -265,7 +265,9 @@ export const Syntax = () => {
         </div>
         <h2>Include/Exclude</h2>
         <div>
-          Use <code>include:extras</code> to reveal all cards. If you want to exclude cards that{' '}
+          Use <code>include:extras</code> to reveal all cards. You can also use{' '}
+          <code>include:extracards</code> to add cards, <code>include:tokens</code> to add tokens,
+          or <code>include:veto</code> to add vetoed cards. If you want to exclude cards that{' '}
           <em>aren't</em> extras, use <code>exclude:nonextras</code>.
         </div>
         <h2>Not Implemented Yet</h2>

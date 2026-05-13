@@ -358,7 +358,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 {displayTags.map((tagEntry, i, ar) => (
                   <span key={tagEntry}>
                     <Link
-                      to={`/?${new URLSearchParams([['tag', tagEntry]]).toString()}`}
+                      to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
                       target="_blank"
                     >
                       {tagEntry}

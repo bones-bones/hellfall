@@ -140,3 +140,4 @@ Write a script to transform the database
 - decide whether to have `-` invert result instead of inverting op
 - figure out if i need more specific extras handling if no sets are selected
 - move actualOp function to filterObjects?
+- add hcv.x to `block`? (move `both` to a different keyword)

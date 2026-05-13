@@ -308,7 +308,7 @@ export const makeCreatorFilter: stringOrNumFilterMaker = (value: string, op: loo
       op,
       '>=',
       card => card.creators,
-      'the artists',
+      'the creators',
       opToIncludePlural
     );
   } else {

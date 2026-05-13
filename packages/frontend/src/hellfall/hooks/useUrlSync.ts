@@ -94,61 +94,70 @@ export const useUrlSync = () => {
   }, [location.search, location.pathname]); // This triggers on back/forward navigation
 };
 
-export const useSyncToURL = () => {
+export const useUpdateURL = () => {
   const navigate = useNavigate();
-  const setPageAtom = useSetAtom(pageAtom);
-  const syncToURL = (
-    query?: string,
-    inputSorts?: string[],
-    activeCard?: string,
-    page?: number,
-    paginationModel?: PaginationModel,
-    resultsLength?: number,
-    options?: { newPathname?: string }
-  ) => {
+  const location = useLocation();
+  const query = useAtomValue(queryAtom);
+  const inputSorts = useAtomValue(inputSortAtom);
+  const page = useAtomValue(pageAtom);
+  const activeCard = useAtomValue(activeCardAtom);
+  const prevValues = useRef({ query, inputSorts, page, activeCard });
+
+  useEffect(() => {
+    const hasChanged =
+      prevValues.current.query !== query ||
+      !listsAreEqual(prevValues.current.inputSorts, inputSorts) ||
+      prevValues.current.page !== page ||
+      prevValues.current.activeCard !== activeCard;
+
+    if (!hasChanged) return;
+
+    const searchToSet = new URLSearchParams();
+
+    if (query) {
+      searchToSet.append('q', query);
+    }
+
+    if (inputSorts.length) {
+      inputSorts.forEach(entry => searchToSet.append('order', entry));
+    }
+    if (page > 0) {
+      searchToSet.append('page', page.toString());
+    }
+    if (activeCard !== '') {
+      searchToSet.append('activeCard', activeCard);
+    }
+    // if (newPathname) {
+    //   const newUrl = `${newPathname}${searchToSet.size ? `?${searchToSet.toString()}`:''}`;
+
+    //   navigate(newUrl, {
+    //     replace: false,
+    //   });
+    // } else {
+    const newUrl = `${searchToSet.size ? `?${searchToSet.toString()}` : ''}`;
+    const currentUrl = location.search;
+    if (newUrl != currentUrl) {
+      navigate(newUrl, {
+        replace: false,
+      });
+    }
+    prevValues.current = { query, inputSorts, page, activeCard };
+    // }
+  });
+};
+
+export const useNavToSearch = () => {
+  const navigate = useNavigate();
+  const navToSearch = (query: string) => {
     const searchToSet = new URLSearchParams();
     if (query) {
       searchToSet.append('q', query);
     }
 
-    if (inputSorts?.length) {
-      inputSorts.forEach(input => searchToSet.append('order', input));
-    }
-    if (paginationModel) {
-      const currentPageNumber = Math.floor(page! / CHUNK_SIZE) + 1;
-
-      if (paginationModel.state.currentPage !== currentPageNumber) {
-        paginationModel.events.goTo(currentPageNumber);
-      }
-      if (resultsLength && resultsLength < page! && resultsLength > 0) {
-        paginationModel.events.goTo(1);
-        setPageAtom(0);
-      } else if (page! > 0) {
-        searchToSet.append('page', page!.toString());
-      }
-    }
-    if (activeCard) {
-      searchToSet.append('activeCard', activeCard);
-    }
-    if (options?.newPathname) {
-      const newUrl = `${options.newPathname}${
-        searchToSet.size ? `?${searchToSet.toString()}` : ''
-      }`;
-      navigate(newUrl, {
-        replace: false,
-      });
-    } else {
-      const newUrl = `${searchToSet.size ? `?${searchToSet.toString()}` : ''}`;
-      const currentUrl = location.search;
-      if ([newUrl, currentUrl].includes('?')) {
-        console.log('still need ? check');
-      }
-      if (newUrl != currentUrl && ![newUrl, currentUrl].every(url => ['', '?'].includes(url))) {
-        navigate(newUrl, {
-          replace: false,
-        });
-      }
-    }
+    const newUrl = `/${searchToSet.size ? `?${searchToSet.toString()}` : ''}`;
+    navigate(newUrl, {
+      replace: false,
+    });
   };
-  return syncToURL;
+  return navToSearch;
 };

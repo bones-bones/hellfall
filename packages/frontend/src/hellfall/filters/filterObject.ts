@@ -214,7 +214,8 @@ export class IncludeFilter extends filterObject<HCCard.Any, string> {
     public filter: includeFilter,
     value: string,
     op: looseOpType,
-    defaultOp: opType
+    defaultOp: opType,
+    inverted?: boolean
   ) {
     super(
       queryName,
@@ -223,7 +224,8 @@ export class IncludeFilter extends filterObject<HCCard.Any, string> {
       op,
       defaultOp,
       card => card,
-      () => this.filter.toSummary(this.getOp(), this.value)
+      () => this.filter.toSummary(this.getOp(), this.value, this.inverted),
+      inverted
     );
   }
 }

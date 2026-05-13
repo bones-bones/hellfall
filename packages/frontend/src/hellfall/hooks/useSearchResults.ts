@@ -20,17 +20,16 @@ import tags_data from '@hellfall/shared/data/tags.json';
 import { CHUNK_SIZE } from '../constants.ts';
 import { combineAndWinnowSorts, searchCards } from '../filters/parseSearchBar.ts';
 import { makeSort } from '../filters/filterBuilder.ts';
-import { useSyncToURL } from '../hooks/useUrlSync.ts';
 
 export const useSearchResults = () => {
-  const syncToURL = useSyncToURL();
+  // const navigate = useNavigate()
 
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
   const cards = useAtomValue(cardsAtom).filter(
     e => !e.tags?.includes('offensive') && e.set != 'NotMagic'
   );
   const query = useAtomValue(queryAtom);
-  const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
+  const sortRules = useAtomValue(sortAtom);
   const [page, setPageAtom] = useAtom(pageAtom);
   const activeCard = useAtomValue(activeCardAtom);
 
@@ -46,33 +45,29 @@ export const useSearchResults = () => {
   });
 
   useEffect(() => {
-    const {
-      cards: tempResults,
-      sortObjects,
-      // allWereIgnored
-    } = searchCards(cards, query, tags_data.data);
+    const tempResults = searchCards(cards, query, tags_data.data);
 
     // setQuerySorts(sortObjects);
-    const { sortList, newInputs } = combineAndWinnowSorts(sortObjects, inputSorts);
+    // const { sortList, newInputs } = combineAndWinnowSorts(sortObjects, inputSorts);
     // setSortRules(sortList);
-    if (!sortList.length) {
-      sortList.push(makeSort('auto', 'auto'));
-    }
+    // if (!sortList.length) {
+    //   sortList.push(makeSort('auto', 'auto'));
+    // }
 
-    for (let i = sortList.length - 1; i >= 0; i--) {
-      tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortList[i].filter(a, '=', b));
+    for (let i = sortRules.length - 1; i >= 0; i--) {
+      tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortRules[i].filter(a, '=', b));
     }
     setResultSet(tempResults);
 
-    syncToURL(query, newInputs, activeCard, page, paginationModel, tempResults.length);
+    // syncToURL(query, newInputs, activeCard, page, paginationModel, tempResults.length);
 
     // const searchToSet = new URLSearchParams();
 
-    // const currentPageNumber = Math.floor(page / CHUNK_SIZE) + 1;
+    const currentPageNumber = Math.floor(page / CHUNK_SIZE) + 1;
 
-    // if (paginationModel.state.currentPage !== currentPageNumber) {
-    //   paginationModel.events.goTo(currentPageNumber);
-    // }
+    if (paginationModel.state.currentPage !== currentPageNumber) {
+      paginationModel.events.goTo(currentPageNumber);
+    }
     // if (query) {
     //   searchToSet.append('q', query);
     // }
@@ -80,12 +75,10 @@ export const useSearchResults = () => {
     // if (newInputs.length) {
     //   newInputs.forEach(entry => searchToSet.append('order', entry));
     // }
-    // if (tempResults.length < page && tempResults.length > 0) {
-    //   paginationModel.events.goTo(1);
-    //   setPageAtom(0);
-    // } else if (page > 0) {
-    //   searchToSet.append('page', page.toString());
-    // }
+    if (tempResults.length < page && tempResults.length > 0) {
+      paginationModel.events.goTo(1);
+      setPageAtom(0);
+    }
     // if (activeCard !== '') {
     //   searchToSet.append('activeCard', activeCard);
     // }
@@ -109,7 +102,8 @@ export const useSearchResults = () => {
     // // }
   }, [
     query,
-    inputSorts,
+    sortRules,
+    // inputSorts,
     page,
     activeCard,
     cards.length,
