@@ -17,30 +17,12 @@ import { combineAndWinnowSorts, parseSearchQuery } from '../filters/parseSearchB
 import { makeSort } from '../filters/filterBuilder.ts';
 import { PaginationModel } from '@workday/canvas-kit-react';
 import { CHUNK_SIZE } from '../constants.ts';
+import { listsAreEqual } from '@hellfall/shared/utils';
 
-export const listsAreEqual = (value1: string[], value2: string[]): boolean => {
-  if (value1.length != value2.length) {
-    return false;
-  }
-  return value1.every((value, i) => value == value2[i]);
-};
-
-export const sortsAreEqual = (value1: sortObject[], value2: sortObject[]): boolean => {
-  if (value1.length != value2.length) {
-    return false;
-  }
-  return value1.every((value, i) => value.sort == value2[i].sort && value.dir == value2[i].dir);
-};
-
-export const invalidsAreEqual = (
-  value1: [string, string][],
-  value2: [string, string][]
-): boolean => {
-  if (value1.length != value2.length) {
-    return false;
-  }
-  return value1.every((value, i) => value[0] == value2[i][0] && value[1] == value2[i][1]);
-};
+const sortsEqual = (mem1: sortObject, mem2: sortObject) =>
+  mem1.sort == mem2.sort && mem1.dir == mem2.dir;
+const invalidsEqual = (mem1: [string, string], mem2: [string, string]) =>
+  mem1[0] == mem2[0] && mem1[1] == mem2[1];
 
 export const useUrlSync = () => {
   const location = useLocation();
@@ -61,7 +43,7 @@ export const useUrlSync = () => {
     if (query != newQuery) {
       setQuery(newQuery);
     }
-    if (!sortsAreEqual(querySorts, parsedQuery.sortObjects)) {
+    if (!listsAreEqual(querySorts, parsedQuery.sortObjects, sortsEqual)) {
       setQuerySorts(parsedQuery.sortObjects);
     }
 
@@ -72,7 +54,7 @@ export const useUrlSync = () => {
     if (!sortList.length) {
       sortList.push(makeSort('auto', 'auto'));
     }
-    if (!sortsAreEqual(sortRules, sortList)) {
+    if (!listsAreEqual(sortRules, sortList, sortsEqual)) {
       setSortRules(sortList);
     }
     if (!listsAreEqual(inputSorts, newInputs)) {
@@ -81,7 +63,7 @@ export const useUrlSync = () => {
     if (summary != parsedQuery.summary) {
       setSummary(parsedQuery.summary);
     }
-    if (!invalidsAreEqual(invalids, parsedQuery.invalids)) {
+    if (!listsAreEqual(invalids, parsedQuery.invalids, invalidsEqual)) {
       setInvalids(parsedQuery.invalids);
     }
     // Set pagination and active card

@@ -6,11 +6,10 @@ import {
   DraftmancerCustomCard,
   SimpleDraftEffectList,
 } from '../types';
-import { stripSingleSlashes, toExportMana } from '@hellfall/shared/utils/textHandling';
+import { stripSingleSlashes, toExportMana, orderColors } from '@hellfall/shared/utils';
 import { canBeACommander } from '../../hellfall/canBeACommander';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
 import { getCustomCardlist, getSplitSet } from '../../hellfall/filters/filterSet';
-import { orderColors } from '@hellfall/shared/utils/orderColors';
 import { mergeHCCardFaces } from '../mergeHCCardFaces';
 
 const validColors = ['W', 'U', 'B', 'R', 'G'];

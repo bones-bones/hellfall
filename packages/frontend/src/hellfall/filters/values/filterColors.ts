@@ -14,8 +14,9 @@ import {
   shorthandType,
   shortToNum,
 } from '../types';
-import { containsOp, opToShorthand } from '../filterUtils';
+import { canContainOp, containsOp, opToShorthand } from '../filterUtils';
 import { filterNumber } from '../filterNumber';
+import { canContain, contains, listEquals } from '@hellfall/shared/utils';
 const MISC_BULLSHIT = 'Misc';
 
 /**
@@ -24,11 +25,11 @@ const MISC_BULLSHIT = 'Misc';
  * @param colors2 The second set of colors to compare
  * @returns boolean of whether the sets are the same colors.
  */
-export const sameColors = (colors1: HCColors | string[], colors2: HCColors | string[]) => {
-  const colorsToUse = colors1.filter(c => c != 'C') as string[];
-  contains(colorsToUse, colors2) && contains(colors2, colorsToUse);
-};
-const contains = (set1: string[], set2: string[]) => set2.every(c => set1.includes(c));
+export const sameColors = (colors1: HCColors | string[], colors2: HCColors | string[]): boolean =>
+  listEquals(
+    colors1.filter(c => c != 'C'),
+    colors2
+  );
 /**
  * Compares two sets of colors using an operator and returns a bool.
  * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)
@@ -156,15 +157,6 @@ export const filterColorIndicatorShort: colorShortListFilter = Object.assign(
   }
 );
 
-const canContain = (set1: string[][] | string[], set2: string[][] | string[]) => {
-  if (set1.length && typeof set1[0] != 'string') {
-    return (set2 as string[]).every(c => set1.some(set => (set as string[]).includes(c)));
-  }
-  if (set2.length && typeof set2[0] != 'string') {
-    return (set2 as string[][]).every(set => set.some(c => (set1 as string[]).includes(c)));
-  }
-  return contains(set1 as string[], set2 as string[]);
-};
 /**
  * Compares two sets of colors using an operator and returns a bool.
  * @param value1 The set of hybrid colors to compare (must not include 'C'; can be empty)
@@ -173,32 +165,8 @@ const canContain = (set1: string[][] | string[], set2: string[][] | string[]) =>
  * @returns boolean of whether the comparison is true
  */
 export const filterHybridIdentityContents: hybridContentFilter = Object.assign(
-  (value1: string[][], operator: opType, value2: string[]) => {
-    if (value2.includes('C')) {
-      switch (operator) {
-        case '<': {
-          return false;
-        }
-        case '<=': {
-          return value1.length == 0;
-        }
-        case '=': {
-          return value1.length == 0;
-        }
-        case '>=': {
-          return true;
-        }
-        case '>': {
-          return value1.length != 0;
-        }
-        case '!=': {
-          return value1.length != 0;
-        }
-      }
-    } else {
-      return containsOp(operator, canContain, value1, value2);
-    }
-  },
+  (value1: string[][], operator: opType, value2: string[]) =>
+    canContainOp(operator, canContain, value1, value2),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string[], invert?: boolean) =>

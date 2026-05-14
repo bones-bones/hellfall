@@ -10,7 +10,7 @@ import {
   cardStringFilter,
 } from './types';
 import { funcOp, opIsNegative, opToNot } from './filterUtils';
-import { textSearchIncludes } from '@hellfall/shared/utils/textHandling';
+import { textSearchIncludes } from '@hellfall/shared/utils';
 
 export const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',

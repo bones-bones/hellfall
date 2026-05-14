@@ -2,7 +2,7 @@ import { Card, Heading, Text } from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
 import { SetLegality } from './SetLegality.tsx';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
-import { formatParens } from '@hellfall/shared/utils/textHandling.ts';
+import { formatParens, listShare } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { HellfallRelatedEntry } from '../HellfallEntry.tsx';
 
@@ -28,6 +28,7 @@ const renderText = (text: string[]) => {
     );
   });
 };
+const triggerEscapeList = ['*', '(', '_', '~'];
 const getImages = (card: HCCard.Any) => {
   const imagesToShow: string[] = [];
   const imageNames: string[] = [];
@@ -114,7 +115,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
 
   return (
     <Container ref={windowRef} key={data.id}>
-      {imagesToShow.length === 0 ? (
+      {imagesToShow.length ? (
         <Test>
           <ImageContainer key="image-container">
             <img
@@ -158,7 +159,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               {face.name &&
-                (['*', '(', '_', '~'].some(char => face.name.includes(char)) ? (
+                (listShare(triggerEscapeList, face.name) ? (
                   <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
                     {formatDiscordMarkdownInline(formatParens(face.name))}
                   </Text>
@@ -175,7 +176,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               </Text>
               <br />
               {face.flavor_name &&
-                (['*', '(', '_', '~'].some(char => face.flavor_name!.includes(char)) ? (
+                (listShare(triggerEscapeList, face.name) ? (
                   <>
                     <Text typeLevel="body.medium" key="flavor-name">
                       {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.flavor_name))}
@@ -199,7 +200,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 </>
               )}
               {face.type_line &&
-                (['*', '(', '_', '~'].some(char => face.type_line.includes(char)) ? (
+                (listShare(triggerEscapeList, face.type_line) ? (
                   <Text typeLevel="body.medium" key="type">
                     {formatDiscordMarkdownInline(formatParens(face.type_line))}
                   </Text>
@@ -213,7 +214,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 ))}
               <br />
               {face.oracle_text &&
-                (['*', '(', '_', '~'].some(char => face.oracle_text.includes(char)) ? (
+                (listShare(triggerEscapeList, face.oracle_text) ? (
                   <Text typeLevel="body.medium" key="rules">
                     {formatDiscordMarkdown(formatParens(face.oracle_text))}
                     <br />
@@ -226,7 +227,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                   </>
                 ))}
               {face.flavor_text &&
-                (['*', '_', '~'].some(char => face.flavor_text?.includes(char)) ? (
+                (listShare(['*', '_', '~'], face.flavor_text) ? (
                   <Text typeLevel="body.medium" key="flavor">
                     {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
                     <br />
@@ -291,25 +292,19 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               <br />
             </>
           )}
-          {data.creators.length && data.creators.length == 1 ? (
+          {data.creators.length && (
             <>
-              <Text key="creator">Creator: {data.creators[0]}</Text>
-              <br />
-            </>
-          ) : (
-            <>
-              <Text key="creator">Creators: {data.creators.join(', ')}</Text>
+              <Text key="creator">
+                Creator{data.creators.length == 1 ? '' : 's'}: {data.creators.join(',')}
+              </Text>
               <br />
             </>
           )}
-          {data.artists?.length && data.artists.length == 1 ? (
+          {data.artists?.length && (
             <>
-              <Text key="artist">Artist: {data.artists[0]}</Text>
-              <br />
-            </>
-          ) : (
-            <>
-              <Text key="artist">Artists: {data.artists?.join(', ')}</Text>
+              <Text key="artist">
+                Artist{data.artists.length == 1 ? '' : 's'}: {data.artists.join(', ')}
+              </Text>
               <br />
             </>
           )}

@@ -11,7 +11,7 @@ node_modules/
 webpack.config.js
 
 # Data files
-src/data/
+src/data/*.json
 data-transformers/src/cubes/
 data-transformers/src/draftmancer/
 

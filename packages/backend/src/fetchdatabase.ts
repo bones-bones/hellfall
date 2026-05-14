@@ -17,7 +17,7 @@ import {
   HCFrameEffect,
 } from '@hellfall/shared/types';
 import { getColorIdentityProps, setDerivedProps } from './derivedProps.ts';
-import { stripMasterpiece } from '@hellfall/shared/utils/textHandling.ts';
+import { stripMasterpiece, isInteger, listShareLower } from '@hellfall/shared/utils';
 import { error } from 'console';
 import {
   addProp,
@@ -33,7 +33,6 @@ import {
   toSingleCard,
   valueType,
 } from './fetchUtils.ts';
-import { isInteger } from '@hellfall/shared/utils/isInt.ts';
 
 export const fetchDatabase = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -479,28 +478,26 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           : entry[1]
         ).split(' // ');
     const getFrontLayout = (front: cardFaceType) => {
-      if (front.types?.some(type => type.toLowerCase() == 'stickers')) {
+      if (listShareLower(front.types, 'stickers')) {
         return HCLayout.Stickers;
-      } else if (front.types?.some(type => type.toLowerCase() == 'dungeon')) {
+      } else if (listShareLower(front.types, 'dungeon')) {
         return HCLayout.Dungeon;
-      } else if (front.subtypes?.some(type => type.toLowerCase() == 'saga')) {
+      } else if (listShareLower(front.subtypes, 'saga')) {
         return HCLayout.Saga;
-      } else if (front.subtypes?.some(type => type.toLowerCase() == 'class')) {
+      } else if (listShareLower(front.subtypes, 'class')) {
         return HCLayout.Class;
-      } else if (front.subtypes?.some(type => type.toLowerCase() == 'case')) {
+      } else if (listShareLower(front.subtypes, 'case')) {
         return HCLayout.Case;
-      } else if (front.types?.some(type => ['plane', 'phenomenon'].includes(type.toLowerCase()))) {
+      } else if (listShareLower(front.types, ['plane', 'phenomenon'])) {
         return HCLayout.Planar;
-      } else if (front.types?.some(type => type.toLowerCase() == 'scheme')) {
+      } else if (listShareLower(front.types, 'scheme')) {
         return HCLayout.Scheme;
-      } else if (front.types?.some(type => type.toLowerCase() == 'vanguard')) {
+      } else if (listShareLower(front.types, 'vanguard')) {
         return HCLayout.Vanguard;
-      } else if (front.types?.some(type => type.toLowerCase() == 'battle')) {
+      } else if (listShareLower(front.types, 'battle')) {
         return HCLayout.Battle;
       } else if (
-        front.subtypes?.some(subtype =>
-          ['spacecraft', 'watercraft', 'planet'].includes(subtype.toLowerCase())
-        ) &&
+        listShareLower(front.subtypes, ['spacecraft', 'watercraft', 'planet']) &&
         front.oracle_text.toLowerCase().includes('station')
       ) {
         return HCLayout.Station;

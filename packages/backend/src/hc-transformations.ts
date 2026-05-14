@@ -21,7 +21,7 @@ import { allSetsList } from '@hellfall/shared/data/sets.ts';
 // import { getDefaultStore } from 'jotai';
 import { getColorIdentityProps, setDerivedProps, setExportProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
-import { stripMasterpiece, textEquals, textPrep } from '@hellfall/shared/utils/textHandling.ts';
+import { pushProp, stripMasterpiece, textEquals, textPrep } from '@hellfall/shared/utils';
 import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 import { error } from 'console';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
@@ -759,15 +759,12 @@ const main = async () => {
               relatedToken.persistent = true;
             }
             // update relatedCard.all_parts
-            if ('all_parts' in relatedCard) {
-              const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == token.id);
-              if (tokenIndex == -1) {
-                relatedCard.all_parts?.push(relatedToken);
-              } else {
-                relatedCard.all_parts![tokenIndex!] = relatedToken;
-              }
+
+            const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == token.id);
+            if (tokenIndex == -1 || tokenIndex == undefined || !relatedCard.all_parts) {
+              pushProp(relatedCard, 'all_parts', relatedToken);
             } else {
-              relatedCard.all_parts = [relatedToken];
+              relatedCard.all_parts[tokenIndex] = relatedToken;
             }
             // if stickers or AddCards, add draftpartner props
             if (
@@ -811,35 +808,29 @@ const main = async () => {
             meldRelatedCards.push(meldPart);
           }
         });
-      if (meldPartIds && meldPartIds.length) {
-        const meldResult: HCRelatedCard = {
-          object: HCObject.ObjectType.RelatedCard,
-          id: token.id,
-          component: 'meld_result',
-          name: token.name,
-          type_line: token.type_line,
-          set: token.set,
-          image: token.image,
-        };
-        meldRelatedCards.push(meldResult);
-        meldPartIds.forEach(id => {
-          const relatedCard = finalCards.find(card => card.id == id);
-          meldRelatedCards
-            .filter(e => e.id != id)
-            .forEach(meldPart => {
-              if ('all_parts' in relatedCard!) {
-                const meldIndex = relatedCard.all_parts?.findIndex(e => e.id == meldPart.id);
-                if (meldIndex == -1) {
-                  relatedCard.all_parts?.push(meldPart);
-                } else {
-                  relatedCard.all_parts![meldIndex!] = meldPart;
-                }
-              } else {
-                relatedCard!.all_parts = [meldPart];
-              }
-            });
-        });
-      }
+      const meldResult: HCRelatedCard = {
+        object: HCObject.ObjectType.RelatedCard,
+        id: token.id,
+        component: 'meld_result',
+        name: token.name,
+        type_line: token.type_line,
+        set: token.set,
+        image: token.image,
+      };
+      meldRelatedCards.push(meldResult);
+      meldPartIds.forEach(id => {
+        const relatedCard = finalCards.find(card => card.id == id) as HCCard.Any;
+        meldRelatedCards
+          .filter(e => e.id != id)
+          .forEach(meldPart => {
+            const meldIndex = relatedCard.all_parts?.findIndex(e => e.id == meldPart.id);
+            if (meldIndex == -1 || meldIndex == undefined || !relatedCard.all_parts) {
+              pushProp(relatedCard, 'all_parts', meldPart);
+            } else {
+              relatedCard.all_parts[meldIndex] = meldPart;
+            }
+          });
+      });
     });
   // update cards that have token copies of them made by other cards or by tokens
   finalCards
@@ -877,15 +868,11 @@ const main = async () => {
               tokenMaker.persistent = true;
               relatedToken.persistent = true;
             }
-            if ('all_parts' in relatedCard!) {
-              const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-              if (tokenIndex == -1) {
-                relatedCard.all_parts?.push(relatedToken);
-              } else {
-                relatedCard.all_parts![tokenIndex!] = relatedToken;
-              }
+            const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+            if (tokenIndex == -1 || tokenIndex == undefined || !relatedCard.all_parts) {
+              pushProp(relatedCard, 'all_parts', relatedToken);
             } else {
-              relatedCard!.all_parts = [relatedToken];
+              relatedCard.all_parts[tokenIndex] = relatedToken;
             }
           }
         });
@@ -926,15 +913,11 @@ const main = async () => {
             partnerCard.set = relatedCard!.set;
             partnerCard.image = relatedCard!.image;
             partnerCard.is_draft_partner = true;
-            if ('all_parts' in relatedCard!) {
-              const partnerIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-              if (partnerIndex == -1) {
-                relatedCard.all_parts?.push(relatedPartner);
-              } else {
-                relatedCard.all_parts![partnerIndex!] = relatedPartner;
-              }
+            const partnerIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+            if (partnerIndex == -1 || partnerIndex == undefined || !relatedCard.all_parts) {
+              pushProp(relatedCard, 'all_parts', relatedPartner);
             } else {
-              relatedCard!.all_parts = [relatedPartner];
+              relatedCard.all_parts[partnerIndex] = relatedPartner;
             }
           }
         });

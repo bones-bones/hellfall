@@ -72,7 +72,7 @@ import {
   filterFrameEffect,
   filterShowcase,
 } from './values/filterFrame';
-import { isInteger, isNumber } from '@hellfall/shared/utils/isInt';
+import { isInteger, isNumber } from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import { toNumber } from '../inputs/NumberSelector';
 

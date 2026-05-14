@@ -1,6 +1,7 @@
 import { HCFrame, HCFrameEffect } from '@hellfall/shared/types';
 import { invertOptionType, opType, textListFilter } from '../types';
-import { equals, shareOp, opToDont } from '../filterUtils';
+import { shareOp, opToDont } from '../filterUtils';
+import { listEquals } from '@hellfall/shared/utils';
 
 const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
@@ -233,7 +234,7 @@ const frameNames: [HCFrame[], string][] = [
 ];
 const getFrameName = (text: string) => {
   if (text in toCardFrame) {
-    return frameNames.find(frames => equals(frames[0], toCardFrame[text]))?.[1];
+    return frameNames.find(frames => listEquals(frames[0], toCardFrame[text]))?.[1];
   }
   return undefined;
 };
@@ -412,7 +413,7 @@ const frameEffectNames: [HCFrameEffect[], string][] = [
 ];
 const getFrameEffectName = (text: string) => {
   if (text in toFrameEffect) {
-    return frameEffectNames.find(frames => equals(frames[0], toFrameEffect[text]))?.[1];
+    return frameEffectNames.find(frames => listEquals(frames[0], toFrameEffect[text]))?.[1];
   }
   return undefined;
 };

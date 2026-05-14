@@ -239,7 +239,6 @@ export const AdvancedSearch = () => {
     if (includeExtraSets) {
       filters.push('include:extras');
     }
-    // TODO: make sure this works
     inputSorts.forEach(input => {
       const [sort, dir] = input.split(',', 2);
       if (sort != 'auto' && dir != 'auto') {

@@ -75,7 +75,7 @@ export const useSearchResults = () => {
     // if (newInputs.length) {
     //   newInputs.forEach(entry => searchToSet.append('order', entry));
     // }
-    if (tempResults.length < page && tempResults.length > 0) {
+    if (tempResults.length < page && tempResults.length) {
       paginationModel.events.goTo(1);
       setPageAtom(0);
     }

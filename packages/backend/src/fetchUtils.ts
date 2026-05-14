@@ -8,6 +8,7 @@ import {
 } from '@hellfall/shared/types';
 import { error } from 'console';
 import { setDerivedProps } from './derivedProps';
+import { listShareLower, pushProp } from '@hellfall/shared/utils';
 
 export type propType = keyof HCCard.Any;
 export type valueType<K extends propType> = HCCard.Any[K];
@@ -42,17 +43,11 @@ export const fillFacesTo = (card: cardObjectType, index: number) => {
 export const addProp = <K extends propType>(card: cardObjectType, prop: K, value: valueType<K>) => {
   (card as any)[prop] = value;
 };
-export const pushProp = <K extends propType>(
+export const pushPropToCard = <K extends propType>(
   card: cardObjectType,
   prop: K,
   value: arrayElementType<K>
-) => {
-  if (Array.isArray(card[prop])) {
-    (card as any)[prop].push(value);
-  } else {
-    (card as any)[prop] = [value];
-  }
-};
+) => pushProp(card, prop, value);
 export const addPropToFace = <K extends facePropType>(
   card: cardObjectType,
   index: number,
@@ -69,11 +64,7 @@ export const pushPropToFace = <K extends facePropType>(
   value: faceArrayElementType<K>
 ) => {
   fillFacesTo(card, index);
-  if (Array.isArray(card.card_faces[index][prop])) {
-    (card as any).card_faces[index][prop].push(value);
-  } else {
-    (card as any).card_faces[index][prop] = [value];
-  }
+  pushProp(card.card_faces[index], prop, value);
 };
 export const addPropToFrontFace = <K extends facePropType>(
   card: cardObjectType,
@@ -83,18 +74,11 @@ export const addPropToFrontFace = <K extends facePropType>(
   fillFacesTo(card, 0);
   (card as any).card_faces[0][prop] = value;
 };
-export const faceIsBattle = (card: cardObjectType, index: number) => {
-  return (
-    index < card.card_faces.length &&
-    (card.card_faces[index].types as string[]).some(type => type.toLowerCase())
-  );
-};
-export const frontIsBattle = (card: cardObjectType) => {
-  return (
-    0 < card.card_faces.length &&
-    (card.card_faces[0].types as string[]).some(type => type.toLowerCase())
-  );
-};
+export const faceIsBattle = (card: cardObjectType, index: number) =>
+  listShareLower(card.card_faces[index]?.types, 'battle');
+
+export const frontIsBattle = (card: cardObjectType) =>
+  listShareLower(card.card_faces[0]?.types, 'battle');
 /**
  * Adds a tag to a specific face
  * @param card card object
@@ -110,7 +94,7 @@ export const addTagToFace = <K extends facePropType>(
   value: faceValueType<K> | faceArrayElementType<K>,
   push?: boolean
 ) => {
-  const faceIndex = index > 0 && index < card.card_faces.length ? index : 0;
+  // const faceIndex = index > 0 && index < card.card_faces.length ? index : 0;
   if (push) {
     pushPropToFace(card, index, prop, value as faceArrayElementType<K>);
   } else {
@@ -131,7 +115,7 @@ export const addTagToRoot = <K extends propType>(
   push?: boolean
 ) => {
   if (push) {
-    pushProp(card, prop, value as arrayElementType<K>);
+    pushPropToCard(card, prop, value as arrayElementType<K>);
   } else {
     addProp(card, prop, value as valueType<K>);
   }

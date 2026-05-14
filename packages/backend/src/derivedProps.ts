@@ -11,10 +11,18 @@ import {
   NewFrames,
   HCFrame,
 } from '@hellfall/shared/types';
-import { splitParens, toExportName } from '@hellfall/shared/utils/textHandling.ts';
+import {
+  splitParens,
+  toExportName,
+  orderColors,
+  isInteger,
+  orderHybrid,
+  contains,
+  containsSome,
+  listShareLower,
+  listShare,
+} from '@hellfall/shared/utils';
 import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
-import { orderColors } from '@hellfall/shared/utils/orderColors.ts';
-import { isInteger } from '@hellfall/shared/utils/isInt';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -36,11 +44,14 @@ export const getColorIdentityProps = (
       }
     });
     if (colors && !colors.includes(HCColor.Colorless) && colors.length > 0) {
-      // if the new colors do not contain some existing colorSet
-      if (!colorIdentityHybrid.some(colorSet => colorSet.every(color => colors.includes(color)))) {
+      // if the new colors do not contain some existing color set
+      // if (!colorIdentityHybrid.some(colorSet => colorSet.every(color => colors.includes(color)))) {
+      // if (!colorIdentityHybrid.some(colorSet => contains(colors,colorSet))) {
+      if (!containsSome(colors, colorIdentityHybrid)) {
         for (let i = colorIdentityHybrid.length - 1; i >= 0; i--) {
-          // if the new colorSet is completely inside the existing colorSet, delete the existing one
-          if (colors.every(color => colorIdentityHybrid[i].includes(color))) {
+          // if the new color set is completely inside an existing color set, delete the existing one
+          // if (colors.every(color => colorIdentityHybrid[i].includes(color))) {
+          if (contains(colorIdentityHybrid[i], colors)) {
             colorIdentityHybrid.splice(i, 1);
           }
         }
@@ -150,9 +161,9 @@ export const setDerivedProps = (card: HCCard.Any) => {
         : NewFrames.includes(card.frame as HCFrame)
     ) {
       if (
-        ((face.supertypes?.some(type => type.toLowerCase() == 'legendary') &&
-          !face.types?.some(type => type.toLowerCase() == 'planeswalker') &&
-          !face.types?.some(type => type.toLowerCase() == 'player') &&
+        ((listShareLower(face.supertypes, 'legendary') &&
+          !listShareLower(face.types, 'planeswalker') &&
+          !listShareLower(face.types, 'player') &&
           !card.tags?.includes('missing-legend-frame')) ||
           card.tags?.includes('legend-frame')) &&
         !face.frame_effects?.includes(HCFrameEffect.Legendary)
@@ -160,21 +171,21 @@ export const setDerivedProps = (card: HCCard.Any) => {
         effects.push(HCFrameEffect.Legendary);
       }
       if (
-        face.supertypes?.some(type => type.toLowerCase() == 'snow') &&
+        listShareLower(face.supertypes, 'snow') &&
         !card.tags?.includes('missing-snow-frame') &&
         !face.frame_effects?.includes(HCFrameEffect.Snow)
       ) {
         effects.push(HCFrameEffect.Snow);
       }
       if (
-        face.subtypes?.some(type => type.toLowerCase() == 'lesson') &&
+        listShareLower(face.subtypes, 'lesson') &&
         !card.tags?.includes('missing-lesson-frame') &&
         !face.frame_effects?.includes(HCFrameEffect.Lesson)
       ) {
         effects.push(HCFrameEffect.Lesson);
       }
       if (
-        face.subtypes?.some(type => type.toLowerCase() == 'vehicle') &&
+        listShareLower(face.subtypes, 'vehicle') &&
         !card.tags?.includes('missing-vehicle-frame') &&
         !face.frame_effects?.includes(HCFrameEffect.Vehicle)
       ) {
@@ -185,35 +196,27 @@ export const setDerivedProps = (card: HCCard.Any) => {
       if (
         !i &&
         card.layout == HCLayout.Transform &&
-        !face.frame_effects?.some(effect =>
-          TransformFrameEffects.includes(effect as HCFrameEffect)
-        ) &&
+        !listShare(face.frame_effects, TransformFrameEffects) &&
         !card.tags?.includes('missing-transform-frame')
       ) {
         effects.push(HCFrameEffect.TransformDfc);
       } else if (
         !i &&
         card.layout == HCLayout.Modal &&
-        !face.frame_effects?.some(effect =>
-          TransformFrameEffects.includes(effect as HCFrameEffect)
-        ) &&
+        !listShare(face.frame_effects, TransformFrameEffects) &&
         !card.tags?.includes('missing-modal-frame')
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         !i &&
         card.layout == HCLayout.Specialize &&
-        !face.frame_effects?.some(effect =>
-          TransformFrameEffects.includes(effect as HCFrameEffect)
-        ) &&
+        !listShare(face.frame_effects, TransformFrameEffects) &&
         !card.tags?.includes('missing-specialize-frame')
       ) {
         effects.push(HCFrameEffect.Specialize);
       } else if (
         face.layout == HCLayout.Transform &&
-        !face.frame_effects?.some(effect =>
-          TransformFrameEffects.includes(effect as HCFrameEffect)
-        ) &&
+        !listShare(face.frame_effects, TransformFrameEffects) &&
         !card.tags?.includes('missing-transform-frame')
       ) {
         const effect = card.card_faces[0].frame_effects?.find(effect =>
@@ -222,17 +225,13 @@ export const setDerivedProps = (card: HCCard.Any) => {
         effects.push((effect ? effect : HCFrameEffect.TransformDfc) as HCFrameEffect);
       } else if (
         face.layout == HCLayout.Modal &&
-        !face.frame_effects?.some(effect =>
-          TransformFrameEffects.includes(effect as HCFrameEffect)
-        ) &&
+        !listShare(face.frame_effects, TransformFrameEffects) &&
         !card.tags?.includes('missing-modal-frame')
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         face.layout == HCLayout.Specialize &&
-        !face.frame_effects?.some(effect =>
-          TransformFrameEffects.includes(effect as HCFrameEffect)
-        ) &&
+        !listShare(face.frame_effects, TransformFrameEffects) &&
         !card.tags?.includes('missing-specialize-frame')
       ) {
         effects.push(HCFrameEffect.Specialize);
@@ -245,6 +244,9 @@ export const setDerivedProps = (card: HCCard.Any) => {
     const mana_cost_list: string[] = [];
     card.card_faces.forEach((face, i) => {
       face.colors = orderColors(face.colors) as HCColors;
+      if (face.color_indicator) {
+        face.color_indicator = orderColors(face.color_indicator) as HCColors;
+      }
       const face_type = [
         face.supertypes?.join(' '),
         [face.types?.join(' '), face.subtypes?.join(' ')].filter(Boolean).join(' — '),
@@ -269,6 +271,9 @@ export const setDerivedProps = (card: HCCard.Any) => {
     }
     card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
   } else {
+    if (card.color_indicator) {
+      card.color_indicator = orderColors(card.color_indicator) as HCColors;
+    }
     card.type_line = [
       card.supertypes?.join(' '),
       [card.types?.join(' '), card.subtypes?.join(' ')].filter(Boolean).join(' — '),
@@ -289,7 +294,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
   card.colors = orderColors(card.colors) as HCColors;
   card.color_identity = orderColors(color_identity) as HCColors;
-  card.color_identity_hybrid = color_identity_hybrid;
+  card.color_identity_hybrid = orderHybrid(color_identity_hybrid) as HCColors[];
 };
 const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'draft_partner',
@@ -372,7 +377,12 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
       if (alwaysDropLayouts.includes(face.layout)) {
         face.drop_face = true;
       } else if (conditionalDropLayouts.includes(face.layout)) {
-        if (card.all_parts && card.all_parts.some(part => part.name == face.name)) {
+        if (
+          listShare(
+            card.all_parts?.map(part => part.name),
+            face.name
+          )
+        ) {
           face.drop_face = true;
         } else if (!face.image) {
           face.compress_face = true;

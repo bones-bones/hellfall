@@ -1,4 +1,10 @@
-import { textEquals, textSearchIncludes } from '@hellfall/shared/utils/textHandling';
+import {
+  textEquals,
+  textSearchIncludes,
+  isNumber,
+  textListIncludes,
+  textListEquals,
+} from '@hellfall/shared/utils';
 import {
   invertOptionType,
   looseOpType,
@@ -9,7 +15,6 @@ import {
   textListFilter,
 } from './types';
 import { opToIncludeSingular, opToTagged, includeEqualsOp, opIsNegative } from './filterUtils';
-import { isNumber } from '@hellfall/shared/utils/isInt';
 import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
 import { prepTag } from './parseSearchBar';
@@ -49,12 +54,6 @@ export const filterId: textFilter = Object.assign(
   }
 );
 
-export const textListIncludes = (value1: string[], value2: string) =>
-  value1.some(text => textSearchIncludes(text, value2));
-export const textListEquals = (value1: string[], value2: string) =>
-  value1.some(text => textEquals(text, value2));
-export const textListShares = (value1: string[], value2: string[]) =>
-  value1.some(text1 => value2.some(text2 => textEquals(text1, text2)));
 export const filterTextList: textListFilter = Object.assign(
   (value1: string[], operator: opType, value2: string) =>
     includeEqualsOp(operator, textListIncludes, textListEquals, value1, value2),

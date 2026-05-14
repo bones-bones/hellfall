@@ -1,10 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import {
-  getMasterpiece,
-  getSetCode,
-  stripMasterpiece,
-  stripSetCode,
-} from '@hellfall/shared/utils/textHandling';
+import { getMasterpiece, getSetCode, stripMasterpiece, stripSetCode } from '@hellfall/shared/utils';
 
 export const getOtherNames = (card: HCCard.Any): string[] | undefined => {
   const names = [];

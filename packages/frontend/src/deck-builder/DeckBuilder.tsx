@@ -85,7 +85,7 @@ export const DeckBuilder = () => {
   };
 
   useEffect(() => {
-    if (cards.length === 0) {
+    if (!cards.length) {
       return;
     }
     const images: HCCard.Any[] = (toRender || [])
@@ -116,7 +116,7 @@ export const DeckBuilder = () => {
   return (
     <div>
       <ImportInstructions />
-      {renderCards.length > 0 &&
+      {renderCards.length &&
         (playtesting ? (
           <PlaytestArea cards={renderCards} />
         ) : (

@@ -22,9 +22,9 @@
       "types": "./src/services/*",
       "import": "./src/services/*"
     },
-    "./utils/*": {
-      "types": "./src/utils/*",
-      "import": "./src/utils/*"
+    "./utils": {
+      "types": "./src/utils/index.ts",
+      "import": "./src/utils/index.ts"
     }
   }
 }

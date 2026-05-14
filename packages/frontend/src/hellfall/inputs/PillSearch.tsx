@@ -57,7 +57,7 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
         .filter(entry => !selectedValues.includes(entry)),
     ].filter(Boolean);
 
-    setMenuItems(filteredValues.length > 0 ? filteredValues : [event.target.value]);
+    setMenuItems(filteredValues.length ? filteredValues : [event.target.value]);
   };
 
   const filteredItems =
