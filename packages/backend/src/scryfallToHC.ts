@@ -121,16 +121,16 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       commander: asToken ? HCLegality.NotLegal : HCLegality.Banned,
     } as HCLegalitiesField,
     mana_value: 0,
-    colors: [HCColor.Colorless] as HCColors,
+    colors: [] as HCColors,
     set: asToken ? 'SFT' : 'SFC',
     variation: false,
     image_status: HCImageStatus.HighRes,
     mana_cost: '',
   };
-  const defaultMultiFaceProps: Record<string, any> = {
+  const defaultFaceProps: Record<string, any> = {
     mana_cost: '',
     mana_value: 0,
-    colors: [HCColor.Colorless] as HCColors,
+    colors: [] as HCColors,
     oracle_text: '',
     image_status: HCImageStatus.Split,
     layout: HCLayout.Token,
@@ -213,9 +213,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
                 }
               }
             });
-            after
-              .split(' ')
-              .forEach(word => pushProp(cardObject.card_faces![index], 'subtypes', word));
+            after?.split(' ').forEach(word => pushProp(cardObject.card_faces![index], 'subtypes', word));
           }
         });
       });
@@ -269,7 +267,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
           }
         }
       });
-      after.split(' ').forEach(word => pushProp(cardObject, 'subtypes', word));
+      after?.split(' ').forEach(word => pushProp(cardObject, 'subtypes', word));
     }
   });
   if (card.full_art) {
@@ -286,6 +284,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     }
   });
   if ('card_faces' in cardObject) {
+    if (cardObject.card_faces?.[0].colors.length) {
+      cardObject.colors = cardObject.card_faces?.[0].colors;
+    }
     cardObject.card_faces = cardObject.card_faces?.map(face => {
       if (!('image' in cardObject) && 'image' in face) {
         cardObject.image = face.image;
@@ -293,7 +294,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
         delete face.image;
         face.image_status = HCImageStatus.Front;
       }
-      Object.entries(defaultMultiFaceProps).forEach(([key, value]) => {
+      Object.entries(defaultFaceProps).forEach(([key, value]) => {
         if (!(key in face)) {
           face[key] = value;
         }
@@ -301,7 +302,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       return face;
     });
   } else {
-    Object.entries(defaultMultiFaceProps).forEach(([key, value]) => {
+    Object.entries(defaultFaceProps).forEach(([key, value]) => {
       if (!(key in cardObject)) {
         cardObject[key] = value;
       }

@@ -343,8 +343,11 @@ const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
  * @returns
  */
 const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
+  if (existingCard.name == 'Concealing Curtains // Revealing Eye') {
+    const x =1;
+  }
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
-    if (existingCard.isActualToken) {
+    if (existingCard.isActualToken && existingCard.set != 'SFT') {
       const merged: HCCard.Any =
         'card_faces' in existingCard ? { ...existingCard } : { ...newCard };
       if ('card_faces' in merged) {
@@ -394,7 +397,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           if (index < value.length) {
             const newFace = newCard.card_faces?.[index];
             Object.entries(newFace).forEach(([k, v]) => {
-              if (k == 'colors') {
+              if (k == 'colors' && existingCard.set != 'SFT') {
                 // TODO: store current version and print the diff if there is one
               } else if (k == 'image_status' && newFace.image) {
                 // TODO: store current version and print the diff if there is one
@@ -403,7 +406,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
                 tokenIgnoreProps.includes(k) &&
                 merged.set != 'SFT'
               ) {
-              } else if (v || (!merged.isActualToken && cardBlankableProps.includes(k))) {
+              } else if (v || (!(merged.isActualToken && merged.set != 'SFT') && cardBlankableProps.includes(k))) {
                 (face as any)[k] = v;
               }
             });
@@ -505,7 +508,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         (merged as any)[key] = value;
       }
     } else if (
-      !merged.isActualToken &&
+      !(merged.isActualToken && merged.set != 'SFT') &&
       merged[key as keyof typeof merged] &&
       cardBlankableProps.includes(key)
     ) {
@@ -518,7 +521,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       (merged as any)[key] = value;
     }
   });
-  if (!merged.isActualToken) {
+  if (!(merged.isActualToken && merged.set != 'SFT')) {
     cardRemovableProps
       .filter(key => key in merged && !(key in newCard))
       .forEach(key => {
@@ -548,7 +551,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         delete (merged as any)[key];
       });
   }
-  if (merged.variation && merged.isActualToken && parseInt(merged.variation_of!)) {
+  if (merged.variation && merged.isActualToken && merged.set != 'SFT' && parseInt(merged.variation_of!)) {
     merged.variation_of = merged.name + merged.variation_of;
   }
   setDerivedProps(merged);
