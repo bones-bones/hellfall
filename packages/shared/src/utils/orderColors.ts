@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { HCColors, HCCoreColors, HCMiscColors } from '../types';
 import { listEquals, listShare, pushProp, removeIntersection, toUnion } from './listHandling';
 const colorOrderList: string[] = [
@@ -157,7 +156,8 @@ export const orderColorGroups = (groupedColors: string[][], groupLen: number): s
             }
           }
         }
-        throw error; // this should be impossible unless I got my logic wrong
+        throw console.error();
+        ; // this should be impossible unless I got my logic wrong
       }
       case 2: {
         // groupLen can be 3 or 4
@@ -173,7 +173,7 @@ export const orderColorGroups = (groupedColors: string[][], groupLen: number): s
             return sortColors(set1, set2);
           }
         }
-        throw error; // this should be impossible unless I got my logic wrong
+        throw console.error(); // this should be impossible unless I got my logic wrong
       }
       case 3: {
         // groupLen is 4
@@ -183,7 +183,7 @@ export const orderColorGroups = (groupedColors: string[][], groupLen: number): s
           const order = colorOrderList.find(order => listEquals(order.split(''), all))!;
           return set1[0] == order[0] ? -1 : 1;
         }
-        throw error; // this should be impossible unless I got my logic wrong
+        throw console.error(); // this should be impossible unless I got my logic wrong
       }
       case 4: {
         // groupLen is 5
@@ -193,10 +193,10 @@ export const orderColorGroups = (groupedColors: string[][], groupLen: number): s
           const order = colorOrderList.find(order => listEquals(order.split(''), all))!;
           return set1[0] == order[0] ? -1 : 1;
         }
-        throw error; // this should be impossible unless I got my logic wrong
+        throw console.error(); // this should be impossible unless I got my logic wrong
       }
     }
-    throw error; // this should be impossible unless I got my logic wrong
+    throw console.error(); // this should be impossible unless I got my logic wrong
   };
   const colors = groupedColors.map(colors => orderColors(colors)) as Array<
     { length: typeof groupLen } & string[]
