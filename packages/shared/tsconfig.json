@@ -22,7 +22,8 @@
     "allowImportingTsExtensions": true,
     "declaration": true,
     "rootDir": "./src",
-    "composite": true
+    "composite": true,
+    "noErrorTruncation": true
   },
   "include": ["src/**/*", "src/**/*.json"]
 }

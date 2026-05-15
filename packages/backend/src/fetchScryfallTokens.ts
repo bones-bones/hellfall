@@ -128,7 +128,7 @@ export const fetchScryfallTokens = async () => {
         }
       }
       if (tokenObject.name == 'Concealing Curtains // Revealing Eye') {
-        const x =1;
+        const x = 1;
       }
 
       return tokenObject;

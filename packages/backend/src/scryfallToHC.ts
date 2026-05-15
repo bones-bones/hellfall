@@ -91,49 +91,49 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   const sameKeys: string[] = [
     'object',
     'oracle_id',
-    'hand_modifier',
-    'life_modifier',
-    'defense',
-    'loyalty',
+    'mana_cost',
+    'type_line',
     'power',
     'toughness',
-    'mana_cost',
-    'watermark',
+    'loyalty',
+    'defense',
+    'hand_modifier',
+    'life_modifier',
     'attraction_lights',
-    'type_line',
-    'border_color',
-    'frame',
-    'frame_effects',
     'colors',
     'color_indicator',
     'color_identity',
+    'watermark',
+    'border_color',
+    'frame',
+    'frame_effects',
   ];
   const keyCorrespondences: Record<string, any> = {
     id: 'scryfall_id',
     cmc: 'mana_value',
   };
   const defaultProps: Record<string, any> = {
-    rulings: '',
-    creators: [],
+    set: asToken ? 'SFT' : 'SFC',
+    image_status: HCImageStatus.HighRes,
+    mana_cost: '',
+    mana_value: 0,
+    colors: [] as HCColors,
     legalities: {
       standard: asToken ? HCLegality.NotLegal : HCLegality.Banned,
       '4cb': asToken ? HCLegality.NotLegal : HCLegality.Banned,
       commander: asToken ? HCLegality.NotLegal : HCLegality.Banned,
     } as HCLegalitiesField,
-    mana_value: 0,
-    colors: [] as HCColors,
-    set: asToken ? 'SFT' : 'SFC',
+    creators: [],
+    rulings: '',
     variation: false,
-    image_status: HCImageStatus.HighRes,
-    mana_cost: '',
   };
   const defaultFaceProps: Record<string, any> = {
+    layout: HCLayout.Token,
+    image_status: HCImageStatus.Split,
     mana_cost: '',
     mana_value: 0,
-    colors: [] as HCColors,
     oracle_text: '',
-    image_status: HCImageStatus.Split,
-    layout: HCLayout.Token,
+    colors: [] as HCColors,
   };
   // const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
   const subKeywords: Record<string, string> = {
@@ -213,7 +213,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
                 }
               }
             });
-            after?.split(' ').forEach(word => pushProp(cardObject.card_faces![index], 'subtypes', word));
+            after
+              ?.split(' ')
+              .forEach(word => pushProp(cardObject.card_faces![index], 'subtypes', word));
           }
         });
       });

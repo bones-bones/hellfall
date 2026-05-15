@@ -303,7 +303,15 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           {data.artists?.length && (
             <>
               <Text key="artist">
-                Artist{data.artists.length == 1 ? '' : 's'}: {data.artists.join(', ')}
+                Artist{data.artists.length == 1 ? '' : 's'}:{' '}
+                {data.artists
+                  .map(
+                    artist =>
+                      `${artist}${
+                        data.artist_notes?.[artist] ? ` (${data.artist_notes[artist]})` : ''
+                      }`
+                  )
+                  .join(', ')}
               </Text>
               <br />
             </>

@@ -63,11 +63,41 @@ export const Syntax = () => {
         </div>
         <br />
         <div>You can also use {mapListToCodeAnd(['is:historic', 'is:party', 'is:outlaw'])}.</div>
-        <h2>Creators & Artists</h2>
+        <h2>Tags, Creators, and Artists</h2>
+        <div>
+          Hellfall doesn't have art tags yet, so those don't work yet. Oracle tags do work, though,
+          and can also be found with <code>tag:</code>.
+        </div>
+        <br />
+        <div>
+          The tag search works mostly like other text search filters, except that it has some
+          special handling for tag notes. You can use <code>tag:x{'<'}</code> to find cards that
+          have any tag note for <code>x</code>, and you can use{' '}
+          <code>
+            tag:x{'<'}y{'>'}
+          </code>{' '}
+          to search for <code>y</code> in the notes for tag <code>x</code>.
+        </div>
+        <br />
+        <div>
+          You can also use <code>tagnote:</code> or <code>tn:</code> to search against just the tag
+          notes.{' '}
+        </div>
+        <br />
         <div>
           You can use all the scryfall search terms for artists, and you can use{' '}
           <code>creator:</code> in the same way.
         </div>
+        <br />
+        <div>
+          You can also search for artist notes in much the same way as for tag notes, including
+          using <code>artistnote:</code> or <code>an:</code> to search against artist notes
+          directly.
+        </div>
+        <br />
+        <div></div>
+        <br />
+        <div></div>
         <h2>Mana Costs</h2>
         <div>
           A lot of the functionality of the scryfall mana search hasn't been added yet, so{' '}
@@ -224,21 +254,6 @@ export const Syntax = () => {
             'nonfoil',
           ])}
           .{' '}
-        </div>
-        <h2>Tags</h2>
-        <div>
-          Hellfall doesn't have art tags yet, so those don't work yet. Oracle tags do work, though,
-          and can also be found with <code>tag:</code>.
-        </div>
-        <br />
-        <div>
-          The tag search works mostly like other text search filters, except that it has some
-          special handling for tag notes. You can use <code>tag:x{'<'}</code> to find cards that
-          have any tag note for <code>x</code>, and you can use{' '}
-          <code>
-            tag:x{'<'}y{'>'}
-          </code>{' '}
-          to search for <code>y</code> in the notes for tag <code>x</code>.
         </div>
         <h2>Display/Sort</h2>
         <div>

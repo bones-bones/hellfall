@@ -20,7 +20,8 @@
     "paths": {
       "@hellfall/shared": ["../shared/src/index.ts"],
       "@hellfall/shared/*": ["../shared/src/*/index.ts", "../shared/src/*"]
-    }
+    },
+    "noErrorTruncation": true
   },
   "include": ["src"]
 }

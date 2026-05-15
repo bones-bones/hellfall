@@ -100,7 +100,7 @@ export interface includeFilter extends cardFilter<HCCard.Any, string> {
 }
 export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
 export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
-export interface tagFilter extends cardFilter<HCCard.Any, string> {
+export interface noteFilter extends cardFilter<HCCard.Any, string> {
   (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string): boolean;
   toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) => string;
 }

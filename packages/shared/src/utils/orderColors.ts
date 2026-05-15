@@ -156,8 +156,7 @@ export const orderColorGroups = (groupedColors: string[][], groupLen: number): s
             }
           }
         }
-        throw console.error();
-        ; // this should be impossible unless I got my logic wrong
+        throw console.error(); // this should be impossible unless I got my logic wrong
       }
       case 2: {
         // groupLen can be 3 or 4

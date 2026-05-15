@@ -87,7 +87,7 @@ export namespace HCCardFields.Core {
      */
     tags?: string[];
     /**
-     * All tag notes of this card.
+     * All tag notes for this card.
      */
     tag_notes?: Record<string, string>;
     /**
@@ -350,6 +350,10 @@ export namespace HCCardFields.Print {
      * The name of the illustrators of this card. Newly spoiled cards may not have this field yet.
      */
     artists?: string[];
+    /**
+     * All artist notes for this card.
+     */
+    artist_notes?: Record<string, string>;
     /**
      * The IDs of the artists that illustrated this card. Newly spoiled cards may not have this field yet.
      *

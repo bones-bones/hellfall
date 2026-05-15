@@ -11,11 +11,11 @@ import {
   opType,
   sortFilter,
   sortType,
-  tagFilter,
+  noteFilter,
 } from './types';
 import { getActualOp } from './filterUtils';
 import { filterNumberString } from './filterNumber';
-import { parseTag } from './filterText';
+import { parseNote } from './filterText';
 
 export interface anyFilterInterface<T = any, S = any> {
   queryName: string;
@@ -181,22 +181,22 @@ export class NumberPropSummaryFilter<T, S> extends filterObject<T, S> {
     );
   }
 }
-export class TagFilter extends filterObject<HCCard.Any, string> {
+export class NoteFilter extends filterObject<HCCard.Any, string> {
   note?: boolean | string;
   constructor(
     queryName: string,
-    public filter: tagFilter,
+    public filter: noteFilter,
     value: string,
     op: looseOpType,
     defaultOp: opType,
     getValueToCompare: (card: HCCard.Any) => HCCard.Any,
     inverted?: boolean
   ) {
-    const { tag, note } = parseTag(value);
+    const { name, note } = parseNote(value);
     super(
       queryName,
       filter,
-      tag,
+      name,
       op,
       defaultOp,
       getValueToCompare,
