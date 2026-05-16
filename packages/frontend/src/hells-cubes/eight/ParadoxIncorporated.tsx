@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const ParadoxIncorporated = () => {
   return (
     <BigContainer>
+      <title>Paradox Incorporated | Hellfall</title>
       <h1>
         Paradox Incorporated <ManaSymbol src={getPipSrc('U/R')} />
       </h1>

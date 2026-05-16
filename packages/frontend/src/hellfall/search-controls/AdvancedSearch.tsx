@@ -256,6 +256,7 @@ export const AdvancedSearch = () => {
 
   return (
     <div>
+      <title>Advanced Search | Hellfall</title>
       <br />
       <SearchContainer>
         <SearchCriteriaSection>

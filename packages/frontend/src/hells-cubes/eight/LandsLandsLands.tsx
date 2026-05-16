@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const LandsLandsLands = () => {
   return (
     <>
+      <title> LANDS LANDS LANDS | Hellfall</title>
       <BigContainer>
         <h3>Lands.</h3>
         <h2>Lands.</h2>

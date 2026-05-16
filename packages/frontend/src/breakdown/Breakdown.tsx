@@ -72,6 +72,7 @@ export const Breakdown = () => {
 
   return (
     <>
+      <title>Breakdown | Hellfall</title>
       {cards.length}
       <StyledSidePanel
         openWidth={window.screen.width > 450 ? 810 : 400}

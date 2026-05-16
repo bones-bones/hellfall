@@ -8,6 +8,7 @@ import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { nameToId } from '../hellfall/hooks/useNameToId.ts';
 import { getDraftmancerForCube } from '../hells-cubes/draftmancer/getDraftmancerForCube.ts';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const basics: Record<string, string> = {
   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -18,8 +19,10 @@ const basics: Record<string, string> = {
 };
 export const DeckBuilder = () => {
   const ref = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const searchparms = new URLSearchParams(document.location.search);
+  const searchparms = new URLSearchParams(location.search);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [textAreaValue, setTextAreaValue] = useState<string>(
@@ -46,12 +49,15 @@ export const DeckBuilder = () => {
       searchToSet.append('name', deckName);
       searchToSet.append('list', textAreaRef.current.value.replaceAll('\n', '∆'));
 
-      if ((searchToSet as any).size > 0) {
-        history.pushState(
-          undefined,
-          '',
-          location.origin + location.pathname + '?' + searchToSet.toString()
-        );
+      if (searchToSet.size) {
+        const newUrl = `${searchToSet.size ? `?${searchToSet.toString()}` : ''}`;
+        const currentUrl = location.search;
+        if (newUrl != currentUrl) navigate(newUrl);
+        // history.pushState(
+        //   undefined,
+        //   '',
+        //   document.location.origin + location.pathname + '?' + searchToSet.toString()
+        // );
       }
     }
   }, [textAreaValue, deckName]);
@@ -112,9 +118,10 @@ export const DeckBuilder = () => {
       });
     setRenderCards(images);
   }, [toRender, cards]);
-
+  // TODO: make this push to history less often? also add url syncing
   return (
     <div>
+      <title>Deck/Cube Builder</title>
       <ImportInstructions />
       {renderCards.length &&
         (playtesting ? (

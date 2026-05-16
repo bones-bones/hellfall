@@ -22,6 +22,7 @@ export const LandBox = () => {
 
   return (
     <>
+      <title>Land Box | Hellfall</title>
       <h1>Need some lands? grab some from the land box</h1>
       <pre>
         {` How to change basic land art on Cockatrice:

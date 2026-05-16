@@ -1,10 +1,26 @@
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { specialCards } from './specialCards.tsx';
+import { useEffect } from 'react';
 
 export const HellsCubeOne = () => {
   const val = useLocation();
+  interface SpecialCardPageProps {
+    name: string;
+    component: React.ReactNode;
+  }
+  const SpecialCardPage = ({ name, component }: SpecialCardPageProps) => {
+    useEffect(() => {
+      document.title = `${name} | Hellfall`;
+    }, [name]);
 
+    return (
+      <>
+        <h3>{name}</h3>
+        {component}
+      </>
+    );
+  };
   return (
     <>
       <Routes>
@@ -12,6 +28,7 @@ export const HellsCubeOne = () => {
           path="/"
           element={
             <>
+              <title>HLC Special Cards | Hellfall</title>
               Devotion to Dreadmaw:
               <ul>
                 <li>6 CMC</li>
@@ -37,12 +54,7 @@ export const HellsCubeOne = () => {
             <Route
               key={entry.path}
               path={entry.path}
-              element={
-                <>
-                  <h3>{entry.name}</h3>
-                  {entry.component}
-                </>
-              }
+              element={<SpecialCardPage name={entry.name} component={entry.component} />}
             />
           );
         })}

@@ -3,6 +3,7 @@ import { BigContainer, InnerContainer } from './components.tsx';
 export const SmallReanimation = () => {
   return (
     <>
+      <title>small reanimation | Hellfall</title>
       <BigContainer>
         <h5>hi friends. i&apos;m the curator for small reanimation :)</h5>
         <div>

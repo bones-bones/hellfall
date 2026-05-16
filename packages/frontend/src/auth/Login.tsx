@@ -14,6 +14,7 @@ export const Login = () => {
   if (!authConfigured) {
     return (
       <div style={{ padding: 24 }}>
+        <title>Login | Hellfall</title>
         <p>Login is not configured. Set REACT_APP_AUTH_API_URL to enable Discord login.</p>
         <Link to="/">Back to search</Link>
       </div>
@@ -23,6 +24,7 @@ export const Login = () => {
   if (loading) {
     return (
       <div style={{ padding: 24 }}>
+        <title>Login Loading | Hellfall</title>
         <p>…</p>
       </div>
     );
@@ -31,6 +33,7 @@ export const Login = () => {
   if (user) {
     return (
       <div style={{ padding: 24 }}>
+        <title>Logged In | Hellfall</title>
         <p>
           You're logged in as <strong>{user.username}</strong>.
         </p>
@@ -41,6 +44,7 @@ export const Login = () => {
 
   return (
     <div style={{ padding: 24 }}>
+      <title>Login | Hellfall</title>
       <p>Sign in with Discord to continue.</p>
       <a href={loginUrl}>Login with Discord</a>
       <br />

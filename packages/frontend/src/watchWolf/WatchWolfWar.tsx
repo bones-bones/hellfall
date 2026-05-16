@@ -57,6 +57,7 @@ export const WatchwolfWar = () => {
 
   return (
     <PageContainer>
+      <title>WatchWolfWar | Hellfall</title>
       <StyledSidePanel
         openWidth={window.screen.width > 450 ? 810 : 400}
         openDirection={activeIsRight ? SidePanelOpenDirection.Right : SidePanelOpenDirection.Left}

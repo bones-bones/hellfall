@@ -18,6 +18,7 @@ import {
   formatDiscordMarkdownInvertedItalics,
   formatDiscordMarkdownInvertedItalicsInline,
 } from '../markdownFormatter.tsx';
+import CardCacheService from './cardCacheService.ts';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
@@ -113,6 +114,12 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   // TODO: add handling for flip and aftermath
   const { images: imagesToShow, names: imageNames } = getImages(data);
 
+  useEffect(() => {
+    if (data?.id) {
+      CardCacheService.saveCard(data);
+    }
+  }, [data]);
+
   return (
     <Container ref={windowRef} key={data.id}>
       {!imagesToShow.length ? (
@@ -155,7 +162,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
       <Card style={{ width: '100%' }}>
         <Card.Body padding={'zero'}>
           {/* {'card_faces' in data && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading>} */}
-          {data.toFaces().map((face, i) => (
+          {('card_faces' in data ? data.card_faces : [data]).map((face, i) => (
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               {face.name &&

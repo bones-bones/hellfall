@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { Suspense } from 'react';
 
-//decks
 export const Decks = () => {
   const val = useLocation();
   return (
@@ -15,6 +14,7 @@ export const Decks = () => {
         path="/"
         element={
           <div>
+            <title>Decks | Hellfall</title>
             Look at all these decks
             <ul>
               {allDecks.map(entry => {

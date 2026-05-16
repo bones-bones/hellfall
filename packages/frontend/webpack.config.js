@@ -122,7 +122,10 @@ export default function (webpackEnv) {
         directory: path.join(__dirname, "../public"),
       },
       open: ["/"],
-      historyApiFallback: true,
+      historyApiFallback: {
+        disableDotRule: true,
+        index: '/index.html',
+      },
     },
     output: {
       // The build folder.

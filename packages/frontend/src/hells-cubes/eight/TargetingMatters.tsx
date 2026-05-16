@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const TargetingMatters = () => {
   return (
     <BigContainer>
+      <title>Targeting Matters | Hellfall</title>
       <h1>RW Targetting Matters</h1>
       <div>
         If you&apos;ve played any amount of Magic between MH3 and a couple of days ago, you might

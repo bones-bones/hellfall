@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const GruulSelfDiscard = () => {
   return (
     <>
+      <title>Grull Self-Discard | Hellfall</title>
       <BigContainer>
         <h1>Gruul Self-Discard</h1>
         <h2>

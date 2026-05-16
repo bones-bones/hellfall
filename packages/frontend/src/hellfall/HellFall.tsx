@@ -8,7 +8,13 @@ import { PaginationComponent } from './inputs';
 
 import { HellfallCard } from './card/HellfallCard.tsx';
 import { useAtom, useAtomValue } from 'jotai';
-import { activeCardAtom, invalidAtom, pageAtom, summaryAtom } from './atoms/searchAtoms.ts';
+import {
+  activeCardAtom,
+  invalidAtom,
+  pageAtom,
+  queryAtom,
+  summaryAtom,
+} from './atoms/searchAtoms.ts';
 import { useSearchResults } from './hooks/useSearchResults.ts';
 import { SortComponent } from './search-controls/SortComponent.tsx';
 import { CHUNK_SIZE } from './constants.ts';
@@ -25,6 +31,7 @@ export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
   const invalids = useAtomValue(invalidAtom);
   const escape = useKeyPress('Escape');
+  const query = useAtomValue(queryAtom);
 
   useUpdateURL();
 
@@ -61,6 +68,9 @@ export const HellFall = () => {
   const { panelProps } = useSidePanel({
     initialExpanded: !!activeCard,
   });
+  useEffect(() => {
+    document.title = `${query || 'Search'} | Hellfall`;
+  }, [query]);
 
   return (
     <div>

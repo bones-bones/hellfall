@@ -3,6 +3,7 @@ import { BigContainer, InnerContainer } from './components.tsx';
 export const AzoriousHistoric = () => {
   return (
     <>
+      <title>Azorius Historic | Hellfall</title>
       <BigContainer>
         <h1>Azorious Historic</h1>
         <div>

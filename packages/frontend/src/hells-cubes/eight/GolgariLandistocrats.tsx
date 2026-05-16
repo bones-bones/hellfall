@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const GolgariLandistocrats = () => {
   return (
     <BigContainer>
+      <title>Golgari Landistocrats | Hellfall</title>
       <h1>
         <ManaSymbol src={getPipSrc('B/G')} /> Golgari Landistocrats
       </h1>
