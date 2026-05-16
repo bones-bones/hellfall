@@ -19,27 +19,27 @@ export const SingleCard = () => {
       return fromCache;
     }
 
-    // PRIORITY 2: Then check loaded cards from global atom
     const fromLoadedCards = cards?.find(e => e.id === cardId);
     if (fromLoadedCards) {
       setIsUsingCache(false);
       return fromLoadedCards;
     }
-    useEffect(() => {
-      if (!cardId) return;
-
-      const fromLoadedCards = cards?.find(e => e.id === cardId);
-      // If we have cached data but global cards just loaded with fresher data
-      if (fromLoadedCards && isUsingCache) {
-        // Optionally update cache with fresh data
-        CardCacheService.saveCard(fromLoadedCards);
-        setIsUsingCache(false);
-        // Force re-render by triggering a state update if needed
-        // The component will re-render automatically due to cards atom change
-      }
-    }, [cards, cardId, isUsingCache]);
     return null;
   }, [cards, cardId]);
+
+  useEffect(() => {
+    if (!cardId) return;
+
+    const fromLoadedCards = cards?.find(e => e.id === cardId);
+    // If we have cached data but global cards just loaded with fresher data
+    if (fromLoadedCards && isUsingCache) {
+      // Optionally update cache with fresh data
+      CardCacheService.saveCard(fromLoadedCards);
+      setIsUsingCache(false);
+      // Force re-render by triggering a state update if needed
+      // The component will re-render automatically due to cards atom change
+    }
+  }, [cards, cardId, isUsingCache]);
 
   const getTitle = () => {
     if (!cardId) {

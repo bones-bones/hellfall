@@ -323,7 +323,7 @@ export default function (webpackEnv) {
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/, /\.ico$/],
               options: {
                 name: "static/media/[name].[hash:8].[ext]",
               },
@@ -356,6 +356,14 @@ export default function (webpackEnv) {
           {
             from: "public/pips",
             to: "pips",
+          },
+          {
+            from: "public/favicon.ico",
+            to: "favicon.ico",
+          },
+          {
+            from: "public/logo.png",
+            to: "logo.png",
           },
         ],
       }),
