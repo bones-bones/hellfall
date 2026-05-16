@@ -25,7 +25,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
-import { useDebounce, useKeyPress } from '../../hooks/index.ts';
+import { useKeyPress } from '../../hooks/index.ts';
 import { useEffect, useState } from 'react';
 import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import { HCSearchColors } from '@hellfall/shared/types';
