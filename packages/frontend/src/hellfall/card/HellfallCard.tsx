@@ -115,7 +115,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
 
   return (
     <Container ref={windowRef} key={data.id}>
-      {imagesToShow.length ? (
+      {!imagesToShow.length ? (
         <Test>
           <ImageContainer key="image-container">
             <img
