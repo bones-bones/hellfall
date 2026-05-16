@@ -62,11 +62,13 @@ export const SortComponent = () => {
     setInputSorts(newInputs);
   };
   useEffect(() => {
-    setCanAddInput(Boolean(getAvailableOptions(sortRules.length).length));
+    setCanAddInput(
+      Boolean(getAvailableOptions(sortRules.length).length && sortRules.at(-1)?.sort != 'auto')
+    );
   }, [inputSorts, sortRules]);
 
   const handleAddInput = () => {
-    if (!canAddInput) return;
+    // if (!canAddInput) return;
     const newInputs = [...inputSorts];
     newInputs.push('auto,auto');
     setInputSorts(newInputs);
@@ -80,7 +82,7 @@ export const SortComponent = () => {
   }, [inputSorts, querySorts]);
 
   const handleDelInput = () => {
-    if (!canDelInput) return;
+    // if (!canDelInput) return;
     const newInputs = [...inputSorts];
     newInputs.pop();
     setInputSorts(newInputs);

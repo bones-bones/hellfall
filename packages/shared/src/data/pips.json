@@ -490,7 +490,7 @@
       "no_shadow": true
     },
     {
-      "filename": "colorIndicators/Pan.svg",
+      "filename": "colorIndicators/Misc/Pan.svg",
       "symbol": "CI-Pan",
       "english": "Color Indicator: Pan (Blue, Yellow, and Pink)",
       "represents_mana": false,
@@ -499,6 +499,20 @@
         "Yellow",
         "Pink"
       ],
+      "no_shadow": true
+    },
+    {
+      "filename": "colorIndicators/Misc/GSlot.svg",
+      "symbol": "CI-GSlot",
+      "english": "Color Indicator: Green Slot (Yellow, Pink, Brown, Purple, and Green)",
+      "represents_mana": false,
+      "colors": [
+				"P",
+				"G",
+				"Brown",
+				"Yellow",
+				"Pink"
+			],
       "no_shadow": true
     },
     {

@@ -32,6 +32,8 @@ const discordToSymbolMatching: Record<string, string> = {
   '<:symbolT:663209472637796382>': '{T}',
 };
 
+// TODO: fix to use types
+
 export const fetchNotMagic = async () => {
   const requestedData = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/NotMagic+(Unapproved)?alt=json&key=${sheetsKey}`
@@ -63,26 +65,26 @@ export const fetchNotMagic = async () => {
 
   const defaultProps: Record<string, any> = {
     object: HCObject.ObjectType.Card,
-    rulings: '',
-    creators: [],
+    set: 'NotMagic',
+    layout: HCLayout.NotMagic,
+    image_status: HCImageStatus.HighRes,
+    mana_value: 0,
+    colors: [] as HCColors,
+    color_identity: [] as HCColors,
+    color_identity_hybrid: [] as HCColors[],
+    keywords: [],
     legalities: {
       standard: HCLegality.NotLegal,
       '4cb': HCLegality.NotLegal,
       commander: HCLegality.NotLegal,
     } as HCLegalitiesField,
-    mana_value: 0,
-    colors: [HCColor.Colorless] as HCColors,
-    color_identity: [] as HCColors,
-    color_identity_hybrid: [] as HCColors[],
-    keywords: [],
-    set: 'NotMagic',
-    variation: false,
-    isActualToken: true,
-    image_status: HCImageStatus.HighRes,
-    layout: HCLayout.NotMagic,
+    creators: [],
+    rulings: '',
+    finish: HCFinish.Nonfoil,
     border_color: HCBorderColor.Borderless,
     frame: HCFrame.NotMagic,
-    finish: HCFinish.Nonfoil,
+    variation: false,
+    isActualToken: true,
   };
 
   const theThing = rest.map(entry => {
@@ -96,8 +98,7 @@ export const fetchNotMagic = async () => {
           const colorArr = entry[i]
             .split(';')
             .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
-          tokenObject[keys[i]] =
-            entry[i] && colorArr.length ? colorArr : ([HCColor.Colorless] as HCColors);
+          tokenObject[keys[i]] = entry[i] && colorArr;
         } else if (['supertypes', 'types', 'subtypes', 'creators'].includes(keys[i])) {
           tokenObject[keys[i]] = entry[i].split(';');
         } else if (keys[i] == 'loyalty' && tokenObject['types']?.includes('Battle')) {

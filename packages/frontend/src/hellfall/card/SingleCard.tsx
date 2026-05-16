@@ -13,7 +13,7 @@ export const SingleCard = () => {
 
   return (
     <Container>
-      {cards.length === 0 ? (
+      {cards.length ? (
         <></>
       ) : !entryToRender ? (
         <h2>Nothing was found...</h2>

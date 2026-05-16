@@ -18,7 +18,7 @@ import {
   HCFrame,
 } from '@hellfall/shared/types';
 import { setDerivedProps } from './derivedProps.ts';
-import { fromImportMana } from '@hellfall/shared/utils/textHandling.ts';
+import { fromImportMana, pushProp } from '@hellfall/shared/utils';
 export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): HCCard.Any => {
   const cardLayoutCorrespondences: Record<ScryfallLayout, HCLayout> = {
     normal: HCLayout.Normal,
@@ -91,16 +91,19 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   const sameKeys: string[] = [
     'object',
     'oracle_id',
-    'hand_modifier',
-    'life_modifier',
-    'defense',
-    'loyalty',
+    'mana_cost',
+    'type_line',
     'power',
     'toughness',
-    'mana_cost',
-    'watermark',
+    'loyalty',
+    'defense',
+    'hand_modifier',
+    'life_modifier',
     'attraction_lights',
-    'type_line',
+    'colors',
+    'color_indicator',
+    'color_identity',
+    'watermark',
     'border_color',
     'frame',
     'frame_effects',
@@ -110,29 +113,29 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     cmc: 'mana_value',
   };
   const defaultProps: Record<string, any> = {
-    rulings: '',
-    creators: [],
+    set: asToken ? 'SFT' : 'SFC',
+    image_status: HCImageStatus.HighRes,
+    mana_cost: '',
+    mana_value: 0,
+    colors: [] as HCColors,
     legalities: {
       standard: asToken ? HCLegality.NotLegal : HCLegality.Banned,
       '4cb': asToken ? HCLegality.NotLegal : HCLegality.Banned,
       commander: asToken ? HCLegality.NotLegal : HCLegality.Banned,
     } as HCLegalitiesField,
-    mana_value: 0,
-    colors: [HCColor.Colorless] as HCColors,
-    set: asToken ? 'SFT' : 'SFC',
+    creators: [],
+    rulings: '',
     variation: false,
-    image_status: HCImageStatus.HighRes,
-    mana_cost: '',
   };
-  const defaultMultiFaceProps: Record<string, any> = {
+  const defaultFaceProps: Record<string, any> = {
+    layout: HCLayout.Token,
+    image_status: HCImageStatus.Split,
     mana_cost: '',
     mana_value: 0,
-    colors: [HCColor.Colorless] as HCColors,
     oracle_text: '',
-    image_status: HCImageStatus.Split,
-    layout: HCLayout.Token,
+    colors: [] as HCColors,
   };
-  const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
+  // const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
   const subKeywords: Record<string, string> = {
     'commander ninjutsu': 'ninjutsu',
     gravestorm: 'storm',
@@ -177,11 +180,12 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
         cardObject.card_faces?.push({} as HCCardFace.MultiFaced);
 
         Object.entries(face).forEach(([k, v]) => {
-          if (colorProps.includes(key)) {
-            cardObject.card_faces![index][k] = (
-              value.length ? value : [HCColor.Colorless]
-            ) as HCColors;
-          } else if (k == 'image_uris') {
+          // if (colorProps.includes(key)) {
+          //   cardObject.card_faces![index][k] = (
+          //     value.length ? value : [HCColor.Colorless]
+          //   ) as HCColors;
+          // } else
+          if (k == 'image_uris') {
             cardObject.card_faces![index].image = (v as ScryfallImageUris).large;
             cardObject.card_faces![index].image_status = HCImageStatus.HighRes;
           } else if (k in keyCorrespondences) {
@@ -199,35 +203,24 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
             const [before, after] = (v as string).split(' — ');
             before.split(' ').forEach(word => {
               if (supers.includes(word)) {
-                if (!('supertypes' in face)) {
-                  cardObject.card_faces![index].supertypes = [];
-                }
-                cardObject.card_faces![index].supertypes.push(word);
+                pushProp(cardObject.card_faces![index], 'supertypes', word);
               } else if (word != 'Token') {
-                if (!('types' in face)) {
-                  cardObject.card_faces![index].types = [];
-                }
                 if (word == 'Card') {
                   cardObject.layout = HCLayout.MultiReminder;
-                  cardObject.card_faces![index].types.push('Reminder Card');
+                  pushProp(cardObject.card_faces![index], 'types', 'Reminder Card');
                 } else {
-                  cardObject.card_faces![index].types.push(word);
+                  pushProp(cardObject.card_faces![index], 'types', word);
                 }
               }
             });
-            if (after) {
-              after.split(' ').forEach(word => {
-                if (!('subtypes' in face)) {
-                  cardObject.card_faces![index].subtypes = [];
-                }
-                cardObject.card_faces![index].subtypes.push(word);
-              });
-            }
+            after
+              ?.split(' ')
+              .forEach(word => pushProp(cardObject.card_faces![index], 'subtypes', word));
           }
         });
       });
-    } else if (colorProps.includes(key)) {
-      cardObject[key] = value as HCColors;
+      // } else if (colorProps.includes(key)) {
+      //   cardObject[key] = value as HCColors;
     } else if (key == 'image_uris') {
       cardObject.image = (value as ScryfallImageUris).large;
       cardObject.image_status = HCImageStatus.HighRes;
@@ -263,41 +256,24 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       const [before, after] = (value as string).split(' — ');
       before.split(' ').forEach(word => {
         if (supers.includes(word)) {
-          if (!('supertypes' in cardObject)) {
-            cardObject.supertypes = [];
-          }
-          cardObject.supertypes.push(word);
+          pushProp(cardObject, 'supertypes', word);
         } else if (word != 'Token') {
-          if (!('types' in cardObject)) {
-            cardObject.types = [];
-          }
           if (word == 'Card') {
             cardObject.layout = HCLayout.Reminder;
-            cardObject.types.push('Reminder Card');
+            pushProp(cardObject, 'types', 'Reminder Card');
           } else {
             if (word == 'Dungeon') {
               cardObject.layout = HCLayout.Dungeon;
             }
-            cardObject.types.push(word);
+            pushProp(cardObject, 'types', word);
           }
         }
       });
-      if (after) {
-        after.split(' ').forEach(word => {
-          if (!('subtypes' in cardObject)) {
-            cardObject.subtypes = [];
-          }
-          cardObject.subtypes.push(word);
-        });
-      }
+      after?.split(' ').forEach(word => pushProp(cardObject, 'subtypes', word));
     }
   });
   if (card.full_art) {
-    if (cardObject.frame_effects) {
-      cardObject.frame_effects.push('fullart');
-    } else {
-      cardObject.frame_effects = ['fullart'];
-    }
+    pushProp(cardObject, 'frame_effects', 'fullart');
   }
   cardObject.finish = card.finishes.includes('nonfoil') ? 'nonfoil' : 'foil';
   cardObject.id = card.id; // make sure to give correct ID using name for tokens
@@ -310,6 +286,9 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     }
   });
   if ('card_faces' in cardObject) {
+    if (cardObject.card_faces?.[0].colors.length) {
+      cardObject.colors = cardObject.card_faces?.[0].colors;
+    }
     cardObject.card_faces = cardObject.card_faces?.map(face => {
       if (!('image' in cardObject) && 'image' in face) {
         cardObject.image = face.image;
@@ -317,7 +296,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
         delete face.image;
         face.image_status = HCImageStatus.Front;
       }
-      Object.entries(defaultMultiFaceProps).forEach(([key, value]) => {
+      Object.entries(defaultFaceProps).forEach(([key, value]) => {
         if (!(key in face)) {
           face[key] = value;
         }
@@ -325,7 +304,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       return face;
     });
   } else {
-    Object.entries(defaultMultiFaceProps).forEach(([key, value]) => {
+    Object.entries(defaultFaceProps).forEach(([key, value]) => {
       if (!(key in cardObject)) {
         cardObject[key] = value;
       }

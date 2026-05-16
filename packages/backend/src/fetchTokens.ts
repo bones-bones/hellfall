@@ -19,16 +19,19 @@ import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 import {
   addProp,
   addPropToFace,
+  fillFacesTo,
+  addTag,
+  toSingleCard,
+  addArtist,
+} from './fetchUtils.ts';
+import {
   cardFaceType,
   cardObjectType,
   facePropType,
   faceValueType,
-  fillFacesTo,
   propType,
   valueType,
-  addTag,
-  toSingleCard,
-} from './fetchUtils.ts';
+} from '@hellfall/shared/utils';
 import { setDerivedProps } from './derivedProps.ts';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -234,8 +237,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           const entryList = (keys[i] == 'name' ? tokenObject.name! : entry[i]).split(' // ');
           entryList.forEach((value, index) => {
             if (keys[i] == 'name') {
-              addPropToFace(tokenObject, index, 'name', value);
-              addPropToFace(tokenObject, index, 'subtypes', value.split(' '));
+              addPropToFace(tokenObject, 'name', value, index);
+              addPropToFace(tokenObject, 'subtypes', value.split(' '), index);
             } else if (keys[i] == 'types') {
               const typesAndSupertypes = value.split(';');
               const superList: string[] = [];
@@ -244,13 +247,13 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
                 supers.includes(e) ? superList.push(e) : typeList.push(e);
               });
               if (superList?.length) {
-                addPropToFace(tokenObject, index, 'supertypes', superList);
+                addPropToFace(tokenObject, 'supertypes', superList, index);
               }
               if (typeList?.length) {
-                addPropToFace(tokenObject, index, 'types', typeList);
+                addPropToFace(tokenObject, 'types', typeList, index);
               }
             } else if (['power', 'toughness'].includes(keys[i])) {
-              addPropToFace(tokenObject, index, keys[i] as 'power' | 'toughness', value);
+              addPropToFace(tokenObject, keys[i] as 'power' | 'toughness', value, index);
             }
           });
         } else if (keys[i] == 'creators' || keys[i] == 'artists') {
@@ -267,11 +270,11 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: shouldUseBase ? name : '',
-              component: 'token_maker',
               name: shouldUseBase ? base : name,
-              type_line: '',
               set: '',
               image: '',
+              type_line: '',
+              component: 'token_maker',
             };
             if (count) {
               maker.count = count.slice(1);
@@ -279,7 +282,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
             return maker;
           });
           addProp(tokenObject, 'all_parts', all_parts);
-        } else if (keys[i] == 'tags') {
+        } else if (keys[i] == 'tags' || keys[i] == 'artists') {
           // now handling this at the end
         } else {
           addProp(tokenObject, keys[i] as propType, entry[i]);
@@ -314,9 +317,11 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           !tokenObject.layout &&
           tokenObject.card_faces.length <= 1
         ) {
-          addTag(tokenObject, tag, note, 'layout', singleLayoutTags);
+          addTag(tokenObject, tag, note, 'layout', singleLayoutTags as Record<string, HCLayout>);
         } else if (tag in multiLayoutTags && !tokenObject.layout) {
-          addTag(tokenObject, tag, note, 'layout', multiLayoutTags, { useRootOnly: true });
+          addTag(tokenObject, tag, note, 'layout', multiLayoutTags as Record<string, HCLayout>, {
+            useRootOnly: true,
+          });
         } else if (tag == 'foil') {
           addTag(tokenObject, tag, note, 'finish', HCFinish.Foil);
         } else if (note) {
@@ -353,7 +358,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           tokenObject.all_parts?.forEach((part: HCRelatedCard) => {
             part.component = 'meld_part';
           });
-          tokenObject.layout = 'meld_result';
+          (tokenObject as any).layout = 'meld_result';
         }
         // if (!('layout' in tokenObject)) {
         //   if (tag in singleLayoutTags) {
@@ -372,23 +377,39 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       tokenObject.card_faces[0].types &&
       tokenObject.card_faces[0].types[0] in typeLayouts
     ) {
-      addPropToFace(tokenObject, 0, 'layout', typeLayouts[tokenObject.card_faces[0].types[0]]);
+      addPropToFace(tokenObject, 'layout', typeLayouts[tokenObject.card_faces[0].types[0]]);
     }
+    const artistIndex = keys.indexOf('artists');
+    if (entry[artistIndex]) {
+      const artists = entry[artistIndex].split(';');
+
+      tokenObject.artists = artists.map(fullArtist => {
+        const hasNote = fullArtist.includes('<') && fullArtist.endsWith('>');
+        const [artist, note] = [
+          hasNote ? fullArtist.split('<')[0] : fullArtist,
+          hasNote ? fullArtist.split('<')[1].slice(0, -1) : undefined,
+        ];
+        addArtist(tokenObject, artist, note);
+        return artist;
+      });
+      tokenObject.artists = Array.from(new Set(tokenObject.artists));
+    }
+
     tokenObject.card_faces.forEach((face, index) => {
       if (tokenObject.layout && tokenObject.layout in multiLayoutToFaceLayout) {
         addPropToFace(
           tokenObject,
-          index,
           'layout',
-          multiLayoutToFaceLayout[tokenObject.layout as keyof typeof multiLayoutToFaceLayout]
+          multiLayoutToFaceLayout[tokenObject.layout as keyof typeof multiLayoutToFaceLayout],
+          index
         );
       } else if (!face.layout) {
-        addPropToFace(tokenObject, index, 'layout', HCLayout.Token);
+        addPropToFace(tokenObject, 'layout', HCLayout.Token, index);
       }
       (Object.keys(defaultFaceProps) as facePropType[])
         .filter(key => !face[key])
         .forEach(key => {
-          addPropToFace(tokenObject, index, key, defaultFaceProps[key]);
+          addPropToFace(tokenObject, key, defaultFaceProps[key], index);
         });
     });
     (Object.keys(defaultProps) as propType[])

@@ -2,7 +2,7 @@ import { HCCard } from '@hellfall/shared/types';
 import { cardStringFilter, opType, invertOptionType } from './types';
 import { funcOp, opIsNegative, opToNot, opToDont, opToNt } from './filterUtils';
 import { canBeACommander } from '../canBeACommander';
-import { textListEquals, textListShares } from './filterText';
+import { textListEquals, textListShares } from '@hellfall/shared/utils';
 
 export const filterIs: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {

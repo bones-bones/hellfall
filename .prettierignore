@@ -11,7 +11,7 @@ webpack.config.js
 
 # Data files
 src/data/Hellscube-Database.json
-packages/shared/src/data/*
+packages/shared/src/data/*.json
 data-transformers/src/cubes/
 data-transformers/src/draftmancer/
 

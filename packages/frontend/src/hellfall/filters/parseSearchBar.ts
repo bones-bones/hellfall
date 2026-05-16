@@ -8,7 +8,7 @@ import {
   splitOnFirstOp,
   unescapeText,
 } from './filterBuilder';
-import { dirType, dirs, sorts, sortType, inclusionOptions } from './types';
+import { dirType, dirs, sorts, sortType, inclusionOptions, includeFilter } from './types';
 import { filterIncludeExtras } from './filterSet';
 
 const sortRedirects: Record<string, sortType> = {
@@ -66,10 +66,6 @@ const isInclude = (text: string): boolean => {
   }
   const { keyword } = splitOnFirstOp(text);
   return keyword == 'include' || keyword == 'exclude';
-};
-const includeIsValid = (text: string): boolean => {
-  const { term } = splitOnFirstOp(text);
-  return term in inclusionOptions;
 };
 const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
   const tokens: string[] = [];
@@ -218,7 +214,7 @@ export const parseSorts = (sortList: string[]): sortObject[] => {
   return sortObs;
 };
 
-const bucketers = ['set', 'color', 'manavalue', 'colormanavalue'];
+const bucketers = ['set', 'color', 'manavalue', 'colormanavalue', 'auto'];
 export const winnowSortObjects = (
   sortList: sortObject[]
 ): { sortList: sortObject[]; winnowed: sortObject[] } => {
@@ -382,13 +378,14 @@ export const parseSearchQuery = (
   node: FilterNode;
   sortObjects: sortObject[];
   includeList: IncludeFilter[];
+  excludeList: IncludeFilter[];
   invalids: [string, string][];
   summary: string;
   winnowed: sortObject[];
   autoFilterExtras: boolean;
 } => {
   const invalids: [string, string][] = [];
-  const includeList: IncludeFilter[] = [];
+  const cludeList: IncludeFilter[] = [];
   let autoFilterExtras = true;
 
   const parseTokens = (
@@ -463,8 +460,8 @@ export const parseSearchQuery = (
         return null;
       }
       if (filter.queryName == 'include') {
-        autoFilterExtras = false;
-        includeList.push(filter);
+        // autoFilterExtras = false;
+        cludeList.push(filter);
         // while (summaries.length && consumeList.includes(summaries.at(-1)!)) {
         //   summaries.pop()
         // }
@@ -540,11 +537,20 @@ export const parseSearchQuery = (
   while ([' and ', ' or '].includes(summaries.at(0) ?? '')) {
     summaries.shift();
   }
-  const summary = summaries.length
-    ? ('where ' + summaries.join('')).trimEnd() +
-      (includeList.length ? `, ${includeList.map(filter => filter.toSummary()).join(' and ')}` : '')
-    : '';
-  return { node, sortObjects, includeList, invalids, summary, winnowed, autoFilterExtras };
+  const { includeList, excludeList, cludeSummary } = splitCludes(cludeList);
+  const summary = `${summaries.length ? ('where ' + summaries.join('')).trimEnd() : ''}${
+    summaries.length && cludeSummary ? ', ' : ''
+  }${cludeSummary}`;
+  return {
+    node,
+    sortObjects,
+    includeList,
+    excludeList,
+    invalids,
+    summary,
+    winnowed,
+    autoFilterExtras,
+  };
 };
 
 export const evaluateFilter = (node: FilterNode, card: HCCard.Any): boolean => {
@@ -560,27 +566,50 @@ export const evaluateFilter = (node: FilterNode, card: HCCard.Any): boolean => {
   }
 };
 
+const splitCludes = (
+  cludeList: IncludeFilter[]
+): { includeList: IncludeFilter[]; excludeList: IncludeFilter[]; cludeSummary: string } => {
+  const includeList: IncludeFilter[] = [];
+  const excludeList: IncludeFilter[] = [];
+  cludeList.forEach(include => {
+    if (include.inverted) {
+      excludeList.push(include);
+    } else {
+      includeList.push(include);
+    }
+  });
+  const includeSummary = includeList.map(include => include.toSummary()).join(' and ');
+  const excludeSummary = excludeList.map(exclude => exclude.toSummary()).join(' and ');
+  const cludeSummary = `${includeSummary}${
+    includeSummary && excludeSummary ? ' but ' : ''
+  }${excludeSummary}`;
+  return { includeList, excludeList, cludeSummary };
+};
+
 export const searchCards = (
   cards: HCCard.Any[],
   query: string,
   tagList: string[]
-): {
-  cards: HCCard.Any[];
-  sortObjects: sortObject[];
-} => {
-  const { node, sortObjects, includeList, autoFilterExtras } = parseSearchQuery(query);
+): HCCard.Any[] => {
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query);
+  const usingClusion = Boolean(includeList.length + excludeList.length);
   fixTags(node, tagList);
+  if (autoFilterExtras) {
+    const defaultInclude = makeIncludeFilter('nonextras', ':');
+    includeList.push(defaultInclude);
+  }
   const newCardsWithExtras = cards.filter(
-    card => evaluateFilter(node, card) && includeList.every(filter => filter.cardPassesFilter(card))
+    card =>
+      evaluateFilter(node, card) &&
+      (includeList.length ? includeList.some(filter => filter.cardPassesFilter(card)) : true) &&
+      (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true)
   );
-  const excludeExtras = makeIncludeFilter('extras', '!:');
+  const excludeExtras = makeIncludeFilter('nonextras', ':');
   const newCardsWithoutExtras = newCardsWithExtras.filter(card =>
     excludeExtras.cardPassesFilter(card)
   );
 
-  return {
-    cards:
-      autoFilterExtras && newCardsWithoutExtras.length ? newCardsWithoutExtras : newCardsWithExtras,
-    sortObjects,
-  };
+  return autoFilterExtras && !usingClusion && newCardsWithoutExtras.length
+    ? newCardsWithoutExtras
+    : newCardsWithExtras;
 };

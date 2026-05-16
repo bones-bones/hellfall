@@ -14,7 +14,7 @@ import { SortComponent } from './search-controls/SortComponent.tsx';
 import { CHUNK_SIZE } from './constants.ts';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom.ts';
-import { useUrlSync } from './hooks/useUrlSync.ts';
+import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
 import { getOtherNames } from './getNames.ts';
 import { withBasePath } from '../basePath.ts';
 import { SearchBar } from './search-controls/SearchBar.tsx';
@@ -25,6 +25,8 @@ export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
   const invalids = useAtomValue(invalidAtom);
   const escape = useKeyPress('Escape');
+
+  useUpdateURL();
 
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
 
@@ -87,7 +89,7 @@ export const HellFall = () => {
       <Summary ref={containerRef}>
         <strong>{`${
           resultSet.length > CHUNK_SIZE ? `${page + 1} - ${page + CHUNK_SIZE} of ` : ''
-        } ${resultSet.length} card${resultSet.length > 1 ? 's' : ''}`}</strong>
+        } ${resultSet.length} card${resultSet.length != 1 ? 's' : ''}`}</strong>
         {summary && ` ${summary}`}
       </Summary>
       <Separator />

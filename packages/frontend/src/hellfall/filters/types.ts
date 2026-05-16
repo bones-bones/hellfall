@@ -86,14 +86,21 @@ export interface hybridContentFilter extends cardFilter<string[][], string[]> {}
 export interface hybridNumFilter extends cardFilter<string[][], number> {}
 export interface hybridShortFilter extends cardFilter<string[][], shorthandType> {}
 // export interface setFilter extends cardFilter<string[],HCCard.Any> {}
-export const inclusionOptions = ['extras', 'nonextras', 'all'] as const;
+export const inclusionOptions = [
+  'extras',
+  'nonextras',
+  'all',
+  'extracards',
+  'tokens',
+  'vetoed',
+] as const;
 export type inclusionType = (typeof inclusionOptions)[number];
 export interface includeFilter extends cardFilter<HCCard.Any, string> {
   (value1: HCCard.Any, operator: opType, value2: string): boolean;
 }
 export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
 export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
-export interface tagFilter extends cardFilter<HCCard.Any, string> {
+export interface noteFilter extends cardFilter<HCCard.Any, string> {
   (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string): boolean;
   toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) => string;
 }

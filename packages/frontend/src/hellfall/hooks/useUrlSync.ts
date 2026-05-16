@@ -17,30 +17,12 @@ import { combineAndWinnowSorts, parseSearchQuery } from '../filters/parseSearchB
 import { makeSort } from '../filters/filterBuilder.ts';
 import { PaginationModel } from '@workday/canvas-kit-react';
 import { CHUNK_SIZE } from '../constants.ts';
+import { listsAreEqual } from '@hellfall/shared/utils';
 
-export const listsAreEqual = (value1: string[], value2: string[]): boolean => {
-  if (value1.length != value2.length) {
-    return false;
-  }
-  return value1.every((value, i) => value == value2[i]);
-};
-
-export const sortsAreEqual = (value1: sortObject[], value2: sortObject[]): boolean => {
-  if (value1.length != value2.length) {
-    return false;
-  }
-  return value1.every((value, i) => value.sort == value2[i].sort && value.dir == value2[i].dir);
-};
-
-export const invalidsAreEqual = (
-  value1: [string, string][],
-  value2: [string, string][]
-): boolean => {
-  if (value1.length != value2.length) {
-    return false;
-  }
-  return value1.every((value, i) => value[0] == value2[i][0] && value[1] == value2[i][1]);
-};
+const sortsEqual = (mem1: sortObject, mem2: sortObject) =>
+  mem1.sort == mem2.sort && mem1.dir == mem2.dir;
+const invalidsEqual = (mem1: [string, string], mem2: [string, string]) =>
+  mem1[0] == mem2[0] && mem1[1] == mem2[1];
 
 export const useUrlSync = () => {
   const location = useLocation();
@@ -61,7 +43,7 @@ export const useUrlSync = () => {
     if (query != newQuery) {
       setQuery(newQuery);
     }
-    if (!sortsAreEqual(querySorts, parsedQuery.sortObjects)) {
+    if (!listsAreEqual(querySorts, parsedQuery.sortObjects, sortsEqual)) {
       setQuerySorts(parsedQuery.sortObjects);
     }
 
@@ -72,7 +54,7 @@ export const useUrlSync = () => {
     if (!sortList.length) {
       sortList.push(makeSort('auto', 'auto'));
     }
-    if (!sortsAreEqual(sortRules, sortList)) {
+    if (!listsAreEqual(sortRules, sortList, sortsEqual)) {
       setSortRules(sortList);
     }
     if (!listsAreEqual(inputSorts, newInputs)) {
@@ -81,7 +63,7 @@ export const useUrlSync = () => {
     if (summary != parsedQuery.summary) {
       setSummary(parsedQuery.summary);
     }
-    if (!invalidsAreEqual(invalids, parsedQuery.invalids)) {
+    if (!listsAreEqual(invalids, parsedQuery.invalids, invalidsEqual)) {
       setInvalids(parsedQuery.invalids);
     }
     // Set pagination and active card
@@ -94,61 +76,70 @@ export const useUrlSync = () => {
   }, [location.search, location.pathname]); // This triggers on back/forward navigation
 };
 
-export const useSyncToURL = () => {
+export const useUpdateURL = () => {
   const navigate = useNavigate();
-  const setPageAtom = useSetAtom(pageAtom);
-  const syncToURL = (
-    query?: string,
-    inputSorts?: string[],
-    activeCard?: string,
-    page?: number,
-    paginationModel?: PaginationModel,
-    resultsLength?: number,
-    options?: { newPathname?: string }
-  ) => {
+  const location = useLocation();
+  const query = useAtomValue(queryAtom);
+  const inputSorts = useAtomValue(inputSortAtom);
+  const page = useAtomValue(pageAtom);
+  const activeCard = useAtomValue(activeCardAtom);
+  const prevValues = useRef({ query, inputSorts, page, activeCard });
+
+  useEffect(() => {
+    const hasChanged =
+      prevValues.current.query !== query ||
+      !listsAreEqual(prevValues.current.inputSorts, inputSorts) ||
+      prevValues.current.page !== page ||
+      prevValues.current.activeCard !== activeCard;
+
+    if (!hasChanged) return;
+
+    const searchToSet = new URLSearchParams();
+
+    if (query) {
+      searchToSet.append('q', query);
+    }
+
+    if (inputSorts.length) {
+      inputSorts.forEach(entry => searchToSet.append('order', entry));
+    }
+    if (page > 0) {
+      searchToSet.append('page', page.toString());
+    }
+    if (activeCard !== '') {
+      searchToSet.append('activeCard', activeCard);
+    }
+    // if (newPathname) {
+    //   const newUrl = `${newPathname}${searchToSet.size ? `?${searchToSet.toString()}`:''}`;
+
+    //   navigate(newUrl, {
+    //     replace: false,
+    //   });
+    // } else {
+    const newUrl = `${searchToSet.size ? `?${searchToSet.toString()}` : ''}`;
+    const currentUrl = location.search;
+    if (newUrl != currentUrl) {
+      navigate(newUrl, {
+        replace: false,
+      });
+    }
+    prevValues.current = { query, inputSorts, page, activeCard };
+    // }
+  });
+};
+
+export const useNavToSearch = () => {
+  const navigate = useNavigate();
+  const navToSearch = (query: string) => {
     const searchToSet = new URLSearchParams();
     if (query) {
       searchToSet.append('q', query);
     }
 
-    if (inputSorts?.length) {
-      inputSorts.forEach(input => searchToSet.append('order', input));
-    }
-    if (paginationModel) {
-      const currentPageNumber = Math.floor(page! / CHUNK_SIZE) + 1;
-
-      if (paginationModel.state.currentPage !== currentPageNumber) {
-        paginationModel.events.goTo(currentPageNumber);
-      }
-      if (resultsLength && resultsLength < page! && resultsLength > 0) {
-        paginationModel.events.goTo(1);
-        setPageAtom(0);
-      } else if (page! > 0) {
-        searchToSet.append('page', page!.toString());
-      }
-    }
-    if (activeCard) {
-      searchToSet.append('activeCard', activeCard);
-    }
-    if (options?.newPathname) {
-      const newUrl = `${options.newPathname}${
-        searchToSet.size ? `?${searchToSet.toString()}` : ''
-      }`;
-      navigate(newUrl, {
-        replace: false,
-      });
-    } else {
-      const newUrl = `${searchToSet.size ? `?${searchToSet.toString()}` : ''}`;
-      const currentUrl = location.search;
-      if ([newUrl, currentUrl].includes('?')) {
-        console.log('still need ? check');
-      }
-      if (newUrl != currentUrl && ![newUrl, currentUrl].every(url => ['', '?'].includes(url))) {
-        navigate(newUrl, {
-          replace: false,
-        });
-      }
-    }
+    const newUrl = `/${searchToSet.size ? `?${searchToSet.toString()}` : ''}`;
+    navigate(newUrl, {
+      replace: false,
+    });
   };
-  return syncToURL;
+  return navToSearch;
 };

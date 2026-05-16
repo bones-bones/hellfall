@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
-import { textEquals } from '@hellfall/shared/utils/textHandling.ts';
+import { textEquals, textListEquals } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 
 export const useNameToId = (name: string): string | undefined => {
@@ -20,7 +20,7 @@ export const useNameToId = (name: string): string | undefined => {
     return movedIds[name];
   }
   const filteredCards = cards.filter(e => e.set != 'NRM');
-  if (name == 'random' && filteredCards.length > 0) {
+  if (name == 'random' && filteredCards.length) {
     const theId = filteredCards[Math.floor(Math.random() * filteredCards.length)].id;
     return theId;
   }
@@ -30,12 +30,20 @@ export const useNameToId = (name: string): string | undefined => {
     cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
     cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
     cards.find(
-      card => 'card_faces' in card && card.card_faces.some(face => textEquals(face.name, name))
+      card =>
+        'card_faces' in card &&
+        textListEquals(
+          card.card_faces.map(e => e.name),
+          name
+        )
     )?.id ??
     cards.find(
       card =>
         'card_faces' in card &&
-        card.card_faces.some(face => face.flavor_name && textEquals(face.flavor_name, name))
+        textListEquals(
+          card.card_faces.flatMap(e => e.flavor_name ?? []),
+          name
+        )
     )?.id
   );
 };
@@ -101,12 +109,20 @@ export const nameToId = (name: string, cards: HCCard.Any[]): string | undefined 
     cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
     cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
     cards.find(
-      card => 'card_faces' in card && card.card_faces.some(face => textEquals(face.name, name))
+      card =>
+        'card_faces' in card &&
+        textListEquals(
+          card.card_faces.map(e => e.name),
+          name
+        )
     )?.id ??
     cards.find(
       card =>
         'card_faces' in card &&
-        card.card_faces.some(face => face.flavor_name && textEquals(face.flavor_name, name))
+        textListEquals(
+          card.card_faces.flatMap(e => e.flavor_name ?? []),
+          name
+        )
     )?.id
   );
 };

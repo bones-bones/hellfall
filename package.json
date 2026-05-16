@@ -17,6 +17,7 @@
     "transform-hc": "yarn workspace @hellfall/backend transform-hc",
     "fetch-oracle-names": "yarn workspace @hellfall/backend fetch-oracle-names",
     "land-box": "yarn workspace @hellfall/backend land-box",
+    "order-lists": "yarn workspace @hellfall/backend order-lists",
     "start:windows": "yarn workspace @hellfall/frontend start:windows",
     "install:all": "yarn install",
     "clean": "rm -rf node_modules packages/*/node_modules",

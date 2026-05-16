@@ -31,11 +31,11 @@ import {
   IncludeFilter,
   StringPropSummaryFilter,
   NumberPropSummaryFilter,
-  TagFilter,
+  NoteFilter,
   CompFilter,
 } from './filterObject';
 import { filterIncludeExtras, filterSetBoth, filterSetCard, filterSetToken } from './filterSet';
-import { filterEmpty, filterId, filterTag, filterTextList } from './filterText';
+import { filterArtist, filterEmpty, filterId, filterTag, filterTextList } from './filterText';
 import {
   colorFilterMaker,
   compFilterMaker,
@@ -72,7 +72,7 @@ import {
   filterFrameEffect,
   filterShowcase,
 } from './values/filterFrame';
-import { isInteger, isNumber } from '@hellfall/shared/utils/isInt';
+import { isInteger, isNumber } from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import { toNumber } from '../inputs/NumberSelector';
 
@@ -308,7 +308,7 @@ export const makeCreatorFilter: stringOrNumFilterMaker = (value: string, op: loo
       op,
       '>=',
       card => card.creators,
-      'the artists',
+      'the creators',
       opToIncludePlural
     );
   } else {
@@ -323,18 +323,23 @@ export const makeCreatorFilter: stringOrNumFilterMaker = (value: string, op: loo
     );
   }
 };
+
+export const makeTagNoteFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new StringPropSummaryFilter<string[], string>(
+    'tagnote',
+    filterTextList,
+    value,
+    op,
+    '>=',
+    card => Object.values(card.tag_notes ?? []),
+    'the tag note',
+    opToIncludeSingular
+  );
+};
+
 export const makeArtistFilter: stringOrNumFilterMaker = (value: string, op: looseOpType) => {
   if (!isNumber(value)) {
-    return new StringPropSummaryFilter<string[], string>(
-      'artist',
-      filterTextList,
-      value,
-      op,
-      '>=',
-      card => card.artists ?? [],
-      'the artists',
-      opToIncludePlural
-    );
+    return new NoteFilter('artist', filterArtist, value, op, '>=', card => card);
   } else {
     return new NumberPropSummaryFilter<number, string>(
       'artist',
@@ -347,6 +352,24 @@ export const makeArtistFilter: stringOrNumFilterMaker = (value: string, op: loos
     );
   }
 };
+
+export const makeArtistNoteFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new StringPropSummaryFilter<string[], string>(
+    'artistnote',
+    filterTextList,
+    value,
+    op,
+    '>=',
+    card => Object.values(card.artist_notes ?? []),
+    'the artist note',
+    opToIncludeSingular
+  );
+};
+
+export const makeTagFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new NoteFilter('tag', filterTag, value, op, '>=', card => card);
+};
+
 export const makeWatermarkFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string[], string>(
     'watermark',
@@ -369,9 +392,6 @@ export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) =
     'the keywords',
     opToIncludePlural
   );
-};
-export const makeTagFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new TagFilter('tag', filterTag, value, op, '>=', card => card);
 };
 export const makeCollectorNumberFilter: filterMaker = (value: string, op: looseOpType) => {
   return new NumberPropSummaryFilter<string | undefined, string>(
@@ -920,9 +940,23 @@ export const equivFilterNames: Record<string, string> = {
   creators: 'creator',
   a: 'artist',
   artists: 'artist',
+  an: 'artistnote',
+  anote: 'artistnote',
+  ans: 'artistnote',
+  anotes: 'artistnote',
+  artistn: 'artistnote',
+  artistns: 'artistnote',
+  artistnotes: 'artistnote',
   otag: 'tag',
   oracletag: 'tag',
   function: 'tag',
+  tn: 'tagnote',
+  tnote: 'tagnote',
+  tns: 'tagnote',
+  tnotes: 'tagnote',
+  tagn: 'tagnote',
+  tagns: 'tagnote',
+  tagnotes: 'tagnote',
   cn: 'number',
   collector: 'number',
   collectornumber: 'number',
@@ -962,8 +996,10 @@ export const filters: Record<string, filterMaker> = {
   lore: makeLoreFilter,
   creator: makeCreatorFilter,
   artist: makeArtistFilter,
+  artistnote: makeArtistNoteFilter,
   keyword: makeKeywordFilter,
   tag: makeTagFilter,
+  tagnote: makeTagNoteFilter,
   number: makeCollectorNumberFilter,
   manavalue: makeManaValueFilter,
   power: makePowerFilter,
