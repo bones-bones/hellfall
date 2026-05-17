@@ -13,6 +13,7 @@ import {
 import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
 import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
 import { canBeACommander } from '../hellfall/canBeACommander.ts';
+import { toFaces } from '@hellfall/shared/utils';
 // TODO: make sure this still works
 export const Breakdown = () => {
   const cards = useAtomValue(cardsAtom).filter(e => e.set === 'HC7.0');
@@ -22,10 +23,10 @@ export const Breakdown = () => {
   });
 
   const sorted = cards.reduce<Record<string, HCCard.Any[]>>((curr, next) => {
-    if (curr[next.toFaces()[0]?.colors.join() || 'undefined']) {
-      curr[next.toFaces()[0]?.colors.join() || 'undefined'].push(next);
+    if (curr[toFaces(next)[0]?.colors.join() || 'undefined']) {
+      curr[toFaces(next)[0]?.colors.join() || 'undefined'].push(next);
     } else {
-      curr[next.toFaces()[0]?.colors.join() || 'undefined'] = [next];
+      curr[toFaces(next)[0]?.colors.join() || 'undefined'] = [next];
     }
 
     return curr;
@@ -37,10 +38,10 @@ export const Breakdown = () => {
       (curr, next) => {
         const colorSet = Array.from(new Set(next.color_identity.flat().filter(Boolean))).sort();
         console.log(colorSet);
-        if (curr[next.toFaces()[0]?.colors.join('') || 'undefined']) {
-          curr[next.toFaces()[0]?.colors.join('') || 'undefined'].push(next);
+        if (curr[toFaces(next)[0]?.colors.join('') || 'undefined']) {
+          curr[toFaces(next)[0]?.colors.join('') || 'undefined'].push(next);
         } else {
-          curr[next.toFaces()[0]?.colors.join('') || 'undefined'] = [next];
+          curr[toFaces(next)[0]?.colors.join('') || 'undefined'] = [next];
         }
 
         return curr;
@@ -72,6 +73,7 @@ export const Breakdown = () => {
 
   return (
     <>
+      <title>Breakdown | Hellfall</title>
       {cards.length}
       <StyledSidePanel
         openWidth={window.screen.width > 450 ? 810 : 400}
@@ -168,14 +170,14 @@ const ColorTracker = ({ cards, color }: { cards: Record<string, HCCard.Any[]>; c
           const uhh = cards[color]
             .sort((a, b) => {
               if (
-                a.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature') &&
-                b.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature')
+                toFaces(a)[0].types?.some((type: string) => type.toLowerCase() == 'creature') &&
+                toFaces(b)[0].types?.some((type: string) => type.toLowerCase() == 'creature')
               ) {
-                return a.toFaces()[0].name > b.toFaces()[0].name ? 1 : -1;
+                return toFaces(a)[0].name > toFaces(b)[0].name ? 1 : -1;
               }
               if (
-                a.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature') &&
-                !b.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature')
+                toFaces(a)[0].types?.some((type: string) => type.toLowerCase() == 'creature') &&
+                !toFaces(b)[0].types?.some((type: string) => type.toLowerCase() == 'creature')
               ) {
                 return -1;
               }
@@ -199,15 +201,15 @@ const ColorTracker = ({ cards, color }: { cards: Record<string, HCCard.Any[]>; c
                   <CardEntry
                     key={e.name}
                     isCreature={Boolean(
-                      e.toFaces()[0].types?.some((type: string) => type.toLowerCase() == 'creature')
+                      toFaces(e)[0].types?.some((type: string) => type.toLowerCase() == 'creature')
                     )}
                     cardColor={
                       hexForColor(
-                        (e.toFaces()[0].colors == undefined
+                        (toFaces(e)[0].colors == undefined
                           ? 'Colorless'
-                          : e.toFaces()[0].colors.length > 1
+                          : toFaces(e)[0].colors.length > 1
                           ? 'Multicolor'
-                          : e.toFaces()[0].colors) as any
+                          : toFaces(e)[0].colors) as any
                       ) as any
                     }
                   >

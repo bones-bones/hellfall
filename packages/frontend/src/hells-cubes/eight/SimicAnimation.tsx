@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const SimicAnimation = () => {
   return (
     <>
+      <title>Simic Animation | Hellfall</title>
       <BigContainer>
         <h1>Simic Animation</h1>
         <div>

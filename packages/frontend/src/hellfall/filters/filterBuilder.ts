@@ -57,7 +57,7 @@ import {
   opToIncludeSingular,
 } from './filterUtils';
 import { filterBanned, filterLegal, filterNotLegal } from './values/filterLegality';
-import { filterHas, filterIs } from './filterIs';
+import { filterHas, filterIs } from './filterState';
 import {
   filterAnyLayout,
   filterCardLayout,
@@ -72,7 +72,14 @@ import {
   filterFrameEffect,
   filterShowcase,
 } from './values/filterFrame';
-import { isInteger, isNumber } from '@hellfall/shared/utils';
+import {
+  getColorsFromFaces,
+  getFromAll,
+  getFromFaces,
+  isInteger,
+  isNumber,
+  toFaces,
+} from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import { toNumber } from '../inputs/NumberSelector';
 
@@ -176,7 +183,7 @@ export const makeCostFilter: filterMaker = (value: string, op: looseOpType) => {
     value,
     op,
     '>=',
-    card => card.toFaces().map(e => e.mana_cost),
+    card => getFromFaces(card, 'mana_cost'),
     'the cost',
     opToIncludeSingular
   );
@@ -190,10 +197,10 @@ export const makeTypeFilter: filterMaker = (value: string, op: looseOpType) => {
     op,
     '>=',
     card => [
-      ...card.toFaces().flatMap(e => e.supertypes ?? []),
-      ...card.toFaces().flatMap(e => e.types ?? []),
-      ...card.toFaces().flatMap(e => e.subtypes ?? []),
-      ...card.toFaces().map(e => e.type_line),
+      ...getFromFaces(card, 'supertypes'),
+      ...getFromFaces(card, 'types'),
+      ...getFromFaces(card, 'subtypes'),
+      ...getFromAll(card, 'type_line'),
     ],
     'the types',
     opToIncludePlural
@@ -206,13 +213,12 @@ export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType)
     value,
     op,
     '>=',
-    card =>
-      card
-        .toFaces()
-        .flatMap(e => [
-          ...(e.supertypes ?? []),
-          ...(e.supertypes && e.supertypes.length > 1 ? [e.supertypes.join(' ')] : []),
-        ]),
+    card => [
+      ...getFromFaces(card, 'supertypes'),
+      ...toFaces(card).flatMap(e =>
+        e.supertypes && e.supertypes?.length > 1 ? e.supertypes.join(' ') : []
+      ),
+    ],
     'the supertypes',
     opToIncludePlural
   );
@@ -224,13 +230,10 @@ export const makeCardtypeFilter: filterMaker = (value: string, op: looseOpType) 
     value,
     op,
     '>=',
-    card =>
-      card
-        .toFaces()
-        .flatMap(e => [
-          ...(e.types ?? []),
-          ...(e.types && e.types.length > 1 ? [e.types.join(' ')] : []),
-        ]),
+    card => [
+      ...getFromFaces(card, 'types'),
+      ...toFaces(card).flatMap(e => (e.types && e.types?.length > 1 ? e.types.join(' ') : [])),
+    ],
     'the card types',
     opToIncludePlural
   );
@@ -242,13 +245,12 @@ export const makeSubtypeFilter: filterMaker = (value: string, op: looseOpType) =
     value,
     op,
     '>=',
-    card =>
-      card
-        .toFaces()
-        .flatMap(e => [
-          ...(e.subtypes ?? []),
-          ...(e.subtypes && e.subtypes.length > 1 ? [e.subtypes.join(' ')] : []),
-        ]),
+    card => [
+      ...getFromFaces(card, 'subtypes'),
+      ...toFaces(card).flatMap(e =>
+        e.subtypes && e.subtypes?.length > 1 ? e.subtypes.join(' ') : []
+      ),
+    ],
     'the subtypes',
     opToIncludePlural
   );
@@ -260,7 +262,7 @@ export const makeOracleFilter: filterMaker = (value: string, op: looseOpType) =>
     value,
     op,
     '>=',
-    card => card.toFaces().map(e => e.oracle_text),
+    card => getFromFaces(card, 'oracle_text'),
     'the oracle text',
     opToIncludeSingular
   );
@@ -272,7 +274,7 @@ export const makeFlavorFilter: filterMaker = (value: string, op: looseOpType) =>
     value,
     op,
     '>=',
-    card => card.toFaces().flatMap(e => e.flavor_text ?? []),
+    card => getFromFaces(card, 'flavor_text'),
     'the flavor text',
     opToIncludeSingular
   );
@@ -287,12 +289,12 @@ export const makeLoreFilter: filterMaker = (value: string, op: looseOpType) => {
     '>=',
     card => [
       ...getAllNames(card),
-      ...card.toFaces().flatMap(e => e.supertypes ?? []),
-      ...card.toFaces().flatMap(e => e.types ?? []),
-      ...card.toFaces().flatMap(e => e.subtypes ?? []),
-      ...card.toFaces().map(e => e.type_line),
-      ...card.toFaces().map(e => e.oracle_text),
-      ...card.toFaces().flatMap(e => e.flavor_text ?? []),
+      ...getFromFaces(card, 'supertypes'),
+      ...getFromFaces(card, 'types'),
+      ...getFromFaces(card, 'subtypes'),
+      ...getFromFaces(card, 'type_line'),
+      ...getFromFaces(card, 'oracle_text'),
+      ...getFromFaces(card, 'flavor_text'),
     ],
     'the lore',
     opToIncludeSingular
@@ -377,7 +379,7 @@ export const makeWatermarkFilter: filterMaker = (value: string, op: looseOpType)
     value,
     opIsNegative(op) ? '=' : '!=',
     '=',
-    card => card.toFaces().flatMap(e => e.watermark ?? []),
+    card => getFromFaces(card, 'watermark'),
     () => `the cards ${opToDont(op)} have the "${value}" watermark`
   );
 };
@@ -431,7 +433,7 @@ export const makePowerFilter: filterMaker = (value: string, op: looseOpType) => 
     value,
     op,
     '=',
-    card => card.toFaces().flatMap(e => e.power ?? []),
+    card => getFromFaces(card, 'power'),
     'the power'
   );
 };
@@ -442,7 +444,7 @@ export const makeToughnessFilter: filterMaker = (value: string, op: looseOpType)
     value,
     op,
     '=',
-    card => card.toFaces().flatMap(e => e.toughness ?? []),
+    card => getFromFaces(card, 'toughness'),
     'the toughness'
   );
 };
@@ -455,11 +457,9 @@ export const makePTFilter: filterMaker = (value: string, op: looseOpType) => {
     op,
     '=',
     card =>
-      card
-        .toFaces()
-        .flatMap(e =>
-          !e.power && !e.toughness ? [] : (toNumber(e.power) ?? 0) + (toNumber(e.toughness) ?? 0)
-        ),
+      toFaces(card).flatMap(e =>
+        !e.power && !e.toughness ? [] : (toNumber(e.power) ?? 0) + (toNumber(e.toughness) ?? 0)
+      ),
     'the sum of power and toughness'
   );
 };
@@ -471,7 +471,7 @@ export const makeLoyaltyFilter: filterMaker = (value: string, op: looseOpType) =
     value,
     op,
     '=',
-    card => card.toFaces().flatMap(e => e.loyalty ?? []),
+    card => getFromFaces(card, 'loyalty'),
     'the loyalty'
   );
 };
@@ -483,7 +483,7 @@ export const makeDefenseFilter: filterMaker = (value: string, op: looseOpType) =
     value,
     op,
     '=',
-    card => card.toFaces().flatMap(e => e.defense ?? []),
+    card => getFromFaces(card, 'defense'),
     'the defense'
   );
 };
@@ -567,11 +567,7 @@ export const makeIndicatorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card =>
-        card
-          .toFaces()
-          .filter(e => e.color_indicator)
-          .map(e => e.color_indicator!)
+      card => getColorsFromFaces(card, 'color_indicator')
     );
   } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[][], number>(
@@ -580,11 +576,7 @@ export const makeIndicatorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card =>
-        card
-          .toFaces()
-          .filter(e => e.color_indicator)
-          .map(e => e.color_indicator!)
+      card => getColorsFromFaces(card, 'color_indicator')
     );
   } else {
     return new PassThroughSummaryFilter<string[][], shorthandType>(
@@ -593,11 +585,7 @@ export const makeIndicatorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card =>
-        card
-          .toFaces()
-          .filter(e => e.color_indicator)
-          .map(e => e.color_indicator!)
+      card => getColorsFromFaces(card, 'color_indicator')
     );
   }
 };
@@ -714,11 +702,7 @@ export const makeMiscIndicatorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card =>
-        card
-          .toFaces()
-          .filter(e => e.color_indicator)
-          .map(e => colorMiscReduce(e.color_indicator!))
+      card => getColorsFromFaces(card, 'color_indicator').map(c => colorMiscReduce(c))
     );
   } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[][], number>(
@@ -727,11 +711,7 @@ export const makeMiscIndicatorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card =>
-        card
-          .toFaces()
-          .filter(e => e.color_indicator)
-          .map(e => colorMiscReduce(e.color_indicator!))
+      card => getColorsFromFaces(card, 'color_indicator').map(c => colorMiscReduce(c))
     );
   } else {
     return new PassThroughSummaryFilter<string[][], shorthandType>(
@@ -740,11 +720,7 @@ export const makeMiscIndicatorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card =>
-        card
-          .toFaces()
-          .filter(e => e.color_indicator)
-          .map(e => colorMiscReduce(e.color_indicator!))
+      card => getColorsFromFaces(card, 'color_indicator').map(c => colorMiscReduce(c))
     );
   }
 };
@@ -838,7 +814,7 @@ export const makeIsFilter: filterMaker = (value: string, op: looseOpType) => {
   if (frameEffectsToParse.includes(value)) {
     return makeFrameEffectFilter(value, op);
   }
-  if (value in toCardLayout) {
+  if (value in toCardLayout && value != 'modal') {
     return makeCardLayoutFilter(value, op);
   }
   return new CardStringFilter('is', filterIs, value, op, '=');
@@ -850,7 +826,7 @@ export const makeHasFilter: filterMaker = (value: string, op: looseOpType) => {
   if (frameEffectsToParse.includes(value)) {
     return makeFrameEffectFilter(value, op);
   }
-  if (value in toFaceLayout) {
+  if (value in toFaceLayout && value != 'modal') {
     return makeFaceLayoutFilter(value, op);
   }
   return new CardStringFilter('has', filterHas, value, op, '=');
@@ -863,12 +839,17 @@ export const makeCardLayoutFilter: filterMaker = (value: string, op: looseOpType
 };
 export const makeFaceLayoutFilter: filterMaker = (value: string, op: looseOpType) => {
   return new PassThroughSummaryFilter('facelayout', filterFaceLayout, value, op, '=', card =>
-    card.toFaces().map(face => face.layout)
+    getFromFaces(card, 'layout')
   );
 };
 export const makeAnyLayoutFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter('anylayout', filterAnyLayout, value, op, '=', card =>
-    (card.toFaces().map(face => face.layout) as string[]).concat(...[card.layout])
+  return new PassThroughSummaryFilter(
+    'anylayout',
+    filterAnyLayout,
+    value,
+    op,
+    '=',
+    card => getFromAll(card, 'layout') as string[]
   );
 };
 
@@ -884,20 +865,20 @@ export const makeBorderFilter: filterMaker = (value: string, op: looseOpType) =>
 };
 export const makeCardFrameFilter: filterMaker = (value: string, op: looseOpType) => {
   return new PassThroughSummaryFilter('cardframe', filterCardFrame, value, op, '=', card => [
-    ...card.toFaces().flatMap(e => e.frame ?? []),
+    ...getFromAll(card, 'frame'),
     ...(card.frame ?? []),
   ]);
 };
 export const makeFrameEffectFilter: filterMaker = (value: string, op: looseOpType) => {
   return new PassThroughSummaryFilter('frameeffect', filterFrameEffect, value, op, '=', card => [
-    ...card.toFaces().flatMap(e => e.frame_effects ?? []),
+    ...getFromAll(card, 'frame_effects'),
     ...(card.frame_effects ?? []),
   ]);
 };
 export const makeFrameFilter: filterMaker = (value: string, op: looseOpType) => {
   return new PassThroughSummaryFilter('frame', filterFrame, value, op, '=', card =>
-    [...card.toFaces().flatMap(e => e.frame ?? []), ...(card.frame ?? [])].concat([
-      ...card.toFaces().flatMap(e => e.frame_effects ?? []),
+    [...getFromAll(card, 'frame'), ...(card.frame ?? [])].concat([
+      ...getFromAll(card, 'frame_effects'),
       ...(card.frame_effects ?? []),
     ])
   );
@@ -917,9 +898,58 @@ export const makeSort: sortMaker = (sort: sortType, dir: dirType) => {
   return new sortObject('sort', filterSort, sort, dir);
 };
 
-export const equivFilterNames: Record<string, string> = {
+const filterNames = [
+  'id',
+  'name',
+  'mana',
+  'type',
+  'supertype',
+  'cardtype',
+  'subtype',
+  'oracle',
+  'flavor',
+  'lore',
+  'creator',
+  'artist',
+  'artistnote',
+  'keyword',
+  'tag',
+  'tagnote',
+  'number',
+  'manavalue',
+  'power',
+  'toughness',
+  'pt',
+  'loyalty',
+  'defense',
+  'legal',
+  'notlegal',
+  'banned',
+  'is',
+  'has',
+  'layout',
+  'facelayout',
+  'anylayout',
+  'border',
+  'cardframe',
+  'frameeffect',
+  'frame',
+  'showcase',
+  'watermark',
+  'invalid',
+  'invalidsort',
+  'invalidkeyword',
+  'invalidcolor',
+  'include',
+  'set',
+  'tokenset',
+  'block',
+] as const;
+type filterNameType = (typeof filterNames)[number];
+
+export const equivFilterNames: Record<string, filterNameType> = {
   cardid: 'id',
-  name: 'n',
+  n: 'name',
   m: 'mana',
   cost: 'mana',
   manacost: 'mana',
@@ -967,12 +997,18 @@ export const equivFilterNames: Record<string, string> = {
   loy: 'loyalty',
   def: 'defense',
   kw: 'keyword',
+  keywords: 'keyword',
   powtou: 'pt',
   cardlayout: 'layout',
   f: 'legal',
   format: 'legal',
+  fl: 'facelayout',
+  al: 'anylayout',
   bordercolor: 'border',
   frameeffects: 'frameeffect',
+  fe: 'frameeffect',
+  wm: 'watermark',
+  watermarks: 'watermark',
   sort: 'invalidsort',
   order: 'invalidsort',
   dir: 'invalidsort',
@@ -983,7 +1019,7 @@ export const equivFilterNames: Record<string, string> = {
   b: 'block',
 };
 
-export const filters: Record<string, filterMaker> = {
+export const filters: Record<filterNameType, filterMaker> = {
   id: makeIDFilter,
   name: makeNameFilter,
   mana: makeCostFilter,
@@ -1020,6 +1056,7 @@ export const filters: Record<string, filterMaker> = {
   frameeffect: makeFrameEffectFilter,
   frame: makeFrameFilter,
   showcase: makeShowcaseFilter,
+  watermark: makeWatermarkFilter,
   invalid: makeInvalidFilter,
   invalidsort: makeInvalidSortFilter,
   invalidkeyword: makeInvalidKeywordFilter,
@@ -1030,12 +1067,24 @@ export const filters: Record<string, filterMaker> = {
   block: makeBlockFilter,
 };
 
-export const invertedFilterNames: Record<string, string> = {
+export const invertedFilterNames: Record<string, filterNameType> = {
   not: 'is',
   exclude: 'include',
 };
 
-export const equivColorFilterNames: Record<string, string> = {
+const colorFilterNames = [
+  'color',
+  'indicator',
+  'identity',
+  'hybrid',
+  'misccolor',
+  'miscindicator',
+  'miscidentity',
+  'mischybrid',
+] as const;
+type colorFilterNameType = (typeof colorFilterNames)[number];
+
+export const equivColorFilterNames: Record<string, colorFilterNameType> = {
   c: 'color',
   colors: 'color',
   colorindicator: 'indicator',
@@ -1079,7 +1128,7 @@ export const equivColorFilterNames: Record<string, string> = {
   mischybrididentity: 'mischybrid',
   mischybridcoloridentity: 'mischybrid',
 };
-export const colorFilters: Record<string, colorFilterMaker> = {
+export const colorFilters: Record<colorFilterNameType, colorFilterMaker> = {
   color: makeColorFilter,
   indicator: makeIndicatorFilter,
   identity: makeIdentityFilter,
@@ -1094,6 +1143,7 @@ export const textIsQuote = (text: string) =>
 export const unescapeText = (text: string) => {
   const strippedText = textIsQuote(text) ? text : text.replaceAll(/[_-]/g, '');
   return strippedText
+    .toLowerCase()
     .replaceAll(/^['"]/g, '')
     .replaceAll(/(?<!\\)['"]/g, '')
     .replaceAll(/\\(['"])/g, '$1');
@@ -1224,7 +1274,7 @@ export const filterIsInverted = (text: string, invert: boolean = false): boolean
   if (text[0] == '-') {
     return filterIsInverted(text.slice(1), !invert);
   }
-  return false;
+  return invert;
 };
 // make sure the thing doesn't strip quotes when passing text in to this from start and end of string when
 export const parseFilter = (text: string, invert: boolean = false): filterObject<any, any> => {
@@ -1261,7 +1311,7 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
   }
   if (keyword in equivFilterNames || keyword in filters) {
     const correctKeyword = keyword in filters ? keyword : equivFilterNames[keyword];
-    return correctOp(filters[correctKeyword](term, op));
+    return correctOp(filters[correctKeyword as filterNameType](term, op));
   }
   if (keyword in invertedFilterNames) {
     return parseFilter(`${invertedFilterNames[keyword]}${op}${term}`, !invert);
@@ -1278,9 +1328,11 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
       correctKeyword.slice(0, 4) != 'misc' &&
       parsedColors.includes('Misc')
     ) {
-      return correctOp(colorFilters['misc' + correctKeyword](parsedColors, op));
+      return correctOp(
+        colorFilters[('misc' + correctKeyword) as colorFilterNameType](parsedColors, op)
+      );
     }
-    return correctOp(colorFilters[correctKeyword](parsedColors, op));
+    return correctOp(colorFilters[correctKeyword as colorFilterNameType](parsedColors, op));
   }
   if (term) {
     return makeInvalidKeywordFilter(keyword, ':');

@@ -46,39 +46,6 @@ export namespace HCCard {
   export type AbstractCard = HCObject.Object<HCObject.ObjectType.Card> &
     HCCardFields.Core.HCReferences & {
       /**
-       * Converts the card to an array of its faces.
-       * For single-faced cards, returns an array with the card itself.
-       * For multi-faced cards, returns the card_faces array.
-       * This must be implemented when loading cards.
-       *
-       * @returns An array of card faces
-       *
-       * @example
-       * const card: HCCard.Any = getCard();
-       * const faces = card.toFaces(); // Always returns an array
-       */
-      toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced];
-      // TODO: make these work
-      /**
-       * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
-       * We haven't yet figured out how to implement this.
-       *
-       * @returns An array of values for the prop
-       * For single-faced cards, returns an array with the prop itself.
-       * For multi-faced cards, returns the prop from each member of the card_faces array.
-       *
-       */
-      // getPropFromAllFaces(prop:string):any[];
-      /**
-       * Gets the value of a prop from each face of a card (including the main part for multiface cards)
-       * We haven't yet figured out how to implement this.
-       *
-       * @returns An array of values for the prop
-       * For single-faced cards, returns an array with the prop itself.
-       * For multi-faced cards, returns the prop from each member of the card_faces array and from the card itself.
-       */
-      // getPropFromAllFacesInclusive(prop:string):any[];
-      /**
        * Custom JSON serialization to ensure consistent property order.
        * This method is automatically called by JSON.stringify().
        *

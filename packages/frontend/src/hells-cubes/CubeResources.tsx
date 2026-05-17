@@ -181,6 +181,7 @@ export const CubeResources = () => {
   ];
   return (
     <Container>
+      <title>Cube Resources | Hellfall</title>
       <StyledTable>
         <caption>
           <h2>Cube Resources</h2>

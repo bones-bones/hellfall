@@ -19,6 +19,7 @@ export const Eight = () => {
         path="/"
         element={
           <div style={{ paddingLeft: '20px' }}>
+            <title>Hells 8 Archetype Guide | Hellfall</title>
             <h1>Hells 8 Archetype Guide</h1>
             <div>
               <Link to={'/hellscubes/eight/azorious-historic'}>

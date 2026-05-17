@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { HellsCard } from './HellsCard.tsx';
 import {
   Stormstorm,
@@ -53,7 +54,7 @@ export const specialCards: Card[] = [
   {
     path: '/black-6-drop',
     name: 'A Black 6 Drop Creature',
-    component: <HellsCard queryString="color=B+mana_value=6" />,
+    component: <HellsCard queryString="color=B+manavalue=6+t:creature" />,
   },
   {
     path: '/puzzle-box',

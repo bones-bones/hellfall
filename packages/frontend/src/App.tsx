@@ -1,4 +1,4 @@
-import { BrowserRouter, useRoutes, useParams, useNavigate } from 'react-router-dom';
+import { BrowserRouter, useRoutes, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HellFall } from './hellfall';
 import { Hellscubes } from './hells-cubes';
@@ -32,6 +32,7 @@ const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
 
   return <>{children}</>;
 };
+
 const CardRoute = () => {
   const params = useParams<{ '*': string }>();
   const navigate = useNavigate();

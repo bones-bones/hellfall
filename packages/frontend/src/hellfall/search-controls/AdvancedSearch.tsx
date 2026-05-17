@@ -25,7 +25,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
-import { useDebounce, useKeyPress } from '../../hooks/index.ts';
+import { useKeyPress } from '../../hooks/index.ts';
 import { useEffect, useState } from 'react';
 import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import { HCSearchColors } from '@hellfall/shared/types';
@@ -34,6 +34,7 @@ import { SortComponent } from './SortComponent.tsx';
 import { useNavigate } from 'react-router-dom';
 import { parseSorts } from '../filters/parseSearchBar.ts';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
+import { normalizeText } from '@hellfall/shared/utils';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -256,18 +257,19 @@ export const AdvancedSearch = () => {
 
   return (
     <div>
+      <title>Advanced Search | Hellfall</title>
       <br />
       <SearchContainer>
         <SearchCriteriaSection>
-          <FormField label="Id">
-            <TextInput value={idSearch} onChange={event => setIdSearch(event.target.value)} />
-          </FormField>
           <PillSearch
             label={'Name'}
             possibleValues={[]}
             values={nameSearch}
             onChange={setNameSearch}
           />
+          <FormField label="Id">
+            <TextInput value={idSearch} onChange={event => setIdSearch(event.target.value)} />
+          </FormField>
           <PillSearch
             label={'Cost'}
             possibleValues={pipList}
@@ -552,7 +554,7 @@ export const AdvancedSearch = () => {
         colors={inputButtonColors}
         borderRadius="m"
         onClick={() => {
-          const newQuery = toQueryString();
+          const newQuery = normalizeText(toQueryString());
           setQuery(newQuery);
           setInputSorts([]);
           setSortRules([]);

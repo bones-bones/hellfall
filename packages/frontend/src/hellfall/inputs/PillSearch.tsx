@@ -90,7 +90,7 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
             }
           }}
         />
-        <Menu.Popper anchorElement={searchRef} placement="bottom">
+        <Menu.Popper anchorElement={searchRef.current} placement="bottom">
           <StyledCard>
             <div style={{ maxHeight: '200px', overflowY: 'auto', width: '275px' }}>
               {filteredItems.map((item, index) => (

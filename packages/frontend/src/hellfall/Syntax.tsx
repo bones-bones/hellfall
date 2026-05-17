@@ -23,6 +23,7 @@ const mapListToCodeOr = (textList: string[]) =>
 export const Syntax = () => {
   return (
     <>
+      <title>Search Reference | Hellfall</title>
       <BigContainer>
         <h1>Search Syntax</h1>
         <div>
@@ -35,7 +36,9 @@ export const Syntax = () => {
         <div>
           Hellscube has extra colors, so you can use <code>p</code> or <code>purple</code> to search
           for purple. You can also search for misc colors ({mapListToCodeAnd(HCMiscColors)}) using
-          either their names or <code>misc</code> as a wildcard that matches all of them.{' '}
+          either their names or <code>misc</code> as a wildcard that matches all of them. You can
+          also use <code>misc</code> before any color search to treat all misc colors as a single
+          color (e.g. for searches against numbers of colors){' '}
         </div>
         <br />
         <div>
@@ -62,7 +65,13 @@ export const Syntax = () => {
           Using <code>~</code> as a placeholder for the card's name doesn't work yet.
         </div>
         <br />
-        <div>You can also use {mapListToCodeAnd(['is:historic', 'is:party', 'is:outlaw'])}.</div>
+        <div>
+          You can also use everything in{' '}
+          <Link to={'https://scryfall.com/docs/syntax#spells'}>
+            Spells, Permanents, and Effects
+          </Link>
+          .
+        </div>
         <h2>Tags, Creators, and Artists</h2>
         <div>
           Hellfall doesn't have art tags yet, so those don't work yet. Oracle tags do work, though,
@@ -94,17 +103,15 @@ export const Syntax = () => {
           using <code>artistnote:</code> or <code>an:</code> to search against artist notes
           directly.
         </div>
-        <br />
-        <div></div>
-        <br />
-        <div></div>
         <h2>Mana Costs</h2>
+        {/* TODO: Implement good mana search */}
         <div>
           A lot of the functionality of the scryfall mana search hasn't been added yet, so{' '}
           <code>mana:</code> currently acts like a regular text search term, though{' '}
           <code>is:hybrid</code> and <code>is:phyrexian</code> do work.
         </div>
         <br />
+        {/* TODO: add these */}
         <div>
           {' '}
           {mapListToCodeAnd(['manavalue:even', 'manavalue:odd', 'devotion:', 'produces:'])} haven't
@@ -162,7 +169,8 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
-          Since reprints haven't been fully implemented yet, <code>in:</code> doesn't work.
+          Since reprints haven't been fully implemented yet, <code>in:</code> doesn't work. You can
+          use <code>is:masterpiece</code> and <code>is:rebalanced</code> though.
         </div>
         <div>
           <code>st:</code> also hasn't been implemented yet.
@@ -180,8 +188,9 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
-          You can use <code>is:commander</code> to find cards that can be your commander, but the
-          other <code>is:</code> search terms from{' '}
+          You can use <code>is:commander</code> to find cards that can be your commander and can use{' '}
+          <code>is:partner</code> to find cards with partner mechanics, but the other{' '}
+          <code>is:</code> search terms from{' '}
           <Link to={'https://scryfall.com/docs/syntax#legality'}>Scryfall</Link> haven't been
           implemented yet.
         </div>
@@ -278,6 +287,11 @@ export const Syntax = () => {
           ones only being used to break ties. Because of this, any that can't have any effect or
           that are duplicates are ignored.
         </div>
+        <h2>Miscellaneous</h2>
+        <div>
+          All the <Link to={'https://scryfall.com/docs/syntax#shortcuts'}>shorthands</Link> that
+          work for Scryfall and have any cards in hellscube that match them also work in Hellfall.
+        </div>
         <h2>Include/Exclude</h2>
         <div>
           Use <code>include:extras</code> to reveal all cards. You can also use{' '}
@@ -287,21 +301,8 @@ export const Syntax = () => {
         </div>
         <h2>Not Implemented Yet</h2>
         <div>
-          The following haven't been implemented yet:{' '}
-          {mapListToCodeAnd([
-            'is:spell',
-            'is:permanent',
-            'is:modal',
-            'is:vanilla',
-            'is:frenchvanilla',
-            'is:bear',
-            'is:manland',
-          ])}
-        </div>
-        <br />
-        <div>
-          Everything in Games, Promos, & Spotlights, Year, Reprints, Languages, Shortcuts and
-          Nicknames,{' '}
+          Everything in Games, Promos, & Spotlights, Year, Reprints, Languages (except{' '}
+          {mapListToCodeAnd(['is:alchemy', 'is:rebalanced'])}){' '}
         </div>
         <h2>Won't Be Implemented</h2>
         <div>

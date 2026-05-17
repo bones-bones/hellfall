@@ -73,6 +73,7 @@ export const Draft = () => {
 
   return (
     <>
+      <title>Draft</title>
       <h2>
         Hellscube draft simulator (the bots are dumb) (if you are looking to play afterwards, try
         draftmancer instead)

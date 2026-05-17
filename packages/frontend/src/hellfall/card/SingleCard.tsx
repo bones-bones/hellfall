@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { HellfallCard } from './HellfallCard.tsx';
 import styled from '@emotion/styled';
@@ -10,10 +10,17 @@ export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
   const { '*': cardId } = useParams();
   const entryToRender = cards?.find(e => e.id === cardId);
+  useEffect(() => {
+    if (!entryToRender) {
+      document.title = `Loading | Hellfall`;
+    } else {
+      document.title = `${entryToRender.name} | Hellfall`;
+    }
+  }, [entryToRender]);
 
   return (
     <Container>
-      {cards.length ? (
+      {!cards.length ? (
         <></>
       ) : !entryToRender ? (
         <h2>Nothing was found...</h2>

@@ -41,14 +41,10 @@ const PLACEHOLDER_CARD: Omit<HCCard.Normal, 'toFaces' | 'toJSON'> = {
 function withCardMethods<T extends HCCard.Any>(
   card: T
 ): T & {
-  toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced];
   toJSON(): Record<string, any>;
 } {
   return {
     ...card,
-    toFaces(): HCCardFace.MultiFaced[] | [HCCard.AnySingleFaced] {
-      return 'card_faces' in this ? this.card_faces : [this];
-    },
     toJSON(): Record<string, any> {
       return this as Record<string, any>;
     },
@@ -58,7 +54,6 @@ function withCardMethods<T extends HCCard.Any>(
 /** Attach toFaces() to a card-like object so it can be used wherever HCCard.Any is expected. */
 export { withCardMethods };
 
-export const withToFaces = <T extends HCCard.Any>(card: T) => withCardMethods(card);
 export const withToJSON = <T extends HCCard.Any>(card: T) => withCardMethods(card);
 
 export function getHc5(): HCCard.Any[] {

@@ -1,8 +1,8 @@
 import { HCCard } from '@hellfall/shared/types';
-import { listShareLower } from '@hellfall/shared/utils';
+import { listShareLower, toFaces } from '@hellfall/shared/utils';
 
 export const canBeACommander = (card: HCCard.Any) => {
-  const faces = card.toFaces();
+  const faces = toFaces(card);
   return (
     ((listShareLower(faces[0].supertypes, 'legendary') &&
       (listShareLower(faces[0].types, 'creature') ||

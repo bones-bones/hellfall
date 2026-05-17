@@ -61,6 +61,7 @@ export const toCardLayout: Record<string, HCLayout | HCLayout[]> = {
   anysticker: [HCLayout.Stickers, HCLayout.StickersOnBack],
   anydungeon: [HCLayout.Dungeon, HCLayout.DungeonInInset, HCLayout.DungeonOnBack],
   modal: HCLayout.Modal,
+  modaldfc: HCLayout.Modal,
   mdfc: HCLayout.Modal,
   transform: HCLayout.Transform,
   tdfc: HCLayout.Transform,

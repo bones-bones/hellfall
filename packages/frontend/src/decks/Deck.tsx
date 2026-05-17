@@ -98,6 +98,7 @@ export const Deck = () => {
 
   return (
     <BiggestContainer>
+      <title>{deck.title} | Hellfall</title>
       <BigContainer showGutter={window.innerWidth > 800}>
         <h2>{deck.title}</h2>
         <h3>By: {deck.author}</h3>

@@ -4,6 +4,7 @@ import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { HellfallEntry } from '../hellfall/HellfallEntry.tsx';
 import { useAtomValue } from 'jotai';
+import { toFaces } from '@hellfall/shared/utils';
 
 export const AvatarOfBalls = () => {
   const cards = useAtomValue(cardsAtom);
@@ -16,6 +17,7 @@ export const AvatarOfBalls = () => {
 
   return (
     <>
+      <title>Avatar of BallsJr123 | Hellfall</title>
       <h2>Avatar of BallsJr123</h2>
       <FormField label={'Value?'}>
         <TextInput type="number" defaultValue={3} ref={powerRef} />
@@ -27,7 +29,7 @@ export const AvatarOfBalls = () => {
         onClick={() => {
           const filtered = cards.filter(entry => {
             return (
-              entry.toFaces()[0].types?.includes('Creature') &&
+              toFaces(entry)[0].types?.includes('Creature') &&
               ((entry.name.includes('Negative') &&
                 parseInt(powerRef.current?.value || '3') == -1) ||
                 entry.mana_value == parseInt(powerRef.current?.value || '3') ||
