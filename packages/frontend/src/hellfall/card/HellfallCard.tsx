@@ -114,14 +114,15 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   // TODO: add handling for flip and aftermath
   const { images: imagesToShow, names: imageNames } = getImages(data);
 
-  useEffect(() => {
-    if (data?.id) {
-      CardCacheService.saveCard(data);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data?.id) {
+  //     CardCacheService.saveCard(data);
+  //   }
+  // }, [data]);
 
   return (
     <Container ref={windowRef} key={data.id}>
+      <title>{data.name} || Hellfall</title>
       {!imagesToShow.length ? (
         <Test>
           <ImageContainer key="image-container">

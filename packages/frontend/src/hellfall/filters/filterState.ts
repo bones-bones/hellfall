@@ -33,6 +33,7 @@ const stateList = [
   'masterpiece',
   'rebalanced',
   'bounceland',
+  'fastland',
   'fetchland',
   'filterland',
   'painland',
@@ -115,6 +116,7 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean> = {
   masterpiece: (value: HCCard.Any) => !!value.tags?.includes('masterpiece'),
   rebalanced: (value: HCCard.Any) => !!value.tags?.includes('alchemy-rebalance'),
   bounceland: (value: HCCard.Any) => !!value.tags?.includes('bounceland'),
+  fastland: (value: HCCard.Any) => !!value.tags?.includes('fastland'),
   fetchland: (value: HCCard.Any) => !!value.tags?.includes('true-fetchland'),
   filterland: (value: HCCard.Any) => !!value.tags?.includes('filterland'),
   painland: (value: HCCard.Any) => !!value.tags?.includes('painland'),
@@ -153,6 +155,8 @@ const stateSummaries: Record<stateType, (operator: opType, value: string) => str
     `the cards are${opToNt(operator)} rebalanced Alchemy cards`,
   bounceland: (operator: opType, value: string) =>
     `the cards are${opToNt(operator)} land-bouncing duals`,
+  fastland: (operator: opType, value: string) =>
+    `the cards are${opToNt(operator)} dual lands that are 'fast'`,
   fetchland: (operator: opType, value: string) =>
     `the cards are${opToNt(operator)} dual lands that filter mana into other colors`,
   filterland: (operator: opType, value: string) =>

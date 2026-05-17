@@ -1,8 +1,9 @@
 import { getAuthApiUrl } from '../auth/getAuthApiUrl';
 
 function getWatchwolfUrl(): string {
-  const base = getAuthApiUrl();
-  return base ? `${base}/api/watchwolf` : '';
+  // const base = getAuthApiUrl();
+  // return base ? `${base}/api/watchwolf` : '';
+  return 'https://get-watch-wolf-war-821285593003.us-central1.run.app/'
 }
 
 export const TeamWolf = async () => {
