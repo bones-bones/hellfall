@@ -45,6 +45,8 @@ type stateType = (typeof stateList)[number];
 const equivStateNames: Record<string, stateType> = {
   alchemy: 'rebalanced',
   alchemyrebalanced: 'rebalanced',
+  rebalance: 'rebalanced',
+  alchemyrebalance: 'rebalanced',
   shadowland: 'snarl',
   tricycle: 'triome',
   trikeland: 'triome',
@@ -111,7 +113,7 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean> = {
     ),
   manland: (value: HCCard.Any) => !!value.tags?.includes('manland'),
   masterpiece: (value: HCCard.Any) => !!value.tags?.includes('masterpiece'),
-  rebalanced: (value: HCCard.Any) => !!value.tags?.includes('alchemy-rebalanced'),
+  rebalanced: (value: HCCard.Any) => !!value.tags?.includes('alchemy-rebalance'),
   bounceland: (value: HCCard.Any) => !!value.tags?.includes('bounceland'),
   fetchland: (value: HCCard.Any) => !!value.tags?.includes('true-fetchland'),
   filterland: (value: HCCard.Any) => !!value.tags?.includes('filterland'),
