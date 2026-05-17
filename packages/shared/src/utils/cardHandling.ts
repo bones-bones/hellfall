@@ -19,7 +19,7 @@ import {
  * Converts the card to an array of its faces.
  * For single-faced cards, returns an array with the card itself.
  * For multi-faced cards, returns the card_faces array.
- * 
+ *
  * Make sure you only try to work with props that exist on both `HCCard.AnySingleFaced` and `HCCardFace.MultiFaced`.
  * @param card card to get the faces of
  * @returns

@@ -13,6 +13,13 @@
 
 import { allSetsList } from '../data/sets';
 
+export const normalizeText = (text: string): string =>
+  text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replaceAll(/[‘’]/g, "'")
+    .replaceAll(/[“”]/g, '"');
+
 /**
  * Convert markdown text to plaintext by stripping formatting characters
  * Handles **bold**, *italic*, ~~strikethrough~~, and respects escaped characters
@@ -153,11 +160,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
     i++;
   }
 
-  const normalized = result
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replaceAll(/[‘’]/g, "'")
-    .replaceAll(/[“”]/g, '"');
+  const normalized = normalizeText(result);
   if (preserveCaps) {
     return normalized;
   }

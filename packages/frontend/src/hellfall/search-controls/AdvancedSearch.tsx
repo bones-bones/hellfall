@@ -34,6 +34,7 @@ import { SortComponent } from './SortComponent.tsx';
 import { useNavigate } from 'react-router-dom';
 import { parseSorts } from '../filters/parseSearchBar.ts';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
+import { normalizeText } from '@hellfall/shared/utils';
 
 // TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
 
@@ -553,7 +554,7 @@ export const AdvancedSearch = () => {
         colors={inputButtonColors}
         borderRadius="m"
         onClick={() => {
-          const newQuery = toQueryString();
+          const newQuery = normalizeText(toQueryString());
           setQuery(newQuery);
           setInputSorts([]);
           setSortRules([]);

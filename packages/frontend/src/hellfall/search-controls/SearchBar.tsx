@@ -4,6 +4,7 @@ import { queryAtom } from '../atoms/searchAtoms';
 import { useEffect, useMemo, useState } from 'react';
 import { useKeyPress } from '../../hooks';
 import { Link } from 'react-router-dom';
+import { normalizeText } from '@hellfall/shared/utils';
 
 export const SearchBar = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -22,7 +23,7 @@ export const SearchBar = () => {
   const enterPressed = useKeyPress('Enter');
   useEffect(() => {
     if (enterPressed) {
-      setQuery(localQuery);
+      setQuery(normalizeText(localQuery));
     }
   }, [enterPressed]);
 
