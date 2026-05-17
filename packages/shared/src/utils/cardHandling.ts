@@ -19,6 +19,8 @@ import {
  * Converts the card to an array of its faces.
  * For single-faced cards, returns an array with the card itself.
  * For multi-faced cards, returns the card_faces array.
+ * 
+ * Make sure you only try to work with props that exist on both `HCCard.AnySingleFaced` and `HCCardFace.MultiFaced`.
  * @param card card to get the faces of
  * @returns
  */
@@ -34,7 +36,7 @@ const asArray = <T>(value: T) => {};
 /**
  * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
  * @param card card to get the value from
- * @param prop prop to get the value of
+ * @param prop prop to get the value of (must be a prop that exists on both `HCCard.AnySingleFaced` and `HCCardFace.MultiFaced`)
  * @returns
  */
 export const getFromFaces = <K extends bothPropType>(
@@ -48,7 +50,7 @@ export const getFromFaces = <K extends bothPropType>(
 /**
  * Gets the value of a prop from each face of a card without flattening it (excluding the main part for multiface cards)
  * @param card card to get the value from
- * @param prop prop to get the value of
+ * @param prop prop to get the value of (must be a prop that exists on both `HCCard.Any` and `HCCardFace.MultiFaced`)
  * @returns
  */
 export const getColorsFromFaces = (card: HCCard.Any, prop: colorPropType): HCColors[] =>
