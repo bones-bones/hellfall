@@ -260,15 +260,15 @@ export const AdvancedSearch = () => {
       <br />
       <SearchContainer>
         <SearchCriteriaSection>
-          <FormField label="Id">
-            <TextInput value={idSearch} onChange={event => setIdSearch(event.target.value)} />
-          </FormField>
           <PillSearch
             label={'Name'}
             possibleValues={[]}
             values={nameSearch}
             onChange={setNameSearch}
           />
+          <FormField label="Id">
+            <TextInput value={idSearch} onChange={event => setIdSearch(event.target.value)} />
+          </FormField>
           <PillSearch
             label={'Cost'}
             possibleValues={pipList}

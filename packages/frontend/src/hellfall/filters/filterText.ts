@@ -163,7 +163,7 @@ export const filterTag: noteFilter = Object.assign(
           ? ` and that tag${
               typeof note == 'string'
                 ? `'s note ${opToIncludeSingular(operator, note, invert)}`
-                : ` ${opIsNegative(operator) ? 'does not have' : 'has'} a note`
+                : ` ${opIsNegative(operator) != !invert ? 'does not have' : 'has'} a note`
             }`
           : ''
       }`,

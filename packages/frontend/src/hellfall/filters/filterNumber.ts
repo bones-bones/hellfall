@@ -15,6 +15,7 @@ import {
 } from './values/filterColors';
 import { equivColorFilterNames, equivFilterNames, splitOnFirstOp } from './filterBuilder';
 import { invertOp, shareOp } from './filterUtils';
+import { getColorsFromFaces, getFromFaces, toFaces } from '@hellfall/shared/utils';
 
 export const filterNumber: numFilter = Object.assign(
   (value1: number, operator: opType, value2: number) => {
@@ -107,28 +108,23 @@ export const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number
     case 'manavalue':
       return [card.mana_value];
     case 'power':
-      return card.toFaces().flatMap(e => toNumber(e.power) ?? []);
+      return toFaces(card).flatMap(e => toNumber(e.power) ?? []);
     case 'toughness':
-      return card.toFaces().flatMap(e => toNumber(e.toughness) ?? []);
+      return toFaces(card).flatMap(e => toNumber(e.toughness) ?? []);
     case 'pt':
-      return card
-        .toFaces()
-        .flatMap(e =>
-          !e.power && !e.toughness ? [] : (toNumber(e.power) ?? 0) + (toNumber(e.toughness) ?? 0)
-        );
+      return toFaces(card).flatMap(e =>
+        !e.power && !e.toughness ? [] : (toNumber(e.power) ?? 0) + (toNumber(e.toughness) ?? 0)
+      );
     case 'loyalty':
-      return card.toFaces().flatMap(e => toNumber(e.loyalty) ?? []);
+      return toFaces(card).flatMap(e => toNumber(e.loyalty) ?? []);
     case 'defense':
-      return card.toFaces().flatMap(e => toNumber(e.defense) ?? []);
+      return toFaces(card).flatMap(e => toNumber(e.defense) ?? []);
     case 'color':
       return [card.colors.length];
     case 'identity':
       return [card.color_identity.length];
     case 'indicator':
-      return card
-        .toFaces()
-        .filter(e => e.color_indicator)
-        .map(e => e.color_indicator!.length);
+      return getColorsFromFaces(card, 'color_indicator').map(c => c.length);
     case 'hybrid':
       return [getHybridColorNumber(card.color_identity_hybrid)];
     case 'misccolor':
@@ -136,10 +132,7 @@ export const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number
     case 'miscidentity':
       return [colorMiscReduce(card.color_identity).length];
     case 'miscindicator':
-      return card
-        .toFaces()
-        .filter(e => e.color_indicator)
-        .map(e => colorMiscReduce(e.color_indicator!).length);
+      return getColorsFromFaces(card, 'color_indicator').map(c => colorMiscReduce(c).length);
     case 'mischybrid':
       return [getHybridColorNumber(hybridIdentityMiscReduce(card.color_identity_hybrid))];
   }

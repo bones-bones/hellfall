@@ -2,7 +2,7 @@ import { Card, Heading, Text } from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
 import { SetLegality } from './SetLegality.tsx';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
-import { formatParens, listShare } from '@hellfall/shared/utils';
+import { formatParens, listShare, textListIncludes, textListShares } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { HellfallRelatedEntry } from '../HellfallEntry.tsx';
 
@@ -166,7 +166,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
             <div key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               {face.name &&
-                (listShare(triggerEscapeList, face.name) ? (
+                (triggerEscapeList.some(e => face.name.includes(e)) ? (
                   <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
                     {formatDiscordMarkdownInline(formatParens(face.name))}
                   </Text>
@@ -183,7 +183,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
               </Text>
               <br />
               {face.flavor_name &&
-                (listShare(triggerEscapeList, face.name) ? (
+                (triggerEscapeList.some(e => face.name.includes(e)) ? (
                   <>
                     <Text typeLevel="body.medium" key="flavor-name">
                       {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.flavor_name))}
@@ -207,7 +207,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 </>
               )}
               {face.type_line &&
-                (listShare(triggerEscapeList, face.type_line) ? (
+                (triggerEscapeList.some(e => face.type_line.includes(e)) ? (
                   <Text typeLevel="body.medium" key="type">
                     {formatDiscordMarkdownInline(formatParens(face.type_line))}
                   </Text>
@@ -221,7 +221,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                 ))}
               <br />
               {face.oracle_text &&
-                (listShare(triggerEscapeList, face.oracle_text) ? (
+                (triggerEscapeList.some(e => face.oracle_text.includes(e)) ? (
                   <Text typeLevel="body.medium" key="rules">
                     {formatDiscordMarkdown(formatParens(face.oracle_text))}
                     <br />
@@ -234,7 +234,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                   </>
                 ))}
               {face.flavor_text &&
-                (listShare(['*', '_', '~'], face.flavor_text) ? (
+                (['*', '_', '~'].some(e => face.flavor_text?.includes(e)) ? (
                   <Text typeLevel="body.medium" key="flavor">
                     {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
                     <br />
