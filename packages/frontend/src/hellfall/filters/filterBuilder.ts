@@ -1143,6 +1143,7 @@ export const textIsQuote = (text: string) =>
 export const unescapeText = (text: string) => {
   const strippedText = textIsQuote(text) ? text : text.replaceAll(/[_-]/g, '');
   return strippedText
+    .toLowerCase()
     .replaceAll(/^['"]/g, '')
     .replaceAll(/(?<!\\)['"]/g, '')
     .replaceAll(/\\(['"])/g, '$1');
