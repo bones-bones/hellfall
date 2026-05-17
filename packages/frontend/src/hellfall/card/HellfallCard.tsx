@@ -18,7 +18,6 @@ import {
   formatDiscordMarkdownInvertedItalics,
   formatDiscordMarkdownInvertedItalicsInline,
 } from '../markdownFormatter.tsx';
-import CardCacheService from './cardCacheService.ts';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
@@ -113,12 +112,6 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
 
   // TODO: add handling for flip and aftermath
   const { images: imagesToShow, names: imageNames } = getImages(data);
-
-  // useEffect(() => {
-  //   if (data?.id) {
-  //     CardCacheService.saveCard(data);
-  //   }
-  // }, [data]);
 
   return (
     <Container ref={windowRef} key={data.id}>
