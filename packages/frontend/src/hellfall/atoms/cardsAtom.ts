@@ -1,8 +1,9 @@
 import { atom } from 'jotai';
 import { HCCard, HCCardFace } from '@hellfall/shared/types';
-// @ts-ignore
-export const cardsAtom = atom<HCCard.Any[]>(async () => {
-  // @ts-ignore
-  const { data } = await import('@hellfall/shared/data/Hellscube-Database.json');
-  return data as HCCard.Any[];
+import { addToJSONToCards } from '@hellfall/shared/utils';
+import cardsData from '@hellfall/shared/data/Hellscube-Database.json';
+
+export const cardsAtom = atom<Promise<HCCard.Any[]>>(async () => {
+  const { data } = cardsData as { data: HCCard.Any[] };
+  return addToJSONToCards(data);
 });

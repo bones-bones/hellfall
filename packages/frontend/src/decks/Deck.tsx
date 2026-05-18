@@ -259,9 +259,7 @@ const getPrice = (name: string) => {
     nameV += name.charCodeAt(i);
   }
 
-  const now = new Date();
-  //@ts-ignore
-  const fullDaysSinceEpoch = Math.floor(now / 8.64e7);
+  const fullDaysSinceEpoch = Math.floor(Date.now() / 8.64e7);
 
   const uhhh = (fullDaysSinceEpoch * nameV) % 10;
 

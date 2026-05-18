@@ -18,7 +18,6 @@ const fetchLandBox = async () => {
         }
         ob[keys[i]].push(entry[i]);
       } else {
-        // @ts-ignore
         ob[keys[i]] = entry[i];
       }
     }
