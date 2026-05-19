@@ -1,5 +1,6 @@
 import { HCCard, HCCardFace, HCColors } from '../types';
 import { facePropOrder, partPropOrder, propOrder } from './orderProps';
+import { getIndicatorFromColors } from './pipsHandling';
 import {
   allPropType,
   allType,
@@ -144,3 +145,40 @@ export const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
     return cardWithJSON as HCCard.Any;
   });
 };
+
+const faceToPlainText = (face: bothType): string => {
+  let text = face.name;
+  if (face.mana_cost) {
+    text += ` ${face.mana_cost}`;
+  }
+  if (face.color_indicator) {
+    text += `\n${getIndicatorFromColors(face.color_indicator)?.english}`;
+  }
+  if (face.type_line) {
+    text += `\n${face.type_line}`;
+  }
+  if (face.oracle_text) {
+    text += `\n${face.oracle_text.replaceAll('\\n', '\n')}`;
+  }
+  if (face.power || face.toughness) {
+    text += `\n${face.power}/${face.toughness}`;
+  }
+  if (face.loyalty) {
+    text += `\nLoyalty: ${face.loyalty}`;
+  }
+  if (face.defense) {
+    text += `\nDefense: ${face.defense}`;
+  }
+  if (face.hand_modifier) {
+    text += `\nHand Size: ${face.hand_modifier}`;
+  }
+  if (face.life_modifier) {
+    text += `\nStarting Life: ${face.life_modifier}`;
+  }
+  return text;
+};
+
+export const toPlainText = (card: HCCard.Any) =>
+  toFaces(card)
+    .map(face => faceToPlainText(face))
+    .join('\n---\n');

@@ -13,25 +13,10 @@ import { WatchwolfWar } from './watchWolf/WatchWolfWar.tsx';
 import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
 import { Login } from './auth/Login.tsx';
 import { useNameToId, useIsId } from './hellfall/hooks/useNameToId.ts';
-import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 import { getBasePath } from './basePath.ts';
 import { AdvancedSearch } from './hellfall/search-controls/AdvancedSearch.tsx';
 import { Syntax } from './hellfall/Syntax.tsx';
 
-const PipsInitializer = ({ children }: { children: React.ReactNode }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    loadPipsData();
-    setIsLoaded(true);
-  }, []);
-
-  if (!isLoaded) {
-    return <div />;
-  }
-
-  return <>{children}</>;
-};
 
 const CardRoute = () => {
   const params = useParams<{ '*': string }>();
@@ -84,9 +69,7 @@ export const App = () => {
   return (
     <BrowserRouter basename={basePath || undefined}>
       <Header />
-      <PipsInitializer>
-        <ApplicationRoutes />
-      </PipsInitializer>
+      <ApplicationRoutes />
     </BrowserRouter>
   );
 };

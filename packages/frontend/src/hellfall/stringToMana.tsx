@@ -1,18 +1,9 @@
 import styled from '@emotion/styled';
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
-import { sameColors } from './filters/values/filterColors.ts';
-import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
+import { getIndicatorFromColors, getPip } from '@hellfall/shared/utils';
 import { withBasePath } from '../basePath.ts';
 
-export const getPipSrc = (name: string) => {
-  const pips = getPipsData();
-  const icon = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-  return icon ? withBasePath('/pips/' + icon.filename) : undefined;
-};
-export const getPip = (name: string) => {
-  const pips = getPipsData();
-  return pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-};
+export const getPipSrc = (name: string) => withBasePath('/pips/' + getPip(name)?.filename);
 export const pipToSrc = (pip: HCCardSymbol) => {
   return withBasePath('/pips/' + pip.filename);
 };
@@ -61,15 +52,11 @@ export const stringToMana = (text: string) => {
 };
 
 export const colorsToIndicator = (colors: HCColors) => {
-  const pips = getPipsData();
-  const icon = pips?.find(
-    e => !e.represents_mana && 'colors' in e && sameColors(e.colors!, colors)
-  );
+  const pip = getIndicatorFromColors(colors);
 
-  // const loc = icon ? withBasePath('/pips/' + icon.filename) : undefined;
-  return icon ? (
+  return pip ? (
     <PipContainer>
-      <PipSymbol src={pipToSrc(icon)} alt={icon?.symbol} title={icon.english} />
+      <PipSymbol src={pipToSrc(pip)} alt={pip?.symbol} title={pip.english} />
     </PipContainer>
   ) : (
     colors.toString()

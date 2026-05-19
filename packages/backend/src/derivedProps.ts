@@ -21,8 +21,9 @@ import {
   containsSome,
   listShareLower,
   listShare,
+  getMVFromCost,
+  getPipColorsFromText,
 } from '@hellfall/shared/utils';
-import { getPipsData } from '@hellfall/shared/services/pipsService.ts';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -59,40 +60,13 @@ export const getColorIdentityProps = (
       }
     }
   };
-  const pips = getPipsData();
   const addColorsFromFace = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced) => {
-    const costNames = face.mana_cost.match(/{([^}]+)}/g)?.map(match => match.slice(1, -1));
-
-    costNames?.forEach(name => {
-      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-      if (pip && pip?.represents_mana) {
-        addColors(pip.colors!);
-      } /*else {
-          const mappedColor = manaSymbolColorMatching[name];
-          if (mappedColor) {
-            addColors([mappedColor]);
-          }
-        }*/
-    });
+    getPipColorsFromText(face.mana_cost).forEach(colorSet => addColors(colorSet));
 
     const minusReminderText = splitParens(face.oracle_text)
       .filter(e => e[0] && e[0] != '(')
       .join('');
-    const textNames = (minusReminderText || '')
-      .match(/{([^}]+)}/g)
-      ?.map(match => match.slice(1, -1));
-
-    textNames?.forEach(name => {
-      const pip = pips?.find(e => e.symbol.toLowerCase() === name.toLowerCase());
-      if (pip && pip?.represents_mana) {
-        addColors(pip.colors!);
-      } /*else {
-          const mappedColor = manaSymbolColorMatching[name];
-          if (mappedColor) {
-            addColors([mappedColor]);
-          }
-        }*/
-    });
+    getPipColorsFromText(minusReminderText).forEach(colorSet => addColors(colorSet));
 
     const splitSubtypes = face.subtypes || [];
     splitSubtypes.forEach(typeEntry => {
@@ -134,19 +108,6 @@ export const getColorIdentityProps = (
     color_identity: Array.from(colorIdentity) as HCColors,
     color_identity_hybrid: colorIdentityHybrid,
   };
-};
-
-export const getMVFromCost = (cost: string): number => {
-  const pips = getPipsData();
-  return (
-    cost
-      .match(/{([^}]+)}/g)
-      ?.map(match => match.slice(1, -1))
-      ?.reduce((totalMV, pipName) => {
-        const pip = pips?.find(e => e.symbol.toLowerCase() === pipName.toLowerCase());
-        return totalMV + (pip?.mana_value || 0);
-      }, 0) || 0
-  );
 };
 
 export const setDerivedProps = (card: HCCard.Any) => {
@@ -255,7 +216,10 @@ export const setDerivedProps = (card: HCCard.Any) => {
         .join(' ') as string;
       face.type_line = face_type;
       type_line_list.push(face_type);
-      face.mana_value = getMVFromCost(face.mana_cost);
+      face.mana_value =
+        i && !face.mana_cost && ['transform', 'flip'].includes(face.layout)
+          ? card.card_faces.slice(0, i).findLast(f => f.mana_cost)?.mana_value ?? 0
+          : getMVFromCost(face.mana_cost);
       mana_cost_list.push(face.mana_cost);
       const effects = [...(face.frame_effects || []), ...getFrameEffectsFromFace(face, i)];
       if (effects.length > 0) {

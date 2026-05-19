@@ -16,20 +16,9 @@ import {
 } from '../types';
 import { canContainOp, containsOp, opToShorthand } from '../filterUtils';
 import { filterNumber } from '../filterNumber';
-import { canContain, contains, listEquals } from '@hellfall/shared/utils';
+import { canContain, contains } from '@hellfall/shared/utils';
 const MISC_BULLSHIT = 'Misc';
 
-/**
- * Checks whether two color sets are the same colors.
- * @param colors1 The first set of colors to compare
- * @param colors2 The second set of colors to compare
- * @returns boolean of whether the sets are the same colors.
- */
-export const sameColors = (colors1: HCColors | string[], colors2: HCColors | string[]): boolean =>
-  listEquals(
-    colors1.filter(c => c != 'C'),
-    colors2
-  );
 /**
  * Compares two sets of colors using an operator and returns a bool.
  * @param value1 The first set of colors to compare (must not include 'C' unless that is its only member; must not be empty)

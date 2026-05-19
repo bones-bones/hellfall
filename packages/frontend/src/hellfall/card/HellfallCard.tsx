@@ -471,7 +471,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           )}
         </Card.Body>
       </Card>
-      {/* <ButtonGroup>
+      <ButtonGroup>
         <br />
         <Button colors={inputButtonColors} borderRadius="m">
           Copy-pasteable Text
@@ -479,7 +479,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
         <Button colors={inputButtonColors} borderRadius="m">
           Copy-pasteable JSON
         </Button>
-      </ButtonGroup> */}
+      </ButtonGroup>
     </Container>
   );
 };

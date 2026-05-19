@@ -18,10 +18,6 @@
       "types": "./src/data/*",
       "import": "./src/data/*"
     },
-    "./services/*": {
-      "types": "./src/services/*",
-      "import": "./src/services/*"
-    },
     "./utils": {
       "types": "./src/utils/index.ts",
       "import": "./src/utils/index.ts"

@@ -18,7 +18,6 @@ import {
   textEquals,
   textPrep,
 } from '@hellfall/shared/utils';
-import { loadPipsData } from '@hellfall/shared/services/pipsService.ts';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import {
   addProp,
@@ -533,9 +532,6 @@ const loadExistingData = () => {
   return { existingCards, existingTokens };
 };
 const main = async () => {
-  // const pips = await loadPips();
-  await loadPipsData();
-
   const { data: newCards } = { data: await fetchDatabase() };
   const usernameMappings = await fetchUsernameMappings();
   const tokenExcludedIds = ['the first pick1'];
@@ -985,7 +981,7 @@ const main = async () => {
   );
   fs.writeFileSync(
     '../shared/src/data/tokens.json',
-    JSON.stringify({ data: finalTokens }, null, '\t')
+    JSON.stringify({ data: addToJSONToCards(finalTokens) }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tags.json',
