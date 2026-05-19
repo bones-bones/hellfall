@@ -1,21 +1,9 @@
-import { Firestore, type DocumentReference, type DocumentSnapshot } from '@google-cloud/firestore';
 import { withCors } from './lib/cors.js';
 import { env } from './lib/env.js';
 import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
-
-const db = new Firestore({ databaseId: env.FIRESTORE_HELLSCUBE_DATABASE_ID });
-const collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
-
-/** If `cards/{id}` is missing, create it with empty tag overrides (merge-safe). Returns latest snapshot. */
-async function getOrSeedCardTagsDoc(docRef: DocumentReference): Promise<DocumentSnapshot> {
-  let snap = await docRef.get();
-  if (!snap.exists) {
-    await docRef.set({ added: [], removed: [] }, { merge: true });
-    snap = await docRef.get();
-  }
-  return snap;
-}
+import { getTagOverrides, setTagOverrides } from './tagsStore.js';
+const useLocalData = env.USE_LOCAL_CARD_DATA;
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -33,8 +21,8 @@ function normalizeTag(t: string): string {
 export const cardTagsHandler = async (
   req: HandlerRequest,
   res: HandlerResponse,
-  cardId: string,
-  tagFromPath: string | null
+  cardId: string
+  // tagFromPath: string | null |undefined
 ): Promise<void> => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
@@ -51,15 +39,9 @@ export const cardTagsHandler = async (
       res.end(JSON.stringify({ ok: false, reason: 'invalid_card_id' }));
       return;
     }
-
-    const docRef = collection.doc(cardId);
-
     if (req.method === 'GET') {
-      const snap = await getOrSeedCardTagsDoc(docRef);
-      const data = snap.data() as CardTagOverrides | undefined;
-      const added = Array.isArray(data?.added) ? data.added.map(String) : [];
-      const removed = Array.isArray(data?.removed) ? data.removed.map(String) : [];
-      const payload = { added, removed, persistEnabled: true as const };
+      const { added, removed } = await getTagOverrides(cardId);
+      const payload = { added, removed, persistEnabled: true };
       let body: string;
       try {
         body = JSON.stringify(payload);
@@ -72,61 +54,51 @@ export const cardTagsHandler = async (
       res.end(body);
       return;
     }
+    if (!useLocalData) {
+      const auth = await requireTagAuth(req, res);
+      if (!auth) return;
+    }
+    let body: { tag?: string };
+    try {
+      body = (await readJsonBody(req)) as { tag?: string };
+    } catch {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_json' }));
+      return;
+    }
+    const tag = body.tag != null ? String(body.tag) : '';
+    const norm = normalizeTag(tag);
+    if (!norm) {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
+      return;
+    }
 
-    const auth = await requireTagAuth(req, res);
-    if (!auth) return;
+    const { added, removed } = await getTagOverrides(cardId);
+    const newAdded = [...added];
+    const newRemoved = [...removed];
 
     if (req.method === 'POST') {
-      let body: { tag?: string };
-      try {
-        body = (await readJsonBody(req)) as { tag?: string };
-      } catch {
-        res.statusCode = 400;
-        res.end(JSON.stringify({ ok: false, reason: 'invalid_json' }));
-        return;
+      if (newRemoved.includes(norm)) {
+        newRemoved.splice(newRemoved.indexOf(norm), 1);
+      } else if (!newAdded.includes(norm)) {
+        newAdded.push(norm);
       }
-      const tag = body.tag != null ? String(body.tag) : '';
-      const norm = normalizeTag(tag);
-      if (!norm) {
-        res.statusCode = 400;
-        res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
-        return;
-      }
-      const snap = await getOrSeedCardTagsDoc(docRef);
-      const data = snap.data() as CardTagOverrides | undefined;
-      const added = Array.isArray(data?.added) ? [...data.added.map(String)] : [];
-      const removed = Array.isArray(data?.removed) ? [...data.removed.map(String)] : [];
-      if (removed.includes(norm)) {
-        removed.splice(removed.indexOf(norm), 1);
-      } else if (!added.includes(norm)) {
-        added.push(norm);
-      }
-      await docRef.set({ added, removed }, { merge: true });
+      await setTagOverrides(cardId, { added: newAdded, removed: newRemoved });
       res.statusCode = 200;
-      res.end(JSON.stringify({ ok: true, added, removed }));
+      res.end(JSON.stringify({ ok: true, added: newAdded, removed: newRemoved }));
       return;
     }
 
     if (req.method === 'DELETE') {
-      const tag = tagFromPath != null ? decodeURIComponent(tagFromPath) : '';
-      const norm = normalizeTag(tag);
-      if (!norm) {
-        res.statusCode = 400;
-        res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
-        return;
+      if (newAdded.includes(norm)) {
+        newAdded.splice(newAdded.indexOf(norm), 1);
+      } else if (!newRemoved.includes(norm)) {
+        newRemoved.push(norm);
       }
-      const snap = await getOrSeedCardTagsDoc(docRef);
-      const data = snap.data() as CardTagOverrides | undefined;
-      let added = Array.isArray(data?.added) ? [...data.added.map(String)] : [];
-      let removed = Array.isArray(data?.removed) ? [...data.removed.map(String)] : [];
-      if (added.includes(norm)) {
-        added = added.filter(t => t !== norm);
-      } else {
-        removed.push(norm);
-      }
-      await docRef.set({ added, removed }, { merge: true });
+      await setTagOverrides(cardId, { added: newAdded, removed: newRemoved });
       res.statusCode = 200;
-      res.end(JSON.stringify({ ok: true, added, removed }));
+      res.end(JSON.stringify({ ok: true, added: newAdded, removed: newRemoved }));
       return;
     }
 

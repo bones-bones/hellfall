@@ -17,7 +17,6 @@ import { getBasePath } from './basePath.ts';
 import { AdvancedSearch } from './hellfall/search-controls/AdvancedSearch.tsx';
 import { Syntax } from './hellfall/Syntax.tsx';
 
-
 const CardRoute = () => {
   const params = useParams<{ '*': string }>();
   const navigate = useNavigate();

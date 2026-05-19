@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useMemo, startTransition } from 'react';
 import { HellfallEntry } from './HellfallEntry.tsx';
-import { xIcon } from '@workday/canvas-system-icons-web';
+import { xIcon, extLinkIcon } from '@workday/canvas-system-icons-web';
 
 import { styled, Card, ToolbarIconButton, space } from '@workday/canvas-kit-react';
 import { SidePanel, useSidePanel } from '@workday/canvas-kit-preview-react/side-panel';
@@ -84,7 +84,20 @@ export const HellFall = () => {
         <Card>
           <Card.Body padding={'zero'}>
             <SPContainer>
-              <ToolbarIconButton icon={xIcon} onClick={() => setActiveCardFromAtom('')} />
+              <ToolbarIconButton
+                icon={xIcon}
+                margin={'2px 0 0 2px'}
+                onClick={() => setActiveCardFromAtom('')}
+              />
+              {activeCard && (
+                <ToolbarIconButton
+                  as="a"
+                  icon={extLinkIcon}
+                  margin={'2px 0 0 2px'}
+                  href={withBasePath('/card/' + encodeURIComponent(activeCard.id))}
+                  target="_blank"
+                />
+              )}
               {activeCard && <HellfallCard data={activeCard} />}
             </SPContainer>
           </Card.Body>

@@ -126,6 +126,15 @@ export default function (webpackEnv) {
         disableDotRule: true,
         index: '/index.html',
       },
+      proxy: [
+
+        {
+          context: ['/api'],
+          target: 'http://localhost:3003',
+          changeOrigin: true,
+        },
+      
+      ],
     },
     output: {
       // The build folder.

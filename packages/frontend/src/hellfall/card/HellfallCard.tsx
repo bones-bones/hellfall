@@ -9,7 +9,7 @@ import {
 import styled from '@emotion/styled';
 import { SetLegality } from './SetLegality.tsx';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
-import { formatParens, listShare, textListIncludes, textListShares } from '@hellfall/shared/utils';
+import { formatParens } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { HellfallRelatedEntry } from '../HellfallEntry.tsx';
 
@@ -25,14 +25,6 @@ import {
   formatDiscordMarkdownInvertedItalics,
   formatDiscordMarkdownInvertedItalicsInline,
 } from '../markdownFormatter.tsx';
-const renderLine = (text: string) => {
-  return (
-    <>
-      <MediumLine>{stringToMana(text)}</MediumLine>
-      {/* <br/> */}
-    </>
-  );
-};
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
@@ -96,7 +88,13 @@ const getImages = (card: HCCard.Any) => {
   }
   return { images: imagesToShow, names: imageNames };
 };
-export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
+export const HellfallCard = ({
+  data,
+  onSinglePage,
+}: {
+  data: HCCard.Any;
+  onSinglePage?: boolean;
+}) => {
   const { user } = useAuth();
   const [displayTags, addTag, removeTag, tagsLoading, tagsError, tagsPersistEnabled] =
     useCardTagOverrides(data.id, data.tags);
@@ -448,7 +446,12 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     .map((entry, i) => (
                       <HellfallRelatedEntry
                         onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                          if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                          if (
+                            event.button === 1 ||
+                            event.metaKey ||
+                            event.ctrlKey ||
+                            !onSinglePage
+                          ) {
                             window.open(
                               withBasePath('/card/' + encodeURIComponent(entry.id)),
                               '_blank'
@@ -473,10 +476,30 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
       </Card>
       <ButtonGroup>
         <br />
-        <Button colors={inputButtonColors} borderRadius="m">
+        <Button
+          colors={inputButtonColors}
+          borderRadius="m"
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
+              window.open(withBasePath(`/api/card/${encodeURIComponent(data.id)}/text`), '_blank');
+            } else {
+              window.location.href = withBasePath(`/api/card/${encodeURIComponent(data.id)}/text`);
+            }
+          }}
+        >
           Copy-pasteable Text
         </Button>
-        <Button colors={inputButtonColors} borderRadius="m">
+        <Button
+          colors={inputButtonColors}
+          borderRadius="m"
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
+              window.open(withBasePath(`/api/card/${encodeURIComponent(data.id)}/json`), '_blank');
+            } else {
+              window.location.href = withBasePath(`/api/card/${encodeURIComponent(data.id)}/json`);
+            }
+          }}
+        >
           Copy-pasteable JSON
         </Button>
       </ButtonGroup>
@@ -598,7 +621,7 @@ const inputButtonColors: ButtonColors = {
   },
 };
 
-const MediumText = styled('p')({
+const MediumText = styled('div')({
   fontSize: type.levels.body.medium.fontSize,
   fontWeight: type.levels.body.medium.fontWeight,
   marginBlock: '.5rem',
@@ -611,7 +634,7 @@ const MediumLine = styled('span')({
 });
 const MediumItalics = styled(MediumText)({ fontStyle: 'italic' });
 const MediumItalicLine = styled(MediumLine)({ fontStyle: 'italic' });
-const SmallText = styled('p')({
+const SmallText = styled('div')({
   fontSize: type.levels.body.small.fontSize,
   fontWeight: type.levels.body.small.fontWeight,
   marginBlock: '.4rem',

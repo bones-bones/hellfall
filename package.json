@@ -26,6 +26,7 @@
     "add:frontend": "yarn workspace @hellfall/frontend add",
     "add:backend": "yarn workspace @hellfall/backend add",
     "add:shared": "yarn workspace @hellfall/shared add",
+    "add:server": "yarn workspace @hellfall/server add",
     "server:dev": "yarn workspace @hellfall/server dev",
     "server:start": "yarn workspace @hellfall/server start"
   },

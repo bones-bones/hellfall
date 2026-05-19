@@ -11,6 +11,7 @@ import { loginHandler } from './api/discord/login.js';
 import { callbackHandler } from './api/discord/callback.js';
 import { doneHandler } from './api/discord/done.js';
 import { cardTagsHandler } from './api/cardTags.js';
+import { cardJsonHandler, cardTextHandler } from './api/cardData.js';
 
 const PORT = Number(process.env.PORT) || 3003;
 
@@ -25,16 +26,26 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
     '/api/discord/done': doneHandler,
   };
 
-const CARD_TAGS_PREFIX = '/api/cards/';
+const CARD_API_PREFIX = '/api/card/';
 
-function parseCardTagsPath(path: string): { cardId: string; tag: string | null } | null {
-  if (!path.startsWith(CARD_TAGS_PREFIX)) return null;
-  const rest = path.slice(CARD_TAGS_PREFIX.length);
-  const parts = rest.split('/');
-  if (parts.length < 2 || parts[0] === '' || parts[1] !== 'tags') return null;
+function parseCardApiPath(
+  path: string
+): { cardId: string; format: 'json' | 'text' | 'tags' | null; tag?: string | null } | null {
+  if (!path.startsWith(CARD_API_PREFIX)) return null;
+
+  const rest = path.slice(CARD_API_PREFIX.length);
+  const parts = rest.split('/').filter(p => p !== '');
+
+  if (parts.length === 0) return null;
+
   const cardId = parts[0];
-  const tag = parts.length >= 3 && parts[2] !== '' ? parts[2] : null;
-  return { cardId, tag };
+  const format = parts[1] as 'json' | 'text' | 'tags' | undefined;
+  if (format === 'json' || format === 'text' || format === 'tags') {
+    return { cardId, format };
+  }
+
+  // Default to null format (will be handled by your existing cardTagsHandler?)
+  return { cardId, format: null };
 }
 
 function parseQuery(search: string | null): Record<string, string | string[]> {
@@ -56,18 +67,27 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
     const { pathname, search } = parseUrl(req.url ?? '/', true);
     const path = pathname ?? '/';
 
-    const cardTagsParams = parseCardTagsPath(path);
-    if (cardTagsParams) {
+    const cardApiParams = parseCardApiPath(path);
+    if (cardApiParams) {
       (req as HandlerRequest).query = parseQuery(search);
-      await cardTagsHandler(
-        req as HandlerRequest,
-        res as HandlerResponse,
-        cardTagsParams.cardId,
-        cardTagsParams.tag
-      );
+
+      // Handle different formats
+      if (cardApiParams.format === 'json') {
+        await cardJsonHandler(req as HandlerRequest, res as HandlerResponse, cardApiParams.cardId);
+        return;
+      } else if (cardApiParams.format === 'text') {
+        await cardTextHandler(req as HandlerRequest, res as HandlerResponse, cardApiParams.cardId);
+        return;
+      } else if (cardApiParams.format === 'tags') {
+        await cardTagsHandler(req as HandlerRequest, res as HandlerResponse, cardApiParams.cardId);
+        return;
+      }
+      const headers = withCors({ 'Content-Type': 'application/json' }, req);
+      Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
+      res.statusCode = 400;
+      res.end(JSON.stringify({ error: 'Format must be one of: json, text, tags' }));
       return;
     }
-
     const loader = routes[path];
     if (!loader) {
       const headers = withCors({ 'Content-Type': 'application/json' }, req);

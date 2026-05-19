@@ -44,7 +44,7 @@ export const getPip = (pipText: string): HCCardSymbol | undefined =>
  * Gets the pip for a color indicator from its colors
  */
 export const getIndicatorFromColors = (colors: HCColors | string[]) =>
-  pips?.find(e => e.symbol.slice(0,3) == 'CI-' && listEquals(e.colors, colors));
+  pips?.find(e => e.symbol.slice(0, 3) == 'CI-' && listEquals(e.colors, colors));
 
 /**
  * Gets all the pips from text

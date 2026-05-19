@@ -48,3 +48,5 @@ build
 .vscode/settings.json
 
 LESSONS_LEARNED.md
+
+local-tags.json
