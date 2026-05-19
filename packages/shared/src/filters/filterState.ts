@@ -1,7 +1,6 @@
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard } from '../types';
 import { cardStringFilter, opType, invertOptionType } from './types';
 import { funcOp, opIsNegative, opToNot, opToDont, opToNt } from './filterUtils';
-import { canBeACommander } from '../canBeACommander';
 import {
   getColorsFromFaces,
   getFromAll,
@@ -10,8 +9,9 @@ import {
   textListIncludes,
   textListShares,
   toFaces,
-} from '@hellfall/shared/utils';
-import { toNumber } from '../inputs/NumberSelector';
+  toNumber,
+  canBeACommander,
+} from '../utils';
 
 const stateList = [
   'foil',

@@ -21,7 +21,7 @@ import { CHUNK_SIZE } from './constants.ts';
 import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom.ts';
 import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
-import { getOtherNames } from './getNames.ts';
+import { getOtherNames } from '@hellfall/shared/utils';
 import { withBasePath } from '../basePath.ts';
 import { SearchBar } from './search-controls/SearchBar.tsx';
 

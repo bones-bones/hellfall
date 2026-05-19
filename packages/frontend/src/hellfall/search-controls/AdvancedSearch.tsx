@@ -25,21 +25,17 @@ import { useAtom, useAtomValue } from 'jotai';
 import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
-import { useKeyPress } from '../../hooks/index.ts';
 import { useEffect, useState } from 'react';
 import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import { HCSearchColors } from '@hellfall/shared/types';
-import { looseOpList, looseOpType } from '../filters/types.ts';
+import { looseOpList, looseOpType } from '@hellfall/shared/filters/types.ts';
 import { SortComponent } from './SortComponent.tsx';
 import { useNavigate } from 'react-router-dom';
-import { parseSorts } from '../filters/parseSearchBar.ts';
+import { parseSorts } from '@hellfall/shared/filters/parseSearchBar.ts';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
 import { normalizeText } from '@hellfall/shared/utils';
 
-// TODO: add or functionality (maybe just entirely switch over to how scryfall does it?)
-
 export const AdvancedSearch = () => {
-  const navigate = useNavigate();
   const [idSearch, setIdSearch] = useState<string>('');
   const [nameSearch, setNameSearch] = useState<string[]>([]);
   const [costSearch, setCostSearch] = useState<string[]>([]);

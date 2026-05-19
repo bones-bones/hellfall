@@ -10,7 +10,7 @@ import { DeckConstruction } from './DeckConstruction.tsx';
 import { CARDS_PER_PACK } from './constants.ts';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
-import { canBeACommander } from '../hellfall/canBeACommander.ts';
+import { canBeACommander } from '@hellfall/shared/utils';
 import { Pack, Round, TheDraft } from './types.ts';
 import { HCCard } from '@hellfall/shared/types';
 

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { FC, PropsWithChildren } from 'react';
 import { HCBorderColor, HCMiscColors } from '@hellfall/shared/types';
-import { looseOpList, sorts } from './filters/types.ts';
+import { looseOpList, sorts } from '@hellfall/shared/filters';
 
 const mapListToCodeAnd = (textList: string[]) =>
   textList.map((text, i) => (

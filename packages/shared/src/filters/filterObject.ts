@@ -1,12 +1,10 @@
-import { HCCard, HCFormat } from '@hellfall/shared/types';
+import { HCCard, HCFormat } from '../types';
 import {
   anyFilter,
   cardFilter,
   cardStringFilter,
   dirType,
   includeFilter,
-  inclusionType,
-  legalFilter,
   looseOpType,
   opType,
   sortFilter,

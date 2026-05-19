@@ -1,4 +1,4 @@
-import { HCCard, HCColor, HCColors, HCLegalitiesField } from '@hellfall/shared/types';
+import { HCCard, HCColor, HCColors, HCLegalitiesField } from '../types';
 import { CompFilter, filterObject, IncludeFilter, sortObject } from './filterObject';
 export const NOPRINT =
   'This should not ever print. Please report this as a bug on discord along with the search terms you used.';

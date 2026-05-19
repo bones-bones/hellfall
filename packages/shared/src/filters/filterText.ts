@@ -4,7 +4,7 @@ import {
   isNumber,
   textListIncludes,
   textListEquals,
-} from '@hellfall/shared/utils';
+} from '../utils';
 import {
   invertOptionType,
   looseOpType,
@@ -22,7 +22,7 @@ import {
   opToIncludePlural,
 } from './filterUtils';
 import { filterNumber } from './filterNumber';
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard } from '../types';
 import { prepTag } from './parseSearchBar';
 
 export const filterEmpty: textFilter = Object.assign(

@@ -1,6 +1,5 @@
-import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
-import { extraSetList } from '@hellfall/shared/data/sets';
-import { getHc5 } from '../../hells-cubes/getHc5';
+import { HCCard, HCRelatedCard } from '../types';
+import { extraSetList } from '../data/sets.ts';
 import {
   includeFilter,
   inclusionOptions,
@@ -10,7 +9,7 @@ import {
   cardStringFilter,
 } from './types';
 import { funcOp, opIsNegative, opToNot } from './filterUtils';
-import { textSearchIncludes } from '@hellfall/shared/utils';
+import { textSearchIncludes } from '../utils';
 
 export const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',
@@ -143,9 +142,6 @@ export const getSplitSet = (
   set: string,
   moveNonDraftablesToTokens: boolean = false
 ): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
-  if (set == 'HC5') {
-    return { cards: getHc5(), tokens: [] };
-  }
   const filteredCards = allCards.filter(card =>
     set == 'All' ? true : filterSetBoth(card, '=', set)
   );

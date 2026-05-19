@@ -1,4 +1,4 @@
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard } from '../types';
 import { filterObject, IncludeFilter, sortObject } from './filterObject';
 import {
   filterIsInverted,
@@ -9,7 +9,6 @@ import {
   unescapeText,
 } from './filterBuilder';
 import { dirType, dirs, sorts, sortType, inclusionOptions, includeFilter } from './types';
-import { filterIncludeExtras } from './filterSet';
 
 const sortRedirects: Record<string, sortType> = {
   mv: 'manavalue',

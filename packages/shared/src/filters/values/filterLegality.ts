@@ -1,4 +1,4 @@
-import { formatList, HCFormat, HCLegalitiesField } from '@hellfall/shared/types';
+import { formatList, HCFormat, HCLegalitiesField } from '../../types';
 import { legalFilter, opType, invertOptionType } from '../types';
 import { funcOp, opToNot } from '../filterUtils';
 

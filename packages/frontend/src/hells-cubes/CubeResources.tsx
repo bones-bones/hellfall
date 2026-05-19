@@ -10,7 +10,7 @@ import { getDraftmancerForCube } from './draftmancer';
 import { getHc5 } from './getHc5.ts';
 import { toMPCAutofill } from './toMPCAutofill.ts';
 import { getLands } from './getLands.ts';
-import { getFilteredSet, getSplitSet } from '../hellfall/filters/filterSet.ts';
+import { getFilteredSet, getSplitSet } from '@hellfall/shared/filters/filterSet.ts';
 
 type CubeSetup = {
   name: string;
@@ -291,10 +291,10 @@ export const CubeResources = () => {
                         Sidename: string;
                         Url: string;
                       }[];
-                      const { cards: intCards, tokens: intTokens } = getSplitSet(
-                        cards,
-                        cubeSetup.id
-                      );
+                      const { cards: intCards, tokens: intTokens } =
+                        cubeSetup.id == 'HC5'
+                          ? { cards: getHc5(), tokens: [] }
+                          : getSplitSet(cards, cubeSetup.id);
                       const tokenNames = intTokens.flatMap(entry => {
                         // Dear sixel, pls finish
                         return (entry.all_parts?.filter(e => e.component == 'token') || []).map(

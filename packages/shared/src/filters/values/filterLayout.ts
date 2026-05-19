@@ -1,4 +1,4 @@
-import { HCLayout, HCLayoutGroup } from '@hellfall/shared/types';
+import { HCLayout, HCLayoutGroup } from '../../types';
 import { invertOptionType, opType, textListFilter } from '../types';
 import { shareOp, opToNot, opToDont } from '../filterUtils';
 export const toCardLayout: Record<string, HCLayout | HCLayout[]> = {

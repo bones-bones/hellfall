@@ -6,20 +6,15 @@ import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   queryAtom,
-  inputSortAtom,
   sortAtom,
   pageAtom,
   activeCardAtom,
-  summaryAtom,
-  invalidAtom,
-  querySortAtom,
   // shouldPushHistoryAtom,
 } from '../atoms/searchAtoms.ts';
 import tags_data from '@hellfall/shared/data/tags.json';
 
 import { CHUNK_SIZE } from '../constants.ts';
-import { combineAndWinnowSorts, searchCards } from '../filters/parseSearchBar.ts';
-import { makeSort } from '../filters/filterBuilder.ts';
+import { searchCards } from '@hellfall/shared/filters';
 
 export const useSearchResults = () => {
   // const navigate = useNavigate()

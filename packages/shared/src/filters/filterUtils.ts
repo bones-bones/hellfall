@@ -1,5 +1,5 @@
 import { cardFilter, looseOpType, opType, shorthandType } from './types';
-import { listShare } from '@hellfall/shared/utils';
+import { listShare } from '../utils';
 
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',

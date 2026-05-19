@@ -3,9 +3,10 @@ import { HCCard, HCCardFace, HCColors, HCLayout, HCRelatedCard } from '@hellfall
 import { orderColors } from '@hellfall/shared/utils';
 import { recursiveAdoption } from '../recursiveAdoption.ts';
 import { prettifyXml } from './prettifyXml';
-import { getSplitSet } from '../../hellfall/filters/filterSet.ts';
+import { getSplitSet } from '@hellfall/shared/filters/filterSet.ts';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { mergeHCCardFaces } from '../mergeHCCardFaces';
+import { getHc5 } from '../getHc5.ts';
 
 const hcToCockLayout: Record<HCLayout, string> = {
   normal: 'normal',
@@ -461,7 +462,8 @@ export const toCockCube = ({
       cardsElement.appendChild(tempCard);
     });
   };
-  const { cards, tokens } = getSplitSet(allCards, set);
+  const { cards, tokens } =
+    set == 'HC5' ? { cards: getHc5(), tokens: [] } : getSplitSet(allCards, set);
   const cockCards = cards.map(card => hcCardToCockProps(card));
   const cockTokens = tokens.map(token => hcCardToCockProps(token));
   cockCards.forEach(card => appendCockCard(card));

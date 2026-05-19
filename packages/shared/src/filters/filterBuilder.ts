@@ -1,5 +1,4 @@
-import { HCCard, HCLegalitiesField, HCMiscColors } from '@hellfall/shared/types';
-import { getAllNames } from '../getNames';
+import { HCCard, HCLegalitiesField, HCMiscColors } from '../types';
 import {
   colorMiscReduce,
   filterColorContents,
@@ -79,9 +78,10 @@ import {
   isInteger,
   isNumber,
   toFaces,
-} from '@hellfall/shared/utils';
+  getAllNames,
+  toNumber,
+} from '../utils';
 import { filterSort } from './sortRule';
-import { toNumber } from '../inputs/NumberSelector';
 
 export const makeIncludeFilter: includeFilterMaker = (value: string, op: looseOpType) => {
   return new IncludeFilter('include', filterIncludeExtras, value, op, '=');

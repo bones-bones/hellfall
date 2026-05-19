@@ -1,14 +1,12 @@
-import { Atom, atom, useAtomValue, useSetAtom, WritableAtom } from 'jotai';
-import { atomWithReset, RESET, useResetAtom } from 'jotai/utils';
-import { sortObject } from '../filters/filterObject';
-import { combineAndWinnowSorts, parseSearchQuery, parseSorts } from '../filters/parseSearchBar';
-import { useCallback } from 'react';
+import { atom } from 'jotai';
+import { sortObject, combineAndWinnowSorts, parseSearchQuery } from '@hellfall/shared/filters';
 
 const searchParams = new URLSearchParams(document.location.search);
 
 export const queryAtom = atom<string>(searchParams.get('q') || '');
 
 const parsedQuery = parseSearchQuery(queryAtom.init);
+
 export const querySortAtom = atom<sortObject[]>(parsedQuery.sortObjects);
 
 export const inputSortAtom = atom<string[]>(searchParams.getAll('order'));

@@ -1,7 +1,7 @@
-import { HCFrame, HCFrameEffect } from '@hellfall/shared/types';
+import { HCFrame, HCFrameEffect } from '../../types';
 import { invertOptionType, opType, textListFilter } from '../types';
 import { shareOp, opToDont } from '../filterUtils';
-import { listEquals } from '@hellfall/shared/utils';
+import { listEquals } from '../../utils';
 
 const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
