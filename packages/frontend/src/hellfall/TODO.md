@@ -95,3 +95,5 @@ Write a script to transform the database
 - use spoiler feature to allow cockatrice auto-update?
 - figure out if i need more specific extras handling if no sets are selected
 - add hcv.x to `block`? (move `both` to a different keyword)
+
+- make pips servable via the api

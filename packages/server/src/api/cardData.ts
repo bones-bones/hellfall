@@ -1,4 +1,3 @@
-// src/api/cardData.ts
 import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { withCors } from './lib/cors.js';
 import { toPlainText } from '@hellfall/shared/utils';

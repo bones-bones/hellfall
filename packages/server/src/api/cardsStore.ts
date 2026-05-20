@@ -6,13 +6,11 @@ const useLocalData = env.USE_LOCAL_CARD_DATA;
 
 let db: Firestore | null = null;
 let collection: CollectionReference | null = null;
-let cardsMap: Map<string, HCCard.Any> | null = null;
+const cardsMap: Map<string, HCCard.Any> = new Map(
+  (cardsData as { data: HCCard.Any[] }).data.map(card => [card.id.toLowerCase(), card])
+);
 
-if (useLocalData) {
-  cardsMap = new Map(
-    (cardsData as { data: HCCard.Any[] }).data.map(card => [card.id.toLowerCase(), card])
-  );
-} else {
+if (!useLocalData) {
   db = new Firestore({ databaseId: env.FIRESTORE_HELLSCUBE_DATABASE_ID });
   collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
 }
@@ -24,3 +22,4 @@ export const getCardById = async (id: string): Promise<HCCard.Any | undefined> =
     return (await collection?.doc(id).get())?.data() as HCCard.Any;
   }
 };
+export const getAllCards = (): HCCard.Any[] => Array.from(cardsMap.values());

@@ -42,59 +42,20 @@ export const useSearchResults = () => {
   useEffect(() => {
     const tempResults = searchCards(cards, query, tags_data.data);
 
-    // setQuerySorts(sortObjects);
-    // const { sortList, newInputs } = combineAndWinnowSorts(sortObjects, inputSorts);
-    // setSortRules(sortList);
-    // if (!sortList.length) {
-    //   sortList.push(makeSort('auto', 'auto'));
-    // }
-
     for (let i = sortRules.length - 1; i >= 0; i--) {
       tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortRules[i].filter(a, '=', b));
     }
     setResultSet(tempResults);
-
-    // syncToURL(query, newInputs, activeCard, page, paginationModel, tempResults.length);
-
-    // const searchToSet = new URLSearchParams();
 
     const currentPageNumber = Math.floor(page / CHUNK_SIZE) + 1;
 
     if (paginationModel.state.currentPage !== currentPageNumber) {
       paginationModel.events.goTo(currentPageNumber);
     }
-    // if (query) {
-    //   searchToSet.append('q', query);
-    // }
-
-    // if (newInputs.length) {
-    //   newInputs.forEach(entry => searchToSet.append('order', entry));
-    // }
     if (tempResults.length < page && tempResults.length) {
       paginationModel.events.goTo(1);
       setPageAtom(0);
     }
-    // if (activeCard !== '') {
-    //   searchToSet.append('activeCard', activeCard);
-    // }
-    // // if (newPathname) {
-    // //   const newUrl = `${newPathname}${searchToSet.size ? `?${searchToSet.toString()}`:''}`;
-
-    // //   navigate(newUrl, {
-    // //     replace: false,
-    // //   });
-    // // } else {
-    //   const newUrl = `${searchToSet.size ? `?${searchToSet.toString()}`:''}`;
-    //   const currentUrl = location.search;
-    //   if ([newUrl,currentUrl].includes('?')) {
-    //     console.log('still need ? check')
-    //   }
-    //   if (newUrl != currentUrl && ![newUrl, currentUrl].every(url => ['', '?'].includes(url))) {
-    //     navigate(newUrl, {
-    //       replace: false,
-    //     });
-    //   }
-    // // }
   }, [
     query,
     sortRules,

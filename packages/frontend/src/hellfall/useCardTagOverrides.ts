@@ -17,7 +17,7 @@ function mergeTags(baseTags: string[] | undefined, overrides: CardTagOverrides |
 type FetchResult = CardTagOverrides & { persistEnabled: boolean };
 
 async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchResult> {
-  const res = await fetch(`${baseUrl}/api/card/${encodeURIComponent(cardId)}/tags`, {
+  const res = await fetch(`${baseUrl}/api/cards/${encodeURIComponent(cardId)}?format=tags`, {
     credentials: 'include',
   });
   if (!res.ok) {
@@ -87,7 +87,7 @@ export function useCardTagOverrides(
     async (tag: string) => {
       const tagNorm = tag.trim();
       if (!tagNorm || !baseUrl || !cardId) return;
-      const res = await fetch(`${baseUrl}/api/card/${encodeURIComponent(cardId)}/tags`, {
+      const res = await fetch(`${baseUrl}/api/cards/${encodeURIComponent(cardId)}?format=tags`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -107,7 +107,7 @@ export function useCardTagOverrides(
     async (tag: string) => {
       const tagNorm = tag.trim();
       if (!tagNorm || !baseUrl || !cardId) return;
-      const res = await fetch(`${baseUrl}/api/card/${encodeURIComponent(cardId)}/tags`, {
+      const res = await fetch(`${baseUrl}/api/cards${encodeURIComponent(cardId)}?format=tags`, {
         method: 'DELETE',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

@@ -481,9 +481,14 @@ export const HellfallCard = ({
           borderRadius="m"
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-              window.open(withBasePath(`/api/card/${encodeURIComponent(data.id)}/text`), '_blank');
+              window.open(
+                withBasePath(`/api/cards/${encodeURIComponent(data.id)}?format=text`),
+                '_blank'
+              );
             } else {
-              window.location.href = withBasePath(`/api/card/${encodeURIComponent(data.id)}/text`);
+              window.location.href = withBasePath(
+                `/api/cards/${encodeURIComponent(data.id)}?format=text`
+              );
             }
           }}
         >
@@ -494,9 +499,14 @@ export const HellfallCard = ({
           borderRadius="m"
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-              window.open(withBasePath(`/api/card/${encodeURIComponent(data.id)}/json`), '_blank');
+              window.open(
+                withBasePath(`/api/cards/${encodeURIComponent(data.id)}?format=json`),
+                '_blank'
+              );
             } else {
-              window.location.href = withBasePath(`/api/card/${encodeURIComponent(data.id)}/json`);
+              window.location.href = withBasePath(
+                `/api/cards/${encodeURIComponent(data.id)}?format=json`
+              );
             }
           }}
         >
