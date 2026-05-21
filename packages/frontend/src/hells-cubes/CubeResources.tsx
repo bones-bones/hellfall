@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { toDeck } from '../deck-builder/toDeck.ts';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
-import { toCockCube } from './cockatrice/toCockCube.ts';
+import { toCockCube } from '@hellfall/shared/utils';
 import { useAtomValue } from 'jotai';
 import { HCCard } from '@hellfall/shared/types';
 import { ReactNode } from 'react';
@@ -234,6 +234,8 @@ export const CubeResources = () => {
                       set: cubeSetup.id,
                       name: cubeSetup.name,
                       allCards: cards,
+                      cardList:
+                        cubeSetup.id == 'HC5' ? getHc5() : getSplitSet(cards, cubeSetup.id).cards,
                     });
 
                     const url = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(val)));

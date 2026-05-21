@@ -146,10 +146,14 @@ export const getSplitSet = (
     set == 'All' ? true : filterSetBoth(card, '=', set)
   );
   const cards = filteredCards.filter(
-    entry => entry.set.includes(set) && !(moveNonDraftablesToTokens && entry.not_directly_draftable)
+    entry =>
+      (entry.set.includes(set) || set == 'All') &&
+      !(moveNonDraftablesToTokens && entry.not_directly_draftable)
   );
   const tokens = filteredCards.filter(
-    entry => !entry.set.includes(set) || (moveNonDraftablesToTokens && entry.not_directly_draftable)
+    entry =>
+      !(entry.set.includes(set) || set == 'All') ||
+      (moveNonDraftablesToTokens && entry.not_directly_draftable)
   );
   return { cards, tokens };
 };
