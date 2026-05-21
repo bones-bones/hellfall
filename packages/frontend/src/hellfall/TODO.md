@@ -39,7 +39,6 @@ Write a script to transform the database
   ~~- mobile support~~
   ~~- Script to fetch and transform sheets directly from google doc~~
 - implement grid type layout (has singlefaceonly attributes for overall card, but also has card_faces)
-- add bars internal to card entries like scryfall does
 - full documentation
 - do better: evolution of the dreadmaw
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
@@ -78,7 +77,6 @@ Write a script to transform the database
 - make popup window resizeable
 - add real-card-reference tags
 - implement smart quotes (autoconvert normal quotes to left/right quotes on page)
-- add button to expose card json? and copy/pastable card details?
 - add {69}, {45}, {-2}
 - make card name text render in hellfallentry below card (so if card doesn't render, the name will)
 - add collections to deal with types, tags, keywords, etc.
