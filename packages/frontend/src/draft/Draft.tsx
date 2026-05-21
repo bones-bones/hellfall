@@ -10,7 +10,9 @@ import { DeckConstruction } from './DeckConstruction.tsx';
 import { CARDS_PER_PACK } from './constants.ts';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
-import { canBeACommander } from '../hellfall/canBeACommander.ts';
+import { canBeACommander } from '@hellfall/shared/utils';
+import { Pack, Round, TheDraft } from './types.ts';
+import { HCCard } from '@hellfall/shared/types';
 
 export const Draft = () => {
   const [Set, setSet] = useState<'HLC' | 'HC2' | 'HC3' | 'HC4' | 'HC5' | 'HC6' | undefined>(
@@ -24,7 +26,7 @@ export const Draft = () => {
   const deckToBuild = useAtomValue(deckAtom);
 
   useEffect(() => {
-    const draft = [];
+    const draft: TheDraft = [];
     if (Set) {
       if (Set === 'HC6') {
         const filtered = cards.filter(
@@ -36,29 +38,29 @@ export const Draft = () => {
         const shuffledNonManders = nonManders.sort(() => (Math.random() > Math.random() ? 1 : -1));
 
         for (let i = 0; i < 3; i++) {
-          draft[i] = [];
+          const round = [];
           for (let j = 0; j < 8; j++) {
-            // eslint-disable-next-line
-            // @ts-ignore
-            draft[i][j] = shuffledManders.splice(0, 2);
-            // @ts-ignore
-            draft[i][j] = draft[i][j].concat(shuffledNonManders.splice(0, 18));
+            const pack: Pack = shuffledManders
+              .splice(0, 2)
+              .concat(shuffledNonManders.splice(0, 18));
+            round.push(pack);
           }
+          draft.push(round as Round);
         }
-        setDraft(draft as any);
+        setDraft(draft);
       } else {
         const filtered = cards.filter(e => e.set.includes(Set) && !e.not_directly_draftable);
         const shuffled = filtered.sort(() => (Math.random() > Math.random() ? 1 : -1));
 
         for (let i = 0; i < 3; i++) {
-          draft[i] = [];
+          const round = [];
           for (let j = 0; j < 8; j++) {
-            // eslint-disable-next-line
-            // @ts-ignore
-            draft[i][j] = shuffled.splice(0, CARDS_PER_PACK);
+            const pack: Pack = shuffled.splice(0, CARDS_PER_PACK);
+            round.push(pack);
           }
+          draft.push(round as Round);
         }
-        setDraft(draft as any);
+        setDraft(draft);
       }
     }
   }, [Set]);

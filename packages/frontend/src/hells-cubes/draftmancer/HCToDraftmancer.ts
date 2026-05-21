@@ -6,11 +6,16 @@ import {
   DraftmancerCustomCard,
   SimpleDraftEffectList,
 } from '../types';
-import { stripSingleSlashes, toExportMana, orderColors } from '@hellfall/shared/utils';
-import { canBeACommander } from '../../hellfall/canBeACommander';
+import {
+  stripSingleSlashes,
+  toExportMana,
+  orderColors,
+  canBeACommander,
+} from '@hellfall/shared/utils';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
-import { getCustomCardlist, getSplitSet } from '../../hellfall/filters/filterSet';
+import { getCustomCardlist, getSplitSet } from '@hellfall/shared/filters';
 import { mergeHCCardFaces } from '../mergeHCCardFaces';
+import { getHc5 } from '../getHc5';
 
 const validColors = ['W', 'U', 'B', 'R', 'G'];
 
@@ -19,9 +24,12 @@ export const HCToDraftmancer = (
   set: string,
   cardIds?: string[]
 ): { cards: DraftmancerCustomCard[]; tokens: DraftmancerCustomCard[] } => {
-  const { cards, tokens } = cardIds
-    ? getCustomCardlist(allCards, cardIds)
-    : getSplitSet(allCards, set, true);
+  const { cards, tokens } =
+    set == 'HC5'
+      ? { cards: getHc5(), tokens: [] }
+      : cardIds
+      ? getCustomCardlist(allCards, cardIds)
+      : getSplitSet(allCards, set, true);
   const idNames: Record<string, string> = {};
   const commanderIds: string[] = [];
   const compressHCCardFaces = (card: HCCard.Any) => {

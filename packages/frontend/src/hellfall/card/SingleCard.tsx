@@ -26,7 +26,7 @@ export const SingleCard = () => {
         <h2>Nothing was found...</h2>
       ) : (
         <CardContainer>
-          <HellfallCard data={entryToRender} />
+          <HellfallCard data={entryToRender} onSinglePage={true} />
         </CardContainer>
       )}
     </Container>

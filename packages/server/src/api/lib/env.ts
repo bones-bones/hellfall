@@ -25,7 +25,7 @@ export const env = {
   },
   /** Where to send the user after login (e.g. https://yoursite.github.io/hellfall). */
   get FRONTEND_URL(): string {
-    return process.env.FRONTEND_URL || 'http://localhost:3003/hellfall';
+    return process.env.FRONTEND_URL || 'http://localhost:3003';
   },
   get COOKIE_NAME(): string {
     return process.env.COOKIE_NAME || 'hellfall_session';
@@ -60,5 +60,9 @@ export const env = {
   /** Collection holding card documents (document id = card id). */
   get FIRESTORE_CARDS_COLLECTION(): string {
     return process.env.FIRESTORE_CARDS_COLLECTION?.trim() || 'cards';
+  },
+
+  get USE_LOCAL_CARD_DATA(): boolean {
+    return process.env.USE_LOCAL_CARD_DATA === 'true' || process.env.NODE_ENV === 'development';
   },
 };

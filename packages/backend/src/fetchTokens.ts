@@ -65,7 +65,6 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     mana_cost: '',
     mana_value: 0,
     type_line: '',
-    oracle_text: '',
     colors: [] as HCColors,
     color_identity: [] as HCColors,
     color_identity_hybrid: [] as HCColors[],
@@ -228,6 +227,22 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     real_card_multi_token: HCLayout.RealCardToken,
   };
 
+  const tagToFaceLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
+    meld: HCLayout.MeldPart,
+    'draftpartner-faces': HCLayout.DraftPartner,
+    'reminder-on-back': HCLayout.Reminder,
+    'dungeon-in-inset': HCLayout.Dungeon,
+    'dungeon-on-back': HCLayout.Dungeon,
+    'stickers-on-back': HCLayout.Stickers,
+    specialize: HCLayout.Specialize,
+    mdfc: HCLayout.Modal,
+    transform: HCLayout.Transform,
+    flip: HCLayout.Flip,
+    inset: HCLayout.Inset,
+    prepare: HCLayout.Prepare,
+    aftermath: HCLayout.Aftermath,
+    split: HCLayout.Split,
+  };
   const HCTokens = rest.map(entry => {
     const tokenObject: cardObjectType = { card_faces: [] as cardFaceType[] } as cardObjectType;
     if (entry[keys.indexOf('collector_number')] == '340') {
@@ -342,7 +357,6 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
               addProp(tokenObject, 'draft_image_status', HCImageStatus.HighRes);
             }
           } else if (tag == 'back-image') {
-            // TODO: make sure both of these work
             addTag(tokenObject, tag, note, 'image', undefined, {
               useUrl: true,
               defaultToBack: true,
@@ -412,7 +426,13 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           index
         );
       } else if (!face.layout) {
-        addPropToFace(tokenObject, 'layout', HCLayout.Token, index);
+        const layout = Object.keys(tagToFaceLayouts).find(tag => tokenObject.tags?.includes(tag));
+        addPropToFace(
+          tokenObject,
+          'layout',
+          tagToFaceLayouts[layout as keyof typeof tagToFaceLayouts] || HCLayout.Token,
+          index
+        );
       }
       (Object.keys(defaultFaceProps) as facePropType[])
         .filter(key => !face[key])

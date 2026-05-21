@@ -4,7 +4,19 @@ import type { AuthState, AuthUser } from './types';
 
 const AuthContext = createContext<AuthState | null>(null);
 
+// Default development user for local testing
+const DEFAULT_DEV_USER: AuthUser = {
+  id: 'dev-user',
+  username: 'Developer',
+  avatar: null,
+  email: null,
+};
+
 async function fetchMe(baseUrl: string): Promise<AuthUser | null> {
+  if (baseUrl === 'http://localhost:3003') {
+    console.log('🔧 Development mode: Using default dev user');
+    return DEFAULT_DEV_USER;
+  }
   const res = await fetch(`${baseUrl}/api/me`, { credentials: 'include' });
   if (!res.ok) return null;
   const data = (await res.json()) as { user: AuthUser | null };

@@ -12,8 +12,7 @@ import {
 } from '@workday/canvas-kit-react';
 import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
 import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
-import { canBeACommander } from '../hellfall/canBeACommander.ts';
-import { toFaces } from '@hellfall/shared/utils';
+import { toFaces, canBeACommander } from '@hellfall/shared/utils';
 // TODO: make sure this still works
 export const Breakdown = () => {
   const cards = useAtomValue(cardsAtom).filter(e => e.set === 'HC7.0');

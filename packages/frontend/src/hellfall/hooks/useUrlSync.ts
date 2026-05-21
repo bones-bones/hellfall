@@ -12,11 +12,12 @@ import {
   invalidAtom,
   // parseOperatorValue,
 } from '../atoms/searchAtoms.ts';
-import { sortObject } from '../filters/filterObject.ts';
-import { combineAndWinnowSorts, parseSearchQuery } from '../filters/parseSearchBar.ts';
-import { makeSort } from '../filters/filterBuilder.ts';
-import { PaginationModel } from '@workday/canvas-kit-react';
-import { CHUNK_SIZE } from '../constants.ts';
+import { sortObject } from '@hellfall/shared/filters/filterObject.ts';
+import {
+  combineAndWinnowSorts,
+  parseSearchQuery,
+} from '@hellfall/shared/filters/parseSearchBar.ts';
+import { makeSort } from '@hellfall/shared/filters/filterBuilder.ts';
 import { listsAreEqual } from '@hellfall/shared/utils';
 
 const sortsEqual = (mem1: sortObject, mem2: sortObject) =>

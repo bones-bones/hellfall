@@ -1,8 +1,15 @@
-import { Card, Heading, Text } from '@workday/canvas-kit-react';
+import {
+  ButtonColors,
+  Card,
+  Heading,
+  inputColors,
+  PrimaryButton,
+  type,
+} from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
 import { SetLegality } from './SetLegality.tsx';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
-import { formatParens, listShare, textListIncludes, textListShares } from '@hellfall/shared/utils';
+import { formatParens } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { HellfallRelatedEntry } from '../HellfallEntry.tsx';
 
@@ -22,8 +29,8 @@ const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
       <>
-        {stringToMana(entry)}
-        <br />
+        <MediumText>{stringToMana(entry)}</MediumText>
+        {/* <br/> */}
       </>
     );
   });
@@ -81,7 +88,13 @@ const getImages = (card: HCCard.Any) => {
   }
   return { images: imagesToShow, names: imageNames };
 };
-export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
+export const HellfallCard = ({
+  data,
+  onSinglePage,
+}: {
+  data: HCCard.Any;
+  onSinglePage?: boolean;
+}) => {
   const { user } = useAuth();
   const [displayTags, addTag, removeTag, tagsLoading, tagsError, tagsPersistEnabled] =
     useCardTagOverrides(data.id, data.tags);
@@ -114,7 +127,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
   const { images: imagesToShow, names: imageNames } = getImages(data);
 
   return (
-    <Container ref={windowRef} key={data.id}>
+    <Container ref={windowRef} key={data.id} style={{ lineHeight: 1 }}>
       <title>{data.name} || Hellfall</title>
       {!imagesToShow.length ? (
         <Test>
@@ -154,156 +167,133 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
         </>
       )}
       <Card style={{ width: '100%' }}>
-        <Card.Body padding={'zero'}>
+        <Card.Body padding={'zero'} marginTop={'-20px'}>
           {/* {'card_faces' in data && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading>} */}
           {('card_faces' in data ? data.card_faces : [data]).map((face, i) => (
-            <div key={'face-' + (i + 1)}>
+            <span key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               {face.name &&
                 (triggerEscapeList.some(e => face.name.includes(e)) ? (
-                  <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
+                  <MediumLine key="name" style={{ marginRight: '1em' }}>
                     {formatDiscordMarkdownInline(formatParens(face.name))}
-                  </Text>
+                  </MediumLine>
                 ) : (
-                  <>
-                    <Text typeLevel="body.medium" key="name" style={{ marginRight: '1em' }}>
-                      {stringToMana(face.name)}
-                    </Text>
-                  </>
+                  <MediumLine key="name" style={{ marginRight: '1em' }}>
+                    {stringToMana(face.name)}
+                  </MediumLine>
                 ))}
-              <Text typeLevel="body.medium" key="cost">
-                {' '}
-                {stringToMana(face.mana_cost)}
-              </Text>
-              <br />
+              <MediumLine key="cost"> {stringToMana(face.mana_cost)}</MediumLine>
               {face.flavor_name &&
                 (triggerEscapeList.some(e => face.name.includes(e)) ? (
                   <>
-                    <Text typeLevel="body.medium" key="flavor-name">
-                      {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.flavor_name))}
-                    </Text>
                     <br />
+                    <MediumLine key="flavor-name">
+                      {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.flavor_name))}
+                    </MediumLine>
                   </>
                 ) : (
                   <>
-                    <ItalicText typeLevel="body.medium" key="flavor-name">
-                      {stringToMana(face.flavor_name)}
-                    </ItalicText>
                     <br />
+                    <MediumItalicLine key="flavor-name">
+                      {stringToMana(face.flavor_name)}
+                    </MediumItalicLine>
                   </>
                 ))}
               {'   '}
+              {(face.color_indicator || face.type_line) && <Separator />}
               {face.color_indicator && (
                 <>
-                  <Text typeLevel="body.medium" key="color-indicator">
+                  <MediumLine key="color-indicator">
                     {colorsToIndicator(face.color_indicator)}
-                  </Text>{' '}
+                  </MediumLine>{' '}
                 </>
               )}
               {face.type_line &&
                 (triggerEscapeList.some(e => face.type_line.includes(e)) ? (
-                  <Text typeLevel="body.medium" key="type">
+                  <MediumLine key="type">
                     {formatDiscordMarkdownInline(formatParens(face.type_line))}
-                  </Text>
+                  </MediumLine>
                 ) : (
-                  <>
-                    <Text typeLevel="body.medium" key="type">
-                      {stringToMana(face.type_line)}
-                    </Text>
-                    {/* <br /> */}
-                  </>
+                  <MediumLine key="type">{stringToMana(face.type_line)}</MediumLine>
                 ))}
-              <br />
+              {(face.oracle_text || face.flavor_text) && <Separator />}
               {face.oracle_text &&
                 (triggerEscapeList.some(e => face.oracle_text.includes(e)) ? (
-                  <Text typeLevel="body.medium" key="rules">
+                  <MediumText key="rules">
                     {formatDiscordMarkdown(formatParens(face.oracle_text))}
-                    <br />
-                  </Text>
+                  </MediumText>
                 ) : (
                   <>
-                    <Text typeLevel="body.medium" key="rules">
-                      {renderText(face.oracle_text.split('\\n'))}
-                    </Text>
+                    <MediumText key="rules">{renderText(face.oracle_text.split('\\n'))}</MediumText>
                   </>
                 ))}
               {face.flavor_text &&
                 (['*', '_', '~'].some(e => face.flavor_text?.includes(e)) ? (
-                  <Text typeLevel="body.medium" key="flavor">
+                  <MediumText key="flavor">
                     {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
-                    <br />
-                  </Text>
+                  </MediumText>
                 ) : (
                   <>
-                    <ItalicText typeLevel="body.medium" key="flavor">
+                    <MediumItalics key="flavor">
                       {renderText(face.flavor_text.split('\\n'))}
-                    </ItalicText>
+                    </MediumItalics>
                   </>
                 ))}
-              {face.power && (
+              {(face.power || face.toughness) && (
                 <>
-                  <Text typeLevel="body.medium" key="stats">
+                  <Separator />
+                  <MediumText key="stats">
                     {face.power}/{face.toughness}
-                  </Text>
-                  <br />
+                  </MediumText>
                 </>
               )}
               {face.loyalty && (
                 <>
-                  <Text typeLevel="body.medium" key="loyalty">
-                    Loyalty: {face.loyalty}
-                  </Text>
-                  <br />
+                  <Separator />
+                  <MediumText key="loyalty">Loyalty: {face.loyalty}</MediumText>
                 </>
               )}
               {face.defense && (
                 <>
-                  <Text typeLevel="body.medium" key="defense">
-                    Defense: {face.defense}
-                  </Text>
-                  <br />
+                  <Separator />
+                  <MediumText key="defense">Defense: {face.defense}</MediumText>
                 </>
               )}
               {face.hand_modifier && (
                 <>
-                  <Text typeLevel="body.medium" key="hand_modifier">
-                    Hand Size: {face.hand_modifier}
-                  </Text>
-                  <br />
+                  <Separator />
+                  <MediumText key="hand_modifier">Hand Size: {face.hand_modifier}</MediumText>
                 </>
               )}
               {face.life_modifier && (
                 <>
-                  <Text typeLevel="body.medium" key="life_modifier">
-                    Starting Life: {face.life_modifier}
-                  </Text>
-                  <br />
+                  <Separator />
+                  <MediumText key="life_modifier">Starting Life: {face.life_modifier}</MediumText>
                 </>
               )}
-            </div>
+            </span>
           ))}
           <Divider />
           {data.set && (
             <>
-              <Text typeLevel="body.medium">
+              <MediumText>
                 Set:{' '}
                 {(data.set == 'HCV.CDC' ? 'CDC' : data.set) +
                   (data.collector_number ? ' #' + data.collector_number : '')}
-              </Text>
-              <br />
+              </MediumText>
+              <Separator />
             </>
           )}
           {data.creators.length && (
             <>
-              <Text key="creator">
+              <SmallText key="creator">
                 Creator{data.creators.length == 1 ? '' : 's'}: {data.creators.join(',')}
-              </Text>
-              <br />
+              </SmallText>
             </>
           )}
           {data.artists?.length && (
             <>
-              <Text key="artist">
+              <SmallText key="artist">
                 Artist{data.artists.length == 1 ? '' : 's'}:{' '}
                 {data.artists
                   .map(
@@ -313,24 +303,23 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       }`
                   )
                   .join(', ')}
-              </Text>
-              <br />
+              </SmallText>
             </>
           )}
           {data.id && (
             <>
-              <Text key="id">Id: {data.id}</Text>
-              <br />
+              <SmallText key="id">Id: {data.id}</SmallText>
             </>
           )}
           {
             <>
-              Constructed <SetLegality legality={data.legalities.standard} />
+              <SetLegality legality={data.legalities.standard} /> Constructed
               <br />
-              4CB <SetLegality legality={data.legalities['4cb']} />
+              <SetLegality legality={data.legalities['4cb']} /> 4CB
               <br />
-              Hellsmander <SetLegality legality={data.legalities.commander} />
+              <SetLegality legality={data.legalities.commander} /> Hellsmander
               <br />
+              <Separator />
             </>
           }
           {data.rulings && (
@@ -346,18 +335,12 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           )}
           {displayTags.length > 0 || user ? (
             <>
-              {tagsLoading && <Text typeLevel="body.small">Loading tags…</Text>}
+              {tagsLoading && <SmallText>Loading tags…</SmallText>}
               {tagsError && (
-                <Text typeLevel="body.small" style={{ color: '#c00' }}>
-                  Could not load tag overrides.
-                </Text>
+                <SmallText style={{ color: '#c00' }}>Could not load tag overrides.</SmallText>
               )}
-              {tagActionError && (
-                <Text typeLevel="body.small" style={{ color: '#c00' }}>
-                  {tagActionError}
-                </Text>
-              )}
-              <Text key="Tags">
+              {tagActionError && <SmallText style={{ color: '#c00' }}>{tagActionError}</SmallText>}
+              <SmallText key="Tags">
                 Tags:{' '}
                 {displayTags.map((tagEntry, i, ar) => (
                   <span key={tagEntry}>
@@ -371,13 +354,13 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                       tagEntry in data.tag_notes &&
                       (data.tag_notes[tagEntry].slice(0, 6) == 'https:' ? (
                         <>
-                          <Text> (</Text>
+                          <SmallText> (</SmallText>
                           <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
-                          <Text>)</Text>
+                          <SmallText>)</SmallText>
                         </>
                       ) : (
                         <>
-                          <Text> ({data.tag_notes[tagEntry]})</Text>
+                          <SmallText> ({data.tag_notes[tagEntry]})</SmallText>
                         </>
                       ))}
                     {user && tagsPersistEnabled && (
@@ -400,7 +383,7 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     {i < ar.length - 1 && ', '}
                   </span>
                 ))}
-              </Text>
+              </SmallText>
               {user && tagsPersistEnabled && (
                 <TagAddRow>
                   <input
@@ -450,7 +433,6 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                   </button>
                 </TagAddRow>
               )}
-              <br />
             </>
           ) : null}
           {data.all_parts && (
@@ -464,7 +446,12 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
                     .map((entry, i) => (
                       <HellfallRelatedEntry
                         onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                          if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                          if (
+                            event.button === 1 ||
+                            event.metaKey ||
+                            event.ctrlKey ||
+                            !onSinglePage
+                          ) {
                             window.open(
                               withBasePath('/card/' + encodeURIComponent(entry.id)),
                               '_blank'
@@ -487,6 +474,45 @@ export const HellfallCard = ({ data }: { data: HCCard.Any }) => {
           )}
         </Card.Body>
       </Card>
+      <ButtonGroup>
+        <br />
+        <Button
+          colors={inputButtonColors}
+          borderRadius="m"
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
+              window.open(
+                withBasePath(`/api/cards/${encodeURIComponent(data.id)}?format=text`),
+                '_blank'
+              );
+            } else {
+              window.location.href = withBasePath(
+                `/api/cards/${encodeURIComponent(data.id)}?format=text`
+              );
+            }
+          }}
+        >
+          Copy-pasteable Text
+        </Button>
+        <Button
+          colors={inputButtonColors}
+          borderRadius="m"
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
+              window.open(
+                withBasePath(`/api/cards/${encodeURIComponent(data.id)}?format=json`),
+                '_blank'
+              );
+            } else {
+              window.location.href = withBasePath(
+                `/api/cards/${encodeURIComponent(data.id)}?format=json`
+              );
+            }
+          }}
+        >
+          Copy-pasteable JSON
+        </Button>
+      </ButtonGroup>
     </Container>
   );
 };
@@ -500,8 +526,6 @@ const Container = styled.div({
   fontSize: '16px',
   justifyContent: 'center',
 });
-
-const ItalicText = styled(Text)({ fontStyle: 'italic' });
 
 const Test = styled.div({
   display: 'flex',
@@ -526,12 +550,6 @@ const ImageContainer = styled.div({
 });
 const StyledHeading = styled(Heading)({
   marginTop: '0px',
-  marginBottom: '10px',
-});
-const Divider = styled.div({
-  height: '1px',
-  backgroundColor: 'grey',
-  marginTop: '10px',
   marginBottom: '10px',
 });
 
@@ -566,4 +584,76 @@ const RelatedGrid = styled('div')({
   width: '100%',
   gap: '0px',
   margin: '0 auto',
+});
+
+const Divider = styled('hr')({
+  height: '2px',
+  backgroundColor: '#ccc',
+  border: 'none',
+  marginLeft: '-32px',
+  marginRight: '-32px',
+});
+
+const Separator = styled('hr')({
+  height: '1px',
+  backgroundColor: '#ccc',
+  border: 'none',
+  marginLeft: '-32px',
+  marginRight: '-32px',
+});
+
+const Button = styled(PrimaryButton)({
+  marginLeft: '30px',
+  marginBottom: '15px',
+  display: 'inline-block',
+  flexDirection: 'row',
+});
+const inputButtonColors: ButtonColors = {
+  default: {
+    background: inputColors.background,
+    border: inputColors.border,
+  },
+  hover: {
+    background: inputColors.disabled.background,
+    border: inputColors.focusBorder,
+  },
+  active: {
+    background: inputColors.background,
+    border: inputColors.border,
+  },
+  focus: {
+    background: inputColors.disabled.background,
+    border: inputColors.focusBorder,
+  },
+  disabled: {
+    background: inputColors.disabled.background,
+    border: inputColors.disabled.border,
+  },
+};
+
+const MediumText = styled('div')({
+  fontSize: type.levels.body.medium.fontSize,
+  fontWeight: type.levels.body.medium.fontWeight,
+  marginBlock: '.5rem',
+  lineHeight: 1.125,
+});
+const MediumLine = styled('span')({
+  fontSize: type.levels.body.medium.fontSize,
+  fontWeight: type.levels.body.medium.fontWeight,
+  marginBlock: '.5rem',
+});
+const MediumItalics = styled(MediumText)({ fontStyle: 'italic' });
+const MediumItalicLine = styled(MediumLine)({ fontStyle: 'italic' });
+const SmallText = styled('div')({
+  fontSize: type.levels.body.small.fontSize,
+  fontWeight: type.levels.body.small.fontWeight,
+  marginBlock: '.4rem',
+});
+
+const ButtonGroup = styled('div')({
+  display: 'inline-block',
+  flexDirection: 'row', // Stack vertically
+  // gap: '4px',               // Space between buttons
+  marginLeft: '4px', // Optional spacing from the selectors
+  verticalAlign: 'top',
 });

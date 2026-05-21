@@ -1,6 +1,7 @@
 import { Fragment, ReactNode } from 'react';
 import simpleMarkdown from 'simple-markdown';
 import { stringToMana } from './stringToMana.tsx';
+import { styled, type } from '@workday/canvas-kit-react';
 
 // Helper function to check if a character is escaped
 const isEscaped = (source: string, index: number): boolean => {
@@ -232,10 +233,10 @@ export const formatDiscordMarkdown = (text: string): ReactNode => {
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, false);
     return (
-      <Fragment key={`line-${index}`}>
-        {index > 0 && <br />}
+      <MediumText key={`line-${index}`}>
+        {/* {index > 0 && <br />} */}
         {formattedLine}
-      </Fragment>
+      </MediumText>
     );
   });
 };
@@ -268,10 +269,10 @@ export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode =>
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, true);
     return (
-      <Fragment key={`line-${index}`}>
-        {index > 0 && <br />}
+      <MediumText key={`line-${index}`}>
+        {/* {index > 0 && <br />} */}
         {formattedLine}
-      </Fragment>
+      </MediumText>
     );
   });
 };
@@ -288,3 +289,9 @@ export const formatDiscordMarkdownInvertedItalicsInline = (text: string): ReactN
   const firstLine = text.split('\\n')[0];
   return formatLine(firstLine, true);
 };
+const MediumText = styled('p')({
+  fontSize: type.levels.body.medium.fontSize,
+  fontWeight: type.levels.body.medium.fontWeight,
+  marginBlock: '.5rem',
+  lineHeight: 1.125,
+});

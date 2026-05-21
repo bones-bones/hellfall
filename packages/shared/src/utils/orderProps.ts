@@ -122,7 +122,7 @@ export const orderFaceProps = (props: facePropType[]) =>
     if (!facePropOrder.includes(a) || !facePropOrder.includes(b)) {
       throw new Error(`You have an extra prop. a: ${a}, b: ${b}`);
     }
-    return propOrder.indexOf(a) - propOrder.indexOf(b);
+    return facePropOrder.indexOf(a) - facePropOrder.indexOf(b);
   });
 
 export const orderPartProps = (props: partPropType[]) =>
