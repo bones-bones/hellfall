@@ -1,23 +1,16 @@
-import { HCCard, HCCardFace, HCColors } from '../types';
-import { listShareLower } from './listHandling';
+import { HCCard, HCCardFace, HCColors } from '@hellfall/shared/types';
+import { listShareLower } from '../listHandling';
 import { facePropOrder, partPropOrder, propOrder } from './orderProps';
-import { getIndicatorFromColors } from './pipsHandling';
+import { getIndicatorFromColors } from '../pipsHandling';
 import {
   allPropType,
-  allType,
   allValueType,
-  arrayElementType,
   bothPropType,
   bothType,
   bothValueType,
   colorPropType,
-  faceArrayElementType,
-  facePropType,
-  faceValueType,
-  propType,
-  valueType,
 } from './propTypes';
-import { getMasterpiece, getSetCode, stripMasterpiece, stripSetCode } from './textHandling';
+import { getMasterpiece, getSetCode, stripMasterpiece, stripSetCode } from '../textHandling';
 
 /**
  * Converts the card to an array of its faces.
@@ -251,4 +244,45 @@ export const canBeACommander = (card: HCCard.Any) => {
       faces[0]?.oracle_text.toLowerCase().includes('can be your commander')) &&
     !faces[0]?.oracle_text.toLowerCase().includes('irresponsible')
   );
+};
+
+export const getAllRelated = (card: HCCard.Any, allCards: HCCard.Any[]): HCCard.Any[] =>
+  card.all_parts?.flatMap(part => allCards.find(c => c.id == part.id) ?? []) ?? [];
+
+export const getRelatedsFromCards = (
+  cardList: HCCard.Any[],
+  allCards: HCCard.Any[],
+  keepIrrelevantParts?: boolean
+): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
+  const tokens: HCCard.Any[] = [];
+  const cards: HCCard.Any[] = cardList.map(card => {
+    if (!card.all_parts) return card;
+    for (let i = card.all_parts.length - 1; i >= 0; i--) {
+      const part = card.all_parts[i];
+      if (cardList.some(c => c.id == part.id)) {
+        continue;
+      }
+      if (part.component == 'token_maker') {
+        card.all_parts.splice(i, 1);
+        continue;
+      }
+      const token = allCards.find(c => c.id == part.id);
+      if (token && !tokens.find(t => t.id == token.id)) {
+        tokens.push(token);
+      }
+    }
+    return card;
+  });
+  if (!keepIrrelevantParts) {
+    tokens.forEach(token => {
+      if (!token.all_parts) return;
+      for (let i = token.all_parts.length - 1; i >= 0; i--) {
+        const part = token.all_parts[i];
+        if (!cardList.some(c => c.id == part.id) && !tokens.some(t => t.id == part.id)) {
+          token.all_parts.splice(i, 1);
+        }
+      }
+    });
+  }
+  return { cards, tokens };
 };

@@ -1,6 +1,3 @@
-import { HCCard } from '../types/Card/Card';
-import { HCCardFace } from '../types/Card/CardFace';
-import { HCRelatedCard } from '../types/Card/RelatedCard';
 import { facePropType, partPropType, propType } from './propTypes';
 
 export const propOrder: propType[] = [

@@ -1,17 +1,4 @@
-/**
- * Preps text for equality checks that ignore formatting
- * @param text text to remove formatting from
- * @returns clean text
- */
-// export const textPrep = (text: string) => {
-//   return text
-//     .toLowerCase()
-//     .replaceAll(/\\[n*_~]/g, '')
-//     .replaceAll('\\(', '(')
-//     .replaceAll('\\)', ')');
-// };
-
-import { allSetsList } from '../data/sets';
+import { allSetsList } from '@hellfall/shared/data/sets.ts';
 
 export const normalizeText = (text: string): string =>
   text

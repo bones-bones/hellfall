@@ -1,5 +1,5 @@
-import { HCCard, HCRelatedCard } from '../types';
-import { extraSetList } from '../data/sets.ts';
+import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
+import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import {
   includeFilter,
   inclusionOptions,
@@ -9,7 +9,7 @@ import {
   cardStringFilter,
 } from './types';
 import { funcOp, opIsNegative, opToNot } from './filterUtils';
-import { textSearchIncludes } from '../utils';
+import { textSearchIncludes } from '@hellfall/shared/utils';
 
 export const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',
@@ -44,7 +44,7 @@ export const filterIncludeExtras: includeFilter = Object.assign(
       case 'extracards':
         return extraSetList.includes(value1.set) && !value1.isActualToken;
       case 'tokens':
-        return !!value1.isActualToken;
+        return value1.isActualToken;
       case 'nonextras':
         return !extraSetList.includes(value1.set);
       case 'vetoed':
@@ -87,7 +87,7 @@ export const filterSetToken: cardStringFilter = Object.assign(
     const shouldIncludeMeld = (part: HCRelatedCard, set: string) => {
       return part.component == 'meld_part' && part.set != set;
     };
-    const tokenInSet = (token: HCCard.Any): boolean => {
+    const tokenInSet = (token: HCCard.Any): boolean | undefined => {
       if (value1.all_parts) {
         if (
           value1.all_parts
@@ -97,7 +97,7 @@ export const filterSetToken: cardStringFilter = Object.assign(
           return true;
         }
       }
-      return Boolean(!value2.length && token.isActualToken);
+      return !value2.length && token.isActualToken;
     };
     return funcOp(operator, tokenInSet, value1);
   },
@@ -146,12 +146,10 @@ export const getSplitSet = (
     set == 'All' ? true : filterSetBoth(card, '=', set)
   );
   const cards = filteredCards.filter(
-    entry =>
-      entry.set.includes(set) && (moveNonDraftablesToTokens ? !entry.not_directly_draftable : true)
+    entry => entry.set.includes(set) && !(moveNonDraftablesToTokens && entry.not_directly_draftable)
   );
   const tokens = filteredCards.filter(
-    entry =>
-      !entry.set.includes(set) || (moveNonDraftablesToTokens ? entry.not_directly_draftable : false)
+    entry => !entry.set.includes(set) || (moveNonDraftablesToTokens && entry.not_directly_draftable)
   );
   return { cards, tokens };
 };

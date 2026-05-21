@@ -1,4 +1,4 @@
-import { HCColors, HCMiscColors } from '../../types';
+import { HCColors, HCMiscColors } from '@hellfall/shared/types';
 import {
   colorContentFilter,
   colorContentListFilter,
@@ -16,7 +16,7 @@ import {
 } from '../types';
 import { canContainOp, containsOp, opToShorthand } from '../filterUtils';
 import { filterNumber } from '../filterNumber';
-import { canContain, contains } from '../../utils';
+import { canContain, contains } from '@hellfall/shared/utils';
 const MISC_BULLSHIT = 'Misc';
 
 /**

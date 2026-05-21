@@ -1,4 +1,4 @@
-import { HCCard } from '../types';
+import { HCCard } from '@hellfall/shared/types';
 import { cardStringFilter, opType, invertOptionType } from './types';
 import { funcOp, opIsNegative, opToNot, opToDont, opToNt } from './filterUtils';
 import {
@@ -11,7 +11,8 @@ import {
   toFaces,
   toNumber,
   canBeACommander,
-} from '../utils';
+  textListIncludesEvery,
+} from '@hellfall/shared/utils';
 
 const stateList = [
   'foil',
@@ -53,7 +54,7 @@ const equivStateNames: Record<string, stateType> = {
   trikeland: 'triome',
   creatureland: 'manland',
 };
-const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean> = {
+const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undefined> = {
   foil: (value: HCCard.Any) => value.finish == 'foil',
   nonfoil: (value: HCCard.Any) => value.finish == 'nonfoil',
   commander: (value: HCCard.Any) => canBeACommander(value),
@@ -104,26 +105,26 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean> = {
   partner: (value: HCCard.Any) =>
     textListShares(value.tags, ['partner-mechanic', 'unprinted-partner']),
   modal: (value: HCCard.Any) =>
-    !!value.tags?.includes('modal') ||
-    ['•', 'choose'].every(test => textListIncludes(getFromFaces(value, 'oracle_text'), test)),
-  vanilla: (value: HCCard.Any) => !!value.tags?.includes('vanilla'),
-  frenchvanilla: (value: HCCard.Any) => !!value.tags?.includes('french-vanilla'),
+    value.tags?.includes('modal') ||
+    textListIncludesEvery(getFromFaces(value, 'oracle_text'), ['•', 'choose']),
+  vanilla: (value: HCCard.Any) => value.tags?.includes('vanilla'),
+  frenchvanilla: (value: HCCard.Any) => value.tags?.includes('french-vanilla'),
   bear: (value: HCCard.Any) =>
     toFaces(value).some(
       face => toNumber(face.power) == 2 && toNumber(face.toughness) == 2 && face.mana_value == 2
     ),
-  manland: (value: HCCard.Any) => !!value.tags?.includes('manland'),
-  masterpiece: (value: HCCard.Any) => !!value.tags?.includes('masterpiece'),
-  rebalanced: (value: HCCard.Any) => !!value.tags?.includes('alchemy-rebalance'),
-  bounceland: (value: HCCard.Any) => !!value.tags?.includes('bounceland'),
-  fastland: (value: HCCard.Any) => !!value.tags?.includes('fastland'),
-  fetchland: (value: HCCard.Any) => !!value.tags?.includes('true-fetchland'),
-  filterland: (value: HCCard.Any) => !!value.tags?.includes('filterland'),
-  painland: (value: HCCard.Any) => !!value.tags?.includes('painland'),
-  pathway: (value: HCCard.Any) => !!value.tags?.includes('pathway'),
-  shockland: (value: HCCard.Any) => !!value.tags?.includes('shockland'),
-  snarl: (value: HCCard.Any) => !!value.tags?.includes('snarl'),
-  triome: (value: HCCard.Any) => !!value.tags?.includes('triome'),
+  manland: (value: HCCard.Any) => value.tags?.includes('manland'),
+  masterpiece: (value: HCCard.Any) => value.tags?.includes('masterpiece'),
+  rebalanced: (value: HCCard.Any) => value.tags?.includes('alchemy-rebalance'),
+  bounceland: (value: HCCard.Any) => value.tags?.includes('bounceland'),
+  fastland: (value: HCCard.Any) => value.tags?.includes('fastland'),
+  fetchland: (value: HCCard.Any) => value.tags?.includes('true-fetchland'),
+  filterland: (value: HCCard.Any) => value.tags?.includes('filterland'),
+  painland: (value: HCCard.Any) => value.tags?.includes('painland'),
+  pathway: (value: HCCard.Any) => value.tags?.includes('pathway'),
+  shockland: (value: HCCard.Any) => value.tags?.includes('shockland'),
+  snarl: (value: HCCard.Any) => value.tags?.includes('snarl'),
+  triome: (value: HCCard.Any) => value.tags?.includes('triome'),
 };
 const stateSummaries: Record<stateType, (operator: opType, value: string) => string> = {
   foil: (operator: opType, value: string) => `the card is ${opToNot(operator)} foil`,
@@ -171,22 +172,70 @@ const stateSummaries: Record<stateType, (operator: opType, value: string) => str
   triome: (operator: opType, value: string) => `the cards are${opToNt(operator)} triomes`,
 };
 
-const isList = [] as const;
+const isList = ['draftpartner', 'token', 'tokenmaker', 'persistent'] as const;
 type isType = (typeof isList)[number];
-const isResolutions: Record<isType, (value: HCCard.Any) => boolean> = {};
-const isSummaries: Record<isType, (operator: opType, value: string) => string> = {};
+const equivIsNames: Record<string, isType> = {
+  dp: 'draftpartner',
+  dps: 'draftpartner',
+  draftpartners: 'draftpartner',
+  tokens: 'token',
+  tm: 'tokenmaker',
+  tms: 'tokenmaker',
+  tokenmakers: 'tokenmaker',
+  persistents: 'persistent',
+  persistenttoken: 'persistent',
+  persistenttokens: 'persistent',
+};
+const isResolutions: Record<isType, (value: HCCard.Any) => boolean | undefined> = {
+  draftpartner: (value: HCCard.Any) => value.has_draft_partners && value.not_directly_draftable,
+  token: (value: HCCard.Any) => value.all_parts?.some(part => part.component == 'token_maker'),
+  tokenmaker: (value: HCCard.Any) => value.all_parts?.some(part => part.component == 'token'),
+  persistent: (value: HCCard.Any) =>
+    value.all_parts?.some(part => part.persistent) && !value.tags?.includes('persistent-tokens'),
+};
+const isSummaries: Record<isType, (operator: opType, value: string) => string> = {
+  draftpartner: (operator: opType, value: string) =>
+    `the cards are${opToNt(operator)} draftpartners`,
+  token: (operator: opType, value: string) => `the cards are${opToNt(operator)} tokens`,
+  tokenmaker: (operator: opType, value: string) => `the cards ${opToDont(operator)} make tokens`,
+  persistent: (operator: opType, value: string) =>
+    `the cards ${opToDont(operator)} make persistent tokens`,
+};
 
-const hasList = ['indicator', 'frameeffect', 'watermark'] as const;
+const hasList = [
+  'indicator',
+  'frameeffect',
+  'watermark',
+  'draftpartner',
+  'token',
+  'tokenmaker',
+  'persistent',
+] as const;
 type hasType = (typeof hasList)[number];
 const equivHasNames: Record<string, hasType> = {
   fe: 'frameeffect',
   frameeffects: 'frameeffect',
   wm: 'watermark',
+  dp: 'draftpartner',
+  dps: 'draftpartner',
+  draftpartners: 'draftpartner',
+  tokens: 'token',
+  tm: 'tokenmaker',
+  tms: 'tokenmaker',
+  tokenmakers: 'tokenmaker',
+  persistents: 'persistent',
+  persistenttoken: 'persistent',
+  persistenttokens: 'persistent',
 };
-const hasResolutions: Record<hasType, (value: HCCard.Any) => boolean> = {
+const hasResolutions: Record<hasType, (value: HCCard.Any) => boolean | undefined> = {
   indicator: (value: HCCard.Any) => Boolean(getColorsFromFaces(value, 'color_indicator').length),
   frameeffect: (value: HCCard.Any) => Boolean(getFromAll(value, 'frame_effects').length),
   watermark: (value: HCCard.Any) => Boolean(getFromFaces(value, 'watermark').length),
+  draftpartner: (value: HCCard.Any) => value.has_draft_partners && !value.not_directly_draftable,
+  token: (value: HCCard.Any) => value.all_parts?.some(part => part.component == 'token'),
+  tokenmaker: (value: HCCard.Any) => value.all_parts?.some(part => part.component == 'token_maker'),
+  persistent: (value: HCCard.Any) =>
+    value.all_parts?.some(part => part.persistent) && value.tags?.includes('persistent-tokens'),
 };
 const hasSummaries: Record<hasType, (operator: opType, value: string) => string> = {
   indicator: (operator: opType, value: string) =>
@@ -194,23 +243,29 @@ const hasSummaries: Record<hasType, (operator: opType, value: string) => string>
   frameeffect: (operator: opType, value: string) =>
     `the cards ${opToDont(operator)} have a frame effect`,
   watermark: (operator: opType, value: string) => `the cards ${opToDont(operator)} have watermarks`,
+  draftpartner: (operator: opType, value: string) =>
+    `the cards ${opToDont(operator)} hve draftpartners`,
+  token: (operator: opType, value: string) => `the cards ${opToDont(operator)} make tokens`,
+  tokenmaker: (operator: opType, value: string) => `the cards are${opToNt(operator)} tokens`,
+  persistent: (operator: opType, value: string) =>
+    `the cards are${opToNt(operator)} persistent tokens`,
 };
 
 export const filterIs: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {
-    const resolveIs = (criteria: string): boolean => {
+    const resolveIs = (criteria: string): boolean | undefined => {
       if (criteria in stateResolutions) {
         return stateResolutions[criteria as stateType](value1);
       }
       if (criteria in equivStateNames) {
         return stateResolutions[equivStateNames[criteria]](value1);
       }
-      // if (criteria in isResolutions) {
-      //   return isResolutions[criteria as isType](value1)
-      // }
-      // if (criteria in equivIsNames) {
-      //   return isResolutions[equivIsNames[criteria] as isType](value1)
-      // }
+      if (criteria in isResolutions) {
+        return isResolutions[criteria as isType](value1);
+      }
+      if (criteria in equivIsNames) {
+        return isResolutions[equivIsNames[criteria] as isType](value1);
+      }
       return false;
     };
     return funcOp(operator, resolveIs, value2);
@@ -224,19 +279,19 @@ export const filterIs: cardStringFilter = Object.assign(
       if (value in equivStateNames) {
         return stateSummaries[equivStateNames[value]](operator, value);
       }
-      // if (value in isSummaries) {
-      //   return isSummaries[value as isType](operator, value)
-      // }
-      // if (value in equivIsNames) {
-      //   return isSummaries[equivIsNames[value]](operator, value)
-      // }
+      if (value in isSummaries) {
+        return isSummaries[value as isType](operator, value);
+      }
+      if (value in equivIsNames) {
+        return isSummaries[equivIsNames[value]](operator, value);
+      }
       return `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`;
     },
   }
 );
 export const filterHas: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {
-    const resolveHas = (criteria: string) => {
+    const resolveHas = (criteria: string): boolean | undefined => {
       if (criteria in stateResolutions) {
         return stateResolutions[criteria as stateType](value1);
       }

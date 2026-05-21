@@ -1,5 +1,5 @@
 import { cardFilter, looseOpType, opType, shorthandType } from './types';
-import { listShare } from '../utils';
+import { listShare } from '@hellfall/shared/utils';
 
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',
@@ -90,7 +90,7 @@ export const opToShorthand = (op: opType, value: shorthandType) => {
  * @param value the value to check
  * @returns
  */
-export const funcOp = <T>(op: opType, func: (value: T) => boolean, value: T) => {
+export const funcOp = <T>(op: opType, func: (value: T) => boolean | undefined, value: T) => {
   switch (op) {
     case '<':
       return !func(value);

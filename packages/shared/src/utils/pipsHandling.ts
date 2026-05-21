@@ -1,6 +1,6 @@
-import { HCCardSymbol, HCColors } from '../types';
+import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { listEquals } from './listHandling';
-import pipsRawData from '../data/pips.json';
+import pipsRawData from '@hellfall/shared/data/pips.json';
 
 const transformPipsData = (data: any[]): HCCardSymbol[] => {
   return data.map(item => {

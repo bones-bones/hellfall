@@ -213,6 +213,8 @@ export const pushProp = <T = any>(ob: T, prop: keyof T, value: any) => {
 
 export const textListIncludes = (value1: string[] | undefined, value2: string): boolean =>
   Boolean(value1?.some(text => textSearchIncludes(text, value2)));
+export const textListIncludesEvery = (value1: string[] | undefined, value2: string[]): boolean =>
+  value2.every(value => value1?.some(text => textSearchIncludes(text, value)));
 export const textListEquals = (value1: string[], value2: string) =>
   value1.some(text => textEquals(text, value2));
 export const textListShares = (

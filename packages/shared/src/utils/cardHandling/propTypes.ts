@@ -1,4 +1,4 @@
-import { HCCard, HCCardFace, HCLayout, HCObject, HCRelatedCard } from '../types';
+import { HCCard, HCCardFace, HCLayout, HCObject, HCRelatedCard } from '@hellfall/shared/types';
 
 export type propType = keyof HCCard.AnySingleFaced | keyof HCCard.AnyMultiFaced;
 export type excludePropType = Exclude<propType, 'layout' | 'card_faces'>;

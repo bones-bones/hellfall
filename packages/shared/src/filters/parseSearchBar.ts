@@ -1,4 +1,4 @@
-import { HCCard } from '../types';
+import { HCCard } from '@hellfall/shared/types';
 import { filterObject, IncludeFilter, sortObject } from './filterObject';
 import {
   filterIsInverted,
@@ -9,6 +9,7 @@ import {
   unescapeText,
 } from './filterBuilder';
 import { dirType, dirs, sorts, sortType, inclusionOptions, includeFilter } from './types';
+import { getAllRelated } from '../utils';
 
 const sortRedirects: Record<string, sortType> = {
   mv: 'manavalue',
@@ -32,10 +33,11 @@ const dirRedirects: Record<string, dirType> = {
 export type FilterNode =
   | { type: 'filter'; filter: filterObject<any, any> }
   | { type: 'not'; child: FilterNode }
+  | { type: 'related'; child: FilterNode }
   | { type: 'and'; children: FilterNode[] }
   | { type: 'or'; children: FilterNode[] };
-const tokenList = ['(', ')', 'or', '-'];
-const charBreakList = ['(', ')', ' '];
+const tokenList = ['(', ')', 'or', '-', '~'];
+const charBreakList = ['(', ' '];
 
 const isSortFilter = (text: string): boolean => {
   if (text.at(0) == '-') {
@@ -78,6 +80,11 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
         tokens.push(currentTerm);
         currentTerm = '';
       }
+      i++;
+      continue;
+    }
+    if (char == '~' && i < query.length - 1 && query.at(i + 1) != ' ' && query.at(i + 1) != ')') {
+      tokens.push(char);
       i++;
       continue;
     }
@@ -254,7 +261,6 @@ export const winnowSortObjects = (
 };
 
 export const getWinnowedSortOptions = (sortList: sortObject[]): sortType[] => {
-  const sortst = sortList;
   const options = [...sorts];
   const hasConflict = (sort: string, other: string) => {
     if (
@@ -369,7 +375,7 @@ export const combineAndWinnowSorts = (
   return { sortList, newInputs };
 };
 
-const noAndList = [' or ', '(', ' and ', ' not ('];
+const noAndList = [' or ', '(', ' and ', ' not (', 'the cards have related cards where '];
 const consumeList = [' or ', '(', ' and ', ' not (', ')'];
 export const parseSearchQuery = (
   query: string
@@ -424,6 +430,18 @@ export const parseSearchQuery = (
 
       if (token === ')') {
         return null;
+      }
+      if (token == '~' && i < tokens.length - 1) {
+        if (summaries.length && !noAndList.includes(summaries.at(-1)!)) {
+          summaries.push(' and ');
+        }
+        summaries.push('the cards have related cards where ');
+        const { node, nextPos } = parseTokens(tokens, i + 1, summaries);
+        i = nextPos;
+        if ((node.type == 'and' || node.type == 'or') && !node.children.length) {
+          return null;
+        }
+        return { type: 'related', child: node };
       }
 
       if (token === '-' && tokens.at(i + 1) == '(') {
@@ -551,17 +569,29 @@ export const parseSearchQuery = (
     autoFilterExtras,
   };
 };
+export const evaluateRelatedFilter = (
+  node: FilterNode,
+  card: HCCard.Any,
+  allCards: HCCard.Any[]
+): boolean =>
+  getAllRelated(card, allCards).some(related => evaluateFilter(node, related, allCards));
 
-export const evaluateFilter = (node: FilterNode, card: HCCard.Any): boolean => {
+export const evaluateFilter = (
+  node: FilterNode,
+  card: HCCard.Any,
+  allCards: HCCard.Any[]
+): boolean => {
   switch (node.type) {
     case 'filter':
       return node.filter.cardPassesFilter(card);
+    case 'related':
+      return evaluateRelatedFilter(node.child, card, allCards);
     case 'not':
-      return !evaluateFilter(node.child, card);
+      return !evaluateFilter(node.child, card, allCards);
     case 'and':
-      return node.children.every(child => evaluateFilter(child, card));
+      return node.children.every(child => evaluateFilter(child, card, allCards));
     case 'or':
-      return node.children.some(child => evaluateFilter(child, card));
+      return node.children.some(child => evaluateFilter(child, card, allCards));
   }
 };
 
@@ -599,7 +629,7 @@ export const searchCards = (
   }
   const newCardsWithExtras = cards.filter(
     card =>
-      evaluateFilter(node, card) &&
+      evaluateFilter(node, card, cards) &&
       (includeList.length ? includeList.some(filter => filter.cardPassesFilter(card)) : true) &&
       (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true)
   );

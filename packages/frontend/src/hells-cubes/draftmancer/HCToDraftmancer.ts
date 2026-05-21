@@ -14,7 +14,7 @@ import {
 } from '@hellfall/shared/utils';
 import { hcjFrontCards, HCJPackInfo } from '../hellstart/hcj';
 import { getCustomCardlist, getSplitSet } from '@hellfall/shared/filters';
-import { mergeHCCardFaces } from '../mergeHCCardFaces';
+import { mergeHCCardFaces } from '../../../../shared/src/utils/cardHandling/mergeHCCardFaces';
 import { getHc5 } from '../getHc5';
 
 const validColors = ['W', 'U', 'B', 'R', 'G'];

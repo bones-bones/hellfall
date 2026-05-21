@@ -153,7 +153,17 @@ export const Syntax = () => {
           <code>exclude:</code>, and vice versa.
         </div>
         <br />
-        <div>Regex hasn't been implemented yet.</div>
+        <div>
+          You can use <code>~</code> before a search term to have that search term check against a
+          card's related cards.
+        </div>
+        <br />
+        <div>
+          You can also use <code>is:</code> with{' '}
+          {mapListToCodeOr(['draftpartner', 'token', 'tokenmaker', 'persistent'])} to find cards
+          that are that, and you can use <code>has:</code> with those terms to find cards that have
+          related cards that match them.
+        </div>
         <br />
         <div>
           Everything from Scryfall's{' '}
@@ -161,6 +171,13 @@ export const Syntax = () => {
           <Link to={'https://scryfall.com/docs/syntax#nesting'}>Nesting Conditions</Link> sections
           also applies.
         </div>
+        <br />
+        <div>
+          When using <code>~</code> on parentheses <code>( )</code>, the search will look for cards
+          with related cards that match the entirety of the contents of the parentheses.
+        </div>
+        <br />
+        <div>Regex hasn't been implemented yet.</div>
         <h2>Sets and Blocks</h2>
         <div>
           Use <code>s:</code> or <code>set:</code> to find cards in a set, use <code>ts:</code> or{' '}

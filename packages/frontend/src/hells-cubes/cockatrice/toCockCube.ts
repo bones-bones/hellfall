@@ -4,8 +4,7 @@ import { orderColors } from '@hellfall/shared/utils';
 import { recursiveAdoption } from '../recursiveAdoption.ts';
 import { prettifyXml } from './prettifyXml';
 import { getSplitSet } from '@hellfall/shared/filters/filterSet.ts';
-import namesRawData from '@hellfall/shared/data/oracle-names.json';
-import { mergeHCCardFaces } from '../mergeHCCardFaces';
+import { mergeHCCardFaces } from '../../../../shared/src/utils/cardHandling/mergeHCCardFaces.ts';
 import { getHc5 } from '../getHc5.ts';
 
 const hcToCockLayout: Record<HCLayout, string> = {
@@ -99,11 +98,6 @@ export const toCockCube = ({
   allCards: HCCard.Any[];
 }) => {
   const idNames: Record<string, string[]> = {};
-  /**
-   * Checks whether a name is taken
-   * @param name name to check
-   * @returns whether name is taken
-   */
   const hcFaceToCockProps = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced
   ): CockFaceProps => {
@@ -155,9 +149,8 @@ export const toCockCube = ({
   /**
    * Convert an hc all_parts array to a cockatrice related props array
    * @param all_parts hc all_parts array
-  //  * @param persistent whether this card makes persistent tokens
-  * @returns cockatrice related props array
-  */
+   * @returns cockatrice related props array
+   */
   const hcAllPartsToCockRelated = (all_parts: HCRelatedCard[]): CockRelatedProps[] => {
     const cockRelateds: CockRelatedProps[] = [];
     all_parts.forEach(part => {
