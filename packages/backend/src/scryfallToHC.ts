@@ -164,14 +164,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     landcycling: 'cycling',
     'manifest dread': 'manifest',
   };
-  const supers: string[] = [
-    'Basic',
-    'Elite',
-    'Legendary',
-    'Ongoing',
-    'Snow',
-    /**'Token', */ 'World',
-  ];
+  const supers: string[] = ['Basic', 'Elite', 'Legendary', 'Ongoing', 'Snow', 'Token', 'World'];
   const cardObject: Record<string, any> & { card_faces?: Record<string, any>[] } = {};
   Object.entries(card).forEach(([key, value]) => {
     if (key == 'card_faces') {
@@ -180,11 +173,6 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
         cardObject.card_faces?.push({} as HCCardFace.MultiFaced);
 
         Object.entries(face).forEach(([k, v]) => {
-          // if (colorProps.includes(key)) {
-          //   cardObject.card_faces![index][k] = (
-          //     value.length ? value : [HCColor.Colorless]
-          //   ) as HCColors;
-          // } else
           if (k == 'image_uris') {
             cardObject.card_faces![index].image = (v as ScryfallImageUris).large;
             cardObject.card_faces![index].image_status = HCImageStatus.HighRes;
@@ -204,13 +192,11 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
             before.split(' ').forEach(word => {
               if (supers.includes(word)) {
                 pushProp(cardObject.card_faces![index], 'supertypes', word);
-              } else if (word != 'Token') {
-                if (word == 'Card') {
-                  cardObject.layout = HCLayout.MultiReminder;
-                  pushProp(cardObject.card_faces![index], 'types', 'Reminder Card');
-                } else {
-                  pushProp(cardObject.card_faces![index], 'types', word);
-                }
+              } else if (word == 'Card') {
+                cardObject.layout = HCLayout.MultiReminder;
+                pushProp(cardObject.card_faces![index], 'types', 'Reminder Card');
+              } else {
+                pushProp(cardObject.card_faces![index], 'types', word);
               }
             });
             after
@@ -257,16 +243,14 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       before.split(' ').forEach(word => {
         if (supers.includes(word)) {
           pushProp(cardObject, 'supertypes', word);
-        } else if (word != 'Token') {
-          if (word == 'Card') {
-            cardObject.layout = HCLayout.Reminder;
-            pushProp(cardObject, 'types', 'Reminder Card');
-          } else {
-            if (word == 'Dungeon') {
-              cardObject.layout = HCLayout.Dungeon;
-            }
-            pushProp(cardObject, 'types', word);
+        } else if (word == 'Card') {
+          cardObject.layout = HCLayout.Reminder;
+          pushProp(cardObject, 'types', 'Reminder Card');
+        } else {
+          if (word == 'Dungeon') {
+            cardObject.layout = HCLayout.Dungeon;
           }
+          pushProp(cardObject, 'types', word);
         }
       });
       after?.split(' ').forEach(word => pushProp(cardObject, 'subtypes', word));
