@@ -61,7 +61,7 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
     JSON.stringify({
       user: {
         id: payload.sub,
-        username: payload.username,
+        username: guild?.nick || payload.username,
         avatar: payload.avatar,
       },
       guild: guild ?? undefined,

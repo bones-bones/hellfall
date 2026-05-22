@@ -8,7 +8,8 @@
     "build:prod": "esbuild src/server.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/server.mjs --external:@google-cloud/firestore --external:dotenv",
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
-    "start:prod": "node dist/server.mjs"
+    "start:prod": "node dist/server.js",
+    "migrate-hellscube-db": "tsx scripts/migrate-hellscube-db.ts"
   },
   "dependencies": {
     "@google-cloud/firestore": "^7.1.0",

@@ -4,21 +4,21 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses 
 
 ## Endpoints
 
-| Path                             | Method   | Description                                                                                             |
-| -------------------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
-| `/api/discord/login`             | GET      | Redirects to Discord OAuth; after auth, Discord redirects to callback                                   |
-| `/api/discord/callback`          | GET      | Exchanges code for token, creates session cookie, redirects to frontend                                 |
-| `/api/me`                        | GET      | Returns current user from session cookie (or `{ user: null }`)                                          |
-| `/api/logout`                    | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL`                                   |
-| `/api/tag`                       | GET      | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags       |
-| `/api/tag`                       | GET      | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags       |
-| `/api/cards/:cardId?format=json` | GET      | Card formatted as a JSON                                                                                |
-| `/api/cards/:cardId?format=text` | GET      | Card formatted as plaintext                                                                             |
-| `/api/cards/:cardId?format=tags` | GET      | Tag overrides from Firestore doc `cards/{cardId}` (`added` / `removed`). DB id defaults to `hellscube`. |
-| `/api/cards/:cardId?format=tags` | POST     | Add a tag (body: `{ tag: string }`). Requires auth + role.                                              |
-| `/api/cards/:cardId?format=tags` | DELETE   | Remove a tag (body: `{ tag: string }`). Requires auth + role.                                           |
-| `/api/watchwolf`                 | GET      | Returns WatchWolfWar card standings from Firestore                                                      |
-| `/api/watchwolf`                 | POST     | Submit a win/lose (body: `{ WinId, LoseId }`)                                                           |
+| Path                            | Method   | Description                                                                                             |
+| ------------------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
+| `/api/discord/login`            | GET      | Redirects to Discord OAuth; after auth, Discord redirects to callback                                   |
+| `/api/discord/callback`         | GET      | Exchanges code for token, creates session cookie, redirects to frontend                                 |
+| `/api/me`                       | GET      | Returns current user from session cookie (or `{ user: null }`)                                          |
+| `/api/logout`                   | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL`                                   |
+| `/api/tag`                      | GET      | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags       |
+| `/api/cards/:cardId?format=json`| GET      | Card formatted as JSON                                                                                  |
+| `/api/cards/:cardId?format=text`| GET      | Card formatted as plaintext                                                                             |
+| `/api/cards/:cardId/tags`       | GET      | Merged `tags` plus `added` / `removed` from Firestore `cards/{cardId}`. DB id defaults to `hellscube`. |
+| `/api/cards/:cardId/tags`       | POST     | Add a tag (body: `{ tag: string }`). Updates overrides and merged `tags`. Requires auth + role.         |
+| `/api/cards/:cardId/tags/:tag`  | DELETE   | Remove a tag. Updates overrides and merged `tags`. Requires auth + role.                                |
+| `/api/cards/:cardId/tags/audit` | GET      | Tag change history for the card (`?limit=50`, max 200). Requires auth + role.                           |
+| `/api/watchwolf`                | GET      | Returns WatchWolfWar card standings from Firestore                                                      |
+| `/api/watchwolf`                | POST     | Submit a win/lose (body: `{ WinId, LoseId }`)                                                          |
 
 ## Setup
 
@@ -35,7 +35,8 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses 
    - `JWT_SECRET` – random string (e.g. `openssl rand -base64 32`)
    - `FRONTEND_URL` – where the React app lives (e.g. `https://user.github.io/hellfall`)
    - Optional: `AUTH_SERVER_URL` (defaults to `http://localhost:3003` when unset), `COOKIE_NAME`, `COOKIE_DOMAIN`, `JWT_ISSUER`
-   - **Card tags:** Firestore database **`hellscube`** (override: `FIRESTORE_HELLSCUBE_DATABASE_ID`), collection **`cards`** (`FIRESTORE_CARDS_COLLECTION`). Each card document may include `added` and `removed` string arrays; writes use **merge** so other fields are preserved.
+   - **Card tags:** Firestore database **`hellscube`**, collection **`cards`**. Each doc has full card data plus `baseTags`, merged `tags`, and override arrays `added` / `removed`. Tag edits append to subcollection **`tag_audit`** (`FIRESTORE_TAG_AUDIT_SUBCOLLECTION`) with `username`, `userId`, `before`/`after` snapshots, and server timestamp.
+   - After rebuilding `Hellscube-Database.json` (`yarn transform-hc`), run **`yarn migrate-hellscube-db`** — see [scripts/README.md](./scripts/README.md).
    - WatchWolf: `GOOGLE_APPLICATION_CREDENTIALS` (path to service account JSON) for Firestore (local dev; Cloud Run uses the service identity)
 
 ## Running the server

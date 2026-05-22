@@ -11,11 +11,17 @@ function getCookie(req: HandlerRequest, name: string): string | null {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
-/** Verifies session and DATABASE_CONTRIBUTOR role. Returns payload or sends error and returns null. */
+export type TagAuthUser = {
+  userId: string;
+  username: string;
+  discord_access_token: string;
+};
+
+/** Verifies session and DATABASE_CONTRIBUTOR role. Returns user or sends error and returns null. */
 export async function requireTagAuth(
   req: HandlerRequest,
   res: HandlerResponse
-): Promise<{ sub: string; discord_access_token: string } | null> {
+): Promise<TagAuthUser | null> {
   const token = getCookie(req, env.COOKIE_NAME);
   if (!token) {
     res.statusCode = 401;
@@ -38,7 +44,7 @@ export async function requireTagAuth(
   }
 
   const guildId = env.DISCORD_GUILD_ID;
-  const discordAccessToken = payload.discord_access_token as string | undefined;
+  const discordAccessToken = payload.discord_access_token;
   if (!guildId || !discordAccessToken) {
     res.statusCode = 401;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
@@ -65,5 +71,12 @@ export async function requireTagAuth(
     return null;
   }
 
-  return { sub: payload.sub as string, discord_access_token: discordAccessToken };
-}
+  const username =
+    guild.kind === 'member' && guild.nick ? guild.nick : payload.username || payload.sub;
+
+  return {
+    userId: payload.sub,
+    username,
+    discord_access_token: discordAccessToken,
+  };
+};

@@ -62,7 +62,8 @@ export const env = {
     return process.env.FIRESTORE_CARDS_COLLECTION?.trim() || 'cards';
   },
 
-  get USE_LOCAL_CARD_DATA(): boolean {
-    return process.env.USE_LOCAL_CARD_DATA === 'true' || process.env.NODE_ENV === 'development';
+  /** Subcollection under each card doc for tag change audit entries. */
+  get FIRESTORE_TAG_AUDIT_SUBCOLLECTION(): string {
+    return process.env.FIRESTORE_TAG_AUDIT_SUBCOLLECTION?.trim() || 'tag_audit';
   },
 };

@@ -14,7 +14,10 @@ function mergeTags(baseTags: string[] | undefined, overrides: CardTagOverrides |
   return base.filter(t => !removedSet.has(t)).concat(added);
 }
 
-type FetchResult = CardTagOverrides & { persistEnabled: boolean };
+type FetchResult = CardTagOverrides & {
+  tags?: string[];
+  persistEnabled: boolean;
+};
 
 async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchResult> {
   const res = await fetch(`${baseUrl}/api/cards/${encodeURIComponent(cardId)}?format=tags`, {
@@ -26,19 +29,36 @@ async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchRes
     throw new Error('Failed to load tag overrides');
   }
   const data = (await res.json()) as {
+    tags?: string[];
     added?: string[];
     removed?: string[];
     persistEnabled?: boolean;
   };
   return {
+    tags: Array.isArray(data.tags) ? data.tags : undefined,
     added: Array.isArray(data.added) ? data.added : [],
     removed: Array.isArray(data.removed) ? data.removed : [],
     persistEnabled: data.persistEnabled !== false,
   };
 }
 
+function parseTagResponse(data: {
+  tags?: string[];
+  added?: string[];
+  removed?: string[];
+}): { tags: string[] | undefined; overrides: CardTagOverrides } {
+  return {
+    tags: Array.isArray(data.tags) ? data.tags : undefined,
+    overrides: {
+      added: Array.isArray(data.added) ? data.added : [],
+      removed: Array.isArray(data.removed) ? data.removed : [],
+    },
+  };
+}
+
 /**
  * Loads tag overrides when `authApiUrl` + `cardId` are set.
+ * Uses Firestore `tags` from the API when present (post-migrate); otherwise merges JSON base + overrides.
  * Sixth value is server `persistEnabled` (hides edit UI when false).
  */
 export function useCardTagOverrides(
@@ -54,6 +74,7 @@ export function useCardTagOverrides(
 ] {
   const baseUrl = getAuthApiUrl();
   const [overrides, setOverrides] = React.useState<CardTagOverrides | null>(null);
+  const [firestoreTags, setFirestoreTags] = React.useState<string[] | null>(null);
   const [persistEnabled, setPersistEnabled] = React.useState(false);
   const [loading, setLoading] = React.useState(!!baseUrl && !!cardId);
   const [error, setError] = React.useState<Error | null>(null);
@@ -61,6 +82,7 @@ export function useCardTagOverrides(
   React.useEffect(() => {
     if (!baseUrl || !cardId) {
       setOverrides(null);
+      setFirestoreTags(null);
       setPersistEnabled(false);
       setLoading(false);
       return;
@@ -69,19 +91,22 @@ export function useCardTagOverrides(
     setError(null);
     fetchOverrides(baseUrl, cardId)
       .then(r => {
-        const { persistEnabled: pe, ...o } = r;
+        const { persistEnabled: pe, tags, ...o } = r;
         setOverrides(o);
+        setFirestoreTags(tags ?? null);
         setPersistEnabled(pe);
       })
       .catch(e => {
         setError(e instanceof Error ? e : new Error(String(e)));
         setOverrides({ added: [], removed: [] });
+        setFirestoreTags(null);
         setPersistEnabled(false);
       })
       .finally(() => setLoading(false));
   }, [baseUrl, cardId]);
 
-  const merged = mergeTags(baseTags, overrides);
+  const merged =
+    firestoreTags ?? mergeTags(baseTags, overrides);
 
   const addTag = React.useCallback(
     async (tag: string) => {
@@ -94,11 +119,14 @@ export function useCardTagOverrides(
         body: JSON.stringify({ tag: tagNorm }),
       });
       if (!res.ok) throw new Error('Failed to add tag');
-      const data = (await res.json()) as { added?: string[]; removed?: string[] };
-      setOverrides({
-        added: Array.isArray(data.added) ? data.added : [],
-        removed: Array.isArray(data.removed) ? data.removed : [],
-      });
+      const data = (await res.json()) as {
+        tags?: string[];
+        added?: string[];
+        removed?: string[];
+      };
+      const { tags, overrides: o } = parseTagResponse(data);
+      setOverrides(o);
+      if (tags) setFirestoreTags(tags);
     },
     [baseUrl, cardId]
   );
@@ -114,11 +142,14 @@ export function useCardTagOverrides(
         body: JSON.stringify({ tag: tagNorm }),
       });
       if (!res.ok) throw new Error('Failed to remove tag');
-      const data = (await res.json()) as { added?: string[]; removed?: string[] };
-      setOverrides({
-        added: Array.isArray(data.added) ? data.added : [],
-        removed: Array.isArray(data.removed) ? data.removed : [],
-      });
+      const data = (await res.json()) as {
+        tags?: string[];
+        added?: string[];
+        removed?: string[];
+      };
+      const { tags, overrides: o } = parseTagResponse(data);
+      setOverrides(o);
+      if (tags) setFirestoreTags(tags);
     },
     [baseUrl, cardId]
   );
