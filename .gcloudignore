@@ -1,8 +1,11 @@
 .git
 .github
 node_modules
-packages/frontend
-packages/backend
+packages/frontend/src
+packages/frontend/public
+packages/frontend/node_modules
+packages/backend/src
+packages/backend/node_modules
 packages/server/dist
 packages/shared/dist
 build
