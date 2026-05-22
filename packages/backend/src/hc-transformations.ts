@@ -306,7 +306,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       } else if (key == 'image_status') {
         // TODO: store current version and print the diff if there is one
         // if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {
-          // merged.image_status = value as HCImageStatus;
+        // merged.image_status = value as HCImageStatus;
         // }
       } else if (key == 'draft_image_status') {
         // TODO: store current version and print the diff if there is one

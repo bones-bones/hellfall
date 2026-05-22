@@ -60,16 +60,6 @@
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "name": "Debug land-box",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "yarn",
-      "runtimeArgs": ["land-box"],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
     }
   ]
 }
