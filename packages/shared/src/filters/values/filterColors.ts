@@ -46,7 +46,7 @@ export const filterColorNumber: colorNumFilter = Object.assign(
   }
 );
 
-export const evalShortNum = (value1: number, operator: opType, value2: shorthandType): boolean => {
+export const evalShortNum = (value1: number, operator: opType, value2: shorthandType) => {
   const shortNum = shortToNum(operator, value2);
   if (value2 == 'c') {
     return filterNumber(value1, operator, shortNum);
