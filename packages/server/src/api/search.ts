@@ -1,9 +1,9 @@
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
-import { withCors } from './lib/cors.js';
-import { getAllCards, getCardById } from './cardsStore.js';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
+import { withCors } from './lib/cors.ts';
+import { getAllCards, getCardById } from './cardsStore.ts';
 import { combineAndWinnowSorts, parseSearchQuery, searchCards } from '@hellfall/shared/filters';
 import tags_data from '@hellfall/shared/data/tags.json';
-import { HCCard } from '../../../shared/src/types/Card/Card.js';
+import { HCCard } from '@hellfall/shared/types';
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];

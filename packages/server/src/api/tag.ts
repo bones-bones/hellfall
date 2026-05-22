@@ -1,6 +1,6 @@
-import { withCors } from './lib/cors.js';
-import { requireTagAuth } from './lib/requireTagAuth.js';
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
+import { withCors } from './lib/cors.ts';
+import { requireTagAuth } from './lib/requireTagAuth.ts';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
 export const tagHandler = async (req: HandlerRequest, res: HandlerResponse): Promise<void> => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);

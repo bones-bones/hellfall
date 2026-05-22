@@ -1,19 +1,18 @@
 import 'dotenv/config';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { parse as parseUrl } from 'node:url';
-import { withCors } from './api/lib/cors.js';
-import type { HandlerRequest, HandlerResponse } from './api/lib/types.js';
-import { meHandler } from './api/me.js';
-import { logoutHandler } from './api/logout.js';
-import { tagHandler } from './api/tag.js';
-import { watchwolfHandler } from './api/watchwolf.js';
-import { loginHandler } from './api/discord/login.js';
-import { callbackHandler } from './api/discord/callback.js';
-import { doneHandler } from './api/discord/done.js';
-import { cardTagsHandler } from './api/cardTags.js';
-import { cardJsonHandler, cardTextHandler } from './api/cardData.js';
-import { pushProp } from '../../shared/src/utils/listHandling.js';
-import { searchHandler } from './api/search.js';
+import { withCors } from './api/lib/cors.ts';
+import type { HandlerRequest, HandlerResponse } from './api/lib/types.ts';
+import { meHandler } from './api/me.ts';
+import { logoutHandler } from './api/logout.ts';
+import { tagHandler } from './api/tag.ts';
+import { watchwolfHandler } from './api/watchwolf.ts';
+import { loginHandler } from './api/discord/login.ts';
+import { callbackHandler } from './api/discord/callback.ts';
+import { doneHandler } from './api/discord/done.ts';
+import { cardTagsHandler } from './api/cardTags.ts';
+import { cardJsonHandler, cardTextHandler } from './api/cardData.ts';
+import { searchHandler } from './api/search.ts';
 
 const PORT = Number(process.env.PORT) || 3003;
 

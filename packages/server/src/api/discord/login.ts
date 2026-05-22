@@ -1,8 +1,8 @@
 import { randomBytes } from 'node:crypto';
-import { buildAuthorizeUrl } from '../lib/discord/discord.js';
-import { env } from '../lib/env.js';
-import { withCors, getCorsOrigin } from '../lib/cors.js';
-import type { HandlerRequest, HandlerResponse } from '../lib/types.js';
+import { buildAuthorizeUrl } from '../lib/discord/discord.ts';
+import { env } from '../lib/env.ts';
+import { withCors, getCorsOrigin } from '../lib/cors.ts';
+import type { HandlerRequest, HandlerResponse } from '../lib/types.ts';
 
 function randomState(): string {
   return randomBytes(24).toString('base64url');

@@ -1,8 +1,8 @@
-import type { HandlerRequest, HandlerResponse } from './types.js';
-import { env } from './env.js';
-import { verifySessionToken } from './jwt.js';
-import { getUserAsGuildMember } from './discord/discord.js';
-import { DATABASE_CONTRIBUTOR } from '../discord/constants.js';
+import type { HandlerRequest, HandlerResponse } from './types.ts';
+import { env } from './env.ts';
+import { verifySessionToken } from './jwt.ts';
+import { getUserAsGuildMember } from './discord/discord.ts';
+import { DATABASE_CONTRIBUTOR } from '../discord/constants.ts';
 
 function getCookie(req: HandlerRequest, name: string): string | null {
   const raw = req.headers.cookie;

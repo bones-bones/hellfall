@@ -1,7 +1,6 @@
-// packages/server/src/api/tagsStore.ts
 import { readFileSync, writeFileSync } from 'node:fs';
-import type { CardTagOverrides } from './cardTags.js';
-import { env } from './lib/env.js';
+import type { CardTagOverrides } from './cardTags.ts';
+import { env } from './lib/env.ts';
 import {
   CollectionReference,
   DocumentReference,

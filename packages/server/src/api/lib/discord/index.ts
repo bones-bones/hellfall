@@ -1,1 +1,1 @@
-export * from './discord.js';
+export * from './discord.ts';

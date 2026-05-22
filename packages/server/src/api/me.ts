@@ -1,8 +1,8 @@
-import { env } from './lib/env.js';
-import { verifySessionToken } from './lib/jwt.js';
-import { withCors } from './lib/cors.js';
-import { getUserAsGuildMember } from './lib/discord/discord.js';
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
+import { env } from './lib/env.ts';
+import { verifySessionToken } from './lib/jwt.ts';
+import { withCors } from './lib/cors.ts';
+import { getUserAsGuildMember } from './lib/discord/discord.ts';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
 function getCookie(req: HandlerRequest, name: string): string | null {
   const raw = req.headers.cookie;

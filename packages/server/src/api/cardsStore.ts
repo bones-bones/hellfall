@@ -1,6 +1,6 @@
 import { CollectionReference, Firestore } from '@google-cloud/firestore';
 import type { HCCard } from '@hellfall/shared/types';
-import { env } from './lib/env.js';
+import { env } from './lib/env.ts';
 import cardsData from '@hellfall/shared/data/Hellscube-Database.json';
 const useLocalData = env.USE_LOCAL_CARD_DATA;
 

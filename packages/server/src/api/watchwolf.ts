@@ -1,6 +1,6 @@
 import { Firestore } from '@google-cloud/firestore';
-import { withCors } from './lib/cors.js';
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
+import { withCors } from './lib/cors.ts';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
 const db = new Firestore({ databaseId: 'watch-wolf-war' });
 const docRef = db.collection('cards');
