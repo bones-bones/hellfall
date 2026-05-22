@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@google-cloud/firestore": "^7.1.0",
+    "@hellfall/shared": "^1.0.0",
     "dotenv": "^16.4.5",
     "jose": "^5.2.0"
   },

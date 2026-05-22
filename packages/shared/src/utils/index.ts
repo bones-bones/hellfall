@@ -1,5 +1,5 @@
 export * from './numHandling.ts';
-export * from './listHandling.ts';
+export * from './listHandling';
 export * from './orderColors.ts';
 export * from './textHandling.ts';
 export * from './orderProps.ts';

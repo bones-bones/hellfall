@@ -9,7 +9,7 @@ import {
   sortFilter,
   sortType,
 } from './types';
-import { allSetsList } from '../data/sets.ts';
+import { allSetsList } from '../data/sets';
 
 const colorSortValue: Record<HCColor, number> = {
   W: 1,
