@@ -354,13 +354,13 @@ export const HellfallCard = ({
                       tagEntry in data.tag_notes &&
                       (data.tag_notes[tagEntry].slice(0, 6) == 'https:' ? (
                         <>
-                          <SmallText> (</SmallText>
+                          <SmallLine> (</SmallLine>
                           <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
-                          <SmallText>)</SmallText>
+                          <SmallLine>)</SmallLine>
                         </>
                       ) : (
                         <>
-                          <SmallText> ({data.tag_notes[tagEntry]})</SmallText>
+                          <SmallLine> ({data.tag_notes[tagEntry]})</SmallLine>
                         </>
                       ))}
                     {user && tagsPersistEnabled && (
@@ -645,6 +645,11 @@ const MediumLine = styled('span')({
 const MediumItalics = styled(MediumText)({ fontStyle: 'italic' });
 const MediumItalicLine = styled(MediumLine)({ fontStyle: 'italic' });
 const SmallText = styled('div')({
+  fontSize: type.levels.body.small.fontSize,
+  fontWeight: type.levels.body.small.fontWeight,
+  marginBlock: '.4rem',
+});
+const SmallLine = styled('span')({
   fontSize: type.levels.body.small.fontSize,
   fontWeight: type.levels.body.small.fontWeight,
   marginBlock: '.4rem',

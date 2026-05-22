@@ -97,6 +97,6 @@ Write a script to transform the database
 - make pips servable via the api
 - add cubecobra export
 
-- add lands
 - fix Hellstart.tsx
 - add ub frame effect
+- add tag note handling for logged in tagger
