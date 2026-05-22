@@ -32,6 +32,7 @@ export const packInfoToCard = (entry: HCJPackInfo): HCCard.Any => {
     creators: [],
     set: 'FHCJ',
     rulings: '',
+    types: ['Front Card'],
     type_line: 'Front Card',
     oracle_text: '',
     mana_cost: '',

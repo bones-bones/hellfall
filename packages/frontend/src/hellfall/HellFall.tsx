@@ -7,7 +7,7 @@ import { SidePanel, useSidePanel } from '@workday/canvas-kit-preview-react/side-
 import { PaginationComponent } from './inputs';
 
 import { HellfallCard } from './card/HellfallCard.tsx';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
   activeCardAtom,
   invalidAtom,
@@ -22,31 +22,18 @@ import { useKeyPress } from '../hooks';
 import { cardsAtom } from './atoms/cardsAtom.ts';
 import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
 import { getOtherNames } from '@hellfall/shared/utils';
-import { withBasePath } from '../basePath.ts';
 import { SearchBar } from './search-controls/SearchBar.tsx';
+import { ActiveCardPanel } from './ActiveCardPanel.tsx';
 
 export const HellFall = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cards = useAtomValue(cardsAtom);
   const summary = useAtomValue(summaryAtom);
   const invalids = useAtomValue(invalidAtom);
-  const escape = useKeyPress('Escape');
   const query = useAtomValue(queryAtom);
 
   useUpdateURL();
 
-  const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-
-  const activeCard = cards.find(entry => {
-    return entry.id === activeCardFromAtom;
-  });
-
-  useEffect(() => {
-    if (escape) {
-      setActiveCardFromAtom('');
-    }
-  }, [escape]);
-  useEffect(() => {});
+  const setActiveCardFromAtom = useSetAtom(activeCardAtom);
 
   const [page, setPage] = useAtom(pageAtom);
   const { resultSet, paginationModel } = useSearchResults();
@@ -65,44 +52,13 @@ export const HellFall = () => {
     return cardWidth * cardNum + 5;
   }, [windowWidth]);
 
-  const { panelProps } = useSidePanel({
-    initialExpanded: !!activeCard,
-  });
   useEffect(() => {
     document.title = `${query || 'Search'} | Hellfall`;
   }, [query]);
 
   return (
     <div>
-      <StyledSidePanel
-        {...panelProps}
-        expanded={!!activeCard}
-        origin="right"
-        expandedWidth={Math.max(windowWidth * 0.535, 350)}
-        collapsedWidth={0}
-      >
-        <Card>
-          <Card.Body padding={'zero'}>
-            <SPContainer>
-              <ToolbarIconButton
-                icon={xIcon}
-                margin={'2px 0 0 2px'}
-                onClick={() => setActiveCardFromAtom('')}
-              />
-              {activeCard && (
-                <ToolbarIconButton
-                  as="a"
-                  icon={extLinkIcon}
-                  margin={'2px 0 0 2px'}
-                  href={withBasePath('/card/' + encodeURIComponent(activeCard.id))}
-                  target="_blank"
-                />
-              )}
-              {activeCard && <HellfallCard data={activeCard} />}
-            </SPContainer>
-          </Card.Body>
-        </Card>
-      </StyledSidePanel>
+      <ActiveCardPanel />
       <br />
       <SearchBar />
       <Separator />
@@ -131,11 +87,9 @@ export const HellFall = () => {
             <HellfallEntry
               onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                 if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                  window.open(withBasePath('/card/' + encodeURIComponent(entry.id)), '_blank');
+                  window.open(`/card/${encodeURIComponent(entry.id)}`, '_blank');
                 } else {
-                  // startTransition(() => {
                   setActiveCardFromAtom(entry.id);
-                  // });
                 }
               }}
               key={'' + entry.id + '-' + i}
@@ -189,20 +143,3 @@ const CardsGrid = styled('div')<{ $maxWidth: number }>(({ $maxWidth }) => ({
   gap: '0px',
   margin: '0 auto',
 }));
-
-const StyledSidePanel = styled(SidePanel)({
-  zIndex: 40,
-  height: '100%',
-  position: 'fixed',
-  backgroundColor: 'transparent',
-  right: 0,
-  top: '35px',
-  '& > div': {
-    paddingRight: '8px !important',
-  },
-});
-const SPContainer = styled('div')({
-  overflowY: 'scroll',
-  height: '90vh',
-  overflowX: 'hidden',
-});

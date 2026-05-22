@@ -1,12 +1,8 @@
 import { HCCard } from '@hellfall/shared/types';
 import { AddCards, DraftEffect, DraftmancerCustomCard, SimpleDraftEffectList } from './draftTypes';
-import { getRelatedsFromCards, toFaces } from '../cardHandling';
+import { compressHCCardFaces, getRelatedsFromCards, toFaces } from '../cardHandling';
 import { getFilteredSet } from '@hellfall/shared/filters';
-import {
-  compressHCCardFaces,
-  HCCardToDraftmancerCard,
-  StickerSheetScryfallIds,
-} from './HCToDraftCard';
+import { HCCardToDraftmancerCard, StickerSheetScryfallIds } from './HCToDraftCard';
 import { stripSingleSlashes } from '../textHandling';
 
 export const HCToDraftmancer = (

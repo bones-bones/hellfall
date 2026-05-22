@@ -1,4 +1,4 @@
-import { HCCardFace } from '@hellfall/shared/types';
+import { HCCard, HCCardFace } from '@hellfall/shared/types';
 const subLayouts = [
   'token',
   'emblem',
@@ -103,4 +103,39 @@ export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.Mul
       });
   });
   return faces[0];
+};
+
+export const compressHCCardFaces = (card: HCCard.Any, alwaysCompressAll?: boolean) => {
+  const newCard = { ...card } as HCCard.Any;
+  if ('card_faces' in newCard) {
+    const goingToCompressAll = Boolean(
+      newCard.card_faces.length > 2 &&
+        newCard.card_faces.filter(face => face.compress_face || face.drop_face).length == 1
+    );
+    for (let i = newCard.card_faces.length - 1; i > 0; i--) {
+      if (newCard.card_faces[i].compress_face) {
+        newCard.card_faces[i - 1] = mergeHCCardFaces([
+          newCard.card_faces[i - 1],
+          newCard.card_faces[i],
+        ]);
+        newCard.card_faces.splice(i, 1);
+      } else if (newCard.card_faces[i].drop_face) {
+        newCard.card_faces.splice(i, 1);
+      }
+    }
+
+    // compress down to 1 side and use front image if there are still too many sides
+    if (goingToCompressAll || alwaysCompressAll) {
+      newCard.card_faces[0].image = newCard.image;
+      if (newCard.rotated_image) {
+        newCard.card_faces[0].rotated_image = newCard.rotated_image;
+      }
+    } else if (!newCard.card_faces[0].image) {
+      newCard.card_faces[0].image = newCard.image;
+      if (!newCard.card_faces[0].rotated_image && newCard.rotated_image) {
+        newCard.card_faces[0].rotated_image = newCard.rotated_image;
+      }
+    }
+  }
+  return newCard;
 };

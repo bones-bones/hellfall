@@ -1,20 +1,10 @@
 import styled from '@emotion/styled';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { useEffect, useMemo, useState } from 'react';
 import { TeamWolf as GetCardVotes } from './TeamWolf.tsx';
-import {
-  SidePanelOpenDirection,
-  Card,
-  ToolbarIconButton,
-  SidePanel,
-} from '@workday/canvas-kit-react';
-import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
 import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
-import { xIcon } from '@workday/canvas-system-icons-web';
-import { useKeyPress } from '../hooks';
-
-//TODO: make results use Id natively on the backend
+import { ActiveCardPanel } from '../hellfall/ActiveCardPanel.tsx';
 
 interface Standing {
   Id: string;
@@ -24,15 +14,8 @@ interface Standing {
 }
 
 export const Watchwolfresults = () => {
-  const escape = useKeyPress('Escape');
   const cards = useAtomValue(cardsAtom).filter(e => e.set != 'NRM');
-  const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const activeCard = cards.find(e => e.id === activeCardFromAtom);
-  useEffect(() => {
-    if (escape) {
-      setActiveCardFromAtom('');
-    }
-  }, [escape]);
+  const setActiveCardFromAtom = useSetAtom(activeCardAtom);
   const [standings, setStandings] = useState<Standing[]>();
   useEffect(() => {
     GetCardVotes().then(setStandings);
@@ -73,22 +56,7 @@ export const Watchwolfresults = () => {
   return (
     <PageContainer>
       <title>WatchWolfWar Results | Hellfall</title>
-      <StyledSidePanel
-        openWidth={window.screen.width > 450 ? 810 : 400}
-        openDirection={SidePanelOpenDirection.Right}
-        open={!!activeCard}
-      >
-        {!!activeCard && (
-          <Card>
-            <Card.Body padding={'zero'}>
-              <SPContainer>
-                <ToolbarIconButton icon={xIcon} onClick={() => setActiveCardFromAtom('')} />
-                {activeCard && <HellfallCard data={activeCard} />}
-              </SPContainer>
-            </Card.Body>
-          </Card>
-        )}
-      </StyledSidePanel>
+      <ActiveCardPanel />
       <StyleComponent>
         <Title>
           Welcome to the WatchWolfWar, the place to be to determine the Hellsiest card of All!
@@ -118,8 +86,14 @@ export const Watchwolfresults = () => {
             return (
               <ResultRow
                 key={entry.Id}
-                onClick={() => {
-                  setActiveCardFromAtom(entry.Id);
+                href={`/card/${encodeURIComponent(card.id)}`}
+                onClick={(event: React.MouseEvent) => {
+                  if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                    window.open(`/card/${encodeURIComponent(card.id)}`, '_blank');
+                  } else {
+                    event.preventDefault();
+                    setActiveCardFromAtom(card.id);
+                  }
                 }}
               >
                 <div>
@@ -158,41 +132,28 @@ const ResultsReceptaclePlaceThing = styled('div')({
   boxShadow: '0 2px 8px rgb(164, 45, 168)',
   textAlign: 'center',
 });
-const ResultRow = styled('div')`
-  display: flex;
-  gap: 8px;
-  cursor: pointer;
-  padding: 0px 16px;
+const ResultRow = styled('a')({
+  display: 'flex',
+  gap: '8px',
+  cursor: 'pointer',
+  padding: '0px 16px',
 
-  &:hover {
-    text-decoration: underline;
-  }
+  '&:hover': {
+    textDecoration: 'underline',
+  },
 
-  &:nth-child(odd) {
-    background-color: #f0f0f0;
-  }
+  '&:nth-child(odd)': {
+    backgroundColor: '#f0f0f0',
+  },
 
-  &:nth-child(even) {
-    background-color: #e0e0e0;
-  }
+  '&:nth-child(even)': {
+    backgroundColor: '#e0e0e0',
+  },
 
-  & > div {
-    flex: 1;
-    text-align: left;
-  }
-`;
+  '& > div': {
+    flex: 1,
+    textAlign: 'left',
+  },
+});
 
 const StyleComponent = styled('div')({ color: 'purple', display: 'flex' });
-
-const StyledSidePanel = styled(SidePanel)({
-  zIndex: 40,
-  height: '100%',
-  position: 'fixed',
-  backgroundColor: 'transparent',
-  top: '10px',
-});
-const SPContainer = styled('div')({
-  overflowY: 'scroll',
-  height: '90vh',
-  overflowX: 'hidden',
-});

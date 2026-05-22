@@ -8,11 +8,7 @@ import { allSetsList } from '@hellfall/shared/data/sets.ts';
 import { setDerivedProps, setExportProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
-  bothPropType,
-  facePropOrder,
   facePropType,
-  partPropOrder,
-  propOrder,
   propType,
   pushProp,
   stripMasterpiece,
