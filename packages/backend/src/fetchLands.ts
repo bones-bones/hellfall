@@ -13,7 +13,6 @@ import {
   HCRelatedCard,
 } from '@hellfall/shared/types/index.ts';
 import { sheetsKey } from './env.ts';
-import fs from 'fs';
 import { landToColorMapping } from './derivedProps.ts';
 import { cardObjectType, facePropType } from '@hellfall/shared/utils/index.ts';
 import { addArtist, addProp, addTag } from './fetchUtils.ts';
@@ -162,7 +161,7 @@ export const fetchLands = async () => {
     }
     const splitName = land.name.split(' ');
     if (splitName[0] == 'Snow-Covered') {
-      land.supertypes?.unshift('Snow');
+      land.supertypes?.push('Snow');
       splitName.shift();
     }
     if (splitName[0] in landToColorMapping) {

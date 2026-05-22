@@ -305,9 +305,9 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         }
       } else if (key == 'image_status') {
         // TODO: store current version and print the diff if there is one
-        if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {
-          merged.image_status = value as HCImageStatus;
-        }
+        // if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {
+          // merged.image_status = value as HCImageStatus;
+        // }
       } else if (key == 'draft_image_status') {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
@@ -430,7 +430,7 @@ const mergeDatabases = (
 ): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[]; mergedLands: HCCard.Any[] } => {
   const existingCardMap = new Map(existingCards.map(card => [card.id, card]));
   const existingTokenMap = new Map(existingTokens.map(token => [token.id.toLowerCase(), token]));
-  const existingLandMap = new Map(existingLands.map(land => [land.id.toLowerCase(), land]));
+  const existingLandMap = new Map(existingLands.map(land => [land.id, land]));
 
   const mergedCards = newCards.map(newCard => {
     const existingCard = !(newCard.id in movedIds)
@@ -969,10 +969,19 @@ const main = async () => {
             ) {
               card.all_parts?.splice(i, 1);
             }
+          } else if (finalTokens.find(e => e.id == part.id)) {
+            if (
+              !(
+                finalTokens.find(e => e.id == part.id)?.all_parts?.find(e => e.id == card.id)
+                  ?.component == 'token_maker'
+              )
+            ) {
+              card.all_parts?.splice(i, 1);
+            }
           } else {
             if (
               !(
-                finalTokens
+                finalLands
                   .find(e => textEquals(e.id, part.id))
                   ?.all_parts?.find(e => e.id == card.id)?.component == 'token_maker'
               )
