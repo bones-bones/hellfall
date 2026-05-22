@@ -1,0 +1,16 @@
+.git
+.github
+node_modules
+packages/frontend
+packages/backend
+packages/server/dist
+packages/shared/dist
+build
+pics
+pics.zip
+*.md
+.DS_Store
+.vscode
+.env*
+.notes.md
+.yarn/install-state.gz
