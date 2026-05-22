@@ -75,7 +75,6 @@ const StyledSidePanel = styled(SidePanel)<{ $origin: 'left' | 'right' }>(({ $ori
   height: '100%',
   position: 'fixed',
   backgroundColor: 'transparent',
-  right: 0,
   top: '35px',
   ...($origin === 'right' ? { right: 0 } : { left: 0 }),
   '& > div': {

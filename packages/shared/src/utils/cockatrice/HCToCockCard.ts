@@ -154,8 +154,8 @@ const hcAllPartsToCockRelated = (all_parts: HCRelatedCard[]): CockRelatedProps[]
   });
   return cockRelateds;
 };
-const compressHCCardFaces = (card: HCCard.Any):HCCard.Any => {
-  const newCard = structuredClone(card)
+const compressHCCardFaces = (card: HCCard.Any): HCCard.Any => {
+  const newCard = structuredClone(card);
   if ('card_faces' in newCard) {
     const goingToCompressAll = Boolean(
       newCard.card_faces.length > 2 &&
@@ -163,10 +163,16 @@ const compressHCCardFaces = (card: HCCard.Any):HCCard.Any => {
     );
     for (let i = newCard.card_faces.length - 1; i > 0; i--) {
       if (i == 3 && newCard.card_faces[2].layout == 'transform') {
-        newCard.card_faces[i - 1] = mergeHCCardFaces([newCard.card_faces[i], newCard.card_faces[i - 1]]);
+        newCard.card_faces[i - 1] = mergeHCCardFaces([
+          newCard.card_faces[i],
+          newCard.card_faces[i - 1],
+        ]);
         newCard.card_faces.splice(i, 1);
       } else if (newCard.card_faces[i].compress_face) {
-        newCard.card_faces[i - 1] = mergeHCCardFaces([newCard.card_faces[i - 1], newCard.card_faces[i]]);
+        newCard.card_faces[i - 1] = mergeHCCardFaces([
+          newCard.card_faces[i - 1],
+          newCard.card_faces[i],
+        ]);
         newCard.card_faces.splice(i, 1);
       } else if (newCard.card_faces[i].drop_face) {
         newCard.card_faces.splice(i, 1);

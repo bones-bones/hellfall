@@ -106,7 +106,7 @@ export type ttsDeckState = {
 //   command?: ttsDeckState;
 // }
 export type ttsDeck = {
-  SaveName:string;
+  SaveName: string;
   ObjectStates: ttsDeckState[];
 };
 

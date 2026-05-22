@@ -1,2 +1,2 @@
-export * from './HCToTTSDeck'
-export * from './ttsTypes'
+export * from './HCToTTSDeck';
+export * from './ttsTypes';

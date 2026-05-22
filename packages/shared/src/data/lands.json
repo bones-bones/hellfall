@@ -848,8 +848,7 @@
 			"tags": [
 				"full-art",
 				"jank-frame",
-				"no-border",
-				""
+				"no-border"
 			],
 			"tag_notes": {
 				"jank-frame": "Physical Object"
@@ -1010,8 +1009,7 @@
 			"frame": "2003",
 			"tags": [
 				"2003-frame",
-				"uses-scryfall-image",
-				""
+				"uses-scryfall-image"
 			],
 			"variation": false
 		},
@@ -2080,8 +2078,7 @@
 			"frame": "1993",
 			"tags": [
 				"1993-frame",
-				"uses-scryfall-image",
-				""
+				"uses-scryfall-image"
 			],
 			"variation": false
 		},
@@ -2238,8 +2235,7 @@
 			],
 			"tags": [
 				"1997-frame",
-				"no-art",
-				""
+				"no-art"
 			],
 			"variation": false
 		},
@@ -2292,8 +2288,7 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless",
-				""
+				"borderless"
 			],
 			"variation": false
 		},
@@ -2347,8 +2342,7 @@
 			"tags": [
 				"jank-frame",
 				"full-art",
-				"borderless",
-				""
+				"borderless"
 			],
 			"variation": false
 		},
@@ -2871,8 +2865,7 @@
 			"frame": "2003",
 			"tags": [
 				"2003-frame",
-				"upside-down",
-				""
+				"upside-down"
 			],
 			"variation": false
 		},
@@ -4151,8 +4144,7 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art",
-				""
+				"full-art"
 			],
 			"variation": false
 		},

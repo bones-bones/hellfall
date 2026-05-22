@@ -6,4 +6,4 @@ export * from './pipsHandling.ts';
 export * from './cardHandling';
 export * from './cockatrice';
 export * from './draftmancer';
-export * from './tts'
+export * from './tts';

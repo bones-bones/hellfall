@@ -2,6 +2,9 @@ import { useAtom, useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { textEquals, textListEquals } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
+import landsData from '@hellfall/shared/data/lands.json';
+import cardsData from '@hellfall/shared/data/Hellscube-Database.json';
+import tokensData from '@hellfall/shared/data/tokens.json';
 
 export const useNameToId = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);
@@ -75,6 +78,25 @@ const getFrontExportName = (card: HCCard.Any) => {
   return card.name;
 };
 
+const landNames = [
+  'Plains',
+  'Island',
+  'Swamp',
+  'Mountain',
+  'Forest',
+  'Nebula',
+  'Wastes',
+  'Snow-Covered Plains',
+  'Snow-Covered Island',
+  'Snow-Covered Swamp',
+  'Snow-Covered Mountain',
+  'Snow-Covered Forest',
+  'Snow-Covered Nebula',
+  'Snow-Covered Wastes',
+];
+
+const getRandom = <T = any>(arr: T[]) =>
+  arr.length ? arr[Math.floor(Math.random() * arr.length)] : undefined;
 export const nameToId = (name: string, cards: HCCard.Any[]): string | undefined => {
   const movedIds: Record<string, string> = {
     '219': '6727',
@@ -94,6 +116,11 @@ export const nameToId = (name: string, cards: HCCard.Any[]): string | undefined 
   if (name == 'random' && filteredCards.length > 0) {
     const theId = filteredCards[Math.floor(Math.random() * filteredCards.length)].id;
     return theId;
+  }
+  if (textListEquals(landNames, name)) {
+    return getRandom(
+      cards.filter(card => card.set.startsWith('HBB') && textEquals(name, card.name))
+    )?.id;
   }
   return (
     cards.find(card => card.export_name && textEquals(card.export_name, name))?.id ??

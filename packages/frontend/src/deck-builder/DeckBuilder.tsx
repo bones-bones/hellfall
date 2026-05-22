@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
 import { HCCard } from '@hellfall/shared/types';
 import styled from '@emotion/styled';
-import { toDeck } from './toDeck.ts';
+// import { toDeck } from './toDeck.ts';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
@@ -106,22 +106,22 @@ export const DeckBuilder = () => {
         //   } as unknown as HCCard.Any;
         //   return Array(count).fill(card);
         // } else {
-          const id = nameToId(rest, cards);
-          const card = id
-            ? cards.find(card => card.id == id)
-            : ({
-                image:
-                  'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
-                name: name + ' - not found',
-              } as unknown as HCCard.Any);
-          return Array(count).fill(card);
+        const id = nameToId(rest, cards);
+        const card = id
+          ? cards.find(card => card.id == id)
+          : ({
+              image:
+                'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
+              name: name + ' - not found',
+            } as unknown as HCCard.Any);
+        return Array(count).fill(card);
         // }
       });
     setRenderCards(images);
   }, [toRender, cards]);
   // TODO: make this push to history less often? also add url syncing
   return (
-    <div style={{marginLeft:'32px'}}>
+    <div style={{ marginLeft: '32px' }}>
       <title>Deck/Cube Builder</title>
       <ImportInstructions />
       {Boolean(renderCards.length) &&
@@ -188,9 +188,10 @@ Cock and Balls to Torture and Abuse"
       </button>{' '}
       <button
         onClick={() => {
-          const val = HCToTTSDeck(deckName,renderCards,cards);
+          const val = HCToTTSDeck(deckName, renderCards, cards);
           const url =
-            'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(val,null,2))));
+            'data:text/plain;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(val, null, 2))));
           const a = document.createElement('a');
           a.style.display = 'none';
           a.href = url;
