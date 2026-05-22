@@ -33,12 +33,6 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const maxWidth = useMemo(() => {
-    const cardWidth = 340 / 1.4 + 10;
-    const cardNum = Math.floor(windowWidth / cardWidth);
-    return cardWidth * cardNum + 5;
-  }, [windowWidth]);
-
   const { panelProps } = useSidePanel({
     initialExpanded: !!activeCard,
   });
@@ -47,7 +41,6 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
     <StyledSidePanel
       {...panelProps}
       expanded={!!activeCard}
-      origin={origin}
       expandedWidth={Math.max(windowWidth * 0.535, 350)}
       collapsedWidth={0}
       $origin={origin}

@@ -154,30 +154,31 @@ const hcAllPartsToCockRelated = (all_parts: HCRelatedCard[]): CockRelatedProps[]
   });
   return cockRelateds;
 };
-const compressHCCardFaces = (card: HCCard.Any) => {
-  if ('card_faces' in card) {
+const compressHCCardFaces = (card: HCCard.Any):HCCard.Any => {
+  const newCard = structuredClone(card)
+  if ('card_faces' in newCard) {
     const goingToCompressAll = Boolean(
-      card.card_faces.length > 2 &&
-        card.card_faces.filter(face => face.compress_face || face.drop_face).length == 1
+      newCard.card_faces.length > 2 &&
+        newCard.card_faces.filter(face => face.compress_face || face.drop_face).length == 1
     );
-    for (let i = card.card_faces.length - 1; i > 0; i--) {
-      if (i == 3 && card.card_faces[2].layout == 'transform') {
-        card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i], card.card_faces[i - 1]]);
-        card.card_faces.splice(i, 1);
-      } else if (card.card_faces[i].compress_face) {
-        card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
-        card.card_faces.splice(i, 1);
-      } else if (card.card_faces[i].drop_face) {
-        card.card_faces.splice(i, 1);
+    for (let i = newCard.card_faces.length - 1; i > 0; i--) {
+      if (i == 3 && newCard.card_faces[2].layout == 'transform') {
+        newCard.card_faces[i - 1] = mergeHCCardFaces([newCard.card_faces[i], newCard.card_faces[i - 1]]);
+        newCard.card_faces.splice(i, 1);
+      } else if (newCard.card_faces[i].compress_face) {
+        newCard.card_faces[i - 1] = mergeHCCardFaces([newCard.card_faces[i - 1], newCard.card_faces[i]]);
+        newCard.card_faces.splice(i, 1);
+      } else if (newCard.card_faces[i].drop_face) {
+        newCard.card_faces.splice(i, 1);
       }
     }
 
     // compress down to 1 side and use front image if there are still too many sides
-    if (goingToCompressAll || !card.card_faces[0].image) {
-      card.card_faces[0].image = card.image;
+    if (goingToCompressAll || !newCard.card_faces[0].image) {
+      newCard.card_faces[0].image = newCard.image;
     }
   }
-  return card;
+  return newCard;
 };
 /**
  * Convert an hc card to cockatrice props

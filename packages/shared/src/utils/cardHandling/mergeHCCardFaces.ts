@@ -106,7 +106,7 @@ export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.Mul
 };
 
 export const compressHCCardFaces = (card: HCCard.Any, alwaysCompressAll?: boolean) => {
-  const newCard = { ...card } as HCCard.Any;
+  const newCard = structuredClone(card);
   if ('card_faces' in newCard) {
     const goingToCompressAll = Boolean(
       newCard.card_faces.length > 2 &&
@@ -127,13 +127,21 @@ export const compressHCCardFaces = (card: HCCard.Any, alwaysCompressAll?: boolea
     // compress down to 1 side and use front image if there are still too many sides
     if (goingToCompressAll || alwaysCompressAll) {
       newCard.card_faces[0].image = newCard.image;
+      if (newCard.still_image) {
+        newCard.card_faces[0].still_image = newCard.still_image;
+      }
       if (newCard.rotated_image) {
         newCard.card_faces[0].rotated_image = newCard.rotated_image;
       }
-    } else if (!newCard.card_faces[0].image) {
-      newCard.card_faces[0].image = newCard.image;
-      if (!newCard.card_faces[0].rotated_image && newCard.rotated_image) {
-        newCard.card_faces[0].rotated_image = newCard.rotated_image;
+    } else {
+      if (!newCard.card_faces[0].image) {
+        newCard.card_faces[0].image = newCard.image;
+        if (!newCard.card_faces[0].rotated_image && newCard.rotated_image) {
+          newCard.card_faces[0].rotated_image = newCard.rotated_image;
+        }
+      }
+      if (!newCard.card_faces[0].still_image && newCard.still_image) {
+        newCard.card_faces[0].still_image = newCard.still_image;
       }
     }
   }

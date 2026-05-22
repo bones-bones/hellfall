@@ -9,14 +9,15 @@ import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { nameToId } from '../hellfall/hooks/useNameToId.ts';
 import { downloadDraftmancer } from '../hells-cubes/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { HCToTTSDeck } from '@hellfall/shared/utils';
 
-const basics: Record<string, string> = {
-  forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
-  swamp: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmZ/swamp.jpeg',
-  island: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn1/island.jpeg',
-  plains: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmY/plains.jpeg',
-  mountain: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmX/mountain.jpeg',
-};
+// const basics: Record<string, string> = {
+//   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
+//   swamp: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmZ/swamp.jpeg',
+//   island: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn1/island.jpeg',
+//   plains: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmY/plains.jpeg',
+//   mountain: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmX/mountain.jpeg',
+// };
 export const DeckBuilder = () => {
   const ref = useRef(null);
   const location = useLocation();
@@ -82,10 +83,10 @@ export const DeckBuilder = () => {
       const id = cards.find(card => card.name == rest)?.id;
       return id ? [count, id] : [count, ''];
     }
-    if (rest.toLowerCase() in basics) {
-      // handle basics
-      return [count, rest.toLowerCase()];
-    }
+    // if (rest.toLowerCase() in basics) {
+    //   // handle basics
+    //   return [count, rest.toLowerCase()];
+    // }
 
     return [count, rest];
   };
@@ -98,13 +99,13 @@ export const DeckBuilder = () => {
       .filter(entry => entry != '' && !entry.startsWith('# '))
       .flatMap(name => {
         const [count, rest] = toCardArr(name);
-        if (rest in basics) {
-          const card = {
-            image: basics[rest],
-            name: rest,
-          } as unknown as HCCard.Any;
-          return Array(count).fill(card);
-        } else {
+        // if (rest in basics) {
+        //   const card = {
+        //     image: basics[rest],
+        //     name: rest,
+        //   } as unknown as HCCard.Any;
+        //   return Array(count).fill(card);
+        // } else {
           const id = nameToId(rest, cards);
           const card = id
             ? cards.find(card => card.id == id)
@@ -114,16 +115,16 @@ export const DeckBuilder = () => {
                 name: name + ' - not found',
               } as unknown as HCCard.Any);
           return Array(count).fill(card);
-        }
+        // }
       });
     setRenderCards(images);
   }, [toRender, cards]);
   // TODO: make this push to history less often? also add url syncing
   return (
-    <div>
+    <div style={{marginLeft:'32px'}}>
       <title>Deck/Cube Builder</title>
       <ImportInstructions />
-      {renderCards.length &&
+      {Boolean(renderCards.length) &&
         (playtesting ? (
           <PlaytestArea cards={renderCards} />
         ) : (
@@ -187,9 +188,9 @@ Cock and Balls to Torture and Abuse"
       </button>{' '}
       <button
         onClick={() => {
-          const val = toDeck(renderCards);
+          const val = HCToTTSDeck(deckName,renderCards,cards);
           const url =
-            'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(val))));
+            'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(val,null,2))));
           const a = document.createElement('a');
           a.style.display = 'none';
           a.href = url;
