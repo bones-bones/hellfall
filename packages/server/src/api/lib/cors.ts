@@ -1,5 +1,5 @@
 import type { IncomingMessage } from 'node:http';
-import { env } from './env.js';
+import { env } from './env.ts';
 
 /** Production skeleton.club: app and API are different origins; both must be allowed for credentialed fetches. */
 const HARDCODED_CORS_ORIGINS = new Set<string>([

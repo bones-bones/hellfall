@@ -95,3 +95,8 @@ Write a script to transform the database
 - add hcv.x to `block`? (move `both` to a different keyword)
 
 - make pips servable via the api
+- add cubecobra export
+
+- add lands
+- fix Hellstart.tsx
+- add ub frame effect

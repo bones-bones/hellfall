@@ -70,7 +70,7 @@ export enum HCLayout {
   /** Split cards or split faces */
   Split = 'split',
   /** Standard front face of a multiface card */
-  Front = 'front',
+  // Front = 'front',
   /** Cards/faces with levels */
   Leveler = 'leveler',
   /** Class-type enchantment cards/faces */
@@ -95,6 +95,8 @@ export enum HCLayout {
   Station = 'station',
   /** Cards with a prepared spell part */
   Prepare = 'prepare',
+  /** Jumpstart front cards */
+  Front = 'front',
 }
 
 /**
@@ -108,6 +110,7 @@ export namespace HCLayoutGroup {
    */
   export const SingleFaced = [
     `${HCLayout.Normal}`,
+    `${HCLayout.Front}`,
     `${HCLayout.MeldResult}`,
     `${HCLayout.Token}`,
     `${HCLayout.NotMagic}`,
@@ -231,6 +234,7 @@ export namespace HCLayoutGroup {
    */
   export const TokenLayout = [
     `${HCLayout.Token}`,
+    `${HCLayout.Front}`,
     `${HCLayout.MultiToken}`,
     `${HCLayout.Emblem}`,
     `${HCLayout.Reminder}`,
@@ -286,7 +290,6 @@ export namespace HCLayoutGroup {
    */
   export const FaceLayout = [
     `${HCLayout.Normal}`,
-    `${HCLayout.Front}`,
     `${HCLayout.MeldPart}`,
     `${HCLayout.MeldResult}`,
     `${HCLayout.Token}`,

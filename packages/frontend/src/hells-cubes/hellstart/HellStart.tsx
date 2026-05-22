@@ -1,7 +1,8 @@
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from '../../hellfall/atoms/cardsAtom.ts';
 import styled from '@emotion/styled';
-import { hcjFrontCards, HCJPackInfo } from './hcj.ts';
+import { HCCard } from '@hellfall/shared/types';
+import { getFilteredSet } from '@hellfall/shared/filters';
 
 export const HellStart = () => {
   const cards = useAtomValue(cardsAtom);
@@ -17,8 +18,8 @@ export const HellStart = () => {
       </pre>
       Packs
       <div>
-        {hcjFrontCards.map(entry => (
-          <HCJPackDisplay key={entry.tag} entry={entry} />
+        {getFilteredSet(cards, 'FHCJ').map(entry => (
+          <HCJPackDisplay key={entry.tags?.[0]} entry={entry} />
         ))}
       </div>
     </Container>
@@ -27,11 +28,11 @@ export const HellStart = () => {
 
 const Container = styled.div({});
 
-const HCJPackDisplay = ({ entry }: { entry: HCJPackInfo }) => {
+const HCJPackDisplay = ({ entry }: { entry: HCCard.Any }) => {
   return (
     <div>
       <h3>{entry.name}</h3>
-      <img src={entry.url} />
+      <img src={entry.image} />
       ...
     </div>
   );

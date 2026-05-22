@@ -1,7 +1,7 @@
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
-import { withCors } from './lib/cors.js';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
+import { withCors } from './lib/cors.ts';
 import { toPlainText } from '@hellfall/shared/utils';
-import { getCardById } from './cardsStore.js';
+import { getCardById } from './cardsStore.ts';
 
 export async function cardJsonHandler(req: HandlerRequest, res: HandlerResponse, cardId: string) {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);

@@ -28,7 +28,6 @@ import {
   propType,
   valueType,
 } from '@hellfall/shared/utils';
-import { error } from 'console';
 import {
   addArtist,
   addProp,
@@ -570,7 +569,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
           );
         }
       } else if (!index && !face.layout) {
-        addPropToFace(cardObject, 'layout', getFrontLayout(face) || HCLayout.Front, index);
+        addPropToFace(cardObject, 'layout', getFrontLayout(face) || HCLayout.Normal, index);
       } else {
         addPropToFace(cardObject, 'layout', HCLayout.Split, index);
       }

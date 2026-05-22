@@ -7,7 +7,7 @@ import { TextInput, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { nameToId } from '../hellfall/hooks/useNameToId.ts';
-import { getDraftmancerForCube } from '../hells-cubes/draftmancer/getDraftmancerForCube.ts';
+import { downloadDraftmancer } from '../hells-cubes/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const basics: Record<string, string> = {
@@ -203,11 +203,11 @@ Cock and Balls to Torture and Abuse"
       </button>{' '}
       <button
         onClick={() => {
-          getDraftmancerForCube({
-            id: 'Custom',
+          downloadDraftmancer({
             name: deckName,
+            set: 'Custom',
             allCards: cards,
-            cardIds: renderCards.filter(card => card.id).map(card => card.id),
+            cardList: renderCards.filter(card => card.id),
           });
         }}
       >

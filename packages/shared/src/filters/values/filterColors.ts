@@ -1,4 +1,4 @@
-import { HCColors, HCMiscColors } from '../../types';
+import { HCColors, HCMiscColors } from '@hellfall/shared/types';
 import {
   colorContentFilter,
   colorContentListFilter,
@@ -16,7 +16,7 @@ import {
 } from '../types';
 import { canContainOp, containsOp, opToShorthand } from '../filterUtils';
 import { filterNumber } from '../filterNumber';
-import { canContain, contains } from '../../utils';
+import { canContain, contains } from '@hellfall/shared/utils';
 const MISC_BULLSHIT = 'Misc';
 
 /**
@@ -46,7 +46,7 @@ export const filterColorNumber: colorNumFilter = Object.assign(
   }
 );
 
-export const evalShortNum = (value1: number, operator: opType, value2: shorthandType): boolean => {
+export const evalShortNum = (value1: number, operator: opType, value2: shorthandType) => {
   const shortNum = shortToNum(operator, value2);
   if (value2 == 'c') {
     return filterNumber(value1, operator, shortNum);

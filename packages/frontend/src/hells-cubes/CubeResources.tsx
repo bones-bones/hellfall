@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { toDeck } from '../deck-builder/toDeck.ts';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
-import { toCockCube } from './cockatrice/toCockCube.ts';
+import { toCockCube } from '@hellfall/shared/utils';
 import { useAtomValue } from 'jotai';
 import { HCCard } from '@hellfall/shared/types';
 import { ReactNode } from 'react';
-import { getDraftmancerForCube } from './draftmancer';
+import { downloadDraftmancer } from './downloadDraftmancer.ts';
 import { getHc5 } from './getHc5.ts';
 import { toMPCAutofill } from './toMPCAutofill.ts';
 import { getLands } from './getLands.ts';
@@ -231,8 +231,10 @@ export const CubeResources = () => {
                 <button
                   onClick={() => {
                     const val = toCockCube({
-                      set: cubeSetup.id,
                       name: cubeSetup.name,
+                      set: cubeSetup.id,
+                      cardList:
+                        cubeSetup.id == 'HC5' ? getHc5() : getSplitSet(cards, cubeSetup.id).cards,
                       allCards: cards,
                     });
 
@@ -255,10 +257,14 @@ export const CubeResources = () => {
                 ) : (
                   <button
                     onClick={() => {
-                      getDraftmancerForCube({
-                        id: cubeSetup.id,
+                      downloadDraftmancer({
                         name: cubeSetup.name,
+                        set: cubeSetup.id,
                         allCards: cards,
+                        cardList:
+                          cubeSetup.id == 'HC5'
+                            ? getHc5()
+                            : getSplitSet(cards, cubeSetup.id, true).cards,
                       });
                     }}
                   >

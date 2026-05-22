@@ -1,4 +1,10 @@
-import { HCCard, HCColor, HCColors, HCLegalitiesField } from '../types';
+import {
+  HCCard,
+  HCColor,
+  HCColors,
+  HCLegalitiesField,
+  HCRelatedCard,
+} from '@hellfall/shared/types';
 import { CompFilter, filterObject, IncludeFilter, sortObject } from './filterObject';
 export const NOPRINT =
   'This should not ever print. Please report this as a bug on discord along with the search terms you used.';
@@ -15,7 +21,7 @@ export const invertOptions = ['ignore', 'flip', 'negate'] as const;
  */
 export type invertOptionType = (typeof invertOptions)[number];
 export interface anyFilter<T = any, S = any> {
-  (value1: T, operator: opType, value2: S): number | boolean;
+  (value1: T, operator: opType, value2: S): number | boolean | undefined;
   invertOption: invertOptionType;
   toSummary: (operator: opType, value: S, invert?: boolean) => string;
 }
@@ -44,7 +50,7 @@ export interface sortFilter extends anyFilter<HCCard.Any, HCCard.Any> {
  * The first type is the type of the entry. The second type is the type from the search query.
  */
 export interface cardFilter<T = any, S = any> extends anyFilter {
-  (value1: T, operator: opType, value2: S): boolean;
+  (value1: T, operator: opType, value2: S): boolean | undefined;
 }
 
 export interface textFilter extends cardFilter<string, string> {}
@@ -96,14 +102,18 @@ export const inclusionOptions = [
 ] as const;
 export type inclusionType = (typeof inclusionOptions)[number];
 export interface includeFilter extends cardFilter<HCCard.Any, string> {
-  (value1: HCCard.Any, operator: opType, value2: string): boolean;
+  (value1: HCCard.Any, operator: opType, value2: string): boolean | undefined;
 }
 export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
 export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
 export interface noteFilter extends cardFilter<HCCard.Any, string> {
-  (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string): boolean;
+  (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string):
+    | boolean
+    | undefined;
   toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) => string;
 }
+
+export interface relatedFilter extends cardFilter<HCRelatedCard[], string> {}
 
 export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
 export type compFilterMaker = (value1: string, op: looseOpType, value2: string) => CompFilter;

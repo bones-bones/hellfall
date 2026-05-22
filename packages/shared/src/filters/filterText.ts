@@ -4,7 +4,7 @@ import {
   isNumber,
   textListIncludes,
   textListEquals,
-} from '../utils';
+} from '@hellfall/shared/utils';
 import {
   invertOptionType,
   looseOpType,
@@ -22,7 +22,7 @@ import {
   opToIncludePlural,
 } from './filterUtils';
 import { filterNumber } from './filterNumber';
-import { HCCard } from '../types';
+import { HCCard } from '@hellfall/shared/types';
 import { prepTag } from './parseSearchBar';
 
 export const filterEmpty: textFilter = Object.assign(
@@ -84,7 +84,7 @@ export const filterArtist: noteFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string) => {
     if (note && typeof note != 'string') {
       const artist = value2.slice(0, -1);
-      return Boolean(
+      return (
         value1.artist_notes && filterTextList(Object.keys(value1.artist_notes), operator, artist)
       );
     }
@@ -129,9 +129,7 @@ export const filterTag: noteFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string) => {
     if (note && typeof note != 'string') {
       const tag = value2.slice(0, -1);
-      return Boolean(
-        value1.tag_notes && filterTextList(Object.keys(value1.tag_notes), operator, tag)
-      );
+      return value1.tag_notes && filterTextList(Object.keys(value1.tag_notes), operator, tag);
     }
     if (note) {
       if (!value1.tag_notes) {

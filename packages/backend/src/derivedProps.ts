@@ -441,7 +441,7 @@ const manaSymbolColorMatching: Record<
   | 'Orange'
 > = {};
 
-const landToColorMapping = {
+export const landToColorMapping = {
   Plains: 'W',
   Ploons: 'W',
   Island: 'U',

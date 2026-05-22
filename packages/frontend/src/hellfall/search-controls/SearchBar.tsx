@@ -20,28 +20,30 @@ export const SearchBar = () => {
 
   const [query, setQuery] = useAtom(queryAtom);
   const [localQuery, setLocalQuery] = useState(query);
-  const enterPressed = useKeyPress('Enter');
-  useEffect(() => {
-    if (enterPressed) {
-      setQuery(normalizeText(localQuery));
-    }
-  }, [enterPressed]);
 
   useEffect(() => {
     if (localQuery != query) {
       setLocalQuery(query);
     }
   }, [query]);
+  const handleSubmit = (formData: FormData) => {
+    const searchQuery = formData.get('search') as string;
+    setQuery(normalizeText(searchQuery));
+  };
 
   return (
     <>
       <Container>
-        <SearchBox
-          width={maxWidth}
-          placeholder="Search for Hellscube cards..."
-          value={localQuery}
-          onChange={event => setLocalQuery(event.target.value)}
-        />
+        <form action={handleSubmit}>
+          <SearchBox
+            width={maxWidth}
+            placeholder="Search for Hellscube cards..."
+            value={localQuery}
+            onChange={event => setLocalQuery(event.target.value)}
+            name="search"
+            enterKeyHint="search"
+          />
+        </form>
         <Spacer />
         <Link to={'/syntax'}>search syntax</Link>
       </Container>

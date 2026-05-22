@@ -1,20 +1,28 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "strict": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "outDir": "dist",
-    "rootDir": "src",
-    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    "isolatedModules": true,
     "noEmit": true,
+    "types": ["node"],
+    // "outDir": "dist",
+    // "rootDir": "src",
+    "declaration": true,
+    "allowImportingTsExtensions": true,
     "paths": {
-      "@hellfall/shared/*": ["../shared/src/*"]
+      "@hellfall/shared": ["../shared/src/index.ts"],
+      "@hellfall/shared/*": ["../shared/src/*/index.ts", "../shared/src/*"]
     }
   },
-  "include": ["src/**/*.ts"],
-  "references": [{ "path": "../shared" }]
+  "include": ["src/**/*.ts"]
 }

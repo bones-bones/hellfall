@@ -1,4 +1,4 @@
-import { HCCard, HCLegalitiesField, HCMiscColors } from '../types';
+import { HCCard, HCLegalitiesField, HCMiscColors } from '@hellfall/shared/types';
 import {
   colorMiscReduce,
   filterColorContents,
@@ -80,7 +80,7 @@ import {
   toFaces,
   getAllNames,
   toNumber,
-} from '../utils';
+} from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 
 export const makeIncludeFilter: includeFilterMaker = (value: string, op: looseOpType) => {
@@ -814,7 +814,7 @@ export const makeIsFilter: filterMaker = (value: string, op: looseOpType) => {
   if (frameEffectsToParse.includes(value)) {
     return makeFrameEffectFilter(value, op);
   }
-  if (value in toCardLayout && value != 'modal') {
+  if (value in toCardLayout && value != 'modal' && value != 'token') {
     return makeCardLayoutFilter(value, op);
   }
   return new CardStringFilter('is', filterIs, value, op, '=');
@@ -826,7 +826,7 @@ export const makeHasFilter: filterMaker = (value: string, op: looseOpType) => {
   if (frameEffectsToParse.includes(value)) {
     return makeFrameEffectFilter(value, op);
   }
-  if (value in toFaceLayout && value != 'modal') {
+  if (value in toFaceLayout && value != 'modal' && value != 'token') {
     return makeFaceLayoutFilter(value, op);
   }
   return new CardStringFilter('has', filterHas, value, op, '=');

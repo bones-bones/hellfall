@@ -1,5 +1,3 @@
-import { HCColors, HCLayout } from '@hellfall/shared/types';
-
 // see https://draftmancer.com/cubeformat.html for more details
 export type DraftmancerCardFace = {
   name: string;

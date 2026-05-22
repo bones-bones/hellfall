@@ -1,13 +1,14 @@
 import fs from 'fs';
 
 import { fetchTokens } from './fetchTokens.ts';
-import { fetchDatabase } from './fetchdatabase.ts';
+import { fetchDatabase } from './fetchDatabase.ts';
 import { fetchUsernameMappings } from './fetchUsernameMapping.ts';
 import { HCCard, HCCardFace, HCImageStatus, HCRelatedCard, HCObject } from '@hellfall/shared/types';
 import { allSetsList } from '@hellfall/shared/data/sets.ts';
 import { setDerivedProps, setExportProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
+  bothPropType,
   facePropOrder,
   facePropType,
   partPropOrder,
@@ -17,6 +18,7 @@ import {
   stripMasterpiece,
   textEquals,
   textPrep,
+  toFaces,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import {
@@ -33,6 +35,8 @@ import {
   getFilteredFaceProps,
 } from './fetchUtils.ts';
 import { addToJSONToCards } from '@hellfall/shared/utils';
+import { fetchHCJFronts } from './fetchHCJFronts.ts';
+import { fetchLands } from './fetchLands.ts';
 
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -73,6 +77,8 @@ const cardRemovableProps: propType[] = [
   'still_draft_image',
   'not_directly_draftable',
   'has_draft_partners',
+  'artists',
+  'artist_notes',
   'watermark',
   'frame_effects',
   'tags',
@@ -101,11 +107,14 @@ const tokenRemovableProps: propType[] = [
   'toughness',
   'not_directly_draftable',
   'has_draft_partners',
+  'artists',
+  'artist_notes',
   'watermark',
   'frame_effects',
   'tags',
   'tag_notes',
   'all_parts',
+  'isActualToken',
 ];
 const tokenFaceRemovableProps: facePropType[] = ['frame'];
 const notMagicBlankableProps: propType[] = ['mana_value', 'oracle_text'];
@@ -170,6 +179,19 @@ const tokenInferrableFaceProps: facePropType[] = [
   'types',
   'power',
   'toughness',
+];
+
+// const landBlankableProps: propType[] = []
+const landRemovableProps: propType[] = [
+  'rotated_image',
+  'still_image',
+  'artists',
+  'artist_notes',
+  'watermark',
+  'frame_effects',
+  'tags',
+  'tag_notes',
+  'all_parts',
 ];
 /**
  *
@@ -283,9 +305,9 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
         }
       } else if (key == 'image_status') {
         // TODO: store current version and print the diff if there is one
-        if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {
-          merged.image_status = value as HCImageStatus;
-        }
+        // if (!('image_status' in merged) || merged.image_status == HCImageStatus.Missing) {
+        // merged.image_status = value as HCImageStatus;
+        // }
       } else if (key == 'draft_image_status') {
         // TODO: store current version and print the diff if there is one
       } else if (key in merged && key == 'name' && merged.tags?.includes('irregular-name')) {
@@ -342,7 +364,18 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       addProp(merged, key, value);
     }
   });
-  if (!merged.isActualToken || merged.set == 'SFT') {
+  if (merged.set.startsWith('HBB')) {
+    getFilteredCardProps(existingCard, landRemovableProps)
+      .filter(prop => !(prop in newCard))
+      .forEach(prop => {
+        if (prop == 'image') {
+          addProp(merged, 'image_status', newCard.image_status);
+        } else if (prop == 'draft_image') {
+          deleteProp(merged, 'draft_image_status');
+        }
+        deleteProp(merged, prop);
+      });
+  } else if (!merged.isActualToken || merged.set == 'SFT') {
     getFilteredCardProps(existingCard, cardRemovableProps)
       .filter(prop => !(prop in newCard))
       .forEach(prop => {
@@ -391,12 +424,13 @@ const mergeDatabases = (
   existingCards: HCCard.Any[],
   newCards: HCCard.Any[],
   existingTokens: HCCard.Any[],
-  newTokens: HCCard.Any[]
-): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[] } => {
-  // const newCardMap = new Map(newCards.map(card => [card.id, card]));
+  newTokens: HCCard.Any[],
+  existingLands: HCCard.Any[],
+  newLands: HCCard.Any[]
+): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[]; mergedLands: HCCard.Any[] } => {
   const existingCardMap = new Map(existingCards.map(card => [card.id, card]));
-  // const newTokenMap = new Map(newTokens.map(token => [token.id, token]));
   const existingTokenMap = new Map(existingTokens.map(token => [token.id.toLowerCase(), token]));
+  const existingLandMap = new Map(existingLands.map(land => [land.id, land]));
 
   const mergedCards = newCards.map(newCard => {
     const existingCard = !(newCard.id in movedIds)
@@ -406,6 +440,7 @@ const mergeDatabases = (
       existingCardMap.delete(existingCard.id);
       return mergeCards(existingCard, newCard);
     }
+    setDerivedProps(newCard);
     return newCard;
   });
   if (usingApproved) {
@@ -427,14 +462,15 @@ const mergeDatabases = (
       existingTokenMap.delete(existingToken.id.toLowerCase());
       return mergeCards(existingToken, newToken);
     }
+    setDerivedProps(newToken);
     return newToken;
   });
   if (usingApproved) {
     mergedTokens.push(
       ...Array.from(
-        existingTokenMap.values().map(Token => {
-          setDerivedProps(Token);
-          return Token;
+        existingTokenMap.values().map(token => {
+          setDerivedProps(token);
+          return token;
         })
       )
     );
@@ -444,15 +480,36 @@ const mergeDatabases = (
         existingTokenMap
           .values()
           .filter(token => token.set == 'SFT')
-          .map(Token => {
-            setDerivedProps(Token);
-            return Token;
+          .map(token => {
+            setDerivedProps(token);
+            return token;
           })
       )
     );
   }
+  const mergedLands = newLands.map(newLand => {
+    const existingLand = !(newLand.id in movedIds)
+      ? existingLandMap.get(newLand.id)
+      : existingLandMap.get(movedIds[newLand.id]);
+    if (existingLand) {
+      existingLandMap.delete(existingLand.id);
+      return mergeCards(existingLand, newLand);
+    }
+    setDerivedProps(newLand);
+    return newLand;
+  });
+  if (usingApproved) {
+    mergedLands.push(
+      ...Array.from(
+        existingLandMap.values().map(land => {
+          setDerivedProps(land);
+          return land;
+        })
+      )
+    );
+  }
 
-  return { mergedCards, mergedTokens };
+  return { mergedCards, mergedTokens, mergedLands };
 };
 const dataToCards = (
   cards: any,
@@ -508,9 +565,11 @@ const dataToCards = (
 const loadExistingData = () => {
   const databasePath = '../shared/src/data/Hellscube-Database.json';
   const tokensPath = '../shared/src/data/tokens.json';
+  const landsPath = '../shared/src/data/lands.json';
 
   let databaseContent = undefined;
   let tokensContent = undefined;
+  let landsContent = undefined;
 
   try {
     databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
@@ -529,23 +588,43 @@ const loadExistingData = () => {
   }
 
   const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
-  return { existingCards, existingTokens };
+
+  try {
+    landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
+  } catch (error) {
+    console.warn('Could not load lands, proceeding with undefined content:', error);
+  }
+
+  const existingLands = landsContent ? dataToCards(landsContent.data || []) : [];
+  return { existingCards, existingTokens, existingLands };
 };
 const main = async () => {
-  const { data: newCards } = { data: await fetchDatabase() };
+  const newCards = await fetchDatabase();
   const usernameMappings = await fetchUsernameMappings();
   const tokenExcludedIds = ['the first pick1'];
   const intTokens = (await fetchTokens(NO_SCRYFALL)).filter(e => !tokenExcludedIds.includes(e.id));
+  const intFronts = fetchHCJFronts();
   const intNotMagic = await fetchNotMagic();
-  const newTokens = intTokens.concat(intNotMagic);
+  const newTokens = intTokens.concat(intFronts).concat(intNotMagic);
+  const newLands = await fetchLands();
   let finalCards = newCards;
   let finalTokens = newTokens;
+  let finalLands = newLands;
+
   if (!NO_UPDATE_MODE) {
     console.log('Running in update mode - merging with existing data...');
-    const { existingCards, existingTokens } = loadExistingData();
-    const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
-    finalCards = merged.mergedCards;
-    finalTokens = merged.mergedTokens as HCCard.AnySingleFaced[];
+    const { existingCards, existingTokens, existingLands } = loadExistingData();
+    const merged = mergeDatabases(
+      existingCards,
+      newCards,
+      existingTokens,
+      newTokens,
+      existingLands,
+      newLands
+    );
+    finalCards = addToJSONToCards(merged.mergedCards);
+    finalTokens = addToJSONToCards(merged.mergedTokens);
+    finalLands = addToJSONToCards(merged.mergedLands) as HCCard.Normal[];
   } else {
     console.log('Running in overwrite mode - using fresh data only...');
   }
@@ -707,12 +786,132 @@ const main = async () => {
           }
         });
     });
+  finalLands
+    .filter(e => 'all_parts' in e)
+    .forEach(land => {
+      land.all_parts
+        ?.filter(e => e.component == 'token_maker')
+        .forEach(tokenMaker => {
+          const relatedToken: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: land.id,
+            name: land.name,
+            set: land.set,
+            image: land.image,
+            type_line: land.type_line,
+            component: 'token',
+          };
+          if (tokenMaker.count) {
+            relatedToken.count = tokenMaker.count;
+          }
+          const relatedCard = tokenMaker.id
+            ? finalCards.find(card => card.id == tokenMaker.id)
+              ? finalCards.find(card => card.id == tokenMaker.id)
+              : finalTokens.find(card => textEquals(card.id, tokenMaker.id))
+            : finalCards.find(card => textEquals(card.name, tokenMaker.name))
+            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
+            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
+          if (relatedCard) {
+            tokenMaker.id = relatedCard.id;
+            tokenMaker.name = relatedCard.name;
+            tokenMaker.set = relatedCard.set;
+            tokenMaker.image = relatedCard.image;
+            tokenMaker.type_line = relatedCard.type_line;
+            if (relatedCard.tags?.includes('persistent-tokens')) {
+              tokenMaker.persistent = true;
+              relatedToken.persistent = true;
+            }
+            const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == land.id);
+            if (tokenIndex == -1 || tokenIndex == undefined || !relatedCard.all_parts) {
+              pushProp(relatedCard, 'all_parts', relatedToken);
+            } else {
+              relatedCard.all_parts[tokenIndex] = relatedToken;
+            }
+          }
+        });
+    });
+  // update front cards
+  finalTokens
+    .filter(e => 'all_parts' in e && e.layout == 'front')
+    .forEach(front => {
+      const headliners: HCRelatedCard[] = [];
+      const others: HCRelatedCard[] = [];
+      const nonbasics: HCRelatedCard[] = [];
+      const thriving: HCRelatedCard[] = [];
+      const basics: HCRelatedCard[] = [];
+
+      finalCards
+        .filter(e => e.set == 'HCJ' && e.tags?.includes(front.tags![0]))
+        .forEach(card => {
+          const relatedFront: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: front.id,
+            name: front.name,
+            set: front.set,
+            image: front.image,
+            type_line: front.type_line,
+            component: 'draft_partner',
+            // is_draft_partner:true
+          };
+          const partIndex = front.all_parts?.findIndex(part => part.id == card.id);
+          const alreadyHasPart = partIndex != -1 && partIndex != undefined;
+          const relatedCard: HCRelatedCard = alreadyHasPart
+            ? front.all_parts![partIndex]
+            : {
+                object: HCObject.ObjectType.RelatedCard,
+                id: card.id,
+                name: card.name,
+                set: card.set,
+                image: card.image,
+                type_line: card.type_line,
+                component: 'draft_partner',
+                is_draft_partner: true,
+              };
+          if (relatedCard.count) {
+            relatedFront.count = relatedCard.count;
+          }
+          if (alreadyHasPart) {
+            relatedCard.id = card.id;
+            relatedCard.name = card.name;
+            relatedCard.set = card.set;
+            relatedCard.image = card.image;
+            relatedCard.type_line = card.type_line;
+          }
+          const frontIndex = card.all_parts?.findIndex(e => e.id == front.id);
+          if (frontIndex == -1 || frontIndex == undefined || !card.all_parts) {
+            pushProp(card, 'all_parts', relatedFront);
+          } else {
+            card.all_parts[frontIndex] = relatedFront;
+          }
+          if (card.tags?.includes('headliner')) {
+            headliners.push(relatedCard);
+          } else if (card.name.startsWith('Thriving') && !card.name.startsWith('Thriving Puff')) {
+            thriving.push(relatedCard);
+          } else if (toFaces(card)[0].supertypes?.includes('Basic')) {
+            basics.push(relatedCard);
+          } else if (toFaces(card)[0].types?.includes('Land')) {
+            nonbasics.push(relatedCard);
+          } else {
+            others.push(relatedCard);
+          }
+        });
+      front.all_parts
+        ?.filter(part => !part.id)
+        .forEach(part => {
+          if (part.name.startsWith('Thriving')) {
+            thriving.push(part);
+          } else {
+            basics.push(part);
+          }
+        });
+      front.all_parts = [...headliners, ...others, ...nonbasics, ...thriving, ...basics];
+    });
   // update draftpartners
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
       card.all_parts
-        ?.filter(e => e.component == 'draft_partner')
+        ?.filter(e => e.component == 'draft_partner' && e.set != 'FHCJ')
         .forEach(partnerCard => {
           const relatedPartner: HCRelatedCard = {
             object: HCObject.ObjectType.RelatedCard,
@@ -770,10 +969,19 @@ const main = async () => {
             ) {
               card.all_parts?.splice(i, 1);
             }
+          } else if (finalTokens.find(e => e.id == part.id)) {
+            if (
+              !(
+                finalTokens.find(e => e.id == part.id)?.all_parts?.find(e => e.id == card.id)
+                  ?.component == 'token_maker'
+              )
+            ) {
+              card.all_parts?.splice(i, 1);
+            }
           } else {
             if (
               !(
-                finalTokens
+                finalLands
                   .find(e => textEquals(e.id, part.id))
                   ?.all_parts?.find(e => e.id == card.id)?.component == 'token_maker'
               )
@@ -789,7 +997,7 @@ const main = async () => {
     });
 
   finalTokens
-    .filter(e => 'all_parts' in e)
+    .filter(e => 'all_parts' in e && e.set != 'FHCJ')
     .forEach(token => {
       for (let i = token.all_parts?.length! - 1; i >= 0; i--) {
         const part = token.all_parts![i];
@@ -909,6 +1117,21 @@ const main = async () => {
     }
   });
 
+  finalLands.forEach(entry => {
+    entry.creators = entry.creators.map(creator => {
+      if (creator in usernameMappings) {
+        creatorSet.add(usernameMappings[creator]);
+        return usernameMappings[creator];
+      }
+      creatorSet.add(creator);
+      return creator;
+    });
+
+    if ('tags' in entry) {
+      entry.tags?.forEach(e => tagSet.add(e));
+    }
+  });
+
   const types = Array.from(typeSet).sort((a, b) => {
     if (a > b) {
       return 1;
@@ -981,7 +1204,11 @@ const main = async () => {
   );
   fs.writeFileSync(
     '../shared/src/data/tokens.json',
-    JSON.stringify({ data: addToJSONToCards(finalTokens) }, null, '\t')
+    JSON.stringify({ data: finalTokens }, null, '\t')
+  );
+  fs.writeFileSync(
+    '../shared/src/data/lands.json',
+    JSON.stringify({ data: finalLands }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tags.json',
@@ -1019,7 +1246,7 @@ const main = async () => {
     '../shared/src/data/Hellscube-Database.json',
     JSON.stringify(
       {
-        data: addToJSONToCards(finalCards).concat(addToJSONToCards(finalTokens)),
+        data: finalCards.concat(finalTokens).concat(finalLands),
       },
       null,
       '\t'

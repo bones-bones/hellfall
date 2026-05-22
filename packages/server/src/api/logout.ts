@@ -1,6 +1,6 @@
-import { env } from './lib/env.js';
-import { withCors } from './lib/cors.js';
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
+import { env } from './lib/env.ts';
+import { withCors } from './lib/cors.ts';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
 export const logoutHandler = (req: HandlerRequest, res: HandlerResponse): void => {
   if (req.method === 'OPTIONS') {

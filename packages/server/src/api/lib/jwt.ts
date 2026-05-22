@@ -1,5 +1,5 @@
 import * as jose from 'jose';
-import { env } from './env.js';
+import { env } from './env.ts';
 
 export interface SessionPayload {
   sub: string; // Discord user id

@@ -88,21 +88,6 @@ export const AdvancedSearch = () => {
 
   const navToSearch = useNavToSearch();
 
-  const textToOps: Record<string, looseOpType> = {
-    '!': '!:',
-    '?': '=',
-    '!?': '!=',
-    '?!': '!=',
-  };
-  const toOpAndValue = (text: string): string => {
-    if (text.slice(0, 2) in textToOps) {
-      return `${textToOps[text.slice(0, 2)]}"${text.slice(2)}"`;
-    }
-    if (text.slice(0, 1) in textToOps) {
-      return `${textToOps[text.slice(0, 1)]}"${text.slice(1)}"`;
-    }
-    return `:"${text}"`;
-  };
   useEffect(() => {
     setInputSorts([]);
     setSortRules([]);
@@ -144,10 +129,14 @@ export const AdvancedSearch = () => {
     }
     const orFilters: string[] = [];
     const addHandlingOr = (searchKeyword: string, searchTerm: string) => {
-      if (searchTerm.startsWith('~')) {
-        orFilters.push(searchKeyword + toOpAndValue(searchTerm.slice(1)));
+      if (searchTerm.startsWith('!?')) {
+        orFilters.push('-' + searchKeyword + searchTerm.slice(2));
+      } else if (searchTerm.startsWith('!')) {
+        filters.push('-' + searchKeyword + searchTerm.slice(1));
+      } else if (searchTerm.startsWith('?')) {
+        orFilters.push(searchKeyword + searchTerm.slice(1));
       } else {
-        filters.push(searchKeyword + toOpAndValue(searchTerm));
+        filters.push(searchKeyword + searchTerm);
       }
     };
     const addAllHandlingOr = (searchKeyword: string, searchTerm: string[]) => {

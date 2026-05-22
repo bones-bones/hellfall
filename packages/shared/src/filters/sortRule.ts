@@ -1,4 +1,4 @@
-import { HCCard, HCColor } from '../types';
+import { HCCard, HCColor } from '@hellfall/shared/types';
 import {
   sorts,
   dirType,
@@ -9,7 +9,7 @@ import {
   sortFilter,
   sortType,
 } from './types';
-import { allSetsList } from '../data/sets';
+import { allSetsList } from '@hellfall/shared/data/sets.ts';
 
 const colorSortValue: Record<HCColor, number> = {
   W: 1,

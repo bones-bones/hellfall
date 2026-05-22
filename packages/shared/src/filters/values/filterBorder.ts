@@ -1,4 +1,4 @@
-import { HCBorderColor } from '../../types';
+import { HCBorderColor } from '@hellfall/shared/types';
 import { opType, textFilter, invertOptionType } from '../types';
 import { funcOp, opToNot } from '../filterUtils';
 const toBorder: Record<string, HCBorderColor> = {

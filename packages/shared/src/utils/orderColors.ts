@@ -1,4 +1,4 @@
-import { HCColors, HCCoreColors, HCMiscColors } from '../types';
+import { HCColors, HCCoreColors, HCMiscColors } from '@hellfall/shared/types';
 import { listEquals, listShare, pushProp, removeIntersection, toUnion } from './listHandling';
 const colorOrderList: string[] = [
   'W',

@@ -186,6 +186,9 @@ const Container = styled('div')({
 const StyledSelect = styled(Select)({
   verticalAlign: 'top',
   display: 'inline-block',
+  '&:disabled': {
+    cursor: 'not-allowed',
+  },
 });
 const SortElements = styled('div')({ lineHeight: '45px', verticalAlign: 'top' });
 const CompactButton = styled(SecondaryButton)({

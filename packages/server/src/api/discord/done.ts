@@ -1,6 +1,6 @@
-import { env } from '../lib/env.js';
-import { withCors } from '../lib/cors.js';
-import type { HandlerRequest, HandlerResponse } from '../lib/types.js';
+import { env } from '../lib/env.ts';
+import { withCors } from '../lib/cors.ts';
+import type { HandlerRequest, HandlerResponse } from '../lib/types.ts';
 
 /**
  * Same-origin redirect so the browser stores the session cookie before going to the frontend.

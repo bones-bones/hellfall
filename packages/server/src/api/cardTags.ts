@@ -1,8 +1,8 @@
-import { withCors } from './lib/cors.js';
-import { env } from './lib/env.js';
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
-import { requireTagAuth } from './lib/requireTagAuth.js';
-import { getTagOverrides, setTagOverrides } from './tagsStore.js';
+import { withCors } from './lib/cors.ts';
+import { env } from './lib/env.ts';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
+import { requireTagAuth } from './lib/requireTagAuth.ts';
+import { getTagOverrides, setTagOverrides } from './tagsStore.ts';
 const useLocalData = env.USE_LOCAL_CARD_DATA;
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {

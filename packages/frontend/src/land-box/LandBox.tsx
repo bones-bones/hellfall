@@ -1,24 +1,22 @@
 import styled from '@emotion/styled';
 import { useLands } from './useLands.ts';
-import { Land } from './types.ts';
 import { useState } from 'react';
+import { HCCard } from '@hellfall/shared/types';
+import { pushProp } from '@hellfall/shared/utils';
+import { Select } from '@workday/canvas-kit-preview-react';
+import { FormField } from '@workday/canvas-kit-react';
 
 export const LandBox = () => {
   const lands = useLands();
-  const [active, setActive] = useState<undefined | Land>();
-  const [activeSet, setActiveSet] = useState('HC4');
+  const [active, setActive] = useState<undefined | HCCard.Normal>();
+  const [activeSet, setActiveSet] = useState('HBB.4');
 
   const grouped = lands
-    .filter(e => e.Set === activeSet)
-    .reduce<Record<Land['Type'], Land[]>>((curr, next) => {
-      if (curr[next.Type]) {
-        curr[next.Type] = [...curr[next.Type], next];
-      } else {
-        curr[next.Type] = [next];
-      }
-
-      return curr;
-    }, {} as any);
+    .filter(e => e.set === activeSet)
+    .reduce<Record<string, HCCard.Normal[]>>((landRecord, land) => {
+      pushProp(landRecord, land.subtypes?.[0] ?? 'Wastes', land);
+      return landRecord;
+    }, {} as Record<string, HCCard.Normal[]>);
 
   return (
     <>
@@ -33,16 +31,16 @@ export const LandBox = () => {
 –exalted`}
       </pre>
       <div>
-        set:{' '}
-        <select
-          defaultValue={activeSet}
-          onChange={e => {
-            setActiveSet(e.target.value);
-          }}
-        >
-          <option>HC4</option>
-          <option>Old</option>
-        </select>
+        <FormField label="set: ">
+          <Select
+            value={activeSet}
+            onChange={e => setActiveSet(e.target.value as any)}
+            options={[
+              { value: 'HBB.4', label: 'HC4' },
+              { value: 'HBB.0', label: 'Old' },
+            ]}
+          />
+        </FormField>
       </div>
       {active && <BigView clear={() => setActive(undefined)} land={active} />}
       <Container>
@@ -66,12 +64,7 @@ export const LandBox = () => {
                 <StyledH2>{type}</StyledH2>
 
                 {values
-                  .sort((a, b) => {
-                    if (getRarityNumber(a.Rarity) < getRarityNumber(b.Rarity)) {
-                      return 1;
-                    }
-                    return -1;
-                  })
+                  .sort((a, b) => getRarityNumber(b.rarity) - getRarityNumber(a.rarity))
                   .map((entry, i) => {
                     return (
                       <LandImageContainer
@@ -107,25 +100,25 @@ const CardsContainer = styled.div({
   padding: '2px',
 });
 
-const getRarityNumber = (val: string) => {
+const getRarityNumber = (val?: string) => {
   switch (val) {
-    case 'Mythic':
+    case 'mythic':
       return 3;
-    case 'Rare':
+    case 'rare':
       return 2;
-    case 'Uncommon':
+    case 'uncommon':
       return 1;
     default:
       return 0;
   }
 };
 
-const BigView = ({ land, clear }: { land: Land; clear: any }) => {
+const BigView = ({ land, clear }: { land: HCCard.Normal; clear: any }) => {
   return (
     <BigViewContianer onClick={clear}>
-      <StyledHImage key={land.Url} src={land.Url} />
-      <CardFooter {...{ type: 'subtitle' }} rarity={land['Rarity'] as any}>
-        Set: {land.Set} Creator: {land.Creator}
+      <StyledHImage key={land.image} src={land.image} />
+      <CardFooter {...{ type: 'subtitle' }} rarity={land.rarity as any}>
+        Set: {land.set} Creator: {land.creators[0]}
       </CardFooter>
     </BigViewContianer>
   );
@@ -142,33 +135,33 @@ const BigViewContianer = styled.div({
   top: '0px',
 });
 
-const LandImageContainer = ({ land, onClick }: { land: Land; onClick: any }) => {
+const LandImageContainer = ({ land, onClick }: { land: HCCard.Normal; onClick: any }) => {
   return (
     <ImageContainer onClick={onClick}>
-      <StyledImage key={land.Url} src={land.Url} />
-      <CardFooter {...{ type: 'subtitle' }} rarity={land['Rarity'] as any}>
-        Set: {land.Set} Creator: {land.Creator}
+      <StyledImage key={land.image} src={land.image} />
+      <CardFooter {...{ type: 'subtitle' }} rarity={land.rarity as any}>
+        Set: {land.set} Creator: {land.creators[0]}
       </CardFooter>
     </ImageContainer>
   );
 };
 
-const CardFooter = styled.div<{ rarity?: 'Mythic' | 'Rare' | 'Uncommon' }>(({ rarity }) => {
+const CardFooter = styled.div<{ rarity?: 'mythic' | 'rare' | 'uncommon' }>(({ rarity }) => {
   let backgroundColor = 'black';
   let borderColor = 'white';
   let color = 'white';
 
-  if (rarity == 'Mythic') {
+  if (rarity == 'mythic') {
     backgroundColor = '#f59326';
     borderColor = '#b43326';
     color = 'black';
   }
-  if (rarity == 'Rare') {
+  if (rarity == 'rare') {
     backgroundColor = '#e9d292';
     borderColor = '#887441';
     color = 'black';
   }
-  if (rarity == 'Uncommon') {
+  if (rarity == 'uncommon') {
     backgroundColor = '#bae2ef';
     borderColor = '#4b6c79';
     color = 'black';

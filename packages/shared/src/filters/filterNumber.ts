@@ -1,4 +1,4 @@
-import { HCCard } from '../types';
+import { HCCard } from '@hellfall/shared/types';
 import {
   cardStringFilter,
   invertOptionType,
@@ -14,7 +14,7 @@ import {
 } from './values/filterColors';
 import { equivColorFilterNames, equivFilterNames, splitOnFirstOp } from './filterBuilder';
 import { invertOp } from './filterUtils';
-import { getColorsFromFaces, toFaces, toNumber } from '../utils';
+import { getColorsFromFaces, toFaces, toNumber } from '@hellfall/shared/utils';
 
 export const filterNumber: numFilter = Object.assign(
   (value1: number, operator: opType, value2: number) => {

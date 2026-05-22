@@ -75,29 +75,32 @@ export namespace HCCard {
   /** A card with the Normal layout. */
   export type Class = AnySingleFaced & Layout<HCLayout.Class>;
 
-  // /** A card with the MeldResult layout. */
+  /** A card with the MeldResult layout. */
   export type MeldResult = AnySingleFaced & Layout<HCLayout.MeldResult>;
 
-  // /** A card with the Token layout. */
+  /** A card with the Token layout. */
   export type Token = AnySingleFaced & Layout<HCLayout.Token>;
 
-  // /** A card with the Emblem layout. */
+  /** A card with the Emblem layout. */
   export type Emblem = AnySingleFaced & Layout<HCLayout.Emblem>;
 
-  // /** A card with the Reminder layout. */
+  /** A card with the Reminder layout. */
   export type Reminder = AnySingleFaced & Layout<HCLayout.Reminder>;
 
-  // /** A card with the Stickers layout. */
+  /** A card with the Stickers layout. */
   export type Stickers = AnySingleFaced & Layout<HCLayout.Stickers>;
 
-  // /** A card with the Dungeon layout. */
+  /** A card with the Dungeon layout. */
   export type Dungeon = AnySingleFaced & Layout<HCLayout.Dungeon>;
 
-  // /** A card with the RealCardToken layout. */
+  /** A card with the RealCardToken layout. */
   export type RealCardToken = AnySingleFaced & Layout<HCLayout.RealCardToken>;
 
-  // /** A card with the Checklist layout. */
+  /** A card with the Checklist layout. */
   export type Checklist = AnySingleFaced & Layout<HCLayout.Checklist>;
+
+  /** A card with the Front layout */
+  export type Front = AnySingleFaced & Layout<HCLayout.Front>;
 
   // /** A card with the Misc layout. */
   export type Misc = AnySingleFaced & Layout<HCLayout.Misc>;
