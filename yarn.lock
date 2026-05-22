@@ -2201,6 +2201,7 @@ __metadata:
   resolution: "@hellfall/server@workspace:packages/server"
   dependencies:
     "@google-cloud/firestore": "npm:^7.1.0"
+    "@hellfall/shared": "npm:^1.0.0"
     "@types/node": "npm:^20.12.8"
     dotenv: "npm:^16.4.5"
     jose: "npm:^5.2.0"

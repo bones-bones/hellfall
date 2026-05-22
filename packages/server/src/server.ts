@@ -12,21 +12,21 @@ import { callbackHandler } from './api/discord/callback.js';
 import { doneHandler } from './api/discord/done.js';
 import { cardTagsHandler } from './api/cardTags.js';
 import { cardJsonHandler, cardTextHandler } from './api/cardData.js';
-import { pushProp } from '../../shared/src/utils/listHandling.js';
+import { pushProp } from '@hellfall/shared/utils';
 import { searchHandler } from './api/search.js';
 
 const PORT = Number(process.env.PORT) || 3003;
 
 const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void | Promise<void>> =
-  {
-    '/api/me': meHandler,
-    '/api/logout': logoutHandler,
-    '/api/tag': tagHandler,
-    '/api/watchwolf': watchwolfHandler,
-    '/api/discord/login': loginHandler,
-    '/api/discord/callback': callbackHandler,
-    '/api/discord/done': doneHandler,
-  };
+{
+  '/api/me': meHandler,
+  '/api/logout': logoutHandler,
+  '/api/tag': tagHandler,
+  '/api/watchwolf': watchwolfHandler,
+  '/api/discord/login': loginHandler,
+  '/api/discord/callback': callbackHandler,
+  '/api/discord/done': doneHandler,
+};
 
 const CARD_API_PREFIX = '/api/cards/';
 

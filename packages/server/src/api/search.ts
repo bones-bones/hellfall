@@ -3,7 +3,7 @@ import { withCors } from './lib/cors.js';
 import { getAllCards, getCardById } from './cardsStore.js';
 import { combineAndWinnowSorts, parseSearchQuery, searchCards } from '@hellfall/shared/filters';
 import tags_data from '@hellfall/shared/data/tags.json';
-import { HCCard } from '../../../shared/src/types/Card/Card.js';
+import type { HCCard } from '@hellfall/shared/types';
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -28,7 +28,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
 
     const { sortList } = combineAndWinnowSorts(sortObjects, inputSorts ?? []);
 
-    const invalidList = invalids.map(invalid =>
+    const invalidList = invalids.map((invalid: [string, string]) =>
       stripDoubleSpaces(`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`)
     );
 
@@ -40,9 +40,8 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
     const response: any = {
       object: 'list',
       total_cards: results.length,
-      details: `${results.length} card${results.length != 1 ? 's' : ''}${
-        summary ? ` ${stripDoubleSpaces(summary)}` : ''
-      }`,
+      details: `${results.length} card${results.length != 1 ? 's' : ''}${summary ? ` ${stripDoubleSpaces(summary)}` : ''
+        }`,
     };
     if (invalidList.length) {
       response.warnings = invalidList;
