@@ -2,25 +2,23 @@
 
 Like scryfall but for Hellscube. Also other stuff.
 
-## [hellfall](./src/hellfall/)
+This is a yarn workspace monorepo
 
-Core hellfall application.
+## [hellfall frontend UI](./packages/frontend/)
 
-## [hellscube](./src/hells-cubes/)
-
-This page contains random card selectors used for various cubes to make irl drafting smoother. currently only supports 1.
-
-## [data-transformer](./data-transformers/)
-
-Scripts used for extracting and transforming data
+Core hellfall application
 
 ## [server](./packages/server/)
 
 Serverless Discord OAuth login. Deploy to Cloud Run (or similar); set `REACT_APP_AUTH_API_URL` in the main app to show “Login with Discord” in the header.
 
-## [deck-builder](./src/deck-builder/)
+## [shared](./packages/shared/)
 
-This pages contains tools to help with building a deck then exporting it to tabletop simulator (or other formats)
+The types, glue, and data that is used by the UI and server
+
+## ["backend"](./packages/backend/)
+
+Not the true backend, but this folder handles all the fetching, parsing, and transforming from the google sheet.
 
 ## [TODO](./TODO.md)
 
