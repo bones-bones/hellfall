@@ -16,7 +16,7 @@ import {
   // HCPrices,
   // HCPromoType,
   // HCPurchaseUris,
-  // HCRarity,
+  HCRarity,
   // HCRelatedUris,
   // HCSecurityStamp,
 } from './values';
@@ -420,6 +420,10 @@ export namespace HCCardFields.Print {
      * Whether this card has draftpartners
      */
     has_draft_partners?: boolean;
+    /**
+     * This card’s rarity.
+     */
+    rarity?: `${HCRarity}`;
     /**
      * This card's set code.
      */

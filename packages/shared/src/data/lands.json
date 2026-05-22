@@ -1,1006 +1,7546 @@
 {
-  "data": [
-    {
-      "Type": "Plains",
-      "Creator": "etharia",
-      "Url": "https://lh3.googleusercontent.com/d/1Eb_gY2XJJjvQFaiTY-85H8eTUyf7vT-D",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1IovYmbBAcH6ZyQCaNLJlGfYqeBM960fu",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Swamp",
-      "Creator": "mattelonian",
-      "Url": "https://lh3.googleusercontent.com/d/1ieak2LxYTx4a8tQFfkV2izYYxNKNC1Be",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Mountain",
-      "Creator": "mattelonian",
-      "Url": "https://lh3.googleusercontent.com/d/1cdHUy7yEcqGG3J26rpE62fIA7hHrMq8r",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Forest",
-      "Creator": "mattelonian",
-      "Url": "https://lh3.googleusercontent.com/d/1Vp9HRQmWbYWXy5n9p5PHgCFyAL_JWp0A",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Plains",
-      "Creator": "mattelonian",
-      "Url": "https://lh3.googleusercontent.com/d/15ryhlKMs7mAlgEHqZVDRM8l0Ut6TjWXs",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Island",
-      "Creator": "mattelonian",
-      "Url": "https://lh3.googleusercontent.com/d/1inj8_UbRKS5lgdYu8xq5VwJVw9OrTha5",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1TuUaCpA4AQoDq9NOZ0MM9xV4B7dMqYzn",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1o0jd4-Gxwppw3z5N3G8Vb1Qr-jDKpySy",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/129msuIlHs13NcttqC2WxtlsouNgK6zns",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1fzgxeJEy23N-jssa7usLgV66zGmZwQpy",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1y6OGayCIOA4LNtylkfNa6LpwIdnW3vp2",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1V3Dz7ch2C4VuFvZfxdcXGPTaLRC78n7e",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1hm9ksKNokeOi__zEig3IPoTUwYEP8aUx",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "bungus2",
-      "Url": "https://lh3.googleusercontent.com/d/1tS1K4wX6G_1a_2oPG5ijgnsS76v-sd9a",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1HAMRuit-_hG75auZRfJUnH9Nix92mHZ_",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "aprilmai",
-      "Url": "https://lh3.googleusercontent.com/d/106Gc0Fqh322gv6qI8QkuTxuDqSET3BnM",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1bwdG0AS5QhICYEltRLGQ1sNzaRwDZjT9",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1Zazs9FiM_b8DB8MSOn9epSm69lfs1QVP",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/12arbcHr51awMaA9RG1HobjDDK-L8eJzT",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1mhd58f8AMtgxhZZ40B6fxtnBzhYTOalu",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1gvV59-HpyQve5JrO65XyHZQqwrUywaci",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1kvtgzESoJYDi9J6JkBHAVegmYQ17xE3O",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/18QDp5tvwVzEkOTRMqNtpvfZGqxGIr7g2",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1XixNhmG1QcyP6WK-F_TzM-iQW8QbO4Uj",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1UZDJ00c1Wg40hr1Z6H6Oxl2QZzen7bGd",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1rn9J2KenvwKnDOa8ZQ9aGRiA27yrMyEw",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1lKuopC-aElmdzCZ80vNj-RkgvmBUE1gy",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "thonnasg",
-      "Url": "https://lh3.googleusercontent.com/d/1KWiuh99NokIpILA1DHLPDeiTf5-LdVz2",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1Zz4dFxtsDAYVvFJdCAAP7od4XZ522kwo",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1I5ezvO6a_sxx7_s4guTOL9FNXfrdPE4s",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1oZfKIwXpaENtd1hSBHNSyJLRhPp9L4yQ",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1GjsjTDtHbd7J9oegHo434KF3y8f-n6jA",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1hYiZWCI2ueHgoeqa3sRbwJEhvMhQnv4d",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1zIUUHZqaA8WnNdb1d3m_Q6CBzgQ46-FF",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1IryodptTG1GB3l8I7z7lUJCQ-IBPbgvD",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1PvEbxP_fzg0QCB6lQLTMXZ4Xq_GkDlmZ",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1y2v51HDUTVdnVsHO4NXDS7FhevhmNks7",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "underflorence",
-      "Url": "https://lh3.googleusercontent.com/d/1hh819fGp2l_QPakiflCa0fWV22bhKXVh",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "garflang",
-      "Url": "https://lh3.googleusercontent.com/d/121TgPWRXwIZz9nxmwwbz9lfT43z9IWR4",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1gP8nRMhK_bR0H7o_FTztuZhdY4G26PEW",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1Eik9WrdVNJeypuNSkUJXbHzHmJO52nu6",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1AFzNWKcAlYDalOmh2vGJ7VKw5QqVw-YY",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "bungus2",
-      "Url": "https://lh3.googleusercontent.com/d/1OsHBr_tkRJTtLjJoeM7v0_W9iMxVt2JL",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "garflang",
-      "Url": "https://lh3.googleusercontent.com/d/1ofqhwspurqBbxKrQsi1OkrQxOymnJEqY",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "rattegirl",
-      "Url": "https://lh3.googleusercontent.com/d/1KzZCqePMgFL7zFFQcjGr6ZJth5Qxhqta",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "lettuce_turtle",
-      "Url": "https://lh3.googleusercontent.com/d/1xP8ZVA9hE9rQedpwjhOlaQBnT2lxchnQ",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "incorrectname",
-      "Url": "https://lh3.googleusercontent.com/d/1SQnzsSekVYc-X5ffXRU8orv58eOOMPKb",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "lettuce_turtle",
-      "Url": "https://lh3.googleusercontent.com/d/1CgwXwCPruRF4g9-HkbrGp2OchtxTQ95T",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "bungus2",
-      "Url": "https://lh3.googleusercontent.com/d/1sbVZHqt7DW0mMV5Wt8nYlIidAUuHU0GE",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "lettuce_turtle",
-      "Url": "https://lh3.googleusercontent.com/d/1TU8rf7G6tG2OMR0lGiDvtEsCtd2GiBsY",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "appleandpearpie9557",
-      "Url": "https://lh3.googleusercontent.com/d/1er-lBJzGu7yniZ7Jvcj4Dly-nUONjSMV",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "bungus2",
-      "Url": "https://lh3.googleusercontent.com/d/1LVNq1eHUjNOD7b99ljAcjWb8p-vfA1cz",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "lettuce_turtle",
-      "Url": "https://lh3.googleusercontent.com/d/1jeAvbfh8G2aOZgzuM24RDRIFJE8epsyl",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1TNNO7JvHjndlNj9vZZ84Xa2fOddrZDK_",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1Sf98lT4jdFRu8N4mKvN0PabZ4gLH5ZRi",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/15pX_0di8rRHK8h5GSyhLeYD4K85BUkqm",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1S0CKN5shSfUupEz1qgFqhTLOHh9zxS6b",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1rrcGEOh7UjmUYAYwnrtOQtt-fKT9BG_n",
-      "Set": "Old"
-    },
-    {
-      "Type": "Wastes",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1Cjs0lCUNshAGqvMTAq9j-XV_kazAIasM",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "sirskidmark",
-      "Url": "https://lh3.googleusercontent.com/d/1jswDRkYeZ0hjssdqiVTEoZHRhFYAsFyX",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "sirskidmark",
-      "Url": "https://lh3.googleusercontent.com/d/1gvrDnak0sHcz8rrVOuaMvnxSDdfFNcjF",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "sirskidmark",
-      "Url": "https://lh3.googleusercontent.com/d/12lMWr3ioOS2WREGaRKdUPh3u_gUpicwi",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "sirskidmark",
-      "Url": "https://lh3.googleusercontent.com/d/1awjaPA7xK8oj27xv4K7x2e6yGnFcXmVI",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "azulavoir",
-      "Url": "https://lh3.googleusercontent.com/d/1g568FAA5N_rimdo9UTJ8FsffjMk_aPWO",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "rattegirl",
-      "Url": "https://lh3.googleusercontent.com/d/1WE1oDIpqsNgv_RkeZwQpKD5NpinE4Rh5",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "psariscottle",
-      "Url": "https://lh3.googleusercontent.com/d/1M2vNDwqyVkfDPQYkN7g8pN-XbPl9lozk",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "psariscottle",
-      "Url": "https://lh3.googleusercontent.com/d/1G6womPkatiTnbMpp-lx1JaXd_jYj7t0L",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "psariscottle",
-      "Url": "https://lh3.googleusercontent.com/d/19RTqHSo4RHNVAy2gAq3AqlHKDNh1yt3v",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "psariscottle",
-      "Url": "https://lh3.googleusercontent.com/d/13icZHkq5aIJTHMrNphU2jKuaO8qiV9mw",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "psariscottle",
-      "Url": "https://lh3.googleusercontent.com/d/1tdNQyo28VrY0X55B95RNSyPf3cIU7mPJ",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "psariscottle",
-      "Url": "https://lh3.googleusercontent.com/d/105bVJubwJVdTzr_nxUZW21dFnJlAf4ek",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "sirskidmark",
-      "Url": "https://lh3.googleusercontent.com/d/1S4warVRCNfrlAH841TvyCcDX8DW1D_0y",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "sirskidmark",
-      "Url": "https://lh3.googleusercontent.com/d/1Ke6iU0MtriFyUdz1ETyICwXc8u7RH9GI",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1JPsesJ8ToVpRV3nlDLvx_Bf48JMrnSw_",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1_JBjGLqOKuprPuv9DOwUV_NnImn-IE9Z",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1lJAjubQD8lXysj1arGhQvxtlM5funhRj",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "bogander_guy",
-      "Url": "https://lh3.googleusercontent.com/d/1QGzy9WMicFjK_SK4zkk56IdLysN29AaF",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "lettuce_turtle",
-      "Url": "https://lh3.googleusercontent.com/d/1S_K3_beOfm2Euu4U-6VxoQF0ApL8-taA",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Wastes",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/12AQKnXZ3Jx0nroxGUQGvnUGSMFXNs2nI",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1XFI3HvTbBUrFhs7L3hZoEXKztleHjj_N",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1wv-pq-WtWmEe1r5jbjXqrUoH8sn6IzkG",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/17Yj_A1EgqVcIwfX_15hfKlHlWsXVhbHP",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1K0WPtPvzfiXaZWadRye8Lrq8T77mV7fs",
-      "Set": "Old"
-    },
-    {
-      "Type": "Wastes",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1vJ7kSudlYXDcRpi3gKZgruaLosvoRqL0",
-      "Set": "Old"
-    },
-    {
-      "Type": "Wastes",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1b4wIL4kpK0Lpi3McXhoxRI0og3cwbKmJ",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "420templar",
-      "Url": "https://lh3.googleusercontent.com/d/1qeTmWen2D6TqWd2bx0s6SwWYRnnna8jf",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1xxhVM8ATv3MhW1KQiDB1BzCPbL6xFHb7",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1LdcSmXzvCDuZbT0SR2O0a5z5KxxmVsE4",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1gxZV2_XWLyuL4vQfd_wyqVL5GQEjxeRS",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1UdYpz3EARQXrh-Ju0Ir6s2CNa57WWdrj",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1qug1rhFTyYK9S59RSeczFgU30QknB5lx",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/14HzSHLsGcmNedVgLNVYqCYWoZ8WBmhir",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1eFNuBJ7qmCqrr_1PiU2gC-Igjf7hhC-X",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1C--9XeuYqXwdL7qRoNZ6IFrMhqB6YqlY",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1UmlAZYk-kbrpMCjPT5HkFh8mpHUDllyu",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1aJ0MTpih4yrr3zrASSFVjHwAhRVo-6nh",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/150yFXIm6VdEzDQw5GxYF-MEQWhSrJcYK",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1qMIq-qWteTGMUWVst0bIhHnI1JqIakIK",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1qpxvuMGpUEzjxLEvUsvXizvfyvanI2hc",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1Ji6ldX9OBCuQRCO34uzWZm352UaBCGf-",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1rZBlhJ1VO1199Q7PVEdP5EBT4PRwpcI4",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/160Evwa73uE6VQAhSHB20JUIdN5z7CZdv",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1G4kh8FCWcc1bzgZ9zp7lFgVhAwNG-glz",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1FcwOutFCF4i6JeHSwvsNKAseFkFD0TVo",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "rattegirl",
-      "Url": "https://lh3.googleusercontent.com/d/1Z_F-oVgIAQTxamiT0SaxXBz43R4C5kwN",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "rattegirl",
-      "Url": "https://lh3.googleusercontent.com/d/18a-Hzt9rahYTFReW8IvkyT88GflVfNlS",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Island",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/15Vp7jKhl9IAzGr6uNJwy7kUPTGZlTgWu",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "yetinator",
-      "Url": "https://lh3.googleusercontent.com/d/1K13-1zQ7R-kW0_dcWrm2Rj35CdrEB2Bq",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Nebula",
-      "Creator": "yetinator",
-      "Url": "https://lh3.googleusercontent.com/d/1bUABiGhmGV_0GIE4LnMJ6O624crqbXip",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "askedforit",
-      "Url": "https://lh3.googleusercontent.com/d/1Tx90fd5W151g8UuyWM6iVTbGLb93jQGd",
-      "Set": "Old"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "askedforit",
-      "Url": "https://lh3.googleusercontent.com/d/1o-ih6EAHLs-vNrDllqKbr3eyyhzB-8Wa",
-      "Set": "Old"
-    },
-    {
-      "Type": "Nebula",
-      "Creator": "aquonn",
-      "Url": "https://lh3.googleusercontent.com/d/1zzjE458BAzn3t4aPd1LIeKoDi5slNtKZ",
-      "Set": "Old"
-    },
-    {
-      "Type": "Island",
-      "Creator": "rattegirl",
-      "Url": "https://lh3.googleusercontent.com/d/1-ol1a8ClUObN66vAmwsYyud9DLAsyTVM",
-      "Set": "Old"
-    },
-    {
-      "Type": "Snow-Covered Mountain",
-      "Creator": "goose5060",
-      "Url": "https://lh3.googleusercontent.com/d/1PcH0cG691Ru1CxfNdxUl5SxsLWuNQxAB",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "rattegirl",
-      "Url": "https://lh3.googleusercontent.com/d/1480XgJwxFlPtRpwg0kbEd2y4fE3thPKO",
-      "Set": "Old"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "rattegirl",
-      "Url": "https://lh3.googleusercontent.com/d/1vcBkzDZLFAOz5eNDu9itoDpT0RIjvdD0",
-      "Set": "Old"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "rattegirl",
-      "Url": "https://lh3.googleusercontent.com/d/1AyWkN26fyU7Pj_Lgljcpth2oMcUXpcjh",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "rattegirl",
-      "Url": "https://lh3.googleusercontent.com/d/1RIMFKYtxekOieaUjHH8V9kh0jMgUBJ-M",
-      "Set": "Old"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "arthropod_queen",
-      "Url": "https://lh3.googleusercontent.com/d/1we0z-byJVrsXxf-z1fypmzVLjOlfXfAB",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "daydreamingdeity",
-      "Url": "https://lh3.googleusercontent.com/d/1zW9q3yhL-lLwiHgujo6-AgiNzSSrH_1a",
-      "Set": "HC4",
-      "Rarity": "Uncommon"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "et al",
-      "Url": "https://lh3.googleusercontent.com/d/1PcvE0Gd_e77EAeSREDGpjYnE81SRT73u",
-      "Set": "HC4",
-      "Rarity": "Mythic"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "jawesome_",
-      "Url": "https://lh3.googleusercontent.com/d/1uZGg7YNNN_2Filn9b1KQ4MCLKo3yQflj",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "lettuce_turtle",
-      "Url": "https://lh3.googleusercontent.com/d/1mlBppCphhGOyBaa_c1R6WtPP5mkEXcpq",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Forest",
-      "Creator": "llllll",
-      "Url": "https://lh3.googleusercontent.com/d/1W3bY_mVQ6oHuUkEEOAGJlu5nQv47lza5",
-      "Set": "HC4",
-      "Rarity": "Rare"
-    },
-    {
-      "Type": "Island",
-      "Creator": "bogander_guy",
-      "Url": "https://lh3.googleusercontent.com/d/1ZCjLhyncI2RdJC3kJ13RYKQaN3Sst5L_",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Island",
-      "Creator": "daydreamingdeity",
-      "Url": "https://lh3.googleusercontent.com/d/1jWHjOscb5WXL-Ze1ug9fN952-GYkKlrK",
-      "Set": "HC4",
-      "Rarity": "Uncommon"
-    },
-    {
-      "Type": "Island",
-      "Creator": "et al",
-      "Url": "https://lh3.googleusercontent.com/d/1h9cl7YVFPOtsRATXgcEqH5vtLcLMl0YY",
-      "Set": "HC4",
-      "Rarity": "Mythic"
-    },
-    {
-      "Type": "Island",
-      "Creator": "juanqu",
-      "Url": "https://lh3.googleusercontent.com/d/1aGUhvgMg5OaA2qm9hQRwd8RHl1506hkQ",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Island",
-      "Creator": "jumberlack.",
-      "Url": "https://lh3.googleusercontent.com/d/1wKt7Bie0gzLlECVwXkNiogzFB3_JYx6p",
-      "Set": "HC4",
-      "Rarity": "Rare"
-    },
-    {
-      "Type": "Island",
-      "Creator": "laptopispy",
-      "Url": "https://lh3.googleusercontent.com/d/1RoBJ_OTUmlKRzzqcT810FaeK1E1HPpAj",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Island",
-      "Creator": "laptopispy",
-      "Url": "https://lh3.googleusercontent.com/d/1cv1sEnWqlifnmdv1K-_LrQ8atypseopr",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Island",
-      "Creator": "n3onblue",
-      "Url": "https://lh3.googleusercontent.com/d/1MdvT3BO_P1Z8hHcfjn06Ob3sNAfjyR4W",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Island",
-      "Creator": "zvosher",
-      "Url": "https://lh3.googleusercontent.com/d/12nl3qL-byfdUV9kmcBOw2FG50wlQ0iDR",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "March10",
-      "Url": "https://lh3.googleusercontent.com/d/1PEXcWIhNM8mw-AGUvcD08fd_BFMWTksQ",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "draner.",
-      "Url": "https://lh3.googleusercontent.com/d/1DnaAFSAOPkL0dur8GkTKtOEETC0OeTSq",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "draner.",
-      "Url": "https://lh3.googleusercontent.com/d/1ZrJPjB6q3-Nj4cKeZ2I0PGTLk3-d10gu",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "enragedmukamuka1",
-      "Url": "https://lh3.googleusercontent.com/d/1Tu2p8OCTplkDLGzDHwwBRrmkBR2MEV5G",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "et al",
-      "Url": "https://lh3.googleusercontent.com/d/14FY_SJAY0H2RzR83UhJ4Jm7jEbv2rkg7",
-      "Set": "HC4",
-      "Rarity": "Mythic"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "exalted.one",
-      "Url": "https://lh3.googleusercontent.com/d/1-Lh1jNeF9Fv5YDb2GikAMIJdgdcK-Ry3",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "incorrectname",
-      "Url": "https://lh3.googleusercontent.com/d/1b_M-O66_ZGJ1m3ktBA7zirVUswRVzA0h",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "insertnamehere23",
-      "Url": "https://lh3.googleusercontent.com/d/1EGDl0-Zep-Rhl8ghqQOfKA_JHTsZ0T22",
-      "Set": "HC4",
-      "Rarity": "Rare"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "laptopispy",
-      "Url": "https://lh3.googleusercontent.com/d/1fs3CH0y7C3yZuBTMJsv4PSNw1vE7eEkz",
-      "Set": "HC4",
-      "Rarity": "Uncommon"
-    },
-    {
-      "Type": "Mountain",
-      "Creator": "moundsofmayhem",
-      "Url": "https://lh3.googleusercontent.com/d/1sLsyozNKJhUqok1WjbLb6jZziAAFBgIs",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "askedforit",
-      "Url": "https://lh3.googleusercontent.com/d/1PCei19qdBHRkGS2UfSiy3BiBQTaOKyZq",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "et al",
-      "Url": "https://lh3.googleusercontent.com/d/15NJUlWG7iT0MxFKjNSc9-AFMXXOdOqYs",
-      "Set": "HC4",
-      "Rarity": "Mythic"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "laptopispy",
-      "Url": "https://lh3.googleusercontent.com/d/1tGQV0fVuZIh7oe4gmRxo5fp9Xhv2Z7F6",
-      "Set": "HC4",
-      "Rarity": "Uncommon"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "llllll",
-      "Url": "https://lh3.googleusercontent.com/d/1CQJ3DE69LMe2CngW42bB1ky0yN1479Wa",
-      "Set": "HC4",
-      "Rarity": "Rare"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "localrodent",
-      "Url": "https://lh3.googleusercontent.com/d/1LjLSyeJEdCjAgx9H_e4Ka-mGL-1Wr-kV",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "March10",
-      "Url": "https://lh3.googleusercontent.com/d/1N4zwv1mPKHyZLhyP3IytZ2la8ID8Xb4s",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Plains",
-      "Creator": "speedbus",
-      "Url": "https://lh3.googleusercontent.com/d/1xby6AU2AXDUHf9ckbuBueYxdQjgPZg2d",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "6requiem",
-      "Url": "https://lh3.googleusercontent.com/d/1dAm0nLUolrqj_JkMtxEybe6_VgxgiOYP",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "askedforit",
-      "Url": "https://lh3.googleusercontent.com/d/1eseTOq0kwAr5nWHgvkBdWgBlIEhCMmzv",
-      "Set": "HC4",
-      "Rarity": "Uncommon"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "benana2222",
-      "Url": "https://lh3.googleusercontent.com/d/1IjoyuDLiyOyMaCRk7iRB9EaB3XBRDNFg",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "et al",
-      "Url": "https://lh3.googleusercontent.com/d/1uozfnTiv8CsZ3Zbi4dyyZoRdUbEuVhn3",
-      "Set": "HC4",
-      "Rarity": "Mythic"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "laptopispy",
-      "Url": "https://lh3.googleusercontent.com/d/1M3-8CjCnoaIfhiJ9tjesPGJ814uhLW0W",
-      "Set": "HC4",
-      "Rarity": "Rare"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "lettuce_turtle",
-      "Url": "https://lh3.googleusercontent.com/d/1u-LTBTvP2UjnUQXG6ksgDeyXt0BMA6X9",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "m4rc05",
-      "Url": "https://lh3.googleusercontent.com/d/1Di9N8j-qX7LSi5iQbGpTVTXI7a_eSY2L",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "rainbow_plague",
-      "Url": "https://lh3.googleusercontent.com/d/1b91nxN8WCwA38UzJ4VdYnCINe9Gw09TD",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Swamp",
-      "Creator": "rylinks",
-      "Url": "https://lh3.googleusercontent.com/d/1OyNhK1M3MY3eEFHEq3rm_VYN5xJnFOgy",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Wastes",
-      "Creator": "daydreamingdeity",
-      "Url": "https://lh3.googleusercontent.com/d/11l9P5irVG1mSMPAR6HdZ_UhXLidNcrvG",
-      "Set": "HC4",
-      "Rarity": "Uncommon"
-    },
-    {
-      "Type": "Wastes",
-      "Creator": "et al",
-      "Url": "https://lh3.googleusercontent.com/d/1EWnR5znfta8yMZpicTS4yATwUPnzIbjH",
-      "Set": "HC4",
-      "Rarity": "Rare"
-    },
-    {
-      "Type": "Wastes",
-      "Creator": "insertnamehere23",
-      "Url": "https://lh3.googleusercontent.com/d/1O2pZFsijMdRo0mbtMTvaqpSG_OOgQ3xS",
-      "Set": "HC4"
-    },
-    {
-      "Type": "Wastes",
-      "Creator": "jakenbakery",
-      "Url": "https://lh3.googleusercontent.com/d/1GWlAaQ25ucEdaV8hdhzsaBuDW1LIBSZI",
-      "Set": "HC4",
-      "Rarity": "Mythic"
-    }
-  ]
+	"data": [
+		{
+			"object": "card",
+			"id": "L1",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "1",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Eb_gY2XJJjvQFaiTY-85H8eTUyf7vT-D",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"etharia"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L2",
+			"name": "Snow-Covered Island",
+			"set": "HBB.0",
+			"collector_number": "2",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1IovYmbBAcH6ZyQCaNLJlGfYqeBM960fu",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Snow Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L3",
+			"name": "Snow-Covered Swamp",
+			"set": "HBB.0",
+			"collector_number": "3",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1ieak2LxYTx4a8tQFfkV2izYYxNKNC1Be",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Snow Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"mattelonian"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L4",
+			"name": "Snow-Covered Mountain",
+			"set": "HBB.0",
+			"collector_number": "4",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1cdHUy7yEcqGG3J26rpE62fIA7hHrMq8r",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Snow Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"mattelonian"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L5",
+			"name": "Snow-Covered Forest",
+			"set": "HBB.0",
+			"collector_number": "5",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Vp9HRQmWbYWXy5n9p5PHgCFyAL_JWp0A",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Snow Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"mattelonian"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L6",
+			"name": "Snow-Covered Plains",
+			"set": "HBB.0",
+			"collector_number": "6",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/15ryhlKMs7mAlgEHqZVDRM8l0Ut6TjWXs",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Snow Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"mattelonian"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L7",
+			"name": "Snow-Covered Island",
+			"set": "HBB.0",
+			"collector_number": "7",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1inj8_UbRKS5lgdYu8xq5VwJVw9OrTha5",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Snow Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"mattelonian"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L8",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "8",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1TuUaCpA4AQoDq9NOZ0MM9xV4B7dMqYzn",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L9",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "9",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1o0jd4-Gxwppw3z5N3G8Vb1Qr-jDKpySy",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L10",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "10",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/129msuIlHs13NcttqC2WxtlsouNgK6zns",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L11",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "11",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1fzgxeJEy23N-jssa7usLgV66zGmZwQpy",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L12",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "12",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1y6OGayCIOA4LNtylkfNa6LpwIdnW3vp2",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L13",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "13",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1V3Dz7ch2C4VuFvZfxdcXGPTaLRC78n7e",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L14",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "14",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1hm9ksKNokeOi__zEig3IPoTUwYEP8aUx",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L15",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "15",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1tS1K4wX6G_1a_2oPG5ijgnsS76v-sd9a",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"bungus2"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L16",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "16",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1HAMRuit-_hG75auZRfJUnH9Nix92mHZ_",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L17",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "17",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/106Gc0Fqh322gv6qI8QkuTxuDqSET3BnM",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"aprilmai"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L18",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "18",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1bwdG0AS5QhICYEltRLGQ1sNzaRwDZjT9",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L19",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "19",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Zazs9FiM_b8DB8MSOn9epSm69lfs1QVP",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L20",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "20",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/12arbcHr51awMaA9RG1HobjDDK-L8eJzT",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L21",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "21",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1mhd58f8AMtgxhZZ40B6fxtnBzhYTOalu",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L22",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "22",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1gvV59-HpyQve5JrO65XyHZQqwrUywaci",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L23",
+			"name": "Snow-Covered Island",
+			"set": "HBB.0",
+			"collector_number": "23",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1kvtgzESoJYDi9J6JkBHAVegmYQ17xE3O",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Snow Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L24",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "24",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/18QDp5tvwVzEkOTRMqNtpvfZGqxGIr7g2",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L25",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "25",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1XixNhmG1QcyP6WK-F_TzM-iQW8QbO4Uj",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L26",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "26",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1UZDJ00c1Wg40hr1Z6H6Oxl2QZzen7bGd",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L27",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "27",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1rn9J2KenvwKnDOa8ZQ9aGRiA27yrMyEw",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L28",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "28",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1lKuopC-aElmdzCZ80vNj-RkgvmBUE1gy",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L29",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "29",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1KWiuh99NokIpILA1DHLPDeiTf5-LdVz2",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"ThomasG"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L30",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "30",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Zz4dFxtsDAYVvFJdCAAP7od4XZ522kwo",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L31",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "31",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1I5ezvO6a_sxx7_s4guTOL9FNXfrdPE4s",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L32",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "32",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1oZfKIwXpaENtd1hSBHNSyJLRhPp9L4yQ",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L33",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "33",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1GjsjTDtHbd7J9oegHo434KF3y8f-n6jA",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L34",
+			"name": "Snow-Covered Mountain",
+			"set": "HBB.0",
+			"collector_number": "34",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1hYiZWCI2ueHgoeqa3sRbwJEhvMhQnv4d",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Snow Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L35",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "35",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1zIUUHZqaA8WnNdb1d3m_Q6CBzgQ46-FF",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L36",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "36",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1IryodptTG1GB3l8I7z7lUJCQ-IBPbgvD",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L37",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "37",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1PvEbxP_fzg0QCB6lQLTMXZ4Xq_GkDlmZ",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L38",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "38",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1y2v51HDUTVdnVsHO4NXDS7FhevhmNks7",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L39",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "39",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1hh819fGp2l_QPakiflCa0fWV22bhKXVh",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"underflorence"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L40",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "40",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/121TgPWRXwIZz9nxmwwbz9lfT43z9IWR4",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"garflang"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L41",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "41",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1gP8nRMhK_bR0H7o_FTztuZhdY4G26PEW",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L42",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "42",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Eik9WrdVNJeypuNSkUJXbHzHmJO52nu6",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L43",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "43",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1AFzNWKcAlYDalOmh2vGJ7VKw5QqVw-YY",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L44",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "44",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1OsHBr_tkRJTtLjJoeM7v0_W9iMxVt2JL",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"bungus2"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L45",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "45",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1ofqhwspurqBbxKrQsi1OkrQxOymnJEqY",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"garflang"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L46",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "46",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1KzZCqePMgFL7zFFQcjGr6ZJth5Qxhqta",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rattegirl"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L47",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "47",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1xP8ZVA9hE9rQedpwjhOlaQBnT2lxchnQ",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"lettuce_turtle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L48",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "48",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1SQnzsSekVYc-X5ffXRU8orv58eOOMPKb",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"incorrectname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L49",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "49",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1CgwXwCPruRF4g9-HkbrGp2OchtxTQ95T",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"lettuce_turtle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L50",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "50",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1sbVZHqt7DW0mMV5Wt8nYlIidAUuHU0GE",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"bungus2"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L51",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "51",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1TU8rf7G6tG2OMR0lGiDvtEsCtd2GiBsY",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"lettuce_turtle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L52",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "52",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1er-lBJzGu7yniZ7Jvcj4Dly-nUONjSMV",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"appleandpearpie9557"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L53",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "53",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1LVNq1eHUjNOD7b99ljAcjWb8p-vfA1cz",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"bungus2"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L54",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "54",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1jeAvbfh8G2aOZgzuM24RDRIFJE8epsyl",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"lettuce_turtle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L55",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "55",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1TNNO7JvHjndlNj9vZZ84Xa2fOddrZDK_",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L56",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "56",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Sf98lT4jdFRu8N4mKvN0PabZ4gLH5ZRi",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L57",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "57",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/15pX_0di8rRHK8h5GSyhLeYD4K85BUkqm",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L58",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "58",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1S0CKN5shSfUupEz1qgFqhTLOHh9zxS6b",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L59",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "59",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1rrcGEOh7UjmUYAYwnrtOQtt-fKT9BG_n",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L60",
+			"name": "Wastes",
+			"set": "HBB.0",
+			"collector_number": "60",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Cjs0lCUNshAGqvMTAq9j-XV_kazAIasM",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"type_line": "Basic Land",
+			"oracle_text": "{T}: Add {C}.",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L61",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "61",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1jswDRkYeZ0hjssdqiVTEoZHRhFYAsFyX",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"SirSkidMark"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L62",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "62",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1gvrDnak0sHcz8rrVOuaMvnxSDdfFNcjF",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"SirSkidMark"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L63",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "63",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/12lMWr3ioOS2WREGaRKdUPh3u_gUpicwi",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"SirSkidMark"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L64",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "64",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1awjaPA7xK8oj27xv4K7x2e6yGnFcXmVI",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"SirSkidMark"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L65",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "65",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1g568FAA5N_rimdo9UTJ8FsffjMk_aPWO",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"azulavoir"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L66",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "66",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1WE1oDIpqsNgv_RkeZwQpKD5NpinE4Rh5",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rattegirl"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L67",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "67",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1M2vNDwqyVkfDPQYkN7g8pN-XbPl9lozk",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"psariscottle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L68",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "68",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1G6womPkatiTnbMpp-lx1JaXd_jYj7t0L",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"psariscottle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L69",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "69",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/19RTqHSo4RHNVAy2gAq3AqlHKDNh1yt3v",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"psariscottle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L70",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "70",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/13icZHkq5aIJTHMrNphU2jKuaO8qiV9mw",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"psariscottle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L71",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "71",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1tdNQyo28VrY0X55B95RNSyPf3cIU7mPJ",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"psariscottle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L72",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "72",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/105bVJubwJVdTzr_nxUZW21dFnJlAf4ek",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"psariscottle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L73",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "73",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1S4warVRCNfrlAH841TvyCcDX8DW1D_0y",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"SirSkidMark"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L74",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "74",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Ke6iU0MtriFyUdz1ETyICwXc8u7RH9GI",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"SirSkidMark"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L75",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "75",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1JPsesJ8ToVpRV3nlDLvx_Bf48JMrnSw_",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L76",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "76",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1_JBjGLqOKuprPuv9DOwUV_NnImn-IE9Z",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L77",
+			"name": "Snow-Covered Mountain",
+			"set": "HBB.0",
+			"collector_number": "77",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1lJAjubQD8lXysj1arGhQvxtlM5funhRj",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Snow Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L78",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "78",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1QGzy9WMicFjK_SK4zkk56IdLysN29AaF",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"bogander_guy"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L79",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "79",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1S_K3_beOfm2Euu4U-6VxoQF0ApL8-taA",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"lettuce_turtle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L80",
+			"name": "Snow-Covered Wastes",
+			"set": "HBB.0",
+			"collector_number": "80",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/12AQKnXZ3Jx0nroxGUQGvnUGSMFXNs2nI",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"type_line": "Snow Basic Land",
+			"oracle_text": "{T}: Add {C}.",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L81",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "81",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1XFI3HvTbBUrFhs7L3hZoEXKztleHjj_N",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L82",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "82",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1wv-pq-WtWmEe1r5jbjXqrUoH8sn6IzkG",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L83",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "83",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/17Yj_A1EgqVcIwfX_15hfKlHlWsXVhbHP",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L84",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "84",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1K0WPtPvzfiXaZWadRye8Lrq8T77mV7fs",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L85",
+			"name": "Wastes",
+			"set": "HBB.0",
+			"collector_number": "85",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1vJ7kSudlYXDcRpi3gKZgruaLosvoRqL0",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"type_line": "Basic Land",
+			"oracle_text": "{T}: Add {C}.",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L86",
+			"name": "Wastes",
+			"set": "HBB.0",
+			"collector_number": "86",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1b4wIL4kpK0Lpi3McXhoxRI0og3cwbKmJ",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"type_line": "Basic Land",
+			"oracle_text": "{T}: Add {C}.",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L87",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "87",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1qeTmWen2D6TqWd2bx0s6SwWYRnnna8jf",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"420Templar"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L88",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "88",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1xxhVM8ATv3MhW1KQiDB1BzCPbL6xFHb7",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L89",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "89",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1LdcSmXzvCDuZbT0SR2O0a5z5KxxmVsE4",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L90",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "90",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1gxZV2_XWLyuL4vQfd_wyqVL5GQEjxeRS",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L91",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "91",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1UdYpz3EARQXrh-Ju0Ir6s2CNa57WWdrj",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L92",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "92",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1qug1rhFTyYK9S59RSeczFgU30QknB5lx",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L93",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "93",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/14HzSHLsGcmNedVgLNVYqCYWoZ8WBmhir",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L94",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "94",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1qpxvuMGpUEzjxLEvUsvXizvfyvanI2hc",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L95",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "95",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Ji6ldX9OBCuQRCO34uzWZm352UaBCGf-",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L96",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "96",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1rZBlhJ1VO1199Q7PVEdP5EBT4PRwpcI4",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L97",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "97",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1eFNuBJ7qmCqrr_1PiU2gC-Igjf7hhC-X",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L98",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "98",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1C--9XeuYqXwdL7qRoNZ6IFrMhqB6YqlY",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L99",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "99",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1UmlAZYk-kbrpMCjPT5HkFh8mpHUDllyu",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L100",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "100",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1aJ0MTpih4yrr3zrASSFVjHwAhRVo-6nh",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L101",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "101",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/150yFXIm6VdEzDQw5GxYF-MEQWhSrJcYK",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L102",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "102",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1qMIq-qWteTGMUWVst0bIhHnI1JqIakIK",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L103",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "103",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/160Evwa73uE6VQAhSHB20JUIdN5z7CZdv",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L104",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "104",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1G4kh8FCWcc1bzgZ9zp7lFgVhAwNG-glz",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L105",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "105",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1FcwOutFCF4i6JeHSwvsNKAseFkFD0TVo",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L106",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "106",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Z_F-oVgIAQTxamiT0SaxXBz43R4C5kwN",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rattegirl"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L107",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "107",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/18a-Hzt9rahYTFReW8IvkyT88GflVfNlS",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rattegirl"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L108",
+			"name": "Snow-Covered Island",
+			"set": "HBB.0",
+			"collector_number": "108",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/15Vp7jKhl9IAzGr6uNJwy7kUPTGZlTgWu",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Snow Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L109",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "109",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1K13-1zQ7R-kW0_dcWrm2Rj35CdrEB2Bq",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"yetinator"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L110",
+			"name": "Snow-Covered Nebula",
+			"set": "HBB.0",
+			"collector_number": "110",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1bUABiGhmGV_0GIE4LnMJ6O624crqbXip",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Snow Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"yetinator"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L111",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "111",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Tx90fd5W151g8UuyWM6iVTbGLb93jQGd",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Askedforit"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L112",
+			"name": "Mountain",
+			"set": "HBB.0",
+			"collector_number": "112",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1o-ih6EAHLs-vNrDllqKbr3eyyhzB-8Wa",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Askedforit"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L113",
+			"name": "Nebula",
+			"set": "HBB.0",
+			"collector_number": "113",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1zzjE458BAzn3t4aPd1LIeKoDi5slNtKZ",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Aquonn"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L114",
+			"name": "Island",
+			"set": "HBB.0",
+			"collector_number": "114",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1-ol1a8ClUObN66vAmwsYyud9DLAsyTVM",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rattegirl"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L115",
+			"name": "Snow-Covered Mountain",
+			"set": "HBB.0",
+			"collector_number": "115",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1PcH0cG691Ru1CxfNdxUl5SxsLWuNQxAB",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Snow",
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Snow Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"goose5060"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			],
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L116",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "116",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1480XgJwxFlPtRpwg0kbEd2y4fE3thPKO",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rattegirl"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L117",
+			"name": "Plains",
+			"set": "HBB.0",
+			"collector_number": "117",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1vcBkzDZLFAOz5eNDu9itoDpT0RIjvdD0",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rattegirl"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L118",
+			"name": "Swamp",
+			"set": "HBB.0",
+			"collector_number": "118",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1AyWkN26fyU7Pj_Lgljcpth2oMcUXpcjh",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rattegirl"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L119",
+			"name": "Forest",
+			"set": "HBB.0",
+			"collector_number": "119",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1RIMFKYtxekOieaUjHH8V9kh0jMgUBJ-M",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rattegirl"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L120",
+			"name": "Plains",
+			"set": "HBB.4",
+			"collector_number": "1",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1PCei19qdBHRkGS2UfSiy3BiBQTaOKyZq",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Askedforit"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L121",
+			"name": "Plains",
+			"set": "HBB.4",
+			"collector_number": "2",
+			"rarity": "mythic",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/15NJUlWG7iT0MxFKjNSc9-AFMXXOdOqYs",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"et al"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L122",
+			"name": "Plains",
+			"set": "HBB.4",
+			"collector_number": "3",
+			"rarity": "uncommon",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1tGQV0fVuZIh7oe4gmRxo5fp9Xhv2Z7F6",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"laptopispy"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L123",
+			"name": "Plains",
+			"set": "HBB.4",
+			"collector_number": "4",
+			"rarity": "rare",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1CQJ3DE69LMe2CngW42bB1ky0yN1479Wa",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"llllll"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L124",
+			"name": "Plains",
+			"set": "HBB.4",
+			"collector_number": "5",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1LjLSyeJEdCjAgx9H_e4Ka-mGL-1Wr-kV",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"localrodent"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L125",
+			"name": "Plains",
+			"set": "HBB.4",
+			"collector_number": "6",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1N4zwv1mPKHyZLhyP3IytZ2la8ID8Xb4s",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"march10"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L126",
+			"name": "Plains",
+			"set": "HBB.4",
+			"collector_number": "7",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1xby6AU2AXDUHf9ckbuBueYxdQjgPZg2d",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains"
+			],
+			"type_line": "Basic Land — Plains",
+			"oracle_text": "({T}: Add {W}.)",
+			"colors": [],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"speedbus"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L127",
+			"name": "Island",
+			"set": "HBB.4",
+			"collector_number": "8",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1ZCjLhyncI2RdJC3kJ13RYKQaN3Sst5L_",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"bogander_guy"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L128",
+			"name": "Island",
+			"set": "HBB.4",
+			"collector_number": "9",
+			"rarity": "uncommon",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1jWHjOscb5WXL-Ze1ug9fN952-GYkKlrK",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"daydreamingdeity"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L129",
+			"name": "Island",
+			"set": "HBB.4",
+			"collector_number": "10",
+			"rarity": "mythic",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1h9cl7YVFPOtsRATXgcEqH5vtLcLMl0YY",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"et al"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L130",
+			"name": "Island",
+			"set": "HBB.4",
+			"collector_number": "11",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1aGUhvgMg5OaA2qm9hQRwd8RHl1506hkQ",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"JuanDM"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L131",
+			"name": "Island",
+			"set": "HBB.4",
+			"collector_number": "12",
+			"rarity": "rare",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1wKt7Bie0gzLlECVwXkNiogzFB3_JYx6p",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"jumberlack."
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L132",
+			"name": "Island",
+			"set": "HBB.4",
+			"collector_number": "13",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1RoBJ_OTUmlKRzzqcT810FaeK1E1HPpAj",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"laptopispy"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L133",
+			"name": "Island",
+			"set": "HBB.4",
+			"collector_number": "14",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1cv1sEnWqlifnmdv1K-_LrQ8atypseopr",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"laptopispy"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L134",
+			"name": "Island",
+			"set": "HBB.4",
+			"collector_number": "15",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1MdvT3BO_P1Z8hHcfjn06Ob3sNAfjyR4W",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"n3onblue"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L135",
+			"name": "Island",
+			"set": "HBB.4",
+			"collector_number": "16",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/12nl3qL-byfdUV9kmcBOw2FG50wlQ0iDR",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island"
+			],
+			"type_line": "Basic Land — Island",
+			"oracle_text": "({T}: Add {U}.)",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"zvosher"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L136",
+			"name": "Swamp",
+			"set": "HBB.4",
+			"collector_number": "17",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1dAm0nLUolrqj_JkMtxEybe6_VgxgiOYP",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Requiem"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L137",
+			"name": "Swamp",
+			"set": "HBB.4",
+			"collector_number": "18",
+			"rarity": "uncommon",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1eseTOq0kwAr5nWHgvkBdWgBlIEhCMmzv",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Askedforit"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L138",
+			"name": "Swamp",
+			"set": "HBB.4",
+			"collector_number": "19",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1IjoyuDLiyOyMaCRk7iRB9EaB3XBRDNFg",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Benana"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L139",
+			"name": "Swamp",
+			"set": "HBB.4",
+			"collector_number": "20",
+			"rarity": "mythic",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1uozfnTiv8CsZ3Zbi4dyyZoRdUbEuVhn3",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"et al"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L140",
+			"name": "Swamp",
+			"set": "HBB.4",
+			"collector_number": "21",
+			"rarity": "rare",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1M3-8CjCnoaIfhiJ9tjesPGJ814uhLW0W",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"laptopispy"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L141",
+			"name": "Swamp",
+			"set": "HBB.4",
+			"collector_number": "22",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1u-LTBTvP2UjnUQXG6ksgDeyXt0BMA6X9",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"lettuce_turtle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L142",
+			"name": "Swamp",
+			"set": "HBB.4",
+			"collector_number": "23",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Di9N8j-qX7LSi5iQbGpTVTXI7a_eSY2L",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Vitral"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L143",
+			"name": "Swamp",
+			"set": "HBB.4",
+			"collector_number": "24",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1b91nxN8WCwA38UzJ4VdYnCINe9Gw09TD",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Rainbow_Plague"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L144",
+			"name": "Swamp",
+			"set": "HBB.4",
+			"collector_number": "25",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1OyNhK1M3MY3eEFHEq3rm_VYN5xJnFOgy",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Swamp"
+			],
+			"type_line": "Basic Land — Swamp",
+			"oracle_text": "({T}: Add {B}.)",
+			"colors": [],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"rylinks"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L145",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "26",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1PEXcWIhNM8mw-AGUvcD08fd_BFMWTksQ",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"march10"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L146",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "27",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1DnaAFSAOPkL0dur8GkTKtOEETC0OeTSq",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Draner"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L147",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "28",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1ZrJPjB6q3-Nj4cKeZ2I0PGTLk3-d10gu",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Draner"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L148",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "29",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1Tu2p8OCTplkDLGzDHwwBRrmkBR2MEV5G",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"enragedmukamuka1"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L149",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "30",
+			"rarity": "mythic",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/14FY_SJAY0H2RzR83UhJ4Jm7jEbv2rkg7",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"et al"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L150",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "31",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1-Lh1jNeF9Fv5YDb2GikAMIJdgdcK-Ry3",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"Exalted"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L151",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "32",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1b_M-O66_ZGJ1m3ktBA7zirVUswRVzA0h",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"incorrectname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L152",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "33",
+			"rarity": "rare",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1EGDl0-Zep-Rhl8ghqQOfKA_JHTsZ0T22",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"insertnamehere23"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L153",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "34",
+			"rarity": "uncommon",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1fs3CH0y7C3yZuBTMJsv4PSNw1vE7eEkz",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"laptopispy"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L154",
+			"name": "Mountain",
+			"set": "HBB.4",
+			"collector_number": "35",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1sLsyozNKJhUqok1WjbLb6jZziAAFBgIs",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Mountain"
+			],
+			"type_line": "Basic Land — Mountain",
+			"oracle_text": "({T}: Add {R}.)",
+			"colors": [],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"moundsofmayhem"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L155",
+			"name": "Forest",
+			"set": "HBB.4",
+			"collector_number": "36",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1we0z-byJVrsXxf-z1fypmzVLjOlfXfAB",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"arthropod_queen"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L156",
+			"name": "Forest",
+			"set": "HBB.4",
+			"collector_number": "37",
+			"rarity": "uncommon",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1zW9q3yhL-lLwiHgujo6-AgiNzSSrH_1a",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"daydreamingdeity"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L157",
+			"name": "Forest",
+			"set": "HBB.4",
+			"collector_number": "38",
+			"rarity": "mythic",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1PcvE0Gd_e77EAeSREDGpjYnE81SRT73u",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"et al"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L158",
+			"name": "Forest",
+			"set": "HBB.4",
+			"collector_number": "39",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1uZGg7YNNN_2Filn9b1KQ4MCLKo3yQflj",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"jawesome_"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L159",
+			"name": "Forest",
+			"set": "HBB.4",
+			"collector_number": "40",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1mlBppCphhGOyBaa_c1R6WtPP5mkEXcpq",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"lettuce_turtle"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L160",
+			"name": "Forest",
+			"set": "HBB.4",
+			"collector_number": "41",
+			"rarity": "rare",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1W3bY_mVQ6oHuUkEEOAGJlu5nQv47lza5",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest"
+			],
+			"type_line": "Basic Land — Forest",
+			"oracle_text": "({T}: Add {G}.)",
+			"colors": [],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"llllll"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L161",
+			"name": "Wastes",
+			"set": "HBB.4",
+			"collector_number": "42",
+			"rarity": "uncommon",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/11l9P5irVG1mSMPAR6HdZ_UhXLidNcrvG",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"type_line": "Basic Land",
+			"oracle_text": "{T}: Add {C}.",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"daydreamingdeity"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L162",
+			"name": "Wastes",
+			"set": "HBB.4",
+			"collector_number": "43",
+			"rarity": "rare",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1EWnR5znfta8yMZpicTS4yATwUPnzIbjH",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"type_line": "Basic Land",
+			"oracle_text": "{T}: Add {C}.",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"et al"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L163",
+			"name": "Wastes",
+			"set": "HBB.4",
+			"collector_number": "44",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1O2pZFsijMdRo0mbtMTvaqpSG_OOgQ3xS",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"type_line": "Basic Land",
+			"oracle_text": "{T}: Add {C}.",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"insertnamehere23"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L164",
+			"name": "Wastes",
+			"set": "HBB.4",
+			"collector_number": "45",
+			"rarity": "mythic",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1GWlAaQ25ucEdaV8hdhzsaBuDW1LIBSZI",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"type_line": "Basic Land",
+			"oracle_text": "{T}: Add {C}.",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"jakenbakery"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"variation": false
+		}
+	]
 }

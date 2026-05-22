@@ -10,6 +10,7 @@ export const propOrder: propType[] = [
   'export_name',
   'set',
   'collector_number',
+  'rarity',
   'layout',
   'image_status',
   'image',

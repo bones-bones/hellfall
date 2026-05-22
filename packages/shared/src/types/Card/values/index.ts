@@ -16,6 +16,6 @@ export * from './Legality.ts';
 // export * from "./Prices.ts";
 // export * from "./PromoType.ts";
 // export * from "./PurchaseUris.ts";
-// export * from "./Rarity.ts";
+export * from './Rarity.ts';
 // export * from "./RelatedUris.ts";
 // export * from "./SecurityStamp.ts";

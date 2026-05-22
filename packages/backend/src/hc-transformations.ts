@@ -1,13 +1,14 @@
 import fs from 'fs';
 
 import { fetchTokens } from './fetchTokens.ts';
-import { fetchDatabase } from './fetchdatabase.ts';
+import { fetchDatabase } from './fetchDatabase.ts';
 import { fetchUsernameMappings } from './fetchUsernameMapping.ts';
 import { HCCard, HCCardFace, HCImageStatus, HCRelatedCard, HCObject } from '@hellfall/shared/types';
 import { allSetsList } from '@hellfall/shared/data/sets.ts';
 import { setDerivedProps, setExportProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
+  bothPropType,
   facePropOrder,
   facePropType,
   partPropOrder,
@@ -35,6 +36,7 @@ import {
 } from './fetchUtils.ts';
 import { addToJSONToCards } from '@hellfall/shared/utils';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
+import { fetchLands } from './fetchLands.ts';
 
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -75,6 +77,8 @@ const cardRemovableProps: propType[] = [
   'still_draft_image',
   'not_directly_draftable',
   'has_draft_partners',
+  'artists',
+  'artist_notes',
   'watermark',
   'frame_effects',
   'tags',
@@ -103,6 +107,8 @@ const tokenRemovableProps: propType[] = [
   'toughness',
   'not_directly_draftable',
   'has_draft_partners',
+  'artists',
+  'artist_notes',
   'watermark',
   'frame_effects',
   'tags',
@@ -173,6 +179,19 @@ const tokenInferrableFaceProps: facePropType[] = [
   'types',
   'power',
   'toughness',
+];
+
+// const landBlankableProps: propType[] = []
+const landRemovableProps: propType[] = [
+  'rotated_image',
+  'still_image',
+  'artists',
+  'artist_notes',
+  'watermark',
+  'frame_effects',
+  'tags',
+  'tag_notes',
+  'all_parts',
 ];
 /**
  *
@@ -345,7 +364,18 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       addProp(merged, key, value);
     }
   });
-  if (!merged.isActualToken || merged.set == 'SFT') {
+  if (merged.set.startsWith('HBB')) {
+    getFilteredCardProps(existingCard, landRemovableProps)
+      .filter(prop => !(prop in newCard))
+      .forEach(prop => {
+        if (prop == 'image') {
+          addProp(merged, 'image_status', newCard.image_status);
+        } else if (prop == 'draft_image') {
+          deleteProp(merged, 'draft_image_status');
+        }
+        deleteProp(merged, prop);
+      });
+  } else if (!merged.isActualToken || merged.set == 'SFT') {
     getFilteredCardProps(existingCard, cardRemovableProps)
       .filter(prop => !(prop in newCard))
       .forEach(prop => {
@@ -394,12 +424,13 @@ const mergeDatabases = (
   existingCards: HCCard.Any[],
   newCards: HCCard.Any[],
   existingTokens: HCCard.Any[],
-  newTokens: HCCard.Any[]
-): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[] } => {
-  // const newCardMap = new Map(newCards.map(card => [card.id, card]));
+  newTokens: HCCard.Any[],
+  existingLands: HCCard.Any[],
+  newLands: HCCard.Any[]
+): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[]; mergedLands: HCCard.Any[] } => {
   const existingCardMap = new Map(existingCards.map(card => [card.id, card]));
-  // const newTokenMap = new Map(newTokens.map(token => [token.id, token]));
   const existingTokenMap = new Map(existingTokens.map(token => [token.id.toLowerCase(), token]));
+  const existingLandMap = new Map(existingLands.map(land => [land.id.toLowerCase(), land]));
 
   const mergedCards = newCards.map(newCard => {
     const existingCard = !(newCard.id in movedIds)
@@ -409,6 +440,7 @@ const mergeDatabases = (
       existingCardMap.delete(existingCard.id);
       return mergeCards(existingCard, newCard);
     }
+    setDerivedProps(newCard);
     return newCard;
   });
   if (usingApproved) {
@@ -430,14 +462,15 @@ const mergeDatabases = (
       existingTokenMap.delete(existingToken.id.toLowerCase());
       return mergeCards(existingToken, newToken);
     }
+    setDerivedProps(newToken);
     return newToken;
   });
   if (usingApproved) {
     mergedTokens.push(
       ...Array.from(
-        existingTokenMap.values().map(Token => {
-          setDerivedProps(Token);
-          return Token;
+        existingTokenMap.values().map(token => {
+          setDerivedProps(token);
+          return token;
         })
       )
     );
@@ -447,15 +480,36 @@ const mergeDatabases = (
         existingTokenMap
           .values()
           .filter(token => token.set == 'SFT')
-          .map(Token => {
-            setDerivedProps(Token);
-            return Token;
+          .map(token => {
+            setDerivedProps(token);
+            return token;
           })
       )
     );
   }
+  const mergedLands = newLands.map(newLand => {
+    const existingLand = !(newLand.id in movedIds)
+      ? existingLandMap.get(newLand.id)
+      : existingLandMap.get(movedIds[newLand.id]);
+    if (existingLand) {
+      existingLandMap.delete(existingLand.id);
+      return mergeCards(existingLand, newLand);
+    }
+    setDerivedProps(newLand);
+    return newLand;
+  });
+  if (usingApproved) {
+    mergedLands.push(
+      ...Array.from(
+        existingLandMap.values().map(land => {
+          setDerivedProps(land);
+          return land;
+        })
+      )
+    );
+  }
 
-  return { mergedCards, mergedTokens };
+  return { mergedCards, mergedTokens, mergedLands };
 };
 const dataToCards = (
   cards: any,
@@ -511,9 +565,11 @@ const dataToCards = (
 const loadExistingData = () => {
   const databasePath = '../shared/src/data/Hellscube-Database.json';
   const tokensPath = '../shared/src/data/tokens.json';
+  const landsPath = '../shared/src/data/lands.json';
 
   let databaseContent = undefined;
   let tokensContent = undefined;
+  let landsContent = undefined;
 
   try {
     databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
@@ -532,24 +588,43 @@ const loadExistingData = () => {
   }
 
   const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
-  return { existingCards, existingTokens };
+
+  try {
+    landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
+  } catch (error) {
+    console.warn('Could not load lands, proceeding with undefined content:', error);
+  }
+
+  const existingLands = landsContent ? dataToCards(landsContent.data || []) : [];
+  return { existingCards, existingTokens, existingLands };
 };
 const main = async () => {
-  const { data: newCards } = { data: await fetchDatabase() };
+  const newCards = await fetchDatabase();
   const usernameMappings = await fetchUsernameMappings();
   const tokenExcludedIds = ['the first pick1'];
   const intTokens = (await fetchTokens(NO_SCRYFALL)).filter(e => !tokenExcludedIds.includes(e.id));
   const intFronts = fetchHCJFronts();
   const intNotMagic = await fetchNotMagic();
   const newTokens = intTokens.concat(intFronts).concat(intNotMagic);
+  const newLands = await fetchLands();
   let finalCards = newCards;
   let finalTokens = newTokens;
+  let finalLands = newLands;
+
   if (!NO_UPDATE_MODE) {
     console.log('Running in update mode - merging with existing data...');
-    const { existingCards, existingTokens } = loadExistingData();
-    const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
-    finalCards = merged.mergedCards;
-    finalTokens = merged.mergedTokens as HCCard.AnySingleFaced[];
+    const { existingCards, existingTokens, existingLands } = loadExistingData();
+    const merged = mergeDatabases(
+      existingCards,
+      newCards,
+      existingTokens,
+      newTokens,
+      existingLands,
+      newLands
+    );
+    finalCards = addToJSONToCards(merged.mergedCards);
+    finalTokens = addToJSONToCards(merged.mergedTokens);
+    finalLands = addToJSONToCards(merged.mergedLands) as HCCard.Normal[];
   } else {
     console.log('Running in overwrite mode - using fresh data only...');
   }
@@ -703,6 +778,50 @@ const main = async () => {
               relatedToken.persistent = true;
             }
             const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+            if (tokenIndex == -1 || tokenIndex == undefined || !relatedCard.all_parts) {
+              pushProp(relatedCard, 'all_parts', relatedToken);
+            } else {
+              relatedCard.all_parts[tokenIndex] = relatedToken;
+            }
+          }
+        });
+    });
+  finalLands
+    .filter(e => 'all_parts' in e)
+    .forEach(land => {
+      land.all_parts
+        ?.filter(e => e.component == 'token_maker')
+        .forEach(tokenMaker => {
+          const relatedToken: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: land.id,
+            name: land.name,
+            set: land.set,
+            image: land.image,
+            type_line: land.type_line,
+            component: 'token',
+          };
+          if (tokenMaker.count) {
+            relatedToken.count = tokenMaker.count;
+          }
+          const relatedCard = tokenMaker.id
+            ? finalCards.find(card => card.id == tokenMaker.id)
+              ? finalCards.find(card => card.id == tokenMaker.id)
+              : finalTokens.find(card => textEquals(card.id, tokenMaker.id))
+            : finalCards.find(card => textEquals(card.name, tokenMaker.name))
+            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
+            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
+          if (relatedCard) {
+            tokenMaker.id = relatedCard.id;
+            tokenMaker.name = relatedCard.name;
+            tokenMaker.set = relatedCard.set;
+            tokenMaker.image = relatedCard.image;
+            tokenMaker.type_line = relatedCard.type_line;
+            if (relatedCard.tags?.includes('persistent-tokens')) {
+              tokenMaker.persistent = true;
+              relatedToken.persistent = true;
+            }
+            const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == land.id);
             if (tokenIndex == -1 || tokenIndex == undefined || !relatedCard.all_parts) {
               pushProp(relatedCard, 'all_parts', relatedToken);
             } else {
@@ -989,6 +1108,21 @@ const main = async () => {
     }
   });
 
+  finalLands.forEach(entry => {
+    entry.creators = entry.creators.map(creator => {
+      if (creator in usernameMappings) {
+        creatorSet.add(usernameMappings[creator]);
+        return usernameMappings[creator];
+      }
+      creatorSet.add(creator);
+      return creator;
+    });
+
+    if ('tags' in entry) {
+      entry.tags?.forEach(e => tagSet.add(e));
+    }
+  });
+
   const types = Array.from(typeSet).sort((a, b) => {
     if (a > b) {
       return 1;
@@ -1061,7 +1195,11 @@ const main = async () => {
   );
   fs.writeFileSync(
     '../shared/src/data/tokens.json',
-    JSON.stringify({ data: addToJSONToCards(finalTokens) }, null, '\t')
+    JSON.stringify({ data: finalTokens }, null, '\t')
+  );
+  fs.writeFileSync(
+    '../shared/src/data/lands.json',
+    JSON.stringify({ data: finalLands }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tags.json',
@@ -1099,7 +1237,7 @@ const main = async () => {
     '../shared/src/data/Hellscube-Database.json',
     JSON.stringify(
       {
-        data: addToJSONToCards(finalCards).concat(addToJSONToCards(finalTokens)),
+        data: finalCards.concat(finalTokens).concat(finalLands),
       },
       null,
       '\t'

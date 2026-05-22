@@ -28,7 +28,6 @@ import {
   propType,
   valueType,
 } from '@hellfall/shared/utils';
-import { error } from 'console';
 import {
   addArtist,
   addProp,

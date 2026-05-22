@@ -246,9 +246,6 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
   };
   const HCTokens = rest.map(entry => {
     const tokenObject: cardObjectType = { card_faces: [] as cardFaceType[] } as cardObjectType;
-    if (entry[keys.indexOf('collector_number')] == '340') {
-      const x = 1;
-    }
     for (let i = 0; i < keys.length; i++) {
       if (entry[i]) {
         if (keys[i] == 'name') {
