@@ -10,7 +10,11 @@
     "rootDir": "src",
     "declaration": true,
     "resolveJsonModule": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@hellfall/shared/*": ["../shared/src/*"]
+    }
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "references": [{ "path": "../shared" }]
 }

@@ -1,5 +1,5 @@
 import { HCCard, HCRelatedCard } from '../types';
-import { extraSetList } from '../data/sets.ts';
+import { extraSetList } from '../data/sets';
 import {
   includeFilter,
   inclusionOptions,
@@ -59,8 +59,8 @@ export const filterIncludeExtras: includeFilter = Object.assign(
         value in inclusionNicknames
           ? inclusionNicknames[value]
           : inclusionOptions.includes(value as inclusionType)
-          ? (value as inclusionType)
-          : undefined;
+            ? (value as inclusionType)
+            : undefined;
       if (!correctValue) {
         return `!Unknown ${invert ? 'ex' : 'in'}clusion option "${value}"`;
       }
