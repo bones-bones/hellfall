@@ -67,7 +67,7 @@ const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => 
   const face = card.card_faces[0];
   const draftCard: DraftmancerCustomCard = {
     id: card.id,
-    name: stripSingleSlashes(face.export_name || face.name),
+    name: stripSingleSlashes(face.export_name || (card.isActualToken ? card.id : face.name)),
     mana_cost: toExportMana(face.mana_cost, true),
     type: face.type_line,
     image: face.rotated_image || face.image || card.rotated_image || card.image,

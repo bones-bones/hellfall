@@ -43,7 +43,7 @@ export const HCToTTSDeckStates = (
     Name: 'DeckCustom',
     CustomDeck: {},
     DeckIDs: [],
-    Transform: DeckPositions.TOKENS,
+    Transform: DeckPositions.DFCS,
     ContainedObjects: [],
     Nickname: 'DFCs',
   };

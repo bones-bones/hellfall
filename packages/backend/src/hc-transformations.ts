@@ -1068,6 +1068,17 @@ const main = async () => {
       }
     }
   });
+  finalLands.forEach(entry => {
+    setExportProps(entry, takenNames);
+    if (!entry.collector_number) {
+      if (entry.set in collectorNumberAutofillSets) {
+        collectorNumberAutofillSets[entry.set] += 1;
+        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
+      } else {
+        throw console.error;
+      }
+    }
+  });
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
