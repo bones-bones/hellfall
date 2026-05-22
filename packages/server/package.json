@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "build:prod": "tsc -p tsconfig.build.json",
+    "build": "tsc -b",
+    "build:prod": "esbuild src/server.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/server.mjs --external:@google-cloud/firestore --external:dotenv",
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
-    "start:prod": "node dist/server.js"
+    "start:prod": "node dist/server.mjs"
   },
   "dependencies": {
     "@google-cloud/firestore": "^7.1.0",
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.8",
+    "esbuild": "^0.25.0",
     "tsx": "^4.7.0",
     "typescript": "^5"
   }

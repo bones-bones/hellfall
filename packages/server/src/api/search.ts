@@ -1,9 +1,17 @@
 import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { withCors } from './lib/cors.js';
 import { getAllCards, getCardById } from './cardsStore.js';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { combineAndWinnowSorts, parseSearchQuery, searchCards } from '@hellfall/shared/filters';
-import tags_data from '@hellfall/shared/data/tags.json';
-import { HCCard } from '../../../shared/src/types/Card/Card.js';
+import type { HCCard } from '@hellfall/shared/types';
+
+function resolveDataFile(name: string): string {
+  if (process.env.DATA_DIR) return join(process.env.DATA_DIR, name);
+  return join(process.cwd(), 'packages/shared/src/data', name);
+}
+
+const tags_data = JSON.parse(readFileSync(resolveDataFile('tags.json'), 'utf-8'));
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
