@@ -7,6 +7,8 @@ COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn/ .yarn/
 COPY packages/shared/package.json packages/shared/
 COPY packages/server/package.json packages/server/
+COPY packages/frontend/package.json packages/frontend/
+COPY packages/backend/package.json packages/backend/
 
 RUN yarn install --immutable
 
