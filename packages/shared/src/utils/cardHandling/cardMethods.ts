@@ -64,82 +64,81 @@ export const getFromAll = <K extends allPropType>(card: HCCard.Any, prop: K): al
   ...('card_faces' in card ? (Array.isArray(card[prop]) ? card[prop] : [card[prop] ?? []]) : []),
   ...getFromFaces(card, prop),
 ];
-
-export const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] => {
+export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
   const ignoreLeftovers = ['toJSON'];
-  return cards.map(card => {
-    const cardWithJSON = Object.assign({}, card, {
-      toJSON(this: Record<string, any>) {
-        const ordered: Record<string, any> = {};
-        propOrder.forEach(prop => {
-          if (prop in this) {
-            ordered[prop] = this[prop];
+  const cardWithJSON = Object.assign({}, card, {
+    toJSON(this: Record<string, any>) {
+      const ordered: Record<string, any> = {};
+      propOrder.forEach(prop => {
+        if (prop in this) {
+          ordered[prop] = this[prop];
+        }
+      });
+      const leftovers = (Object.keys(this) as (typeof propOrder)[number][]).filter(
+        left => !propOrder.includes(left) && !ignoreLeftovers.includes(left)
+      );
+      if (leftovers.length) {
+        // You forgot a prop.
+        throw console.error(`You forgot one or more card props: ${leftovers}`);
+      }
+      if (ordered.card_faces) {
+        ordered.card_faces = this.card_faces.map((face: Record<string, any>) => {
+          const orderedFace: Record<string, any> = {};
+          facePropOrder.forEach(prop => {
+            if (prop in face) {
+              orderedFace[prop] = face[prop];
+            }
+          });
+          const leftoverProps = (Object.keys(face) as (typeof facePropOrder)[number][]).filter(
+            left => !facePropOrder.includes(left) && !ignoreLeftovers.includes(left)
+          );
+          if (leftoverProps.length) {
+            // You forgot a prop.
+            throw console.error(`You forgot one or more face props: ${leftovers}`);
           }
+          return orderedFace;
         });
-        const leftovers = (Object.keys(this) as (typeof propOrder)[number][]).filter(
-          left => !propOrder.includes(left) && !ignoreLeftovers.includes(left)
-        );
-        if (leftovers.length) {
-          // You forgot a prop.
-          throw console.error(`You forgot one or more card props: ${leftovers}`);
-        }
-        if (ordered.card_faces) {
-          ordered.card_faces = this.card_faces.map((face: Record<string, any>) => {
-            const orderedFace: Record<string, any> = {};
-            facePropOrder.forEach(prop => {
-              if (prop in face) {
-                orderedFace[prop] = face[prop];
-              }
-            });
-            const leftoverProps = (Object.keys(face) as (typeof facePropOrder)[number][]).filter(
-              left => !facePropOrder.includes(left) && !ignoreLeftovers.includes(left)
-            );
-            if (leftoverProps.length) {
-              // You forgot a prop.
-              throw console.error(`You forgot one or more face props: ${leftovers}`);
-            }
-            return orderedFace;
-          });
-        }
-        if (ordered.all_parts) {
-          const faceNames = (this.card_faces || []).map((face: Record<string, any>) => face.name);
-          const shouldBeAtTop = (part: Record<string, any>): number => {
-            return (
-              faceNames.includes(part.name) ||
-              ['meld_part', 'meld_result', 'draft_partner'].includes(part.component)
-            );
-          };
-          const sortedParts =
-            'card_faces' in this
-              ? [...this.all_parts].sort(
-                  (a: Record<string, any>, b: Record<string, any>) =>
-                    shouldBeAtTop(b) - shouldBeAtTop(a)
-                )
-              : this.all_parts;
+      }
+      if (ordered.all_parts) {
+        const faceNames = (this.card_faces || []).map((face: Record<string, any>) => face.name);
+        const shouldBeAtTop = (part: Record<string, any>): number => {
+          return (
+            faceNames.includes(part.name) ||
+            ['meld_part', 'meld_result', 'draft_partner'].includes(part.component)
+          );
+        };
+        const sortedParts =
+          'card_faces' in this
+            ? [...this.all_parts].sort(
+                (a: Record<string, any>, b: Record<string, any>) =>
+                  shouldBeAtTop(b) - shouldBeAtTop(a)
+              )
+            : this.all_parts;
 
-          ordered.all_parts = sortedParts.map((part: Record<string, any>) => {
-            const orderedPart: Record<string, any> = {};
-            partPropOrder.forEach(prop => {
-              if (prop in part) {
-                orderedPart[prop] = part[prop];
-              }
-            });
-            const leftoverProps = (Object.keys(part) as (typeof partPropOrder)[number][]).filter(
-              left => !partPropOrder.includes(left) && !ignoreLeftovers.includes(left)
-            );
-            if (leftoverProps.length) {
-              // You forgot a prop.
-              throw console.error(`You forgot one or more part props: ${leftovers}`);
+        ordered.all_parts = sortedParts.map((part: Record<string, any>) => {
+          const orderedPart: Record<string, any> = {};
+          partPropOrder.forEach(prop => {
+            if (prop in part) {
+              orderedPart[prop] = part[prop];
             }
-            return orderedPart;
           });
-        }
-        return ordered;
-      },
-    });
-    return cardWithJSON as HCCard.Any;
+          const leftoverProps = (Object.keys(part) as (typeof partPropOrder)[number][]).filter(
+            left => !partPropOrder.includes(left) && !ignoreLeftovers.includes(left)
+          );
+          if (leftoverProps.length) {
+            // You forgot a prop.
+            throw console.error(`You forgot one or more part props: ${leftovers}`);
+          }
+          return orderedPart;
+        });
+      }
+      return ordered;
+    },
   });
+  return cardWithJSON as HCCard.Any;
 };
+export const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] =>
+  cards.map(card => addToJSONToCard(card));
 
 const faceToPlainText = (face: bothType): string => {
   let text = face.name;

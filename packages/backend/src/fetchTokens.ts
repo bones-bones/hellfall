@@ -114,16 +114,17 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
 
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
 
-  const typeLayouts: Record<string, HCLayoutGroup.SingleFacedType> = {
-    Emblem: HCLayout.Emblem,
-    // 'Reminder Card': HCLayout.Reminder,
-    Stickers: HCLayout.Stickers,
-    Dungeon: HCLayout.Dungeon,
-    // 'Real Card': HCLayout.RealCardToken,
-    'Ad Card': HCLayout.Misc,
-    Misc: HCLayout.Misc,
-    Checklist: HCLayout.Checklist,
-  };
+  const typeLayouts: Record<string, HCLayoutGroup.SingleFacedType & HCLayoutGroup.FaceLayoutType> =
+    {
+      Emblem: HCLayout.Emblem,
+      // 'Reminder Card': HCLayout.Reminder,
+      Stickers: HCLayout.Stickers,
+      Dungeon: HCLayout.Dungeon,
+      // 'Real Card': HCLayout.RealCardToken,
+      'Ad Card': HCLayout.Misc,
+      Misc: HCLayout.Misc,
+      Checklist: HCLayout.Checklist,
+    };
 
   const multiLayoutTags: Record<string, HCLayoutGroup.MultiFacedType> = {
     'reminder-card': HCLayout.MultiReminder,

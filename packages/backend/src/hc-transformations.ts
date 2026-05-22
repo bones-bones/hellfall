@@ -17,6 +17,7 @@ import {
   stripMasterpiece,
   textEquals,
   textPrep,
+  toFaces,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import {
@@ -33,6 +34,7 @@ import {
   getFilteredFaceProps,
 } from './fetchUtils.ts';
 import { addToJSONToCards } from '@hellfall/shared/utils';
+import { fetchHCJFronts } from './fetchHCJFronts.ts';
 
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -106,6 +108,7 @@ const tokenRemovableProps: propType[] = [
   'tags',
   'tag_notes',
   'all_parts',
+  'isActualToken',
 ];
 const tokenFaceRemovableProps: facePropType[] = ['frame'];
 const notMagicBlankableProps: propType[] = ['mana_value', 'oracle_text'];
@@ -536,8 +539,9 @@ const main = async () => {
   const usernameMappings = await fetchUsernameMappings();
   const tokenExcludedIds = ['the first pick1'];
   const intTokens = (await fetchTokens(NO_SCRYFALL)).filter(e => !tokenExcludedIds.includes(e.id));
+  const intFronts = fetchHCJFronts();
   const intNotMagic = await fetchNotMagic();
-  const newTokens = intTokens.concat(intNotMagic);
+  const newTokens = intTokens.concat(intFronts).concat(intNotMagic);
   let finalCards = newCards;
   let finalTokens = newTokens;
   if (!NO_UPDATE_MODE) {
@@ -707,12 +711,88 @@ const main = async () => {
           }
         });
     });
+  // update front cards
+  finalTokens
+    .filter(e => 'all_parts' in e && e.layout == 'front')
+    .forEach(front => {
+      const headliners: HCRelatedCard[] = [];
+      const others: HCRelatedCard[] = [];
+      const nonbasics: HCRelatedCard[] = [];
+      const thriving: HCRelatedCard[] = [];
+      const basics: HCRelatedCard[] = [];
+
+      finalCards
+        .filter(e => e.set == 'HCJ' && e.tags?.includes(front.tags![0]))
+        .forEach(card => {
+          const relatedFront: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: front.id,
+            name: front.name,
+            set: front.set,
+            image: front.image,
+            type_line: front.type_line,
+            component: 'draft_partner',
+            // is_draft_partner:true
+          };
+          const partIndex = front.all_parts?.findIndex(part => part.id == card.id);
+          const alreadyHasPart = partIndex != -1 && partIndex != undefined;
+          const relatedCard: HCRelatedCard = alreadyHasPart
+            ? front.all_parts![partIndex]
+            : {
+                object: HCObject.ObjectType.RelatedCard,
+                id: card.id,
+                name: card.name,
+                set: card.set,
+                image: card.image,
+                type_line: card.type_line,
+                component: 'draft_partner',
+                is_draft_partner: true,
+              };
+          if (relatedCard.count) {
+            relatedFront.count = relatedCard.count;
+          }
+          if (alreadyHasPart) {
+            relatedCard.id = card.id;
+            relatedCard.name = card.name;
+            relatedCard.set = card.set;
+            relatedCard.image = card.image;
+            relatedCard.type_line = card.type_line;
+          }
+          const frontIndex = card.all_parts?.findIndex(e => e.id == front.id);
+          if (frontIndex == -1 || frontIndex == undefined || !card.all_parts) {
+            pushProp(card, 'all_parts', relatedFront);
+          } else {
+            card.all_parts[frontIndex] = relatedFront;
+          }
+          if (card.tags?.includes('headliner')) {
+            headliners.push(relatedCard);
+          } else if (card.name.startsWith('Thriving') && !card.name.startsWith('Thriving Puff')) {
+            thriving.push(relatedCard);
+          } else if (toFaces(card)[0].supertypes?.includes('Basic')) {
+            basics.push(relatedCard);
+          } else if (toFaces(card)[0].types?.includes('Land')) {
+            nonbasics.push(relatedCard);
+          } else {
+            others.push(relatedCard);
+          }
+        });
+      front.all_parts
+        ?.filter(part => !part.id)
+        .forEach(part => {
+          if (part.name.startsWith('Thriving')) {
+            thriving.push(part);
+          } else {
+            basics.push(part);
+          }
+        });
+      front.all_parts = [...headliners, ...others, ...nonbasics, ...thriving, ...basics];
+    });
   // update draftpartners
   finalCards
     .filter(e => 'all_parts' in e)
     .forEach(card => {
       card.all_parts
-        ?.filter(e => e.component == 'draft_partner')
+        ?.filter(e => e.component == 'draft_partner' && e.set != 'FHCJ')
         .forEach(partnerCard => {
           const relatedPartner: HCRelatedCard = {
             object: HCObject.ObjectType.RelatedCard,
@@ -789,7 +869,7 @@ const main = async () => {
     });
 
   finalTokens
-    .filter(e => 'all_parts' in e)
+    .filter(e => 'all_parts' in e && e.set != 'FHCJ')
     .forEach(token => {
       for (let i = token.all_parts?.length! - 1; i >= 0; i--) {
         const part = token.all_parts![i];
