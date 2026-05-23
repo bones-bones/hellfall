@@ -55,14 +55,14 @@ export const HCToTTSDeckStates = (
     ContainedObjects: [],
     Nickname: 'Tokens',
   };
-  const commandDeck: ttsDeckState = {
-    Name: 'DeckCustom',
-    CustomDeck: {},
-    DeckIDs: [],
-    Transform: DeckPositions.COMMAND_ZONE,
-    ContainedObjects: [],
-    Nickname: 'Emblems and Reminder Cards',
-  };
+  // const commandDeck: ttsDeckState = {
+  //   Name: 'DeckCustom',
+  //   CustomDeck: {},
+  //   DeckIDs: [],
+  //   Transform: DeckPositions.COMMAND_ZONE,
+  //   ContainedObjects: [],
+  //   Nickname: 'Emblems and Reminder Cards',
+  // };
   cards.forEach(card => {
     const compressed = toFaces(compressHCCardFaces(card));
     const mainID = (mainDeck.DeckIDs.at(-1) ?? 0) + 100;
@@ -115,51 +115,51 @@ export const HCToTTSDeckStates = (
   tokens.forEach(token => {
     const compressed = toFaces(compressHCCardFaces(token));
     const plain = toPlainText(token);
-    if (!commandLayouts.includes(compressed[0].layout as HCLayoutGroup.FaceLayoutType)) {
-      const tokenID = (tokenDeck.DeckIDs.at(-1) ?? 0) + 100;
-      const tokenCustom: ttsCustomCard = {
-        FaceURL: compressed[0].still_image ?? compressed[0].rotated_image ?? compressed[0].image!,
-        BackURL: cardBackURL,
-        NumWidth: 1,
-        NumHeight: 1,
-        BackIsHidden: true,
-      };
-      const tokenCard: ttsCard = {
-        Name: 'Card',
-        CardID: tokenID,
-        Nickname: token.name,
-        Transform: CardPosition,
-        Description: plain,
-      };
-      if (compressed[0].rotated_image) {
-        tokenCard.SidewaysCard = true;
-      }
-      tokenDeck.DeckIDs.push(tokenID);
-      tokenDeck.CustomDeck[Object.keys(tokenDeck.CustomDeck).length + 1] = tokenCustom;
-      tokenDeck.ContainedObjects.push(tokenCard);
-    } else {
-      const commandID = (commandDeck.DeckIDs.at(-1) ?? 0) + 100;
-      const commandCustom: ttsCustomCard = {
-        FaceURL: compressed[0].still_image ?? compressed[0].rotated_image ?? compressed[0].image!,
-        BackURL: cardBackURL,
-        NumWidth: 1,
-        NumHeight: 1,
-        BackIsHidden: true,
-      };
-      const commandCard: ttsCard = {
-        Name: 'Card',
-        CardID: commandID,
-        Nickname: token.name,
-        Transform: CardPosition,
-        Description: plain,
-      };
-      if (compressed[0].rotated_image) {
-        commandCard.SidewaysCard = true;
-      }
-      commandDeck.DeckIDs.push(commandID);
-      commandDeck.CustomDeck[Object.keys(commandDeck.CustomDeck).length + 1] = commandCustom;
-      commandDeck.ContainedObjects.push(commandCard);
+    // if (!commandLayouts.includes(compressed[0].layout as HCLayoutGroup.FaceLayoutType)) {
+    const tokenID = (tokenDeck.DeckIDs.at(-1) ?? 0) + 100;
+    const tokenCustom: ttsCustomCard = {
+      FaceURL: compressed[0].still_image ?? compressed[0].rotated_image ?? compressed[0].image!,
+      BackURL: cardBackURL,
+      NumWidth: 1,
+      NumHeight: 1,
+      BackIsHidden: true,
+    };
+    const tokenCard: ttsCard = {
+      Name: 'Card',
+      CardID: tokenID,
+      Nickname: token.name,
+      Transform: CardPosition,
+      Description: plain,
+    };
+    if (compressed[0].rotated_image) {
+      tokenCard.SidewaysCard = true;
     }
+    tokenDeck.DeckIDs.push(tokenID);
+    tokenDeck.CustomDeck[Object.keys(tokenDeck.CustomDeck).length + 1] = tokenCustom;
+    tokenDeck.ContainedObjects.push(tokenCard);
+    // } else {
+    //   const commandID = (commandDeck.DeckIDs.at(-1) ?? 0) + 100;
+    //   const commandCustom: ttsCustomCard = {
+    //     FaceURL: compressed[0].still_image ?? compressed[0].rotated_image ?? compressed[0].image!,
+    //     BackURL: cardBackURL,
+    //     NumWidth: 1,
+    //     NumHeight: 1,
+    //     BackIsHidden: true,
+    //   };
+    //   const commandCard: ttsCard = {
+    //     Name: 'Card',
+    //     CardID: commandID,
+    //     Nickname: token.name,
+    //     Transform: CardPosition,
+    //     Description: plain,
+    //   };
+    //   if (compressed[0].rotated_image) {
+    //     commandCard.SidewaysCard = true;
+    //   }
+    //   commandDeck.DeckIDs.push(commandID);
+    //   commandDeck.CustomDeck[Object.keys(commandDeck.CustomDeck).length + 1] = commandCustom;
+    //   commandDeck.ContainedObjects.push(commandCard);
+    // }
   });
   const bundle = [mainDeck];
   if (dfcDeck.DeckIDs.length) {
@@ -168,9 +168,9 @@ export const HCToTTSDeckStates = (
   if (tokenDeck.DeckIDs.length) {
     bundle.push(tokenDeck);
   }
-  if (commandDeck.DeckIDs.length) {
-    bundle.push(commandDeck);
-  }
+  // if (commandDeck.DeckIDs.length) {
+  //   bundle.push(commandDeck);
+  // }
   return bundle;
 };
 

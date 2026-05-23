@@ -1,10 +1,8 @@
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { textEquals, textListEquals } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
-import landsData from '@hellfall/shared/data/lands.json';
-import cardsData from '@hellfall/shared/data/Hellscube-Database.json';
-import tokensData from '@hellfall/shared/data/tokens.json';
+import { unescapeText } from '@hellfall/shared/filters';
 
 export const useNameToId = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);
@@ -150,6 +148,10 @@ export const nameToId = (name: string, cards: HCCard.Any[]): string | undefined 
           card.card_faces.flatMap(e => e.flavor_name ?? []),
           name
         )
+    )?.id ??
+    cards.find(card => card.export_name && textEquals(`${card.name} ${card.id}`, name))?.id ??
+    cards.find(
+      card => card.export_name && textEquals(unescapeText(card.export_name), unescapeText(name))
     )?.id
   );
 };

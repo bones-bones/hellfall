@@ -62,7 +62,7 @@ export const DeckPositions = {
     scaleZ: 1,
   },
   DFCS: {
-    posX: 4.4,
+    posX: -2.2,
     posY: 1,
     posZ: 0,
     rotX: 0,
@@ -82,7 +82,7 @@ export const DeckPositions = {
     scaleX: 1,
     scaleY: 1,
     scaleZ: 1,
-  }, // Same as sideboard
+  },
   COMMAND_ZONE: {
     posX: -2.2,
     posY: 1,
