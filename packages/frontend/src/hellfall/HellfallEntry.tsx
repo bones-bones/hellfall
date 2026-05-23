@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { withBasePath } from '../basePath.ts';
 
 export const HellfallEntry = ({
   url,
@@ -8,6 +7,7 @@ export const HellfallEntry = ({
   otherNames,
   onClick,
   onClickTitle,
+  imgLinkUrl,
 }: {
   url: string;
   id: string;
@@ -15,8 +15,9 @@ export const HellfallEntry = ({
   otherNames?: string[];
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
+  imgLinkUrl?: string;
 }) => {
-  const linkUrl = withBasePath(`/card/${encodeURIComponent(id)}`);
+  const linkUrl = `/card/${encodeURIComponent(id)}`;
 
   const handleClick = (
     e: React.MouseEvent,
@@ -37,16 +38,30 @@ export const HellfallEntry = ({
   return (
     <Container key={id} role="button">
       {onClickTitle ? (
-        <>
-          <StyledTitleLink
-            key={id + '-title'}
-            href={linkUrl}
-            onClick={e => handleClick(e, onClickTitle as any)}
-          >
-            <TitleText>{name}</TitleText>
-          </StyledTitleLink>
-          <br />
-        </>
+        imgLinkUrl ? (
+          <>
+            <StyledTitleLink
+              key={id + '-title'}
+              href={linkUrl}
+              onClick={e => handleClick(e, onClickTitle as any)}
+            >
+              <TitleText as={'h3'} style={{ lineHeight: 0 }}>
+                {name}
+              </TitleText>
+            </StyledTitleLink>
+          </>
+        ) : (
+          <>
+            <StyledTitleLink
+              key={id + '-title'}
+              href={linkUrl}
+              onClick={e => handleClick(e, onClickTitle as any)}
+            >
+              <TitleText>{name}</TitleText>
+            </StyledTitleLink>
+            <br />
+          </>
+        )
       ) : (
         <>
           <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
@@ -63,9 +78,15 @@ export const HellfallEntry = ({
           )}
         </>
       )}
-      <StyledImageLink href={linkUrl} onClick={e => handleClick(e)}>
-        <StyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
-      </StyledImageLink>
+      {imgLinkUrl ? (
+        <StyledImageLink href={imgLinkUrl} onClick={e => handleClick(e)}>
+          <StyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
+        </StyledImageLink>
+      ) : (
+        <StyledImageLink href={linkUrl} onClick={e => handleClick(e)}>
+          <StyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
+        </StyledImageLink>
+      )}
     </Container>
   );
 };
@@ -137,7 +158,7 @@ export const HellfallRelatedEntry = ({
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
-  const linkUrl = withBasePath(`/card/${encodeURIComponent(id)}`);
+  const linkUrl = `/card/${encodeURIComponent(id)}`;
 
   const handleClick = (
     e: React.MouseEvent,

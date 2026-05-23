@@ -1,50 +1,10 @@
 import { HCCard, HCCardFace } from '@hellfall/shared/types';
 import { DraftmancerCardFace, DraftmancerCustomCard } from './draftTypes';
-import { canBeACommander, mergeHCCardFaces } from '../cardHandling';
+import { canBeACommander } from '../cardHandling';
 import { stripSingleSlashes, toExportMana } from '../textHandling';
 import { orderColors } from '../orderColors';
 const validColors = ['W', 'U', 'B', 'R', 'G'];
 
-export const compressHCCardFaces = (card: HCCard.Any) => {
-  if ('card_faces' in card) {
-    const goingToCompressAll = Boolean(
-      card.card_faces.length > 2 &&
-        card.card_faces.filter(face => face.compress_face || face.drop_face).length == 1
-    );
-    for (let i = card.card_faces.length - 1; i > 0; i--) {
-      if (card.card_faces[i].compress_face) {
-        card.card_faces[i - 1] = mergeHCCardFaces([card.card_faces[i - 1], card.card_faces[i]]);
-        card.card_faces.splice(i, 1);
-      } else if (card.card_faces[i].drop_face) {
-        card.card_faces.splice(i, 1);
-      }
-    }
-
-    // compress down to 1 side and use front image if there are still too many sides
-    if (goingToCompressAll) {
-      card.card_faces[0].image = card.image;
-      if (card.rotated_image) {
-        card.card_faces[0].rotated_image = card.rotated_image;
-      }
-    } else if (!card.card_faces[0].image) {
-      card.card_faces[0].image = card.image;
-      if (!card.card_faces[0].rotated_image && card.rotated_image) {
-        card.card_faces[0].rotated_image = card.rotated_image;
-      }
-    }
-    // store the names
-    // idNames[card.id] = stripSingleSlashes(
-    //   card.card_faces[0].export_name ||
-    //     (card.isActualToken && card.set != 'SFT' ? card.id : card.card_faces[0].name)
-    // );
-  }
-  // else {
-  //   idNames[card.id] = stripSingleSlashes(
-  //     card.export_name || (card.isActualToken ? card.id : card.name)
-  //   );
-  // }
-  return card;
-};
 const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard => {
   const draftCard: DraftmancerCustomCard = {
     id: card.id,
@@ -107,7 +67,7 @@ const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => 
   const face = card.card_faces[0];
   const draftCard: DraftmancerCustomCard = {
     id: card.id,
-    name: stripSingleSlashes(face.export_name || face.name),
+    name: stripSingleSlashes(face.export_name || (card.isActualToken ? card.id : face.name)),
     mana_cost: toExportMana(face.mana_cost, true),
     type: face.type_line,
     image: face.rotated_image || face.image || card.rotated_image || card.image,

@@ -84,7 +84,6 @@ Write a script to transform the database
 - don't trigger new history on activecard change?
 - figure out if pip shadows have correct angle (should they be slightly more downward than leftward?)
 - implement flip/aftermath rotation buttons (base it off of cockatrice face merge logic)
-- clean up hcj webpage
 - rework tts
 - put buttons for switching to rotated/still on top later
 - add rotations for images that are upright by default
@@ -97,6 +96,5 @@ Write a script to transform the database
 - make pips servable via the api
 - add cubecobra export
 
-- add lands
-- fix Hellstart.tsx
 - add ub frame effect
+- add tag note handling for logged in tagger

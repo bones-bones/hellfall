@@ -1,12 +1,9 @@
 import styled from '@emotion/styled';
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { getIndicatorFromColors, getPip } from '@hellfall/shared/utils';
-import { withBasePath } from '../basePath.ts';
 
-export const getPipSrc = (name: string) => withBasePath('/pips/' + getPip(name)?.filename);
-export const pipToSrc = (pip: HCCardSymbol) => {
-  return withBasePath('/pips/' + pip.filename);
-};
+export const getPipSrc = (name: string) => `/pips/${getPip(name)?.filename}`;
+export const pipToSrc = (pip: HCCardSymbol) => `/pips/${pip.filename}`;
 const getClipPath = (pip: HCCardSymbol) => {
   if (!pip.clip_type) {
     return undefined;

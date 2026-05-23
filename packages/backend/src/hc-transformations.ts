@@ -8,11 +8,7 @@ import { allSetsList } from '@hellfall/shared/data/sets.ts';
 import { setDerivedProps, setExportProps } from './derivedProps.ts';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
-  bothPropType,
-  facePropOrder,
   facePropType,
-  partPropOrder,
-  propOrder,
   propType,
   pushProp,
   stripMasterpiece,
@@ -1062,6 +1058,17 @@ const main = async () => {
     }
   });
   finalTokens.forEach(entry => {
+    setExportProps(entry, takenNames);
+    if (!entry.collector_number) {
+      if (entry.set in collectorNumberAutofillSets) {
+        collectorNumberAutofillSets[entry.set] += 1;
+        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
+      } else {
+        throw console.error;
+      }
+    }
+  });
+  finalLands.forEach(entry => {
     setExportProps(entry, takenNames);
     if (!entry.collector_number) {
       if (entry.set in collectorNumberAutofillSets) {

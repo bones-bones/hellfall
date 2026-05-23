@@ -1161,21 +1161,21 @@ export const splitOnFirstOp = (
       return {
         keyword: unescapeText(text.slice(0, i)),
         op: text.slice(i, i + 2) as looseOpType,
-        term: unescapeText(text.slice(i + 2)),
+        term: text.slice(i + 2),
       };
     }
     if (looseOpList.includes(text.at(i) as looseOpType)) {
       return {
         keyword: unescapeText(text.slice(0, i)),
         op: text.at(i) as looseOpType,
-        term: unescapeText(text.slice(i + 1)),
+        term: text.slice(i + 1),
       };
     }
     if (text.at(i) == '"' || text.at(i) == "'") {
       break;
     }
   }
-  return { keyword: 'name', op: ':', term: unescapeText(text) };
+  return { keyword: 'name', op: ':', term: text };
 };
 const shorthands: Record<string, shorthandType> = {
   colorless: 'c',
@@ -1303,11 +1303,11 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
     return parseFilter(text.slice(1), !invert);
   }
   if (text[0] == '"' || text[0] == "'" || !looseOpList.some(op => text.includes(op))) {
-    return correctOp(makeNameFilter(unescapeText(text), ':'));
+    return correctOp(makeNameFilter(text, ':'));
   }
   const { keyword, op, term } = splitOnFirstOp(text);
   if (isCompKeyword(keyword) && isCompKeyword(term)) {
-    return correctOp(makeCompFilter(keyword, op, term));
+    return correctOp(makeCompFilter(keyword, op, unescapeText(term)));
   }
   if (keyword in equivFilterNames || keyword in filters) {
     const correctKeyword = keyword in filters ? keyword : equivFilterNames[keyword];

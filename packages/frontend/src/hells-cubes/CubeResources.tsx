@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { toDeck } from '../deck-builder/toDeck.ts';
+// import { toDeck } from '../deck-builder/toDeck.ts';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
-import { toCockCube } from '@hellfall/shared/utils';
+import { HCToTTSDeck, toCockCube } from '@hellfall/shared/utils';
 import { useAtomValue } from 'jotai';
 import { HCCard } from '@hellfall/shared/types';
 import { ReactNode } from 'react';
@@ -208,12 +208,14 @@ export const CubeResources = () => {
                 {cubeSetup.tts || (
                   <button
                     onClick={() => {
-                      const filtered = getFilteredSet(cards, cubeSetup.id);
-
-                      const val = toDeck(filtered);
+                      const val = HCToTTSDeck(
+                        cubeSetup.name,
+                        cubeSetup.id == 'HC5' ? getHc5() : getSplitSet(cards, cubeSetup.id).cards,
+                        cards
+                      );
                       const url =
                         'data:text/plain;base64,' +
-                        btoa(unescape(encodeURIComponent(JSON.stringify(val))));
+                        btoa(unescape(encodeURIComponent(JSON.stringify(val, null, 2))));
                       const a = document.createElement('a');
                       a.style.display = 'none';
                       a.href = url;

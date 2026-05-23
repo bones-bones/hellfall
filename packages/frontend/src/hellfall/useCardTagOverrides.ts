@@ -107,7 +107,7 @@ export function useCardTagOverrides(
     async (tag: string) => {
       const tagNorm = tag.trim();
       if (!tagNorm || !baseUrl || !cardId) return;
-      const res = await fetch(`${baseUrl}/api/cards${encodeURIComponent(cardId)}?format=tags`, {
+      const res = await fetch(`${baseUrl}/api/cards/${encodeURIComponent(cardId)}?format=tags`, {
         method: 'DELETE',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

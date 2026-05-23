@@ -409,7 +409,13 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
       }
     });
   } else {
-    let exportName = toExportName(card.isActualToken ? card.id : card.name);
+    let exportName = toExportName(
+      card.set.startsWith('HBB')
+        ? `${card.name} (${card.id})`
+        : card.isActualToken
+        ? card.id
+        : card.name
+    );
     if (exportName.startsWith('(') || /^\d/.test(exportName)) {
       exportName = '_' + exportName;
     }
