@@ -71,6 +71,8 @@ export enum HCFrameEffect {
   UpsidedownDfc = 'upsidedowndfc',
   /** The cards have the Shattered Glass frame effect */
   ShatteredGlass = 'shatteredglass',
+  /** The cards have the Universes Beyond frame effect */
+  UniversesBeyond = 'universesbeyond',
 }
 export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.SunMoonDfc,

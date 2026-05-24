@@ -149,7 +149,9 @@ export const DeckBuilder = () => {
         defaultValue={textAreaValue}
         placeholder="4 Strict Improvement
 Swamp
-Cock and Balls to Torture and Abuse"
+Cock and Balls to Torture and Abuse
+2 Island L18
+%1984"
       />
       <br />
       <button

@@ -345,6 +345,10 @@ const toFrameEffect: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   slab: HCFrameEffect.Slab,
   slabbed: HCFrameEffect.Slab,
   arena: HCFrameEffect.Arena,
+  ub: HCFrameEffect.UniversesBeyond,
+  beyond: HCFrameEffect.UniversesBeyond,
+  universebeyond: HCFrameEffect.UniversesBeyond,
+  universesbeyond: HCFrameEffect.UniversesBeyond,
 };
 const frameEffectNames: [HCFrameEffect[], string][] = [
   [
@@ -410,6 +414,7 @@ const frameEffectNames: [HCFrameEffect[], string][] = [
   [[HCFrameEffect.Etched], 'an etched foil treatment'],
   [[HCFrameEffect.Slab], 'a slabbed frame'],
   [[HCFrameEffect.Arena], 'an Arena frame'],
+  [[HCFrameEffect.UniversesBeyond], 'a Universes Beyond frame'],
 ];
 const getFrameEffectName = (text: string) => {
   if (text in toFrameEffect) {

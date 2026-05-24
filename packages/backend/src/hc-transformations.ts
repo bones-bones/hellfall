@@ -179,8 +179,25 @@ const tokenInferrableFaceProps: facePropType[] = [
 
 // const landBlankableProps: propType[] = []
 const landRemovableProps: propType[] = [
+  'flavor_name',
+  'export_name',
+  'collector_number',
+  'image',
   'rotated_image',
   'still_image',
+  'supertypes',
+  'types',
+  'subtypes',
+  'power',
+  'toughness',
+  'loyalty',
+  'defense',
+  'draft_image_status',
+  'draft_image',
+  'rotated_draft_image',
+  'still_draft_image',
+  'not_directly_draftable',
+  'has_draft_partners',
   'artists',
   'artist_notes',
   'watermark',
@@ -645,13 +662,12 @@ const main = async () => {
             relatedToken.count = tokenMaker.count;
           }
           // goes by id if possible, but if not, it goes by name; tries to find in cards, then tries in tokens
-          const relatedCard = tokenMaker.id
-            ? finalCards.find(card => card.id == tokenMaker.id)
-              ? finalCards.find(card => card.id == tokenMaker.id)
-              : finalTokens.find(card => textEquals(card.id, tokenMaker.id))
-            : finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
+          const relatedCard =
+            finalCards.find(card => card.id == tokenMaker.id) ??
+            finalTokens.find(card => textEquals(card.id, tokenMaker.id)) ??
+            finalLands.find(card => card.id == tokenMaker.id) ??
+            finalCards.find(card => textEquals(card.name, tokenMaker.name)) ??
+            finalTokens.find(card => textEquals(card.id, tokenMaker.name));
           if (relatedCard) {
             // update token.all_parts
             tokenMaker.id = relatedCard.id;
@@ -756,13 +772,11 @@ const main = async () => {
           if (tokenMaker.count) {
             relatedToken.count = tokenMaker.count;
           }
-          const relatedCard = tokenMaker.id
-            ? finalCards.find(card => card.id == tokenMaker.id)
-              ? finalCards.find(card => card.id == tokenMaker.id)
-              : finalTokens.find(card => textEquals(card.id, tokenMaker.id))
-            : finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
+          const relatedCard =
+            finalCards.find(card => card.id == tokenMaker.id) ??
+            finalTokens.find(card => textEquals(card.id, tokenMaker.id)) ??
+            finalCards.find(card => textEquals(card.name, tokenMaker.name)) ??
+            finalTokens.find(card => textEquals(card.id, tokenMaker.name));
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
@@ -800,13 +814,11 @@ const main = async () => {
           if (tokenMaker.count) {
             relatedToken.count = tokenMaker.count;
           }
-          const relatedCard = tokenMaker.id
-            ? finalCards.find(card => card.id == tokenMaker.id)
-              ? finalCards.find(card => card.id == tokenMaker.id)
-              : finalTokens.find(card => textEquals(card.id, tokenMaker.id))
-            : finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            ? finalCards.find(card => textEquals(card.name, tokenMaker.name))
-            : finalTokens.find(card => textEquals(card.id, tokenMaker.name));
+          const relatedCard =
+            finalCards.find(card => card.id == tokenMaker.id) ??
+            finalTokens.find(card => textEquals(card.id, tokenMaker.id)) ??
+            finalCards.find(card => textEquals(card.name, tokenMaker.name)) ??
+            finalTokens.find(card => textEquals(card.id, tokenMaker.name));
           if (relatedCard) {
             tokenMaker.id = relatedCard.id;
             tokenMaker.name = relatedCard.name;
@@ -823,10 +835,18 @@ const main = async () => {
             } else {
               relatedCard.all_parts[tokenIndex] = relatedToken;
             }
+            if (relatedCard.tags?.includes('AddCards') && (!relatedCard.tag_notes?.['AddCards'] || parseInt(relatedCard.tag_notes['AddCards']) || relatedCard.tag_notes['AddCards'] == land.id)) {
+              relatedCard.has_draft_partners = true;
+              land.has_draft_partners = true;
+              land.not_directly_draftable = true;
+              tokenMaker.is_draft_partner = true;
+              relatedCard.all_parts!.find(e => e.id == land.id)!.is_draft_partner = true;
+            }
           }
+          
         });
     });
-  // update front cards
+  // update front cards and order their parts
   finalTokens
     .filter(e => 'all_parts' in e && e.layout == 'front')
     .forEach(front => {

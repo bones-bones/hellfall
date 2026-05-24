@@ -206,6 +206,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'meld-frame': HCFrameEffect.Meld,
     'slab-frame': HCFrameEffect.Slab,
     'arena-frame': HCFrameEffect.Arena,
+    'universes-beyond-frame': HCFrameEffect.UniversesBeyond,
   };
 
   const frontImageTagProps: Record<string, string> = {

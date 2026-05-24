@@ -47,7 +47,7 @@ export const HellFall = () => {
   }, []);
 
   const maxWidth = useMemo(() => {
-    const cardWidth = 340 / 1.4 + 10;
+    const cardWidth = 350 / 1.4 + 10;
     const cardNum = Math.floor(windowWidth / cardWidth);
     return cardWidth * cardNum + 5;
   }, [windowWidth]);

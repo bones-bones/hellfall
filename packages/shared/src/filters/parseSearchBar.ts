@@ -396,7 +396,8 @@ export const parseSearchQuery = (
   const parseTokens = (
     tokens: string[],
     start: number = 0,
-    summaries: string[]
+    summaries: string[],
+    inRelated?: boolean
   ): { node: FilterNode; nextPos: number; summaries: string[] } => {
     let i = start;
     let leftNode: FilterNode | null = null;
@@ -436,7 +437,7 @@ export const parseSearchQuery = (
           summaries.push(' and ');
         }
         summaries.push('the cards have related cards where ');
-        const { node, nextPos } = parseTokens(tokens, i + 1, summaries);
+        const { node, nextPos } = parseTokens(tokens, i + 1, summaries, true);
         i = nextPos;
         if ((node.type == 'and' || node.type == 'or') && !node.children.length) {
           return null;
@@ -505,6 +506,10 @@ export const parseSearchQuery = (
 
     if (!leftNode) {
       return { node: { type: 'and', children: [] }, nextPos: i, summaries };
+    }
+
+    if (inRelated) {
+      return { node: leftNode || { type: 'and', children: [] }, nextPos: i, summaries };
     }
 
     while (i < tokens.length) {
@@ -622,8 +627,9 @@ export const searchCards = (
 ): HCCard.Any[] => {
   const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query);
   const usingClusion = Boolean(includeList.length + excludeList.length);
+  // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
   fixTags(node, tagList);
-  if (autoFilterExtras) {
+  if (includeList.length) {
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);
   }
@@ -633,6 +639,7 @@ export const searchCards = (
       (includeList.length ? includeList.some(filter => filter.cardPassesFilter(card)) : true) &&
       (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true)
   );
+  const includeNonExtras = makeIncludeFilter('nonextras', ':');
   const excludeExtras = makeIncludeFilter('nonextras', ':');
   const newCardsWithoutExtras = newCardsWithExtras.filter(card =>
     excludeExtras.cardPassesFilter(card)
