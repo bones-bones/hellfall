@@ -1,18 +1,8 @@
 import { env } from './lib/env.ts';
-import { verifySessionToken } from './lib/jwt.ts';
 import { withCors } from './lib/cors.ts';
-import { getUserAsGuildMember } from './lib/discord/discord.ts';
+import { getSession, resolveGuildRoles } from './lib/session.ts';
 import { DATABASE_CONTRIBUTOR } from './discord/constants.ts';
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
-
-function getCookie(req: HandlerRequest, name: string): string | null {
-  const raw = req.headers.cookie;
-  if (!raw) {
-    return null;
-  }
-  const match = raw.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`));
-  return match ? decodeURIComponent(match[1]) : null;
-}
 
 export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Promise<void> => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
@@ -25,15 +15,7 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
     return;
   }
 
-  const token = getCookie(req, env.COOKIE_NAME);
-  if (!token) {
-    console.log('No token');
-    res.statusCode = 200;
-    res.end(JSON.stringify({ user: null }));
-    return;
-  }
-
-  const payload = await verifySessionToken(token);
+  const payload = await getSession(req);
   if (!payload) {
     res.statusCode = 200;
     res.end(JSON.stringify({ user: null }));
@@ -41,13 +23,9 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
   }
 
   let guild: { nick: string | null; roles: string[] } | null = null;
-  const guildId = env.DISCORD_GUILD_ID;
-  const discordAccessToken = payload.discord_access_token;
-  if (guildId && discordAccessToken) {
-    const gm = await getUserAsGuildMember(discordAccessToken, guildId);
-    if (gm.kind === 'member') {
-      guild = { nick: gm.nick, roles: gm.roles };
-    }
+  const result = await resolveGuildRoles(payload, res);
+  if (result.kind === 'ok') {
+    guild = { nick: result.nick, roles: result.roles };
   }
 
   const contributorRoleId = env.DISCORD_TAG_ROLE_ID ?? DATABASE_CONTRIBUTOR;

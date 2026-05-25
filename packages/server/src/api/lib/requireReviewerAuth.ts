@@ -1,18 +1,19 @@
 import type { HandlerRequest, HandlerResponse } from './types.ts';
 import { env } from './env.ts';
 import { getSession, resolveGuildRoles } from './session.ts';
+import { DATABASE_CONTRIBUTOR } from '../discord/constants.ts';
 
-export type AdminAuthUser = {
+export type ReviewerAuthUser = {
   userId: string;
   username: string;
   discord_access_token: string;
 };
 
-/** Verifies session and DISCORD_ADMIN_ROLE_ID. Returns user or sends error and returns null. */
-export async function requireAdminAuth(
+/** Verifies session and admin or DATABASE_CONTRIBUTOR role for viewing changesets. */
+export async function requireReviewerAuth(
   req: HandlerRequest,
   res: HandlerResponse
-): Promise<AdminAuthUser | null> {
+): Promise<ReviewerAuthUser | null> {
   const payload = await getSession(req);
   if (!payload) {
     res.statusCode = 401;
@@ -38,9 +39,12 @@ export async function requireAdminAuth(
     return null;
   }
 
-  if (!guild.roles.includes(env.DISCORD_ADMIN_ROLE_ID)) {
+  const contributorRoleId = env.DISCORD_TAG_ROLE_ID ?? DATABASE_CONTRIBUTOR;
+  const isContributor = guild.roles.includes(contributorRoleId);
+  const isAdmin = guild.roles.includes(env.DISCORD_ADMIN_ROLE_ID);
+  if (!isContributor && !isAdmin) {
     res.statusCode = 403;
-    res.end(JSON.stringify({ ok: false, reason: 'missing_admin_role' }));
+    res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
     return null;
   }
 

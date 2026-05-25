@@ -58,7 +58,7 @@ function isValidFirestoreDocId(id: string): boolean {
 }
 
 /** Firestore forbids nested arrays — stringify any array-of-arrays fields. */
-function sanitizeForFirestore(obj: Record<string, unknown>): Record<string, unknown> {
+const sanitizeForFirestore = (obj: Record<string, unknown>): Record<string, unknown> => {
   const out: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(obj)) {
     if (Array.isArray(value) && value.some(v => Array.isArray(v))) {
@@ -70,10 +70,10 @@ function sanitizeForFirestore(obj: Record<string, unknown>): Record<string, unkn
   return out;
 }
 
-function buildFirestoreDoc(
+const buildFirestoreDoc = (
   card: HellscubeCard,
   existing: Record<string, unknown> | undefined
-): Record<string, unknown> {
+): Record<string, unknown> => {
   const baseTags = dedupeOrdered(normalizeTagList(card.tags));
   const overrides: CardTagOverrides = {
     added: normalizeTagList(existing?.added),
