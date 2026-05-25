@@ -171,6 +171,7 @@ const tokenInferrableProps: propType[] = [
   'frame_effects',
   'tags',
   'tag_notes',
+  'token_id',
 ];
 const tokenInferrableFaceProps: facePropType[] = [
   'compress_face',

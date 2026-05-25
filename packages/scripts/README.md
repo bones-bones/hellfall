@@ -1,10 +1,14 @@
 # Hellscube database migration (JSON → Firestore)
 
-Uploads the **entire** `Hellscube-Database.json` into Firestore `hellscube` / `cards/{cardId}`, merging contributor tag overrides into each card’s `tags` field.
+Uploads `Hellscube-Database.json` into Firestore `hellscube` / `cards/{cardId}`.
+
+**Checklist:** [MIGRATION_CHECKLIST.md](./MIGRATION_CHECKLIST.md)
+
+Each document is the full card object from JSON, plus tag-merge fields that preserve contributor overrides across re-runs.
 
 ## What gets written
 
-Each document is the full card object from JSON (name, oracle_text, image, legalities, etc.), plus:
+Each `cards/{cardId}` document contains:
 
 | Field | Source |
 |-------|--------|
@@ -13,24 +17,25 @@ Each document is the full card object from JSON (name, oracle_text, image, legal
 | `tags` | `merge(baseTags, { added, removed })` |
 | `added`, `removed` | Preserved from the existing Firestore doc (empty arrays if new) |
 
-Re-running migrate refreshes card fields and `baseTags` from JSON, then recomputes `tags` from `baseTags` + existing overrides (`packages/server/src/lib/cardTagMerge.ts`).
+Re-running migrate refreshes card fields and `baseTags` from JSON, then recomputes `tags` from `baseTags` + existing overrides (`@hellfall/shared/cardTags/cardTagMerge`).
 
 The tag API (`cardTags.ts`) updates `added` / `removed` and keeps `tags` in sync; `baseTags` is left unchanged until the next migrate.
 
-## Tag change audit
+## Edit audit
 
-Contributor tag edits (POST/DELETE) append an immutable row to:
+All card edits append an immutable row to:
 
-`cards/{cardId}/tag_audit/{autoId}`
+`cards/{cardId}/audit/{autoId}`
 
 Each entry includes:
 
 - `at` — server timestamp
 - `username` — guild nick if set, else Discord username from session
 - `userId` — Discord snowflake
-- `action` — `tag_add` | `tag_remove`
-- `tag` — tag string affected
-- `before` / `after` — snapshots of `tags`, `added`, `removed`, `baseTags`
+- `action` — `tag_add` | `tag_remove` | `field_edit`
+- `field` — which field changed (e.g. `tags`, `oracle_text`)
+- `tag` — tag string (for tag actions; null for field edits)
+- `changes` — `{ before, after }` snapshots
 
 Read history: `GET /api/cards/:cardId/tags/audit?limit=50` (same auth as tag edits).
 
@@ -44,16 +49,19 @@ Bulk migrate does not write per-card audit rows (use Firestore/console logs for 
    yarn transform-hc
    ```
 
-2. **Service account** with Firestore write access to the `hellscube` database.
+2. **Create a Firestore database** in your Firebase/GCP project (Native mode):
+   - Database ID: `hellscube`
+   - Collection (`cards`) is auto-created on first document write.
 
-3. **`packages/server/.env`**:
+3. **Service account** with Firestore read/write access.
+
+4. **`packages/scripts/.env`** (copy from `.env.example`):
 
    ```env
    GOOGLE_APPLICATION_CREDENTIALS=./path/to/service-account.json
-   # optional:
-   # FIRESTORE_HELLSCUBE_DATABASE_ID=hellscube
+   # optional (defaults shown):
+   # FIRESTORE_DATABASE_ID=hellscube
    # FIRESTORE_CARDS_COLLECTION=cards
-   # FIRESTORE_TAG_AUDIT_SUBCOLLECTION=tag_audit
    ```
 
 ## Run
@@ -107,9 +115,37 @@ Run on a machine or CI job with `GOOGLE_APPLICATION_CREDENTIALS` set.
 
 - **Not** the WatchWolf database (`watch-wolf-war`); only `hellscube` / `cards`.
 - Firestore document size limit is 1 MiB per doc; Hellscube cards are well below that.
-- The frontend still loads cards from bundled JSON today; this script populates Firestore as the shared store. Pointing the app at Firestore for card data is a separate change if you want runtime reads from there.
+- The frontend still loads cards from bundled JSON today; this script populates Firestore as the shared store.
+
+## Export Firestore snapshot
+
+Download the `cards` collection as stored in Firestore (faithful backup; not the bundled JSON file).
+
+From repo root:
+
+```bash
+yarn export-hellscube-db
+yarn export-hellscube-db --out ./backup.json
+```
+
+Output shape:
+
+```json
+{
+  "exportedAt": "...",
+  "databaseId": "hellscube",
+  "collection": "cards",
+  "data": [{ "_docId": "6727", "id": "6727", ... }]
+}
+```
+
+- `_docId` is the Firestore document ID (e.g. `token-<CN>` for tokens).
+- Fields match what migrate wrote, including `baseTags`, `added`, `removed`, merged `tags`.
+
+**Admin API:** `GET /api/admin/export-hellscube` (session cookie + `DISCORD_ADMIN_ROLE_ID`). Returns the same JSON as a download attachment.
 
 ## Implementation
 
-Script: `migrate-hellscube-db.ts`  
-Tag API + audit: `packages/server/src/api/cardTags.ts`, `packages/server/src/lib/cardTagAudit.ts`
+Script: `src/migrate-hellscube-db.ts`, `src/export-hellscube-db.ts`  
+Shared export: `src/lib/exportCards.ts`  
+Tag API + audit: `packages/server/src/api/cardTags.ts`, `packages/server/src/lib/cardAudit.ts`

@@ -3,16 +3,16 @@ import { withCors } from './lib/cors.js';
 import { env } from './lib/env.js';
 import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
-import { listCardTagAudit, recordCardTagAudit } from '../lib/cardTagAudit.js';
+import { listCardAudit, recordTagAudit } from '../lib/cardAudit.js';
 import {
   applyAddTag,
   applyRemoveTag,
   normalizeTag,
   resolveTagState,
   tagFieldsForWrite,
-} from '../lib/cardTagMerge.js';
+} from '@hellfall/shared/cardTags/cardTagMerge';
 
-const db = new Firestore({ databaseId: env.FIRESTORE_HELLSCUBE_DATABASE_ID });
+const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
 
 const EMPTY_TAG_SEED = {
@@ -87,7 +87,7 @@ export const cardTagsHandler = async (
         typeof limitRaw === 'string' && /^\d+$/.test(limitRaw)
           ? Math.min(200, Math.max(1, Number(limitRaw)))
           : 50;
-      const entries = await listCardTagAudit(cardId, limit);
+      const entries = await listCardAudit(cardId, limit);
       res.statusCode = 200;
       res.end(JSON.stringify({ ok: true, cardId, entries }));
       return;
@@ -132,7 +132,7 @@ export const cardTagsHandler = async (
       const before = resolveTagState(snap.data());
       const state = applyAddTag(before, norm);
       await docRef.set(tagFieldsForWrite(state), { merge: true });
-      await recordCardTagAudit({
+      await recordTagAudit({
         cardId,
         action: 'tag_add',
         tag: norm,
@@ -163,7 +163,7 @@ export const cardTagsHandler = async (
       const before = resolveTagState(snap.data());
       const state = applyRemoveTag(before, norm);
       await docRef.set(tagFieldsForWrite(state), { merge: true });
-      await recordCardTagAudit({
+      await recordTagAudit({
         cardId,
         action: 'tag_remove',
         tag: norm,

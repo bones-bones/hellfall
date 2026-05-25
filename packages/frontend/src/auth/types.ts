@@ -3,6 +3,8 @@ export interface AuthUser {
   username: string;
   avatar: string | null;
   email: string | null;
+  isContributor: boolean;
+  isAdmin: boolean;
 }
 
 export interface AuthState {

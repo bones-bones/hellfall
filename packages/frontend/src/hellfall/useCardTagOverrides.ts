@@ -59,7 +59,9 @@ function parseTagResponse(data: {
 /**
  * Loads tag overrides when `authApiUrl` + `cardId` are set.
  * Uses Firestore `tags` from the API when present (post-migrate); otherwise merges JSON base + overrides.
- * Sixth value is server `persistEnabled` (hides edit UI when false).
+ *
+ * Add/remove now submit changesets for admin review instead of mutating directly.
+ * Returns: [mergedTags, addTag, removeTag, loading, error, persistEnabled, changesetSubmitted]
  */
 export function useCardTagOverrides(
   cardId: string,
@@ -70,6 +72,7 @@ export function useCardTagOverrides(
   (tag: string) => Promise<void>,
   boolean,
   Error | null,
+  boolean,
   boolean
 ] {
   const baseUrl = getAuthApiUrl();
@@ -78,6 +81,7 @@ export function useCardTagOverrides(
   const [persistEnabled, setPersistEnabled] = React.useState(false);
   const [loading, setLoading] = React.useState(!!baseUrl && !!cardId);
   const [error, setError] = React.useState<Error | null>(null);
+  const [changesetSubmitted, setChangesetSubmitted] = React.useState(false);
 
   React.useEffect(() => {
     if (!baseUrl || !cardId) {
@@ -89,6 +93,7 @@ export function useCardTagOverrides(
     }
     setLoading(true);
     setError(null);
+    setChangesetSubmitted(false);
     fetchOverrides(baseUrl, cardId)
       .then(r => {
         const { persistEnabled: pe, tags, ...o } = r;
@@ -112,47 +117,46 @@ export function useCardTagOverrides(
     async (tag: string) => {
       const tagNorm = tag.trim();
       if (!tagNorm || !baseUrl || !cardId) return;
-      const res = await fetch(`${baseUrl}/api/cards/${encodeURIComponent(cardId)}?format=tags`, {
+      const currentTags = firestoreTags ?? mergeTags(baseTags, overrides);
+      if (currentTags.includes(tagNorm)) return;
+      const newTags = [...currentTags, tagNorm];
+      const res = await fetch(`${baseUrl}/api/changesets`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tag: tagNorm }),
+        body: JSON.stringify({
+          cardId,
+          changes: { tags: { before: currentTags, after: newTags } },
+          comment: `Add tag: ${tagNorm}`,
+        }),
       });
-      if (!res.ok) throw new Error('Failed to add tag');
-      const data = (await res.json()) as {
-        tags?: string[];
-        added?: string[];
-        removed?: string[];
-      };
-      const { tags, overrides: o } = parseTagResponse(data);
-      setOverrides(o);
-      if (tags) setFirestoreTags(tags);
+      if (!res.ok) throw new Error('Failed to submit changeset');
+      setChangesetSubmitted(true);
     },
-    [baseUrl, cardId]
+    [baseUrl, cardId, firestoreTags, baseTags, overrides]
   );
 
   const removeTag = React.useCallback(
     async (tag: string) => {
       const tagNorm = tag.trim();
       if (!tagNorm || !baseUrl || !cardId) return;
-      const res = await fetch(`${baseUrl}/api/cards${encodeURIComponent(cardId)}?format=tags`, {
-        method: 'DELETE',
+      const currentTags = firestoreTags ?? mergeTags(baseTags, overrides);
+      const newTags = currentTags.filter(t => t !== tagNorm);
+      const res = await fetch(`${baseUrl}/api/changesets`, {
+        method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tag: tagNorm }),
+        body: JSON.stringify({
+          cardId,
+          changes: { tags: { before: currentTags, after: newTags } },
+          comment: `Remove tag: ${tagNorm}`,
+        }),
       });
-      if (!res.ok) throw new Error('Failed to remove tag');
-      const data = (await res.json()) as {
-        tags?: string[];
-        added?: string[];
-        removed?: string[];
-      };
-      const { tags, overrides: o } = parseTagResponse(data);
-      setOverrides(o);
-      if (tags) setFirestoreTags(tags);
+      if (!res.ok) throw new Error('Failed to submit changeset');
+      setChangesetSubmitted(true);
     },
-    [baseUrl, cardId]
+    [baseUrl, cardId, firestoreTags, baseTags, overrides]
   );
 
-  return [merged, addTag, removeTag, loading, error, persistEnabled];
+  return [merged, addTag, removeTag, loading, error, persistEnabled, changesetSubmitted];
 }

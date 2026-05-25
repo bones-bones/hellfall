@@ -2378,11 +2378,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@hellfall/scripts@workspace:*, @hellfall/scripts@workspace:packages/scripts":
+  version: 0.0.0-use.local
+  resolution: "@hellfall/scripts@workspace:packages/scripts"
+  dependencies:
+    "@google-cloud/firestore": "npm:^7.1.0"
+    "@hellfall/shared": "npm:^1.0.0"
+    "@types/node": "npm:^20.12.8"
+    dotenv: "npm:^16.4.5"
+    tsx: "npm:^4.7.0"
+    typescript: "npm:^5"
+  languageName: unknown
+  linkType: soft
+
 "@hellfall/server@workspace:packages/server":
   version: 0.0.0-use.local
   resolution: "@hellfall/server@workspace:packages/server"
   dependencies:
     "@google-cloud/firestore": "npm:^7.1.0"
+    "@hellfall/scripts": "workspace:*"
     "@hellfall/shared": "npm:^1.0.0"
     "@types/node": "npm:^20.12.8"
     dotenv: "npm:^16.4.5"

@@ -42,7 +42,7 @@ packages/server/.env
 .yarn/install-state.gz
 
 
-.env
+.env*
 
 build
 .vscode/settings.json
@@ -53,3 +53,7 @@ local-tags.json
 
 tsconfig.tsbuildinfo
 tsconfig.build.tsbuildinfo
+packages/**/tsconfig.tsbuildinfo
+hellfall-api-key.json
+hellscube-firestore-export.json
+packages/shared/src/data/hellscube-firestore-export.json

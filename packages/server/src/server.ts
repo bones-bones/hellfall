@@ -13,6 +13,8 @@ import { doneHandler } from './api/discord/done.ts';
 import { cardTagsHandler } from './api/cardTags.ts';
 import { cardJsonHandler, cardTextHandler } from './api/cardData.ts';
 import { searchHandler } from './api/search.ts';
+import { changesetsHandler } from './api/changesets.ts';
+import { exportHellscubeHandler } from './api/exportHellscube.ts';
 
 const PORT = Number(process.env.PORT) || 3003;
 
@@ -28,6 +30,8 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
   };
 
 const CARD_API_PREFIX = '/api/cards/';
+const CHANGESETS_PREFIX = '/api/changesets';
+const EXPORT_HELLSCUBE_PATH = '/api/admin/export-hellscube';
 
 function parseCardIDFromPath(path: string): string | null {
   if (!path.startsWith(CARD_API_PREFIX)) return null;
@@ -75,6 +79,20 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
     const { pathname, search } = parseUrl(req.url ?? '/', true);
     const path = pathname ?? '/';
     req.query = parseQuery(search);
+
+    if (path === EXPORT_HELLSCUBE_PATH) {
+      await exportHellscubeHandler(req, res as HandlerResponse);
+      return;
+    }
+
+    if (path === CHANGESETS_PREFIX || path.startsWith(CHANGESETS_PREFIX + '/')) {
+      const rest = path.slice(CHANGESETS_PREFIX.length).replace(/^\//, '');
+      const parts = rest.split('/').filter(Boolean);
+      const changesetId = parts[0] || null;
+      const action = parts[1] || null;
+      await changesetsHandler(req, res as HandlerResponse, changesetId, action);
+      return;
+    }
 
     const cardTagsParams = parseCardTagsPath(path);
     if (cardTagsParams) {

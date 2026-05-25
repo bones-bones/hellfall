@@ -1,8 +1,15 @@
 /**
- * Migrate the full Hellscube-Database.json into Firestore cards/{cardId} documents.
- * Merges JSON base tags with any existing `added` / `removed` overrides into `tags`.
+ * Migrate Hellscube-Database.json into Firestore `hellscube` / `cards/{id}`.
  *
- * Usage: see packages/server/scripts/README.md
+ * Each doc gets the full card JSON plus tag-merge fields:
+ *   baseTags  — JSON tags at migrate time
+ *   added     — contributor overrides (preserved across re-runs)
+ *   removed   — contributor overrides (preserved across re-runs)
+ *   tags      — merge(baseTags, { added, removed })
+ *
+ * Rerunnable: card fields + baseTags refresh from JSON; overrides survive via merge.
+ *
+ * Usage: see packages/scripts/README.md
  */
 import { config } from 'dotenv';
 import { readFileSync } from 'node:fs';
@@ -14,7 +21,7 @@ import {
   mergeTags,
   normalizeTagList,
   type CardTagOverrides,
-} from '../src/lib/cardTagMerge.ts';
+} from '@hellfall/shared/cardTags/cardTagMerge.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '../../..');
@@ -25,7 +32,43 @@ const DEFAULT_DB_PATH = resolve(
 
 config({ path: resolve(__dirname, '../.env') });
 
-type HellscubeCard = Record<string, unknown> & { id?: string; tags?: string[] };
+type HellscubeCard = Record<string, unknown> & {
+  id?: string;
+  token_id?: string;
+  isActualToken?: boolean;
+  tags?: string[];
+};
+
+/** Firestore doc ID for a card: tokens use `token-<token_id>`, others use `id`. */
+function firestoreDocId(card: HellscubeCard): string | undefined {
+  if (card.isActualToken) {
+    return typeof card.token_id === 'string' && card.token_id
+      ? `token-${card.token_id}`
+      : undefined;
+  }
+  return typeof card.id === 'string' && card.id ? card.id : undefined;
+}
+
+function isValidFirestoreDocId(id: string): boolean {
+  if (!id || id.length > 200) return false;
+  if (id.includes('/')) return false;
+  if (id === '.' || id === '..') return false;
+  if (/^__.*__$/.test(id)) return false;
+  return true;
+}
+
+/** Firestore forbids nested arrays — stringify any array-of-arrays fields. */
+function sanitizeForFirestore(obj: Record<string, unknown>): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (Array.isArray(value) && value.some(v => Array.isArray(v))) {
+      out[key] = JSON.stringify(value);
+    } else {
+      out[key] = value;
+    }
+  }
+  return out;
+}
 
 function buildFirestoreDoc(
   card: HellscubeCard,
@@ -37,13 +80,13 @@ function buildFirestoreDoc(
     removed: normalizeTagList(existing?.removed),
   };
   const mergedTags = dedupeOrdered(mergeTags(baseTags, overrides));
-  return {
+  return sanitizeForFirestore({
     ...card,
     baseTags,
     tags: mergedTags,
     added: overrides.added,
     removed: overrides.removed,
-  };
+  });
 }
 
 function parseArgs(argv: string[]) {
@@ -57,7 +100,7 @@ function parseArgs(argv: string[]) {
     const arg = argv[i];
     if (arg === '--dry-run') dryRun = true;
     else if (arg === '--prune-orphans') pruneOrphans = true;
-    else if (arg === '--report' || arg === '--mode' && argv[i + 1] === 'report') {
+    else if (arg === '--report' || (arg === '--mode' && argv[i + 1] === 'report')) {
       if (arg === '--mode') i++;
       reportOnly = true;
     } else if (arg === '--help' || arg === '-h') {
@@ -81,14 +124,13 @@ function parseArgs(argv: string[]) {
 }
 
 function printHelp() {
-  console.log(`migrate-hellscube-db — upload full Hellscube-Database.json to Firestore
+  console.log(`migrate-hellscube-db — upload Hellscube-Database.json to Firestore
 
 Usage:
   yarn migrate-hellscube-db [options]
 
-Writes each card to Firestore cards/{id} with the full JSON object. The \`tags\`
-field is merged from JSON base tags plus any existing added/removed overrides.
-baseTags (JSON tags), merged tags, and added/removed are written on each document.
+Writes each card to Firestore cards/{id} with the full JSON object. Tag fields
+(baseTags, added, removed, tags) are merged so contributor overrides survive.
 
 Options:
   --report          Stats only (no writes)
@@ -97,10 +139,10 @@ Options:
   --db-path <path>  Path to Hellscube-Database.json
   --limit <n>       Migrate only the first n cards (testing)
 
-Env (packages/server/.env):
+Env (packages/scripts/.env):
   GOOGLE_APPLICATION_CREDENTIALS
-  FIRESTORE_HELLSCUBE_DATABASE_ID (default: hellscube)
-  FIRESTORE_CARDS_COLLECTION (default: cards)
+  FIRESTORE_DATABASE_ID       (default: hellscube)
+  FIRESTORE_CARDS_COLLECTION  (default: cards)
 `);
 }
 
@@ -128,7 +170,7 @@ async function main() {
   }
 
   const databaseId =
-    process.env.FIRESTORE_HELLSCUBE_DATABASE_ID?.trim() || 'hellscube';
+    process.env.FIRESTORE_DATABASE_ID?.trim() || 'hellscube';
   const collectionName =
     process.env.FIRESTORE_CARDS_COLLECTION?.trim() || 'cards';
 
@@ -146,33 +188,32 @@ async function main() {
     process.exit(1);
   }
 
-  let cards = parsed.data.filter(
-    (c): c is HellscubeCard & { id: string } =>
-      typeof c.id === 'string' && c.id.length > 0 && c.id.length <= 200
-  );
+  let cards = parsed.data.filter(c => {
+    const docId = firestoreDocId(c);
+    return docId != null && isValidFirestoreDocId(docId);
+  });
 
   const skippedInvalidId = parsed.data.length - cards.length;
   if (skippedInvalidId > 0) {
-    console.warn(`Skipped ${skippedInvalidId} cards with missing/invalid id`);
+    console.warn(`Skipped ${skippedInvalidId} cards with missing/invalid Firestore doc id`);
   }
 
   if (limit != null) {
     cards = cards.slice(0, limit);
   }
 
-  const allJsonIds = new Set(
+  const allDocIds = new Set(
     parsed.data
-      .filter(
-        (c): c is HellscubeCard & { id: string } =>
-          typeof c.id === 'string' && c.id.length > 0 && c.id.length <= 200
-      )
-      .map(c => c.id)
+      .map(c => firestoreDocId(c))
+      .filter((id): id is string => id != null && isValidFirestoreDocId(id))
   );
 
-  console.log(`Cards to migrate: ${cards.length} (of ${allJsonIds.size} in JSON)`);
+  console.log(`Cards to migrate: ${cards.length} (of ${allDocIds.size} in JSON)`);
 
   const db = new Firestore({ databaseId });
   const collection = db.collection(collectionName);
+
+  console.log('Loading existing docs...');
   const existingById = await loadExistingDocs(collection);
   console.log(`Existing Firestore docs: ${existingById.size}`);
 
@@ -185,12 +226,13 @@ async function main() {
 
   for (const card of cards) {
     if ((card.tags?.length ?? 0) > 0) stats.jsonWithTags++;
-    const existing = existingById.get(card.id);
+    const docId = firestoreDocId(card)!;
+    const existing = existingById.get(docId);
     const hadOverrides =
       normalizeTagList(existing?.added).length > 0 ||
       normalizeTagList(existing?.removed).length > 0;
     const doc = buildFirestoreDoc(card, existing);
-    const jsonOnlyTags = dedupeOrdered(normalizeTagList(card.tags)); // same as baseTags
+    const jsonOnlyTags = dedupeOrdered(normalizeTagList(card.tags));
     const mergedTags = doc.tags as string[];
     if (
       hadOverrides &&
@@ -203,7 +245,7 @@ async function main() {
 
   if (pruneOrphans) {
     for (const id of existingById.keys()) {
-      if (!allJsonIds.has(id)) stats.pruneDeletes++;
+      if (!allDocIds.has(id)) stats.pruneDeletes++;
     }
   }
 
@@ -213,7 +255,7 @@ async function main() {
   console.log(`Firestore docs (before): ${existingById.size}`);
   console.log(`Cards with merged tags (overrides applied): ${stats.tagsMergedFromOverrides}`);
 
-  const orphanCount = [...existingById.keys()].filter(id => !allJsonIds.has(id)).length;
+  const orphanCount = [...existingById.keys()].filter(id => !allDocIds.has(id)).length;
   console.log(`Firestore orphans (id not in JSON): ${orphanCount}`);
 
   if (reportOnly) return;
@@ -229,20 +271,18 @@ async function main() {
   }
 
   const bulkWriter = db.bulkWriter();
-  bulkWriter.onWriteError(error => {
-    if (error.failedAttempts < 5) return true;
-    return false;
-  });
+  bulkWriter.onWriteError(error => error.failedAttempts < 5);
 
   for (const card of cards) {
-    const existing = existingById.get(card.id);
+    const docId = firestoreDocId(card)!;
+    const existing = existingById.get(docId);
     const doc = buildFirestoreDoc(card, existing);
-    bulkWriter.set(collection.doc(card.id), doc, { merge: true });
+    bulkWriter.set(collection.doc(docId), doc, { merge: true });
   }
 
   if (pruneOrphans) {
     for (const id of existingById.keys()) {
-      if (!allJsonIds.has(id)) {
+      if (!allDocIds.has(id)) {
         bulkWriter.delete(collection.doc(id));
       }
     }

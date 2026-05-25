@@ -12,6 +12,7 @@ import { Decks } from './decks/Decks.tsx';
 import { WatchwolfWar } from './watchWolf/WatchWolfWar.tsx';
 import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
 import { Login } from './auth/Login.tsx';
+import { ReviewPage } from './review/ReviewPage.tsx';
 import { useNameToId, useIsId } from './hellfall/hooks/useNameToId.ts';
 import { getBasePath } from './basePath.ts';
 import { AdvancedSearch } from './hellfall/search-controls/AdvancedSearch.tsx';
@@ -58,6 +59,7 @@ const ApplicationRoutes = () => {
     },
     { path: '/breakdown', element: <Breakdown /> },
     { path: '/login', element: <Login /> },
+    { path: '/review', element: <ReviewPage /> },
     { path: '/Watchwolfwar', element: <WatchwolfWar /> },
     { path: '/Watchwolfresults', element: <Watchwolfresults /> },
   ]);

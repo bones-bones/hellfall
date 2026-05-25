@@ -52,9 +52,9 @@ export const env = {
     return process.env.DISCORD_TAG_ROLE_ID;
   },
 
-  /** Firestore database for Hellscube card docs (tag overrides use `added` / `removed` on each card). */
-  get FIRESTORE_HELLSCUBE_DATABASE_ID(): string {
-    return process.env.FIRESTORE_HELLSCUBE_DATABASE_ID?.trim() || 'hellscube';
+  /** Firestore database for Hellscube cards (card data + tag overrides + audit). */
+  get FIRESTORE_DATABASE_ID(): string {
+    return process.env.FIRESTORE_DATABASE_ID?.trim() || 'hellscube';
   },
 
   /** Collection holding card documents (document id = card id). */
@@ -62,8 +62,18 @@ export const env = {
     return process.env.FIRESTORE_CARDS_COLLECTION?.trim() || 'cards';
   },
 
-  /** Subcollection under each card doc for tag change audit entries. */
-  get FIRESTORE_TAG_AUDIT_SUBCOLLECTION(): string {
-    return process.env.FIRESTORE_TAG_AUDIT_SUBCOLLECTION?.trim() || 'tag_audit';
+  /** Subcollection under each card doc for edit audit entries. */
+  get FIRESTORE_AUDIT_SUBCOLLECTION(): string {
+    return process.env.FIRESTORE_AUDIT_SUBCOLLECTION?.trim() || 'audit';
+  },
+
+  /** Collection for staged changesets awaiting admin review. */
+  get FIRESTORE_CHANGESETS_COLLECTION(): string {
+    return process.env.FIRESTORE_CHANGESETS_COLLECTION?.trim() || 'changesets';
+  },
+
+  /** Discord role ID for admin actions (accept/reject changesets). */
+  get DISCORD_ADMIN_ROLE_ID(): string {
+    return process.env.DISCORD_ADMIN_ROLE_ID?.trim() || '';
   },
 };

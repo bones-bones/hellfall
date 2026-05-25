@@ -19,6 +19,7 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses 
 | `/api/cards/:cardId/tags/audit` | GET      | Tag change history for the card (`?limit=50`, max 200). Requires auth + role.                           |
 | `/api/watchwolf`                | GET      | Returns WatchWolfWar card standings from Firestore                                                      |
 | `/api/watchwolf`                | POST     | Submit a win/lose (body: `{ WinId, LoseId }`)                                                          |
+| `/api/admin/export-hellscube`   | GET      | Download full `hellscube` / `cards` collection as JSON (admin role required)                            |
 
 ## Setup
 
@@ -35,8 +36,8 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), and tags. Uses 
    - `JWT_SECRET` – random string (e.g. `openssl rand -base64 32`)
    - `FRONTEND_URL` – where the React app lives (e.g. `https://user.github.io/hellfall`)
    - Optional: `AUTH_SERVER_URL` (defaults to `http://localhost:3003` when unset), `COOKIE_NAME`, `COOKIE_DOMAIN`, `JWT_ISSUER`
-   - **Card tags:** Firestore database **`hellscube`**, collection **`cards`**. Each doc has full card data plus `baseTags`, merged `tags`, and override arrays `added` / `removed`. Tag edits append to subcollection **`tag_audit`** (`FIRESTORE_TAG_AUDIT_SUBCOLLECTION`) with `username`, `userId`, `before`/`after` snapshots, and server timestamp.
-   - After rebuilding `Hellscube-Database.json` (`yarn transform-hc`), run **`yarn migrate-hellscube-db`** — see [scripts/README.md](./scripts/README.md).
+   - **Card tags:** Firestore database **`hellscube`**, collection **`cards`**. Each doc has full card data plus `baseTags`, merged `tags`, and override arrays `added` / `removed`. Edits append to subcollection **`audit`** (`FIRESTORE_AUDIT_SUBCOLLECTION`) with `action`, `field`, `changes` (before/after), `username`, `userId`, and server timestamp.
+   - After rebuilding `Hellscube-Database.json` (`yarn transform-hc`), run **`yarn migrate-hellscube-db`** — see [packages/scripts/README.md](../scripts/README.md).
    - WatchWolf: `GOOGLE_APPLICATION_CREDENTIALS` (path to service account JSON) for Firestore (local dev; Cloud Run uses the service identity)
 
 ## Running the server

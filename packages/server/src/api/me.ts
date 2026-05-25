@@ -2,6 +2,7 @@ import { env } from './lib/env.ts';
 import { verifySessionToken } from './lib/jwt.ts';
 import { withCors } from './lib/cors.ts';
 import { getUserAsGuildMember } from './lib/discord/discord.ts';
+import { DATABASE_CONTRIBUTOR } from './discord/constants.ts';
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
 function getCookie(req: HandlerRequest, name: string): string | null {
@@ -54,7 +55,10 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
       guild = { nick: gm.nick, roles: gm.roles };
     }
   }
-  console.log(guild);
+
+  const contributorRoleId = env.DISCORD_TAG_ROLE_ID ?? DATABASE_CONTRIBUTOR;
+  const isContributor = guild?.roles.includes(contributorRoleId) ?? false;
+  const isAdmin = guild?.roles.includes(env.DISCORD_ADMIN_ROLE_ID) ?? false;
 
   res.statusCode = 200;
   res.end(
@@ -63,6 +67,8 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
         id: payload.sub,
         username: guild?.nick || payload.username,
         avatar: payload.avatar,
+        isContributor,
+        isAdmin,
       },
       guild: guild ?? undefined,
     })
