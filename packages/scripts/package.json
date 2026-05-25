@@ -1,0 +1,23 @@
+{
+  "name": "@hellfall/scripts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./exportCards": "./src/lib/exportCards.ts"
+  },
+  "dependencies": {
+    "@google-cloud/firestore": "^7.1.0",
+    "@hellfall/shared": "^1.0.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.8",
+    "tsx": "^4.7.0",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "migrate-hellscube-db": "tsx src/migrate-hellscube-db.ts",
+    "export-hellscube-db": "tsx src/export-hellscube-db.ts"
+  }
+}

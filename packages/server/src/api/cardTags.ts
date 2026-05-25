@@ -1,9 +1,36 @@
-import { withCors } from './lib/cors.ts';
-import { env } from './lib/env.ts';
-import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
-import { requireTagAuth } from './lib/requireTagAuth.ts';
-import { getTagOverrides, setTagOverrides } from './tagsStore.ts';
-const useLocalData = env.USE_LOCAL_CARD_DATA;
+import { Firestore, type DocumentReference, type DocumentSnapshot } from '@google-cloud/firestore';
+import { withCors } from './lib/cors.js';
+import { env } from './lib/env.js';
+import type { HandlerRequest, HandlerResponse } from './lib/types.js';
+import { requireTagAuth } from './lib/requireTagAuth.js';
+import { listCardAudit, recordTagAudit } from '../lib/cardAudit.js';
+import {
+  applyAddTag,
+  applyRemoveTag,
+  normalizeTag,
+  resolveTagState,
+  tagFieldsForWrite,
+} from '@hellfall/shared/cardTags/cardTagMerge';
+
+const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
+const collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
+
+const EMPTY_TAG_SEED = {
+  baseTags: [] as string[],
+  added: [] as string[],
+  removed: [] as string[],
+  tags: [] as string[],
+};
+
+/** If `cards/{id}` is missing, create empty tag fields (merge-safe). Returns latest snapshot. */
+async function getOrSeedCardDoc(docRef: DocumentReference): Promise<DocumentSnapshot> {
+  let snap = await docRef.get();
+  if (!snap.exists) {
+    await docRef.set(EMPTY_TAG_SEED, { merge: true });
+    snap = await docRef.get();
+  }
+  return snap;
+}
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -12,17 +39,21 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   return body ? JSON.parse(body) : {};
 }
 
-export type CardTagOverrides = { added: string[]; removed: string[] };
-
-function normalizeTag(t: string): string {
-  return t.trim();
+function tagResponsePayload(state: ReturnType<typeof resolveTagState>) {
+  return {
+    tags: state.tags,
+    added: state.added,
+    removed: state.removed,
+    persistEnabled: true as const,
+  };
 }
 
 export const cardTagsHandler = async (
   req: HandlerRequest,
   res: HandlerResponse,
-  cardId: string
-  // tagFromPath: string | null |undefined
+  cardId: string,
+  tagFromPath: string | null,
+  auditTrail = false
 ): Promise<void> => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
@@ -39,12 +70,35 @@ export const cardTagsHandler = async (
       res.end(JSON.stringify({ ok: false, reason: 'invalid_card_id' }));
       return;
     }
+
+    const docRef = collection.doc(cardId);
+
+    if (auditTrail) {
+      if (req.method !== 'GET') {
+        res.statusCode = 405;
+        res.setHeader('Allow', 'GET, OPTIONS');
+        res.end();
+        return;
+      }
+      const auth = await requireTagAuth(req, res);
+      if (!auth) return;
+      const limitRaw = req.query?.limit;
+      const limit =
+        typeof limitRaw === 'string' && /^\d+$/.test(limitRaw)
+          ? Math.min(200, Math.max(1, Number(limitRaw)))
+          : 50;
+      const entries = await listCardAudit(cardId, limit);
+      res.statusCode = 200;
+      res.end(JSON.stringify({ ok: true, cardId, entries }));
+      return;
+    }
+
     if (req.method === 'GET') {
-      const { added, removed } = await getTagOverrides(cardId);
-      const payload = { added, removed, persistEnabled: true };
+      const snap = await getOrSeedCardDoc(docRef);
+      const state = resolveTagState(snap.data());
       let body: string;
       try {
-        body = JSON.stringify(payload);
+        body = JSON.stringify(tagResponsePayload(state));
       } catch {
         res.statusCode = 500;
         res.end(JSON.stringify({ ok: false, reason: 'invalid_stored_data' }));
@@ -54,51 +108,78 @@ export const cardTagsHandler = async (
       res.end(body);
       return;
     }
-    if (!useLocalData) {
-      const auth = await requireTagAuth(req, res);
-      if (!auth) return;
-    }
-    let body: { tag?: string };
-    try {
-      body = (await readJsonBody(req)) as { tag?: string };
-    } catch {
-      res.statusCode = 400;
-      res.end(JSON.stringify({ ok: false, reason: 'invalid_json' }));
-      return;
-    }
-    const tag = body.tag != null ? String(body.tag) : '';
-    const norm = normalizeTag(tag);
-    if (!norm) {
-      res.statusCode = 400;
-      res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
-      return;
-    }
 
-    const { added, removed } = await getTagOverrides(cardId);
-    const newAdded = [...added];
-    const newRemoved = [...removed];
+    const auth = await requireTagAuth(req, res);
+    if (!auth) return;
 
     if (req.method === 'POST') {
-      if (newRemoved.includes(norm)) {
-        newRemoved.splice(newRemoved.indexOf(norm), 1);
-      } else if (!newAdded.includes(norm)) {
-        newAdded.push(norm);
+      let reqBody: { tag?: string };
+      try {
+        reqBody = (await readJsonBody(req)) as { tag?: string };
+      } catch {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, reason: 'invalid_json' }));
+        return;
       }
-      await setTagOverrides(cardId, { added: newAdded, removed: newRemoved });
+      const tag = reqBody.tag != null ? String(reqBody.tag) : '';
+      const norm = normalizeTag(tag);
+      if (!norm) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
+        return;
+      }
+      const snap = await getOrSeedCardDoc(docRef);
+      const before = resolveTagState(snap.data());
+      const state = applyAddTag(before, norm);
+      await docRef.set(tagFieldsForWrite(state), { merge: true });
+      await recordTagAudit({
+        cardId,
+        action: 'tag_add',
+        tag: norm,
+        user: { userId: auth.userId, username: auth.username },
+        before,
+        after: state,
+      });
       res.statusCode = 200;
-      res.end(JSON.stringify({ ok: true, added: newAdded, removed: newRemoved }));
+      res.end(
+        JSON.stringify({
+          ok: true,
+          tags: state.tags,
+          added: state.added,
+          removed: state.removed,
+        })
+      );
       return;
     }
 
     if (req.method === 'DELETE') {
-      if (newAdded.includes(norm)) {
-        newAdded.splice(newAdded.indexOf(norm), 1);
-      } else if (!newRemoved.includes(norm)) {
-        newRemoved.push(norm);
+      const norm = tagFromPath ? normalizeTag(tagFromPath) : null;
+      if (!norm) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
+        return;
       }
-      await setTagOverrides(cardId, { added: newAdded, removed: newRemoved });
+      const snap = await getOrSeedCardDoc(docRef);
+      const before = resolveTagState(snap.data());
+      const state = applyRemoveTag(before, norm);
+      await docRef.set(tagFieldsForWrite(state), { merge: true });
+      await recordTagAudit({
+        cardId,
+        action: 'tag_remove',
+        tag: norm,
+        user: { userId: auth.userId, username: auth.username },
+        before,
+        after: state,
+      });
       res.statusCode = 200;
-      res.end(JSON.stringify({ ok: true, added: newAdded, removed: newRemoved }));
+      res.end(
+        JSON.stringify({
+          ok: true,
+          tags: state.tags,
+          added: state.added,
+          removed: state.removed,
+        })
+      );
       return;
     }
 

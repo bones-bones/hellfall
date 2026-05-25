@@ -1,12 +1,6 @@
-import { CollectionReference, Firestore } from '@google-cloud/firestore';
 import type { HCCard } from '@hellfall/shared/types';
 import { readDataJson } from '../lib/loadDataFiles.ts';
-import { env } from './lib/env.ts';
 
-const useLocalData = env.USE_LOCAL_CARD_DATA;
-
-let db: Firestore | null = null;
-let collection: CollectionReference | null = null;
 const cardsMap: Map<string, HCCard.Any> = new Map(
   readDataJson<{ data: HCCard.Any[] }>('Hellscube-Database.json').data.map(card => [
     card.id.toLowerCase(),
@@ -14,16 +8,8 @@ const cardsMap: Map<string, HCCard.Any> = new Map(
   ])
 );
 
-if (!useLocalData) {
-  db = new Firestore({ databaseId: env.FIRESTORE_HELLSCUBE_DATABASE_ID });
-  collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
-}
-
 export const getCardById = async (id: string): Promise<HCCard.Any | undefined> => {
-  if (useLocalData) {
-    return cardsMap?.get(id.toLowerCase());
-  } else {
-    return (await collection?.doc(id).get())?.data() as HCCard.Any;
-  }
+  return cardsMap.get(id.toLowerCase());
 };
+
 export const getAllCards = (): HCCard.Any[] => Array.from(cardsMap.values());

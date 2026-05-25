@@ -2,7 +2,6 @@ import type { HandlerRequest, HandlerResponse } from './types.ts';
 import { env } from './env.ts';
 import { verifySessionToken } from './jwt.ts';
 import { getUserAsGuildMember } from './discord/discord.ts';
-import { DATABASE_CONTRIBUTOR } from '../discord/constants.ts';
 
 function getCookie(req: HandlerRequest, name: string): string | null {
   const raw = req.headers.cookie;
@@ -11,17 +10,17 @@ function getCookie(req: HandlerRequest, name: string): string | null {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
-export type TagAuthUser = {
+export type AdminAuthUser = {
   userId: string;
   username: string;
   discord_access_token: string;
 };
 
-/** Verifies session and DATABASE_CONTRIBUTOR role. Returns user or sends error and returns null. */
-export async function requireTagAuth(
+/** Verifies session and DISCORD_ADMIN_ROLE_ID. Returns user or sends error and returns null. */
+export async function requireAdminAuth(
   req: HandlerRequest,
   res: HandlerResponse
-): Promise<TagAuthUser | null> {
+): Promise<AdminAuthUser | null> {
   const token = getCookie(req, env.COOKIE_NAME);
   if (!token) {
     res.statusCode = 401;
@@ -36,13 +35,6 @@ export async function requireTagAuth(
     return null;
   }
 
-  const roleId = DATABASE_CONTRIBUTOR;
-  if (!roleId) {
-    res.statusCode = 500;
-    res.end(JSON.stringify({ ok: false, reason: 'role_not_configured' }));
-    return null;
-  }
-
   const guildId = env.DISCORD_GUILD_ID;
   const discordAccessToken = payload.discord_access_token;
   if (!guildId || !discordAccessToken) {
@@ -50,8 +42,6 @@ export async function requireTagAuth(
     res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
     return null;
   }
-
-  const candidateRoleId = env.DISCORD_TAG_ROLE_ID ?? roleId;
 
   const guild = await getUserAsGuildMember(discordAccessToken, guildId);
   if (guild.kind === 'oauth_invalid') {
@@ -65,9 +55,9 @@ export async function requireTagAuth(
     return null;
   }
 
-  if (!guild.roles.includes(candidateRoleId)) {
+  if (!guild.roles.includes(env.DISCORD_ADMIN_ROLE_ID)) {
     res.statusCode = 403;
-    res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
+    res.end(JSON.stringify({ ok: false, reason: 'missing_admin_role' }));
     return null;
   }
 
@@ -79,4 +69,4 @@ export async function requireTagAuth(
     username,
     discord_access_token: discordAccessToken,
   };
-};
+}

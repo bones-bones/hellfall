@@ -44,6 +44,10 @@
     "./utils/cardHandling/cardMethods": {
       "types": "./src/utils/cardHandling/cardMethods.ts",
       "import": "./src/utils/cardHandling/cardMethods.ts"
+    },
+    "./cardTags/cardTagMerge": {
+      "types": "./src/cardTags/cardTagMerge.ts",
+      "import": "./src/cardTags/cardTagMerge.ts"
     }
   },
   "dependencies": {
