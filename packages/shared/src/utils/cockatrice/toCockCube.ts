@@ -1,5 +1,5 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
-
+import { DOMParser, XMLSerializer } from 'xmldom';
 import { HCCard } from '@hellfall/shared/types';
 import { CockCardProps } from './cockTypes';
 import { getRelatedsFromCards } from '../cardHandling';
@@ -56,7 +56,10 @@ export const toCockCube = ({
   cardList: HCCard.Any[];
   allCards: HCCard.Any[];
 }) => {
-  const xmlDoc = document.implementation.createDocument(null, 'cockatrice_carddatabase');
+  const xmlDoc = new DOMParser().parseFromString(
+    '<cockatrice_carddatabase version="2"/>',
+    'application/xml'
+  );
   xmlDoc.documentElement.setAttribute('version', '4');
 
   const setsElement = xmlDoc.createElement('sets');
@@ -235,13 +238,11 @@ export const toCockCube = ({
   cards.forEach(card => appendCockCard(card));
   tokens.forEach(token => appendCockCard(token));
 
-  const formattedXmlDoc = document.implementation.createDocument(null, '', null);
-
   // Import nodes from the original document into the new document
-  formattedXmlDoc.appendChild(formattedXmlDoc.importNode(xmlDoc.documentElement, true));
+  // formattedXmlDoc.appendChild(formattedXmlDoc.importNode(xmlDoc.documentElement, true));
 
   // Serialize the new document to string with indentation
-  const formattedXmlString = new XMLSerializer().serializeToString(formattedXmlDoc);
+  const formattedXmlString = new XMLSerializer().serializeToString(xmlDoc);
 
-  return prettifyXml(formattedXmlString);
+  return prettifyXml('<?xml version="1.0" encoding="UTF-8"?>\n' + formattedXmlString);
 };

@@ -18,7 +18,6 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../useCardTagOverrides.ts';
 import tagsData from '@hellfall/shared/data/tags.json';
-import { withBasePath } from '../../basePath.ts';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
@@ -284,7 +283,7 @@ export const HellfallCard = ({
               <Separator />
             </>
           )}
-          {data.creators.length && (
+          {Boolean(data.creators.length) && (
             <>
               <SmallText key="creator">
                 Creator{data.creators.length == 1 ? '' : 's'}: {data.creators.join(',')}
@@ -354,13 +353,13 @@ export const HellfallCard = ({
                       tagEntry in data.tag_notes &&
                       (data.tag_notes[tagEntry].slice(0, 6) == 'https:' ? (
                         <>
-                          <SmallText> (</SmallText>
+                          <SmallLine> (</SmallLine>
                           <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
-                          <SmallText>)</SmallText>
+                          <SmallLine>)</SmallLine>
                         </>
                       ) : (
                         <>
-                          <SmallText> ({data.tag_notes[tagEntry]})</SmallText>
+                          <SmallLine> ({data.tag_notes[tagEntry]})</SmallLine>
                         </>
                       ))}
                     {user && tagsPersistEnabled && (
@@ -457,14 +456,9 @@ export const HellfallCard = ({
                             event.ctrlKey ||
                             !onSinglePage
                           ) {
-                            window.open(
-                              withBasePath('/card/' + encodeURIComponent(entry.id)),
-                              '_blank'
-                            );
+                            window.open(`/card/${encodeURIComponent(entry.id)}`, '_blank');
                           } else {
-                            window.location.href = withBasePath(
-                              '/card/' + encodeURIComponent(entry.id)
-                            );
+                            window.location.href = `/card/${encodeURIComponent(entry.id)}`;
                           }
                         }}
                         key={entry.id}
@@ -486,14 +480,9 @@ export const HellfallCard = ({
           borderRadius="m"
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-              window.open(
-                withBasePath(`/api/cards/${encodeURIComponent(data.id)}?format=text`),
-                '_blank'
-              );
+              window.open(`/api/cards/${encodeURIComponent(data.id)}?format=text`, '_blank');
             } else {
-              window.location.href = withBasePath(
-                `/api/cards/${encodeURIComponent(data.id)}?format=text`
-              );
+              window.location.href = `/api/cards/${encodeURIComponent(data.id)}?format=text`;
             }
           }}
         >
@@ -504,14 +493,9 @@ export const HellfallCard = ({
           borderRadius="m"
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-              window.open(
-                withBasePath(`/api/cards/${encodeURIComponent(data.id)}?format=json`),
-                '_blank'
-              );
+              window.open(`/api/cards/${encodeURIComponent(data.id)}?format=json`, '_blank');
             } else {
-              window.location.href = withBasePath(
-                `/api/cards/${encodeURIComponent(data.id)}?format=json`
-              );
+              window.location.href = `/api/cards/${encodeURIComponent(data.id)}?format=json`;
             }
           }}
         >
@@ -650,6 +634,11 @@ const MediumLine = styled('span')({
 const MediumItalics = styled(MediumText)({ fontStyle: 'italic' });
 const MediumItalicLine = styled(MediumLine)({ fontStyle: 'italic' });
 const SmallText = styled('div')({
+  fontSize: type.levels.body.small.fontSize,
+  fontWeight: type.levels.body.small.fontWeight,
+  marginBlock: '.4rem',
+});
+const SmallLine = styled('span')({
   fontSize: type.levels.body.small.fontSize,
   fontWeight: type.levels.body.small.fontWeight,
   marginBlock: '.4rem',

@@ -68,7 +68,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loginUrl: baseUrl ? `${baseUrl}/api/discord/login` : '',
     logoutUrl: baseUrl
       ? `${baseUrl}/api/logout?redirect=${encodeURIComponent(
-          window.location.origin + (window.location.pathname || '/hellfall')
+          window.location.origin + (window.location.pathname || '/')
         )}`
       : '',
     refetch,

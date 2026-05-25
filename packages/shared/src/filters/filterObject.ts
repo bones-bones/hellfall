@@ -14,6 +14,7 @@ import {
 import { getActualOp } from './filterUtils';
 import { filterNumberString } from './filterNumber';
 import { parseNote } from './filterText';
+import { unescapeText } from '.';
 
 export interface anyFilterInterface<T = any, S = any> {
   queryName: string;
@@ -79,7 +80,12 @@ export class filterObject<T, S> implements filterInterface {
   getOp = () => getActualOp(this.op, this.defaultOp);
   // TODO: Make sure the inversion logic works
   cardPassesFilter = (card: HCCard.Any) =>
-    !this.inverted != !this.filter(this.getValueToCompare(card), this.getOp(), this.value);
+    !this.inverted !=
+    !this.filter(
+      this.getValueToCompare(card),
+      this.getOp(),
+      typeof this.value == 'string' ? unescapeText(this.value) : this.value
+    );
 }
 export class PassThroughSummaryFilter<T, S> extends filterObject<T, S> {
   constructor(
@@ -204,7 +210,7 @@ export class NoteFilter extends filterObject<HCCard.Any, string> {
     this.note = note;
   }
   cardPassesFilter = (card: HCCard.Any) =>
-    !this.inverted != !this.filter(card, this.getOp(), this.value, this.note);
+    !this.inverted != !this.filter(card, this.getOp(), unescapeText(this.value), this.note);
 }
 export class IncludeFilter extends filterObject<HCCard.Any, string> {
   constructor(

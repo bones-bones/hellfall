@@ -14,7 +14,6 @@ import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
 import { Login } from './auth/Login.tsx';
 import { ReviewPage } from './review/ReviewPage.tsx';
 import { useNameToId, useIsId } from './hellfall/hooks/useNameToId.ts';
-import { getBasePath } from './basePath.ts';
 import { AdvancedSearch } from './hellfall/search-controls/AdvancedSearch.tsx';
 import { Syntax } from './hellfall/Syntax.tsx';
 
@@ -42,7 +41,17 @@ const CardRoute = () => {
   }
   return <SingleCard />;
 };
+const RedirectBase = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  useEffect(() => {
+    const newPath = location.pathname.replace('/hellfall', '') + location.search;
+    navigate(newPath, { replace: true });
+  }, [location, navigate]);
+
+  return null;
+};
 const ApplicationRoutes = () => {
   return useRoutes([
     { path: '/hellscubes/*', element: <Hellscubes /> },
@@ -53,10 +62,8 @@ const ApplicationRoutes = () => {
     { path: '/', element: <HellFall /> },
     { path: '/advanced', element: <AdvancedSearch /> },
     { path: '/syntax', element: <Syntax /> },
-    {
-      path: '/card/*',
-      element: <CardRoute />,
-    },
+    { path: '/card/*', element: <CardRoute /> },
+    { path: '/hellfall/*', element: <RedirectBase /> },
     { path: '/breakdown', element: <Breakdown /> },
     { path: '/login', element: <Login /> },
     { path: '/review', element: <ReviewPage /> },
@@ -65,10 +72,8 @@ const ApplicationRoutes = () => {
   ]);
 };
 export const App = () => {
-  const basePath = getBasePath();
-
   return (
-    <BrowserRouter basename={basePath || undefined}>
+    <BrowserRouter>
       <Header />
       <ApplicationRoutes />
     </BrowserRouter>

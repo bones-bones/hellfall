@@ -64,10 +64,14 @@ export const getFromAll = <K extends allPropType>(card: HCCard.Any, prop: K): al
   ...('card_faces' in card ? (Array.isArray(card[prop]) ? card[prop] : [card[prop] ?? []]) : []),
   ...getFromFaces(card, prop),
 ];
+
 export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
+  if (card.hasOwnProperty('toJSON')) {
+    return card;
+  }
   const ignoreLeftovers = ['toJSON'];
-  const cardWithJSON = Object.assign({}, card, {
-    toJSON(this: Record<string, any>) {
+  Object.defineProperty(card, 'toJSON', {
+    value: function (this: Record<string, any>) {
       const ordered: Record<string, any> = {};
       propOrder.forEach(prop => {
         if (prop in this) {
@@ -134,8 +138,11 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
       }
       return ordered;
     },
+    enumerable: false,
+    configurable: true,
+    writable: true,
   });
-  return cardWithJSON as HCCard.Any;
+  return card as HCCard.Any;
 };
 export const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] =>
   cards.map(card => addToJSONToCard(card));

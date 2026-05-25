@@ -2,7 +2,7 @@
   "name": "hellfall",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/hellfall",
+  "homepage": "/",
   "workspaces": [
     "packages/frontend",
     "packages/backend",
