@@ -51,6 +51,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'rulings',
     'creators',
     'tags',
+    'CN',
     'collector_number',
     'artists',
   ];
@@ -277,6 +278,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
               addPropToFace(tokenObject, keys[i] as 'power' | 'toughness', value, index);
             }
           });
+        } else if (keys[i] == 'CN') {
+          addProp(tokenObject, 'token_id', entry[i]);
         } else if (keys[i] == 'creators' || keys[i] == 'artists') {
           addProp(tokenObject, keys[i] as 'creators' | 'artists', entry[i].split(';'));
         } else if (keys[i] == 'token_maker') {

@@ -95,7 +95,7 @@ export const HellfallCard = ({
   onSinglePage?: boolean;
 }) => {
   const { user } = useAuth();
-  const [displayTags, addTag, removeTag, tagsLoading, tagsError, tagsPersistEnabled] =
+  const [displayTags, addTag, removeTag, tagsLoading, tagsError, tagsPersistEnabled, changesetSubmitted] =
     useCardTagOverrides(data.id, data.tags);
   const [activeImageSide, setActiveImageSide] = useState(0);
   const [newTagInput, setNewTagInput] = useState('');
@@ -431,6 +431,11 @@ export const HellfallCard = ({
                     Add
                   </button>
                 </TagAddRow>
+              )}
+              {changesetSubmitted && (
+                <SmallText style={{ color: '#28a745', marginTop: 4 }}>
+                  Change submitted for review.
+                </SmallText>
               )}
             </>
           ) : null}

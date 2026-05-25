@@ -13,6 +13,8 @@ import { doneHandler } from './api/discord/done.ts';
 import { cardTagsHandler } from './api/cardTags.ts';
 import { cardJsonHandler, cardTextHandler } from './api/cardData.ts';
 import { searchHandler } from './api/search.ts';
+import { changesetsHandler } from './api/changesets.ts';
+import { exportHellscubeHandler } from './api/exportHellscube.ts';
 
 const PORT = Number(process.env.PORT) || 3003;
 
@@ -28,6 +30,8 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
   };
 
 const CARD_API_PREFIX = '/api/cards/';
+const CHANGESETS_PREFIX = '/api/changesets';
+const EXPORT_HELLSCUBE_PATH = '/api/admin/export-hellscube';
 
 function parseCardIDFromPath(path: string): string | null {
   if (!path.startsWith(CARD_API_PREFIX)) return null;
@@ -37,8 +41,22 @@ function parseCardIDFromPath(path: string): string | null {
 
   if (parts.length === 0) return null;
 
+  return parts[0];
+}
+
+function parseCardTagsPath(
+  path: string
+): { cardId: string; tag: string | null; audit: boolean } | null {
+  if (!path.startsWith(CARD_API_PREFIX)) return null;
+  const rest = path.slice(CARD_API_PREFIX.length);
+  const parts = rest.split('/');
+  if (parts.length < 2 || parts[0] === '' || parts[1] !== 'tags') return null;
   const cardId = parts[0];
-  return cardId;
+  if (parts.length >= 3 && parts[2] === 'audit') {
+    return { cardId, tag: null, audit: true };
+  }
+  const tag = parts.length >= 3 && parts[2] !== '' ? parts[2] : null;
+  return { cardId, tag, audit: false };
 }
 
 function parseQuery(search: string | null): Record<string, string | string[]> {
@@ -61,18 +79,40 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
     const { pathname, search } = parseUrl(req.url ?? '/', true);
     const path = pathname ?? '/';
     req.query = parseQuery(search);
-    const cardId = parseCardIDFromPath(path);
 
+    if (path === EXPORT_HELLSCUBE_PATH) {
+      await exportHellscubeHandler(req, res as HandlerResponse);
+      return;
+    }
+
+    if (path === CHANGESETS_PREFIX || path.startsWith(CHANGESETS_PREFIX + '/')) {
+      const rest = path.slice(CHANGESETS_PREFIX.length).replace(/^\//, '');
+      const parts = rest.split('/').filter(Boolean);
+      const changesetId = parts[0] || null;
+      const action = parts[1] || null;
+      await changesetsHandler(req, res as HandlerResponse, changesetId, action);
+      return;
+    }
+
+    const cardTagsParams = parseCardTagsPath(path);
+    if (cardTagsParams) {
+      await cardTagsHandler(
+        req,
+        res as HandlerResponse,
+        cardTagsParams.cardId,
+        cardTagsParams.tag,
+        cardTagsParams.audit
+      );
+      return;
+    }
+
+    const cardId = parseCardIDFromPath(path);
     if (cardId) {
-      // Handle different formats
-      if (cardId == 'search') {
+      if (cardId === 'search') {
         await searchHandler(req, res as HandlerResponse);
         return;
       }
-      if (req.query.format == 'tags') {
-        await cardTagsHandler(req, res as HandlerResponse, cardId);
-        return;
-      } else if (req.query.format === 'text') {
+      if (req.query.format === 'text') {
         await cardTextHandler(req, res as HandlerResponse, cardId);
         return;
       } else if (req.query.format) {
@@ -82,9 +122,10 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
       const headers = withCors({ 'Content-Type': 'application/json' }, req);
       Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
       res.statusCode = 400;
-      res.end(JSON.stringify({ error: 'Format must be one of: json, text, tags' }));
+      res.end(JSON.stringify({ error: 'Format must be one of: json, text' }));
       return;
     }
+
     const loader = routes[path];
     if (!loader) {
       const headers = withCors({ 'Content-Type': 'application/json' }, req);
