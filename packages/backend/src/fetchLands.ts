@@ -97,6 +97,7 @@ const frameEffectTags: Record<string, HCFrameEffect> = {
   'meld-frame': HCFrameEffect.Meld,
   'slab-frame': HCFrameEffect.Slab,
   'arena-frame': HCFrameEffect.Arena,
+  'universes-beyond-frame': HCFrameEffect.UniversesBeyond,
 };
 
 const faceImageTagProps: Record<string, facePropType> = {
@@ -128,7 +129,7 @@ export const fetchLands = async () => {
       object: HCObject.ObjectType.Card,
       id: entry[keys.indexOf('id')],
       name: entry[keys.indexOf('name')],
-      set: convertSet[entry[keys.indexOf('set')]] ?? 'HBB',
+      set: convertSet[entry[keys.indexOf('set')]] ?? (entry[keys.indexOf('set')] || 'HBB'),
       collector_number: entry[keys.indexOf('collector_number')],
       layout: HCLayout.Normal,
       image: entry[keys.indexOf('image')],

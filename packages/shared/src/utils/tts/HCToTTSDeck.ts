@@ -119,7 +119,11 @@ export const HCToTTSDeckStates = (
     const tokenID = (tokenDeck.DeckIDs.at(-1) ?? 0) + 100;
     const tokenCustom: ttsCustomCard = {
       FaceURL: compressed[0].still_image ?? compressed[0].rotated_image ?? compressed[0].image!,
-      BackURL: cardBackURL,
+      BackURL:
+        compressed[1].still_image ??
+        compressed[1].rotated_image ??
+        compressed[1].image ??
+        cardBackURL,
       NumWidth: 1,
       NumHeight: 1,
       BackIsHidden: true,

@@ -361,6 +361,8 @@
 					"P"
 				]
 			],
+			"not_directly_draftable": true,
+			"has_draft_partners": true,
 			"keywords": [],
 			"legalities": {
 				"standard": "legal",
@@ -390,7 +392,8 @@
 					"set": "HLC.2",
 					"image": "https://lh3.googleusercontent.com/d/1SSySHAHbdPwOxNWm2JCIwl7hDv0c0tA9",
 					"type_line": "Creature — Space Cat",
-					"component": "token_maker"
+					"component": "token_maker",
+					"is_draft_partner": true
 				}
 			]
 		},
@@ -6381,7 +6384,7 @@
 			"name": "Plains",
 			"export_name": "Plains (L123)_",
 			"set": "HBB.4",
-			"collector_number": "123",
+			"collector_number": "1",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1PCei19qdBHRkGS2UfSiy3BiBQTaOKyZq",
@@ -6436,7 +6439,7 @@
 			"name": "Plains",
 			"export_name": "Plains (L124)_",
 			"set": "HBB.4",
-			"collector_number": "124",
+			"collector_number": "2",
 			"rarity": "mythic",
 			"layout": "normal",
 			"image_status": "highres",
@@ -6491,7 +6494,7 @@
 			"name": "Plains",
 			"export_name": "Plains (L125)_",
 			"set": "HBB.4",
-			"collector_number": "125",
+			"collector_number": "3",
 			"rarity": "uncommon",
 			"layout": "normal",
 			"image_status": "highres",
@@ -6547,7 +6550,7 @@
 			"name": "Plains",
 			"export_name": "Plains (L126)_",
 			"set": "HBB.4",
-			"collector_number": "126",
+			"collector_number": "4",
 			"rarity": "rare",
 			"layout": "normal",
 			"image_status": "highres",
@@ -6599,7 +6602,7 @@
 			"name": "Plains",
 			"export_name": "Plains (L127)_",
 			"set": "HBB.4",
-			"collector_number": "127",
+			"collector_number": "5",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1LjLSyeJEdCjAgx9H_e4Ka-mGL-1Wr-kV",
@@ -6654,7 +6657,7 @@
 			"name": "Plains",
 			"export_name": "Plains (L128)_",
 			"set": "HBB.4",
-			"collector_number": "128",
+			"collector_number": "6",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1N4zwv1mPKHyZLhyP3IytZ2la8ID8Xb4s",
@@ -6705,7 +6708,7 @@
 			"name": "Plains",
 			"export_name": "Plains (L129)_",
 			"set": "HBB.4",
-			"collector_number": "129",
+			"collector_number": "7",
 			"layout": "normal",
 			"image_status": "medres",
 			"image": "https://lh3.googleusercontent.com/d/1xby6AU2AXDUHf9ckbuBueYxdQjgPZg2d",
@@ -6758,7 +6761,7 @@
 			"name": "Island",
 			"export_name": "Island (L130)_",
 			"set": "HBB.4",
-			"collector_number": "130",
+			"collector_number": "8",
 			"layout": "normal",
 			"image_status": "medres",
 			"image": "https://lh3.googleusercontent.com/d/1ZCjLhyncI2RdJC3kJ13RYKQaN3Sst5L_",
@@ -6808,7 +6811,7 @@
 			"name": "Island",
 			"export_name": "Island (L131)_",
 			"set": "HBB.4",
-			"collector_number": "131",
+			"collector_number": "9",
 			"rarity": "uncommon",
 			"layout": "normal",
 			"image_status": "medres",
@@ -6856,7 +6859,7 @@
 			"name": "Island",
 			"export_name": "Island (L132)_",
 			"set": "HBB.4",
-			"collector_number": "132",
+			"collector_number": "10",
 			"rarity": "mythic",
 			"layout": "normal",
 			"image_status": "highres",
@@ -6911,7 +6914,7 @@
 			"name": "Island",
 			"export_name": "Island (L133)_",
 			"set": "HBB.4",
-			"collector_number": "133",
+			"collector_number": "11",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1aGUhvgMg5OaA2qm9hQRwd8RHl1506hkQ",
@@ -6961,7 +6964,7 @@
 			"name": "Island",
 			"export_name": "Island (L134)_",
 			"set": "HBB.4",
-			"collector_number": "134",
+			"collector_number": "12",
 			"rarity": "rare",
 			"layout": "normal",
 			"image_status": "highres",
@@ -7018,7 +7021,7 @@
 			"name": "Island",
 			"export_name": "Island (L135)_",
 			"set": "HBB.4",
-			"collector_number": "135",
+			"collector_number": "13",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1RoBJ_OTUmlKRzzqcT810FaeK1E1HPpAj",
@@ -7068,7 +7071,7 @@
 			"name": "Island",
 			"export_name": "Island (L136)_",
 			"set": "HBB.4",
-			"collector_number": "136",
+			"collector_number": "14",
 			"layout": "normal",
 			"image_status": "medres",
 			"image": "https://lh3.googleusercontent.com/d/1cv1sEnWqlifnmdv1K-_LrQ8atypseopr",
@@ -7115,7 +7118,7 @@
 			"name": "Island",
 			"export_name": "Island (L137)_",
 			"set": "HBB.4",
-			"collector_number": "137",
+			"collector_number": "15",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1MdvT3BO_P1Z8hHcfjn06Ob3sNAfjyR4W",
@@ -7165,7 +7168,7 @@
 			"name": "Island",
 			"export_name": "Island (L138)_",
 			"set": "HBB.4",
-			"collector_number": "138",
+			"collector_number": "16",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/12nl3qL-byfdUV9kmcBOw2FG50wlQ0iDR",
@@ -7218,7 +7221,7 @@
 			"name": "Swamp",
 			"export_name": "Swamp (L139)_",
 			"set": "HBB.4",
-			"collector_number": "139",
+			"collector_number": "17",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1dAm0nLUolrqj_JkMtxEybe6_VgxgiOYP",
@@ -7281,7 +7284,7 @@
 			"name": "Swamp",
 			"export_name": "Swamp (L140)_",
 			"set": "HBB.4",
-			"collector_number": "140",
+			"collector_number": "18",
 			"rarity": "uncommon",
 			"layout": "normal",
 			"image_status": "highres",
@@ -7337,7 +7340,7 @@
 			"name": "Swamp",
 			"export_name": "Swamp (L141)_",
 			"set": "HBB.4",
-			"collector_number": "141",
+			"collector_number": "19",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1IjoyuDLiyOyMaCRk7iRB9EaB3XBRDNFg",
@@ -7388,7 +7391,7 @@
 			"name": "Swamp",
 			"export_name": "Swamp (L142)_",
 			"set": "HBB.4",
-			"collector_number": "142",
+			"collector_number": "20",
 			"rarity": "mythic",
 			"layout": "normal",
 			"image_status": "highres",
@@ -7443,7 +7446,7 @@
 			"name": "Swamp",
 			"export_name": "Swamp (L143)_",
 			"set": "HBB.4",
-			"collector_number": "143",
+			"collector_number": "21",
 			"rarity": "rare",
 			"layout": "normal",
 			"image_status": "highres",
@@ -7495,7 +7498,7 @@
 			"name": "Swamp",
 			"export_name": "Swamp (L144)_",
 			"set": "HBB.4",
-			"collector_number": "144",
+			"collector_number": "22",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1u-LTBTvP2UjnUQXG6ksgDeyXt0BMA6X9",
@@ -7552,7 +7555,7 @@
 			"name": "Swamp",
 			"export_name": "Swamp (L145)_",
 			"set": "HBB.4",
-			"collector_number": "145",
+			"collector_number": "23",
 			"layout": "normal",
 			"image_status": "medres",
 			"image": "https://lh3.googleusercontent.com/d/1Di9N8j-qX7LSi5iQbGpTVTXI7a_eSY2L",
@@ -7607,7 +7610,7 @@
 			"name": "Swamp",
 			"export_name": "Swamp (L146)_",
 			"set": "HBB.4",
-			"collector_number": "146",
+			"collector_number": "24",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1b91nxN8WCwA38UzJ4VdYnCINe9Gw09TD",
@@ -7661,7 +7664,7 @@
 			"name": "Swamp",
 			"export_name": "Swamp (L147)_",
 			"set": "HBB.4",
-			"collector_number": "147",
+			"collector_number": "25",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1OyNhK1M3MY3eEFHEq3rm_VYN5xJnFOgy",
@@ -7715,7 +7718,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L148)_",
 			"set": "HBB.4",
-			"collector_number": "148",
+			"collector_number": "26",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1PEXcWIhNM8mw-AGUvcD08fd_BFMWTksQ",
@@ -7772,7 +7775,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L149)_",
 			"set": "HBB.4",
-			"collector_number": "149",
+			"collector_number": "27",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1DnaAFSAOPkL0dur8GkTKtOEETC0OeTSq",
@@ -7823,7 +7826,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L150)_",
 			"set": "HBB.4",
-			"collector_number": "150",
+			"collector_number": "28",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1ZrJPjB6q3-Nj4cKeZ2I0PGTLk3-d10gu",
@@ -7878,7 +7881,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L151)_",
 			"set": "HBB.4",
-			"collector_number": "151",
+			"collector_number": "29",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1Tu2p8OCTplkDLGzDHwwBRrmkBR2MEV5G",
@@ -7928,7 +7931,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L152)_",
 			"set": "HBB.4",
-			"collector_number": "152",
+			"collector_number": "30",
 			"rarity": "mythic",
 			"layout": "normal",
 			"image_status": "highres",
@@ -7983,7 +7986,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L153)_",
 			"set": "HBB.4",
-			"collector_number": "153",
+			"collector_number": "31",
 			"layout": "normal",
 			"image_status": "medres",
 			"image": "https://lh3.googleusercontent.com/d/1-Lh1jNeF9Fv5YDb2GikAMIJdgdcK-Ry3",
@@ -8034,7 +8037,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L154)_",
 			"set": "HBB.4",
-			"collector_number": "154",
+			"collector_number": "32",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1b_M-O66_ZGJ1m3ktBA7zirVUswRVzA0h",
@@ -8088,7 +8091,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L155)_",
 			"set": "HBB.4",
-			"collector_number": "155",
+			"collector_number": "33",
 			"rarity": "rare",
 			"layout": "normal",
 			"image_status": "medres",
@@ -8139,7 +8142,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L156)_",
 			"set": "HBB.4",
-			"collector_number": "156",
+			"collector_number": "34",
 			"rarity": "uncommon",
 			"layout": "normal",
 			"image_status": "medres",
@@ -8190,7 +8193,7 @@
 			"name": "Mountain",
 			"export_name": "Mountain (L157)_",
 			"set": "HBB.4",
-			"collector_number": "157",
+			"collector_number": "35",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1sLsyozNKJhUqok1WjbLb6jZziAAFBgIs",
@@ -8240,7 +8243,7 @@
 			"name": "Forest",
 			"export_name": "Forest (L158)_",
 			"set": "HBB.4",
-			"collector_number": "158",
+			"collector_number": "36",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1we0z-byJVrsXxf-z1fypmzVLjOlfXfAB",
@@ -8291,7 +8294,7 @@
 			"name": "Forest",
 			"export_name": "Forest (L159)_",
 			"set": "HBB.4",
-			"collector_number": "159",
+			"collector_number": "37",
 			"rarity": "uncommon",
 			"layout": "normal",
 			"image_status": "medres",
@@ -8339,7 +8342,7 @@
 			"name": "Forest",
 			"export_name": "Forest (L160)_",
 			"set": "HBB.4",
-			"collector_number": "160",
+			"collector_number": "38",
 			"rarity": "mythic",
 			"layout": "normal",
 			"image_status": "highres",
@@ -8394,7 +8397,7 @@
 			"name": "Forest",
 			"export_name": "Forest (L161)_",
 			"set": "HBB.4",
-			"collector_number": "161",
+			"collector_number": "39",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1uZGg7YNNN_2Filn9b1KQ4MCLKo3yQflj",
@@ -8445,7 +8448,7 @@
 			"name": "Forest",
 			"export_name": "Forest (L162)_",
 			"set": "HBB.4",
-			"collector_number": "162",
+			"collector_number": "40",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1mlBppCphhGOyBaa_c1R6WtPP5mkEXcpq",
@@ -8495,7 +8498,7 @@
 			"name": "Forest",
 			"export_name": "Forest (L163)_",
 			"set": "HBB.4",
-			"collector_number": "163",
+			"collector_number": "41",
 			"rarity": "rare",
 			"layout": "normal",
 			"image_status": "highres",
@@ -8547,7 +8550,7 @@
 			"name": "Wastes",
 			"export_name": "Wastes (L164)_",
 			"set": "HBB.4",
-			"collector_number": "164",
+			"collector_number": "42",
 			"rarity": "uncommon",
 			"layout": "normal",
 			"image_status": "medres",
@@ -8586,7 +8589,7 @@
 			"name": "Wastes",
 			"export_name": "Wastes (L165)_",
 			"set": "HBB.4",
-			"collector_number": "165",
+			"collector_number": "43",
 			"rarity": "rare",
 			"layout": "normal",
 			"image_status": "highres",
@@ -8632,7 +8635,7 @@
 			"name": "Wastes",
 			"export_name": "Wastes (L166)_",
 			"set": "HBB.4",
-			"collector_number": "166",
+			"collector_number": "44",
 			"layout": "normal",
 			"image_status": "medres",
 			"image": "https://lh3.googleusercontent.com/d/1O2pZFsijMdRo0mbtMTvaqpSG_OOgQ3xS",
@@ -8678,7 +8681,7 @@
 			"name": "Wastes",
 			"export_name": "Wastes (L167)_",
 			"set": "HBB.4",
-			"collector_number": "167",
+			"collector_number": "45",
 			"rarity": "mythic",
 			"layout": "normal",
 			"image_status": "highres",
@@ -8717,6 +8720,350 @@
 				"borderless"
 			],
 			"variation": false
+		},
+		{
+			"object": "card",
+			"id": "L168",
+			"name": "Nebula",
+			"export_name": "Nebula (L168)_",
+			"set": "HBB.7",
+			"collector_number": "1",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1SeDMxSOJFZFibu71lee3vH0xtEeP-L-9",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"not_directly_draftable": true,
+			"has_draft_partners": true,
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"0ri0din"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"frame_effects": [
+				"noart"
+			],
+			"tags": [
+				"no-art"
+			],
+			"variation": false,
+			"isActualToken": true,
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "3871",
+					"name": "Dwardish Spirit Guide",
+					"set": "HC7.0",
+					"image": "https://lh3.googleusercontent.com/d/1_29JF379bOVzslOPaoRawip9QDq8EwcJ",
+					"type_line": "Creature — Dward Spirit",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "4671",
+					"name": "Eldrazi from the Really Blind Eternities",
+					"set": "HC7.1",
+					"image": "https://lh3.googleusercontent.com/d/1WQfISyURxRlbNyqDC_v5u-uD89pHfSSi",
+					"type_line": "Creature — Eldrazi Drone",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "3877",
+					"name": "Black Hole (HC)",
+					"set": "HC7.0",
+					"image": "https://lh3.googleusercontent.com/d/15Fg6YNI1hZV5EU7Emzr7kuuxSrRihZMP",
+					"type_line": "Land — Swamp Nebula",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "4700",
+					"name": "The Final Frontier",
+					"set": "HC7.1",
+					"image": "https://lh3.googleusercontent.com/d/1PGQi98t1XyctKS8puN4fBkRgK_3TPm9-",
+					"type_line": "Land",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "4004",
+					"name": "Burning-Bush Emissary",
+					"set": "HC7.0",
+					"image": "https://lh3.googleusercontent.com/d/1kUEMpRzymuBta9INrRiAsO0UY6G_8AlG",
+					"type_line": "Creature — Human Shaman",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "4800",
+					"name": "Arena Aggro Drafter",
+					"set": "HC7.1",
+					"image": "https://lh3.googleusercontent.com/d/14iqFMnurxQbWJNVBsNHTxzFhQJXdbGUl",
+					"type_line": "Creature — Human Arena Player",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "4816",
+					"name": "chance to have a 10 nebula for 1 pick in a booster",
+					"set": "HCV.7",
+					"image": "https://lh3.googleusercontent.com/d/12shWPzbg2Upxl5zMOAVGgEOlPfqEGdCv",
+					"type_line": "Conspiracy",
+					"component": "token_maker",
+					"is_draft_partner": true,
+					"count": "10"
+				},
+				{
+					"object": "related_card",
+					"id": "4837",
+					"name": "Asteroid Mining Colony",
+					"set": "HC7.1",
+					"image": "https://lh3.googleusercontent.com/d/1qAy0SQLc37ncA3dvfUovgo_FtoYCs3kB",
+					"type_line": "Land — Nebula",
+					"component": "token_maker",
+					"persistent": true
+				},
+				{
+					"object": "related_card",
+					"id": "4852",
+					"name": "Fetch, Land",
+					"set": "HC7.1",
+					"image": "https://lh3.googleusercontent.com/d/1V_khdO97OL7nnx9-g3NsPKVxOapAH6h_",
+					"type_line": "Land — Dog",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "4883",
+					"name": "LGS Cleaning Crew",
+					"set": "HC7.1",
+					"image": "https://lh3.googleusercontent.com/d/1ynC8GJF6lp4vC_zLeSJhu7JxRT_2kIUP",
+					"type_line": "Creature — Human Employee",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "4994",
+					"name": "Slimefoot, The Fungus Attached to the ISS",
+					"set": "HC7.1",
+					"image": "https://lh3.googleusercontent.com/d/1lS_SKEG6hccArf3nGHnmPLZPIDLEm4IN",
+					"type_line": "Legendary Creature — Fungus",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "1630",
+					"name": "POV: You Just Played Llanowar Elves for the First Time",
+					"set": "HC3.1",
+					"image": "https://lh3.googleusercontent.com/d/11P-ZDB6onZSPTiz8GX9E78YdAMTZqlhG",
+					"type_line": "Legendary Creature — Elf Druid",
+					"component": "token_maker"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"id": "L169",
+			"name": "Nebula",
+			"export_name": "Nebula (L169)_",
+			"set": "HBB.L",
+			"collector_number": "1",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1QZHs1TLphTKcIXxa8A6xGuC81hUpfe4l",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "({T}: Add {P}.)",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"not_directly_draftable": true,
+			"has_draft_partners": true,
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"mimp666"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "1993",
+			"tags": [
+				"1993-frame",
+				"double-border"
+			],
+			"variation": false,
+			"isActualToken": true,
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "7124",
+					"name": "Kobolds of Starbase Kher",
+					"set": "HKL",
+					"image": "https://lh3.googleusercontent.com/d/1thowg-wqfejbXpiGzm6z7Xt7x-IwUIa1",
+					"type_line": "Creature — Kobold",
+					"component": "token_maker",
+					"is_draft_partner": true
+				},
+				{
+					"object": "related_card",
+					"id": "7135",
+					"name": "Waxy Charm",
+					"set": "HKL",
+					"image": "https://lh3.googleusercontent.com/d/1NX_F5UBxAQpYzPySzKKTJ65iQB3mly1F",
+					"type_line": "Instant",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "7229",
+					"name": "PURPLE Lotus",
+					"set": "HCV.L",
+					"image": "https://lh3.googleusercontent.com/d/1oL0c-QJDWTkGwcsGMTptVR-DWbnWjjbr",
+					"type_line": "Draft Artifact",
+					"component": "token_maker",
+					"is_draft_partner": true,
+					"count": "3"
+				},
+				{
+					"object": "related_card",
+					"id": "7163",
+					"name": "Dagoth Ur",
+					"set": "HKL",
+					"image": "https://lh3.googleusercontent.com/d/1qilJHZlJBWbM1G26KNEG10WJzGrymgjW",
+					"type_line": "Legendary Creature — God",
+					"component": "token_maker",
+					"is_draft_partner": true
+				},
+				{
+					"object": "related_card",
+					"id": "7309",
+					"name": "The Spider From Trade Caravan",
+					"set": "HCV.L",
+					"image": "https://lh3.googleusercontent.com/d/1KeYzyFBjlRcOhlPsh6XqyxXpJrmdOGIs",
+					"type_line": "Creature — Spider From Trade Caravan",
+					"component": "token_maker"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"id": "L170",
+			"name": "Nebula",
+			"export_name": "Nebula (L170)_",
+			"set": "HBB.L",
+			"collector_number": "2",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://lh3.googleusercontent.com/d/1FtWdUYfkLkSNecHerWiWs2lov02SEV5M",
+			"mana_cost": "",
+			"mana_value": 0,
+			"supertypes": [
+				"Basic"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Basic Land — Nebula",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"not_directly_draftable": true,
+			"has_draft_partners": true,
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"mac06771"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "borderless",
+			"frame": "2015",
+			"frame_effects": [
+				"fullart"
+			],
+			"tags": [
+				"full-art",
+				"borderless"
+			],
+			"variation": true,
+			"variation_of": "Nebula1",
+			"isActualToken": true,
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "6912",
+					"name": "HKL: Woah Lions",
+					"set": "HKL",
+					"image": "https://lh3.googleusercontent.com/d/1fEkKfsuo-CbVk96009q-5ay2MCA1QJpr",
+					"type_line": "Creature — Space Cat",
+					"component": "token_maker",
+					"is_draft_partner": true
+				}
+			]
 		}
 	]
 }

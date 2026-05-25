@@ -18,6 +18,8 @@ export const extraSetList = [
   'HBB',
   'HBB.0',
   'HBB.4',
+  'HBB.7',
+  'HBB.L',
   'SFT',
 ];
 export const allSetsList = [
@@ -66,6 +68,8 @@ export const allSetsList = [
   'HBB',
   'HBB.0',
   'HBB.4',
+  'HBB.7',
+  'HBB.L',
   'SFT',
   'NotMagic',
 ];

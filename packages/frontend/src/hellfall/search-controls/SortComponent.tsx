@@ -102,6 +102,16 @@ export const SortComponent = () => {
                 <>
                   <StyledSelect
                     style={{ width: '135px' }}
+                    title={
+                      sortIsOverriden(i)
+                        ? 'You specified this option in your search terms'
+                        : 'Change how cards are sorted'
+                    }
+                    aria-label={
+                      sortIsOverriden(i)
+                        ? 'You specified this option in your search terms'
+                        : 'Change how cards are sorted'
+                    }
                     value={rule.sort}
                     disabled={sortIsOverriden(i)}
                     options={ALL_SORT_OPTIONS.filter(opt => available.includes(opt.value))}
@@ -110,6 +120,16 @@ export const SortComponent = () => {
                   <span> : </span>
                   <StyledSelect
                     style={{ width: '85px' }}
+                    title={
+                      dirIsOverriden(i)
+                        ? 'You specified this option in your search terms'
+                        : 'Change sort direction'
+                    }
+                    aria-label={
+                      dirIsOverriden(i)
+                        ? 'You specified this option in your search terms'
+                        : 'Change sort direction'
+                    }
                     value={rule.dir}
                     disabled={dirIsOverriden(i)}
                     options={DIR_OPTIONS}
@@ -124,7 +144,6 @@ export const SortComponent = () => {
               <StyledSelect
                 style={{ width: '135px' }}
                 value={'auto'}
-                // TODO: Change cursor and alt text when disabled
                 disabled={false}
                 options={ALL_SORT_OPTIONS}
                 onChange={e => handleSortChange(0, e.target.value as sortType)}

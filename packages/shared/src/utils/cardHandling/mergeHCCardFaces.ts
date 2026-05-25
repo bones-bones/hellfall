@@ -105,7 +105,7 @@ export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.Mul
   return faces[0];
 };
 
-export const compressHCCardFaces = (card: HCCard.Any, alwaysCompressAll?: boolean) => {
+export const compressHCCardFaces = (card: HCCard.Any) => {
   const newCard = structuredClone(card);
   if ('card_faces' in newCard) {
     const goingToCompressAll = Boolean(
@@ -125,7 +125,7 @@ export const compressHCCardFaces = (card: HCCard.Any, alwaysCompressAll?: boolea
     }
 
     // compress down to 1 side and use front image if there are still too many sides
-    if (goingToCompressAll || alwaysCompressAll) {
+    if (goingToCompressAll) {
       newCard.card_faces[0].image = newCard.image;
       if (newCard.still_image) {
         newCard.card_faces[0].still_image = newCard.still_image;

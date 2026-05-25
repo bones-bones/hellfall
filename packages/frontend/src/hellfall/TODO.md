@@ -98,3 +98,9 @@ Write a script to transform the database
 
 - add ub frame effect
 - add tag note handling for logged in tagger
+- find better way to handle apostrophes in card text for searches
+- add link to search with relateds to card page
+- make thread for token errors
+- add is:conjured and is:remindercard
+- add conjured to layouts?
+- fix draftpartners for lands (the other cards are losing the props)

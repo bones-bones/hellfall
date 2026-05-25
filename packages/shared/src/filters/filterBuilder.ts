@@ -170,7 +170,7 @@ export const makeNameFilter: filterMaker = (value: string, op: looseOpType) => {
     value,
     op,
     '>=',
-    card => getAllNames(card),
+    card => getAllNames(card).map(text => unescapeText(text)),
     'the name',
     opToIncludeSingular
   );
@@ -196,12 +196,13 @@ export const makeTypeFilter: filterMaker = (value: string, op: looseOpType) => {
     value,
     op,
     '>=',
-    card => [
-      ...getFromFaces(card, 'supertypes'),
-      ...getFromFaces(card, 'types'),
-      ...getFromFaces(card, 'subtypes'),
-      ...getFromAll(card, 'type_line'),
-    ],
+    card =>
+      [
+        ...getFromFaces(card, 'supertypes'),
+        ...getFromFaces(card, 'types'),
+        ...getFromFaces(card, 'subtypes'),
+        ...getFromAll(card, 'type_line'),
+      ].map(text => unescapeText(text)),
     'the types',
     opToIncludePlural
   );
@@ -213,12 +214,13 @@ export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType)
     value,
     op,
     '>=',
-    card => [
-      ...getFromFaces(card, 'supertypes'),
-      ...toFaces(card).flatMap(e =>
-        e.supertypes && e.supertypes?.length > 1 ? e.supertypes.join(' ') : []
-      ),
-    ],
+    card =>
+      [
+        ...getFromFaces(card, 'supertypes'),
+        ...toFaces(card).flatMap(e =>
+          e.supertypes && e.supertypes?.length > 1 ? e.supertypes.join(' ') : []
+        ),
+      ].map(text => unescapeText(text)),
     'the supertypes',
     opToIncludePlural
   );
@@ -230,10 +232,11 @@ export const makeCardtypeFilter: filterMaker = (value: string, op: looseOpType) 
     value,
     op,
     '>=',
-    card => [
-      ...getFromFaces(card, 'types'),
-      ...toFaces(card).flatMap(e => (e.types && e.types?.length > 1 ? e.types.join(' ') : [])),
-    ],
+    card =>
+      [
+        ...getFromFaces(card, 'types'),
+        ...toFaces(card).flatMap(e => (e.types && e.types?.length > 1 ? e.types.join(' ') : [])),
+      ].map(text => unescapeText(text)),
     'the card types',
     opToIncludePlural
   );
@@ -245,12 +248,13 @@ export const makeSubtypeFilter: filterMaker = (value: string, op: looseOpType) =
     value,
     op,
     '>=',
-    card => [
-      ...getFromFaces(card, 'subtypes'),
-      ...toFaces(card).flatMap(e =>
-        e.subtypes && e.subtypes?.length > 1 ? e.subtypes.join(' ') : []
-      ),
-    ],
+    card =>
+      [
+        ...getFromFaces(card, 'subtypes'),
+        ...toFaces(card).flatMap(e =>
+          e.subtypes && e.subtypes?.length > 1 ? e.subtypes.join(' ') : []
+        ),
+      ].map(text => unescapeText(text)),
     'the subtypes',
     opToIncludePlural
   );
@@ -262,7 +266,7 @@ export const makeOracleFilter: filterMaker = (value: string, op: looseOpType) =>
     value,
     op,
     '>=',
-    card => getFromFaces(card, 'oracle_text'),
+    card => getFromFaces(card, 'oracle_text').map(text => unescapeText(text)),
     'the oracle text',
     opToIncludeSingular
   );
@@ -274,7 +278,7 @@ export const makeFlavorFilter: filterMaker = (value: string, op: looseOpType) =>
     value,
     op,
     '>=',
-    card => getFromFaces(card, 'flavor_text'),
+    card => getFromFaces(card, 'flavor_text').map(text => unescapeText(text)),
     'the flavor text',
     opToIncludeSingular
   );
@@ -287,15 +291,16 @@ export const makeLoreFilter: filterMaker = (value: string, op: looseOpType) => {
     value,
     op,
     '>=',
-    card => [
-      ...getAllNames(card),
-      ...getFromFaces(card, 'supertypes'),
-      ...getFromFaces(card, 'types'),
-      ...getFromFaces(card, 'subtypes'),
-      ...getFromFaces(card, 'type_line'),
-      ...getFromFaces(card, 'oracle_text'),
-      ...getFromFaces(card, 'flavor_text'),
-    ],
+    card =>
+      [
+        ...getAllNames(card),
+        ...getFromFaces(card, 'supertypes'),
+        ...getFromFaces(card, 'types'),
+        ...getFromFaces(card, 'subtypes'),
+        ...getFromFaces(card, 'type_line'),
+        ...getFromFaces(card, 'oracle_text'),
+        ...getFromFaces(card, 'flavor_text'),
+      ].map(text => unescapeText(text)),
     'the lore',
     opToIncludeSingular
   );
@@ -309,7 +314,7 @@ export const makeCreatorFilter: stringOrNumFilterMaker = (value: string, op: loo
       value,
       op,
       '>=',
-      card => card.creators,
+      card => card.creators.map(text => unescapeText(text)),
       'the creators',
       opToIncludePlural
     );
@@ -333,7 +338,7 @@ export const makeTagNoteFilter: filterMaker = (value: string, op: looseOpType) =
     value,
     op,
     '>=',
-    card => Object.values(card.tag_notes ?? []),
+    card => Object.values(card.tag_notes ?? []).map(text => unescapeText(text)),
     'the tag note',
     opToIncludeSingular
   );
@@ -362,7 +367,7 @@ export const makeArtistNoteFilter: filterMaker = (value: string, op: looseOpType
     value,
     op,
     '>=',
-    card => Object.values(card.artist_notes ?? []),
+    card => Object.values(card.artist_notes ?? []).map(text => unescapeText(text)),
     'the artist note',
     opToIncludeSingular
   );
@@ -379,7 +384,7 @@ export const makeWatermarkFilter: filterMaker = (value: string, op: looseOpType)
     value,
     opIsNegative(op) ? '=' : '!=',
     '=',
-    card => getFromFaces(card, 'watermark'),
+    card => getFromFaces(card, 'watermark').map(text => unescapeText(text)),
     () => `the cards ${opToDont(op)} have the "${value}" watermark`
   );
 };
@@ -390,7 +395,7 @@ export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) =
     value,
     op,
     '=',
-    card => card.keywords,
+    card => card.keywords.map(text => unescapeText(text)),
     'the keywords',
     opToIncludePlural
   );
@@ -805,6 +810,8 @@ const frameEffectsToParse = [
   'etched',
   'borderless',
   'colorshifted',
+  'ub',
+  'universesbeyond',
 ];
 
 export const makeIsFilter: filterMaker = (value: string, op: looseOpType) => {
