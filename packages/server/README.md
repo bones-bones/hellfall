@@ -4,28 +4,28 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), tags, card data
 
 ## Endpoints
 
-| Path                             | Method   | Description                                                                                                                                                                           |
-| -------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/api/discord/login`             | GET      | Redirects to Discord OAuth; after auth, Discord redirects to callback                                                                                                                 |
-| `/api/discord/callback`          | GET      | Exchanges code for token, creates session cookie, redirects to frontend                                                                                                               |
-| `/api/me`                        | GET      | Returns current user from session cookie (or `{ user: null }`)                                                                                                                        |
-| `/api/logout`                    | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL`                                                                                                                 |
-| `/api/tag`                       | GET      | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags                                                                                     |
-| `/api/cards/:cardId?format=json` | GET      | Card formatted as JSON                                                                                                                                                                |
-| `/api/cards/:cardId?format=text` | GET      | Card formatted as plaintext                                                                                                                                                           |
-| `/api/cards/:cardId/tags`        | GET      | Merged `tags` plus `added` / `removed` from Firestore `cards/{cardId}`. DB id defaults to `hellscube`.                                                                              |
-| `/api/cards/:cardId/tags`        | POST     | Add a tag (body: `{ tag: string }`). Updates overrides and merged `tags`. Requires auth + role.                                                                                       |
-| `/api/cards/:cardId/tags/:tag`   | DELETE   | Remove a tag. Updates overrides and merged `tags`. Requires auth + role.                                                                                                                |
-| `/api/cards/:cardId/tags/audit`  | GET      | Tag change history for the card (`?limit=50`, max 200). Requires auth + role.                                                                                                         |
-| `/api/cards/search?query`        | GET      | Search results. Optional `format`: `json`, `xml`, `cockatrice`, `draftmancer`, `tabletopsimulator`.                                                                                   |
-| `/api/changesets`                | GET      | List changesets (`?status=`, `?cardId=`). Requires auth + role.                                                                                                                       |
-| `/api/changesets`                | POST     | Submit a staged change (body: `{ cardId, changes, comment? }`). Requires auth + role.                                                                                                  |
-| `/api/changesets/:id`            | GET      | Get one changeset. Requires auth + role.                                                                                                                                              |
-| `/api/changesets/:id/accept`     | POST     | Admin accepts and applies a pending changeset.                                                                                                                                        |
-| `/api/changesets/:id/reject`     | POST     | Admin rejects a pending changeset.                                                                                                                                                    |
-| `/api/watchwolf`                 | GET      | Returns WatchWolfWar card standings from Firestore                                                                                                                                    |
-| `/api/watchwolf`                 | POST     | Submit a win/lose (body: `{ WinId, LoseId }`)                                                                                                                                          |
-| `/api/admin/export-hellscube`    | GET      | Download full `hellscube` / `cards` collection as JSON (admin role required)                                                                                                          |
+| Path                             | Method   | Description                                                                                            |
+| -------------------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
+| `/api/discord/login`             | GET      | Redirects to Discord OAuth; after auth, Discord redirects to callback                                  |
+| `/api/discord/callback`          | GET      | Exchanges code for token, creates session cookie, redirects to frontend                                |
+| `/api/me`                        | GET      | Returns current user from session cookie (or `{ user: null }`)                                         |
+| `/api/logout`                    | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL`                                  |
+| `/api/tag`                       | GET      | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags      |
+| `/api/cards/:cardId?format=json` | GET      | Card formatted as JSON                                                                                 |
+| `/api/cards/:cardId?format=text` | GET      | Card formatted as plaintext                                                                            |
+| `/api/cards/:cardId/tags`        | GET      | Merged `tags` plus `added` / `removed` from Firestore `cards/{cardId}`. DB id defaults to `hellscube`. |
+| `/api/cards/:cardId/tags`        | POST     | Add a tag (body: `{ tag: string }`). Updates overrides and merged `tags`. Requires auth + role.        |
+| `/api/cards/:cardId/tags/:tag`   | DELETE   | Remove a tag. Updates overrides and merged `tags`. Requires auth + role.                               |
+| `/api/cards/:cardId/tags/audit`  | GET      | Tag change history for the card (`?limit=50`, max 200). Requires auth + role.                          |
+| `/api/cards/search?query`        | GET      | Search results. Optional `format`: `json`, `xml`, `cockatrice`, `draftmancer`, `tabletopsimulator`.    |
+| `/api/changesets`                | GET      | List changesets (`?status=`, `?cardId=`). Requires auth + role.                                        |
+| `/api/changesets`                | POST     | Submit a staged change (body: `{ cardId, changes, comment? }`). Requires auth + role.                  |
+| `/api/changesets/:id`            | GET      | Get one changeset. Requires auth + role.                                                               |
+| `/api/changesets/:id/accept`     | POST     | Admin accepts and applies a pending changeset.                                                         |
+| `/api/changesets/:id/reject`     | POST     | Admin rejects a pending changeset.                                                                     |
+| `/api/watchwolf`                 | GET      | Returns WatchWolfWar card standings from Firestore                                                     |
+| `/api/watchwolf`                 | POST     | Submit a win/lose (body: `{ WinId, LoseId }`)                                                          |
+| `/api/admin/export-hellscube`    | GET      | Download full `hellscube` / `cards` collection as JSON (admin role required)                           |
 
 ## Setup
 

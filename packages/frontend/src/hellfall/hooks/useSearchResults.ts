@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { usePaginationModel, getLastPage } from '@workday/canvas-kit-react/pagination';
 import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
@@ -8,7 +7,6 @@ import {
   queryAtom,
   sortAtom,
   pageAtom,
-  activeCardAtom,
   // shouldPushHistoryAtom,
 } from '../atoms/searchAtoms.ts';
 import tags_data from '@hellfall/shared/data/tags.json';
@@ -26,7 +24,6 @@ export const useSearchResults = () => {
   const query = useAtomValue(queryAtom);
   const sortRules = useAtomValue(sortAtom);
   const [page, setPageAtom] = useAtom(pageAtom);
-  const activeCard = useAtomValue(activeCardAtom);
 
   const lastPage = getLastPage(CHUNK_SIZE, resultSet.length);
 
@@ -61,12 +58,9 @@ export const useSearchResults = () => {
     sortRules,
     // inputSorts,
     page,
-    activeCard,
     cards.length,
     // location.search,
   ]);
 
   return { resultSet, paginationModel };
 };
-
-// TODO: fix includes

@@ -195,12 +195,7 @@ export function ReviewPage() {
       {error && <ErrorText>{error}</ErrorText>}
       {!loading && !error && changesets.length === 0 && <p>No changesets found.</p>}
       {changesets.map(cs => (
-        <ChangesetCard
-          key={cs.id}
-          cs={cs}
-          isAdmin={user.isAdmin}
-          onAction={handleAction}
-        />
+        <ChangesetCard key={cs.id} cs={cs} isAdmin={user.isAdmin} onAction={handleAction} />
       ))}
     </PageContainer>
   );

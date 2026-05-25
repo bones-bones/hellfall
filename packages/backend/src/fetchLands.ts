@@ -11,10 +11,10 @@ import {
   HCObject,
   HCRarity,
   HCRelatedCard,
-} from '@hellfall/shared/types/index.ts';
+} from '@hellfall/shared/types';
 import { sheetsKey } from './env.ts';
 import { landToColorMapping } from './derivedProps.ts';
-import { cardObjectType, facePropType } from '@hellfall/shared/utils/index.ts';
+import { cardObjectType, facePropType } from '@hellfall/shared/utils';
 import { addArtist, addProp, addTag } from './fetchUtils.ts';
 
 const convertSet: Record<string, string> = {

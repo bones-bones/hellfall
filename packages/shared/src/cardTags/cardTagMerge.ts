@@ -20,14 +20,9 @@ export function normalizeTagList(tags: unknown): string[] {
   return tags.map(String).map(normalizeTag).filter(Boolean);
 }
 
-export function mergeTags(
-  baseTags: string[],
-  overrides: CardTagOverrides
-): string[] {
+export function mergeTags(baseTags: string[], overrides: CardTagOverrides): string[] {
   const removedSet = new Set(overrides.removed.map(normalizeTag));
-  const added = overrides.added
-    .map(normalizeTag)
-    .filter(t => t && !removedSet.has(t));
+  const added = overrides.added.map(normalizeTag).filter(t => t && !removedSet.has(t));
   return baseTags
     .map(normalizeTag)
     .filter(t => t && !removedSet.has(t))
@@ -47,10 +42,7 @@ export function dedupeOrdered(tags: string[]): string[] {
 }
 
 /** Recover base tags from merged `tags` + overrides when `baseTags` was not stored yet. */
-export function inferBaseTags(
-  storedTags: string[],
-  overrides: CardTagOverrides
-): string[] {
+export function inferBaseTags(storedTags: string[], overrides: CardTagOverrides): string[] {
   const { added, removed } = overrides;
   const base: string[] = [];
   for (const t of storedTags) {
@@ -62,9 +54,7 @@ export function inferBaseTags(
   return dedupeOrdered(base);
 }
 
-export function resolveTagState(
-  data: Record<string, unknown> | undefined
-): CardTagState {
+export function resolveTagState(data: Record<string, unknown> | undefined): CardTagState {
   const added = normalizeTagList(data?.added);
   const removed = normalizeTagList(data?.removed);
   const overrides: CardTagOverrides = { added, removed };

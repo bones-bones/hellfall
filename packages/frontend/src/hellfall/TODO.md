@@ -84,7 +84,6 @@ Write a script to transform the database
 - don't trigger new history on activecard change?
 - figure out if pip shadows have correct angle (should they be slightly more downward than leftward?)
 - implement flip/aftermath rotation buttons (base it off of cockatrice face merge logic)
-- rework tts
 - put buttons for switching to rotated/still on top later
 - add rotations for images that are upright by default
 - add hcp draft
@@ -103,4 +102,3 @@ Write a script to transform the database
 - make thread for token errors
 - add is:conjured and is:remindercard
 - add conjured to layouts?
-- fix draftpartners for lands (the other cards are losing the props)

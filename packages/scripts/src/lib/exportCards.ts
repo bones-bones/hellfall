@@ -35,10 +35,7 @@ function serializeValue(value: unknown): unknown {
   return value;
 }
 
-function docToExportRow(
-  docId: string,
-  data: Record<string, unknown>
-): HellscubeExportCard {
+function docToExportRow(docId: string, data: Record<string, unknown>): HellscubeExportCard {
   const serialized = serializeValue(data) as Record<string, unknown>;
   return { _docId: docId, ...serialized };
 }
@@ -48,13 +45,9 @@ export async function exportHellscubeCards(
   options: HellscubeExportOptions = {}
 ): Promise<HellscubeExportPayload> {
   const databaseId =
-    options.databaseId?.trim() ||
-    process.env.FIRESTORE_DATABASE_ID?.trim() ||
-    'hellscube';
+    options.databaseId?.trim() || process.env.FIRESTORE_DATABASE_ID?.trim() || 'hellscube';
   const collectionName =
-    options.collectionName?.trim() ||
-    process.env.FIRESTORE_CARDS_COLLECTION?.trim() ||
-    'cards';
+    options.collectionName?.trim() || process.env.FIRESTORE_CARDS_COLLECTION?.trim() || 'cards';
 
   const db = new Firestore({ databaseId });
   const snapshot = await db.collection(collectionName).get();

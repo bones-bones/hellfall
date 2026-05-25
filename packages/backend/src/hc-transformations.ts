@@ -836,7 +836,12 @@ const main = async () => {
             } else {
               relatedCard.all_parts[tokenIndex] = relatedToken;
             }
-            if (relatedCard.tags?.includes('AddCards') && (!relatedCard.tag_notes?.['AddCards'] || parseInt(relatedCard.tag_notes['AddCards']) || relatedCard.tag_notes['AddCards'] == land.id)) {
+            if (
+              relatedCard.tags?.includes('AddCards') &&
+              (!relatedCard.tag_notes?.['AddCards'] ||
+                parseInt(relatedCard.tag_notes['AddCards']) ||
+                relatedCard.tag_notes['AddCards'] == land.id)
+            ) {
               relatedCard.has_draft_partners = true;
               land.has_draft_partners = true;
               land.not_directly_draftable = true;
@@ -844,7 +849,6 @@ const main = async () => {
               relatedCard.all_parts!.find(e => e.id == land.id)!.is_draft_partner = true;
             }
           }
-          
         });
     });
   // update front cards and order their parts

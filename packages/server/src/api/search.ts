@@ -3,9 +3,7 @@ import { withCors } from './lib/cors.ts';
 import { getAllCards, getCardById } from './cardsStore.ts';
 import { combineAndWinnowSorts, parseSearchQuery, searchCards } from '@hellfall/shared/filters';
 import { HCCard } from '@hellfall/shared/types';
-import { toCockCube, toCockCubeJSON } from '@hellfall/shared/utils/cockatrice';
-import { HCToDraftmancer } from '@hellfall/shared/utils/draftmancer';
-import { HCToTTSDeck } from '@hellfall/shared/utils/tts';
+import { toCockCube, toCockCubeJSON, HCToDraftmancer, HCToTTSDeck } from '@hellfall/shared/utils';
 import { readDataJson } from '../lib/loadDataFiles.ts';
 
 const tagsData = readDataJson<{ data: string[] }>('tags.json');

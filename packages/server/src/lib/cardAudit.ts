@@ -4,7 +4,12 @@ import type { CardTagState } from '@hellfall/shared/cardTags/cardTagMerge';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 
-export type AuditAction = 'tag_add' | 'tag_remove' | 'field_edit' | 'changeset_accept' | 'changeset_reject';
+export type AuditAction =
+  | 'tag_add'
+  | 'tag_remove'
+  | 'field_edit'
+  | 'changeset_accept'
+  | 'changeset_reject';
 
 export type AuditActor = {
   userId: string;
@@ -60,8 +65,18 @@ export async function recordCardAudit(params: {
 
 function tagChangesFromState(before: CardTagState, after: CardTagState) {
   return {
-    before: { tags: before.tags, added: before.added, removed: before.removed, baseTags: before.baseTags },
-    after: { tags: after.tags, added: after.added, removed: after.removed, baseTags: after.baseTags },
+    before: {
+      tags: before.tags,
+      added: before.added,
+      removed: before.removed,
+      baseTags: before.baseTags,
+    },
+    after: {
+      tags: after.tags,
+      added: after.added,
+      removed: after.removed,
+      baseTags: after.baseTags,
+    },
   };
 }
 
@@ -84,14 +99,8 @@ export async function recordTagAudit(params: {
   });
 }
 
-export async function listCardAudit(
-  cardId: string,
-  limit = 50
-): Promise<CardAuditEntry[]> {
-  const snap = await auditCollection(cardId)
-    .orderBy('at', 'desc')
-    .limit(limit)
-    .get();
+export async function listCardAudit(cardId: string, limit = 50): Promise<CardAuditEntry[]> {
+  const snap = await auditCollection(cardId).orderBy('at', 'desc').limit(limit).get();
 
   return snap.docs.map(doc => {
     const data = doc.data();

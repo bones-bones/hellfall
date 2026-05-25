@@ -4,15 +4,9 @@ import { SecondaryButton, TertiaryButton, PrimaryButton } from '@workday/canvas-
 import { useAtom, useAtomValue } from 'jotai';
 import { inputSortAtom, queryAtom, querySortAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import styled from '@emotion/styled';
-import { sorts, dirs, sortType, dirType } from '@hellfall/shared/filters/types.ts';
-import {
-  getWinnowedSortOptions,
-  combineAndWinnowSorts,
-  parseSorts,
-} from '@hellfall/shared/filters/parseSearchBar.ts';
+import { sortType, dirType, getWinnowedSortOptions } from '@hellfall/shared/filters';
 import { useEffect, useState } from 'react';
 import { plusIcon, minusIcon } from '@workday/canvas-system-icons-web';
-import { makeSort } from '@hellfall/shared/filters/filterBuilder.ts';
 
 const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
   { label: 'Auto', value: 'auto' },

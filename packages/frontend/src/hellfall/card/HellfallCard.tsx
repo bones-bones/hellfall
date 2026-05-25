@@ -95,8 +95,15 @@ export const HellfallCard = ({
   onSinglePage?: boolean;
 }) => {
   const { user } = useAuth();
-  const [displayTags, addTag, removeTag, tagsLoading, tagsError, tagsPersistEnabled, changesetSubmitted] =
-    useCardTagOverrides(data.id, data.tags);
+  const [
+    displayTags,
+    addTag,
+    removeTag,
+    tagsLoading,
+    tagsError,
+    tagsPersistEnabled,
+    changesetSubmitted,
+  ] = useCardTagOverrides(data.id, data.tags);
   const [activeImageSide, setActiveImageSide] = useState(0);
   const [newTagInput, setNewTagInput] = useState('');
   const [tagActionError, setTagActionError] = useState<string | null>(null);

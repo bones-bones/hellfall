@@ -28,10 +28,8 @@ import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useEffect, useState } from 'react';
 import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import { HCSearchColors } from '@hellfall/shared/types';
-import { looseOpList, looseOpType } from '@hellfall/shared/filters/types.ts';
+import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
 import { SortComponent } from './SortComponent.tsx';
-import { useNavigate } from 'react-router-dom';
-import { parseSorts } from '@hellfall/shared/filters/parseSearchBar.ts';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
 import { normalizeText } from '@hellfall/shared/utils';
 

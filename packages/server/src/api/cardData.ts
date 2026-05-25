@@ -1,6 +1,6 @@
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 import { withCors } from './lib/cors.ts';
-import { toPlainText } from '@hellfall/shared/utils/cardHandling/cardMethods';
+import { toPlainText } from '@hellfall/shared/utils';
 import { getCardById } from './cardsStore.ts';
 
 export async function cardJsonHandler(req: HandlerRequest, res: HandlerResponse, cardId: string) {

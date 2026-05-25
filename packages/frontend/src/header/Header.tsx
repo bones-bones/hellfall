@@ -35,7 +35,9 @@ export const Header = () => {
                 {user.username}
               </span>
               {user.isAdmin && (
-                <>, <Link to="/review">review</Link></>
+                <>
+                  , <Link to="/review">review</Link>
+                </>
               )}
               , <a href={logoutUrl}>logout</a>
             </AuthBlock>

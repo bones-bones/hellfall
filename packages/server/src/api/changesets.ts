@@ -132,11 +132,20 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
 
   const snap = await docRef.get();
   res.statusCode = 201;
-  res.end(JSON.stringify({ ok: true, changeset: serializeChangeset(docRef.id, snap.data() as ChangesetDoc) }));
+  res.end(
+    JSON.stringify({
+      ok: true,
+      changeset: serializeChangeset(docRef.id, snap.data() as ChangesetDoc),
+    })
+  );
 }
 
 /** GET /api/changesets/:id — get single changeset */
-async function getChangeset(req: HandlerRequest, res: HandlerResponse, changesetId: string): Promise<void> {
+async function getChangeset(
+  req: HandlerRequest,
+  res: HandlerResponse,
+  changesetId: string
+): Promise<void> {
   const auth = await requireTagAuth(req, res);
   if (!auth) return;
 
@@ -148,7 +157,12 @@ async function getChangeset(req: HandlerRequest, res: HandlerResponse, changeset
   }
 
   res.statusCode = 200;
-  res.end(JSON.stringify({ ok: true, changeset: serializeChangeset(snap.id, snap.data() as ChangesetDoc) }));
+  res.end(
+    JSON.stringify({
+      ok: true,
+      changeset: serializeChangeset(snap.id, snap.data() as ChangesetDoc),
+    })
+  );
 }
 
 /** Apply tag changes using the merge helpers so baseTags/added/removed/tags stay consistent. */
@@ -179,7 +193,11 @@ function applyTagChanges(
 }
 
 /** POST /api/changesets/:id/accept — admin accepts changeset */
-async function acceptChangeset(req: HandlerRequest, res: HandlerResponse, changesetId: string): Promise<void> {
+async function acceptChangeset(
+  req: HandlerRequest,
+  res: HandlerResponse,
+  changesetId: string
+): Promise<void> {
   const auth = await requireAdminAuth(req, res);
   if (!auth) return;
 
@@ -227,7 +245,11 @@ async function acceptChangeset(req: HandlerRequest, res: HandlerResponse, change
 }
 
 /** POST /api/changesets/:id/reject — admin rejects changeset */
-async function rejectChangeset(req: HandlerRequest, res: HandlerResponse, changesetId: string): Promise<void> {
+async function rejectChangeset(
+  req: HandlerRequest,
+  res: HandlerResponse,
+  changesetId: string
+): Promise<void> {
   const auth = await requireAdminAuth(req, res);
   if (!auth) return;
 

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { useState, useEffect } from 'react';
 import { StyledLegend } from '../StyledLabel.tsx';
-import { looseOpList, looseOpType } from '@hellfall/shared/filters/types.ts';
+import { looseOpList, looseOpType } from '@hellfall/shared/filters';
 import { toNumber } from '@hellfall/shared/utils';
 // TODO: figure out better way to deal with 5/1
 

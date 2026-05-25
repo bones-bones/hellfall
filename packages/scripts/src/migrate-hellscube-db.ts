@@ -25,10 +25,7 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '../../..');
-const DEFAULT_DB_PATH = resolve(
-  REPO_ROOT,
-  'packages/shared/src/data/Hellscube-Database.json'
-);
+const DEFAULT_DB_PATH = resolve(REPO_ROOT, 'packages/shared/src/data/Hellscube-Database.json');
 
 config({ path: resolve(__dirname, '../.env') });
 
@@ -158,21 +155,15 @@ async function loadExistingDocs(
 }
 
 async function main() {
-  const { dryRun, dbPath, pruneOrphans, reportOnly, limit } = parseArgs(
-    process.argv.slice(2)
-  );
+  const { dryRun, dbPath, pruneOrphans, reportOnly, limit } = parseArgs(process.argv.slice(2));
 
   if (!reportOnly && !dryRun && !process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim()) {
-    console.error(
-      'GOOGLE_APPLICATION_CREDENTIALS is required (path to service account JSON).'
-    );
+    console.error('GOOGLE_APPLICATION_CREDENTIALS is required (path to service account JSON).');
     process.exit(1);
   }
 
-  const databaseId =
-    process.env.FIRESTORE_DATABASE_ID?.trim() || 'hellscube';
-  const collectionName =
-    process.env.FIRESTORE_CARDS_COLLECTION?.trim() || 'cards';
+  const databaseId = process.env.FIRESTORE_DATABASE_ID?.trim() || 'hellscube';
+  const collectionName = process.env.FIRESTORE_CARDS_COLLECTION?.trim() || 'cards';
 
   console.log(`Database: ${databaseId}`);
   console.log(`Collection: ${collectionName}`);
@@ -234,10 +225,7 @@ async function main() {
     const doc = buildFirestoreDoc(card, existing);
     const jsonOnlyTags = dedupeOrdered(normalizeTagList(card.tags));
     const mergedTags = doc.tags as string[];
-    if (
-      hadOverrides &&
-      JSON.stringify(mergedTags) !== JSON.stringify(jsonOnlyTags)
-    ) {
+    if (hadOverrides && JSON.stringify(mergedTags) !== JSON.stringify(jsonOnlyTags)) {
       stats.tagsMergedFromOverrides++;
     }
     if (!reportOnly) stats.writes++;

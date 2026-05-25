@@ -42,11 +42,10 @@ async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchRes
   };
 }
 
-function parseTagResponse(data: {
-  tags?: string[];
-  added?: string[];
-  removed?: string[];
-}): { tags: string[] | undefined; overrides: CardTagOverrides } {
+function parseTagResponse(data: { tags?: string[]; added?: string[]; removed?: string[] }): {
+  tags: string[] | undefined;
+  overrides: CardTagOverrides;
+} {
   return {
     tags: Array.isArray(data.tags) ? data.tags : undefined,
     overrides: {
@@ -110,8 +109,7 @@ export function useCardTagOverrides(
       .finally(() => setLoading(false));
   }, [baseUrl, cardId]);
 
-  const merged =
-    firestoreTags ?? mergeTags(baseTags, overrides);
+  const merged = firestoreTags ?? mergeTags(baseTags, overrides);
 
   const addTag = React.useCallback(
     async (tag: string) => {

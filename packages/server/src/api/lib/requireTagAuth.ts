@@ -79,4 +79,4 @@ export async function requireTagAuth(
     username,
     discord_access_token: discordAccessToken,
   };
-};
+}
