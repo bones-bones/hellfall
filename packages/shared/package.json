@@ -29,6 +29,22 @@
       "types": "./src/filters/index.ts",
       "import": "./src/filters/index.ts"
     },
+    "./utils/cockatrice": {
+      "types": "./src/utils/cockatrice/index.ts",
+      "import": "./src/utils/cockatrice/index.ts"
+    },
+    "./utils/draftmancer": {
+      "types": "./src/utils/draftmancer/index.ts",
+      "import": "./src/utils/draftmancer/index.ts"
+    },
+    "./utils/tts": {
+      "types": "./src/utils/tts/index.ts",
+      "import": "./src/utils/tts/index.ts"
+    },
+    "./utils/cardHandling/cardMethods": {
+      "types": "./src/utils/cardHandling/cardMethods.ts",
+      "import": "./src/utils/cardHandling/cardMethods.ts"
+    },
     "./cardTags/cardTagMerge": {
       "types": "./src/cardTags/cardTagMerge.ts",
       "import": "./src/cardTags/cardTagMerge.ts"
