@@ -1,4 +1,4 @@
-import { exportHellscubeCards } from '@hellfall/scripts/exportCards';
+import { exportHellscubeCards } from '@hellfall/shared/export/cards';
 import { withCors } from './lib/cors.js';
 import { env } from './lib/env.js';
 import { requireAdminAuth } from './lib/requireAdminAuth.js';

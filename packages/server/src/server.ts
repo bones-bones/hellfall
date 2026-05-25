@@ -80,6 +80,14 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
     const path = pathname ?? '/';
     req.query = parseQuery(search);
 
+    if (req.method === 'OPTIONS') {
+      const headers = withCors({}, req);
+      Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
+      res.statusCode = 204;
+      res.end();
+      return;
+    }
+
     if (path === EXPORT_HELLSCUBE_PATH) {
       await exportHellscubeHandler(req, res as HandlerResponse);
       return;

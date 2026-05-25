@@ -53,7 +53,6 @@ local-tags.json
 
 tsconfig.tsbuildinfo
 tsconfig.build.tsbuildinfo
-]
 packages/scripts/hellfall-api-key.json
 
 packages/**/tsconfig.tsbuildinfo

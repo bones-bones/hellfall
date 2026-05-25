@@ -48,9 +48,14 @@
     "./cardTags/cardTagMerge": {
       "types": "./src/cardTags/cardTagMerge.ts",
       "import": "./src/cardTags/cardTagMerge.ts"
+    },
+    "./export/cards": {
+      "types": "./src/export/exportCards.ts",
+      "import": "./src/export/exportCards.ts"
     }
   },
   "dependencies": {
+    "@google-cloud/firestore": "^7.1.0",
     "@types/xmldom": "^0.1.34",
     "xmldom": "^0.6.0"
   }

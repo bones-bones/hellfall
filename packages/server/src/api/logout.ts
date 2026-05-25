@@ -3,13 +3,6 @@ import { withCors } from './lib/cors.ts';
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
 export const logoutHandler = (req: HandlerRequest, res: HandlerResponse): void => {
-  if (req.method === 'OPTIONS') {
-    Object.entries(withCors({}, req)).forEach(([k, v]) => res.setHeader(k, v));
-    res.statusCode = 204;
-    res.end();
-    return;
-  }
-
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.statusCode = 405;
     res.setHeader('Allow', 'GET, POST');

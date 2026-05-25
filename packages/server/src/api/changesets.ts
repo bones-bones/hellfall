@@ -282,12 +282,6 @@ export async function changesetsHandler(
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
-  if (req.method === 'OPTIONS') {
-    res.statusCode = 204;
-    res.end();
-    return;
-  }
-
   try {
     if (!changesetId && !action) {
       if (req.method === 'GET') return listChangesets(req, res);
