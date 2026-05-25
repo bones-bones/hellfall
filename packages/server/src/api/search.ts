@@ -2,9 +2,13 @@ import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 import { withCors } from './lib/cors.ts';
 import { getAllCards, getCardById } from './cardsStore.ts';
 import { combineAndWinnowSorts, parseSearchQuery, searchCards } from '@hellfall/shared/filters';
-import tags_data from '@hellfall/shared/data/tags.json';
 import { HCCard } from '@hellfall/shared/types';
-import { HCToDraftmancer, HCToTTSDeck, toCockCube, toCockCubeJSON } from '@hellfall/shared/utils';
+import { toCockCube, toCockCubeJSON } from '@hellfall/shared/utils/cockatrice';
+import { HCToDraftmancer } from '@hellfall/shared/utils/draftmancer';
+import { HCToTTSDeck } from '@hellfall/shared/utils/tts';
+import { readDataJson } from '../lib/loadDataFiles.ts';
+
+const tagsData = readDataJson<{ data: string[] }>('tags.json');
 
 export const searchFormats = [
   'json',
@@ -81,7 +85,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
     );
     const allCards = getAllCards();
 
-    const results = searchCards(allCards, query ?? '', tags_data.data);
+    const results = searchCards(allCards, query ?? '', tagsData.data);
 
     for (let i = sortList.length - 1; i >= 0; i--) {
       results.sort((a: HCCard.Any, b: HCCard.Any) => sortList[i].filter(a, '=', b));
