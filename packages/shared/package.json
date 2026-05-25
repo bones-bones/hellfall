@@ -28,6 +28,10 @@
     "./filters": {
       "types": "./src/filters/index.ts",
       "import": "./src/filters/index.ts"
+    },
+    "./cardTags/cardTagMerge": {
+      "types": "./src/cardTags/cardTagMerge.ts",
+      "import": "./src/cardTags/cardTagMerge.ts"
     }
   },
   "dependencies": {

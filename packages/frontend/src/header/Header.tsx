@@ -34,6 +34,9 @@ export const Header = () => {
               <span title={user.email ?? undefined} data-logged-in>
                 {user.username}
               </span>
+              {user.isAdmin && (
+                <>, <Link to="/review">review</Link></>
+              )}
               , <a href={logoutUrl}>logout</a>
             </AuthBlock>
           ) : null}

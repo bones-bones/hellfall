@@ -91,6 +91,11 @@ export namespace HCCardFields.Core {
      */
     tag_notes?: Record<string, string>;
     /**
+     * Stable Firestore-friendly ID for tokens, sourced from the token sheet.
+     * Stored in Firestore as `token-<token_id>`.
+     */
+    token_id?: string;
+    /**
      * Whether this card is an actual token (TODO: replace with type-based checks)
      */
     isActualToken?: boolean;

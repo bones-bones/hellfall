@@ -10,6 +10,8 @@ const DEFAULT_DEV_USER: AuthUser = {
   username: 'Developer',
   avatar: null,
   email: null,
+  isContributor: true,
+  isAdmin: true,
 };
 
 async function fetchMe(baseUrl: string): Promise<AuthUser | null> {
