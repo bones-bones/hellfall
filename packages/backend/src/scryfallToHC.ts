@@ -17,8 +17,7 @@ import {
   HCImageStatus,
   HCFrame,
 } from '@hellfall/shared/types';
-import { setDerivedProps } from './derivedProps.ts';
-import { fromImportMana, pushProp } from '@hellfall/shared/utils';
+import { fromImportMana, pushProp, setDerivedProps } from '@hellfall/shared/utils';
 export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): HCCard.Any => {
   const cardLayoutCorrespondences: Record<ScryfallLayout, HCLayout> = {
     normal: HCLayout.Normal,

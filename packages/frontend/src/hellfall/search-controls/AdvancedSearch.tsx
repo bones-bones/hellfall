@@ -126,19 +126,19 @@ export const AdvancedSearch = () => {
       }
     }
     const orFilters: string[] = [];
-    const addHandlingOr = (searchKeyword: string, searchTerm: string) => {
+    const addHandlingOr = (searchKeyword: string, searchTerm: string, defaultOp= ':') => {
       if (searchTerm.startsWith('!?')) {
-        orFilters.push('-' + searchKeyword + searchTerm.slice(2));
+        orFilters.push('-' + searchKeyword + defaultOp + searchTerm.slice(2));
       } else if (searchTerm.startsWith('!')) {
-        filters.push('-' + searchKeyword + searchTerm.slice(1));
+        filters.push('-' + searchKeyword + defaultOp + searchTerm.slice(1));
       } else if (searchTerm.startsWith('?')) {
-        orFilters.push(searchKeyword + searchTerm.slice(1));
+        orFilters.push(searchKeyword + defaultOp + searchTerm.slice(1));
       } else {
-        filters.push(searchKeyword + searchTerm);
+        filters.push(searchKeyword+ defaultOp + searchTerm);
       }
     };
-    const addAllHandlingOr = (searchKeyword: string, searchTerm: string[]) => {
-      searchTerm.forEach(term => addHandlingOr(searchKeyword, term));
+    const addAllHandlingOr = (searchKeyword: string, searchTerm: string[], defaultOp=':') => {
+      searchTerm.forEach(term => addHandlingOr(searchKeyword, term,defaultOp));
     };
     if (idSearch) {
       addHandlingOr('id', idSearch);
@@ -165,7 +165,7 @@ export const AdvancedSearch = () => {
       addAllHandlingOr('artist', artists);
     }
     if (tags.length) {
-      addAllHandlingOr('tag', tags);
+      addAllHandlingOr('tag', tags,'=');
     }
     if (isCommander) {
       filters.push('is:commander');

@@ -11,6 +11,10 @@ export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
    */
   id: string;
   /**
+   * the old unique ID for this card in HC's database.
+   */
+  // hcid: string; #uuid
+  /**
    * A field explaining what role this card plays in this relationship.
    */
   component:

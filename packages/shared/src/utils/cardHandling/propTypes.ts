@@ -56,7 +56,7 @@ export type allValueType<K extends keyof allType> = Exclude<allType[K], undefine
   : Exclude<allType[K], undefined>;
 
 export type cardFaceType = { [F in facePropType]: faceValueType<F> /* & {layout?: HCLayout} */ };
-
+export type faceType = HCCard.AnySingleFaced|HCCardFace.MultiFaced
 export type cardObjectType = {
   [K in excludePropType]?: valueType<K>;
 } & {

@@ -88,6 +88,7 @@ export const facePropOrder: facePropType[] = [
   'attraction_lights',
   'colors',
   'color_indicator',
+  'finish',
   'watermark',
   'border_color',
   'frame',

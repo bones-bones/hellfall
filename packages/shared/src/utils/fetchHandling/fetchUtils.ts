@@ -2,6 +2,7 @@ import {
   HCCard,
   HCCardFace,
   HCFrameEffect,
+  HCImageStatus,
   HCLayout,
   HCLayoutGroup,
   HCRelatedCard,
@@ -21,31 +22,6 @@ import {
   pushProp,
   valueType,
 } from '@hellfall/shared/utils';
-
-// export type propType = keyof HCCard.Any;
-// export type valueType<K extends propType> = HCCard.Any[K];
-// export type arrayElementType<K extends propType> = Exclude<
-//   HCCard.Any[K],
-//   undefined
-// > extends Array<infer U>
-//   ? U
-//   : never;
-
-// export type facePropType = keyof HCCardFace.MultiFaced;
-// export type faceValueType<K extends facePropType> = HCCardFace.MultiFaced[K];
-// export type faceArrayElementType<K extends keyof HCCardFace.MultiFaced> = Exclude<
-//   HCCardFace.MultiFaced[K],
-//   undefined
-// > extends Array<infer U>
-//   ? U
-//   : never;
-// // export type cardObjectType = Record<propType, valueType<propType>> & { card_faces: Record<facePropType, faceValueType<facePropType>>[], all_parts?: Record<partPropType, partValueType<partPropType>>[]}
-// export type cardFaceType = { [F in facePropType]: HCCardFace.MultiFaced[F] };
-// export type cardObjectType = {
-//   [K in propType]?: HCCard.Any[K]; // This preserves individual types
-// } & {
-//   card_faces: cardFaceType[];
-// };
 
 export const fillFacesTo = (card: cardObjectType | HCCard.AnyMultiFaced, index: number) => {
   while (card.card_faces.length <= index) {
@@ -100,14 +76,14 @@ export const frontIsBattle = (card: cardObjectType) =>
 
 /**
  * Adds a tag to a specific face
- * @param card card object
+ * @param card card to add tag to
  * @param index face number (defaults to 0 if the face number is invalid)
  * @param prop prop to set/push the value to
  * @param value value to set/push
  * @param push whether to push the value (use true when the prop is an array)
  */
 export const addTagToFace = <K extends facePropType>(
-  card: cardObjectType,
+  card: HCCard.Any,
   index: number,
   prop: K,
   value: faceValueType<K> | faceArrayElementType<K>,
@@ -115,20 +91,20 @@ export const addTagToFace = <K extends facePropType>(
 ) => {
   // const faceIndex = index > 0 && index < card.card_faces.length ? index : 0;
   if (push) {
-    pushPropToFace(card, prop, value as faceArrayElementType<K>, index);
+    pushPropToFace(card as cardObjectType, prop, value as faceArrayElementType<K>, index);
   } else {
-    addPropToFace(card, prop, value as faceValueType<K>, index);
+    addPropToFace(card as cardObjectType, prop, value as faceValueType<K>, index);
   }
 };
 /**
  * Adds a tag to the card root
- * @param card card object
+ * @param card card to add tag to
  * @param prop prop to set/push the value to
  * @param value value to set/push
  * @param push whether to push the value (use true when the prop is an array)
  */
 export const addTagToRoot = <K extends propType>(
-  card: cardObjectType,
+  card: HCCard.Any,
   prop: K,
   value: valueType<K> | arrayElementType<K>,
   push?: boolean
@@ -139,14 +115,15 @@ export const addTagToRoot = <K extends propType>(
     addProp(card, prop, value as valueType<K>);
   }
 };
+
 /**
  * Adds a tag note
- * @param card card object
+ * @param card card to add tag note to
  * @param tag tag to add note to
  * @param note note to add
  * @param replaceNote whether to replace the note; if not true, will concat with '; '
  */
-const addTagNote = (card: cardObjectType, tag: string, note: string, replaceNote?: boolean) => {
+const addTagNote = (card: HCCard.Any, tag: string, note: string, replaceNote?: boolean) => {
   if (!replaceNote && card.tag_notes?.[tag]) {
     card.tag_notes[tag] += '; ' + note;
   } else {
@@ -174,15 +151,16 @@ type StringCompatibleForK<K> = K extends 'layout'
 type AcceptableValue<K> = StringCompatibleForK<K>;
 /**
  * Adds a tag
- * @param card card object
+ * @param card card to add tag to
  * @param tag tag to add
  * @param note tag note
  * @param prop prop to set
  * @param value value to set the prop to, or record to access with the tag to get the value
  * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
+ * returns true when the tag is added to the root and false otherwise
  */
 export const addTag = <K extends propType | facePropType>(
-  card: cardObjectType,
+  card: HCCard.Any,
   tag: string,
   note?: string,
   prop?: K,
@@ -196,9 +174,10 @@ export const addTag = <K extends propType | facePropType>(
     defaultToBack?: boolean;
   }
 ) => {
+  let addedToRoot = false;
   if (note) {
-    const useBoth = note.includes('|') && !options?.useRootOnly;
-    const noteIsNum = Number.isInteger(Number(note)) && !options?.useRootOnly;
+    const useBoth = note.includes('|') && !options?.useRootOnly && 'card_faces' in card;
+    const noteIsNum = Number.isInteger(Number(note)) && !options?.useRootOnly && 'card_faces' in card;
     const [face, subnote] = [
       useBoth ? parseInt(note.split('|')[0]) : noteIsNum ? parseInt(note) : undefined,
       useBoth ? note.split('|')[1] : noteIsNum ? undefined : note,
@@ -223,7 +202,7 @@ export const addTag = <K extends propType | facePropType>(
           options?.push
         );
       }
-    } else if (options?.defaultToBack) {
+    } else if (options?.defaultToBack && 'card_faces' in card) {
       if (typeof value == 'string') {
         addTagToFace(card, 1, prop as facePropType, value, options?.push);
       } else if (value) {
@@ -245,6 +224,7 @@ export const addTag = <K extends propType | facePropType>(
       } else if (prop) {
         addTagToRoot(card, prop as propType, options?.useUrl ? tagUrl! : note, options?.push);
       }
+      addedToRoot = Boolean(value || prop)
     }
     if (subnote && !options?.useUrl && !options?.dontAddNote) {
       addTagNote(card, tag, subnote, options?.replaceNote);
@@ -254,6 +234,211 @@ export const addTag = <K extends propType | facePropType>(
       addTagToRoot(card, prop as propType, value, options?.push);
     } else if (value) {
       addTagToRoot(card, prop as propType, value[tag], options?.push);
+    }
+    addedToRoot = Boolean(value)
+  }
+  return addedToRoot;
+};
+export const layoutTags = [
+  'weird-leveler',
+  'leveler',
+  'weird-1-mana-levelers-cycle',
+  'mutate-layout',
+  'prototype',
+  'noncard',
+  'meld',
+  'reminder-card',
+  'draftpartner-faces',
+  'reminder-on-back',
+  'dungeon-in-inset',
+  'dungeon-on-back',
+  'stickers-on-back',
+  'token-in-inset',
+  'token-on-back',
+  'specialize',
+  'mdfc',
+  'transform',
+  'flip',
+  'inset',
+  'prepare',
+  'aftermath',
+  'split',
+  'reminder',
+  'token',
+  'stickers',
+  'dungeon',
+  'draftpartner'
+] as const
+export type layoutTagType = typeof layoutTags[number]
+const singleLayoutTags: Partial<Record<layoutTagType, HCLayoutGroup.SingleFacedType>> = {
+  'weird-leveler': HCLayout.Leveler,
+  leveler: HCLayout.Leveler,
+  'weird-1-mana-levelers-cycle': HCLayout.Leveler,
+  'mutate-layout': HCLayout.Mutate,
+  noncard: HCLayout.Misc,
+  prototype: HCLayout.Prototype,
+};
+
+
+// use this for token faces in combination with cardMultiLayoutToFaceLayout
+const multiLayoutTags = {
+  meld: HCLayout.MeldPart,
+  'draftpartner-faces': HCLayout.DraftPartner,
+  'reminder-on-back': HCLayout.ReminderOnBack,
+  'dungeon-in-inset': HCLayout.DungeonInInset,
+  'dungeon-on-back': HCLayout.DungeonOnBack,
+  'stickers-on-back': HCLayout.StickersOnBack,
+  'token-in-inset': HCLayout.TokenInInset,
+  'token-on-back': HCLayout.TokenOnBack,
+  specialize: HCLayout.Specialize,
+  mdfc: HCLayout.Modal,
+  transform: HCLayout.Transform,
+  flip: HCLayout.Flip,
+  inset: HCLayout.Inset,
+  prepare: HCLayout.Prepare,
+  aftermath: HCLayout.Aftermath,
+  split: HCLayout.Split,
+} as const satisfies Partial<Record<layoutTagType, HCLayoutGroup.MultiFacedType>>;
+
+const layoutTagToImageStatus: Partial<Record<keyof typeof faceLayoutTags | keyof typeof multiToFaceLayoutTags,HCImageStatus>> = {
+  'draftpartner-faces':HCImageStatus.DraftPartner,
+  'draftpartner':HCImageStatus.DraftPartner,
+  'reminder-on-back':HCImageStatus.Reminder,
+  'reminder-card':HCImageStatus.Reminder,
+  'reminder':HCImageStatus.Reminder,
+  'dungeon-in-inset':HCImageStatus.Dungeon,
+  'dungeon-on-back':HCImageStatus.Dungeon,
+  'dungeon':HCImageStatus.Dungeon,
+  'stickers-on-back':HCImageStatus.Stickers,
+  'stickers':HCImageStatus.Stickers,
+  'token-in-inset':HCImageStatus.Token,
+  'token-on-back':HCImageStatus.Token,
+  'token':HCImageStatus.Token,
+  flip: HCImageStatus.Flip,
+  inset: HCImageStatus.Inset,
+  prepare: HCImageStatus.Prepare,
+  aftermath: HCImageStatus.Aftermath,
+  split: HCImageStatus.Split,
+  
+}
+
+
+const frontIgnoreMultiLayoutTags: (keyof typeof multiLayoutTags)[] = [
+  'meld',
+  'draftpartner-faces',
+  'reminder-on-back',
+  'token-on-back',
+  'token-in-inset',
+  'dungeon-on-back',
+  'dungeon-in-inset',
+  'stickers-on-back',
+  'inset',
+  'prepare',
+];
+const faceLayoutTags: Partial<Record<layoutTagType,HCLayoutGroup.FaceLayoutType>> = {
+  'draftpartner': HCLayout.DraftPartner,
+  'reminder': HCLayout.Reminder,
+  'token':HCLayout.Token,
+  'dungeon': HCLayout.Dungeon,
+  'stickers': HCLayout.Stickers,
+  mdfc: HCLayout.Modal,
+  transform: HCLayout.Transform,
+  specialize: HCLayout.Specialize,
+  flip: HCLayout.Flip,
+  inset: HCLayout.Inset,
+  prepare: HCLayout.Prepare,
+  aftermath: HCLayout.Aftermath,
+  split: HCLayout.Split,
+};
+const multiToFaceLayoutTags: Partial<Record<keyof typeof multiLayoutTags,HCLayoutGroup.FaceLayoutType>> = {
+  'draftpartner-faces': HCLayout.DraftPartner,
+  'reminder-on-back': HCLayout.Reminder,
+  'token-on-back':HCLayout.Token,
+  'token-in-inset':HCLayout.Token,
+  'dungeon-in-inset': HCLayout.Dungeon,
+  'dungeon-on-back': HCLayout.Dungeon,
+  'stickers-on-back': HCLayout.Stickers,
+  mdfc: HCLayout.Modal,
+  transform: HCLayout.Transform,
+  specialize: HCLayout.Specialize,
+  flip: HCLayout.Flip,
+  inset: HCLayout.Inset,
+  prepare: HCLayout.Prepare,
+  aftermath: HCLayout.Aftermath,
+  split: HCLayout.Split,
+};
+
+const defaultRootLayouts = [HCLayout.MultiToken,HCLayout.Multi,HCLayout.Token,HCLayout.Normal]
+
+export const layoutIsDefault = (card:HCCard.Any, index?:number) => {
+  if (index == undefined) {
+    return defaultRootLayouts.includes(card.layout as HCLayout)
+  }
+  if (!('card_faces' in card)) return false;
+  if (!index) {
+    return card.card_faces[0].layout == (card.isActualToken ? HCLayout.Token : HCLayout.Normal)
+  }
+  return card.card_faces[index].layout == (card.isActualToken ? HCLayout.Token : HCLayout.Multi)
+}
+
+
+const addLayoutToRoot =(card:HCCard.Any,tag:string, value:typeof singleLayoutTags | typeof multiLayoutTags) => addTagToRoot(card,'layout',value[tag as keyof typeof value] as HCLayoutGroup.SingleFacedType)
+const addLayoutToFace =(card:HCCard.AnyMultiFaced, index:number, tag:string, value:typeof faceLayoutTags | typeof multiToFaceLayoutTags) => {
+  addTagToFace(card, index,'layout',value[tag as keyof typeof value] as HCLayoutGroup.FaceLayoutType);
+  if (!card.card_faces[index].image && tag in layoutTagToImageStatus) {
+    card.card_faces[index].image_status = layoutTagToImageStatus[tag as keyof typeof value]!
+  }
+}
+
+export const addLayoutTag = <K extends propType | facePropType>(
+  card: HCCard.Any,
+  tag: string,
+  note?: string,
+) => {
+  const useBoth = note?.includes('|') && 'card_faces' in card;
+  const noteIsNum = Number.isInteger(Number(note)) && 'card_faces' in card;
+
+  if (note) {
+    const [face, subnote] = [
+      useBoth ? parseInt(note.split('|')[0]) : noteIsNum ? parseInt(note) : undefined,
+      useBoth ? note.split('|')[1] : noteIsNum ? undefined : note,
+    ];
+    if (subnote) {
+      addTagNote(card, tag, subnote);
+    }
+    if (face != undefined) {
+      if (tag in faceLayoutTags && 'card_faces' in card) {
+        addLayoutToFace(card, face, tag, faceLayoutTags);
+      }
+      return;
+    }
+  }
+  if (!('card_faces' in card)) {
+    if (tag in singleLayoutTags) {
+      addLayoutToRoot(card,tag, singleLayoutTags)
+    }
+  } else {
+    if (tag in multiLayoutTags) {
+      if (!card.isActualToken) {
+        addLayoutToRoot(card,tag, multiLayoutTags)
+      }
+      if (tag in multiToFaceLayoutTags) {
+        card.card_faces.forEach((face,i)=> {
+          if ((i || !(tag in frontIgnoreMultiLayoutTags)) && !layoutIsDefault(card,i)) {
+            addLayoutToFace(card,i,tag, multiToFaceLayoutTags)
+          }
+        })
+      }
+    } else if (tag == 'meld') {
+      addTagToRoot(card,'layout',(card.isActualToken ? 'meld_result':'meld_part') as HCLayoutGroup.SingleFacedType)
+      card.card_faces.forEach((face,i)=> {
+        addTagToFace(card,i,'layout', i ? 'meld_result' : 'meld_part' as HCLayoutGroup.FaceLayoutType)
+      })
+    } else if (tag == 'reminder-card' && card.isActualToken) {
+      addTagToRoot(card,'layout','multi_reminder' as HCLayoutGroup.SingleFacedType)
+      card.card_faces.forEach((face,i)=> {
+        addTagToFace(card,i,'layout', 'reminder')
+      })
     }
   }
 };

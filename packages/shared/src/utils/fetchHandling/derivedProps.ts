@@ -24,6 +24,7 @@ import {
   getMVFromCost,
   getPipColorsFromText,
 } from '@hellfall/shared/utils';
+import { handleTags } from './tagHandling';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -110,7 +111,10 @@ export const getColorIdentityProps = (
   };
 };
 
-export const setDerivedProps = (card: HCCard.Any) => {
+export const setDerivedProps = (card: HCCard.Any, tags?:string[])/* :{card:HCCard.Any;relateds?:HCCard.Any[]}  */=> {
+  if (tags && tags.length) {
+    card = handleTags(card,tags)
+  }
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,
     i: number
@@ -259,6 +263,7 @@ export const setDerivedProps = (card: HCCard.Any) => {
   card.colors = orderColors(card.colors) as HCColors;
   card.color_identity = orderColors(color_identity) as HCColors;
   card.color_identity_hybrid = orderHybrid(color_identity_hybrid) as HCColors[];
+
 };
 const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
   'draft_partner',

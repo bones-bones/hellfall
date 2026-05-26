@@ -37,30 +37,38 @@ export namespace HCCardFields.Core {
    */
   export type HCReferences = {
     /**
+     * 
      * A unique ID for this card in HC's database.
-     *
+     * 
      * @type UUID
      */
     id: string;
     /**
-     * A unique oracle ID for this card in Scryfall's database, if it exists
-     * (This is for the card in general)
-     *
+     * whether the card has a scryfall id
+     */
+    id_is_scryfall?: boolean;
+    /**
+     * 
+     * A unique ID for this card's oracle identity.
+     * This value is consistent across reprinted card editions, and unique among different cards with the same name (tokens, Unstable variants, etc).
+     * 
      * @type UUID
      */
     oracle_id?: string;
     /**
-     * A unique ID for this card in Scryfall's database, if it exists
-     * (This is for the specific printing)
-     *
-     * @type UUID
+     * whether the card has a scryfall oracle id
      */
-    scryfall_id?: string;
+    oracle_id_is_scryfall?: boolean;
     /**
      * A code for this card's layout. TODO: rework
      *
      * @see {@link https://scryfall.com/docs/api/layouts}
      */
+    /**
+     * the old unique ID for this card in HC's database.
+     */
+    // hcid: string; #uuid
+    scryfall_id?:string; //#uuid
     // layout: `${HCLayout}`;
     /**
      * All rulings for the card.
@@ -93,12 +101,17 @@ export namespace HCCardFields.Core {
     /**
      * Stable Firestore-friendly ID for tokens, sourced from the token sheet.
      * Stored in Firestore as `token-<token_id>`.
+     * remove soon
      */
     token_id?: string;
     /**
      * Whether this card is an actual token (TODO: replace with type-based checks)
      */
     isActualToken?: boolean;
+    /**
+     * Kind of card
+     */
+    // kind: 'card'|'token'|'land'; #uuid:later (use to replace isActualToken checks and set.startsWith('HBB') checks)
     layout: `${HCLayout}`;
   };
 }
@@ -527,7 +540,11 @@ export namespace HCCardFields.Print {
     /**
      * This card's border color: black, white, borderless, silver, gold, yellow, blue, or rainbow.
      */
-    border_color: `${HCBorderColor}`;
+    border_color?: `${HCBorderColor}`;
+    /**
+     * A computer-readable flag that indicate if this card has a foil, nonfoil, or etched finish.
+     */
+    finish?: `${HCFinish}`;
   };
 
   type VariationInfo = {

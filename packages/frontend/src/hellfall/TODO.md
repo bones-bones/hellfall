@@ -102,3 +102,12 @@ Write a script to transform the database
 - make thread for token errors
 - add is:conjured and is:remindercard
 - add conjured to layouts?
+- switch to using uuids
+  - #uuid:hcid = replace all usages of id with hcid
+  - #uuid:id = replace all usages of scryfall_id with id
+  - #uuid:first = only use on the initial run; delete afterwards
+  - #uuid:later = do after everything else is working
+- switch to using uuid card map instead of list of cards (both for main maps and subsets)
+- add reprint handling using oracle id
+- fix uuids of all cards that are also on scryfall
+- remove token_id

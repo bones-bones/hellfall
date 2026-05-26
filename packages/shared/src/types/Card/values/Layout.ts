@@ -290,6 +290,7 @@ export namespace HCLayoutGroup {
    */
   export const FaceLayout = [
     `${HCLayout.Normal}`,
+    `${HCLayout.Multi}`,
     `${HCLayout.MeldPart}`,
     `${HCLayout.MeldResult}`,
     `${HCLayout.Token}`,

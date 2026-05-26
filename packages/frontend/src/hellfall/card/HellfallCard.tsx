@@ -314,7 +314,7 @@ export const HellfallCard = ({
           )}
           {data.id && (
             <>
-              <SmallText key="id">Id: {data.id}</SmallText>
+              <SmallText key="hcid">Id: {data.id}</SmallText>
             </>
           )}
           {
