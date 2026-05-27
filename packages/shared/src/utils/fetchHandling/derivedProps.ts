@@ -34,6 +34,25 @@ const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.DraftPartner,
 ];
 
+export const landNames = [
+  'Plains',
+  'Island',
+  'Swamp',
+  'Mountain',
+  'Forest',
+  'Nebula',
+  'Wastes',
+  'Snow-Covered Plains',
+  'Snow-Covered Island',
+  'Snow-Covered Swamp',
+  'Snow-Covered Mountain',
+  'Snow-Covered Forest',
+  'Snow-Covered Nebula',
+  'Snow-Covered Wastes',
+];
+
+
+
 export const getColorIdentityProps = (
   card: HCCard.Any
 ): { color_identity: HCColors; color_identity_hybrid: HCColors[] } => {
@@ -417,10 +436,10 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     });
   } else {
     let exportName = toExportName(
-      card.set.startsWith('HBB')
-        ? `${card.name} (${card.id})`
+      card.set.startsWith('HBB') && landNames.includes(card.name)
+        ? `${card.name} (${card.hcid})`
         : card.isActualToken
-        ? card.id
+        ? card.hcid
         : card.name
     );
     if (exportName.startsWith('(') || /^\d/.test(exportName)) {
@@ -432,7 +451,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     while (takenNames.includes(exportName) || isInteger(exportName)) {
       exportName += '_';
     }
-    if (exportName != (card.isActualToken ? card.id : card.name)) {
+    if (exportName != (card.isActualToken ? card.hcid : card.name)) {
       card.export_name = exportName;
     }
     takenNames.push(exportName);

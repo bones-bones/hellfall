@@ -38,7 +38,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
   const asJson = (await requestedData.json()) as any;
   const [_garbage, _oldKeys, ...rest] = asJson.values as string[][];
   const keys = [
-    'id',
+    'hcid',
     'name',
     'image',
     'creators',
@@ -224,7 +224,8 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
 
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
-                id: shouldUseBase ? name : '', // #uuid
+                id: '',
+                hcid: shouldUseBase ? name : '',
                 name: shouldUseBase ? base : name,
                 set: '',
                 image: '',

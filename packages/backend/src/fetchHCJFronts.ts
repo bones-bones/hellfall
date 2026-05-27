@@ -23,7 +23,9 @@ export type HCJPackInfo = {
 export const packInfoToCard = (entry: HCJPackInfo): HCCard.Any => {
   const card: Omit<HCCard.Front, 'toJSON'> = {
     object: HCObject.ObjectType.Card,
-    id: `fhcj-${entry.tag}`,
+    id:'',
+    oracle_id:'',
+    hcid: `fhcj-${entry.tag}`,
     layout: HCLayout.Front,
     name: `${entry.name} - ${entry.tag}`,
     image: entry.url,
@@ -452,7 +454,8 @@ export const fetchHCJFronts = (): HCCard.Any[] =>
     front.all_parts = pack.lands.map(land => {
       const part: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
-        id: land.id || '',
+        id:'',
+        hcid: land.id || '',
         component: 'draft_partner',
         name: land.name || '',
         type_line: '',
@@ -467,7 +470,8 @@ export const fetchHCJFronts = (): HCCard.Any[] =>
     if (pack.secondCopyOf) {
       front.all_parts.push({
         object: HCObject.ObjectType.RelatedCard,
-        id: pack.secondCopyOf,
+        id:'',
+        hcid: pack.secondCopyOf,
         component: 'draft_partner',
         name: '',
         type_line: '',

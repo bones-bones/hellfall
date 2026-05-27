@@ -111,7 +111,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     for (let i = 0; i < keys.length; i++) {
       if (entry[i]) {
         if (keys[i] == 'name') {
-          tokenObject.id = entry[i];
+          tokenObject.hcid = entry[i];
           tokenObject.name = hardTokenIds.includes(entry[i])
             ? entry[i].slice(0, -1)
             : entry[i].replace(/\d+$/, '');
@@ -139,8 +139,6 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
               addPropToFace(tokenObject, keys[i] as 'power' | 'toughness', value, index);
             }
           });
-        } else if (keys[i] == 'CN') {
-          addProp(tokenObject, 'token_id', entry[i]);
         } else if (keys[i] == 'creators' || keys[i] == 'artists') {
           addProp(tokenObject, keys[i] as 'creators' | 'artists', entry[i].split(';'));
         } else if (keys[i] == 'token_maker') {
@@ -157,7 +155,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
                 ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!));
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
-              id: shouldUseBase ? name : '', // #uuid:hcid
+              id:'',
+              hcid: shouldUseBase ? name : '',
               name: shouldUseBase ? base : name,
               set: '',
               image: '',

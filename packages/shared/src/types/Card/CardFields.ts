@@ -55,7 +55,7 @@ export namespace HCCardFields.Core {
      *
      * @type UUID
      */
-    oracle_id?: string;
+    oracle_id: string;
     /**
      * whether the card has a scryfall oracle id
      */
@@ -68,8 +68,7 @@ export namespace HCCardFields.Core {
     /**
      * the old unique ID for this card in HC's database.
      */
-    // hcid: string; #uuid
-    scryfall_id?: string; //#uuid
+    hcid: string;
     // layout: `${HCLayout}`;
     /**
      * All rulings for the card.
@@ -109,10 +108,10 @@ export namespace HCCardFields.Core {
      * Whether this card is an actual token (TODO: replace with type-based checks)
      */
     isActualToken?: boolean;
-    /**
-     * Kind of card
-     */
-    // kind: 'card'|'token'|'land'; #uuid:later (use to replace isActualToken checks and set.startsWith('HBB') checks)
+    // /**
+    //  * Kind of card
+    //  */
+    // kind: 'card'|'token'|'land'|'front'|'scryfall'|'notmagic'; #uuid:later (use to replace isActualToken checks and set.startsWith('HBB') checks)
     layout: `${HCLayout}`;
   };
 }

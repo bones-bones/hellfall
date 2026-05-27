@@ -277,11 +277,11 @@ export const getAllRelated = (card: HCCard.Any, cardMap: cardMap): cardMap =>
     card.all_parts?.flatMap(
       part =>
         cardMap.get(part.id) ??
-        cardMap.values().find(related => textEquals(part.id, related.id)) ??
+        cardMap.values().find(related => textEquals(part.hcid, related.hcid)) ??
         cardMap.values().find(related => textEquals(part.name, related.name)) ??
         []
     ) ?? []
-  ); // #uuid:hcid (only for second one)
+  );
 
 export const getRelatedsFromCards = (
   cardList: HCCard.Any[],

@@ -3,8 +3,10 @@ import { facePropType, partPropType, propType } from './propTypes';
 export const propOrder: propType[] = [
   'object',
   'id',
-  'scryfall_id',
+  'id_is_scryfall',
   'oracle_id',
+  'oracle_id_is_scryfall',
+  'hcid',
   'name',
   'flavor_name',
   'export_name',
@@ -99,6 +101,7 @@ export const facePropOrder: facePropType[] = [
 export const partPropOrder: partPropType[] = [
   'object',
   'id',
+  'hcid',
   'name',
   'set',
   'image',

@@ -89,6 +89,7 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
   const italicsReplaceKeys: string[] = ['name', 'flavor_text', 'oracle_text'];
   const sameKeys: string[] = [
     'object',
+    'id',
     'oracle_id',
     'mana_cost',
     'type_line',
@@ -108,7 +109,6 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'frame_effects',
   ];
   const keyCorrespondences: Record<string, any> = {
-    id: 'scryfall_id',
     cmc: 'mana_value',
   };
   const defaultProps: Record<string, any> = {

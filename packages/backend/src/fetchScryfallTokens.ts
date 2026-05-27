@@ -52,22 +52,12 @@ export const fetchScryfallTokens = async () => {
   const asJson = (await requestedData.json()) as any;
 
   const [_oldkeys, ...rest] = asJson.values as string[][];
-  const keys = ['id', 'scryfall_id', 'layout', 'token_maker', 'notes', 'tags'];
+  const keys = ['hcid', 'id', 'layout', 'token_maker', 'notes', 'tags'];
   rest.forEach(row => {
     while (row.length < keys.length) {
       row.push('');
     }
   });
-  const typeLayouts: Record<string, HCLayout> = {
-    Emblem: HCLayout.Emblem,
-    'Reminder Card': HCLayout.Reminder,
-    Stickers: HCLayout.Stickers,
-    Dungeon: HCLayout.Dungeon,
-    'Real Card': HCLayout.RealCardToken,
-    'Ad Card': HCLayout.Misc,
-    Misc: HCLayout.Misc,
-    Checklist: HCLayout.Checklist,
-  };
 
   const theThing = await Promise.all(
     rest.map(async entry => {
@@ -89,7 +79,8 @@ export const fetchScryfallTokens = async () => {
                 ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
-                id: shouldUseBase ? name : '',
+                id:'',
+                hcid: shouldUseBase ? name : '',
                 component: 'token_maker',
                 name: shouldUseBase ? base : name,
                 type_line: '',

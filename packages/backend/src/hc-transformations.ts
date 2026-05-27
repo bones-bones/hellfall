@@ -132,7 +132,7 @@ const notMagicRemovableProps: propType[] = [
   'tags',
 ];
 const cardUninferrableProps: propType[] = [
-  'scryfall_id', // #uuid:id
+  'id',
   'oracle_id',
   'image_status',
   'draft_image_status',
@@ -146,7 +146,7 @@ const cardMoveProps: (propType & facePropType)[] = [
   'color_indicator',
 ];
 const tokenInferrableProps: propType[] = [
-  'id', // #uuid:hcid
+  'hcid',
   'name',
   'flavor_name',
   'set',
@@ -334,11 +334,11 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       } else if (key == 'all_parts' && existingCard.all_parts && newCard.all_parts) {
         merged.all_parts = newCard.all_parts?.map(part => {
           // is true when the thing that makes this is itself a token
-          const tokenIsMaker = !!(part.name && part.id); // #uuid:hcid
+          const tokenIsMaker = part.name && part.hcid;
           const existingPart = tokenIsMaker
-            ? existingCard.all_parts?.find(e => textEquals(e.id, part.id)) // #uuid:hcid
+            ? existingCard.all_parts?.find(e => textEquals(e.hcid, part.hcid))
             : existingCard.all_parts?.find(
-                e => textEquals(e.name, part.name) && e.name != e.id.replace(/\d+$/, '') // #uuid:hcid
+                e => textEquals(e.name, part.name) && e.name != e.hcid.replace(/\d+$/, '')
               );
           if (existingPart) {
             // if there is already a part, update it
@@ -445,16 +445,16 @@ const mergeDatabases = (
   existingLands: HCCard.Any[],
   newLands: HCCard.Any[]
 ): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[]; mergedLands: HCCard.Any[] } => {
-  const existingCardMap = new Map(existingCards.map(card => [card.id, card])); // #uuid:hcid
-  const existingTokenMap = new Map(existingTokens.map(token => [token.id.toLowerCase(), token])); // #uuid:hcid
-  const existingLandMap = new Map(existingLands.map(land => [land.id, land])); // #uuid:hcid
+  const existingCardMap = new Map(existingCards.map(card => [card.hcid, card]));
+  const existingTokenMap = new Map(existingTokens.map(token => [token.hcid.toLowerCase(), token]));
+  const existingLandMap = new Map(existingLands.map(land => [land.hcid, land]));
 
   const mergedCards = newCards.map(newCard => {
-    const existingCard = !(newCard.id in movedIds) // #uuid:hcid
-      ? existingCardMap.get(newCard.id) // #uuid:hcid
-      : existingCardMap.get(movedIds[newCard.id]); // #uuid:hcid
+    const existingCard = !(newCard.hcid in movedIds)
+      ? existingCardMap.get(newCard.hcid)
+      : existingCardMap.get(movedIds[newCard.hcid]);
     if (existingCard) {
-      existingCardMap.delete(existingCard.id); // #uuid:hcid
+      existingCardMap.delete(existingCard.hcid);
       return mergeCards(existingCard, newCard);
     }
     setDerivedProps(newCard);
@@ -472,11 +472,11 @@ const mergeDatabases = (
   }
 
   const mergedTokens = newTokens.map(newToken => {
-    const existingToken = !(newToken.id in movedIds) // #uuid:hcid
-      ? existingTokenMap.get(newToken.id?.toLowerCase()) // #uuid:hcid
-      : existingTokenMap.get(movedIds[newToken.id]); // #uuid:hcid
+    const existingToken = !(newToken.hcid in movedIds)
+      ? existingTokenMap.get(newToken.hcid?.toLowerCase())
+      : existingTokenMap.get(movedIds[newToken.hcid]);
     if (existingToken) {
-      existingTokenMap.delete(existingToken.id.toLowerCase()); // #uuid:hcid
+      existingTokenMap.delete(existingToken.hcid.toLowerCase());
       return mergeCards(existingToken, newToken);
     }
     setDerivedProps(newToken);
@@ -505,11 +505,11 @@ const mergeDatabases = (
     );
   }
   const mergedLands = newLands.map(newLand => {
-    const existingLand = !(newLand.id in movedIds) // #uuid:hcid
-      ? existingLandMap.get(newLand.id) // #uuid:hcid
-      : existingLandMap.get(movedIds[newLand.id]); // #uuid:hcid
+    const existingLand = !(newLand.hcid in movedIds)
+      ? existingLandMap.get(newLand.hcid)
+      : existingLandMap.get(movedIds[newLand.hcid]);
     if (existingLand) {
-      existingLandMap.delete(existingLand.id); // #uuid:hcid
+      existingLandMap.delete(existingLand.hcid);
       return mergeCards(existingLand, newLand);
     }
     setDerivedProps(newLand);
@@ -576,12 +576,12 @@ const mergeDatabases = (
     }
   });
   mergedCards.sort((a, b) => {
-    if (parseInt(a.id) == parseInt(b.id)) {
-      if (a.id > b.id) {
+    if (parseInt(a.hcid) == parseInt(b.hcid)) {
+      if (a.hcid > b.hcid) {
         return 1;
       }
       return -1;
-    } else if (parseInt(a.id) > parseInt(b.id)) {
+    } else if (parseInt(a.hcid) > parseInt(b.hcid)) {
       return 1;
     }
     return -1;
@@ -595,8 +595,8 @@ const mergeDatabases = (
     }
     if (a.name == b.name) {
       if (
-        (parseInt(a.id.match(/\d+$/)?.[0] || '') || 0) >
-        (parseInt(b.id.match(/\d+$/)?.[0] || '') || 0)
+        (parseInt(a.hcid.match(/\d+$/)?.[0] || '') || 0) >
+        (parseInt(b.hcid.match(/\d+$/)?.[0] || '') || 0)
       ) {
         return 1;
       }
@@ -607,43 +607,43 @@ const mergeDatabases = (
     }
     return -1;
   });
-  // const hcToOracleUUIDs = new Map<string,string>(); // #uuid
-  // [mergedCards,mergedTokens,mergedLands].forEach(mergedList=>mergedList.forEach(card=> {
-  //   if (!card.id) {
-  //     card.id = crypto.randomUUID();
-  //   } else {
-  //     card.id_is_scryfall = true; // #uuid:first
-  //   }
-  //   if (card.oracle_id) { // #uuid:first
-  //     card.oracle_id_is_scryfall = true;
-  //   }
-  //   if (hcToOracleUUIDs.has(card.variation_of ?? card.id)) { // #uuid:first (variation handling), #uuid:hcid
-  //     card.oracle_id = hcToOracleUUIDs.get(card.variation_of ?? card.id)! // #uuid:hcid
-  //   } else {
-  //     card.oracle_id = card.oracle_id ?? crypto.randomUUID()
-  //     hcToOracleUUIDs.set(card.variation_of ?? card.id,card.oracle_id)
-  //   }
-  //   if (card.variation) { // #uuid:first
-  //     card.variation = false;
-  //     deleteProp(card,'variation_of');
-  //   }
-  //   if (card.tags?.includes('masterpiece')) {
-  //     const originalName = stripMasterpiece(card.name);
-  //     const original = mergedList.find(c=>textEquals(c.name,originalName))
-  //     if (original?.oracle_id) {
-  //       card.oracle_id = original.oracle_id
-  //     }
-  //   } else if (card.tags?.includes('reprint')) {
-  //     const originalName = stripSetCode(card.name);
-  //     const original = mergedList.find(c=>textEquals(c.name,originalName))
-  //     if (original?.oracle_id) {
-  //       card.oracle_id = original.oracle_id
-  //     }
-  //   }
-  //   if (!card.oracle_id) {
-  //     card.oracle_id = crypto.randomUUID();
-  //   }
-  // }))
+  const hcToOracleUUIDs = new Map<string,string>();
+  [mergedCards,mergedTokens,mergedLands].forEach(mergedList=>mergedList.forEach(card=> {
+    if (!card.id) {
+      card.id = crypto.randomUUID();
+    } else {
+      card.id_is_scryfall = true; // #uuid:first
+    }
+    if (card.oracle_id) { // #uuid:first
+      card.oracle_id_is_scryfall = true;
+    }
+    if (hcToOracleUUIDs.has(card.variation_of ?? card.hcid)) { // #uuid:first (variation handling),
+      card.oracle_id = hcToOracleUUIDs.get(card.variation_of ?? card.hcid)!
+    } else {
+      card.oracle_id = card.oracle_id ?? crypto.randomUUID()
+      hcToOracleUUIDs.set(card.variation_of ?? card.hcid,card.oracle_id)
+    }
+    if (card.variation) { // #uuid:first
+      card.variation = false;
+      deleteProp(card,'variation_of');
+    }
+    if (card.tags?.includes('masterpiece')) {
+      const originalName = stripMasterpiece(card.name);
+      const original = mergedList.find(c=>textEquals(c.name,originalName))
+      if (original?.oracle_id) {
+        card.oracle_id = original.oracle_id
+      }
+    } else if (card.tags?.includes('reprint')) {
+      const originalName = stripSetCode(card.name);
+      const original = mergedList.find(c=>textEquals(c.name,originalName))
+      if (original?.oracle_id) {
+        card.oracle_id = original.oracle_id
+      }
+    }
+    if (!card.oracle_id) {
+      card.oracle_id = crypto.randomUUID();
+    }
+  }))
 
   return { mergedCards, mergedTokens, mergedLands };
 };

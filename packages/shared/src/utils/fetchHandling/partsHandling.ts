@@ -20,7 +20,7 @@ export const updateParts = (
       const cardAsRelated: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: card.id,
-        // hcid: card.hcid, // #uuid
+        hcid: card.hcid,
         name: card.name,
         set: card.set,
         image: card.image,
@@ -34,6 +34,7 @@ export const updateParts = (
         : {
             object: HCObject.ObjectType.RelatedCard,
             id: relatedCard.id,
+            hcid: relatedCard.hcid,
             name: relatedCard.name,
             set: relatedCard.set,
             image: relatedCard.image,
@@ -46,7 +47,7 @@ export const updateParts = (
       }
       if (alreadyHasPart) {
         part.id = relatedCard.id;
-        // part.hcid = relatedCard.hcid #uuid
+        part.hcid = relatedCard.hcid
         part.name = relatedCard.name;
         part.set = relatedCard.set;
         part.image = relatedCard.image;
@@ -91,7 +92,7 @@ export const updateParts = (
       const cardAsRelated: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: card.id,
-        // hcid: card.hcid, // #uuid
+        hcid: card.hcid,
         name: card.name,
         set: card.set,
         image: card.image,
@@ -103,13 +104,13 @@ export const updateParts = (
       }
       const relatedCard =
         relateds.get(part.id) ??
-        relateds.values().find(related => textEquals(part.id, related.id)) ??
+        relateds.values().find(related => textEquals(part.hcid, related.hcid)) ??
         relateds.values().find(related => textEquals(part.name, related.name));
       if (!relatedCard) {
         throw console.error;
       }
       part.id = relatedCard.id;
-      // part.hcid = relatedCard.hcid; #uuid
+      part.hcid = relatedCard.hcid;
       part.name = relatedCard.name;
       part.set = relatedCard.set;
       part.image = relatedCard.image;
@@ -130,10 +131,10 @@ export const updateParts = (
       if (
         (card.type_line.includes('Stickers') && relatedCard.tags?.includes('draftpartner')) ||
         (relatedCard.tags?.includes('AddCards') &&
-          card.id != 'Ticket Counter1' && // #uuid:hcid
+          card.hcid != 'Ticket Counter1' &&
           (!relatedCard.tag_notes?.['AddCards'] ||
             parseInt(relatedCard.tag_notes['AddCards']) ||
-            relatedCard.tag_notes['AddCards'] == card.id)) // #uuid:hcid
+            relatedCard.tag_notes['AddCards'] == card.hcid))
       ) {
         relatedCard.has_draft_partners = true;
         card.has_draft_partners = true;
@@ -148,7 +149,7 @@ export const updateParts = (
       const cardAsRelated: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: card.id,
-        // hcid: card.hcid, // #uuid
+        hcid: card.hcid,
         name: card.name,
         set: card.set,
         image: card.image,
@@ -161,7 +162,7 @@ export const updateParts = (
       }
       const relatedCard =
         relateds.get(part.id) ??
-        relateds.values().find(related => textEquals(part.id, related.id)) ??
+        relateds.values().find(related => textEquals(part.hcid, related.hcid)) ??
         relateds.values().find(related => textEquals(part.name, related.name));
       if (!relatedCard) {
         throw console.error;
@@ -174,7 +175,7 @@ export const updateParts = (
       }
 
       part.id = relatedCard.id;
-      // part.hcid = relatedCard.hcid; #uuid
+      part.hcid = relatedCard.hcid;
       part.name = relatedCard.name;
       part.set = relatedCard.set;
       part.image = relatedCard.image;
@@ -195,13 +196,13 @@ export const updateParts = (
       .forEach(part => {
         const relatedCard =
           relateds.get(part.id) ??
-          relateds.values().find(related => textEquals(part.id, related.id)) ??
+          relateds.values().find(related => textEquals(part.hcid, related.hcid)) ??
           relateds.values().find(related => textEquals(part.name, related.name));
         if (!relatedCard) {
           throw console.error;
         }
         part.id = relatedCard.id;
-        // part.hcid = relatedCard.hcid #uuid
+        part.hcid = relatedCard.hcid;
         part.name = relatedCard.name;
         part.set = relatedCard.set;
         part.image = relatedCard.image;
@@ -217,7 +218,7 @@ export const updateParts = (
     const meldResult: HCRelatedCard = {
       object: HCObject.ObjectType.RelatedCard,
       id: card.id,
-      // hcid: card.hcid, // #uuid
+      hcid: card.hcid,
       name: card.name,
       set: card.set,
       image: card.image,
