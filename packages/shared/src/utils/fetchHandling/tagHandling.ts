@@ -1,5 +1,5 @@
 import { HCBorderColor, HCCard, HCCardFace, HCFinish, HCFrame, HCFrameEffect, HCImageStatus, HCLayout, HCLayoutGroup } from "@hellfall/shared/types";
-import { addLayoutTag, addProp, addTag, addTagToFace, deleteProp, deletePropFromFace, layoutIsDefault, layoutTags } from "./fetchUtils";
+import { addLayoutTag, addProp, addTag, addTagToFace, deleteProp, deletePropFromFace, layoutIsDefault, layoutTags, layoutTagType } from "./fetchUtils";
 import { facePropType, faceType, faceValueType, propType, valueType } from "../cardHandling";
 import { listShareLower } from "../listHandling";
 import { setDerivedProps } from "./derivedProps";
@@ -43,7 +43,7 @@ const tokenFrameTags: Record<string, HCFrame> = {
   '2015-frame': HCFrame.StampToken,
   '2020-frame': HCFrame.FullToken,
 };
-const frameEffectTags: Record<string, HCFrameEffect> = {
+export const frameEffectTags: Record<string, HCFrameEffect> = {
   'miracle-frame': HCFrameEffect.Miracle,
   'nyx-frame': HCFrameEffect.Enchantment,
   'draft-frame': HCFrameEffect.Draft,
@@ -101,7 +101,6 @@ const borderColorTags: Record<string, HCBorderColor> = {
 const removableTagProps: propType[]=['flavor_name','watermark','frame_effects', 'rotated_image','still_image','draft_image', 'draft_image_status','rotated_draft_image','still_draft_image']
 const removableFaceTagProps: facePropType[]=['finish','border_color', 'frame']
 
-// TODO: move hc-transformations all_parts syncing code to syncAllParts.ts
 const setTagPropsToDefault = (card:HCCard.Any) =>{
   removableTagProps.forEach(prop=> deleteProp(card,prop))
   card.finish = HCFinish.Nonfoil;
@@ -118,7 +117,7 @@ const setTagPropsToDefault = (card:HCCard.Any) =>{
       }
     })
   } else {
-    card.layout = card.isActualToken ? HCLayout.Token : HCLayout.Normal
+    card.layout = card.isActualToken ? HCLayout.Token : card.set.startsWith('FHCJ')? HCLayout.Front : HCLayout.Normal
   }
 }
 
@@ -183,7 +182,7 @@ const setFacePropsFromTypes = (face:faceType, shouldSetLayout:boolean, isTokenRo
   }
 }
 
-export const handleTags = (card:HCCard.Any, tags:string[]):HCCard.Any => {
+export const handleTags = (card:HCCard.Any, tags:string[]) => {
   setTagPropsToDefault(card);
   card.tags = tags.map(fullTag => {
     const hasNote = fullTag.includes('<') && fullTag.endsWith('>');
@@ -200,12 +199,12 @@ export const handleTags = (card:HCCard.Any, tags:string[]):HCCard.Any => {
     } else if (tag in tokenFrameTags && card.isActualToken) {
       addTag(card, tag, note, 'frame', tokenFrameTags);
     } else if (tag in frameEffectTags) {
-      addTag(card, tag, note, 'frame_effects', frameEffectTags, { push: true });
+      addTag(card, tag, note || '0', 'frame_effects', frameEffectTags, { push: true });
     } else if (tag in faceImageTagProps) {
       addTag(card, tag, note, faceImageTagProps[tag], undefined, { useUrl: true });
     } else if (tag in borderColorTags) {
       addTag(card, tag, note, 'border_color', borderColorTags);
-    } else if (tag in layoutTags) {
+    } else if (layoutTags.includes(tag as layoutTagType)) {
       addLayoutTag(card,tag,note)
     } else if (tag == 'foil') {
       addTag(card, tag, note, 'finish', HCFinish.Foil);
@@ -241,6 +240,4 @@ export const handleTags = (card:HCCard.Any, tags:string[]):HCCard.Any => {
   } else (
     setFacePropsFromTypes(card,layoutIsDefault(card),card.isActualToken)
   )
-  setDerivedProps(card);
-  return card
 }

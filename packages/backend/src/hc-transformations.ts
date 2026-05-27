@@ -1221,7 +1221,7 @@ const main = async () => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
         typeEntry => {
-          typeSet.add(textPrep(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''), true));
+          typeSet.add(textPrep(typeEntry.replaceAll(/[[\]{}*_~]/g, ''), true));
         }
       );
     });
@@ -1340,11 +1340,11 @@ const main = async () => {
   );
   fs.writeFileSync(
     '../shared/src/data/tokens.json',
-    JSON.stringify({ data: finalCards.values().filter(card=>card.isActualToken) }, null, '\t')
+    JSON.stringify({ data: Array.from(finalCards.values().filter(card=>card.isActualToken || card.set == 'FHCJ')) }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/lands.json',
-    JSON.stringify({ data: finalCards.values().filter(card=>card.set.startsWith('HBB')) }, null, '\t')
+    JSON.stringify({ data: Array.from(finalCards.values().filter(card=>card.set.startsWith('HBB'))) }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tags.json',
@@ -1382,7 +1382,7 @@ const main = async () => {
     '../shared/src/data/Hellscube-Database.json',
     JSON.stringify(
       {
-        data: finalCards.values(),
+        data: Array.from(finalCards.values()),
       },
       null,
       '\t'

@@ -22,6 +22,7 @@ import {
   pushProp,
   valueType,
 } from '@hellfall/shared/utils';
+import { frameEffectTags } from './tagHandling';
 
 export const fillFacesTo = (card: cardObjectType | HCCard.AnyMultiFaced, index: number) => {
   while (card.card_faces.length <= index) {
@@ -226,7 +227,7 @@ export const addTag = <K extends propType | facePropType>(
       }
       addedToRoot = Boolean(value || prop)
     }
-    if (subnote && !options?.useUrl && !options?.dontAddNote) {
+    if (subnote && !options?.useUrl && !options?.dontAddNote && !(subnote == '0' && tag in frameEffectTags)) {
       addTagNote(card, tag, subnote, options?.replaceNote);
     }
   } else {
@@ -282,7 +283,7 @@ const singleLayoutTags: Partial<Record<layoutTagType, HCLayoutGroup.SingleFacedT
 
 // use this for token faces in combination with cardMultiLayoutToFaceLayout
 const multiLayoutTags = {
-  meld: HCLayout.MeldPart,
+  // meld: HCLayout.MeldPart,
   'draftpartner-faces': HCLayout.DraftPartner,
   'reminder-on-back': HCLayout.ReminderOnBack,
   'dungeon-in-inset': HCLayout.DungeonInInset,
@@ -324,7 +325,7 @@ const layoutTagToImageStatus: Partial<Record<keyof typeof faceLayoutTags | keyof
 
 
 const frontIgnoreMultiLayoutTags: (keyof typeof multiLayoutTags)[] = [
-  'meld',
+  // 'meld',
   'draftpartner-faces',
   'reminder-on-back',
   'token-on-back',
@@ -390,7 +391,7 @@ const addLayoutToFace =(card:HCCard.AnyMultiFaced, index:number, tag:string, val
   }
 }
 
-export const addLayoutTag = <K extends propType | facePropType>(
+export const addLayoutTag = (
   card: HCCard.Any,
   tag: string,
   note?: string,
@@ -416,6 +417,10 @@ export const addLayoutTag = <K extends propType | facePropType>(
   if (!('card_faces' in card)) {
     if (tag in singleLayoutTags) {
       addLayoutToRoot(card,tag, singleLayoutTags)
+    } else if (tag == 'meld') {
+      addTagToRoot(card,'layout',(card.isActualToken ? 'meld_result':'meld_part') as HCLayoutGroup.SingleFacedType)
+    } else if (tag == 'reminder-card' && card.isActualToken) {
+      addTagToRoot(card,'layout','reminder')
     }
   } else {
     if (tag in multiLayoutTags) {
@@ -424,11 +429,11 @@ export const addLayoutTag = <K extends propType | facePropType>(
       }
       if (tag in multiToFaceLayoutTags) {
         card.card_faces.forEach((face,i)=> {
-          if ((i || !(tag in frontIgnoreMultiLayoutTags)) && !layoutIsDefault(card,i)) {
+          if ((i || !frontIgnoreMultiLayoutTags.includes(tag as keyof typeof multiLayoutTags)) && layoutIsDefault(card,i)) {
             addLayoutToFace(card,i,tag, multiToFaceLayoutTags)
           }
         })
-      }
+      } 
     } else if (tag == 'meld') {
       addTagToRoot(card,'layout',(card.isActualToken ? 'meld_result':'meld_part') as HCLayoutGroup.SingleFacedType)
       card.card_faces.forEach((face,i)=> {
@@ -438,6 +443,9 @@ export const addLayoutTag = <K extends propType | facePropType>(
       addTagToRoot(card,'layout','multi_reminder' as HCLayoutGroup.SingleFacedType)
       card.card_faces.forEach((face,i)=> {
         addTagToFace(card,i,'layout', 'reminder')
+        if (!face.image) {
+          face.image_status = layoutTagToImageStatus['reminder-card']!
+        }
       })
     }
   }

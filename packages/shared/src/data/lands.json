@@ -8775,7 +8775,6 @@
 				"no-art"
 			],
 			"variation": false,
-			"isActualToken": true,
 			"all_parts": [
 				{
 					"object": "related_card",
@@ -8942,7 +8941,6 @@
 				"double-border"
 			],
 			"variation": false,
-			"isActualToken": true,
 			"all_parts": [
 				{
 					"object": "related_card",
@@ -9017,7 +9015,7 @@
 				"Nebula"
 			],
 			"type_line": "Basic Land — Nebula",
-			"oracle_text": "",
+			"oracle_text": "({T}: Add {P}.)",
 			"colors": [],
 			"color_identity": [
 				"P"
@@ -9051,7 +9049,6 @@
 			],
 			"variation": true,
 			"variation_of": "Nebula1",
-			"isActualToken": true,
 			"all_parts": [
 				{
 					"object": "related_card",

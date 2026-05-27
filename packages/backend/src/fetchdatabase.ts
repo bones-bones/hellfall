@@ -358,7 +358,9 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
             addProp(cardObject, 'legalities', legalities);
           } else if (keys[i] == 'related') {
             const all_parts: HCRelatedCard[] = entry[i].split(';').map(oldName => {
-              const [, name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [, oldName, undefined];
+              const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+              const name = match?.groups?.name ?? oldName;
+              const count = match?.groups?.count;
               const base = name.replace(/\d+$/, '');
               const shouldUseBase =
                 /\d/.test(name.at(-1)!) &&
@@ -456,7 +458,7 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
 
     // }
 
-    const name = cardObject.tags?.includes('irregular-face-name')
+    const name = entry[keys.indexOf('tags')].includes('irregular-face-name')
       ? []
       : (cardObject.card_faces.length > 1 && cardObject.tags?.includes('masterpiece')
           ? stripMasterpiece(entry[1])
@@ -601,21 +603,21 @@ export const fetchDatabase = async (usingApproved: boolean = false) => {
     const card = cardObject.card_faces.length <= 1 ? toSingleCard(cardObject) : cardObject as HCCard.AnyMultiFaced
     setDerivedProps(card, entry[keys.indexOf('tags')].split(';'));
     card.tags?.forEach( tag=> {
-      if (tag == 'draftpartner' && cardObject.all_parts) {
-        cardObject.all_parts[0].is_draft_partner = true;
-        if (cardObject.all_parts[0].component == 'token_maker') {
+      if (tag == 'draftpartner' && card.all_parts) {
+        card.all_parts[0].is_draft_partner = true;
+        if (card.all_parts[0].component == 'token_maker') {
           // don't overwrite melds
-          cardObject.all_parts[0].component = 'draft_partner';
+          card.all_parts[0].component = 'draft_partner';
         }
         if (!card.tags?.includes('draftpartner-with-self')) {
-          cardObject.not_directly_draftable = true;
+          card.not_directly_draftable = true;
         }
-        cardObject.has_draft_partners = true;
-      } else if (tag == 'meld' && cardObject.all_parts) {
-        cardObject.all_parts[0].component = 'meld_part';
+        card.has_draft_partners = true;
+      } else if (tag == 'meld' && card.all_parts) {
+        card.all_parts[0].component = 'meld_part';
       } else if (tag == 'NotDirectlyDraftable') {
         // for Prismatic Pardner
-        cardObject.not_directly_draftable = true;
+        card.not_directly_draftable = true;
       }
     });
     return card;

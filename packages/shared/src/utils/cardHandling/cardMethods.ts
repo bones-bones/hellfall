@@ -67,7 +67,7 @@ export const getFromAll = <K extends allPropType>(card: HCCard.Any, prop: K): al
 ];
 
 export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
-  if (card.hasOwnProperty('toJSON')) {
+  if (Object.prototype.hasOwnProperty.call(card, 'toJSON')) {
     return card;
   }
   const ignoreLeftovers = ['toJSON'];
@@ -119,7 +119,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
                   shouldBeAtTop(b) - shouldBeAtTop(a)
               )
             : this.all_parts;
-
+        // TODO: add ordering for the parts themselves©
         ordered.all_parts = sortedParts.map((part: Record<string, any>) => {
           const orderedPart: Record<string, any> = {};
           partPropOrder.forEach(prop => {

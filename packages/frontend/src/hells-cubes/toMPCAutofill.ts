@@ -45,14 +45,11 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
     orderSegment.cards.forEach((card, index) => {
       const existingCard = [...fronts.querySelectorAll('card')].find(e => {
         console.log(card);
-        // @ts-expect-error
-        return e.querySelector('id').textContent == card.sides[0].id;
+        return e.querySelector('id')?.textContent == card.sides[0].id;
       });
       if (existingCard) {
-        // @ts-expect-error
-        existingCard.querySelector('slots').textContent = `${
-          // @ts-expect-error
-          existingCard.querySelector('slots').textContent
+        existingCard.querySelector('slots')!.textContent = `${
+          existingCard.querySelector('slots')?.textContent
         },${index}`;
       } else {
         const newCard = xmlDoc.createElement('card');
@@ -79,16 +76,12 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
       if (card.sides.length == 1) {
         return;
       }
-      // @ts-ignore
       const existingCard = [...backs.querySelectorAll('card')].find(
-        // @ts-ignore
-        e => e.querySelector('id').textContent == card.sides[1].id
+        e => e.querySelector('id')?.textContent == card.sides[1].id
       );
       if (existingCard) {
-        // @ts-ignore
-        existingCard.querySelector('slots').textContent = `${
-          // @ts-ignore
-          existingCard.querySelector('slots').textContent
+        existingCard.querySelector('slots')!.textContent = `${
+          existingCard.querySelector('slots')?.textContent
         },${index}`;
       } else {
         const newCard = xmlDoc.createElement('card');

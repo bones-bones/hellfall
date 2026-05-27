@@ -48,7 +48,6 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'rulings',
     'creators',
     'tags',
-    'CN',
     'collector_number',
     'artists',
   ];
@@ -282,16 +281,18 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           addProp(tokenObject, keys[i] as 'creators' | 'artists', entry[i].split(';'));
         } else if (keys[i] == 'token_maker') {
           const all_parts = entry[i].split(';').map(oldName => {
-            const [, name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [, oldName, undefined];
-            const base = name.replace(/\d+$/, '');
-            const shouldUseBase =
+            const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+            const name = match?.groups?.name ?? oldName;
+            const count = match?.groups?.count;
+            const base = hardTokenIds.includes(name) ? name.slice(0,-1): name.replace(/\d+$/, '');
+            const shouldUseBase = hardTokenIds.includes(name) ||
               /\d/.test(name.at(-1)!) &&
               !hardCardNames.includes(name) &&
               base &&
               ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
-              id: shouldUseBase ? name : '', // #uuid
+              id: shouldUseBase ? name : '', // #uuid:hcid
               name: shouldUseBase ? base : name,
               set: '',
               image: '',
@@ -445,10 +446,10 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         addProp(tokenObject, key, defaultProps[key]);
       });
     const token = tokenObject.card_faces.length <= 1 ? toSingleCard(tokenObject) : tokenObject as HCCard.AnyMultiFaced
+    setDerivedProps(token, entry[keys.indexOf('tags')].split(';'))
     if (token.tags?.includes('meld')) {
       token.all_parts?.forEach(part=>part.component = 'meld_part')
     }
-    setDerivedProps(token, entry[keys.indexOf('tags')].split(';'))
     return token;
   });
   if (NO_SCRYFALL) {

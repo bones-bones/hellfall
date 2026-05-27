@@ -998,6 +998,7 @@ export const equivFilterNames: Record<string, filterNameType> = {
   collector: 'number',
   collectornumber: 'number',
   mv: 'manavalue',
+  cmc: 'manavalue',
   pow: 'power',
   tou: 'toughness',
   tough: 'toughness',

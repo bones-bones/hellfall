@@ -107,7 +107,7 @@ export const listEquals = <T = any>(value1: T | T[], value2: T | T[]) => {
 export const removeIntersection = <T = any>(value1: T[], value2: T[]): { set1: T[]; set2: T[] } => {
   const set1 = [...value1];
   const set2 = [...value2];
-  for (let i = value2.length; i > -0; i--) {
+  for (let i = value2.length; i >= 0; i--) {
     const index = set1.indexOf(value2[i]);
     if (index == -1) {
       continue;

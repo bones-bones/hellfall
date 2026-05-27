@@ -78,7 +78,9 @@ export const fetchScryfallTokens = async () => {
             tokenObject.id = entry[i];
           } else if (keys[i] == 'token_maker') {
             tokenObject.all_parts = entry[i].split(';').map(oldName => {
-              const [, name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [, oldName, undefined];
+              const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+              const name = match?.groups?.name ?? oldName;
+              const count = match?.groups?.count;
               const base = name.replace(/\d+$/, '');
               const shouldUseBase =
                 /\d/.test(name.at(-1)!) &&
@@ -116,9 +118,6 @@ export const fetchScryfallTokens = async () => {
             tokenObject.tags = Array.from(new Set(tokenObject.tags));
           }
         }
-      }
-      if (tokenObject.name == 'Concealing Curtains // Revealing Eye') {
-        const x = 1;
       }
 
       return tokenObject;

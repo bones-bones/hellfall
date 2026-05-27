@@ -112,8 +112,8 @@ export const getColorIdentityProps = (
 };
 
 export const setDerivedProps = (card: HCCard.Any, tags?:string[])/* :{card:HCCard.Any;relateds?:HCCard.Any[]}  */=> {
-  if (tags && tags.length) {
-    card = handleTags(card,tags)
+  if (tags && !(tags.length == 1 && tags[0] == '')) {
+    handleTags(card,tags)
   }
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,

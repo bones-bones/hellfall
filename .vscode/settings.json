@@ -1,0 +1,18 @@
+{
+  "editor.detectIndentation": false,
+  "editor.indentSize": "tabSize",
+  "editor.tabSize": 2,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.workingDirectories": [
+    { "directory": "./packages/frontend" },
+    { "directory": "./packages/backend" },
+    { "directory": "./packages/shared" },
+    { "directory": "./packages/server" },
+    { "directory": "./packages/scripts" }
+  ]
+}

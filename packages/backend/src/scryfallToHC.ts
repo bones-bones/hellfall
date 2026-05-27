@@ -29,10 +29,10 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     leveler: HCLayout.Leveler,
     class: HCLayout.Class,
     saga: HCLayout.Saga,
-    // @ts-ignore
+    // @ts-ignore not in api yet
     case: HCLayout.Case,
     adventure: HCLayout.Inset,
-    // @ts-ignore
+    // @ts-ignore not in api yet
     prepare: HCLayout.Prepare,
     mutate: HCLayout.Mutate,
     prototype: HCLayout.Prototype,
@@ -58,10 +58,10 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     leveler: HCLayout.RealCardToken,
     class: HCLayout.RealCardToken,
     saga: HCLayout.RealCardToken,
-    // @ts-ignore
+    // @ts-ignore not in api yet
     case: HCLayout.RealCardToken,
     adventure: HCLayout.RealCardMultiToken,
-    // @ts-ignore
+    // @ts-ignore not in api yet
     prepare: HCLayout.RealCardMultiToken,
     mutate: HCLayout.RealCardToken,
     prototype: HCLayout.RealCardToken,

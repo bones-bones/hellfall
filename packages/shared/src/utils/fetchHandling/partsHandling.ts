@@ -7,7 +7,7 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
   if (!card.all_parts) {
     return
   }
-  if (card.isActualToken && card.layout == 'front') {
+  if (card.layout == 'front') {
     const headliners: HCRelatedCard[] = [];
     const others: HCRelatedCard[] = [];
     const nonbasics: HCRelatedCard[] = [];
@@ -30,11 +30,11 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
         ? card.all_parts![frontIndex]
         : {
             object: HCObject.ObjectType.RelatedCard,
-            id: card.id,
-            name: card.name,
-            set: card.set,
-            image: card.image,
-            type_line: card.type_line,
+            id: relatedCard.id,
+            name: relatedCard.name,
+            set: relatedCard.set,
+            image: relatedCard.image,
+            type_line: relatedCard.type_line,
             component: 'draft_partner',
             is_draft_partner: true,
           };
@@ -206,6 +206,7 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
       component: 'meld_result',
     };
     meldParts.set(card.id,meldResult);
+    relateds.set(card.id,card)
     meldParts.keys().forEach(id=> {
       const relatedCard = relateds.get(id)
       if (!relatedCard) {
@@ -226,6 +227,7 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
 }
 
 export const cleanParts = (card:HCCard.Any,relateds:cardMap) => {
+  if (card.layout == 'front') return;
   for (let i = card.all_parts?.length! - 1; i >= 0; i--) {
     const part = card.all_parts![i];
 
