@@ -1,11 +1,14 @@
-import { HCCard, HCObject, HCRelatedCard } from "@hellfall/shared/types";
-import { textEquals } from "../textHandling";
-import { pushProp } from "../listHandling";
-import { cardMap, toFaces } from "../cardHandling";
+import { HCCard, HCObject, HCRelatedCard } from '@hellfall/shared/types';
+import { textEquals } from '../textHandling';
+import { pushProp } from '../listHandling';
+import { cardMap, toFaces } from '../cardHandling';
 
-export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.Any;relateds:HCCard.Any[]} */ => {
+export const updateParts = (
+  card: HCCard.Any,
+  relateds: cardMap
+) /* :{card:HCCard.Any;relateds:HCCard.Any[]} */ => {
   if (!card.all_parts) {
-    return
+    return;
   }
   if (card.layout == 'front') {
     const headliners: HCRelatedCard[] = [];
@@ -13,7 +16,7 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
     const nonbasics: HCRelatedCard[] = [];
     const thriving: HCRelatedCard[] = [];
     const basics: HCRelatedCard[] = [];
-    relateds.forEach((relatedCard, id)=> {
+    relateds.forEach((relatedCard, id) => {
       const cardAsRelated: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: card.id,
@@ -57,7 +60,10 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
       }
       if (relatedCard.tags?.includes('headliner')) {
         headliners.push(part);
-      } else if (relatedCard.name.startsWith('Thriving') && !relatedCard.name.startsWith('Thriving Puff')) {
+      } else if (
+        relatedCard.name.startsWith('Thriving') &&
+        !relatedCard.name.startsWith('Thriving Puff')
+      ) {
         thriving.push(part);
       } else if (toFaces(relatedCard)[0].supertypes?.includes('Basic')) {
         basics.push(part);
@@ -79,51 +85,55 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
     card.all_parts = [...headliners, ...others, ...nonbasics, ...thriving, ...basics];
     return;
   }
-  card.all_parts.filter(e=>e.component == 'token_maker').forEach(part=> {
-    const cardAsRelated: HCRelatedCard = {
-      object: HCObject.ObjectType.RelatedCard,
-      id: card.id,
-      // hcid: card.hcid, // #uuid
-      name: card.name,
-      set: card.set,
-      image: card.image,
-      type_line: card.type_line,
-      component: 'token',
-    };
-    if (part.count) {
-      cardAsRelated.count=part.count;
-    }
-    const relatedCard = relateds.get(part.id) ?? relateds.values().find(related=>textEquals(part.id,related.id)) ?? relateds.values().find(related=>textEquals(part.name,related.name))
-    if (!relatedCard) {
-      throw console.error;
-    }
-    part.id = relatedCard.id;
-    // part.hcid = relatedCard.hcid; #uuid
-    part.name = relatedCard.name;
-    part.set = relatedCard.set;
-    part.image = relatedCard.image;
-    part.type_line = relatedCard.type_line;
-    if (relatedCard.tags?.includes('persistent-tokens')) {
-      part.persistent = true;
-      cardAsRelated.persistent = true;
-    }
-    // update relatedCard.all_parts
-    
-    const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-    if (relatedIndex == -1 || relatedIndex == undefined || !relatedCard.all_parts) {
-      pushProp(relatedCard, 'all_parts', cardAsRelated);
-    } else {
-      relatedCard.all_parts[relatedIndex] = cardAsRelated;
-    }
-    // if stickers or AddCards, add draftpartner props
-    if (
-      (card.type_line.includes('Stickers') &&
-      relatedCard.tags?.includes('draftpartner')) ||
-      (relatedCard.tags?.includes('AddCards') &&
-      card.id != 'Ticket Counter1' && // #uuid:hcid
-      (!relatedCard.tag_notes?.['AddCards'] ||
-        parseInt(relatedCard.tag_notes['AddCards']) ||
-        relatedCard.tag_notes['AddCards'] == card.id))// #uuid:hcid
+  card.all_parts
+    .filter(e => e.component == 'token_maker')
+    .forEach(part => {
+      const cardAsRelated: HCRelatedCard = {
+        object: HCObject.ObjectType.RelatedCard,
+        id: card.id,
+        // hcid: card.hcid, // #uuid
+        name: card.name,
+        set: card.set,
+        image: card.image,
+        type_line: card.type_line,
+        component: 'token',
+      };
+      if (part.count) {
+        cardAsRelated.count = part.count;
+      }
+      const relatedCard =
+        relateds.get(part.id) ??
+        relateds.values().find(related => textEquals(part.id, related.id)) ??
+        relateds.values().find(related => textEquals(part.name, related.name));
+      if (!relatedCard) {
+        throw console.error;
+      }
+      part.id = relatedCard.id;
+      // part.hcid = relatedCard.hcid; #uuid
+      part.name = relatedCard.name;
+      part.set = relatedCard.set;
+      part.image = relatedCard.image;
+      part.type_line = relatedCard.type_line;
+      if (relatedCard.tags?.includes('persistent-tokens')) {
+        part.persistent = true;
+        cardAsRelated.persistent = true;
+      }
+      // update relatedCard.all_parts
+
+      const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+      if (relatedIndex == -1 || relatedIndex == undefined || !relatedCard.all_parts) {
+        pushProp(relatedCard, 'all_parts', cardAsRelated);
+      } else {
+        relatedCard.all_parts[relatedIndex] = cardAsRelated;
+      }
+      // if stickers or AddCards, add draftpartner props
+      if (
+        (card.type_line.includes('Stickers') && relatedCard.tags?.includes('draftpartner')) ||
+        (relatedCard.tags?.includes('AddCards') &&
+          card.id != 'Ticket Counter1' && // #uuid:hcid
+          (!relatedCard.tag_notes?.['AddCards'] ||
+            parseInt(relatedCard.tag_notes['AddCards']) ||
+            relatedCard.tag_notes['AddCards'] == card.id)) // #uuid:hcid
       ) {
         relatedCard.has_draft_partners = true;
         card.has_draft_partners = true;
@@ -131,70 +141,79 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
         part.is_draft_partner = true;
         relatedCard.all_parts!.find(e => e.id == card.id)!.is_draft_partner = true;
       }
-    })
-  card.all_parts.filter(e=>e.component == 'draft_partner' && e.set != 'FHCJ').forEach(part=> {
-    const cardAsRelated: HCRelatedCard = {
-      object: HCObject.ObjectType.RelatedCard,
-      id: card.id,
-      // hcid: card.hcid, // #uuid
-      name: card.name,
-      set: card.set,
-      image: card.image,
-      type_line: card.type_line,
-      component: 'draft_partner',
-      is_draft_partner: true,
-    };
-    if (part.count) {
-      cardAsRelated.count=part.count;
-    }
-    const relatedCard = relateds.get(part.id) ?? relateds.values().find(related=>textEquals(part.id,related.id)) ?? relateds.values().find(related=>textEquals(part.name,related.name))
-    if (!relatedCard) {
-      throw console.error;
-    }
-    if (!relatedCard.has_draft_partners) {
-      relatedCard.has_draft_partners = true;
-    }
-    if (!card.has_draft_partners) {
-      card.has_draft_partners = true;
-    }
-
-    part.id = relatedCard.id;
-    // part.hcid = relatedCard.hcid; #uuid
-    part.name = relatedCard.name;
-    part.set = relatedCard.set;
-    part.image = relatedCard.image;
-    part.type_line = relatedCard.type_line;
-    part.is_draft_partner = true
-    
-    const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-    if (relatedIndex == -1 || relatedIndex == undefined || !relatedCard.all_parts) {
-      pushProp(relatedCard, 'all_parts', cardAsRelated);
-    } else {
-      relatedCard.all_parts[relatedIndex] = cardAsRelated;
-    }
-    })
-  if (card.isActualToken && card.all_parts.some(part=>part.component == 'meld_part')) {
-    const meldParts = new Map<string,HCRelatedCard>()
-    card.all_parts.filter(e=>e.component == 'meld_part').forEach(part=> {
-      const relatedCard = relateds.get(part.id) ?? relateds.values().find(related=>textEquals(part.id,related.id)) ?? relateds.values().find(related=>textEquals(part.name,related.name))
+    });
+  card.all_parts
+    .filter(e => e.component == 'draft_partner' && e.set != 'FHCJ')
+    .forEach(part => {
+      const cardAsRelated: HCRelatedCard = {
+        object: HCObject.ObjectType.RelatedCard,
+        id: card.id,
+        // hcid: card.hcid, // #uuid
+        name: card.name,
+        set: card.set,
+        image: card.image,
+        type_line: card.type_line,
+        component: 'draft_partner',
+        is_draft_partner: true,
+      };
+      if (part.count) {
+        cardAsRelated.count = part.count;
+      }
+      const relatedCard =
+        relateds.get(part.id) ??
+        relateds.values().find(related => textEquals(part.id, related.id)) ??
+        relateds.values().find(related => textEquals(part.name, related.name));
       if (!relatedCard) {
         throw console.error;
       }
+      if (!relatedCard.has_draft_partners) {
+        relatedCard.has_draft_partners = true;
+      }
+      if (!card.has_draft_partners) {
+        card.has_draft_partners = true;
+      }
+
       part.id = relatedCard.id;
-      // part.hcid = relatedCard.hcid #uuid
+      // part.hcid = relatedCard.hcid; #uuid
       part.name = relatedCard.name;
       part.set = relatedCard.set;
       part.image = relatedCard.image;
       part.type_line = relatedCard.type_line;
-      if (part.count) {
-        delete part.count;
+      part.is_draft_partner = true;
+
+      const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
+      if (relatedIndex == -1 || relatedIndex == undefined || !relatedCard.all_parts) {
+        pushProp(relatedCard, 'all_parts', cardAsRelated);
+      } else {
+        relatedCard.all_parts[relatedIndex] = cardAsRelated;
       }
-      if (relatedCard.tags?.includes('draftpartner')) {
-        part.is_draft_partner = true;
-      }
-      meldParts.set(part.id,part)
-      
-    })
+    });
+  if (card.isActualToken && card.all_parts.some(part => part.component == 'meld_part')) {
+    const meldParts = new Map<string, HCRelatedCard>();
+    card.all_parts
+      .filter(e => e.component == 'meld_part')
+      .forEach(part => {
+        const relatedCard =
+          relateds.get(part.id) ??
+          relateds.values().find(related => textEquals(part.id, related.id)) ??
+          relateds.values().find(related => textEquals(part.name, related.name));
+        if (!relatedCard) {
+          throw console.error;
+        }
+        part.id = relatedCard.id;
+        // part.hcid = relatedCard.hcid #uuid
+        part.name = relatedCard.name;
+        part.set = relatedCard.set;
+        part.image = relatedCard.image;
+        part.type_line = relatedCard.type_line;
+        if (part.count) {
+          delete part.count;
+        }
+        if (relatedCard.tags?.includes('draftpartner')) {
+          part.is_draft_partner = true;
+        }
+        meldParts.set(part.id, part);
+      });
     const meldResult: HCRelatedCard = {
       object: HCObject.ObjectType.RelatedCard,
       id: card.id,
@@ -205,14 +224,14 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
       type_line: card.type_line,
       component: 'meld_result',
     };
-    meldParts.set(card.id,meldResult);
-    relateds.set(card.id,card)
-    meldParts.keys().forEach(id=> {
-      const relatedCard = relateds.get(id)
+    meldParts.set(card.id, meldResult);
+    relateds.set(card.id, card);
+    meldParts.keys().forEach(id => {
+      const relatedCard = relateds.get(id);
       if (!relatedCard) {
         throw console.error;
       }
-      meldParts.forEach((part,partid)=> {
+      meldParts.forEach((part, partid) => {
         if (id != partid) {
           const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == partid);
           if (relatedIndex == -1 || relatedIndex == undefined || !relatedCard.all_parts) {
@@ -221,12 +240,12 @@ export const updateParts = (card:HCCard.Any,relateds:cardMap)/* :{card:HCCard.An
             relatedCard.all_parts[relatedIndex] = part;
           }
         }
-      })
-    })
+      });
+    });
   }
-}
+};
 
-export const cleanParts = (card:HCCard.Any,relateds:cardMap) => {
+export const cleanParts = (card: HCCard.Any, relateds: cardMap) => {
   if (card.layout == 'front') return;
   for (let i = card.all_parts?.length! - 1; i >= 0; i--) {
     const part = card.all_parts![i];
@@ -234,7 +253,7 @@ export const cleanParts = (card:HCCard.Any,relateds:cardMap) => {
     if (card.all_parts!.slice(0, i).find(e => e.id == part.id)) {
       card.all_parts?.splice(i, 1);
     } else if (part.component == 'token') {
-      if (!relateds.get(part.id)?.all_parts?.find(e=>e.id == card.id)) {
+      if (!relateds.get(part.id)?.all_parts?.find(e => e.id == card.id)) {
         card.all_parts?.splice(i, 1);
       }
     }
@@ -242,4 +261,4 @@ export const cleanParts = (card:HCCard.Any,relateds:cardMap) => {
   if (card.all_parts?.length == 0) {
     delete card.all_parts;
   }
-}
+};

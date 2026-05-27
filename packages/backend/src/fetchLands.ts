@@ -1,9 +1,5 @@
 import {
-  HCBorderColor,
   HCCard,
-  HCFinish,
-  HCFrame,
-  HCFrameEffect,
   HCImageStatus,
   HCLayout,
   HCLegalitiesField,
@@ -13,7 +9,15 @@ import {
   HCRelatedCard,
 } from '@hellfall/shared/types';
 import { sheetsKey } from './env.ts';
-import { cardObjectType, facePropType,  addArtist, addProp, addTag ,  landToColorMapping, setDerivedProps  } from '@hellfall/shared/utils';
+import {
+  cardObjectType,
+  facePropType,
+  addArtist,
+  addProp,
+  addTag,
+  landToColorMapping,
+  setDerivedProps,
+} from '@hellfall/shared/utils';
 
 const convertSet: Record<string, string> = {
   HC4: 'HBB.4',
@@ -29,79 +33,6 @@ const hardCardNames: string[] = [
   'Plagiarism by doomclaw9',
   'Carrion Feeder from MH8',
 ];
-
-// const borderColorTags: Record<string, HCBorderColor> = {
-//   'white-border': HCBorderColor.White,
-//   borderless: HCBorderColor.Borderless,
-//   'no-border': HCBorderColor.NoBorder,
-//   'silver-border': HCBorderColor.Silver,
-//   'gold-border': HCBorderColor.Gold,
-//   'yellow-border': HCBorderColor.Yellow,
-//   'rainbow-border': HCBorderColor.Rainbow,
-//   'blue-border': HCBorderColor.Blue,
-//   'unique-border': HCBorderColor.Unique,
-//   'orange-border': HCBorderColor.Orange,
-//   'red-border': HCBorderColor.Red,
-// };
-
-// const frameTags: Record<string, HCFrame> = {
-//   '1993-frame': HCFrame.Original,
-//   '1997-frame': HCFrame.Classic,
-//   '2003-frame': HCFrame.Modern,
-//   '2015-frame': HCFrame.Stamp,
-//   'future-frame': HCFrame.Future,
-//   'playtest-frame': HCFrame.Playtest,
-//   'jank-frame': HCFrame.Jank,
-//   '1997-token-frame': HCFrame.ClassicToken,
-//   '2003-token-frame': HCFrame.ModernToken,
-//   '2015-token-frame': HCFrame.StampToken,
-//   '2020-token-frame': HCFrame.FullToken,
-//   'pokemon-frame': HCFrame.Pokemon,
-//   'yugioh-frame': HCFrame.Yugioh,
-//   'legends-of-runeterra-frame': HCFrame.LegendsOfRuneterra,
-//   'slay-the-spire-frame': HCFrame.SlayTheSpire,
-//   'inscryption-frame': HCFrame.Inscryption,
-//   'hearthstone-frame': HCFrame.Hearthstone,
-//   'lorcana-frame': HCFrame.Lorcana,
-//   'notmagic-frame': HCFrame.NotMagic,
-//   'website-app-frame': HCFrame.WebsiteApp,
-//   'shattered-frame': HCFrame.Shattered,
-// };
-// const frameEffectTags: Record<string, HCFrameEffect> = {
-//   'miracle-frame': HCFrameEffect.Miracle,
-//   'nyx-frame': HCFrameEffect.Enchantment,
-//   'draft-frame': HCFrameEffect.Draft,
-//   'devoid-frame': HCFrameEffect.Devoid,
-//   tombstone: HCFrameEffect.Tombstone,
-//   'colorshifted-frame': HCFrameEffect.Colorshifted,
-//   'masterpiece-frame': HCFrameEffect.Masterpiece,
-//   'inverted-text': HCFrameEffect.Inverted,
-//   'sun-moon-transform': HCFrameEffect.SunMoonDfc,
-//   'type-transform-marks': HCFrameEffect.TypeDfc,
-//   'generic-transform-marks': HCFrameEffect.TransformDfc,
-//   'generic-mdfc-marks': HCFrameEffect.Mdfc,
-//   'compass-land-transform': HCFrameEffect.CompassLandDfc,
-//   'origin-pw-transform': HCFrameEffect.OriginPwDfc,
-//   'moon-eldrazi-transform': HCFrameEffect.MoonEldraziDfc,
-//   'fan-transform': HCFrameEffect.FanDfc,
-//   'showcase-frame': HCFrameEffect.Showcase,
-//   'extended-art': HCFrameEffect.ExtendedArt,
-//   'full-art': HCFrameEffect.FullArt,
-//   'vertical-art': HCFrameEffect.VerticalArt,
-//   'no-art': HCFrameEffect.NoArt,
-//   'companion-frame': HCFrameEffect.Companion,
-//   'etched-frame': HCFrameEffect.Etched,
-//   'spree-frame': HCFrameEffect.Spree,
-//   'meld-frame': HCFrameEffect.Meld,
-//   'slab-frame': HCFrameEffect.Slab,
-//   'arena-frame': HCFrameEffect.Arena,
-//   'universes-beyond-frame': HCFrameEffect.UniversesBeyond,
-// };
-
-// const faceImageTagProps: Record<string, facePropType> = {
-//   'rotated-image': 'rotated_image',
-//   'still-image': 'still_image',
-// };
 
 export const fetchLands = async () => {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Lands+(Unapproved)?alt=json&key=${sheetsKey}`;
@@ -171,7 +102,9 @@ export const fetchLands = async () => {
     }
     if (entry[keys.indexOf('token_maker')]) {
       const all_parts = entry[keys.indexOf('token_maker')].split(';').map(oldName => {
-        const [, name, count] = oldName.match(/(.*)(\*(?:\d+|x))$/) ?? [, oldName, undefined];
+        const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+        const name = match?.groups?.name ?? oldName;
+        const count = match?.groups?.count;
         const base = name.replace(/\d+$/, '');
         const shouldUseBase =
           /\d/.test(name.at(-1)!) &&
@@ -194,50 +127,7 @@ export const fetchLands = async () => {
       });
       addProp(land, 'all_parts', all_parts);
     }
-    const tagIndex = keys.indexOf('tags');
-    // if (entry[tagIndex]) {
-    //   const tags = entry[tagIndex].split(';');
 
-    //   land.tags = tags.map(fullTag => {
-    //     const hasNote = fullTag.includes('<') && fullTag.endsWith('>');
-    //     const [tag, note] = [
-    //       hasNote ? fullTag.split('<')[0] : fullTag,
-    //       hasNote ? fullTag.split('<')[1].slice(0, -1) : undefined,
-    //     ];
-    //     if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
-    //       addTag(
-    //         land as cardObjectType,
-    //         tag,
-    //         note,
-    //         'watermark',
-    //         tag.slice(0, tag.lastIndexOf('-')),
-    //         { useRootOnly: true }
-    //       );
-    //     } else if (tag in frameTags) {
-    //       addTag(land as cardObjectType, tag, note, 'frame', frameTags), { useRootOnly: true };
-    //     } else if (tag in frameEffectTags) {
-    //       addTag(land as cardObjectType, tag, note, 'frame_effects', frameEffectTags, {
-    //         push: true,
-    //         useRootOnly: true,
-    //       });
-    //     } else if (tag in faceImageTagProps) {
-    //       addTag(land as cardObjectType, tag, note, faceImageTagProps[tag], undefined, {
-    //         useUrl: true,
-    //         useRootOnly: true,
-    //       });
-    //     } else if (tag in borderColorTags) {
-    //       addTag(land as cardObjectType, tag, note, 'border_color', borderColorTags, {
-    //         useRootOnly: true,
-    //       });
-    //     } else if (tag == 'foil') {
-    //       addTag(land as cardObjectType, tag, note, 'finish', HCFinish.Foil, { useRootOnly: true });
-    //     } else if (note) {
-    //       addTag(land as cardObjectType, tag, note, undefined, undefined, { useRootOnly: true });
-    //     }
-    //     return tag;
-    //   });
-    //   land.tags = Array.from(new Set(land.tags));
-    // }
     const artistIndex = keys.indexOf('artists');
     if (entry[artistIndex]) {
       const artists = entry[artistIndex].split(';');
@@ -253,7 +143,7 @@ export const fetchLands = async () => {
       });
       land.artists = Array.from(new Set(land.artists));
     }
-    setDerivedProps(land,entry[keys.indexOf('tags')].split(';'))
+    setDerivedProps(land, entry[keys.indexOf('tags')].split(';'));
     return land;
   });
   return allLands;

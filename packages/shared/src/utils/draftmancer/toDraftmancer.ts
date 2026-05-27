@@ -13,7 +13,7 @@ export const toDraftmancerCube = ({
   allCards: HCCard.Any[];
   draftMode?: 'commander' | 'jumpstart';
 }) => {
-  const { cards: cards, tokens: tokens } = HCToDraftmancer(cardList, allCards, draftMode);
+  const { cards, tokens } = HCToDraftmancer(cardList, allCards, draftMode);
 
   if (draftMode == 'commander') {
     const commanderCards = cards.filter(card => card.canBeACommander);
@@ -51,7 +51,7 @@ export const toDraftmancerCube = ({
     return formatted;
   }
 
-  if ((draftMode = 'jumpstart')) {
+  if (draftMode == 'jumpstart') {
     // get 4, pick 1, pick 1, burn 2
     const formatted = `[Settings]
 {

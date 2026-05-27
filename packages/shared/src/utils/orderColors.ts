@@ -89,7 +89,7 @@ export const orderColors = (colors: string[]) => {
       }
       return true;
     });
-    colorList.push(...ordered?.split('')!);
+    colorList.push(...ordered!.split('')!);
   }
   HCMiscColors.forEach(color => {
     if (colors.includes(color)) {

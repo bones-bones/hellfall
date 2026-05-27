@@ -288,7 +288,7 @@ export const getWinnowedSortOptions = (sortList: sortObject[]): sortType[] => {
   return options;
 };
 
-export const prepTag = (tag: string) => tag.replaceAll(/[\/\\'"\- _\.]/g, '').toLowerCase();
+export const prepTag = (tag: string) => tag.replaceAll(/[/\\'"\- _.]/g, '').toLowerCase();
 
 export const fixTags = (node: FilterNode, tagList: string[]) => {
   switch (node.type) {

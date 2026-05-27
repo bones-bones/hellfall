@@ -1,11 +1,28 @@
-import { HCBorderColor, HCCard, HCCardFace, HCFinish, HCFrame, HCFrameEffect, HCImageStatus, HCLayout, HCLayoutGroup } from "@hellfall/shared/types";
-import { addLayoutTag, addProp, addTag, addTagToFace, deleteProp, deletePropFromFace, layoutIsDefault, layoutTags, layoutTagType } from "./fetchUtils";
-import { facePropType, faceType, faceValueType, propType, valueType } from "../cardHandling";
-import { listShareLower } from "../listHandling";
-import { setDerivedProps } from "./derivedProps";
-
-
-
+import {
+  HCBorderColor,
+  HCCard,
+  HCCardFace,
+  HCFinish,
+  HCFrame,
+  HCFrameEffect,
+  HCImageStatus,
+  HCLayout,
+  HCLayoutGroup,
+} from '@hellfall/shared/types';
+import {
+  addLayoutTag,
+  addProp,
+  addTag,
+  addTagToFace,
+  deleteProp,
+  deletePropFromFace,
+  layoutIsDefault,
+  layoutTags,
+  layoutTagType,
+} from './fetchUtils';
+import { facePropType, faceType, faceValueType, propType, valueType } from '../cardHandling';
+import { listShareLower } from '../listHandling';
+import { setDerivedProps } from './derivedProps';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -96,31 +113,42 @@ const borderColorTags: Record<string, HCBorderColor> = {
   'red-border': HCBorderColor.Red,
 };
 
+const removableTagProps: propType[] = [
+  'flavor_name',
+  'watermark',
+  'frame_effects',
+  'rotated_image',
+  'still_image',
+  'draft_image',
+  'draft_image_status',
+  'rotated_draft_image',
+  'still_draft_image',
+];
+const removableFaceTagProps: facePropType[] = ['finish', 'border_color', 'frame'];
 
-
-const removableTagProps: propType[]=['flavor_name','watermark','frame_effects', 'rotated_image','still_image','draft_image', 'draft_image_status','rotated_draft_image','still_draft_image']
-const removableFaceTagProps: facePropType[]=['finish','border_color', 'frame']
-
-const setTagPropsToDefault = (card:HCCard.Any) =>{
-  removableTagProps.forEach(prop=> deleteProp(card,prop))
+const setTagPropsToDefault = (card: HCCard.Any) => {
+  removableTagProps.forEach(prop => deleteProp(card, prop));
   card.finish = HCFinish.Nonfoil;
   card.border_color = HCBorderColor.Black;
-  card.frame = card.isActualToken ? HCFrame.FullToken : HCFrame.Stamp
+  card.frame = card.isActualToken ? HCFrame.FullToken : HCFrame.Stamp;
   if ('card_faces' in card) {
     card.layout = card.isActualToken ? HCLayout.MultiToken : HCLayout.Multi;
-    card.card_faces.forEach((face,i)=> {
-      removableTagProps.forEach(prop=> deletePropFromFace(card,prop as facePropType,i))
-      removableFaceTagProps.forEach(prop=> deletePropFromFace(card,prop,i))
-      face.layout = card.isActualToken ? HCLayout.Token : i ? HCLayout.Multi : HCLayout.Normal
+    card.card_faces.forEach((face, i) => {
+      removableTagProps.forEach(prop => deletePropFromFace(card, prop as facePropType, i));
+      removableFaceTagProps.forEach(prop => deletePropFromFace(card, prop, i));
+      face.layout = card.isActualToken ? HCLayout.Token : i ? HCLayout.Multi : HCLayout.Normal;
       if (!face.image) {
-        face.image_status= i ? 'inapplicable' : 'front'
+        face.image_status = i ? 'inapplicable' : 'front';
       }
-    })
+    });
   } else {
-    card.layout = card.isActualToken ? HCLayout.Token : card.set.startsWith('FHCJ')? HCLayout.Front : HCLayout.Normal
+    card.layout = card.isActualToken
+      ? HCLayout.Token
+      : card.set.startsWith('FHCJ')
+      ? HCLayout.Front
+      : HCLayout.Normal;
   }
-}
-
+};
 
 // const tokenMultiLayoutToFaceLayout: Record<
 //   HCLayoutGroup.MultiFacedType & HCLayoutGroup.TokenLayoutType,
@@ -131,8 +159,7 @@ const setTagPropsToDefault = (card:HCCard.Any) =>{
 //   multi_token: HCLayout.Token,
 //   real_card_multi_token: HCLayout.RealCardToken,
 // };
-const tokenTypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> =
-{
+const tokenTypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
   emblem: HCLayout.Emblem,
   // 'reminder card': HCLayout.Reminder,
   stickers: HCLayout.Stickers,
@@ -142,47 +169,50 @@ const tokenTypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> =
   misc: HCLayout.Misc,
   checklist: HCLayout.Checklist,
 };
-const typeLayouts:Record<string,HCLayoutGroup.FaceLayoutType> = {
-  plane:HCLayout.Planar,
-  phenomenon:HCLayout.Planar,
-  scheme:HCLayout.Scheme,
-  vanguard:HCLayout.Vanguard,
-  battle:HCLayout.Battle
-}
-const subtypeLayouts:Record<string,HCLayoutGroup.FaceLayoutType> = {
-  saga:HCLayout.Saga,
-  class:HCLayout.Class,
-  case:HCLayout.Case,
-  spacecraft:HCLayout.Station,
-  watercraft:HCLayout.Station,
-  planet:HCLayout.Station
-}
+const typeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
+  plane: HCLayout.Planar,
+  phenomenon: HCLayout.Planar,
+  scheme: HCLayout.Scheme,
+  vanguard: HCLayout.Vanguard,
+  battle: HCLayout.Battle,
+};
+const subtypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
+  saga: HCLayout.Saga,
+  class: HCLayout.Class,
+  case: HCLayout.Case,
+  spacecraft: HCLayout.Station,
+  watercraft: HCLayout.Station,
+  planet: HCLayout.Station,
+};
 
-
-const setFacePropsFromTypes = (face:faceType, shouldSetLayout:boolean, isTokenRoot?:boolean)=> {
+const setFacePropsFromTypes = (face: faceType, shouldSetLayout: boolean, isTokenRoot?: boolean) => {
   if (shouldSetLayout) {
-    const tokenType = face.types?.find(type=>type.toLowerCase() in tokenTypeLayouts)?.toLowerCase();
+    const tokenType = face.types
+      ?.find(type => type.toLowerCase() in tokenTypeLayouts)
+      ?.toLowerCase();
     if (tokenType) {
-      face.layout = tokenTypeLayouts[tokenType]
-      return
+      face.layout = tokenTypeLayouts[tokenType];
+      return;
     } else if (isTokenRoot) {
-      return
+      return;
     }
-    const type = face.types?.find(type=>type.toLowerCase() in typeLayouts)?.toLowerCase();
+    const type = face.types?.find(type => type.toLowerCase() in typeLayouts)?.toLowerCase();
     if (type) {
-      face.layout = subtypeLayouts[type]
-      return
+      face.layout = subtypeLayouts[type];
+      return;
     }
-    
-    const subtype = face.subtypes?.find(type=>type.toLowerCase() in subtypeLayouts)?.toLowerCase();
+
+    const subtype = face.subtypes
+      ?.find(type => type.toLowerCase() in subtypeLayouts)
+      ?.toLowerCase();
     if (subtype) {
-      face.layout = subtypeLayouts[subtype]
-      return
+      face.layout = subtypeLayouts[subtype];
+      return;
     }
   }
-}
+};
 
-export const handleTags = (card:HCCard.Any, tags:string[]) => {
+export const handleTags = (card: HCCard.Any, tags: string[]) => {
   setTagPropsToDefault(card);
   card.tags = tags.map(fullTag => {
     const hasNote = fullTag.includes('<') && fullTag.endsWith('>');
@@ -205,7 +235,7 @@ export const handleTags = (card:HCCard.Any, tags:string[]) => {
     } else if (tag in borderColorTags) {
       addTag(card, tag, note, 'border_color', borderColorTags);
     } else if (layoutTags.includes(tag as layoutTagType)) {
-      addLayoutTag(card,tag,note)
+      addLayoutTag(card, tag, note);
     } else if (tag == 'foil') {
       addTag(card, tag, note, 'finish', HCFinish.Foil);
     } else if (note) {
@@ -218,7 +248,7 @@ export const handleTags = (card:HCCard.Any, tags:string[]) => {
           addProp(card, 'draft_image_status', HCImageStatus.HighRes);
         }
       } else if (tag == 'back-image') {
-        addTag(card, tag, note, 'image', undefined, {useUrl: true,defaultToBack: true,});
+        addTag(card, tag, note, 'image', undefined, { useUrl: true, defaultToBack: true });
       } else if (tag == 'flavor-name') {
         addTag(card, tag, note, 'flavor_name', undefined, { dontAddNote: true });
       } else if (
@@ -232,12 +262,10 @@ export const handleTags = (card:HCCard.Any, tags:string[]) => {
       }
     }
     return tag;
-  })
+  });
 
   card.tags = Array.from(new Set(card.tags));
   if ('card_faces' in card) {
-    card.card_faces.forEach((face,i)=>setFacePropsFromTypes(face,layoutIsDefault(card,i)))
-  } else (
-    setFacePropsFromTypes(card,layoutIsDefault(card),card.isActualToken)
-  )
-}
+    card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
+  } else setFacePropsFromTypes(card, layoutIsDefault(card), card.isActualToken);
+};

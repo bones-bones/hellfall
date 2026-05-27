@@ -25,12 +25,12 @@ import {
   getFilteredCardProps,
   getFilteredFaceMoveEntries,
   getFilteredFaceProps,
-   setDerivedProps, setExportProps, 
-   toCardMap,
-   getAllRelated,
-   filterMap,
-   stripSetCode
-
+  setDerivedProps,
+  setExportProps,
+  toCardMap,
+  getAllRelated,
+  filterMap,
+  stripSetCode,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { addToJSONToCards } from '@hellfall/shared/utils';
@@ -737,7 +737,7 @@ const loadExistingData = () => {
 const main = async () => {
   const newCards = await fetchDatabase();
   const usernameMappings = await fetchUsernameMappings();
-  const intTokens = (await fetchTokens(NO_SCRYFALL))
+  const intTokens = await fetchTokens(NO_SCRYFALL);
   const intFronts = fetchHCJFronts();
   const intNotMagic = await fetchNotMagic();
   const newTokens = intTokens.concat(intFronts).concat(intNotMagic);
@@ -753,425 +753,25 @@ const main = async () => {
     existingLands,
     newLands
   );
-  const finalCards = toCardMap(addToJSONToCards(merged.mergedCards.concat(merged.mergedTokens.concat(merged.mergedLands))));
+  const finalCards = toCardMap(
+    addToJSONToCards(merged.mergedCards.concat(merged.mergedTokens.concat(merged.mergedLands)))
+  );
   // const finalTokens = toCardMap(addToJSONToCards(merged.mergedTokens));
   // const finalLands = toCardMap(addToJSONToCards(merged.mergedLands));
-  finalCards.forEach(card=>{
+  finalCards.forEach(card => {
     if (card.all_parts) {
       if (card.layout == 'front') {
-        updateParts(card,filterMap(finalCards,value=>value.set == 'HCJ' && value.tags?.includes(card.tags![0])))
+        updateParts(
+          card,
+          filterMap(finalCards, value => value.set == 'HCJ' && value.tags?.includes(card.tags![0]))
+        );
       } else {
-        updateParts(card,getAllRelated(card,finalCards))
-
+        updateParts(card, getAllRelated(card, finalCards));
       }
-    } 
-  })
-  finalCards.forEach(card=>cleanParts(card,getAllRelated(card,finalCards)));
+    }
+  });
+  finalCards.forEach(card => cleanParts(card, getAllRelated(card, finalCards)));
 
-  // finalTokens
-  //   .filter(e => 'all_parts' in e)
-  //   .forEach(token => {
-  //     // add all tokens to all_parts
-  //     token.all_parts
-  //       ?.filter(e => e.component == 'token_maker')
-  //       .forEach(tokenMaker => {
-  //         const relatedToken: HCRelatedCard = {
-  //           object: HCObject.ObjectType.RelatedCard,
-  //           id: token.id,
-  //           name: token.name,
-  //           set: token.set,
-  //           image: token.image,
-  //           type_line: token.type_line,
-  //           component: 'token',
-  //         };
-  //         if (tokenMaker.count) {
-  //           relatedToken.count = tokenMaker.count;
-  //         }
-  //         // goes by id if possible, but if not, it goes by name; tries to find in cards, then tries in tokens
-  //         const relatedCard =
-  //           finalCards.find(card => card.id == tokenMaker.id) ??
-  //           finalTokens.find(card => textEquals(card.id, tokenMaker.id)) ??
-  //           finalLands.find(card => card.id == tokenMaker.id) ??
-  //           finalCards.find(card => textEquals(card.name, tokenMaker.name)) ??
-  //           finalTokens.find(card => textEquals(card.id, tokenMaker.name));
-  //         if (relatedCard) {
-  //           // update token.all_parts
-  //           tokenMaker.id = relatedCard.id;
-  //           tokenMaker.name = relatedCard.name;
-  //           tokenMaker.set = relatedCard.set;
-  //           tokenMaker.image = relatedCard.image;
-  //           tokenMaker.type_line = relatedCard.type_line;
-  //           if (relatedCard.tags?.includes('persistent-tokens')) {
-  //             tokenMaker.persistent = true;
-  //             relatedToken.persistent = true;
-  //           }
-  //           // update relatedCard.all_parts
-
-  //           const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == token.id);
-  //           if (tokenIndex == -1 || tokenIndex == undefined || !relatedCard.all_parts) {
-  //             pushProp(relatedCard, 'all_parts', relatedToken);
-  //           } else {
-  //             relatedCard.all_parts[tokenIndex] = relatedToken;
-  //           }
-  //           // if stickers or AddCards, add draftpartner props
-  //           if (
-  //             (token.type_line.includes('Stickers') &&
-  //               relatedCard.tags?.includes('draftpartner')) ||
-  //             (relatedCard.tags?.includes('AddCards') &&
-  //               token.id != 'Ticket Counter1' &&
-  //               (!relatedCard.tag_notes?.['AddCards'] ||
-  //                 parseInt(relatedCard.tag_notes['AddCards']) ||
-  //                 relatedCard.tag_notes['AddCards'] == token.id))
-  //           ) {
-  //             relatedCard.has_draft_partners = true;
-  //             token.has_draft_partners = true;
-  //             token.not_directly_draftable = true;
-  //             tokenMaker.is_draft_partner = true;
-  //             relatedCard.all_parts!.find(e => e.id == token.id)!.is_draft_partner = true;
-  //           }
-  //         }
-  //       });
-  //     const meldPartIds: string[] = [];
-  //     const meldRelatedCards: HCRelatedCard[] = [];
-  //     token.all_parts
-  //       ?.filter(e => e.component == 'meld_part')
-  //       .forEach(meldPart => {
-  //         const relatedCard = finalCards.find(card => card.id == meldPart.id) ?? textEquals(card.name, meldPart.name);
-  //         if (relatedCard) {
-  //           meldPart.id = relatedCard.id;
-  //           meldPartIds.push(relatedCard.id);
-  //           meldPart.name = relatedCard.name;
-  //           meldPart.set = relatedCard.set;
-  //           meldPart.image = relatedCard.image;
-  //           meldPart.type_line = relatedCard.type_line;
-  //           if (meldPart.count) {
-  //             delete meldPart.count;
-  //           }
-  //           if (relatedCard.tags?.includes('draftpartner')) {
-  //             meldPart.is_draft_partner = true;
-  //           }
-  //           meldRelatedCards.push(meldPart);
-  //         }
-  //       });
-  //     const meldResult: HCRelatedCard = {
-  //       object: HCObject.ObjectType.RelatedCard,
-  //       id: token.id,
-  //       name: token.name,
-  //       set: token.set,
-  //       image: token.image,
-  //       type_line: token.type_line,
-  //       component: 'meld_result',
-  //     };
-  //     meldRelatedCards.push(meldResult);
-  //     meldPartIds.forEach(id => {
-  //       const relatedCard = finalCards.find(card => card.id == id) as HCCard.Any;
-  //       meldRelatedCards
-  //         .filter(e => e.id != id)
-  //         .forEach(meldPart => {
-  //           const meldIndex = relatedCard.all_parts?.findIndex(e => e.id == meldPart.id);
-  //           if (meldIndex == -1 || meldIndex == undefined || !relatedCard.all_parts) {
-  //             pushProp(relatedCard, 'all_parts', meldPart);
-  //           } else {
-  //             relatedCard.all_parts[meldIndex] = meldPart;
-  //           }
-  //         });
-  //     });
-  //   });
-  // // update cards that have token copies of them made by other cards or by tokens
-  // finalCards
-  //   .filter(e => 'all_parts' in e)
-  //   .forEach(card => {
-  //     card.all_parts
-  //       ?.filter(e => e.component == 'token_maker')
-  //       .forEach(tokenMaker => {
-  //         const relatedToken: HCRelatedCard = {
-  //           object: HCObject.ObjectType.RelatedCard,
-  //           id: card.id,
-  //           name: card.name,
-  //           set: card.set,
-  //           image: card.image,
-  //           type_line: card.type_line,
-  //           component: 'token',
-  //         };
-  //         if (tokenMaker.count) {
-  //           relatedToken.count = tokenMaker.count;
-  //         }
-  //         const relatedCard =
-  //           finalCards.find(card => card.id == tokenMaker.id) ??
-  //           finalTokens.find(card => textEquals(card.id, tokenMaker.id)) ??
-  //           finalCards.find(card => textEquals(card.name, tokenMaker.name)) ??
-  //           finalTokens.find(card => textEquals(card.id, tokenMaker.name));
-  //         if (relatedCard) {
-  //           tokenMaker.id = relatedCard.id;
-  //           tokenMaker.name = relatedCard.name;
-  //           tokenMaker.set = relatedCard.set;
-  //           tokenMaker.image = relatedCard.image;
-  //           tokenMaker.type_line = relatedCard.type_line;
-  //           if (relatedCard.tags?.includes('persistent-tokens')) {
-  //             tokenMaker.persistent = true;
-  //             relatedToken.persistent = true;
-  //           }
-  //           const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-  //           if (tokenIndex == -1 || tokenIndex == undefined || !relatedCard.all_parts) {
-  //             pushProp(relatedCard, 'all_parts', relatedToken);
-  //           } else {
-  //             relatedCard.all_parts[tokenIndex] = relatedToken;
-  //           }
-  //         }
-  //       });
-  //   });
-  // finalLands
-  //   .filter(e => 'all_parts' in e)
-  //   .forEach(land => {
-  //     land.all_parts
-  //       ?.filter(e => e.component == 'token_maker')
-  //       .forEach(tokenMaker => {
-  //         const relatedToken: HCRelatedCard = {
-  //           object: HCObject.ObjectType.RelatedCard,
-  //           id: land.id,
-  //           name: land.name,
-  //           set: land.set,
-  //           image: land.image,
-  //           type_line: land.type_line,
-  //           component: 'token',
-  //         };
-  //         if (tokenMaker.count) {
-  //           relatedToken.count = tokenMaker.count;
-  //         }
-  //         const relatedCard =
-  //           finalCards.find(card => card.id == tokenMaker.id) ??
-  //           finalTokens.find(card => textEquals(card.id, tokenMaker.id)) ??
-  //           finalCards.find(card => textEquals(card.name, tokenMaker.name)) ??
-  //           finalTokens.find(card => textEquals(card.id, tokenMaker.name));
-  //         if (relatedCard) {
-  //           tokenMaker.id = relatedCard.id;
-  //           tokenMaker.name = relatedCard.name;
-  //           tokenMaker.set = relatedCard.set;
-  //           tokenMaker.image = relatedCard.image;
-  //           tokenMaker.type_line = relatedCard.type_line;
-  //           if (relatedCard.tags?.includes('persistent-tokens')) {
-  //             tokenMaker.persistent = true;
-  //             relatedToken.persistent = true;
-  //           }
-  //           const tokenIndex = relatedCard.all_parts?.findIndex(e => e.id == land.id);
-  //           if (tokenIndex == -1 || tokenIndex == undefined || !relatedCard.all_parts) {
-  //             pushProp(relatedCard, 'all_parts', relatedToken);
-  //           } else {
-  //             relatedCard.all_parts[tokenIndex] = relatedToken;
-  //           }
-  //           if (
-  //             relatedCard.tags?.includes('AddCards') &&
-  //             (!relatedCard.tag_notes?.['AddCards'] ||
-  //               parseInt(relatedCard.tag_notes['AddCards']) ||
-  //               relatedCard.tag_notes['AddCards'] == land.id)
-  //           ) {
-  //             relatedCard.has_draft_partners = true;
-  //             land.has_draft_partners = true;
-  //             land.not_directly_draftable = true;
-  //             tokenMaker.is_draft_partner = true;
-  //             relatedCard.all_parts!.find(e => e.id == land.id)!.is_draft_partner = true;
-  //           }
-  //         }
-  //       });
-  //   });
-  // // update front cards and order their parts
-  // finalTokens
-  //   .filter(e => 'all_parts' in e && e.layout == 'front')
-  //   .forEach(front => {
-  //     const headliners: HCRelatedCard[] = [];
-  //     const others: HCRelatedCard[] = [];
-  //     const nonbasics: HCRelatedCard[] = [];
-  //     const thriving: HCRelatedCard[] = [];
-  //     const basics: HCRelatedCard[] = [];
-
-  //     finalCards
-  //       .filter(e => e.set == 'HCJ' && e.tags?.includes(front.tags![0]))
-  //       .forEach(card => {
-  //         const relatedFront: HCRelatedCard = {
-  //           object: HCObject.ObjectType.RelatedCard,
-  //           id: front.id,
-  //           name: front.name,
-  //           set: front.set,
-  //           image: front.image,
-  //           type_line: front.type_line,
-  //           component: 'draft_partner',
-  //           // is_draft_partner:true
-  //         };
-  //         const partIndex = front.all_parts?.findIndex(part => part.id == card.id);
-  //         const alreadyHasPart = partIndex != -1 && partIndex != undefined;
-  //         const relatedCard: HCRelatedCard = alreadyHasPart
-  //           ? front.all_parts![partIndex]
-  //           : {
-  //               object: HCObject.ObjectType.RelatedCard,
-  //               id: card.id,
-  //               name: card.name,
-  //               set: card.set,
-  //               image: card.image,
-  //               type_line: card.type_line,
-  //               component: 'draft_partner',
-  //               is_draft_partner: true,
-  //             };
-  //         if (relatedCard.count) {
-  //           relatedFront.count = relatedCard.count;
-  //         }
-  //         if (alreadyHasPart) {
-  //           relatedCard.id = card.id;
-  //           relatedCard.name = card.name;
-  //           relatedCard.set = card.set;
-  //           relatedCard.image = card.image;
-  //           relatedCard.type_line = card.type_line;
-  //         }
-  //         const frontIndex = card.all_parts?.findIndex(e => e.id == front.id);
-  //         if (frontIndex == -1 || frontIndex == undefined || !card.all_parts) {
-  //           pushProp(card, 'all_parts', relatedFront);
-  //         } else {
-  //           card.all_parts[frontIndex] = relatedFront;
-  //         }
-  //         if (card.tags?.includes('headliner')) {
-  //           headliners.push(relatedCard);
-  //         } else if (card.name.startsWith('Thriving') && !card.name.startsWith('Thriving Puff')) {
-  //           thriving.push(relatedCard);
-  //         } else if (toFaces(card)[0].supertypes?.includes('Basic')) {
-  //           basics.push(relatedCard);
-  //         } else if (toFaces(card)[0].types?.includes('Land')) {
-  //           nonbasics.push(relatedCard);
-  //         } else {
-  //           others.push(relatedCard);
-  //         }
-  //       });
-  //     front.all_parts
-  //       ?.filter(part => !part.id)
-  //       .forEach(part => {
-  //         if (part.name.startsWith('Thriving')) {
-  //           thriving.push(part);
-  //         } else {
-  //           basics.push(part);
-  //         }
-  //       });
-  //     front.all_parts = [...headliners, ...others, ...nonbasics, ...thriving, ...basics];
-  //   });
-  // // update draftpartners
-  // finalCards
-  //   .filter(e => 'all_parts' in e)
-  //   .forEach(card => {
-  //     card.all_parts
-  //       ?.filter(e => e.component == 'draft_partner' && e.set != 'FHCJ')
-  //       .forEach(part => {
-  //         const cardAsRelated: HCRelatedCard = {
-  //           object: HCObject.ObjectType.RelatedCard,
-  //           id: card.id,
-  //           name: card.name,
-  //           set: card.set,
-  //           image: card.image,
-  //           type_line: card.type_line,
-  //           component: 'draft_partner',
-  //           is_draft_partner: true,
-  //         };
-  //         if (part.count) {
-  //           cardAsRelated.count = part.count;
-  //         }
-  //         const relatedCard = finalCards.find(e =>
-  //           part.id ? e.id == part.id : textEquals(e.name, part.name)
-  //         );
-  //         if (relatedCard) {
-  //           if (!('has_draft_partners' in relatedCard!)) {
-  //             relatedCard!.has_draft_partners = true;
-  //           }
-  //           if (!('has_draft_partners' in card)) {
-  //             card.has_draft_partners = true;
-  //           }
-  //           part.id = relatedCard!.id;
-  //           part.name = relatedCard!.name;
-  //           part.set = relatedCard!.set;
-  //           part.image = relatedCard!.image;
-  //           part.type_line = relatedCard!.type_line;
-  //           part.is_draft_partner = true;
-  //           const partnerIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
-  //           if (partnerIndex == -1 || partnerIndex == undefined || !relatedCard.all_parts) {
-  //             pushProp(relatedCard, 'all_parts', cardAsRelated);
-  //           } else {
-  //             relatedCard.all_parts[partnerIndex] = cardAsRelated;
-  //           }
-  //         }
-  //       });
-  //   });
-  // finalCards
-  //   .filter(e => 'all_parts' in e)
-  //   .forEach(card => {
-  //     for (let i = card.all_parts?.length! - 1; i >= 0; i--) {
-  //       const part = card.all_parts![i];
-
-  //       if (card.all_parts!.slice(0, i).find(e => e.id == part.id)) {
-  //         card.all_parts?.splice(i, 1);
-  //       } else if (part.component == 'token') {
-  //         if (finalCards.find(e => e.id == part.id)) {
-  //           if (
-  //             !(
-  //               finalCards.find(e => e.id == part.id)?.all_parts?.find(e => e.id == card.id)
-  //                 ?.component == 'token_maker'
-  //             )
-  //           ) {
-  //             card.all_parts?.splice(i, 1);
-  //           }
-  //         } else if (finalTokens.find(e => e.id == part.id)) {
-  //           if (
-  //             !(
-  //               finalTokens.find(e => e.id == part.id)?.all_parts?.find(e => e.id == card.id)
-  //                 ?.component == 'token_maker'
-  //             )
-  //           ) {
-  //             card.all_parts?.splice(i, 1);
-  //           }
-  //         } else {
-  //           if (
-  //             !(
-  //               finalLands
-  //                 .find(e => textEquals(e.id, part.id))
-  //                 ?.all_parts?.find(e => e.id == card.id)?.component == 'token_maker'
-  //             )
-  //           ) {
-  //             card.all_parts?.splice(i, 1);
-  //           }
-  //         }
-  //       }
-  //     }
-  //     if (card.all_parts?.length == 0) {
-  //       delete card.all_parts;
-  //     }
-  //   });
-
-  // finalTokens
-  //   .filter(e => 'all_parts' in e && e.set != 'FHCJ')
-  //   .forEach(token => {
-  //     for (let i = token.all_parts?.length! - 1; i >= 0; i--) {
-  //       const part = token.all_parts![i];
-  //       if (
-  //         token.all_parts!.slice(0, i).find(e => e.id == part.id) ||
-  //         (part.component == 'token' &&
-  //           !(
-  //             finalTokens
-  //               .find(e => textEquals(e.id, part.id))
-  //               ?.all_parts?.find(e => e.id == token.id)?.component == 'token_maker'
-  //           ))
-  //       ) {
-  //         token.all_parts?.splice(i, 1);
-  //       }
-  //     }
-  //     if (token.all_parts?.length == 0) {
-  //       delete token.all_parts;
-  //     }
-  //   });
-  // automatically add variations for masterpieces
-  // finalCards
-  //   .filter(entry => entry.tags?.includes('masterpiece') && !entry.variation)
-  //   .forEach(entry => {
-  //     const varName = stripMasterpiece(entry.name);
-  //     const variation_of = finalCards.find(card => textEquals(card.name, varName))?.id;
-  //     if (variation_of) {
-  //       entry.variation = true;
-  //       entry.variation_of = variation_of;
-  //     }
-  //   });
   // automatically add collector numbers and export props
   const collectorNumberAutofillSets: Record<string, number> = {
     'HCV.2': 0,
@@ -1195,28 +795,7 @@ const main = async () => {
   };
   const takenNames = namesRawData.data;
   finalCards.forEach(entry => setExportProps(entry, takenNames));
-  // finalTokens.forEach(entry => {
-  //   setExportProps(entry, takenNames);
-  //   if (!entry.collector_number) {
-  //     if (entry.set in collectorNumberAutofillSets) {
-  //       collectorNumberAutofillSets[entry.set] += 1;
-  //       entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
-  //     } else {
-  //       throw console.error;
-  //     }
-  //   }
-  // });
-  // finalLands.forEach(entry => {
-  //   setExportProps(entry, takenNames);
-  //   if (!entry.collector_number) {
-  //     if (entry.set in collectorNumberAutofillSets) {
-  //       collectorNumberAutofillSets[entry.set] += 1;
-  //       entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
-  //     } else {
-  //       throw console.error;
-  //     }
-  //   }
-  // });
+
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
@@ -1239,43 +818,6 @@ const main = async () => {
       entry.tags?.forEach(e => tagSet.add(e));
     }
   });
-  // finalTokens.forEach(entry => {
-  //   ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
-  //     [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
-  //       typeEntry => {
-  //         typeSet.add(textPrep(typeEntry.replaceAll(/[[\]{}\*_~]/g, ''), true));
-  //       }
-  //     );
-  //   });
-
-  //   entry.creators = entry.creators.map(creator => {
-  //     if (creator in usernameMappings) {
-  //       creatorSet.add(usernameMappings[creator]);
-  //       return usernameMappings[creator];
-  //     }
-  //     creatorSet.add(creator);
-  //     return creator;
-  //   });
-
-  //   if ('tags' in entry) {
-  //     entry.tags?.forEach(e => tagSet.add(e));
-  //   }
-  // });
-
-  // finalLands.forEach(entry => {
-  //   entry.creators = entry.creators.map(creator => {
-  //     if (creator in usernameMappings) {
-  //       creatorSet.add(usernameMappings[creator]);
-  //       return usernameMappings[creator];
-  //     }
-  //     creatorSet.add(creator);
-  //     return creator;
-  //   });
-
-  //   if ('tags' in entry) {
-  //     entry.tags?.forEach(e => tagSet.add(e));
-  //   }
-  // });
 
   const types = Array.from(typeSet).sort((a, b) => {
     if (a > b) {
@@ -1301,50 +843,29 @@ const main = async () => {
   const creators = Array.from(creatorSet);
   const tags = Array.from(tagSet);
 
-  // finalCards.sort((a, b) => {
-  //   if (parseInt(a.id) == parseInt(b.id)) {
-  //     if (a.id > b.id) {
-  //       return 1;
-  //     }
-  //     return -1;
-  //   } else if (parseInt(a.id) > parseInt(b.id)) {
-  //     return 1;
-  //   }
-  //   return -1;
-  // });
-  // finalTokens.sort((a, b) => {
-  //   if (a.set != b.set) {
-  //     return allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set);
-  //   }
-  //   if (a.collector_number && b.collector_number) {
-  //     return parseInt(a.collector_number) - parseInt(b.collector_number);
-  //   }
-  //   if (a.name == b.name) {
-  //     if (
-  //       (parseInt(a.id.match(/\d+$/)?.[0] || '') || 0) >
-  //       (parseInt(b.id.match(/\d+$/)?.[0] || '') || 0)
-  //     ) {
-  //       return 1;
-  //     }
-  //     return -1;
-  //   }
-  //   if (a.name > b.name) {
-  //     return 1;
-  //   }
-  //   return -1;
-  // });
-
   fs.writeFileSync(
     '../shared/src/data/types.json',
     JSON.stringify({ data: reducedTypes }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tokens.json',
-    JSON.stringify({ data: Array.from(finalCards.values().filter(card=>card.isActualToken || card.set == 'FHCJ')) }, null, '\t')
+    JSON.stringify(
+      {
+        data: Array.from(
+          finalCards.values().filter(card => card.isActualToken || card.set == 'FHCJ')
+        ),
+      },
+      null,
+      '\t'
+    )
   );
   fs.writeFileSync(
     '../shared/src/data/lands.json',
-    JSON.stringify({ data: Array.from(finalCards.values().filter(card=>card.set.startsWith('HBB'))) }, null, '\t')
+    JSON.stringify(
+      { data: Array.from(finalCards.values().filter(card => card.set.startsWith('HBB'))) },
+      null,
+      '\t'
+    )
   );
   fs.writeFileSync(
     '../shared/src/data/tags.json',

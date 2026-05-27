@@ -1,3 +1,5 @@
+/* eslint-disable no-redeclare */
+/* eslint-disable no-undef */
 import { HCObject } from '../Object';
 import { HCLayout, HCLayoutGroup } from './values';
 import { HCCardFace } from './CardFace.ts';

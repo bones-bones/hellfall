@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 import {
   HCBorderColor,
   HCColors,
@@ -37,9 +38,9 @@ export namespace HCCardFields.Core {
    */
   export type HCReferences = {
     /**
-     * 
+     *
      * A unique ID for this card in HC's database.
-     * 
+     *
      * @type UUID
      */
     id: string;
@@ -48,10 +49,10 @@ export namespace HCCardFields.Core {
      */
     id_is_scryfall?: boolean;
     /**
-     * 
+     *
      * A unique ID for this card's oracle identity.
      * This value is consistent across reprinted card editions, and unique among different cards with the same name (tokens, Unstable variants, etc).
-     * 
+     *
      * @type UUID
      */
     oracle_id?: string;
@@ -68,7 +69,7 @@ export namespace HCCardFields.Core {
      * the old unique ID for this card in HC's database.
      */
     // hcid: string; #uuid
-    scryfall_id?:string; //#uuid
+    scryfall_id?: string; //#uuid
     // layout: `${HCLayout}`;
     /**
      * All rulings for the card.

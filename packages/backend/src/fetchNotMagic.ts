@@ -3,7 +3,6 @@ import {
   HCCard,
   HCImageStatus,
   HCLayout,
-  HCRelatedCard,
   HCColor,
   HCColors,
   HCObject,

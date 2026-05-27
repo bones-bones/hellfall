@@ -294,7 +294,7 @@ export const toExportName = (name: string) => {
 
 export const stripSingleSlashes = (text: string) => {
   return text
-    .replaceAll(/([^\/])\/([^\/])/g, '$1$2')
+    .replaceAll(/([^/])\/([^/])/g, '$1$2')
     .replaceAll('|', '')
     .trim();
 };
@@ -371,7 +371,7 @@ const costSubstitutes: [RegExp | string, string][] = [
 export const toExportMana = (text: string, isCost: boolean = false) => {
   if (text.includes('{')) {
     return text
-      .split(/({[\w -\.\?\/]+})/g)
+      .split(/({[\w -.?/]+})/g)
       .map(subtext => {
         if (!subtext.includes('{')) {
           return subtext;

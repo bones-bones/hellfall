@@ -84,7 +84,7 @@ export const filterSort: sortFilter = Object.assign(
       }
       case 'set':
         return (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
-      case 'setnumber':
+      case 'setnumber': {
         const set = (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
         if (!set) {
           if (!value1.collector_number && !value2.collector_number) {
@@ -102,6 +102,7 @@ export const filterSort: sortFilter = Object.assign(
         } else {
           return set;
         }
+      }
     }
     return 0; // just in case
   },

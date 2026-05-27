@@ -1,5 +1,5 @@
 import { sheetsKey } from './env.ts';
-import {HCLayout,HCRelatedCard,HCObject} from '@hellfall/shared/types';
+import { HCLayout, HCRelatedCard, HCObject } from '@hellfall/shared/types';
 import { ScryfallCard } from '@scryfall/api-types';
 import pLimit from 'p-limit';
 import { ScryfallToHC } from './scryfallToHC.ts';

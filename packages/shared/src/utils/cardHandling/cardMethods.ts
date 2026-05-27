@@ -10,7 +10,13 @@ import {
   bothValueType,
   colorPropType,
 } from './propTypes';
-import { getMasterpiece, getSetCode, stripMasterpiece, stripSetCode, textEquals } from '../textHandling';
+import {
+  getMasterpiece,
+  getSetCode,
+  stripMasterpiece,
+  stripSetCode,
+  textEquals,
+} from '../textHandling';
 import { cardMap, toCardMap } from './cardMap';
 
 /**
@@ -253,7 +259,10 @@ export const canBeACommander = (card: HCCard.Any) => {
   );
 };
 
-export const filterMap =<K, V>(map: Map<K, V>, predicate: (value: V, key: K) => boolean|undefined): Map<K, V> => {
+export const filterMap = <K, V>(
+  map: Map<K, V>,
+  predicate: (value: V, key: K) => boolean | undefined
+): Map<K, V> => {
   const subset = new Map<K, V>();
   for (const [key, value] of map) {
     if (predicate(value, key)) {
@@ -261,10 +270,18 @@ export const filterMap =<K, V>(map: Map<K, V>, predicate: (value: V, key: K) => 
     }
   }
   return subset;
-}
+};
 
 export const getAllRelated = (card: HCCard.Any, cardMap: cardMap): cardMap =>
-  toCardMap((card.all_parts?.flatMap(part => cardMap.get(part.id) ?? cardMap.values().find(related=>textEquals(part.id,related.id)) ?? cardMap.values().find(related=>textEquals(part.name,related.name)) ?? []) ?? [])); // #uuid:hcid (only for second one)
+  toCardMap(
+    card.all_parts?.flatMap(
+      part =>
+        cardMap.get(part.id) ??
+        cardMap.values().find(related => textEquals(part.id, related.id)) ??
+        cardMap.values().find(related => textEquals(part.name, related.name)) ??
+        []
+    ) ?? []
+  ); // #uuid:hcid (only for second one)
 
 export const getRelatedsFromCards = (
   cardList: HCCard.Any[],

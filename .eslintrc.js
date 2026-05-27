@@ -33,19 +33,23 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/no-non-null-asserted-optional-chain': 0, // Look i know what i'm doing, honest
     // 'react/react-in-jsx-scope': 'off',
-    '@typescript-eslint/ban-ts-comment': ["error", { // I fixed it
-      "ts-ignore": "allow-with-description",
-      "ts-expect-error": "allow-with-description",
-      "ts-nocheck": "allow-with-description",
-      "ts-check": "allow-with-description"
-    }],
+    '@typescript-eslint/ban-ts-comment': [
+      'error',
+      {
+        // I fixed it
+        'ts-ignore': 'allow-with-description',
+        'ts-expect-error': 'allow-with-description',
+        'ts-nocheck': 'allow-with-description',
+        'ts-check': 'allow-with-description',
+      },
+    ],
     '@typescript-eslint/no-namespace': 0, // This is how scryfall does it and I don't want to rewrite their work more than I need to
     eqeqeq: 0,
     // 'no-restricted-globals': 0,
     'no-unused-vars': 0,
     '@typescript-eslint/no-unused-vars': 0,
     'react-hooks/exhaustive-deps': 0,
-    'no-empty':0,
+    'no-empty': 0,
     'sonarjs/no-in-misuse': 'error',
 
     'react/self-closing-comp': [
@@ -101,6 +105,6 @@ module.exports = {
       rules: {
         'react/no-unescaped-entities': 'off',
       },
-    }
-  ]
+    },
+  ],
 };
