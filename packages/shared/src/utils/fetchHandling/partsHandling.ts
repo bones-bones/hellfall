@@ -47,7 +47,7 @@ export const updateParts = (
       }
       if (alreadyHasPart) {
         part.id = relatedCard.id;
-        part.hcid = relatedCard.hcid
+        part.hcid = relatedCard.hcid;
         part.name = relatedCard.name;
         part.set = relatedCard.set;
         part.image = relatedCard.image;
@@ -189,7 +189,7 @@ export const updateParts = (
         relatedCard.all_parts[relatedIndex] = cardAsRelated;
       }
     });
-  if (card.isActualToken && card.all_parts.some(part => part.component == 'meld_part')) {
+  if (card.kind == 'token' && card.all_parts.some(part => part.component == 'meld_part')) {
     const meldParts = new Map<string, HCRelatedCard>();
     card.all_parts
       .filter(e => e.component == 'meld_part')

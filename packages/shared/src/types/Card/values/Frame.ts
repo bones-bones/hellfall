@@ -37,6 +37,10 @@ export enum HCFrame {
   Hearthstone = 'hearthstone',
   /** Any cards with a lorcana frame. */
   Lorcana = 'lorcana',
+  /** Any cards with a balatro frame. */
+  Balatro = 'balatro',
+  /** Any cards with a tarot frame. */
+  Tarot = 'tarot',
   /** Any cards with a notmagic game frame that isn't covered by another frame. */
   NotMagic = 'notmagic',
   /** Any cards with a website or app frame. */
@@ -52,6 +56,8 @@ export const NotMagicFrames: HCFrame[] = [
   HCFrame.Inscryption,
   HCFrame.Hearthstone,
   HCFrame.Lorcana,
+  HCFrame.Balatro,
+  HCFrame.Tarot,
   HCFrame.NotMagic,
 ];
 export const CardFrames: HCFrame[] = [

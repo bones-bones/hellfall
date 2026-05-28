@@ -1,29 +1,13 @@
 import { sheetsKey } from './env.ts';
-import {
-  HCCard,
-  HCImageStatus,
-  HCRelatedCard,
-  HCColors,
-  HCObject,
-  HCLegality,
-  HCLegalitiesField,
-  HCBorderColor,
-  HCFrame,
-  HCFinish,
-} from '@hellfall/shared/types';
+import { HCImageStatus, HCRelatedCard, HCObject, HCKind, HCFrame } from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 import {
-  cardFaceType,
-  cardObjectType,
-  facePropType,
-  faceValueType,
   propType,
-  valueType,
   addProp,
-  addPropToFace,
-  toSingleCard,
   addArtist,
   setDerivedProps,
+  getDefaultCard,
+  addPropToFaceOrRoot,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -45,45 +29,16 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'tags',
     'collector_number',
     'artists',
-  ];
+  ] as const;
+
+  type keyType = (typeof keys)[number];
+
   rest.forEach(row => {
     while (row.length < keys.length) {
       row.push('');
     }
   });
-  const defaultProps: { [P in propType]?: valueType<P> } = {
-    object: HCObject.ObjectType.Card,
-    set: 'HCT',
-    mana_cost: '',
-    mana_value: 0,
-    type_line: '',
-    colors: [] as HCColors,
-    color_identity: [] as HCColors,
-    color_identity_hybrid: [] as HCColors[],
-    keywords: [],
-    legalities: {
-      standard: HCLegality.NotLegal,
-      '4cb': HCLegality.NotLegal,
-      commander: HCLegality.NotLegal,
-    } as HCLegalitiesField,
-    creators: [],
-    rulings: '',
-    finish: HCFinish.Nonfoil,
-    border_color: HCBorderColor.Black,
-    frame: HCFrame.FullToken,
-    variation: false,
-    isActualToken: true,
-  };
-  const defaultFaceProps: { [P in facePropType]?: faceValueType<P> } = {
-    object: HCObject.ObjectType.CardFace,
-    name: '',
-    image_status: HCImageStatus.Token,
-    mana_cost: '',
-    mana_value: 0,
-    type_line: '',
-    oracle_text: '',
-    colors: [] as HCColors,
-  };
+
   const hardCardNames: string[] = [
     'Crypt of u/Em9500',
     '1d6',
@@ -105,23 +60,37 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
   ];
 
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
+  const splitKeys: keyType[] = ['name', 'types', 'power', 'toughness'];
+  const skipKeys: keyType[] = ['image', 'collector_number', 'creators', 'tags', 'artists'];
 
   const HCTokens = rest.map(entry => {
-    const tokenObject: cardObjectType = { card_faces: [] as cardFaceType[] } as cardObjectType;
+    const entryAt = (key: keyType) => entry[keys.indexOf(key)];
+    const token = getDefaultCard(
+      HCKind.Token,
+      splitKeys.some(key => entry[keys.indexOf(key)].includes(' // ')),
+      {
+        hcid: entryAt('name'),
+        set: 'HCT',
+        image: entryAt('image'),
+        image_status: HCImageStatus.HighRes,
+        creators: entryAt('creators').split(';'),
+        collector_number: entryAt('collector_number'),
+      },
+      {}
+    );
     for (let i = 0; i < keys.length; i++) {
-      if (entry[i]) {
+      if (entry[i] && !skipKeys.includes(keys[i])) {
         if (keys[i] == 'name') {
-          tokenObject.hcid = entry[i];
-          tokenObject.name = hardTokenIds.includes(entry[i])
+          token.name = hardTokenIds.includes(entry[i])
             ? entry[i].slice(0, -1)
             : entry[i].replace(/\d+$/, '');
         }
         if (['name', 'types', 'power', 'toughness'].includes(keys[i])) {
-          const entryList = (keys[i] == 'name' ? tokenObject.name! : entry[i]).split(' // ');
+          const entryList = (keys[i] == 'name' ? token.name! : entry[i]).split(' // ');
           entryList.forEach((value, index) => {
             if (keys[i] == 'name') {
-              addPropToFace(tokenObject, 'name', value, index);
-              addPropToFace(tokenObject, 'subtypes', value.split(' '), index);
+              addPropToFaceOrRoot(token, 'name', value, index);
+              addPropToFaceOrRoot(token, 'subtypes', value.split(' '), index);
             } else if (keys[i] == 'types') {
               const typesAndSupertypes = value.split(';');
               const superList: string[] = [];
@@ -130,17 +99,15 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
                 supers.includes(e) ? superList.push(e) : typeList.push(e);
               });
               if (superList?.length) {
-                addPropToFace(tokenObject, 'supertypes', superList, index);
+                addPropToFaceOrRoot(token, 'supertypes', superList, index);
               }
               if (typeList?.length) {
-                addPropToFace(tokenObject, 'types', typeList, index);
+                addPropToFaceOrRoot(token, 'types', typeList, index);
               }
             } else if (['power', 'toughness'].includes(keys[i])) {
-              addPropToFace(tokenObject, keys[i] as 'power' | 'toughness', value, index);
+              addPropToFaceOrRoot(token, keys[i] as 'power' | 'toughness', value, index);
             }
           });
-        } else if (keys[i] == 'creators' || keys[i] == 'artists') {
-          addProp(tokenObject, keys[i] as 'creators' | 'artists', entry[i].split(';'));
         } else if (keys[i] == 'token_maker') {
           const all_parts = entry[i].split(';').map(oldName => {
             const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
@@ -155,7 +122,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
                 ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!));
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
-              id:'',
+              id: '',
               hcid: shouldUseBase ? name : '',
               name: shouldUseBase ? base : name,
               set: '',
@@ -168,14 +135,11 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
             }
             return maker;
           });
-          addProp(tokenObject, 'all_parts', all_parts);
+          addProp(token, 'all_parts', all_parts);
         } else if (keys[i] == 'tags' || keys[i] == 'artists') {
           // now handling this at the end
         } else {
-          addProp(tokenObject, keys[i] as propType, entry[i]);
-        }
-        if (keys[i] == 'image') {
-          addProp(tokenObject, 'image_status', HCImageStatus.HighRes);
+          addProp(token, keys[i] as propType, entry[i]);
         }
       }
     }
@@ -183,35 +147,19 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     if (entry[artistIndex]) {
       const artists = entry[artistIndex].split(';');
 
-      tokenObject.artists = artists.map(fullArtist => {
+      token.artists = artists.map(fullArtist => {
         const hasNote = fullArtist.includes('<') && fullArtist.endsWith('>');
         const [artist, note] = [
           hasNote ? fullArtist.split('<')[0] : fullArtist,
           hasNote ? fullArtist.split('<')[1].slice(0, -1) : undefined,
         ];
-        addArtist(tokenObject, artist, note);
+        addArtist(token, artist, note);
         return artist;
       });
-      tokenObject.artists = Array.from(new Set(tokenObject.artists));
+      token.artists = Array.from(new Set(token.artists));
     }
 
-    tokenObject.card_faces.forEach((face, index) => {
-      (Object.keys(defaultFaceProps) as facePropType[])
-        .filter(key => !face[key])
-        .forEach(key => {
-          addPropToFace(tokenObject, key, defaultFaceProps[key], index);
-        });
-    });
-    (Object.keys(defaultProps) as propType[])
-      .filter(key => !tokenObject[key])
-      .forEach(key => {
-        addProp(tokenObject, key, defaultProps[key]);
-      });
-    const token =
-      tokenObject.card_faces.length <= 1
-        ? toSingleCard(tokenObject)
-        : (tokenObject as HCCard.AnyMultiFaced);
-    setDerivedProps(token, entry[keys.indexOf('tags')].split(';'));
+    setDerivedProps(token, entryAt('tags').split(';'));
     if (token.tags?.includes('meld')) {
       token.all_parts?.forEach(part => (part.component = 'meld_part'));
     }

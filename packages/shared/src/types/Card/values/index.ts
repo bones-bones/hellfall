@@ -8,6 +8,7 @@ export * from './FrameEffect';
 // export * from './ImageSize.ts';
 export * from './ImageStatus';
 // export * from './ImageUris.ts';
+export * from './Kind.ts';
 export * from './LegalitiesField';
 // export * from "./LanguageCode.ts";
 export * from './Layout';

@@ -9,6 +9,7 @@ import {
   HCFrameEffect,
   // HCGame,
   HCImageStatus,
+  HCKind,
   // HCImageUris,
   // HCLanguageCode,
   HCLayout,
@@ -103,15 +104,15 @@ export namespace HCCardFields.Core {
      * Stored in Firestore as `token-<token_id>`.
      * remove soon
      */
-    token_id?: string;
+    // token_id?: string;
     /**
-     * Whether this card is an actual token (TODO: replace with type-based checks)
+     * Whether this card is an actual token (replaced with kind)
      */
-    isActualToken?: boolean;
-    // /**
-    //  * Kind of card
-    //  */
-    // kind: 'card'|'token'|'land'|'front'|'scryfall'|'notmagic'; #uuid:later (use to replace isActualToken checks and set.startsWith('HBB') checks)
+    // isActualToken?: boolean;
+    /**
+     * Kind of card
+     */
+    kind: `${HCKind}`;
     layout: `${HCLayout}`;
   };
 }
@@ -449,8 +450,8 @@ export namespace HCCardFields.Print {
     /**
      * This card's collector number within the set.
      */
-    collector_number?: string;
-  } & VariationInfo;
+    collector_number: string;
+  };
 
   /**
    * These print fields are specific for single face cards.
@@ -545,20 +546,5 @@ export namespace HCCardFields.Print {
      * A computer-readable flag that indicate if this card has a foil, nonfoil, or etched finish.
      */
     finish?: `${HCFinish}`;
-  };
-
-  type VariationInfo = {
-    /**
-     * Whether this card is a variation of another printing.
-     */
-    variation: boolean;
-    /**
-     * The printing ID of the printing this card is a variation of.
-     *
-     * This will only exist if the `variation` field is true.
-     *
-     * @type UUID
-     */
-    variation_of?: string;
   };
 }

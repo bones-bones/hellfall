@@ -16,9 +16,29 @@ import {
   HCColors,
   HCImageStatus,
   HCFrame,
+  HCKind,
+  AllLayoutType,
+  HCLayoutGroup,
+  HCFrameEffect,
 } from '@hellfall/shared/types';
-import { fromImportMana, pushProp, setDerivedProps } from '@hellfall/shared/utils';
-export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): HCCard.Any => {
+import {
+  addProp,
+  addPropToFace,
+  deletePropFromFace,
+  facePropType,
+  faceValueType,
+  fromImportMana,
+  getDefaultCard,
+  propType,
+  pushProp,
+  pushPropToCard,
+  pushPropToFace,
+  setDerivedProps,
+  valueType,
+} from '@hellfall/shared/utils';
+export type fixedScryfall = Exclude<ScryfallCard.Any, ScryfallCard.ReversibleCard>;
+
+export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCCard.Any => {
   const cardLayoutCorrespondences: Record<ScryfallLayout, HCLayout> = {
     normal: HCLayout.Normal,
     split: HCLayout.Split,
@@ -86,12 +106,12 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
       ? cardLayoutCorrespondences[layout]
       : HCLayout.Normal;
   };
-  const italicsReplaceKeys: string[] = ['name', 'flavor_text', 'oracle_text'];
-  const sameKeys: string[] = [
+  const italicsReplaceKeys: facePropType[] = ['flavor_text', 'oracle_text'];
+  const sameKeys: propType[] = [
     'object',
     'id',
     'oracle_id',
-    'mana_cost',
+    'name',
     'type_line',
     'power',
     'toughness',
@@ -105,34 +125,11 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'color_identity',
     'watermark',
     'border_color',
-    'frame',
     'frame_effects',
   ];
+
   const keyCorrespondences: Record<string, any> = {
     cmc: 'mana_value',
-  };
-  const defaultProps: Record<string, any> = {
-    set: asToken ? 'SFT' : 'SFC',
-    image_status: HCImageStatus.HighRes,
-    mana_cost: '',
-    mana_value: 0,
-    colors: [] as HCColors,
-    legalities: {
-      standard: asToken ? HCLegality.NotLegal : HCLegality.Banned,
-      '4cb': asToken ? HCLegality.NotLegal : HCLegality.Banned,
-      commander: asToken ? HCLegality.NotLegal : HCLegality.Banned,
-    } as HCLegalitiesField,
-    creators: [],
-    rulings: '',
-    variation: false,
-  };
-  const defaultFaceProps: Record<string, any> = {
-    layout: HCLayout.Token,
-    image_status: HCImageStatus.Split,
-    mana_cost: '',
-    mana_value: 0,
-    oracle_text: '',
-    colors: [] as HCColors,
   };
   // const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
   const subKeywords: Record<string, string> = {
@@ -164,139 +161,139 @@ export const ScryfallToHC = (card: ScryfallCard.Any, asToken: boolean = true): H
     'manifest dread': 'manifest',
   };
   const supers: string[] = ['Basic', 'Elite', 'Legendary', 'Ongoing', 'Snow', 'Token', 'World'];
-  const cardObject: Record<string, any> & { card_faces?: Record<string, any>[] } = {};
-  Object.entries(card).forEach(([key, value]) => {
-    if (key == 'card_faces') {
-      cardObject.card_faces = [] as HCCardFace.MultiFaced[];
-      (value as ScryfallCardFace.Any[]).forEach((face, index) => {
-        cardObject.card_faces?.push({} as HCCardFace.MultiFaced);
 
-        Object.entries(face).forEach(([k, v]) => {
-          if (k == 'image_uris') {
-            cardObject.card_faces![index].image = (v as ScryfallImageUris).large;
-            cardObject.card_faces![index].image_status = HCImageStatus.HighRes;
-          } else if (k in keyCorrespondences) {
-            cardObject.card_faces![index][keyCorrespondences[k]] = v;
-          } else if (k == 'mana_cost') {
-            cardObject.card_faces![index][k] = fromImportMana(v as string);
-          } else if (italicsReplaceKeys.includes(k)) {
-            cardObject.card_faces![index][k] = fromImportMana(
-              (v as string).replaceAll('\n', '\\n')
-            );
-          } else if (sameKeys.includes(k)) {
-            cardObject.card_faces![index][k] = v;
-          }
-          if (k == 'type_line') {
-            const [before, after] = (v as string).split(' — ');
-            before.split(' ').forEach(word => {
-              if (supers.includes(word)) {
-                pushProp(cardObject.card_faces![index], 'supertypes', word);
-              } else if (word == 'Card') {
-                cardObject.layout = HCLayout.MultiReminder;
-                pushProp(cardObject.card_faces![index], 'types', 'Reminder Card');
-              } else {
-                pushProp(cardObject.card_faces![index], 'types', word);
-              }
-            });
-            after
-              ?.split(' ')
-              .forEach(word => pushProp(cardObject.card_faces![index], 'subtypes', word));
+  const card = getDefaultCard(
+    HCKind.Scryfall,
+    'card_faces' in entry,
+    {
+      ...(Object.entries(entry) as { [K in propType]: [K, valueType<K>] }[propType][]).filter(
+        ([key, value]) => sameKeys.includes(key as propType)
+      ),
+      id_is_scryfall: true,
+      oracle_id_is_scryfall: true,
+      set: asToken ? 'SFT' : 'SFC',
+      mana_value: entry.cmc,
+      image_status: HCImageStatus.HighRes,
+    },
+    {}
+  );
+  if ('card_faces' in entry && 'card_faces' in card) {
+    entry.card_faces.forEach((face, i) => {
+      (
+        Object.entries(face) as { [K in facePropType]: [K, faceValueType<K>] }[facePropType][]
+      ).forEach(([prop, value]) => {
+        if (sameKeys.includes(prop as propType)) {
+          addPropToFace(card, prop, value, i);
+        } else if (prop == 'mana_cost') {
+          addPropToFace(card, prop, fromImportMana(value), i);
+        } else if (italicsReplaceKeys.includes(prop)) {
+          addPropToFace(card, prop, fromImportMana((value as string).replaceAll('\n', '\\n')), i);
+        }
+        if (prop == 'type_line') {
+          const [before, after] = value.split(' — ');
+          before.split(' ').forEach(word => {
+            if (supers.includes(word)) {
+              pushPropToFace(card, 'supertypes', word, i);
+            } else if (word == 'Card') {
+              addProp(card, 'layout', HCLayout.MultiReminder as HCLayoutGroup.SingleFacedType);
+              addPropToFace(card, 'layout', HCLayout.Reminder, i);
+              pushPropToFace(card, 'types', 'Reminder Card', i);
+            } else {
+              pushPropToFace(card, 'types', word, i);
+            }
+          });
+          after?.split(' ').forEach(word => pushPropToFace(card, 'subtypes', word, i));
+        }
+      });
+      if ('image_uris' in face) {
+        addPropToFace(card, 'image', (face.image_uris as ScryfallImageUris).large, i);
+        addPropToFace(card, 'image_status', HCImageStatus.HighRes, i);
+      }
+    });
+  }
+  (Object.entries(entry) as { [K in propType]: [K, valueType<K>] }[propType][]).forEach(
+    ([prop, value]) => {
+      if (prop == 'mana_cost') {
+        addProp(card, prop, fromImportMana(value));
+      } else if (italicsReplaceKeys.includes(prop as facePropType)) {
+        addProp(card, prop, fromImportMana((value as string).replaceAll('\n', '\\n')));
+      } else if (prop == 'type_line' && !('card_faces' in card)) {
+        const [before, after] = value.split(' — ');
+        before.split(' ').forEach(word => {
+          if (supers.includes(word)) {
+            pushPropToCard(card, 'supertypes', word);
+          } else if (word == 'Card') {
+            addProp(card, 'layout', HCLayout.Reminder);
+            pushPropToCard(card, 'types', 'Reminder Card');
+          } else {
+            if (word == 'Dungeon') {
+              addProp(card, 'layout', HCLayout.Dungeon);
+            }
+            pushPropToCard(card, 'types', word);
           }
         });
-      });
-      // } else if (colorProps.includes(key)) {
-      //   cardObject[key] = value as HCColors;
-    } else if (key == 'image_uris') {
-      cardObject.image = (value as ScryfallImageUris).large;
-      cardObject.image_status = HCImageStatus.HighRes;
-    } else if (key == 'layout' && !('layout' in cardObject)) {
-      cardObject.layout = convertLayout(value as ScryfallLayout);
-    } else if (key == 'keywords') {
-      cardObject.keywords = value.map((keyword: string) => {
-        return keyword.toLowerCase().replace('!', '');
-      });
-      cardObject.keywords.forEach((keyword: string) => {
-        if (keyword in subKeywords) {
-          cardObject.keywords.push(subKeywords[keyword]);
-        }
-      });
-    } else if (key in keyCorrespondences) {
-      cardObject[keyCorrespondences[key]] = value;
-    } else if (key == 'mana_cost') {
-      cardObject[key] = fromImportMana(value);
-    } else if (italicsReplaceKeys.includes(key)) {
-      cardObject[key] = fromImportMana(value.replaceAll('\n', '\\n'));
-    } else if (key == 'frame') {
-      // if it was released after June 2019, use the new token frame
-      const isNewToken =
-        value == '2015' &&
-        card.set_type == 'token' &&
-        (card.released_at.slice(0, 3) != '201' ||
-          (card.released_at.slice(0, 4) == '2019' && parseInt(card.released_at.slice(5, 7)) > 6));
-      cardObject.frame = (card.set_type == 'token' ? 'token_' : '') + (isNewToken ? '2020' : value);
-    } else if (sameKeys.includes(key)) {
-      cardObject[key] = value;
-    }
-    if (key == 'type_line' && !('card_faces' in card)) {
-      const [before, after] = (value as string).split(' — ');
-      before.split(' ').forEach(word => {
-        if (supers.includes(word)) {
-          pushProp(cardObject, 'supertypes', word);
-        } else if (word == 'Card') {
-          cardObject.layout = HCLayout.Reminder;
-          pushProp(cardObject, 'types', 'Reminder Card');
-        } else {
-          if (word == 'Dungeon') {
-            cardObject.layout = HCLayout.Dungeon;
+        after?.split(' ').forEach(word => pushPropToCard(card, 'subtypes', word));
+      } else if (prop == 'layout') {
+        addProp(
+          card,
+          prop,
+          convertLayout(value as ScryfallLayout) as HCLayoutGroup.SingleFacedType
+        );
+      } else if (prop == 'keywords') {
+        addProp(
+          card,
+          prop,
+          value.map((keyword: string) => keyword.toLowerCase().replace('!', ''))
+        );
+        card.keywords.forEach(keyword => {
+          if (keyword in subKeywords) {
+            pushPropToCard(card, prop, subKeywords[keyword]);
           }
-          pushProp(cardObject, 'types', word);
-        }
-      });
-      after?.split(' ').forEach(word => pushProp(cardObject, 'subtypes', word));
-    }
-  });
-  if (card.full_art) {
-    pushProp(cardObject, 'frame_effects', 'fullart');
-  }
-  cardObject.finish = card.finishes.includes('nonfoil') ? 'nonfoil' : 'foil';
-  cardObject.id = card.id; // make sure to give correct ID using name for tokens
-  if (card.layout == 'token' && card.type_line == 'Creature') {
-    cardObject.layout = HCLayout.Reminder;
-  }
-  Object.entries(defaultProps).forEach(([key, value]) => {
-    if (!(key in cardObject)) {
-      cardObject[key] = value;
-    }
-  });
-  if ('card_faces' in cardObject) {
-    if (cardObject.card_faces?.[0].colors.length) {
-      cardObject.colors = cardObject.card_faces?.[0].colors;
-    }
-    cardObject.card_faces = cardObject.card_faces?.map(face => {
-      if (!('image' in cardObject) && 'image' in face) {
-        cardObject.image = face.image;
-        cardObject.image_status = face.image_status;
-        delete face.image;
-        face.image_status = HCImageStatus.Front;
+        });
+      } else if (prop == 'frame') {
+        const isNewToken =
+          value == '2015' &&
+          entry.set_type == 'token' &&
+          (entry.released_at.slice(0, 3) != '201' ||
+            (entry.released_at.slice(0, 4) == '2019' &&
+              parseInt(entry.released_at.slice(5, 7)) > 6));
+        addProp(
+          card,
+          prop,
+          ((entry.set_type == 'token' ? 'token_' : '') + (isNewToken ? '2020' : value)) as HCFrame
+        );
       }
-      Object.entries(defaultFaceProps).forEach(([key, value]) => {
-        if (!(key in face)) {
-          face[key] = value;
-        }
-      });
-      return face;
-    });
-  } else {
-    Object.entries(defaultFaceProps).forEach(([key, value]) => {
-      if (!(key in cardObject)) {
-        cardObject[key] = value;
-      }
-    });
+    }
+  );
+  if ('image_uris' in entry) {
+    addProp(card, 'image', (entry.image_uris as ScryfallImageUris).large);
+    addProp(card, 'image_status', HCImageStatus.HighRes);
   }
-  if (asToken) {
-    cardObject.isActualToken = true;
+  if (entry.full_art) {
+    pushPropToCard(card, 'frame_effects', HCFrameEffect.FullArt);
   }
-  const cardFinal = cardObject as HCCard.Any;
-  setDerivedProps(cardFinal);
-  return cardFinal;
+  if (!entry.finishes.includes('nonfoil')) {
+    addProp(card, 'finish', 'foil');
+  }
+  if (entry.layout == 'token' && entry.type_line == 'Creature') {
+    addProp(card, 'layout', HCLayout.Reminder);
+  }
+
+  if ('card_faces' in card) {
+    if (card.card_faces[0].colors.length && !card.colors.length) {
+      card.colors = card.card_faces[0].colors;
+    } else if (!card.card_faces[0].colors.length && card.colors.length) {
+      card.card_faces[0].colors = card.colors;
+    }
+    if (!card.image && card.card_faces[0].image) {
+      card.image = card.card_faces[0].image;
+      deletePropFromFace(card, 'image', 0);
+      [card.image_status, card.card_faces[0].image_status] = [
+        card.card_faces[0].image_status,
+        card.image_status,
+      ];
+    }
+  }
+  // setDerivedProps(card);
+  return card;
 };

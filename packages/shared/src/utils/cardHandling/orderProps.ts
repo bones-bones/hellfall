@@ -2,6 +2,7 @@ import { facePropType, partPropType, propType } from './propTypes';
 
 export const propOrder: propType[] = [
   'object',
+  // 'kind',
   'id',
   'id_is_scryfall',
   'oracle_id',
@@ -56,10 +57,6 @@ export const propOrder: propType[] = [
   'frame_effects',
   'tags',
   'tag_notes',
-  'token_id',
-  'variation',
-  'variation_of',
-  'isActualToken',
   'card_faces',
   'all_parts',
 ];

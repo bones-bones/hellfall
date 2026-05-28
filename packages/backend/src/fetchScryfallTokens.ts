@@ -2,7 +2,8 @@ import { sheetsKey } from './env.ts';
 import { HCLayout, HCRelatedCard, HCObject } from '@hellfall/shared/types';
 import { ScryfallCard } from '@scryfall/api-types';
 import pLimit from 'p-limit';
-import { ScryfallToHC } from './scryfallToHC.ts';
+import { fixedScryfall, ScryfallToHC } from './scryfallToHC.ts';
+import { setDerivedProps } from '@hellfall/shared/utils/index.ts';
 
 const REQUEST_DELAY_MS = 125;
 const limiter = pLimit(1);
@@ -19,7 +20,7 @@ const hardCardNames: string[] = [
   'Carrion Feeder from MH8',
 ];
 
-async function fetchCardById(cardId: string): Promise<ScryfallCard.Any> {
+async function fetchCardById(cardId: string): Promise<fixedScryfall> {
   return limiter(async () => {
     const url = `https://api.scryfall.com/cards/${cardId}`;
 
@@ -40,7 +41,7 @@ async function fetchCardById(cardId: string): Promise<ScryfallCard.Any> {
 
     await delay(REQUEST_DELAY_MS);
 
-    const cardData: ScryfallCard.Any = (await response.json()) as any;
+    const cardData: fixedScryfall = (await response.json()) as any;
     return cardData;
   });
 }
@@ -52,22 +53,24 @@ export const fetchScryfallTokens = async () => {
   const asJson = (await requestedData.json()) as any;
 
   const [_oldkeys, ...rest] = asJson.values as string[][];
-  const keys = ['hcid', 'id', 'layout', 'token_maker', 'notes', 'tags'];
+  const keys = ['hcid', 'id', 'token_maker', 'notes', 'tags'] as const;
+  type keyType = (typeof keys)[number];
   rest.forEach(row => {
     while (row.length < keys.length) {
       row.push('');
     }
   });
 
-  const theThing = await Promise.all(
+  const HCScryfallTokens = await Promise.all(
     rest.map(async entry => {
-      const tokenObject = ScryfallToHC(await fetchCardById(entry[1]));
+      const entryAt = (key: keyType) => entry[keys.indexOf(key)];
+      const token = ScryfallToHC(await fetchCardById(entry[1]));
       for (let i = 0; i < keys.length; i++) {
         if (entry[i]) {
-          if (keys[i] == 'id') {
-            tokenObject.id = entry[i];
+          if (keys[i] == 'hcid') {
+            token.hcid = entry[i];
           } else if (keys[i] == 'token_maker') {
-            tokenObject.all_parts = entry[i].split(';').map(oldName => {
+            token.all_parts = entry[i].split(';').map(oldName => {
               const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
               const name = match?.groups?.name ?? oldName;
               const count = match?.groups?.count;
@@ -79,7 +82,7 @@ export const fetchScryfallTokens = async () => {
                 ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
-                id:'',
+                id: '',
                 hcid: shouldUseBase ? name : '',
                 component: 'token_maker',
                 name: shouldUseBase ? base : name,
@@ -92,27 +95,13 @@ export const fetchScryfallTokens = async () => {
               }
               return maker;
             });
-          } else if (keys[i] == 'tags') {
-            const tags = entry[i].split(';');
-            tokenObject.tags = tags.map(fullTag => {
-              if (fullTag.includes('<') && fullTag.includes('>')) {
-                const [tag, note] = [fullTag.split('<')[0], fullTag.split('<')[1].slice(0, -1)];
-                if (!tokenObject.tag_notes) {
-                  tokenObject.tag_notes = {} as Record<string, string>;
-                }
-                tokenObject.tag_notes[tag] = note;
-                return tag;
-              } else {
-                return fullTag;
-              }
-            });
-            tokenObject.tags = Array.from(new Set(tokenObject.tags));
           }
         }
       }
+      setDerivedProps(token, entryAt('tags').split(';'));
 
-      return tokenObject;
+      return token;
     })
   );
-  return theThing;
+  return HCScryfallTokens;
 };

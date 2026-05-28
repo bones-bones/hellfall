@@ -10,6 +10,8 @@ import {
   TransformFrameEffects,
   NewFrames,
   HCFrame,
+  NoIdentityFaceLayout,
+  NoIdentityFaceLayoutType,
 } from '@hellfall/shared/types';
 import {
   splitParens,
@@ -50,8 +52,6 @@ export const landNames = [
   'Snow-Covered Nebula',
   'Snow-Covered Wastes',
 ];
-
-
 
 export const getColorIdentityProps = (
   card: HCCard.Any
@@ -106,10 +106,10 @@ export const getColorIdentityProps = (
   if ('card_faces' in card) {
     // this way it ignores face 0
     const lastImageIndex = card.card_faces.findLastIndex((face, i) => face.image && i);
-    // add each face that isn't an ignored image_status or the last image in a layout that ignores the last image
+    // add each face that isn't an ignored layout or the last image in a layout that ignores the last image
     card.card_faces.forEach((entry, i) => {
       if (
-        card.isActualToken ||
+        !(NoIdentityFaceLayout.includes(entry.layout as NoIdentityFaceLayoutType) && card.kind == 'card' && i) &&
         (!ignoreFaceIdentityImageStatus.includes(entry.image_status as HCImageStatus) &&
           !(
             HCLayoutGroup.FrontIdentityLayout.includes(
@@ -134,7 +134,8 @@ export const setDerivedProps = (
   card: HCCard.Any,
   tags?: string[]
 ) /* :{card:HCCard.Any;relateds?:HCCard.Any[]}  */ => {
-  if (tags && !(tags.length == 1 && tags[0] == '')) {
+  // todo: make sure this works when tags are empty
+  if (tags /* && !(tags.length == 1 && tags[0] == '') */ && card.kind != 'scryfall') {
     handleTags(card, tags);
   }
   const getFrameEffectsFromFace = (
@@ -178,7 +179,18 @@ export const setDerivedProps = (
       ) {
         effects.push(HCFrameEffect.Vehicle);
       }
+    } else if (
+      ((listShareLower(face.supertypes, 'legendary') &&
+        !listShareLower(face.types, 'planeswalker') &&
+        !listShareLower(face.types, 'player') &&
+        card.tags?.includes('hearthstone-frame') &&
+        !card.tags?.includes('missing-legend-frame')) ||
+        card.tags?.includes('legend-frame')) &&
+      !face.frame_effects?.includes(HCFrameEffect.Legendary)
+    ) {
+      effects.push(HCFrameEffect.Legendary);
     }
+
     if ('card_faces' in card) {
       if (
         !i &&
@@ -191,7 +203,7 @@ export const setDerivedProps = (
         !i &&
         card.layout == HCLayout.Modal &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-modal-frame')
+        !card.tags?.includes('missing-mdfc-frame')
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
@@ -213,7 +225,7 @@ export const setDerivedProps = (
       } else if (
         face.layout == HCLayout.Modal &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-modal-frame')
+        !card.tags?.includes('missing-mdfc-frame')
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
@@ -248,7 +260,7 @@ export const setDerivedProps = (
           : getMVFromCost(face.mana_cost);
       mana_cost_list.push(face.mana_cost);
       const effects = [...(face.frame_effects || []), ...getFrameEffectsFromFace(face, i)];
-      if (effects.length > 0) {
+      if (effects.length > 0 && card.kind != 'scryfall') {
         face.frame_effects = effects;
       }
     });
@@ -315,7 +327,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
   if ('card_faces' in card) {
     const toFinalExportName = (name: string) => {
       let exportName = toExportName(name);
-      if (card.isActualToken) {
+      if (['token', 'notmagic', 'scryfall'].includes(card.kind)) {
         let i = 1;
         while (takenNames.includes(exportName + i)) {
           i++;
@@ -436,9 +448,9 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     });
   } else {
     let exportName = toExportName(
-      card.set.startsWith('HBB') && landNames.includes(card.name)
+      card.kind == 'land' && landNames.includes(card.name)
         ? `${card.name} (${card.hcid})`
-        : card.isActualToken
+        : ['token', 'notmagic', 'scryfall'].includes(card.kind)
         ? card.hcid
         : card.name
     );
@@ -451,7 +463,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     while (takenNames.includes(exportName) || isInteger(exportName)) {
       exportName += '_';
     }
-    if (exportName != (card.isActualToken ? card.hcid : card.name)) {
+    if (exportName != (['token', 'notmagic', 'scryfall'].includes(card.kind) ? card.hcid : card.name)) {
       card.export_name = exportName;
     }
     takenNames.push(exportName);

@@ -1,7 +1,6 @@
 import {
   HCBorderColor,
   HCCard,
-  HCCardFace,
   HCFinish,
   HCFrame,
   HCFrameEffect,
@@ -13,16 +12,16 @@ import {
   addLayoutTag,
   addProp,
   addTag,
-  addTagToFace,
   deleteProp,
   deletePropFromFace,
+  kindToDefaultFrame,
+  kindToFaceLayout,
+  kindToMultiLayout,
   layoutIsDefault,
   layoutTags,
   layoutTagType,
 } from './fetchUtils';
-import { facePropType, faceType, faceValueType, propType, valueType } from '../cardHandling';
-import { listShareLower } from '../listHandling';
-import { setDerivedProps } from './derivedProps';
+import { facePropType, faceType, propType } from '../cardHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -35,6 +34,8 @@ const frameTags: Record<string, HCFrame> = {
   'inscryption-frame': HCFrame.Inscryption,
   'hearthstone-frame': HCFrame.Hearthstone,
   'lorcana-frame': HCFrame.Lorcana,
+  'balatro-frame': HCFrame.Balatro,
+  'tarot-frame': HCFrame.Tarot,
   'notmagic-frame': HCFrame.NotMagic,
   'website-app-frame': HCFrame.WebsiteApp,
   'shattered-frame': HCFrame.Shattered,
@@ -123,6 +124,7 @@ const removableTagProps: propType[] = [
   'draft_image_status',
   'rotated_draft_image',
   'still_draft_image',
+  'tag_notes',
 ];
 const removableFaceTagProps: facePropType[] = ['finish', 'border_color', 'frame'];
 
@@ -130,35 +132,22 @@ const setTagPropsToDefault = (card: HCCard.Any) => {
   removableTagProps.forEach(prop => deleteProp(card, prop));
   card.finish = HCFinish.Nonfoil;
   card.border_color = HCBorderColor.Black;
-  card.frame = card.isActualToken ? HCFrame.FullToken : HCFrame.Stamp;
+  card.frame = kindToDefaultFrame[card.kind];
   if ('card_faces' in card) {
-    card.layout = card.isActualToken ? HCLayout.MultiToken : HCLayout.Multi;
+    card.layout = kindToMultiLayout[card.kind];
     card.card_faces.forEach((face, i) => {
       removableTagProps.forEach(prop => deletePropFromFace(card, prop as facePropType, i));
       removableFaceTagProps.forEach(prop => deletePropFromFace(card, prop, i));
-      face.layout = card.isActualToken ? HCLayout.Token : i ? HCLayout.Multi : HCLayout.Normal;
+      face.layout = card.kind == 'card' && i ? HCLayout.Multi : kindToFaceLayout[card.kind];
       if (!face.image) {
         face.image_status = i ? 'inapplicable' : 'front';
       }
     });
   } else {
-    card.layout = card.isActualToken
-      ? HCLayout.Token
-      : card.set.startsWith('FHCJ')
-      ? HCLayout.Front
-      : HCLayout.Normal;
+    card.layout = kindToFaceLayout[card.kind];
   }
 };
 
-// const tokenMultiLayoutToFaceLayout: Record<
-//   HCLayoutGroup.MultiFacedType & HCLayoutGroup.TokenLayoutType,
-//   HCLayoutGroup.FaceLayoutType & HCLayoutGroup.SingleFacedType
-// > = {
-//   multi_reminder: HCLayout.Reminder,
-//   multi_not_magic: HCLayout.NotMagic,
-//   multi_token: HCLayout.Token,
-//   real_card_multi_token: HCLayout.RealCardToken,
-// };
 const tokenTypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
   emblem: HCLayout.Emblem,
   // 'reminder card': HCLayout.Reminder,
@@ -214,7 +203,16 @@ const setFacePropsFromTypes = (face: faceType, shouldSetLayout: boolean, isToken
 
 export const handleTags = (card: HCCard.Any, tags: string[]) => {
   setTagPropsToDefault(card);
-  card.tags = tags.map(fullTag => {
+  if (!tags.length || (tags.length == 1 && tags[0] == '')) {
+    deleteProp(card,'tags')
+    deleteProp(card,'tag_notes')
+    if ('card_faces' in card) {
+      card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
+    } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
+    return;
+  }
+
+  card.tags = tags!.map(fullTag => {
     const hasNote = fullTag.includes('<') && fullTag.endsWith('>');
     const [tag, note] = [
       hasNote ? fullTag.split('<')[0] : fullTag,
@@ -224,9 +222,9 @@ export const handleTags = (card: HCCard.Any, tags: string[]) => {
       addTag(card, tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
     } else if (tag in frameTags) {
       addTag(card, tag, note, 'frame', frameTags);
-    } else if (tag in cardFrameTags && !card.isActualToken) {
+    } else if (tag in cardFrameTags && card.kind != 'token') {
       addTag(card, tag, note, 'frame', cardFrameTags);
-    } else if (tag in tokenFrameTags && card.isActualToken) {
+    } else if (tag in tokenFrameTags && card.kind == 'token') {
       addTag(card, tag, note, 'frame', tokenFrameTags);
     } else if (tag in frameEffectTags) {
       addTag(card, tag, note || '0', 'frame_effects', frameEffectTags, { push: true });
@@ -240,10 +238,7 @@ export const handleTags = (card: HCCard.Any, tags: string[]) => {
       addTag(card, tag, note, 'finish', HCFinish.Foil);
     } else if (note) {
       if (tag in frontImageTagProps) {
-        addTag(card, tag, note, frontImageTagProps[tag] as propType, undefined, {
-          useUrl: true,
-          useRootOnly: true,
-        });
+        addTag(card, tag, note, frontImageTagProps[tag] as propType, undefined, {useUrl: true,useRootOnly: true,});
         if (tag == 'draft-image') {
           addProp(card, 'draft_image_status', HCImageStatus.HighRes);
         }
@@ -251,11 +246,7 @@ export const handleTags = (card: HCCard.Any, tags: string[]) => {
         addTag(card, tag, note, 'image', undefined, { useUrl: true, defaultToBack: true });
       } else if (tag == 'flavor-name') {
         addTag(card, tag, note, 'flavor_name', undefined, { dontAddNote: true });
-      } else if (
-        tag.toLowerCase() == card.set?.toLowerCase() ||
-        (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
-          (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
-      ) {
+      } else if (tag.toLowerCase() == card.set?.toLowerCase() || (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&(card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))) {
         addTag(card, tag, undefined, 'collector_number', note);
       } else {
         addTag(card, tag, note, undefined, undefined, { useRootOnly: true });
@@ -267,5 +258,5 @@ export const handleTags = (card: HCCard.Any, tags: string[]) => {
   card.tags = Array.from(new Set(card.tags));
   if ('card_faces' in card) {
     card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
-  } else setFacePropsFromTypes(card, layoutIsDefault(card), card.isActualToken);
+  } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
 };

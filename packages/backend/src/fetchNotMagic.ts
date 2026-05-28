@@ -1,3 +1,14 @@
+import {
+  addArtist,
+  addProp,
+  addPropToFaceOrRoot,
+  bothPropType,
+  faceOrRootIsBattle,
+  getDefaultCard,
+  isInteger,
+  propType,
+  setDerivedProps,
+} from '@hellfall/shared/utils/index.ts';
 import { sheetsKey } from './env.ts';
 import {
   HCCard,
@@ -11,6 +22,7 @@ import {
   HCBorderColor,
   HCFrame,
   HCFinish,
+  HCKind,
 } from '@hellfall/shared/types';
 
 const discordToSymbolMatching: Record<string, string> = {
@@ -29,6 +41,15 @@ const discordToSymbolMatching: Record<string, string> = {
   '<:manaC:636012967938490383>.': '{C}',
   '<:manaRG:636012967405813781>': '{R/G}',
   '<:symbolT:663209472637796382>': '{T}',
+};
+
+const emojiToColorIndicators: Record<string, HCColors> = {
+  '⚪': ['W'],
+  '⚫': ['B'],
+  '🔵': ['U'],
+  '🔴': ['R'],
+  '🟢': ['G'],
+  '🏳️‍🌈': ['W', 'U', 'B', 'R', 'G'],
 };
 
 // TODO: fix to use types
@@ -55,73 +76,136 @@ export const fetchNotMagic = async () => {
     'toughness',
     'loyalty',
     'oracle_text',
+    'flavor_text',
+    'tags',
+    'artists',
+    '1mana_value',
+    '1colors',
+    '1mana_cost',
+    '1supertypes',
+    '1types',
+    '1subtypes',
+    '1power',
+    '1toughness',
+    '1loyalty',
+    '1oracle_text',
+    '1flavor_text',
+  ] as const;
+
+  type keyType = (typeof keys)[number];
+  const skipKeys: keyType[] = [
+    'game',
+    'name',
+    'image',
+    'creators',
+    'rulings',
+    'mana_value',
+    'colors',
+    'mana_cost',
+    'supertypes',
+    'types',
+    'subtypes',
+    'power',
+    'toughness',
+    'loyalty',
+    'oracle_text',
+    'flavor_text',
+    'tags',
+    'artists',
   ];
+
   rest.forEach(row => {
     while (row.length < keys.length) {
       row.push('');
     }
   });
 
-  const defaultProps: Record<string, any> = {
-    object: HCObject.ObjectType.Card,
-    set: 'NotMagic',
-    layout: HCLayout.NotMagic,
-    image_status: HCImageStatus.HighRes,
-    mana_value: 0,
-    colors: [] as HCColors,
-    color_identity: [] as HCColors,
-    color_identity_hybrid: [] as HCColors[],
-    keywords: [],
-    legalities: {
-      standard: HCLegality.NotLegal,
-      '4cb': HCLegality.NotLegal,
-      commander: HCLegality.NotLegal,
-    } as HCLegalitiesField,
-    creators: [],
-    rulings: '',
-    finish: HCFinish.Nonfoil,
-    border_color: HCBorderColor.Borderless,
-    frame: HCFrame.NotMagic,
-    variation: false,
-    isActualToken: true,
-  };
-
-  const theThing = rest.map(entry => {
-    const tokenObject: Record<string, any> = {};
+  const allNotMagic = rest.map(entry => {
+    const entryAt = (key: keyType) => entry[keys.indexOf(key)];
+    const cardIsMulti = entry.slice(keys.indexOf('1mana_value')).some(value => value);
+    const card = getDefaultCard(
+      HCKind.NotMagic,
+      cardIsMulti,
+      {
+        hcid: entryAt('name') + (['Pot of Greed'].includes(entryAt('name')) ? '3' : '1'),
+        name: entryAt('name'),
+        image: entryAt('image'),
+        image_status: entryAt('tags').includes('low-quality')
+          ? HCImageStatus.MedRes
+          : HCImageStatus.HighRes,
+        creators: entryAt('creators').split(';'),
+        set: 'NMTG',
+        mana_value: parseInt(entryAt('mana_value')),
+        colors: entryAt('colors') ? entryAt('colors')
+          .split(';')
+          .map(color => HCColor[color as keyof typeof HCColor]):[],
+      },
+      {
+        colors: entryAt('colors') ? entryAt('colors')
+          .split(';')
+          .map(color => HCColor[color as keyof typeof HCColor]):[],
+        color_indicator: Object.entries(emojiToColorIndicators).flatMap(([emoji, colorSet]) =>
+          entryAt('rulings').includes(emoji) ? colorSet : []
+        ) as HCColors,
+        mana_cost: entryAt('mana_cost'),
+        supertypes: entryAt('supertypes').split(';'),
+        types: entryAt('types').split(';'),
+        subtypes: entryAt('subtypes').split(';'),
+        power: entryAt('power'),
+        toughness: entryAt('toughness'),
+        loyalty: !entryAt('types').toLowerCase().includes('battle') ? entryAt('loyalty') : '',
+        defense: entryAt('types').toLowerCase().includes('battle') ? entryAt('loyalty') : '',
+        oracle_text: entryAt('oracle_text')
+          .match(/<[^>]*>|[^<>]+/g)
+          ?.map(text => (text[0] == '<' ? discordToSymbolMatching[text] : text))
+          .join(''),
+        flavor_text: entryAt('flavor_text'),
+      }
+    );
     for (let i = 0; i < keys.length; i++) {
-      if (entry[i]) {
-        if (keys[i] == 'name') {
-          tokenObject.hcid = entry[i] + (['Pot of Greed'].includes(entry[i]) ? '3' : '1');
-          tokenObject.name = entry[i];
-        } else if (keys[i] == 'colors') {
-          const colorArr = entry[i]
-            .split(';')
-            .map(color => HCColor[color as keyof typeof HCColor]) as HCColors;
-          tokenObject[keys[i]] = entry[i] && colorArr;
-        } else if (['supertypes', 'types', 'subtypes', 'creators'].includes(keys[i])) {
-          tokenObject[keys[i]] = entry[i].split(';');
-        } else if (keys[i] == 'loyalty' && tokenObject['types']?.includes('Battle')) {
-          tokenObject.defense = entry[i];
-        } else if (['rulings', 'oracle_text'].includes(keys[i])) {
-          const textList = entry[i].match(/<[^>]*>|[^<>]+/g) || [];
-          tokenObject[keys[i]] = textList
-            .map(text => {
-              return text[0] == '<' ? discordToSymbolMatching[text] : text;
-            })
-            .join('');
-        } else if (keys[i] == 'game') {
-          tokenObject.tags = [entry[i].toLowerCase().replaceAll(' ', '-')];
+      if (entry[i] && !skipKeys.includes(keys[i])) {
+        if ('1'.includes(keys[i][0])) {
+          const face = parseInt(keys[i][0]);
+          const key = keys[i].slice(1);
+          const entryList = face == 3 ? entry[i].split(' // ') : [entry[i]];
+          entryList.forEach((value, index) => {
+            if (['supertypes', 'types', 'subtypes'].includes(key)) {
+              addPropToFaceOrRoot(
+                card,
+                key as 'supertypes' | 'types' | 'subtypes',
+                value.split(';'),
+                face + index
+              );
+            } else if (key == 'loyalty' && faceOrRootIsBattle(card, face + index)) {
+              addPropToFaceOrRoot(card, 'defense', value, face + index);
+            } else {
+              addPropToFaceOrRoot(card, key as bothPropType, value, face + index);
+            }
+          });
         } else {
-          tokenObject[keys[i]] = entry[i];
+          addProp(card, keys[i] as propType, entry[i]);
         }
       }
     }
-    Object.keys(defaultProps)
-      .filter(key => !(key in tokenObject))
-      .forEach(key => {
-        tokenObject[key] = defaultProps[key];
+
+    const artistIndex = keys.indexOf('artists');
+    if (entry[artistIndex]) {
+      const artists = entry[artistIndex].split(';');
+
+      card.artists = artists.map(fullArtist => {
+        const hasNote = fullArtist.includes('<') && fullArtist.endsWith('>');
+        const [artist, note] = [
+          hasNote ? fullArtist.split('<')[0] : fullArtist,
+          hasNote ? fullArtist.split('<')[1].slice(0, -1) : undefined,
+        ];
+        addArtist(card, artist, note);
+        return artist;
       });
-    return tokenObject as HCCard.Any;
+      card.artists = Array.from(new Set(card.artists));
+    }
+
+    setDerivedProps(card, entryAt('tags').split(';'));
+    return card;
   });
-  return theThing;
+  return allNotMagic;
 };

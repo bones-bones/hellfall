@@ -1,7 +1,7 @@
 import {
   HCCard,
   HCImageStatus,
-  HCLayout,
+  HCKind,
   HCLegalitiesField,
   HCLegality,
   HCObject,
@@ -10,11 +10,11 @@ import {
 } from '@hellfall/shared/types';
 import { sheetsKey } from './env.ts';
 import {
-  cardObjectType,
   addArtist,
   addProp,
   landToColorMapping,
   setDerivedProps,
+  getDefaultCard,
 } from '@hellfall/shared/utils';
 
 const convertSet: Record<string, string> = {
@@ -32,28 +32,27 @@ const hardCardNames: string[] = [
   'Carrion Feeder from MH8',
 ];
 
-export const landOracleIds:Record<string,string> = {
-  plains:'bc71ebf6-2056-41f7-be35-b2e5c34afa99',
-  island:'b2c6aa39-2d2a-459c-a555-fb48ba993373',
-  swamp:'56719f6a-1a6c-4c0a-8d21-18f7d7350b68',
-  mountain:'a3fb7228-e76b-4e96-a40e-20b5fed75685',
+export const landOracleIds: Record<string, string> = {
+  plains: 'bc71ebf6-2056-41f7-be35-b2e5c34afa99',
+  island: 'b2c6aa39-2d2a-459c-a555-fb48ba993373',
+  swamp: '56719f6a-1a6c-4c0a-8d21-18f7d7350b68',
+  mountain: 'a3fb7228-e76b-4e96-a40e-20b5fed75685',
   forest: 'b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6',
   nebula: 'fad3359c-6c3d-4a94-8d7c-4f833d82cb8d',
   wastes: '05d24b0c-904a-46b6-b42a-96a4d91a0dd4',
-  'snow-covered plains':'ac8cc74d-e43b-4118-bba0-dfa8b9c04d45',
-  'snow-covered island':'5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0',
-  'snow-covered swamp':'d8239a86-7184-4005-ba1e-2dddcd756c47',
-  'snow-covered mountain':'ca9f660b-e07d-4f42-a46e-abd0ca72510c',
-  'snow-covered forest':'5f0d3be8-e63e-4ade-ae58-6b0c14f2ce6d',
+  'snow-covered plains': 'ac8cc74d-e43b-4118-bba0-dfa8b9c04d45',
+  'snow-covered island': '5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0',
+  'snow-covered swamp': 'd8239a86-7184-4005-ba1e-2dddcd756c47',
+  'snow-covered mountain': 'ca9f660b-e07d-4f42-a46e-abd0ca72510c',
+  'snow-covered forest': '5f0d3be8-e63e-4ade-ae58-6b0c14f2ce6d',
   'snow-covered nebula': '2c268e90-9bec-45c3-9c99-436761643f3c',
   'snow-covered wastes': '46a07b53-ff58-4bd6-80dd-ded2eb0e29a3',
-  'thriving heath':'d1946630-e224-40db-8f0d-388b09622288',
+  'thriving heath': 'd1946630-e224-40db-8f0d-388b09622288',
   'thriving isle': '69fc70b8-b143-4662-ac95-e2743037239d',
   'thriving moor': 'b7c7d0c0-ada6-4c89-b47b-977e35e67b39',
   'thriving bluff': '91fceb34-0f2d-4392-be27-00dcd765637f',
   'thriving grove': 'a8052556-8962-4130-86a8-6fb7b6a324f7',
-}
-
+};
 
 export const fetchLands = async () => {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/1qqGCedHmQ8bwi-YFjmv-pNKKMjubZQUAaF7ItJN5d1g/values/Lands+(Unapproved)?alt=json&key=${sheetsKey}`;
@@ -72,46 +71,41 @@ export const fetchLands = async () => {
     'tags',
     'collector_number',
     'artists',
-  ];
+  ] as const;
+
+  type keyType = (typeof keys)[number];
 
   const allLands = rest.map(entry => {
-    const land = {
-      object: HCObject.ObjectType.Card,
-      id: '',
-      oracle_id: Object.entries(landOracleIds).find(([name, id])=> entry[keys.indexOf('name')].toLowerCase().startsWith(name))?.[1] ?? '',
-      hcid: entry[keys.indexOf('hcid')],
-      name: entry[keys.indexOf('name')],
-      set: convertSet[entry[keys.indexOf('set')]] ?? (entry[keys.indexOf('set')] || 'HBB'),
-      collector_number: entry[keys.indexOf('collector_number')],
-      layout: HCLayout.Normal,
-      image: entry[keys.indexOf('image')],
-      image_status: HCImageStatus.HighRes,
-      mana_cost: '',
-      mana_value: 0,
-      supertypes: ['Basic'],
-      types: ['Land'],
-      type_line: '',
-      oracle_text: '',
-      colors: [],
-      color_identity: [],
-      color_identity_hybrid: [],
-      keywords: [],
-      legalities: {
-        standard: HCLegality.Legal,
-        '4cb': HCLegality.Legal,
-        commander: HCLegality.Legal,
-      } as HCLegalitiesField,
-      creators: entry[keys.indexOf('creators')].split(';'),
-      rulings: '',
-      finish: 'nonfoil',
-      border_color: 'black',
-      frame: '2015',
-      variation: false,
-    } as Omit<HCCard.Normal, 'toJSON'> as HCCard.Normal;
+    const entryAt = (key: keyType) => entry[keys.indexOf(key)];
+    const land = getDefaultCard(
+      HCKind.Land,
+      false,
+      {
+        object: HCObject.ObjectType.Card,
+        oracle_id:
+          Object.entries(landOracleIds).find(([name, id]) =>
+            entryAt('name').toLowerCase().startsWith(name)
+          )?.[1] ?? '',
+        hcid: entryAt('hcid'),
+        name: entryAt('name'),
+        set: convertSet[entryAt('set')] ?? (entryAt('set') || 'HBB'),
+        collector_number: entryAt('collector_number'),
+        rarity: entryAt('rarity').toLowerCase().split(' ')[0] as HCRarity,
+        image: entryAt('image'),
+        image_status: HCImageStatus.HighRes,
+        legalities: {
+          standard: HCLegality.Legal,
+          '4cb': HCLegality.Legal,
+          commander: HCLegality.Legal,
+        } as HCLegalitiesField,
+        creators: entryAt('creators').split(';'),
+      },
+      {
+        supertypes: ['Basic'],
+        types: ['Land'],
+      }
+    ) as HCCard.AnySingleFaced;
 
-    if (entry[keys.indexOf('rarity')]) {
-      land.rarity = entry[keys.indexOf('rarity')].toLowerCase().split(' ')[0] as HCRarity;
-    }
     const splitName = land.name.split(' ');
     if (splitName[0] == 'Snow-Covered') {
       land.supertypes?.push('Snow');
@@ -123,32 +117,34 @@ export const fetchLands = async () => {
     } else {
       land.oracle_text = '{T}: Add {C}.';
     }
-    if (entry[keys.indexOf('token_maker')]) {
-      const all_parts = entry[keys.indexOf('token_maker')].split(';').map(oldName => {
-        const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-        const name = match?.groups?.name ?? oldName;
-        const count = match?.groups?.count;
-        const base = name.replace(/\d+$/, '');
-        const shouldUseBase =
-          /\d/.test(name.at(-1)!) &&
-          !hardCardNames.includes(name) &&
-          base &&
-          ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
-        const maker: HCRelatedCard = {
-          object: HCObject.ObjectType.RelatedCard,
-          id: '',
-          hcid: shouldUseBase ? name : '',
-          name: shouldUseBase ? base : name,
-          set: '',
-          image: '',
-          type_line: '',
-          component: 'token_maker',
-        };
-        if (count) {
-          maker.count = count.slice(1);
-        }
-        return maker;
-      });
+    if (entryAt('token_maker')) {
+      const all_parts = entryAt('token_maker')
+        .split(';')
+        .map(oldName => {
+          const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+          const name = match?.groups?.name ?? oldName;
+          const count = match?.groups?.count;
+          const base = name.replace(/\d+$/, '');
+          const shouldUseBase =
+            /\d/.test(name.at(-1)!) &&
+            !hardCardNames.includes(name) &&
+            base &&
+            ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
+          const maker: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: '',
+            hcid: shouldUseBase ? name : '',
+            name: shouldUseBase ? base : name,
+            set: '',
+            image: '',
+            type_line: '',
+            component: 'token_maker',
+          };
+          if (count) {
+            maker.count = count.slice(1);
+          }
+          return maker;
+        });
       addProp(land, 'all_parts', all_parts);
     }
 
@@ -162,12 +158,12 @@ export const fetchLands = async () => {
           hasNote ? fullArtist.split('<')[0] : fullArtist,
           hasNote ? fullArtist.split('<')[1].slice(0, -1) : undefined,
         ];
-        addArtist(land as cardObjectType, artist, note);
+        addArtist(land, artist, note);
         return artist;
       });
       land.artists = Array.from(new Set(land.artists));
     }
-    setDerivedProps(land, entry[keys.indexOf('tags')].split(';'));
+    setDerivedProps(land, entryAt('tags').split(';'));
     return land;
   });
   return allLands;

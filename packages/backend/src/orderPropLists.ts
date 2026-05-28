@@ -1,25 +1,12 @@
 // scripts/orderCardLists.ts
 
 import {
-  HCBorderColor,
-  HCColors,
-  HCFinish,
-  HCFrame,
-  HCImageStatus,
-  HCLayout,
-  HCLegalitiesField,
-  HCLegality,
-  HCObject,
-} from '@hellfall/shared/types';
-import {
   facePropType,
-  faceValueType,
   orderCardProps,
   orderFaceProps,
   orderPartProps,
   partPropType,
   propType,
-  valueType,
 } from '@hellfall/shared/utils';
 
 const listsToOrder = {};

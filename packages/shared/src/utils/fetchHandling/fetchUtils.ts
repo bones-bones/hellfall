@@ -1,20 +1,28 @@
 import {
+  BothLayoutType,
+  HCBorderColor,
   HCCard,
   HCCardFace,
-  HCFrameEffect,
+  HCColors,
+  HCFinish,
+  HCFrame,
   HCImageStatus,
+  HCKind,
   HCLayout,
   HCLayoutGroup,
-  HCRelatedCard,
+  HCLegalitiesField,
+  HCLegality,
+  HCObject,
 } from '@hellfall/shared/types';
-import { error } from 'console';
-import { setDerivedProps } from './derivedProps';
 import {
+  allPropType,
+  allValueType,
   arrayElementType,
-  cardFaceType,
-  cardObjectType,
+  bothPropType,
+  bothValueType,
   faceArrayElementType,
   facePropType,
+  faceType,
   faceValueType,
   listShareLower,
   partPropType,
@@ -24,28 +32,148 @@ import {
 } from '@hellfall/shared/utils';
 import { frameEffectTags } from './tagHandling';
 
-export const fillFacesTo = (card: cardObjectType | HCCard.AnyMultiFaced, index: number) => {
+const defaultProps = {
+  id: '',
+  oracle_id: '',
+  hcid: '',
+  name: '',
+  set: '',
+  collector_number: '',
+  image_status: HCImageStatus.Inapplicable,
+  mana_cost: '',
+  mana_value: 0,
+  type_line: '',
+  colors: [] as HCColors,
+  color_identity: [] as HCColors,
+  color_identity_hybrid: [] as HCColors[],
+  keywords: [],
+  legalities: {
+    standard: HCLegality.NotLegal,
+    '4cb': HCLegality.NotLegal,
+    commander: HCLegality.NotLegal,
+  } as HCLegalitiesField,
+  creators: [],
+  rulings: '',
+  finish: HCFinish.Nonfoil,
+  border_color: HCBorderColor.Black,
+};
+
+const defaultFaceProps = {
+  name: '',
+  image_status: HCImageStatus.Inapplicable,
+  mana_cost: '',
+  mana_value: 0,
+  type_line: '',
+  oracle_text: '',
+  colors: [] as HCColors,
+};
+// const kindToSet:Record<HCKind,string> = {
+//   card:'',
+//   token:'HCT',
+//   land:'HBB',
+//   front:'FHCJ',
+//   scryfall:'SFT',
+//   notmagic:'NotMagic'
+// }
+
+export const kindToFaceLayout: Record<HCKind, BothLayoutType> = {
+  card: HCLayout.Normal,
+  token: HCLayout.Token,
+  land: HCLayout.Normal,
+  front: HCLayout.Front,
+  scryfall: HCLayout.Normal,
+  notmagic: HCLayout.NotMagic,
+};
+export const kindToMultiLayout: Record<HCKind, HCLayoutGroup.MultiFacedType> = {
+  card: HCLayout.Multi,
+  token: HCLayout.MultiToken,
+  land: HCLayout.Multi,
+  front: HCLayout.Multi,
+  scryfall: HCLayout.Multi,
+  notmagic: HCLayout.MultiNotMagic,
+};
+
+export const kindToDefaultFrame: Record<HCKind, HCFrame> = {
+  card: HCFrame.Stamp,
+  token: HCFrame.FullToken,
+  land: HCFrame.Stamp,
+  front: HCFrame.Stamp,
+  scryfall: HCFrame.Stamp,
+  notmagic: HCFrame.NotMagic,
+};
+/**
+ * Gets the default card given certain props
+ * @param kind the kind of card
+ * @param isMultiFaced whether the card is multifaced
+ * @param entryProps props to add to the root; ignores values of '', [], and [''].
+ * @param faceProps props to add to the first face or to the root, depending on whether the card is multifaced; ignores values of '', [], and [''].
+ * @returns
+ */
+export const getDefaultCard = (
+  kind: HCKind,
+  isMultiFaced: boolean,
+  entryProps: Partial<HCCard.Any>,
+  faceProps: Partial<faceType>
+): HCCard.Any => {
+  const card = (
+    isMultiFaced
+      ? ({
+          ...defaultProps,
+          object: HCObject.ObjectType.Card,
+          kind,
+          layout: kindToMultiLayout[kind],
+          frame: kindToDefaultFrame[kind],
+          card_faces: [] as HCCardFace.MultiFaced[],
+        } satisfies HCCard.AnyMultiFaced)
+      : ({
+          ...defaultProps,
+          object: HCObject.ObjectType.Card,
+          kind,
+          layout: kindToFaceLayout[kind],
+          frame: kindToDefaultFrame[kind],
+          oracle_text: '',
+        } satisfies HCCard.AnySingleFaced)
+  ) as HCCard.Any;
+  (Object.entries(entryProps) as { [K in allPropType]: [K, allValueType<K>] }[allPropType][])
+    .filter(([prop, value]) =>
+      Array.isArray(value)
+        ? value.length && !(value.length == 1 && value[0] == '')
+        : value != '' && value != undefined
+    )
+    .forEach(([prop, value]) => addProp(card, prop, value));
+  (Object.entries(faceProps) as { [K in bothPropType]: [K, bothValueType<K>] }[bothPropType][])
+    .filter(([prop, value]) =>
+      Array.isArray(value)
+        ? value.length && !(value.length == 1 && value[0] == '')
+        : value != '' && value != undefined
+    )
+    .forEach(([prop, value]) => addPropToFaceOrRoot(card, prop, value, 0));
+  return card;
+};
+
+export const fillFacesTo = (card: HCCard.AnyMultiFaced, index: number) => {
   while (card.card_faces.length <= index) {
-    card.card_faces.push({} as cardFaceType);
+    card.card_faces.push({
+      ...defaultFaceProps,
+      object: HCObject.ObjectType.CardFace,
+      layout: card.kind == 'card' && index ? HCLayout.Multi : kindToFaceLayout[card.kind],
+    } satisfies HCCardFace.MultiFaced);
   }
 };
-export const addProp = <K extends propType>(
-  card: cardObjectType | HCCard.Any,
-  prop: K,
-  value: valueType<K>
-) => {
+export const addProp = <K extends propType>(card: HCCard.Any, prop: K, value: valueType<K>) => {
   (card as any)[prop] = value;
 };
-export const deleteProp = <K extends propType>(card: cardObjectType | HCCard.Any, prop: K) => {
+export const deleteProp = <K extends propType>(card: HCCard.Any, prop: K) => {
   delete (card as any)[prop];
 };
 export const pushPropToCard = <K extends propType>(
-  card: cardObjectType | HCCard.Any,
+  card: HCCard.Any,
   prop: K,
   value: arrayElementType<K>
-) => pushProp(card as cardObjectType, prop, value);
+) => pushProp(card, prop as keyof typeof card, value);
+
 export const addPropToFace = <K extends facePropType>(
-  card: cardObjectType | HCCard.AnyMultiFaced,
+  card: HCCard.AnyMultiFaced,
   prop: K,
   value: faceValueType<K>,
   index?: number
@@ -54,14 +182,14 @@ export const addPropToFace = <K extends facePropType>(
   (card as any).card_faces[index ?? 0][prop] = value;
 };
 export const deletePropFromFace = <K extends facePropType>(
-  card: cardObjectType | HCCard.AnyMultiFaced,
+  card: HCCard.AnyMultiFaced,
   prop: K,
   index?: number
 ) => {
   delete card.card_faces[index ?? 0][prop];
 };
 export const pushPropToFace = <K extends facePropType>(
-  card: cardObjectType | HCCard.AnyMultiFaced,
+  card: HCCard.AnyMultiFaced,
   prop: K,
   value: faceArrayElementType<K>,
   index?: number
@@ -69,11 +197,39 @@ export const pushPropToFace = <K extends facePropType>(
   fillFacesTo(card, index ?? 0);
   pushProp(card.card_faces[index ?? 0], prop, value);
 };
-export const faceIsBattle = (card: cardObjectType, index: number) =>
+
+export const addPropToFaceOrRoot = <K extends bothPropType>(
+  card: HCCard.Any,
+  prop: K,
+  value: bothValueType<K>,
+  index?: number
+) => {
+  if ('card_faces' in card) {
+    addPropToFace(card, prop, value as faceValueType<K>, index);
+  } else {
+    addProp(card, prop, value as valueType<K>);
+  }
+};
+export const pushPropToFaceOrRoot = <K extends bothPropType>(
+  card: HCCard.Any,
+  prop: K,
+  value: bothValueType<K>,
+  index?: number
+) => {
+  if ('card_faces' in card) {
+    pushPropToFace(card, prop, value as faceArrayElementType<K>, index);
+  } else {
+    pushProp(card, prop, value as arrayElementType<K>);
+  }
+};
+
+export const faceIsBattle = (card: HCCard.AnyMultiFaced, index: number) =>
   listShareLower(card.card_faces[index]?.types, 'battle');
 
-export const frontIsBattle = (card: cardObjectType) =>
-  listShareLower(card.card_faces[0]?.types, 'battle');
+export const rootIsBattle = (card: HCCard.AnySingleFaced) => listShareLower(card.types, 'battle');
+
+export const faceOrRootIsBattle = (card: HCCard.Any, index: number) =>
+  'card_faces' in card ? faceIsBattle(card, index) : rootIsBattle(card);
 
 /**
  * Adds a tag to a specific face
@@ -84,7 +240,7 @@ export const frontIsBattle = (card: cardObjectType) =>
  * @param push whether to push the value (use true when the prop is an array)
  */
 export const addTagToFace = <K extends facePropType>(
-  card: HCCard.Any,
+  card: HCCard.AnyMultiFaced,
   index: number,
   prop: K,
   value: faceValueType<K> | faceArrayElementType<K>,
@@ -92,9 +248,9 @@ export const addTagToFace = <K extends facePropType>(
 ) => {
   // const faceIndex = index > 0 && index < card.card_faces.length ? index : 0;
   if (push) {
-    pushPropToFace(card as cardObjectType, prop, value as faceArrayElementType<K>, index);
+    pushPropToFace(card, prop, value as faceArrayElementType<K>, index);
   } else {
-    addPropToFace(card as cardObjectType, prop, value as faceValueType<K>, index);
+    addPropToFace(card, prop, value as faceValueType<K>, index);
   }
 };
 /**
@@ -190,7 +346,7 @@ export const addTag = <K extends propType | facePropType>(
           ? subnote
           : 'https://lh3.googleusercontent.com/d/' + subnote
         : undefined;
-    if (face != undefined) {
+    if (face != undefined && 'card_faces' in card) {
       if (typeof value == 'string') {
         addTagToFace(card, face, prop as facePropType, value, options?.push);
       } else if (value) {
@@ -376,17 +532,21 @@ const multiToFaceLayoutTags: Partial<
   split: HCLayout.Split,
 };
 
-const defaultRootLayouts = [HCLayout.MultiToken, HCLayout.Multi, HCLayout.Token, HCLayout.Normal];
+// const defaultRootLayouts = [HCLayout.MultiToken, HCLayout.Multi, HCLayout.Token, HCLayout.Normal];
 
 export const layoutIsDefault = (card: HCCard.Any, index?: number) => {
+  if (!('card_faces' in card)) {
+    return card.layout == kindToFaceLayout[card.kind];
+  }
   if (index == undefined) {
-    return defaultRootLayouts.includes(card.layout as HCLayout);
+    return card.layout == kindToMultiLayout[card.kind];
   }
-  if (!('card_faces' in card)) return false;
-  if (!index) {
-    return card.card_faces[0].layout == (card.isActualToken ? HCLayout.Token : HCLayout.Normal);
-  }
-  return card.card_faces[index].layout == (card.isActualToken ? HCLayout.Token : HCLayout.Multi);
+  return (
+    card.card_faces[index].layout ==
+    (index && kindToFaceLayout[card.kind] == 'normal'
+      ? HCLayout.Multi
+      : kindToFaceLayout[card.kind])
+  );
 };
 
 const addLayoutToRoot = (
@@ -438,14 +598,14 @@ export const addLayoutTag = (card: HCCard.Any, tag: string, note?: string) => {
       addTagToRoot(
         card,
         'layout',
-        (card.isActualToken ? 'meld_result' : 'meld_part') as HCLayoutGroup.SingleFacedType
+        (card.kind == 'token' ? 'meld_result' : 'meld_part') as HCLayoutGroup.SingleFacedType
       );
-    } else if (tag == 'reminder-card' && card.isActualToken) {
+    } else if (tag == 'reminder-card' && card.kind == 'token') {
       addTagToRoot(card, 'layout', 'reminder');
     }
   } else {
     if (tag in multiLayoutTags) {
-      if (!card.isActualToken) {
+      if (card.kind != 'token') {
         addLayoutToRoot(card, tag, multiLayoutTags);
       }
       if (tag in multiToFaceLayoutTags) {
@@ -462,7 +622,7 @@ export const addLayoutTag = (card: HCCard.Any, tag: string, note?: string) => {
       addTagToRoot(
         card,
         'layout',
-        (card.isActualToken ? 'meld_result' : 'meld_part') as HCLayoutGroup.SingleFacedType
+        (card.kind == 'token' ? 'meld_result' : 'meld_part') as HCLayoutGroup.SingleFacedType
       );
       card.card_faces.forEach((face, i) => {
         addTagToFace(
@@ -472,7 +632,7 @@ export const addLayoutTag = (card: HCCard.Any, tag: string, note?: string) => {
           i ? 'meld_result' : ('meld_part' as HCLayoutGroup.FaceLayoutType)
         );
       });
-    } else if (tag == 'reminder-card' && card.isActualToken) {
+    } else if (tag == 'reminder-card' && card.kind == 'token') {
       addTagToRoot(card, 'layout', 'multi_reminder' as HCLayoutGroup.SingleFacedType);
       card.card_faces.forEach((face, i) => {
         addTagToFace(card, i, 'layout', 'reminder');
@@ -490,7 +650,7 @@ export const addLayoutTag = (card: HCCard.Any, tag: string, note?: string) => {
  * @param artist artist to add note to
  * @param note note to add
  */
-const addArtistNote = (card: cardObjectType, artist: string, note: string) => {
+const addArtistNote = (card: HCCard.Any, artist: string, note: string) => {
   if (card.artist_notes?.[artist]) {
     card.artist_notes[artist] += '; ' + note;
   } else {
@@ -503,55 +663,55 @@ const addArtistNote = (card: cardObjectType, artist: string, note: string) => {
 
 /**
  * Adds a tag
- * @param card card object
+ * @param card card
  * @param tag tag to add
  * @param note tag note
  * @param prop prop to set
  * @param value value to set the prop to, or record to access with the tag to get the value
  * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
  */
-export const addArtist = (card: cardObjectType, artist: string, note?: string) => {
+export const addArtist = (card: HCCard.Any, artist: string, note?: string) => {
   if (note) {
     addArtistNote(card, artist, note);
   }
 };
 
-export const toSingleCard = (
-  cardObject: cardObjectType,
-  layout?: HCLayoutGroup.SingleFacedType
-): HCCard.AnySingleFaced => {
-  if (cardObject.card_faces[0].image) {
-    // this should never happen. If it does, it means that an image needs to be moved to an image tag
-    throw error;
-  }
-  const { card_faces, ...singleCard } = cardObject;
-  for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
-    ([key, value]) =>
-      ![
-        'object',
-        'name',
-        'type_line',
-        // 'mana_cost',
-        'mana_value',
-        'image_status',
-        'colors',
-        'image',
-        'layout',
-      ].includes(key)
-  )) {
-    if (key == 'frame_effects' && cardObject[key]) {
-      (singleCard as any)[key].push(...(value as HCFrameEffect[]));
-    } else {
-      (singleCard as any)[key] = value;
-    }
-  }
-  if (layout) {
-    (singleCard as any).layout = layout;
-  }
-  const card = singleCard as HCCard.AnySingleFaced;
-  setDerivedProps(card);
-  return card;
-};
+// export const toSingleCard = (
+//   cardObject: cardObjectType,
+//   layout?: HCLayoutGroup.SingleFacedType
+// ): HCCard.AnySingleFaced => {
+//   if (cardObject.card_faces[0].image) {
+//     // this should never happen. If it does, it means that an image needs to be moved to an image tag
+//     throw error;
+//   }
+//   const { card_faces, ...singleCard } = cardObject;
+//   for (const [key, value] of Object.entries(cardObject.card_faces[0]).filter(
+//     ([key, value]) =>
+//       ![
+//         'object',
+//         'name',
+//         'type_line',
+//         // 'mana_cost',
+//         'mana_value',
+//         'image_status',
+//         'colors',
+//         'image',
+//         'layout',
+//       ].includes(key)
+//   )) {
+//     if (key == 'frame_effects' && cardObject[key]) {
+//       (singleCard as any)[key].push(...(value as HCFrameEffect[]));
+//     } else {
+//       (singleCard as any)[key] = value;
+//     }
+//   }
+//   if (layout) {
+//     (singleCard as any).layout = layout;
+//   }
+//   const card = singleCard as HCCard.AnySingleFaced;
+//   setDerivedProps(card);
+//   return card;
+// };
 
 export const propListIncludes = (propList: propType[], prop: string | propType) =>
   propList.includes(prop as propType);

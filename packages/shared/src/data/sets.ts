@@ -71,5 +71,5 @@ export const allSetsList = [
   'HBB.7',
   'HBB.L',
   'SFT',
-  'NotMagic',
+  'NMTG',
 ];

@@ -290,6 +290,7 @@ export namespace HCLayoutGroup {
    */
   export const FaceLayout = [
     `${HCLayout.Normal}`,
+    `${HCLayout.Front}`,
     `${HCLayout.Multi}`,
     `${HCLayout.MeldPart}`,
     `${HCLayout.MeldResult}`,
@@ -356,3 +357,7 @@ export const NoIdentityFaceLayout = [
  *
  */
 export type NoIdentityFaceLayoutType = (typeof NoIdentityFaceLayout)[number];
+
+export type BothLayoutType = HCLayoutGroup.FaceLayoutType & HCLayoutGroup.SingleFacedType;
+
+export type AllLayoutType = HCLayoutGroup.MultiFacedType & HCLayoutGroup.SingleFacedType;

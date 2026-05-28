@@ -53,10 +53,9 @@ export namespace HCCard {
        *
        * @returns An ordered object representation of the card
        */
-      toJSON(): Record<string, any>;
+      toJSON?(): Record<string, any>;
     };
 }
-
 export namespace HCCard {
   /**
    * Any card with a single-faced layout.
