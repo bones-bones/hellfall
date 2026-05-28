@@ -67,6 +67,7 @@ export const fetchHCJFronts = (): HCCard.Any[] =>
         name: '',
         type_line: '',
         set: 'HCJ',
+        is_draft_partner: true,
         count: '2',
       });
     }

@@ -27,7 +27,7 @@ export const updateParts = (
         type_line: card.type_line,
         component: 'draft_partner',
       };
-      const frontIndex = card.all_parts?.findIndex(e => e.id == relatedCard.id);
+      const frontIndex = card.all_parts?.findIndex(e => e.hcid == relatedCard.hcid);
       const alreadyHasPart = frontIndex != -1 && frontIndex != undefined;
       const part: HCRelatedCard = alreadyHasPart
         ? card.all_parts![frontIndex]
