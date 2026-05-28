@@ -204,8 +204,8 @@ const setFacePropsFromTypes = (face: faceType, shouldSetLayout: boolean, isToken
 export const handleTags = (card: HCCard.Any, tags: string[]) => {
   setTagPropsToDefault(card);
   if (!tags.length || (tags.length == 1 && tags[0] == '')) {
-    deleteProp(card,'tags')
-    deleteProp(card,'tag_notes')
+    deleteProp(card, 'tags');
+    deleteProp(card, 'tag_notes');
     if ('card_faces' in card) {
       card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
     } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
@@ -238,7 +238,10 @@ export const handleTags = (card: HCCard.Any, tags: string[]) => {
       addTag(card, tag, note, 'finish', HCFinish.Foil);
     } else if (note) {
       if (tag in frontImageTagProps) {
-        addTag(card, tag, note, frontImageTagProps[tag] as propType, undefined, {useUrl: true,useRootOnly: true,});
+        addTag(card, tag, note, frontImageTagProps[tag] as propType, undefined, {
+          useUrl: true,
+          useRootOnly: true,
+        });
         if (tag == 'draft-image') {
           addProp(card, 'draft_image_status', HCImageStatus.HighRes);
         }
@@ -246,7 +249,11 @@ export const handleTags = (card: HCCard.Any, tags: string[]) => {
         addTag(card, tag, note, 'image', undefined, { useUrl: true, defaultToBack: true });
       } else if (tag == 'flavor-name') {
         addTag(card, tag, note, 'flavor_name', undefined, { dontAddNote: true });
-      } else if (tag.toLowerCase() == card.set?.toLowerCase() || (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&(card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))) {
+      } else if (
+        tag.toLowerCase() == card.set?.toLowerCase() ||
+        (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
+          (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
+      ) {
         addTag(card, tag, undefined, 'collector_number', note);
       } else {
         addTag(card, tag, note, undefined, undefined, { useRootOnly: true });

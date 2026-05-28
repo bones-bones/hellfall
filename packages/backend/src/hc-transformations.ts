@@ -178,7 +178,7 @@ const kindFaceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
   card: ['compress_face', 'frame'],
   token: ['frame'],
 };
-// TODO: which of these are necessary?
+
 const kindIgnoreProps: Record<HCKind, propType[]> = {
   card: ['keywords'],
   token: ['mana_cost', 'mana_value', 'subtypes', 'oracle_text', 'colors', 'rulings'],
@@ -568,11 +568,11 @@ const mergeDatabases = (
 const dataToCards = <K extends propType>(
   cards: any,
   missingProp?: K,
-  missingPropValue?: valueType<K> | ((card:HCCard.Any)=>valueType<K>),
+  missingPropValue?: valueType<K> | ((card: HCCard.Any) => valueType<K>),
   addTo?: 'faces' | 'parts'
 ) => {
   if (!missingProp || missingPropValue == undefined) {
-      return cards as HCCard.Any[];
+    return cards as HCCard.Any[];
   }
   switch (addTo) {
     case 'faces':
@@ -582,7 +582,10 @@ const dataToCards = <K extends propType>(
             if (!(missingProp in face)) {
               return {
                 ...face,
-                [missingProp]: typeof missingPropValue == 'function' ? missingPropValue(card as HCCard.Any) : missingPropValue,
+                [missingProp]:
+                  typeof missingPropValue == 'function'
+                    ? missingPropValue(card as HCCard.Any)
+                    : missingPropValue,
               } as HCCardFace.MultiFaced;
             }
             return face as HCCardFace.MultiFaced;
@@ -597,7 +600,10 @@ const dataToCards = <K extends propType>(
             if (!(missingProp in part)) {
               return {
                 ...part,
-                [missingProp]: typeof missingPropValue == 'function' ? missingPropValue(card as HCCard.Any) : missingPropValue,
+                [missingProp]:
+                  typeof missingPropValue == 'function'
+                    ? missingPropValue(card as HCCard.Any)
+                    : missingPropValue,
               } as HCRelatedCard;
             }
             return part as HCRelatedCard;
@@ -606,15 +612,18 @@ const dataToCards = <K extends propType>(
         return card as HCCard.Any;
       }) as HCCard.Any[];
   }
-    return cards.map((card: any) => {
-      if (!(missingProp in card)) {
-        return {
-          ...card,
-          [missingProp]: typeof missingPropValue == 'function' ? missingPropValue(card as HCCard.Any) : missingPropValue,
-        } as HCCard.Any;
-      }
-      return card as HCCard.Any;
-    }) as HCCard.Any[];
+  return cards.map((card: any) => {
+    if (!(missingProp in card)) {
+      return {
+        ...card,
+        [missingProp]:
+          typeof missingPropValue == 'function'
+            ? missingPropValue(card as HCCard.Any)
+            : missingPropValue,
+      } as HCCard.Any;
+    }
+    return card as HCCard.Any;
+  }) as HCCard.Any[];
 };
 const loadExistingData = () => {
   const databasePath = '../shared/src/data/Hellscube-Database.json';
@@ -632,7 +641,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: HCCard.Any) => /* e.kind != 'card' */ !['HCT','SFT','FHCJ'].includes(e.set) && !e.set.includes('HBB')) || [], 'kind', HCKind.Card) 
+    ? dataToCards(databaseContent.data.filter((e: HCCard.Any) => e.kind != 'card') || [])
     : [];
 
   try {
@@ -641,7 +650,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || [], 'kind', (card:HCCard.Any)=> card.set == 'SFT'?'scryfall':card.set == 'FHCJ'?'front':'token' ) : [];
+  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
 
   try {
     landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
@@ -649,7 +658,7 @@ const loadExistingData = () => {
     console.warn('Could not load lands, proceeding with undefined content:', error);
   }
 
-  const existingLands = landsContent ? dataToCards(landsContent.data || [], 'kind', 'land') : [];
+  const existingLands = landsContent ? dataToCards(landsContent.data || []) : [];
   return { existingCards, existingTokens, existingLands };
 };
 const main = async () => {

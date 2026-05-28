@@ -2,6 +2,7 @@
 	"data": [
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "5a4ead92-de4c-4695-9026-56d75e30d9ee",
 			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
 			"oracle_id_is_scryfall": true,
@@ -60,6 +61,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "11f79f69-2739-4f16-913b-701695219614",
 			"oracle_id": "ac8cc74d-e43b-4118-bba0-dfa8b9c04d45",
 			"oracle_id_is_scryfall": true,
@@ -121,6 +123,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "8f4b193a-5a1d-4c83-8daf-e2cfbb206f7c",
 			"oracle_id": "5f0d3be8-e63e-4ade-ae58-6b0c14f2ce6d",
 			"oracle_id_is_scryfall": true,
@@ -181,6 +184,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "299c8ee5-237f-4fb7-9d82-d3c8613065c7",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
@@ -235,6 +239,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "7ebaec4e-7467-472c-adbf-084d54633d6d",
 			"oracle_id": "d8239a86-7184-4005-ba1e-2dddcd756c47",
 			"oracle_id_is_scryfall": true,
@@ -290,6 +295,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "d30883ad-8bf9-47aa-9b12-afb811ab57f0",
 			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
 			"oracle_id_is_scryfall": true,
@@ -343,6 +349,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "af48297c-b390-480b-aec1-b8f07127bbc0",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -414,6 +421,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "6c046347-9734-459f-9665-24d070504ff2",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -475,6 +483,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "8930430d-8109-47de-bffb-965fec841979",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -531,6 +540,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "e537444d-ee74-4c9c-813b-f8773be58199",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -580,6 +590,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "d2d5450e-6cc8-43f8-9810-30550b2a563f",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -636,6 +647,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "e8c528e1-4cfb-40ab-aba6-c9c7645f2b09",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -692,6 +704,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "11af1461-4dd0-4889-ba87-014ed524bfce",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -748,6 +761,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "191dd042-6f95-4b4d-9b2b-0c6e858fddf2",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -801,6 +815,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "ca92d6f4-bb2d-4374-9bd6-3b6708569358",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -850,6 +865,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "aca98d96-6345-454e-a89c-23480917c112",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -910,6 +926,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "3951dcb3-f0a6-47ac-a4bf-2162faa57825",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -969,6 +986,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "356dafdb-e116-40d6-bb0d-0467d3ae13d0",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -1024,6 +1042,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "414a897a-6851-4b42-a253-70dd9b5fd723",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -1077,6 +1096,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "bd609c2b-27cd-43c6-b1ce-a4d03194d12a",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -1130,6 +1150,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "385da6a7-3993-4841-a1b5-eae8382ed8c7",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -1186,6 +1207,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "c81ab05d-86f3-4359-abb7-949ee72ab1cd",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -1242,6 +1264,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "c625dc9c-328d-4a00-89c1-0113c3f847c2",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -1294,6 +1317,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "19f6c00d-c05a-47e7-88dc-68f86954cdde",
 			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
 			"oracle_id_is_scryfall": true,
@@ -1347,6 +1371,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "ef0636eb-a365-46f8-a9a2-005606a05abc",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -1399,6 +1424,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "7793474e-85fb-4628-9504-78d68e910161",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -1454,6 +1480,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "d14a9c41-58bb-4862-bf5a-9dcd69c370cb",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -1506,6 +1533,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "4129b652-7650-473a-8b7b-0bbc61a3863b",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -1562,6 +1590,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "625ce0b9-d8fe-434e-b640-d675e6509211",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -1618,6 +1647,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "c9f81834-7d19-47c1-8ca8-a714d8ac6ea2",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -1674,6 +1704,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "f82c8723-8a3c-4d94-bc3d-c240b48284d4",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -1727,6 +1758,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "6e43a945-89e4-47c9-9ce7-f9ccf4ff9b05",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -1780,6 +1812,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "ee6b014b-4cb7-41ba-82dd-06cab7a9667f",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
@@ -1834,6 +1867,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "a21fb118-f54f-43ec-80df-823e9eca5de2",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -1887,6 +1921,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "d156bf4d-4f97-422c-8eeb-983212a315b2",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
@@ -1943,6 +1978,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "e4a7dcdb-59af-4c64-9b5a-8a3e631481dc",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -1996,6 +2032,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "41b376b4-ef6e-453e-b2a4-0a0a323a5dee",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -2048,6 +2085,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "a0ba3be9-a107-42c4-9d9e-41ea199bfc27",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -2104,6 +2142,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "d620d75a-ddf3-402a-a32e-fafbeb12ca4c",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -2156,6 +2195,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "75ea42db-2909-4795-9d93-01a12ac66aab",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -2209,6 +2249,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "17efa2be-ea9e-4d5e-b7f2-d0982080526f",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -2262,6 +2303,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "0af6bb35-3856-4107-9e5d-52f71d5a1b3d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -2319,6 +2361,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "019bf760-fe72-432b-82e5-b2454b7b301b",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -2375,6 +2418,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "489d203f-5238-4377-9f4c-fa74e94d5325",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -2431,6 +2475,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "4ec8b07b-c607-4d43-b5ce-c21165ed86a8",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -2488,6 +2533,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "c25d24f5-93c3-4e5a-9316-9dffb4550db5",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -2545,6 +2591,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "53a68a75-ab4a-47fe-bf60-1b51882554b3",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -2600,6 +2647,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "c4a5f49f-aeb6-4015-9d0c-6d770d2c393c",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -2656,6 +2704,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "72b1329b-aed6-4025-84af-3a05bc0de0e3",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -2712,6 +2761,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "7d79eab8-44e4-4872-b0b4-dac9f2497de9",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -2765,6 +2815,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "8be3e3d7-c73f-4f18-a3f6-8896cfcfa623",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -2821,6 +2872,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "4c1b79c2-ab78-4610-94dd-30c66a089a91",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -2875,6 +2927,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "b8cc3359-a753-47fe-af82-42f06ecbe6f0",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -2927,6 +2980,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "f16e16f7-0b63-4336-88aa-4c29ce80ba6b",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -2988,6 +3042,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "bc5a6bfa-25ae-4f44-bafc-ea6cf0c23aba",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -3041,6 +3096,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "2deaa66a-9a2a-403a-bafb-c5a20a7339d4",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -3093,6 +3149,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "ed0552ff-4018-4a13-8fe7-50417f9738da",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -3145,6 +3202,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "ed96dd45-d9ec-4906-ba5e-f51b7d4ae176",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -3197,6 +3255,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "43766609-829c-4188-ae63-a93e5a506007",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -3249,6 +3308,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "29d1f526-1614-4848-ab37-08dfd4cb529d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -3301,6 +3361,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "90277cfb-0c8f-41ea-83ab-8e19f1332e96",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
@@ -3344,6 +3405,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "e9442059-eb2d-4786-9f1a-987a262838a2",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -3400,6 +3462,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "cf5beecc-e436-4fe0-99cc-54e25933e524",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -3456,6 +3519,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "89324caf-d39b-4639-bb9e-ff50e49e5845",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -3512,6 +3576,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "262e61f8-f2b2-4c40-a23a-25aadce6449f",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -3567,6 +3632,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "b7259762-2e71-4a0a-9db7-ab5eeb69eb9d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -3627,6 +3693,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "850fbeea-1229-4a68-955b-2284583c3d9f",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -3680,6 +3747,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "3f0c8e2e-0d1d-46e6-b9c0-b12db6adcc45",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -3735,6 +3803,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "685cdda3-dce1-48bd-a1f0-50cb82d3ca6c",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -3790,6 +3859,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "c24949f5-8364-448e-9eae-4ae1f357a187",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -3845,6 +3915,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "8302527f-baf7-46c0-877d-3263004d707d",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -3900,6 +3971,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "43b0085e-dcc8-4a01-baf9-8f127dea5f9a",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -3955,6 +4027,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "26f592b8-bff2-46fe-9ad7-57d5d26c3dd0",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -4012,6 +4085,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "4667ed73-0458-4f30-9ec1-99c9b1746ab2",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -4067,6 +4141,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "d30af56e-e2ad-4576-92d1-cc81e4bb7812",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -4122,6 +4197,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "0441c0e8-88f8-46b3-a580-b712dd4b8bde",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -4174,6 +4250,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "59d52e29-8632-4f69-a22b-5afa68e5a0be",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -4226,6 +4303,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "0535026e-3ea1-4854-9619-2c9941df6c01",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
@@ -4283,6 +4361,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "12210f39-904e-4124-8c50-2279fd0745e0",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -4340,6 +4419,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "5e8e6670-1ce1-4ab2-af14-1b695c55fe88",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -4395,6 +4475,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "0f2486a2-bc98-4519-a1a0-772d0fdfb077",
 			"oracle_id": "46a07b53-ff58-4bd6-80dd-ded2eb0e29a3",
 			"oracle_id_is_scryfall": true,
@@ -4440,6 +4521,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "f6382e79-6d13-4ea1-a799-f0d5079648e3",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -4492,6 +4574,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "814a53ae-14c5-4c98-8f39-f995bd4e15dc",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -4545,6 +4628,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "38dadcd1-d455-48ce-85b7-04463a9b8836",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -4603,6 +4687,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "d97f9450-230e-49f6-a809-9983eee30f37",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -4661,6 +4746,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "e2de0f4d-66f4-46f1-8671-e32f49d25638",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -4719,6 +4805,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "6dea855c-1c71-45b9-8884-eb2efd40fa05",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -4777,6 +4864,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "d7374aaf-2e10-408b-84e2-9c96fefa351d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -4835,6 +4923,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "3e1d420a-61ca-494a-855d-9280a137594f",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
@@ -4884,6 +4973,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "a56202fe-d694-4008-80c3-c58dc61fbb48",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
@@ -4928,6 +5018,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "3c341e3c-9349-4dbb-b132-b2bdb3fea4f5",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -4977,6 +5068,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "4f0e6282-8ab5-4d80-bbca-6b4bf4c0801d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -5034,6 +5126,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "857e5f7c-4357-43b9-9715-8a17ae3f94b0",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -5086,6 +5179,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "0bd69b9e-9160-4f07-919b-eae57fc6eda0",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -5138,6 +5232,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "cf8b670b-bd79-4797-b050-da3833764b09",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -5195,6 +5290,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "67d46cf3-d402-4200-89d2-8eef59a00348",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -5247,6 +5343,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "1e59aac7-f6d2-4641-ab98-1685035feb68",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -5304,6 +5401,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "3d910b1e-feff-434d-81e9-cd19070c3f12",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -5356,6 +5454,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "d8b27751-8f86-44b9-bd99-4f68b85dfbb6",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -5408,6 +5507,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "8d76e128-373a-47a7-9d31-77b7c06f495e",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -5460,6 +5560,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "8fc20b2b-83c3-4564-b54d-5530a58a6e82",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -5512,6 +5613,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "821bdbd1-0f29-4ca8-a018-f13fe8805c9b",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -5564,6 +5666,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "89e139ba-aa4b-458b-8390-97f07f9464ba",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -5616,6 +5719,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "eaaf065b-fdef-4b6b-af1d-42e5f5a43876",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -5672,6 +5776,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "dc6dd8f9-1706-4825-bd5d-7a6b47a171e3",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -5728,6 +5833,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "c789ac9b-5e31-4438-bf26-1af1040312d8",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -5780,6 +5886,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "9d3d6a3a-1362-4c11-9c14-1bf5adea559d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -5829,6 +5936,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "5e1b1c20-cb9c-42ac-a02e-dc255a378db1",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -5878,6 +5986,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "79735096-2bf9-4399-86e4-c263f1d5b5f4",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -5927,6 +6036,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "5bea3048-dca5-4189-821b-9b213b5637d6",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -5976,6 +6086,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "05785814-bb42-45ce-a7bc-9977e4c8f34e",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -6025,6 +6136,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "93c4691c-a820-4944-9d58-624d70e36e42",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -6074,6 +6186,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "1a2bab94-f655-4326-853a-ac2800b9cdd1",
 			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
 			"oracle_id_is_scryfall": true,
@@ -6137,6 +6250,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "f0f698e4-0bf6-4509-b2a7-657a47ee1a7e",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
@@ -6190,6 +6304,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "f207061c-f5ce-4004-a921-f2648bde05f7",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -6239,6 +6354,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "4d92d95c-9597-4807-a5b5-8c2e5c175e93",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -6294,6 +6410,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "ddd2331f-a903-4231-813c-d22b265ddadf",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -6350,6 +6467,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "57295125-85ee-41d5-bd26-e84587a654c1",
 			"oracle_id": "2c268e90-9bec-45c3-9c99-436761643f3c",
 			"oracle_id_is_scryfall": true,
@@ -6410,6 +6528,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "054ce96e-44cd-44ed-8708-2248a9d7a37d",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -6466,6 +6585,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "415a5598-c430-4257-a4da-97dc2d0f57be",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -6516,6 +6636,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "eb1e6559-9fc3-4360-a35f-f800bc9f5bfd",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -6571,6 +6692,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "0e4da2e8-6320-4b2d-86c7-d488e264395e",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -6626,6 +6748,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "3b9742ae-9219-491c-b5ee-3a6382c31c22",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -6683,6 +6806,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "11f2e9d6-171b-429c-a9b3-3558de939731",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -6740,6 +6864,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "43d7b23c-3f27-40ca-b941-e340af27066b",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -6798,6 +6923,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "3b775d99-f288-416b-8a88-5741e3d274b9",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -6852,6 +6978,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "95678486-b11a-4c93-9145-c3d848ecd0ab",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -6909,6 +7036,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "ad1db88a-7544-4bba-9c4f-4dae00ad4a04",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -6962,6 +7090,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "9c98b9bc-f88a-4b12-9987-808be909946d",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
@@ -7017,6 +7146,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "67edd74c-24bf-4bdf-a696-1ddd93e0be7d",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -7069,6 +7199,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "faf33b6d-013d-4bbc-889e-d1f3e2ee52a4",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -7119,6 +7250,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "2839fdf5-487f-476f-bec4-515d4e8c2185",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -7176,6 +7308,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "a2772151-645e-4e10-a563-e0a139f8d26a",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -7228,6 +7361,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "939fe6ac-ca43-4f68-ae3b-26213e2f1cb4",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -7287,6 +7421,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "910f4287-3274-4dba-b2b0-fa3cbbc5d7a9",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -7339,6 +7474,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "6da1e169-0932-48d9-8efa-481dd0a44493",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -7388,6 +7524,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "b2a08e54-013e-470b-9fc6-8e05cf78e265",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -7440,6 +7577,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "23c7fa88-3cd3-45f1-9a58-f58a59d6d647",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
@@ -7495,6 +7633,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "6ce24c5f-064e-4d32-aeeb-352369b92ea8",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -7560,6 +7699,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "834d3a76-0825-4980-8659-13e574af0c8c",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -7618,6 +7758,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "58b69f0d-2687-43bb-acbf-c0ee5518ba4f",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -7671,6 +7812,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "3f0ab793-c2ee-4ef4-baa9-ea231d9f9b12",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -7728,6 +7870,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "a15ee682-41e1-47fc-a1e1-e133046506f7",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -7782,6 +7925,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "14987e70-ef8e-4dfa-af91-1004e15949a4",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -7841,6 +7985,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "9ff80339-c41c-4f98-aa48-ea9c1711ab53",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -7898,6 +8043,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "7cbe71f7-6dfb-46d8-97f4-8dd6b9307974",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -7954,6 +8100,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "f17eb434-8eb8-4701-b5df-d56d19d7f28b",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
@@ -8010,6 +8157,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "99f87759-7c3e-4aea-971c-5ea7cbc6c108",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8069,6 +8217,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "9df5f8d8-8346-42de-9a04-fcefe427f101",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8122,6 +8271,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "19a49400-a514-4d23-a619-d8bdf02967cb",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8179,6 +8329,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "3decfcf9-80f5-47b4-8bac-a38306e8098f",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8231,6 +8382,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "023553e0-f21f-4f49-ac4c-2210acfa36f5",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8288,6 +8440,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "eae83c11-62bd-4b48-9bf2-cff5457119d4",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8341,6 +8494,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "aac5a3a5-e475-48a9-b9fc-0f7e89aa8790",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8397,6 +8551,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "06461afe-1798-4e10-aad3-e82b02d2e6e4",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8450,6 +8605,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "dcbfad75-e117-4cc1-822e-19d8f41c759b",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8503,6 +8659,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "897be83a-8cb7-42b9-9ed3-16e5a73f34b6",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
@@ -8555,6 +8712,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "bfe74d50-e3fa-44f7-9e0a-8f930176c27e",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -8608,6 +8766,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "b99b4206-4ba4-4d16-96d3-b2714440f5d8",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -8658,6 +8817,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "56a229c3-5a5b-4d17-9125-c58cde30cf88",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -8715,6 +8875,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "8724d465-ee54-489f-8017-48a634da91cb",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -8768,6 +8929,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "674fc7d6-94bb-4fae-9ea2-63985a32ab96",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -8820,6 +8982,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "bc5786ed-6b5d-429c-918a-fb56f9cfb96c",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
@@ -8874,6 +9037,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "c32b03c4-b97c-4a54-8603-b6c361794d30",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
@@ -8915,6 +9079,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "61a07865-302b-488b-95c9-690013c4dbb8",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
@@ -8963,6 +9128,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "7d10085c-a7d7-40c5-ba09-a613c00a73e7",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
@@ -9011,6 +9177,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "9ec12a01-3e95-44ee-9534-653823578157",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
@@ -9059,6 +9226,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "f7159036-be27-4e72-b52b-af983077c558",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -9241,6 +9409,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "65c93f00-8221-4eee-bebc-0454bd2d08e0",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
@@ -9352,6 +9521,7 @@
 		},
 		{
 			"object": "card",
+			"kind": "land",
 			"id": "2d836916-66a8-4096-96b3-e1b469cde363",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,

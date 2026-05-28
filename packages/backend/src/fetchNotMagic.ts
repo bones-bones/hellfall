@@ -136,14 +136,18 @@ export const fetchNotMagic = async () => {
         creators: entryAt('creators').split(';'),
         set: 'NMTG',
         mana_value: parseInt(entryAt('mana_value')),
-        colors: entryAt('colors') ? entryAt('colors')
-          .split(';')
-          .map(color => HCColor[color as keyof typeof HCColor]):[],
+        colors: entryAt('colors')
+          ? entryAt('colors')
+              .split(';')
+              .map(color => HCColor[color as keyof typeof HCColor])
+          : [],
       },
       {
-        colors: entryAt('colors') ? entryAt('colors')
-          .split(';')
-          .map(color => HCColor[color as keyof typeof HCColor]):[],
+        colors: entryAt('colors')
+          ? entryAt('colors')
+              .split(';')
+              .map(color => HCColor[color as keyof typeof HCColor])
+          : [],
         color_indicator: Object.entries(emojiToColorIndicators).flatMap(([emoji, colorSet]) =>
           entryAt('rulings').includes(emoji) ? colorSet : []
         ) as HCColors,

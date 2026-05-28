@@ -144,14 +144,18 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               ? parseInt(entryAt('mana_value'))
               : parseFloat(entryAt('mana_value'))
             : 999999999999999,
-        colors: entryAt('colors') ? entryAt('colors')
-          .split(';')
-          .map(color => HCColor[color as keyof typeof HCColor]):[],
+        colors: entryAt('colors')
+          ? entryAt('colors')
+              .split(';')
+              .map(color => HCColor[color as keyof typeof HCColor])
+          : [],
       },
       {
-        colors: entryAt('colors') ? entryAt('colors')
-          .split(';')
-          .map(color => HCColor[color as keyof typeof HCColor]):[],
+        colors: entryAt('colors')
+          ? entryAt('colors')
+              .split(';')
+              .map(color => HCColor[color as keyof typeof HCColor])
+          : [],
         mana_cost: entryAt('mana_cost'),
         supertypes: entryAt('supertypes').split(';'),
         types: entryAt('types').split(';'),

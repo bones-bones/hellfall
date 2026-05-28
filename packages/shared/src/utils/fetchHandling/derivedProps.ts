@@ -109,14 +109,18 @@ export const getColorIdentityProps = (
     // add each face that isn't an ignored layout or the last image in a layout that ignores the last image
     card.card_faces.forEach((entry, i) => {
       if (
-        !(NoIdentityFaceLayout.includes(entry.layout as NoIdentityFaceLayoutType) && card.kind == 'card' && i) &&
-        (!ignoreFaceIdentityImageStatus.includes(entry.image_status as HCImageStatus) &&
-          !(
-            HCLayoutGroup.FrontIdentityLayout.includes(
-              card.layout as HCLayoutGroup.FrontIdentityLayoutType
-            ) && i == lastImageIndex
-          ) &&
-          !(card.layout == HCLayout.Specialize && i != 0))
+        !(
+          NoIdentityFaceLayout.includes(entry.layout as NoIdentityFaceLayoutType) &&
+          card.kind == 'card' &&
+          i
+        ) &&
+        !ignoreFaceIdentityImageStatus.includes(entry.image_status as HCImageStatus) &&
+        !(
+          HCLayoutGroup.FrontIdentityLayout.includes(
+            card.layout as HCLayoutGroup.FrontIdentityLayoutType
+          ) && i == lastImageIndex
+        ) &&
+        !(card.layout == HCLayout.Specialize && i != 0)
       ) {
         addColorsFromFace(entry);
       }
@@ -463,7 +467,9 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     while (takenNames.includes(exportName) || isInteger(exportName)) {
       exportName += '_';
     }
-    if (exportName != (['token', 'notmagic', 'scryfall'].includes(card.kind) ? card.hcid : card.name)) {
+    if (
+      exportName != (['token', 'notmagic', 'scryfall'].includes(card.kind) ? card.hcid : card.name)
+    ) {
       card.export_name = exportName;
     }
     takenNames.push(exportName);

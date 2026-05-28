@@ -2,7 +2,7 @@ import { facePropType, partPropType, propType } from './propTypes';
 
 export const propOrder: propType[] = [
   'object',
-  // 'kind',
+  'kind',
   'id',
   'id_is_scryfall',
   'oracle_id',
