@@ -8,6 +8,7 @@ import {
   HCRelatedCard,
   HCObject,
   HCKind,
+  HCSet,
 } from '@hellfall/shared/types';
 import {
   setDerivedProps,
@@ -20,6 +21,7 @@ import {
   addPropToFaceOrRoot,
   faceOrRootIsBattle,
   bothPropType,
+  HCIDMap,
 } from '@hellfall/shared/utils';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
@@ -136,7 +138,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         image: entryAt('image'),
         image_status: HCImageStatus.HighRes,
         creators: entryAt('creators').split(';'),
-        set: entryAt('set'),
+        set: entryAt('set') as HCSet,
         rulings: entryAt('rulings'),
         mana_value:
           entryAt('mana_value') != '∞'
@@ -298,5 +300,5 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     return card;
   });
 
-  return allCards;
+  return new HCIDMap(allCards);
 };

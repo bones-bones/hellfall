@@ -1,11 +1,11 @@
 import { HCCard, HCObject, HCRelatedCard } from '@hellfall/shared/types';
 import { textEquals } from '../textHandling';
 import { pushProp } from '../listHandling';
-import { cardMap, toFaces } from '../cardHandling';
+import { CardMap, toFaces } from '../cardHandling';
 
 export const updateParts = (
   card: HCCard.Any,
-  relateds: cardMap
+  relateds: CardMap
 ) /* :{card:HCCard.Any;relateds:HCCard.Any[]} */ => {
   if (!card.all_parts) {
     return;
@@ -16,7 +16,7 @@ export const updateParts = (
     const nonbasics: HCRelatedCard[] = [];
     const thriving: HCRelatedCard[] = [];
     const basics: HCRelatedCard[] = [];
-    relateds.forEach((relatedCard, id) => {
+    relateds.forEach(relatedCard => {
       const cardAsRelated: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: card.id,
@@ -104,8 +104,8 @@ export const updateParts = (
       }
       const relatedCard =
         relateds.get(part.id) ??
-        relateds.values().find(related => textEquals(part.hcid, related.hcid)) ??
-        relateds.values().find(related => textEquals(part.name, related.name));
+        relateds.find(related => textEquals(part.hcid, related.hcid)) ??
+        relateds.find(related => textEquals(part.name, related.name));
       if (!relatedCard) {
         throw console.error;
       }
@@ -162,8 +162,8 @@ export const updateParts = (
       }
       const relatedCard =
         relateds.get(part.id) ??
-        relateds.values().find(related => textEquals(part.hcid, related.hcid)) ??
-        relateds.values().find(related => textEquals(part.name, related.name));
+        relateds.find(related => textEquals(part.hcid, related.hcid)) ??
+        relateds.find(related => textEquals(part.name, related.name));
       if (!relatedCard) {
         throw console.error;
       }
@@ -196,8 +196,8 @@ export const updateParts = (
       .forEach(part => {
         const relatedCard =
           relateds.get(part.id) ??
-          relateds.values().find(related => textEquals(part.hcid, related.hcid)) ??
-          relateds.values().find(related => textEquals(part.name, related.name));
+          relateds.find(related => textEquals(part.hcid, related.hcid)) ??
+          relateds.find(related => textEquals(part.name, related.name));
         if (!relatedCard) {
           throw console.error;
         }
@@ -226,7 +226,7 @@ export const updateParts = (
       component: 'meld_result',
     };
     meldParts.set(card.id, meldResult);
-    relateds.set(card.id, card);
+    relateds.set(card);
     meldParts.keys().forEach(id => {
       const relatedCard = relateds.get(id);
       if (!relatedCard) {
@@ -246,7 +246,7 @@ export const updateParts = (
   }
 };
 
-export const cleanParts = (card: HCCard.Any, relateds: cardMap) => {
+export const cleanParts = (card: HCCard.Any, relateds: CardMap) => {
   if (card.layout == 'front') return;
   for (let i = card.all_parts?.length! - 1; i >= 0; i--) {
     const part = card.all_parts![i];

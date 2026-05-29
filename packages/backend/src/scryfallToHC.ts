@@ -1,23 +1,10 @@
-import {
-  ScryfallCard,
-  ScryfallCardFace,
-  ScryfallImageUris,
-  ScryfallLayout,
-  ScryfallRelatedCard,
-} from '@scryfall/api-types';
+import { ScryfallCard, ScryfallImageUris, ScryfallLayout } from '@scryfall/api-types';
 import {
   HCCard,
-  HCCardFace,
   HCLayout,
-  HCLegalitiesField,
-  HCLegality,
-  HCRelatedCard,
-  HCColor,
-  HCColors,
   HCImageStatus,
   HCFrame,
   HCKind,
-  AllLayoutType,
   HCLayoutGroup,
   HCFrameEffect,
 } from '@hellfall/shared/types';
@@ -30,10 +17,8 @@ import {
   fromImportMana,
   getDefaultCard,
   propType,
-  pushProp,
   pushPropToCard,
   pushPropToFace,
-  setDerivedProps,
   valueType,
 } from '@hellfall/shared/utils';
 export type fixedScryfall = Exclude<ScryfallCard.Any, ScryfallCard.ReversibleCard>;
@@ -128,10 +113,6 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     'frame_effects',
   ];
 
-  const keyCorrespondences: Record<string, any> = {
-    cmc: 'mana_value',
-  };
-  // const colorProps: string[] = ['colors', 'color_indicator', 'color_identity'];
   const subKeywords: Record<string, string> = {
     'commander ninjutsu': 'ninjutsu',
     gravestorm: 'storm',
@@ -171,7 +152,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
       ),
       id_is_scryfall: true,
       oracle_id_is_scryfall: true,
-      set: asToken ? 'SFT' : 'SFC',
+      set: 'SFT',
       mana_value: entry.cmc,
       image_status: HCImageStatus.HighRes,
     },

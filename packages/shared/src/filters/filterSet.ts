@@ -9,7 +9,7 @@ import {
   cardStringFilter,
 } from './types';
 import { funcOp, opIsNegative, opToNot } from './filterUtils';
-import { textSearchIncludes } from '@hellfall/shared/utils';
+import { cardMap, textSearchIncludes } from '@hellfall/shared/utils';
 
 export const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',
@@ -42,9 +42,9 @@ export const filterIncludeExtras: includeFilter = Object.assign(
       case 'extras':
         return extraSetList.includes(value1.set);
       case 'extracards':
-        return extraSetList.includes(value1.set) && !value1.isActualToken;
+        return extraSetList.includes(value1.set) && ['card', 'land'].includes(value1.kind);
       case 'tokens':
-        return value1.isActualToken;
+        return !['card', 'land'].includes(value1.kind);
       case 'nonextras':
         return !extraSetList.includes(value1.set);
       case 'vetoed':
@@ -97,7 +97,7 @@ export const filterSetToken: cardStringFilter = Object.assign(
           return true;
         }
       }
-      return !value2.length && token.isActualToken;
+      return !value2.length && value1.kind != 'card';
     };
     return funcOp(operator, tokenInSet, value1);
   },
@@ -132,16 +132,19 @@ export const getFilteredSet = (cards: HCCard.Any[], set: string): HCCard.Any[] =
 
 /**
  * Get a set split into cards and tokens.
- * @param allCards The list of all cards
+ * @param cardMap The map of all cards
  * @param set The set to get
  * @param moveNonDraftablesToTokens Whether to move cards that aren't directly draftable to the tokens section
  * @returns
  */
 export const getSplitSet = (
-  allCards: HCCard.Any[],
+  cardMap: cardMap,
   set: string,
   moveNonDraftablesToTokens: boolean = false
 ): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
+  const cards: HCCard.Any[] = [];
+  const tokens: HCCard.Any[] = [];
+
   const filteredCards = allCards.filter(card =>
     set == 'All' ? true : filterSetBoth(card, '=', set)
   );

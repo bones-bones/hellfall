@@ -7,6 +7,7 @@ import {
   HCObject,
   HCRarity,
   HCRelatedCard,
+  HCSet,
 } from '@hellfall/shared/types';
 import { sheetsKey } from './env.ts';
 import {
@@ -15,6 +16,7 @@ import {
   landToColorMapping,
   setDerivedProps,
   getDefaultCard,
+  HCIDMap,
 } from '@hellfall/shared/utils';
 
 const convertSet: Record<string, string> = {
@@ -88,7 +90,7 @@ export const fetchLands = async () => {
           )?.[1] ?? '',
         hcid: entryAt('hcid'),
         name: entryAt('name'),
-        set: convertSet[entryAt('set')] ?? (entryAt('set') || 'HBB'),
+        set: (convertSet[entryAt('set')] ?? (entryAt('set') || 'HBB')) as HCSet,
         collector_number: entryAt('collector_number'),
         rarity: entryAt('rarity').toLowerCase().split(' ')[0] as HCRarity,
         image: entryAt('image'),
@@ -166,5 +168,5 @@ export const fetchLands = async () => {
     setDerivedProps(land, entryAt('tags').split(';'));
     return land;
   });
-  return allLands;
+  return new HCIDMap(allLands);
 };

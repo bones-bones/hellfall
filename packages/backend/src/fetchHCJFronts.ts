@@ -7,7 +7,7 @@ import {
   HCObject,
   HCRelatedCard,
 } from '@hellfall/shared/types';
-import { addToJSONToCard, getDefaultCard } from '@hellfall/shared/utils';
+import { addToJSONToCard, getDefaultCard, HCIDMap } from '@hellfall/shared/utils';
 
 export type HCJPackInfo = {
   name: string;
@@ -38,41 +38,43 @@ export const packInfoToCard = (entry: HCJPackInfo): HCCard.Front =>
     )
   ) as HCCard.Front;
 
-export const fetchHCJFronts = (): HCCard.Any[] =>
-  hcjFrontCards.map((pack, i) => {
-    const front = packInfoToCard(pack);
-    front.collector_number = `${i + 1}`;
-    front.all_parts = pack.lands.map(land => {
-      const part: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: '',
-        hcid: land.id || '',
-        component: 'draft_partner',
-        name: land.name || '',
-        type_line: '',
-        set: '',
-        is_draft_partner: true,
-      };
-      if (land.count > 1) {
-        part.count = `${land.count}`;
-      }
-      return part;
-    });
-    if (pack.secondCopyOf) {
-      front.all_parts.push({
-        object: HCObject.ObjectType.RelatedCard,
-        id: '',
-        hcid: pack.secondCopyOf,
-        component: 'draft_partner',
-        name: '',
-        type_line: '',
-        set: 'HCJ',
-        is_draft_partner: true,
-        count: '2',
+export const fetchHCJFronts = (): HCIDMap =>
+  new HCIDMap(
+    hcjFrontCards.map((pack, i) => {
+      const front = packInfoToCard(pack);
+      front.collector_number = `${i + 1}`;
+      front.all_parts = pack.lands.map(land => {
+        const part: HCRelatedCard = {
+          object: HCObject.ObjectType.RelatedCard,
+          id: '',
+          hcid: land.id || '',
+          component: 'draft_partner',
+          name: land.name || '',
+          type_line: '',
+          set: '',
+          is_draft_partner: true,
+        };
+        if (land.count > 1) {
+          part.count = `${land.count}`;
+        }
+        return part;
       });
-    }
-    return front;
-  });
+      if (pack.secondCopyOf) {
+        front.all_parts.push({
+          object: HCObject.ObjectType.RelatedCard,
+          id: '',
+          hcid: pack.secondCopyOf,
+          component: 'draft_partner',
+          name: '',
+          type_line: '',
+          set: 'HCJ',
+          is_draft_partner: true,
+          count: '2',
+        });
+      }
+      return front;
+    })
+  );
 
 export const hcjFrontCards: HCJPackInfo[] = [
   {

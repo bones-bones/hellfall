@@ -47,7 +47,60 @@ export enum HCFrame {
   WebsiteApp = 'website_app',
 }
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
-export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.FullToken, HCFrame.StampToken];
+export const RetroCardFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic];
+export const RetroTokenFrames: HCFrame[] = [HCFrame.ClassicToken];
+export const NewFrames: HCFrame[] = [
+  HCFrame.Modern,
+  HCFrame.Stamp,
+  HCFrame.Future,
+  HCFrame.Playtest,
+  HCFrame.Shattered,
+  HCFrame.ModernToken,
+  HCFrame.StampToken,
+  HCFrame.FullToken,
+];
+export const NewCardFrames: HCFrame[] = [
+  HCFrame.Modern,
+  HCFrame.Stamp,
+  HCFrame.Future,
+  HCFrame.Playtest,
+  HCFrame.Shattered,
+];
+export const NewTokenFrames: HCFrame[] = [
+  HCFrame.ModernToken,
+  HCFrame.StampToken,
+  HCFrame.FullToken,
+];
+export const CardFrames: HCFrame[] = [
+  HCFrame.Original,
+  HCFrame.Classic,
+  HCFrame.Modern,
+  HCFrame.Stamp,
+  HCFrame.Future,
+  HCFrame.Playtest,
+  HCFrame.Shattered,
+];
+export const TokenFrames: HCFrame[] = [
+  HCFrame.ClassicToken,
+  HCFrame.ModernToken,
+  HCFrame.StampToken,
+  HCFrame.FullToken,
+];
+
+export const MagicFrames: HCFrame[] = [
+  HCFrame.Original,
+  HCFrame.Classic,
+  HCFrame.Modern,
+  HCFrame.Stamp,
+  HCFrame.Future,
+  HCFrame.Playtest,
+  HCFrame.Shattered,
+  HCFrame.ClassicToken,
+  HCFrame.ModernToken,
+  HCFrame.StampToken,
+  HCFrame.FullToken,
+];
+
 export const NotMagicFrames: HCFrame[] = [
   HCFrame.Pokemon,
   HCFrame.Yugioh,
@@ -59,22 +112,4 @@ export const NotMagicFrames: HCFrame[] = [
   HCFrame.Balatro,
   HCFrame.Tarot,
   HCFrame.NotMagic,
-];
-export const CardFrames: HCFrame[] = [
-  HCFrame.Original,
-  HCFrame.Classic,
-  HCFrame.Modern,
-  HCFrame.Stamp,
-  HCFrame.Future,
-  HCFrame.Playtest,
-  HCFrame.Jank,
-  ...NotMagicFrames,
-];
-export const TokenFrames: HCFrame[] = [
-  HCFrame.ClassicToken,
-  HCFrame.ModernToken,
-  HCFrame.StampToken,
-  HCFrame.FullToken,
-  HCFrame.Jank,
-  ...NotMagicFrames,
 ];

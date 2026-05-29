@@ -1,4 +1,4 @@
-import { HCCard, HCCardFace, HCColors } from '@hellfall/shared/types';
+import { HCCard, HCCardFace, HCColors, HCSet } from '@hellfall/shared/types';
 import { listShareLower } from '../listHandling';
 import { facePropOrder, partPropOrder, propOrder } from './orderProps';
 import { getIndicatorFromColors } from '../pipsHandling';
@@ -17,7 +17,7 @@ import {
   stripSetCode,
   textEquals,
 } from '../textHandling';
-import { cardMap, toCardMap } from './cardMap';
+import { CardMap } from './cardMap';
 
 /**
  * Converts the card to an array of its faces.
@@ -34,8 +34,6 @@ export const toFaces = (card: HCCard.Any): bothType[] => {
   }
   return [card] as bothType[];
 };
-
-const asArray = <T>(value: T) => {};
 
 /**
  * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
@@ -259,64 +257,55 @@ export const canBeACommander = (card: HCCard.Any) => {
   );
 };
 
-export const filterMap = <K, V>(
-  map: Map<K, V>,
-  predicate: (value: V, key: K) => boolean | undefined
-): Map<K, V> => {
-  const subset = new Map<K, V>();
-  for (const [key, value] of map) {
-    if (predicate(value, key)) {
-      subset.set(key, value);
-    }
-  }
-  return subset;
-};
-
-export const getAllRelated = (card: HCCard.Any, cardMap: cardMap): cardMap =>
-  toCardMap(
+/**
+ * This version will also try to match hcid and name, so it's slower, but it's not suitable for use on the frontend
+ */
+export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap =>
+  new CardMap(
     card.all_parts?.flatMap(
       part =>
         cardMap.get(part.id) ??
-        cardMap.values().find(related => textEquals(part.hcid, related.hcid)) ??
-        cardMap.values().find(related => textEquals(part.name, related.name)) ??
+        cardMap.find(related => textEquals(part.hcid, related.hcid)) ??
+        cardMap.find(related => textEquals(part.name, related.name)) ??
         []
     ) ?? []
   );
 
+/**
+ * This version won't try to match hcid and name, so it's not suitable for use in hc-transformations.ts
+ */
+export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
+  cardMap.getSubset(card.all_parts?.map(part => part.id) ?? []);
+
 export const getRelatedsFromCards = (
-  cardList: HCCard.Any[],
-  allCards: HCCard.Any[],
-  keepIrrelevantParts?: boolean
-): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
-  const tokens: HCCard.Any[] = [];
-  const cards: HCCard.Any[] = cardList.map(card => {
-    if (!card.all_parts) return card;
-    for (let i = card.all_parts.length - 1; i >= 0; i--) {
-      const part = card.all_parts[i];
-      if (cardList.some(c => c.id == part.id)) {
-        continue;
-      }
-      if (part.component == 'token_maker') {
-        card.all_parts.splice(i, 1);
-        continue;
-      }
-      const token = allCards.find(c => c.id == part.id);
-      if (token && !tokens.find(t => t.id == token.id)) {
-        tokens.push(token);
-      }
-    }
-    return card;
-  });
-  if (!keepIrrelevantParts) {
-    tokens.forEach(token => {
-      if (!token.all_parts) return;
-      for (let i = token.all_parts.length - 1; i >= 0; i--) {
-        const part = token.all_parts[i];
-        if (!cardList.some(c => c.id == part.id) && !tokens.some(t => t.id == part.id)) {
-          token.all_parts.splice(i, 1);
-        }
-      }
-    });
-  }
+  idList: string[],
+  cardMap: CardMap
+): { cards: CardMap; tokens: CardMap } => {
+  // TODO: don't use this for 'all'
+  const cards: CardMap = cardMap.getSubset(idList);
+  const tokens: CardMap = cardMap.getSubset(
+    cards.flatMap(
+      card =>
+        card.all_parts?.flatMap(part =>
+          !cards.has(part.id) && part.component != 'token_maker' ? part.id : []
+        ) ?? []
+    )
+  );
+  return { cards, tokens };
+};
+export const getRelatedsFromSet = (
+  set: HCSet,
+  cardMap: CardMap
+): { cards: CardMap; tokens: CardMap } => {
+  // TODO: don't use this for 'all'
+  const cards: CardMap = cardMap.getAllInSet(set);
+  const tokens: CardMap = cardMap.getSubset(
+    cards.flatMap(
+      card =>
+        card.all_parts?.flatMap(part =>
+          !part.set.includes(set) && part.component != 'token_maker' ? part.id : []
+        ) ?? []
+    )
+  );
   return { cards, tokens };
 };

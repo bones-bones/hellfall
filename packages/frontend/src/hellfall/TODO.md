@@ -107,3 +107,4 @@ Write a script to transform the database
 - fix uuids of all cards that are also on scryfall
 - remove token_id
 - reduce processing churn when updating cards
+- add special cases for searching only for set (use map directly)

@@ -28,9 +28,7 @@ export const HCToTTSDeckStates = (
   allCards: HCCard.Any[]
 ): ttsDeckState[] => {
   const cards = cardList.map(card => structuredClone(card));
-  const tokens = getRelatedsFromCards(cards, allCards).tokens.filter(
-    token => !token.tags?.includes('gif')
-  );
+  const tokens = getRelatedsFromCards(cards, allCards).tokens;
   const mainDeck: ttsDeckState = {
     Name: 'DeckCustom',
     CustomDeck: {},

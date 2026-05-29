@@ -3,8 +3,7 @@ import fs from 'fs';
 import { fetchTokens } from './fetchTokens.ts';
 import { fetchCards } from './fetchCards.ts';
 import { fetchUsernameMappings } from './fetchUsernameMapping.ts';
-import { HCCard, HCCardFace, HCRelatedCard, HCKind } from '@hellfall/shared/types';
-import { allSetsList } from '@hellfall/shared/data/sets.ts';
+import { HCCard, HCCardFace, HCRelatedCard, HCKind, allSetsList } from '@hellfall/shared/types';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
   facePropType,
@@ -27,12 +26,12 @@ import {
   getFilteredFaceProps,
   setDerivedProps,
   setExportProps,
-  toCardMap,
-  getAllRelated,
-  filterMap,
   stripSetCode,
   allPropType,
   valueType,
+  getAllRelatedPermissive,
+  CardMap,
+  HCIDMap,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { addToJSONToCards } from '@hellfall/shared/utils';
@@ -368,92 +367,68 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
   return merged;
 };
 const mergeDatabases = (
-  existingCards: HCCard.Any[],
-  newCards: HCCard.Any[],
-  existingTokens: HCCard.Any[],
-  newTokens: HCCard.Any[],
-  existingLands: HCCard.Any[],
-  newLands: HCCard.Any[]
-): { mergedCards: HCCard.Any[]; mergedTokens: HCCard.Any[]; mergedLands: HCCard.Any[] } => {
-  const existingCardMap = new Map(existingCards.map(card => [card.hcid, card]));
-  const existingTokenMap = new Map(existingTokens.map(token => [token.hcid.toLowerCase(), token]));
-  const existingLandMap = new Map(existingLands.map(land => [land.hcid, land]));
+  existingCards: HCIDMap,
+  newCards: HCIDMap,
+  existingTokens: HCIDMap,
+  newTokens: HCIDMap,
+  existingLands: HCIDMap,
+  newLands: HCIDMap
+): HCCard.Any[] => {
+  // const existingCardMap = new CardMap(existingCards,true);
+  // const existingTokenMap = new CardMap(existingTokens,true);
+  // const existingLandMap = new CardMap(existingLands,true);
 
-  const mergedCards = newCards.map(newCard => {
-    const existingCard = !(newCard.hcid in movedIds)
-      ? existingCardMap.get(newCard.hcid)
-      : existingCardMap.get(movedIds[newCard.hcid]);
+  newCards.forEach((newCard: HCCard.Any, id: string) => {});
+  const mergedCards = newCards.map((newCard: HCCard.Any, id: string) => {
+    const existingCard = existingCards.get(movedIds[id] ?? id);
     if (existingCard) {
-      existingCardMap.delete(existingCard.hcid);
+      existingCards.delete(existingCard.hcid);
       return mergeCards(existingCard, newCard);
     }
     // setDerivedProps(newCard);
     return newCard;
   });
   if (usingApproved) {
-    mergedCards.push(
-      ...Array.from(
-        existingCardMap.values().map(card => {
-          setDerivedProps(card);
-          return card;
-        })
-      )
-    );
+    existingCards.forEach(card => {
+      setDerivedProps(card);
+      mergedCards.set(card);
+    });
   }
 
-  const mergedTokens = newTokens.map(newToken => {
-    const existingToken = !(newToken.hcid in movedIds)
-      ? existingTokenMap.get(newToken.hcid?.toLowerCase())
-      : existingTokenMap.get(movedIds[newToken.hcid]);
-    if (existingToken) {
-      existingTokenMap.delete(existingToken.hcid.toLowerCase());
-      return mergeCards(existingToken, newToken);
+  const mergedTokens = newTokens.map((newCard: HCCard.Any, id: string) => {
+    const existingCard = existingTokens.get(movedIds[id] ?? id);
+    if (existingCard) {
+      existingTokens.delete(existingCard.hcid);
+      return mergeCards(existingCard, newCard);
     }
-    // setDerivedProps(newToken);
-    return newToken;
+    // setDerivedProps(newCard);
+    return newCard;
   });
   if (usingApproved) {
-    mergedTokens.push(
-      ...Array.from(
-        existingTokenMap.values().map(token => {
-          setDerivedProps(token);
-          return token;
-        })
-      )
-    );
+    existingTokens.forEach(card => {
+      setDerivedProps(card);
+      mergedTokens.set(card);
+    });
   } else if (NO_SCRYFALL) {
-    mergedTokens.push(
-      ...Array.from(
-        existingTokenMap
-          .values()
-          .filter(token => token.set == 'SFT')
-          .map(token => {
-            setDerivedProps(token);
-            return token;
-          })
-      )
-    );
+    existingTokens.getAllInSet('SFT').forEach(card => {
+      setDerivedProps(card);
+      mergedTokens.set(card);
+    });
   }
-  const mergedLands = newLands.map(newLand => {
-    const existingLand = !(newLand.hcid in movedIds)
-      ? existingLandMap.get(newLand.hcid)
-      : existingLandMap.get(movedIds[newLand.hcid]);
-    if (existingLand) {
-      existingLandMap.delete(existingLand.hcid);
-      return mergeCards(existingLand, newLand);
+  const mergedLands = newCards.map((newCard: HCCard.Any, id: string) => {
+    const existingCard = existingLands.get(movedIds[id] ?? id);
+    if (existingCard) {
+      existingLands.delete(existingCard.hcid);
+      return mergeCards(existingCard, newCard);
     }
-    // setDerivedProps(newLand);
-    return newLand;
+    // setDerivedProps(newCard);
+    return newCard;
   });
   if (usingApproved) {
-    mergedLands.push(
-      ...Array.from(
-        existingLandMap.values().map(land => {
-          setDerivedProps(land);
-          return land;
-        })
-      )
-    );
+    existingLands.forEach(card => {
+      setDerivedProps(card);
+      mergedLands.set(card);
+    });
   }
   const collectorNumberAutofillSets: Record<string, number> = {
     'HCV.2': 0,
@@ -505,38 +480,6 @@ const mergeDatabases = (
       }
     }
   });
-  mergedCards.sort((a, b) => {
-    if (parseInt(a.hcid) == parseInt(b.hcid)) {
-      if (a.hcid > b.hcid) {
-        return 1;
-      }
-      return -1;
-    } else if (parseInt(a.hcid) > parseInt(b.hcid)) {
-      return 1;
-    }
-    return -1;
-  });
-  mergedTokens.sort((a, b) => {
-    if (a.set != b.set) {
-      return allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set);
-    }
-    if (a.collector_number && b.collector_number) {
-      return parseInt(a.collector_number) - parseInt(b.collector_number);
-    }
-    if (a.name == b.name) {
-      if (
-        (parseInt(a.hcid.match(/\d+$/)?.[0] || '') || 0) >
-        (parseInt(b.hcid.match(/\d+$/)?.[0] || '') || 0)
-      ) {
-        return 1;
-      }
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return -1;
-  });
   [mergedCards, mergedTokens, mergedLands].forEach(mergedList =>
     mergedList.forEach(card => {
       if (!card.id) {
@@ -563,7 +506,43 @@ const mergeDatabases = (
     })
   );
 
-  return { mergedCards, mergedTokens, mergedLands };
+  return mergedCards
+    .cards()
+    .sort((a, b) => {
+      if (parseInt(a.hcid) == parseInt(b.hcid)) {
+        if (a.hcid > b.hcid) {
+          return 1;
+        }
+        return -1;
+      } else if (parseInt(a.hcid) > parseInt(b.hcid)) {
+        return 1;
+      }
+      return -1;
+    })
+    .concat(
+      mergedTokens.cards().sort((a, b) => {
+        if (a.set != b.set) {
+          return allSetsList.indexOf(a.set) - allSetsList.indexOf(b.set);
+        }
+        if (a.collector_number && b.collector_number) {
+          return parseInt(a.collector_number) - parseInt(b.collector_number);
+        }
+        if (a.name == b.name) {
+          if (
+            (parseInt(a.hcid.match(/\d+$/)?.[0] || '') || 0) >
+            (parseInt(b.hcid.match(/\d+$/)?.[0] || '') || 0)
+          ) {
+            return 1;
+          }
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return -1;
+      }),
+      mergedLands.cards().sort((a, b) => parseInt(a.hcid.slice(1)) - parseInt(b.hcid.slice(1)))
+    );
 };
 const dataToCards = <K extends propType>(
   cards: any,
@@ -640,9 +619,9 @@ const loadExistingData = () => {
     console.warn('Could not load cards, proceeding with undefined content:', error);
   }
 
-  const existingCards = databaseContent
-    ? dataToCards(databaseContent.data.filter((e: HCCard.Any) => e.kind != 'card') || [])
-    : [];
+  const existingCards = new HCIDMap(
+    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind != 'card') ?? [])
+  );
 
   try {
     tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
@@ -650,7 +629,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = tokensContent ? dataToCards(tokensContent.data || []) : [];
+  const existingTokens = new HCIDMap(dataToCards(tokensContent?.data ?? []));
 
   try {
     landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
@@ -658,16 +637,15 @@ const loadExistingData = () => {
     console.warn('Could not load lands, proceeding with undefined content:', error);
   }
 
-  const existingLands = landsContent ? dataToCards(landsContent.data || []) : [];
+  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
   return { existingCards, existingTokens, existingLands };
 };
 const main = async () => {
   const newCards = await fetchCards();
   const usernameMappings = await fetchUsernameMappings();
-  const intTokens = await fetchTokens(NO_SCRYFALL);
-  const intFronts = fetchHCJFronts();
-  const intNotMagic = await fetchNotMagic();
-  const newTokens = intTokens.concat(intFronts).concat(intNotMagic);
+  const newTokens = await fetchTokens(NO_SCRYFALL);
+  newTokens.setMultiple(fetchHCJFronts());
+  newTokens.setMultiple(await fetchNotMagic());
   const newLands = await fetchLands();
 
   console.log('Running in update mode - merging with existing data...');
@@ -680,9 +658,7 @@ const main = async () => {
     existingLands,
     newLands
   );
-  const finalCards = toCardMap(
-    addToJSONToCards(merged.mergedCards.concat(merged.mergedTokens.concat(merged.mergedLands)))
-  );
+  const finalCards = new CardMap(addToJSONToCards(merged));
   // const finalTokens = toCardMap(addToJSONToCards(merged.mergedTokens));
   // const finalLands = toCardMap(addToJSONToCards(merged.mergedLands));
   finalCards.forEach(card => {
@@ -690,14 +666,14 @@ const main = async () => {
       if (card.layout == 'front') {
         updateParts(
           card,
-          filterMap(finalCards, value => value.set == 'HCJ' && value.tags?.includes(card.tags![0]))
+          finalCards.filterFromSetExact('HCJ', value => value.tags?.includes(card.tags![0]))
         );
       } else {
-        updateParts(card, getAllRelated(card, finalCards));
+        updateParts(card, getAllRelatedPermissive(card, finalCards));
       }
     }
   });
-  finalCards.forEach(card => cleanParts(card, getAllRelated(card, finalCards)));
+  finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
 
   const takenNames = namesRawData.data;
   finalCards.forEach(entry => setExportProps(entry, takenNames));
@@ -757,11 +733,9 @@ const main = async () => {
     '../shared/src/data/tokens.json',
     JSON.stringify(
       {
-        data: Array.from(
-          finalCards
-            .values()
-            .filter(card => ['token', 'scryfall', 'notmagic', 'front'].includes(card.kind))
-        ),
+        data: finalCards
+          .filter(card => ['token', 'scryfall', 'notmagic', 'front'].includes(card.kind))
+          .cards(),
       },
       null,
       '\t'
@@ -769,11 +743,7 @@ const main = async () => {
   );
   fs.writeFileSync(
     '../shared/src/data/lands.json',
-    JSON.stringify(
-      { data: Array.from(finalCards.values().filter(card => card.kind == 'land')) },
-      null,
-      '\t'
-    )
+    JSON.stringify({ data: finalCards.filter(card => card.kind == 'land').cards() }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/tags.json',
@@ -811,7 +781,7 @@ const main = async () => {
     '../shared/src/data/Hellscube-Database.json',
     JSON.stringify(
       {
-        data: Array.from(finalCards.values()),
+        data: finalCards.cards(),
       },
       null,
       '\t'

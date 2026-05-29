@@ -8,6 +8,7 @@ import {
   setDerivedProps,
   getDefaultCard,
   addPropToFaceOrRoot,
+  HCIDMap,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -166,9 +167,9 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     return token;
   });
   if (NO_SCRYFALL) {
-    return HCTokens;
+    return new HCIDMap(HCTokens);
   } else {
     const ScryfallTokens = await fetchScryfallTokens();
-    return HCTokens.concat(ScryfallTokens);
+    return new HCIDMap(HCTokens.concat(ScryfallTokens));
   }
 };

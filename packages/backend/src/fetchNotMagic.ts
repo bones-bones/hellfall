@@ -5,6 +5,7 @@ import {
   bothPropType,
   faceOrRootIsBattle,
   getDefaultCard,
+  HCIDMap,
   isInteger,
   propType,
   setDerivedProps,
@@ -211,5 +212,5 @@ export const fetchNotMagic = async () => {
     setDerivedProps(card, entryAt('tags').split(';'));
     return card;
   });
-  return allNotMagic;
+  return new HCIDMap(allNotMagic);
 };

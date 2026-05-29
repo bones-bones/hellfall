@@ -13,6 +13,7 @@ import {
   HCLegalitiesField,
   HCLegality,
   HCObject,
+  HCSet,
 } from '@hellfall/shared/types';
 import {
   allPropType,
@@ -37,7 +38,7 @@ const defaultProps = {
   oracle_id: '',
   hcid: '',
   name: '',
-  set: '',
+  set: 'HCV' as HCSet,
   collector_number: '',
   image_status: HCImageStatus.Inapplicable,
   mana_cost: '',

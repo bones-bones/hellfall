@@ -21,6 +21,7 @@ import {
   HCRarity,
   // HCRelatedUris,
   // HCSecurityStamp,
+  HCSet,
 } from './values';
 
 import { HCCardFace } from './CardFace.ts';
@@ -446,7 +447,7 @@ export namespace HCCardFields.Print {
     /**
      * This card's set code.
      */
-    set: string;
+    set: HCSet;
     /**
      * This card's collector number within the set.
      */

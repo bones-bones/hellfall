@@ -20,3 +20,4 @@ export * from './Legality';
 export * from './Rarity.ts';
 // export * from "./RelatedUris.ts";
 // export * from "./SecurityStamp.ts";
+export * from './Set.ts';
