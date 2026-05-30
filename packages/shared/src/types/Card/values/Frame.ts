@@ -49,6 +49,11 @@ export enum HCFrame {
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
 export const RetroCardFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic];
 export const RetroTokenFrames: HCFrame[] = [HCFrame.ClassicToken];
+export const EffectFrames: HCFrame[] = [
+  HCFrame.Stamp,
+  HCFrame.StampToken,
+  HCFrame.FullToken,
+];
 export const NewFrames: HCFrame[] = [
   HCFrame.Modern,
   HCFrame.Stamp,

@@ -602,7 +602,7 @@ export const addLayoutTag = (card: HCCard.Any, tag: string, note?: string) => {
         (card.kind == 'token' ? 'meld_result' : 'meld_part') as HCLayoutGroup.SingleFacedType
       );
     } else if (tag == 'reminder-card' && card.kind == 'token') {
-      addTagToRoot(card, 'layout', 'reminder');
+      addTagToRoot(card, 'layout', HCLayout.Reminder);
     }
   } else {
     if (tag in multiLayoutTags) {
@@ -623,20 +623,20 @@ export const addLayoutTag = (card: HCCard.Any, tag: string, note?: string) => {
       addTagToRoot(
         card,
         'layout',
-        (card.kind == 'token' ? 'meld_result' : 'meld_part') as HCLayoutGroup.SingleFacedType
+        (card.kind == 'token' ? HCLayout.MeldResult : HCLayout.MeldPart) as HCLayoutGroup.SingleFacedType
       );
       card.card_faces.forEach((face, i) => {
         addTagToFace(
           card,
           i,
           'layout',
-          i ? 'meld_result' : ('meld_part' as HCLayoutGroup.FaceLayoutType)
+          i ? HCLayout.MeldResult : (HCLayout.MeldPart as HCLayoutGroup.FaceLayoutType)
         );
       });
     } else if (tag == 'reminder-card' && card.kind == 'token') {
-      addTagToRoot(card, 'layout', 'multi_reminder' as HCLayoutGroup.SingleFacedType);
+      addTagToRoot(card, 'layout', HCLayout.MultiReminder as HCLayoutGroup.SingleFacedType);
       card.card_faces.forEach((face, i) => {
-        addTagToFace(card, i, 'layout', 'reminder');
+        addTagToFace(card, i, 'layout', HCLayout.Reminder);
         if (!face.image) {
           face.image_status = layoutTagToImageStatus['reminder-card']!;
         }

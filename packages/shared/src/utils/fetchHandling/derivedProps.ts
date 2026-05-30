@@ -12,6 +12,7 @@ import {
   HCFrame,
   NoIdentityFaceLayout,
   NoIdentityFaceLayoutType,
+  EffectFrames,
 } from '@hellfall/shared/types';
 import {
   splitParens,
@@ -150,8 +151,8 @@ export const setDerivedProps = (
     const effects: HCFrameEffect[] = [];
     if (
       face.frame
-        ? NewFrames.includes(face.frame as HCFrame)
-        : NewFrames.includes(card.frame as HCFrame)
+        ? EffectFrames.includes(face.frame as HCFrame)
+        : EffectFrames.includes(card.frame as HCFrame)
     ) {
       if (
         ((listShareLower(face.supertypes, 'legendary') &&

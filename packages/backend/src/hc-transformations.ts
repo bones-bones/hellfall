@@ -56,7 +56,7 @@ const movedIds: Record<string, string> = {
   '2035b': '6735',
 };
 const kindBlankableProps: Partial<Record<HCKind, propType[]>> = {
-  card: ['mana_cost', 'mana_value', 'oracle_text', 'rulings'],
+  card: ['mana_cost', 'mana_value', 'oracle_text', 'rulings', 'collector_number'],
   notmagic: ['mana_cost', 'mana_value', 'oracle_text'],
 };
 const kindRemovableProps: Partial<Record<HCKind, propType[]>> = {
