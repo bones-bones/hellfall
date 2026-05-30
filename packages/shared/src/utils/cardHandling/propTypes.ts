@@ -36,9 +36,16 @@ export type bothPropType = keyof bothType;
 // export type excludeFacePropType = Exclude<facePropType, 'layout'>;
 export type bothValueType<K extends bothPropType> = K extends
   | 'colors'
+  // | ''
   | 'supertypes'
   | 'types'
   | 'subtypes'
+  ? Exclude<bothType[K], undefined>
+  : Exclude<bothType[K], undefined> extends Array<infer U>
+  ? U
+  : Exclude<bothType[K], undefined>;
+
+export type filterBothValueType<K extends bothPropType> = K extends 'colors'
   ? Exclude<bothType[K], undefined>
   : Exclude<bothType[K], undefined> extends Array<infer U>
   ? U

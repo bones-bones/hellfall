@@ -9,6 +9,7 @@ import {
   bothType,
   bothValueType,
   colorPropType,
+  filterBothValueType,
 } from './propTypes';
 import {
   getMasterpiece,
@@ -45,7 +46,7 @@ export const toFaces = (card: HCCard.Any): bothType[] => {
 export const getFromFaces = <K extends bothPropType>(
   card: HCCard.Any,
   prop: K
-): bothValueType<K>[] =>
+): filterBothValueType<K>[] =>
   toFaces(card).flatMap(face =>
     Array.isArray(face[prop]) ? face[prop] : [face[prop] ?? []].flat()
   );

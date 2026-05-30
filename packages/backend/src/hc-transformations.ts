@@ -276,7 +276,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
               } else if (k == 'image_status' && face.image) {
                 // TODO: store current version and print the diff if there is one
               } else if (kindIgnoreProps[merged.kind].includes(k)) {
-              } else if ((v || kindBlankableProps[merged.kind]?.includes(k))) {
+              } else if (v || kindBlankableProps[merged.kind]?.includes(k)) {
                 addPropToFace(merged, k, v, index);
               }
             });

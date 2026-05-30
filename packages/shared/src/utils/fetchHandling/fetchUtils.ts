@@ -145,7 +145,7 @@ export const getDefaultCard = (
   (Object.entries(faceProps) as { [K in bothPropType]: [K, bothValueType<K>] }[bothPropType][])
     .filter(([prop, value]) =>
       Array.isArray(value)
-        ? value.length && !(value.length == 1 && value[0] == '')
+        ? value.length && !(prop != 'colors' && value.length == 1 && value[0] == '')
         : value != '' && value != undefined
     )
     .forEach(([prop, value]) => addPropToFaceOrRoot(card, prop, value, 0));
@@ -623,7 +623,9 @@ export const addLayoutTag = (card: HCCard.Any, tag: string, note?: string) => {
       addTagToRoot(
         card,
         'layout',
-        (card.kind == 'token' ? HCLayout.MeldResult : HCLayout.MeldPart) as HCLayoutGroup.SingleFacedType
+        (card.kind == 'token'
+          ? HCLayout.MeldResult
+          : HCLayout.MeldPart) as HCLayoutGroup.SingleFacedType
       );
       card.card_faces.forEach((face, i) => {
         addTagToFace(

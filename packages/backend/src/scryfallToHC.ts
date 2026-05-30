@@ -148,9 +148,11 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     HCKind.Scryfall,
     'card_faces' in entry,
     {
-      ...Object.fromEntries((Object.entries(entry) as { [K in propType]: [K, valueType<K>] }[propType][]).filter(
-        ([key, value]) => sameKeys.includes(key as propType)
-      )),
+      ...Object.fromEntries(
+        (Object.entries(entry) as { [K in propType]: [K, valueType<K>] }[propType][]).filter(
+          ([key, value]) => sameKeys.includes(key as propType)
+        )
+      ),
       id_is_scryfall: true,
       oracle_id_is_scryfall: true,
       set: 'SFT',
