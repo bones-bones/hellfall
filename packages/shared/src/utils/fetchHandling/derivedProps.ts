@@ -25,6 +25,7 @@ import {
   listShare,
   getMVFromCost,
   getPipColorsFromText,
+  hasTokenHCID,
 } from '@hellfall/shared/utils';
 import { handleTags } from './tagHandling';
 
@@ -303,28 +304,26 @@ export const setDerivedProps = (
   card.color_identity_hybrid = orderHybrid(color_identity_hybrid) as HCColors[];
 };
 const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
-  'draft_partner',
-  'meld_result',
-  'specialize',
+  HCLayout.DraftPartner,
+  HCLayout.MeldResult,
+  HCLayout.Specialize,
 ];
 const conditionalDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
-  'checklist',
-  'dungeon',
-  'token',
-  'emblem',
-  'checklist',
-  'reminder',
-  'misc',
-  'stickers',
-  'dungeon',
+  HCLayout.Checklist,
+  HCLayout.Dungeon,
+  HCLayout.Token,
+  HCLayout.Emblem,
+  HCLayout.Reminder,
+  HCLayout.Misc,
+  HCLayout.Stickers,
 ];
 const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
-  'split',
-  'aftermath',
-  'prepare',
-  'inset',
-  'token',
-  'flip',
+  HCLayout.Split,
+  HCLayout.Aftermath,
+  HCLayout.Prepare,
+  HCLayout.Inset,
+  HCLayout.Token,
+  HCLayout.Flip,
 ];
 
 export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
@@ -454,7 +453,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     let exportName = toExportName(
       card.kind == 'land' && landNames.includes(card.name)
         ? `${card.name} (${card.hcid})`
-        : ['token', 'notmagic', 'scryfall'].includes(card.kind)
+        : hasTokenHCID(card)
         ? card.hcid
         : card.name
     );
@@ -467,9 +466,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     while (takenNames.includes(exportName) || isInteger(exportName)) {
       exportName += '_';
     }
-    if (
-      exportName != (['token', 'notmagic', 'scryfall'].includes(card.kind) ? card.hcid : card.name)
-    ) {
+    if (exportName != (hasTokenHCID(card) ? card.hcid : card.name)) {
       card.export_name = exportName;
     }
     takenNames.push(exportName);

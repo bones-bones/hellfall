@@ -30,7 +30,7 @@ export const packInfoToCard = (entry: HCJPackInfo): HCCard.Front =>
         image: entry.url,
         image_status: HCImageStatus.HighRes,
         type_line: 'Front Card',
-        tags: [entry.tag],
+        tags: [entry.tag, 'BurnAfterPicking'],
       },
       {
         types: ['Front Card'],

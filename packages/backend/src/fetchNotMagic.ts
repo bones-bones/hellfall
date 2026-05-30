@@ -151,7 +151,7 @@ export const fetchNotMagic = async () => {
           : [],
         color_indicator: Object.entries(emojiToColorIndicators).flatMap(([emoji, colorSet]) =>
           entryAt('rulings').includes(emoji) ? colorSet : []
-        ) as HCColors,
+        ),
         mana_cost: entryAt('mana_cost'),
         supertypes: entryAt('supertypes').split(';'),
         types: entryAt('types').split(';'),

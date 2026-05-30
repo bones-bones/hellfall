@@ -1,8 +1,8 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { DOMParser, XMLSerializer } from 'xmldom';
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, HCSet } from '@hellfall/shared/types';
 import { CockCardProps } from './cockTypes';
-import { getRelatedsFromCards } from '../cardHandling';
+import { CardMap, getRelatedsFromCards, getRelatedsFromSet } from '../cardHandling';
 import { hcCardToCockProps } from './HCToCockCard';
 import { prettifyXml } from './prettifyXml';
 import { makeSort } from '@hellfall/shared/filters';
@@ -20,24 +20,28 @@ export const recursiveAdoption = (parent: Node, children: RecursiveChild) => {
 };
 
 export const toCockCubeJSON = (
-  cardList: HCCard.Any[],
-  allCards: HCCard.Any[]
+  cardMap: CardMap,
+  set?: HCSet,
+  idList?: string[]
 ): { cards: CockCardProps[]; tokens: CockCardProps[] } => {
-  const { cards: HCCards, tokens: HCTokens } = getRelatedsFromCards(cardList, allCards, true);
-  const cards = HCCards.map(card => hcCardToCockProps(card));
-  const tokens = HCTokens.map(token => hcCardToCockProps(token));
+  const { cards: HCCards, tokens: HCTokens } = set
+    ? getRelatedsFromSet(set, cardMap)
+    : idList?.length
+    ? getRelatedsFromCards(idList, cardMap)
+    : { cards: cardMap, tokens: new CardMap() };
+  const cockCards = HCCards.mapToIdMap(card => hcCardToCockProps(card));
+  const cockTokens = HCTokens.mapToIdMap(token => hcCardToCockProps(token));
   const addRelatedNames = (card: CockCardProps) => {
     card.related?.forEach(relatedCard => {
       relatedCard.name =
-        cards.find(c => c.id == relatedCard.id)?.props[0].name ||
-        tokens.find(t => t.id == relatedCard.id)?.props[0].name ||
-        relatedCard.id;
+        cockCards.get(relatedCard.id)?.props[0].name ??
+        cockTokens.get(relatedCard.id)?.props[0].name;
     });
   };
-  cards.forEach(card => addRelatedNames(card));
-  tokens.forEach(token => addRelatedNames(token));
-  const rule = makeSort('number', 'asc');
-  tokens.sort((a, b) => parseInt(a.collector_number!) - parseInt(b.collector_number!));
+  cockCards.forEach(card => addRelatedNames(card));
+  cockTokens.forEach(token => addRelatedNames(token));
+  const cards = Array.from(cockCards.values());
+  const tokens = Array.from(cockTokens.values());
   /**
    * Adds names to all related entries
    * @param card card props to add related names to
@@ -47,14 +51,14 @@ export const toCockCubeJSON = (
 
 export const toCockCube = ({
   name,
+  cardMap,
   set,
-  cardList,
-  allCards,
+  idList,
 }: {
   name: string;
-  set: string;
-  cardList: HCCard.Any[];
-  allCards: HCCard.Any[];
+  cardMap: CardMap;
+  set: HCSet;
+  idList?: string[];
 }) => {
   const xmlDoc = new DOMParser().parseFromString(
     '<cockatrice_carddatabase version="2"/>',
@@ -100,7 +104,8 @@ export const toCockCube = ({
       const setElement = xmlDoc.createElement('set');
       setElement.setAttribute('rarity', 'common');
       setElement.setAttribute('picURL', face.picurl || entry.props[0].picurl || '');
-      setElement.setAttribute('muid', 'hc' + entry.id + (i ? 'b' : ''));
+      setElement.setAttribute('uuid', entry.id);
+      setElement.setAttribute('muid', 'hc' + entry.hcid + (i ? 'b' : ''));
       if (entry.collector_number) {
         setElement.setAttribute('num', entry.collector_number);
       }
@@ -234,7 +239,11 @@ export const toCockCube = ({
   };
   // const { cards, tokens } =
   // set == 'HC5' ? { cards: getHc5(), tokens: [] } : getSplitSet(allCards, set);
-  const { cards, tokens } = toCockCubeJSON(cardList, allCards);
+  const { cards, tokens } = toCockCubeJSON(
+    cardMap,
+    cardMap.hasSet(set as HCSet) || set == 'HC5' ? set : undefined,
+    idList
+  );
   cards.forEach(card => appendCockCard(card));
   tokens.forEach(token => appendCockCard(token));
 

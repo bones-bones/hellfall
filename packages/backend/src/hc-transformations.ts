@@ -276,7 +276,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
               } else if (k == 'image_status' && face.image) {
                 // TODO: store current version and print the diff if there is one
               } else if (kindIgnoreProps[merged.kind].includes(k)) {
-              } else if (v || kindBlankableProps[merged.kind]?.includes(k)) {
+              } else if ((v || kindBlankableProps[merged.kind]?.includes(k))) {
                 addPropToFace(merged, k, v, index);
               }
             });
@@ -415,7 +415,7 @@ const mergeDatabases = (
       mergedTokens.set(card);
     });
   }
-  const mergedLands = newCards.map((newCard: HCCard.Any, id: string) => {
+  const mergedLands = newLands.map((newCard: HCCard.Any, id: string) => {
     const existingCard = existingLands.get(movedIds[id] ?? id);
     if (existingCard) {
       existingLands.delete(existingCard.hcid);
@@ -620,7 +620,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = new HCIDMap(
-    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind != 'card') ?? [])
+    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [])
   );
 
   try {

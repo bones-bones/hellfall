@@ -7,6 +7,7 @@ import {
   HCKind,
   HCLayoutGroup,
   HCFrameEffect,
+  HCFinish,
 } from '@hellfall/shared/types';
 import {
   addProp,
@@ -218,7 +219,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
         addProp(
           card,
           prop,
-          convertLayout(value as ScryfallLayout) as HCLayoutGroup.SingleFacedType
+          convertLayout(value as unknown as ScryfallLayout) as HCLayoutGroup.SingleFacedType
         );
       } else if (prop == 'keywords') {
         addProp(
@@ -254,7 +255,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     pushPropToCard(card, 'frame_effects', HCFrameEffect.FullArt);
   }
   if (!entry.finishes.includes('nonfoil')) {
-    addProp(card, 'finish', 'foil');
+    addProp(card, 'finish', HCFinish.Foil);
   }
   if (entry.layout == 'token' && entry.type_line == 'Creature') {
     addProp(card, 'layout', HCLayout.Reminder);

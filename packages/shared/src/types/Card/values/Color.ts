@@ -34,9 +34,9 @@ export const HCMiscColors = [
 export const HCSearchColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc'];
 // export type HCColor = HCCoreColor | HCMiscColor;
 
-// export type HCCoreColors = `${HCCoreColor}`[];
+// export type HCCoreColors = HCCoreColor[];
 
-// export type HCMiscColors = `${HCMiscColor}`[];
+// export type HCMiscColors = HCMiscColor[];
 
 export type HCColors = `${HCColor}`[];
 // export const isCoreColor = (color: HCColor): boolean => {

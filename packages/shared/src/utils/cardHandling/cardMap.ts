@@ -252,6 +252,58 @@ export class CardMap {
     return ret;
   }
   /**
+   * Calls a defined callback function on each card, and returns a map that contains the results.
+   * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each card.
+   */
+  mapToMap<K, V>(callbackfn: (card: HCCard.Any) => [K, V]): Map<K, V>;
+  mapToMap<K, V>(callbackfn: (card: HCCard.Any, id: string) => [K, V]): Map<K, V>;
+  mapToMap<K, V>(callbackfn: (card: HCCard.Any, id: string, set: HCSet) => [K, V]): Map<K, V>;
+  mapToMap<K, V>(callbackfn: (...args: any[]) => [K, V]): Map<K, V> {
+    const retMap = new Map<K, V>();
+    for (const [id, card] of this) {
+      switch (callbackfn.length) {
+        case 3: {
+          retMap.set(...callbackfn(card, id, card.set));
+          break;
+        }
+        case 2: {
+          retMap.set(...callbackfn(card, id));
+          break;
+        }
+        default: {
+          retMap.set(...callbackfn(card));
+        }
+      }
+    }
+    return retMap;
+  }
+  /**
+   * Calls a defined callback function on each card, and returns a map that contains the results.
+   * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each card.
+   */
+  mapToIdMap<V>(callbackfn: (card: HCCard.Any) => V): Map<string, V>;
+  mapToIdMap<V>(callbackfn: (card: HCCard.Any, id: string) => V): Map<string, V>;
+  mapToIdMap<V>(callbackfn: (card: HCCard.Any, id: string, set: HCSet) => V): Map<string, V>;
+  mapToIdMap<V>(callbackfn: (...args: any[]) => V): Map<string, V> {
+    const retMap = new Map<string, V>();
+    for (const [id, card] of this) {
+      switch (callbackfn.length) {
+        case 3: {
+          retMap.set(id, callbackfn(card, id, card.set));
+          break;
+        }
+        case 2: {
+          retMap.set(id, callbackfn(card, id));
+          break;
+        }
+        default: {
+          retMap.set(id, callbackfn(card));
+        }
+      }
+    }
+    return retMap;
+  }
+  /**
    * Calls a defined callback function on each card, and returns a new CardMap.
    * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each card.
    */

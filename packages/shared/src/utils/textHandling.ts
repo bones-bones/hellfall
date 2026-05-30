@@ -1,4 +1,4 @@
-import { allSetsList } from '@hellfall/shared/data/sets.ts';
+import { allSetsList } from '@hellfall/shared/types';
 
 export const normalizeText = (text: string): string =>
   text

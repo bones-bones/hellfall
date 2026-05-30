@@ -32,8 +32,10 @@ export const SimpleDraftEffectList = [
   'TrackRemovedCardsNames',
   'TrackRemovedCardsSubtypes',
   'CogworkGrinder',
+  'BurnAfterPicking',
 ];
 
+// TODO: support AddBooster, if necessary
 export type AddCards = {
   type: 'AddCards';
   count?: number;
@@ -61,7 +63,7 @@ export type DraftmancerCustomCard = {
   layout?: string; // Possible values are: 'split', 'flip' and 'split-left'
   back?: DraftmancerCardFace;
   related_cards?: Array<string | DraftmancerCardFace>; // You can use this field to display some related cards when right clicking on the card. CardID can be the name of another custom card, or a Scryfall ID.
-  draft_effects?: Array<DraftEffect>; // See the list of valid effects bellow.
+  draft_effects?: Array<DraftEffect>; // See the list of valid effects above.
   // foil?: boolean; // Override the default finish of the card
   oracle_text?: string; // Oracle text.
   power?: number | string; // Creature power

@@ -140,7 +140,7 @@ const setTagPropsToDefault = (card: HCCard.Any) => {
       removableFaceTagProps.forEach(prop => deletePropFromFace(card, prop, i));
       face.layout = card.kind == 'card' && i ? HCLayout.Multi : kindToFaceLayout[card.kind];
       if (!face.image) {
-        face.image_status = i ? 'inapplicable' : 'front';
+        face.image_status = i ? HCImageStatus.Inapplicable : HCImageStatus.Front;
       }
     });
   } else {

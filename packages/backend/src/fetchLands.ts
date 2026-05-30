@@ -99,7 +99,7 @@ export const fetchLands = async () => {
           standard: HCLegality.Legal,
           '4cb': HCLegality.Legal,
           commander: HCLegality.Legal,
-        } as HCLegalitiesField,
+        },
         creators: entryAt('creators').split(';'),
       },
       {

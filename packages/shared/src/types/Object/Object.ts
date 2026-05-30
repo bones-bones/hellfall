@@ -59,6 +59,6 @@ export namespace HCObject {
     /**
      * A content type for this object.
      */
-    object: T | `${T}`;
+    object: T;
   };
 }

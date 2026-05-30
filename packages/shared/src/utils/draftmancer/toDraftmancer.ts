@@ -1,19 +1,22 @@
 // https://draftmancer.com/cubeformat.html#cube
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, HCSet } from '@hellfall/shared/types';
 import { HCToDraftmancer } from './HCToDraftmancer.ts';
+import { CardMap } from '../cardHandling/cardMap.ts';
 
 export const toDraftmancerCube = ({
   name,
-  cardList,
-  allCards,
+  cardMap,
+  set,
+  idList,
   draftMode,
 }: {
   name: string;
-  cardList: HCCard.Any[];
-  allCards: HCCard.Any[];
+  cardMap: CardMap;
+  set: HCSet;
+  idList?: string[];
   draftMode?: 'commander' | 'jumpstart';
 }) => {
-  const { cards, tokens } = HCToDraftmancer(cardList, allCards, draftMode);
+  const { cards, tokens } = HCToDraftmancer(cardMap, set, idList, draftMode);
 
   if (draftMode == 'commander') {
     const commanderCards = cards.filter(card => card.canBeACommander);

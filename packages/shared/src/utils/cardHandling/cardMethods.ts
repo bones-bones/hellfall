@@ -18,6 +18,7 @@ import {
   textEquals,
 } from '../textHandling';
 import { CardMap } from './cardMap';
+import { getHc5 } from './getHc5';
 
 /**
  * Converts the card to an array of its faces.
@@ -295,9 +296,18 @@ export const getRelatedsFromCards = (
 };
 export const getRelatedsFromSet = (
   set: HCSet,
-  cardMap: CardMap
+  cardMap: CardMap,
+  moveNonDraftablesToTokens: boolean = false
 ): { cards: CardMap; tokens: CardMap } => {
-  // TODO: don't use this for 'all'
+  if (set == 'HC5') {
+    return { cards: getHc5(), tokens: new CardMap() };
+  }
+  if (set == 'HCJ' && moveNonDraftablesToTokens) {
+    const { cards, tokens } = getRelatedsFromSet(set, cardMap, false);
+    const fronts = cardMap.getAllInSet('FHCJ');
+    cards.setMultiple(tokens);
+    return { cards: fronts, tokens: cards };
+  }
   const cards: CardMap = cardMap.getAllInSet(set);
   const tokens: CardMap = cardMap.getSubset(
     cards.flatMap(
@@ -307,5 +317,13 @@ export const getRelatedsFromSet = (
         ) ?? []
     )
   );
+  if (moveNonDraftablesToTokens) {
+    cards.forEach((card: HCCard.Any, id: string) => {
+      if (card.not_directly_draftable) {
+        tokens.set(card);
+        cards.delete(id);
+      }
+    });
+  }
   return { cards, tokens };
 };
