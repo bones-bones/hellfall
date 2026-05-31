@@ -93,45 +93,32 @@ function formatVal(val: unknown): string {
 }
 
 const Container = styled('div')({
-  marginTop: 8,
+  marginTop: 6,
   marginBottom: 4,
 });
 
 const ToggleRow = styled('div')({
   display: 'flex',
   alignItems: 'center',
-  gap: 6,
+  gap: 4,
   cursor: 'pointer',
   userSelect: 'none',
-  '&:hover': { opacity: 0.8 },
 });
 
 const Badge = styled('span')({
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  background: '#fff3cd',
-  color: '#856404',
-  borderRadius: 10,
-  fontWeight: 700,
-  fontSize: 11,
-  minWidth: 20,
-  height: 20,
-  padding: '0 6px',
+  fontSize: 12,
+  fontWeight: 600,
 });
 
 const ToggleText = styled('span')({
-  fontSize: 13,
-  fontWeight: 600,
-  color: '#856404',
+  fontSize: 12,
+  color: '#555',
 });
 
 const ChangesetBlock = styled('div')({
-  marginTop: 8,
-  padding: '8px 10px',
-  background: '#fffcf0',
-  border: '1px solid #f0e5b0',
-  borderRadius: 6,
+  marginTop: 6,
+  padding: '6px 8px',
+  border: '1px solid #ccc',
 });
 
 const CsMeta = styled('div')({
@@ -140,27 +127,25 @@ const CsMeta = styled('div')({
 });
 
 const CsComment = styled('div')({
-  fontSize: 13,
+  fontSize: 12,
   fontStyle: 'italic',
   color: '#555',
   marginTop: 2,
 });
 
 const FieldDiff = styled('div')({
-  marginTop: 6,
+  marginTop: 4,
 });
 
 const FieldName = styled('div')({
   fontSize: 11,
-  fontWeight: 700,
+  fontWeight: 600,
   color: '#888',
-  textTransform: 'uppercase',
-  letterSpacing: '0.5px',
 });
 
 const DiffRow = styled('div')({
   display: 'flex',
-  gap: 8,
+  gap: 6,
   alignItems: 'flex-start',
   fontSize: 13,
   fontFamily: 'monospace',
@@ -168,15 +153,14 @@ const DiffRow = styled('div')({
 });
 
 const Before = styled('span')({
-  color: '#c00',
+  color: '#900',
   textDecoration: 'line-through',
   wordBreak: 'break-word',
   maxWidth: '40%',
 });
 
 const After = styled('span')({
-  color: '#155724',
-  fontWeight: 600,
+  color: '#060',
   wordBreak: 'break-word',
   maxWidth: '40%',
 });
@@ -188,9 +172,8 @@ const Arrow = styled('span')({
 
 const ReviewLink = styled(Link)({
   display: 'inline-block',
-  marginTop: 6,
+  marginTop: 4,
   fontSize: 12,
-  color: '#C690FF',
-  textDecoration: 'none',
+  color: 'inherit',
   '&:hover': { textDecoration: 'underline' },
 });
