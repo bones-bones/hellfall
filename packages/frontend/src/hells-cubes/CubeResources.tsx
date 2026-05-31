@@ -255,7 +255,7 @@ export const CubeResources = () => {
                       downloadDraftmancer({
                         name: cubeSetup.name,
                         set: cubeSetup.id,
-                        cardMap
+                        cardMap,
                       });
                     }}
                   >
@@ -289,7 +289,10 @@ export const CubeResources = () => {
                         Sidename: string;
                         Url: string;
                       }[];
-                      const { cards: intCards, tokens: intTokens } = getRelatedsFromSet(cubeSetup.id,cardMap)
+                      const { cards: intCards, tokens: intTokens } = getRelatedsFromSet(
+                        cubeSetup.id,
+                        cardMap
+                      );
                       const tokenNames = intTokens.flatMap(entry => {
                         // Dear sixel, pls finish
                         return (entry.all_parts?.filter(e => e.component == 'token') || []).map(

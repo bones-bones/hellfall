@@ -139,7 +139,7 @@ export const HellfallCard = ({
         <Test>
           <ImageContainer key="image-container">
             <img
-              alt = {toPlainText(data)}
+              alt={toPlainText(data)}
               src={data.image!}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
@@ -150,7 +150,7 @@ export const HellfallCard = ({
         <>
           <ImageContainer key={imagesToShow[activeImageSide] || data.image}>
             <img
-              alt = {toPlainText(data)}
+              alt={toPlainText(data)}
               src={imagesToShow[activeImageSide] || data.image!}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"

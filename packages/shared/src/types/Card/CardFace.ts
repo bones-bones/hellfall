@@ -18,5 +18,4 @@ export namespace HCCardFace {
   export type MultiFaced = AbstractCardFace &
     HCCardFields.Gameplay.CardFaceSpecific &
     HCCardFields.Print.CardFaceSpecific;
-
 }

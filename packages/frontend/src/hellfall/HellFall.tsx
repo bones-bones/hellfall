@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo, } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { HellfallEntry } from './HellfallEntry.tsx';
 
 import { styled, space } from '@workday/canvas-kit-react';

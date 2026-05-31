@@ -104,7 +104,7 @@ export namespace HCCardFields.Core {
     /**
      * The tag state of this card (with notes stored unformatted).
      */
-    tag_state?:tagState;
+    tag_state?: tagState;
     /**
      * Stable Firestore-friendly ID for tokens, sourced from the token sheet.
      * Stored in Firestore as `token-<token_id>`.

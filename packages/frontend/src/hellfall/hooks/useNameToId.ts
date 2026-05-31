@@ -7,7 +7,7 @@ import { unescapeText } from '@hellfall/shared/filters';
 export const useNameToHCID = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);
   if (name == 'random') {
-    return cards.getAllInSetListExact(allExceptNormal).getRandomId()
+    return cards.getAllInSetListExact(allExceptNormal).getRandomId();
   }
   return (
     cards.get(name)?.hcid ??
@@ -66,13 +66,16 @@ const getFrontExportName = (card: HCCard.Any) => {
 
 export const nameToId = (name: string, cards: CardMap): string | undefined => {
   if (name == 'random') {
-    return cards.getAllInSetListExact(allExceptNormal).getRandomId()
+    return cards.getAllInSetListExact(allExceptNormal).getRandomId();
   }
   if (textListEquals(landNames, name)) {
-    return cards.getAllInSet('HBB').filter(card => textEquals(name, card.name)).getRandomId();
+    return cards
+      .getAllInSet('HBB')
+      .filter(card => textEquals(name, card.name))
+      .getRandomId();
   }
   return (
-    cards.get(name)?.id??
+    cards.get(name)?.id ??
     cards.find(card => card.export_name && textEquals(card.export_name, name))?.id ??
     cards.find(
       card =>

@@ -2,7 +2,13 @@ import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 import { withCors } from './lib/cors.ts';
 import { combineAndWinnowSorts, parseSearchQuery, searchCards } from '@hellfall/shared/filters';
 import { HCCard, HCSet } from '@hellfall/shared/types';
-import { toCockCube, toCockCubeJSON, HCToDraftmancer, HCToTTSDeck, CardMap } from '@hellfall/shared/utils';
+import {
+  toCockCube,
+  toCockCubeJSON,
+  HCToDraftmancer,
+  HCToTTSDeck,
+  CardMap,
+} from '@hellfall/shared/utils';
 import { cardMap } from './cardsStore.ts';
 import { tagsData } from '@hellfall/shared/data';
 
@@ -45,11 +51,11 @@ const formatSearchResult = (
 ) => {
   switch (format) {
     case 'draftmancer': {
-      const draftCards = HCToDraftmancer(cardMap, '' as HCSet,idList);
+      const draftCards = HCToDraftmancer(cardMap, '' as HCSet, idList);
       return draftCards.cards.concat(draftCards.tokens);
     }
     case 'cockatrice': {
-      const cockCards = toCockCubeJSON(cardMap, '' as HCSet,idList);
+      const cockCards = toCockCubeJSON(cardMap, '' as HCSet, idList);
       return cockCards.cards.concat(cockCards.tokens);
     }
     case 'tabletopsimulator':
@@ -98,9 +104,11 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
     );
     res.statusCode = 200;
     if (format == 'xml') {
-      res.end(toCockCube({ name: 'Custom', set: 'Custom' as HCSet, cardMap, idList:resultMap.ids() }));
+      res.end(
+        toCockCube({ name: 'Custom', set: 'Custom' as HCSet, cardMap, idList: resultMap.ids() })
+      );
     } else if (format == 'json') {
-      const results = resultMap.cards()
+      const results = resultMap.cards();
       for (let i = sortList.length - 1; i >= 0; i--) {
         results.sort((a: HCCard.Any, b: HCCard.Any) => sortList[i].filter(a, '=', b));
       }

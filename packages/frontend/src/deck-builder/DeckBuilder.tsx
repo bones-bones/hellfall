@@ -30,7 +30,7 @@ export const DeckBuilder = () => {
   const [textAreaValue, setTextAreaValue] = useState<string>(
     (searchparms.get('list') || '').replaceAll('∆', '\n')
   );
-  const cardMap = new CardMap(cardsData.data)
+  const cardMap = new CardMap(cardsData.data);
   // const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') || 'your deck name goes here');
@@ -78,7 +78,9 @@ export const DeckBuilder = () => {
 
     if (rest[0] == '%') {
       // handle ids
-      return cardMap.find(card => card.hcid == rest.slice(1)) ? [count, rest.slice(1)] : [count, ''];
+      return cardMap.find(card => card.hcid == rest.slice(1))
+        ? [count, rest.slice(1)]
+        : [count, ''];
     }
     if (/^\d+$/.test(rest)) {
       // handle card names that are all digits
@@ -192,7 +194,11 @@ Cock and Balls to Torture and Abuse
       </button>{' '}
       <button
         onClick={() => {
-          const val = HCToTTSDeck(deckName, renderCards.flatMap(card=>card.id ?? []), cardMap);
+          const val = HCToTTSDeck(
+            deckName,
+            renderCards.flatMap(card => card.id ?? []),
+            cardMap
+          );
           const url =
             'data:text/plain;base64,' +
             btoa(unescape(encodeURIComponent(JSON.stringify(val, null, 2))));
@@ -212,7 +218,7 @@ Cock and Balls to Torture and Abuse
           downloadDraftmancer({
             name: deckName,
             set: 'Custom' as HCSet,
-            idList: renderCards.flatMap(card=>card.id ?? []),
+            idList: renderCards.flatMap(card => card.id ?? []),
             cardMap,
           });
         }}

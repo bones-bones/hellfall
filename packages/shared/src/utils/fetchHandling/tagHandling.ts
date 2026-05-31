@@ -204,16 +204,16 @@ const setFacePropsFromTypes = (face: faceType, shouldSetLayout: boolean, isToken
   }
 };
 
-export const splitFullTag = (fullTag:string) => {
+export const splitFullTag = (fullTag: string) => {
   const hasNote = fullTag.includes('<') && fullTag.endsWith('>');
   const [tag, note] = [
     (hasNote ? fullTag.split('<')[0] : fullTag).trim(),
-    hasNote ? (fullTag.split('<')[1].slice(0, -1)).trim() : undefined,
+    hasNote ? fullTag.split('<')[1].slice(0, -1).trim() : undefined,
   ];
-  return {tag, note}
-}
+  return { tag, note };
+};
 
-export const handleTags = (card: HCCard.Any, tags: string[], setBaseTags?:boolean) => {
+export const handleTags = (card: HCCard.Any, tags: string[], setBaseTags?: boolean) => {
   if (card.kind == 'scryfall') return;
   setTagPropsToDefault(card);
   if (!tags.length || (tags.length == 1 && tags[0] == '')) {
@@ -226,12 +226,12 @@ export const handleTags = (card: HCCard.Any, tags: string[], setBaseTags?:boolea
     return;
   }
   if (setBaseTags || !card.tag_state) {
-    addProp(card,'tag_state',{})
+    addProp(card, 'tag_state', {});
   }
   card.tags = tags.map(fullTag => {
-    const {tag, note} = splitFullTag(fullTag);
+    const { tag, note } = splitFullTag(fullTag);
     if (setBaseTags) {
-      pushPropToRecord(card.tag_state!,'base_tags',tag,fullTag)
+      pushPropToRecord(card.tag_state!, 'base_tags', tag, fullTag);
     }
     if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
       addTag(card, tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
@@ -283,37 +283,40 @@ export const handleTags = (card: HCCard.Any, tags: string[], setBaseTags?:boolea
   } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
 };
 
-export const mergeTags = (card:HCCard.Any) => {
-  if (card.kind == 'scryfall') throw console.error("Can't set tags for scryfall cards");;
+export const mergeTags = (card: HCCard.Any) => {
+  if (card.kind == 'scryfall') throw console.error("Can't set tags for scryfall cards");
   // TODO: implement this on the frontend too
-  const state = card.tag_state
-  const newTags:string[]=[];
+  const state = card.tag_state;
+  const newTags: string[] = [];
   if (state?.base_tags) {
-    Object.entries(state.base_tags).filter(([key,value])=>!state.removed?.includes(key)).forEach(([key,value])=> value.forEach(tag => newTags.push(tag)))
+    Object.entries(state.base_tags)
+      .filter(([key, value]) => !state.removed?.includes(key))
+      .forEach(([key, value]) => value.forEach(tag => newTags.push(tag)));
   }
   if (state?.added) {
-    Object.values(state.added).forEach(value=> value.forEach(tag => newTags.push(tag)))
+    Object.values(state.added).forEach(value => value.forEach(tag => newTags.push(tag)));
   }
-  handleTags(card,newTags);
+  handleTags(card, newTags);
 };
 
-
-
-export const addTagContributor = (card:HCCard.Any, tag:string) => {
+export const addTagContributor = (card: HCCard.Any, tag: string) => {
   if (!card.tag_state) {
-    addProp(card,'tag_state',{})
+    addProp(card, 'tag_state', {});
   }
-  pushPropToRecord(card.tag_state!,'added',splitFullTag(tag).tag,tag)
-  mergeTags(card)
-}
-export const deleteTagContributor = (card:HCCard.Any, tag:string) => {
+  pushPropToRecord(card.tag_state!, 'added', splitFullTag(tag).tag, tag);
+  mergeTags(card);
+};
+export const deleteTagContributor = (card: HCCard.Any, tag: string) => {
   const tagToDelete = splitFullTag(tag).tag;
   if (card.tag_state?.added?.[tagToDelete]) {
     delete card.tag_state.added[tagToDelete];
-  } else if (card.tag_state?.base_tags?.[tagToDelete] && !card.tag_state.removed?.includes(tagToDelete)) {
-    pushProp(card.tag_state,'removed',tagToDelete);
+  } else if (
+    card.tag_state?.base_tags?.[tagToDelete] &&
+    !card.tag_state.removed?.includes(tagToDelete)
+  ) {
+    pushProp(card.tag_state, 'removed', tagToDelete);
   } else {
     return;
   }
   mergeTags(card);
-}
+};

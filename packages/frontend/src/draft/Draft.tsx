@@ -48,8 +48,8 @@ export const Draft = () => {
         });
 
         // const commanders = filtered.filter(canBeACommander);
-        const shuffledManders = shuffle(commanders.cards())
-        const shuffledNonManders = shuffle(nonManders.cards())
+        const shuffledManders = shuffle(commanders.cards());
+        const shuffledNonManders = shuffle(nonManders.cards());
 
         for (let i = 0; i < 3; i++) {
           const round = [];

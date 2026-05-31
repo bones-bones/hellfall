@@ -53,15 +53,21 @@ module.exports = {
     'no-empty': 0,
     'sonarjs/no-in-misuse': 'error',
 
-    'react/no-unescaped-entities':["error", {
-      "forbid": [{
-        "char": ">",
-        "alternatives": ["&gt;"]
-      }, {
-        "char": "}",
-        "alternatives": ["&#125;"]
-      }]
-    }],
+    'react/no-unescaped-entities': [
+      'error',
+      {
+        forbid: [
+          {
+            char: '>',
+            alternatives: ['&gt;'],
+          },
+          {
+            char: '}',
+            alternatives: ['&#125;'],
+          },
+        ],
+      },
+    ],
 
     'react/self-closing-comp': [
       'error',
@@ -73,11 +79,12 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.ts', '*.tsx'],  // Fix #2 - Add this override
+      files: ['*.ts', '*.tsx'], // Fix #2 - Add this override
       rules: {
-        'no-undef': 'off'
-      }
-    },    {
+        'no-undef': 'off',
+      },
+    },
+    {
       files: ['packages/frontend/**/*.ts', 'packages/frontend/**/*.tsx'],
       parserOptions: {
         project: './packages/frontend/tsconfig.json',
@@ -115,6 +122,6 @@ module.exports = {
         project: './packages/scripts/tsconfig.json',
         tsconfigRootDir: __dirname,
       },
-    }
+    },
   ],
 };
