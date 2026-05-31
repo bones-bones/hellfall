@@ -5,7 +5,7 @@ import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
 import { requireAdminAuth } from './lib/requireAdminAuth.js';
 import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
-import { recordCardAudit } from '../lib/cardAudit.js';
+import { recardCardChangeset } from '../lib/cardAudit.js';
 import {
   resolveTagState,
   tagFieldsForWrite,
@@ -212,7 +212,7 @@ async function acceptChangeset(req: HandlerRequest, res: HandlerResponse, change
 
   await cardRef.set(cardData, { merge: true });
 
-  await recordCardAudit({
+  await recardCardChangeset({
     cardId: cs.cardId,
     action: 'changeset_accept',
     field: null,
@@ -260,7 +260,7 @@ async function rejectChangeset(req: HandlerRequest, res: HandlerResponse, change
     rejectReason: typeof body.reason === 'string' ? body.reason.trim() || null : null,
   });
 
-  await recordCardAudit({
+  await recardCardChangeset({
     cardId: cs.cardId,
     action: 'changeset_reject',
     field: null,

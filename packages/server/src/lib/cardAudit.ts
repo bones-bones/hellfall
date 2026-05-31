@@ -35,7 +35,7 @@ function timestampToIso(at: Timestamp | undefined): string | null {
 }
 
 /** Append-only audit entry; failures are logged and do not block the API. */
-export async function recordCardAudit(params: {
+export async function recardCardChangeset(params: {
   cardId: string;
   action: AuditAction;
   field: string | null;
@@ -66,7 +66,7 @@ function tagChangesFromState(before: CardTagState, after: CardTagState) {
 }
 
 /** Convenience wrapper for tag add/remove — keeps cardTags.ts callsites clean. */
-export async function recordTagAudit(params: {
+export async function recordTagChangeset(params: {
   cardId: string;
   action: 'tag_add' | 'tag_remove';
   tag: string;
@@ -74,7 +74,7 @@ export async function recordTagAudit(params: {
   before: CardTagState;
   after: CardTagState;
 }): Promise<void> {
-  return recordCardAudit({
+  return recardCardChangeset({
     cardId: params.cardId,
     action: params.action,
     field: 'tags',
@@ -84,7 +84,7 @@ export async function recordTagAudit(params: {
   });
 }
 
-export async function listCardAudit(
+export async function listCardChangesets(
   cardId: string,
   limit = 50
 ): Promise<CardAuditEntry[]> {

@@ -27,11 +27,11 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
     '/api/discord/login': loginHandler,
     '/api/discord/callback': callbackHandler,
     '/api/discord/done': doneHandler,
+    '/api/admin/export-hellscube': exportHellscubeHandler,
   };
 
 const CARD_API_PREFIX = '/api/cards/';
 const CHANGESETS_PREFIX = '/api/changesets';
-const EXPORT_HELLSCUBE_PATH = '/api/admin/export-hellscube';
 
 function parseCardIDFromPath(path: string): string | null {
   if (!path.startsWith(CARD_API_PREFIX)) return null;
@@ -85,11 +85,6 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
       Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
       res.statusCode = 204;
       res.end();
-      return;
-    }
-
-    if (path === EXPORT_HELLSCUBE_PATH) {
-      await exportHellscubeHandler(req, res as HandlerResponse);
       return;
     }
 

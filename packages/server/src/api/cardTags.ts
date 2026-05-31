@@ -3,7 +3,7 @@ import { withCors } from './lib/cors.js';
 import { env } from './lib/env.js';
 import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
-import { listCardAudit, recordTagAudit } from '../lib/cardAudit.js';
+import { listCardChangesets, recordTagChangeset } from '../lib/cardAudit.js';
 import {
   applyAddTag,
   applyRemoveTag,
@@ -81,7 +81,7 @@ export const cardTagsHandler = async (
         typeof limitRaw === 'string' && /^\d+$/.test(limitRaw)
           ? Math.min(200, Math.max(1, Number(limitRaw)))
           : 50;
-      const entries = await listCardAudit(cardId, limit);
+      const entries = await listCardChangesets(cardId, limit);
       res.statusCode = 200;
       res.end(JSON.stringify({ ok: true, cardId, entries }));
       return;
@@ -126,7 +126,7 @@ export const cardTagsHandler = async (
       const before = resolveTagState(snap.data());
       const state = applyAddTag(before, norm);
       await docRef.set(tagFieldsForWrite(state), { merge: true });
-      await recordTagAudit({
+      await recordTagChangeset({
         cardId,
         action: 'tag_add',
         tag: norm,
@@ -157,7 +157,7 @@ export const cardTagsHandler = async (
       const before = resolveTagState(snap.data());
       const state = applyRemoveTag(before, norm);
       await docRef.set(tagFieldsForWrite(state), { merge: true });
-      await recordTagAudit({
+      await recordTagChangeset({
         cardId,
         action: 'tag_remove',
         tag: norm,
