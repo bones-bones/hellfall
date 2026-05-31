@@ -57,10 +57,7 @@ async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchRes
   };
 }
 
-async function fetchPendingTagAfter(
-  baseUrl: string,
-  cardId: string
-): Promise<string[] | null> {
+async function fetchPendingTagAfter(baseUrl: string, cardId: string): Promise<string[] | null> {
   const res = await fetch(
     `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}&status=pending`,
     { credentials: 'include' }

@@ -65,7 +65,7 @@ const sanitizeForFirestore = (obj: Record<string, unknown>): Record<string, unkn
     }
   }
   return out;
-}
+};
 
 const buildFirestoreDoc = (
   card: HellscubeCard,
@@ -84,7 +84,7 @@ const buildFirestoreDoc = (
     added: overrides.added,
     removed: overrides.removed,
   });
-}
+};
 
 function parseArgs(argv: string[]) {
   let dryRun = false;

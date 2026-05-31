@@ -85,12 +85,9 @@ export function CardEditPanel({
 
   const hasChanges = Object.keys(changedFields).length > 0;
 
-  const handleChange = useCallback(
-    (field: keyof EditableFields, value: string) => {
-      setFields(prev => ({ ...prev, [field]: value }));
-    },
-    []
-  );
+  const handleChange = useCallback((field: keyof EditableFields, value: string) => {
+    setFields(prev => ({ ...prev, [field]: value }));
+  }, []);
 
   const handleSubmit = async () => {
     if (!baseUrl || !hasChanges) return;

@@ -17,7 +17,9 @@ function loadJsonFileSync<T>(filename: string): JsonDataWrapper<T> {
   return JSON.parse(content);
 }
 
-export const cardsDataAsync = Promise.resolve(loadJsonFileSync<HCCard.Any>('Hellscube-Database.json'));
+export const cardsDataAsync = Promise.resolve(
+  loadJsonFileSync<HCCard.Any>('Hellscube-Database.json')
+);
 export const landsDataAsync = Promise.resolve(loadJsonFileSync<HCCard.Any>('lands.json'));
 export const tokensDataAsync = Promise.resolve(loadJsonFileSync<HCCard.Any>('tokens.json'));
 export const pipsDataAsync = Promise.resolve(loadJsonFileSync<HCCardSymbol>('pips.json'));

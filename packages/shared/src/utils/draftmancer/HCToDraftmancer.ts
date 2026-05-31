@@ -32,7 +32,7 @@ export const HCToDraftmancer = (
     if (related) {
       return stripSingleSlashes(
         toFaces(related)[0].export_name ??
-          (hasTokenHCID(related) ? related.id : toFaces(related)[0].name)
+          (hasTokenHCID(related) ? related.hcid : toFaces(related)[0].name)
       );
     }
   };
@@ -74,7 +74,7 @@ export const HCToDraftmancer = (
   };
 
   const getRelatedList = (card: HCCard.Any): string[] | undefined => {
-    const relatedList = card.all_parts?.map(part => getExportNameFromId(part.id) ?? part.name);
+    const relatedList = card.all_parts?.flatMap(part => getExportNameFromId(part.id) ?? []);
     if (relatedList && relatedList.length) {
       return relatedList;
     }

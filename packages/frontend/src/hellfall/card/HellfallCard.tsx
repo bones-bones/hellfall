@@ -371,47 +371,47 @@ export const HellfallCard = ({
                 {displayTags.map((tagEntry, i, ar) => {
                   const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
                   return (
-                  <span key={tagEntry}>
-                    <TagLink $pendingRemove={pendingRemove}>
-                      <Link
-                        to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
-                        target="_blank"
-                      >
-                        {tagEntry}
-                      </Link>
-                    </TagLink>
-                    {data.tag_notes &&
-                      tagEntry in data.tag_notes &&
-                      (data.tag_notes[tagEntry].slice(0, 6) == 'https:' ? (
-                        <>
-                          <SmallLine> (</SmallLine>
-                          <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
-                          <SmallLine>)</SmallLine>
-                        </>
-                      ) : (
-                        <>
-                          <SmallLine> ({data.tag_notes[tagEntry]})</SmallLine>
-                        </>
-                      ))}
-                    {user && tagsPersistEnabled && (
-                      <TagRemoveButton
-                        type="button"
-                        onClick={async () => {
-                          setTagActionError(null);
-                          try {
-                            await removeTag(tagEntry);
-                          } catch {
-                            setTagActionError('Failed to remove tag');
-                          }
-                        }}
-                        title="Remove tag"
-                        aria-label={`Remove tag ${tagEntry}`}
-                      >
-                        ×
-                      </TagRemoveButton>
-                    )}
-                    {i < ar.length - 1 && ', '}
-                  </span>
+                    <span key={tagEntry}>
+                      <TagLink $pendingRemove={pendingRemove}>
+                        <Link
+                          to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
+                          target="_blank"
+                        >
+                          {tagEntry}
+                        </Link>
+                      </TagLink>
+                      {data.tag_notes &&
+                        tagEntry in data.tag_notes &&
+                        (data.tag_notes[tagEntry].slice(0, 6) == 'https:' ? (
+                          <>
+                            <SmallLine> (</SmallLine>
+                            <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
+                            <SmallLine>)</SmallLine>
+                          </>
+                        ) : (
+                          <>
+                            <SmallLine> ({data.tag_notes[tagEntry]})</SmallLine>
+                          </>
+                        ))}
+                      {user && tagsPersistEnabled && (
+                        <TagRemoveButton
+                          type="button"
+                          onClick={async () => {
+                            setTagActionError(null);
+                            try {
+                              await removeTag(tagEntry);
+                            } catch {
+                              setTagActionError('Failed to remove tag');
+                            }
+                          }}
+                          title="Remove tag"
+                          aria-label={`Remove tag ${tagEntry}`}
+                        >
+                          ×
+                        </TagRemoveButton>
+                      )}
+                      {i < ar.length - 1 && ', '}
+                    </span>
                   );
                 })}
                 {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => (
@@ -430,9 +430,7 @@ export const HellfallCard = ({
                 ))}
               </SmallText>
               {pendingTagStaging && (
-                <SmallText style={{ color: '#856404' }}>
-                  Staged changes pending review.
-                </SmallText>
+                <SmallText style={{ color: '#856404' }}>Staged changes pending review.</SmallText>
               )}
               {user && tagsPersistEnabled && (
                 <TagAddRow>

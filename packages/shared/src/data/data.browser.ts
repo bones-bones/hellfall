@@ -12,7 +12,6 @@ export interface JsonDataWrapper<T> {
   data: T[];
 }
 
-
 // Export the data directly (synchronous, no Node.js code!)
 export const cardsData = cardsDataRaw as JsonDataWrapper<HCCard.Any>;
 export const landsData = landsDataRaw as JsonDataWrapper<HCCard.Any>;

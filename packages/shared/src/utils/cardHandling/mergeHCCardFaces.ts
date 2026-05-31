@@ -110,7 +110,7 @@ export const compressHCCardFaces = (card: HCCard.Any) => {
   if ('card_faces' in newCard) {
     const goingToCompressAll = Boolean(
       newCard.card_faces.length > 2 &&
-        newCard.card_faces.filter(face => face.compress_face || face.drop_face).length == 1
+        newCard.card_faces.filter(face => !face.compress_face && !face.drop_face).length == 1
     );
     for (let i = newCard.card_faces.length - 1; i > 0; i--) {
       if (newCard.card_faces[i].compress_face) {
