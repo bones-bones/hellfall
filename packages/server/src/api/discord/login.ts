@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { buildAuthorizeUrl } from '../lib/discord/discord.ts';
 import { env } from '../lib/env.ts';
-import { withCors, getCorsOrigin } from '../lib/cors.ts';
+import { withCors } from '../lib/cors.ts';
 import type { HandlerRequest, HandlerResponse } from '../lib/types.ts';
 
 function randomState(): string {
@@ -9,14 +9,6 @@ function randomState(): string {
 }
 
 export const loginHandler = (req: HandlerRequest, res: HandlerResponse): void => {
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.statusCode = 204;
-    res.end();
-    return;
-  }
-
   if (req.method !== 'GET') {
     res.statusCode = 405;
     res.setHeader('Allow', 'GET');

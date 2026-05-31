@@ -4,30 +4,7 @@ import styled from '@emotion/styled';
 import { useAuth } from '../auth';
 import { getAuthApiUrl } from '../auth/getAuthApiUrl';
 import { Link } from 'react-router-dom';
-
-interface ChangesetUser {
-  userId: string;
-  username: string;
-}
-
-interface FieldChange {
-  before: unknown;
-  after: unknown;
-}
-
-interface Changeset {
-  id: string;
-  cardId: string;
-  status: 'pending' | 'accepted' | 'rejected';
-  createdAt: string | null;
-  resolvedAt: string | null;
-  submittedBy: ChangesetUser;
-  resolvedBy: ChangesetUser | null;
-  changes: Record<string, FieldChange>;
-  comment: string | null;
-}
-
-type StatusFilter = 'pending' | 'accepted' | 'rejected' | 'all';
+import { Changeset, StatusFilter } from './types';
 
 function formatValue(val: unknown): string {
   if (val == null) return '(empty)';
@@ -134,8 +111,10 @@ export function ReviewPage() {
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<StatusFilter>('pending');
 
+  const canViewChangesets = Boolean(user?.isAdmin || user?.isContributor);
+
   const fetchChangesets = useCallback(async () => {
-    if (!baseUrl) return;
+    if (!baseUrl || !canViewChangesets) return;
     setLoading(true);
     setError(null);
     try {
@@ -151,11 +130,22 @@ export function ReviewPage() {
     } finally {
       setLoading(false);
     }
-  }, [baseUrl, filter]);
+  }, [baseUrl, filter, canViewChangesets]);
 
   useEffect(() => {
+    if (!user) {
+      setLoading(false);
+      setChangesets([]);
+      return;
+    }
+    if (!canViewChangesets) {
+      setLoading(false);
+      setChangesets([]);
+      setError(null);
+      return;
+    }
     fetchChangesets();
-  }, [fetchChangesets]);
+  }, [user, canViewChangesets, fetchChangesets]);
 
   const handleAction = async (id: string, action: 'accept' | 'reject') => {
     if (!baseUrl) return;
@@ -177,6 +167,15 @@ export function ReviewPage() {
       <PageContainer>
         <Heading size="medium">Review Changesets</Heading>
         <p>Please log in to view changesets.</p>
+      </PageContainer>
+    );
+  }
+
+  if (!canViewChangesets) {
+    return (
+      <PageContainer>
+        <Heading size="medium">Review Changesets</Heading>
+        <p>You need admin or database contributor access to view changesets.</p>
       </PageContainer>
     );
   }

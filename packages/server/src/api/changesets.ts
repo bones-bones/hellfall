@@ -4,6 +4,7 @@ import { env } from './lib/env.js';
 import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
 import { requireAdminAuth } from './lib/requireAdminAuth.js';
+import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
 import { recordCardAudit } from '../lib/cardAudit.js';
 // import {
 //   resolveTagState,
@@ -73,7 +74,7 @@ function isValidChanges(changes: unknown): changes is ChangesMap {
 
 /** GET /api/changesets — list changesets, filterable by ?status= and ?cardId= */
 async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promise<void> {
-  const auth = await requireTagAuth(req, res);
+  const auth = await requireReviewerAuth(req, res);
   if (!auth) return;
 
   let query = changesetsCol.orderBy('createdAt', 'desc').limit(100);
@@ -303,12 +304,6 @@ export async function changesetsHandler(
 ): Promise<void> {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
-
-  if (req.method === 'OPTIONS') {
-    res.statusCode = 204;
-    res.end();
-    return;
-  }
 
   try {
     if (!changesetId && !action) {

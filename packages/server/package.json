@@ -5,14 +5,13 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b",
-    "build:prod": "esbuild src/server.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/server.mjs --external:@google-cloud/firestore --external:dotenv --external:xmldom --external:@hellfall/scripts",
+    "build:prod": "esbuild src/server.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/server.mjs --external:@google-cloud/firestore --external:dotenv --external:xmldom",
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
     "start:prod": "node dist/server.js"
   },
   "dependencies": {
     "@google-cloud/firestore": "^7.1.0",
-    "@hellfall/scripts": "workspace:*",
     "@hellfall/shared": "^1.0.0",
     "dotenv": "^16.4.5",
     "jose": "^5.2.0"

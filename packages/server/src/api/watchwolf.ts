@@ -20,12 +20,6 @@ export const watchwolfHandler = async (
   Object.assign(headers, { 'Cache-Control': 'public, max-age=86400' });
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
-  if (req.method === 'OPTIONS') {
-    res.statusCode = 204;
-    res.end();
-    return;
-  }
-
   if (req.method === 'GET') {
     const snapshot = await docRef.get();
     const data = snapshot.docs.map(d => d.data());

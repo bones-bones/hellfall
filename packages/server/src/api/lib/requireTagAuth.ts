@@ -1,15 +1,7 @@
 import type { HandlerRequest, HandlerResponse } from './types.ts';
 import { env } from './env.ts';
-import { verifySessionToken } from './jwt.ts';
-import { getUserAsGuildMember } from './discord/discord.ts';
+import { getSession, resolveGuildRoles } from './session.ts';
 import { DATABASE_CONTRIBUTOR } from '../discord/constants.ts';
-
-function getCookie(req: HandlerRequest, name: string): string | null {
-  const raw = req.headers.cookie;
-  if (!raw) return null;
-  const match = raw.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`));
-  return match ? decodeURIComponent(match[1]) : null;
-}
 
 export type TagAuthUser = {
   userId: string;
@@ -22,14 +14,7 @@ export async function requireTagAuth(
   req: HandlerRequest,
   res: HandlerResponse
 ): Promise<TagAuthUser | null> {
-  const token = getCookie(req, env.COOKIE_NAME);
-  if (!token) {
-    res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
-    return null;
-  }
-
-  const payload = await verifySessionToken(token);
+  const payload = await getSession(req);
   if (!payload) {
     res.statusCode = 401;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
@@ -43,17 +28,13 @@ export async function requireTagAuth(
     return null;
   }
 
-  const guildId = env.DISCORD_GUILD_ID;
-  const discordAccessToken = payload.discord_access_token;
-  if (!guildId || !discordAccessToken) {
+  if (!payload.discord_access_token) {
     res.statusCode = 401;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
     return null;
   }
 
-  const candidateRoleId = env.DISCORD_TAG_ROLE_ID ?? roleId;
-
-  const guild = await getUserAsGuildMember(discordAccessToken, guildId);
+  const guild = await resolveGuildRoles(payload, res);
   if (guild.kind === 'oauth_invalid') {
     res.statusCode = 401;
     res.end(JSON.stringify({ ok: false, reason: 'discord_oauth_expired' }));
@@ -65,18 +46,18 @@ export async function requireTagAuth(
     return null;
   }
 
+  const candidateRoleId = env.DISCORD_TAG_ROLE_ID ?? roleId;
   if (!guild.roles.includes(candidateRoleId)) {
     res.statusCode = 403;
     res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
     return null;
   }
 
-  const username =
-    guild.kind === 'member' && guild.nick ? guild.nick : payload.username || payload.sub;
+  const username = guild.nick || payload.username || payload.sub;
 
   return {
     userId: payload.sub,
     username,
-    discord_access_token: discordAccessToken,
+    discord_access_token: payload.discord_access_token,
   };
 }

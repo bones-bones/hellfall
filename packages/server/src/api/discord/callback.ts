@@ -1,4 +1,4 @@
-import { exchangeCodeForToken, getDiscordUser } from '../lib/discord/discord.ts';
+import { exchangeCodeForToken, getDiscordUser, getUserAsGuildMember } from '../lib/discord/discord.ts';
 import { env } from '../lib/env.ts';
 import { createSessionToken } from '../lib/jwt.ts';
 import { withCors } from '../lib/cors.ts';
@@ -41,12 +41,29 @@ export const callbackHandler = async (req: HandlerRequest, res: HandlerResponse)
       env.DISCORD_CLIENT_SECRET
     );
     const user = await getDiscordUser(token.access_token);
+
+    let guildRoles: string[] | undefined;
+    let guildNick: string | null | undefined;
+    let rolesFetchedAt: number | undefined;
+    const guildId = env.DISCORD_GUILD_ID;
+    if (guildId) {
+      const gm = await getUserAsGuildMember(token.access_token, guildId);
+      if (gm.kind === 'member') {
+        guildRoles = gm.roles;
+        guildNick = gm.nick;
+        rolesFetchedAt = Math.floor(Date.now() / 1000);
+      }
+    }
+
     const sessionToken = await createSessionToken({
       sub: user.id,
       username: user.username,
       avatar: user.avatar,
       email: user.email ?? null,
       discord_access_token: token.access_token,
+      guild_roles: guildRoles,
+      guild_nick: guildNick,
+      roles_fetched_at: rolesFetchedAt,
     });
 
     const isProd = env.AUTH_SERVER_URL.startsWith('https');

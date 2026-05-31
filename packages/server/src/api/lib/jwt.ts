@@ -7,6 +7,9 @@ export interface SessionPayload {
   avatar: string | null;
   email?: string | null;
   discord_access_token?: string; // OAuth token for Discord API calls (e.g. guild info)
+  guild_roles?: string[];
+  guild_nick?: string | null;
+  roles_fetched_at?: number; // Unix epoch seconds when guild roles were last fetched
   iat?: number;
   exp?: number;
   iss?: string;
@@ -25,6 +28,9 @@ export async function createSessionToken(
     email: payload.email,
   };
   if (payload.discord_access_token) claims.discord_access_token = payload.discord_access_token;
+  if (payload.guild_roles) claims.guild_roles = payload.guild_roles;
+  if (payload.guild_nick !== undefined) claims.guild_nick = payload.guild_nick;
+  if (payload.roles_fetched_at) claims.roles_fetched_at = payload.roles_fetched_at;
   return new jose.SignJWT(claims)
     .setProtectedHeader({ alg: ALG })
     .setIssuer(env.JWT_ISSUER)
@@ -46,6 +52,9 @@ export async function verifySessionToken(token: string): Promise<SessionPayload 
       avatar: (payload.avatar as string | null) ?? null,
       email: (payload.email as string | null) ?? null,
       discord_access_token: payload.discord_access_token as string | undefined,
+      guild_roles: (payload.guild_roles as string[] | undefined) ?? undefined,
+      guild_nick: (payload.guild_nick as string | null | undefined) ?? undefined,
+      roles_fetched_at: (payload.roles_fetched_at as number | undefined) ?? undefined,
       iat: payload.iat,
       exp: payload.exp,
       iss: payload.iss as string,
