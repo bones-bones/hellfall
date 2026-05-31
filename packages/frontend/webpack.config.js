@@ -226,18 +226,37 @@ export default function (webpackEnv) {
         .filter((ext) => useTypeScript || !ext.includes("ts")),
       alias: {
         ...(modules.webpackAliases || {}),
+        '@hellfall/shared/data': path.resolve(__dirname, '../shared/src/data/data.browser.ts'),
         '@hellfall/shared': path.resolve(__dirname, '../shared/src'),
       },
       mainFields: ['browser', 'module', 'main'],
       mainFiles: ['index', 'index.ts', 'index.tsx', 'index.js', 'index.jsx'], // Look for these files in folders
       fullySpecified: false, // Don't require extensions
-      symlinks: true
+      symlinks: true,
+      fallback: {
+        fs: false,
+        path: false,
+        url: false,
+      },
     },
     module: {
       strictExportPresence: true,
       rules: [
         {
           oneOf: [
+                       {
+              test: /\.json$/,
+              type: 'javascript/auto',
+              include: [
+                path.resolve(__dirname, '../shared/src/data'),
+                paths.appSrc,
+              ],
+              use: [
+                {
+                  loader: 'json-loader',
+                },
+              ],
+            },
             {
               test: /\.html$/,
               loader: "html-loader",
@@ -354,8 +373,8 @@ export default function (webpackEnv) {
       new CopyPlugin({
         patterns: [
           {
-            from: path.resolve(sharedPackageSrc, 'data/Hellscube-Database.json'),
-            to: "Hellscube-Database.json",
+            from: path.resolve(sharedPackageSrc, 'data/*.json'),
+            to: "*.json",
             transform(content) {
               const raw = content.toString("utf8");
               const out = transformHellscubeDatabase(raw);

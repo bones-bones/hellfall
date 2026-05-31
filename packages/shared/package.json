@@ -18,8 +18,14 @@
       "import": "./src/types/index.ts"
     },
     "./data": {
-      "types": "./src/data/index.ts",
-      "import": "./src/data/index.ts"
+      "browser": "./src/data/data.browser.ts",
+      "node": "./src/data/data.node.ts",
+      "default": "./src/data/data.node.ts"
+    },
+    "./data/*": {
+      "browser": "./src/data/data.browser.ts",
+      "node": "./src/data/data.node.ts",
+      "default": "./src/data/data.node.ts"
     },
     "./utils": {
       "types": "./src/utils/index.ts",

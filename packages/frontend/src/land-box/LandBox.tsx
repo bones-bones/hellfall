@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
-import { useLands } from './useLands.ts';
+// import { useLands } from './useLands.ts';
 import { useState } from 'react';
 import { HCCard } from '@hellfall/shared/types';
 import { pushProp } from '@hellfall/shared/utils';
 import { Select } from '@workday/canvas-kit-preview-react';
 import { FormField } from '@workday/canvas-kit-react';
+import { landsData } from '@hellfall/shared/data';
 
 export const LandBox = () => {
-  const lands = useLands();
+  const lands = landsData.data as HCCard.Normal[];
   const [active, setActive] = useState<undefined | HCCard.Normal>();
   const [activeSet, setActiveSet] = useState('HBB.4');
 
