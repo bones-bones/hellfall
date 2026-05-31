@@ -712,15 +712,13 @@ const ButtonGroup = styled('div')({
 
 const EditCardButton = styled('button')({
   display: 'block',
-  marginTop: 8,
+  marginTop: 6,
   marginBottom: 4,
-  padding: '5px 14px',
-  background: '#f5f0ff',
-  color: '#5a3d8a',
-  border: '1px solid #d4c5f0',
-  borderRadius: 4,
-  fontSize: 13,
-  fontWeight: 600,
+  padding: '3px 10px',
+  background: '#fff',
+  border: '1px solid #ccc',
+  borderRadius: 2,
+  fontSize: 12,
   cursor: 'pointer',
-  '&:hover': { background: '#ece4ff', borderColor: '#C690FF' },
+  '&:hover': { borderColor: '#888' },
 });

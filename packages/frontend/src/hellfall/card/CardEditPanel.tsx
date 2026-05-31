@@ -202,7 +202,7 @@ export function CardEditPanel({
 }
 
 const Panel = styled('div')({
-  marginTop: 16,
+  marginTop: 12,
   width: '100%',
 });
 
@@ -210,18 +210,18 @@ const PanelHeader = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: 16,
+  marginBottom: 12,
 });
 
 const PanelTitle = styled('span')({
-  fontSize: 18,
-  fontWeight: 700,
+  fontSize: 16,
+  fontWeight: 600,
 });
 
 const FieldsGrid = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  gap: 10,
+  gap: 8,
 });
 
 const FieldRow = styled('div')({
@@ -231,57 +231,44 @@ const FieldRow = styled('div')({
 });
 
 const Label = styled('label')({
-  fontSize: 13,
+  fontSize: 12,
   fontWeight: 600,
-  color: '#333',
+  color: '#555',
 });
 
 const StyledInput = styled('input')<{ $changed: boolean }>(({ $changed }) => ({
-  padding: '6px 10px',
-  border: `1px solid ${$changed ? '#C690FF' : '#ccc'}`,
-  borderRadius: 4,
+  padding: '4px 8px',
+  border: `1px solid ${$changed ? '#888' : '#ccc'}`,
+  borderRadius: 2,
   fontSize: 14,
   fontFamily: 'inherit',
-  background: $changed ? '#faf5ff' : '#fff',
-  '&:focus': {
-    outline: 'none',
-    borderColor: '#C690FF',
-    boxShadow: '0 0 0 2px rgba(198,144,255,0.2)',
-  },
+  background: $changed ? '#ffe' : '#fff',
 }));
 
 const StyledTextarea = styled('textarea')<{ $changed: boolean }>(({ $changed }) => ({
-  padding: '6px 10px',
-  border: `1px solid ${$changed ? '#C690FF' : '#ccc'}`,
-  borderRadius: 4,
+  padding: '4px 8px',
+  border: `1px solid ${$changed ? '#888' : '#ccc'}`,
+  borderRadius: 2,
   fontSize: 14,
   fontFamily: 'inherit',
   resize: 'vertical',
-  background: $changed ? '#faf5ff' : '#fff',
-  '&:focus': {
-    outline: 'none',
-    borderColor: '#C690FF',
-    boxShadow: '0 0 0 2px rgba(198,144,255,0.2)',
-  },
+  background: $changed ? '#ffe' : '#fff',
 }));
 
 const ChangeSummary = styled('div')({
-  marginTop: 16,
-  padding: 12,
-  background: '#f8f5ff',
-  borderRadius: 6,
-  border: '1px solid #e0d4f5',
+  marginTop: 12,
+  padding: '8px 10px',
+  border: '1px solid #ccc',
 });
 
 const SummaryTitle = styled('div')({
-  fontSize: 13,
-  fontWeight: 700,
-  marginBottom: 8,
-  color: '#5a3d8a',
+  fontSize: 12,
+  fontWeight: 600,
+  marginBottom: 6,
 });
 
 const ChangeRow = styled('div')({
-  marginBottom: 6,
+  marginBottom: 4,
 });
 
 const ChangeField = styled('span')({
@@ -294,21 +281,20 @@ const ChangeField = styled('span')({
 const ChangeValues = styled('div')({
   display: 'flex',
   alignItems: 'flex-start',
-  gap: 8,
+  gap: 6,
   fontSize: 13,
   fontFamily: 'monospace',
 });
 
 const BeforeValue = styled('span')({
-  color: '#c00',
+  color: '#900',
   textDecoration: 'line-through',
   wordBreak: 'break-word',
   maxWidth: '40%',
 });
 
 const AfterValue = styled('span')({
-  color: '#155724',
-  fontWeight: 600,
+  color: '#060',
   wordBreak: 'break-word',
   maxWidth: '40%',
 });
@@ -319,7 +305,7 @@ const Arrow = styled('span')({
 });
 
 const CommentRow = styled('div')({
-  marginTop: 12,
+  marginTop: 10,
   display: 'flex',
   flexDirection: 'column',
   gap: 2,
@@ -327,57 +313,49 @@ const CommentRow = styled('div')({
 
 const ErrorMsg = styled('p')({
   color: '#c00',
-  fontSize: 14,
-  margin: '8px 0',
+  fontSize: 13,
+  margin: '6px 0',
 });
 
 const SuccessMessage = styled('p')({
-  color: '#155724',
-  fontSize: 16,
-  fontWeight: 600,
-  background: '#d4edda',
-  padding: 12,
-  borderRadius: 6,
+  fontSize: 14,
+  margin: 0,
 });
 
 const ActionRow = styled('div')({
   display: 'flex',
   gap: 8,
-  marginTop: 16,
+  marginTop: 12,
 });
 
 const SubmitButton = styled('button')({
-  padding: '8px 20px',
-  background: '#C690FF',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 4,
-  fontWeight: 600,
-  fontSize: 14,
+  padding: '4px 14px',
+  border: '1px solid #ccc',
+  borderRadius: 2,
+  fontSize: 13,
   cursor: 'pointer',
-  '&:hover:not(:disabled)': { background: '#a870e0' },
-  '&:disabled': { opacity: 0.5, cursor: 'default' },
+  background: '#fff',
+  '&:hover:not(:disabled)': { borderColor: '#888' },
+  '&:disabled': { opacity: 0.4, cursor: 'default' },
 });
 
 const CancelButton = styled('button')({
-  padding: '8px 20px',
-  background: '#fff',
-  color: '#333',
+  padding: '4px 14px',
   border: '1px solid #ccc',
-  borderRadius: 4,
-  fontWeight: 600,
-  fontSize: 14,
+  borderRadius: 2,
+  fontSize: 13,
   cursor: 'pointer',
-  '&:hover': { background: '#f5f5f5' },
+  background: '#fff',
+  '&:hover': { borderColor: '#888' },
 });
 
 const CloseButton = styled('button')({
   background: 'transparent',
   border: 'none',
-  fontSize: 22,
+  fontSize: 18,
   cursor: 'pointer',
   color: '#666',
   lineHeight: 1,
-  padding: '4px 8px',
-  '&:hover': { color: '#333' },
+  padding: '2px 6px',
+  '&:hover': { color: '#000' },
 });
