@@ -1,14 +1,13 @@
 import { sheetsKey } from './env.ts';
 import {
   HCColor,
-  HCColors,
   HCImageStatus,
   HCLegalitiesField,
   HCLegality,
   HCRelatedCard,
   HCObject,
   HCKind,
-  HCSet,
+  SetCode,
 } from '@hellfall/shared/types';
 import {
   setDerivedProps,
@@ -138,7 +137,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         image: entryAt('image'),
         image_status: HCImageStatus.HighRes,
         creators: entryAt('creators').split(';'),
-        set: entryAt('set') as HCSet,
+        set: entryAt('set') as SetCode,
         rulings: entryAt('rulings'),
         mana_value:
           entryAt('mana_value') != '∞'

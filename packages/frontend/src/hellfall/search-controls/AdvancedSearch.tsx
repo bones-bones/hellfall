@@ -22,11 +22,11 @@ import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useEffect, useState } from 'react';
-import { HCSearchColors, extraSetList } from '@hellfall/shared/types';
+import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
 import { SortComponent } from './SortComponent.tsx';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
-import { normalizeText } from '@hellfall/shared/utils';
+import { extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
 
 export const AdvancedSearch = () => {

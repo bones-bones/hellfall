@@ -1,5 +1,5 @@
 // https://draftmancer.com/cubeformat.html#cube
-import { HCCard, HCSet } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 import { HCToDraftmancer } from './HCToDraftmancer.ts';
 import { CardMap } from '../cardHandling/cardMap.ts';
 
@@ -12,7 +12,7 @@ export const toDraftmancerCube = ({
 }: {
   name: string;
   cardMap: CardMap;
-  set: HCSet;
+  set: SetCode;
   idList?: string[];
   draftMode?: 'commander' | 'jumpstart';
 }) => {

@@ -1,7 +1,7 @@
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 import { withCors } from './lib/cors.ts';
 import { combineAndWinnowSorts, parseSearchQuery, searchCards } from '@hellfall/shared/filters';
-import { HCCard, HCSet } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 import {
   toCockCube,
   toCockCubeJSON,
@@ -51,11 +51,11 @@ const formatSearchResult = (
 ) => {
   switch (format) {
     case 'draftmancer': {
-      const draftCards = HCToDraftmancer(cardMap, '' as HCSet, idList);
+      const draftCards = HCToDraftmancer(cardMap, '' as SetCode, idList);
       return draftCards.cards.concat(draftCards.tokens);
     }
     case 'cockatrice': {
-      const cockCards = toCockCubeJSON(cardMap, '' as HCSet, idList);
+      const cockCards = toCockCubeJSON(cardMap, '' as SetCode, idList);
       return cockCards.cards.concat(cockCards.tokens);
     }
     case 'tabletopsimulator':
@@ -105,7 +105,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
     res.statusCode = 200;
     if (format == 'xml') {
       res.end(
-        toCockCube({ name: 'Custom', set: 'Custom' as HCSet, cardMap, idList: resultMap.ids() })
+        toCockCube({ name: 'Custom', set: 'Custom' as SetCode, cardMap, idList: resultMap.ids() })
       );
     } else if (format == 'json') {
       const results = resultMap.cards();

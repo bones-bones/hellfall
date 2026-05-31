@@ -6,11 +6,12 @@ import { useRef, useState, useEffect } from 'react';
 import { TeamClock } from './TeamWolf.tsx';
 import { Link } from 'react-router-dom';
 import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
-import { cardSets, HCCard } from '@hellfall/shared/types';
+import { HCCard } from '@hellfall/shared/types';
 import { ActiveCardPanel } from '../hellfall/ActiveCardPanel.tsx';
+import { cardSetList } from '@hellfall/shared/utils';
 
 export const WatchwolfWar = () => {
-  const cards = useAtomValue(cardsAtom).getAllInSetList(cardSets);
+  const cards = useAtomValue(cardsAtom).getAllInSetList(cardSetList);
   const setActiveCardFromAtom = useSetAtom(activeCardAtom);
 
   const submitting = useRef(false);

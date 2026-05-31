@@ -2,11 +2,12 @@ import cardsDataRaw from './Hellscube-Database.json';
 import landsDataRaw from './lands.json';
 import tokensDataRaw from './tokens.json';
 import pipsDataRaw from './pips.json';
+import setsDataRaw from './sets.json';
 import creatorsDataRaw from './creators.json';
 import oracleNamesRaw from './oracle-names.json';
 import tagsDataRaw from './tags.json';
 import typesDataRaw from './types.json';
-import { HCCard, HCCardSymbol } from '../types';
+import { HCCard, HCCardSymbol, HCSet } from '../types';
 
 export interface JsonDataWrapper<T> {
   data: T[];
@@ -17,6 +18,7 @@ export const cardsData = cardsDataRaw as JsonDataWrapper<HCCard.Any>;
 export const landsData = landsDataRaw as JsonDataWrapper<HCCard.Any>;
 export const tokensData = tokensDataRaw as JsonDataWrapper<HCCard.Any>;
 export const pipsData = pipsDataRaw as JsonDataWrapper<HCCardSymbol>;
+export const setsData = setsDataRaw as JsonDataWrapper<HCSet>;
 export const creatorsData = creatorsDataRaw as JsonDataWrapper<string>;
 export const oracleNames = oracleNamesRaw as JsonDataWrapper<string>;
 export const tagsData = tagsDataRaw as JsonDataWrapper<string>;

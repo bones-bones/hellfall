@@ -1,4 +1,4 @@
-import { HCCard, HCRelatedCard, HCSet, extraSetList } from '@hellfall/shared/types';
+import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
 import {
   includeFilter,
   inclusionOptions,
@@ -8,7 +8,7 @@ import {
   cardStringFilter,
 } from './types';
 import { funcOp, opToNot } from './filterUtils';
-import { canBeInDecks, textSearchIncludes } from '@hellfall/shared/utils';
+import { canBeInDecks, extraSetList, textSearchIncludes } from '@hellfall/shared/utils';
 
 export const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',

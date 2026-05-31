@@ -63,3 +63,6 @@ export const getPipColorsFromText = (text: string): HCColors[] =>
  */
 export const getMVFromCost = (cost: string): number =>
   getPipsFromText(cost).reduce((totalMV, pip) => totalMV + (pip.mana_value ?? 0), 0);
+
+export const getPipSrc = (name: string) => `/pips/${getPip(name)?.filename}`;
+export const pipToSrc = (pip: HCCardSymbol) => `/pips/${pip.filename}`;

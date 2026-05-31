@@ -7,7 +7,7 @@ import {
   HCObject,
   HCRarity,
   HCRelatedCard,
-  HCSet,
+  SetCode,
 } from '@hellfall/shared/types';
 import { sheetsKey } from './env.ts';
 import {
@@ -90,7 +90,7 @@ export const fetchLands = async () => {
           )?.[1] ?? '',
         hcid: entryAt('hcid'),
         name: entryAt('name'),
-        set: (convertSet[entryAt('set')] ?? (entryAt('set') || 'HBB')) as HCSet,
+        set: (convertSet[entryAt('set')] ?? (entryAt('set') || 'HBB')) as SetCode,
         collector_number: entryAt('collector_number'),
         rarity: entryAt('rarity').toLowerCase().split(' ')[0] as HCRarity,
         image: entryAt('image'),

@@ -1,11 +1,12 @@
-import { HCCard, HCSet, toSubSets } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
+import { getChildSets } from '../setHandling';
 
 /**
  * The class for a map of cards.
  */
 export class CardMap {
   protected idMap = new Map<string, HCCard.Any>();
-  protected setMap = new Map<HCSet, Set<string>>();
+  protected setMap = new Map<SetCode, Set<string>>();
 
   /**
    * Adds a new card to the CardMap. If a card with the same id already exists, the card will be updated.
@@ -96,10 +97,10 @@ export class CardMap {
    * Returns the subset of the CardMap object in the given set as a new CardMap.
    * @returns Returns the subset of the CardMap in the given set.
    */
-  getAllInSet(set: HCSet): this {
+  getAllInSet(set: SetCode): this {
     const idList = [
       ...Array.from(this.setMap.get(set) ?? []),
-      ...(toSubSets[set]?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ?? []),
+      ...(getChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ?? []),
     ];
     if (!idList) return new (this.constructor as any)() as this;
     return this.getSubset(idList);
@@ -109,7 +110,7 @@ export class CardMap {
    * Returns the subset of the CardMap object exactly in the given set as a new CardMap.
    * @returns Returns the subset of the CardMap exactly in the given set.
    */
-  getAllInSetExact(set: HCSet): this {
+  getAllInSetExact(set: SetCode): this {
     const idList = this.setMap.get(set);
     if (!idList) return new (this.constructor as any)() as this;
     return this.getSubset(idList);
@@ -119,10 +120,10 @@ export class CardMap {
    * Returns the ids of the cards in the given set.
    * @returns Returns the ids of the cards in the given set.
    */
-  getAllIdsInSet(set: HCSet): string[] {
+  getAllIdsInSet(set: SetCode): string[] {
     return [
       ...Array.from(this.setMap.get(set) ?? []),
-      ...(toSubSets[set]?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ?? []),
+      ...(getChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ?? []),
     ];
   }
 
@@ -130,14 +131,14 @@ export class CardMap {
    * Returns the ids of the cards exactly in the given set.
    * @returns Returns the ids of the cards exactly in the given set.
    */
-  getAllIdsInSetExact(set: HCSet): string[] {
+  getAllIdsInSetExact(set: SetCode): string[] {
     return Array.from(this.setMap.get(set) ?? []);
   }
   /**
    * Returns the subset of the CardMap object in the given sets as a new CardMap.
    * @returns Returns the subset of the CardMap in the given sets.
    */
-  getAllInSetList(setList: HCSet[]): this {
+  getAllInSetList(setList: SetCode[]): this {
     const idList = setList.flatMap(set => this.getAllIdsInSet(set));
     return this.getSubset(idList);
   }
@@ -146,7 +147,7 @@ export class CardMap {
    * Returns the subset of the CardMap object exactly in the given sets as a new CardMap.
    * @returns Returns the subset of the CardMap exactly in the given sets.
    */
-  getAllInSetListExact(setList: HCSet[]): this {
+  getAllInSetListExact(setList: SetCode[]): this {
     const idList = setList.flatMap(set => this.getAllIdsInSetExact(set));
     return this.getSubset(idList);
   }
@@ -155,7 +156,7 @@ export class CardMap {
    * Returns the ids of the cards in the given sets.
    * @returns Returns the ids of the cards in the given sets.
    */
-  getAllIdsInSetList(setList: HCSet[]): string[] {
+  getAllIdsInSetList(setList: SetCode[]): string[] {
     return setList.flatMap(set => this.getAllIdsInSet(set));
   }
 
@@ -163,7 +164,7 @@ export class CardMap {
    * Returns the ids of the cards exactly in the given sets.
    * @returns Returns the ids of the cards exactly in the given sets.
    */
-  getAllIdsInSetListExact(setList: HCSet[]): string[] {
+  getAllIdsInSetListExact(setList: SetCode[]): string[] {
     return setList.flatMap(set => this.getAllIdsInSetExact(set));
   }
 
@@ -180,7 +181,7 @@ export class CardMap {
    */
   every(predicate: (card: HCCard.Any) => unknown): boolean;
   every(predicate: (card: HCCard.Any, id: string) => unknown): boolean;
-  every(predicate: (card: HCCard.Any, id: string, set: HCSet) => unknown): boolean;
+  every(predicate: (card: HCCard.Any, id: string, set: SetCode) => unknown): boolean;
   every(predicate: (...args: any[]) => unknown): boolean {
     for (const [id, card] of this) {
       switch (predicate.length) {
@@ -213,7 +214,7 @@ export class CardMap {
    */
   some(predicate: (card: HCCard.Any) => unknown): boolean;
   some(predicate: (card: HCCard.Any, id: string) => unknown): boolean;
-  some(predicate: (card: HCCard.Any, id: string, set: HCSet) => unknown): boolean;
+  some(predicate: (card: HCCard.Any, id: string, set: SetCode) => unknown): boolean;
   some(predicate: (...args: any[]) => unknown): boolean {
     for (const [id, card] of this) {
       switch (predicate.length) {
@@ -246,7 +247,7 @@ export class CardMap {
    */
   forEach(callbackfn: (card: HCCard.Any) => void): void;
   forEach(callbackfn: (card: HCCard.Any, id: string) => void): void;
-  forEach(callbackfn: (card: HCCard.Any, id: string, set: HCSet) => void): void;
+  forEach(callbackfn: (card: HCCard.Any, id: string, set: SetCode) => void): void;
   forEach(callbackfn: (...args: any[]) => void): void {
     for (const [id, card] of this) {
       switch (callbackfn.length) {
@@ -271,7 +272,7 @@ export class CardMap {
    */
   mapToArray<T>(callbackfn: (card: HCCard.Any) => T): T[];
   mapToArray<T>(callbackfn: (card: HCCard.Any, id: string) => T): T[];
-  mapToArray<T>(callbackfn: (card: HCCard.Any, id: string, set: HCSet) => T): T[];
+  mapToArray<T>(callbackfn: (card: HCCard.Any, id: string, set: SetCode) => T): T[];
   mapToArray<T>(callbackfn: (...args: any[]) => T): T[] {
     const ret: T[] = [];
     for (const [id, card] of this) {
@@ -297,7 +298,7 @@ export class CardMap {
    */
   mapToMap<K, V>(callbackfn: (card: HCCard.Any) => [K, V]): Map<K, V>;
   mapToMap<K, V>(callbackfn: (card: HCCard.Any, id: string) => [K, V]): Map<K, V>;
-  mapToMap<K, V>(callbackfn: (card: HCCard.Any, id: string, set: HCSet) => [K, V]): Map<K, V>;
+  mapToMap<K, V>(callbackfn: (card: HCCard.Any, id: string, set: SetCode) => [K, V]): Map<K, V>;
   mapToMap<K, V>(callbackfn: (...args: any[]) => [K, V]): Map<K, V> {
     const retMap = new Map<K, V>();
     for (const [id, card] of this) {
@@ -323,7 +324,7 @@ export class CardMap {
    */
   mapToIdMap<V>(callbackfn: (card: HCCard.Any) => V): Map<string, V>;
   mapToIdMap<V>(callbackfn: (card: HCCard.Any, id: string) => V): Map<string, V>;
-  mapToIdMap<V>(callbackfn: (card: HCCard.Any, id: string, set: HCSet) => V): Map<string, V>;
+  mapToIdMap<V>(callbackfn: (card: HCCard.Any, id: string, set: SetCode) => V): Map<string, V>;
   mapToIdMap<V>(callbackfn: (...args: any[]) => V): Map<string, V> {
     const retMap = new Map<string, V>();
     for (const [id, card] of this) {
@@ -349,7 +350,7 @@ export class CardMap {
    */
   map(callbackfn: (card: HCCard.Any) => HCCard.Any): this;
   map(callbackfn: (card: HCCard.Any, id: string) => HCCard.Any): this;
-  map(callbackfn: (card: HCCard.Any, id: string, set: HCSet) => HCCard.Any): this;
+  map(callbackfn: (card: HCCard.Any, id: string, set: SetCode) => HCCard.Any): this;
   map(callbackfn: (...args: any[]) => HCCard.Any): this {
     const mapped = new (this.constructor as any)() as this;
     for (const [id, card] of this) {
@@ -377,7 +378,7 @@ export class CardMap {
    */
   flatMap<T>(callback: (card: HCCard.Any) => T | ReadonlyArray<T>): T[];
   flatMap<T>(callback: (card: HCCard.Any, id: string) => T | ReadonlyArray<T>): T[];
-  flatMap<T>(callback: (card: HCCard.Any, id: string, set: HCSet) => T | ReadonlyArray<T>): T[];
+  flatMap<T>(callback: (card: HCCard.Any, id: string, set: SetCode) => T | ReadonlyArray<T>): T[];
   flatMap<T>(callback: (...args: any[]) => T | ReadonlyArray<T>): T[] {
     return this.mapToArray(callback).flat() as T[];
   }
@@ -389,7 +390,7 @@ export class CardMap {
    */
   find(predicate: (card: HCCard.Any) => any): HCCard.Any | undefined;
   find(predicate: (card: HCCard.Any, id: string) => any): HCCard.Any | undefined;
-  find(predicate: (card: HCCard.Any, id: string, set: HCSet) => any): HCCard.Any | undefined;
+  find(predicate: (card: HCCard.Any, id: string, set: SetCode) => any): HCCard.Any | undefined;
   find(predicate: (...args: any[]) => any): HCCard.Any | undefined {
     for (const [id, card] of this) {
       switch (predicate.length) {
@@ -420,9 +421,12 @@ export class CardMap {
    * @param set The set to find against.
    * @param predicate A function that accepts up to two arguments. The find method calls the predicate function one time for each card in the set until returning true.
    */
-  findFromSet(set: HCSet, predicate: (card: HCCard.Any) => any): HCCard.Any | undefined;
-  findFromSet(set: HCSet, predicate: (card: HCCard.Any, id: string) => any): HCCard.Any | undefined;
-  findFromSet(set: HCSet, predicate: (...args: any[]) => any): HCCard.Any | undefined {
+  findFromSet(set: SetCode, predicate: (card: HCCard.Any) => any): HCCard.Any | undefined;
+  findFromSet(
+    set: SetCode,
+    predicate: (card: HCCard.Any, id: string) => any
+  ): HCCard.Any | undefined;
+  findFromSet(set: SetCode, predicate: (...args: any[]) => any): HCCard.Any | undefined {
     for (const [id, card] of this.getAllInSet(set)) {
       switch (predicate.length) {
         case 2: {
@@ -446,12 +450,12 @@ export class CardMap {
    * @param set The set to find against exactly.
    * @param predicate A function that accepts up to two arguments. The find method calls the predicate function one time for each card in the set until returning true.
    */
-  findFromSetExact(set: HCSet, predicate: (card: HCCard.Any) => any): HCCard.Any | undefined;
+  findFromSetExact(set: SetCode, predicate: (card: HCCard.Any) => any): HCCard.Any | undefined;
   findFromSetExact(
-    set: HCSet,
+    set: SetCode,
     predicate: (card: HCCard.Any, id: string) => any
   ): HCCard.Any | undefined;
-  findFromSetExact(set: HCSet, predicate: (...args: any[]) => any): HCCard.Any | undefined {
+  findFromSetExact(set: SetCode, predicate: (...args: any[]) => any): HCCard.Any | undefined {
     for (const [id, card] of this.getAllInSetExact(set)) {
       switch (predicate.length) {
         case 2: {
@@ -476,7 +480,7 @@ export class CardMap {
    */
   filter(predicate: (card: HCCard.Any) => any): this;
   filter(predicate: (card: HCCard.Any, id: string) => any): this;
-  filter(predicate: (card: HCCard.Any, id: string, set: HCSet) => any): this;
+  filter(predicate: (card: HCCard.Any, id: string, set: SetCode) => any): this;
   filter(predicate: (...args: any[]) => any): this {
     const subMap = new (this.constructor as any)() as this;
     for (const [id, card] of this) {
@@ -508,9 +512,9 @@ export class CardMap {
    * @param set The set to filter against.
    * @param predicate A function that accepts up to two arguments. The filter method calls the predicate function one time for each card in the set.
    */
-  filterFromSet(set: HCSet, predicate: (card: HCCard.Any) => any): this;
-  filterFromSet(set: HCSet, predicate: (card: HCCard.Any, id: string) => any): this;
-  filterFromSet(set: HCSet, predicate: (...args: any[]) => any): this {
+  filterFromSet(set: SetCode, predicate: (card: HCCard.Any) => any): this;
+  filterFromSet(set: SetCode, predicate: (card: HCCard.Any, id: string) => any): this;
+  filterFromSet(set: SetCode, predicate: (...args: any[]) => any): this {
     const subMap = new (this.constructor as any)() as this;
     for (const [id, card] of this.getAllInSet(set)) {
       switch (predicate.length) {
@@ -535,9 +539,9 @@ export class CardMap {
    * @param set The set to filter against exactly.
    * @param predicate A function that accepts up to two arguments. The filter method calls the predicate function one time for each card in the set.
    */
-  filterFromSetExact(set: HCSet, predicate: (card: HCCard.Any) => any): this;
-  filterFromSetExact(set: HCSet, predicate: (card: HCCard.Any, id: string) => any): this;
-  filterFromSetExact(set: HCSet, predicate: (...args: any[]) => any): this {
+  filterFromSetExact(set: SetCode, predicate: (card: HCCard.Any) => any): this;
+  filterFromSetExact(set: SetCode, predicate: (card: HCCard.Any, id: string) => any): this;
+  filterFromSetExact(set: SetCode, predicate: (...args: any[]) => any): this {
     const subMap = new (this.constructor as any)() as this;
     for (const [id, card] of this.getAllInSetExact(set)) {
       switch (predicate.length) {
@@ -574,12 +578,12 @@ export class CardMap {
    * @returns boolean indicating whether a card with the specified id exists or not, and possibly whether it is in the specified set or not.
    */
   has(id: string): boolean;
-  has(id: string, set: HCSet): boolean;
-  has(id: string, set?: HCSet): boolean {
+  has(id: string, set: SetCode): boolean;
+  has(id: string, set?: SetCode): boolean {
     if (set) {
       return Boolean(
         this.setMap.get(set)?.has(id) ||
-          toSubSets[set]?.some(subSet => this.setMap.get(subSet)?.has(id))
+          getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.has(id))
       );
     }
     return this.idMap.has(id);
@@ -588,22 +592,22 @@ export class CardMap {
   /**
    * @returns boolean indicating whether a card with the specified id exists or not in the specified exact set.
    */
-  hasExact(id: string, set: HCSet): boolean {
+  hasExact(id: string, set: SetCode): boolean {
     return Boolean(this.setMap.get(set)?.has(id));
   }
 
   /**
    * @returns boolean indicating whether the specified set exists or not.
    */
-  hasSet(set: HCSet): boolean {
+  hasSet(set: SetCode): boolean {
     return Boolean(
-      this.setMap.get(set)?.size || toSubSets[set]?.some(subSet => this.setMap.get(subSet)?.size)
+      this.setMap.get(set)?.size || getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.size)
     );
   }
   /**
    * @returns boolean indicating whether the specified exact set exists or not.
    */
-  hasSetExact(set: HCSet): boolean {
+  hasSetExact(set: SetCode): boolean {
     return Boolean(this.setMap.get(set)?.size);
   }
 
@@ -706,12 +710,12 @@ export class HCIDMap extends CardMap {
    * @returns boolean indicating whether a card with the specified id exists or not, and possibly whether it is in the specified set or not.
    */
   has(id: string): boolean;
-  has(id: string, set: HCSet): boolean;
-  has(id: string, set?: HCSet): boolean {
+  has(id: string, set: SetCode): boolean;
+  has(id: string, set?: SetCode): boolean {
     if (set) {
       return Boolean(
         this.setMap.get(set)?.has(id.toLowerCase()) ||
-          toSubSets[set]?.some(subSet => this.setMap.get(subSet)?.has(id.toLowerCase()))
+          getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.has(id.toLowerCase()))
       );
     }
     return this.idMap.has(id.toLowerCase());
@@ -720,7 +724,7 @@ export class HCIDMap extends CardMap {
   /**
    * @returns boolean indicating whether a card with the specified id exists or not in the specified exact set.
    */
-  hasExact(id: string, set: HCSet): boolean {
+  hasExact(id: string, set: SetCode): boolean {
     return Boolean(this.setMap.get(set)?.has(id.toLowerCase()));
   }
 }

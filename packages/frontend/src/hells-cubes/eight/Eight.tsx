@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { getPipSrc } from '../../hellfall/stringToMana.tsx';
+import { getPipSrc } from '@hellfall/shared/utils';
 import { Routes, Route, Link } from 'react-router-dom';
 import { AzoriousHistoric } from './AzoriousHistoric.tsx';
 import { TargetingMatters } from './TargetingMatters.tsx';

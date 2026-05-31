@@ -1,6 +1,6 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { DOMParser, XMLSerializer } from 'xmldom';
-import { HCCard, HCSet } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 import { CockCardProps } from './cockTypes';
 import { CardMap, getRelatedsFromCards, getRelatedsFromSet } from '../cardHandling';
 import { hcCardToCockProps } from './HCToCockCard';
@@ -21,7 +21,7 @@ export const recursiveAdoption = (parent: Node, children: RecursiveChild) => {
 
 export const toCockCubeJSON = (
   cardMap: CardMap,
-  set?: HCSet,
+  set?: SetCode,
   idList?: string[]
 ): { cards: CockCardProps[]; tokens: CockCardProps[] } => {
   const { cards: HCCards, tokens: HCTokens } =
@@ -58,7 +58,7 @@ export const toCockCube = ({
 }: {
   name: string;
   cardMap: CardMap;
-  set: HCSet;
+  set: SetCode;
   idList?: string[];
 }) => {
   const xmlDoc = new DOMParser().parseFromString(
@@ -242,7 +242,7 @@ export const toCockCube = ({
   // set == 'HC5' ? { cards: getHc5(), tokens: [] } : getSplitSet(allCards, set);
   const { cards, tokens } = toCockCubeJSON(
     cardMap,
-    cardMap.hasSet(set as HCSet) || set == 'HC5' ? set : undefined,
+    cardMap.hasSet(set as SetCode) || set == 'HC5' ? set : undefined,
     idList
   );
   cards.forEach(card => appendCockCard(card));

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
-import { HCCard, HCSet } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 import styled from '@emotion/styled';
 // import { toDeck } from './toDeck.ts';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
@@ -217,7 +217,7 @@ Cock and Balls to Torture and Abuse
         onClick={() => {
           downloadDraftmancer({
             name: deckName,
-            set: 'Custom' as HCSet,
+            set: 'Custom' as SetCode,
             idList: renderCards.flatMap(card => card.id ?? []),
             cardMap,
           });

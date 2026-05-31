@@ -1,4 +1,4 @@
-import { HCCard, HCSet } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 import { AddCards, DraftEffect, DraftmancerCustomCard, SimpleDraftEffectList } from './draftTypes';
 import {
   CardMap,
@@ -13,7 +13,7 @@ import { stripSingleSlashes } from '../textHandling';
 
 export const HCToDraftmancer = (
   cardMap: CardMap,
-  set?: HCSet,
+  set?: SetCode,
   idList?: string[],
   draftMode?: 'commander' | 'jumpstart'
 ): { cards: DraftmancerCustomCard[]; tokens: DraftmancerCustomCard[] } => {

@@ -27,6 +27,12 @@ declare module './pips.json' {
   export default value;
 }
 
+declare module './sets.json' {
+  import type { HCSet } from '../types';
+  const value: { data: HCSet[] };
+  export default value;
+}
+
 declare module './creators.json' {
   const value: { data: string[] };
   export default value;

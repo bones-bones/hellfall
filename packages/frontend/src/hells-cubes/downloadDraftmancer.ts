@@ -1,5 +1,5 @@
 import { CardMap, toDraftmancerCube } from '@hellfall/shared/utils';
-import { HCCard, HCSet } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 
 export const downloadDraftmancer = ({
   name,
@@ -8,7 +8,7 @@ export const downloadDraftmancer = ({
   cardMap,
 }: {
   name: string;
-  set: HCSet;
+  set: SetCode;
   idList?: string[];
   cardMap: CardMap;
 }) => {

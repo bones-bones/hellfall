@@ -1,7 +1,13 @@
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
-import { CardMap, landNames, textEquals, textListEquals } from '@hellfall/shared/utils';
-import { allExceptNormal, HCCard } from '@hellfall/shared/types';
+import {
+  allExceptNormal,
+  CardMap,
+  landNames,
+  textEquals,
+  textListEquals,
+} from '@hellfall/shared/utils';
+import { HCCard } from '@hellfall/shared/types';
 import { unescapeText } from '@hellfall/shared/filters';
 
 export const useNameToHCID = (name: string): string | undefined => {

@@ -110,3 +110,7 @@ Write a script to transform the database
 - add special cases for searching only for set (use map directly)
 - add random button for searches
 - make card uuid hard-coded on singleCard pages
+- make sets servable via the api
+- rework CubeResources page to be all sets page?
+- subdivide HCT into specific sets?
+- move jumpstart lands to HBB.J

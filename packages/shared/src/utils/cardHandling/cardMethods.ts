@@ -1,4 +1,4 @@
-import { HCCard, HCCardFace, HCColors, HCSet } from '@hellfall/shared/types';
+import { HCCard, HCCardFace, HCColors, SetCode } from '@hellfall/shared/types';
 import { listShareLower } from '../listHandling';
 import { facePropOrder, partPropOrder, propOrder } from './orderProps';
 import { getIndicatorFromColors } from '../pipsHandling';
@@ -296,7 +296,7 @@ export const getRelatedsFromCards = (
   return { cards, tokens };
 };
 export const getRelatedsFromSet = (
-  set: HCSet,
+  set: SetCode,
   cardMap: CardMap,
   moveNonDraftablesToTokens: boolean = false
 ): { cards: CardMap; tokens: CardMap } => {

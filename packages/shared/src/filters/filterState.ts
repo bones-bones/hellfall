@@ -34,6 +34,7 @@ const stateList = [
   'masterpiece',
   'rebalanced',
   'bounceland',
+  'dual',
   'fastland',
   'fetchland',
   'filterland',
@@ -49,6 +50,7 @@ const equivStateNames: Record<string, stateType> = {
   alchemyrebalanced: 'rebalanced',
   rebalance: 'rebalanced',
   alchemyrebalance: 'rebalanced',
+  ogdual: 'dual',
   shadowland: 'snarl',
   tricycle: 'triome',
   trikeland: 'triome',
@@ -117,6 +119,7 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
   masterpiece: (value: HCCard.Any) => value.tags?.includes('masterpiece'),
   rebalanced: (value: HCCard.Any) => value.tags?.includes('alchemy-rebalance'),
   bounceland: (value: HCCard.Any) => value.tags?.includes('bounceland'),
+  dual: (value: HCCard.Any) => value.tags?.includes('og-dual'),
   fastland: (value: HCCard.Any) => value.tags?.includes('fastland'),
   fetchland: (value: HCCard.Any) => value.tags?.includes('true-fetchland'),
   filterland: (value: HCCard.Any) => value.tags?.includes('filterland'),
@@ -154,6 +157,7 @@ const stateSummaries: Record<stateType, (operator: opType, value: string) => str
   masterpiece: (operator: opType, value: string) => `the cards are${opToNt(operator)} masterpieces`,
   rebalanced: (operator: opType, value: string) =>
     `the cards are${opToNt(operator)} rebalanced Alchemy cards`,
+  dual: (operator: opType, value: string) => `the cards are${opToNt(operator)} dual lands`,
   bounceland: (operator: opType, value: string) =>
     `the cards are${opToNt(operator)} land-bouncing duals`,
   fastland: (operator: opType, value: string) =>

@@ -7,11 +7,11 @@ import { ReactNode } from 'react';
 import { downloadDraftmancer } from './downloadDraftmancer.ts';
 import { toMPCAutofill } from './toMPCAutofill.ts';
 import { getLands } from './getLands.ts';
-import { HCSet } from '@hellfall/shared/types';
+import { SetCode } from '@hellfall/shared/types';
 
 type CubeSetup = {
   name: string;
-  id: HCSet;
+  id: SetCode;
   description: string;
   // cards: HCCard.Any[];
   quickLink?: ReactNode;
@@ -170,7 +170,7 @@ export const CubeResources = () => {
     },
     {
       name: 'All Hellscube Sets',
-      id: 'All' as HCSet,
+      id: 'All' as SetCode,
       description: 'All sets!',
     },
   ];
