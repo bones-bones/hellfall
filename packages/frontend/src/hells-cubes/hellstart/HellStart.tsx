@@ -5,7 +5,6 @@ import { HCCard } from '@hellfall/shared/types';
 import { HellfallEntry } from '../../hellfall/HellfallEntry.tsx';
 import { ActiveCardPanel } from '../../hellfall/ActiveCardPanel.tsx';
 import { activeCardAtom } from '../../hellfall/atoms/searchAtoms.ts';
-import { space } from '@workday/canvas-kit-react';
 
 export const HellStart = () => {
   const cards = useAtomValue(cardsAtom);
@@ -58,6 +57,6 @@ export const HellStart = () => {
 
 const Container = styled.div({
   marginTop: '10px',
-  paddingLeft: space.l,
-  paddingRight: space.l,
+  paddingLeft: '32px',
+  paddingRight: '32px',
 });

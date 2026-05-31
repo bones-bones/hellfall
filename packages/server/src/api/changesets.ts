@@ -5,15 +5,15 @@ import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
 import { requireAdminAuth } from './lib/requireAdminAuth.js';
 import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
-import { recordCardAudit } from '../lib/cardAudit.js';
-// import {
-//   resolveTagState,
-//   tagFieldsForWrite,
-//   dedupeOrdered,
-//   mergeTags,
-//   normalizeTagList,
-//   type CardTagOverrides,
-// } from '@hellfall/shared/cardTags/cardTagMerge';
+import { recardCardChangeset } from '../lib/cardAudit.js';
+import {
+  resolveTagState,
+  tagFieldsForWrite,
+  dedupeOrdered,
+  mergeTags,
+  normalizeTagList,
+  type CardTagOverrides,
+} from '@hellfall/shared/cardTags/cardTagMerge';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const changesetsCol = db.collection(env.FIRESTORE_CHANGESETS_COLLECTION);
@@ -133,21 +133,12 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
 
   const snap = await docRef.get();
   res.statusCode = 201;
-  res.end(
-    JSON.stringify({
-      ok: true,
-      changeset: serializeChangeset(docRef.id, snap.data() as ChangesetDoc),
-    })
-  );
+  res.end(JSON.stringify({ ok: true, changeset: serializeChangeset(docRef.id, snap.data() as ChangesetDoc) }));
 }
 
 /** GET /api/changesets/:id — get single changeset */
-async function getChangeset(
-  req: HandlerRequest,
-  res: HandlerResponse,
-  changesetId: string
-): Promise<void> {
-  const auth = await requireTagAuth(req, res);
+async function getChangeset(req: HandlerRequest, res: HandlerResponse, changesetId: string): Promise<void> {
+  const auth = await requireReviewerAuth(req, res);
   if (!auth) return;
 
   const snap = await changesetsCol.doc(changesetId).get();
@@ -158,12 +149,7 @@ async function getChangeset(
   }
 
   res.statusCode = 200;
-  res.end(
-    JSON.stringify({
-      ok: true,
-      changeset: serializeChangeset(snap.id, snap.data() as ChangesetDoc),
-    })
-  );
+  res.end(JSON.stringify({ ok: true, changeset: serializeChangeset(snap.id, snap.data() as ChangesetDoc) }));
 }
 
 /** Apply tag changes using the merge helpers so baseTags/added/removed/tags stay consistent. */
@@ -194,11 +180,7 @@ function applyTagChanges(
 }
 
 /** POST /api/changesets/:id/accept — admin accepts changeset */
-async function acceptChangeset(
-  req: HandlerRequest,
-  res: HandlerResponse,
-  changesetId: string
-): Promise<void> {
+async function acceptChangeset(req: HandlerRequest, res: HandlerResponse, changesetId: string): Promise<void> {
   const auth = await requireAdminAuth(req, res);
   if (!auth) return;
 
@@ -230,7 +212,7 @@ async function acceptChangeset(
 
   await cardRef.set(cardData, { merge: true });
 
-  await recordCardAudit({
+  await recardCardChangeset({
     cardId: cs.cardId,
     action: 'changeset_accept',
     field: null,
@@ -246,11 +228,7 @@ async function acceptChangeset(
 }
 
 /** POST /api/changesets/:id/reject — admin rejects changeset */
-async function rejectChangeset(
-  req: HandlerRequest,
-  res: HandlerResponse,
-  changesetId: string
-): Promise<void> {
+async function rejectChangeset(req: HandlerRequest, res: HandlerResponse, changesetId: string): Promise<void> {
   const auth = await requireAdminAuth(req, res);
   if (!auth) return;
 
@@ -282,7 +260,7 @@ async function rejectChangeset(
     rejectReason: typeof body.reason === 'string' ? body.reason.trim() || null : null,
   });
 
-  await recordCardAudit({
+  await recardCardChangeset({
     cardId: cs.cardId,
     action: 'changeset_reject',
     field: null,

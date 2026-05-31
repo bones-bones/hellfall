@@ -24,6 +24,8 @@ import {
   formatDiscordMarkdownInvertedItalicsInline,
 } from '../markdownFormatter.tsx';
 import { tagsData } from '@hellfall/shared/data';
+import { CardEditPanel } from './CardEditPanel.tsx';
+import { PendingChanges } from './PendingChanges.tsx';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
@@ -103,10 +105,13 @@ export const HellfallCard = ({
     tagsError,
     tagsPersistEnabled,
     changesetSubmitted,
+    pendingTagStaging,
   ] = useCardTagOverrides(data.id, data.tags);
   const [activeImageSide, setActiveImageSide] = useState(0);
   const [newTagInput, setNewTagInput] = useState('');
   const [tagActionError, setTagActionError] = useState<string | null>(null);
+  const [editing, setEditing] = useState(false);
+  const isContributor = Boolean(user?.isAdmin || user?.isContributor);
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -341,7 +346,20 @@ export const HellfallCard = ({
               </div>
             </>
           )}
-          {displayTags.length > 0 || user ? (
+          {isContributor && <PendingChanges cardId={data.id} />}
+          {user && tagsPersistEnabled && !editing && (
+            <EditCardButton type="button" onClick={() => setEditing(true)}>
+              Edit Card Data
+            </EditCardButton>
+          )}
+          {editing && (
+            <CardEditPanel
+              card={data}
+              onClose={() => setEditing(false)}
+              onSubmitted={() => setEditing(false)}
+            />
+          )}
+          {displayTags.length > 0 || pendingTagStaging || user ? (
             <>
               {tagsLoading && <SmallText>Loading tags…</SmallText>}
               {tagsError && (
@@ -350,14 +368,18 @@ export const HellfallCard = ({
               {tagActionError && <SmallText style={{ color: '#c00' }}>{tagActionError}</SmallText>}
               <SmallText key="Tags">
                 Tags:{' '}
-                {displayTags.map((tagEntry, i, ar) => (
+                {displayTags.map((tagEntry, i, ar) => {
+                  const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
+                  return (
                   <span key={tagEntry}>
-                    <Link
-                      to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
-                      target="_blank"
-                    >
-                      {tagEntry}
-                    </Link>
+                    <TagLink $pendingRemove={pendingRemove}>
+                      <Link
+                        to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
+                        target="_blank"
+                      >
+                        {tagEntry}
+                      </Link>
+                    </TagLink>
                     {data.tag_notes &&
                       tagEntry in data.tag_notes &&
                       (data.tag_notes[tagEntry].slice(0, 6) == 'https:' ? (
@@ -390,8 +412,28 @@ export const HellfallCard = ({
                     )}
                     {i < ar.length - 1 && ', '}
                   </span>
+                  );
+                })}
+                {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => (
+                  <span key={`pending-${tagEntry}`}>
+                    {(displayTags.length > 0 || i > 0) && ', '}
+                    <TagLink $pendingAdd>
+                      <Link
+                        to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
+                        target="_blank"
+                      >
+                        +{tagEntry}
+                      </Link>
+                    </TagLink>
+                    {i < ar.length - 1 && ', '}
+                  </span>
                 ))}
               </SmallText>
+              {pendingTagStaging && (
+                <SmallText style={{ color: '#856404' }}>
+                  Staged changes pending review.
+                </SmallText>
+              )}
               {user && tagsPersistEnabled && (
                 <TagAddRow>
                   <input
@@ -553,6 +595,16 @@ const StyledHeading = styled(Heading)({
 
 const ButtonContainer = styled.div();
 
+const TagLink = styled.span<{ $pendingAdd?: boolean; $pendingRemove?: boolean }>(
+  ({ $pendingAdd, $pendingRemove }) => ({
+    '& a': {
+      color: $pendingAdd ? '#28a745' : $pendingRemove ? '#888' : undefined,
+      textDecoration: $pendingRemove ? 'line-through' : undefined,
+      fontWeight: $pendingAdd ? 600 : undefined,
+    },
+  })
+);
+
 const TagRemoveButton = styled.button({
   marginLeft: '2px',
   padding: '0 4px',
@@ -655,8 +707,22 @@ const SmallLine = styled('span')({
 
 const ButtonGroup = styled('div')({
   display: 'inline-block',
-  flexDirection: 'row', // Stack vertically
-  // gap: '4px',               // Space between buttons
-  marginLeft: '4px', // Optional spacing from the selectors
+  flexDirection: 'row',
+  marginLeft: '4px',
   verticalAlign: 'top',
+});
+
+const EditCardButton = styled('button')({
+  display: 'block',
+  marginTop: 8,
+  marginBottom: 4,
+  padding: '5px 14px',
+  background: '#f5f0ff',
+  color: '#5a3d8a',
+  border: '1px solid #d4c5f0',
+  borderRadius: 4,
+  fontSize: 13,
+  fontWeight: 600,
+  cursor: 'pointer',
+  '&:hover': { background: '#ece4ff', borderColor: '#C690FF' },
 });

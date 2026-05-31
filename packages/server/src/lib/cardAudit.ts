@@ -4,12 +4,7 @@ import type { CardTagState } from '@hellfall/shared/cardTags/cardTagMerge';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 
-export type AuditAction =
-  | 'tag_add'
-  | 'tag_remove'
-  | 'field_edit'
-  | 'changeset_accept'
-  | 'changeset_reject';
+export type AuditAction = 'tag_add' | 'tag_remove' | 'field_edit' | 'changeset_accept' | 'changeset_reject';
 
 export type AuditActor = {
   userId: string;
@@ -40,7 +35,7 @@ function timestampToIso(at: Timestamp | undefined): string | null {
 }
 
 /** Append-only audit entry; failures are logged and do not block the API. */
-export async function recordCardAudit(params: {
+export async function recardCardChangeset(params: {
   cardId: string;
   action: AuditAction;
   field: string | null;
@@ -65,23 +60,13 @@ export async function recordCardAudit(params: {
 
 function tagChangesFromState(before: CardTagState, after: CardTagState) {
   return {
-    before: {
-      tags: before.tags,
-      added: before.added,
-      removed: before.removed,
-      baseTags: before.baseTags,
-    },
-    after: {
-      tags: after.tags,
-      added: after.added,
-      removed: after.removed,
-      baseTags: after.baseTags,
-    },
+    before: { tags: before.tags, added: before.added, removed: before.removed, baseTags: before.baseTags },
+    after: { tags: after.tags, added: after.added, removed: after.removed, baseTags: after.baseTags },
   };
 }
 
 /** Convenience wrapper for tag add/remove — keeps cardTags.ts callsites clean. */
-export async function recordTagAudit(params: {
+export async function recordTagChangeset(params: {
   cardId: string;
   action: 'tag_add' | 'tag_remove';
   tag: string;
@@ -89,7 +74,7 @@ export async function recordTagAudit(params: {
   before: CardTagState;
   after: CardTagState;
 }): Promise<void> {
-  return recordCardAudit({
+  return recardCardChangeset({
     cardId: params.cardId,
     action: params.action,
     field: 'tags',
@@ -99,8 +84,14 @@ export async function recordTagAudit(params: {
   });
 }
 
-export async function listCardAudit(cardId: string, limit = 50): Promise<CardAuditEntry[]> {
-  const snap = await auditCollection(cardId).orderBy('at', 'desc').limit(limit).get();
+export async function listCardChangesets(
+  cardId: string,
+  limit = 50
+): Promise<CardAuditEntry[]> {
+  const snap = await auditCollection(cardId)
+    .orderBy('at', 'desc')
+    .limit(limit)
+    .get();
 
   return snap.docs.map(doc => {
     const data = doc.data();

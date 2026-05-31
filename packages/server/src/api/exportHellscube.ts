@@ -1,19 +1,21 @@
 import { exportHellscubeCards } from '@hellfall/shared/export/cards';
-import { withCors } from './lib/cors.js';
-import { env } from './lib/env.js';
-import { requireAdminAuth } from './lib/requireAdminAuth.js';
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
+import { withCors } from './lib/cors.ts';
+import { env } from './lib/env.ts';
+import { requireAdminAuth } from './lib/requireAdminAuth.ts';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
 /** GET /api/admin/export-hellscube — full cards collection export (admin only). */
-export async function exportHellscubeHandler(
+export const exportHellscubeHandler = async (
   req: HandlerRequest,
   res: HandlerResponse
-): Promise<void> {
+): Promise<void> => {
+  const headers = withCors({ 'Content-Type': 'application/json' }, req);
+  Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
+
   if (req.method !== 'GET') {
-    const headers = withCors({ 'Content-Type': 'application/json' }, req);
-    Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
     res.statusCode = 405;
-    res.end(JSON.stringify({ error: 'Method not allowed' }));
+    res.setHeader('Allow', 'GET');
+    res.end();
     return;
   }
 
@@ -27,14 +29,7 @@ export async function exportHellscubeHandler(
 
   const date = payload.exportedAt.slice(0, 10);
   const filename = `hellscube-cards-${date}.json`;
-  const headers = withCors(
-    {
-      'Content-Type': 'application/json',
-      'Content-Disposition': `attachment; filename="${filename}"`,
-    },
-    req
-  );
-  Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
   res.statusCode = 200;
   res.end(JSON.stringify(payload));
-}
+};
