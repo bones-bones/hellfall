@@ -36,7 +36,7 @@ export const LandsLandsLands = () => {
         <div>
           But we&apos;re not just activating our lands. Our sisters over in{' '}
           <Link to="/hellscubes/eight/golgari-landistocrats">
-            <img height="12px" src={getPipSrc('B/G')} /> Lands
+            <img alt='B/G' height="12px" src={getPipSrc('B/G')} /> Lands
           </Link>{' '}
           have the right of it that lands should go in the graveyard- but why stop there? Why not
           lands with suspend hopping into exile? Lands in hands being beheld for extra effects,
@@ -65,7 +65,7 @@ export const LandsLandsLands = () => {
           <li>
             Don&apos;t make all the lands colorless. The lands are ours. If I see one filthy{' '}
             <Link to="/hellscubes/eight/paradox-incorporated">
-              Paradox <img height="12px" src={getPipSrc('U/R')} /> gamer
+              Paradox <img alt='U/R' height="12px" src={getPipSrc('U/R')} /> gamer
             </Link>{' '}
             playing with our utillity lands, I&apos;m going to be knocking in skulls.
           </li>

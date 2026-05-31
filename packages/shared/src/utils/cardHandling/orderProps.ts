@@ -57,6 +57,7 @@ export const propOrder: propType[] = [
   'frame_effects',
   'tags',
   'tag_notes',
+  'tag_state',
   'card_faces',
   'all_parts',
 ];

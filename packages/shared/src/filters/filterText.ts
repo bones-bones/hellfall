@@ -4,6 +4,7 @@ import {
   isNumber,
   textListIncludes,
   textListEquals,
+  isValidV4UUID,
 } from '@hellfall/shared/utils';
 import {
   invertOptionType,
@@ -43,8 +44,6 @@ export const filterText: textFilter = Object.assign(
   }
 );
 
-const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const isValidV4UUID = (uuid: string): boolean => uuidRegex.test(uuid);
 export const filterOracleId: textFilter = Object.assign(
   (value1: string, operator: opType, value2: string) =>
     funcOp(operator, (id: string) => id == value1, value2),

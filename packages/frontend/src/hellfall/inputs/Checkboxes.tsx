@@ -36,7 +36,7 @@ export const CheckboxGroup: FC<
           return (
             <CheckEntry key={entry}>
               <SearchCheckbox
-                id={label + entry + 'label' + 'checkbox'}
+                id={`${label}-${entry}-label-checkbox`}
                 type="checkbox"
                 checked={selected.includes(entry)}
                 onChange={event => {
@@ -47,7 +47,7 @@ export const CheckboxGroup: FC<
                   }
                 }}
               />
-              <StyledLabel htmlFor={label + entry + 'label' + 'checkbox'}>{entry}</StyledLabel>
+              <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{entry}</StyledLabel>
             </CheckEntry>
           );
         })}
@@ -83,7 +83,7 @@ export const BoxlessCheckboxGroup: FC<
           return (
             <CheckEntry key={entry}>
               <SearchCheckbox
-                id={label + entry + 'label' + 'checkbox'}
+                id={`${label}-${entry}-label-checkbox`}
                 type="checkbox"
                 checked={selected.includes(entry)}
                 onChange={event => {
@@ -94,7 +94,7 @@ export const BoxlessCheckboxGroup: FC<
                   }
                 }}
               />
-              <StyledLabel htmlFor={label + entry + 'label' + 'checkbox'}>{entry}</StyledLabel>
+              <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{entry}</StyledLabel>
             </CheckEntry>
           );
         })}
@@ -133,7 +133,7 @@ export const NamedCheckboxGroup: FC<
           return (
             <CheckEntry key={entry}>
               <SearchCheckbox
-                id={label + entry + 'label' + 'checkbox'}
+                id={`${label}-${entry}-label-checkbox`}
                 type="checkbox"
                 checked={selected.includes(entry)}
                 onChange={event => {
@@ -144,7 +144,7 @@ export const NamedCheckboxGroup: FC<
                   }
                 }}
               />
-              <StyledLabel htmlFor={label + entry + 'label' + 'checkbox'}>{name}</StyledLabel>
+              <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{name}</StyledLabel>
             </CheckEntry>
           );
         })}
@@ -183,7 +183,7 @@ export const HiddenCheckboxGroup: FC<
               return (
                 <CheckEntry key={entry}>
                   <SearchCheckbox
-                    id={label + entry + 'label' + 'checkbox'}
+                    id={`${label}-${entry}-label-checkbox`}
                     type="checkbox"
                     checked={selected.includes(entry)}
                     onChange={event => {
@@ -194,7 +194,7 @@ export const HiddenCheckboxGroup: FC<
                       }
                     }}
                   />
-                  <StyledLabel htmlFor={label + entry + 'label' + 'checkbox'}>{entry}</StyledLabel>
+                  <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{entry}</StyledLabel>
                 </CheckEntry>
               );
             })}
@@ -252,7 +252,7 @@ export const NamedHiddenCheckboxGroup: FC<
               return (
                 <CheckEntry key={entry}>
                   <SearchCheckbox
-                    id={label + entry + 'label' + 'checkbox'}
+                    id={`${label}-${entry}-label-checkbox`}
                     type="checkbox"
                     checked={selected.includes(entry)}
                     onChange={event => {
@@ -263,7 +263,7 @@ export const NamedHiddenCheckboxGroup: FC<
                       }
                     }}
                   />
-                  <StyledLabel htmlFor={label + entry + 'label' + 'checkbox'}>{name}</StyledLabel>
+                  <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{name}</StyledLabel>
                 </CheckEntry>
               );
             })}

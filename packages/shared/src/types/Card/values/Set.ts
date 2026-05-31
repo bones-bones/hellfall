@@ -52,6 +52,7 @@ export const allSetsList = [
   'NMTG',
 ] as const;
 
+
 export type HCSet = (typeof allSetsList)[number];
 
 export const toSubSets: Partial<Record<HCSet, HCSet[]>> = {
@@ -102,3 +103,14 @@ export const extraSetList: HCSet[] = [
   'HBB.L',
   'SFT',
 ];
+export const allExceptNormal = allSetsList.filter(set=>set!='NRM');
+
+export const cardSets = allSetsList.filter(set=>!['NRM','HCT',  'HBB',
+  'HBB.0',
+  'HBB.4',
+  'HBB.7',
+  'HBB.L',
+  'FHCJ',
+  'SFT',
+  'NMTG',
+].includes(set))

@@ -16,9 +16,7 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
   const cards = useAtomValue(cardsAtom);
   const escape = useKeyPress('Escape');
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
-  const activeCard = cards.find(entry => {
-    return entry.id === activeCardFromAtom;
-  });
+  const activeCard = cards.get(activeCardFromAtom);
 
   useEffect(() => {
     if (escape) {
@@ -58,7 +56,7 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
                 as="a"
                 icon={extLinkIcon}
                 margin={'2px 0 0 2px'}
-                href={'/card/' + encodeURIComponent(activeCard.id)}
+                href={'/card/' + encodeURIComponent(activeCard.hcid)}
                 target="_blank"
               />
             )}

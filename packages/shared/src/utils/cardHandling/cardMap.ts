@@ -133,6 +133,47 @@ export class CardMap {
   getAllIdsInSetExact(set: HCSet): string[] {
     return Array.from(this.setMap.get(set) ?? []);
   }
+  /**
+   * Returns the subset of the CardMap object in the given sets as a new CardMap.
+   * @returns Returns the subset of the CardMap in the given sets.
+   */
+  getAllInSetList(setList: HCSet[]): this {
+    const idList = setList.flatMap(set=>this.getAllIdsInSet(set))
+    return this.getSubset(idList);
+  }
+
+  /**
+   * Returns the subset of the CardMap object exactly in the given sets as a new CardMap.
+   * @returns Returns the subset of the CardMap exactly in the given sets.
+   */
+  getAllInSetListExact(setList: HCSet[]): this {
+    const idList = setList.flatMap(set=>this.getAllIdsInSetExact(set))
+    return this.getSubset(idList);
+  }
+
+  /**
+   * Returns the ids of the cards in the given sets.
+   * @returns Returns the ids of the cards in the given sets.
+   */
+  getAllIdsInSetList(setList: HCSet[]): string[] {
+    return setList.flatMap(set=>this.getAllIdsInSet(set))
+    
+  }
+
+  /**
+   * Returns the ids of the cards exactly in the given sets.
+   * @returns Returns the ids of the cards exactly in the given sets.
+   */
+  getAllIdsInSetListExact(setList: HCSet[]): string[] {
+    return setList.flatMap(set=>this.getAllIdsInSetExact(set))
+  }
+
+  getRandomId():string {
+    return this.ids()[Math.floor(Math.random() * this.size())]
+  }
+  getRandomCard():HCCard.Any {
+    return this.cards()[Math.floor(Math.random() * this.size())]
+  }
 
   /**
    * Determines whether all the cards in a CardMap satisfy the specified test.

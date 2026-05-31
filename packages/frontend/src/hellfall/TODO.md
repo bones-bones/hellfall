@@ -108,3 +108,5 @@ Write a script to transform the database
 - remove token_id
 - reduce processing churn when updating cards
 - add special cases for searching only for set (use map directly)
+- add random button for searches
+- make card uuid hard-coded on singleCard pages

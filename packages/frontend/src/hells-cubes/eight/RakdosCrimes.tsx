@@ -82,7 +82,7 @@ export const RakdosCrimes = () => {
           flashbacking crimes and all other kinds of posthumous crimes.
         </div>
         <br />
-        <img src="https://media.tenor.com/FwP1UdcbX9AAAAAM/night-in-the-woods-nitw.gif" />
+        <img alt='crimes' src="https://media.tenor.com/FwP1UdcbX9AAAAAM/night-in-the-woods-nitw.gif" />
         <div>—munkegutz</div>
       </BigContainer>
     </>

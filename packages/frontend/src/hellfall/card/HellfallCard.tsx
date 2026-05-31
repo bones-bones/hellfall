@@ -9,7 +9,7 @@ import {
 import styled from '@emotion/styled';
 import { SetLegality } from './SetLegality.tsx';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
-import { formatParens } from '@hellfall/shared/utils';
+import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { HellfallRelatedEntry } from '../HellfallEntry.tsx';
 
@@ -17,13 +17,13 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../useCardTagOverrides.ts';
-import tagsData from '@hellfall/shared/data/tags.json';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
   formatDiscordMarkdownInvertedItalics,
   formatDiscordMarkdownInvertedItalicsInline,
 } from '../markdownFormatter.tsx';
+import { tagsData } from '@hellfall/shared/data';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
@@ -139,6 +139,7 @@ export const HellfallCard = ({
         <Test>
           <ImageContainer key="image-container">
             <img
+              alt = {toPlainText(data)}
               src={data.image!}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
@@ -149,6 +150,7 @@ export const HellfallCard = ({
         <>
           <ImageContainer key={imagesToShow[activeImageSide] || data.image}>
             <img
+              alt = {toPlainText(data)}
               src={imagesToShow[activeImageSide] || data.image!}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
@@ -312,9 +314,9 @@ export const HellfallCard = ({
               </SmallText>
             </>
           )}
-          {data.id && (
+          {data.hcid && (
             <>
-              <SmallText key="hcid">Id: {data.id}</SmallText>
+              <SmallText key="hcid">Id: {data.hcid}</SmallText>
             </>
           )}
           {
@@ -463,13 +465,13 @@ export const HellfallCard = ({
                             event.ctrlKey ||
                             !onSinglePage
                           ) {
-                            window.open(`/card/${encodeURIComponent(entry.id)}`, '_blank');
+                            window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
                           } else {
-                            window.location.href = `/card/${encodeURIComponent(entry.id)}`;
+                            window.location.href = `/card/${encodeURIComponent(entry.hcid)}`;
                           }
                         }}
                         key={entry.id}
-                        id={entry.id}
+                        id={entry.hcid}
                         name={entry.name}
                         url={entry.image!}
                       />

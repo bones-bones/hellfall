@@ -24,7 +24,7 @@ export const toCockCubeJSON = (
   set?: HCSet,
   idList?: string[]
 ): { cards: CockCardProps[]; tokens: CockCardProps[] } => {
-  const { cards: HCCards, tokens: HCTokens } = set
+  const { cards: HCCards, tokens: HCTokens } = set && (cardMap.hasSet(set) || set == 'HC5')
     ? getRelatedsFromSet(set, cardMap)
     : idList?.length
     ? getRelatedsFromCards(idList, cardMap)

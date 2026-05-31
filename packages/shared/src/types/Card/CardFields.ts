@@ -22,6 +22,7 @@ import {
   // HCRelatedUris,
   // HCSecurityStamp,
   HCSet,
+  tagState,
 } from './values';
 
 import { HCCardFace } from './CardFace.ts';
@@ -100,6 +101,10 @@ export namespace HCCardFields.Core {
      * All tag notes for this card.
      */
     tag_notes?: Record<string, string>;
+    /**
+     * The tag state of this card (with notes stored unformatted).
+     */
+    tag_state?:tagState;
     /**
      * Stable Firestore-friendly ID for tokens, sourced from the token sheet.
      * Stored in Firestore as `token-<token_id>`.
@@ -332,7 +337,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * The layout of this card
      */
-    layout: HCLayoutGroup.MultiFacedType;
+    layout: HCLayout;
   };
   /**
    * These fields are specific for multiface grid cards. (TODO: fully implement this)
@@ -482,7 +487,7 @@ export namespace HCCardFields.Print {
     /**
      * The layout of this card.
      */
-    layout: HCLayoutGroup.SingleFacedType;
+    layout: HCLayout;
     /**
      * This faces's frame effects, if any.
      */

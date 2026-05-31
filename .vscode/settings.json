@@ -10,5 +10,6 @@
     { "directory": "./packages/shared" },
     { "directory": "./packages/server" },
     { "directory": "./packages/scripts" }
-  ]
+  ],
+  "typescript.experimental.expandableHover": true
 }

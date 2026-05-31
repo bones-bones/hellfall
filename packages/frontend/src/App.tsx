@@ -13,7 +13,7 @@ import { WatchwolfWar } from './watchWolf/WatchWolfWar.tsx';
 import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
 import { Login } from './auth/Login.tsx';
 import { ReviewPage } from './review/ReviewPage.tsx';
-import { useNameToId, useIsId } from './hellfall/hooks/useNameToId.ts';
+import { useNameToHCID, useIsHCID } from './hellfall/hooks/useNameToId.ts';
 import { AdvancedSearch } from './hellfall/search-controls/AdvancedSearch.tsx';
 import { Syntax } from './hellfall/Syntax.tsx';
 
@@ -21,12 +21,12 @@ const CardRoute = () => {
   const params = useParams<{ '*': string }>();
   const navigate = useNavigate();
   const cardIdentifier = params['*'];
-  const cardId = useNameToId(cardIdentifier || '');
-  const IsId = useIsId(cardIdentifier || '');
+  const cardId = useNameToHCID(cardIdentifier || '');
+  const IsHCID = useIsHCID(cardIdentifier || '');
   const [shouldRender, setShouldRender] = useState(false);
   useEffect(() => {
     const handleRedirect = async () => {
-      if (cardIdentifier == 'random' || (!IsId && cardId)) {
+      if (cardIdentifier == 'random' || (!IsHCID && cardId)) {
         navigate(`/card/${cardId}`, { replace: true });
         return;
       }

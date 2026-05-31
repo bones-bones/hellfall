@@ -4,33 +4,26 @@ import { env } from './lib/env.js';
 import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
 import { listCardAudit, recordTagAudit } from '../lib/cardAudit.js';
-import {
-  applyAddTag,
-  applyRemoveTag,
-  normalizeTag,
-  resolveTagState,
-  tagFieldsForWrite,
-} from '@hellfall/shared/cardTags/cardTagMerge';
 
-const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
-const collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
+// const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
+// const collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
 
-const EMPTY_TAG_SEED = {
-  baseTags: [] as string[],
-  added: [] as string[],
-  removed: [] as string[],
-  tags: [] as string[],
-};
+// const EMPTY_TAG_SEED = {
+//   baseTags: [] as string[],
+//   added: [] as string[],
+//   removed: [] as string[],
+//   tags: [] as string[],
+// };
 
 /** If `cards/{id}` is missing, create empty tag fields (merge-safe). Returns latest snapshot. */
-async function getOrSeedCardDoc(docRef: DocumentReference): Promise<DocumentSnapshot> {
-  let snap = await docRef.get();
-  if (!snap.exists) {
-    await docRef.set(EMPTY_TAG_SEED, { merge: true });
-    snap = await docRef.get();
-  }
-  return snap;
-}
+// async function getOrSeedCardDoc(docRef: DocumentReference): Promise<DocumentSnapshot> {
+//   let snap = await docRef.get();
+//   if (!snap.exists) {
+//     await docRef.set(EMPTY_TAG_SEED, { merge: true });
+//     snap = await docRef.get();
+//   }
+//   return snap;
+// }
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -39,14 +32,14 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   return body ? JSON.parse(body) : {};
 }
 
-function tagResponsePayload(state: ReturnType<typeof resolveTagState>) {
-  return {
-    tags: state.tags,
-    added: state.added,
-    removed: state.removed,
-    persistEnabled: true as const,
-  };
-}
+// function tagResponsePayload(state: ReturnType<typeof resolveTagState>) {
+//   return {
+//     tags: state.tags,
+//     added: state.added,
+//     removed: state.removed,
+//     persistEnabled: true as const,
+//   };
+// }
 
 export const cardTagsHandler = async (
   req: HandlerRequest,

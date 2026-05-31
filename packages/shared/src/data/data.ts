@@ -22,11 +22,11 @@ export interface JsonDataWrapper<T> {
   data: T[];
 }
 
-export const cardsData = loadJsonFile<JsonDataWrapper<HCCard.Any[]>>('./Hellscube-Database.json');
-export const landsData = loadJsonFile<JsonDataWrapper<HCCard.Any[]>>('./lands.json');
-export const tokensData = loadJsonFile<JsonDataWrapper<HCCard.Any[]>>('./tokens.json');
-export const pipsData = loadJsonFile<JsonDataWrapper<HCCardSymbol[]>>('./pips.json');
-export const creators = loadJsonFile<JsonDataWrapper<string[]>>('./creators.json');
-export const oracleNames = loadJsonFile<JsonDataWrapper<string[]>>('./oracle-names.json');
-export const tagsData = loadJsonFile<JsonDataWrapper<string[]>>('./tags.json');
-export const typesData = loadJsonFile<JsonDataWrapper<string[]>>('./types.json');
+export const cardsData = loadJsonFile<JsonDataWrapper<HCCard.Any>>('./Hellscube-Database.json');
+export const landsData = loadJsonFile<JsonDataWrapper<HCCard.Any>>('./lands.json');
+export const tokensData = loadJsonFile<JsonDataWrapper<HCCard.Any>>('./tokens.json');
+export const pipsData = loadJsonFile<JsonDataWrapper<HCCardSymbol>>('./pips.json');
+export const creatorsData = loadJsonFile<JsonDataWrapper<string>>('./creators.json');
+export const oracleNames = loadJsonFile<JsonDataWrapper<string>>('./oracle-names.json');
+export const tagsData = loadJsonFile<JsonDataWrapper<string>>('./tags.json');
+export const typesData = loadJsonFile<JsonDataWrapper<string>>('./types.json');

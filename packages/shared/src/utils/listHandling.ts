@@ -232,3 +232,39 @@ export const listsAreEqual = <T = any>(
   }
   return value1.every((value, i) => equals(value, value2[i]));
 };
+
+
+/**
+ * Correctly deals with pushing a value to an optional property that's a `Record<string,string[]>` by creating the value of the prop first if necessary
+ * @param ob object that has the prop
+ * @param prop prop to push to
+ * @param key key to push to
+ * @param value value to push
+ */
+export const pushPropToRecord = <T =any>(ob: T, prop: keyof T, key:string, value: string) => {
+  if (ob[prop] == undefined) {
+    (ob as any)[prop] = {};
+  }
+  const record = ob[prop] as Record<string, string[]>;
+  if (key in record) {
+    record[key].push(value);
+  } else {
+    record[key]=[value]
+  }
+};
+
+/**
+ * Correctly deals with pushing a value to a `Record<string,string[]>` by creating the value of the prop first if necessary
+ * @param record record
+ * @param key key to push to
+ * @param value value to push
+ */
+export const pushToRecord = (record:Record<string,string[]>, key:string, value: string) => {
+  if (key in record) {
+    if (!record[key].includes(value)) {
+      record[key].push(value);
+    }
+  } else {
+    record[key]=[value]
+  }
+};

@@ -128,17 +128,17 @@ export const specialCards: Card[] = [
     name: 'Lazav With a Flamethrower',
     component: <HellsCard queryString={`!"chandra,+fire+of+kaladesh"`} />,
   },
-  {
-    path: '/tit',
-    name: 'Tit for Tat',
-    component: (
-      <img
-        src={
-          'https://cdn.discordapp.com/attachments/631289553415700492/685521203217170526/cwx75bn555k41.png'
-        }
-      />
-    ),
-  },
+  // {
+  //   path: '/tit',
+  //   name: 'Tit for Tat',
+  //   component: (
+  //     <img
+  //       src={
+  //         'https://cdn.discordapp.com/attachments/631289553415700492/685521203217170526/cwx75bn555k41.png'
+  //       }
+  //     />
+  //   ),
+  // },
   {
     path: '/weed-token',
     name: 'Weed Token',

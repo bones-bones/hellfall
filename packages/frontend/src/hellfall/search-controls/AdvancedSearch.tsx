@@ -16,22 +16,18 @@ import {
   ButtonColors,
   inputColors,
 } from '@workday/canvas-kit-react';
-import cardTypes from '@hellfall/shared/data/types.json';
-import creators_data from '@hellfall/shared/data/creators.json';
-import tags_data from '@hellfall/shared/data/tags.json';
-import pips from '@hellfall/shared/data/pips.json';
 
 import { useAtom, useAtomValue } from 'jotai';
 import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useEffect, useState } from 'react';
-import { extraSetList } from '@hellfall/shared/data/sets.ts';
-import { HCSearchColors } from '@hellfall/shared/types';
+import { HCSearchColors, extraSetList } from '@hellfall/shared/types';
 import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
 import { SortComponent } from './SortComponent.tsx';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
 import { normalizeText } from '@hellfall/shared/utils';
+import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');
@@ -234,7 +230,7 @@ export const AdvancedSearch = () => {
     return filters.join(' ');
   };
   const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
-  const pipList = pips.data
+  const pipList = pipsData.data
     .filter(pip => !excludeFiles.some(file => pip.filename.includes(file)))
     .map(pip => '{' + pip.symbol + '}');
 
@@ -261,7 +257,7 @@ export const AdvancedSearch = () => {
           />
           <PillSearch
             label={'Type'}
-            possibleValues={cardTypes.data}
+            possibleValues={typesData.data}
             values={typeSearch}
             onChange={setTypeSearch}
           />
@@ -281,7 +277,7 @@ export const AdvancedSearch = () => {
           />
           <PillSearch
             label={'Creator(s)'}
-            possibleValues={creators_data.data}
+            possibleValues={creatorsData.data}
             values={creators}
             onChange={setCreators}
           />
@@ -293,7 +289,7 @@ export const AdvancedSearch = () => {
           />
           <PillSearch
             label={'Tags'}
-            possibleValues={tags_data.data}
+            possibleValues={tagsData.data}
             values={tags}
             onChange={setTags}
           />

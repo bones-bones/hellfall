@@ -5,14 +5,14 @@ import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
 import { requireAdminAuth } from './lib/requireAdminAuth.js';
 import { recordCardAudit } from '../lib/cardAudit.js';
-import {
-  resolveTagState,
-  tagFieldsForWrite,
-  dedupeOrdered,
-  mergeTags,
-  normalizeTagList,
-  type CardTagOverrides,
-} from '@hellfall/shared/cardTags/cardTagMerge';
+// import {
+//   resolveTagState,
+//   tagFieldsForWrite,
+//   dedupeOrdered,
+//   mergeTags,
+//   normalizeTagList,
+//   type CardTagOverrides,
+// } from '@hellfall/shared/cardTags/cardTagMerge';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const changesetsCol = db.collection(env.FIRESTORE_CHANGESETS_COLLECTION);

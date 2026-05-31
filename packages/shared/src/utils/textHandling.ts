@@ -398,3 +398,5 @@ export const toExportMana = (text: string, isCost: boolean = false) => {
     return text.replaceAll(':[', ':(');
   }
 };
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export const isValidV4UUID = (uuid: string): boolean => uuidRegex.test(uuid);

@@ -9,18 +9,16 @@ import {
   pageAtom,
   // shouldPushHistoryAtom,
 } from '../atoms/searchAtoms.ts';
-import tags_data from '@hellfall/shared/data/tags.json';
 
 import { CHUNK_SIZE } from '../constants.ts';
 import { searchCards } from '@hellfall/shared/filters';
+import { tagsData } from '@hellfall/shared/data';
 
 export const useSearchResults = () => {
   // const navigate = useNavigate()
 
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(
-    e => !e.tags?.includes('offensive') && e.set != 'NotMagic'
-  );
+  const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
   const query = useAtomValue(queryAtom);
   const sortRules = useAtomValue(sortAtom);
   const [page, setPageAtom] = useAtom(pageAtom);
@@ -37,7 +35,7 @@ export const useSearchResults = () => {
   });
 
   useEffect(() => {
-    const tempResults = searchCards(cards, query, tags_data.data);
+    const tempResults = searchCards(cards, query, tagsData.data).cards();
 
     for (let i = sortRules.length - 1; i >= 0; i--) {
       tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortRules[i].filter(a, '=', b));
@@ -58,7 +56,7 @@ export const useSearchResults = () => {
     sortRules,
     // inputSorts,
     page,
-    cards.length,
+    cards.size(),
     // location.search,
   ]);
 

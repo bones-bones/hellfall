@@ -9,7 +9,7 @@ import { useAtomValue } from 'jotai';
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
   const { '*': cardId } = useParams();
-  const entryToRender = cards?.find(e => e.id === cardId);
+  const entryToRender = cards?.find(e => e.hcid === cardId);
   useEffect(() => {
     if (!entryToRender) {
       document.title = `Loading | Hellfall`;
@@ -20,7 +20,7 @@ export const SingleCard = () => {
 
   return (
     <Container>
-      {!cards.length ? (
+      {!cards.size() ? (
         <></>
       ) : !entryToRender ? (
         <h2>Nothing was found...</h2>

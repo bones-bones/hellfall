@@ -17,7 +17,7 @@ export const HCToDraftmancer = (
   idList?: string[],
   draftMode?: 'commander' | 'jumpstart'
 ): { cards: DraftmancerCustomCard[]; tokens: DraftmancerCustomCard[] } => {
-  const { cards: HCCards, tokens: HCTokens } = set
+  const { cards: HCCards, tokens: HCTokens } = set && (cardMap.hasSet(set) || set == 'HC5')
     ? getRelatedsFromSet(set, cardMap, true)
     : idList?.length
     ? getRelatedsFromCards(idList, cardMap)

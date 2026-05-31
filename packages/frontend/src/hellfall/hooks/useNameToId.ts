@@ -1,35 +1,20 @@
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
-import { landNames, textEquals, textListEquals } from '@hellfall/shared/utils';
-import { HCCard } from '@hellfall/shared/types';
+import { CardMap, landNames, textEquals, textListEquals } from '@hellfall/shared/utils';
+import { allExceptNormal, HCCard } from '@hellfall/shared/types';
 import { unescapeText } from '@hellfall/shared/filters';
 
-export const useNameToId = (name: string): string | undefined => {
+export const useNameToHCID = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);
-  const movedIds: Record<string, string> = {
-    '219': '6727',
-    '219b': '6728',
-    '1121': '6729',
-    '1121b': '6730',
-    '1121c': '6731',
-    '1121d': '6732',
-    '1121e': '6733',
-    '2035': '6734',
-    '2035b': '6735',
-  };
-  if (name in movedIds) {
-    return movedIds[name];
-  }
-  const filteredCards = cards.filter(e => e.set != 'NRM');
-  if (name == 'random' && filteredCards.length) {
-    const theId = filteredCards[Math.floor(Math.random() * filteredCards.length)].id;
-    return theId;
+  if (name == 'random') {
+    return cards.getAllInSetListExact(allExceptNormal).getRandomId()
   }
   return (
-    cards.find(card => textEquals(card.id, name))?.id ??
-    cards.find(card => textEquals(card.name, name))?.id ??
-    cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
-    cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
+    cards.get(name)?.hcid ??
+    cards.find(card => textEquals(card.hcid, name))?.hcid ??
+    cards.find(card => textEquals(card.name, name))?.hcid ??
+    cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.hcid ??
+    cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.hcid ??
     cards.find(
       card =>
         'card_faces' in card &&
@@ -37,7 +22,7 @@ export const useNameToId = (name: string): string | undefined => {
           card.card_faces.map(e => e.name),
           name
         )
-    )?.id ??
+    )?.hcid ??
     cards.find(
       card =>
         'card_faces' in card &&
@@ -45,7 +30,7 @@ export const useNameToId = (name: string): string | undefined => {
           card.card_faces.flatMap(e => e.flavor_name ?? []),
           name
         )
-    )?.id
+    )?.hcid
   );
 };
 
@@ -76,34 +61,18 @@ const getFrontExportName = (card: HCCard.Any) => {
   return card.name;
 };
 
-const getRandom = <T = any>(arr: T[]) =>
-  arr.length ? arr[Math.floor(Math.random() * arr.length)] : undefined;
-export const nameToId = (name: string, cards: HCCard.Any[]): string | undefined => {
-  const movedIds: Record<string, string> = {
-    '219': '6727',
-    '219b': '6728',
-    '1121': '6729',
-    '1121b': '6730',
-    '1121c': '6731',
-    '1121d': '6732',
-    '1121e': '6733',
-    '2035': '6734',
-    '2035b': '6735',
-  };
-  if (name in movedIds) {
-    return movedIds[name];
-  }
-  const filteredCards = cards.filter(e => e.set != 'NRM');
-  if (name == 'random' && filteredCards.length > 0) {
-    const theId = filteredCards[Math.floor(Math.random() * filteredCards.length)].id;
-    return theId;
+// const getRandom = <T = any>(arr: T[]) =>
+//   arr.length ? arr[Math.floor(Math.random() * arr.length)] : undefined;
+
+export const nameToId = (name: string, cards: CardMap): string | undefined => {
+  if (name == 'random') {
+    return cards.getAllInSetListExact(allExceptNormal).getRandomId()
   }
   if (textListEquals(landNames, name)) {
-    return getRandom(
-      cards.filter(card => card.set.startsWith('HBB') && textEquals(name, card.name))
-    )?.id;
+    return cards.getAllInSet('HBB').filter(card => textEquals(name, card.name)).getRandomId();
   }
   return (
+    cards.get(name)?.id??
     cards.find(card => card.export_name && textEquals(card.export_name, name))?.id ??
     cards.find(
       card =>
@@ -112,7 +81,7 @@ export const nameToId = (name: string, cards: HCCard.Any[]): string | undefined 
         textEquals(card.card_faces[0].export_name, name)
     )?.id ??
     cards.find(card => 'card_faces' in card && textEquals(getFrontExportName(card), name))?.id ??
-    cards.find(card => textEquals(card.id, name))?.id ??
+    cards.find(card => textEquals(card.hcid, name))?.id ??
     cards.find(card => textEquals(card.name, name))?.id ??
     cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
     cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
@@ -138,7 +107,7 @@ export const nameToId = (name: string, cards: HCCard.Any[]): string | undefined 
     )?.id
   );
 };
-export const useIsId = (id: string): boolean => {
+export const useIsHCID = (id: string): boolean => {
   const cards = useAtomValue(cardsAtom);
-  return !!cards.find(card => card.id == id);
+  return cards.some(card => card.hcid == id);
 };
