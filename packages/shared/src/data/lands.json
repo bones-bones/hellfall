@@ -57,7 +57,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -119,7 +129,23 @@
 				"miracle-frame",
 				"missing-snow-frame",
 				"inverted-text"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"miracle-frame": [
+						"miracle-frame"
+					],
+					"missing-snow-frame": [
+						"missing-snow-frame"
+					],
+					"inverted-text": [
+						"inverted-text"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -180,6 +206,16 @@
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
+			},
+			"tag_state": {
+				"base_tags": {
+					"missing-snow-frame": [
+						"missing-snow-frame"
+					],
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
 			}
 		},
 		{
@@ -235,7 +271,17 @@
 			"tags": [
 				"1997-frame",
 				"no-font"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"no-font": [
+						"no-font"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -291,7 +337,17 @@
 			"tags": [
 				"white-watermark",
 				"missing-snow-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"white-watermark": [
+						"white-watermark"
+					],
+					"missing-snow-frame": [
+						"missing-snow-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -345,7 +401,14 @@
 			"frame": "2003",
 			"tags": [
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -405,6 +468,16 @@
 				"2003-frame",
 				"full-art"
 			],
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			},
 			"all_parts": [
 				{
 					"object": "related_card",
@@ -536,7 +609,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -643,7 +726,17 @@
 			"tags": [
 				"full-art",
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -700,7 +793,17 @@
 			"tags": [
 				"no-art",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -757,7 +860,17 @@
 			"tags": [
 				"full-art",
 				"2015-token-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2015-token-frame": [
+						"2015-token-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -811,7 +924,17 @@
 			"tags": [
 				"1993-frame",
 				"double-border"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"double-border": [
+						"double-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -922,6 +1045,19 @@
 			],
 			"tag_notes": {
 				"jank-frame": "Physical Object"
+			},
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"jank-frame": [
+						"jank-frame<Physical Object>"
+					],
+					"no-border": [
+						"no-border"
+					]
+				}
 			}
 		},
 		{
@@ -982,6 +1118,16 @@
 			],
 			"tag_notes": {
 				"showcase-frame": "Invocation"
+			},
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Invocation>"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
 			}
 		},
 		{
@@ -1038,7 +1184,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1092,7 +1245,17 @@
 			"tags": [
 				"2003-frame",
 				"uses-scryfall-image"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					],
+					"uses-scryfall-image": [
+						"uses-scryfall-image"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1146,7 +1309,17 @@
 			"tags": [
 				"hearthstone-frame",
 				"no-border"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"hearthstone-frame": [
+						"hearthstone-frame"
+					],
+					"no-border": [
+						"no-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1203,7 +1376,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1260,7 +1443,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1313,7 +1506,14 @@
 			"frame": "future",
 			"tags": [
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1367,7 +1567,14 @@
 			"frame": "future",
 			"tags": [
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1420,7 +1627,14 @@
 			"frame": "2015",
 			"tags": [
 				"upside-down"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"upside-down": [
+						"upside-down"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1476,7 +1690,20 @@
 				"black-watermark",
 				"mario",
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"black-watermark": [
+						"black-watermark"
+					],
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1529,7 +1756,14 @@
 			"frame": "future",
 			"tags": [
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1586,7 +1820,17 @@
 			"tags": [
 				"full-art",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1643,7 +1887,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1700,7 +1954,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1754,7 +2018,17 @@
 			"tags": [
 				"mario",
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1808,7 +2082,17 @@
 			"tags": [
 				"mario",
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1863,7 +2147,17 @@
 			"tags": [
 				"mario",
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1917,7 +2211,17 @@
 			"tags": [
 				"mario",
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -1974,7 +2278,14 @@
 			],
 			"tags": [
 				"no-font"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"no-font": [
+						"no-font"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2028,7 +2339,17 @@
 			"tags": [
 				"misframe",
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2081,7 +2402,14 @@
 			"frame": "future",
 			"tags": [
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2138,7 +2466,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2191,7 +2529,14 @@
 			"frame": "future",
 			"tags": [
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2245,7 +2590,17 @@
 			"tags": [
 				"1993-frame",
 				"uses-scryfall-image"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"uses-scryfall-image": [
+						"uses-scryfall-image"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2299,7 +2654,17 @@
 			"tags": [
 				"intentional-low-quality",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"intentional-low-quality": [
+						"intentional-low-quality"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2357,7 +2722,20 @@
 				"low-quality",
 				"no-art",
 				"1997-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"low-quality": [
+						"low-quality"
+					],
+					"no-art": [
+						"no-art"
+					],
+					"1997-frame": [
+						"1997-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2414,7 +2792,17 @@
 			"tags": [
 				"1997-frame",
 				"no-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"no-art": [
+						"no-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2471,7 +2859,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2529,7 +2927,20 @@
 				"jank-frame",
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					],
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2587,7 +2998,20 @@
 				"jank-frame",
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					],
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2643,7 +3067,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2700,7 +3131,17 @@
 			"tags": [
 				"no-art",
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					],
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2757,7 +3198,17 @@
 			"tags": [
 				"no-art",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2811,7 +3262,17 @@
 			"tags": [
 				"comic-sans",
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"comic-sans": [
+						"comic-sans"
+					],
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2868,6 +3329,16 @@
 			],
 			"tag_notes": {
 				"jank-frame": "Physical Object"
+			},
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame<Physical Object>"
+					],
+					"no-border": [
+						"no-border"
+					]
+				}
 			}
 		},
 		{
@@ -2923,7 +3394,20 @@
 				"pokemon-frame",
 				"sharpie",
 				"yellow-border"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon-frame": [
+						"pokemon-frame"
+					],
+					"sharpie": [
+						"sharpie"
+					],
+					"yellow-border": [
+						"yellow-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -2976,7 +3460,14 @@
 			"frame": "2015",
 			"tags": [
 				"misframe"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3038,6 +3529,22 @@
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Omnath, Locus of Creation"
+			},
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"legend-frame": [
+						"legend-frame"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Omnath, Locus of Creation>"
+					]
+				}
 			}
 		},
 		{
@@ -3092,7 +3599,17 @@
 			"tags": [
 				"2003-frame",
 				"upside-down"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					],
+					"upside-down": [
+						"upside-down"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3145,7 +3662,14 @@
 			"frame": "yugioh",
 			"tags": [
 				"yugioh-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3198,7 +3722,14 @@
 			"frame": "yugioh",
 			"tags": [
 				"yugioh-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3251,7 +3782,14 @@
 			"frame": "yugioh",
 			"tags": [
 				"yugioh-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3304,7 +3842,14 @@
 			"frame": "yugioh",
 			"tags": [
 				"yugioh-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3357,7 +3902,14 @@
 			"frame": "yugioh",
 			"tags": [
 				"yugioh-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3401,7 +3953,14 @@
 			"frame": "yugioh",
 			"tags": [
 				"yugioh-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3458,7 +4017,17 @@
 			"tags": [
 				"full-art",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3515,7 +4084,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3572,7 +4151,17 @@
 			"tags": [
 				"full-art",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3628,7 +4217,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3689,6 +4285,19 @@
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Forest #280 from ZNR"
+			},
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Forest #280 from ZNR>"
+					]
+				}
 			}
 		},
 		{
@@ -3743,7 +4352,17 @@
 			"tags": [
 				"low-quality",
 				"1997-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"low-quality": [
+						"low-quality"
+					],
+					"1997-frame": [
+						"1997-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3799,7 +4418,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3855,7 +4481,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3911,7 +4544,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -3967,7 +4607,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4023,7 +4670,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4081,7 +4735,20 @@
 				"full-art",
 				"no-font",
 				"misframe"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"no-font": [
+						"no-font"
+					],
+					"misframe": [
+						"misframe"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4137,7 +4804,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4193,7 +4867,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4246,7 +4927,14 @@
 			"frame": "yugioh",
 			"tags": [
 				"yugioh-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4299,7 +4987,14 @@
 			"frame": "2003",
 			"tags": [
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4357,7 +5052,17 @@
 			"tags": [
 				"full-art",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4415,7 +5120,20 @@
 				"2015-token-frame",
 				"legend-frame",
 				"misframe"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"2015-token-frame": [
+						"2015-token-frame"
+					],
+					"legend-frame": [
+						"legend-frame"
+					],
+					"misframe": [
+						"misframe"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4471,7 +5189,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4517,7 +5242,17 @@
 			"tags": [
 				"misframe",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4570,7 +5305,14 @@
 			"frame": "1997",
 			"tags": [
 				"1997-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4624,7 +5366,17 @@
 			"tags": [
 				"misframe",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -4683,6 +5435,13 @@
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
+			},
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
 			}
 		},
 		{
@@ -4742,6 +5501,13 @@
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
+			},
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
 			}
 		},
 		{
@@ -4801,6 +5567,13 @@
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
+			},
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
 			}
 		},
 		{
@@ -4860,6 +5633,13 @@
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
+			},
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
 			}
 		},
 		{
@@ -4919,6 +5699,13 @@
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
+			},
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
 			}
 		},
 		{
@@ -4969,6 +5756,13 @@
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
+			},
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
 			}
 		},
 		{
@@ -5014,7 +5808,17 @@
 			"tags": [
 				"misframe",
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5122,7 +5926,20 @@
 				"full-art",
 				"borderless",
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					],
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5175,7 +5992,14 @@
 			"frame": "2015",
 			"tags": [
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5228,7 +6052,14 @@
 			"frame": "2015",
 			"tags": [
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5286,7 +6117,20 @@
 				"full-art",
 				"borderless",
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					],
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5339,7 +6183,14 @@
 			"frame": "2015",
 			"tags": [
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5397,7 +6248,20 @@
 				"full-art",
 				"borderless",
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					],
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5450,7 +6314,14 @@
 			"frame": "2015",
 			"tags": [
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5503,7 +6374,14 @@
 			"frame": "2015",
 			"tags": [
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5556,7 +6434,14 @@
 			"frame": "2015",
 			"tags": [
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5609,7 +6494,14 @@
 			"frame": "2015",
 			"tags": [
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5662,7 +6554,14 @@
 			"frame": "2015",
 			"tags": [
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5715,7 +6614,14 @@
 			"frame": "2015",
 			"tags": [
 				"pokemon"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5772,7 +6678,17 @@
 			"tags": [
 				"future-frame",
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5829,7 +6745,17 @@
 			"tags": [
 				"future-frame",
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -5882,7 +6808,14 @@
 			"frame": "future",
 			"tags": [
 				"future-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6246,6 +7179,16 @@
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Snow-Covered Island #278 from KHM"
+			},
+			"tag_state": {
+				"base_tags": {
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Snow-Covered Island #278 from KHM>"
+					]
+				}
 			}
 		},
 		{
@@ -6300,7 +7243,14 @@
 			"frame": "2003",
 			"tags": [
 				"2003-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6406,7 +7356,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6463,7 +7420,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6524,6 +7491,13 @@
 			],
 			"tag_notes": {
 				"showcase-frame": "Viking"
+			},
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Viking>"
+					]
+				}
 			}
 		},
 		{
@@ -6581,7 +7555,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6688,7 +7672,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6744,7 +7735,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6802,7 +7800,20 @@
 				"sideways",
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"sideways": [
+						"sideways"
+					],
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6860,7 +7871,17 @@
 			"tags": [
 				"1997-frame",
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6919,7 +7940,20 @@
 				"full-art",
 				"jank-frame",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"jank-frame": [
+						"jank-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -6974,7 +8008,17 @@
 			"tags": [
 				"website-app-frame",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7032,7 +8076,20 @@
 				"full-art",
 				"jank-frame",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"jank-frame": [
+						"jank-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7086,7 +8143,17 @@
 			"tags": [
 				"website-app-frame",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7142,7 +8209,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7195,7 +8269,14 @@
 			"frame": "2015",
 			"tags": [
 				"intentional-low-quality"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"intentional-low-quality": [
+						"intentional-low-quality"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7304,7 +8385,17 @@
 			"tags": [
 				"1997-frame",
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7357,7 +8448,14 @@
 			"frame": "jank",
 			"tags": [
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7417,6 +8515,22 @@
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Tropical Island"
+			},
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"double-border": [
+						"double-border"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Tropical Island>"
+					]
+				}
 			}
 		},
 		{
@@ -7470,7 +8584,14 @@
 			"frame": "jank",
 			"tags": [
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7573,7 +8694,14 @@
 			"frame": "jank",
 			"tags": [
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7629,7 +8757,14 @@
 			],
 			"tags": [
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7695,6 +8830,31 @@
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Plains #306 from 40K"
+			},
+			"tag_state": {
+				"base_tags": {
+					"inverted-colors": [
+						"inverted-colors"
+					],
+					"inverted-text": [
+						"inverted-text"
+					],
+					"white-border": [
+						"white-border"
+					],
+					"ub-frame": [
+						"ub-frame"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Plains #306 from 40K>"
+					],
+					"white-watermark": [
+						"white-watermark"
+					]
+				}
 			}
 		},
 		{
@@ -7754,7 +8914,20 @@
 				"sideways",
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"sideways": [
+						"sideways"
+					],
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7808,7 +8981,17 @@
 			"tags": [
 				"intentional-low-quality",
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"intentional-low-quality": [
+						"intentional-low-quality"
+					],
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7866,7 +9049,17 @@
 			"tags": [
 				"1997-frame",
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7921,7 +9114,17 @@
 			"tags": [
 				"unusual-proportions",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"unusual-proportions": [
+						"unusual-proportions"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -7981,6 +9184,25 @@
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Black Lotus"
+			},
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"double-border": [
+						"double-border"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Black Lotus>"
+					],
+					"sharpie": [
+						"sharpie"
+					]
+				}
 			}
 		},
 		{
@@ -8039,7 +9261,20 @@
 				"no-art",
 				"2003-frame",
 				"phyrexian-text"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					],
+					"phyrexian-text": [
+						"phyrexian-text"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8096,7 +9331,17 @@
 			"tags": [
 				"full-art",
 				"unique-border"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"unique-border": [
+						"unique-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8153,7 +9398,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8213,6 +9468,22 @@
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Blood Moon"
+			},
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					],
+					"misframe": [
+						"misframe"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Blood Moon>"
+					]
+				}
 			}
 		},
 		{
@@ -8267,7 +9538,17 @@
 			"tags": [
 				"website-app-frame",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8325,6 +9606,19 @@
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Urza's Tower d from ATQ"
+			},
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Urza's Tower d from ATQ>"
+					]
+				}
 			}
 		},
 		{
@@ -8378,7 +9672,14 @@
 			"frame": "yugioh",
 			"tags": [
 				"yugioh-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8436,7 +9737,17 @@
 			"tags": [
 				"1997-frame",
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8490,7 +9801,17 @@
 			"tags": [
 				"website-app-frame",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8547,7 +9868,17 @@
 			"tags": [
 				"monochrome",
 				"no-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"monochrome": [
+						"monochrome"
+					],
+					"no-art": [
+						"no-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8601,7 +9932,14 @@
 			"frame": "jank",
 			"tags": [
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8655,7 +9993,14 @@
 			"frame": "jank",
 			"tags": [
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8708,7 +10053,14 @@
 			"frame": "jank",
 			"tags": [
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8762,7 +10114,17 @@
 			"tags": [
 				"website-app-frame",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8871,7 +10233,17 @@
 			"tags": [
 				"1997-frame",
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8925,7 +10297,17 @@
 			"tags": [
 				"jank-frame",
 				"no-border"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					],
+					"no-border": [
+						"no-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -8978,7 +10360,14 @@
 			"frame": "jank",
 			"tags": [
 				"jank-frame"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -9033,7 +10422,17 @@
 			"tags": [
 				"website-app-frame",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -9124,7 +10523,17 @@
 			"tags": [
 				"1997-frame",
 				"full-art"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -9173,6 +10582,16 @@
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Encroaching Wastes"
+			},
+			"tag_state": {
+				"base_tags": {
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Encroaching Wastes>"
+					]
+				}
 			}
 		},
 		{
@@ -9222,7 +10641,17 @@
 			"tags": [
 				"full-art",
 				"borderless"
-			]
+			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
@@ -9281,6 +10710,13 @@
 			"tags": [
 				"no-art"
 			],
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					]
+				}
+			},
 			"all_parts": [
 				{
 					"object": "related_card",
@@ -9462,6 +10898,16 @@
 				"1993-frame",
 				"double-border"
 			],
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"double-border": [
+						"double-border"
+					]
+				}
+			},
 			"all_parts": [
 				{
 					"object": "related_card",
@@ -9577,6 +11023,16 @@
 				"full-art",
 				"borderless"
 			],
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			},
 			"all_parts": [
 				{
 					"object": "related_card",
