@@ -1,5 +1,4 @@
 import type { HCCard } from '@hellfall/shared/types';
-import { readDataJson } from '../lib/loadDataFiles.ts';
 import { CardMap } from '@hellfall/shared/utils';
 import { cardsData } from '@hellfall/shared/data';
 

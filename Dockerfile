@@ -29,8 +29,7 @@ ENV DATA_DIR=/app/data
 RUN npm install @google-cloud/firestore@7 dotenv@16 xmldom@0.6.0
 
 COPY --from=builder /app/packages/server/dist/server.mjs ./
-COPY --from=builder /app/packages/shared/src/data/Hellscube-Database.json /app/data/
-COPY --from=builder /app/packages/shared/src/data/tags.json /app/data/
+COPY --from=builder /app/packages/shared/src/data/*.json /app/data/
 
 EXPOSE 8080
 CMD ["node", "server.mjs"]

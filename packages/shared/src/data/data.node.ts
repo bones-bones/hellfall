@@ -11,8 +11,14 @@ export interface JsonDataWrapper<T> {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+function resolveDataDir(): string {
+  const fromEnv = process.env.DATA_DIR?.trim();
+  if (fromEnv) return fromEnv;
+  return __dirname;
+}
+
 function loadJsonFileSync<T>(filename: string): JsonDataWrapper<T> {
-  const filePath = join(__dirname, filename);
+  const filePath = join(resolveDataDir(), filename);
   const content = fs.readFileSync(filePath, 'utf-8');
   return JSON.parse(content);
 }
