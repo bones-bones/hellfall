@@ -37,22 +37,40 @@ export enum HCFrame {
   Hearthstone = 'hearthstone',
   /** Any cards with a lorcana frame. */
   Lorcana = 'lorcana',
+  /** Any cards with a balatro frame. */
+  Balatro = 'balatro',
+  /** Any cards with a tarot frame. */
+  Tarot = 'tarot',
   /** Any cards with a notmagic game frame that isn't covered by another frame. */
   NotMagic = 'notmagic',
   /** Any cards with a website or app frame. */
   WebsiteApp = 'website_app',
 }
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
-export const NewFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.FullToken, HCFrame.StampToken];
-export const NotMagicFrames: HCFrame[] = [
-  HCFrame.Pokemon,
-  HCFrame.Yugioh,
-  HCFrame.LegendsOfRuneterra,
-  HCFrame.SlayTheSpire,
-  HCFrame.Inscryption,
-  HCFrame.Hearthstone,
-  HCFrame.Lorcana,
-  HCFrame.NotMagic,
+export const RetroCardFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic];
+export const RetroTokenFrames: HCFrame[] = [HCFrame.ClassicToken];
+export const EffectFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.StampToken, HCFrame.FullToken];
+export const NewFrames: HCFrame[] = [
+  HCFrame.Modern,
+  HCFrame.Stamp,
+  HCFrame.Future,
+  HCFrame.Playtest,
+  HCFrame.Shattered,
+  HCFrame.ModernToken,
+  HCFrame.StampToken,
+  HCFrame.FullToken,
+];
+export const NewCardFrames: HCFrame[] = [
+  HCFrame.Modern,
+  HCFrame.Stamp,
+  HCFrame.Future,
+  HCFrame.Playtest,
+  HCFrame.Shattered,
+];
+export const NewTokenFrames: HCFrame[] = [
+  HCFrame.ModernToken,
+  HCFrame.StampToken,
+  HCFrame.FullToken,
 ];
 export const CardFrames: HCFrame[] = [
   HCFrame.Original,
@@ -61,14 +79,38 @@ export const CardFrames: HCFrame[] = [
   HCFrame.Stamp,
   HCFrame.Future,
   HCFrame.Playtest,
-  HCFrame.Jank,
-  ...NotMagicFrames,
+  HCFrame.Shattered,
 ];
 export const TokenFrames: HCFrame[] = [
   HCFrame.ClassicToken,
   HCFrame.ModernToken,
   HCFrame.StampToken,
   HCFrame.FullToken,
-  HCFrame.Jank,
-  ...NotMagicFrames,
+];
+
+export const MagicFrames: HCFrame[] = [
+  HCFrame.Original,
+  HCFrame.Classic,
+  HCFrame.Modern,
+  HCFrame.Stamp,
+  HCFrame.Future,
+  HCFrame.Playtest,
+  HCFrame.Shattered,
+  HCFrame.ClassicToken,
+  HCFrame.ModernToken,
+  HCFrame.StampToken,
+  HCFrame.FullToken,
+];
+
+export const NotMagicFrames: HCFrame[] = [
+  HCFrame.Pokemon,
+  HCFrame.Yugioh,
+  HCFrame.LegendsOfRuneterra,
+  HCFrame.SlayTheSpire,
+  HCFrame.Inscryption,
+  HCFrame.Hearthstone,
+  HCFrame.Lorcana,
+  HCFrame.Balatro,
+  HCFrame.Tarot,
+  HCFrame.NotMagic,
 ];

@@ -34,7 +34,14 @@ import {
   CompFilter,
 } from './filterObject';
 import { filterIncludeExtras, filterSetBoth, filterSetCard, filterSetToken } from './filterSet';
-import { filterArtist, filterEmpty, filterId, filterTag, filterTextList } from './filterText';
+import {
+  filterArtist,
+  filterEmpty,
+  filterId,
+  filterOracleId,
+  filterTag,
+  filterTextList,
+} from './filterText';
 import {
   colorFilterMaker,
   compFilterMaker,
@@ -82,6 +89,7 @@ import {
   toNumber,
 } from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
+import { filterKind } from './values';
 
 export const makeIncludeFilter: includeFilterMaker = (value: string, op: looseOpType) => {
   return new IncludeFilter('include', filterIncludeExtras, value, op, '=');
@@ -159,7 +167,29 @@ export const makeIDFilter: filterMaker = (value: string, op: looseOpType) => {
     value,
     op,
     '=',
-    card => card.id
+    card => card.hcid
+  );
+};
+
+export const makeOracleIDFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new PassThroughSummaryFilter<string, string>(
+    'oracleid',
+    filterOracleId,
+    value,
+    op,
+    '=',
+    card => card.oracle_id
+  );
+};
+
+export const makeKindFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new PassThroughSummaryFilter<string, string>(
+    'kind',
+    filterKind,
+    value,
+    op,
+    '=',
+    card => card.kind
   );
 };
 
@@ -907,6 +937,8 @@ export const makeSort: sortMaker = (sort: sortType, dir: dirType) => {
 
 const filterNames = [
   'id',
+  'oracleid',
+  'kind',
   'name',
   'mana',
   'type',
@@ -998,6 +1030,7 @@ export const equivFilterNames: Record<string, filterNameType> = {
   collector: 'number',
   collectornumber: 'number',
   mv: 'manavalue',
+  cmc: 'manavalue',
   pow: 'power',
   tou: 'toughness',
   tough: 'toughness',
@@ -1028,6 +1061,8 @@ export const equivFilterNames: Record<string, filterNameType> = {
 
 export const filters: Record<filterNameType, filterMaker> = {
   id: makeIDFilter,
+  oracleid: makeOracleIDFilter,
+  kind: makeKindFilter,
   name: makeNameFilter,
   mana: makeCostFilter,
   type: makeTypeFilter,

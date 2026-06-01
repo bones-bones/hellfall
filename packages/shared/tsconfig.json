@@ -11,7 +11,7 @@
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "bundler",
-    "resolveJsonModule": true,
+    "resolveJsonModule": false,
     "outDir": "dist",
     "isolatedModules": false,
     "types": ["node"],
@@ -25,5 +25,6 @@
     "composite": true,
     "noErrorTruncation": true
   },
-  "include": ["src/**/*", "src/**/*.json"]
+  "include": ["src/**/*", "src/**/*.ts", "src/**/*.d.ts"],
+  "exclude": ["src/data/*.json"]
 }

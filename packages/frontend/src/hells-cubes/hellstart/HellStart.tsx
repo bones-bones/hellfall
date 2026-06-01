@@ -2,7 +2,6 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../../hellfall/atoms/cardsAtom.ts';
 import styled from '@emotion/styled';
 import { HCCard } from '@hellfall/shared/types';
-import { getFilteredSet } from '@hellfall/shared/filters';
 import { HellfallEntry } from '../../hellfall/HellfallEntry.tsx';
 import { ActiveCardPanel } from '../../hellfall/ActiveCardPanel.tsx';
 import { activeCardAtom } from '../../hellfall/atoms/searchAtoms.ts';
@@ -48,7 +47,7 @@ export const HellStart = () => {
       <br />
       <h1 style={{ lineHeight: 0.5 }}>Packs</h1>
       <div>
-        {getFilteredSet(cards, 'FHCJ').map(entry => (
+        {cards.getAllInSet('FHCJ').mapToArray(entry => (
           <HCJPackDisplay key={entry.tags?.[0]} entry={entry} />
         ))}
       </div>

@@ -1,33 +1,38 @@
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 import { AddCards, DraftEffect, DraftmancerCustomCard, SimpleDraftEffectList } from './draftTypes';
-import { compressHCCardFaces, getRelatedsFromCards, toFaces } from '../cardHandling';
-import { getFilteredSet } from '@hellfall/shared/filters';
+import {
+  CardMap,
+  compressHCCardFaces,
+  getRelatedsFromCards,
+  getRelatedsFromSet,
+  hasTokenHCID,
+  toFaces,
+} from '../cardHandling';
 import { HCCardToDraftmancerCard, StickerSheetScryfallIds } from './HCToDraftCard';
 import { stripSingleSlashes } from '../textHandling';
 
 export const HCToDraftmancer = (
-  cardList: HCCard.Any[],
-  allCards: HCCard.Any[],
+  cardMap: CardMap,
+  set?: SetCode,
+  idList?: string[],
   draftMode?: 'commander' | 'jumpstart'
 ): { cards: DraftmancerCustomCard[]; tokens: DraftmancerCustomCard[] } => {
-  const { cards: HCCards, tokens: HCTokens } = getRelatedsFromCards(cardList, allCards, true);
-  const intcards =
-    draftMode == 'jumpstart'
-      ? getFilteredSet(allCards, 'FHCJ')
-      : HCCards.map(card => compressHCCardFaces(card));
-  const inttokens =
-    draftMode == 'jumpstart'
-      ? HCCards.map(card => compressHCCardFaces(card))
-          .concat(HCTokens.map(token => compressHCCardFaces(token)))
-          .filter(card => card.set != 'FHCJ')
-      : HCTokens.map(token => compressHCCardFaces(token));
+  const { cards: HCCards, tokens: HCTokens } =
+    set && (cardMap.hasSet(set) || set == 'HC5')
+      ? getRelatedsFromSet(set, cardMap, true)
+      : idList?.length
+      ? getRelatedsFromCards(idList, cardMap)
+      : { cards: cardMap, tokens: new CardMap() };
+  const draftCards = HCCards.map(card => compressHCCardFaces(card));
+  const draftTokens = HCTokens.map(card => compressHCCardFaces(card));
 
-  const getExportNameFromId = (id: string): string | undefined => {
-    const related = intcards.find(c => c.id == id) ?? inttokens.find(c => c.id == id);
+  const getExportNameFromId = (id: string | undefined): string | undefined => {
+    if (!id) return;
+    const related = draftCards.get(id) ?? draftTokens.get(id);
     if (related) {
       return stripSingleSlashes(
-        toFaces(related)[0].export_name ||
-          (related.isActualToken ? related.id : toFaces(related)[0].name)
+        toFaces(related)[0].export_name ??
+          (hasTokenHCID(related) ? related.hcid : toFaces(related)[0].name)
       );
     }
   };
@@ -49,7 +54,7 @@ export const HCToDraftmancer = (
         });
     }
     // handle \_\_\_\_\_\_\_ Balls
-    if (card.id == '2136') {
+    if (card.hcid == '2136') {
       draftpartnerNameList.push(...StickerSheetScryfallIds);
     }
     if (draftpartnerNameList.length) {
@@ -69,15 +74,13 @@ export const HCToDraftmancer = (
   };
 
   const getRelatedList = (card: HCCard.Any): string[] | undefined => {
-    const relatedList = card.all_parts?.flatMap(part =>
-      part.id ? getExportNameFromId(part.id) ?? [] : part.name
-    );
+    const relatedList = card.all_parts?.flatMap(part => getExportNameFromId(part.id) ?? []);
     if (relatedList && relatedList.length) {
       return relatedList;
     }
   };
 
-  const tokens = inttokens.map(card => {
+  const tokens = draftTokens.mapToArray(card => {
     const draftCard = HCCardToDraftmancerCard(card);
     const related = getRelatedList(card);
     if (related) {
@@ -90,7 +93,7 @@ export const HCToDraftmancer = (
     return draftCard;
   });
 
-  const cards = intcards.map(card => {
+  const cards = draftCards.mapToArray(card => {
     const draftCard = HCCardToDraftmancerCard(card);
     const related = getRelatedList(card);
     if (related) {

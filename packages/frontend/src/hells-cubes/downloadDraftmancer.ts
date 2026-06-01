@@ -1,21 +1,22 @@
-import { toDraftmancerCube } from '@hellfall/shared/utils';
-import { HCCard } from '@hellfall/shared/types';
+import { CardMap, toDraftmancerCube } from '@hellfall/shared/utils';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 
 export const downloadDraftmancer = ({
   name,
   set,
-  cardList,
-  allCards,
+  idList,
+  cardMap,
 }: {
   name: string;
-  set: string;
-  cardList: HCCard.Any[];
-  allCards: HCCard.Any[];
+  set: SetCode;
+  idList?: string[];
+  cardMap: CardMap;
 }) => {
   const val = toDraftmancerCube({
     name,
-    cardList,
-    allCards,
+    set,
+    idList,
+    cardMap,
     draftMode: set == 'HC6' ? 'commander' : set == 'HCJ' ? 'jumpstart' : undefined,
   });
 

@@ -1,5 +1,4 @@
 import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
-import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import {
   includeFilter,
   inclusionOptions,
@@ -8,8 +7,8 @@ import {
   opType,
   cardStringFilter,
 } from './types';
-import { funcOp, opIsNegative, opToNot } from './filterUtils';
-import { textSearchIncludes } from '@hellfall/shared/utils';
+import { funcOp, opToNot } from './filterUtils';
+import { canBeInDecks, extraSetList, textSearchIncludes } from '@hellfall/shared/utils';
 
 export const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',
@@ -42,9 +41,9 @@ export const filterIncludeExtras: includeFilter = Object.assign(
       case 'extras':
         return extraSetList.includes(value1.set);
       case 'extracards':
-        return extraSetList.includes(value1.set) && !value1.isActualToken;
+        return extraSetList.includes(value1.set) && canBeInDecks(value1);
       case 'tokens':
-        return value1.isActualToken;
+        return !canBeInDecks(value1);
       case 'nonextras':
         return !extraSetList.includes(value1.set);
       case 'vetoed':
@@ -97,7 +96,7 @@ export const filterSetToken: cardStringFilter = Object.assign(
           return true;
         }
       }
-      return !value2.length && token.isActualToken;
+      return !value2.length && value1.kind != 'card';
     };
     return funcOp(operator, tokenInSet, value1);
   },
@@ -116,64 +115,3 @@ export const filterSetBoth: cardStringFilter = Object.assign(
     toSummary: (operator: opType, value: string) => `the block is ${opToNot(operator)} "${value}"`,
   }
 );
-
-/**
- * Filters cards based on specified sets
- * @param cards cards to filter
- * @param sets sets to filter for
- * @param extraSets extra sets to filter for
- * @param includeExtraSets whether to hide extra sets by default
- * @param mode whether to fetch only cards in the sets, only tokens made by cards in the sets, or both
- * @returns
- */
-export const getFilteredSet = (cards: HCCard.Any[], set: string): HCCard.Any[] => {
-  return cards.filter(card => filterSetCard(card, '=', set));
-};
-
-/**
- * Get a set split into cards and tokens.
- * @param allCards The list of all cards
- * @param set The set to get
- * @param moveNonDraftablesToTokens Whether to move cards that aren't directly draftable to the tokens section
- * @returns
- */
-export const getSplitSet = (
-  allCards: HCCard.Any[],
-  set: string,
-  moveNonDraftablesToTokens: boolean = false
-): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
-  const filteredCards = allCards.filter(card =>
-    set == 'All' ? true : filterSetBoth(card, '=', set)
-  );
-  const cards = filteredCards.filter(
-    entry =>
-      (entry.set.includes(set) || set == 'All') &&
-      !(moveNonDraftablesToTokens && entry.not_directly_draftable)
-  );
-  const tokens = filteredCards.filter(
-    entry =>
-      !(entry.set.includes(set) || set == 'All') ||
-      (moveNonDraftablesToTokens && entry.not_directly_draftable)
-  );
-  return { cards, tokens };
-};
-
-/**
- * Get a list of cards and their tokens.
- * @param allCards The list of all cards
- * @param cardIds The list of card ids to get
- * @returns
- */
-export const getCustomCardlist = (
-  allCards: HCCard.Any[],
-  cardIds: string[]
-): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
-  const cards = allCards.filter(entry => cardIds.includes(entry.id));
-
-  const tokens = allCards.filter(
-    entry =>
-      !cardIds.includes(entry.id) &&
-      cards.some(card => card.all_parts?.some(part => part.id == entry.id))
-  );
-  return { cards, tokens };
-};

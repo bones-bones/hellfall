@@ -10,11 +10,11 @@ Each document is the full card object from JSON, plus tag-merge fields that pres
 
 Each `cards/{cardId}` document contains:
 
-| Field | Source |
-|-------|--------|
-| All card fields | `Hellscube-Database.json` |
-| `baseTags` | JSON `tags` at migrate time (canonical base for future merges) |
-| `tags` | `merge(baseTags, { added, removed })` |
+| Field              | Source                                                          |
+| ------------------ | --------------------------------------------------------------- |
+| All card fields    | `Hellscube-Database.json`                                       |
+| `baseTags`         | JSON `tags` at migrate time (canonical base for future merges)  |
+| `tags`             | `merge(baseTags, { added, removed })`                           |
 | `added`, `removed` | Preserved from the existing Firestore doc (empty arrays if new) |
 
 Re-running migrate refreshes card fields and `baseTags` from JSON, then recomputes `tags` from `baseTags` + existing overrides (`@hellfall/shared/cardTags/cardTagMerge`).
@@ -50,6 +50,7 @@ Bulk migrate does not write per-card audit rows (use Firestore/console logs for 
    ```
 
 2. **Create a Firestore database** in your Firebase/GCP project (Native mode):
+
    - Database ID: `hellscube`
    - Collection (`cards`) is auto-created on first document write.
 
@@ -103,13 +104,13 @@ Run on a machine or CI job with `GOOGLE_APPLICATION_CREDENTIALS` set.
 
 ## Flags
 
-| Flag | Description |
-|------|-------------|
-| `--report` | Counts only, no Firestore writes |
-| `--dry-run` | Summary without writing |
-| `--prune-orphans` | Delete `cards/{id}` docs not present in the JSON |
-| `--db-path <path>` | Alternate JSON path |
-| `--limit <n>` | Migrate only the first *n* cards |
+| Flag               | Description                                      |
+| ------------------ | ------------------------------------------------ |
+| `--report`         | Counts only, no Firestore writes                 |
+| `--dry-run`        | Summary without writing                          |
+| `--prune-orphans`  | Delete `cards/{id}` docs not present in the JSON |
+| `--db-path <path>` | Alternate JSON path                              |
+| `--limit <n>`      | Migrate only the first _n_ cards                 |
 
 ## Notes
 

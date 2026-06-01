@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { usePaginationModel, getLastPage } from '@workday/canvas-kit-react/pagination';
 import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
@@ -8,25 +7,21 @@ import {
   queryAtom,
   sortAtom,
   pageAtom,
-  activeCardAtom,
   // shouldPushHistoryAtom,
 } from '../atoms/searchAtoms.ts';
-import tags_data from '@hellfall/shared/data/tags.json';
 
 import { CHUNK_SIZE } from '../constants.ts';
 import { searchCards } from '@hellfall/shared/filters';
+import { tagsData } from '@hellfall/shared/data';
 
 export const useSearchResults = () => {
   // const navigate = useNavigate()
 
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(
-    e => !e.tags?.includes('offensive') && e.set != 'NotMagic'
-  );
+  const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
   const query = useAtomValue(queryAtom);
   const sortRules = useAtomValue(sortAtom);
   const [page, setPageAtom] = useAtom(pageAtom);
-  const activeCard = useAtomValue(activeCardAtom);
 
   const lastPage = getLastPage(CHUNK_SIZE, resultSet.length);
 
@@ -40,7 +35,7 @@ export const useSearchResults = () => {
   });
 
   useEffect(() => {
-    const tempResults = searchCards(cards, query, tags_data.data);
+    const tempResults = searchCards(cards, query, tagsData.data).cards();
 
     for (let i = sortRules.length - 1; i >= 0; i--) {
       tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortRules[i].filter(a, '=', b));
@@ -61,12 +56,9 @@ export const useSearchResults = () => {
     sortRules,
     // inputSorts,
     page,
-    activeCard,
-    cards.length,
+    cards.size(),
     // location.search,
   ]);
 
   return { resultSet, paginationModel };
 };
-
-// TODO: fix includes

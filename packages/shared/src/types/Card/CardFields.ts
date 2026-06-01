@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 import {
   HCBorderColor,
   HCColors,
@@ -8,6 +9,7 @@ import {
   HCFrameEffect,
   // HCGame,
   HCImageStatus,
+  HCKind,
   // HCImageUris,
   // HCLanguageCode,
   HCLayout,
@@ -19,10 +21,12 @@ import {
   HCRarity,
   // HCRelatedUris,
   // HCSecurityStamp,
+  tagState,
 } from './values';
 
 import { HCCardFace } from './CardFace.ts';
 import { HCRelatedCard } from './RelatedCard.ts';
+import { SetCode } from '../Set/Set.ts';
 // import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType';
 // import { SetType } from "../Set/values";
 
@@ -37,31 +41,38 @@ export namespace HCCardFields.Core {
    */
   export type HCReferences = {
     /**
+     *
      * A unique ID for this card in HC's database.
      *
      * @type UUID
      */
     id: string;
     /**
-     * A unique oracle ID for this card in Scryfall's database, if it exists
-     * (This is for the card in general)
-     *
-     * @type UUID
+     * whether the card has a scryfall id
      */
-    oracle_id?: string;
+    id_is_scryfall?: boolean;
     /**
-     * A unique ID for this card in Scryfall's database, if it exists
-     * (This is for the specific printing)
+     *
+     * A unique ID for this card's oracle identity.
+     * This value is consistent across reprinted card editions, and unique among different cards with the same name (tokens, Unstable variants, etc).
      *
      * @type UUID
      */
-    scryfall_id?: string;
+    oracle_id: string;
+    /**
+     * whether the card has a scryfall oracle id
+     */
+    oracle_id_is_scryfall?: boolean;
     /**
      * A code for this card's layout. TODO: rework
      *
      * @see {@link https://scryfall.com/docs/api/layouts}
      */
-    // layout: `${HCLayout}`;
+    /**
+     * the old unique ID for this card in HC's database.
+     */
+    hcid: string;
+    // layout: HCLayout;
     /**
      * All rulings for the card.
      */
@@ -91,15 +102,24 @@ export namespace HCCardFields.Core {
      */
     tag_notes?: Record<string, string>;
     /**
+     * The tag state of this card (with notes stored unformatted).
+     */
+    tag_state?: tagState;
+    /**
      * Stable Firestore-friendly ID for tokens, sourced from the token sheet.
      * Stored in Firestore as `token-<token_id>`.
+     * remove soon
      */
-    token_id?: string;
+    // token_id?: string;
     /**
-     * Whether this card is an actual token (TODO: replace with type-based checks)
+     * Whether this card is an actual token (replaced with kind)
      */
-    isActualToken?: boolean;
-    layout: `${HCLayout}`;
+    // isActualToken?: boolean;
+    /**
+     * Kind of card
+     */
+    kind: HCKind;
+    layout: HCLayout;
   };
 }
 
@@ -174,7 +194,7 @@ export namespace HCCardFields.Gameplay {
     type_line: string;
     mana_cost: string;
     mana_value: number;
-    layout: `${HCLayout}`;
+    layout: HCLayout;
     export_name?: string;
   };
 
@@ -236,7 +256,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * The layout of this face
      */
-    layout: `${HCLayout}`;
+    layout: HCLayout;
     /**
      * Whether this face should be compressed on export
      */
@@ -295,7 +315,7 @@ export namespace HCCardFields.Gameplay {
      * The type line of this card.
      */
     type_line: string;
-    layout: `${HCLayout}`;
+    layout: HCLayout;
     /**
      * What name to use when exporting this face
      */
@@ -317,7 +337,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * The layout of this card
      */
-    layout: `${HCLayoutGroup.MultiFacedType}`;
+    layout: HCLayout;
   };
   /**
    * These fields are specific for multiface grid cards. (TODO: fully implement this)
@@ -368,23 +388,23 @@ export namespace HCCardFields.Print {
     /**
      * This card's border color: black, white, borderless, silver, gold, yellow, blue, or rainbow.
      */
-    border_color: `${HCBorderColor}`;
+    border_color: HCBorderColor;
     /**
      * A computer-readable flag that indicate if this card has a foil, nonfoil, or etched finish.
      */
-    finish: `${HCFinish}`;
+    finish: HCFinish;
     /**
      * This card's frame effects, if any.
      */
-    frame_effects?: `${HCFrameEffect}`[];
+    frame_effects?: HCFrameEffect[];
     /**
      * This card's frame layout.
      */
-    frame: `${HCFrame}`;
+    frame: HCFrame;
     /**
      * A computer-readable indicator for the state of this card's image.
      */
-    image_status: `${HCImageStatus}`;
+    image_status: HCImageStatus;
     /**
      * A string with the image for this card.
      */
@@ -396,7 +416,7 @@ export namespace HCCardFields.Print {
     /**
      * A computer-readable indicator for the state of this card's draft image.
      */
-    draft_image_status?: `${HCImageStatus}`;
+    draft_image_status?: HCImageStatus;
     /**
      * A string with the rotated image for this card.
      */
@@ -428,16 +448,16 @@ export namespace HCCardFields.Print {
     /**
      * This card’s rarity.
      */
-    rarity?: `${HCRarity}`;
+    rarity?: HCRarity;
     /**
      * This card's set code.
      */
-    set: string;
+    set: SetCode;
     /**
      * This card's collector number within the set.
      */
-    collector_number?: string;
-  } & VariationInfo;
+    collector_number: string;
+  };
 
   /**
    * These print fields are specific for single face cards.
@@ -447,7 +467,7 @@ export namespace HCCardFields.Print {
     /**
      * A computer-readable indicator for the state of this face's image. If this face doesn't have an image, this also explains why.
      */
-    image_status: `${HCImageStatus}`;
+    image_status: HCImageStatus;
     /**
      * A string with the image for this face, if any.
      */
@@ -467,15 +487,15 @@ export namespace HCCardFields.Print {
     /**
      * The layout of this card.
      */
-    layout: `${HCLayoutGroup.SingleFacedType}`;
+    layout: HCLayout;
     /**
      * This faces's frame effects, if any.
      */
-    frame_effects?: `${HCFrameEffect}`[];
+    frame_effects?: HCFrameEffect[];
     /**
      * This faces's frame layout, if it is different from that of the overall card.
      */
-    frame?: `${HCFrame}`;
+    frame?: HCFrame;
   };
   /**
    * These print fields are specific for a card face.
@@ -487,7 +507,7 @@ export namespace HCCardFields.Print {
     /**
      * A computer-readable indicator for the state of this face's image. If this face doesn't have an image, this also explains why.
      */
-    image_status: `${HCImageStatus}`;
+    image_status: HCImageStatus;
     /**
      * A string with the image for this face, if any.
      */
@@ -515,33 +535,22 @@ export namespace HCCardFields.Print {
     /**
      * The layout of this face.
      */
-    layout: `${HCLayoutGroup.FaceLayoutType}`;
+    layout: HCLayoutGroup.FaceLayoutType;
     /**
      * This faces's frame effects, if any.
      */
-    frame_effects?: `${HCFrameEffect}`[] /**
+    frame_effects?: HCFrameEffect[] /**
     /**
      * This faces's frame layout, if it is different from that of the overall card.
      */;
-    frame?: `${HCFrame}`;
+    frame?: HCFrame;
     /**
      * This card's border color: black, white, borderless, silver, gold, yellow, blue, or rainbow.
      */
-    border_color: `${HCBorderColor}`;
-  };
-
-  type VariationInfo = {
+    border_color?: HCBorderColor;
     /**
-     * Whether this card is a variation of another printing.
+     * A computer-readable flag that indicate if this card has a foil, nonfoil, or etched finish.
      */
-    variation: boolean;
-    /**
-     * The printing ID of the printing this card is a variation of.
-     *
-     * This will only exist if the `variation` field is true.
-     *
-     * @type UUID
-     */
-    variation_of?: string;
+    finish?: HCFinish;
   };
 }

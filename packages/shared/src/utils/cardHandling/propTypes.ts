@@ -15,10 +15,6 @@ export type arrayElementType<K extends propType> = Exclude<valueType<K>, undefin
   ? U
   : never;
 
-type FaceProps = keyof HCCardFace.MultiFaced;
-type CardProps = keyof HCCard.AnySingleFaced;
-type Conflicting = Omit<HCCardFace.MultiFaced, 'object'> & Omit<HCCard.AnySingleFaced, 'object'>;
-
 export type colorPropType = 'colors' | 'color_indicator';
 export type facePropType = keyof HCCardFace.MultiFaced;
 // export type excludeFacePropType = Exclude<facePropType, 'layout'>;
@@ -38,9 +34,20 @@ export type bothType = Omit<
 
 export type bothPropType = keyof bothType;
 // export type excludeFacePropType = Exclude<facePropType, 'layout'>;
-export type bothValueType<K extends bothPropType> = Exclude<bothType[K], undefined> extends Array<
-  infer U
->
+export type bothValueType<K extends bothPropType> = K extends
+  | 'colors'
+  // | ''
+  | 'supertypes'
+  | 'types'
+  | 'subtypes'
+  ? Exclude<bothType[K], undefined>
+  : Exclude<bothType[K], undefined> extends Array<infer U>
+  ? U
+  : Exclude<bothType[K], undefined>;
+
+export type filterBothValueType<K extends bothPropType> = K extends 'colors'
+  ? Exclude<bothType[K], undefined>
+  : Exclude<bothType[K], undefined> extends Array<infer U>
   ? U
   : Exclude<bothType[K], undefined>;
 
@@ -55,14 +62,14 @@ export type allValueType<K extends keyof allType> = Exclude<allType[K], undefine
   ? U
   : Exclude<allType[K], undefined>;
 
-export type cardFaceType = { [F in facePropType]: faceValueType<F> /* & {layout?: HCLayout} */ };
-
-export type cardObjectType = {
-  [K in excludePropType]?: valueType<K>;
-} & {
-  layout?: HCLayout;
-  card_faces: cardFaceType[];
-};
+// export type cardFaceType = { [F in facePropType]: faceValueType<F> /* & {layout?: HCLayout} */ };
+export type faceType = HCCard.AnySingleFaced | HCCardFace.MultiFaced;
+// export type cardObjectType = {
+//   [K in propType]?: valueType<K>;
+// } & {
+// //   layout?: HCLayout;
+// //   card_faces: cardFaceType[];
+// // };
 
 export type partPropType = keyof HCRelatedCard;
 export type partValueType<K extends partPropType> = HCRelatedCard[K];

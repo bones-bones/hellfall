@@ -1,6 +1,6 @@
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { listEquals } from './listHandling';
-import pipsRawData from '@hellfall/shared/data/pips.json';
+import { pipsData } from '@hellfall/shared/data';
 
 const transformPipsData = (data: any[]): HCCardSymbol[] => {
   return data.map(item => {
@@ -32,7 +32,7 @@ const transformPipsData = (data: any[]): HCCardSymbol[] => {
   }) as HCCardSymbol[];
 };
 
-const pips = transformPipsData(pipsRawData.data);
+const pips = transformPipsData(pipsData.data);
 
 /**
  * Gets the pip from pip text (must have had curly braces stripped first)
@@ -63,3 +63,6 @@ export const getPipColorsFromText = (text: string): HCColors[] =>
  */
 export const getMVFromCost = (cost: string): number =>
   getPipsFromText(cost).reduce((totalMV, pip) => totalMV + (pip.mana_value ?? 0), 0);
+
+export const getPipSrc = (name: string) => `/pips/${getPip(name)?.filename}`;
+export const pipToSrc = (pip: HCCardSymbol) => `/pips/${pip.filename}`;

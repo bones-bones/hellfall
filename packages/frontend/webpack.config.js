@@ -1,5 +1,3 @@
-"use strict";
-
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -15,6 +13,9 @@ import ForkTsCheckerWebpackPlugin from "react-dev-utils/ForkTsCheckerWebpackPlug
 import typescriptFormatter from "react-dev-utils/typescriptFormatter.js";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import { createRequire } from "module";
+// Import paths and modules - these are CommonJS modules, so we need to handle them
+import pathsModule from "../../config/paths.js";
+import modulesModule from "../../config/modules.js";
 
 // Get __dirname equivalent in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -25,9 +26,6 @@ const sharedPackageSrc = path.resolve(workspaceRoot, "packages/shared/src");
 const require = createRequire(import.meta.url);
 const { transformHellscubeDatabase } = require("../../config/transformHellscubeDatabase.js");
 
-// Import paths and modules - these are CommonJS modules, so we need to handle them
-import pathsModule from "../../config/paths.js";
-import modulesModule from "../../config/modules.js";
 
 // Handle the imports (in case they're default exports or CommonJS)
 const paths = pathsModule.default || pathsModule;
@@ -84,7 +82,7 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-export default function (webpackEnv) {
+export default function webpackConfig(webpackEnv) {
   const isEnvDevelopment = process.env.NODE_ENV === "development";
   const isEnvProduction = process.env.NODE_ENV === "production";
 
@@ -226,18 +224,37 @@ export default function (webpackEnv) {
         .filter((ext) => useTypeScript || !ext.includes("ts")),
       alias: {
         ...(modules.webpackAliases || {}),
+        '@hellfall/shared/data': path.resolve(__dirname, '../shared/src/data/data.browser.ts'),
         '@hellfall/shared': path.resolve(__dirname, '../shared/src'),
       },
       mainFields: ['browser', 'module', 'main'],
       mainFiles: ['index', 'index.ts', 'index.tsx', 'index.js', 'index.jsx'], // Look for these files in folders
       fullySpecified: false, // Don't require extensions
-      symlinks: true
+      symlinks: true,
+      fallback: {
+        fs: false,
+        path: false,
+        url: false,
+      },
     },
     module: {
       strictExportPresence: true,
       rules: [
         {
           oneOf: [
+                       {
+              test: /\.json$/,
+              type: 'javascript/auto',
+              include: [
+                path.resolve(__dirname, '../shared/src/data'),
+                paths.appSrc,
+              ],
+              use: [
+                {
+                  loader: 'json-loader',
+                },
+              ],
+            },
             {
               test: /\.html$/,
               loader: "html-loader",
@@ -354,8 +371,8 @@ export default function (webpackEnv) {
       new CopyPlugin({
         patterns: [
           {
-            from: path.resolve(sharedPackageSrc, 'data/Hellscube-Database.json'),
-            to: "Hellscube-Database.json",
+            from: path.resolve(sharedPackageSrc, 'data/*.json'),
+            to: "*.json",
             transform(content) {
               const raw = content.toString("utf8");
               const out = transformHellscubeDatabase(raw);
@@ -365,6 +382,10 @@ export default function (webpackEnv) {
           {
             from: "public/pips",
             to: "pips",
+          },
+          {
+            from: "public/sets",
+            to: "sets",
           },
           {
             from: "public/favicon.ico",

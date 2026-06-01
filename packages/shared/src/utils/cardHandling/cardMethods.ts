@@ -1,4 +1,4 @@
-import { HCCard, HCCardFace, HCColors } from '@hellfall/shared/types';
+import { HCCard, HCCardFace, HCColors, SetCode } from '@hellfall/shared/types';
 import { listShareLower } from '../listHandling';
 import { facePropOrder, partPropOrder, propOrder } from './orderProps';
 import { getIndicatorFromColors } from '../pipsHandling';
@@ -9,8 +9,17 @@ import {
   bothType,
   bothValueType,
   colorPropType,
+  filterBothValueType,
 } from './propTypes';
-import { getMasterpiece, getSetCode, stripMasterpiece, stripSetCode } from '../textHandling';
+import {
+  getMasterpiece,
+  getSetCode,
+  stripMasterpiece,
+  stripSetCode,
+  textEquals,
+} from '../textHandling';
+import { CardMap } from './cardMap';
+import { getHc5 } from './getHc5';
 
 /**
  * Converts the card to an array of its faces.
@@ -28,8 +37,6 @@ export const toFaces = (card: HCCard.Any): bothType[] => {
   return [card] as bothType[];
 };
 
-const asArray = <T>(value: T) => {};
-
 /**
  * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
  * @param card card to get the value from
@@ -39,7 +46,7 @@ const asArray = <T>(value: T) => {};
 export const getFromFaces = <K extends bothPropType>(
   card: HCCard.Any,
   prop: K
-): bothValueType<K>[] =>
+): filterBothValueType<K>[] =>
   toFaces(card).flatMap(face =>
     Array.isArray(face[prop]) ? face[prop] : [face[prop] ?? []].flat()
   );
@@ -66,10 +73,10 @@ export const getFromAll = <K extends allPropType>(card: HCCard.Any, prop: K): al
 ];
 
 export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
-  if (card.hasOwnProperty('toJSON')) {
+  if (Object.prototype.hasOwnProperty.call(card, 'toJSON')) {
     return card;
   }
-  const ignoreLeftovers = ['toJSON'];
+  const ignoreLeftovers = ['toJSON', 'kind'];
   Object.defineProperty(card, 'toJSON', {
     value: function (this: Record<string, any>) {
       const ordered: Record<string, any> = {};
@@ -118,7 +125,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
                   shouldBeAtTop(b) - shouldBeAtTop(a)
               )
             : this.all_parts;
-
+        // TODO: add ordering for the parts themselves©
         ordered.all_parts = sortedParts.map((part: Record<string, any>) => {
           const orderedPart: Record<string, any> = {};
           partPropOrder.forEach(prop => {
@@ -252,41 +259,70 @@ export const canBeACommander = (card: HCCard.Any) => {
   );
 };
 
-export const getAllRelated = (card: HCCard.Any, allCards: HCCard.Any[]): HCCard.Any[] =>
-  card.all_parts?.flatMap(part => allCards.find(c => c.id == part.id) ?? []) ?? [];
+/**
+ * This version will also try to match hcid and name, so it's slower, but it's not suitable for use on the frontend
+ */
+export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap =>
+  new CardMap(
+    card.all_parts?.flatMap(
+      part =>
+        cardMap.get(part.id) ??
+        cardMap.find(related => textEquals(part.hcid, related.hcid)) ??
+        cardMap.find(related => textEquals(part.name, related.name)) ??
+        []
+    ) ?? []
+  );
+
+/**
+ * This version won't try to match hcid and name, so it's not suitable for use in hc-transformations.ts
+ */
+export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
+  cardMap.getSubset(card.all_parts?.map(part => part.id) ?? []);
 
 export const getRelatedsFromCards = (
-  cardList: HCCard.Any[],
-  allCards: HCCard.Any[],
-  keepIrrelevantParts?: boolean
-): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
-  const tokens: HCCard.Any[] = [];
-  const cards: HCCard.Any[] = cardList.map(card => {
-    if (!card.all_parts) return card;
-    for (let i = card.all_parts.length - 1; i >= 0; i--) {
-      const part = card.all_parts[i];
-      if (cardList.some(c => c.id == part.id)) {
-        continue;
-      }
-      if (part.component == 'token_maker') {
-        card.all_parts.splice(i, 1);
-        continue;
-      }
-      const token = allCards.find(c => c.id == part.id);
-      if (token && !tokens.find(t => t.id == token.id)) {
-        tokens.push(token);
-      }
-    }
-    return card;
-  });
-  if (!keepIrrelevantParts) {
-    tokens.forEach(token => {
-      if (!token.all_parts) return;
-      for (let i = token.all_parts.length - 1; i >= 0; i--) {
-        const part = token.all_parts[i];
-        if (!cardList.some(c => c.id == part.id) && !tokens.some(t => t.id == part.id)) {
-          token.all_parts.splice(i, 1);
-        }
+  idList: string[],
+  cardMap: CardMap
+): { cards: CardMap; tokens: CardMap } => {
+  // TODO: don't use this for 'all'
+  const cards: CardMap = cardMap.getSubset(idList);
+  const tokens: CardMap = cardMap.getSubset(
+    cards.flatMap(
+      card =>
+        card.all_parts?.flatMap(part =>
+          !cards.has(part.id) && part.component != 'token_maker' ? part.id : []
+        ) ?? []
+    )
+  );
+  return { cards, tokens };
+};
+export const getRelatedsFromSet = (
+  set: SetCode,
+  cardMap: CardMap,
+  moveNonDraftablesToTokens: boolean = false
+): { cards: CardMap; tokens: CardMap } => {
+  if (set == 'HC5') {
+    return { cards: getHc5(), tokens: new CardMap() };
+  }
+  if (set == 'HCJ' && moveNonDraftablesToTokens) {
+    const { cards, tokens } = getRelatedsFromSet(set, cardMap, false);
+    const fronts = cardMap.getAllInSet('FHCJ');
+    cards.setMultiple(tokens);
+    return { cards: fronts, tokens: cards };
+  }
+  const cards: CardMap = cardMap.getAllInSet(set);
+  const tokens: CardMap = cardMap.getSubset(
+    cards.flatMap(
+      card =>
+        card.all_parts?.flatMap(part =>
+          !part.set.includes(set) && part.component != 'token_maker' ? part.id : []
+        ) ?? []
+    )
+  );
+  if (moveNonDraftablesToTokens) {
+    cards.forEach((card: HCCard.Any, id: string) => {
+      if (card.not_directly_draftable) {
+        tokens.set(card);
+        cards.delete(id);
       }
     });
   }

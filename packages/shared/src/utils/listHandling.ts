@@ -107,7 +107,7 @@ export const listEquals = <T = any>(value1: T | T[], value2: T | T[]) => {
 export const removeIntersection = <T = any>(value1: T[], value2: T[]): { set1: T[]; set2: T[] } => {
   const set1 = [...value1];
   const set2 = [...value2];
-  for (let i = value2.length; i > -0; i--) {
+  for (let i = value2.length; i >= 0; i--) {
     const index = set1.indexOf(value2[i]);
     if (index == -1) {
       continue;
@@ -231,4 +231,39 @@ export const listsAreEqual = <T = any>(
     return false;
   }
   return value1.every((value, i) => equals(value, value2[i]));
+};
+
+/**
+ * Correctly deals with pushing a value to an optional property that's a `Record<string,string[]>` by creating the value of the prop first if necessary
+ * @param ob object that has the prop
+ * @param prop prop to push to
+ * @param key key to push to
+ * @param value value to push
+ */
+export const pushPropToRecord = <T = any>(ob: T, prop: keyof T, key: string, value: string) => {
+  if (ob[prop] == undefined) {
+    (ob as any)[prop] = {};
+  }
+  const record = ob[prop] as Record<string, string[]>;
+  if (key in record) {
+    record[key].push(value);
+  } else {
+    record[key] = [value];
+  }
+};
+
+/**
+ * Correctly deals with pushing a value to a `Record<string,string[]>` by creating the value of the prop first if necessary
+ * @param record record
+ * @param key key to push to
+ * @param value value to push
+ */
+export const pushToRecord = (record: Record<string, string[]>, key: string, value: string) => {
+  if (key in record) {
+    if (!record[key].includes(value)) {
+      record[key].push(value);
+    }
+  } else {
+    record[key] = [value];
+  }
 };

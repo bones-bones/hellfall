@@ -8,7 +8,6 @@ const docRef = db.collection('cards');
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
   for await (const chunk of req) chunks.push(chunk);
-  // @ts-ignore
   const body = Buffer.concat(chunks).toString('utf-8');
   return body ? JSON.parse(body) : {};
 }

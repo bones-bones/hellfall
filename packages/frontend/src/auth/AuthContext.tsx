@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { getAuthApiUrl } from './getAuthApiUrl';
 import type { AuthState, AuthUser } from './types';
 

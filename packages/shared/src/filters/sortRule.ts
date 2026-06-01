@@ -1,4 +1,4 @@
-import { HCCard, HCColor } from '@hellfall/shared/types';
+import { HCCard, HCColor, HCKind, allSetsList } from '@hellfall/shared/types';
 import {
   sorts,
   dirType,
@@ -9,7 +9,7 @@ import {
   sortFilter,
   sortType,
 } from './types';
-import { allSetsList } from '@hellfall/shared/data/sets.ts';
+import { hasTokenHCID } from '../utils';
 
 const colorSortValue: Record<HCColor, number> = {
   W: 1,
@@ -34,7 +34,7 @@ const toColorNumber = (card: HCCard.Any) =>
   card.colors.map(color => colorSortValue[color]).reduce((total, curr) => total + curr, 0) ||
   colorSortValue['C'];
 
-const toTokenNumber = (card: HCCard.Any) => parseInt(card.id.replace(card.name, ''));
+const toTokenNumber = (card: HCCard.Any) => parseInt(card.hcid.replace(card.name, ''));
 
 export const filterSort: sortFilter = Object.assign(
   function (this: sortFilter, value1: HCCard.Any, operator: looseOpType, value2: HCCard.Any) {
@@ -54,10 +54,10 @@ export const filterSort: sortFilter = Object.assign(
       }
       case 'number': {
         if (!value1.collector_number && !value2.collector_number) {
-          if (parseInt(value1.id) == parseInt(value2.id)) {
-            return (value1.id.charCodeAt(-1) - value2.id.charCodeAt(-1)) * dirMult;
+          if (parseInt(value1.hcid) == parseInt(value2.hcid)) {
+            return (value1.hcid.charCodeAt(-1) - value2.hcid.charCodeAt(-1)) * dirMult;
           }
-          return (parseInt(value1.id) - parseInt(value2.id)) * dirMult;
+          return (parseInt(value1.hcid) - parseInt(value2.hcid)) * dirMult;
         }
         if ('collector_number' in value1 != 'collector_number' in value2) {
           return 'collector_number' in value1 ? -dirMult : dirMult;
@@ -65,16 +65,20 @@ export const filterSort: sortFilter = Object.assign(
         return (parseInt(value1.collector_number!) - parseInt(value2.collector_number!)) * dirMult;
       }
       case 'id': {
-        if (!value1.isActualToken && !value2.isActualToken) {
-          return (parseInt(value1.id) - parseInt(value2.id)) * dirMult;
+        if (value1.kind != value2.kind) {
+          return Object.values(HCKind).indexOf(value1.kind);
         }
-        if (value1.isActualToken != value2.isActualToken) {
-          return value1.isActualToken ? -dirMult : dirMult;
+        if (value1.kind == 'card' && value2.kind == 'card') {
+          return (parseInt(value1.hcid) - parseInt(value2.hcid)) * dirMult;
+        }
+
+        if ((value1.kind == 'token' || value2.kind == 'token') && value1.kind != value2.kind) {
+          return value1.kind == 'token' ? -dirMult : dirMult;
         }
         if (value1.name == value2.name) {
           return (toTokenNumber(value1) - toTokenNumber(value2)) * dirMult;
         }
-        return value1.id < value2.id ? -dirMult : dirMult;
+        return value1.hcid < value2.hcid ? -dirMult : dirMult;
       }
       case 'name': {
         if (value1.name == value2.name) {
@@ -84,7 +88,7 @@ export const filterSort: sortFilter = Object.assign(
       }
       case 'set':
         return (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
-      case 'setnumber':
+      case 'setnumber': {
         const set = (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
         if (!set) {
           if (!value1.collector_number && !value2.collector_number) {
@@ -102,6 +106,7 @@ export const filterSort: sortFilter = Object.assign(
         } else {
           return set;
         }
+      }
     }
     return 0; // just in case
   },

@@ -2,7 +2,11 @@
 	"data": [
 		{
 			"object": "card",
-			"id": "L1",
+			"kind": "land",
+			"id": "5a4ead92-de4c-4695-9026-56d75e30d9ee",
+			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L1",
 			"name": "Snow-Covered Island",
 			"export_name": "Snow-Covered Island (L1)_",
 			"set": "HBB.0",
@@ -54,11 +58,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L2",
+			"kind": "land",
+			"id": "11f79f69-2739-4f16-913b-701695219614",
+			"oracle_id": "ac8cc74d-e43b-4118-bba0-dfa8b9c04d45",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L2",
 			"name": "Snow-Covered Plains",
 			"export_name": "Snow-Covered Plains (L2)_",
 			"set": "HBB.0",
@@ -113,11 +130,30 @@
 				"missing-snow-frame",
 				"inverted-text"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"miracle-frame": [
+						"miracle-frame"
+					],
+					"missing-snow-frame": [
+						"missing-snow-frame"
+					],
+					"inverted-text": [
+						"inverted-text"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L3",
+			"kind": "land",
+			"id": "8f4b193a-5a1d-4c83-8daf-e2cfbb206f7c",
+			"oracle_id": "5f0d3be8-e63e-4ade-ae58-6b0c14f2ce6d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L3",
 			"name": "Snow-Covered Forest",
 			"export_name": "Snow-Covered Forest (L3)_",
 			"set": "HBB.0",
@@ -171,11 +207,24 @@
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"missing-snow-frame": [
+						"missing-snow-frame"
+					],
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L4",
+			"kind": "land",
+			"id": "299c8ee5-237f-4fb7-9d82-d3c8613065c7",
+			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L4",
 			"name": "Snow-Covered Mountain",
 			"export_name": "Snow-Covered Mountain (L4)_",
 			"set": "HBB.0",
@@ -223,11 +272,24 @@
 				"1997-frame",
 				"no-font"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"no-font": [
+						"no-font"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L5",
+			"kind": "land",
+			"id": "7ebaec4e-7467-472c-adbf-084d54633d6d",
+			"oracle_id": "d8239a86-7184-4005-ba1e-2dddcd756c47",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L5",
 			"name": "Snow-Covered Swamp",
 			"export_name": "Snow-Covered Swamp (L5)_",
 			"set": "HBB.0",
@@ -276,11 +338,24 @@
 				"white-watermark",
 				"missing-snow-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"white-watermark": [
+						"white-watermark"
+					],
+					"missing-snow-frame": [
+						"missing-snow-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L6",
+			"kind": "land",
+			"id": "d30883ad-8bf9-47aa-9b12-afb811ab57f0",
+			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L6",
 			"name": "Snow-Covered Island",
 			"export_name": "Snow-Covered Island (L6)_",
 			"set": "HBB.0",
@@ -327,11 +402,21 @@
 			"tags": [
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L7",
+			"kind": "land",
+			"id": "af48297c-b390-480b-aec1-b8f07127bbc0",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L7",
 			"name": "Nebula",
 			"export_name": "Nebula (L7)_",
 			"set": "HBB.0",
@@ -383,11 +468,21 @@
 				"2003-frame",
 				"full-art"
 			],
-			"variation": false,
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			},
 			"all_parts": [
 				{
 					"object": "related_card",
-					"id": "509",
+					"id": "306652ea-6275-4c52-958d-f5096ce80012",
+					"hcid": "509",
 					"name": "Woah Lions",
 					"set": "HLC.2",
 					"image": "https://lh3.googleusercontent.com/d/1SSySHAHbdPwOxNWm2JCIwl7hDv0c0tA9",
@@ -399,7 +494,11 @@
 		},
 		{
 			"object": "card",
-			"id": "L8",
+			"kind": "land",
+			"id": "6c046347-9734-459f-9665-24d070504ff2",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L8",
 			"name": "Nebula",
 			"export_name": "Nebula (L8)_",
 			"set": "HBB.0",
@@ -442,11 +541,11 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"variation": false,
 			"all_parts": [
 				{
 					"object": "related_card",
-					"id": "1624",
+					"id": "0c5b1e3e-c93f-49bd-b6b9-fcdfc84ef9f1",
+					"hcid": "1624",
 					"name": "Twisty Nipple Charm",
 					"set": "HC3.0",
 					"image": "https://lh3.googleusercontent.com/d/1gBJsDK5cZFUk9XybcvEjtU81ahagqREW",
@@ -457,7 +556,11 @@
 		},
 		{
 			"object": "card",
-			"id": "L9",
+			"kind": "land",
+			"id": "8930430d-8109-47de-bffb-965fec841979",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L9",
 			"name": "Nebula",
 			"export_name": "Nebula (L9)_",
 			"set": "HBB.0",
@@ -507,11 +610,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L10",
+			"kind": "land",
+			"id": "e537444d-ee74-4c9c-813b-f8773be58199",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L10",
 			"name": "Nebula",
 			"export_name": "Nebula (L10)_",
 			"set": "HBB.0",
@@ -553,12 +669,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L11",
+			"kind": "land",
+			"id": "d2d5450e-6cc8-43f8-9810-30550b2a563f",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L11",
 			"name": "Plains",
 			"export_name": "Plains (L11)_",
 			"set": "HBB.0",
@@ -608,11 +727,24 @@
 				"full-art",
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L12",
+			"kind": "land",
+			"id": "e8c528e1-4cfb-40ab-aba6-c9c7645f2b09",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L12",
 			"name": "Island",
 			"export_name": "Island (L12)_",
 			"set": "HBB.0",
@@ -662,11 +794,24 @@
 				"no-art",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L13",
+			"kind": "land",
+			"id": "11af1461-4dd0-4889-ba87-014ed524bfce",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L13",
 			"name": "Swamp",
 			"export_name": "Swamp (L13)_",
 			"set": "HBB.0",
@@ -716,11 +861,24 @@
 				"full-art",
 				"2015-token-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2015-token-frame": [
+						"2015-token-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L14",
+			"kind": "land",
+			"id": "191dd042-6f95-4b4d-9b2b-0c6e858fddf2",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L14",
 			"name": "Mountain",
 			"export_name": "Mountain (L14)_",
 			"set": "HBB.0",
@@ -767,11 +925,24 @@
 				"1993-frame",
 				"double-border"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"double-border": [
+						"double-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L15",
+			"kind": "land",
+			"id": "ca92d6f4-bb2d-4374-9bd6-3b6708569358",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L15",
 			"name": "Forest",
 			"export_name": "Forest (L15)_",
 			"set": "HBB.0",
@@ -813,12 +984,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L16",
+			"kind": "land",
+			"id": "aca98d96-6345-454e-a89c-23480917c112",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L16",
 			"name": "Forest",
 			"export_name": "Forest (L16)_",
 			"set": "HBB.0",
@@ -872,11 +1046,27 @@
 			"tag_notes": {
 				"jank-frame": "Physical Object"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"jank-frame": [
+						"jank-frame<Physical Object>"
+					],
+					"no-border": [
+						"no-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L17",
+			"kind": "land",
+			"id": "3951dcb3-f0a6-47ac-a4bf-2162faa57825",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L17",
 			"name": "Plains",
 			"export_name": "Plains (L17)_",
 			"set": "HBB.0",
@@ -929,11 +1119,24 @@
 			"tag_notes": {
 				"showcase-frame": "Invocation"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Invocation>"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L18",
+			"kind": "land",
+			"id": "356dafdb-e116-40d6-bb0d-0467d3ae13d0",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L18",
 			"name": "Island",
 			"export_name": "Island (L18)_",
 			"set": "HBB.0",
@@ -982,11 +1185,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L19",
+			"kind": "land",
+			"id": "414a897a-6851-4b42-a253-70dd9b5fd723",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L19",
 			"name": "Island",
 			"export_name": "Island (L19)_",
 			"set": "HBB.0",
@@ -1033,11 +1246,24 @@
 				"2003-frame",
 				"uses-scryfall-image"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					],
+					"uses-scryfall-image": [
+						"uses-scryfall-image"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L20",
+			"kind": "land",
+			"id": "bd609c2b-27cd-43c6-b1ce-a4d03194d12a",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L20",
 			"name": "Island",
 			"export_name": "Island (L20)_",
 			"set": "HBB.0",
@@ -1084,11 +1310,24 @@
 				"hearthstone-frame",
 				"no-border"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"hearthstone-frame": [
+						"hearthstone-frame"
+					],
+					"no-border": [
+						"no-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L21",
+			"kind": "land",
+			"id": "385da6a7-3993-4841-a1b5-eae8382ed8c7",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L21",
 			"name": "Island",
 			"export_name": "Island (L21)_",
 			"set": "HBB.0",
@@ -1138,11 +1377,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L22",
+			"kind": "land",
+			"id": "c81ab05d-86f3-4359-abb7-949ee72ab1cd",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L22",
 			"name": "Mountain",
 			"export_name": "Mountain (L22)_",
 			"set": "HBB.0",
@@ -1192,11 +1444,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L23",
+			"kind": "land",
+			"id": "c625dc9c-328d-4a00-89c1-0113c3f847c2",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L23",
 			"name": "Island",
 			"export_name": "Island (L23)_",
 			"set": "HBB.0",
@@ -1242,11 +1507,21 @@
 			"tags": [
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L24",
+			"kind": "land",
+			"id": "19f6c00d-c05a-47e7-88dc-68f86954cdde",
+			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L24",
 			"name": "Snow-Covered Island",
 			"export_name": "Snow-Covered Island (L24)_",
 			"set": "HBB.0",
@@ -1293,11 +1568,21 @@
 			"tags": [
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L25",
+			"kind": "land",
+			"id": "ef0636eb-a365-46f8-a9a2-005606a05abc",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L25",
 			"name": "Swamp",
 			"export_name": "Swamp (L25)_",
 			"set": "HBB.0",
@@ -1343,11 +1628,21 @@
 			"tags": [
 				"upside-down"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"upside-down": [
+						"upside-down"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L26",
+			"kind": "land",
+			"id": "7793474e-85fb-4628-9504-78d68e910161",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L26",
 			"name": "Island",
 			"export_name": "Island (L26)_",
 			"set": "HBB.0",
@@ -1396,11 +1691,27 @@
 				"mario",
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"black-watermark": [
+						"black-watermark"
+					],
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L27",
+			"kind": "land",
+			"id": "d14a9c41-58bb-4862-bf5a-9dcd69c370cb",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L27",
 			"name": "Forest",
 			"export_name": "Forest (L27)_",
 			"set": "HBB.0",
@@ -1446,11 +1757,21 @@
 			"tags": [
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L28",
+			"kind": "land",
+			"id": "4129b652-7650-473a-8b7b-0bbc61a3863b",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L28",
 			"name": "Mountain",
 			"export_name": "Mountain (L28)_",
 			"set": "HBB.0",
@@ -1500,11 +1821,24 @@
 				"full-art",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L29",
+			"kind": "land",
+			"id": "625ce0b9-d8fe-434e-b640-d675e6509211",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L29",
 			"name": "Forest",
 			"export_name": "Forest (L29)_",
 			"set": "HBB.0",
@@ -1554,11 +1888,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L30",
+			"kind": "land",
+			"id": "c9f81834-7d19-47c1-8ca8-a714d8ac6ea2",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L30",
 			"name": "Nebula",
 			"export_name": "Nebula (L30)_",
 			"set": "HBB.0",
@@ -1608,11 +1955,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L31",
+			"kind": "land",
+			"id": "f82c8723-8a3c-4d94-bc3d-c240b48284d4",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L31",
 			"name": "Forest",
 			"export_name": "Forest (L31)_",
 			"set": "HBB.0",
@@ -1659,11 +2019,24 @@
 				"mario",
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L32",
+			"kind": "land",
+			"id": "6e43a945-89e4-47c9-9ce7-f9ccf4ff9b05",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L32",
 			"name": "Plains",
 			"export_name": "Plains (L32)_",
 			"set": "HBB.0",
@@ -1710,11 +2083,24 @@
 				"mario",
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L33",
+			"kind": "land",
+			"id": "ee6b014b-4cb7-41ba-82dd-06cab7a9667f",
+			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L33",
 			"name": "Snow-Covered Mountain",
 			"export_name": "Snow-Covered Mountain (L33)_",
 			"set": "HBB.0",
@@ -1762,11 +2148,24 @@
 				"mario",
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L34",
+			"kind": "land",
+			"id": "a21fb118-f54f-43ec-80df-823e9eca5de2",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L34",
 			"name": "Island",
 			"export_name": "Island (L34)_",
 			"set": "HBB.0",
@@ -1813,11 +2212,24 @@
 				"mario",
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"mario": [
+						"mario"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L35",
+			"kind": "land",
+			"id": "d156bf4d-4f97-422c-8eeb-983212a315b2",
+			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L35",
 			"name": "Snow-Covered Mountain",
 			"export_name": "Snow-Covered Mountain (L35)_",
 			"set": "HBB.0",
@@ -1867,11 +2279,21 @@
 			"tags": [
 				"no-font"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"no-font": [
+						"no-font"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L36",
+			"kind": "land",
+			"id": "e4a7dcdb-59af-4c64-9b5a-8a3e631481dc",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L36",
 			"name": "Mountain",
 			"export_name": "Mountain (L36)_",
 			"set": "HBB.0",
@@ -1918,11 +2340,24 @@
 				"misframe",
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L37",
+			"kind": "land",
+			"id": "41b376b4-ef6e-453e-b2a4-0a0a323a5dee",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L37",
 			"name": "Mountain",
 			"export_name": "Mountain (L37)_",
 			"set": "HBB.0",
@@ -1968,11 +2403,21 @@
 			"tags": [
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L38",
+			"kind": "land",
+			"id": "a0ba3be9-a107-42c4-9d9e-41ea199bfc27",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L38",
 			"name": "Swamp",
 			"export_name": "Swamp (L38)_",
 			"set": "HBB.0",
@@ -2022,11 +2467,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L39",
+			"kind": "land",
+			"id": "d620d75a-ddf3-402a-a32e-fafbeb12ca4c",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L39",
 			"name": "Island",
 			"export_name": "Island (L39)_",
 			"set": "HBB.0",
@@ -2072,11 +2530,21 @@
 			"tags": [
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L40",
+			"kind": "land",
+			"id": "75ea42db-2909-4795-9d93-01a12ac66aab",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L40",
 			"name": "Mountain",
 			"export_name": "Mountain (L40)_",
 			"set": "HBB.0",
@@ -2123,11 +2591,24 @@
 				"1993-frame",
 				"uses-scryfall-image"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"uses-scryfall-image": [
+						"uses-scryfall-image"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L41",
+			"kind": "land",
+			"id": "17efa2be-ea9e-4d5e-b7f2-d0982080526f",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L41",
 			"name": "Plains",
 			"export_name": "Plains (L41)_",
 			"set": "HBB.0",
@@ -2174,11 +2655,24 @@
 				"intentional-low-quality",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"intentional-low-quality": [
+						"intentional-low-quality"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L42",
+			"kind": "land",
+			"id": "0af6bb35-3856-4107-9e5d-52f71d5a1b3d",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L42",
 			"name": "Forest",
 			"export_name": "Forest (L42)_",
 			"set": "HBB.0",
@@ -2229,11 +2723,27 @@
 				"no-art",
 				"1997-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"low-quality": [
+						"low-quality"
+					],
+					"no-art": [
+						"no-art"
+					],
+					"1997-frame": [
+						"1997-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L43",
+			"kind": "land",
+			"id": "019bf760-fe72-432b-82e5-b2454b7b301b",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L43",
 			"name": "Mountain",
 			"export_name": "Mountain (L43)_",
 			"set": "HBB.0",
@@ -2283,11 +2793,24 @@
 				"1997-frame",
 				"no-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"no-art": [
+						"no-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L44",
+			"kind": "land",
+			"id": "489d203f-5238-4377-9f4c-fa74e94d5325",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L44",
 			"name": "Swamp",
 			"export_name": "Swamp (L44)_",
 			"set": "HBB.0",
@@ -2337,11 +2860,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L45",
+			"kind": "land",
+			"id": "4ec8b07b-c607-4d43-b5ce-c21165ed86a8",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L45",
 			"name": "Plains",
 			"export_name": "Plains (L45)_",
 			"set": "HBB.0",
@@ -2392,11 +2928,27 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					],
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L46",
+			"kind": "land",
+			"id": "c25d24f5-93c3-4e5a-9316-9dffb4550db5",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L46",
 			"name": "Mountain",
 			"export_name": "Mountain (L46)_",
 			"set": "HBB.0",
@@ -2447,11 +2999,27 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					],
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L47",
+			"kind": "land",
+			"id": "53a68a75-ab4a-47fe-bf60-1b51882554b3",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L47",
 			"name": "Forest",
 			"export_name": "Forest (L47)_",
 			"set": "HBB.0",
@@ -2500,11 +3068,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L48",
+			"kind": "land",
+			"id": "c4a5f49f-aeb6-4015-9d0c-6d770d2c393c",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L48",
 			"name": "Island",
 			"export_name": "Island (L48)_",
 			"set": "HBB.0",
@@ -2554,11 +3132,24 @@
 				"no-art",
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					],
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L49",
+			"kind": "land",
+			"id": "72b1329b-aed6-4025-84af-3a05bc0de0e3",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L49",
 			"name": "Plains",
 			"export_name": "Plains (L49)_",
 			"set": "HBB.0",
@@ -2608,11 +3199,24 @@
 				"no-art",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L50",
+			"kind": "land",
+			"id": "7d79eab8-44e4-4872-b0b4-dac9f2497de9",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L50",
 			"name": "Forest",
 			"export_name": "Forest (L50)_",
 			"set": "HBB.0",
@@ -2659,11 +3263,24 @@
 				"comic-sans",
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"comic-sans": [
+						"comic-sans"
+					],
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L51",
+			"kind": "land",
+			"id": "8be3e3d7-c73f-4f18-a3f6-8896cfcfa623",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L51",
 			"name": "Nebula",
 			"export_name": "Nebula (L51)_",
 			"set": "HBB.0",
@@ -2713,11 +3330,24 @@
 			"tag_notes": {
 				"jank-frame": "Physical Object"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame<Physical Object>"
+					],
+					"no-border": [
+						"no-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L52",
+			"kind": "land",
+			"id": "4c1b79c2-ab78-4610-94dd-30c66a089a91",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L52",
 			"name": "Mountain",
 			"export_name": "Mountain (L52)_",
 			"set": "HBB.0",
@@ -2765,11 +3395,27 @@
 				"sharpie",
 				"yellow-border"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon-frame": [
+						"pokemon-frame"
+					],
+					"sharpie": [
+						"sharpie"
+					],
+					"yellow-border": [
+						"yellow-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L53",
+			"kind": "land",
+			"id": "b8cc3359-a753-47fe-af82-42f06ecbe6f0",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L53",
 			"name": "Island",
 			"export_name": "Island (L53)_",
 			"set": "HBB.0",
@@ -2815,11 +3461,21 @@
 			"tags": [
 				"misframe"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L54",
+			"kind": "land",
+			"id": "f16e16f7-0b63-4336-88aa-4c29ce80ba6b",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L54",
 			"name": "Swamp",
 			"export_name": "Swamp (L54)_",
 			"set": "HBB.0",
@@ -2874,11 +3530,30 @@
 			"tag_notes": {
 				"ransom-over-real-card": "Omnath, Locus of Creation"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"legend-frame": [
+						"legend-frame"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Omnath, Locus of Creation>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L55",
+			"kind": "land",
+			"id": "bc5a6bfa-25ae-4f44-bafc-ea6cf0c23aba",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L55",
 			"name": "Plains",
 			"export_name": "Plains (L55)_",
 			"set": "HBB.0",
@@ -2925,11 +3600,24 @@
 				"2003-frame",
 				"upside-down"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					],
+					"upside-down": [
+						"upside-down"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L56",
+			"kind": "land",
+			"id": "2deaa66a-9a2a-403a-bafb-c5a20a7339d4",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L56",
 			"name": "Plains",
 			"export_name": "Plains (L56)_",
 			"set": "HBB.0",
@@ -2975,11 +3663,21 @@
 			"tags": [
 				"yugioh-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L57",
+			"kind": "land",
+			"id": "ed0552ff-4018-4a13-8fe7-50417f9738da",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L57",
 			"name": "Island",
 			"export_name": "Island (L57)_",
 			"set": "HBB.0",
@@ -3025,11 +3723,21 @@
 			"tags": [
 				"yugioh-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L58",
+			"kind": "land",
+			"id": "ed96dd45-d9ec-4906-ba5e-f51b7d4ae176",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L58",
 			"name": "Swamp",
 			"export_name": "Swamp (L58)_",
 			"set": "HBB.0",
@@ -3075,11 +3783,21 @@
 			"tags": [
 				"yugioh-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L59",
+			"kind": "land",
+			"id": "43766609-829c-4188-ae63-a93e5a506007",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L59",
 			"name": "Mountain",
 			"export_name": "Mountain (L59)_",
 			"set": "HBB.0",
@@ -3125,11 +3843,21 @@
 			"tags": [
 				"yugioh-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L60",
+			"kind": "land",
+			"id": "29d1f526-1614-4848-ab37-08dfd4cb529d",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L60",
 			"name": "Forest",
 			"export_name": "Forest (L60)_",
 			"set": "HBB.0",
@@ -3175,11 +3903,21 @@
 			"tags": [
 				"yugioh-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L61",
+			"kind": "land",
+			"id": "90277cfb-0c8f-41ea-83ab-8e19f1332e96",
+			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L61",
 			"name": "Wastes",
 			"export_name": "Wastes (L61)_",
 			"set": "HBB.0",
@@ -3216,11 +3954,21 @@
 			"tags": [
 				"yugioh-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L62",
+			"kind": "land",
+			"id": "e9442059-eb2d-4786-9f1a-987a262838a2",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L62",
 			"name": "Plains",
 			"export_name": "Plains (L62)_",
 			"set": "HBB.0",
@@ -3270,11 +4018,24 @@
 				"full-art",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L63",
+			"kind": "land",
+			"id": "cf5beecc-e436-4fe0-99cc-54e25933e524",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L63",
 			"name": "Mountain",
 			"export_name": "Mountain (L63)_",
 			"set": "HBB.0",
@@ -3324,11 +4085,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L64",
+			"kind": "land",
+			"id": "89324caf-d39b-4639-bb9e-ff50e49e5845",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L64",
 			"name": "Swamp",
 			"export_name": "Swamp (L64)_",
 			"set": "HBB.0",
@@ -3378,11 +4152,24 @@
 				"full-art",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L65",
+			"kind": "land",
+			"id": "262e61f8-f2b2-4c40-a23a-25aadce6449f",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L65",
 			"name": "Island",
 			"export_name": "Island (L65)_",
 			"set": "HBB.0",
@@ -3431,11 +4218,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L66",
+			"kind": "land",
+			"id": "b7259762-2e71-4a0a-9db7-ab5eeb69eb9d",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L66",
 			"name": "Forest",
 			"export_name": "Forest (L66)_",
 			"set": "HBB.0",
@@ -3489,11 +4286,27 @@
 			"tag_notes": {
 				"ransom-over-real-card": "Forest #280 from ZNR"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Forest #280 from ZNR>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L67",
+			"kind": "land",
+			"id": "850fbeea-1229-4a68-955b-2284583c3d9f",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L67",
 			"name": "Nebula",
 			"export_name": "Nebula (L67)_",
 			"set": "HBB.0",
@@ -3540,11 +4353,24 @@
 				"low-quality",
 				"1997-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"low-quality": [
+						"low-quality"
+					],
+					"1997-frame": [
+						"1997-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L68",
+			"kind": "land",
+			"id": "3f0c8e2e-0d1d-46e6-b9c0-b12db6adcc45",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L68",
 			"name": "Plains",
 			"export_name": "Plains (L68)_",
 			"set": "HBB.0",
@@ -3593,11 +4419,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L69",
+			"kind": "land",
+			"id": "685cdda3-dce1-48bd-a1f0-50cb82d3ca6c",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L69",
 			"name": "Island",
 			"export_name": "Island (L69)_",
 			"set": "HBB.0",
@@ -3646,11 +4482,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L70",
+			"kind": "land",
+			"id": "c24949f5-8364-448e-9eae-4ae1f357a187",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L70",
 			"name": "Swamp",
 			"export_name": "Swamp (L70)_",
 			"set": "HBB.0",
@@ -3699,11 +4545,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L71",
+			"kind": "land",
+			"id": "8302527f-baf7-46c0-877d-3263004d707d",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L71",
 			"name": "Mountain",
 			"export_name": "Mountain (L71)_",
 			"set": "HBB.0",
@@ -3752,11 +4608,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L72",
+			"kind": "land",
+			"id": "43b0085e-dcc8-4a01-baf9-8f127dea5f9a",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L72",
 			"name": "Forest",
 			"export_name": "Forest (L72)_",
 			"set": "HBB.0",
@@ -3805,11 +4671,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L73",
+			"kind": "land",
+			"id": "26f592b8-bff2-46fe-9ad7-57d5d26c3dd0",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L73",
 			"name": "Nebula",
 			"export_name": "Nebula (L73)_",
 			"set": "HBB.0",
@@ -3860,11 +4736,27 @@
 				"no-font",
 				"misframe"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"no-font": [
+						"no-font"
+					],
+					"misframe": [
+						"misframe"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L74",
+			"kind": "land",
+			"id": "4667ed73-0458-4f30-9ec1-99c9b1746ab2",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L74",
 			"name": "Island",
 			"export_name": "Island (L74)_",
 			"set": "HBB.0",
@@ -3913,11 +4805,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L75",
+			"kind": "land",
+			"id": "d30af56e-e2ad-4576-92d1-cc81e4bb7812",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L75",
 			"name": "Forest",
 			"export_name": "Forest (L75)_",
 			"set": "HBB.0",
@@ -3966,11 +4868,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L76",
+			"kind": "land",
+			"id": "0441c0e8-88f8-46b3-a580-b712dd4b8bde",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L76",
 			"name": "Nebula",
 			"export_name": "Nebula (L76)_",
 			"set": "HBB.0",
@@ -4016,11 +4928,21 @@
 			"tags": [
 				"yugioh-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L77",
+			"kind": "land",
+			"id": "59d52e29-8632-4f69-a22b-5afa68e5a0be",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L77",
 			"name": "Mountain",
 			"export_name": "Mountain (L77)_",
 			"set": "HBB.0",
@@ -4066,11 +4988,21 @@
 			"tags": [
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L78",
+			"kind": "land",
+			"id": "0535026e-3ea1-4854-9619-2c9941df6c01",
+			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L78",
 			"name": "Snow-Covered Mountain",
 			"export_name": "Snow-Covered Mountain (L78)_",
 			"set": "HBB.0",
@@ -4121,11 +5053,24 @@
 				"full-art",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L79",
+			"kind": "land",
+			"id": "12210f39-904e-4124-8c50-2279fd0745e0",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L79",
 			"name": "Nebula",
 			"export_name": "Nebula (L79)_",
 			"set": "HBB.0",
@@ -4176,11 +5121,27 @@
 				"legend-frame",
 				"misframe"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"2015-token-frame": [
+						"2015-token-frame"
+					],
+					"legend-frame": [
+						"legend-frame"
+					],
+					"misframe": [
+						"misframe"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L80",
+			"kind": "land",
+			"id": "5e8e6670-1ce1-4ab2-af14-1b695c55fe88",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L80",
 			"name": "Forest",
 			"export_name": "Forest (L80)_",
 			"set": "HBB.0",
@@ -4229,11 +5190,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L81",
+			"kind": "land",
+			"id": "0f2486a2-bc98-4519-a1a0-772d0fdfb077",
+			"oracle_id": "46a07b53-ff58-4bd6-80dd-ded2eb0e29a3",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L81",
 			"name": "Snow-Covered Wastes",
 			"export_name": "Snow-Covered Wastes (L81)_",
 			"set": "HBB.0",
@@ -4272,11 +5243,24 @@
 				"misframe",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L82",
+			"kind": "land",
+			"id": "f6382e79-6d13-4ea1-a799-f0d5079648e3",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L82",
 			"name": "Mountain",
 			"export_name": "Mountain (L82)_",
 			"set": "HBB.0",
@@ -4322,11 +5306,21 @@
 			"tags": [
 				"1997-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L83",
+			"kind": "land",
+			"id": "814a53ae-14c5-4c98-8f39-f995bd4e15dc",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L83",
 			"name": "Swamp",
 			"export_name": "Swamp (L83)_",
 			"set": "HBB.0",
@@ -4373,11 +5367,24 @@
 				"misframe",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L84",
+			"kind": "land",
+			"id": "38dadcd1-d455-48ce-85b7-04463a9b8836",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L84",
 			"name": "Plains",
 			"export_name": "Plains (L84)_",
 			"set": "HBB.0",
@@ -4429,11 +5436,21 @@
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L85",
+			"kind": "land",
+			"id": "d97f9450-230e-49f6-a809-9983eee30f37",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L85",
 			"name": "Island",
 			"export_name": "Island (L85)_",
 			"set": "HBB.0",
@@ -4485,11 +5502,21 @@
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L86",
+			"kind": "land",
+			"id": "e2de0f4d-66f4-46f1-8671-e32f49d25638",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L86",
 			"name": "Swamp",
 			"export_name": "Swamp (L86)_",
 			"set": "HBB.0",
@@ -4541,11 +5568,21 @@
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L87",
+			"kind": "land",
+			"id": "6dea855c-1c71-45b9-8884-eb2efd40fa05",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L87",
 			"name": "Mountain",
 			"export_name": "Mountain (L87)_",
 			"set": "HBB.0",
@@ -4597,11 +5634,21 @@
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L88",
+			"kind": "land",
+			"id": "d7374aaf-2e10-408b-84e2-9c96fefa351d",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L88",
 			"name": "Forest",
 			"export_name": "Forest (L88)_",
 			"set": "HBB.0",
@@ -4653,11 +5700,21 @@
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L89",
+			"kind": "land",
+			"id": "3e1d420a-61ca-494a-855d-9280a137594f",
+			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L89",
 			"name": "Wastes",
 			"export_name": "Wastes (L89)_",
 			"set": "HBB.0",
@@ -4700,11 +5757,21 @@
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Parchment>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L90",
+			"kind": "land",
+			"id": "a56202fe-d694-4008-80c3-c58dc61fbb48",
+			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L90",
 			"name": "Wastes",
 			"export_name": "Wastes (L90)_",
 			"set": "HBB.0",
@@ -4742,11 +5809,24 @@
 				"misframe",
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"misframe": [
+						"misframe"
+					],
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L91",
+			"kind": "land",
+			"id": "3c341e3c-9349-4dbb-b132-b2bdb3fea4f5",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L91",
 			"name": "Island",
 			"export_name": "Island (L91)_",
 			"set": "HBB.0",
@@ -4788,12 +5868,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L92",
+			"kind": "land",
+			"id": "4f0e6282-8ab5-4d80-bbca-6b4bf4c0801d",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L92",
 			"name": "Forest",
 			"export_name": "Forest (L92)_",
 			"set": "HBB.0",
@@ -4844,11 +5927,27 @@
 				"borderless",
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					],
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L93",
+			"kind": "land",
+			"id": "857e5f7c-4357-43b9-9715-8a17ae3f94b0",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L93",
 			"name": "Forest",
 			"export_name": "Forest (L93)_",
 			"set": "HBB.0",
@@ -4894,11 +5993,21 @@
 			"tags": [
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L94",
+			"kind": "land",
+			"id": "0bd69b9e-9160-4f07-919b-eae57fc6eda0",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L94",
 			"name": "Mountain",
 			"export_name": "Mountain (L94)_",
 			"set": "HBB.0",
@@ -4944,11 +6053,21 @@
 			"tags": [
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L95",
+			"kind": "land",
+			"id": "cf8b670b-bd79-4797-b050-da3833764b09",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L95",
 			"name": "Mountain",
 			"export_name": "Mountain (L95)_",
 			"set": "HBB.0",
@@ -4999,11 +6118,27 @@
 				"borderless",
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					],
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L96",
+			"kind": "land",
+			"id": "67d46cf3-d402-4200-89d2-8eef59a00348",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L96",
 			"name": "Plains",
 			"export_name": "Plains (L96)_",
 			"set": "HBB.0",
@@ -5049,11 +6184,21 @@
 			"tags": [
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L97",
+			"kind": "land",
+			"id": "1e59aac7-f6d2-4641-ab98-1685035feb68",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L97",
 			"name": "Plains",
 			"export_name": "Plains (L97)_",
 			"set": "HBB.0",
@@ -5104,11 +6249,27 @@
 				"borderless",
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					],
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L98",
+			"kind": "land",
+			"id": "3d910b1e-feff-434d-81e9-cd19070c3f12",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L98",
 			"name": "Island",
 			"export_name": "Island (L98)_",
 			"set": "HBB.0",
@@ -5154,11 +6315,21 @@
 			"tags": [
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L99",
+			"kind": "land",
+			"id": "d8b27751-8f86-44b9-bd99-4f68b85dfbb6",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L99",
 			"name": "Plains",
 			"export_name": "Plains (L99)_",
 			"set": "HBB.0",
@@ -5204,11 +6375,21 @@
 			"tags": [
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L100",
+			"kind": "land",
+			"id": "8d76e128-373a-47a7-9d31-77b7c06f495e",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L100",
 			"name": "Island",
 			"export_name": "Island (L100)_",
 			"set": "HBB.0",
@@ -5254,11 +6435,21 @@
 			"tags": [
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L101",
+			"kind": "land",
+			"id": "8fc20b2b-83c3-4564-b54d-5530a58a6e82",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L101",
 			"name": "Mountain",
 			"export_name": "Mountain (L101)_",
 			"set": "HBB.0",
@@ -5304,11 +6495,21 @@
 			"tags": [
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L102",
+			"kind": "land",
+			"id": "821bdbd1-0f29-4ca8-a018-f13fe8805c9b",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L102",
 			"name": "Forest",
 			"export_name": "Forest (L102)_",
 			"set": "HBB.0",
@@ -5354,11 +6555,21 @@
 			"tags": [
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L103",
+			"kind": "land",
+			"id": "89e139ba-aa4b-458b-8390-97f07f9464ba",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L103",
 			"name": "Swamp",
 			"export_name": "Swamp (L103)_",
 			"set": "HBB.0",
@@ -5404,11 +6615,21 @@
 			"tags": [
 				"pokemon"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"pokemon": [
+						"pokemon"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L104",
+			"kind": "land",
+			"id": "eaaf065b-fdef-4b6b-af1d-42e5f5a43876",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L104",
 			"name": "Island",
 			"export_name": "Island (L104)_",
 			"set": "HBB.0",
@@ -5458,11 +6679,24 @@
 				"future-frame",
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L105",
+			"kind": "land",
+			"id": "dc6dd8f9-1706-4825-bd5d-7a6b47a171e3",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L105",
 			"name": "Mountain",
 			"export_name": "Mountain (L105)_",
 			"set": "HBB.0",
@@ -5512,11 +6746,24 @@
 				"future-frame",
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L106",
+			"kind": "land",
+			"id": "c789ac9b-5e31-4438-bf26-1af1040312d8",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L106",
 			"name": "Forest",
 			"export_name": "Forest (L106)_",
 			"set": "HBB.0",
@@ -5562,11 +6809,21 @@
 			"tags": [
 				"future-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"future-frame": [
+						"future-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L107",
+			"kind": "land",
+			"id": "9d3d6a3a-1362-4c11-9c14-1bf5adea559d",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L107",
 			"name": "Forest",
 			"export_name": "Forest (L107)_",
 			"set": "HBB.0",
@@ -5608,12 +6865,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L108",
+			"kind": "land",
+			"id": "5e1b1c20-cb9c-42ac-a02e-dc255a378db1",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L108",
 			"name": "Mountain",
 			"export_name": "Mountain (L108)_",
 			"set": "HBB.0",
@@ -5655,12 +6915,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L109",
+			"kind": "land",
+			"id": "79735096-2bf9-4399-86e4-c263f1d5b5f4",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L109",
 			"name": "Island",
 			"export_name": "Island (L109)_",
 			"set": "HBB.0",
@@ -5702,12 +6965,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L110",
+			"kind": "land",
+			"id": "5bea3048-dca5-4189-821b-9b213b5637d6",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L110",
 			"name": "Plains",
 			"export_name": "Plains (L110)_",
 			"set": "HBB.0",
@@ -5749,12 +7015,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L111",
+			"kind": "land",
+			"id": "05785814-bb42-45ce-a7bc-9977e4c8f34e",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L111",
 			"name": "Swamp",
 			"export_name": "Swamp (L111)_",
 			"set": "HBB.0",
@@ -5796,12 +7065,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L112",
+			"kind": "land",
+			"id": "93c4691c-a820-4944-9d58-624d70e36e42",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L112",
 			"name": "Forest",
 			"export_name": "Forest (L112)_",
 			"set": "HBB.0",
@@ -5843,12 +7115,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L113",
+			"kind": "land",
+			"id": "1a2bab94-f655-4326-853a-ac2800b9cdd1",
+			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L113",
 			"name": "Snow-Covered Island",
 			"export_name": "Snow-Covered Island (L113)_",
 			"set": "HBB.0",
@@ -5905,11 +7180,24 @@
 			"tag_notes": {
 				"ransom-over-real-card": "Snow-Covered Island #278 from KHM"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Snow-Covered Island #278 from KHM>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L114",
+			"kind": "land",
+			"id": "f0f698e4-0bf6-4509-b2a7-657a47ee1a7e",
+			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L114",
 			"name": "Snow-Covered Mountain",
 			"export_name": "Snow-Covered Mountain (L114)_",
 			"set": "HBB.0",
@@ -5956,11 +7244,21 @@
 			"tags": [
 				"2003-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L115",
+			"kind": "land",
+			"id": "f207061c-f5ce-4004-a921-f2648bde05f7",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L115",
 			"name": "Swamp",
 			"export_name": "Swamp (L115)_",
 			"set": "HBB.0",
@@ -6002,12 +7300,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L116",
+			"kind": "land",
+			"id": "4d92d95c-9597-4807-a5b5-8c2e5c175e93",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L116",
 			"name": "Mountain",
 			"export_name": "Mountain (L116)_",
 			"set": "HBB.0",
@@ -6056,11 +7357,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L117",
+			"kind": "land",
+			"id": "ddd2331f-a903-4231-813c-d22b265ddadf",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L117",
 			"name": "Nebula",
 			"export_name": "Nebula (L117)_",
 			"set": "HBB.0",
@@ -6110,11 +7421,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L118",
+			"kind": "land",
+			"id": "57295125-85ee-41d5-bd26-e84587a654c1",
+			"oracle_id": "2c268e90-9bec-45c3-9c99-436761643f3c",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L118",
 			"name": "Snow-Covered Nebula",
 			"export_name": "Snow-Covered Nebula (L118)_",
 			"set": "HBB.0",
@@ -6168,11 +7492,21 @@
 			"tag_notes": {
 				"showcase-frame": "Viking"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"showcase-frame": [
+						"showcase-frame<Viking>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L119",
+			"kind": "land",
+			"id": "054ce96e-44cd-44ed-8708-2248a9d7a37d",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L119",
 			"name": "Nebula",
 			"export_name": "Nebula (L119)_",
 			"set": "HBB.0",
@@ -6222,11 +7556,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L120",
+			"kind": "land",
+			"id": "415a5598-c430-4257-a4da-97dc2d0f57be",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L120",
 			"name": "Plains",
 			"export_name": "Plains (L120)_",
 			"set": "HBB.0",
@@ -6269,12 +7616,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L121",
+			"kind": "land",
+			"id": "eb1e6559-9fc3-4360-a35f-f800bc9f5bfd",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L121",
 			"name": "Forest",
 			"export_name": "Forest (L121)_",
 			"set": "HBB.0",
@@ -6323,11 +7673,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L122",
+			"kind": "land",
+			"id": "0e4da2e8-6320-4b2d-86c7-d488e264395e",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L122",
 			"name": "Mountain",
 			"export_name": "Mountain (L122)_",
 			"set": "HBB.0",
@@ -6376,11 +7736,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L123",
+			"kind": "land",
+			"id": "3b9742ae-9219-491c-b5ee-3a6382c31c22",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L123",
 			"name": "Plains",
 			"export_name": "Plains (L123)_",
 			"set": "HBB.4",
@@ -6431,11 +7801,27 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"sideways": [
+						"sideways"
+					],
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L124",
+			"kind": "land",
+			"id": "11f2e9d6-171b-429c-a9b3-3558de939731",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L124",
 			"name": "Plains",
 			"export_name": "Plains (L124)_",
 			"set": "HBB.4",
@@ -6486,11 +7872,24 @@
 				"1997-frame",
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L125",
+			"kind": "land",
+			"id": "43d7b23c-3f27-40ca-b941-e340af27066b",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L125",
 			"name": "Plains",
 			"export_name": "Plains (L125)_",
 			"set": "HBB.4",
@@ -6542,11 +7941,27 @@
 				"jank-frame",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"jank-frame": [
+						"jank-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L126",
+			"kind": "land",
+			"id": "3b775d99-f288-416b-8a88-5741e3d274b9",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L126",
 			"name": "Plains",
 			"export_name": "Plains (L126)_",
 			"set": "HBB.4",
@@ -6594,11 +8009,24 @@
 				"website-app-frame",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L127",
+			"kind": "land",
+			"id": "95678486-b11a-4c93-9145-c3d848ecd0ab",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L127",
 			"name": "Plains",
 			"export_name": "Plains (L127)_",
 			"set": "HBB.4",
@@ -6649,11 +8077,27 @@
 				"jank-frame",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"jank-frame": [
+						"jank-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L128",
+			"kind": "land",
+			"id": "ad1db88a-7544-4bba-9c4f-4dae00ad4a04",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L128",
 			"name": "Plains",
 			"export_name": "Plains (L128)_",
 			"set": "HBB.4",
@@ -6700,11 +8144,24 @@
 				"website-app-frame",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L129",
+			"kind": "land",
+			"id": "9c98b9bc-f88a-4b12-9987-808be909946d",
+			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L129",
 			"name": "Plains",
 			"export_name": "Plains (L129)_",
 			"set": "HBB.4",
@@ -6753,11 +8210,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L130",
+			"kind": "land",
+			"id": "67edd74c-24bf-4bdf-a696-1ddd93e0be7d",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L130",
 			"name": "Island",
 			"export_name": "Island (L130)_",
 			"set": "HBB.4",
@@ -6803,11 +8270,21 @@
 			"tags": [
 				"intentional-low-quality"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"intentional-low-quality": [
+						"intentional-low-quality"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L131",
+			"kind": "land",
+			"id": "faf33b6d-013d-4bbc-889e-d1f3e2ee52a4",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L131",
 			"name": "Island",
 			"export_name": "Island (L131)_",
 			"set": "HBB.4",
@@ -6850,12 +8327,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L132",
+			"kind": "land",
+			"id": "2839fdf5-487f-476f-bec4-515d4e8c2185",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L132",
 			"name": "Island",
 			"export_name": "Island (L132)_",
 			"set": "HBB.4",
@@ -6906,11 +8386,24 @@
 				"1997-frame",
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L133",
+			"kind": "land",
+			"id": "a2772151-645e-4e10-a563-e0a139f8d26a",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L133",
 			"name": "Island",
 			"export_name": "Island (L133)_",
 			"set": "HBB.4",
@@ -6956,11 +8449,21 @@
 			"tags": [
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L134",
+			"kind": "land",
+			"id": "939fe6ac-ca43-4f68-ae3b-26213e2f1cb4",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L134",
 			"name": "Island",
 			"export_name": "Island (L134)_",
 			"set": "HBB.4",
@@ -7013,11 +8516,30 @@
 			"tag_notes": {
 				"ransom-over-real-card": "Tropical Island"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"double-border": [
+						"double-border"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Tropical Island>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L135",
+			"kind": "land",
+			"id": "910f4287-3274-4dba-b2b0-fa3cbbc5d7a9",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L135",
 			"name": "Island",
 			"export_name": "Island (L135)_",
 			"set": "HBB.4",
@@ -7063,11 +8585,21 @@
 			"tags": [
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L136",
+			"kind": "land",
+			"id": "6da1e169-0932-48d9-8efa-481dd0a44493",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L136",
 			"name": "Island",
 			"export_name": "Island (L136)_",
 			"set": "HBB.4",
@@ -7109,12 +8641,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L137",
+			"kind": "land",
+			"id": "b2a08e54-013e-470b-9fc6-8e05cf78e265",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L137",
 			"name": "Island",
 			"export_name": "Island (L137)_",
 			"set": "HBB.4",
@@ -7160,11 +8695,21 @@
 			"tags": [
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L138",
+			"kind": "land",
+			"id": "23c7fa88-3cd3-45f1-9a58-f58a59d6d647",
+			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L138",
 			"name": "Island",
 			"export_name": "Island (L138)_",
 			"set": "HBB.4",
@@ -7213,11 +8758,21 @@
 			"tags": [
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L139",
+			"kind": "land",
+			"id": "6ce24c5f-064e-4d32-aeeb-352369b92ea8",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L139",
 			"name": "Swamp",
 			"export_name": "Swamp (L139)_",
 			"set": "HBB.4",
@@ -7276,11 +8831,39 @@
 			"tag_notes": {
 				"ransom-over-real-card": "Plains #306 from 40K"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"inverted-colors": [
+						"inverted-colors"
+					],
+					"inverted-text": [
+						"inverted-text"
+					],
+					"white-border": [
+						"white-border"
+					],
+					"ub-frame": [
+						"ub-frame"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Plains #306 from 40K>"
+					],
+					"white-watermark": [
+						"white-watermark"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L140",
+			"kind": "land",
+			"id": "834d3a76-0825-4980-8659-13e574af0c8c",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L140",
 			"name": "Swamp",
 			"export_name": "Swamp (L140)_",
 			"set": "HBB.4",
@@ -7332,11 +8915,27 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"sideways": [
+						"sideways"
+					],
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L141",
+			"kind": "land",
+			"id": "58b69f0d-2687-43bb-acbf-c0ee5518ba4f",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L141",
 			"name": "Swamp",
 			"export_name": "Swamp (L141)_",
 			"set": "HBB.4",
@@ -7383,11 +8982,24 @@
 				"intentional-low-quality",
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"intentional-low-quality": [
+						"intentional-low-quality"
+					],
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L142",
+			"kind": "land",
+			"id": "3f0ab793-c2ee-4ef4-baa9-ea231d9f9b12",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L142",
 			"name": "Swamp",
 			"export_name": "Swamp (L142)_",
 			"set": "HBB.4",
@@ -7438,11 +9050,24 @@
 				"1997-frame",
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L143",
+			"kind": "land",
+			"id": "a15ee682-41e1-47fc-a1e1-e133046506f7",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L143",
 			"name": "Swamp",
 			"export_name": "Swamp (L143)_",
 			"set": "HBB.4",
@@ -7490,11 +9115,24 @@
 				"unusual-proportions",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"unusual-proportions": [
+						"unusual-proportions"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L144",
+			"kind": "land",
+			"id": "14987e70-ef8e-4dfa-af91-1004e15949a4",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L144",
 			"name": "Swamp",
 			"export_name": "Swamp (L144)_",
 			"set": "HBB.4",
@@ -7547,11 +9185,33 @@
 			"tag_notes": {
 				"ransom-over-real-card": "Black Lotus"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"double-border": [
+						"double-border"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Black Lotus>"
+					],
+					"sharpie": [
+						"sharpie"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L145",
+			"kind": "land",
+			"id": "9ff80339-c41c-4f98-aa48-ea9c1711ab53",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L145",
 			"name": "Swamp",
 			"export_name": "Swamp (L145)_",
 			"set": "HBB.4",
@@ -7602,11 +9262,27 @@
 				"2003-frame",
 				"phyrexian-text"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					],
+					"2003-frame": [
+						"2003-frame"
+					],
+					"phyrexian-text": [
+						"phyrexian-text"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L146",
+			"kind": "land",
+			"id": "7cbe71f7-6dfb-46d8-97f4-8dd6b9307974",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L146",
 			"name": "Swamp",
 			"export_name": "Swamp (L146)_",
 			"set": "HBB.4",
@@ -7656,11 +9332,24 @@
 				"full-art",
 				"unique-border"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"unique-border": [
+						"unique-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L147",
+			"kind": "land",
+			"id": "f17eb434-8eb8-4701-b5df-d56d19d7f28b",
+			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L147",
 			"name": "Swamp",
 			"export_name": "Swamp (L147)_",
 			"set": "HBB.4",
@@ -7710,11 +9399,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L148",
+			"kind": "land",
+			"id": "99f87759-7c3e-4aea-971c-5ea7cbc6c108",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L148",
 			"name": "Mountain",
 			"export_name": "Mountain (L148)_",
 			"set": "HBB.4",
@@ -7767,11 +9469,30 @@
 			"tag_notes": {
 				"ransom-over-real-card": "Blood Moon"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"2003-frame": [
+						"2003-frame"
+					],
+					"misframe": [
+						"misframe"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Blood Moon>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L149",
+			"kind": "land",
+			"id": "9df5f8d8-8346-42de-9a04-fcefe427f101",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L149",
 			"name": "Mountain",
 			"export_name": "Mountain (L149)_",
 			"set": "HBB.4",
@@ -7818,11 +9539,24 @@
 				"website-app-frame",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L150",
+			"kind": "land",
+			"id": "19a49400-a514-4d23-a619-d8bdf02967cb",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L150",
 			"name": "Mountain",
 			"export_name": "Mountain (L150)_",
 			"set": "HBB.4",
@@ -7873,11 +9607,27 @@
 			"tag_notes": {
 				"ransom-over-real-card": "Urza's Tower d from ATQ"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Urza's Tower d from ATQ>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L151",
+			"kind": "land",
+			"id": "3decfcf9-80f5-47b4-8bac-a38306e8098f",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L151",
 			"name": "Mountain",
 			"export_name": "Mountain (L151)_",
 			"set": "HBB.4",
@@ -7923,11 +9673,21 @@
 			"tags": [
 				"yugioh-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"yugioh-frame": [
+						"yugioh-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L152",
+			"kind": "land",
+			"id": "023553e0-f21f-4f49-ac4c-2210acfa36f5",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L152",
 			"name": "Mountain",
 			"export_name": "Mountain (L152)_",
 			"set": "HBB.4",
@@ -7978,11 +9738,24 @@
 				"1997-frame",
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L153",
+			"kind": "land",
+			"id": "eae83c11-62bd-4b48-9bf2-cff5457119d4",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L153",
 			"name": "Mountain",
 			"export_name": "Mountain (L153)_",
 			"set": "HBB.4",
@@ -8029,11 +9802,24 @@
 				"website-app-frame",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L154",
+			"kind": "land",
+			"id": "aac5a3a5-e475-48a9-b9fc-0f7e89aa8790",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L154",
 			"name": "Mountain",
 			"export_name": "Mountain (L154)_",
 			"set": "HBB.4",
@@ -8083,11 +9869,24 @@
 				"monochrome",
 				"no-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"monochrome": [
+						"monochrome"
+					],
+					"no-art": [
+						"no-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L155",
+			"kind": "land",
+			"id": "06461afe-1798-4e10-aad3-e82b02d2e6e4",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L155",
 			"name": "Mountain",
 			"export_name": "Mountain (L155)_",
 			"set": "HBB.4",
@@ -8134,11 +9933,21 @@
 			"tags": [
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L156",
+			"kind": "land",
+			"id": "dcbfad75-e117-4cc1-822e-19d8f41c759b",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L156",
 			"name": "Mountain",
 			"export_name": "Mountain (L156)_",
 			"set": "HBB.4",
@@ -8185,11 +9994,21 @@
 			"tags": [
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L157",
+			"kind": "land",
+			"id": "897be83a-8cb7-42b9-9ed3-16e5a73f34b6",
+			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L157",
 			"name": "Mountain",
 			"export_name": "Mountain (L157)_",
 			"set": "HBB.4",
@@ -8235,11 +10054,21 @@
 			"tags": [
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L158",
+			"kind": "land",
+			"id": "bfe74d50-e3fa-44f7-9e0a-8f930176c27e",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L158",
 			"name": "Forest",
 			"export_name": "Forest (L158)_",
 			"set": "HBB.4",
@@ -8286,11 +10115,24 @@
 				"website-app-frame",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L159",
+			"kind": "land",
+			"id": "b99b4206-4ba4-4d16-96d3-b2714440f5d8",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L159",
 			"name": "Forest",
 			"export_name": "Forest (L159)_",
 			"set": "HBB.4",
@@ -8333,12 +10175,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L160",
+			"kind": "land",
+			"id": "56a229c3-5a5b-4d17-9125-c58cde30cf88",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L160",
 			"name": "Forest",
 			"export_name": "Forest (L160)_",
 			"set": "HBB.4",
@@ -8389,11 +10234,24 @@
 				"1997-frame",
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L161",
+			"kind": "land",
+			"id": "8724d465-ee54-489f-8017-48a634da91cb",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L161",
 			"name": "Forest",
 			"export_name": "Forest (L161)_",
 			"set": "HBB.4",
@@ -8440,11 +10298,24 @@
 				"jank-frame",
 				"no-border"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					],
+					"no-border": [
+						"no-border"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L162",
+			"kind": "land",
+			"id": "674fc7d6-94bb-4fae-9ea2-63985a32ab96",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L162",
 			"name": "Forest",
 			"export_name": "Forest (L162)_",
 			"set": "HBB.4",
@@ -8490,11 +10361,21 @@
 			"tags": [
 				"jank-frame"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"jank-frame": [
+						"jank-frame"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L163",
+			"kind": "land",
+			"id": "bc5786ed-6b5d-429c-918a-fb56f9cfb96c",
+			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L163",
 			"name": "Forest",
 			"export_name": "Forest (L163)_",
 			"set": "HBB.4",
@@ -8542,11 +10423,24 @@
 				"website-app-frame",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"website-app-frame": [
+						"website-app-frame"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L164",
+			"kind": "land",
+			"id": "c32b03c4-b97c-4a54-8603-b6c361794d30",
+			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L164",
 			"name": "Wastes",
 			"export_name": "Wastes (L164)_",
 			"set": "HBB.4",
@@ -8580,12 +10474,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015",
-			"variation": false
+			"frame": "2015"
 		},
 		{
 			"object": "card",
-			"id": "L165",
+			"kind": "land",
+			"id": "61a07865-302b-488b-95c9-690013c4dbb8",
+			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L165",
 			"name": "Wastes",
 			"export_name": "Wastes (L165)_",
 			"set": "HBB.4",
@@ -8627,11 +10524,24 @@
 				"1997-frame",
 				"full-art"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"1997-frame": [
+						"1997-frame"
+					],
+					"full-art": [
+						"full-art"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L166",
+			"kind": "land",
+			"id": "7d10085c-a7d7-40c5-ba09-a613c00a73e7",
+			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L166",
 			"name": "Wastes",
 			"export_name": "Wastes (L166)_",
 			"set": "HBB.4",
@@ -8673,11 +10583,24 @@
 			"tag_notes": {
 				"ransom-over-real-card": "Encroaching Wastes"
 			},
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"ransomnote": [
+						"ransomnote"
+					],
+					"ransom-over-real-card": [
+						"ransom-over-real-card<Encroaching Wastes>"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L167",
+			"kind": "land",
+			"id": "9ec12a01-3e95-44ee-9534-653823578157",
+			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L167",
 			"name": "Wastes",
 			"export_name": "Wastes (L167)_",
 			"set": "HBB.4",
@@ -8719,11 +10642,24 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": false
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			}
 		},
 		{
 			"object": "card",
-			"id": "L168",
+			"kind": "land",
+			"id": "f7159036-be27-4e72-b52b-af983077c558",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L168",
 			"name": "Nebula",
 			"export_name": "Nebula (L168)_",
 			"set": "HBB.7",
@@ -8774,12 +10710,18 @@
 			"tags": [
 				"no-art"
 			],
-			"variation": false,
-			"isActualToken": true,
+			"tag_state": {
+				"base_tags": {
+					"no-art": [
+						"no-art"
+					]
+				}
+			},
 			"all_parts": [
 				{
 					"object": "related_card",
-					"id": "3871",
+					"id": "c0c6dac5-40b2-4fb5-8ddb-c8ae5003bc49",
+					"hcid": "3871",
 					"name": "Dwardish Spirit Guide",
 					"set": "HC7.0",
 					"image": "https://lh3.googleusercontent.com/d/1_29JF379bOVzslOPaoRawip9QDq8EwcJ",
@@ -8788,7 +10730,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "4671",
+					"id": "ced31bb3-908c-43f6-a603-5a8d076e44b8",
+					"hcid": "4671",
 					"name": "Eldrazi from the Really Blind Eternities",
 					"set": "HC7.1",
 					"image": "https://lh3.googleusercontent.com/d/1WQfISyURxRlbNyqDC_v5u-uD89pHfSSi",
@@ -8797,7 +10740,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "3877",
+					"id": "a9707596-804d-447e-bb24-ff575a45468c",
+					"hcid": "3877",
 					"name": "Black Hole (HC)",
 					"set": "HC7.0",
 					"image": "https://lh3.googleusercontent.com/d/15Fg6YNI1hZV5EU7Emzr7kuuxSrRihZMP",
@@ -8806,7 +10750,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "4700",
+					"id": "cc87d890-fd02-4dbb-b30d-029588510e1a",
+					"hcid": "4700",
 					"name": "The Final Frontier",
 					"set": "HC7.1",
 					"image": "https://lh3.googleusercontent.com/d/1PGQi98t1XyctKS8puN4fBkRgK_3TPm9-",
@@ -8815,7 +10760,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "4004",
+					"id": "44e7db75-d1de-4926-90f9-2945b926fe53",
+					"hcid": "4004",
 					"name": "Burning-Bush Emissary",
 					"set": "HC7.0",
 					"image": "https://lh3.googleusercontent.com/d/1kUEMpRzymuBta9INrRiAsO0UY6G_8AlG",
@@ -8824,7 +10770,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "4800",
+					"id": "11130db4-d99e-4798-94f4-768c51507f34",
+					"hcid": "4800",
 					"name": "Arena Aggro Drafter",
 					"set": "HC7.1",
 					"image": "https://lh3.googleusercontent.com/d/14iqFMnurxQbWJNVBsNHTxzFhQJXdbGUl",
@@ -8833,7 +10780,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "4816",
+					"id": "169b6215-9a77-4c26-9c62-6e9ad8a0f089",
+					"hcid": "4816",
 					"name": "chance to have a 10 nebula for 1 pick in a booster",
 					"set": "HCV.7",
 					"image": "https://lh3.googleusercontent.com/d/12shWPzbg2Upxl5zMOAVGgEOlPfqEGdCv",
@@ -8844,7 +10792,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "4837",
+					"id": "d474ffab-d91b-48e3-8df7-c7bf2caf64e7",
+					"hcid": "4837",
 					"name": "Asteroid Mining Colony",
 					"set": "HC7.1",
 					"image": "https://lh3.googleusercontent.com/d/1qAy0SQLc37ncA3dvfUovgo_FtoYCs3kB",
@@ -8854,7 +10803,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "4852",
+					"id": "dd4e282f-3557-493d-a450-974878d47a2b",
+					"hcid": "4852",
 					"name": "Fetch, Land",
 					"set": "HC7.1",
 					"image": "https://lh3.googleusercontent.com/d/1V_khdO97OL7nnx9-g3NsPKVxOapAH6h_",
@@ -8863,7 +10813,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "4883",
+					"id": "793c0bab-bebe-4882-b5ba-a66d5c35ed6e",
+					"hcid": "4883",
 					"name": "LGS Cleaning Crew",
 					"set": "HC7.1",
 					"image": "https://lh3.googleusercontent.com/d/1ynC8GJF6lp4vC_zLeSJhu7JxRT_2kIUP",
@@ -8872,7 +10823,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "4994",
+					"id": "45b7c535-e3fc-4fab-9b39-abe884f4485b",
+					"hcid": "4994",
 					"name": "Slimefoot, The Fungus Attached to the ISS",
 					"set": "HC7.1",
 					"image": "https://lh3.googleusercontent.com/d/1lS_SKEG6hccArf3nGHnmPLZPIDLEm4IN",
@@ -8881,7 +10833,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "1630",
+					"id": "0df4aece-2477-473c-8fe9-e89a54e0b831",
+					"hcid": "1630",
 					"name": "POV: You Just Played Llanowar Elves for the First Time",
 					"set": "HC3.1",
 					"image": "https://lh3.googleusercontent.com/d/11P-ZDB6onZSPTiz8GX9E78YdAMTZqlhG",
@@ -8892,7 +10845,11 @@
 		},
 		{
 			"object": "card",
-			"id": "L169",
+			"kind": "land",
+			"id": "65c93f00-8221-4eee-bebc-0454bd2d08e0",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L169",
 			"name": "Nebula",
 			"export_name": "Nebula (L169)_",
 			"set": "HBB.L",
@@ -8941,12 +10898,21 @@
 				"1993-frame",
 				"double-border"
 			],
-			"variation": false,
-			"isActualToken": true,
+			"tag_state": {
+				"base_tags": {
+					"1993-frame": [
+						"1993-frame"
+					],
+					"double-border": [
+						"double-border"
+					]
+				}
+			},
 			"all_parts": [
 				{
 					"object": "related_card",
-					"id": "7124",
+					"id": "2a816133-c1f0-46d3-ae1f-99a4b34b41a1",
+					"hcid": "7124",
 					"name": "Kobolds of Starbase Kher",
 					"set": "HKL",
 					"image": "https://lh3.googleusercontent.com/d/1thowg-wqfejbXpiGzm6z7Xt7x-IwUIa1",
@@ -8956,7 +10922,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "7135",
+					"id": "7fabdffd-9ee7-4c3c-8eb9-762d9493b46e",
+					"hcid": "7135",
 					"name": "Waxy Charm",
 					"set": "HKL",
 					"image": "https://lh3.googleusercontent.com/d/1NX_F5UBxAQpYzPySzKKTJ65iQB3mly1F",
@@ -8965,7 +10932,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "7229",
+					"id": "ac98f6fc-e954-4887-92e9-711d9a6e402d",
+					"hcid": "7229",
 					"name": "PURPLE Lotus",
 					"set": "HCV.L",
 					"image": "https://lh3.googleusercontent.com/d/1oL0c-QJDWTkGwcsGMTptVR-DWbnWjjbr",
@@ -8976,7 +10944,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "7163",
+					"id": "31856247-3e6a-44ba-8eaf-5cacd3a50d94",
+					"hcid": "7163",
 					"name": "Dagoth Ur",
 					"set": "HKL",
 					"image": "https://lh3.googleusercontent.com/d/1qilJHZlJBWbM1G26KNEG10WJzGrymgjW",
@@ -8986,7 +10955,8 @@
 				},
 				{
 					"object": "related_card",
-					"id": "7309",
+					"id": "e6a53102-b298-4bed-96af-4a881e11d7fe",
+					"hcid": "7309",
 					"name": "The Spider From Trade Caravan",
 					"set": "HCV.L",
 					"image": "https://lh3.googleusercontent.com/d/1KeYzyFBjlRcOhlPsh6XqyxXpJrmdOGIs",
@@ -8997,7 +10967,11 @@
 		},
 		{
 			"object": "card",
-			"id": "L170",
+			"kind": "land",
+			"id": "2d836916-66a8-4096-96b3-e1b469cde363",
+			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
+			"oracle_id_is_scryfall": true,
+			"hcid": "L170",
 			"name": "Nebula",
 			"export_name": "Nebula (L170)_",
 			"set": "HBB.L",
@@ -9017,7 +10991,7 @@
 				"Nebula"
 			],
 			"type_line": "Basic Land — Nebula",
-			"oracle_text": "",
+			"oracle_text": "({T}: Add {P}.)",
 			"colors": [],
 			"color_identity": [
 				"P"
@@ -9049,13 +11023,21 @@
 				"full-art",
 				"borderless"
 			],
-			"variation": true,
-			"variation_of": "Nebula1",
-			"isActualToken": true,
+			"tag_state": {
+				"base_tags": {
+					"full-art": [
+						"full-art"
+					],
+					"borderless": [
+						"borderless"
+					]
+				}
+			},
 			"all_parts": [
 				{
 					"object": "related_card",
-					"id": "6912",
+					"id": "36e93eef-86c2-4718-bf1c-fff971abfde0",
+					"hcid": "6912",
 					"name": "HKL: Woah Lions",
 					"set": "HKL",
 					"image": "https://lh3.googleusercontent.com/d/1fEkKfsuo-CbVk96009q-5ay2MCA1QJpr",

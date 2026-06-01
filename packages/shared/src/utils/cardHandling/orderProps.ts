@@ -2,9 +2,12 @@ import { facePropType, partPropType, propType } from './propTypes';
 
 export const propOrder: propType[] = [
   'object',
+  'kind',
   'id',
-  'scryfall_id',
+  'id_is_scryfall',
   'oracle_id',
+  'oracle_id_is_scryfall',
+  'hcid',
   'name',
   'flavor_name',
   'export_name',
@@ -54,10 +57,7 @@ export const propOrder: propType[] = [
   'frame_effects',
   'tags',
   'tag_notes',
-  'token_id',
-  'variation',
-  'variation_of',
-  'isActualToken',
+  'tag_state',
   'card_faces',
   'all_parts',
 ];
@@ -88,6 +88,7 @@ export const facePropOrder: facePropType[] = [
   'attraction_lights',
   'colors',
   'color_indicator',
+  'finish',
   'watermark',
   'border_color',
   'frame',
@@ -98,6 +99,7 @@ export const facePropOrder: facePropType[] = [
 export const partPropOrder: partPropType[] = [
   'object',
   'id',
+  'hcid',
   'name',
   'set',
   'image',

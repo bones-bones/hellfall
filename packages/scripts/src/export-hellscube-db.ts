@@ -60,9 +60,7 @@ async function main() {
   const { outPath } = parseArgs(process.argv.slice(2));
 
   if (!process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim()) {
-    console.error(
-      'GOOGLE_APPLICATION_CREDENTIALS is required (path to service account JSON).'
-    );
+    console.error('GOOGLE_APPLICATION_CREDENTIALS is required (path to service account JSON).');
     process.exit(1);
   }
 

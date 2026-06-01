@@ -1,10 +1,12 @@
+/* eslint-disable no-redeclare */
+/* eslint-disable no-undef */
 import { HCObject } from '../Object';
 import { HCLayout, HCLayoutGroup } from './values';
 import { HCCardFace } from './CardFace.ts';
 import { HCCardFields } from './CardFields.ts';
 
-type Layout<T extends `${HCLayout}`> = Pick<HCCardFields.Core.HCReferences, 'layout'> & {
-  layout: `${T}`;
+type Layout<T extends HCLayout> = Pick<HCCardFields.Core.HCReferences, 'layout'> & {
+  layout: T;
 };
 
 /**
@@ -51,10 +53,9 @@ export namespace HCCard {
        *
        * @returns An ordered object representation of the card
        */
-      toJSON(): Record<string, any>;
+      toJSON?(): Record<string, any>;
     };
 }
-
 export namespace HCCard {
   /**
    * Any card with a single-faced layout.

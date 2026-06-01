@@ -1,7 +1,7 @@
 import { HCCard, HCCardFace, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
 import { CockCardProps, CockFaceProps, CockRelatedProps } from './cockTypes';
 import { orderColors } from '../orderColors';
-import { mergeHCCardFaces, toFaces } from '../cardHandling';
+import { canBeInDecks, hasTokenHCID, mergeHCCardFaces, toFaces } from '../cardHandling';
 
 const hcToCockLayout: Record<HCLayout, string> = {
   normal: 'normal',
@@ -159,7 +159,7 @@ const compressHCCardFaces = (card: HCCard.Any): HCCard.Any => {
   if ('card_faces' in newCard) {
     const goingToCompressAll = Boolean(
       newCard.card_faces.length > 2 &&
-        newCard.card_faces.filter(face => face.compress_face || face.drop_face).length == 1
+        newCard.card_faces.filter(face => !face.compress_face && !face.drop_face).length == 1
     );
     for (let i = newCard.card_faces.length - 1; i > 0; i--) {
       if (i == 3 && newCard.card_faces[2].layout == 'transform') {
@@ -196,13 +196,14 @@ export const hcCardToCockProps = (uncompressedCard: HCCard.Any): CockCardProps =
   const cockCard: CockCardProps = {
     coloridentity: card.color_identity.join(''),
     id: card.id,
+    hcid: card.hcid,
     props: [],
     set: card.set,
   };
   if (card.collector_number) {
     cockCard.collector_number = card.collector_number;
   }
-  if (card.isActualToken) {
+  if (!canBeInDecks(card)) {
     cockCard.token = '1';
   }
   Object.entries(card.legalities).forEach(([key, value]) => {
@@ -212,13 +213,13 @@ export const hcCardToCockProps = (uncompressedCard: HCCard.Any): CockCardProps =
   });
   if ('card_faces' in card) {
     card.card_faces.forEach(face => cockCard.props.push(hcFaceToCockProps(face)));
-    if (card.isActualToken && card.card_faces.length == 1 && !card.card_faces[0].export_name) {
-      cockCard.props[0].name = card.id;
+    if (hasTokenHCID(card) && card.card_faces.length == 1 && !card.card_faces[0].export_name) {
+      cockCard.props[0].name = card.hcid;
     }
   } else {
     cockCard.props.push(hcFaceToCockProps(card));
-    if (card.isActualToken && !card.export_name) {
-      cockCard.props[0].name = card.id;
+    if (hasTokenHCID(card) && !card.export_name) {
+      cockCard.props[0].name = card.hcid;
     }
   }
   if (card.all_parts) {

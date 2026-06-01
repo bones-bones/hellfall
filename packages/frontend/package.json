@@ -32,6 +32,7 @@
     "identity-obj-proxy": "3.0.0",
     "jotai": "^2.0.1",
     "jsdom": "^17.0.0",
+    "json-loader": "^0.5.7",
     "p-limit": "^7.3.0",
     "prompts": "2.4.0",
     "react": "^19.2.0",
@@ -148,42 +149,6 @@
       "jest-watch-typeahead/testname"
     ],
     "resetMocks": true
-  },
-  "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "prefer-destructuring": [
-        "error",
-        {
-          "object": true,
-          "array": false
-        }
-      ],
-      "import/prefer-default-export": 0,
-      "@typescript-eslint/explicit-function-return-type": 0,
-      "@typescript-eslint/no-use-before-define": 0,
-      "@typescript-eslint/no-inferrable-types": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "no-cond-assign": 0,
-      "react/prop-types": 0,
-      "@typescript-eslint/explicit-module-boundary-types": 0,
-      "@typescript-eslint/no-non-null-assertion": 0,
-      "@typescript-eslint/no-non-null-asserted-optional-chain": 0,
-      "react/react-in-jsx-scope": "off",
-      "@typescript-eslint/ban-ts-comment": 0,
-      "@typescript-eslint/no-namespace": 0,
-      "eqeqeq": 0,
-      "no-restricted-globals": 0,
-      "no-unused-vars": 0,
-      "react-hooks/exhaustive-deps": 0,
-      "react/self-closing-comp": [
-        "error",
-        {
-          "component": true,
-          "html": true
-        }
-      ]
-    }
   },
   "browserslist": {
     "production": [

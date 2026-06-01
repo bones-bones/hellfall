@@ -45,7 +45,6 @@ packages/server/.env
 .env*
 
 build
-.vscode/settings.json
 
 LESSONS_LEARNED.md
 

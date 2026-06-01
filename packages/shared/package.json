@@ -17,9 +17,15 @@
       "types": "./src/types/index.ts",
       "import": "./src/types/index.ts"
     },
+    "./data": {
+      "browser": "./src/data/data.browser.ts",
+      "node": "./src/data/data.node.ts",
+      "default": "./src/data/data.node.ts"
+    },
     "./data/*": {
-      "types": "./src/data/*",
-      "import": "./src/data/*"
+      "browser": "./src/data/data.browser.ts",
+      "node": "./src/data/data.node.ts",
+      "default": "./src/data/data.node.ts"
     },
     "./utils": {
       "types": "./src/utils/index.ts",
@@ -40,14 +46,6 @@
     "./utils/tts": {
       "types": "./src/utils/tts/index.ts",
       "import": "./src/utils/tts/index.ts"
-    },
-    "./utils/cardHandling/cardMethods": {
-      "types": "./src/utils/cardHandling/cardMethods.ts",
-      "import": "./src/utils/cardHandling/cardMethods.ts"
-    },
-    "./cardTags/cardTagMerge": {
-      "types": "./src/cardTags/cardTagMerge.ts",
-      "import": "./src/cardTags/cardTagMerge.ts"
     },
     "./export/cards": {
       "types": "./src/export/exportCards.ts",

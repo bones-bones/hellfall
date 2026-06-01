@@ -39,7 +39,7 @@ export const AvatarOfBalls = () => {
 
           const cardsTo = [];
           for (let i = 0; i < parseInt(numRef.current?.value || '2'); i++) {
-            cardsTo.push(filtered[Math.floor(Math.random() * filtered.length)]);
+            cardsTo.push(filtered.getRandomCard());
           }
 
           setCardsToRender(cardsTo);

@@ -1,5 +1,5 @@
 import { BigContainer, Divider, InnerContainer, ManaSymbolSmall, StyledH3 } from './components.tsx';
-import { getPipSrc } from '../../hellfall/stringToMana.tsx';
+import { getPipSrc } from '@hellfall/shared/utils';
 import { Link } from 'react-router-dom';
 export const RakdosCrimes = () => {
   return (
@@ -82,7 +82,10 @@ export const RakdosCrimes = () => {
           flashbacking crimes and all other kinds of posthumous crimes.
         </div>
         <br />
-        <img src="https://media.tenor.com/FwP1UdcbX9AAAAAM/night-in-the-woods-nitw.gif" />
+        <img
+          alt="crimes"
+          src="https://media.tenor.com/FwP1UdcbX9AAAAAM/night-in-the-woods-nitw.gif"
+        />
         <div>—munkegutz</div>
       </BigContainer>
     </>

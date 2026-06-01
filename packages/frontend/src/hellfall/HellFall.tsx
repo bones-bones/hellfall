@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState, useMemo, startTransition } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { HellfallEntry } from './HellfallEntry.tsx';
-import { xIcon, extLinkIcon } from '@workday/canvas-system-icons-web';
 
-import { styled, Card, ToolbarIconButton, space } from '@workday/canvas-kit-react';
-import { SidePanel, useSidePanel } from '@workday/canvas-kit-preview-react/side-panel';
+import { styled, space } from '@workday/canvas-kit-react';
 import { PaginationComponent } from './inputs';
 
-import { HellfallCard } from './card/HellfallCard.tsx';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
   activeCardAtom,
@@ -18,8 +15,6 @@ import {
 import { useSearchResults } from './hooks/useSearchResults.ts';
 import { SortComponent } from './search-controls/SortComponent.tsx';
 import { CHUNK_SIZE } from './constants.ts';
-import { useKeyPress } from '../hooks';
-import { cardsAtom } from './atoms/cardsAtom.ts';
 import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
 import { getOtherNames } from '@hellfall/shared/utils';
 import { SearchBar } from './search-controls/SearchBar.tsx';
@@ -87,13 +82,13 @@ export const HellFall = () => {
             <HellfallEntry
               onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                 if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                  window.open(`/card/${encodeURIComponent(entry.id)}`, '_blank');
+                  window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
                 } else {
                   setActiveCardFromAtom(entry.id);
                 }
               }}
               key={'' + entry.id + '-' + i}
-              id={entry.id}
+              id={entry.hcid}
               name={entry.name}
               otherNames={getOtherNames(entry)}
               url={

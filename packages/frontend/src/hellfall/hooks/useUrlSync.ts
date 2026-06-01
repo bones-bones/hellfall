@@ -10,14 +10,13 @@ import {
   querySortAtom,
   summaryAtom,
   invalidAtom,
-  // parseOperatorValue,
 } from '../atoms/searchAtoms.ts';
-import { sortObject } from '@hellfall/shared/filters/filterObject.ts';
 import {
+  sortObject,
   combineAndWinnowSorts,
   parseSearchQuery,
-} from '@hellfall/shared/filters/parseSearchBar.ts';
-import { makeSort } from '@hellfall/shared/filters/filterBuilder.ts';
+  makeSort,
+} from '@hellfall/shared/filters';
 import { listsAreEqual } from '@hellfall/shared/utils';
 
 const sortsEqual = (mem1: sortObject, mem2: sortObject) =>
@@ -67,13 +66,14 @@ export const useUrlSync = () => {
     if (!listsAreEqual(invalids, parsedQuery.invalids, invalidsEqual)) {
       setInvalids(parsedQuery.invalids);
     }
-    // Set pagination and active card
+    // Set pagination and reset active card
     if (page != parseInt(params.get('page') || '0')) {
       setPage(parseInt(params.get('page') || '0'));
     }
-    if (activeCard != (params.get('activeCard') || '')) {
-      setActiveCard(params.get('activeCard') || '');
-    }
+    // if (activeCard != (params.get('activeCard') || '')) {
+    //   setActiveCard(params.get('activeCard') || '');
+    // }
+    setActiveCard('');
   }, [location.search, location.pathname]); // This triggers on back/forward navigation
 };
 
@@ -83,17 +83,17 @@ export const useUpdateURL = () => {
   const query = useAtomValue(queryAtom);
   const inputSorts = useAtomValue(inputSortAtom);
   const page = useAtomValue(pageAtom);
-  const activeCard = useAtomValue(activeCardAtom);
-  const prevValues = useRef({ query, inputSorts, page, activeCard });
+  // const activeCard = useAtomValue(activeCardAtom);
+  const prevValues = useRef({ query, inputSorts, page /*, activeCard */ });
 
   useEffect(() => {
     const hasChanged =
       prevValues.current.query !== query ||
       !listsAreEqual(prevValues.current.inputSorts, inputSorts) ||
-      prevValues.current.page !== page ||
-      prevValues.current.activeCard !== activeCard;
+      prevValues.current.page !== page;
+    // const activeHasChanged = prevValues.current.activeCard !== activeCard;
 
-    if (!hasChanged) return;
+    if (!hasChanged /* && !activeHasChanged */) return;
 
     const searchToSet = new URLSearchParams();
 
@@ -107,25 +107,18 @@ export const useUpdateURL = () => {
     if (page > 0) {
       searchToSet.append('page', page.toString());
     }
-    if (activeCard !== '') {
-      searchToSet.append('activeCard', activeCard);
-    }
-    // if (newPathname) {
-    //   const newUrl = `${newPathname}${searchToSet.size ? `?${searchToSet.toString()}`:''}`;
-
-    //   navigate(newUrl, {
-    //     replace: false,
-    //   });
-    // } else {
+    // if (activeCard !== '') {
+    //   searchToSet.append('activeCard', activeCard);
+    // }
     const newUrl = `${searchToSet.size ? `?${searchToSet.toString()}` : ''}`;
     const currentUrl = location.search;
+
     if (newUrl != currentUrl) {
       navigate(newUrl, {
-        replace: false,
+        replace: false /* !hasChanged */,
       });
     }
-    prevValues.current = { query, inputSorts, page, activeCard };
-    // }
+    prevValues.current = { query, inputSorts, page /*, activeCard */ };
   });
 };
 

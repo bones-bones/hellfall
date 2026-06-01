@@ -1,20 +1,17 @@
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
-// import { toDeck } from '../deck-builder/toDeck.ts';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
-import { HCToTTSDeck, toCockCube } from '@hellfall/shared/utils';
+import { getRelatedsFromSet, HCToTTSDeck, toCockCube } from '@hellfall/shared/utils';
 import { useAtomValue } from 'jotai';
-import { HCCard } from '@hellfall/shared/types';
 import { ReactNode } from 'react';
 import { downloadDraftmancer } from './downloadDraftmancer.ts';
-import { getHc5 } from './getHc5.ts';
 import { toMPCAutofill } from './toMPCAutofill.ts';
 import { getLands } from './getLands.ts';
-import { getFilteredSet, getSplitSet } from '@hellfall/shared/filters/filterSet.ts';
+import { SetCode } from '@hellfall/shared/types';
 
 type CubeSetup = {
   name: string;
-  id: string;
+  id: SetCode;
   description: string;
   // cards: HCCard.Any[];
   quickLink?: ReactNode;
@@ -26,9 +23,7 @@ type CubeSetup = {
 };
 
 export const CubeResources = () => {
-  const cards = useAtomValue(cardsAtom).filter(
-    e => !e.tags?.includes('offensive') && e.set != 'NotMagic'
-  );
+  const cardMap = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
   const cubeSetups: CubeSetup[] = [
     {
       name: 'Hellscube',
@@ -175,7 +170,7 @@ export const CubeResources = () => {
     },
     {
       name: 'All Hellscube Sets',
-      id: 'All',
+      id: 'All' as SetCode,
       description: 'All sets!',
     },
   ];
@@ -210,8 +205,8 @@ export const CubeResources = () => {
                     onClick={() => {
                       const val = HCToTTSDeck(
                         cubeSetup.name,
-                        cubeSetup.id == 'HC5' ? getHc5() : getSplitSet(cards, cubeSetup.id).cards,
-                        cards
+                        cardMap.getAllIdsInSet(cubeSetup.id),
+                        cardMap
                       );
                       const url =
                         'data:text/plain;base64,' +
@@ -235,9 +230,7 @@ export const CubeResources = () => {
                     const val = toCockCube({
                       name: cubeSetup.name,
                       set: cubeSetup.id,
-                      cardList:
-                        cubeSetup.id == 'HC5' ? getHc5() : getSplitSet(cards, cubeSetup.id).cards,
-                      allCards: cards,
+                      cardMap,
                     });
 
                     const url = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(val)));
@@ -262,11 +255,7 @@ export const CubeResources = () => {
                       downloadDraftmancer({
                         name: cubeSetup.name,
                         set: cubeSetup.id,
-                        allCards: cards,
-                        cardList:
-                          cubeSetup.id == 'HC5'
-                            ? getHc5()
-                            : getSplitSet(cards, cubeSetup.id, true).cards,
+                        cardMap,
                       });
                     }}
                   >
@@ -285,7 +274,7 @@ export const CubeResources = () => {
                           )
                         ).json()
                       ).values
-                        .map((entry: any, i: any) => {
+                        .flatMap((entry: any, i: any) => {
                           if (i !== 0) {
                             return {
                               Cardname: entry[0],
@@ -293,16 +282,17 @@ export const CubeResources = () => {
                               Url: entry[2],
                             };
                           }
+                          return [];
                         })
                         .filter(Boolean) as {
                         Cardname: string;
                         Sidename: string;
                         Url: string;
                       }[];
-                      const { cards: intCards, tokens: intTokens } =
-                        cubeSetup.id == 'HC5'
-                          ? { cards: getHc5(), tokens: [] }
-                          : getSplitSet(cards, cubeSetup.id);
+                      const { cards: intCards, tokens: intTokens } = getRelatedsFromSet(
+                        cubeSetup.id,
+                        cardMap
+                      );
                       const tokenNames = intTokens.flatMap(entry => {
                         // Dear sixel, pls finish
                         return (entry.all_parts?.filter(e => e.component == 'token') || []).map(
@@ -322,7 +312,7 @@ export const CubeResources = () => {
                         };
                       });
 
-                      const printableCards = intCards.map(cardEntry => {
+                      const printableCards = intCards.mapToArray(cardEntry => {
                         const matches = cardList.filter(e => e.Cardname == cardEntry.name);
                         if (cardEntry.name.includes('// Elves')) {
                           console.log(cardList, matches);

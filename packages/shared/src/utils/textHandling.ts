@@ -1,4 +1,4 @@
-import { allSetsList } from '@hellfall/shared/data/sets.ts';
+import { allSetsList } from '@hellfall/shared/types';
 
 export const normalizeText = (text: string): string =>
   text
@@ -294,7 +294,7 @@ export const toExportName = (name: string) => {
 
 export const stripSingleSlashes = (text: string) => {
   return text
-    .replaceAll(/([^\/])\/([^\/])/g, '$1$2')
+    .replaceAll(/([^/])\/([^/])/g, '$1$2')
     .replaceAll('|', '')
     .trim();
 };
@@ -371,7 +371,7 @@ const costSubstitutes: [RegExp | string, string][] = [
 export const toExportMana = (text: string, isCost: boolean = false) => {
   if (text.includes('{')) {
     return text
-      .split(/({[\w -\.\?\/]+})/g)
+      .split(/({[\w -.?/]+})/g)
       .map(subtext => {
         if (!subtext.includes('{')) {
           return subtext;
@@ -398,3 +398,5 @@ export const toExportMana = (text: string, isCost: boolean = false) => {
     return text.replaceAll(':[', ':(');
   }
 };
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export const isValidV4UUID = (uuid: string): boolean => uuidRegex.test(uuid);

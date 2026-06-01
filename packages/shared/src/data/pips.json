@@ -1100,6 +1100,16 @@
       "no_shadow": true
     },
     {
+      "filename": "mono/variables/TREEX.png",
+      "symbol": "TREEX",
+      "english": "TREE(X) generic mana",
+      "represents_mana": true,
+      "mana_value": 0,
+      "colors": [
+        "C"
+      ]
+    },
+    {
       "filename": "mono/fractional/HW.svg",
       "symbol": "HW",
       "english": "one-half white mana",

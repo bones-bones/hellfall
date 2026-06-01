@@ -1,5 +1,5 @@
 import { BigContainer, InnerContainer, ManaSymbolSmall } from './components.tsx';
-import { getPipSrc } from '../../hellfall/stringToMana.tsx';
+import { getPipSrc } from '@hellfall/shared/utils';
 import { Link } from 'react-router-dom';
 export const GruulSelfDiscard = () => {
   return (
@@ -36,7 +36,11 @@ export const GruulSelfDiscard = () => {
         </h2>
 
         <h2>Have fun you filthy animals</h2>
-        <img width="400px" src={'https://i.redd.it/i7lw68wrqxua1.png'} />
+        <img
+          alt="NO TERFS ON GRUUL TURF"
+          width="400px"
+          src={'https://i.redd.it/i7lw68wrqxua1.png'}
+        />
         <h3>—Red</h3>
       </BigContainer>
     </>

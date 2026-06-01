@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 import styled from '@emotion/styled';
 // import { toDeck } from './toDeck.ts';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
@@ -9,7 +9,8 @@ import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { nameToId } from '../hellfall/hooks/useNameToId.ts';
 import { downloadDraftmancer } from '../hells-cubes/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { HCToTTSDeck } from '@hellfall/shared/utils';
+import { CardMap, HCToTTSDeck } from '@hellfall/shared/utils';
+import { cardsData } from '@hellfall/shared/data';
 
 // const basics: Record<string, string> = {
 //   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -29,18 +30,19 @@ export const DeckBuilder = () => {
   const [textAreaValue, setTextAreaValue] = useState<string>(
     (searchparms.get('list') || '').replaceAll('∆', '\n')
   );
-  const [cards, setCards] = useState<HCCard.Any[]>([]);
+  const cardMap = new CardMap(cardsData.data);
+  // const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') || 'your deck name goes here');
   const [renderCards, setRenderCards] = useState<HCCard.Any[]>([]);
   const [playtesting, setPlaytesthing] = useState(false);
   const [showImage, setShowImage] = useState(true);
 
-  useEffect(() => {
-    import('@hellfall/shared/data/Hellscube-Database.json').then(({ data }: any) => {
-      setCards(data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   import('@hellfall/shared/data/Hellscube-Database.json').then(({ data }: any) => {
+  //     setCards(data);
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -76,11 +78,13 @@ export const DeckBuilder = () => {
 
     if (rest[0] == '%') {
       // handle ids
-      return cards.find(card => card.id == rest.slice(1)) ? [count, rest.slice(1)] : [count, ''];
+      return cardMap.find(card => card.hcid == rest.slice(1))
+        ? [count, rest.slice(1)]
+        : [count, ''];
     }
     if (/^\d+$/.test(rest)) {
       // handle card names that are all digits
-      const id = cards.find(card => card.name == rest)?.id;
+      const id = cardMap.find(card => card.name == rest)?.id;
       return id ? [count, id] : [count, ''];
     }
     // if (rest.toLowerCase() in basics) {
@@ -92,7 +96,7 @@ export const DeckBuilder = () => {
   };
 
   useEffect(() => {
-    if (!cards.length) {
+    if (!cardMap.size()) {
       return;
     }
     const images: HCCard.Any[] = (toRender || [])
@@ -106,9 +110,9 @@ export const DeckBuilder = () => {
         //   } as unknown as HCCard.Any;
         //   return Array(count).fill(card);
         // } else {
-        const id = nameToId(rest, cards);
+        const id = nameToId(rest, cardMap);
         const card = id
-          ? cards.find(card => card.id == id)
+          ? cardMap.get(id)
           : ({
               image:
                 'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
@@ -118,7 +122,7 @@ export const DeckBuilder = () => {
         // }
       });
     setRenderCards(images);
-  }, [toRender, cards]);
+  }, [toRender, cardMap]);
   // TODO: make this push to history less often? also add url syncing
   return (
     <div style={{ marginLeft: '32px' }}>
@@ -190,7 +194,11 @@ Cock and Balls to Torture and Abuse
       </button>{' '}
       <button
         onClick={() => {
-          const val = HCToTTSDeck(deckName, renderCards, cards);
+          const val = HCToTTSDeck(
+            deckName,
+            renderCards.flatMap(card => card.id ?? []),
+            cardMap
+          );
           const url =
             'data:text/plain;base64,' +
             btoa(unescape(encodeURIComponent(JSON.stringify(val, null, 2))));
@@ -209,9 +217,9 @@ Cock and Balls to Torture and Abuse
         onClick={() => {
           downloadDraftmancer({
             name: deckName,
-            set: 'Custom',
-            allCards: cards,
-            cardList: renderCards.filter(card => card.id),
+            set: 'Custom' as SetCode,
+            idList: renderCards.flatMap(card => card.id ?? []),
+            cardMap,
           });
         }}
       >

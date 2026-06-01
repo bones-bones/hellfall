@@ -16,24 +16,18 @@ import {
   ButtonColors,
   inputColors,
 } from '@workday/canvas-kit-react';
-import cardTypes from '@hellfall/shared/data/types.json';
-import creators_data from '@hellfall/shared/data/creators.json';
-import tags_data from '@hellfall/shared/data/tags.json';
-import pips from '@hellfall/shared/data/pips.json';
 
 import { useAtom, useAtomValue } from 'jotai';
 import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useEffect, useState } from 'react';
-import { extraSetList } from '@hellfall/shared/data/sets.ts';
 import { HCSearchColors } from '@hellfall/shared/types';
-import { looseOpList, looseOpType } from '@hellfall/shared/filters/types.ts';
+import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
 import { SortComponent } from './SortComponent.tsx';
-import { useNavigate } from 'react-router-dom';
-import { parseSorts } from '@hellfall/shared/filters/parseSearchBar.ts';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
-import { normalizeText } from '@hellfall/shared/utils';
+import { extraSetList, normalizeText } from '@hellfall/shared/utils';
+import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');
@@ -128,19 +122,19 @@ export const AdvancedSearch = () => {
       }
     }
     const orFilters: string[] = [];
-    const addHandlingOr = (searchKeyword: string, searchTerm: string) => {
+    const addHandlingOr = (searchKeyword: string, searchTerm: string, defaultOp = ':') => {
       if (searchTerm.startsWith('!?')) {
-        orFilters.push('-' + searchKeyword + searchTerm.slice(2));
+        orFilters.push('-' + searchKeyword + defaultOp + searchTerm.slice(2));
       } else if (searchTerm.startsWith('!')) {
-        filters.push('-' + searchKeyword + searchTerm.slice(1));
+        filters.push('-' + searchKeyword + defaultOp + searchTerm.slice(1));
       } else if (searchTerm.startsWith('?')) {
-        orFilters.push(searchKeyword + searchTerm.slice(1));
+        orFilters.push(searchKeyword + defaultOp + searchTerm.slice(1));
       } else {
-        filters.push(searchKeyword + searchTerm);
+        filters.push(searchKeyword + defaultOp + searchTerm);
       }
     };
-    const addAllHandlingOr = (searchKeyword: string, searchTerm: string[]) => {
-      searchTerm.forEach(term => addHandlingOr(searchKeyword, term));
+    const addAllHandlingOr = (searchKeyword: string, searchTerm: string[], defaultOp = ':') => {
+      searchTerm.forEach(term => addHandlingOr(searchKeyword, term, defaultOp));
     };
     if (idSearch) {
       addHandlingOr('id', idSearch);
@@ -167,7 +161,7 @@ export const AdvancedSearch = () => {
       addAllHandlingOr('artist', artists);
     }
     if (tags.length) {
-      addAllHandlingOr('tag', tags);
+      addAllHandlingOr('tag', tags, '=');
     }
     if (isCommander) {
       filters.push('is:commander');
@@ -236,7 +230,7 @@ export const AdvancedSearch = () => {
     return filters.join(' ');
   };
   const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
-  const pipList = pips.data
+  const pipList = pipsData.data
     .filter(pip => !excludeFiles.some(file => pip.filename.includes(file)))
     .map(pip => '{' + pip.symbol + '}');
 
@@ -263,7 +257,7 @@ export const AdvancedSearch = () => {
           />
           <PillSearch
             label={'Type'}
-            possibleValues={cardTypes.data}
+            possibleValues={typesData.data}
             values={typeSearch}
             onChange={setTypeSearch}
           />
@@ -283,7 +277,7 @@ export const AdvancedSearch = () => {
           />
           <PillSearch
             label={'Creator(s)'}
-            possibleValues={creators_data.data}
+            possibleValues={creatorsData.data}
             values={creators}
             onChange={setCreators}
           />
@@ -295,7 +289,7 @@ export const AdvancedSearch = () => {
           />
           <PillSearch
             label={'Tags'}
-            possibleValues={tags_data.data}
+            possibleValues={tagsData.data}
             values={tags}
             onChange={setTags}
           />

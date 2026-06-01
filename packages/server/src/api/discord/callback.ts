@@ -1,4 +1,8 @@
-import { exchangeCodeForToken, getDiscordUser, getUserAsGuildMember } from '../lib/discord/discord.ts';
+import {
+  exchangeCodeForToken,
+  getDiscordUser,
+  getUserAsGuildMember,
+} from '../lib/discord/discord.ts';
 import { env } from '../lib/env.ts';
 import { createSessionToken } from '../lib/jwt.ts';
 import { withCors } from '../lib/cors.ts';

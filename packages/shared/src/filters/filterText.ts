@@ -4,6 +4,7 @@ import {
   isNumber,
   textListIncludes,
   textListEquals,
+  isValidV4UUID,
 } from '@hellfall/shared/utils';
 import {
   invertOptionType,
@@ -20,6 +21,7 @@ import {
   includeEqualsOp,
   opIsNegative,
   opToIncludePlural,
+  funcOp,
 } from './filterUtils';
 import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
@@ -42,6 +44,19 @@ export const filterText: textFilter = Object.assign(
   }
 );
 
+export const filterOracleId: textFilter = Object.assign(
+  (value1: string, operator: opType, value2: string) =>
+    funcOp(operator, (id: string) => id == value1, value2),
+  {
+    invertOption: 'negate' as invertOptionType,
+    toSummary: (operator: opType, value: string, invert?: boolean) => {
+      if (isValidV4UUID(value)) {
+        return `the Oracle ID is ${filterNumber.toSummary(operator, parseInt(value), invert)}`;
+      }
+      return `!You must provide a valid v4 UUID.`;
+    },
+  }
+);
 export const filterId: textFilter = Object.assign(
   (value1: string, operator: opType, value2: string) => {
     if (isNumber(value2)) {

@@ -84,7 +84,6 @@ Write a script to transform the database
 - don't trigger new history on activecard change?
 - figure out if pip shadows have correct angle (should they be slightly more downward than leftward?)
 - implement flip/aftermath rotation buttons (base it off of cockatrice face merge logic)
-- rework tts
 - put buttons for switching to rotated/still on top later
 - add rotations for images that are upright by default
 - add hcp draft
@@ -103,4 +102,15 @@ Write a script to transform the database
 - make thread for token errors
 - add is:conjured and is:remindercard
 - add conjured to layouts?
-- fix draftpartners for lands (the other cards are losing the props)
+- switch to using uuid card map instead of list of cards (both for main maps and subsets)
+- add reprint handling using oracle id
+- fix uuids of all cards that are also on scryfall
+- remove token_id
+- reduce processing churn when updating cards
+- add special cases for searching only for set (use map directly)
+- add random button for searches
+- make card uuid hard-coded on singleCard pages
+- make sets servable via the api
+- rework CubeResources page to be all sets page?
+- subdivide HCT into specific sets?
+- move jumpstart lands to HBB.J

@@ -57,10 +57,7 @@ async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchRes
   };
 }
 
-async function fetchPendingTagAfter(
-  baseUrl: string,
-  cardId: string
-): Promise<string[] | null> {
+async function fetchPendingTagAfter(baseUrl: string, cardId: string): Promise<string[] | null> {
   const res = await fetch(
     `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}&status=pending`,
     { credentials: 'include' }
@@ -146,8 +143,7 @@ export function useCardTagOverrides(
       .finally(() => setLoading(false));
   }, [baseUrl, cardId]);
 
-  const merged =
-    firestoreTags ?? mergeTags(baseTags, overrides);
+  const merged = firestoreTags ?? mergeTags(baseTags, overrides);
 
   const pendingStaging = React.useMemo((): PendingTagStaging | null => {
     if (!pendingAfter) return null;

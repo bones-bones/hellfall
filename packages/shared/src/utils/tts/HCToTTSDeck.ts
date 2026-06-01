@@ -8,6 +8,7 @@ import {
   ttsDeckState,
 } from './ttsTypes';
 import {
+  CardMap,
   compressHCCardFaces,
   getRelatedsFromCards,
   mergeHCCardFaces,
@@ -23,14 +24,8 @@ const commandLayouts: HCLayoutGroup.FaceLayoutType[] = [
   HCLayout.Stickers,
   HCLayout.Emblem,
 ];
-export const HCToTTSDeckStates = (
-  cardList: HCCard.Any[],
-  allCards: HCCard.Any[]
-): ttsDeckState[] => {
-  const cards = cardList.map(card => structuredClone(card));
-  const tokens = getRelatedsFromCards(cards, allCards).tokens.filter(
-    token => !token.tags?.includes('gif')
-  );
+export const HCToTTSDeckStates = (idList: string[], cardMap: CardMap): ttsDeckState[] => {
+  const { cards, tokens } = getRelatedsFromCards(idList, cardMap);
   const mainDeck: ttsDeckState = {
     Name: 'DeckCustom',
     CustomDeck: {},
@@ -120,9 +115,9 @@ export const HCToTTSDeckStates = (
     const tokenCustom: ttsCustomCard = {
       FaceURL: compressed[0].still_image ?? compressed[0].rotated_image ?? compressed[0].image!,
       BackURL:
-        compressed[1].still_image ??
-        compressed[1].rotated_image ??
-        compressed[1].image ??
+        compressed[1]?.still_image ??
+        compressed[1]?.rotated_image ??
+        compressed[1]?.image ??
         cardBackURL,
       NumWidth: 1,
       NumHeight: 1,
@@ -178,14 +173,10 @@ export const HCToTTSDeckStates = (
   return bundle;
 };
 
-export const HCToTTSDeck = (
-  name: string,
-  cardList: HCCard.Any[],
-  allCards: HCCard.Any[]
-): ttsDeck => {
+export const HCToTTSDeck = (name: string, idList: string[], cardMap: CardMap): ttsDeck => {
   const deck: ttsDeck = {
     SaveName: name,
-    ObjectStates: HCToTTSDeckStates(cardList, allCards),
+    ObjectStates: HCToTTSDeckStates(idList, cardMap),
   };
   return deck;
 };

@@ -1,12 +1,13 @@
 import {
   HCCard,
   HCImageStatus,
+  HCKind,
   HCLayout,
   HCLegality,
   HCObject,
   HCRelatedCard,
 } from '@hellfall/shared/types';
-import { addToJSONToCard } from '@hellfall/shared/utils';
+import { addToJSONToCard, getDefaultCard, HCIDMap } from '@hellfall/shared/utils';
 
 export type HCJPackInfo = {
   name: string;
@@ -17,43 +18,63 @@ export type HCJPackInfo = {
   lands: { count: number; name?: string; id?: string }[];
 };
 
-// import { withCardMethods } from '../../../frontend/src/hells-cubes/getHc5.ts';
+export const packInfoToCard = (entry: HCJPackInfo): HCCard.Front =>
+  addToJSONToCard(
+    getDefaultCard(
+      HCKind.Front,
+      false,
+      {
+        hcid: `fhcj-${entry.tag}`,
+        name: `${entry.name} - ${entry.tag}`,
+        set: 'FHCJ',
+        image: entry.url,
+        image_status: HCImageStatus.HighRes,
+        type_line: 'Front Card',
+        tags: [entry.tag, 'BurnAfterPicking'],
+      },
+      {
+        types: ['Front Card'],
+      }
+    )
+  ) as HCCard.Front;
 
-/** Convert pack front metadata into an HCCard.Any with toFaces() for use in getDraftMancerCard etc. */
-export const packInfoToCard = (entry: HCJPackInfo): HCCard.Any => {
-  const card: Omit<HCCard.Front, 'toJSON'> = {
-    object: HCObject.ObjectType.Card,
-    id: `fhcj-${entry.tag}`,
-    layout: HCLayout.Front,
-    name: `${entry.name} - ${entry.tag}`,
-    image: entry.url,
-    image_status: HCImageStatus.HighRes,
-    mana_value: 0,
-    creators: [],
-    set: 'FHCJ',
-    rulings: '',
-    types: ['Front Card'],
-    type_line: 'Front Card',
-    oracle_text: '',
-    mana_cost: '',
-    color_identity: [],
-    colors: [],
-    keywords: [],
-    legalities: {
-      standard: HCLegality.NotLegal,
-      '4cb': HCLegality.NotLegal,
-      commander: HCLegality.NotLegal,
-    },
-    tags: [entry.tag],
-    color_identity_hybrid: [],
-    variation: false,
-    border_color: 'black',
-    frame: '2015',
-    finish: 'nonfoil',
-    // isActualToken: true,
-  };
-  return addToJSONToCard(card as HCCard.Front);
-};
+export const fetchHCJFronts = (): HCIDMap =>
+  new HCIDMap(
+    hcjFrontCards.map((pack, i) => {
+      const front = packInfoToCard(pack);
+      front.collector_number = `${i + 1}`;
+      front.all_parts = pack.lands.map(land => {
+        const part: HCRelatedCard = {
+          object: HCObject.ObjectType.RelatedCard,
+          id: '',
+          hcid: land.id || '',
+          component: 'draft_partner',
+          name: land.name || '',
+          type_line: '',
+          set: '',
+          is_draft_partner: true,
+        };
+        if (land.count > 1) {
+          part.count = `${land.count}`;
+        }
+        return part;
+      });
+      if (pack.secondCopyOf) {
+        front.all_parts.push({
+          object: HCObject.ObjectType.RelatedCard,
+          id: '',
+          hcid: pack.secondCopyOf,
+          component: 'draft_partner',
+          name: '',
+          type_line: '',
+          set: 'HCJ',
+          is_draft_partner: true,
+          count: '2',
+        });
+      }
+      return front;
+    })
+  );
 
 export const hcjFrontCards: HCJPackInfo[] = [
   {
@@ -444,36 +465,3 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
 ];
-
-export const fetchHCJFronts = (): HCCard.Any[] =>
-  hcjFrontCards.map((pack, i) => {
-    const front = packInfoToCard(pack);
-    front.collector_number = `${i + 1}`;
-    front.all_parts = pack.lands.map(land => {
-      const part: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: land.id || '',
-        component: 'draft_partner',
-        name: land.name || '',
-        type_line: '',
-        set: '',
-        is_draft_partner: true,
-      };
-      if (land.count > 1) {
-        part.count = `${land.count}`;
-      }
-      return part;
-    });
-    if (pack.secondCopyOf) {
-      front.all_parts.push({
-        object: HCObject.ObjectType.RelatedCard,
-        id: pack.secondCopyOf,
-        component: 'draft_partner',
-        name: '',
-        type_line: '',
-        set: 'HCJ',
-        count: '2',
-      });
-    }
-    return front;
-  });

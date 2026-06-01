@@ -79,17 +79,17 @@ export const Watchwolfresults = () => {
             <span>W/L</span>
           </ResultRow>
 
-          {wrGroupedStandings?.slice(0, cards.length).map(entry => {
-            const card = cards.find(e => entry.Id === e.id);
+          {wrGroupedStandings?.slice(0, cards.size()).map(entry => {
+            const card = cards.get(entry.Id);
             if (!card) return null;
 
             return (
               <ResultRow
                 key={entry.Id}
-                href={`/card/${encodeURIComponent(card.id)}`}
+                href={`/card/${encodeURIComponent(card.hcid)}`}
                 onClick={(event: React.MouseEvent) => {
                   if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                    window.open(`/card/${encodeURIComponent(card.id)}`, '_blank');
+                    window.open(`/card/${encodeURIComponent(card.hcid)}`, '_blank');
                   } else {
                     event.preventDefault();
                     setActiveCardFromAtom(card.id);

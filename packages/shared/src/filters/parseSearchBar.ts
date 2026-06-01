@@ -9,7 +9,7 @@ import {
   unescapeText,
 } from './filterBuilder';
 import { dirType, dirs, sorts, sortType, inclusionOptions, includeFilter } from './types';
-import { getAllRelated } from '../utils';
+import { CardMap, getAllRelated } from '../utils';
 
 const sortRedirects: Record<string, sortType> = {
   mv: 'manavalue',
@@ -288,7 +288,7 @@ export const getWinnowedSortOptions = (sortList: sortObject[]): sortType[] => {
   return options;
 };
 
-export const prepTag = (tag: string) => tag.replaceAll(/[\/\\'"\- _\.]/g, '').toLowerCase();
+export const prepTag = (tag: string) => tag.replaceAll(/[/\\'"\- _.]/g, '').toLowerCase();
 
 export const fixTags = (node: FilterNode, tagList: string[]) => {
   switch (node.type) {
@@ -577,26 +577,21 @@ export const parseSearchQuery = (
 export const evaluateRelatedFilter = (
   node: FilterNode,
   card: HCCard.Any,
-  allCards: HCCard.Any[]
-): boolean =>
-  getAllRelated(card, allCards).some(related => evaluateFilter(node, related, allCards));
+  cardMap: CardMap
+): boolean => getAllRelated(card, cardMap).some(related => evaluateFilter(node, related, cardMap));
 
-export const evaluateFilter = (
-  node: FilterNode,
-  card: HCCard.Any,
-  allCards: HCCard.Any[]
-): boolean => {
+export const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): boolean => {
   switch (node.type) {
     case 'filter':
       return node.filter.cardPassesFilter(card);
     case 'related':
-      return evaluateRelatedFilter(node.child, card, allCards);
+      return evaluateRelatedFilter(node.child, card, cardMap);
     case 'not':
-      return !evaluateFilter(node.child, card, allCards);
+      return !evaluateFilter(node.child, card, cardMap);
     case 'and':
-      return node.children.every(child => evaluateFilter(child, card, allCards));
+      return node.children.every(child => evaluateFilter(child, card, cardMap));
     case 'or':
-      return node.children.some(child => evaluateFilter(child, card, allCards));
+      return node.children.some(child => evaluateFilter(child, card, cardMap));
   }
 };
 
@@ -620,11 +615,7 @@ const splitCludes = (
   return { includeList, excludeList, cludeSummary };
 };
 
-export const searchCards = (
-  cards: HCCard.Any[],
-  query: string,
-  tagList: string[]
-): HCCard.Any[] => {
+export const searchCards = (cardMap: CardMap, query: string, tagList: string[]): CardMap => {
   const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query);
   const usingClusion = Boolean(includeList.length + excludeList.length);
   // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
@@ -633,19 +624,19 @@ export const searchCards = (
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);
   }
-  const newCardsWithExtras = cards.filter(
+  const newCardsWithExtras = cardMap.filter(
     card =>
-      evaluateFilter(node, card, cards) &&
+      evaluateFilter(node, card, cardMap) &&
       (includeList.length ? includeList.some(filter => filter.cardPassesFilter(card)) : true) &&
       (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true)
   );
-  const includeNonExtras = makeIncludeFilter('nonextras', ':');
+  // const includeNonExtras = makeIncludeFilter('nonextras', ':');
   const excludeExtras = makeIncludeFilter('nonextras', ':');
   const newCardsWithoutExtras = newCardsWithExtras.filter(card =>
     excludeExtras.cardPassesFilter(card)
   );
 
-  return autoFilterExtras && !usingClusion && newCardsWithoutExtras.length
+  return autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
     ? newCardsWithoutExtras
     : newCardsWithExtras;
 };

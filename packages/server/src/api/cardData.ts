@@ -1,20 +1,21 @@
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 import { withCors } from './lib/cors.ts';
-import { toPlainText } from '@hellfall/shared/utils/cardHandling/cardMethods';
-import { getCardById } from './cardsStore.ts';
+import { isValidV4UUID, toPlainText } from '@hellfall/shared/utils';
+import { cardMap } from './cardsStore.ts';
+// import { getCardById } from './cardsStore.ts';
 
 export async function cardJsonHandler(req: HandlerRequest, res: HandlerResponse, cardId: string) {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
   try {
-    if (!cardId || cardId.length > 200) {
+    if (!isValidV4UUID(cardId)) {
       res.statusCode = 400;
       res.end(JSON.stringify({ error: 'invalid_card_id' }));
       return;
     }
 
-    const card = await getCardById(cardId);
+    const card = cardMap.get(cardId);
 
     if (!card) {
       res.statusCode = 404;
@@ -43,7 +44,7 @@ export async function cardTextHandler(req: HandlerRequest, res: HandlerResponse,
       return;
     }
 
-    const card = await getCardById(cardId);
+    const card = cardMap.get(cardId);
 
     if (!card) {
       res.statusCode = 404;

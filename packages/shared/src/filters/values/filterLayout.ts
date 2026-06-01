@@ -3,6 +3,7 @@ import { invertOptionType, opType, textListFilter } from '../types';
 import { shareOp, opToNot, opToDont } from '../filterUtils';
 export const toCardLayout: Record<string, HCLayout | HCLayout[]> = {
   normal: HCLayout.Normal,
+  front: HCLayout.Front,
   meldpart: HCLayout.MeldPart,
   meldresult: HCLayout.MeldResult,
   meld: [HCLayout.MeldPart, HCLayout.MeldResult],
@@ -90,6 +91,7 @@ export const toFaceLayout: Record<
   HCLayoutGroup.FaceLayoutType | HCLayoutGroup.FaceLayoutType[]
 > = {
   normal: HCLayout.Normal,
+  front: HCLayout.Front,
   meldpart: HCLayout.MeldPart,
   meldresult: HCLayout.MeldResult,
   meld: [HCLayout.MeldPart, HCLayout.MeldResult],

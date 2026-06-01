@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.8",
+    "eslint-plugin-sonarjs": "^4.0.3",
     "prettier": "^2.2.1",
     "typescript": "^5",
     "yarn-deduplicate": "^6.0.2"

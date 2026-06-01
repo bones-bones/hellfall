@@ -15,6 +15,7 @@ export type CockFaceProps = Record<string, string | number | HCColors> & {
 };
 export type CockCardProps = Record<string, string | CockFaceProps[]> & {
   coloridentity?: string;
+  hcid: string;
   id: string;
   'format-standard'?: 'legal';
   'format-4cb'?: 'legal';
