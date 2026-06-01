@@ -50,6 +50,10 @@
     "./export/cards": {
       "types": "./src/export/exportCards.ts",
       "import": "./src/export/exportCards.ts"
+    },
+    "./cardTags/cardTagMerge": {
+      "types": "./src/cardTags/cardTagMerge.ts",
+      "import": "./src/cardTags/cardTagMerge.ts"
     }
   },
   "dependencies": {
