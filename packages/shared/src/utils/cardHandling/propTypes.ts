@@ -36,10 +36,12 @@ export type bothPropType = keyof bothType;
 // export type excludeFacePropType = Exclude<facePropType, 'layout'>;
 export type bothValueType<K extends bothPropType> = K extends
   | 'colors'
+  | 'color_indicator'
   // | ''
   | 'supertypes'
   | 'types'
   | 'subtypes'
+  | 'attraction_lights'
   ? Exclude<bothType[K], undefined>
   : Exclude<bothType[K], undefined> extends Array<infer U>
   ? U
@@ -50,6 +52,23 @@ export type filterBothValueType<K extends bothPropType> = K extends 'colors'
   : Exclude<bothType[K], undefined> extends Array<infer U>
   ? U
   : Exclude<bothType[K], undefined>;
+
+// export type frontType = Omit<IntersectKeys<bothType, HCCard.AnyMultiFaced>, 'object' | 'layout'> & {
+//   layout?: HCLayout
+// };
+export type frontPropType = keyof HCCard.Any;
+export type frontValueType<K extends frontPropType> = K extends
+  | 'colors'
+  // | ''
+  | 'supertypes'
+  | 'types'
+  | 'subtypes'
+  ? Exclude<HCCard.Any[K], undefined>
+  : Exclude<HCCard.Any[K], undefined> extends Array<infer U>
+  ? U
+  : Exclude<HCCard.Any[K], undefined>;
+
+
 
 export type allType = Omit<IntersectKeys<bothType, HCCard.AnyMultiFaced>, 'object' | 'layout'> & {
   layout?: HCLayout;

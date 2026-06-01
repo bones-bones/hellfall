@@ -13,7 +13,7 @@ export type tagState = {
    */
   added?: tagRecord;
   /**
-   * The tags removed by contributors
+   * The (base tag input) tags removed by contributors
    */
   removed?: string[];
 };

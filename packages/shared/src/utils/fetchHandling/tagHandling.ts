@@ -8,6 +8,7 @@ import {
   HCLayout,
   HCLayoutGroup,
   tagRecord,
+  tagState,
 } from '@hellfall/shared/types';
 import {
   addLayoutTag,
@@ -24,7 +25,7 @@ import {
   pushPropToCard,
 } from './fetchUtils';
 import { facePropType, faceType, propType } from '../cardHandling';
-import { pushProp, pushPropToRecord, pushToRecord } from '../listHandling';
+import { doubleListEquals, pushProp, pushPropToRecord, pushToRecord } from '../listHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -320,3 +321,62 @@ export const deleteTagContributor = (card: HCCard.Any, tag: string) => {
   }
   mergeTags(card);
 };
+
+export const tagRecordsEqual = (record1?: tagRecord, record2?:tagRecord):boolean => {
+  if (!record1 || !record2) {
+    return !record1 == !record2
+  }
+  if (!doubleListEquals(Object.keys(record1),Object.keys(record2))) {
+    return false
+  }
+  Object.keys(record1).forEach(tag=> {
+    if (!doubleListEquals(record1[tag],record2[tag])) {
+      return false;
+    }
+  })
+  return true;
+}
+
+/**
+ * Returns true if the tags changed and false otherwise
+ */
+export const updateTags = (card:HCCard.Any, state:tagState):boolean => {
+  let shouldMerge = false;
+  if (!tagRecordsEqual(card.tag_state?.base_tags,state.base_tags)) {
+    shouldMerge = true;
+    if (!state.base_tags) {
+      delete card.tag_state?.base_tags
+    } else {
+      if (!card.tag_state) {
+        addProp(card, 'tag_state', {});
+      }
+      card.tag_state!.base_tags = state.base_tags
+    }
+  }
+  if (!tagRecordsEqual(card.tag_state?.added,state.added)) {
+    shouldMerge = true;
+    if (!state.added) {
+      delete card.tag_state?.added
+    } else {
+      if (!card.tag_state) {
+        addProp(card, 'tag_state', {});
+      }
+      card.tag_state!.added = state.added
+    }
+  }
+  if (!card.tag_state?.removed != !state.removed || (card.tag_state?.removed && state.removed && !doubleListEquals(card.tag_state.removed,state.removed))) {
+    shouldMerge = true;
+    if (!state.removed) {
+      delete card.tag_state?.removed
+    } else {
+      if (!card.tag_state) {
+        addProp(card, 'tag_state', {});
+      }
+      card.tag_state!.removed = state.removed
+    }
+  }
+  if (shouldMerge) {
+    mergeTags(card);
+  }
+  return shouldMerge
+}
