@@ -7,7 +7,6 @@ import { Draft } from './draft';
 import { LandBox } from './land-box';
 import { SingleCard } from './hellfall/card/SingleCard.tsx';
 import { Header } from './header';
-import { Breakdown } from './breakdown/Breakdown.tsx';
 import { Decks } from './decks/Decks.tsx';
 import { WatchwolfWar } from './watchWolf/WatchWolfWar.tsx';
 import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
@@ -64,7 +63,6 @@ const ApplicationRoutes = () => {
     { path: '/syntax', element: <Syntax /> },
     { path: '/card/*', element: <CardRoute /> },
     { path: '/hellfall/*', element: <RedirectBase /> },
-    { path: '/breakdown', element: <Breakdown /> },
     { path: '/login', element: <Login /> },
     { path: '/review', element: <ReviewPage /> },
     { path: '/Watchwolfwar', element: <WatchwolfWar /> },
