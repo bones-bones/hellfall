@@ -95,6 +95,7 @@ export const SortComponent = () => {
               return (
                 <>
                   <StyledSelect
+                    key={'sort-' + i}
                     style={{ width: '135px' }}
                     title={
                       sortIsOverriden(i)
@@ -113,6 +114,7 @@ export const SortComponent = () => {
                   />
                   <span> : </span>
                   <StyledSelect
+                    key={'dir-' + i}
                     style={{ width: '85px' }}
                     title={
                       dirIsOverriden(i)
@@ -136,6 +138,7 @@ export const SortComponent = () => {
           ) : (
             <>
               <StyledSelect
+                key={'sort-0'}
                 style={{ width: '135px' }}
                 value={'auto'}
                 disabled={false}
@@ -144,6 +147,7 @@ export const SortComponent = () => {
               />
               <span> : </span>
               <StyledSelect
+                key={'dir-0'}
                 style={{ width: '85px' }}
                 value={'auto'}
                 disabled={false}

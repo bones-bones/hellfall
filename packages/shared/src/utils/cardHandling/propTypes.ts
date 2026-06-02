@@ -68,8 +68,6 @@ export type frontValueType<K extends frontPropType> = K extends
   ? U
   : Exclude<HCCard.Any[K], undefined>;
 
-
-
 export type allType = Omit<IntersectKeys<bothType, HCCard.AnyMultiFaced>, 'object' | 'layout'> & {
   layout?: HCLayout;
   object: HCObject.ObjectType.Card | HCObject.ObjectType.CardFace;

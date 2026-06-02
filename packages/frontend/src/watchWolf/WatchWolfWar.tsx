@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { ActiveCardPanel } from '../hellfall/ActiveCardPanel.tsx';
-import { cardSetList } from '@hellfall/shared/utils';
+import { cardSetList, toPlainText } from '@hellfall/shared/utils';
 
 export const WatchwolfWar = () => {
   const cards = useAtomValue(cardsAtom).getAllInSetList(cardSetList);
@@ -54,6 +54,7 @@ export const WatchwolfWar = () => {
           id={TwoCardState.LeftCard.hcid}
           name={TwoCardState.LeftCard.name}
           url={TwoCardState.LeftCard.image!}
+          plainText={toPlainText(TwoCardState.LeftCard)}
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(`/card/${encodeURIComponent(TwoCardState.LeftCard.hcid)}`, '_blank');
@@ -75,6 +76,7 @@ export const WatchwolfWar = () => {
           id={TwoCardState.RightCard.hcid}
           name={TwoCardState.RightCard.name}
           url={TwoCardState.RightCard.image!}
+          plainText={toPlainText(TwoCardState.RightCard)}
           onClick={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(`/card/${encodeURIComponent(TwoCardState.RightCard.hcid)}`, '_blank');

@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
 export const HellfallEntry = ({
   url,
   id,
   name,
   otherNames,
+  plainText,
   onClick,
   onClickTitle,
   imgLinkUrl,
@@ -13,11 +15,14 @@ export const HellfallEntry = ({
   id: string;
   name: string;
   otherNames?: string[];
+  plainText?: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
   imgLinkUrl?: string;
 }) => {
   const linkUrl = `/card/${encodeURIComponent(id)}`;
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageErrored, setImageErrored] = useState(false);
 
   const handleClick = (
     e: React.MouseEvent,
@@ -37,65 +42,65 @@ export const HellfallEntry = ({
 
   return (
     <Container key={id} role="button">
-      {onClickTitle ? (
-        imgLinkUrl ? (
-          <>
-            <StyledTitleLink
-              key={id + '-title'}
-              href={linkUrl}
-              onClick={e => handleClick(e, onClickTitle as any)}
-            >
-              <TitleText as={'h3'} style={{ lineHeight: 0 }}>
-                {name}
-              </TitleText>
-            </StyledTitleLink>
-          </>
-        ) : (
-          <>
-            <StyledTitleLink
-              key={id + '-title'}
-              href={linkUrl}
-              onClick={e => handleClick(e, onClickTitle as any)}
-            >
-              <TitleText>{name}</TitleText>
-            </StyledTitleLink>
-            <br />
-          </>
-        )
-      ) : (
-        <>
-          <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
-          {otherNames ? (
-            otherNames.map((otherName, i) => {
-              return (
-                <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
-                  {otherName}
-                </VisuallyHiddenSpan>
-              );
-            })
+      {onClickTitle && (
+        <StyledTitleLink
+          key={id + '-title'}
+          href={linkUrl}
+          onClick={e => handleClick(e, onClickTitle as any)}
+        >
+          <TitleText as={imgLinkUrl ? 'h3' : 'span'} style={imgLinkUrl ? { lineHeight: 0 } : {}}>
+            {name}
+          </TitleText>
+        </StyledTitleLink>
+      )}
+      <StyledImageLink
+        href={imgLinkUrl ?? linkUrl}
+        onClick={e => handleClick(e)}
+        title={plainText ?? name}
+        imageLoaded={imageLoaded}
+      >
+        <StyledImage
+          key={id + '-image'}
+          src={url}
+          referrerPolicy="no-referrer"
+          aria-label={name}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => setImageErrored(true)}
+          style={
+            imageLoaded || imageErrored
+              ? {}
+              : { visibility: 'hidden', display: 'inline', width: 0, height: 0, opacity: 0 }
+          }
+        />
+        {!onClickTitle &&
+          (imageLoaded ? (
+            <VisuallyHiddenSpan key={id + '-name'}>{name}</VisuallyHiddenSpan>
           ) : (
-            <></>
-          )}
-        </>
-      )}
-      {imgLinkUrl ? (
-        <StyledImageLink href={imgLinkUrl} onClick={e => handleClick(e)}>
-          <StyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
-        </StyledImageLink>
-      ) : (
-        <StyledImageLink href={linkUrl} onClick={e => handleClick(e)}>
-          <StyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
-        </StyledImageLink>
-      )}
+            <TitleText
+              /* onClick={e => handleClick(e)} */ key={id + '-name'}
+              style={
+                imageLoaded ? { visibility: 'hidden' } : { margin: '4px', position: 'absolute' }
+              }
+            >
+              {name}
+            </TitleText>
+          ))}
+        {otherNames &&
+          otherNames.map((otherName, i) => {
+            return (
+              <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
+                {otherName}
+              </VisuallyHiddenSpan>
+            );
+          })}
+      </StyledImageLink>
     </Container>
   );
 };
 
-const StyledImage = styled.img({
-  maxWidth: '500px',
-  maxHeight: '340px',
-  cursor: 'pointer',
-});
+interface ImageProps {
+  imageLoaded: boolean;
+}
 
 const Container = styled.div({
   height: '340px',
@@ -108,25 +113,6 @@ const Container = styled.div({
     height: 'auto',
     objectFit: 'contain',
   },
-});
-
-const VisuallyHiddenSpan = styled.span({
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  padding: '0',
-  margin: '-1px',
-  overflow: 'hidden',
-  clip: 'rect(0, 0, 0, 0)',
-  whiteSpace: 'nowrap',
-  border: '0',
-  pointerEvents: 'none',
-});
-
-const StyledImageLink = styled.a({
-  display: 'block',
-  textDecoration: 'none',
-  cursor: 'pointer',
 });
 
 const StyledTitleLink = styled.a({
@@ -143,11 +129,49 @@ const TitleText = styled.span({
   },
 });
 
+const StyledImageLink = styled.a<ImageProps>(
+  {
+    display: 'block',
+    textDecoration: 'none',
+    cursor: 'pointer',
+  },
+  props =>
+    props.imageLoaded
+      ? {}
+      : {
+          height: '340px',
+          width: '243px',
+          backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
+          borderRadius: '4.75% / 3.5%',
+          position: 'relative',
+        }
+);
+
+const StyledImage = styled.img({
+  maxWidth: '500px',
+  maxHeight: '340px',
+  cursor: 'pointer',
+});
+
+const VisuallyHiddenSpan = styled.span({
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: '0',
+  margin: '-1px',
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: '0',
+  pointerEvents: 'none',
+});
+
 export const HellfallRelatedEntry = ({
   url,
   id,
   name,
   otherNames,
+  plainText,
   onClick,
   onClickTitle,
 }: {
@@ -155,10 +179,13 @@ export const HellfallRelatedEntry = ({
   id: string;
   name: string;
   otherNames?: string[];
+  plainText?: string;
   onClick: React.MouseEventHandler<HTMLImageElement>;
   onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
 }) => {
   const linkUrl = `/card/${encodeURIComponent(id)}`;
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageErrored, setImageErrored] = useState(false);
 
   const handleClick = (
     e: React.MouseEvent,
@@ -174,46 +201,63 @@ export const HellfallRelatedEntry = ({
       onClick(e as any);
     }
   };
+
   return (
     <RelatedContainer key={id} role="button">
-      {onClickTitle ? (
-        <>
-          <StyledTitleLink
-            key={id + '-title'}
-            href={linkUrl}
-            onClick={e => handleClick(e, onClickTitle as any)}
-          >
-            <TitleText>{name}</TitleText>
-          </StyledTitleLink>
-          <br />
-        </>
-      ) : (
-        <>
-          <VisuallyHiddenSpan key={id}>{name}</VisuallyHiddenSpan>
-          {otherNames ? (
-            otherNames.map((otherName, i) => {
-              return (
-                <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
-                  {otherName}
-                </VisuallyHiddenSpan>
-              );
-            })
-          ) : (
-            <></>
-          )}
-        </>
+      {onClickTitle && (
+        <StyledTitleLink
+          key={id + '-title'}
+          href={linkUrl}
+          onClick={e => handleClick(e, onClickTitle as any)}
+        >
+          <TitleText>{name}</TitleText>
+        </StyledTitleLink>
       )}
-      <RelatedStyledImageLink href={linkUrl} onClick={e => handleClick(e)}>
-        <RelatedStyledImage key={id} src={url} referrerPolicy="no-referrer" aria-label={name} />
+      <RelatedStyledImageLink
+        href={linkUrl}
+        onClick={e => handleClick(e)}
+        title={plainText ?? name}
+        imageLoaded={imageLoaded}
+      >
+        <RelatedStyledImage
+          key={id}
+          src={url}
+          referrerPolicy="no-referrer"
+          aria-label={name}
+          title={plainText ?? name}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => setImageErrored(true)}
+          style={
+            imageLoaded || imageErrored
+              ? {}
+              : { visibility: 'hidden', display: 'inline', width: 0, height: 0, opacity: 0 }
+          }
+        />
+        {!onClickTitle &&
+          (imageLoaded ? (
+            <VisuallyHiddenSpan key={id + '-name'}>{name}</VisuallyHiddenSpan>
+          ) : (
+            <TitleText
+              /* onClick={e => handleClick(e)} */ key={id + '-name'}
+              style={
+                imageLoaded ? { visibility: 'hidden' } : { margin: '4px', position: 'absolute' }
+              }
+            >
+              {name}
+            </TitleText>
+          ))}
+        {otherNames &&
+          otherNames.map((otherName, i) => {
+            return (
+              <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
+                {otherName}
+              </VisuallyHiddenSpan>
+            );
+          })}
       </RelatedStyledImageLink>
     </RelatedContainer>
   );
 };
-const RelatedStyledImage = styled.img({
-  maxHeight: '450px',
-  maxWidth: '320px',
-  cursor: 'pointer',
-});
 
 const RelatedContainer = styled.div({
   display: 'flex',
@@ -230,8 +274,26 @@ const RelatedContainer = styled.div({
   },
 });
 
-const RelatedStyledImageLink = styled.a({
-  display: 'block',
-  textDecoration: 'none',
+const RelatedStyledImageLink = styled.a<ImageProps>(
+  {
+    display: 'block',
+    textDecoration: 'none',
+    cursor: 'pointer',
+  },
+  props =>
+    props.imageLoaded
+      ? {}
+      : {
+          height: '320px',
+          width: '230px',
+          backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
+          borderRadius: '4.75% / 3.5%',
+          position: 'relative',
+        }
+);
+
+const RelatedStyledImage = styled.img({
+  maxHeight: '450px',
+  maxWidth: '320px',
   cursor: 'pointer',
 });
