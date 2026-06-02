@@ -1,6 +1,7 @@
 import type { HCCard } from '../types';
 import type { tagRecord, tagState } from '../types/Card/values/Tag';
 import { normalizeTagList } from '../cardTags/cardTagMerge';
+import { hydrateCatalogCard } from './catalogHydrate';
 
 const FIRESTORE_ONLY_KEYS = new Set(['baseTags', 'added', 'removed']);
 
@@ -116,6 +117,8 @@ export function firestoreDocToCatalogCard(
     const merged = normalizeTagList(raw.tags);
     if (merged.length > 0) card.tags = merged;
   }
+
+  hydrateCatalogCard(card);
 
   return card as HCCard.Any;
 }

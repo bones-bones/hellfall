@@ -17,10 +17,13 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Firestore, type CollectionReference } from '@google-cloud/firestore';
 import {
+  applyAddTag,
+  applyRemoveTag,
   dedupeOrdered,
   mergeTags,
   normalizeTagList,
   type CardTagOverrides,
+  type CardTagState,
 } from '@hellfall/shared/cardTags/cardTagMerge.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -54,18 +57,148 @@ function isValidFirestoreDocId(id: string): boolean {
   return true;
 }
 
-/** Firestore forbids nested arrays — stringify any array-of-arrays fields. */
-const sanitizeForFirestore = (obj: Record<string, unknown>): Record<string, unknown> => {
-  const out: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(obj)) {
-    if (Array.isArray(value) && value.some(v => Array.isArray(v))) {
-      out[key] = JSON.stringify(value);
-    } else {
-      out[key] = value;
+/** Firestore: stringify nested arrays; omit attributes whose value is `""`. */
+const sanitizeForFirestore = (value: unknown): unknown => {
+  if (Array.isArray(value)) {
+    if (value.some(v => Array.isArray(v))) {
+      return JSON.stringify(value);
+    }
+    return value.map(v => sanitizeForFirestore(v));
+  }
+  if (value !== null && typeof value === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [key, nested] of Object.entries(value as Record<string, unknown>)) {
+      if (nested === '') continue;
+      out[key] = sanitizeForFirestore(nested);
+    }
+    return out;
+  }
+  return value;
+};
+
+type CardIndexes = {
+  docIdByHcid: Map<string, string>;
+  docIdsByName: Map<string, string[]>;
+};
+
+function buildCardIndexes(cards: HellscubeCard[]): CardIndexes {
+  const docIdByHcid = new Map<string, string>();
+  const docIdsByName = new Map<string, string[]>();
+  for (const card of cards) {
+    const docId = firestoreDocId(card);
+    if (!docId) continue;
+    if (card.hcid != null && String(card.hcid) !== '') {
+      docIdByHcid.set(String(card.hcid), docId);
+    }
+    const name = typeof card.name === 'string' ? card.name.trim() : '';
+    if (name) {
+      const list = docIdsByName.get(name) ?? [];
+      list.push(docId);
+      docIdsByName.set(name, list);
     }
   }
-  return out;
-};
+  return { docIdByHcid, docIdsByName };
+}
+
+function decodeOrphanDocId(orphanId: string): string | undefined {
+  try {
+    return decodeURIComponent(orphanId);
+  } catch {
+    return undefined;
+  }
+}
+
+/** Map a legacy/orphan Firestore doc id to the current JSON card doc id. */
+function targetDocIdForOrphan(
+  orphanId: string,
+  orphan: Record<string, unknown>,
+  indexes: CardIndexes
+): string | undefined {
+  const { docIdByHcid, docIdsByName } = indexes;
+
+  if (docIdByHcid.has(orphanId)) return docIdByHcid.get(orphanId);
+
+  const decoded = decodeOrphanDocId(orphanId);
+  if (decoded && docIdByHcid.has(decoded)) return docIdByHcid.get(decoded);
+
+  const hcid = orphan.hcid != null ? String(orphan.hcid) : '';
+  if (hcid && docIdByHcid.has(hcid)) return docIdByHcid.get(hcid);
+
+  const name = typeof orphan.name === 'string' ? orphan.name.trim() : '';
+  const nameCandidates = name ? docIdsByName.get(name) : undefined;
+  if (nameCandidates?.length === 1) return nameCandidates[0];
+
+  if (decoded) {
+    const decodedCandidates = docIdsByName.get(decoded);
+    if (decodedCandidates?.length === 1) return decodedCandidates[0];
+  }
+
+  return undefined;
+}
+
+function overridesFromDoc(doc: Record<string, unknown> | undefined): CardTagOverrides {
+  return {
+    added: normalizeTagList(doc?.added),
+    removed: normalizeTagList(doc?.removed),
+  };
+}
+
+function hasTagOverrides(overrides: CardTagOverrides): boolean {
+  return overrides.added.length > 0 || overrides.removed.length > 0;
+}
+
+function mergeDonorOverrides(
+  into: CardTagOverrides,
+  donor: CardTagOverrides
+): CardTagOverrides {
+  let state: CardTagState = {
+    baseTags: [],
+    added: [...into.added],
+    removed: [...into.removed],
+    tags: [],
+  };
+  for (const tag of donor.added) state = applyAddTag(state, tag);
+  for (const tag of donor.removed) state = applyRemoveTag(state, tag);
+  return { added: state.added, removed: state.removed };
+}
+
+function collectOrphanTagTransfers(
+  existingById: Map<string, Record<string, unknown>>,
+  jsonDocIds: Set<string>,
+  indexes: CardIndexes
+): {
+  transfers: Map<string, CardTagOverrides>;
+  orphanToTarget: Map<string, string>;
+  stats: { orphansWithOverrides: number; transferred: number; unmatched: number };
+} {
+  const transfers = new Map<string, CardTagOverrides>();
+  const orphanToTarget = new Map<string, string>();
+  const stats = { orphansWithOverrides: 0, transferred: 0, unmatched: 0 };
+
+  for (const [orphanId, orphan] of existingById) {
+    if (jsonDocIds.has(orphanId)) continue;
+    const donor = overridesFromDoc(orphan);
+    if (!hasTagOverrides(donor)) continue;
+    stats.orphansWithOverrides++;
+
+    const targetId = targetDocIdForOrphan(orphanId, orphan, indexes);
+    if (!targetId) {
+      stats.unmatched++;
+      console.warn(
+        `Orphan tag overrides not transferred (no match): ${orphanId}` +
+          (orphan.name ? ` (${orphan.name})` : '')
+      );
+      continue;
+    }
+
+    stats.transferred++;
+    orphanToTarget.set(orphanId, targetId);
+    const prior = transfers.get(targetId) ?? { added: [], removed: [] };
+    transfers.set(targetId, mergeDonorOverrides(prior, donor));
+  }
+
+  return { transfers, orphanToTarget, stats };
+}
 
 const buildFirestoreDoc = (
   card: HellscubeCard,
@@ -77,13 +210,14 @@ const buildFirestoreDoc = (
     removed: normalizeTagList(existing?.removed),
   };
   const mergedTags = dedupeOrdered(mergeTags(baseTags, overrides));
+  const { tag_state: _tagState, ...cardFields } = card;
   return sanitizeForFirestore({
-    ...card,
+    ...cardFields,
     baseTags,
     tags: mergedTags,
     added: overrides.added,
     removed: overrides.removed,
-  });
+  }) as Record<string, unknown>;
 };
 
 function parseArgs(argv: string[]) {
@@ -132,7 +266,7 @@ Writes each card to Firestore cards/{id} with the full JSON object. Tag fields
 Options:
   --report          Stats only (no writes)
   --dry-run         Show summary without writing
-  --prune-orphans   Delete Firestore docs whose id is not in the JSON
+  --prune-orphans   Delete orphan docs; move tag overrides (and pending changesets) to the matching JSON card by hcid/name
   --db-path <path>  Path to Hellscube-Database.json
   --limit <n>       Migrate only the first n cards (testing)
 
@@ -203,15 +337,28 @@ async function main() {
 
   const db = new Firestore({ databaseId });
   const collection = db.collection(collectionName);
+  const indexes = buildCardIndexes(parsed.data);
 
   console.log('Loading existing docs...');
   const existingById = await loadExistingDocs(collection);
   console.log(`Existing Firestore docs: ${existingById.size}`);
 
+  const orphanTransfers = pruneOrphans
+    ? collectOrphanTagTransfers(existingById, allDocIds, indexes)
+    : null;
+
+  if (orphanTransfers) {
+    console.log(
+      `Orphan tag overrides: ${orphanTransfers.stats.orphansWithOverrides} found, ` +
+        `${orphanTransfers.stats.transferred} transferred, ${orphanTransfers.stats.unmatched} unmatched`
+    );
+  }
+
   const stats = {
     writes: 0,
     tagsMergedFromOverrides: 0,
     pruneDeletes: 0,
+    changesetsReassigned: 0,
     jsonWithTags: 0,
   };
 
@@ -219,10 +366,18 @@ async function main() {
     if ((card.tags?.length ?? 0) > 0) stats.jsonWithTags++;
     const docId = firestoreDocId(card)!;
     const existing = existingById.get(docId);
+    const transferred = orphanTransfers?.transfers.get(docId);
+    const existingForBuild =
+      transferred != null
+        ? {
+            ...existing,
+            ...mergeDonorOverrides(overridesFromDoc(existing), transferred),
+          }
+        : existing;
     const hadOverrides =
-      normalizeTagList(existing?.added).length > 0 ||
-      normalizeTagList(existing?.removed).length > 0;
-    const doc = buildFirestoreDoc(card, existing);
+      normalizeTagList(existingForBuild?.added).length > 0 ||
+      normalizeTagList(existingForBuild?.removed).length > 0;
+    const doc = buildFirestoreDoc(card, existingForBuild);
     const jsonOnlyTags = dedupeOrdered(normalizeTagList(card.tags));
     const mergedTags = doc.tags as string[];
     if (hadOverrides && JSON.stringify(mergedTags) !== JSON.stringify(jsonOnlyTags)) {
@@ -264,11 +419,33 @@ async function main() {
   for (const card of cards) {
     const docId = firestoreDocId(card)!;
     const existing = existingById.get(docId);
-    const doc = buildFirestoreDoc(card, existing);
+    const transferred = orphanTransfers?.transfers.get(docId);
+    const existingForBuild =
+      transferred != null
+        ? {
+            ...existing,
+            ...mergeDonorOverrides(overridesFromDoc(existing), transferred),
+          }
+        : existing;
+    const doc = buildFirestoreDoc(card, existingForBuild);
     bulkWriter.set(collection.doc(docId), doc, { merge: true });
   }
 
-  if (pruneOrphans) {
+  if (pruneOrphans && orphanTransfers) {
+    const changesetsCol = db.collection(
+      process.env.FIRESTORE_CHANGESETS_COLLECTION?.trim() || 'changesets'
+    );
+    const pendingChangesets = await changesetsCol.where('status', '==', 'pending').get();
+    for (const cs of pendingChangesets.docs) {
+      const cardId = cs.data().cardId;
+      if (typeof cardId !== 'string') continue;
+      const targetId = orphanTransfers.orphanToTarget.get(cardId);
+      if (targetId) {
+        bulkWriter.update(cs.ref, { cardId: targetId });
+        stats.changesetsReassigned++;
+      }
+    }
+
     for (const id of existingById.keys()) {
       if (!allDocIds.has(id)) {
         bulkWriter.delete(collection.doc(id));
@@ -277,6 +454,9 @@ async function main() {
   }
 
   await bulkWriter.close();
+  if (stats.changesetsReassigned > 0) {
+    console.log(`Pending changesets reassigned: ${stats.changesetsReassigned}`);
+  }
   console.log('\nMigration complete.');
 }
 
