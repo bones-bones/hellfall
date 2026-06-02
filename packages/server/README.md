@@ -11,7 +11,7 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), tags, card data
 | `/api/me`                        | GET      | Returns current user from session cookie (or `{ user: null }`)                                         |
 | `/api/logout`                    | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL`                                  |
 | `/api/tag`                       | GET      | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags      |
-| `/api/cards/load`                | GET      | Full card catalog from Firestore (`{ data: HCCard[] }`). Public; `Cache-Control: max-age=300`.         |
+| `/api/cards/load`                | GET      | Full card catalog from Firestore as `Hellscube-Database.json` shape (`{ data: HCCard[] }`). Stubs and Firestore-only tag fields are stripped. Public; `Cache-Control: max-age=300`. |
 | `/api/cards/:cardId?format=json` | GET      | Card formatted as JSON                                                                                 |
 | `/api/cards/:cardId?format=text` | GET      | Card formatted as plaintext                                                                            |
 | `/api/cards/:cardId/tags`        | GET      | Merged `tags` plus `added` / `removed` from Firestore `cards/{cardId}`. DB id defaults to `hellscube`. |

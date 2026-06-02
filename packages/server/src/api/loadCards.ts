@@ -1,5 +1,5 @@
 import { exportHellscubeCards } from '@hellfall/shared/export/cards';
-import type { HCCard } from '@hellfall/shared/types';
+import { firestoreDocsToCatalogCards } from '@hellfall/shared/export/firestoreToCatalog';
 import { withCors } from './lib/cors.ts';
 import { env } from './lib/env.ts';
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
@@ -10,7 +10,7 @@ export const loadCardsHandler = async (
   res: HandlerResponse
 ): Promise<void> => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
-  Object.assign(headers, { 'Cache-Control': 'public, max-age=300' });
+  Object.assign(headers, { 'Cache-Control': 'public, max-age=' + 3 * 24 * 60 * 60 });
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
   if (req.method !== 'GET') {
@@ -25,7 +25,9 @@ export const loadCardsHandler = async (
     collectionName: env.FIRESTORE_CARDS_COLLECTION,
   });
 
-  const data = payload.data.map(({ _docId, ...card }) => card as HCCard.Any);
+  const data = firestoreDocsToCatalogCards(
+    payload.data.map(({ _docId, ...card }) => card)
+  );
 
   res.statusCode = 200;
   res.end(JSON.stringify({ data }));

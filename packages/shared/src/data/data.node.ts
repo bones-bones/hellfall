@@ -2,6 +2,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { exportHellscubeCards } from '../export/exportCards';
+import { firestoreDocsToCatalogCards } from '../export/firestoreToCatalog';
 import { HCCard, HCCardSymbol, HCSet } from '../types';
 
 export interface JsonDataWrapper<T> {
@@ -41,7 +42,9 @@ export async function loadCardsData(): Promise<JsonDataWrapper<HCCard.Any>> {
   }
 
   const payload = await exportHellscubeCards();
-  const data = payload.data.map(({ _docId, ...card }) => card as HCCard.Any);
+  const data = firestoreDocsToCatalogCards(
+    payload.data.map(({ _docId, ...card }) => card)
+  );
   return { data };
 }
 

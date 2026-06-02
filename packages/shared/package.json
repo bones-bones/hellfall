@@ -51,6 +51,10 @@
       "types": "./src/export/exportCards.ts",
       "import": "./src/export/exportCards.ts"
     },
+    "./export/firestoreToCatalog": {
+      "types": "./src/export/firestoreToCatalog.ts",
+      "import": "./src/export/firestoreToCatalog.ts"
+    },
     "./cardTags/cardTagMerge": {
       "types": "./src/cardTags/cardTagMerge.ts",
       "import": "./src/cardTags/cardTagMerge.ts"
