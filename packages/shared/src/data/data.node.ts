@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { loadHellscubeCatalogCards } from '../export/loadHellscubeCatalog';
 import { HCCard, HCCardSymbol, HCSet } from '../types';
 
 export interface JsonDataWrapper<T> {
@@ -23,9 +24,27 @@ function loadJsonFileSync<T>(filename: string): JsonDataWrapper<T> {
   return JSON.parse(content);
 }
 
-export const cardsDataAsync = Promise.resolve(
-  loadJsonFileSync<HCCard.Any>('Hellscube-Database.json')
-);
+function getCardsLoadApiBase(): string | undefined {
+  const base = process.env.CARDS_LOAD_API_URL?.trim();
+  return base?.replace(/\/$/, '');
+}
+
+/** Load cards from Firestore, or via GET /api/cards/load when CARDS_LOAD_API_URL is set. */
+export async function loadCardsData(): Promise<JsonDataWrapper<HCCard.Any>> {
+  const apiBase = getCardsLoadApiBase();
+  if (apiBase) {
+    const res = await fetch(`${apiBase}/api/cards/load`);
+    if (!res.ok) {
+      throw new Error(`Failed to load cards from ${apiBase}/api/cards/load: ${res.status}`);
+    }
+    return (await res.json()) as JsonDataWrapper<HCCard.Any>;
+  }
+
+  const data = await loadHellscubeCatalogCards();
+  return { data };
+}
+
+export const cardsDataAsync = loadCardsData();
 export const landsDataAsync = Promise.resolve(loadJsonFileSync<HCCard.Any>('lands.json'));
 export const tokensDataAsync = Promise.resolve(loadJsonFileSync<HCCard.Any>('tokens.json'));
 export const pipsDataAsync = Promise.resolve(loadJsonFileSync<HCCardSymbol>('pips.json'));
@@ -35,8 +54,8 @@ export const oracleNamesAsync = Promise.resolve(loadJsonFileSync<string>('oracle
 export const tagsDataAsync = Promise.resolve(loadJsonFileSync<string>('tags.json'));
 export const typesDataAsync = Promise.resolve(loadJsonFileSync<string>('types.json'));
 
-// Individual exports (synchronous, wrapped in Promise for API consistency)
-export const cardsData = loadJsonFileSync<HCCard.Any>('Hellscube-Database.json');
+// Individual exports (cards loaded from Firestore /api/cards/load)
+export const cardsData = await cardsDataAsync;
 export const landsData = loadJsonFileSync<HCCard.Any>('lands.json');
 export const tokensData = loadJsonFileSync<HCCard.Any>('tokens.json');
 export const pipsData = loadJsonFileSync<HCCardSymbol>('pips.json');

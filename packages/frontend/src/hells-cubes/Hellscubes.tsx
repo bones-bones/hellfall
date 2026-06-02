@@ -6,6 +6,7 @@ import { AvatarOfBalls } from './AvatarOfBalls.tsx';
 import { Suspense } from 'react';
 import { Eight } from './eight';
 import { HellStart } from './hellstart/HellStart.tsx';
+import { CubeList } from './CubeList.tsx';
 
 export const Hellscubes = () => {
   return (
@@ -23,6 +24,14 @@ export const Hellscubes = () => {
         <Route path="/eight/*" element={<Eight />} />
         <Route path="/hcj/*" element={<HellStart />} />
         <Route path="/ballsjr" element={<AvatarOfBalls />} />
+        <Route
+          path="/list/:setCode"
+          element={
+            <Suspense>
+              <CubeList />
+            </Suspense>
+          }
+        />
       </Routes>
     </>
   );

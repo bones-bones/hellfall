@@ -11,6 +11,7 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), tags, card data
 | `/api/me`                        | GET      | Returns current user from session cookie (or `{ user: null }`)                                         |
 | `/api/logout`                    | GET/POST | Clears session cookie and redirects to `?redirect=` or `FRONTEND_URL`                                  |
 | `/api/tag`                       | GET      | Requires Discord auth + DATABASE_CONTRIBUTOR role; returns `{ ok: true }` if allowed to edit tags      |
+| `/api/cards/load`                | GET      | Full card catalog from Firestore as `Hellscube-Database.json` shape (`{ data: HCCard[] }`). In-memory cache (default 15 min, `CATALOG_CACHE_TTL_MS`). Seeded from startup load. `Cache-Control: public, 3 days`. |
 | `/api/cards/:cardId?format=json` | GET      | Card formatted as JSON                                                                                 |
 | `/api/cards/:cardId?format=text` | GET      | Card formatted as plaintext                                                                            |
 | `/api/cards/:cardId/tags`        | GET      | Merged `tags` plus `added` / `removed` from Firestore `cards/{cardId}`. DB id defaults to `hellscube`. |
@@ -42,6 +43,7 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), tags, card data
    - `JWT_SECRET` – random string (e.g. `openssl rand -base64 32`)
    - `FRONTEND_URL` – where the React app lives (e.g. `https://user.github.io/hellfall`)
    - Optional: `AUTH_SERVER_URL` (defaults to `http://localhost:3003` when unset), `COOKIE_NAME`, `COOKIE_DOMAIN`, `JWT_ISSUER`
+   - Optional: `CARDS_LOAD_API_URL` — if set, startup loads the catalog from `{CARDS_LOAD_API_URL}/api/cards/load` instead of Firestore. Do **not** point this at `AUTH_SERVER_URL`; the server reads Firestore directly by default.
    - **Card tags:** Firestore database **`hellscube`**, collection **`cards`**. Each doc has full card data plus `baseTags`, merged `tags`, and override arrays `added` / `removed`. Edits append to subcollection **`audit`** (`FIRESTORE_AUDIT_SUBCOLLECTION`) with `action`, `field`, `changes` (before/after), `username`, `userId`, and server timestamp.
    - After rebuilding `Hellscube-Database.json` (`yarn transform-hc`), run **`yarn migrate-hellscube-db`** — see [packages/scripts/README.md](../scripts/README.md).
    - WatchWolf: `GOOGLE_APPLICATION_CREDENTIALS` (path to service account JSON) for Firestore (local dev; Cloud Run uses the service identity)

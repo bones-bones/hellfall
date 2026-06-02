@@ -198,7 +198,11 @@ export const CubeResources = () => {
               <StyledTD>{cubeSetup.name}</StyledTD>
               <StyledTD>{cubeSetup.id}</StyledTD>
               <StyledTD>{cubeSetup.description}</StyledTD>
-              <StyledTD>{cubeSetup.quickLink || 'None'}</StyledTD>
+              <StyledTD>
+                {cubeSetup.quickLink}
+                {cubeSetup.quickLink ? ', ' : null}
+                <StyledLink to={`/hellscubes/list/${cubeSetup.id}`}>Card list</StyledLink>
+              </StyledTD>
               <StyledTD>
                 {cubeSetup.tts || (
                   <button

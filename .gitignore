@@ -50,11 +50,8 @@ LESSONS_LEARNED.md
 
 local-tags.json
 
-tsconfig.tsbuildinfo
-tsconfig.build.tsbuildinfo
+*.tsbuildinfo
 packages/scripts/hellfall-api-key.json
-
-packages/**/tsconfig.tsbuildinfo
 hellfall-api-key.json
 hellscube-firestore-export.json
 packages/shared/src/data/hellscube-firestore-export.json

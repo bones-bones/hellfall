@@ -1,4 +1,5 @@
-import { Firestore, type Timestamp } from '@google-cloud/firestore';
+import type { Timestamp } from '@google-cloud/firestore';
+import { getFirestore, resolveCardsCollectionName } from './firestoreClient';
 
 export type HellscubeExportCard = Record<string, unknown> & { _docId: string };
 
@@ -46,11 +47,9 @@ export async function exportHellscubeCards(
 ): Promise<HellscubeExportPayload> {
   const databaseId =
     options.databaseId?.trim() || process.env.FIRESTORE_DATABASE_ID?.trim() || 'hellscube';
-  const collectionName =
-    options.collectionName?.trim() || process.env.FIRESTORE_CARDS_COLLECTION?.trim() || 'cards';
+  const collectionName = resolveCardsCollectionName(options.collectionName);
 
-  const db = new Firestore({ databaseId });
-  const snapshot = await db.collection(collectionName).get();
+  const snapshot = await getFirestore(databaseId).collection(collectionName).get();
 
   const data = snapshot.docs.map(doc =>
     docToExportRow(doc.id, doc.data() as Record<string, unknown>)
