@@ -16,6 +16,8 @@ import { searchHandler } from './api/search.ts';
 import { changesetsHandler } from './api/changesets.ts';
 import { exportHellscubeHandler } from './api/exportHellscube.ts';
 import { loadCardsHandler } from './api/loadCards.ts';
+import { cardsData } from '@hellfall/shared/data';
+import { seedCatalogCache, warmCatalogCache } from './lib/catalogCache.ts';
 
 const PORT = Number(process.env.PORT) || 3003;
 
@@ -158,5 +160,7 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
     }
   }
 }).listen(PORT, () => {
+  seedCatalogCache(cardsData.data);
+  warmCatalogCache();
   console.log(`Server at http://localhost:${PORT}`);
 });

@@ -19,10 +19,32 @@ export function isHellscubeCatalogCard(doc: Record<string, unknown>): boolean {
   return typeof doc.name === 'string' && doc.name.length > 0;
 }
 
+function normalizeFirestoreValue(value: unknown): unknown {
+  if (value == null) return value;
+  if (typeof value === 'object' && value !== null && 'toDate' in value) {
+    const ts = value as { toDate?: () => Date };
+    if (typeof ts.toDate === 'function') {
+      return ts.toDate().toISOString();
+    }
+  }
+  if (Array.isArray(value)) {
+    return value.map(normalizeFirestoreValue);
+  }
+  if (typeof value === 'object' && value.constructor === Object) {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value)) {
+      out[k] = normalizeFirestoreValue(v);
+    }
+    return out;
+  }
+  return value;
+}
+
 /** Firestore stores nested arrays as JSON strings (see migrate-hellscube-db). */
 function deserializeFirestoreFields(doc: Record<string, unknown>): Record<string, unknown> {
+  const normalized = normalizeFirestoreValue(doc) as Record<string, unknown>;
   const out: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(doc)) {
+  for (const [key, value] of Object.entries(normalized)) {
     if (typeof value === 'string' && value.length > 0 && value[0] === '[') {
       try {
         const parsed = JSON.parse(value);

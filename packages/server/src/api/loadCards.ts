@@ -1,7 +1,5 @@
-import { exportHellscubeCards } from '@hellfall/shared/export/cards';
-import { firestoreDocsToCatalogCards } from '@hellfall/shared/export/firestoreToCatalog';
+import { getCatalogResponseBody } from '../lib/catalogCache.ts';
 import { withCors } from './lib/cors.ts';
-import { env } from './lib/env.ts';
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
 /** GET /api/cards/load — full card catalog from Firestore ({ data: HCCard[] }). */
@@ -20,15 +18,7 @@ export const loadCardsHandler = async (
     return;
   }
 
-  const payload = await exportHellscubeCards({
-    databaseId: env.FIRESTORE_DATABASE_ID,
-    collectionName: env.FIRESTORE_CARDS_COLLECTION,
-  });
-
-  const data = firestoreDocsToCatalogCards(
-    payload.data.map(({ _docId, ...card }) => card)
-  );
-
+  const body = await getCatalogResponseBody();
   res.statusCode = 200;
-  res.end(JSON.stringify({ data }));
+  res.end(body);
 };
