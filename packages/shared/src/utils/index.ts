@@ -9,3 +9,4 @@ export * from './draftmancer';
 export * from './tts';
 export * from './fetchHandling';
 export * from './setHandling.ts';
+export * from './cubeList';
