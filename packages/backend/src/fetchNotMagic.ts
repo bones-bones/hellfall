@@ -144,6 +144,7 @@ export const fetchNotMagic = async () => {
           : [],
       },
       {
+        name: entryAt('name'),
         colors: entryAt('colors')
           ? entryAt('colors')
               .split(';')
@@ -163,7 +164,7 @@ export const fetchNotMagic = async () => {
         oracle_text: entryAt('oracle_text')
           .match(/<[^>]*>|[^<>]+/g)
           ?.map(text => (text[0] == '<' ? discordToSymbolMatching[text] : text))
-          .join(''),
+          .join('') ?? entryAt('oracle_text'),
         flavor_text: entryAt('flavor_text'),
       }
     );
@@ -183,6 +184,8 @@ export const fetchNotMagic = async () => {
               );
             } else if (key == 'loyalty' && faceOrRootIsBattle(card, face + index)) {
               addPropToFaceOrRoot(card, 'defense', value, face + index);
+            } else if (key == 'oracle_text') {
+              addPropToFaceOrRoot(card, 'oracle_text', (value).match(/<[^>]*>|[^<>]+/g)?.map(text => (text[0] == '<' ? discordToSymbolMatching[text] : text)).join('') ?? value, face + index);
             } else {
               addPropToFaceOrRoot(card, key as bothPropType, value, face + index);
             }
