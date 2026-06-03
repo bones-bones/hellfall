@@ -21,21 +21,38 @@ function cacheTtlMs(): number {
 }
 
 async function buildCatalogBody(): Promise<string> {
+  const t0 = Date.now();
   const data = await loadHellscubeCatalogCards({
     databaseId: env.FIRESTORE_DATABASE_ID,
     collectionName: env.FIRESTORE_CARDS_COLLECTION,
   });
-  return JSON.stringify({ data });
+  const loadMs = Date.now() - t0;
+  const t1 = Date.now();
+  const body = JSON.stringify({ data });
+  const stringifyMs = Date.now() - t1;
+  console.log(
+    `[cards/load] buildCatalogBody cards=${data.length} firestore=${loadMs}ms stringify=${stringifyMs}ms total=${Date.now() - t0}ms bytes=${body.length}`
+  );
+  return body;
 }
 
 /** Cached `{ data: HCCard[] }` JSON for `/api/cards/load` (single-flight refresh). */
 export async function getCatalogResponseBody(): Promise<string> {
+  const t0 = Date.now();
   const now = Date.now();
   if (cache && now - cache.loadedAt < cacheTtlMs()) {
+    const ageMs = now - cache.loadedAt;
+    console.log(
+      `[cards/load] cache hit age=${ageMs}ms ttl=${cacheTtlMs()}ms bytes=${cache.body.length} total=${Date.now() - t0}ms`
+    );
     return cache.body;
   }
 
+  const waitingOnInflight = inflight !== null;
   if (!inflight) {
+    console.log(
+      `[cards/load] cache ${cache ? 'stale' : 'empty'} (age=${cache ? now - cache.loadedAt : 'n/a'}ms), refreshing`
+    );
     inflight = (async () => {
       try {
         const body = await buildCatalogBody();
@@ -45,9 +62,15 @@ export async function getCatalogResponseBody(): Promise<string> {
         inflight = null;
       }
     })();
+  } else {
+    console.log('[cards/load] cache stale/empty, waiting on inflight refresh');
   }
 
-  return inflight;
+  const body = await inflight;
+  console.log(
+    `[cards/load] ${waitingOnInflight ? 'inflight wait' : 'refresh'} complete total=${Date.now() - t0}ms bytes=${body.length}`
+  );
+  return body;
 }
 
 /** Warm cache after listen so the first browser request is fast. */

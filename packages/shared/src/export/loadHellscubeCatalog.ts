@@ -16,15 +16,27 @@ export async function loadHellscubeCatalogCards(
 
   const col = getFirestore(databaseId).collection(collectionName);
 
+  const tQuery = Date.now();
   let snapshot = await col.where('object', '==', 'card').get();
+  console.log(
+    `[cards/load] firestore query object==card ${Date.now() - tQuery}ms docs=${snapshot.size}`
+  );
   if (snapshot.empty) {
+    const tFallback = Date.now();
     snapshot = await col.get();
+    console.log(
+      `[cards/load] firestore fallback full collection ${Date.now() - tFallback}ms docs=${snapshot.size}`
+    );
   }
 
+  const tConvert = Date.now();
   const cards: HCCard.Any[] = [];
   for (const doc of snapshot.docs) {
     const card = firestoreDocToCatalogCard(doc.data() as Record<string, unknown>);
     if (card) cards.push(card);
   }
+  console.log(
+    `[cards/load] firestore doc conversion ${Date.now() - tConvert}ms cards=${cards.length}/${snapshot.size}`
+  );
   return cards;
 }

@@ -26,6 +26,7 @@ function hydrateStringsOnRecord(
   }
 }
 
+// TODO: move this shit to server
 /** Fill missing catalog string fields with `""` so clients match bundled JSON shape. */
 export function hydrateCatalogCard(card: Record<string, unknown>): void {
   hydrateStringsOnRecord(card, ROOT_STRING_DEFAULTS);
