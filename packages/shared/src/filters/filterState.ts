@@ -84,8 +84,8 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
     textListShares(getFromFaces(value, 'types'), [
       'artifact',
       'battle',
+      'creature',
       'enchantment',
-      'instant',
       'land',
       'planeswalker',
     ]),

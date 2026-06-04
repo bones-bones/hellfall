@@ -15,10 +15,7 @@ const FACE_STRING_DEFAULTS = ['name', 'mana_cost', 'type_line', 'oracle_text'] a
 
 const RELATED_PART_STRING_DEFAULTS = ['id', 'hcid', 'name', 'type_line', 'set'] as const;
 
-function hydrateStringsOnRecord(
-  record: Record<string, unknown>,
-  fields: readonly string[]
-): void {
+function hydrateStringsOnRecord(record: Record<string, unknown>, fields: readonly string[]): void {
   for (const key of fields) {
     if (record[key] === undefined || record[key] === null) {
       record[key] = '';

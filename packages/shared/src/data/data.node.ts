@@ -44,8 +44,9 @@ export async function loadCardsData(): Promise<JsonDataWrapper<HCCard.Any>> {
     const data = await loadHellscubeCatalogCards();
     return { data };
   } catch (error) {
-    const data = (await Promise.resolve(loadJsonFileSync<HCCard.Any>('Hellscube-Database.json'))).data
-    return { data }
+    const data = (await Promise.resolve(loadJsonFileSync<HCCard.Any>('Hellscube-Database.json')))
+      .data;
+    return { data };
   }
 }
 

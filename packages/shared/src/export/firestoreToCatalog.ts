@@ -72,9 +72,7 @@ function tagsToTagRecord(tags: string[]): tagRecord {
   return record;
 }
 
-function buildTagStateFromFirestore(
-  doc: Record<string, unknown>
-): tagState | undefined {
+function buildTagStateFromFirestore(doc: Record<string, unknown>): tagState | undefined {
   const baseTags = normalizeTagList(doc.baseTags);
   const added = normalizeTagList(doc.added);
   const removed = normalizeTagList(doc.removed);
@@ -94,9 +92,7 @@ function buildTagStateFromFirestore(
 }
 
 /** Map a Firestore card document to Hellscube-Database.json card shape. */
-export function firestoreDocToCatalogCard(
-  doc: Record<string, unknown>
-): HCCard.Any | null {
+export function firestoreDocToCatalogCard(doc: Record<string, unknown>): HCCard.Any | null {
   if (!isHellscubeCatalogCard(doc)) return null;
 
   const raw = deserializeFirestoreFields(doc);
@@ -123,9 +119,7 @@ export function firestoreDocToCatalogCard(
   return card as HCCard.Any;
 }
 
-export function firestoreDocsToCatalogCards(
-  docs: Record<string, unknown>[]
-): HCCard.Any[] {
+export function firestoreDocsToCatalogCards(docs: Record<string, unknown>[]): HCCard.Any[] {
   return docs
     .map(doc => firestoreDocToCatalogCard(doc))
     .filter((card): card is HCCard.Any => card != null);

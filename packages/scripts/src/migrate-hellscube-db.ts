@@ -147,10 +147,7 @@ function hasTagOverrides(overrides: CardTagOverrides): boolean {
   return overrides.added.length > 0 || overrides.removed.length > 0;
 }
 
-function mergeDonorOverrides(
-  into: CardTagOverrides,
-  donor: CardTagOverrides
-): CardTagOverrides {
+function mergeDonorOverrides(into: CardTagOverrides, donor: CardTagOverrides): CardTagOverrides {
   let state: CardTagState = {
     baseTags: [],
     added: [...into.added],

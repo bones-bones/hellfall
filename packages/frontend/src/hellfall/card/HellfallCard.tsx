@@ -186,7 +186,15 @@ export const HellfallCard = ({
             <span key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               {face.name &&
-                (triggerEscapeList.some(e => face.name.includes(e)) ? (
+                (data.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
+                  <MediumLine
+                    key="name"
+                    style={{ marginRight: '1em' }}
+                    dangerouslySetInnerHTML={{ __html: face.name }}
+                  />
+                ) : triggerEscapeList.some(
+                    e => face.name.includes(e) && data.id != 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d'
+                  ) ? (
                   <MediumLine key="name" style={{ marginRight: '1em' }}>
                     {formatDiscordMarkdownInline(formatParens(face.name))}
                   </MediumLine>
@@ -231,7 +239,19 @@ export const HellfallCard = ({
                 ))}
               {(face.oracle_text || face.flavor_text) && <Separator />}
               {face.oracle_text &&
-                (triggerEscapeList.some(e => face.oracle_text.includes(e)) ? (
+                (data.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
+                  <MediumText key="rules">
+                    {formatDiscordMarkdown(
+                      formatParens(face.oracle_text),
+                      text =>
+                        text.replaceAll(
+                          'HTML Injection in the Hellfall Website Elemental',
+                          face.name.replaceAll('2em', 'em')
+                        ),
+                      true
+                    )}
+                  </MediumText>
+                ) : triggerEscapeList.some(e => face.oracle_text.includes(e)) ? (
                   <MediumText key="rules">
                     {formatDiscordMarkdown(formatParens(face.oracle_text))}
                   </MediumText>

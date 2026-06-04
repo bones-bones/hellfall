@@ -31,30 +31,33 @@ declare module '*.png' {
   export default content;
 }
 declare module 'simple-markdown' {
-  export interface ParserState {
-    key?: number;
-    inline?: boolean;
-    [key: string]: any;
-  }
-
+  export type ParsedNode = {
+    content?: ParsedNode[] | string;
+    type?: string;
+    [key: string]: unknown;
+  };
+  export type ParseFunction = (source: string, state?: ParserState) => ParsedNode[];
+  export type OutputFunction = (nodes: ParsedNode[], state?: ParserState) => React.ReactNode;
+  export type RuleOutputFunction = (rules: Record<string, Rule>, type: string) => OutputFunction;
   export interface Rule {
     order: number;
     match: (source: string, state?: ParserState) => RegExpExecArray | null;
-    parse?: (capture: RegExpExecArray, parse: any, state?: ParserState) => any;
-    react?: (node: any, output: any, state?: ParserState) => React.ReactNode;
-    [key: string]: any;
+    parse?: (capture: RegExpExecArray, parse: ParseFunction, state?: ParserState) => ParsedNode;
+    react?: (node: ParsedNode, output: OutputFunction, state?: ParserState) => React.ReactNode;
+    [key: string]: unknown;
+  }
+  export interface ParserState {
+    key?: number;
+    // inline?: boolean;
+    setDangerously?: boolean;
+    [key: string]: Rule;
   }
 
-  export function parserFor(
-    rules: Record<string, Rule>
-  ): (source: string, state?: ParserState) => any[];
-  export function reactFor(
-    ruleOutput: (rules: Record<string, Rule>, type: string) => any
-  ): (nodes: any[], state?: ParserState) => React.ReactNode;
-  export function ruleOutput(
-    rules: Record<string, Rule>,
-    type: string
-  ): (rules: Record<string, Rule>, type: string) => any;
+  export function parserFor(rules: Record<string, Rule>): ParseFunction;
+
+  export function reactFor(ruleOutput: RuleOutputFunction): OutputFunction;
+
+  export function ruleOutput(rules: Record<string, Rule>, type: string): RuleOutputFunction;
 
   // Default export
   const simpleMarkdown: {
