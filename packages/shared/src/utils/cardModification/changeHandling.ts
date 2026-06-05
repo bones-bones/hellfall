@@ -15,6 +15,7 @@ import {
 } from '@hellfall/shared/types';
 import {
   CardMap,
+  faceEntriesType,
   facePropType,
   faceValueType,
   getAllRelated,
@@ -41,7 +42,7 @@ import {
   pushPropToRoot,
   toMultiFaced,
   toSingleFaced,
-} from './fetchUtils';
+} from './modificationHandling';
 import { setDerivedProps } from './derivedProps';
 import { cleanParts, updateParts } from './partsHandling';
 import { textEquals } from '../textHandling';
@@ -267,7 +268,11 @@ export const rootChangeIsValid = <K extends rootPropType>(
         return change.value === true && change.value != currentValue;
       }
       if (change.prop == 'image') {
-        return typeof change.value == 'string' && change.value.startsWith('https://') && change.value != currentValue;
+        return (
+          typeof change.value == 'string' &&
+          change.value.startsWith('https://') &&
+          change.value != currentValue
+        );
       }
       if (change.prop == 'mana_value') {
         return typeof change.value == 'number';
@@ -284,7 +289,7 @@ export const rootChangeIsValid = <K extends rootPropType>(
           change.value.length == 2 &&
           typeof change.value[0] == 'string' &&
           typeof change.value[1] == 'string' &&
-          change.value[1] != (currentValue as Record<string,string>)[change.value[0]]
+          change.value[1] != (currentValue as Record<string, string>)[change.value[0]]
         );
       }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
@@ -356,7 +361,11 @@ export const faceChangeIsValid = <K extends facePropType>(
         );
       }
       if (['supertypes', 'types', 'subtypes'].includes(change.prop)) {
-        return Array.isArray(change.value) && change.value.every(v=>typeof v == 'string') && !listsAreEqual(change.value, currentValue as string[]);
+        return (
+          Array.isArray(change.value) &&
+          change.value.every(v => typeof v == 'string') &&
+          !listsAreEqual(change.value, currentValue as string[])
+        );
       }
       if (change.value == currentValue) {
         return false;
@@ -405,9 +414,7 @@ export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange
     return false;
   }
   if (
-    !(
-      Object.entries(change.face) as { [K in facePropType]: [K, faceValueType<K>] }[facePropType][]
-    ).every(([prop, value]) => {
+    !(Object.entries(change.face) as faceEntriesType).every(([prop, value]) => {
       switch (prop) {
         case 'object':
           return value == HCObject.ObjectType.CardFace;
@@ -474,19 +481,20 @@ export const getPartChangeIndex = (
     case 'add': {
       if (!change.related) return undefined;
       const part_prop = change.related.id ? 'id' : change.related.hcid ? 'hcid' : 'name';
-      const index = card.all_parts?.findIndex(
-        part => {
-          switch (part_prop) {
-            case 'id': 
-              return part.id == change.related!.id
-            case 'hcid':
-              return textEquals(part.hcid,change.related!.hcid)
-            case 'name':
-              return textEquals(part.name, change.related!.name) && part.hcid.replace(/\d+$/, '') != change.related!.name
-          }
-          return false;
+      const index = card.all_parts?.findIndex(part => {
+        switch (part_prop) {
+          case 'id':
+            return part.id == change.related!.id;
+          case 'hcid':
+            return textEquals(part.hcid, change.related!.hcid);
+          case 'name':
+            return (
+              textEquals(part.name, change.related!.name) &&
+              part.hcid.replace(/\d+$/, '') != change.related!.name
+            );
         }
-      );
+        return false;
+      });
       return index == -1 ? undefined : index;
     }
 

@@ -16,15 +16,17 @@ import {
   addTag,
   deletePropFromFace,
   deletePropFromRoot,
+  layoutTags,
+  layoutTagType,
+} from './modificationHandling';
+import { anyPropType, facePropType, faceType, rootPropType } from '../cardHandling';
+import { doubleListEquals, pushProp, pushPropToRecord, pushToRecord } from '../listHandling';
+import {
   kindToDefaultFrame,
   kindToFaceLayout,
   kindToMultiLayout,
   layoutIsDefault,
-  layoutTags,
-  layoutTagType,
-} from './fetchUtils';
-import { anyPropType, facePropType, faceType, rootPropType } from '../cardHandling';
-import { doubleListEquals, pushProp, pushPropToRecord, pushToRecord } from '../listHandling';
+} from './defaults';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -383,4 +385,29 @@ export const updateTags = (card: HCCard.Any, state: tagState): boolean => {
     mergeTags(card);
   }
   return shouldMerge;
+};
+
+export const addTagToState = (state: tagState, tag: string) => {
+  pushPropToRecord(state!, 'added', splitFullTag(tag).tag, tag);
+};
+export const deleteTagFromState = (state: tagState, tag: string) => {
+  const tagToDelete = splitFullTag(tag).tag;
+  if (state?.added?.[tagToDelete]) {
+    delete state.added[tagToDelete];
+  } else if (state?.base_tags?.[tagToDelete] && !state.removed?.includes(tagToDelete)) {
+    pushProp(state, 'removed', tagToDelete);
+  } else {
+    return;
+  }
+};
+
+export const mergeTagStates = (into: tagState, donor: tagState): tagState => {
+  const state: tagState = structuredClone(into);
+  if (donor.added) {
+    Object.values(donor.added).forEach(tags => tags.forEach(tag => addTagToState(state, tag)));
+  }
+  if (donor.removed) {
+    donor.removed.forEach(tag => deleteTagFromState(state, tag));
+  }
+  return state;
 };

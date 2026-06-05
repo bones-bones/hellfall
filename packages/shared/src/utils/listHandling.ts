@@ -261,7 +261,7 @@ export const addPropToRecord = <T = any>(ob: T, prop: keyof T, key: string, valu
     (ob as any)[prop] = {};
   }
   const record = ob[prop] as Record<string, string>;
-  record[key] = value
+  record[key] = value;
 };
 /**
  * Correctly deals with pushing a value to an optional property that's a `Record<string,string[]>` by creating the value of the prop first if necessary
@@ -290,7 +290,7 @@ export const pushPropToRecord = <T = any>(ob: T, prop: keyof T, key: string, val
  */
 export const deletePropFromRecord = <T = any>(ob: T, prop: keyof T, key: string) => {
   if (ob[prop] == undefined) {
-    return false;;
+    return false;
   }
   const record = ob[prop] as Record<string, string>;
   if (record[key] != undefined) {
@@ -307,15 +307,15 @@ export const deletePropFromRecord = <T = any>(ob: T, prop: keyof T, key: string)
  * @param key key to pop from
  * @param value value to pop
  */
-export const popPropFromRecord = <T = any>(ob: T, prop: keyof T, key: string, value:string) => {
+export const popPropFromRecord = <T = any>(ob: T, prop: keyof T, key: string, value: string) => {
   if (ob[prop] == undefined) {
     return false;
   }
   const record = ob[prop] as Record<string, string[]>;
   if (key in record) {
     const index = record[key].indexOf(value);
-    if (index == -1 || index == undefined) return false; 
-    record[key].splice(index,1);
+    if (index == -1 || index == undefined) return false;
+    record[key].splice(index, 1);
     return true;
   }
   return false;

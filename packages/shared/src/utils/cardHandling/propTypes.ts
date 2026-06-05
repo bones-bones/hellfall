@@ -39,6 +39,7 @@ export type faceType = Omit<
 
 export type facePropType = keyof faceType;
 // export type excludeFacePropType = Exclude<facePropType, 'layout'>;
+export type defaultFaceValueType<K extends facePropType> = Exclude<faceType[K], undefined>;
 export type faceValueType<K extends facePropType> = K extends
   | 'colors'
   | 'color_indicator'
@@ -62,6 +63,7 @@ export type filterFaceValueType<K extends facePropType> = K extends 'colors'
 //   layout?: HCLayout
 // };
 export type rootPropType = keyof HCCard.Any;
+export type defaultRootValueType<K extends rootPropType> = Exclude<HCCard.Any[K], undefined>;
 export type rootValueType<K extends rootPropType> = K extends 'artist_notes'
   ? [string, string]
   : K extends
@@ -100,3 +102,13 @@ export type allValueType<K extends keyof allType> = Exclude<allType[K], undefine
 
 export type partPropType = keyof HCRelatedCard;
 export type partValueType<K extends partPropType> = HCRelatedCard[K];
+
+export type rootMappedType = { [K in rootPropType]?: defaultRootValueType<K> };
+export type faceMappedType = { [K in facePropType]?: defaultFaceValueType<K> };
+export type partMappedType = { [K in partPropType]?: partValueType<K> };
+export type anyMappedType = { [K in anyPropType]?: anyValueType<K> };
+
+export type rootEntriesType = { [K in rootPropType]: [K, rootValueType<K>] }[rootPropType][];
+export type faceEntriesType = { [K in facePropType]: [K, faceValueType<K>] }[facePropType][];
+export type partEntriesType = { [K in partPropType]: [K, partValueType<K>] }[partPropType][];
+export type anyEntriesType = { [K in anyPropType]: [K, anyValueType<K>] }[anyPropType][];

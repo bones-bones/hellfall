@@ -120,31 +120,33 @@ export const fetchLands = async () => {
       land.oracle_text = '{T}: Add {C}.';
     }
     if (entryAt('token_maker')) {
-      entryAt('token_maker').split(';').forEach(oldName => {
-        const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-        const name = match?.groups?.name ?? oldName;
-        const count = match?.groups?.count;
-        const base = name.replace(/\d+$/, '');
-        const shouldUseBase =
-          /\d/.test(name.at(-1)!) &&
-          !hardCardNames.includes(name) &&
-          base &&
-          ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
-        const maker: HCRelatedCard = {
-          object: HCObject.ObjectType.RelatedCard,
-          id: '',
-          hcid: shouldUseBase ? name : '',
-          name: shouldUseBase ? base : name,
-          set: '' as SetCode,
-          image: '',
-          type_line: '',
-          component: 'token_maker',
-        };
-        if (count) {
-          maker.count = count.slice(1);
-        }
-        pushPropToRoot(land, 'all_parts', maker);
-      });
+      entryAt('token_maker')
+        .split(';')
+        .forEach(oldName => {
+          const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+          const name = match?.groups?.name ?? oldName;
+          const count = match?.groups?.count;
+          const base = name.replace(/\d+$/, '');
+          const shouldUseBase =
+            /\d/.test(name.at(-1)!) &&
+            !hardCardNames.includes(name) &&
+            base &&
+            ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
+          const maker: HCRelatedCard = {
+            object: HCObject.ObjectType.RelatedCard,
+            id: '',
+            hcid: shouldUseBase ? name : '',
+            name: shouldUseBase ? base : name,
+            set: '' as SetCode,
+            image: '',
+            type_line: '',
+            component: 'token_maker',
+          };
+          if (count) {
+            maker.count = count.slice(1);
+          }
+          pushPropToRoot(land, 'all_parts', maker);
+        });
     }
 
     const artistIndex = keys.indexOf('artists');

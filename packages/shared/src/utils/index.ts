@@ -7,6 +7,7 @@ export * from './cardHandling';
 export * from './cockatrice';
 export * from './draftmancer';
 export * from './tts';
-export * from './fetchHandling';
+export * from './cardModification';
 export * from './setHandling.ts';
 export * from './cubeList';
+export * from './firestore/';

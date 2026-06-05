@@ -116,4 +116,6 @@ Write a script to transform the database
 - move jumpstart lands to HBB.J
 - fix search for dashes
 - add keyword tags
+- switch to using root/face type pattern
 - get rid of as much of the usage of anyPropType as possible
+- switch to using mapped/entry type pattern
