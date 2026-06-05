@@ -235,6 +235,7 @@ export default function webpackConfig(webpackEnv) {
         fs: false,
         path: false,
         url: false,
+        stream: false
       },
     },
     module: {
