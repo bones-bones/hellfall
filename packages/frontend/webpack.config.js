@@ -237,6 +237,14 @@ export default function webpackConfig(webpackEnv) {
         url: false,
         stream: false,
         util: false,
+        crypto: false,
+        buffer: false,
+        assert: false,
+        http: false,
+        https: false,
+        os: false,
+        zlib: false,
+        querystring: false
       },
     },
     module: {
