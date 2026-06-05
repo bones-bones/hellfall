@@ -1,4 +1,3 @@
-import type { Timestamp } from '@google-cloud/firestore';
 import { getFirestore, resolveCardsCollectionName } from './firestoreClient';
 import { CardMap } from '../cardHandling';
 import { firestoreToCard } from './cardConversion';

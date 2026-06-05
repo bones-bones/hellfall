@@ -8,12 +8,12 @@ import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
 import { recardCardChangeset } from '../lib/cardAudit.js';
 import {
   anyChange,
-  applyFromCollection,
   cardToFirestore,
   changeIsValid,
   firestoreToCard,
   isValidV4UUID,
 } from '@hellfall/shared/utils';
+import { applyFromCollection } from '../lib/utils.js';
 // import {
 //   resolveTagState,
 //   tagFieldsForWrite,

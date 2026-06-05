@@ -2,7 +2,6 @@ import { HCCard, HCObject, HCRelatedCard } from '@hellfall/shared/types';
 import { textEquals } from '../textHandling';
 import { pushProp } from '../listHandling';
 import { CardMap, toFaces } from '../cardHandling';
-import { DocumentReference } from '@google-cloud/firestore';
 
 export const updateParts = (
   card: HCCard.Any,
