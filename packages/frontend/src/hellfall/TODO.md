@@ -119,3 +119,4 @@ Write a script to transform the database
 - switch to using root/face type pattern
 - get rid of as much of the usage of anyPropType as possible
 - switch to using mapped/entry type pattern
+- add is:maincube and is:sidecube

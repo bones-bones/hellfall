@@ -1,6 +1,7 @@
 import { FieldValue, Firestore, type Timestamp } from '@google-cloud/firestore';
 import { env } from '../api/lib/env.js';
-import type { CardTagState } from '@hellfall/shared/cardTags/cardTagMerge';
+import { tagState } from '@hellfall/shared/types';
+// import type { CardTagState } from '@hellfall/shared/cardTags/cardTagMerge';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 
@@ -63,19 +64,19 @@ export async function recardCardChangeset(params: {
   }
 }
 
-function tagChangesFromState(before: CardTagState, after: CardTagState) {
+function tagChangesFromState(before?: tagState, after?: tagState) {
   return {
     before: {
-      tags: before.tags,
-      added: before.added,
-      removed: before.removed,
-      baseTags: before.baseTags,
+      // tags: before.tags,
+      added: before?.added,
+      removed: before?.removed,
+      base_tags: before?.base_tags,
     },
     after: {
-      tags: after.tags,
-      added: after.added,
-      removed: after.removed,
-      baseTags: after.baseTags,
+      // tags: after.tags,
+      added: after?.added,
+      removed: after?.removed,
+      base_tags: after?.base_tags,
     },
   };
 }
@@ -86,8 +87,8 @@ export async function recordTagChangeset(params: {
   action: 'tag_add' | 'tag_remove';
   tag: string;
   user: AuditActor;
-  before: CardTagState;
-  after: CardTagState;
+  before?: tagState;
+  after?: tagState;
 }): Promise<void> {
   return recardCardChangeset({
     cardId: params.cardId,

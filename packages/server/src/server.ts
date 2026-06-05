@@ -106,7 +106,7 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
         req,
         res as HandlerResponse,
         cardTagsParams.cardId,
-        cardTagsParams.tag,
+        // cardTagsParams.tag,
         cardTagsParams.audit
       );
       return;
