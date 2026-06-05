@@ -9,6 +9,7 @@ import {
   facePropType,
   faceType,
   faceValueType,
+  filterFaceValueType,
 } from './propTypes';
 import {
   getMasterpiece,
@@ -45,7 +46,7 @@ export const toFaces = (card: HCCard.Any): faceType[] => {
 export const getFromFaces = <K extends facePropType>(
   card: HCCard.Any,
   prop: K
-): faceValueType<K>[] =>
+): filterFaceValueType<K>[] =>
   toFaces(card).flatMap(face =>
     Array.isArray(face[prop]) ? face[prop] : [face[prop] ?? []].flat()
   );

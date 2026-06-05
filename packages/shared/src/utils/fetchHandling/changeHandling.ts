@@ -18,8 +18,10 @@ import {
 } from '@hellfall/shared/types';
 import {
   anyPropType,
+  CardMap,
   facePropType,
   faceValueType,
+  getAllRelated,
   rootPropType,
   rootValueType,
   toFaces,
@@ -46,6 +48,8 @@ import {
   toMultiFaced,
   toSingleFaced,
 } from './fetchUtils';
+import { setDerivedProps } from './derivedProps';
+import { cleanParts, updateParts } from './partsHandling';
 
 export type changeType = 'add' | 'push' | 'delete' | 'pop';
 // commented out = currently done automatically via tags, but could concievable be done manually in the future
@@ -655,7 +659,7 @@ export const applyAllPartsChange = (card: HCCard.Any, change: allPartsChange): b
   return true;
 };
 /**
- * Returns true if the change can change derived props
+ * Returns true if the change can affect derived props
  */
 export const applyChange = (card: HCCard.Any, change: anyChange): boolean => {
   switch (change.location) {
@@ -856,9 +860,11 @@ const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
 
 export const changeTypeOrder = ['delete', 'pop', 'add', 'push'];
 export const locationOrder = ['card_faces', 'all_parts', 'face', 'root'];
+
 export const sortChanges = (a: anyChange, b: anyChange): number =>
   locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
   changeTypeOrder.indexOf(a.change_type) - changeTypeOrder.indexOf(b.change_type);
+
 export const getChangesFromDifferences = (
   existingCard: HCCard.Any,
   newCard: HCCard.Any,
@@ -1143,9 +1149,12 @@ export const getChangesFromDifferences = (
   return changeList.sort(sortChanges);
 };
 
-export const applyChanges = (card: HCCard.Any, changeList: anyChange[]) => {
+export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean => {
+  let setDerived = false;
   changeList.forEach((change, index) => {
-    applyChange(card, change);
+    if (applyChange(card, change)) {
+      setDerived = true;
+    }
     if (change.location == 'card_faces') {
       const face = change.index;
       for (let i = changeList.length - 1; i > index; i--) {
@@ -1166,4 +1175,37 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]) => {
       }
     }
   });
+  return setDerived;
+};
+
+/**
+ * Merges an existing card and a card from the google sheet
+ * @param existingCard The card from the stored database JSON
+ * @param newCard The card from the google sheet
+ * @returns
+ */
+export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
+  const changeList = getChangesFromDifferences(existingCard, newCard, true);
+  if (applyChanges(existingCard, changeList) && newCard.kind != 'scryfall') {
+    setDerivedProps(existingCard);
+  }
+  if (newCard.kind == 'scryfall') {
+    newCard.all_parts = existingCard.all_parts;
+    setDerivedProps(newCard);
+    return newCard;
+  }
+  return existingCard;
+};
+/**
+ * Updates a card along with its related cards
+ * @param existingCard The card from the card map
+ * @returns
+ */
+export const applyFromMap = (card: HCCard.Any, changeList: anyChange[], cardMap: CardMap) => {
+  const oldRelateds = getAllRelated(card, cardMap);
+  if (!applyChanges(card, changeList)) return;
+  const newRelateds = getAllRelated(card, cardMap);
+  setDerivedProps(card);
+  updateParts(card, newRelateds);
+  cleanParts(card, oldRelateds);
 };

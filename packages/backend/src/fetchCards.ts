@@ -20,6 +20,7 @@ import {
   facePropType,
   addPropToRoot,
   rootPropType,
+  pushPropToRoot,
 } from '@hellfall/shared/utils';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
@@ -221,7 +222,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
             };
             addPropToRoot(card, 'legalities', legalities);
           } else if (keys[i] == 'related') {
-            const all_parts: HCRelatedCard[] = entry[i].split(';').map(oldName => {
+            entry[i].split(';').forEach(oldName => {
               const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
               const name = match?.groups?.name ?? oldName;
               const count = match?.groups?.count;
@@ -237,7 +238,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 id: '',
                 hcid: shouldUseBase ? name : '',
                 name: shouldUseBase ? base : name,
-                set: '',
+                set: '' as SetCode,
                 image: '',
                 type_line: '',
                 component: 'token_maker',
@@ -245,9 +246,8 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               if (count) {
                 maker.count = count.slice(1);
               }
-              return maker;
+              pushPropToRoot(card, 'all_parts', maker);
             });
-            addPropToRoot(card, 'all_parts', all_parts);
           } else {
             addPropToRoot(card, keys[i] as rootPropType, entry[i]);
           }

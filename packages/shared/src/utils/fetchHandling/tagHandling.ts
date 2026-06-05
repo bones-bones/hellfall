@@ -12,19 +12,18 @@ import {
 } from '@hellfall/shared/types';
 import {
   addLayoutTag,
-  addProp,
+  addPropToRoot,
   addTag,
-  deleteProp,
   deletePropFromFace,
+  deletePropFromRoot,
   kindToDefaultFrame,
   kindToFaceLayout,
   kindToMultiLayout,
   layoutIsDefault,
   layoutTags,
   layoutTagType,
-  pushPropToCard,
 } from './fetchUtils';
-import { facePropType, faceType, propType } from '../cardHandling';
+import { anyPropType, facePropType, faceType, rootPropType } from '../cardHandling';
 import { doubleListEquals, pushProp, pushPropToRecord, pushToRecord } from '../listHandling';
 
 const frameTags: Record<string, HCFrame> = {
@@ -118,7 +117,7 @@ const borderColorTags: Record<string, HCBorderColor> = {
   'red-border': HCBorderColor.Red,
 };
 
-const removableTagProps: propType[] = [
+const removableTagProps: anyPropType[] = [
   'flavor_name',
   'watermark',
   'frame_effects',
@@ -133,7 +132,7 @@ const removableTagProps: propType[] = [
 const removableFaceTagProps: facePropType[] = ['finish', 'border_color', 'frame'];
 
 const setTagPropsToDefault = (card: HCCard.Any) => {
-  removableTagProps.forEach(prop => deleteProp(card, prop));
+  removableTagProps.forEach(prop => deletePropFromRoot(card, prop as rootPropType));
   card.finish = HCFinish.Nonfoil;
   card.border_color = HCBorderColor.Black;
   card.frame = kindToDefaultFrame[card.kind];
@@ -218,16 +217,16 @@ export const handleTags = (card: HCCard.Any, tags: string[], setBaseTags?: boole
   if (card.kind == 'scryfall') return;
   setTagPropsToDefault(card);
   if (!tags.length || (tags.length == 1 && tags[0] == '')) {
-    deleteProp(card, 'tags');
-    deleteProp(card, 'tag_notes');
-    deleteProp(card, 'tag_state');
+    deletePropFromRoot(card, 'tags');
+    deletePropFromRoot(card, 'tag_notes');
+    deletePropFromRoot(card, 'tag_state');
     if ('card_faces' in card) {
       card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
     } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
     return;
   }
   if (setBaseTags || !card.tag_state) {
-    addProp(card, 'tag_state', {});
+    addPropToRoot(card, 'tag_state', {});
   }
   card.tags = tags.map(fullTag => {
     const { tag, note } = splitFullTag(fullTag);
@@ -254,12 +253,12 @@ export const handleTags = (card: HCCard.Any, tags: string[], setBaseTags?: boole
       addTag(card, tag, note, 'finish', HCFinish.Foil);
     } else if (note) {
       if (tag in frontImageTagProps) {
-        addTag(card, tag, note, frontImageTagProps[tag] as propType, undefined, {
+        addTag(card, tag, note, frontImageTagProps[tag] as rootPropType, undefined, {
           useUrl: true,
           useRootOnly: true,
         });
         if (tag == 'draft-image') {
-          addProp(card, 'draft_image_status', HCImageStatus.HighRes);
+          addPropToRoot(card, 'draft_image_status', HCImageStatus.HighRes);
         }
       } else if (tag == 'back-image') {
         addTag(card, tag, note, 'image', undefined, { useUrl: true, defaultToBack: true });
@@ -302,7 +301,7 @@ export const mergeTags = (card: HCCard.Any) => {
 
 export const addTagContributor = (card: HCCard.Any, tag: string) => {
   if (!card.tag_state) {
-    addProp(card, 'tag_state', {});
+    addPropToRoot(card, 'tag_state', {});
   }
   pushPropToRecord(card.tag_state!, 'added', splitFullTag(tag).tag, tag);
   mergeTags(card);
@@ -348,7 +347,7 @@ export const updateTags = (card: HCCard.Any, state: tagState): boolean => {
       delete card.tag_state?.base_tags;
     } else {
       if (!card.tag_state) {
-        addProp(card, 'tag_state', {});
+        addPropToRoot(card, 'tag_state', {});
       }
       card.tag_state!.base_tags = state.base_tags;
     }
@@ -359,7 +358,7 @@ export const updateTags = (card: HCCard.Any, state: tagState): boolean => {
       delete card.tag_state?.added;
     } else {
       if (!card.tag_state) {
-        addProp(card, 'tag_state', {});
+        addPropToRoot(card, 'tag_state', {});
       }
       card.tag_state!.added = state.added;
     }
@@ -375,7 +374,7 @@ export const updateTags = (card: HCCard.Any, state: tagState): boolean => {
       delete card.tag_state?.removed;
     } else {
       if (!card.tag_state) {
-        addProp(card, 'tag_state', {});
+        addPropToRoot(card, 'tag_state', {});
       }
       card.tag_state!.removed = state.removed;
     }

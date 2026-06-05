@@ -1,5 +1,12 @@
 import { sheetsKey } from './env.ts';
-import { HCImageStatus, HCRelatedCard, HCObject, HCKind, HCFrame } from '@hellfall/shared/types';
+import {
+  HCImageStatus,
+  HCRelatedCard,
+  HCObject,
+  HCKind,
+  HCFrame,
+  SetCode,
+} from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 import {
   addArtist,
@@ -9,6 +16,7 @@ import {
   addPropToFace,
   addPropToRoot,
   rootPropType,
+  pushPropToRoot,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -110,7 +118,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
             }
           });
         } else if (keys[i] == 'token_maker') {
-          const all_parts = entry[i].split(';').map(oldName => {
+          entry[i].split(';').forEach(oldName => {
             const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
             const name = match?.groups?.name ?? oldName;
             const count = match?.groups?.count;
@@ -126,7 +134,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
               id: '',
               hcid: shouldUseBase ? name : '',
               name: shouldUseBase ? base : name,
-              set: '',
+              set: '' as SetCode,
               image: '',
               type_line: '',
               component: 'token_maker',
@@ -134,9 +142,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
             if (count) {
               maker.count = count.slice(1);
             }
-            return maker;
+            pushPropToRoot(token, 'all_parts', maker);
           });
-          addPropToRoot(token, 'all_parts', all_parts);
         } else if (keys[i] == 'tags' || keys[i] == 'artists') {
           // now handling this at the end
         } else {

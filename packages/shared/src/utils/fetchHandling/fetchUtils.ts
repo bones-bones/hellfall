@@ -16,8 +16,6 @@ import {
   SetCode,
 } from '@hellfall/shared/types';
 import {
-  allPropType,
-  allValueType,
   anyPropType,
   anyValueType,
   facePropOrder,
