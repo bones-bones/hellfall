@@ -137,14 +137,14 @@ export const getDefaultCard = (
     .filter(([prop, value]) =>
       Array.isArray(value)
         ? value.length && !(value.length == 1 && (value[0] as string) == '')
-        : value != '' && value != undefined
+        : value != '' && value != undefined && !(typeof value == 'number' && isNaN(value))
     )
     .forEach(([prop, value]) => addPropToRoot(card, prop, value));
   (Object.entries(faceProps) as { [K in facePropType]: [K, faceValueType<K>] }[facePropType][])
     .filter(([prop, value]) =>
       Array.isArray(value)
         ? value.length && !(prop != 'colors' && value.length == 1 && value[0] == '')
-        : value != '' && value != undefined
+        : value != '' && value != undefined && !(typeof value == 'number' && isNaN(value))
     )
     .forEach(([prop, value]) => addPropToFace(card, prop, value, 0));
   return card;

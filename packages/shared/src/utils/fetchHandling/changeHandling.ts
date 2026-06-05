@@ -44,6 +44,7 @@ import {
 } from './fetchUtils';
 import { setDerivedProps } from './derivedProps';
 import { cleanParts, updateParts } from './partsHandling';
+import { textEquals } from '../textHandling';
 
 export type changeType = 'add' | 'push' | 'delete' | 'pop';
 // commented out = currently done automatically via tags, but could concievable be done manually in the future
@@ -266,7 +267,7 @@ export const rootChangeIsValid = <K extends rootPropType>(
         return change.value === true && change.value != currentValue;
       }
       if (change.prop == 'image') {
-        return typeof change.value == 'string' && change.value.startsWith('https://');
+        return typeof change.value == 'string' && change.value.startsWith('https://') && change.value != currentValue;
       }
       if (change.prop == 'mana_value') {
         return typeof change.value == 'number';
@@ -282,7 +283,8 @@ export const rootChangeIsValid = <K extends rootPropType>(
           Array.isArray(change.value) &&
           change.value.length == 2 &&
           typeof change.value[0] == 'string' &&
-          typeof change.value[1] == 'string'
+          typeof change.value[1] == 'string' &&
+          change.value[1] != (currentValue as Record<string,string>)[change.value[0]]
         );
       }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
@@ -354,7 +356,7 @@ export const faceChangeIsValid = <K extends facePropType>(
         );
       }
       if (['supertypes', 'types', 'subtypes'].includes(change.prop)) {
-        return Array.isArray(change.value) && listsAreEqual(change.value, currentValue as string[]);
+        return Array.isArray(change.value) && change.value.every(v=>typeof v == 'string') && !listsAreEqual(change.value, currentValue as string[]);
       }
       if (change.value == currentValue) {
         return false;
@@ -473,7 +475,17 @@ export const getPartChangeIndex = (
       if (!change.related) return undefined;
       const part_prop = change.related.id ? 'id' : change.related.hcid ? 'hcid' : 'name';
       const index = card.all_parts?.findIndex(
-        part => part[part_prop] == change.related![part_prop]
+        part => {
+          switch (part_prop) {
+            case 'id': 
+              return part.id == change.related!.id
+            case 'hcid':
+              return textEquals(part.hcid,change.related!.hcid)
+            case 'name':
+              return textEquals(part.name, change.related!.name) && part.hcid.replace(/\d+$/, '') != change.related!.name
+          }
+          return false;
+        }
       );
       return index == -1 ? undefined : index;
     }
@@ -956,6 +968,9 @@ export const getChangesFromDifferences = (
             }
             const values = existingCard[prop] as rootValueType<typeof prop>[];
             if (values == undefined) return;
+            if (pullingFromSheet) {
+              if (rootIgnoreProps[existingCard.kind]?.includes(prop)) return;
+            }
             values.forEach(value => {
               const change: rootChange<typeof prop> = {
                 location: 'root',
@@ -1053,7 +1068,7 @@ export const getChangesFromDifferences = (
             }
             case 'delete': {
               const value = newFace[prop] as faceValueType<typeof prop>;
-              if (value == undefined) return;
+              if (value != undefined) return;
               if (pullingFromSheet) {
                 if (!faceRemovableProps[existingCard.kind]?.includes(prop)) return;
                 if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
