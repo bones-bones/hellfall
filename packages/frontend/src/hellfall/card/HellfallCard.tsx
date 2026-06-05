@@ -97,16 +97,16 @@ export const HellfallCard = ({
   onSinglePage?: boolean;
 }) => {
   const { user } = useAuth();
-  const [
-    displayTags,
+  const {
+    // displayTags,
     addTag,
     removeTag,
-    tagsLoading,
-    tagsError,
-    tagsPersistEnabled,
+    loading: tagsLoading,
+    error: tagsError,
+    persistEnabled: tagsPersistEnabled,
     changesetSubmitted,
-    pendingTagStaging,
-  ] = useCardTagOverrides(data.id, data.tags);
+    // pendingTagStaging,
+  } = useCardTagOverrides(data);
   const [activeImageSide, setActiveImageSide] = useState(0);
   const [newTagInput, setNewTagInput] = useState('');
   const [tagActionError, setTagActionError] = useState<string | null>(null);
@@ -379,62 +379,65 @@ export const HellfallCard = ({
               onSubmitted={() => setEditing(false)}
             />
           )}
-          {displayTags.length > 0 || pendingTagStaging || user ? (
-            <>
-              {tagsLoading && <SmallText>Loading tags…</SmallText>}
-              {tagsError && (
-                <SmallText style={{ color: '#c00' }}>Could not load tag overrides.</SmallText>
-              )}
-              {tagActionError && <SmallText style={{ color: '#c00' }}>{tagActionError}</SmallText>}
-              <SmallText key="Tags">
-                Tags:{' '}
-                {displayTags.map((tagEntry, i, ar) => {
-                  const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
-                  return (
-                    <span key={tagEntry}>
-                      <TagLink $pendingRemove={pendingRemove}>
-                        <Link
-                          to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
-                          target="_blank"
-                        >
-                          {tagEntry}
-                        </Link>
-                      </TagLink>
-                      {data.tag_notes &&
-                        tagEntry in data.tag_notes &&
-                        (data.tag_notes[tagEntry].slice(0, 6) == 'https:' ? (
-                          <>
-                            <SmallLine> (</SmallLine>
-                            <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
-                            <SmallLine>)</SmallLine>
-                          </>
-                        ) : (
-                          <>
-                            <SmallLine> ({data.tag_notes[tagEntry]})</SmallLine>
-                          </>
-                        ))}
-                      {user && tagsPersistEnabled && (
-                        <TagRemoveButton
-                          type="button"
-                          onClick={async () => {
-                            setTagActionError(null);
-                            try {
-                              await removeTag(tagEntry);
-                            } catch {
-                              setTagActionError('Failed to remove tag');
-                            }
-                          }}
-                          title="Remove tag"
-                          aria-label={`Remove tag ${tagEntry}`}
-                        >
-                          ×
-                        </TagRemoveButton>
-                      )}
-                      {i < ar.length - 1 && ', '}
-                    </span>
-                  );
-                })}
-                {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => (
+          {
+            /* displayTags.length > 0 || pendingTagStaging || */ user ? (
+              <>
+                {tagsLoading && <SmallText>Loading tags…</SmallText>}
+                {tagsError && (
+                  <SmallText style={{ color: '#c00' }}>Could not load tag overrides.</SmallText>
+                )}
+                {tagActionError && (
+                  <SmallText style={{ color: '#c00' }}>{tagActionError}</SmallText>
+                )}
+                <SmallText key="Tags">
+                  Tags:{' '}
+                  {data.tags?.map((tagEntry, i, ar) => {
+                    // const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
+                    return (
+                      <span key={tagEntry}>
+                        <TagLink /* $pendingRemove={pendingRemove} */>
+                          <Link
+                            to={`/?${new URLSearchParams([['q', `tag=${tagEntry}`]]).toString()}`}
+                            target="_blank"
+                          >
+                            {tagEntry}
+                          </Link>
+                        </TagLink>
+                        {data.tag_notes &&
+                          tagEntry in data.tag_notes &&
+                          (data.tag_notes[tagEntry].startsWith('https:') ? (
+                            <>
+                              <SmallLine> (</SmallLine>
+                              <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
+                              <SmallLine>)</SmallLine>
+                            </>
+                          ) : (
+                            <>
+                              <SmallLine> ({data.tag_notes[tagEntry]})</SmallLine>
+                            </>
+                          ))}
+                        {user && tagsPersistEnabled && (
+                          <TagRemoveButton
+                            type="button"
+                            onClick={async () => {
+                              setTagActionError(null);
+                              try {
+                                await removeTag(tagEntry);
+                              } catch {
+                                setTagActionError('Failed to remove tag');
+                              }
+                            }}
+                            title="Remove tag"
+                            aria-label={`Remove tag ${tagEntry}`}
+                          >
+                            ×
+                          </TagRemoveButton>
+                        )}
+                        {i < ar.length - 1 && ', '}
+                      </span>
+                    );
+                  })}
+                  {/* {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => (
                   <span key={`pending-${tagEntry}`}>
                     {(displayTags.length > 0 || i > 0) && ', '}
                     <TagLink $pendingAdd>
@@ -447,21 +450,44 @@ export const HellfallCard = ({
                     </TagLink>
                     {i < ar.length - 1 && ', '}
                   </span>
-                ))}
-              </SmallText>
-              {pendingTagStaging && (
+                ))} */}
+                </SmallText>
+                {/* {pendingTagStaging && (
                 <SmallText style={{ color: '#856404' }}>Staged changes pending review.</SmallText>
-              )}
-              {user && tagsPersistEnabled && (
-                <TagAddRow>
-                  <input
-                    type="text"
-                    list="hellfall-tag-list"
-                    value={newTagInput}
-                    onChange={e => setNewTagInput(e.target.value)}
-                    onKeyDown={async e => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
+              )} */}
+                {user && tagsPersistEnabled && (
+                  <TagAddRow>
+                    <input
+                      type="text"
+                      list="hellfall-tag-list"
+                      value={newTagInput}
+                      onChange={e => setNewTagInput(e.target.value)}
+                      onKeyDown={async e => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          const v = newTagInput.trim();
+                          if (v) {
+                            setTagActionError(null);
+                            try {
+                              await addTag(v);
+                              setNewTagInput('');
+                            } catch {
+                              setTagActionError('Failed to add tag');
+                            }
+                          }
+                        }
+                      }}
+                      placeholder="Add tag..."
+                      aria-label="Add tag"
+                    />
+                    <datalist id="hellfall-tag-list">
+                      {(tagsData.data as string[]).map(t => (
+                        <option key={t} value={t} />
+                      ))}
+                    </datalist>
+                    <button
+                      type="button"
+                      onClick={async () => {
                         const v = newTagInput.trim();
                         if (v) {
                           setTagActionError(null);
@@ -472,42 +498,20 @@ export const HellfallCard = ({
                             setTagActionError('Failed to add tag');
                           }
                         }
-                      }
-                    }}
-                    placeholder="Add tag..."
-                    aria-label="Add tag"
-                  />
-                  <datalist id="hellfall-tag-list">
-                    {(tagsData.data as string[]).map(t => (
-                      <option key={t} value={t} />
-                    ))}
-                  </datalist>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      const v = newTagInput.trim();
-                      if (v) {
-                        setTagActionError(null);
-                        try {
-                          await addTag(v);
-                          setNewTagInput('');
-                        } catch {
-                          setTagActionError('Failed to add tag');
-                        }
-                      }
-                    }}
-                  >
-                    Add
-                  </button>
-                </TagAddRow>
-              )}
-              {changesetSubmitted && (
-                <SmallText style={{ color: '#28a745', marginTop: 4 }}>
-                  Change submitted for review.
-                </SmallText>
-              )}
-            </>
-          ) : null}
+                      }}
+                    >
+                      Add
+                    </button>
+                  </TagAddRow>
+                )}
+                {changesetSubmitted && (
+                  <SmallText style={{ color: '#28a745', marginTop: 4 }}>
+                    Change submitted for review.
+                  </SmallText>
+                )}
+              </>
+            ) : null
+          }
           {data.all_parts && (
             <>
               <Divider />

@@ -4,56 +4,88 @@ import { Card } from '@workday/canvas-kit-react';
 import type { HCCard } from '@hellfall/shared/types';
 import { useAuth } from '../../auth';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
+import {
+  anyChange,
+  faceChange,
+  faceMappedType,
+  faceValueType,
+  getFaceEntries,
+  toFaces,
+} from '@hellfall/shared/utils';
 
-type EditableFields = {
+export type EditableFields = {
   name: string;
   mana_cost: string;
-  type_line: string;
+  supertypes: string;
+  types: string;
+  subtypes: string;
   oracle_text: string;
   flavor_text: string;
   power: string;
   toughness: string;
   loyalty: string;
   defense: string;
-  rarity: string;
-  set: string;
-  collector_number: string;
+  // rarity: string;
+  // set: string;
+  // collector_number: string;
 };
 
 function extractEditableFields(card: HCCard.Any): EditableFields {
-  const face = 'card_faces' in card ? card.card_faces[0] : card;
+  const face = toFaces(card)[0];
   return {
     name: card.name ?? '',
     mana_cost: face.mana_cost ?? '',
-    type_line: face.type_line ?? '',
+    supertypes: face.supertypes?.join(';') ?? '',
+    types: face.types?.join(';') ?? '',
+    subtypes: face.subtypes?.join(';') ?? '',
     oracle_text: face.oracle_text ?? '',
     flavor_text: ('flavor_text' in face ? (face as any).flavor_text : '') ?? '',
     power: ('power' in face ? (face as any).power : '') ?? '',
     toughness: ('toughness' in face ? (face as any).toughness : '') ?? '',
     loyalty: ('loyalty' in face ? (face as any).loyalty : '') ?? '',
     defense: ('defense' in face ? (face as any).defense : '') ?? '',
-    rarity: card.rarity ?? '',
-    set: card.set ?? '',
-    collector_number: card.collector_number ?? '',
+    // rarity: card.rarity ?? '',
+    // set: card.set ?? '',
+    // collector_number: card.collector_number ?? '',
   };
 }
 
 const FIELD_LABELS: Record<keyof EditableFields, string> = {
   name: 'Name',
   mana_cost: 'Mana Cost',
-  type_line: 'Type Line',
+  supertypes: 'Supertypes',
+  types: 'Types',
+  subtypes: 'Subtypes',
   oracle_text: 'Oracle Text',
   flavor_text: 'Flavor Text',
   power: 'Power',
   toughness: 'Toughness',
   loyalty: 'Loyalty',
   defense: 'Defense',
-  rarity: 'Rarity',
-  set: 'Set',
-  collector_number: 'Collector #',
+  // rarity: 'Rarity',
+  // set: 'Set',
+  // collector_number: 'Collector #',
 };
 
 const TEXTAREA_FIELDS: (keyof EditableFields)[] = ['oracle_text', 'flavor_text'];
+
+const convertFieldToChange = <T extends keyof EditableFields>(
+  prop: T,
+  value: EditableFields[T]
+): anyChange => {
+  const change: faceChange<T> = {
+    location: 'face',
+    change_type: 'add',
+    prop,
+    index: 0,
+  };
+  if (['supertypes', 'types', 'subtypes'].includes(prop)) {
+    change.value = value.split(';') as faceValueType<T>;
+  } else {
+    change.value = value as faceValueType<T>;
+  }
+  return change;
+};
 
 export function CardEditPanel({
   card,
@@ -83,6 +115,16 @@ export function CardEditPanel({
     return changed;
   }, [fields, original]);
 
+  const changeMap = useMemo(() => {
+    const changed: faceMappedType /* Record<string, { before: unknown; after: unknown }> */ = {};
+    for (const key of Object.keys(fields) as (keyof EditableFields)[]) {
+      if (fields[key] !== original[key]) {
+        (changed as any)[key] = fields[key] /* { before: original[key], after: fields[key] } */;
+      }
+    }
+    return changed;
+  }, [fields, original]);
+
   const hasChanges = Object.keys(changedFields).length > 0;
 
   const handleChange = useCallback((field: keyof EditableFields, value: string) => {
@@ -100,7 +142,9 @@ export function CardEditPanel({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           cardId: card.id,
-          changes: changedFields,
+          changes: getFaceEntries(changeMap).map(([prop, value]) =>
+            convertFieldToChange(prop as keyof EditableFields, value as string)
+          ),
           comment: comment.trim() || undefined,
         }),
       });
