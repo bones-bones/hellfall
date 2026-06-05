@@ -8,7 +8,6 @@ import {
   HCColors,
   HCFrameEffect,
   TransformFrameEffects,
-  NewFrames,
   HCFrame,
   NoIdentityFaceLayout,
   NoIdentityFaceLayoutType,

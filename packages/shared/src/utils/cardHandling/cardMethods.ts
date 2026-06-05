@@ -5,11 +5,10 @@ import { getIndicatorFromColors } from '../pipsHandling';
 import {
   allPropType,
   allValueType,
-  bothPropType,
-  bothType,
-  bothValueType,
   colorPropType,
-  filterBothValueType,
+  facePropType,
+  faceType,
+  faceValueType,
 } from './propTypes';
 import {
   getMasterpiece,
@@ -30,11 +29,11 @@ import { getHc5 } from './getHc5';
  * @param card card to get the faces of
  * @returns
  */
-export const toFaces = (card: HCCard.Any): bothType[] => {
+export const toFaces = (card: HCCard.Any): faceType[] => {
   if ('card_faces' in card) {
-    return card.card_faces as bothType[];
+    return card.card_faces as faceType[];
   }
-  return [card] as bothType[];
+  return [card] as faceType[];
 };
 
 /**
@@ -43,10 +42,10 @@ export const toFaces = (card: HCCard.Any): bothType[] => {
  * @param prop prop to get the value of (must be a prop that exists on both `HCCard.AnySingleFaced` and `HCCardFace.MultiFaced`)
  * @returns
  */
-export const getFromFaces = <K extends bothPropType>(
+export const getFromFaces = <K extends facePropType>(
   card: HCCard.Any,
   prop: K
-): filterBothValueType<K>[] =>
+): faceValueType<K>[] =>
   toFaces(card).flatMap(face =>
     Array.isArray(face[prop]) ? face[prop] : [face[prop] ?? []].flat()
   );
@@ -154,7 +153,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
 export const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] =>
   cards.map(card => addToJSONToCard(card));
 
-const faceToPlainText = (face: bothType): string => {
+const faceToPlainText = (face: faceType): string => {
   let text = face.name;
   if (face.mana_cost) {
     text += ` ${face.mana_cost}`;

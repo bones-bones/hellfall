@@ -2,13 +2,13 @@ import { sheetsKey } from './env.ts';
 import { HCImageStatus, HCRelatedCard, HCObject, HCKind, HCFrame } from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 import {
-  propType,
-  addProp,
   addArtist,
   setDerivedProps,
   getDefaultCard,
-  addPropToFaceOrRoot,
   HCIDMap,
+  addPropToFace,
+  addPropToRoot,
+  rootPropType,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -90,8 +90,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           const entryList = (keys[i] == 'name' ? token.name! : entry[i]).split(' // ');
           entryList.forEach((value, index) => {
             if (keys[i] == 'name') {
-              addPropToFaceOrRoot(token, 'name', value, index);
-              addPropToFaceOrRoot(token, 'subtypes', value.split(' '), index);
+              addPropToFace(token, 'name', value, index);
+              addPropToFace(token, 'subtypes', value.split(' '), index);
             } else if (keys[i] == 'types') {
               const typesAndSupertypes = value.split(';');
               const superList: string[] = [];
@@ -100,13 +100,13 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
                 supers.includes(e) ? superList.push(e) : typeList.push(e);
               });
               if (superList?.length) {
-                addPropToFaceOrRoot(token, 'supertypes', superList, index);
+                addPropToFace(token, 'supertypes', superList, index);
               }
               if (typeList?.length) {
-                addPropToFaceOrRoot(token, 'types', typeList, index);
+                addPropToFace(token, 'types', typeList, index);
               }
             } else if (['power', 'toughness'].includes(keys[i])) {
-              addPropToFaceOrRoot(token, keys[i] as 'power' | 'toughness', value, index);
+              addPropToFace(token, keys[i] as 'power' | 'toughness', value, index);
             }
           });
         } else if (keys[i] == 'token_maker') {
@@ -136,11 +136,11 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
             }
             return maker;
           });
-          addProp(token, 'all_parts', all_parts);
+          addPropToRoot(token, 'all_parts', all_parts);
         } else if (keys[i] == 'tags' || keys[i] == 'artists') {
           // now handling this at the end
         } else {
-          addProp(token, keys[i] as propType, entry[i]);
+          addPropToRoot(token, keys[i] as rootPropType, entry[i]);
         }
       }
     }

@@ -5,32 +5,58 @@ import {
   HCColor,
   HCColors,
   HCImageStatus,
+  HCKind,
   HCLayout,
   HCLegalitiesField,
   HCLegality,
   HCObject,
   HCRarity,
+  HCRelatedCard,
+  relatedComponent,
+  relatedComponentList,
+  SetCode,
 } from '@hellfall/shared/types';
 import {
-  allPropType,
-  bothPropType,
-  bothValueType,
-  frontPropType,
-  frontValueType,
-  propType,
+  anyPropType,
+  facePropType,
+  faceValueType,
+  rootPropType,
+  rootValueType,
+  toFaces,
 } from '../cardHandling';
-import { doubleListEquals } from '../listHandling';
+import {
+  doubleListEquals,
+  listEquals,
+  listsAreEqual,
+  listShare,
+  popPropFromRecord,
+  pushPropToRecord,
+} from '../listHandling';
 import { isValidV4UUID } from '../textHandling';
+import {
+  addArtist,
+  addPropToFace,
+  addPropToRoot,
+  deletePropFromFace,
+  deletePropFromRoot,
+  popPropFromFace,
+  popPropFromRoot,
+  pushPropToFace,
+  pushPropToRoot,
+  toMultiFaced,
+  toSingleFaced,
+} from './fetchUtils';
 
 export type changeType = 'add' | 'push' | 'delete' | 'pop';
 // commented out = currently done automatically via tags, but could concievable be done manually in the future
-export const frontChangeableProps: Record<changeType, frontPropType[]> = {
+export const rootChangeableProps: Record<changeType, rootPropType[]> = {
   add: [
     'id_is_scryfall',
     // 'oracle_id',
     'oracle_id_is_scryfall',
+    'name',
     // 'flavor_name',
-    // 'set',
+    'set',
     // 'collector_number',
     'rarity',
     // 'layout',
@@ -56,7 +82,7 @@ export const frontChangeableProps: Record<changeType, frontPropType[]> = {
     'keywords',
     'creators',
     'artists',
-    // 'artist_notes',
+    'artist_notes',
     // 'frame_effects',
     // 'tags',
     // 'tag_notes',
@@ -81,14 +107,14 @@ export const frontChangeableProps: Record<changeType, frontPropType[]> = {
     'keywords',
     'creators',
     'artists',
-    // 'artist_notes',
+    'artist_notes',
     // 'frame_effects',
     // 'tags',
     // 'tag_notes',
     // 'tag_state',
   ],
 };
-export const faceChangeableProps: Record<changeType, bothPropType[]> = {
+export const faceChangeableProps: Record<changeType, facePropType[]> = {
   add: [
     'name',
     // 'flavor_name',
@@ -99,6 +125,9 @@ export const faceChangeableProps: Record<changeType, bothPropType[]> = {
     // 'still_image',
     'mana_cost',
     'mana_value',
+    'supertypes',
+    'types',
+    'subtypes',
     'oracle_text',
     'flavor_text',
     'power',
@@ -118,9 +147,6 @@ export const faceChangeableProps: Record<changeType, bothPropType[]> = {
     // 'drop_face',
   ],
   push: [
-    'supertypes',
-    'types',
-    'subtypes',
     // 'frame_effects',
   ],
   delete: [
@@ -131,6 +157,9 @@ export const faceChangeableProps: Record<changeType, bothPropType[]> = {
     // 'still_image',
     'mana_cost',
     'mana_value',
+    'supertypes',
+    'types',
+    'subtypes',
     'flavor_text',
     'power',
     'toughness',
@@ -146,24 +175,21 @@ export const faceChangeableProps: Record<changeType, bothPropType[]> = {
     // 'drop_face',
   ],
   pop: [
-    'supertypes',
-    'types',
-    'subtypes',
     // 'frame_effects',
   ],
 };
-export type changeLocation = 'front' | 'face' | 'card_faces' | 'all_parts';
-export type frontChange<K extends frontPropType> = {
-  location: 'front';
+export type changeLocation = 'root' | 'face' | 'card_faces' | 'all_parts';
+export type rootChange<K extends rootPropType> = {
+  location: 'root';
   change_type: changeType;
   prop: K;
-  value?: frontValueType<K>;
+  value?: rootValueType<K>;
 };
-export type faceChange<K extends bothPropType> = {
+export type faceChange<K extends facePropType> = {
   location: 'face';
   change_type: changeType;
   prop: K;
-  value?: bothValueType<K>;
+  value?: faceValueType<K>;
   index?: number;
 };
 export type cardFacesChange = {
@@ -175,7 +201,10 @@ export type cardFacesChange = {
 export type allPartsChange = {
   location: 'all_parts';
   change_type: 'add' | 'delete';
-  id: string;
+  id?: string;
+  part_prop?: 'name' | 'hcid';
+  related?: HCRelatedCard;
+  no_overwrite?: boolean;
 };
 
 export const colorsAreValid = (colors: HCColors): boolean => {
@@ -190,38 +219,53 @@ export const colorsAreValid = (colors: HCColors): boolean => {
   return true;
 };
 
-export const legalitiesAreValid = (legalities: HCLegalitiesField): boolean =>
+export const legalitiesAreValid = (
+  legalities: HCLegalitiesField,
+  current: HCLegalitiesField
+): boolean =>
   doubleListEquals(formatList, Object.keys(legalities)) &&
-  Object.values(legalities).every(legality => Object.values(HCLegality).includes(legality));
-
-export const rederiveValueProps: (frontPropType | bothPropType)[] = [];
+  Object.values(legalities).every(legality => Object.values(HCLegality).includes(legality)) &&
+  Object.entries(legalities).some(([format, legality]) => current[format] != legality);
 
 export type anyChange =
-  | frontChange<frontPropType>
-  | faceChange<bothPropType>
+  | rootChange<rootPropType>
+  | faceChange<facePropType>
   | cardFacesChange
   | allPartsChange;
 
-export const frontChangeIsValid = <K extends frontPropType>(
+export const rootChangeIsValid = <K extends rootPropType>(
   card: HCCard.Any,
-  change: frontChange<K>
+  change: rootChange<K>
 ) => {
   if (card.kind == 'scryfall') {
     return false;
   }
-  if (!frontChangeableProps[change.change_type].includes(change.prop)) {
+  if (!rootChangeableProps[change.change_type].includes(change.prop)) {
     return false;
   }
+  const currentValue = card[change.prop];
   switch (change.change_type) {
     case 'add': {
       if (change.value == undefined) {
         return false;
       }
       if (change.prop == 'colors') {
-        return colorsAreValid(change.value as HCColors);
+        return (
+          colorsAreValid(change.value as HCColors) &&
+          !listEquals(change.value as HCColors, currentValue as HCColors)
+        );
+      }
+      if (change.prop == 'legalities') {
+        return legalitiesAreValid(
+          change.value as HCLegalitiesField,
+          currentValue as HCLegalitiesField
+        );
+      }
+      if (change.value == currentValue) {
+        return false;
       }
       if (['id_is_scryfall', 'oracle_id_is_scryfall'].includes(change.prop)) {
-        return change.value === true;
+        return change.value === true && change.value != currentValue;
       }
       if (change.prop == 'image') {
         return typeof change.value == 'string' && change.value.startsWith('https://');
@@ -229,23 +273,33 @@ export const frontChangeIsValid = <K extends frontPropType>(
       if (change.prop == 'mana_value') {
         return typeof change.value == 'number';
       }
-      if (change.prop == 'legalities') {
-        return legalitiesAreValid(change.value as HCLegalitiesField);
-      }
       if (change.prop == 'rarity') {
         return Object.values(HCRarity).includes(change.value as HCRarity);
       }
-      if (change.prop == 'rulings') {
-        return typeof change.value == 'string';
-      }
-      return false;
+      return typeof change.value == 'string';
     }
-    case 'push':
-      return typeof change.value == 'string';
+    case 'push': {
+      if (change.prop == 'artist_notes') {
+        return (
+          Array.isArray(change.value) &&
+          change.value.length == 2 &&
+          typeof change.value[0] == 'string' &&
+          typeof change.value[1] == 'string'
+        );
+      }
+      return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
+    }
     case 'delete':
-      return true;
+      return change.prop in card;
     case 'pop':
-      return typeof change.value == 'string';
+      if (change.prop == 'artist_notes') {
+        return (
+          Array.isArray(change.value) &&
+          (currentValue as Record<string, string>)?.[(change.value as [string, string])[0]] !=
+            undefined
+        );
+      }
+      return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
   }
 };
 
@@ -260,14 +314,14 @@ export const attractionLightsAreValid = (lights: number[]) => {
   }
   return true;
 };
-export const faceChangeIsValid = <K extends bothPropType>(
+export const faceChangeIsValid = <K extends facePropType>(
   card: HCCard.Any,
   change: faceChange<K>
 ) => {
-  if (!faceChangeableProps[change.change_type].includes(change.prop)) {
+  if (card.kind == 'scryfall') {
     return false;
   }
-  if (card.kind == 'scryfall') {
+  if (!faceChangeableProps[change.change_type].includes(change.prop)) {
     return false;
   }
   if ('card_faces' in card) {
@@ -279,16 +333,33 @@ export const faceChangeIsValid = <K extends bothPropType>(
     ) {
       return false;
     }
-  } else if (change.index != undefined) {
+  } else if (change.index /* != undefined */) {
     return false;
   }
+  const face = toFaces(card)[change.index ?? 0];
+  const currentValue = face[change.prop];
   switch (change.change_type) {
     case 'add': {
       if (change.value == undefined) {
         return false;
       }
       if (change.prop == 'colors' || change.prop == 'color_indicator') {
-        return colorsAreValid(change.value as HCColors);
+        return (
+          colorsAreValid(change.value as HCColors) &&
+          !listEquals(change.value as HCColors, currentValue as HCColors)
+        );
+      }
+      if (change.prop == 'attraction_lights') {
+        return (
+          attractionLightsAreValid(change.value as number[]) &&
+          !listEquals(change.value as number[], currentValue as number[])
+        );
+      }
+      if (['supertypes', 'types', 'subtypes'].includes(change.prop)) {
+        return Array.isArray(change.value) && listsAreEqual(change.value, currentValue as string[]);
+      }
+      if (change.value == currentValue) {
+        return false;
       }
       if (change.prop == 'image') {
         return typeof change.value == 'string' && change.value.startsWith('https://');
@@ -296,27 +367,24 @@ export const faceChangeIsValid = <K extends bothPropType>(
       if (change.prop == 'mana_value') {
         return typeof change.value == 'number';
       }
-      if (change.prop == 'attraction_lights') {
-        return attractionLightsAreValid(change.value as number[]);
-      }
       return typeof change.value == 'string';
     }
     case 'push':
-      return typeof change.value == 'string';
+      return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
     case 'delete':
-      return true;
+      return change.prop in face;
     case 'pop':
-      return typeof change.value == 'string';
+      return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
   }
 };
 export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange): boolean => {
-  // TODO: build more robust handling for switching between a single faced card and a multiface card and vice versa
+  // TODO: Make sure this properly handles when multiple card faces are being added
   if (card.kind == 'scryfall') {
     return false;
   }
   if (
     !('card_faces' in card) &&
-    (change.change_type == 'delete' || [0, 1].includes(change.index))
+    (change.change_type == 'delete' || ![0, 1].includes(change.index))
   ) {
     return false;
   }
@@ -338,7 +406,7 @@ export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange
   }
   if (
     !(
-      Object.entries(change.face) as { [K in bothPropType]: [K, bothValueType<K>] }[bothPropType][]
+      Object.entries(change.face) as { [K in facePropType]: [K, faceValueType<K>] }[facePropType][]
     ).every(([prop, value]) => {
       switch (prop) {
         case 'object':
@@ -389,24 +457,65 @@ export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange
     'type_line',
     'oracle_text',
     'colors',
-  ].every(prop => change.face![prop as bothPropType] != undefined);
+  ].every(prop => change.face![prop as facePropType] != undefined);
 };
 
-export const allPartsChangeIsValid = (card: HCCard.Any, change: allPartsChange): boolean => {
+const partCheckProps: (keyof HCRelatedCard)[] = [
+  'component',
+  'is_draft_partner',
+  'count',
+  'persistent',
+];
+export const getPartChangeIndex = (
+  card: HCCard.Any,
+  change: allPartsChange
+): number | undefined => {
   switch (change.change_type) {
-    case 'add':
-      return isValidV4UUID(change.id) && !card.all_parts?.some(part => part.id == change.id);
+    case 'add': {
+      if (!change.related) return undefined;
+      const part_prop = change.related.id ? 'id' : change.related.hcid ? 'hcid' : 'name';
+      const index = card.all_parts?.findIndex(
+        part => part[part_prop] == change.related![part_prop]
+      );
+      return index == -1 ? undefined : index;
+    }
+
+    case 'delete': {
+      const index = card.all_parts?.findIndex(part => part[change.part_prop ?? 'id'] == change.id);
+      return index == -1 ? undefined : index;
+    }
+  }
+};
+
+export const allPartsChangeIsValid = (
+  card: HCCard.Any,
+  change: allPartsChange,
+  index?: number
+): boolean => {
+  if (index == undefined) {
+    index = getPartChangeIndex(card, change);
+  }
+  switch (change.change_type) {
+    case 'add': {
+      if (!change.related) return false;
+      if (index == undefined) return true;
+      if (change.no_overwrite) return false;
+      for (const prop of partCheckProps) {
+        if (card.all_parts![index][prop] != change.related[prop]) return true;
+      }
+      return false;
+    }
+
     case 'delete':
-      return !!card.all_parts?.some(part => part.id == change.id);
+      return index != undefined;
   }
 };
 
 export const changeIsValid = (card: HCCard.Any, change: anyChange): boolean => {
-  // once I build applyChange, make sure to take whatever I make in there to check if the change does anything and stick a call to it here
   try {
     switch (change.location) {
-      case 'front':
-        return frontChangeIsValid(card, change);
+      case 'root':
+        return rootChangeIsValid(card, change);
       case 'face':
         return faceChangeIsValid(card, change);
       case 'card_faces':
@@ -419,15 +528,642 @@ export const changeIsValid = (card: HCCard.Any, change: anyChange): boolean => {
   }
 };
 
-export const applyChange = (card: HCCard.Any, change: anyChange) => {
-  switch (change.location) {
-    case 'front':
-      return frontChangeIsValid(card, change);
-    case 'face':
-      return faceChangeIsValid(card, change);
-    case 'card_faces':
-      return cardFacesChangeIsValid(card, change);
-    case 'all_parts':
-      return allPartsChangeIsValid(card, change);
+const rootDeriveProps: rootPropType[] = [];
+
+export const applyRootChange = <K extends rootPropType>(
+  card: HCCard.Any,
+  change: rootChange<K>
+): boolean => {
+  switch (change.change_type) {
+    case 'add': {
+      addPropToRoot(card, change.prop, change.value!);
+      break;
+    }
+    case 'push': {
+      if (change.prop == 'artist_notes') {
+        const [artist, note] = change.value as [string, string];
+        if (!card.artists?.includes(artist)) {
+          pushPropToRoot(card, 'artists', artist);
+        }
+        pushPropToRecord(card, 'artist_notes', artist, note);
+        break;
+      }
+      pushPropToRoot(card, change.prop, change.value!);
+      break;
+    }
+    case 'delete':
+      deletePropFromRoot(card, change.prop);
+      break;
+    case 'pop':
+      if (change.prop == 'artist_notes') {
+        const [artist, note] = change.value as [string, string];
+        popPropFromRecord(card, 'artist_notes', artist);
+        break;
+      }
+      if (change.prop == 'artists') {
+        popPropFromRecord(card, 'artist_notes', change.value as string);
+      }
+      popPropFromRoot(card, change.prop, change.value!);
+      break;
   }
+  return rootDeriveProps.includes(change.prop);
+};
+
+const faceDeriveProps: facePropType[] = [
+  'mana_cost',
+  'oracle_text',
+  'color_indicator',
+  'supertypes',
+  'types',
+  'subtypes',
+];
+
+export const applyFaceChange = <K extends facePropType>(
+  card: HCCard.Any,
+  change: faceChange<K>
+): boolean => {
+  switch (change.change_type) {
+    case 'add': {
+      addPropToFace(card, change.prop, change.value!);
+      break;
+    }
+    case 'push': {
+      pushPropToFace(card, change.prop, change.value!);
+      break;
+    }
+    case 'delete':
+      deletePropFromFace(card, change.prop);
+      break;
+    case 'pop':
+      popPropFromFace(card, change.prop, change.value!);
+      break;
+  }
+  return faceDeriveProps.includes(change.prop);
+};
+
+export const applyCardFacesChange = (card: HCCard.Any, change: cardFacesChange): boolean => {
+  // TODO: make sure this works when using toSingleFaced/toMultiFaced (i.e. that it actually modifies the original)
+  if (change.change_type == 'delete') {
+    if (!('card_faces' in card)) {
+      throw console.error('Tried to delete a nonexistent face');
+    }
+    card.card_faces.splice(change.index, 1);
+    if (card.card_faces.length == 1) {
+      card = toSingleFaced(card);
+    }
+  } else {
+    if (!change.face) {
+      throw console.error('Tried to add a nonexistent face');
+    }
+    if (!('card_faces' in card)) {
+      card = toMultiFaced(card);
+    }
+    // if (!('card_faces' in card)) {
+    //   throw console.error('Something went very, very wrong')
+    // }
+    card.card_faces.splice(change.index, 0, change.face);
+  }
+  return true;
+};
+
+export const applyAllPartsChange = (card: HCCard.Any, change: allPartsChange): boolean => {
+  // TODO: make sure the new part gets pulled correctly and gets added to the other card correctly after doing this
+  if (change.change_type == 'delete') {
+    const index = card.all_parts?.findIndex(part => part[change.part_prop ?? 'id'] == change.id);
+    if (index == undefined || index == -1) {
+      throw console.error('Tried to delete a nonexistent part');
+    }
+    card.all_parts?.splice(index, 1);
+  } else if (!change.related) {
+    throw console.error('Tried to add a nonexistent part');
+  } else {
+    const part_prop = change.related.id ? 'id' : change.related.hcid ? 'hcid' : 'name';
+    const part = card.all_parts?.find(part => part[part_prop] == change.related![part_prop]);
+    if (!part) {
+      pushPropToRoot(card, 'all_parts', change.related);
+    } else {
+      partCheckProps.forEach(prop => {
+        if (part[prop] == change.related![prop]) return;
+        if (change.related![prop] == undefined) {
+          delete part[prop];
+        } else {
+          (part as any)[prop] = change.related![prop];
+        }
+      });
+    }
+  }
+  return true;
+};
+/**
+ * Returns true if the change can change derived props
+ */
+export const applyChange = (card: HCCard.Any, change: anyChange): boolean => {
+  switch (change.location) {
+    case 'root':
+      return applyRootChange(card, change);
+    case 'face':
+      return applyFaceChange(card, change);
+    case 'card_faces':
+      return applyCardFacesChange(card, change);
+    case 'all_parts':
+      return applyAllPartsChange(card, change);
+  }
+};
+
+// can add even if empty
+const rootBlankableProps: Partial<Record<HCKind, rootPropType[]>> = {
+  card: ['mana_cost', 'mana_value', 'rulings', 'collector_number'],
+  notmagic: ['mana_cost', 'mana_value'],
+};
+
+const faceBlankableProps: Partial<Record<HCKind, facePropType[]>> = {
+  card: ['mana_cost', 'mana_value', 'oracle_text'],
+  notmagic: ['mana_cost', 'mana_value', 'oracle_text'],
+};
+
+// can delete
+const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
+  card: [
+    'flavor_name',
+    'export_name',
+    'collector_number',
+    'image',
+    'rotated_image',
+    'still_image',
+    'draft_image_status',
+    'draft_image',
+    'rotated_draft_image',
+    'still_draft_image',
+    'not_directly_draftable',
+    'has_draft_partners',
+    'artists',
+    'artist_notes',
+    'frame_effects',
+    'tags',
+    'tag_notes',
+    'all_parts',
+  ],
+  token: [
+    'flavor_name',
+    'export_name',
+    'collector_number',
+    'image',
+    'rotated_image',
+    'still_image',
+    'draft_image_status',
+    'draft_image',
+    'rotated_draft_image',
+    'still_draft_image',
+    'not_directly_draftable',
+    'has_draft_partners',
+    'artists',
+    'artist_notes',
+    'frame_effects',
+    'tags',
+    'tag_notes',
+    'all_parts',
+  ],
+  land: [
+    'flavor_name',
+    'export_name',
+    'collector_number',
+    'image',
+    'rotated_image',
+    'still_image',
+    'draft_image_status',
+    'draft_image',
+    'rotated_draft_image',
+    'still_draft_image',
+    'not_directly_draftable',
+    'has_draft_partners',
+    'artists',
+    'artist_notes',
+    'frame_effects',
+    'tags',
+    'tag_notes',
+    'all_parts',
+  ],
+  notmagic: [
+    'flavor_name',
+    'export_name',
+    'collector_number',
+    'image',
+    'rotated_image',
+    'still_image',
+    'draft_image_status',
+    'draft_image',
+    'rotated_draft_image',
+    'still_draft_image',
+    'not_directly_draftable',
+    'has_draft_partners',
+    'artists',
+    'artist_notes',
+    'frame_effects',
+    'tags',
+    'tag_notes',
+    'all_parts',
+  ],
+};
+const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
+  card: [
+    'flavor_name',
+    'export_name',
+    'image',
+    'rotated_image',
+    'still_image',
+    'supertypes',
+    'types',
+    'subtypes',
+    'flavor_text',
+    'power',
+    'toughness',
+    'loyalty',
+    'defense',
+    'watermark',
+    'frame',
+    'frame_effects',
+    'compress_face',
+    'drop_face',
+  ],
+  token: [
+    'flavor_name',
+    'export_name',
+    'image',
+    'rotated_image',
+    'still_image',
+    'supertypes',
+    'types',
+    'power',
+    'toughness',
+    'watermark',
+    'frame',
+    'frame_effects',
+  ],
+  land: [
+    'flavor_name',
+    'export_name',
+    'image',
+    'rotated_image',
+    'still_image',
+    'supertypes',
+    'types',
+    'subtypes',
+    'power',
+    'toughness',
+    'loyalty',
+    'defense',
+    'watermark',
+    'frame',
+    'frame_effects',
+  ],
+  notmagic: [
+    'flavor_name',
+    'export_name',
+    'image',
+    'rotated_image',
+    'still_image',
+    'supertypes',
+    'types',
+    'subtypes',
+    'flavor_text',
+    'power',
+    'toughness',
+    'loyalty',
+    'defense',
+    'color_indicator',
+    'watermark',
+    'frame',
+    'frame_effects',
+  ],
+};
+
+const rootIgnoreProps: Record<HCKind, rootPropType[]> = {
+  card: ['keywords', 'image_status', 'draft_image_status'],
+  token: ['mana_cost', 'mana_value', 'colors', 'rulings', 'image_status', 'draft_image_status'],
+  land: ['keywords', 'image_status', 'draft_image_status'],
+  front: ['keywords', 'image_status', 'draft_image_status'],
+  scryfall: [],
+  notmagic: ['keywords', 'image_status', 'draft_image_status'],
+};
+const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
+  card: ['colors'],
+  token: ['mana_cost', 'mana_value', 'subtypes', 'oracle_text', 'colors'],
+  land: ['colors'],
+  front: ['colors'],
+  scryfall: ['colors'],
+  notmagic: ['colors'],
+};
+
+export const changeTypeOrder = ['delete', 'pop', 'add', 'push'];
+export const locationOrder = ['card_faces', 'all_parts', 'face', 'root'];
+export const sortChanges = (a: anyChange, b: anyChange): number =>
+  locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
+  changeTypeOrder.indexOf(a.change_type) - changeTypeOrder.indexOf(b.change_type);
+export const getChangesFromDifferences = (
+  existingCard: HCCard.Any,
+  newCard: HCCard.Any,
+  pullingFromSheet?: boolean
+): anyChange[] => {
+  const changeList: anyChange[] = [];
+  (Object.entries(rootChangeableProps) as [changeType, rootPropType[]][]).forEach(
+    ([change_type, props]) => {
+      props.forEach(prop => {
+        switch (change_type) {
+          case 'add': {
+            const value = newCard[prop] as rootValueType<typeof prop>;
+            if (value == undefined) {
+              return;
+            }
+            if (pullingFromSheet) {
+              if (!value && !rootBlankableProps[existingCard.kind]?.includes(prop)) return;
+              if (rootIgnoreProps[existingCard.kind]?.includes(prop)) return;
+              // if (prop == 'image_status') return
+            }
+            const change: rootChange<typeof prop> = {
+              location: 'root',
+              change_type,
+              prop,
+              value,
+            };
+            if (rootChangeIsValid(existingCard, change)) {
+              changeList.push(change);
+            }
+            break;
+          }
+          case 'push': {
+            if (prop == 'artist_notes') {
+              const artists = newCard[prop] as Record<string, string>;
+              Object.entries(artists).forEach(([artist, note]) => {
+                const change: rootChange<typeof prop> = {
+                  location: 'root',
+                  change_type,
+                  prop,
+                  value: [artist, note],
+                };
+                if (rootChangeIsValid(existingCard, change)) {
+                  changeList.push(change);
+                }
+              });
+              return;
+            }
+            const values = newCard[prop] as rootValueType<typeof prop>[];
+            if (values == undefined) {
+              return;
+            }
+            values.forEach(value => {
+              const change: rootChange<typeof prop> = {
+                location: 'root',
+                change_type,
+                prop,
+                value,
+              };
+              if (rootChangeIsValid(existingCard, change)) {
+                changeList.push(change);
+              }
+            });
+            break;
+          }
+          case 'delete': {
+            const value = newCard[prop] as rootValueType<typeof prop>;
+            if (value != undefined) {
+              return;
+            }
+            if (pullingFromSheet) {
+              if (!rootRemovableProps[existingCard.kind]?.includes(prop)) return;
+              if (rootIgnoreProps[existingCard.kind]?.includes(prop)) return;
+            }
+            const change: rootChange<typeof prop> = {
+              location: 'root',
+              change_type,
+              prop,
+            };
+            if (rootChangeIsValid(existingCard, change)) {
+              changeList.push(change);
+            }
+            break;
+          }
+          case 'pop': {
+            if (prop == 'artist_notes') {
+              const artists = existingCard[prop] as Record<string, string>;
+              Object.entries(artists).forEach(([artist, note]) => {
+                const change: rootChange<typeof prop> = {
+                  location: 'root',
+                  change_type,
+                  prop,
+                  value: [artist, note],
+                };
+                if (newCard[prop]?.[artist] == undefined) {
+                  changeList.push(change);
+                }
+              });
+              return;
+            }
+            const values = existingCard[prop] as rootValueType<typeof prop>[];
+            values.forEach(value => {
+              const change: rootChange<typeof prop> = {
+                location: 'root',
+                change_type,
+                prop,
+                value,
+              };
+              if (!(newCard[prop] as rootValueType<typeof prop>[])?.includes(value)) {
+                changeList.push(change);
+              }
+            });
+            break;
+          }
+        }
+      });
+    }
+  );
+  // if ('card_faces' in existingCard != 'card_faces' in newCard) {
+  //   throw console.error('You really shouldn\'t try to use this to compare between single cards and multiface cards.')
+  // }
+  for (
+    let index = 0;
+    index <
+    Math.max(
+      'card_faces' in existingCard ? existingCard.card_faces.length : 1,
+      'card_faces' in newCard ? newCard.card_faces.length : 1
+    );
+    index++
+  ) {
+    const existingFace = toFaces(existingCard)[index];
+    const newFace = toFaces(newCard)[index];
+    if (!existingFace) {
+      const change: cardFacesChange = {
+        location: 'card_faces',
+        index,
+        change_type: 'add',
+        face: newFace as HCCardFace.MultiFaced,
+      };
+      changeList.push(change);
+      continue;
+    }
+    if (!newFace) {
+      const change: cardFacesChange = {
+        location: 'card_faces',
+        index,
+        change_type: 'delete',
+      };
+      changeList.push(change);
+      continue;
+    }
+    (Object.entries(faceChangeableProps) as [changeType, facePropType[]][]).forEach(
+      ([change_type, props]) => {
+        props.forEach(prop => {
+          switch (change_type) {
+            case 'add': {
+              const value = newFace[prop] as faceValueType<typeof prop>;
+              if (value == undefined) {
+                return;
+              }
+              if (pullingFromSheet) {
+                if (!value && !faceBlankableProps[existingCard.kind]?.includes(prop)) return;
+                if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
+                if (prop == 'image_status' && newFace.image) return;
+              }
+              const change: faceChange<typeof prop> = {
+                location: 'face',
+                change_type,
+                prop,
+                value,
+                index,
+              };
+              if (faceChangeIsValid(existingCard, change)) {
+                changeList.push(change);
+              }
+              break;
+            }
+            case 'push': {
+              const values = newFace[prop] as faceValueType<typeof prop>[];
+              if (values == undefined) {
+                return;
+              }
+              if (pullingFromSheet) {
+                if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
+              }
+              values.forEach(value => {
+                const change: faceChange<typeof prop> = {
+                  location: 'face',
+                  change_type,
+                  prop,
+                  value,
+                  index,
+                };
+
+                if (faceChangeIsValid(existingCard, change)) {
+                  changeList.push(change);
+                }
+              });
+              break;
+            }
+            case 'delete': {
+              const value = newFace[prop] as faceValueType<typeof prop>;
+              if (value != undefined) {
+                return;
+              }
+              if (pullingFromSheet) {
+                if (!faceRemovableProps[existingCard.kind]?.includes(prop)) return;
+                if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
+              }
+              const change: faceChange<typeof prop> = {
+                location: 'face',
+                change_type,
+                prop,
+                index,
+              };
+              if (faceChangeIsValid(existingCard, change)) {
+                changeList.push(change);
+              }
+              break;
+            }
+            case 'pop': {
+              const values = existingFace[prop] as faceValueType<typeof prop>[];
+              values.forEach(value => {
+                const change: faceChange<typeof prop> = {
+                  location: 'face',
+                  change_type,
+                  prop,
+                  value,
+                  index,
+                };
+                if (!(newFace[prop] as faceValueType<typeof prop>[])?.includes(value)) {
+                  changeList.push(change);
+                }
+              });
+              break;
+            }
+          }
+        });
+      }
+    );
+  }
+
+  const foundIndices: number[] = [];
+  newCard.all_parts?.forEach(newPart => {
+    const change: allPartsChange = {
+      location: 'all_parts',
+      change_type: 'add',
+      related: newPart,
+    };
+    if (pullingFromSheet) {
+      change.no_overwrite = true;
+    }
+    const index = getPartChangeIndex(existingCard, change);
+    if (index != undefined) {
+      foundIndices.push(index);
+      if (allPartsChangeIsValid(existingCard, change, index)) {
+        changeList.push(change);
+      }
+    } else {
+      changeList.push(change);
+    }
+  });
+  existingCard.all_parts
+    ?.filter((part, i) => !foundIndices.includes(i))
+    .forEach(part => {
+      const change: allPartsChange = {
+        location: 'all_parts',
+        change_type: 'delete',
+      };
+      if (part.id) {
+        change.id = part.id;
+      } else if (part.hcid) {
+        change.id = part.hcid;
+        change.part_prop = 'hcid';
+      } else if (part.name) {
+        change.id = part.name;
+        change.part_prop = 'name';
+      } else {
+        return;
+      }
+      changeList.push(change);
+    });
+  return changeList.sort(sortChanges);
+};
+
+export const applyChanges = (card: HCCard.Any, changeList: anyChange[]) => {
+  changeList.forEach((change, index) => {
+    applyChange(card, change);
+    if (change.location == 'card_faces') {
+      const face = change.index;
+      for (let i = changeList.length - 1; i > index; i--) {
+        const otherChange = changeList[i];
+        if (
+          otherChange.location == 'root' ||
+          otherChange.location == 'all_parts' ||
+          otherChange.index == undefined
+        )
+          continue;
+        if (change.change_type == 'delete' && otherChange.index == face) {
+          changeList.splice(i, 1);
+          continue;
+        }
+        if (otherChange.index >= face) {
+          otherChange.index += change.change_type == 'delete' ? -1 : 1;
+        }
+      }
+    }
+  });
 };

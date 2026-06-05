@@ -12,15 +12,14 @@ import {
 import {
   setDerivedProps,
   isInteger,
-  propType,
   addArtist,
-  addProp,
   addPropToFace,
   getDefaultCard,
-  addPropToFaceOrRoot,
-  faceOrRootIsBattle,
-  bothPropType,
   HCIDMap,
+  frontIsBattle,
+  facePropType,
+  addPropToRoot,
+  rootPropType,
 } from '@hellfall/shared/utils';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
@@ -179,19 +178,19 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           const entryList = face == 3 ? entry[i].split(' // ') : [entry[i]];
           entryList.forEach((value, index) => {
             if (['supertypes', 'types', 'subtypes'].includes(key)) {
-              addPropToFaceOrRoot(
+              addPropToFace(
                 card,
                 key as 'supertypes' | 'types' | 'subtypes',
                 value.split(';'),
                 face + index
               );
-            } else if (key == 'loyalty' && faceOrRootIsBattle(card, face + index)) {
-              addPropToFaceOrRoot(card, 'defense', value, face + index);
+            } else if (key == 'loyalty' && frontIsBattle(card, face + index)) {
+              addPropToFace(card, 'defense', value, face + index);
             } else {
-              addPropToFaceOrRoot(card, key as bothPropType, value, face + index);
+              addPropToFace(card, key as facePropType, value, face + index);
             }
             if (key == 'image') {
-              addPropToFaceOrRoot(card, 'image_status', HCImageStatus.HighRes, face + index);
+              addPropToFace(card, 'image_status', HCImageStatus.HighRes, face + index);
             }
           });
         } else {
@@ -220,7 +219,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                   : HCLegality.Banned
                 : HCLegality.Legal,
             };
-            addProp(card, 'legalities', legalities);
+            addPropToRoot(card, 'legalities', legalities);
           } else if (keys[i] == 'related') {
             const all_parts: HCRelatedCard[] = entry[i].split(';').map(oldName => {
               const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
@@ -248,9 +247,9 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               }
               return maker;
             });
-            addProp(card, 'all_parts', all_parts);
+            addPropToRoot(card, 'all_parts', all_parts);
           } else {
-            addProp(card, keys[i] as propType, entry[i]);
+            addPropToRoot(card, keys[i] as rootPropType, entry[i]);
           }
         }
       }
@@ -271,6 +270,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
       });
       card.artists = Array.from(new Set(card.artists));
     }
+    // TODO: move to derived props? or just remove?
     if ('card_faces' in card && !entryAt('tags').includes('irregular-face-name')) {
       card.name.split(' // ').forEach((name, i) => {
         addPropToFace(card, 'name', name, i);

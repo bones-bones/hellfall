@@ -7,31 +7,30 @@ import { HCCard, HCCardFace, HCRelatedCard, HCKind, allSetsList } from '@hellfal
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
   facePropType,
-  propType,
-  pushProp,
   stripMasterpiece,
   textEquals,
   textPrep,
-  toFaces,
-  addProp,
   addPropToFace,
-  deleteProp,
   deletePropFromFace,
   getCardEntries,
-  getFaceEntries,
-  getFilteredCardEntries,
-  getFilteredCardMoveEntries,
-  getFilteredCardProps,
-  getFilteredFaceMoveEntries,
   getFilteredFaceProps,
   setDerivedProps,
   setExportProps,
   stripSetCode,
   allPropType,
-  valueType,
   getAllRelatedPermissive,
   CardMap,
   HCIDMap,
+  rootPropType,
+  anyPropType,
+  toSingleFaced,
+  toMultiFaced,
+  getCardFaceEntries,
+  addPropToRoot,
+  allValueType,
+  getFilteredRootProps,
+  deletePropFromRoot,
+  anyValueType,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { addToJSONToCards } from '@hellfall/shared/utils';
@@ -55,11 +54,11 @@ const movedIds: Record<string, string> = {
   '2035': '6734',
   '2035b': '6735',
 };
-const kindBlankableProps: Partial<Record<HCKind, propType[]>> = {
+const kindBlankableProps: Partial<Record<HCKind, anyPropType[]>> = {
   card: ['mana_cost', 'mana_value', 'oracle_text', 'rulings', 'collector_number'],
   notmagic: ['mana_cost', 'mana_value', 'oracle_text'],
 };
-const kindRemovableProps: Partial<Record<HCKind, propType[]>> = {
+const kindRemovableProps: Partial<Record<HCKind, anyPropType[]>> = {
   card: [
     'flavor_name',
     'export_name',
@@ -178,7 +177,7 @@ const kindFaceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
   token: ['frame'],
 };
 
-const kindIgnoreProps: Record<HCKind, propType[]> = {
+const kindIgnoreProps: Record<HCKind, anyPropType[]> = {
   card: ['keywords'],
   token: ['mana_cost', 'mana_value', 'subtypes', 'oracle_text', 'colors', 'rulings'],
   land: ['keywords'],
@@ -187,44 +186,44 @@ const kindIgnoreProps: Record<HCKind, propType[]> = {
   notmagic: ['keywords'],
 };
 
-const cardKeepProps: propType[] = [
-  'id',
-  'id_is_scryfall',
-  'oracle_id',
-  'oracle_id_is_scryfall',
-  'image_status',
-  'draft_image_status',
-  'keywords',
-];
+// const cardKeepProps: rootPropType[] = [
+//   'id',
+//   'id_is_scryfall',
+//   'oracle_id',
+//   'oracle_id_is_scryfall',
+//   'image_status',
+//   'draft_image_status',
+//   'keywords',
+// ];
 
-const cardMoveProps: (propType & facePropType)[] = [
-  'attraction_lights',
-  'colors',
-  'color_indicator',
-];
-const tokenKeepProps: propType[] = [
-  'id',
-  'id_is_scryfall',
-  'oracle_id',
-  'oracle_id_is_scryfall',
-  'image_status',
-  'mana_cost',
-  'mana_value',
-  'colors',
-  'draft_image_status',
-  'keywords',
-];
+// const cardMoveProps: facePropType[] = [
+//   'attraction_lights',
+//   'colors',
+//   'color_indicator',
+// ];
+// const tokenKeepProps: rootPropType[] = [
+//   'id',
+//   'id_is_scryfall',
+//   'oracle_id',
+//   'oracle_id_is_scryfall',
+//   'image_status',
+//   'mana_cost',
+//   'mana_value',
+//   'colors',
+//   'draft_image_status',
+//   'keywords',
+// ];
 
-const tokenMoveProps: (propType & facePropType)[] = [
-  'mana_cost',
-  'mana_value',
-  'subtypes',
-  'oracle_text',
-  'flavor_text',
-  'attraction_lights',
-  'colors',
-  'color_indicator',
-];
+// const tokenMoveProps: facePropType[] = [
+//   'mana_cost',
+//   'mana_value',
+//   'subtypes',
+//   'oracle_text',
+//   'flavor_text',
+//   'attraction_lights',
+//   'colors',
+//   'color_indicator',
+// ];
 /**
  *
  * @param existingCard The card from the stored database JSON
@@ -232,33 +231,59 @@ const tokenMoveProps: (propType & facePropType)[] = [
  * @returns
  */
 const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
+  if (newCard.kind == 'scryfall') {
+    newCard.all_parts = newCard.all_parts?.map(part => {
+      // is true when the thing that makes this is itself a token
+      const tokenIsMaker = part.name && part.hcid;
+      const existingPart = tokenIsMaker
+        ? existingCard.all_parts?.find(e => textEquals(e.hcid, part.hcid))
+        : existingCard.all_parts?.find(
+            e => textEquals(e.name, part.name) && e.name != e.hcid.replace(/\d+$/, '')
+          );
+      if (existingPart) {
+        // if there is already a part, update it
+        Object.entries(existingPart).forEach(([k, v]) => {
+          if (!['name', 'component' /**,'is_draft_partner'*/].includes(k) && v) {
+            (part as any)[k] = v;
+          }
+        });
+      }
+      return part;
+    });
+    return newCard;
+  }
   if ('card_faces' in existingCard != 'card_faces' in newCard) {
     if (existingCard.kind == 'scryfall') {
       throw console.error();
     } else {
-      const merged: HCCard.Any = { ...newCard };
-      getFilteredCardEntries(
-        existingCard,
-        existingCard.kind == 'token' ? tokenKeepProps : cardKeepProps
-      ).forEach(([key, value]) => addProp(merged, key, value));
-      if ('card_faces' in merged) {
-        getFilteredCardMoveEntries(
-          existingCard,
-          existingCard.kind == 'token' ? tokenMoveProps : cardMoveProps
-        ).forEach(([key, value]) => addPropToFace(merged, key, value));
-      } else if ('card_faces' in existingCard) {
-        getFilteredFaceMoveEntries(
-          existingCard,
-          existingCard.kind == 'token' ? tokenMoveProps : cardMoveProps
-        ).forEach(([key, value]) => addProp(merged, key, value));
-      }
+      return mergeCards(
+        'card_faces' in existingCard ? toSingleFaced(existingCard) : toMultiFaced(existingCard),
+        newCard
+      );
+      // const merged: HCCard.Any = { ...newCard };
+      // getFilteredCardEntries(
+      //   existingCard,
+      //   existingCard.kind == 'token' ? tokenKeepProps : cardKeepProps
+      // ).forEach(([key, value]) => addProp(merged, key, value));
+      // if ('card_faces' in merged) {
+      //   getFilteredCardMoveEntries(
+      //     existingCard,
+      //     existingCard.kind == 'token' ? tokenMoveProps : cardMoveProps
+      //   ).forEach(([key, value]) => addPropToFace(merged, key, value));
+      // } else if ('card_faces' in existingCard) {
+      //   getFilteredFaceMoveEntries(
+      //     existingCard,
+      //     existingCard.kind == 'token' ? tokenMoveProps : cardMoveProps
+      //   ).forEach(([key, value]) => addProp(merged, key, value));
+      // }
 
-      setDerivedProps(merged);
-      return merged;
+      // setDerivedProps(merged);
+      // return merged;
     }
   }
 
   const merged: HCCard.Any = { ...existingCard };
+  // TODO: rework to match new root/face pattern (convert differences to cardChanges and then apply them?)
   getCardEntries(newCard).forEach(([key, value]) => {
     if (value) {
       if (
@@ -270,7 +295,7 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
       ) {
         newCard.card_faces.forEach((face, index) => {
           if (index < merged.card_faces.length) {
-            getFaceEntries(newCard, index).forEach(([k, v]) => {
+            getCardFaceEntries(newCard, index).forEach(([k, v]) => {
               if (k == 'colors' && existingCard.kind != 'scryfall') {
                 // TODO: store current version and print the diff if there is one
               } else if (k == 'image_status' && face.image) {
@@ -347,21 +372,24 @@ const mergeCards = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any =
           merged.layout = value as typeof newCard.layout;
         }
       } else {
-        addProp(merged, key, value);
+        addPropToRoot(merged, key as allPropType, value as any); // TODO: REPLACE THIS
       }
     } else if (kindBlankableProps[merged.kind]?.includes(key) && merged[key as allPropType]) {
-      addProp(merged, key, value);
+      addPropToRoot(merged, key as allPropType, value as any);
     }
   });
-  getFilteredCardProps(existingCard, kindRemovableProps[existingCard.kind] ?? [])
+  getFilteredRootProps(
+    existingCard,
+    (kindRemovableProps[existingCard.kind] ?? []) as rootPropType[]
+  )
     .filter(prop => !(prop in newCard))
     .forEach(prop => {
       if (prop == 'image') {
-        addProp(merged, 'image_status', newCard.image_status);
+        addPropToRoot(merged, 'image_status', newCard.image_status);
       } else if (prop == 'draft_image') {
-        deleteProp(merged, 'draft_image_status');
+        deletePropFromRoot(merged, 'draft_image_status');
       }
-      deleteProp(merged, prop);
+      deletePropFromRoot(merged, prop);
     });
   setDerivedProps(merged);
   return merged;
@@ -544,10 +572,10 @@ const mergeDatabases = (
       mergedLands.cards().sort((a, b) => parseInt(a.hcid.slice(1)) - parseInt(b.hcid.slice(1)))
     );
 };
-const dataToCards = <K extends propType>(
+const dataToCards = <K extends anyPropType>(
   cards: any,
   missingProp?: K,
-  missingPropValue?: valueType<K> | ((card: HCCard.Any) => valueType<K>),
+  missingPropValue?: anyValueType<K> | ((card: HCCard.Any) => anyValueType<K>),
   addTo?: 'faces' | 'parts'
 ) => {
   if (!missingProp || missingPropValue == undefined) {

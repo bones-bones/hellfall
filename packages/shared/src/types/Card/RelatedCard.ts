@@ -1,4 +1,15 @@
 import { HCObject } from '../Object';
+import { SetCode } from '../Set';
+
+export const relatedComponentList = [
+  'token',
+  'token_maker',
+  'meld_part',
+  'meld_result',
+  'combo_piece',
+  'draft_partner',
+] as const;
+export type relatedComponent = (typeof relatedComponentList)[number];
 
 /**
  * A related card entry.
@@ -15,31 +26,25 @@ export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
    */
   hcid: string;
   /**
-   * A field explaining what role this card plays in this relationship.
-   */
-  component:
-    | 'token'
-    | 'token_maker'
-    | 'meld_part'
-    | 'meld_result'
-    | 'combo_piece'
-    | 'draft_partner';
-  /**
    * The name of this particular related card.
    */
   name: string;
+  /**
+   * A string with the set for this card.
+   */
+  set: SetCode;
+  /**
+   * A string with the image for this card.
+   */
+  image?: string;
   /**
    * The type line of this card.
    */
   type_line: string;
   /**
-   * A string with the set for this card.
+   * A field explaining what role this card plays in this relationship.
    */
-  set: string;
-  /**
-   * A string with the image for this card.
-   */
-  image?: string;
+  component: relatedComponent;
   /**
    * A URI where you can retrieve a full object describing this card on HC's API.
    *

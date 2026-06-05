@@ -329,7 +329,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * The oracle text of the card itself apart from any face, if any
      */
-    oracle_text?: string;
+    // oracle_text?: string;
     /**
      * True when the multiface card is a rotating card (excluding flip ones)
      */
