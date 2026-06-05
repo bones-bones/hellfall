@@ -6,6 +6,7 @@ import {
   HCLegality,
   HCObject,
   HCRelatedCard,
+  SetCode,
 } from '@hellfall/shared/types';
 import { addToJSONToCard, getDefaultCard, HCIDMap } from '@hellfall/shared/utils';
 
@@ -51,7 +52,7 @@ export const fetchHCJFronts = (): HCIDMap =>
           component: 'draft_partner',
           name: land.name || '',
           type_line: '',
-          set: '',
+          set: '' as SetCode,
           is_draft_partner: true,
         };
         if (land.count > 1) {

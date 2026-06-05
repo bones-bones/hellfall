@@ -12,12 +12,8 @@ import {
   HCObject,
   HCRarity,
   HCRelatedCard,
-  relatedComponent,
-  relatedComponentList,
-  SetCode,
 } from '@hellfall/shared/types';
 import {
-  anyPropType,
   CardMap,
   facePropType,
   faceValueType,
@@ -27,16 +23,14 @@ import {
   toFaces,
 } from '../cardHandling';
 import {
+  addPropToRecord,
+  deletePropFromRecord,
   doubleListEquals,
   listEquals,
   listsAreEqual,
   listShare,
-  popPropFromRecord,
-  pushPropToRecord,
 } from '../listHandling';
-import { isValidV4UUID } from '../textHandling';
 import {
-  addArtist,
   addPropToFace,
   addPropToRoot,
   deletePropFromFace,
@@ -549,7 +543,7 @@ export const applyRootChange = <K extends rootPropType>(
         if (!card.artists?.includes(artist)) {
           pushPropToRoot(card, 'artists', artist);
         }
-        pushPropToRecord(card, 'artist_notes', artist, note);
+        addPropToRecord(card, 'artist_notes', artist, note);
         break;
       }
       pushPropToRoot(card, change.prop, change.value!);
@@ -561,11 +555,11 @@ export const applyRootChange = <K extends rootPropType>(
     case 'pop':
       if (change.prop == 'artist_notes') {
         const [artist, note] = change.value as [string, string];
-        popPropFromRecord(card, 'artist_notes', artist);
+        deletePropFromRecord(card, 'artist_notes', artist);
         break;
       }
       if (change.prop == 'artists') {
-        popPropFromRecord(card, 'artist_notes', change.value as string);
+        deletePropFromRecord(card, 'artist_notes', change.value as string);
       }
       popPropFromRoot(card, change.prop, change.value!);
       break;
@@ -877,9 +871,7 @@ export const getChangesFromDifferences = (
         switch (change_type) {
           case 'add': {
             const value = newCard[prop] as rootValueType<typeof prop>;
-            if (value == undefined) {
-              return;
-            }
+            if (value == undefined) return;
             if (pullingFromSheet) {
               if (!value && !rootBlankableProps[existingCard.kind]?.includes(prop)) return;
               if (rootIgnoreProps[existingCard.kind]?.includes(prop)) return;
@@ -899,6 +891,7 @@ export const getChangesFromDifferences = (
           case 'push': {
             if (prop == 'artist_notes') {
               const artists = newCard[prop] as Record<string, string>;
+              if (artists == undefined) return;
               Object.entries(artists).forEach(([artist, note]) => {
                 const change: rootChange<typeof prop> = {
                   location: 'root',
@@ -913,9 +906,7 @@ export const getChangesFromDifferences = (
               return;
             }
             const values = newCard[prop] as rootValueType<typeof prop>[];
-            if (values == undefined) {
-              return;
-            }
+            if (values == undefined) return;
             values.forEach(value => {
               const change: rootChange<typeof prop> = {
                 location: 'root',
@@ -931,9 +922,7 @@ export const getChangesFromDifferences = (
           }
           case 'delete': {
             const value = newCard[prop] as rootValueType<typeof prop>;
-            if (value != undefined) {
-              return;
-            }
+            if (value != undefined) return;
             if (pullingFromSheet) {
               if (!rootRemovableProps[existingCard.kind]?.includes(prop)) return;
               if (rootIgnoreProps[existingCard.kind]?.includes(prop)) return;
@@ -951,6 +940,7 @@ export const getChangesFromDifferences = (
           case 'pop': {
             if (prop == 'artist_notes') {
               const artists = existingCard[prop] as Record<string, string>;
+              if (artists == undefined) return;
               Object.entries(artists).forEach(([artist, note]) => {
                 const change: rootChange<typeof prop> = {
                   location: 'root',
@@ -965,6 +955,7 @@ export const getChangesFromDifferences = (
               return;
             }
             const values = existingCard[prop] as rootValueType<typeof prop>[];
+            if (values == undefined) return;
             values.forEach(value => {
               const change: rootChange<typeof prop> = {
                 location: 'root',
@@ -1021,9 +1012,7 @@ export const getChangesFromDifferences = (
           switch (change_type) {
             case 'add': {
               const value = newFace[prop] as faceValueType<typeof prop>;
-              if (value == undefined) {
-                return;
-              }
+              if (value == undefined) return;
               if (pullingFromSheet) {
                 if (!value && !faceBlankableProps[existingCard.kind]?.includes(prop)) return;
                 if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
@@ -1043,9 +1032,7 @@ export const getChangesFromDifferences = (
             }
             case 'push': {
               const values = newFace[prop] as faceValueType<typeof prop>[];
-              if (values == undefined) {
-                return;
-              }
+              if (values == undefined) return;
               if (pullingFromSheet) {
                 if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
               }
@@ -1066,9 +1053,7 @@ export const getChangesFromDifferences = (
             }
             case 'delete': {
               const value = newFace[prop] as faceValueType<typeof prop>;
-              if (value != undefined) {
-                return;
-              }
+              if (value == undefined) return;
               if (pullingFromSheet) {
                 if (!faceRemovableProps[existingCard.kind]?.includes(prop)) return;
                 if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
@@ -1086,6 +1071,7 @@ export const getChangesFromDifferences = (
             }
             case 'pop': {
               const values = existingFace[prop] as faceValueType<typeof prop>[];
+              if (values == undefined) return;
               values.forEach(value => {
                 const change: faceChange<typeof prop> = {
                   location: 'face',
