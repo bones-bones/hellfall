@@ -113,35 +113,46 @@ export const cardTagsHandler = async (
       return;
     }
 
-    const auth = await requireTagAuth(req, res);
-    if (!auth) return;
-
-    let reqBody: { tag?: string };
-    try {
-      reqBody = (await readJsonBody(req)) as { tag?: string };
-    } catch {
-      res.statusCode = 400;
-      res.end(JSON.stringify({ ok: false, reason: 'invalid_json' }));
-      return;
-    }
-    const tag = (reqBody.tag != null ? String(reqBody.tag) : '').trim();
-    // const norm = normalizeTag(tag);
-    if (!tag) {
-      res.statusCode = 400;
-      res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
-      return;
-    }
-    // const snap = await getOrSeedCardDoc(docRef);
-    // const before = resolveTagState(snap.data());
-    // const state = applyAddTag(before, norm);
-    const card: HCCard.Any = firestoreToCard(await docRef.get());
-    const before = card.tag_state ?? {};
     if (req.method === 'POST') {
-      addTagContributor(card, tag);
+      const auth = await requireTagAuth(req, res);
+      if (!auth) return;
+      
+      let reqBody: { tag?: string, change_type: 'add' | 'delete' };
+      try {
+        reqBody = (await readJsonBody(req)) as { tag?: string, change_type: 'add' | 'delete' };
+        if (reqBody.change_type != 'add' && reqBody.change_type != 'delete') {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, reason: 'invalid_json' }));
+          return;
+        }
+      } catch {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, reason: 'invalid_json' }));
+        return;
+      }
+      const tag = (reqBody.tag != null ? String(reqBody.tag) : '').trim();
+      const change_type = reqBody.change_type;
+      // const norm = normalizeTag(tag);
+      if (!tag) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
+        return;
+      }
+      // const snap = await getOrSeedCardDoc(docRef);
+      // const before = resolveTagState(snap.data());
+      // const state = applyAddTag(before, norm);
+      const card: HCCard.Any = firestoreToCard(await docRef.get());
+      const before = card.tag_state ?? {};
+      if (change_type == 'add') {
+        addTagContributor(card, tag);
+      } else {
+
+      }
+      
       await docRef.set(cardToFirestore(card) /*  { merge: true } */);
       await recordTagChangeset({
         cardId,
-        action: 'tag_add',
+        action: `tag_${change_type}`,
         tag,
         user: { userId: auth.userId, username: auth.username },
         before,
@@ -159,40 +170,40 @@ export const cardTagsHandler = async (
       return;
     }
 
-    if (req.method === 'DELETE') {
-      // const norm = tagFromPath ? normalizeTag(tagFromPath) : null;
-      // if (!norm) {
-      //   res.statusCode = 400;
-      //   res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
-      //   return;
-      // }
-      // const snap = await getOrSeedCardDoc(docRef);
-      // const before = resolveTagState(snap.data());
-      // const state = applyRemoveTag(before, norm);
-      deleteTagContributor(card, tag);
-      await docRef.set(cardToFirestore(card) /* { merge: true } */);
-      await recordTagChangeset({
-        cardId,
-        action: 'tag_remove',
-        tag,
-        user: { userId: auth.userId, username: auth.username },
-        before,
-        after: card.tag_state,
-      });
-      res.statusCode = 200;
-      res.end(
-        JSON.stringify({
-          ok: true,
-          base_tags: card.tag_state?.base_tags,
-          added: card.tag_state?.added,
-          removed: card.tag_state?.removed,
-        })
-      );
-      return;
-    }
+    // if (req.method === 'DELETE') {
+    //   // const norm = tagFromPath ? normalizeTag(tagFromPath) : null;
+    //   // if (!norm) {
+    //   //   res.statusCode = 400;
+    //   //   res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
+    //   //   return;
+    //   // }
+    //   // const snap = await getOrSeedCardDoc(docRef);
+    //   // const before = resolveTagState(snap.data());
+    //   // const state = applyRemoveTag(before, norm);
+    //   deleteTagContributor(card, tag);
+    //   await docRef.set(cardToFirestore(card) /* { merge: true } */);
+    //   await recordTagChangeset({
+    //     cardId,
+    //     action: 'tag_remove',
+    //     tag,
+    //     user: { userId: auth.userId, username: auth.username },
+    //     before,
+    //     after: card.tag_state,
+    //   });
+    //   res.statusCode = 200;
+    //   res.end(
+    //     JSON.stringify({
+    //       ok: true,
+    //       base_tags: card.tag_state?.base_tags,
+    //       added: card.tag_state?.added,
+    //       removed: card.tag_state?.removed,
+    //     })
+    //   );
+    //   return;
+    // }
 
     res.statusCode = 405;
-    res.setHeader('Allow', 'GET, POST, DELETE, OPTIONS');
+    res.setHeader('Allow', 'GET, POST, OPTIONS');
     res.end();
   } catch (err) {
     console.error('cardTagsHandler', err);

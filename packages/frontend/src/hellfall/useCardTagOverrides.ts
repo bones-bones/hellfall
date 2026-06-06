@@ -166,6 +166,7 @@ export function useCardTagOverrides(
           // changes: { tags: { before: currentTags, after: newTags } },
           // comment: `Add tag: ${tagNorm}`,
           tag: tagNorm,
+          change_type: 'add'
         }),
       });
       if (!res.ok) throw new Error('Failed to submit changeset');
@@ -183,7 +184,7 @@ export function useCardTagOverrides(
       // const currentTags = firestoreTags ?? mergeTags(baseTags, overrides);
       // const newTags = currentTags.filter(t => t !== tagNorm);
       const res = await fetch(`${baseUrl}/api/changesets`, {
-        method: 'DELETE',
+        method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -191,6 +192,7 @@ export function useCardTagOverrides(
           // changes: { tags: { before: currentTags, after: newTags } },
           // comment: `Remove tag: ${tagNorm}`,
           tag: tagNorm,
+          change_type: 'delete'
         }),
       });
       if (!res.ok) throw new Error('Failed to submit changeset');

@@ -1243,6 +1243,7 @@ export const applyFromMap = (card: HCCard.Any, changeList: anyChange[], cardMap:
   updateParts(card, newRelateds);
   cleanParts(card, oldRelateds);
 };
+
 export const applyFromCollection = async (
   card: HCCard.Any,
   changeList: anyChange[],

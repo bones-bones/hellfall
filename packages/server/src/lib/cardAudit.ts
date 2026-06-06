@@ -7,7 +7,7 @@ const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 
 export type AuditAction =
   | 'tag_add'
-  | 'tag_remove'
+  | 'tag_delete'
   | 'field_edit'
   | 'changeset_accept'
   | 'changeset_reject';
@@ -84,7 +84,7 @@ function tagChangesFromState(before?: tagState, after?: tagState) {
 /** Convenience wrapper for tag add/remove — keeps cardTags.ts callsites clean. */
 export async function recordTagChangeset(params: {
   cardId: string;
-  action: 'tag_add' | 'tag_remove';
+  action: 'tag_add' | 'tag_delete';
   tag: string;
   user: AuditActor;
   before?: tagState;
