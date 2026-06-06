@@ -337,7 +337,7 @@ const getBaseDiffs = (oldBase:string[], newBase:string[]): {added:string[], dele
   return {added, deleted}
 }
 
-export const getMergedTags = (oldTags:string[],newTags:string[]): {mergedTags:string[], shouldDeriveProps:boolean} => {
+const getMergedTags = (oldTags:string[],newTags:string[]): {mergedTags:string[], shouldDeriveProps:boolean} => {
   let shouldDeriveProps = false;
   // TODO: implement this on the frontend too
   // TODO: move error to correct spot

@@ -1238,7 +1238,12 @@ export const getChangesFromDifferences = (
 export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean => {
   let setDerived = false;
   changeList.forEach((change, index) => {
-    if (!changeIsValid(card, change)) throw console.error('invalid change got passed in');
+    if (!changeIsValid(card, change)) {
+      if (!('card_Faces' in card) && change.location == 'root' && changeList.slice(0,index).some(other=>other.location == 'face' && other.change_type == change.change_type && other.prop == change.prop && other.value == change.value)) {
+        return;
+      }
+      throw console.error('invalid change got passed in');
+    }
     if (applyChange(card, change)) {
       setDerived = true;
     }
@@ -1281,6 +1286,11 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
     newCard.all_parts = existingCard.all_parts;
     setDerivedProps(newCard);
     return newCard;
+  }
+  if (newCard.base_tags) {
+    existingCard.base_tags = newCard.base_tags;
+  } else {
+    delete existingCard.base_tags
   }
   return existingCard;
 };
