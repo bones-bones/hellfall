@@ -141,7 +141,7 @@ export const setDerivedProps = (
 ) /* :{card:HCCard.Any;relateds?:HCCard.Any[]}  */ => {
   // todo: make sure this works when tags are empty
   if (tags /* && !(tags.length == 1 && tags[0] == '') */ && card.kind != 'scryfall') {
-    setTags(card, tags, true);
+    setTags(card, tags);
   }
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,

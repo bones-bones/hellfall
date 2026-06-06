@@ -452,7 +452,7 @@ const setPropsFromTags = (card: HCCard.Any, tags: string[], shouldDeriveProps?: 
   } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
 };
 
-export const setTags = (card: HCCard.Any, newBase: string[], forceDerivedProps?: boolean) => {
+export const setTags = (card: HCCard.Any, newBase: string[], noForceDerivedProps?: boolean) => {
   const base: string[] = card.base_tags ?? [];
   const fixedNew = newBase.length == 1 && newBase[0] == '' ? [] : newBase;
   const { mergedTags, shouldDeriveProps } = getMergedTags(base, fixedNew);
@@ -461,7 +461,7 @@ export const setTags = (card: HCCard.Any, newBase: string[], forceDerivedProps?:
   } else {
     deletePropFromRoot(card, 'base_tags');
   }
-  setPropsFromTags(card, mergedTags, shouldDeriveProps || forceDerivedProps);
+  setPropsFromTags(card, mergedTags, shouldDeriveProps || !noForceDerivedProps);
 };
 
 // export const handleTags = (card: HCCard.Any, tagState: tagState, setBaseTags?: boolean, deriveInvisibleProps?:boolean) => {

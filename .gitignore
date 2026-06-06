@@ -48,8 +48,6 @@ build
 
 LESSONS_LEARNED.md
 
-local-tags.json
-
 *.tsbuildinfo
 packages/scripts/hellfall-api-key.json
 hellfall-api-key.json

@@ -192,9 +192,7 @@ export const HellfallCard = ({
                     style={{ marginRight: '1em' }}
                     dangerouslySetInnerHTML={{ __html: face.name }}
                   />
-                ) : triggerEscapeList.some(
-                    e => face.name.includes(e) && data.id != 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d'
-                  ) ? (
+                ) : triggerEscapeList.some(e => face.name.includes(e)) ? (
                   <MediumLine key="name" style={{ marginRight: '1em' }}>
                     {formatDiscordMarkdownInline(formatParens(face.name))}
                   </MediumLine>

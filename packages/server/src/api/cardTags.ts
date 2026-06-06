@@ -1,16 +1,28 @@
-import { Firestore, type DocumentReference, type DocumentSnapshot } from '@google-cloud/firestore';
+import {
+  FieldValue,
+  Firestore,
+  type DocumentReference,
+  type DocumentSnapshot,
+} from '@google-cloud/firestore';
 import { withCors } from './lib/cors.js';
 import { env } from './lib/env.js';
 import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
-import { listCardChangesets, recordTagChangeset } from '../lib/cardAudit.js';
-import { HCCard, tagState } from '@hellfall/shared/types';
+import { listCardChangesets } from '../lib/cardAudit.js';
+import { HCCard } from '@hellfall/shared/types';
 import {
-  addTagContributor,
+  addTagToBase,
+  anyChange,
   cardToFirestore,
-  deleteTagContributor,
+  changeIsValid,
+  deleteTagFromBase,
   firestoreCard,
   firestoreToCard,
+  getChangesFromDifferences,
+  setTags,
+  tagChange,
+  tagChangeIsValid,
+  tagChangesAnyProps,
 } from '@hellfall/shared/utils';
 // import {
 //   applyAddTag,
@@ -22,6 +34,7 @@ import {
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const collection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
+const changesetsCol = db.collection(env.FIRESTORE_CHANGESETS_COLLECTION);
 
 // const EMPTY_TAG_SEED = {
 //   baseTags: [] as string[],
@@ -60,7 +73,6 @@ export const cardTagsHandler = async (
   req: HandlerRequest,
   res: HandlerResponse,
   cardId: string,
-  // tagFromPath: string | null,
   auditTrail = false
 ): Promise<void> => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
@@ -99,10 +111,10 @@ export const cardTagsHandler = async (
       // const snap = await getOrSeedCardDoc(docRef);
       // const state = resolveTagState(snap.data());
       const card: firestoreCard = await docRef.get();
-      const state = card.tag_state ?? {};
+      // const state = card.tag_state ?? {};
       let body: string;
       try {
-        body = JSON.stringify({ ...state, persistEnabled: true });
+        body = JSON.stringify({ ...(card.base_tags ?? []), persistEnabled: true });
       } catch {
         res.statusCode = 500;
         res.end(JSON.stringify({ ok: false, reason: 'invalid_stored_data' }));
@@ -141,29 +153,56 @@ export const cardTagsHandler = async (
       // const snap = await getOrSeedCardDoc(docRef);
       // const before = resolveTagState(snap.data());
       // const state = applyAddTag(before, norm);
-      const card: HCCard.Any = firestoreToCard(await docRef.get());
-      const before = card.tag_state ?? {};
+      const card: firestoreCard = await docRef.get();
+      const base_tags = [...(card.base_tags ?? [])];
       if (change_type == 'add') {
-        addTagContributor(card, tag);
+        addTagToBase(base_tags, tag);
       } else {
+        deleteTagFromBase(base_tags, tag);
+      }
+      const changes: anyChange[] = [{ location: 'tag', change_type, tag } as tagChange];
+      if (tagChangesAnyProps(tag)) {
+        const hcCard = firestoreToCard(card);
+        const newCard = structuredClone(hcCard);
+        setTags(newCard, base_tags);
+        changes.push(...getChangesFromDifferences(hcCard, newCard));
+        if (changes.some(change => !changeIsValid(hcCard, change))) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, reason: 'invalid_tag_change' }));
+          return;
+        }
+      }
+      await changesetsCol.add({
+        cardId,
+        status: 'pending',
+        createdAt: FieldValue.serverTimestamp(),
+        resolvedAt: null,
+        submittedBy: { userId: auth.userId, username: auth.username },
+        resolvedBy: null,
+        changes,
+        comment: `${change_type == 'add' ? 'Added' : 'Deleted'} tag: "${tag}"`,
+      });
+
+      if (base_tags.length) {
+        card.base_tags = base_tags;
+      } else {
+        delete card.base_tags;
       }
 
-      await docRef.set(cardToFirestore(card) /*  { merge: true } */);
-      await recordTagChangeset({
-        cardId,
-        action: `tag_${change_type}`,
-        tag,
-        user: { userId: auth.userId, username: auth.username },
-        before,
-        after: card.tag_state,
-      });
+      await docRef.set(card /*  { merge: true } */);
+      // await recordTagChangeset({
+      //   cardId,
+      //   action: `tag_${change_type}`,
+      //   tag,
+      //   user: { userId: auth.userId, username: auth.username },
+      //   before,
+      //   after: card.tag_state,
+      // });
       res.statusCode = 200;
       res.end(
         JSON.stringify({
           ok: true,
-          base_tags: card.tag_state?.base_tags,
-          added: card.tag_state?.added,
-          removed: card.tag_state?.removed,
+          base_tags: base_tags,
         })
       );
       return;
