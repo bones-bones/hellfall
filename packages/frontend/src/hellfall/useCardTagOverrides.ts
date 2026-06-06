@@ -166,7 +166,7 @@ export function useCardTagOverrides(
           // changes: { tags: { before: currentTags, after: newTags } },
           // comment: `Add tag: ${tagNorm}`,
           tag: tagNorm,
-          change_type: 'add'
+          change_type: 'add',
         }),
       });
       if (!res.ok) throw new Error('Failed to submit changeset');
@@ -192,7 +192,7 @@ export function useCardTagOverrides(
           // changes: { tags: { before: currentTags, after: newTags } },
           // comment: `Remove tag: ${tagNorm}`,
           tag: tagNorm,
-          change_type: 'delete'
+          change_type: 'delete',
         }),
       });
       if (!res.ok) throw new Error('Failed to submit changeset');

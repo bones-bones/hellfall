@@ -8,7 +8,12 @@ import {
   cardStringFilter,
 } from './types';
 import { funcOp, opToNot } from './filterUtils';
-import { canBeInDecks, extraSetList, getChildSets, textSearchIncludes } from '@hellfall/shared/utils';
+import {
+  canBeInDecks,
+  extraSetList,
+  getChildSets,
+  textSearchIncludes,
+} from '@hellfall/shared/utils';
 import { setsData } from '@hellfall/shared/data';
 
 const sets = setsData.data;
@@ -77,9 +82,11 @@ export const filterIncludeExtras: includeFilter = Object.assign(
  * @param value2 the value of the search's set
  * @returns
  */
-export const inChildSets = (value1:SetCode, value2:SetCode) => getChildSets(value2)?.some(set=>set == value1);
+export const inChildSets = (value1: SetCode, value2: SetCode) =>
+  getChildSets(value2)?.some(set => set == value1);
 
-export const inSetOrChildren = (value1:SetCode, value2:SetCode) => value1 == value2 || inChildSets(value1,value2)
+export const inSetOrChildren = (value1: SetCode, value2: SetCode) =>
+  value1 == value2 || inChildSets(value1, value2);
 
 /**
  * To use in filters when need to check if one set is in another's group
@@ -114,10 +121,9 @@ export const inSetOrChildren = (value1:SetCode, value2:SetCode) => value1 == val
 //   }
 // };
 
-
 export const filterSetCard: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) =>
-    funcOp(operator, (set: string) => textSearchIncludes(set, value2), value1.set),
+    funcOp(operator, (set: string) => textSearchIncludes(set ?? '', value2), value1.set),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: (operator: opType, value: string) => `the set is ${opToNot(operator)} "${value}"`,
@@ -129,7 +135,7 @@ const includeComponent = (part: HCRelatedCard) =>
 
 export const filterSetToken: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {
-    const isSetInResults = (set: string) => textSearchIncludes(set, value2);
+    const isSetInResults = (set: string) => textSearchIncludes(set ?? '', value2);
     const shouldIncludeMeld = (part: HCRelatedCard, set: string) => {
       return part.component == 'meld_part' && part.set != set;
     };

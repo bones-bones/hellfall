@@ -32,7 +32,11 @@ async function buildCatalogBody(): Promise<string> {
   const body = JSON.stringify({ data });
   const stringifyMs = Date.now() - t1;
   console.log(
-    `[cards/load] buildCatalogBody cards=${data.length} firestore=${loadMs}ms stringify=${stringifyMs}ms total=${Date.now() - t0}ms bytes=${body.length}`
+    `[cards/load] buildCatalogBody cards=${
+      data.length
+    } firestore=${loadMs}ms stringify=${stringifyMs}ms total=${Date.now() - t0}ms bytes=${
+      body.length
+    }`
   );
   return body;
 }
@@ -44,7 +48,9 @@ export async function getCatalogResponseBody(): Promise<string> {
   if (cache && now - cache.loadedAt < cacheTtlMs()) {
     const ageMs = now - cache.loadedAt;
     console.log(
-      `[cards/load] cache hit age=${ageMs}ms ttl=${cacheTtlMs()}ms bytes=${cache.body.length} total=${Date.now() - t0}ms`
+      `[cards/load] cache hit age=${ageMs}ms ttl=${cacheTtlMs()}ms bytes=${
+        cache.body.length
+      } total=${Date.now() - t0}ms`
     );
     return cache.body;
   }
@@ -52,7 +58,9 @@ export async function getCatalogResponseBody(): Promise<string> {
   const waitingOnInflight = inflight !== null;
   if (!inflight) {
     console.log(
-      `[cards/load] cache ${cache ? 'stale' : 'empty'} (age=${cache ? now - cache.loadedAt : 'n/a'}ms), refreshing`
+      `[cards/load] cache ${cache ? 'stale' : 'empty'} (age=${
+        cache ? now - cache.loadedAt : 'n/a'
+      }ms), refreshing`
     );
     inflight = (async () => {
       try {
@@ -69,7 +77,9 @@ export async function getCatalogResponseBody(): Promise<string> {
 
   const body = await inflight;
   console.log(
-    `[cards/load] ${waitingOnInflight ? 'inflight wait' : 'refresh'} complete total=${Date.now() - t0}ms bytes=${body.length}`
+    `[cards/load] ${waitingOnInflight ? 'inflight wait' : 'refresh'} complete total=${
+      Date.now() - t0
+    }ms bytes=${body.length}`
   );
   return body;
 }

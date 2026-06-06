@@ -174,9 +174,7 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
     'compress_face',
     'drop_face',
   ],
-  push: [
-    'frame_effects',
-  ],
+  push: ['frame_effects'],
   delete: [
     'flavor_name',
     'export_name',
@@ -203,9 +201,7 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
     'compress_face',
     'drop_face',
   ],
-  pop: [
-    'frame_effects',
-  ],
+  pop: ['frame_effects'],
 };
 export const colorsAreValid = (colors: HCColors): boolean => {
   const colorList: HCColors = [];
@@ -227,8 +223,22 @@ export const legalitiesAreValid = (
   Object.values(legalities).every(legality => Object.values(HCLegality).includes(legality)) &&
   Object.entries(legalities).some(([format, legality]) => current[format] != legality);
 
-const imageProps = ['image','rotated_image','still_image','draft_image', 'rotated_draft_image', 'still_draft_image']
-const boolProps = ['id_is_scryfall', 'oracle_id_is_scryfall', 'not_directly_draftable', 'has_draft_partners', 'compress_face', 'drop_face']
+const imageProps = [
+  'image',
+  'rotated_image',
+  'still_image',
+  'draft_image',
+  'rotated_draft_image',
+  'still_draft_image',
+];
+const boolProps = [
+  'id_is_scryfall',
+  'oracle_id_is_scryfall',
+  'not_directly_draftable',
+  'has_draft_partners',
+  'compress_face',
+  'drop_face',
+];
 
 export const rootChangeIsValid = <K extends rootPropType>(
   card: HCCard.Any,
@@ -266,8 +276,7 @@ export const rootChangeIsValid = <K extends rootPropType>(
       }
       if (imageProps.includes(change.prop)) {
         return (
-          typeof change.value == 'string' &&
-          change.value.startsWith('https://') /* &&
+          typeof change.value == 'string' && change.value.startsWith('https://') /* &&
           change.value != currentValue */
         );
       }
@@ -305,8 +314,11 @@ export const rootChangeIsValid = <K extends rootPropType>(
           change.value[1] != (currentValue as Record<string, string>)[change.value[0]]
         );
       }
-      if (change.prop == 'frame_effects' && !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)) {
-        return false
+      if (
+        change.prop == 'frame_effects' &&
+        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
+      ) {
+        return false;
       }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
     }
@@ -320,8 +332,11 @@ export const rootChangeIsValid = <K extends rootPropType>(
             undefined
         );
       }
-      if (change.prop == 'frame_effects' && !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)) {
-        return false
+      if (
+        change.prop == 'frame_effects' &&
+        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
+      ) {
+        return false;
       }
       return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
   }
@@ -338,8 +353,20 @@ export const attractionLightsAreValid = (lights: number[]) => {
   }
   return true;
 };
-const faceImageProps = ['image','rotated_image','still_image','draft_image', 'rotated_draft_image', 'still_draft_image']
-const faceBoolProps = ['id_is_scryfall', 'oracle_id_is_scryfall', 'not_directly_draftable', 'has_draft_partners']
+const faceImageProps = [
+  'image',
+  'rotated_image',
+  'still_image',
+  'draft_image',
+  'rotated_draft_image',
+  'still_draft_image',
+];
+const faceBoolProps = [
+  'id_is_scryfall',
+  'oracle_id_is_scryfall',
+  'not_directly_draftable',
+  'has_draft_partners',
+];
 export const faceChangeIsValid = <K extends facePropType>(
   card: HCCard.Any,
   change: faceChange<K>
@@ -395,10 +422,7 @@ export const faceChangeIsValid = <K extends facePropType>(
         return change.value === true && change.value != currentValue;
       }
       if (imageProps.includes(change.prop)) {
-        return (
-          typeof change.value == 'string' &&
-          change.value.startsWith('https://')
-        );
+        return typeof change.value == 'string' && change.value.startsWith('https://');
       }
       if (change.prop == 'layout') {
         // TODO: more complex validation for layouts
@@ -422,15 +446,21 @@ export const faceChangeIsValid = <K extends facePropType>(
       return typeof change.value == 'string';
     }
     case 'push':
-      if (change.prop == 'frame_effects' && !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)) {
-        return false
+      if (
+        change.prop == 'frame_effects' &&
+        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
+      ) {
+        return false;
       }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
     case 'delete':
       return change.prop in face;
     case 'pop':
-      if (change.prop == 'frame_effects' && !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)) {
-        return false
+      if (
+        change.prop == 'frame_effects' &&
+        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
+      ) {
+        return false;
       }
       return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
   }
@@ -581,9 +611,9 @@ export const allPartsChangeIsValid = (
 
 export const tagChangeIsValid = (card: HCCard.Any, change: tagChange): boolean => {
   if (change.change_type == 'add') {
-    return !card.base_tags?.includes(change.tag)
+    return !card.base_tags?.includes(change.tag);
   }
-  return card.base_tags?.includes(change.tag) ?? false
+  return card.base_tags?.includes(change.tag) ?? false;
 };
 
 export const changeIsValid = (card: HCCard.Any, change: anyChange): boolean => {
@@ -735,13 +765,13 @@ export const applyAllPartsChange = (card: HCCard.Any, change: allPartsChange): b
 export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
   if (change.change_type == 'add') {
     if (card.base_tags) {
-      addTagToBase(card.base_tags,change.tag)
+      addTagToBase(card.base_tags, change.tag);
     } else {
       card.base_tags = [change.tag];
     }
   } else {
     if (card.base_tags) {
-      deleteTagFromBase(card.base_tags, change.tag)
+      deleteTagFromBase(card.base_tags, change.tag);
     }
   }
   return true;
@@ -1239,7 +1269,19 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
   let setDerived = false;
   changeList.forEach((change, index) => {
     if (!changeIsValid(card, change)) {
-      if (!('card_Faces' in card) && change.location == 'root' && changeList.slice(0,index).some(other=>other.location == 'face' && other.change_type == change.change_type && other.prop == change.prop && other.value == change.value)) {
+      if (
+        !('card_Faces' in card) &&
+        change.location == 'root' &&
+        changeList
+          .slice(0, index)
+          .some(
+            other =>
+              other.location == 'face' &&
+              other.change_type == change.change_type &&
+              other.prop == change.prop &&
+              other.value == change.value
+          )
+      ) {
         return;
       }
       throw console.error('invalid change got passed in');
@@ -1290,7 +1332,7 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
   if (newCard.base_tags) {
     existingCard.base_tags = newCard.base_tags;
   } else {
-    delete existingCard.base_tags
+    delete existingCard.base_tags;
   }
   return existingCard;
 };

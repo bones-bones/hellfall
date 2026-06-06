@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { anyMappedType, getCardEntries } from '../cardHandling';
+import { anyMappedType, anyPropType, getCardEntries } from '../cardHandling';
 import { firestoreCard } from './firestoreTypes';
 import { restoreMissingFields } from '../cardModification';
 
@@ -17,9 +17,10 @@ export const cardToFirestore = (card: HCCard.Any): firestoreCard => {
   return fire;
 };
 
-export const firestoreToCard = (fire: firestoreCard): HCCard.Any => {
+export const firestoreToCard = (fire: firestoreCard, noRestore?: boolean): HCCard.Any => {
   const card = { ...fire } as unknown as HCCard.Any;
   card.color_identity_hybrid = JSON.parse(fire.color_identity_hybrid!);
+  if (noRestore) return card;
   restoreMissingFields(card);
   return card;
 };

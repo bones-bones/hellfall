@@ -76,11 +76,11 @@ for (const pkg of packages) {
   const count = observed[pkg];
   if (count > allowed) {
     errors.push(
-      `${pkg}: ${count} circular chain(s) found (baseline allows ${allowed}). New cycles were introduced.`,
+      `${pkg}: ${count} circular chain(s) found (baseline allows ${allowed}). New cycles were introduced.`
     );
   } else if (count < allowed) {
     errors.push(
-      `${pkg}: ${count} circular chain(s) found (baseline allows ${allowed}). Cycles were fixed — run \`yarn check:circular-deps --update-baseline\`.`,
+      `${pkg}: ${count} circular chain(s) found (baseline allows ${allowed}). Cycles were fixed — run \`yarn check:circular-deps --update-baseline\`.`
     );
   }
 }

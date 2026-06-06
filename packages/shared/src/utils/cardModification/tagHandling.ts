@@ -218,8 +218,8 @@ export const splitFullTag = (fullTag: string) => {
   return { tag, note };
 };
 
-export const tagChangesVisibleProps = (fullTag:string): boolean => {
-  const {tag} = splitFullTag(fullTag);
+export const tagChangesVisibleProps = (fullTag: string): boolean => {
+  const { tag } = splitFullTag(fullTag);
   if (tag in faceImageTagProps) {
     return true;
   }
@@ -242,10 +242,10 @@ export const tagChangesVisibleProps = (fullTag:string): boolean => {
     return true;
   }
   return false;
-}
+};
 
-export const tagChangesAnyProps = (fullTag:string): boolean => {
-  const {tag} = splitFullTag(fullTag);
+export const tagChangesAnyProps = (fullTag: string): boolean => {
+  const { tag } = splitFullTag(fullTag);
   if (tagChangesVisibleProps(tag)) {
     return true;
   }
@@ -271,7 +271,7 @@ export const tagChangesAnyProps = (fullTag:string): boolean => {
     return true;
   }
   return false;
-}
+};
 
 // // export const addTagToState = (state: tagState, tag: string):boolean => {
 // //   const tagToAdd = splitFullTag(tag).tag
@@ -301,20 +301,23 @@ export const tagChangesAnyProps = (fullTag:string): boolean => {
 //   return state;
 // };
 
-export const addTagToBase = (base_tags: string[], fullTag: string):boolean => {
+export const addTagToBase = (base_tags: string[], fullTag: string): boolean => {
   if (!base_tags.includes(fullTag)) {
-    base_tags.push(fullTag)
-    return tagChangesVisibleProps(fullTag)
+    base_tags.push(fullTag);
+    return tagChangesVisibleProps(fullTag);
   }
   return false;
 };
 
-export const deleteTagFromBase = (base_tags: string[], fullTag: string):boolean => {
-  const {tag, note} = splitFullTag(fullTag);
-  let changesVisible = false
-  for (let i = base_tags.length-1;i>=0;i--) {
-    if (splitFullTag(base_tags[i]).tag == tag && (note == undefined || note == (splitFullTag(base_tags[i]).note ?? ''))) {
-      base_tags.splice(i,1);
+export const deleteTagFromBase = (base_tags: string[], fullTag: string): boolean => {
+  const { tag, note } = splitFullTag(fullTag);
+  let changesVisible = false;
+  for (let i = base_tags.length - 1; i >= 0; i--) {
+    if (
+      splitFullTag(base_tags[i]).tag == tag &&
+      (note == undefined || note == (splitFullTag(base_tags[i]).note ?? ''))
+    ) {
+      base_tags.splice(i, 1);
       if (tagChangesVisibleProps(tag)) {
         changesVisible = true;
       }
@@ -328,37 +331,42 @@ export const deleteTagFromBase = (base_tags: string[], fullTag: string):boolean 
 //   if (note == 'undefined') {
 
 //   }
-  
+
 // };
 
-const getBaseDiffs = (oldBase:string[], newBase:string[]): {added:string[], deleted:string[]} =>  {
-  const added:string[] = newBase.filter(tag=>!oldBase.includes(tag));
-  const deleted:string[] = oldBase.filter(tag=>!newBase.includes(tag));
-  return {added, deleted}
-}
+const getBaseDiffs = (
+  oldBase: string[],
+  newBase: string[]
+): { added: string[]; deleted: string[] } => {
+  const added: string[] = newBase.filter(tag => !oldBase.includes(tag));
+  const deleted: string[] = oldBase.filter(tag => !newBase.includes(tag));
+  return { added, deleted };
+};
 
-const getMergedTags = (oldTags:string[],newTags:string[]): {mergedTags:string[], shouldDeriveProps:boolean} => {
+const getMergedTags = (
+  oldTags: string[],
+  newTags: string[]
+): { mergedTags: string[]; shouldDeriveProps: boolean } => {
   let shouldDeriveProps = false;
   // TODO: implement this on the frontend too
   // TODO: move error to correct spot
   // if (card.kind == 'scryfall') throw console.error("Can't set tags for scryfall cards");
   const mergedTags = [...oldTags];
-  const {added, deleted} = getBaseDiffs(oldTags,newTags)
-  deleted.forEach(fullTag=>{
-    if (deleteTagFromBase(mergedTags,fullTag)) {
+  const { added, deleted } = getBaseDiffs(oldTags, newTags);
+  deleted.forEach(fullTag => {
+    if (deleteTagFromBase(mergedTags, fullTag)) {
       shouldDeriveProps = true;
     }
-  })
-  added.forEach(fullTag=>{
-    if (addTagToBase(mergedTags,fullTag)) {
+  });
+  added.forEach(fullTag => {
+    if (addTagToBase(mergedTags, fullTag)) {
       shouldDeriveProps = true;
     }
-  })
-  return {mergedTags, shouldDeriveProps}
-
+  });
+  return { mergedTags, shouldDeriveProps };
 };
 
-const setPropsFromTags = (card: HCCard.Any, tags: string[], shouldDeriveProps?:boolean) => {
+const setPropsFromTags = (card: HCCard.Any, tags: string[], shouldDeriveProps?: boolean) => {
   if (card.kind == 'scryfall') return;
   if (!shouldDeriveProps) {
     deletePropFromRoot(card, 'tag_notes');
@@ -369,7 +377,7 @@ const setPropsFromTags = (card: HCCard.Any, tags: string[], shouldDeriveProps?:b
     card.tags = tags.map(fullTag => {
       const { tag, note } = splitFullTag(fullTag);
       if (note) {
-        addTagNote(card, tag, note)
+        addTagNote(card, tag, note);
       }
       return tag;
     });
@@ -444,23 +452,22 @@ const setPropsFromTags = (card: HCCard.Any, tags: string[], shouldDeriveProps?:b
   } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
 };
 
-export const setTags = (card: HCCard.Any, newBase:string[], forceDerivedProps?:boolean) => {
-  const base:string[] = card.base_tags ?? [];
-  const fixedNew =  newBase.length == 1 && newBase[0] == '' ? [] : newBase
-  const {mergedTags, shouldDeriveProps} = getMergedTags(base, fixedNew)
+export const setTags = (card: HCCard.Any, newBase: string[], forceDerivedProps?: boolean) => {
+  const base: string[] = card.base_tags ?? [];
+  const fixedNew = newBase.length == 1 && newBase[0] == '' ? [] : newBase;
+  const { mergedTags, shouldDeriveProps } = getMergedTags(base, fixedNew);
   if (mergedTags.length) {
-    addPropToRoot(card,'base_tags',mergedTags)
+    addPropToRoot(card, 'base_tags', mergedTags);
   } else {
-    deletePropFromRoot(card,'base_tags')
+    deletePropFromRoot(card, 'base_tags');
   }
-  setPropsFromTags(card,mergedTags,shouldDeriveProps || forceDerivedProps);
-}
-
+  setPropsFromTags(card, mergedTags, shouldDeriveProps || forceDerivedProps);
+};
 
 // export const handleTags = (card: HCCard.Any, tagState: tagState, setBaseTags?: boolean, deriveInvisibleProps?:boolean) => {
 //   if (card.kind == 'scryfall') return;
 //   setTagPropsToDefault(card);
-//   const shouldDeriveProps:'all'|'visible'|false|undefined = deriveInvisibleProps ? 
+//   const shouldDeriveProps:'all'|'visible'|false|undefined = deriveInvisibleProps ?
 //   if (!tags.length || (tags.length == 1 && tags[0] == '')) {
 //     deletePropFromRoot(card, 'tags');
 //     deletePropFromRoot(card, 'tag_notes');
@@ -527,7 +534,6 @@ export const setTags = (card: HCCard.Any, newBase:string[], forceDerivedProps?:b
 //     card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
 //   } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
 // };
-
 
 // export const addTagContributor = (card: HCCard.Any, tag: string) => {
 //   if (!card.tag_state) {

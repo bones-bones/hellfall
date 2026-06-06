@@ -143,7 +143,7 @@ export const DeckBuilder = () => {
       <FormField label="Deck Name">
         <TextInput
           defaultValue={deckName}
-          placeholder='your deck name goes here'
+          placeholder="your deck name goes here"
           onBlur={event => {
             setNameOfDeck(event.target.value);
           }}

@@ -121,3 +121,4 @@ Write a script to transform the database
 - switch to using mapped/entry type pattern
 - add is:maincube and is:sidecube
 - add dropdown to tag editor for tags with multiple underlying base tags
+- set up my own firebase instance

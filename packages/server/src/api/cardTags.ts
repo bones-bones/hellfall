@@ -116,10 +116,10 @@ export const cardTagsHandler = async (
     if (req.method === 'POST') {
       const auth = await requireTagAuth(req, res);
       if (!auth) return;
-      
-      let reqBody: { tag?: string, change_type: 'add' | 'delete' };
+
+      let reqBody: { tag?: string; change_type: 'add' | 'delete' };
       try {
-        reqBody = (await readJsonBody(req)) as { tag?: string, change_type: 'add' | 'delete' };
+        reqBody = (await readJsonBody(req)) as { tag?: string; change_type: 'add' | 'delete' };
         if (reqBody.change_type != 'add' && reqBody.change_type != 'delete') {
           res.statusCode = 400;
           res.end(JSON.stringify({ ok: false, reason: 'invalid_json' }));
@@ -146,9 +146,8 @@ export const cardTagsHandler = async (
       if (change_type == 'add') {
         addTagContributor(card, tag);
       } else {
-
       }
-      
+
       await docRef.set(cardToFirestore(card) /*  { merge: true } */);
       await recordTagChangeset({
         cardId,
