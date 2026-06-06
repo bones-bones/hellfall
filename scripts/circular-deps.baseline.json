@@ -1,0 +1,8 @@
+{
+  "$comment": "Max allowed circular dependency chains per package. Lower when cycles are fixed.",
+  "packages/shared": 35,
+  "packages/backend": 0,
+  "packages/frontend": 0,
+  "packages/server": 0,
+  "packages/scripts": 0
+}
