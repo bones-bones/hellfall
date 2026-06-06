@@ -50,6 +50,10 @@
     "./utils/firestore": {
       "types": "./src/utils/firestore/index.ts",
       "import": "./src/utils/firestore/index.ts"
+    },
+    "./utils/cardModification/changeHandling": {
+      "types": "./src/utils/cardModification/changeHandling.ts",
+      "import": "./src/utils/cardModification/changeHandling.ts"
     }
   },
   "dependencies": {

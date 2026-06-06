@@ -1,7 +1,6 @@
 import type { HCCard } from '@hellfall/shared/types';
-// import { loadHellscubeCatalogCards } from '@hellfall/shared/export/loadHellscubeCatalog';
 import { env } from '../api/lib/env.ts';
-import { exportCardMap } from '@hellfall/shared/utils';
+import { loadHellscubeCatalogCards } from './loadHellscubeCatalog.ts';
 
 const DEFAULT_TTL_MS = 15 * 60 * 1000;
 
@@ -23,7 +22,7 @@ function cacheTtlMs(): number {
 
 async function buildCatalogBody(): Promise<string> {
   const t0 = Date.now();
-  const data = await exportCardMap({
+  const data = await loadHellscubeCatalogCards({
     databaseId: env.FIRESTORE_DATABASE_ID,
     collectionName: env.FIRESTORE_CARDS_COLLECTION,
   });
@@ -32,7 +31,7 @@ async function buildCatalogBody(): Promise<string> {
   const body = JSON.stringify({ data });
   const stringifyMs = Date.now() - t1;
   console.log(
-    `[cards/load] buildCatalogBody cards=${data.size()} firestore=${loadMs}ms stringify=${stringifyMs}ms total=${Date.now() - t0}ms bytes=${body.length}`
+    `[cards/load] buildCatalogBody cards=${data.length} firestore=${loadMs}ms stringify=${stringifyMs}ms total=${Date.now() - t0}ms bytes=${body.length}`
   );
   return body;
 }

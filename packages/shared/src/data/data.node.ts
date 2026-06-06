@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 // import { loadHellscubeCatalogCards } from '../export/loadHellscubeCatalog';
 import { HCCard, HCCardSymbol, HCSet } from '../types';
-import { exportCardMap } from '../utils';
+import { exportCardMap } from '../utils/firestore';
 // import { error } from 'console';
 
 export interface JsonDataWrapper<T> {
