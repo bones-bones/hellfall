@@ -108,6 +108,7 @@ export const cardTagsHandler = async (
     }
 
     if (req.method === 'GET') {
+      // TODO: make the tags persist through reloads
       // const snap = await getOrSeedCardDoc(docRef);
       // const state = resolveTagState(snap.data());
       const card: firestoreCard = await docRef.get();
@@ -202,7 +203,7 @@ export const cardTagsHandler = async (
       res.end(
         JSON.stringify({
           ok: true,
-          base_tags: base_tags,
+          base_tags,
         })
       );
       return;

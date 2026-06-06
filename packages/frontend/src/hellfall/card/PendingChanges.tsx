@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
+import { anyChange } from '@hellfall/shared/utils';
 
 interface ChangesetUser {
   userId: string;
   username: string;
 }
 
-interface FieldChange {
-  before: unknown;
-  after: unknown;
-}
+// interface FieldChange {
+//   before: unknown;
+//   after: unknown;
+// }
 
 interface PendingChangeset {
   id: string;
@@ -19,7 +20,8 @@ interface PendingChangeset {
   status: 'pending';
   createdAt: string | null;
   submittedBy: ChangesetUser;
-  changes: Record<string, FieldChange>;
+  // changes: Record<string, FieldChange>;
+  changes: anyChange[];
   comment: string | null;
 }
 
@@ -71,11 +73,12 @@ export function PendingChanges({ cardId }: { cardId: string }) {
             {Object.entries(cs.changes).map(([field, change]) => (
               <FieldDiff key={field}>
                 <FieldName>{field}</FieldName>
-                <DiffRow>
+                {formatVal(change)}
+                {/* <DiffRow>
                   <Before>{formatVal(change.before)}</Before>
                   <Arrow>&rarr;</Arrow>
                   <After>{formatVal(change.after)}</After>
-                </DiffRow>
+                </DiffRow> */}
               </FieldDiff>
             ))}
             <ReviewLink to="/review">View in Review</ReviewLink>
