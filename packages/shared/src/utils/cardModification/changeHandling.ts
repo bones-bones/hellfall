@@ -1,9 +1,13 @@
 import {
   formatList,
+  HCBorderColor,
   HCCard,
   HCCardFace,
   HCColor,
   HCColors,
+  HCFinish,
+  HCFrame,
+  HCFrameEffect,
   HCImageStatus,
   HCKind,
   HCLayout,
@@ -57,6 +61,7 @@ import type {
   rootChange,
   tagChange,
 } from './changeTypes';
+import { addTagToBase, deleteTagFromBase } from './tagHandling';
 
 export type {
   allPartsChange,
@@ -75,35 +80,36 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     // 'oracle_id',
     'oracle_id_is_scryfall',
     'name',
-    // 'flavor_name',
+    'flavor_name',
+    'export_name',
     'set',
-    // 'collector_number',
+    'collector_number',
     'rarity',
-    // 'layout',
-    // 'image_status',
+    'layout',
+    'image_status',
     'image',
-    // 'rotated_image',
-    // 'still_image',
+    'rotated_image',
+    'still_image',
     'mana_value',
     'colors',
-    // 'draft_image_status',
-    // 'draft_image',
-    // 'rotated_draft_image',
-    // 'still_draft_image',
-    // 'not_directly_draftable',
-    // 'has_draft_partners',
+    'draft_image_status',
+    'draft_image',
+    'rotated_draft_image',
+    'still_draft_image',
+    'not_directly_draftable',
+    'has_draft_partners',
     'legalities',
     'rulings',
-    // 'finish',
-    // 'border_color',
-    // 'frame',
+    'finish',
+    'border_color',
+    'frame',
   ],
   push: [
     'keywords',
     'creators',
     'artists',
     'artist_notes',
-    // 'frame_effects',
+    'frame_effects',
     // 'tags',
     // 'tag_notes',
     // 'tag_state',
@@ -111,24 +117,25 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
   delete: [
     'id_is_scryfall',
     'oracle_id_is_scryfall',
-    // 'flavor_name',
+    'flavor_name',
+    'export_name',
     'rarity',
     // 'image',
-    // 'rotated_image',
-    // 'still_image',
-    // 'draft_image_status',
-    // 'draft_image',
-    // 'rotated_draft_image',
-    // 'still_draft_image',
-    // 'not_directly_draftable',
-    // 'has_draft_partners',
+    'rotated_image',
+    'still_image',
+    'draft_image_status',
+    'draft_image',
+    'rotated_draft_image',
+    'still_draft_image',
+    'not_directly_draftable',
+    'has_draft_partners',
   ],
   pop: [
     'keywords',
     'creators',
     'artists',
     'artist_notes',
-    // 'frame_effects',
+    'frame_effects',
     // 'tags',
     // 'tag_notes',
     // 'tag_state',
@@ -137,12 +144,13 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
 export const faceChangeableProps: Record<changeType, facePropType[]> = {
   add: [
     'name',
-    // 'flavor_name',
-    // 'layout',
-    // 'image_status',
+    'layout',
+    'flavor_name',
+    'export_name',
+    'image_status',
     'image',
-    // 'rotated_image',
-    // 'still_image',
+    'rotated_image',
+    'still_image',
     'mana_cost',
     'mana_value',
     'supertypes',
@@ -159,22 +167,23 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
     'attraction_lights',
     'colors',
     'color_indicator',
-    // 'finish',
-    // 'watermark',
-    // 'border_color',
-    // 'frame',
-    // 'compress_face',
-    // 'drop_face',
+    'finish',
+    'watermark',
+    'border_color',
+    'frame',
+    'compress_face',
+    'drop_face',
   ],
   push: [
-    // 'frame_effects',
+    'frame_effects',
   ],
   delete: [
-    // 'flavor_name',
-    // 'image_status',
+    'flavor_name',
+    'export_name',
+    'image_status',
     'image',
-    // 'rotated_image',
-    // 'still_image',
+    'rotated_image',
+    'still_image',
     'mana_cost',
     'mana_value',
     'supertypes',
@@ -189,13 +198,13 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
     'life_modifier',
     'attraction_lights',
     'color_indicator',
-    // 'watermark',
-    // 'frame',
-    // 'compress_face',
-    // 'drop_face',
+    'watermark',
+    'frame',
+    'compress_face',
+    'drop_face',
   ],
   pop: [
-    // 'frame_effects',
+    'frame_effects',
   ],
 };
 export const colorsAreValid = (colors: HCColors): boolean => {
@@ -217,6 +226,9 @@ export const legalitiesAreValid = (
   doubleListEquals(formatList, Object.keys(legalities)) &&
   Object.values(legalities).every(legality => Object.values(HCLegality).includes(legality)) &&
   Object.entries(legalities).some(([format, legality]) => current[format] != legality);
+
+const imageProps = ['image','rotated_image','still_image','draft_image', 'rotated_draft_image', 'still_draft_image']
+const boolProps = ['id_is_scryfall', 'oracle_id_is_scryfall', 'not_directly_draftable', 'has_draft_partners', 'compress_face', 'drop_face']
 
 export const rootChangeIsValid = <K extends rootPropType>(
   card: HCCard.Any,
@@ -249,14 +261,14 @@ export const rootChangeIsValid = <K extends rootPropType>(
       if (change.value == currentValue) {
         return false;
       }
-      if (['id_is_scryfall', 'oracle_id_is_scryfall'].includes(change.prop)) {
+      if (boolProps.includes(change.prop)) {
         return change.value === true && change.value != currentValue;
       }
-      if (change.prop == 'image') {
+      if (imageProps.includes(change.prop)) {
         return (
           typeof change.value == 'string' &&
-          change.value.startsWith('https://') &&
-          change.value != currentValue
+          change.value.startsWith('https://') /* &&
+          change.value != currentValue */
         );
       }
       if (change.prop == 'mana_value') {
@@ -264,6 +276,22 @@ export const rootChangeIsValid = <K extends rootPropType>(
       }
       if (change.prop == 'rarity') {
         return Object.values(HCRarity).includes(change.value as HCRarity);
+      }
+      if (change.prop == 'layout') {
+        // TODO: more complex validation for layouts
+        return Object.values(HCLayout).includes(change.value as HCLayout);
+      }
+      if (change.prop == 'finish') {
+        return Object.values(HCFinish).includes(change.value as HCFinish);
+      }
+      if (change.prop == 'border_color') {
+        return Object.values(HCBorderColor).includes(change.value as HCBorderColor);
+      }
+      if (change.prop == 'frame') {
+        return Object.values(HCFrame).includes(change.value as HCFrame);
+      }
+      if (change.prop == 'image_status' || change.prop == 'draft_image_status') {
+        return Object.values(HCImageStatus).includes(change.value as HCImageStatus);
       }
       return typeof change.value == 'string';
     }
@@ -277,6 +305,9 @@ export const rootChangeIsValid = <K extends rootPropType>(
           change.value[1] != (currentValue as Record<string, string>)[change.value[0]]
         );
       }
+      if (change.prop == 'frame_effects' && !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)) {
+        return false
+      }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
     }
     case 'delete':
@@ -288,6 +319,9 @@ export const rootChangeIsValid = <K extends rootPropType>(
           (currentValue as Record<string, string>)?.[(change.value as [string, string])[0]] !=
             undefined
         );
+      }
+      if (change.prop == 'frame_effects' && !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)) {
+        return false
       }
       return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
   }
@@ -304,6 +338,8 @@ export const attractionLightsAreValid = (lights: number[]) => {
   }
   return true;
 };
+const faceImageProps = ['image','rotated_image','still_image','draft_image', 'rotated_draft_image', 'still_draft_image']
+const faceBoolProps = ['id_is_scryfall', 'oracle_id_is_scryfall', 'not_directly_draftable', 'has_draft_partners']
 export const faceChangeIsValid = <K extends facePropType>(
   card: HCCard.Any,
   change: faceChange<K>
@@ -355,8 +391,30 @@ export const faceChangeIsValid = <K extends facePropType>(
       if (change.value == currentValue) {
         return false;
       }
-      if (change.prop == 'image') {
-        return typeof change.value == 'string' && change.value.startsWith('https://');
+      if (boolProps.includes(change.prop)) {
+        return change.value === true && change.value != currentValue;
+      }
+      if (imageProps.includes(change.prop)) {
+        return (
+          typeof change.value == 'string' &&
+          change.value.startsWith('https://')
+        );
+      }
+      if (change.prop == 'layout') {
+        // TODO: more complex validation for layouts
+        return Object.values(HCLayout).includes(change.value as HCLayout);
+      }
+      if (change.prop == 'finish') {
+        return Object.values(HCFinish).includes(change.value as HCFinish);
+      }
+      if (change.prop == 'border_color') {
+        return Object.values(HCBorderColor).includes(change.value as HCBorderColor);
+      }
+      if (change.prop == 'frame') {
+        return Object.values(HCFrame).includes(change.value as HCFrame);
+      }
+      if (change.prop == 'image_status') {
+        return Object.values(HCImageStatus).includes(change.value as HCImageStatus);
       }
       if (change.prop == 'mana_value') {
         return typeof change.value == 'number';
@@ -364,10 +422,16 @@ export const faceChangeIsValid = <K extends facePropType>(
       return typeof change.value == 'string';
     }
     case 'push':
+      if (change.prop == 'frame_effects' && !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)) {
+        return false
+      }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
     case 'delete':
       return change.prop in face;
     case 'pop':
+      if (change.prop == 'frame_effects' && !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)) {
+        return false
+      }
       return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
   }
 };
@@ -516,8 +580,10 @@ export const allPartsChangeIsValid = (
 };
 
 export const tagChangeIsValid = (card: HCCard.Any, change: tagChange): boolean => {
-  // TODO: add logic here?
-  return true;
+  if (change.change_type == 'add') {
+    return !card.base_tags?.includes(change.tag)
+  }
+  return card.base_tags?.includes(change.tag) ?? false
 };
 
 export const changeIsValid = (card: HCCard.Any, change: anyChange): boolean => {
@@ -665,9 +731,20 @@ export const applyAllPartsChange = (card: HCCard.Any, change: allPartsChange): b
   }
   return true;
 };
+
 export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
-  // TODO: add logic here?
-  return false;
+  if (change.change_type == 'add') {
+    if (card.base_tags) {
+      addTagToBase(card.base_tags,change.tag)
+    } else {
+      card.base_tags = [change.tag];
+    }
+  } else {
+    if (card.base_tags) {
+      deleteTagFromBase(card.base_tags, change.tag)
+    }
+  }
+  return true;
 };
 
 /**
@@ -873,7 +950,7 @@ const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
 };
 
 export const changeTypeOrder = ['delete', 'pop', 'add', 'push'];
-export const locationOrder = ['card_faces', 'all_parts', 'face', 'root'];
+export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
 
 export const sortChanges = (a: anyChange, b: anyChange): number =>
   locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||

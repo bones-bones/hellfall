@@ -26,8 +26,8 @@ import {
   getMVFromCost,
   getPipColorsFromText,
   hasTokenHCID,
+  setTags,
 } from '@hellfall/shared/utils';
-import { handleTags } from './tagHandling';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -141,7 +141,7 @@ export const setDerivedProps = (
 ) /* :{card:HCCard.Any;relateds?:HCCard.Any[]}  */ => {
   // todo: make sure this works when tags are empty
   if (tags /* && !(tags.length == 1 && tags[0] == '') */ && card.kind != 'scryfall') {
-    handleTags(card, tags, true);
+    setTags(card, tags, true);
   }
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,

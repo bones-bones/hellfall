@@ -74,6 +74,7 @@ export type rootValueType<K extends rootPropType> = K extends 'artist_notes'
       | 'supertypes'
       | 'types'
       | 'subtypes'
+      | 'base_tags'
   ? // | 'all_parts'
     Exclude<HCCard.Any[K], undefined>
   : Exclude<HCCard.Any[K], undefined> extends Array<infer U>

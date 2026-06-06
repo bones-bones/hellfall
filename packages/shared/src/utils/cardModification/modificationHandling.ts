@@ -134,7 +134,7 @@ export const addTagToRoot = <K extends rootPropType>(
  * @param note note to add
  * @param replaceNote whether to replace the note; if not true, will concat with '; '
  */
-const addTagNote = (card: HCCard.Any, tag: string, note: string, replaceNote?: boolean) => {
+export const addTagNote = (card: HCCard.Any, tag: string, note: string, replaceNote?: boolean) => {
   if (!replaceNote && card.tag_notes?.[tag]) {
     card.tag_notes[tag] += '; ' + note;
   } else {

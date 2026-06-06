@@ -7,13 +7,15 @@ import {
   HCImageStatus,
   HCLayout,
   HCLayoutGroup,
-  tagRecord,
-  tagState,
+  SetCode,
+  // tagRecord,
+  // tagState,
 } from '@hellfall/shared/types';
 import {
   addLayoutTag,
   addPropToRoot,
   addTag,
+  addTagNote,
   deletePropFromFace,
   deletePropFromRoot,
   layoutTags,
@@ -27,6 +29,7 @@ import {
   kindToMultiLayout,
   layoutIsDefault,
 } from './defaults';
+import { getSet } from '../setHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -215,26 +218,182 @@ export const splitFullTag = (fullTag: string) => {
   return { tag, note };
 };
 
-export const handleTags = (card: HCCard.Any, tags: string[], setBaseTags?: boolean) => {
+export const tagChangesVisibleProps = (fullTag:string): boolean => {
+  const {tag} = splitFullTag(fullTag);
+  if (tag in faceImageTagProps) {
+    return true;
+  }
+  if (tag in frontImageTagProps) {
+    return true;
+  }
+  if (tag == 'back-image') {
+    return true;
+  }
+  if (tag in frontImageTagProps) {
+    return true;
+  }
+  if (tag in frontImageTagProps) {
+    return true;
+  }
+  if (tag in frontImageTagProps) {
+    return true;
+  }
+  if (getSet(tag.toUpperCase() as SetCode) || ['hc1.0', 'hc1.1', 'hc1.2'].includes(tag)) {
+    return true;
+  }
+  return false;
+}
+
+export const tagChangesAnyProps = (fullTag:string): boolean => {
+  const {tag} = splitFullTag(fullTag);
+  if (tagChangesVisibleProps(tag)) {
+    return true;
+  }
+  if (tag in frameTags) {
+    return true;
+  }
+  if (tag in cardFrameTags) {
+    return true;
+  }
+  if (tag in tokenFrameTags) {
+    return true;
+  }
+  if (tag in frameEffectTags) {
+    return true;
+  }
+  if (tag in borderColorTags) {
+    return true;
+  }
+  if (layoutTags.includes(tag as layoutTagType)) {
+    return true;
+  }
+  if (tag == 'foil') {
+    return true;
+  }
+  return false;
+}
+
+// // export const addTagToState = (state: tagState, tag: string):boolean => {
+// //   const tagToAdd = splitFullTag(tag).tag
+// //   pushPropToRecord(state!, 'added', tagToAdd, tag);
+// //   return tagChangesVisibleProps(tagToAdd)
+// // };
+// // export const deleteTagFromState = (state: tagState, tag: string):boolean => {
+// //   const tagToDelete = splitFullTag(tag).tag;
+// //   if (state?.added?.[tagToDelete]) {
+// //     delete state.added[tagToDelete];
+// //   } else if (state?.base_tags?.[tagToDelete] && !state.deleted?.includes(tagToDelete)) {
+// //     pushProp(state, 'deleted', tagToDelete);
+// //   } else {
+// //     return false;
+// //   }
+// //   return tagChangesVisibleProps(tagToDelete)
+// // };
+
+// export const mergeTagStates = (into: tagState, donor: tagState): tagState => {
+//   const state: tagState = structuredClone(into);
+//   if (donor.added) {
+//     Object.values(donor.added).forEach(tags => tags.forEach(tag => addTagToState(state, tag)));
+//   }
+//   if (donor.deleted) {
+//     donor.deleted.forEach(tag => deleteTagFromState(state, tag));
+//   }
+//   return state;
+// };
+
+export const addTagToBase = (base_tags: string[], fullTag: string):boolean => {
+  if (!base_tags.includes(fullTag)) {
+    base_tags.push(fullTag)
+    return tagChangesVisibleProps(fullTag)
+  }
+  return false;
+};
+
+export const deleteTagFromBase = (base_tags: string[], fullTag: string):boolean => {
+  const {tag, note} = splitFullTag(fullTag);
+  let changesVisible = false
+  for (let i = base_tags.length-1;i>=0;i--) {
+    if (splitFullTag(base_tags[i]).tag == tag && (note == undefined || note == (splitFullTag(base_tags[i]).note ?? ''))) {
+      base_tags.splice(i,1);
+      if (tagChangesVisibleProps(tag)) {
+        changesVisible = true;
+      }
+    }
+  }
+  return changesVisible;
+};
+
+// export const replaceTagInBase = (base_tags: string[], fullTag: string, noteToReplace?:string):boolean => {
+//   const {tag, note} = splitFullTag(fullTag)
+//   if (note == 'undefined') {
+
+//   }
+  
+// };
+
+const getBaseDiffs = (oldBase:string[], newBase:string[]): {added:string[], deleted:string[]} =>  {
+  const added:string[] = newBase.filter(tag=>!oldBase.includes(tag));
+  const deleted:string[] = oldBase.filter(tag=>!newBase.includes(tag));
+  return {added, deleted}
+}
+
+export const getMergedTags = (oldTags:string[],newTags:string[]): {mergedTags:string[], shouldDeriveProps:boolean} => {
+  let shouldDeriveProps = false;
+  // TODO: implement this on the frontend too
+  // TODO: move error to correct spot
+  // if (card.kind == 'scryfall') throw console.error("Can't set tags for scryfall cards");
+  const mergedTags = [...oldTags];
+  const {added, deleted} = getBaseDiffs(oldTags,newTags)
+  deleted.forEach(fullTag=>{
+    if (deleteTagFromBase(mergedTags,fullTag)) {
+      shouldDeriveProps = true;
+    }
+  })
+  added.forEach(fullTag=>{
+    if (addTagToBase(mergedTags,fullTag)) {
+      shouldDeriveProps = true;
+    }
+  })
+  return {mergedTags, shouldDeriveProps}
+
+};
+
+const setPropsFromTags = (card: HCCard.Any, tags: string[], shouldDeriveProps?:boolean) => {
   if (card.kind == 'scryfall') return;
-  setTagPropsToDefault(card);
-  if (!tags.length || (tags.length == 1 && tags[0] == '')) {
-    deletePropFromRoot(card, 'tags');
+  if (!shouldDeriveProps) {
     deletePropFromRoot(card, 'tag_notes');
-    deletePropFromRoot(card, 'tag_state');
+    if (!tags.length /* || (tags.length == 1 && tags[0] == '') */) {
+      deletePropFromRoot(card, 'tags');
+      return;
+    }
+    card.tags = tags.map(fullTag => {
+      const { tag, note } = splitFullTag(fullTag);
+      if (note) {
+        addTagNote(card, tag, note)
+      }
+      return tag;
+    });
+    card.tags = Array.from(new Set(card.tags));
+    return;
+  }
+  setTagPropsToDefault(card);
+  deletePropFromRoot(card, 'tag_notes');
+  if (!tags.length /* || (tags.length == 1 && tags[0] == '') */) {
+    deletePropFromRoot(card, 'tags');
+    // deletePropFromRoot(card, 'tag_state');
     if ('card_faces' in card) {
       card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
     } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
     return;
   }
-  if (setBaseTags || !card.tag_state) {
-    addPropToRoot(card, 'tag_state', {});
-  }
+  // if (setBaseTags || !card.tag_state) {
+  //   addPropToRoot(card, 'tag_state', {});
+  // }
   card.tags = tags.map(fullTag => {
     const { tag, note } = splitFullTag(fullTag);
-    if (setBaseTags) {
-      pushPropToRecord(card.tag_state!, 'base_tags', tag, fullTag);
-    }
+    // if (setBaseTags) {
+    //   pushPropToRecord(card.tag_state!, 'base_tags', tag, fullTag);
+    // }
     if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
       addTag(card, tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
     } else if (tag in frameTags) {
@@ -285,129 +444,173 @@ export const handleTags = (card: HCCard.Any, tags: string[], setBaseTags?: boole
   } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
 };
 
-export const mergeTags = (card: HCCard.Any) => {
-  if (card.kind == 'scryfall') throw console.error("Can't set tags for scryfall cards");
-  // TODO: implement this on the frontend too
-  const state = card.tag_state;
-  const newTags: string[] = [];
-  if (state?.base_tags) {
-    Object.entries(state.base_tags)
-      .filter(([key, value]) => !state.removed?.includes(key))
-      .forEach(([key, value]) => value.forEach(tag => newTags.push(tag)));
-  }
-  if (state?.added) {
-    Object.values(state.added).forEach(value => value.forEach(tag => newTags.push(tag)));
-  }
-  handleTags(card, newTags);
-};
-
-export const addTagContributor = (card: HCCard.Any, tag: string) => {
-  if (!card.tag_state) {
-    addPropToRoot(card, 'tag_state', {});
-  }
-  pushPropToRecord(card.tag_state!, 'added', splitFullTag(tag).tag, tag);
-  mergeTags(card);
-};
-export const deleteTagContributor = (card: HCCard.Any, tag: string) => {
-  const tagToDelete = splitFullTag(tag).tag;
-  if (card.tag_state?.added?.[tagToDelete]) {
-    delete card.tag_state.added[tagToDelete];
-  } else if (
-    card.tag_state?.base_tags?.[tagToDelete] &&
-    !card.tag_state.removed?.includes(tagToDelete)
-  ) {
-    pushProp(card.tag_state, 'removed', tagToDelete);
+export const setTags = (card: HCCard.Any, newBase:string[], forceDerivedProps?:boolean) => {
+  const base:string[] = card.base_tags ?? [];
+  const fixedNew =  newBase.length == 1 && newBase[0] == '' ? [] : newBase
+  const {mergedTags, shouldDeriveProps} = getMergedTags(base, fixedNew)
+  if (mergedTags.length) {
+    addPropToRoot(card,'base_tags',mergedTags)
   } else {
-    return;
+    deletePropFromRoot(card,'base_tags')
   }
-  mergeTags(card);
-};
+  setPropsFromTags(card,mergedTags,shouldDeriveProps || forceDerivedProps);
+}
 
-export const tagRecordsEqual = (record1?: tagRecord, record2?: tagRecord): boolean => {
-  if (!record1 || !record2) {
-    return !record1 == !record2;
-  }
-  if (!doubleListEquals(Object.keys(record1), Object.keys(record2))) {
-    return false;
-  }
-  Object.keys(record1).forEach(tag => {
-    if (!doubleListEquals(record1[tag], record2[tag])) {
-      return false;
-    }
-  });
-  return true;
-};
 
-/**
- * Returns true if the tags changed and false otherwise
- */
-export const updateTags = (card: HCCard.Any, state: tagState): boolean => {
-  let shouldMerge = false;
-  if (!tagRecordsEqual(card.tag_state?.base_tags, state.base_tags)) {
-    shouldMerge = true;
-    if (!state.base_tags) {
-      delete card.tag_state?.base_tags;
-    } else {
-      if (!card.tag_state) {
-        addPropToRoot(card, 'tag_state', {});
-      }
-      card.tag_state!.base_tags = state.base_tags;
-    }
-  }
-  if (!tagRecordsEqual(card.tag_state?.added, state.added)) {
-    shouldMerge = true;
-    if (!state.added) {
-      delete card.tag_state?.added;
-    } else {
-      if (!card.tag_state) {
-        addPropToRoot(card, 'tag_state', {});
-      }
-      card.tag_state!.added = state.added;
-    }
-  }
-  if (
-    !card.tag_state?.removed != !state.removed ||
-    (card.tag_state?.removed &&
-      state.removed &&
-      !doubleListEquals(card.tag_state.removed, state.removed))
-  ) {
-    shouldMerge = true;
-    if (!state.removed) {
-      delete card.tag_state?.removed;
-    } else {
-      if (!card.tag_state) {
-        addPropToRoot(card, 'tag_state', {});
-      }
-      card.tag_state!.removed = state.removed;
-    }
-  }
-  if (shouldMerge) {
-    mergeTags(card);
-  }
-  return shouldMerge;
-};
+// export const handleTags = (card: HCCard.Any, tagState: tagState, setBaseTags?: boolean, deriveInvisibleProps?:boolean) => {
+//   if (card.kind == 'scryfall') return;
+//   setTagPropsToDefault(card);
+//   const shouldDeriveProps:'all'|'visible'|false|undefined = deriveInvisibleProps ? 
+//   if (!tags.length || (tags.length == 1 && tags[0] == '')) {
+//     deletePropFromRoot(card, 'tags');
+//     deletePropFromRoot(card, 'tag_notes');
+//     deletePropFromRoot(card, 'tag_state');
+//     if ('card_faces' in card) {
+//       card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
+//     } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
+//     return;
+//   }
+//   if (setBaseTags || !card.tag_state) {
+//     addPropToRoot(card, 'tag_state', {});
+//   }
+//   card.tags = tags.map(fullTag => {
+//     const { tag, note } = splitFullTag(fullTag);
+//     if (setBaseTags) {
+//       pushPropToRecord(card.tag_state!, 'base_tags', tag, fullTag);
+//     }
+//     if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
+//       addTag(card, tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
+//     } else if (tag in frameTags) {
+//       addTag(card, tag, note, 'frame', frameTags);
+//     } else if (tag in cardFrameTags && card.kind != 'token') {
+//       addTag(card, tag, note, 'frame', cardFrameTags);
+//     } else if (tag in tokenFrameTags && card.kind == 'token') {
+//       addTag(card, tag, note, 'frame', tokenFrameTags);
+//     } else if (tag in frameEffectTags) {
+//       addTag(card, tag, note || '0', 'frame_effects', frameEffectTags, { push: true });
+//     } else if (tag in faceImageTagProps) {
+//       addTag(card, tag, note, faceImageTagProps[tag], undefined, { useUrl: true });
+//     } else if (tag in borderColorTags) {
+//       addTag(card, tag, note, 'border_color', borderColorTags);
+//     } else if (layoutTags.includes(tag as layoutTagType)) {
+//       addLayoutTag(card, tag, note);
+//     } else if (tag == 'foil') {
+//       addTag(card, tag, note, 'finish', HCFinish.Foil);
+//     } else if (note) {
+//       if (tag in frontImageTagProps) {
+//         addTag(card, tag, note, frontImageTagProps[tag] as rootPropType, undefined, {
+//           useUrl: true,
+//           useRootOnly: true,
+//         });
+//         if (tag == 'draft-image') {
+//           addPropToRoot(card, 'draft_image_status', HCImageStatus.HighRes);
+//         }
+//       } else if (tag == 'back-image') {
+//         addTag(card, tag, note, 'image', undefined, { useUrl: true, defaultToBack: true });
+//       } else if (tag == 'flavor-name') {
+//         addTag(card, tag, note, 'flavor_name', undefined, { dontAddNote: true });
+//       } else if (
+//         tag.toLowerCase() == card.set?.toLowerCase() ||
+//         (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
+//           (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
+//       ) {
+//         addTag(card, tag, undefined, 'collector_number', note);
+//       } else {
+//         addTag(card, tag, note, undefined, undefined, { useRootOnly: true });
+//       }
+//     }
+//     return tag;
+//   });
 
-export const addTagToState = (state: tagState, tag: string) => {
-  pushPropToRecord(state!, 'added', splitFullTag(tag).tag, tag);
-};
-export const deleteTagFromState = (state: tagState, tag: string) => {
-  const tagToDelete = splitFullTag(tag).tag;
-  if (state?.added?.[tagToDelete]) {
-    delete state.added[tagToDelete];
-  } else if (state?.base_tags?.[tagToDelete] && !state.removed?.includes(tagToDelete)) {
-    pushProp(state, 'removed', tagToDelete);
-  } else {
-    return;
-  }
-};
+//   card.tags = Array.from(new Set(card.tags));
+//   if ('card_faces' in card) {
+//     card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
+//   } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
+// };
 
-export const mergeTagStates = (into: tagState, donor: tagState): tagState => {
-  const state: tagState = structuredClone(into);
-  if (donor.added) {
-    Object.values(donor.added).forEach(tags => tags.forEach(tag => addTagToState(state, tag)));
-  }
-  if (donor.removed) {
-    donor.removed.forEach(tag => deleteTagFromState(state, tag));
-  }
-  return state;
-};
+
+// export const addTagContributor = (card: HCCard.Any, tag: string) => {
+//   if (!card.tag_state) {
+//     addPropToRoot(card, 'tag_state', {});
+//   }
+//   pushPropToRecord(card.tag_state!, 'added', splitFullTag(tag).tag, tag);
+//   mergeTags(card);
+// };
+// export const deleteTagContributor = (card: HCCard.Any, tag: string) => {
+//   const tagToDelete = splitFullTag(tag).tag;
+//   if (card.tag_state?.added?.[tagToDelete]) {
+//     delete card.tag_state.added[tagToDelete];
+//   } else if (
+//     card.tag_state?.base_tags?.[tagToDelete] &&
+//     !card.tag_state.deleted?.includes(tagToDelete)
+//   ) {
+//     pushProp(card.tag_state, 'deleted', tagToDelete);
+//   } else {
+//     return;
+//   }
+//   mergeTags(card);
+// };
+
+// export const tagRecordsEqual = (record1?: tagRecord, record2?: tagRecord): boolean => {
+//   if (!record1 || !record2) {
+//     return !record1 == !record2;
+//   }
+//   if (!doubleListEquals(Object.keys(record1), Object.keys(record2))) {
+//     return false;
+//   }
+//   Object.keys(record1).forEach(tag => {
+//     if (!doubleListEquals(record1[tag], record2[tag])) {
+//       return false;
+//     }
+//   });
+//   return true;
+// };
+
+// /**
+//  * Returns true if the tags changed and false otherwise
+//  */
+// export const updateTags = (card: HCCard.Any, state: tagState): boolean => {
+//   let shouldMerge = false;
+//   if (!tagRecordsEqual(card.tag_state?.base_tags, state.base_tags)) {
+//     shouldMerge = true;
+//     if (!state.base_tags) {
+//       delete card.tag_state?.base_tags;
+//     } else {
+//       if (!card.tag_state) {
+//         addPropToRoot(card, 'tag_state', {});
+//       }
+//       card.tag_state!.base_tags = state.base_tags;
+//     }
+//   }
+//   if (!tagRecordsEqual(card.tag_state?.added, state.added)) {
+//     shouldMerge = true;
+//     if (!state.added) {
+//       delete card.tag_state?.added;
+//     } else {
+//       if (!card.tag_state) {
+//         addPropToRoot(card, 'tag_state', {});
+//       }
+//       card.tag_state!.added = state.added;
+//     }
+//   }
+//   if (
+//     !card.tag_state?.deleted != !state.deleted ||
+//     (card.tag_state?.deleted &&
+//       state.deleted &&
+//       !doubleListEquals(card.tag_state.deleted, state.deleted))
+//   ) {
+//     shouldMerge = true;
+//     if (!state.deleted) {
+//       delete card.tag_state?.deleted;
+//     } else {
+//       if (!card.tag_state) {
+//         addPropToRoot(card, 'tag_state', {});
+//       }
+//       card.tag_state!.deleted = state.deleted;
+//     }
+//   }
+//   if (shouldMerge) {
+//     mergeTags(card);
+//   }
+//   return shouldMerge;
+// };

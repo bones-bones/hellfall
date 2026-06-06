@@ -120,3 +120,4 @@ Write a script to transform the database
 - get rid of as much of the usage of anyPropType as possible
 - switch to using mapped/entry type pattern
 - add is:maincube and is:sidecube
+- add dropdown to tag editor for tags with multiple underlying base tags

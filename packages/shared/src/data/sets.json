@@ -382,7 +382,8 @@
         "text": "PDF by g0m"
       },
       "set_type": "side",
-      "filename": "hcj.png"
+      "filename": "hcj.png",
+      "child_set_codes": "FHCJ"
     },
     {
       "id": "32b9149e-7b36-4332-9dbd-100e7972da03",

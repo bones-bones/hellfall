@@ -57,7 +57,8 @@ export const propOrder: anyPropType[] = [
   'frame_effects',
   'tags',
   'tag_notes',
-  'tag_state',
+  'base_tags',
+  // 'tag_state',
   'card_faces',
   'all_parts',
 ];
@@ -104,7 +105,8 @@ export const rootPropOrder: rootPropType[] = [
   'frame_effects',
   'tags',
   'tag_notes',
-  'tag_state',
+  'base_tags',
+  // 'tag_state',
   'all_parts',
 ];
 export const facePropOrder: facePropType[] = [

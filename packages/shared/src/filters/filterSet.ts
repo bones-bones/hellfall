@@ -1,4 +1,4 @@
-import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
+import { HCCard, HCRelatedCard, SetCode } from '@hellfall/shared/types';
 import {
   includeFilter,
   inclusionOptions,
@@ -8,7 +8,10 @@ import {
   cardStringFilter,
 } from './types';
 import { funcOp, opToNot } from './filterUtils';
-import { canBeInDecks, extraSetList, textSearchIncludes } from '@hellfall/shared/utils';
+import { canBeInDecks, extraSetList, getChildSets, textSearchIncludes } from '@hellfall/shared/utils';
+import { setsData } from '@hellfall/shared/data';
+
+const sets = setsData.data;
 
 export const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',
@@ -67,6 +70,50 @@ export const filterIncludeExtras: includeFilter = Object.assign(
     },
   }
 );
+
+/**
+ * To use in filters when need to check if one set is in another
+ * @param value1 the value of the card's set
+ * @param value2 the value of the search's set
+ * @returns
+ */
+export const inChildSets = (value1:SetCode, value2:SetCode) => getChildSets(value2)?.some(set=>set == value1);
+
+export const inSetOrChildren = (value1:SetCode, value2:SetCode) => value1 == value2 || inChildSets(value1,value2)
+
+/**
+ * To use in filters when need to check if one set is in another's group
+ * @param value1 the value of the card's set
+ * @param value2 the value of the search's set
+ * @returns
+ */
+// export const inSetBlock = (value1:SetCode, value2:SetCode) => getChildSets(value2)?.some(set=>set == value1) || ;
+
+/**
+ * To use in filters when need to check against a set
+ * @param value1 the value of the card's set
+ * @param operator operation to use
+ * @param value2 the value of the search's set
+ * @returns
+ */
+// export const setOp = (value1:SetCode, operator: opType, value2:SetCode) => {
+
+//   switch (operator) {
+//     case '<':
+//       return !func(value);
+//     case '<=':
+//       return func(value);
+//     case '=':
+//       return func(value);
+//     case '>=':
+//       return func(value);
+//     case '>':
+//       return !func(value);
+//     case '!=':
+//       return !func(value);
+//   }
+// };
+
 
 export const filterSetCard: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) =>
