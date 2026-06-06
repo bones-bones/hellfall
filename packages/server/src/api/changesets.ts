@@ -6,13 +6,14 @@ import { requireTagAuth } from './lib/requireTagAuth.js';
 import { requireAdminAuth } from './lib/requireAdminAuth.js';
 import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
 import { recardCardChangeset } from '../lib/cardAudit.js';
-import { isValidV4UUID } from '@hellfall/shared/utils';
 import {
   anyChange,
   applyFromCollection,
+  cardToFirestore,
   changeIsValid,
-} from '@hellfall/shared/utils/cardModification/changeHandling';
-import { cardToFirestore, firestoreToCard } from '@hellfall/shared/utils/firestore';
+  firestoreToCard,
+  isValidV4UUID,
+} from '@hellfall/shared/utils';
 // import {
 //   resolveTagState,
 //   tagFieldsForWrite,

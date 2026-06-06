@@ -1,6 +1,7 @@
 import type { HCCard } from '@hellfall/shared/types';
+// import { loadHellscubeCatalogCards } from '@hellfall/shared/export/loadHellscubeCatalog';
 import { env } from '../api/lib/env.ts';
-import { loadHellscubeCatalogCards } from './loadHellscubeCatalog.ts';
+import { loadHellscubeCatalogCards } from '@hellfall/shared/utils';
 
 const DEFAULT_TTL_MS = 15 * 60 * 1000;
 

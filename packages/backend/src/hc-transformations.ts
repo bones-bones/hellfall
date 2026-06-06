@@ -31,8 +31,8 @@ import {
   getFilteredRootProps,
   deletePropFromRoot,
   anyValueType,
+  mergeFromSheet,
 } from '@hellfall/shared/utils';
-import { mergeFromSheet } from '@hellfall/shared/utils/cardModification/changeHandling';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { addToJSONToCards } from '@hellfall/shared/utils';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';

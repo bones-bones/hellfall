@@ -46,7 +46,7 @@ import { setDerivedProps } from './derivedProps';
 import { cleanParts, updateParts } from './partsHandling';
 import { textEquals } from '../textHandling';
 import { toMultiFaced, toSingleFaced } from './defaults';
-import type { CollectionReference, DocumentReference } from '@google-cloud/firestore';
+import { CollectionReference, DocumentReference } from '@google-cloud/firestore';
 import { cardToFirestore, firestoreCard, firestoreToCard } from '../firestore';
 import type {
   allPartsChange,

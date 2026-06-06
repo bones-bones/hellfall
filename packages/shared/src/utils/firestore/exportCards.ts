@@ -59,6 +59,19 @@ export async function exportCardMap(options: HellscubeExportOptions = {}): Promi
   return data;
 }
 
+
+export async function loadHellscubeCatalogCards(options: HellscubeExportOptions = {}): Promise<HCCard.Any[]> {
+  const databaseId =
+    options.databaseId?.trim() || process.env.FIRESTORE_DATABASE_ID?.trim() || 'hellscube';
+  const collectionName = resolveCardsCollectionName(options.collectionName);
+
+  const snapshot = await getFirestore(databaseId).collection(collectionName).get();
+
+  const data = snapshot.docs.map(doc => firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard))
+  return data;
+}
+
+
 export async function exportHellscubeCards(
   options: HellscubeExportOptions = {}
 ): Promise<HellscubeExportPayload> {
