@@ -46,10 +46,28 @@ import { setDerivedProps } from './derivedProps';
 import { cleanParts, updateParts } from './partsHandling';
 import { textEquals } from '../textHandling';
 import { toMultiFaced, toSingleFaced } from './defaults';
-import { CollectionReference, DocumentReference } from '@google-cloud/firestore';
+import type { CollectionReference, DocumentReference } from '@google-cloud/firestore';
 import { cardToFirestore, firestoreCard, firestoreToCard } from '../firestore';
+import type {
+  allPartsChange,
+  anyChange,
+  cardFacesChange,
+  changeType,
+  faceChange,
+  rootChange,
+  tagChange,
+} from './changeTypes';
 
-export type changeType = 'add' | 'push' | 'delete' | 'pop';
+export type {
+  allPartsChange,
+  anyChange,
+  cardFacesChange,
+  changeLocation,
+  changeType,
+  faceChange,
+  rootChange,
+  tagChange,
+} from './changeTypes';
 // commented out = currently done automatically via tags, but could concievable be done manually in the future
 export const rootChangeableProps: Record<changeType, rootPropType[]> = {
   add: [
@@ -180,40 +198,6 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
     // 'frame_effects',
   ],
 };
-export type changeLocation = 'root' | 'face' | 'card_faces' | 'all_parts' | 'tag';
-export type rootChange<K extends rootPropType> = {
-  location: 'root';
-  change_type: changeType;
-  prop: K;
-  value?: rootValueType<K>;
-};
-export type faceChange<K extends facePropType> = {
-  location: 'face';
-  change_type: changeType;
-  prop: K;
-  value?: faceValueType<K>;
-  index?: number;
-};
-export type cardFacesChange = {
-  location: 'card_faces';
-  index: number;
-  change_type: 'add' | 'delete';
-  face?: HCCardFace.MultiFaced;
-};
-export type allPartsChange = {
-  location: 'all_parts';
-  change_type: 'add' | 'delete';
-  id?: string;
-  part_prop?: 'name' | 'hcid';
-  related?: HCRelatedCard;
-  no_overwrite?: boolean;
-};
-export type tagChange = {
-  location: 'tag';
-  change_type: 'add' | 'delete';
-  tag: string;
-};
-
 export const colorsAreValid = (colors: HCColors): boolean => {
   const colorList: HCColors = [];
   for (const color of colors) {
@@ -233,13 +217,6 @@ export const legalitiesAreValid = (
   doubleListEquals(formatList, Object.keys(legalities)) &&
   Object.values(legalities).every(legality => Object.values(HCLegality).includes(legality)) &&
   Object.entries(legalities).some(([format, legality]) => current[format] != legality);
-
-export type anyChange =
-  | rootChange<rootPropType>
-  | faceChange<facePropType>
-  | cardFacesChange
-  | allPartsChange
-  | tagChange;
 
 export const rootChangeIsValid = <K extends rootPropType>(
   card: HCCard.Any,

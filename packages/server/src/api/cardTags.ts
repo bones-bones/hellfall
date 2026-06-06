@@ -5,13 +5,8 @@ import type { HandlerRequest, HandlerResponse } from './lib/types.js';
 import { requireTagAuth } from './lib/requireTagAuth.js';
 import { listCardChangesets, recordTagChangeset } from '../lib/cardAudit.js';
 import { HCCard, tagState } from '@hellfall/shared/types';
-import {
-  addTagContributor,
-  cardToFirestore,
-  deleteTagContributor,
-  firestoreCard,
-  firestoreToCard,
-} from '@hellfall/shared/utils';
+import { addTagContributor, deleteTagContributor } from '@hellfall/shared/utils';
+import { cardToFirestore, firestoreCard, firestoreToCard } from '@hellfall/shared/utils/firestore';
 // import {
 //   applyAddTag,
 //   applyRemoveTag,

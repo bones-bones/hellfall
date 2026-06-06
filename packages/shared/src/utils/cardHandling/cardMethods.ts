@@ -20,7 +20,7 @@ import {
 } from '../textHandling';
 import { CardMap } from './cardMap';
 import { getHc5 } from './getHc5';
-import { CollectionReference } from '@google-cloud/firestore';
+import type { CollectionReference } from '@google-cloud/firestore';
 
 /**
  * Converts the card to an array of its faces.
