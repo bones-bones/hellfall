@@ -13,6 +13,7 @@ jobs:
       FIREBASE_HOSTING_TARGET: ${{ vars.FIREBASE_HOSTING_TARGET }}
       FIREBASE_HOSTING_PUBLIC: packages/build
       REACT_APP_AUTH_API_URL: ${{ vars.REACT_APP_AUTH_API_URL }}
+      CARD_CATALOG_URL: ${{ vars.CARD_CATALOG_URL }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4

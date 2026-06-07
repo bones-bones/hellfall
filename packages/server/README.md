@@ -47,6 +47,10 @@ Unified backend: Discord OAuth (auth), WatchWolfWar (Firestore), tags, card data
    - **Card tags:** Firestore database **`hellscube`**, collection **`cards`**. Each doc has full card data plus `baseTags`, merged `tags`, and override arrays `added` / `removed`. Edits append to subcollection **`audit`** (`FIRESTORE_AUDIT_SUBCOLLECTION`) with `action`, `field`, `changes` (before/after), `username`, `userId`, and server timestamp.
    - After rebuilding `Hellscube-Database.json` (`yarn transform-hc`), run **`yarn migrate-hellscube-db`** — see [packages/scripts/README.md](../scripts/README.md).
    - WatchWolf: `GOOGLE_APPLICATION_CREDENTIALS` (path to service account JSON) for Firestore (local dev; Cloud Run uses the service identity)
+<<<<<<< Updated upstream
+=======
+   - **Catalog snapshot:** `/api/cards/load` reads bundled JSON or GCS — not Firestore on cache miss. Optional `CATALOG_GCS_BUCKET`: on changeset accept, debounced Firestore export uploads gzip-compressed `catalog.json` (`Content-Encoding: gzip`) + `catalog-manifest.json`. When the bucket (or optional `CATALOG_PUBLIC_URL`) is configured, `/api/cards/load` **302-redirects** non-browser clients (no `Origin` header) to the public catalog URL; browser `fetch` must use `CARD_CATALOG_URL` (direct GCS URL) because cross-origin redirect chains drop `Origin` and break GCS CORS. Apply [misc/cors.json](../../misc/cors.json) to the bucket. Cloud Run SA needs `storage.objectAdmin` (publish) and `objectViewer` (read). `CATALOG_PUBLISH_DEBOUNCE_MS` defaults to 30000; `CATALOG_CACHE_TTL_MS` defaults to 86400000 (24h).
+>>>>>>> Stashed changes
 
 ## Running the server
 

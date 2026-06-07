@@ -18,6 +18,27 @@ export const loadCardsHandler = async (
     return;
   }
 
+<<<<<<< Updated upstream
+=======
+  const publicUrl = getCatalogPublicUrl();
+  const origin = req.headers.origin;
+  // Cross-origin fetch following a 302 drops Origin, so GCS won't return CORS headers.
+  // Redirect only non-browser clients (curl, etc.); browsers get the body or use CARD_CATALOG_URL.
+  if (publicUrl && !origin) {
+    const headers = withCors({}, req);
+    Object.assign(headers, { Location: publicUrl, 'Cache-Control': 'public, max-age=300' });
+    Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
+    res.statusCode = 302;
+    res.end();
+    console.log(`[cards/load] redirect location=${publicUrl}`);
+    return;
+  }
+
+  const headers = withCors({ 'Content-Type': 'application/json' }, req);
+  Object.assign(headers, { 'Cache-Control': 'public, max-age=' + 3 * 24 * 60 * 60 });
+  Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
+
+>>>>>>> Stashed changes
   const t0 = Date.now();
   const body = await getCatalogResponseBody();
   const catalogMs = Date.now() - t0;
