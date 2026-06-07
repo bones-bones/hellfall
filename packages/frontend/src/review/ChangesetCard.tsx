@@ -58,11 +58,11 @@ export function ChangesetCard({
                 <td>
                   <code>{field}</code>
                 </td>
-                <td>
+                {/* <td>
                   <DiffValue>{formatValue(change.before)}</DiffValue>
-                </td>
+                </td> */}
                 <td>
-                  <DiffValue>{formatValue(change.after)}</DiffValue>
+                  <DiffValue>{formatValue(change)}</DiffValue>
                 </td>
               </tr>
             ))}

@@ -21,7 +21,6 @@ import {
   HCRarity,
   // HCRelatedUris,
   // HCSecurityStamp,
-  tagState,
 } from './values';
 
 import { HCCardFace } from './CardFace.ts';
@@ -102,9 +101,9 @@ export namespace HCCardFields.Core {
      */
     tag_notes?: Record<string, string>;
     /**
-     * The tag state of this card (with notes stored unformatted).
+     * The base tags of this card (with notes stored unformatted).
      */
-    tag_state?: tagState;
+    base_tags?: string[];
     /**
      * Stable Firestore-friendly ID for tokens, sourced from the token sheet.
      * Stored in Firestore as `token-<token_id>`.
@@ -329,7 +328,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * The oracle text of the card itself apart from any face, if any
      */
-    oracle_text?: string;
+    // oracle_text?: string;
     /**
      * True when the multiface card is a rotating card (excluding flip ones)
      */
@@ -446,7 +445,7 @@ export namespace HCCardFields.Print {
      */
     has_draft_partners?: boolean;
     /**
-     * This card’s rarity.
+     * This card's rarity.
      */
     rarity?: HCRarity;
     /**

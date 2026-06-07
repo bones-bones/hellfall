@@ -1,6 +1,6 @@
-import { facePropType, partPropType, propType } from './propTypes';
+import { anyPropType, facePropType, partPropType, rootPropType } from './propTypes';
 
-export const propOrder: propType[] = [
+export const propOrder: anyPropType[] = [
   'object',
   'kind',
   'id',
@@ -57,8 +57,56 @@ export const propOrder: propType[] = [
   'frame_effects',
   'tags',
   'tag_notes',
-  'tag_state',
+  'base_tags',
+  // 'tag_state',
   'card_faces',
+  'all_parts',
+];
+export const rootPropOrder: rootPropType[] = [
+  'object',
+  'kind',
+  'id',
+  'id_is_scryfall',
+  'oracle_id',
+  'oracle_id_is_scryfall',
+  'hcid',
+  'name',
+  'flavor_name',
+  'export_name',
+  'set',
+  'collector_number',
+  'rarity',
+  'layout',
+  'image_status',
+  'image',
+  'rotated_image',
+  'still_image',
+  'mana_cost',
+  'mana_value',
+  'type_line',
+  'colors',
+  'color_identity',
+  'color_identity_hybrid',
+  'draft_image_status',
+  'draft_image',
+  'rotated_draft_image',
+  'still_draft_image',
+  'not_directly_draftable',
+  'has_draft_partners',
+  'keywords',
+  'legalities',
+  'creators',
+  'artists',
+  'artist_notes',
+  'rulings',
+  'finish',
+  'border_color',
+  'frame',
+  'frame_effects',
+  'tags',
+  'tag_notes',
+  'base_tags',
+  // 'tag_state',
   'all_parts',
 ];
 export const facePropOrder: facePropType[] = [
@@ -110,7 +158,7 @@ export const partPropOrder: partPropType[] = [
   'persistent',
 ];
 
-export const orderCardProps = (props: propType[]) =>
+export const orderCardProps = (props: anyPropType[]) =>
   props.sort((a, b) => {
     if (!propOrder.includes(a) || !propOrder.includes(b)) {
       throw new Error(`You have an extra prop. a: ${a}, b: ${b}`);

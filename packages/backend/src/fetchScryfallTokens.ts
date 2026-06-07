@@ -1,5 +1,5 @@
 import { sheetsKey } from './env.ts';
-import { HCLayout, HCRelatedCard, HCObject } from '@hellfall/shared/types';
+import { HCLayout, HCRelatedCard, HCObject, SetCode } from '@hellfall/shared/types';
 import { ScryfallCard } from '@scryfall/api-types';
 import pLimit from 'p-limit';
 import { fixedScryfall, ScryfallToHC } from './scryfallToHC.ts';
@@ -87,7 +87,7 @@ export const fetchScryfallTokens = async () => {
                 component: 'token_maker',
                 name: shouldUseBase ? base : name,
                 type_line: '',
-                set: '',
+                set: '' as SetCode,
                 image: '',
               };
               if (count) {

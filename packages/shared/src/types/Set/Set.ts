@@ -53,8 +53,8 @@ export const allSetsList = [
   // 'HBB.J',
   'HBB.L',
   'FHCJ',
-  'NMTG',
   'SFT',
+  'NMTG',
   'NRM',
 ] as const;
 

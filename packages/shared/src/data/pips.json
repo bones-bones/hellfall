@@ -2668,6 +2668,21 @@
       ]
     },
     {
+      "filename": "WUPBRG.svg",
+      "symbol": "W/U/P/B/R/G",
+      "english": "one white, blue, purple, black, red, or green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "U",
+        "P",
+        "B",
+        "R",
+        "G"
+      ]
+    },
+    {
       "filename": "phyrexian/mono/PhW.svg",
       "symbol": "H/W",
       "english": "one white mana or two life",
@@ -3109,6 +3124,12 @@
       "english": "a faith counter",
       "represents_mana": false,
       "no_shadow": true
+    },
+    {
+      "filename": "symbols/additional/J.png",
+      "symbol": "J",
+      "english": "What Pool of Peanut Butter doesn't add",
+      "represents_mana": false
     },
     {
       "filename": "symbols/emoji/hypermaro.png",

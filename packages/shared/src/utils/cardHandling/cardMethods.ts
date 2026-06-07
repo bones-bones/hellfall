@@ -5,11 +5,11 @@ import { getIndicatorFromColors } from '../pipsHandling';
 import {
   allPropType,
   allValueType,
-  bothPropType,
-  bothType,
-  bothValueType,
   colorPropType,
-  filterBothValueType,
+  facePropType,
+  faceType,
+  faceValueType,
+  filterFaceValueType,
 } from './propTypes';
 import {
   getMasterpiece,
@@ -20,6 +20,8 @@ import {
 } from '../textHandling';
 import { CardMap } from './cardMap';
 import { getHc5 } from './getHc5';
+import { CollectionReference } from '@google-cloud/firestore';
+import { firestoreCard } from '../firestore';
 
 /**
  * Converts the card to an array of its faces.
@@ -30,11 +32,11 @@ import { getHc5 } from './getHc5';
  * @param card card to get the faces of
  * @returns
  */
-export const toFaces = (card: HCCard.Any): bothType[] => {
+export const toFaces = (card: HCCard.Any): faceType[] => {
   if ('card_faces' in card) {
-    return card.card_faces as bothType[];
+    return card.card_faces as faceType[];
   }
-  return [card] as bothType[];
+  return [card] as faceType[];
 };
 
 /**
@@ -43,10 +45,10 @@ export const toFaces = (card: HCCard.Any): bothType[] => {
  * @param prop prop to get the value of (must be a prop that exists on both `HCCard.AnySingleFaced` and `HCCardFace.MultiFaced`)
  * @returns
  */
-export const getFromFaces = <K extends bothPropType>(
+export const getFromFaces = <K extends facePropType>(
   card: HCCard.Any,
   prop: K
-): filterBothValueType<K>[] =>
+): filterFaceValueType<K>[] =>
   toFaces(card).flatMap(face =>
     Array.isArray(face[prop]) ? face[prop] : [face[prop] ?? []].flat()
   );
@@ -76,7 +78,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
   if (Object.prototype.hasOwnProperty.call(card, 'toJSON')) {
     return card;
   }
-  const ignoreLeftovers = ['toJSON', 'kind'];
+  const ignoreLeftovers = ['toJSON', 'tag_state'];
   Object.defineProperty(card, 'toJSON', {
     value: function (this: Record<string, any>) {
       const ordered: Record<string, any> = {};
@@ -154,7 +156,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
 export const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] =>
   cards.map(card => addToJSONToCard(card));
 
-const faceToPlainText = (face: bothType): string => {
+const faceToPlainText = (face: faceType): string => {
   let text = face.name;
   if (face.mana_cost) {
     text += ` ${face.mana_cost}`;
@@ -278,6 +280,11 @@ export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): Car
  */
 export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
   cardMap.getSubset(card.all_parts?.map(part => part.id) ?? []);
+
+export const getAllRelatedCollection = (
+  card: HCCard.Any | firestoreCard,
+  cardsCol: CollectionReference
+) => (card.all_parts?.map(part => part.id) ?? []).map(id => cardsCol.doc(id));
 
 export const getRelatedsFromCards = (
   idList: string[],

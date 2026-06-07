@@ -114,3 +114,11 @@ Write a script to transform the database
 - rework CubeResources page to be all sets page?
 - subdivide HCT into specific sets?
 - move jumpstart lands to HBB.J
+- fix search for dashes
+- add keyword tags
+- switch to using root/face type pattern
+- get rid of as much of the usage of anyPropType as possible
+- switch to using mapped/entry type pattern
+- add is:maincube and is:sidecube
+- add dropdown to tag editor for tags with multiple underlying base tags
+- set up my own firebase instance

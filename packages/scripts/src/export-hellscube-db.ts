@@ -3,11 +3,12 @@
  *
  * Usage: see packages/scripts/README.md
  */
+import { exportHellscubeCards } from '@hellfall/shared/utils';
 import { config } from 'dotenv';
 import { writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { exportHellscubeCards } from '@hellfall/shared/export/cards';
+// import { exportHellscubeCards } from '@hellfall/shared/export/cards';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '../../..');

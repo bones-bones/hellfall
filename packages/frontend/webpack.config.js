@@ -235,6 +235,20 @@ export default function webpackConfig(webpackEnv) {
         fs: false,
         path: false,
         url: false,
+        stream: false,
+        util: false,
+        crypto: false,
+        buffer: false,
+        assert: false,
+        http: false,
+        https: false,
+        os: false,
+        zlib: false,
+        querystring: false,
+        child_process: false,
+        net:false,
+        dns:false,
+        tls:false
       },
     },
     module: {
@@ -397,7 +411,9 @@ export default function webpackConfig(webpackEnv) {
           },
         ],
       }),
-
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^(@google-cloud|google-auth-library|google-gax|firebase-admin)$/
+      }),
       // This is necessary to emit hot updates (CSS and Fast Refresh):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       // Experimental hot reloading for React .

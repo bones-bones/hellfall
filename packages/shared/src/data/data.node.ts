@@ -1,8 +1,10 @@
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { loadHellscubeCatalogCards } from '../export/loadHellscubeCatalog';
+// import { loadHellscubeCatalogCards } from '../export/loadHellscubeCatalog';
 import { HCCard, HCCardSymbol, HCSet } from '../types';
+import { exportCardMap } from '../utils';
+// import { error } from 'console';
 
 export interface JsonDataWrapper<T> {
   data: T[];
@@ -39,9 +41,14 @@ export async function loadCardsData(): Promise<JsonDataWrapper<HCCard.Any>> {
     }
     return (await res.json()) as JsonDataWrapper<HCCard.Any>;
   }
-
-  const data = await loadHellscubeCatalogCards();
-  return { data };
+  try {
+    const data = (await exportCardMap()).cards();
+    return { data };
+  } catch (error) {
+    const data = (await Promise.resolve(loadJsonFileSync<HCCard.Any>('Hellscube-Database.json')))
+      .data;
+    return { data };
+  }
 }
 
 export const cardsDataAsync = loadCardsData();

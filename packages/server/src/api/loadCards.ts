@@ -24,6 +24,8 @@ export const loadCardsHandler = async (
   res.statusCode = 200;
   res.end(body);
   console.log(
-    `[cards/load] request complete catalog=${catalogMs}ms write=${Date.now() - t0 - catalogMs}ms total=${Date.now() - t0}ms bytes=${body.length}`
+    `[cards/load] request complete catalog=${catalogMs}ms write=${
+      Date.now() - t0 - catalogMs
+    }ms total=${Date.now() - t0}ms bytes=${body.length}`
   );
 };

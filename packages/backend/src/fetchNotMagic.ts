@@ -1,30 +1,16 @@
 import {
   addArtist,
-  addProp,
-  addPropToFaceOrRoot,
-  bothPropType,
-  faceOrRootIsBattle,
+  addPropToFace,
+  addPropToRoot,
+  facePropType,
+  frontIsBattle,
   getDefaultCard,
   HCIDMap,
-  isInteger,
-  propType,
+  rootPropType,
   setDerivedProps,
 } from '@hellfall/shared/utils/index.ts';
 import { sheetsKey } from './env.ts';
-import {
-  HCCard,
-  HCImageStatus,
-  HCLayout,
-  HCColor,
-  HCColors,
-  HCObject,
-  HCLegality,
-  HCLegalitiesField,
-  HCBorderColor,
-  HCFrame,
-  HCFinish,
-  HCKind,
-} from '@hellfall/shared/types';
+import { HCImageStatus, HCColor, HCColors, HCKind } from '@hellfall/shared/types';
 
 const discordToSymbolMatching: Record<string, string> = {
   '<:mana0:636012942243921931>': '{0}',
@@ -52,8 +38,6 @@ const emojiToColorIndicators: Record<string, HCColors> = {
   '🟢': ['G'],
   '🏳️‍🌈': ['W', 'U', 'B', 'R', 'G'],
 };
-
-// TODO: fix to use types
 
 export const fetchNotMagic = async () => {
   const requestedData = await fetch(
@@ -144,6 +128,7 @@ export const fetchNotMagic = async () => {
           : [],
       },
       {
+        name: entryAt('name'),
         colors: entryAt('colors')
           ? entryAt('colors')
               .split(';')
@@ -160,10 +145,11 @@ export const fetchNotMagic = async () => {
         toughness: entryAt('toughness'),
         loyalty: !entryAt('types').toLowerCase().includes('battle') ? entryAt('loyalty') : '',
         defense: entryAt('types').toLowerCase().includes('battle') ? entryAt('loyalty') : '',
-        oracle_text: entryAt('oracle_text')
-          .match(/<[^>]*>|[^<>]+/g)
-          ?.map(text => (text[0] == '<' ? discordToSymbolMatching[text] : text))
-          .join(''),
+        oracle_text:
+          entryAt('oracle_text')
+            .match(/<[^>]*>|[^<>]+/g)
+            ?.map(text => (text[0] == '<' ? discordToSymbolMatching[text] : text))
+            .join('') ?? entryAt('oracle_text'),
         flavor_text: entryAt('flavor_text'),
       }
     );
@@ -175,20 +161,30 @@ export const fetchNotMagic = async () => {
           const entryList = face == 3 ? entry[i].split(' // ') : [entry[i]];
           entryList.forEach((value, index) => {
             if (['supertypes', 'types', 'subtypes'].includes(key)) {
-              addPropToFaceOrRoot(
+              addPropToFace(
                 card,
                 key as 'supertypes' | 'types' | 'subtypes',
                 value.split(';'),
                 face + index
               );
-            } else if (key == 'loyalty' && faceOrRootIsBattle(card, face + index)) {
-              addPropToFaceOrRoot(card, 'defense', value, face + index);
+            } else if (key == 'loyalty' && frontIsBattle(card, face + index)) {
+              addPropToFace(card, 'defense', value, face + index);
+            } else if (key == 'oracle_text') {
+              addPropToFace(
+                card,
+                'oracle_text',
+                value
+                  .match(/<[^>]*>|[^<>]+/g)
+                  ?.map(text => (text[0] == '<' ? discordToSymbolMatching[text] : text))
+                  .join('') ?? value,
+                face + index
+              );
             } else {
-              addPropToFaceOrRoot(card, key as bothPropType, value, face + index);
+              addPropToFace(card, key as facePropType, value, face + index);
             }
           });
         } else {
-          addProp(card, keys[i] as propType, entry[i]);
+          addPropToRoot(card, keys[i] as rootPropType, entry[i]);
         }
       }
     }

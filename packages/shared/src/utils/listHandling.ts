@@ -210,6 +210,22 @@ export const pushProp = <T = any>(ob: T, prop: keyof T, value: any) => {
     ob[prop].push(value);
   }
 };
+/**
+ * Correctly deals with popping a value from an optional property
+ * @param ob object that has the prop
+ * @param prop prop to pop from
+ * @param value value to pop
+ */
+export const popProp = <T = any>(ob: T, prop: keyof T, value: any) => {
+  if (ob[prop] == undefined) {
+    return false;
+  } else if (Array.isArray(ob[prop])) {
+    const loc = ob[prop].indexOf(value);
+    if (loc == undefined || loc == -1) return false;
+    ob[prop].splice(loc, 1);
+    return true;
+  }
+};
 
 export const textListIncludes = (value1: string[] | undefined, value2: string): boolean =>
   Boolean(value1?.some(text => textSearchIncludes(text, value2)));
@@ -234,6 +250,20 @@ export const listsAreEqual = <T = any>(
 };
 
 /**
+ * Correctly deals with adding a value to an optional property that's a `Record<string,string>` by creating the value of the prop first if necessary
+ * @param ob object that has the prop
+ * @param prop prop to add to
+ * @param key key to add
+ * @param value value to add
+ */
+export const addPropToRecord = <T = any>(ob: T, prop: keyof T, key: string, value: string) => {
+  if (ob[prop] == undefined) {
+    (ob as any)[prop] = {};
+  }
+  const record = ob[prop] as Record<string, string>;
+  record[key] = value;
+};
+/**
  * Correctly deals with pushing a value to an optional property that's a `Record<string,string[]>` by creating the value of the prop first if necessary
  * @param ob object that has the prop
  * @param prop prop to push to
@@ -250,6 +280,45 @@ export const pushPropToRecord = <T = any>(ob: T, prop: keyof T, key: string, val
   } else {
     record[key] = [value];
   }
+};
+
+/**
+ * Correctly deals with deleting a value from an optional property that's a `Record<string,string>
+ * @param ob object that has the prop
+ * @param prop prop to delete from
+ * @param key key to delete
+ */
+export const deletePropFromRecord = <T = any>(ob: T, prop: keyof T, key: string) => {
+  if (ob[prop] == undefined) {
+    return false;
+  }
+  const record = ob[prop] as Record<string, string>;
+  if (record[key] != undefined) {
+    delete record[key];
+    return true;
+  }
+  return false;
+};
+
+/**
+ * Correctly deals with popping a value from an optional property that's a `Record<string,string[]>
+ * @param ob object that has the prop
+ * @param prop prop to delete from
+ * @param key key to pop from
+ * @param value value to pop
+ */
+export const popPropFromRecord = <T = any>(ob: T, prop: keyof T, key: string, value: string) => {
+  if (ob[prop] == undefined) {
+    return false;
+  }
+  const record = ob[prop] as Record<string, string[]>;
+  if (key in record) {
+    const index = record[key].indexOf(value);
+    if (index == -1 || index == undefined) return false;
+    record[key].splice(index, 1);
+    return true;
+  }
+  return false;
 };
 
 /**

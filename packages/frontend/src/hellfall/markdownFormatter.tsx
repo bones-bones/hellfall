@@ -1,5 +1,15 @@
 import { Fragment, ReactNode } from 'react';
-import simpleMarkdown from 'simple-markdown';
+import {
+  ParserState,
+  ParsedNode,
+  ParseFunction,
+  OutputFunction,
+  parserFor,
+  RuleOutputFunction,
+  Rule,
+  reactFor,
+  ruleOutput,
+} from 'simple-markdown';
 import { stringToMana } from './stringToMana.tsx';
 import { styled, type } from '@workday/canvas-kit-react';
 
@@ -15,8 +25,8 @@ const isEscaped = (source: string, index: number): boolean => {
 };
 
 // Create rules with escaped character support
-const createRules = (invertedItalics: boolean = false) => {
-  const baseRules = {
+const createRules = (invertedItalics: boolean = false): Record<string, Rule> => {
+  const baseRules: Record<string, Rule> = {
     // Strong/bold formatting (**text**)
     strong: {
       order: 1,
@@ -28,13 +38,13 @@ const createRules = (invertedItalics: boolean = false) => {
         }
         return null;
       },
-      parse: (capture: RegExpExecArray, parse: any, state: any) => {
+      parse: (capture: RegExpExecArray, parse: ParseFunction, state?: ParserState): ParsedNode => {
         return {
           content: parse(capture[1], state),
         };
       },
-      react: (node: any, output: any, state: any) => {
-        return <strong key={state.key}>{output(node.content, state)}</strong>;
+      react: (node: ParsedNode, output: OutputFunction, state?: ParserState): React.ReactNode => {
+        return <strong key={state?.key}>{output(node.content as ParsedNode[], state)}</strong>;
       },
     },
 
@@ -49,13 +59,13 @@ const createRules = (invertedItalics: boolean = false) => {
         }
         return null;
       },
-      parse: (capture: RegExpExecArray, parse: any, state: any) => {
+      parse: (capture: RegExpExecArray, parse: ParseFunction, state?: ParserState): ParsedNode => {
         return {
           content: parse(capture[1], state),
         };
       },
-      react: (node: any, output: any, state: any) => {
-        return <u key={state.key}>{output(node.content, state)}</u>;
+      react: (node: ParsedNode, output: OutputFunction, state?: ParserState): React.ReactNode => {
+        return <u key={state?.key}>{output(node.content as ParsedNode[], state)}</u>;
       },
     },
 
@@ -69,18 +79,18 @@ const createRules = (invertedItalics: boolean = false) => {
         }
         return null;
       },
-      parse: (capture: RegExpExecArray, parse: any, state: any) => {
+      parse: (capture: RegExpExecArray, parse: ParseFunction, state?: ParserState): ParsedNode => {
         return {
           content: parse(capture[1], state),
         };
       },
-      react: (node: any, output: any, state: any) => {
+      react: (node: ParsedNode, output: OutputFunction, state?: ParserState): React.ReactNode => {
         return (
           <del
-            key={state.key}
+            key={state?.key}
             style={{ textDecorationThickness: '0.1em', textDecorationSkipInk: 'none' }}
           >
-            {output(node.content, state)}
+            {output(node.content as ParsedNode[], state)}
           </del>
         );
       },
@@ -94,7 +104,7 @@ const createRules = (invertedItalics: boolean = false) => {
         const match = /^[\s\S]+?(?=(?<!\\)(?:[*_~]|$))/.exec(source);
         return match;
       },
-      parse: (capture: RegExpExecArray) => {
+      parse: (capture: RegExpExecArray): ParsedNode => {
         // Unescape any escaped characters
         let content = capture[0];
         content = content.replace(/\\([*_~])/g, '$1');
@@ -102,8 +112,15 @@ const createRules = (invertedItalics: boolean = false) => {
           content: content,
         };
       },
-      react: (node: any, output: any, state: any) => {
-        return <span key={state.key}>{stringToMana(node.content)}</span>;
+      react: (node: ParsedNode, _output: OutputFunction, state?: ParserState): React.ReactNode => {
+        return state?.setDangerously ? (
+          <span
+            key={state?.key}
+            dangerouslySetInnerHTML={{ __html: stringToMana(node.content as string) }}
+          />
+        ) : (
+          <span key={state?.key}>{stringToMana(node.content as string)}</span>
+        );
       },
     },
   };
@@ -130,20 +147,24 @@ const createRules = (invertedItalics: boolean = false) => {
           }
           return null;
         },
-        parse: (capture: RegExpExecArray, parse: any, state: any) => {
+        parse: (
+          capture: RegExpExecArray,
+          parse: ParseFunction,
+          state?: ParserState
+        ): ParsedNode => {
           return {
             content: parse(capture[1], state),
           };
         },
-        react: (node: any, output: any, state: any) => {
+        react: (node: ParsedNode, output: OutputFunction, state?: ParserState): React.ReactNode => {
           // In inverted italics, *text* should be non-italic
           return (
-            <span key={state.key} style={{ fontStyle: 'normal' }}>
-              {output(node.content, state)}
+            <span key={state?.key} style={{ fontStyle: 'normal' }}>
+              {output(node.content as ParsedNode[], state)}
             </span>
           );
         },
-      },
+      } satisfies Rule,
     };
   } else {
     // Normal mode: *text* makes text italic
@@ -164,30 +185,38 @@ const createRules = (invertedItalics: boolean = false) => {
           }
           return null;
         },
-        parse: (capture: RegExpExecArray, parse: any, state: any) => {
+        parse: (
+          capture: RegExpExecArray,
+          parse: ParseFunction,
+          state?: ParserState
+        ): ParsedNode => {
           return {
             content: parse(capture[1], state),
           };
         },
-        react: (node: any, output: any, state: any) => {
-          return <em key={state.key}>{output(node.content, state)}</em>;
+        react: (node: ParsedNode, output: OutputFunction, state?: ParserState): React.ReactNode => {
+          return <em key={state?.key}>{output(node.content as ParsedNode[], state)}</em>;
         },
-      },
+      } satisfies Rule,
     };
   }
 };
 
 // Helper function to parse and render a single line
-const formatLine = (line: string, invertedItalics: boolean = false): ReactNode => {
+const formatLine = (
+  line: string,
+  invertedItalics: boolean = false,
+  setDangerously?: boolean
+): ReactNode => {
   if (!line) return null;
 
   try {
     const rules = createRules(invertedItalics);
-    const parser = simpleMarkdown.parserFor(rules);
-    const reactOutput = simpleMarkdown.reactFor(simpleMarkdown.ruleOutput(rules, 'react'));
+    const parser = parserFor(rules);
+    const reactOutput = reactFor(ruleOutput(rules, 'react'));
 
     // Parse the line into an AST
-    const parsed = parser(line, { inline: true });
+    const parsed = parser(line, { /* inline: true, */ setDangerously } as ParserState);
 
     if (!parsed || parsed.length === 0) {
       const content = stringToMana(line);
@@ -198,7 +227,7 @@ const formatLine = (line: string, invertedItalics: boolean = false): ReactNode =
     }
 
     // Render the parsed nodes
-    const rendered = reactOutput(parsed);
+    const rendered = reactOutput(parsed, { setDangerously } as ParserState);
 
     // If inverted italics mode, wrap the entire result in <em>
     if (invertedItalics) {
@@ -225,13 +254,19 @@ const formatLine = (line: string, invertedItalics: boolean = false): ReactNode =
  * @param text - The text to format (may contain \n for line breaks)
  * @returns React nodes with formatting applied
  */
-export const formatDiscordMarkdown = (text: string): ReactNode => {
+export const formatDiscordMarkdown = (
+  text: string,
+  textModifier?: (text: string) => string,
+  setDangerously?: boolean
+): ReactNode => {
   if (!text) return null;
 
-  const lines = text.split('\\n');
+  const lines = textModifier
+    ? text.split('\\n').map(text => textModifier(text))
+    : text.split('\\n');
 
   return lines.map((line, index) => {
-    const formattedLine = formatLine(line, false);
+    const formattedLine = formatLine(line, false, setDangerously);
     return (
       <MediumText key={`line-${index}`}>
         {/* {index > 0 && <br />} */}

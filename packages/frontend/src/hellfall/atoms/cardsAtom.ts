@@ -6,15 +6,19 @@ import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
 
 async function loadCards(): Promise<CardMap> {
   const base = getAuthApiUrl().replace(/\/$/, '');
-  if (base) {
-    const res = await fetch(`${base}/api/cards/load`);
-    if (!res.ok) {
-      throw new Error(`Failed to load cards: ${res.status}`);
+  try {
+    if (base) {
+      const res = await fetch(`${base}/api/cards/load`);
+      if (!res.ok) {
+        throw new Error(`Failed to load cards: ${res.status}`);
+      }
+      const { data } = (await res.json()) as { data: HCCard.Any[] };
+      return new CardMap(data);
     }
-    const { data } = (await res.json()) as { data: HCCard.Any[] };
-    return new CardMap(data);
+    return new CardMap(cardsData.data);
+  } catch {
+    return new CardMap(cardsData.data);
   }
-  return new CardMap(cardsData.data);
 }
 
 export const cardsAtom = atom<Promise<CardMap>>(loadCards);

@@ -1,6 +1,6 @@
 export enum HCLegality {
   Legal = 'legal',
   NotLegal = 'not_legal',
-  Restricted = 'restricted',
+  // Restricted = 'restricted',
   Banned = 'banned',
 }

@@ -16,7 +16,7 @@ import { useSearchResults } from './hooks/useSearchResults.ts';
 import { SortComponent } from './search-controls/SortComponent.tsx';
 import { CHUNK_SIZE } from './constants.ts';
 import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
-import { getOtherNames } from '@hellfall/shared/utils';
+import { getOtherNames, toPlainText } from '@hellfall/shared/utils';
 import { SearchBar } from './search-controls/SearchBar.tsx';
 import { ActiveCardPanel } from './ActiveCardPanel.tsx';
 
@@ -91,6 +91,7 @@ export const HellFall = () => {
               id={entry.hcid}
               name={entry.name}
               otherNames={getOtherNames(entry)}
+              plainText={toPlainText(entry)}
               url={
                 'card_faces' in entry && entry.layout == 'meld_part' && entry.card_faces[0].image
                   ? entry.card_faces[0].image

@@ -121,18 +121,15 @@ export const formatTypeLine = (card: HCCard.Any): string => {
     const secondPart = [...(face.subtypes ?? [])].join(' ');
     const parts = [firstPart, secondPart].filter(Boolean).join(' — ');
 
-    return parts
+    return parts;
   }
-
 
   const firstPart = [...(card.supertypes ?? []), ...(card.types ?? [])].join(' ');
   const secondPart = [...(card.subtypes ?? [])].join(' ');
   const parts = [firstPart, secondPart].filter(Boolean).join(' — ');
 
-  return parts
+  return parts;
 };
-
-
 
 const colorNumber = (card: HCCard.Any) =>
   getCardColors(card)

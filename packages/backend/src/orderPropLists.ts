@@ -1,12 +1,12 @@
 // scripts/orderCardLists.ts
 
 import {
+  anyPropType,
   facePropType,
   orderCardProps,
   orderFaceProps,
   orderPartProps,
   partPropType,
-  propType,
 } from '@hellfall/shared/utils';
 
 const listsToOrder = {};
@@ -14,7 +14,7 @@ const listsToOrder = {};
 if (Object.keys(listsToOrder).length) {
   console.log('// Ordered by propOrder\n');
   for (const [listName, props] of Object.entries(listsToOrder)) {
-    orderCardProps(props as propType[]);
+    orderCardProps(props as anyPropType[]);
     console.log(`const ${listName} = ${JSON.stringify(props, null, 2).replaceAll('"', "'")};`);
     console.log();
   }

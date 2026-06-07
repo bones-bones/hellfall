@@ -7,20 +7,28 @@ import { requireAdminAuth } from './lib/requireAdminAuth.js';
 import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
 import { recardCardChangeset } from '../lib/cardAudit.js';
 import {
-  resolveTagState,
-  tagFieldsForWrite,
-  dedupeOrdered,
-  mergeTags,
-  normalizeTagList,
-  type CardTagOverrides,
-} from '@hellfall/shared/cardTags/cardTagMerge';
+  anyChange,
+  applyFromCollection,
+  cardToFirestore,
+  changeIsValid,
+  firestoreToCard,
+  isValidV4UUID,
+} from '@hellfall/shared/utils';
+// import {
+//   resolveTagState,
+//   tagFieldsForWrite,
+//   dedupeOrdered,
+//   mergeTags,
+//   normalizeTagList,
+//   type CardTagOverrides,
+// } from '@hellfall/shared/cardTags/cardTagMerge';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const changesetsCol = db.collection(env.FIRESTORE_CHANGESETS_COLLECTION);
 const cardsCol = db.collection(env.FIRESTORE_CARDS_COLLECTION);
 
-type FieldChange = { before: unknown; after: unknown };
-type ChangesMap = Record<string, FieldChange>;
+// type FieldChange = { before: unknown; after: unknown };
+// type ChangesMap = Record<string, anyChange>;
 
 type ChangesetStatus = 'pending' | 'accepted' | 'rejected';
 
@@ -31,7 +39,8 @@ interface ChangesetDoc {
   resolvedAt: Timestamp | null;
   submittedBy: { userId: string; username: string };
   resolvedBy: { userId: string; username: string } | null;
-  changes: ChangesMap;
+  // changes: ChangesMap;
+  changes: anyChange[];
   comment: string | null;
 }
 
@@ -61,16 +70,16 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   return body ? JSON.parse(body) : {};
 }
 
-function isValidChanges(changes: unknown): changes is ChangesMap {
-  if (!changes || typeof changes !== 'object' || Array.isArray(changes)) return false;
-  for (const [key, val] of Object.entries(changes as Record<string, unknown>)) {
-    if (typeof key !== 'string') return false;
-    if (!val || typeof val !== 'object' || Array.isArray(val)) return false;
-    const v = val as Record<string, unknown>;
-    if (!('before' in v) || !('after' in v)) return false;
-  }
-  return Object.keys(changes).length > 0;
-}
+// function isValidChanges(changes: unknown): changes is ChangesMap {
+//   if (!changes || typeof changes !== 'object' || Array.isArray(changes)) return false;
+//   for (const [key, val] of Object.entries(changes as Record<string, unknown>)) {
+//     if (typeof key !== 'string') return false;
+//     if (!val || typeof val !== 'object' || Array.isArray(val)) return false;
+//     const v = val as Record<string, unknown>;
+//     if (!('before' in v) || !('after' in v)) return false;
+//   }
+//   return Object.keys(changes).length > 0;
+// }
 
 /** GET /api/changesets — list changesets, filterable by ?status= and ?cardId= */
 async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promise<void> {
@@ -108,13 +117,24 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
   }
 
   const cardId = typeof body.cardId === 'string' ? body.cardId.trim() : '';
-  if (!cardId || cardId.length > 200) {
+  if (!cardId || !isValidV4UUID(cardId) || cardId.length > 200) {
     res.statusCode = 400;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_card_id' }));
     return;
   }
-
-  if (!isValidChanges(body.changes)) {
+  const card = firestoreToCard(await cardsCol.doc(cardId).get());
+  if (!cardId || cardId.length > 200) {
+    res.statusCode = 400;
+    res.end(JSON.stringify({ ok: false, reason: 'card not found' }));
+    return;
+  }
+  try {
+    if ((body.changes as anyChange[]).some(change => !changeIsValid(card, change))) {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
+      return;
+    }
+  } catch {
     res.statusCode = 400;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
     return;
@@ -167,31 +187,31 @@ async function getChangeset(
 }
 
 /** Apply tag changes using the merge helpers so baseTags/added/removed/tags stay consistent. */
-function applyTagChanges(
-  cardData: Record<string, unknown>,
-  afterTags: unknown
-): Record<string, unknown> {
-  const newTagsList = normalizeTagList(afterTags);
-  const currentState = resolveTagState(cardData);
-  const baseTags = currentState.baseTags;
-  const baseSet = new Set(baseTags);
+// function applyTagChanges(
+//   cardData: Record<string, unknown>,
+//   afterTags: unknown
+// ): Record<string, unknown> {
+//   const newTagsList = normalizeTagList(afterTags);
+//   const currentState = resolveTagState(cardData);
+//   const baseTags = currentState.baseTags;
+//   const baseSet = new Set(baseTags);
 
-  const added: string[] = [];
-  const removed: string[] = [];
-  for (const t of newTagsList) {
-    if (!baseSet.has(t)) added.push(t);
-  }
-  for (const t of baseTags) {
-    if (!newTagsList.includes(t)) removed.push(t);
-  }
-  const overrides: CardTagOverrides = { added, removed };
-  const tags = dedupeOrdered(mergeTags(baseTags, overrides));
+//   const added: string[] = [];
+//   const removed: string[] = [];
+//   for (const t of newTagsList) {
+//     if (!baseSet.has(t)) added.push(t);
+//   }
+//   for (const t of baseTags) {
+//     if (!newTagsList.includes(t)) removed.push(t);
+//   }
+//   const overrides: CardTagOverrides = { added, removed };
+//   const tags = dedupeOrdered(mergeTags(baseTags, overrides));
 
-  return {
-    ...cardData,
-    ...tagFieldsForWrite({ baseTags, added, removed, tags }),
-  };
-}
+//   return {
+//     ...cardData,
+//     ...tagFieldsForWrite({ baseTags, added, removed, tags }),
+//   };
+// }
 
 /** POST /api/changesets/:id/accept — admin accepts changeset */
 async function acceptChangeset(
@@ -217,18 +237,20 @@ async function acceptChangeset(
   }
 
   const cardRef = cardsCol.doc(cs.cardId);
-  const cardSnap = await cardRef.get();
-  let cardData = (cardSnap.data() ?? {}) as Record<string, unknown>;
+  const card = firestoreToCard(await cardRef.get());
+  applyFromCollection(card, cs.changes, cardsCol);
 
-  for (const [field, change] of Object.entries(cs.changes)) {
-    if (field === 'tags') {
-      cardData = applyTagChanges(cardData, change.after);
-    } else {
-      cardData[field] = change.after;
-    }
-  }
+  // let cardData = (cardSnap.data() ?? {}) as Record<string, unknown>;
 
-  await cardRef.set(cardData, { merge: true });
+  // for (const [field, change] of Object.entries(cs.changes)) {
+  //   if (field === 'tags') {
+  //     // cardData = applyTagChanges(cardData, change.after);
+  //   } else {
+  //     cardData[field] = change.after;
+  //   }
+  // }
+
+  await cardRef.set(cardToFirestore(card) /* , { merge: true } */);
 
   await recardCardChangeset({
     cardId: cs.cardId,

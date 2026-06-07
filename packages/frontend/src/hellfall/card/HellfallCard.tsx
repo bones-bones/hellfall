@@ -97,16 +97,16 @@ export const HellfallCard = ({
   onSinglePage?: boolean;
 }) => {
   const { user } = useAuth();
-  const [
-    displayTags,
+  const {
+    displayCard,
     addTag,
-    removeTag,
-    tagsLoading,
-    tagsError,
-    tagsPersistEnabled,
+    deleteTag,
+    loading: tagsLoading,
+    error: tagsError,
+    persistEnabled: tagsPersistEnabled,
     changesetSubmitted,
     pendingTagStaging,
-  ] = useCardTagOverrides(data.id, data.tags);
+  } = useCardTagOverrides(data);
   const [activeImageSide, setActiveImageSide] = useState(0);
   const [newTagInput, setNewTagInput] = useState('');
   const [tagActionError, setTagActionError] = useState<string | null>(null);
@@ -135,17 +135,17 @@ export const HellfallCard = ({
   }, [windowWidth]);
 
   // TODO: add handling for flip and aftermath
-  const { images: imagesToShow, names: imageNames } = getImages(data);
+  const { images: imagesToShow, names: imageNames } = getImages(displayCard);
 
   return (
-    <Container ref={windowRef} key={data.id} style={{ lineHeight: 1 }}>
+    <Container ref={windowRef} key={displayCard.id} style={{ lineHeight: 1 }}>
       <title>{data.name} || Hellfall</title>
       {!imagesToShow.length ? (
         <Test>
           <ImageContainer key="image-container">
             <img
-              alt={toPlainText(data)}
-              src={data.image!}
+              alt={toPlainText(displayCard)}
+              src={displayCard.image!}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
             />
@@ -153,10 +153,10 @@ export const HellfallCard = ({
         </Test>
       ) : (
         <>
-          <ImageContainer key={imagesToShow[activeImageSide] || data.image}>
+          <ImageContainer key={imagesToShow[activeImageSide] || displayCard.image}>
             <img
-              alt={toPlainText(data)}
-              src={imagesToShow[activeImageSide] || data.image!}
+              alt={toPlainText(displayCard)}
+              src={imagesToShow[activeImageSide] || displayCard.image!}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
             />
@@ -181,12 +181,18 @@ export const HellfallCard = ({
       )}
       <Card style={{ width: '100%' }}>
         <Card.Body padding={'zero'} marginTop={'-20px'}>
-          {/* {'card_faces' in data && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{data.name}</StyledHeading>} */}
-          {('card_faces' in data ? data.card_faces : [data]).map((face, i) => (
+          {/* {'card_faces' in displayCard && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{displayCard.name}</StyledHeading>} */}
+          {('card_faces' in displayCard ? displayCard.card_faces : [displayCard]).map((face, i) => (
             <span key={'face-' + (i + 1)}>
               {i > 0 && <Divider />}
               {face.name &&
-                (triggerEscapeList.some(e => face.name.includes(e)) ? (
+                (displayCard.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
+                  <MediumLine
+                    key="name"
+                    style={{ marginRight: '1em' }}
+                    dangerouslySetInnerHTML={{ __html: face.name }}
+                  />
+                ) : triggerEscapeList.some(e => face.name.includes(e)) ? (
                   <MediumLine key="name" style={{ marginRight: '1em' }}>
                     {formatDiscordMarkdownInline(formatParens(face.name))}
                   </MediumLine>
@@ -231,7 +237,19 @@ export const HellfallCard = ({
                 ))}
               {(face.oracle_text || face.flavor_text) && <Separator />}
               {face.oracle_text &&
-                (triggerEscapeList.some(e => face.oracle_text.includes(e)) ? (
+                (displayCard.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
+                  <MediumText key="rules">
+                    {formatDiscordMarkdown(
+                      formatParens(face.oracle_text),
+                      text =>
+                        text.replaceAll(
+                          'HTML Injection in the Hellfall Website Elemental',
+                          face.name.replaceAll('2em', 'em')
+                        ),
+                      true
+                    )}
+                  </MediumText>
+                ) : triggerEscapeList.some(e => face.oracle_text.includes(e)) ? (
                   <MediumText key="rules">
                     {formatDiscordMarkdown(formatParens(face.oracle_text))}
                   </MediumText>
@@ -287,161 +305,192 @@ export const HellfallCard = ({
             </span>
           ))}
           <Divider />
-          {data.set && (
+          {displayCard.set && (
             <>
               <MediumText>
                 Set:{' '}
-                {(data.set == 'HCV.CDC' ? 'CDC' : data.set) +
-                  (data.collector_number ? ' #' + data.collector_number : '')}
+                {(displayCard.set == 'HCV.CDC' ? 'CDC' : displayCard.set) +
+                  (displayCard.collector_number ? ' #' + displayCard.collector_number : '')}
               </MediumText>
               <Separator />
             </>
           )}
-          {Boolean(data.creators.length) && (
+          {Boolean(displayCard.creators.length) && (
             <>
               <SmallText key="creator">
-                Creator{data.creators.length == 1 ? '' : 's'}: {data.creators.join(',')}
+                Creator{displayCard.creators.length == 1 ? '' : 's'}:{' '}
+                {displayCard.creators.join(',')}
               </SmallText>
             </>
           )}
-          {data.artists?.length && (
+          {displayCard.artists?.length && (
             <>
               <SmallText key="artist">
-                Artist{data.artists.length == 1 ? '' : 's'}:{' '}
-                {data.artists
+                Artist{displayCard.artists.length == 1 ? '' : 's'}:{' '}
+                {displayCard.artists
                   .map(
                     artist =>
                       `${artist}${
-                        data.artist_notes?.[artist] ? ` (${data.artist_notes[artist]})` : ''
+                        displayCard.artist_notes?.[artist]
+                          ? ` (${displayCard.artist_notes[artist]})`
+                          : ''
                       }`
                   )
                   .join(', ')}
               </SmallText>
             </>
           )}
-          {data.hcid && (
+          {displayCard.hcid && (
             <>
-              <SmallText key="hcid">Id: {data.hcid}</SmallText>
+              <SmallText key="hcid">Id: {displayCard.hcid}</SmallText>
             </>
           )}
           {
             <>
-              <SetLegality legality={data.legalities.standard} /> Constructed
+              <SetLegality legality={displayCard.legalities.standard} /> Constructed
               <br />
-              <SetLegality legality={data.legalities['4cb']} /> 4CB
+              <SetLegality legality={displayCard.legalities['4cb']} /> 4CB
               <br />
-              <SetLegality legality={data.legalities.commander} /> Hellsmander
+              <SetLegality legality={displayCard.legalities.commander} /> Hellsmander
               <br />
               <Separator />
             </>
           }
-          {data.rulings && (
+          {displayCard.rulings && (
             <>
               <Divider />
               <div>
                 <StyledHeading size="small">Rulings</StyledHeading>
-                {data.rulings.split('\\n').map((e, i) => {
+                {displayCard.rulings.split('\\n').map((e, i) => {
                   return <Ruling key={i}>{e}</Ruling>;
                 })}
               </div>
             </>
           )}
-          {isContributor && <PendingChanges cardId={data.id} />}
+          {isContributor && <PendingChanges cardId={displayCard.id} />}
           {user && tagsPersistEnabled && !editing && (
             <EditCardButton type="button" onClick={() => setEditing(true)}>
-              Edit Card Data
+              Edit Card displayCard
             </EditCardButton>
           )}
           {editing && (
             <CardEditPanel
-              card={data}
+              card={displayCard}
               onClose={() => setEditing(false)}
               onSubmitted={() => setEditing(false)}
             />
           )}
-          {displayTags.length > 0 || pendingTagStaging || user ? (
-            <>
-              {tagsLoading && <SmallText>Loading tags…</SmallText>}
-              {tagsError && (
-                <SmallText style={{ color: '#c00' }}>Could not load tag overrides.</SmallText>
-              )}
-              {tagActionError && <SmallText style={{ color: '#c00' }}>{tagActionError}</SmallText>}
-              <SmallText key="Tags">
-                Tags:{' '}
-                {displayTags.map((tagEntry, i, ar) => {
-                  const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
-                  return (
-                    <span key={tagEntry}>
-                      <TagLink $pendingRemove={pendingRemove}>
+          {
+            /* displayTags.length > 0 || pendingTagStaging || */ user ? (
+              <>
+                {tagsLoading && <SmallText>Loading tags…</SmallText>}
+                {tagsError && (
+                  <SmallText style={{ color: '#c00' }}>Could not load tag overrides.</SmallText>
+                )}
+                {tagActionError && (
+                  <SmallText style={{ color: '#c00' }}>{tagActionError}</SmallText>
+                )}
+                <SmallText key="Tags">
+                  Tags:{' '}
+                  {displayCard.tags?.map((tagEntry, i, ar) => {
+                    const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
+                    return (
+                      <span key={tagEntry}>
+                        <TagLink $pendingRemove={pendingRemove}>
+                          <Link
+                            to={`/?${new URLSearchParams([['q', `tag=${tagEntry}`]]).toString()}`}
+                            target="_blank"
+                          >
+                            {tagEntry}
+                          </Link>
+                        </TagLink>
+                        {displayCard.tag_notes &&
+                          tagEntry in displayCard.tag_notes &&
+                          (displayCard.tag_notes[tagEntry].startsWith('https:') ? (
+                            <>
+                              <SmallLine> (</SmallLine>
+                              <Link to={displayCard.tag_notes[tagEntry]}>
+                                {displayCard.tag_notes[tagEntry]}
+                              </Link>
+                              <SmallLine>)</SmallLine>
+                            </>
+                          ) : (
+                            <>
+                              <SmallLine> ({displayCard.tag_notes[tagEntry]})</SmallLine>
+                            </>
+                          ))}
+                        {user && tagsPersistEnabled && (
+                          <TagRemoveButton
+                            type="button"
+                            onClick={async () => {
+                              setTagActionError(null);
+                              try {
+                                await deleteTag(tagEntry);
+                              } catch {
+                                setTagActionError('Failed to remove tag');
+                              }
+                            }}
+                            title="Remove tag"
+                            aria-label={`Remove tag ${tagEntry}`}
+                          >
+                            ×
+                          </TagRemoveButton>
+                        )}
+                        {i < ar.length - 1 && ', '}
+                      </span>
+                    );
+                  })}
+                  {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => (
+                    <span key={`pending-${tagEntry}`}>
+                      {(displayCard.tags?.length || i > 0) && ', '}
+                      <TagLink $pendingAdd>
                         <Link
                           to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
                           target="_blank"
                         >
-                          {tagEntry}
+                          +{tagEntry}
                         </Link>
                       </TagLink>
-                      {data.tag_notes &&
-                        tagEntry in data.tag_notes &&
-                        (data.tag_notes[tagEntry].slice(0, 6) == 'https:' ? (
-                          <>
-                            <SmallLine> (</SmallLine>
-                            <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
-                            <SmallLine>)</SmallLine>
-                          </>
-                        ) : (
-                          <>
-                            <SmallLine> ({data.tag_notes[tagEntry]})</SmallLine>
-                          </>
-                        ))}
-                      {user && tagsPersistEnabled && (
-                        <TagRemoveButton
-                          type="button"
-                          onClick={async () => {
-                            setTagActionError(null);
-                            try {
-                              await removeTag(tagEntry);
-                            } catch {
-                              setTagActionError('Failed to remove tag');
-                            }
-                          }}
-                          title="Remove tag"
-                          aria-label={`Remove tag ${tagEntry}`}
-                        >
-                          ×
-                        </TagRemoveButton>
-                      )}
                       {i < ar.length - 1 && ', '}
                     </span>
-                  );
-                })}
-                {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => (
-                  <span key={`pending-${tagEntry}`}>
-                    {(displayTags.length > 0 || i > 0) && ', '}
-                    <TagLink $pendingAdd>
-                      <Link
-                        to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
-                        target="_blank"
-                      >
-                        +{tagEntry}
-                      </Link>
-                    </TagLink>
-                    {i < ar.length - 1 && ', '}
-                  </span>
-                ))}
-              </SmallText>
-              {pendingTagStaging && (
-                <SmallText style={{ color: '#856404' }}>Staged changes pending review.</SmallText>
-              )}
-              {user && tagsPersistEnabled && (
-                <TagAddRow>
-                  <input
-                    type="text"
-                    list="hellfall-tag-list"
-                    value={newTagInput}
-                    onChange={e => setNewTagInput(e.target.value)}
-                    onKeyDown={async e => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
+                  ))}
+                </SmallText>
+                {pendingTagStaging && (
+                  <SmallText style={{ color: '#856404' }}>Staged changes pending review.</SmallText>
+                )}
+                {user && tagsPersistEnabled && (
+                  <TagAddRow>
+                    <input
+                      type="text"
+                      list="hellfall-tag-list"
+                      value={newTagInput}
+                      onChange={e => setNewTagInput(e.target.value)}
+                      onKeyDown={async e => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          const v = newTagInput.trim();
+                          if (v) {
+                            setTagActionError(null);
+                            try {
+                              await addTag(v);
+                              setNewTagInput('');
+                            } catch {
+                              setTagActionError('Failed to add tag');
+                            }
+                          }
+                        }
+                      }}
+                      placeholder="Add tag..."
+                      aria-label="Add tag"
+                    />
+                    <datalist id="hellfall-tag-list">
+                      {(tagsData.data as string[]).map(t => (
+                        <option key={t} value={t} />
+                      ))}
+                    </datalist>
+                    <button
+                      type="button"
+                      onClick={async () => {
                         const v = newTagInput.trim();
                         if (v) {
                           setTagActionError(null);
@@ -452,50 +501,28 @@ export const HellfallCard = ({
                             setTagActionError('Failed to add tag');
                           }
                         }
-                      }
-                    }}
-                    placeholder="Add tag..."
-                    aria-label="Add tag"
-                  />
-                  <datalist id="hellfall-tag-list">
-                    {(tagsData.data as string[]).map(t => (
-                      <option key={t} value={t} />
-                    ))}
-                  </datalist>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      const v = newTagInput.trim();
-                      if (v) {
-                        setTagActionError(null);
-                        try {
-                          await addTag(v);
-                          setNewTagInput('');
-                        } catch {
-                          setTagActionError('Failed to add tag');
-                        }
-                      }
-                    }}
-                  >
-                    Add
-                  </button>
-                </TagAddRow>
-              )}
-              {changesetSubmitted && (
-                <SmallText style={{ color: '#28a745', marginTop: 4 }}>
-                  Change submitted for review.
-                </SmallText>
-              )}
-            </>
-          ) : null}
-          {data.all_parts && (
+                      }}
+                    >
+                      Add
+                    </button>
+                  </TagAddRow>
+                )}
+                {changesetSubmitted && (
+                  <SmallText style={{ color: '#28a745', marginTop: 4 }}>
+                    Change submitted for review.
+                  </SmallText>
+                )}
+              </>
+            ) : null
+          }
+          {displayCard.all_parts && (
             <>
               <Divider />
               <div>
                 <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
                 <RelatedGrid>
-                  {data.all_parts
-                    .filter(e => e.id != data.id)
+                  {displayCard.all_parts
+                    .filter(e => e.id != displayCard.id)
                     .map((entry, i) => (
                       <HellfallRelatedEntry
                         onClick={(event: React.MouseEvent<HTMLImageElement>) => {
@@ -529,9 +556,9 @@ export const HellfallCard = ({
           borderRadius="m"
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-              window.open(`/api/cards/${encodeURIComponent(data.id)}?format=text`, '_blank');
+              window.open(`/api/cards/${encodeURIComponent(displayCard.id)}?format=text`, '_blank');
             } else {
-              window.location.href = `/api/cards/${encodeURIComponent(data.id)}?format=text`;
+              window.location.href = `/api/cards/${encodeURIComponent(displayCard.id)}?format=text`;
             }
           }}
         >
@@ -542,9 +569,9 @@ export const HellfallCard = ({
           borderRadius="m"
           onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-              window.open(`/api/cards/${encodeURIComponent(data.id)}?format=json`, '_blank');
+              window.open(`/api/cards/${encodeURIComponent(displayCard.id)}?format=json`, '_blank');
             } else {
-              window.location.href = `/api/cards/${encodeURIComponent(data.id)}?format=json`;
+              window.location.href = `/api/cards/${encodeURIComponent(displayCard.id)}?format=json`;
             }
           }}
         >

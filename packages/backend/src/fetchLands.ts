@@ -12,11 +12,11 @@ import {
 import { sheetsKey } from './env.ts';
 import {
   addArtist,
-  addProp,
   landToColorMapping,
   setDerivedProps,
   getDefaultCard,
   HCIDMap,
+  pushPropToRoot,
 } from '@hellfall/shared/utils';
 
 const convertSet: Record<string, string> = {
@@ -120,9 +120,9 @@ export const fetchLands = async () => {
       land.oracle_text = '{T}: Add {C}.';
     }
     if (entryAt('token_maker')) {
-      const all_parts = entryAt('token_maker')
+      entryAt('token_maker')
         .split(';')
-        .map(oldName => {
+        .forEach(oldName => {
           const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
           const name = match?.groups?.name ?? oldName;
           const count = match?.groups?.count;
@@ -137,7 +137,7 @@ export const fetchLands = async () => {
             id: '',
             hcid: shouldUseBase ? name : '',
             name: shouldUseBase ? base : name,
-            set: '',
+            set: '' as SetCode,
             image: '',
             type_line: '',
             component: 'token_maker',
@@ -145,9 +145,8 @@ export const fetchLands = async () => {
           if (count) {
             maker.count = count.slice(1);
           }
-          return maker;
+          pushPropToRoot(land, 'all_parts', maker);
         });
-      addProp(land, 'all_parts', all_parts);
     }
 
     const artistIndex = keys.indexOf('artists');

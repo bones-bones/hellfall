@@ -1,15 +1,14 @@
 import { FieldValue, Firestore, type Timestamp } from '@google-cloud/firestore';
 import { env } from '../api/lib/env.js';
-import type { CardTagState } from '@hellfall/shared/cardTags/cardTagMerge';
+// import { tagState } from '@hellfall/shared/types';
+// import type { CardTagState } from '@hellfall/shared/cardTags/cardTagMerge';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 
 export type AuditAction =
-  | 'tag_add'
-  | 'tag_remove'
-  | 'field_edit'
-  | 'changeset_accept'
-  | 'changeset_reject';
+  // | 'tag_add'
+  // | 'tag_delete'
+  'field_edit' | 'changeset_accept' | 'changeset_reject';
 
 export type AuditActor = {
   userId: string;
@@ -63,41 +62,7 @@ export async function recardCardChangeset(params: {
   }
 }
 
-function tagChangesFromState(before: CardTagState, after: CardTagState) {
-  return {
-    before: {
-      tags: before.tags,
-      added: before.added,
-      removed: before.removed,
-      baseTags: before.baseTags,
-    },
-    after: {
-      tags: after.tags,
-      added: after.added,
-      removed: after.removed,
-      baseTags: after.baseTags,
-    },
-  };
-}
-
 /** Convenience wrapper for tag add/remove — keeps cardTags.ts callsites clean. */
-export async function recordTagChangeset(params: {
-  cardId: string;
-  action: 'tag_add' | 'tag_remove';
-  tag: string;
-  user: AuditActor;
-  before: CardTagState;
-  after: CardTagState;
-}): Promise<void> {
-  return recardCardChangeset({
-    cardId: params.cardId,
-    action: params.action,
-    field: 'tags',
-    tag: params.tag,
-    user: params.user,
-    changes: tagChangesFromState(params.before, params.after),
-  });
-}
 
 export async function listCardChangesets(cardId: string, limit = 50): Promise<CardAuditEntry[]> {
   const snap = await auditCollection(cardId).orderBy('at', 'desc').limit(limit).get();
@@ -113,8 +78,8 @@ export async function listCardChangesets(cardId: string, limit = 50): Promise<Ca
       username: String(data.username ?? ''),
       userId: String(data.userId ?? ''),
       changes: {
-        before: data.changes?.before ?? data.before ?? null,
-        after: data.changes?.after ?? data.after ?? null,
+        before: data.before ?? null,
+        after: data.after ?? null,
       },
     };
   });
