@@ -40,6 +40,7 @@ export type tagChange = {
   location: 'tag';
   change_type: 'add' | 'delete';
   tag: string;
+  // rederive_props: boolean;
 };
 
 export type anyChange =

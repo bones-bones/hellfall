@@ -33,7 +33,7 @@ export const DeckBuilder = () => {
   const cardMap = new CardMap(cardsData.data);
   // const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
-  const [deckName, setNameOfDeck] = useState(searchparms.get('name') || 'your deck name goes here');
+  const [deckName, setNameOfDeck] = useState(searchparms.get('name') ?? '');
   const [renderCards, setRenderCards] = useState<HCCard.Any[]>([]);
   const [playtesting, setPlaytesthing] = useState(false);
   const [showImage, setShowImage] = useState(true);
@@ -143,6 +143,7 @@ export const DeckBuilder = () => {
       <FormField label="Deck Name">
         <TextInput
           defaultValue={deckName}
+          placeholder="your deck name goes here"
           onBlur={event => {
             setNameOfDeck(event.target.value);
           }}

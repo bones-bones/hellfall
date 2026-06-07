@@ -1,18 +1,18 @@
 import React from 'react';
 import { getAuthApiUrl } from '../auth/getAuthApiUrl';
-import { HCCard, tagState } from '@hellfall/shared/types';
-import { addTagContributor, deleteTagContributor, updateTags } from '@hellfall/shared/utils';
+import { HCCard } from '@hellfall/shared/types';
+import { addTagToBase, anyChange, setTags } from '@hellfall/shared/utils';
 
 // export type CardTagOverrides = {
 //   added: string[];
 //   removed: string[];
 // };
 
-// export type PendingTagStaging = {
-//   after: string[];
-//   toAdd: string[];
-//   toRemove: string[];
-// };
+export type PendingTagStaging = {
+  // after: string[];
+  toAdd: string[];
+  toRemove: string[];
+};
 
 // function diffTags(current: string[], after: string[]): { toAdd: string[]; toRemove: string[] } {
 //   const currentSet = new Set(current);
@@ -31,8 +31,8 @@ import { addTagContributor, deleteTagContributor, updateTags } from '@hellfall/s
 //   return base.filter(t => !removedSet.has(t)).concat(added);
 // }
 
-type FetchResult = tagState & {
-  // tags?: string[];
+type FetchResult = {
+  base_tags?: string[];
   persistEnabled: boolean;
 };
 
@@ -53,18 +53,45 @@ async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchRes
   // };
 }
 
-async function fetchPendingTagAfter(baseUrl: string, cardId: string): Promise<string[] | null> {
+// async function fetchPendingTagAfter(baseUrl: string, cardId: string): Promise<string[] | null> {
+//   const res = await fetch(
+//     `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}?status=pending`,
+//     { credentials: 'include' }
+//   );
+//   if (!res.ok) return null;
+//   const data = (await res.json()) as {
+//     changesets?: Array<{ changes?: Record<string, { after?: unknown }> }>;
+//   };
+//   const cs = data.changesets?.find(c => c.changes?.tags);
+//   const after = cs?.changes?.tags?.after;
+//   return Array.isArray(after) ? (after as string[]) : null;
+// }
+
+async function fetchPendingTagStaging(
+  baseUrl: string,
+  cardId: string
+): Promise<PendingTagStaging | null> {
   const res = await fetch(
-    `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}&status=pending`,
+    `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}?status=pending`,
     { credentials: 'include' }
   );
   if (!res.ok) return null;
   const data = (await res.json()) as {
-    changesets?: Array<{ changes?: Record<string, { after?: unknown }> }>;
+    changesets?: Array<{ changes: anyChange[] }>;
   };
-  const cs = data.changesets?.find(c => c.changes?.tags);
-  const after = cs?.changes?.tags?.after;
-  return Array.isArray(after) ? (after as string[]) : null;
+  const pending: PendingTagStaging = { toAdd: [], toRemove: [] };
+  const tag_changes = data.changesets
+    ?.map(c => c.changes)
+    .flatMap(c => c.find(change => change.location == 'tag') ?? []);
+  tag_changes?.forEach(change => {
+    if (change.change_type == 'add') {
+      pending.toAdd.push(change.tag);
+    } else {
+      pending.toRemove.push(change.tag);
+    }
+  });
+
+  return pending.toAdd.length > 0 || pending.toRemove.length > 0 ? pending : null;
 }
 
 /**
@@ -79,16 +106,17 @@ export function useCardTagOverrides(
   // cardId: string,
   // baseTags: string[] | undefined
 ): {
-  // displayTags: string[],
+  displayCard: HCCard.Any;
   addTag: (tag: string) => Promise<void>;
-  removeTag: (tag: string) => Promise<void>;
+  deleteTag: (tag: string) => Promise<void>;
   loading: boolean;
   error: Error | null;
   persistEnabled: boolean;
   changesetSubmitted: boolean;
-  // pendingTagStaging:PendingTagStaging | null
+  pendingTagStaging: PendingTagStaging | null;
 } {
   const baseUrl = getAuthApiUrl();
+  const displayCard = structuredClone(card);
   // const [overrides, setOverrides] = React.useState<CardTagOverrides | null>(null);
   // const [firestoreTags, setFirestoreTags] = React.useState<string[] | null>(null);
   const [persistEnabled, setPersistEnabled] = React.useState(false);
@@ -96,19 +124,20 @@ export function useCardTagOverrides(
   const [error, setError] = React.useState<Error | null>(null);
   const [changesetSubmitted, setChangesetSubmitted] = React.useState(false);
   // const [pendingAfter, setPendingAfter] = React.useState<string[] | null>(null);
+  const [pendingTagStaging, setPendingTagStaging] = React.useState<PendingTagStaging | null>(null);
 
-  // const loadPending = React.useCallback(async () => {
-  //   if (!baseUrl || !card) {
-  //     setPendingAfter(null);
-  //     return;
-  //   }
-  //   try {
-  //     const after = await fetchPendingTagAfter(baseUrl, card.id);
-  //     setPendingAfter(after);
-  //   } catch {
-  //     setPendingAfter(null);
-  //   }
-  // }, [baseUrl, card]);
+  const loadPending = React.useCallback(async () => {
+    if (!baseUrl || !card) {
+      setPendingTagStaging(null);
+      return;
+    }
+    try {
+      const after = await fetchPendingTagStaging(baseUrl, card.id);
+      setPendingTagStaging(after);
+    } catch {
+      setPendingTagStaging(null);
+    }
+  }, [baseUrl, card]);
 
   React.useEffect(() => {
     if (!baseUrl || !card.id) {
@@ -122,14 +151,16 @@ export function useCardTagOverrides(
     setLoading(true);
     setError(null);
     setChangesetSubmitted(false);
-    Promise.all([fetchOverrides(baseUrl, card.id) /* , fetchPendingTagAfter(baseUrl, cardId) */])
-      .then(([r /* , pending */]) => {
-        const { persistEnabled: pe, /* tags, */ ...o } = r;
+    Promise.all([fetchOverrides(baseUrl, card.id), fetchPendingTagStaging(baseUrl, card.id)])
+      .then(([r, pending]) => {
+        const { persistEnabled: pe, base_tags } = r;
         // setOverrides(o);
         // setFirestoreTags(tags ?? null);
-        updateTags(card, o);
+        if (base_tags) {
+          setTags(card, base_tags);
+        }
         setPersistEnabled(pe);
-        // setPendingAfter(pending);
+        setPendingTagStaging(pending);
       })
       .catch(e => {
         setError(e instanceof Error ? e : new Error(String(e)));
@@ -166,24 +197,28 @@ export function useCardTagOverrides(
           // changes: { tags: { before: currentTags, after: newTags } },
           // comment: `Add tag: ${tagNorm}`,
           tag: tagNorm,
+          change_type: 'add',
         }),
       });
       if (!res.ok) throw new Error('Failed to submit changeset');
-      addTagContributor(card, tagNorm);
+      const base = (await res.json()).base_tags;
+      if (base) {
+        setTags(displayCard, base);
+      }
       setChangesetSubmitted(true);
-      // await loadPending();
+      await loadPending();
     },
     [baseUrl, card /* cardId, firestoreTags, baseTags, overrides, loadPending */]
   );
 
-  const removeTag = React.useCallback(
+  const deleteTag = React.useCallback(
     async (tag: string) => {
       const tagNorm = tag.trim();
       if (!tagNorm || !baseUrl || !card.id) return;
       // const currentTags = firestoreTags ?? mergeTags(baseTags, overrides);
       // const newTags = currentTags.filter(t => t !== tagNorm);
       const res = await fetch(`${baseUrl}/api/changesets`, {
-        method: 'DELETE',
+        method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -191,24 +226,28 @@ export function useCardTagOverrides(
           // changes: { tags: { before: currentTags, after: newTags } },
           // comment: `Remove tag: ${tagNorm}`,
           tag: tagNorm,
+          change_type: 'delete',
         }),
       });
       if (!res.ok) throw new Error('Failed to submit changeset');
-      deleteTagContributor(card, tagNorm);
+      const base = (await res.json()).base_tags;
+      if (base) {
+        setTags(displayCard, base);
+      }
       setChangesetSubmitted(true);
-      // await loadPending();
+      await loadPending();
     },
     [baseUrl, card /* cardId, firestoreTags, baseTags, overrides, loadPending */]
   );
 
   return {
-    // merged,
+    displayCard,
     addTag,
-    removeTag,
+    deleteTag,
     loading,
     error,
     persistEnabled,
     changesetSubmitted,
-    // pendingStaging,
+    pendingTagStaging,
   };
 }

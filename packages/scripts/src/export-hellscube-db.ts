@@ -3,7 +3,7 @@
  *
  * Usage: see packages/scripts/README.md
  */
-import { exportHellscubeCards } from './lib/exportCards.js';
+import { exportHellscubeCards } from '@hellfall/shared/utils';
 import { config } from 'dotenv';
 import { writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';

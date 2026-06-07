@@ -4,8 +4,14 @@ import { Card } from '@workday/canvas-kit-react';
 import type { HCCard } from '@hellfall/shared/types';
 import { useAuth } from '../../auth';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
-import type { anyChange, faceChange, faceMappedType, faceValueType } from '@hellfall/shared/utils';
-import { getFaceEntries, toFaces } from '@hellfall/shared/utils';
+import {
+  anyChange,
+  faceChange,
+  faceMappedType,
+  faceValueType,
+  getFaceEntries,
+  toFaces,
+} from '@hellfall/shared/utils';
 
 export type EditableFields = {
   name: string;

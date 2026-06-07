@@ -20,7 +20,8 @@ import {
 } from '../textHandling';
 import { CardMap } from './cardMap';
 import { getHc5 } from './getHc5';
-import type { CollectionReference } from '@google-cloud/firestore';
+import { CollectionReference } from '@google-cloud/firestore';
+import { firestoreCard } from '../firestore';
 
 /**
  * Converts the card to an array of its faces.
@@ -77,7 +78,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
   if (Object.prototype.hasOwnProperty.call(card, 'toJSON')) {
     return card;
   }
-  const ignoreLeftovers = ['toJSON', 'kind'];
+  const ignoreLeftovers = ['toJSON', 'tag_state'];
   Object.defineProperty(card, 'toJSON', {
     value: function (this: Record<string, any>) {
       const ordered: Record<string, any> = {};
@@ -280,8 +281,10 @@ export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): Car
 export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
   cardMap.getSubset(card.all_parts?.map(part => part.id) ?? []);
 
-export const getAllRelatedCollection = (card: HCCard.Any, cardsCol: CollectionReference) =>
-  (card.all_parts?.map(part => part.id) ?? []).map(id => cardsCol.doc(id));
+export const getAllRelatedCollection = (
+  card: HCCard.Any | firestoreCard,
+  cardsCol: CollectionReference
+) => (card.all_parts?.map(part => part.id) ?? []).map(id => cardsCol.doc(id));
 
 export const getRelatedsFromCards = (
   idList: string[],
