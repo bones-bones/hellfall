@@ -91,6 +91,12 @@ export const env = {
     return process.env.CATALOG_GCS_MANIFEST_OBJECT?.trim() || 'catalog-manifest.json';
   },
 
+  /** Override public catalog URL for GET /api/cards/load redirects (defaults to storage.googleapis.com URL). */
+  get CATALOG_PUBLIC_URL(): string | undefined {
+    const v = process.env.CATALOG_PUBLIC_URL?.trim();
+    return v || undefined;
+  },
+
   /** Debounce window before exporting Firestore → cache/GCS after changeset accept. */
   get CATALOG_PUBLISH_DEBOUNCE_MS(): number {
     const fromEnv = Number(process.env.CATALOG_PUBLISH_DEBOUNCE_MS);
