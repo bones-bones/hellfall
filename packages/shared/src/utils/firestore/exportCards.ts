@@ -59,6 +59,7 @@ export async function exportCardMap(options: HellscubeExportOptions = {}): Promi
   return data;
 }
 
+/** Load the playable catalog in one pass (skips tag-only stub documents when possible). */
 export async function loadHellscubeCatalogCards(
   options: HellscubeExportOptions = {}
 ): Promise<HCCard.Any[]> {
@@ -66,12 +67,22 @@ export async function loadHellscubeCatalogCards(
     options.databaseId?.trim() || process.env.FIRESTORE_DATABASE_ID?.trim() || 'hellscube';
   const collectionName = resolveCardsCollectionName(options.collectionName);
 
-  const snapshot = await getFirestore(databaseId).collection(collectionName).get();
+  const col = getFirestore(databaseId).collection(collectionName);
 
-  const data = snapshot.docs.map(doc =>
-    firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard)
-  );
-  return data;
+  let snapshot = await col.where('object', '==', 'card').get();
+  if (snapshot.empty) {
+    snapshot = await col.get();
+  }
+
+  const cards: HCCard.Any[] = [];
+  for (const doc of snapshot.docs) {
+    const data = doc.data() as firestoreCard;
+    if (data.object !== 'card' && !(typeof data.name === 'string' && data.name.length > 0)) {
+      continue;
+    }
+    cards.push(firestoreToCard(data));
+  }
+  return cards;
 }
 
 export async function exportHellscubeCards(

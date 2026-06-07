@@ -1,23 +1,15 @@
-import { getCatalogResponseBody } from '../lib/catalogCache.ts';
+import { getCatalogPublicUrl } from '../lib/catalogGcs.ts';
+import { getCatalogResponse } from '../lib/catalogCache.ts';
 import { withCors } from './lib/cors.ts';
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
-function getCatalogPublicUrl(): string {
-  const fromEnv = process.env.CATALOG_PUBLIC_URL?.trim();
-  if (fromEnv) return fromEnv;
-  const bucket = process.env.CATALOG_GCS_BUCKET?.trim();
-  if (bucket) return `https://storage.googleapis.com/${bucket}/catalog.json`;
-  return '';
-}
-
-/** GET /api/cards/load — full card catalog from Firestore ({ data: HCCard[] }). */
+/** GET /api/cards/load — redirects to public catalog URL when configured, else serves cached JSON. */
 export const loadCardsHandler = async (
   req: HandlerRequest,
   res: HandlerResponse
 ): Promise<void> => {
   if (req.method !== 'GET') {
-    const headers = withCors({ 'Content-Type': 'application/json' }, req);
-    Object.assign(headers, { 'Cache-Control': 'public, max-age=' + 3 * 24 * 60 * 60 });
+    const headers = withCors({}, req);
     Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
     res.statusCode = 405;
     res.setHeader('Allow', 'GET');
@@ -44,13 +36,20 @@ export const loadCardsHandler = async (
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
   const t0 = Date.now();
-  const body = await getCatalogResponseBody();
+  const { body, gzipBody } = await getCatalogResponse();
   const catalogMs = Date.now() - t0;
+  const acceptsGzip = req.headers['accept-encoding']?.includes('gzip');
   res.statusCode = 200;
-  res.end(body);
+  if (acceptsGzip) {
+    res.setHeader('Content-Encoding', 'gzip');
+    res.setHeader('Vary', 'Accept-Encoding');
+    res.end(gzipBody);
+  } else {
+    res.end(body);
+  }
   console.log(
     `[cards/load] request complete catalog=${catalogMs}ms write=${
       Date.now() - t0 - catalogMs
-    }ms total=${Date.now() - t0}ms bytes=${body.length}`
+    }ms total=${Date.now() - t0}ms bytes=${acceptsGzip ? gzipBody.length : body.length} gzip=${acceptsGzip}`
   );
 };
