@@ -72,7 +72,7 @@ async function fetchPendingTagStaging(
   cardId: string
 ): Promise<PendingTagStaging | null> {
   const res = await fetch(
-    `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}?status=pending`,
+    `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}&status=pending`,
     { credentials: 'include' }
   );
   if (!res.ok) return null;
@@ -188,14 +188,11 @@ export function useCardTagOverrides(
       // const currentTags = firestoreTags ?? mergeTags(baseTags, overrides);
       // if (currentTags.includes(tagNorm)) return;
       // const newTags = [...currentTags, tagNorm];
-      const res = await fetch(`${baseUrl}/api/tags`, {
+      const res = await fetch(`${baseUrl}/api/cards/${encodeURIComponent(card.id)}/tags`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          // cardId:card.id,
-          // changes: { tags: { before: currentTags, after: newTags } },
-          // comment: `Add tag: ${tagNorm}`,
           tag: tagNorm,
           change_type: 'add',
         }),
@@ -217,14 +214,11 @@ export function useCardTagOverrides(
       if (!tagNorm || !baseUrl || !card.id) return;
       // const currentTags = firestoreTags ?? mergeTags(baseTags, overrides);
       // const newTags = currentTags.filter(t => t !== tagNorm);
-      const res = await fetch(`${baseUrl}/api/changesets`, {
+      const res = await fetch(`${baseUrl}/api/cards/${encodeURIComponent(card.id)}/tags`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          // cardId,
-          // changes: { tags: { before: currentTags, after: newTags } },
-          // comment: `Remove tag: ${tagNorm}`,
           tag: tagNorm,
           change_type: 'delete',
         }),
