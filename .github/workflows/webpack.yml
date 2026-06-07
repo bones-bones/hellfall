@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REACT_APP_AUTH_API_URL: ${{ vars.REACT_APP_AUTH_API_URL }}
+      CARD_CATALOG_URL: ${{ vars.CARD_CATALOG_URL }}
 
     steps:
       - uses: actions/checkout@v4

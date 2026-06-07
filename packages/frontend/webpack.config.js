@@ -54,13 +54,15 @@ function loadClientEnvFiles(basePath) {
 }
 
 /** Env keys exposed to browser bundles (Webpack 5 does not define process). */
+const BROWSER_ENV_KEYS = new Set(["CARD_CATALOG_URL"]);
+
 function getBrowserProcessEnv() {
   const env = {
     NODE_ENV: process.env.NODE_ENV || "development",
     PUBLIC_URL: process.env.PUBLIC_URL || "",
   };
   for (const key of Object.keys(process.env)) {
-    if (key.startsWith("REACT_APP_")) {
+    if (key.startsWith("REACT_APP_") || BROWSER_ENV_KEYS.has(key)) {
       env[key] = process.env[key];
     }
   }
