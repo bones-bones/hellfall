@@ -6,6 +6,7 @@ import { requireTagAuth } from './lib/requireTagAuth.js';
 import { requireAdminAuth } from './lib/requireAdminAuth.js';
 import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
 import { recardCardChangeset } from '../lib/cardAudit.js';
+import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
 import {
   anyChange,
   applyFromCollection,
@@ -238,18 +239,7 @@ async function acceptChangeset(
 
   const cardRef = cardsCol.doc(cs.cardId);
   const card = firestoreToCard(await cardRef.get());
-  applyFromCollection(card, cs.changes, cardsCol);
-
-  // let cardData = (cardSnap.data() ?? {}) as Record<string, unknown>;
-
-  // for (const [field, change] of Object.entries(cs.changes)) {
-  //   if (field === 'tags') {
-  //     // cardData = applyTagChanges(cardData, change.after);
-  //   } else {
-  //     cardData[field] = change.after;
-  //   }
-  // }
-
+  await applyFromCollection(card, cs.changes, cardsCol);
   await cardRef.set(cardToFirestore(card) /* , { merge: true } */);
 
   await recardCardChangeset({
@@ -262,6 +252,8 @@ async function acceptChangeset(
   });
 
   await changesetsCol.doc(changesetId).delete();
+
+  scheduleCatalogPublish();
 
   res.statusCode = 200;
   res.end(JSON.stringify({ ok: true, status: 'accepted' }));

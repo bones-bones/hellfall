@@ -3,7 +3,6 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 // import { loadHellscubeCatalogCards } from '../export/loadHellscubeCatalog';
 import { HCCard, HCCardSymbol, HCSet } from '../types';
-import { exportCardMap } from '../utils';
 // import { error } from 'console';
 
 export interface JsonDataWrapper<T> {
@@ -31,7 +30,7 @@ function getCardsLoadApiBase(): string | undefined {
   return base?.replace(/\/$/, '');
 }
 
-/** Load cards from Firestore, or via GET /api/cards/load when CARDS_LOAD_API_URL is set. */
+/** Load cards from bundled JSON, or via GET /api/cards/load when CARDS_LOAD_API_URL is set. */
 export async function loadCardsData(): Promise<JsonDataWrapper<HCCard.Any>> {
   const apiBase = getCardsLoadApiBase();
   if (apiBase) {
@@ -41,14 +40,7 @@ export async function loadCardsData(): Promise<JsonDataWrapper<HCCard.Any>> {
     }
     return (await res.json()) as JsonDataWrapper<HCCard.Any>;
   }
-  try {
-    const data = (await exportCardMap()).cards();
-    return { data };
-  } catch (error) {
-    const data = (await Promise.resolve(loadJsonFileSync<HCCard.Any>('Hellscube-Database.json')))
-      .data;
-    return { data };
-  }
+  return loadJsonFileSync<HCCard.Any>('Hellscube-Database.json');
 }
 
 export const cardsDataAsync = loadCardsData();
@@ -61,7 +53,7 @@ export const oracleNamesAsync = Promise.resolve(loadJsonFileSync<string>('oracle
 export const tagsDataAsync = Promise.resolve(loadJsonFileSync<string>('tags.json'));
 export const typesDataAsync = Promise.resolve(loadJsonFileSync<string>('types.json'));
 
-// Individual exports (cards loaded from Firestore /api/cards/load)
+// Individual exports (bundled JSON at startup; live catalog via /api/cards/load)
 export const cardsData = await cardsDataAsync;
 export const landsData = loadJsonFileSync<HCCard.Any>('lands.json');
 export const tokensData = loadJsonFileSync<HCCard.Any>('tokens.json');

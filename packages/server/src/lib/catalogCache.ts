@@ -1,8 +1,9 @@
 import type { HCCard } from '@hellfall/shared/types';
-import { loadHellscubeCatalogCards } from '@hellfall/shared/utils';
-import { env } from '../api/lib/env.ts';
+import { downloadCatalogBodyFromGcs } from './catalogGcs.ts';
+import { readDataJson } from './loadDataFiles.ts';
 
-const DEFAULT_TTL_MS = 15 * 60 * 1000;
+/** Default 24h — catalog refreshes via publish on accept, not Firestore on TTL. */
+const DEFAULT_TTL_MS = 24 * 60 * 60 * 1000;
 
 type CacheEntry = { body: string; loadedAt: number };
 
@@ -22,20 +23,23 @@ function cacheTtlMs(): number {
 
 async function buildCatalogBody(): Promise<string> {
   const t0 = Date.now();
-  const data = await loadHellscubeCatalogCards({
-    databaseId: env.FIRESTORE_DATABASE_ID,
-    collectionName: env.FIRESTORE_CARDS_COLLECTION,
-  });
-  const loadMs = Date.now() - t0;
-  const t1 = Date.now();
+
+  try {
+    const fromGcs = await downloadCatalogBodyFromGcs();
+    if (fromGcs) {
+      console.log(
+        `[cards/load] buildCatalogBody source=gcs total=${Date.now() - t0}ms bytes=${fromGcs.length}`
+      );
+      return fromGcs;
+    }
+  } catch (err) {
+    console.error('[cards/load] gcs download failed', err);
+  }
+
+  const { data } = readDataJson<{ data: HCCard.Any[] }>('Hellscube-Database.json');
   const body = JSON.stringify({ data });
-  const stringifyMs = Date.now() - t1;
   console.log(
-    `[cards/load] buildCatalogBody cards=${
-      data.length
-    } firestore=${loadMs}ms stringify=${stringifyMs}ms total=${Date.now() - t0}ms bytes=${
-      body.length
-    }`
+    `[cards/load] buildCatalogBody source=bundled cards=${data.length} total=${Date.now() - t0}ms bytes=${body.length}`
   );
   return body;
 }
