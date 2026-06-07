@@ -26,7 +26,7 @@ ENV NODE_ENV=production
 ENV PORT=8080
 ENV DATA_DIR=/app/data
 
-RUN npm install @google-cloud/firestore@7 dotenv@16 xmldom@0.6.0
+RUN npm install @google-cloud/firestore@7 @google-cloud/storage@7 dotenv@16 xmldom@0.6.0
 
 COPY --from=builder /app/packages/server/dist/server.mjs ./
 COPY --from=builder /app/packages/shared/src/data/*.json /app/data/

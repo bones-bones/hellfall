@@ -1,4 +1,4 @@
-import { anyChange } from '@hellfall/shared/utils';
+import type { anyChange } from '@hellfall/shared/utils';
 
 export interface ChangesetUser {
   userId: string;

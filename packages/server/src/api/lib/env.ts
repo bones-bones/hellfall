@@ -76,4 +76,30 @@ export const env = {
   get DISCORD_ADMIN_ROLE_ID(): string {
     return process.env.DISCORD_ADMIN_ROLE_ID?.trim() || '';
   },
+
+  /** GCS bucket for published catalog snapshots (optional; enables cross-instance reads). */
+  get CATALOG_GCS_BUCKET(): string | undefined {
+    const v = process.env.CATALOG_GCS_BUCKET?.trim();
+    return v || undefined;
+  },
+
+  get CATALOG_GCS_OBJECT(): string {
+    return process.env.CATALOG_GCS_OBJECT?.trim() || 'catalog.json';
+  },
+
+  get CATALOG_GCS_MANIFEST_OBJECT(): string {
+    return process.env.CATALOG_GCS_MANIFEST_OBJECT?.trim() || 'catalog-manifest.json';
+  },
+
+  /** Override public catalog URL for GET /api/cards/load redirects (defaults to storage.googleapis.com URL). */
+  get CATALOG_PUBLIC_URL(): string | undefined {
+    const v = process.env.CATALOG_PUBLIC_URL?.trim();
+    return v || undefined;
+  },
+
+  /** Debounce window before exporting Firestore → cache/GCS after changeset accept. */
+  get CATALOG_PUBLISH_DEBOUNCE_MS(): number {
+    const fromEnv = Number(process.env.CATALOG_PUBLISH_DEBOUNCE_MS);
+    return Number.isFinite(fromEnv) && fromEnv >= 0 ? fromEnv : 30_000;
+  },
 };
