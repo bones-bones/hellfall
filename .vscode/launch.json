@@ -32,6 +32,26 @@
       "internalConsoleOptions": "neverOpen"
     },
     {
+      "name": "Debug migrate-hellscube-db",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["migrate-hellscube-db"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug export-hellscube-db",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["export-hellscube-db"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
       "name": "Debug fetch-oracle-names",
       "type": "node",
       "request": "launch",

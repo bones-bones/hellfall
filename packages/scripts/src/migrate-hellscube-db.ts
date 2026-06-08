@@ -26,8 +26,8 @@ import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredenti
 //   type CardTagOverrides,
 //   type CardTagState,
 // } from '@hellfall/shared/cardTags/cardTagMerge.ts';
-import { HCCard, tagState } from '@hellfall/shared/types';
-import { CardMap, mergeTagStates, tagRecordsEqual, updateTags } from '@hellfall/shared/utils';
+import { HCCard } from '@hellfall/shared/types';
+import { CardMap } from '@hellfall/shared/utils';
 import { cardToFirestore, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { JsonDataWrapper } from '@hellfall/shared/data';
 
@@ -162,59 +162,59 @@ function targetDocIdForOrphan(
 //   return { added: state.added, removed: state.removed };
 // }
 
-function collectOrphanTagTransfers(
-  existingById: Map<string, firestoreCard>,
-  cardMap: CardMap,
-  indexes: CardIndexes
-): {
-  transfers: Map<string, tagState>;
-  orphanToTarget: Map<string, string>;
-  stats: { orphansWithOverrides: number; transferred: number; unmatched: number };
-} {
-  const transfers = new Map<string, tagState>();
-  const orphanToTarget = new Map<string, string>();
-  const stats = { orphansWithOverrides: 0, transferred: 0, unmatched: 0 };
+// function collectOrphanTagTransfers(
+//   existingById: Map<string, firestoreCard>,
+//   cardMap: CardMap,
+//   indexes: CardIndexes
+// ): {
+//   transfers: Map<string, tagState>;
+//   orphanToTarget: Map<string, string>;
+//   stats: { orphansWithOverrides: number; transferred: number; unmatched: number };
+// } {
+//   const transfers = new Map<string, tagState>();
+//   const orphanToTarget = new Map<string, string>();
+//   const stats = { orphansWithOverrides: 0, transferred: 0, unmatched: 0 };
 
-  for (const [orphanId, orphan] of existingById) {
-    if (cardMap.has(orphanId)) continue;
-    const donor = orphan.tag_state;
-    if (!donor?.added && !donor?.removed) continue;
-    stats.orphansWithOverrides++;
+//   for (const [orphanId, orphan] of existingById) {
+//     if (cardMap.has(orphanId)) continue;
+//     const donor = orphan.tag_state;
+//     if (!donor?.added && !donor?.removed) continue;
+//     stats.orphansWithOverrides++;
 
-    const targetId = targetDocIdForOrphan(orphanId, orphan, indexes);
-    if (!targetId) {
-      stats.unmatched++;
-      console.warn(
-        `Orphan tag overrides not transferred (no match): ${orphanId}` +
-          (orphan.name ? ` (${orphan.name})` : '')
-      );
-      continue;
-    }
-    const base = cardMap.get(targetId)?.tag_state?.base_tags;
-    if (base) {
-      donor.base_tags = base;
-    } else {
-      delete donor.base_tags;
-    }
+//     const targetId = targetDocIdForOrphan(orphanId, orphan, indexes);
+//     if (!targetId) {
+//       stats.unmatched++;
+//       console.warn(
+//         `Orphan tag overrides not transferred (no match): ${orphanId}` +
+//           (orphan.name ? ` (${orphan.name})` : '')
+//       );
+//       continue;
+//     }
+//     const base = cardMap.get(targetId)?.tag_state?.base_tags;
+//     if (base) {
+//       donor.base_tags = base;
+//     } else {
+//       delete donor.base_tags;
+//     }
 
-    stats.transferred++;
-    orphanToTarget.set(orphanId, targetId);
-    const prior = transfers.get(targetId);
-    transfers.set(targetId, prior ? mergeTagStates(prior, donor) : donor);
-  }
+//     stats.transferred++;
+//     orphanToTarget.set(orphanId, targetId);
+//     const prior = transfers.get(targetId);
+//     transfers.set(targetId, prior ? mergeTagStates(prior, donor) : donor);
+//   }
 
-  return { transfers, orphanToTarget, stats };
-}
+//   return { transfers, orphanToTarget, stats };
+// }
 
 const buildFirestoreDoc = (
   card: HCCard.Any,
   existing: firestoreCard | undefined
 ): { doc: firestoreCard; merged: boolean } => {
   const newCard = structuredClone(card);
-  const state: tagState = existing?.tag_state ?? {};
-  if (newCard.tag_state?.base_tags) {
-    state.base_tags = newCard.tag_state?.base_tags;
-  }
+  // const state: tagState = existing?.tag_state ?? {};
+  // if (newCard.tag_state?.base_tags) {
+  //   state.base_tags = newCard.tag_state?.base_tags;
+  // }
   const merged = updateTags(newCard, state);
   return { doc: cardToFirestore(newCard), merged };
 

@@ -9,8 +9,10 @@ import {
   rootValueType,
   fillFacesTo,
   layoutIsDefault,
+  anyChange,
+  tagChange,
 } from '@hellfall/shared/utils';
-import { frameEffectTags } from './tagHandling';
+import { frameEffectTags, splitFullTag } from './tagHandling';
 
 export const addPropToRoot = <K extends rootPropType>(
   card: HCCard.Any,
@@ -134,7 +136,7 @@ export const addTagToRoot = <K extends rootPropType>(
  * @param note note to add
  * @param replaceNote whether to replace the note; if not true, will concat with '; '
  */
-export const addTagNote = (card: HCCard.Any, tag: string, note: string, replaceNote?: boolean) => {
+const addTagNote = (card: HCCard.Any, tag: string, note: string, replaceNote?: boolean) => {
   if (!replaceNote && card.tag_notes?.[tag]) {
     card.tag_notes[tag] += '; ' + note;
   } else {
@@ -256,6 +258,7 @@ export const addTag = <K extends rootPropType | facePropType>(
   }
   return addedToRoot;
 };
+
 export const layoutTags = [
   'weird-leveler',
   'leveler',

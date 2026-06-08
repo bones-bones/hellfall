@@ -15,7 +15,6 @@ import {
   addLayoutTag,
   addPropToRoot,
   addTag,
-  addTagNote,
   deletePropFromFace,
   deletePropFromRoot,
   layoutTags,
@@ -30,6 +29,8 @@ import {
   layoutIsDefault,
 } from './defaults';
 import { getSet } from '../setHandling';
+import { anyChange, tagChange } from './changeTypes';
+import { changeIsValid } from './changeHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -135,6 +136,7 @@ const removableTagProps: anyPropType[] = [
   'tag_notes',
 ];
 const removableFaceTagProps: facePropType[] = ['finish', 'border_color', 'frame'];
+
 
 const setTagPropsToDefault = (card: HCCard.Any) => {
   removableTagProps.forEach(prop => deletePropFromRoot(card, prop as rootPropType));
@@ -273,6 +275,164 @@ export const tagChangesAnyProps = (fullTag: string): boolean => {
   return false;
 };
 
+/**
+ * Adds a tag
+ * @param card card to add tag to
+ * @param tag tag to add
+ * @param note tag note
+ * @param prop prop to set
+ * @param value value to set the prop to, or record to access with the tag to get the value
+ * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
+ */
+export const preAddTag = <K extends rootPropType | facePropType>(
+  card: HCCard.Any,
+  change_type:'add'|'delete',
+  full_tag:string,
+  prop?: K,
+  value?: Record<string, AcceptableValue<K>> | AcceptableValue<K>,
+  options?: {
+    dontAddNote?: boolean;
+    replaceNote?: boolean;
+    push?: boolean;
+    useRootOnly?: boolean;
+    useUrl?: boolean;
+    defaultToBack?: boolean;
+  }
+):anyChange[] => {
+  const { tag, note } = splitFullTag(full_tag);
+  let addedToRoot = false;
+  const changes:anyChange[] = []
+  const tagChange:tagChange = {
+    location:'tag',
+    change_type,
+    full_tag
+  }
+  if (note) {
+    const useBoth = note.includes('|') && !options?.useRootOnly && 'card_faces' in card;
+    const noteIsNum =
+      Number.isInteger(Number(note)) && !options?.useRootOnly && 'card_faces' in card;
+    const [face, subnote] = [
+      useBoth ? parseInt(note.split('|')[0]) : noteIsNum ? parseInt(note) : undefined,
+      useBoth ? note.split('|')[1] : noteIsNum ? undefined : note,
+    ];
+    const tagUrl =
+      options?.useUrl && subnote
+        ? subnote.slice(0, 4) == 'http'
+          ? subnote
+          : 'https://lh3.googleusercontent.com/d/' + subnote
+        : undefined;
+    if (face != undefined && 'card_faces' in card) {
+      if (typeof value == 'string') {
+        addTagToFace(card, prop as facePropType, value, face, options?.push);
+      } else if (value) {
+        addTagToFace(card, prop as facePropType, value[tag], face, options?.push);
+      } else if (prop && subnote) {
+        addTagToFace(
+          card,
+          prop as facePropType,
+          options?.useUrl ? tagUrl! : subnote,
+          face,
+          options?.push
+        );
+      }
+    } else if (options?.defaultToBack && 'card_faces' in card) {
+      if (typeof value == 'string') {
+        addTagToFace(card, prop as facePropType, value, 1, options?.push);
+      } else if (value) {
+        addTagToFace(card, prop as facePropType, value[tag], 1, options?.push);
+      } else if (prop && subnote) {
+        addTagToFace(
+          card,
+          prop as facePropType,
+          options?.useUrl ? tagUrl! : subnote,
+          1,
+          options?.push
+        );
+      }
+    } else {
+      if (typeof value == 'string') {
+        addTagToRoot(card, prop as rootPropType, value, options?.push);
+      } else if (value) {
+        addTagToRoot(card, prop as rootPropType, value[tag], options?.push);
+      } else if (prop) {
+        addTagToRoot(card, prop as rootPropType, options?.useUrl ? tagUrl! : note, options?.push);
+      }
+      addedToRoot = Boolean(value || prop);
+    }
+    if (
+      subnote &&
+      !options?.useUrl &&
+      !options?.dontAddNote &&
+      !(subnote == '0' && tag in frameEffectTags)
+    ) {
+      addTagNote(card, tag, subnote, options?.replaceNote);
+    }
+  } else {
+    if (typeof value == 'string') {
+      addTagToRoot(card, prop as rootPropType, value, options?.push);
+    } else if (value) {
+      addTagToRoot(card, prop as rootPropType, value[tag], options?.push);
+    }
+    addedToRoot = Boolean(value);
+  }
+  return addedToRoot;
+};
+
+
+export const getChangesFromTag = (card:HCCard.Any, change_type:'add'|'delete', full_tag:string):anyChange[] => {
+  const changes:anyChange[] = []
+  const tagChange:tagChange = {
+    location:'tag',
+    change_type,
+    full_tag
+  }
+  const { tag, note } = splitFullTag(full_tag);
+  if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
+    addTag(card, tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
+  } else if (tag in frameTags) {
+    addTag(card, tag, note, 'frame', frameTags);
+  } else if (tag in cardFrameTags && card.kind != 'token') {
+    addTag(card, tag, note, 'frame', cardFrameTags);
+  } else if (tag in tokenFrameTags && card.kind == 'token') {
+    addTag(card, tag, note, 'frame', tokenFrameTags);
+  } else if (tag in frameEffectTags) {
+    addTag(card, tag, note || '0', 'frame_effects', frameEffectTags, { push: true });
+  } else if (tag in faceImageTagProps) {
+    addTag(card, tag, note, faceImageTagProps[tag], undefined, { useUrl: true });
+  } else if (tag in borderColorTags) {
+    addTag(card, tag, note, 'border_color', borderColorTags);
+  } else if (layoutTags.includes(tag as layoutTagType)) {
+    addLayoutTag(card, tag, note);
+  } else if (tag == 'foil') {
+    addTag(card, tag, note, 'finish', HCFinish.Foil);
+  } else if (note) {
+    if (tag in frontImageTagProps) {
+      addTag(card, tag, note, frontImageTagProps[tag] as rootPropType, undefined, {
+        useUrl: true,
+        useRootOnly: true,
+      });
+      if (tag == 'draft-image') {
+        addPropToRoot(card, 'draft_image_status', HCImageStatus.HighRes);
+      }
+    } else if (tag == 'back-image') {
+      addTag(card, tag, note, 'image', undefined, { useUrl: true, defaultToBack: true });
+    } else if (tag == 'flavor-name') {
+      addTag(card, tag, note, 'flavor_name', undefined, { dontAddNote: true });
+    } else if (
+      tag.toLowerCase() == card.set?.toLowerCase() ||
+      (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
+        (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
+    ) {
+      addTag(card, tag, undefined, 'collector_number', note);
+    } else {
+      addTag(card, tag, note, undefined, undefined, { useRootOnly: true });
+    }
+  }
+  return changes.filter(change=>changeIsValid(card,change))
+
+}
+
+
 // // export const addTagToState = (state: tagState, tag: string):boolean => {
 // //   const tagToAdd = splitFullTag(tag).tag
 // //   pushPropToRecord(state!, 'added', tagToAdd, tag);
@@ -334,7 +494,7 @@ export const deleteTagFromBase = (base_tags: string[], fullTag: string): boolean
 
 // };
 
-const getBaseDiffs = (
+export const getBaseDiffs = (
   oldBase: string[],
   newBase: string[]
 ): { added: string[]; deleted: string[] } => {

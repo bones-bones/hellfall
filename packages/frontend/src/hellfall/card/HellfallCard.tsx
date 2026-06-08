@@ -15,7 +15,7 @@ import { HCCard } from '@hellfall/shared/types';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
-import { useCardTagOverrides } from '../hooks/useCardTagOverrides.js';
+import { useCardTagOverrides } from '../hooks/useCardTagOverrides.ts';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,

@@ -29,6 +29,7 @@ import {
 import {
   addPropToRecord,
   deletePropFromRecord,
+  doubleListEquals,
   listEquals,
   listsAreEqual,
   listShare,
@@ -56,7 +57,7 @@ import type {
   rootChange,
   tagChange,
 } from './changeTypes';
-import { addTagToBase, deleteTagFromBase } from './tagHandling';
+import { addTagToBase, deleteTagFromBase, getBaseDiffs, splitFullTag } from './tagHandling';
 
 export type {
   allPartsChange,
@@ -108,7 +109,7 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'frame_effects',
     // 'tags',
     // 'tag_notes',
-    // 'tag_state',
+    // 'base_tags',
   ],
   delete: [
     'id_is_scryfall',
@@ -134,7 +135,7 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'frame_effects',
     // 'tags',
     // 'tag_notes',
-    // 'tag_state',
+    // 'base_tags',
   ],
 };
 export const faceChangeableProps: Record<changeType, facePropType[]> = {
@@ -740,6 +741,16 @@ export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
     } else {
       card.base_tags = [change.tag];
     }
+    const {tag, note} = splitFullTag(change.tag)
+    if (!card.tags) {
+      card.tags = [tag];      
+    } else if (!card.tags.includes(tag)) {
+      card.tags.push(tag)
+    }
+    if (!note) return true;
+    if (!card.tag_notes?.[tag]) {
+      addPropToRecord(card,'tag_notes',tag,note)
+    }
   } else {
     if (card.base_tags) {
       deleteTagFromBase(card.base_tags, change.tag);
@@ -762,7 +773,7 @@ export const applyChange = (card: HCCard.Any, change: anyChange): boolean => {
     case 'all_parts':
       return applyAllPartsChange(card, change);
     case 'tag':
-      return false;
+      return applyTagChange(card,change);
   }
 };
 
@@ -797,6 +808,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'frame_effects',
     'tags',
     'tag_notes',
+    'base_tags',
     'all_parts',
   ],
   token: [
@@ -817,6 +829,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'frame_effects',
     'tags',
     'tag_notes',
+    'base_tags',
     'all_parts',
   ],
   land: [
@@ -837,6 +850,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'frame_effects',
     'tags',
     'tag_notes',
+    'base_tags',
     'all_parts',
   ],
   notmagic: [
@@ -857,6 +871,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'frame_effects',
     'tags',
     'tag_notes',
+    'base_tags',
     'all_parts',
   ],
 };
@@ -956,6 +971,31 @@ export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
 export const sortChanges = (a: anyChange, b: anyChange): number =>
   locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
   changeTypeOrder.indexOf(a.change_type) - changeTypeOrder.indexOf(b.change_type);
+
+export const getChangesFromTag = ()
+
+export const getTagChangesFromDifferences = (oldBase:string[], newBase:string[]):tagChange[]=> {
+  if (doubleListEquals(oldBase,newBase)) return [];
+  const changes:tagChange[] = []
+  const {added, deleted} = getBaseDiffs(oldBase, newBase);
+  added.forEach(tag=> {
+    const change:tagChange = {
+      location:'tag',
+      change_type:'add',
+      tag
+    }
+    changes.push(change)
+  })
+  deleted.forEach(tag=> {
+    const change:tagChange = {
+      location:'tag',
+      change_type:'delete',
+      tag
+    }
+    changes.push(change)
+  })
+  return changes;  
+}
 
 export const getChangesFromDifferences = (
   existingCard: HCCard.Any,
@@ -1233,6 +1273,7 @@ export const getChangesFromDifferences = (
       }
       changeList.push(change);
     });
+  changeList.push(...getTagChangesFromDifferences(existingCard.base_tags ?? [], newCard.base_tags ?? []))
   return changeList.sort(sortChanges);
 };
 

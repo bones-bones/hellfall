@@ -54,10 +54,6 @@
 				"fullart",
 				"snow"
 			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless"
@@ -117,12 +113,6 @@
 				"fullart",
 				"miracle",
 				"inverted"
-			],
-			"tags": [
-				"full-art",
-				"miracle-frame",
-				"missing-snow-frame",
-				"inverted-text"
 			],
 			"base_tags": [
 				"full-art",
@@ -184,10 +174,6 @@
 			"frame_effects": [
 				"showcase"
 			],
-			"tags": [
-				"missing-snow-frame",
-				"showcase-frame"
-			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
@@ -246,10 +232,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "1997",
-			"tags": [
-				"1997-frame",
-				"no-font"
-			],
 			"base_tags": [
 				"1997-frame",
 				"no-font"
@@ -306,10 +288,6 @@
 			"watermark": "white",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"white-watermark",
-				"missing-snow-frame"
-			],
 			"base_tags": [
 				"white-watermark",
 				"missing-snow-frame"
@@ -365,9 +343,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"2003-frame"
-			],
 			"base_tags": [
 				"2003-frame"
 			]
@@ -425,14 +400,6 @@
 			"frame": "2003",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"2003-frame",
-				"full-art"
-			],
-			"base_tags": [
-				"2003-frame",
-				"full-art"
 			],
 			"all_parts": [
 				{
@@ -562,10 +529,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless"
@@ -673,10 +636,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"future-frame"
-			],
 			"base_tags": [
 				"full-art",
 				"future-frame"
@@ -733,10 +692,6 @@
 			"frame": "2003",
 			"frame_effects": [
 				"noart"
-			],
-			"tags": [
-				"no-art",
-				"2003-frame"
 			],
 			"base_tags": [
 				"no-art",
@@ -795,10 +750,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"2015-token-frame"
-			],
 			"base_tags": [
 				"full-art",
 				"2015-token-frame"
@@ -853,10 +804,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "1993",
-			"tags": [
-				"1993-frame",
-				"double-border"
-			],
 			"base_tags": [
 				"1993-frame",
 				"double-border"
@@ -964,11 +911,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"jank-frame",
-				"no-border"
-			],
 			"tag_notes": {
 				"jank-frame": "Physical Object"
 			},
@@ -1030,10 +972,6 @@
 			"frame_effects": [
 				"showcase"
 			],
-			"tags": [
-				"showcase-frame",
-				"borderless"
-			],
 			"tag_notes": {
 				"showcase-frame": "Invocation"
 			},
@@ -1094,9 +1032,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -1150,10 +1085,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"2003-frame",
-				"uses-scryfall-image"
-			],
 			"base_tags": [
 				"2003-frame",
 				"uses-scryfall-image"
@@ -1208,10 +1139,6 @@
 			"finish": "nonfoil",
 			"border_color": "no_border",
 			"frame": "hearthstone",
-			"tags": [
-				"hearthstone-frame",
-				"no-border"
-			],
 			"base_tags": [
 				"hearthstone-frame",
 				"no-border"
@@ -1268,10 +1195,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"borderless"
 			],
 			"base_tags": [
 				"full-art",
@@ -1330,10 +1253,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless"
@@ -1388,9 +1307,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"future-frame"
-			],
 			"base_tags": [
 				"future-frame"
 			]
@@ -1445,9 +1361,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"future-frame"
-			],
 			"base_tags": [
 				"future-frame"
 			]
@@ -1501,9 +1414,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"upside-down"
-			],
 			"base_tags": [
 				"upside-down"
 			]
@@ -1558,11 +1468,6 @@
 			"watermark": "black",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"black-watermark",
-				"mario",
-				"future-frame"
-			],
 			"base_tags": [
 				"black-watermark",
 				"mario",
@@ -1618,9 +1523,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"future-frame"
-			],
 			"base_tags": [
 				"future-frame"
 			]
@@ -1676,10 +1578,6 @@
 			"frame": "2003",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"2003-frame"
 			],
 			"base_tags": [
 				"full-art",
@@ -1738,10 +1636,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless"
@@ -1799,10 +1693,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless"
@@ -1857,10 +1747,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"mario",
-				"future-frame"
-			],
 			"base_tags": [
 				"mario",
 				"future-frame"
@@ -1915,10 +1801,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"mario",
-				"future-frame"
-			],
 			"base_tags": [
 				"mario",
 				"future-frame"
@@ -1974,10 +1856,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"mario",
-				"future-frame"
-			],
 			"base_tags": [
 				"mario",
 				"future-frame"
@@ -2032,10 +1910,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"mario",
-				"future-frame"
-			],
 			"base_tags": [
 				"mario",
 				"future-frame"
@@ -2094,9 +1968,6 @@
 			"frame_effects": [
 				"snow"
 			],
-			"tags": [
-				"no-font"
-			],
 			"base_tags": [
 				"no-font"
 			]
@@ -2150,10 +2021,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"misframe",
-				"future-frame"
-			],
 			"base_tags": [
 				"misframe",
 				"future-frame"
@@ -2208,9 +2075,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"future-frame"
-			],
 			"base_tags": [
 				"future-frame"
 			]
@@ -2267,10 +2131,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless"
@@ -2325,9 +2185,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"future-frame"
-			],
 			"base_tags": [
 				"future-frame"
 			]
@@ -2381,10 +2238,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "1993",
-			"tags": [
-				"1993-frame",
-				"uses-scryfall-image"
-			],
 			"base_tags": [
 				"1993-frame",
 				"uses-scryfall-image"
@@ -2439,10 +2292,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"intentional-low-quality",
-				"2003-frame"
-			],
 			"base_tags": [
 				"intentional-low-quality",
 				"2003-frame"
@@ -2499,11 +2348,6 @@
 			"frame": "1997",
 			"frame_effects": [
 				"noart"
-			],
-			"tags": [
-				"low-quality",
-				"no-art",
-				"1997-frame"
 			],
 			"base_tags": [
 				"low-quality",
@@ -2563,10 +2407,6 @@
 			"frame_effects": [
 				"noart"
 			],
-			"tags": [
-				"1997-frame",
-				"no-art"
-			],
 			"base_tags": [
 				"1997-frame",
 				"no-art"
@@ -2624,10 +2464,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless"
@@ -2684,11 +2520,6 @@
 			"frame": "jank",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"jank-frame",
-				"full-art",
-				"borderless"
 			],
 			"base_tags": [
 				"jank-frame",
@@ -2748,11 +2579,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"jank-frame",
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"jank-frame",
 				"full-art",
@@ -2811,9 +2637,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -2869,10 +2692,6 @@
 			"frame": "jank",
 			"frame_effects": [
 				"noart"
-			],
-			"tags": [
-				"no-art",
-				"jank-frame"
 			],
 			"base_tags": [
 				"no-art",
@@ -2931,10 +2750,6 @@
 			"frame_effects": [
 				"noart"
 			],
-			"tags": [
-				"no-art",
-				"2003-frame"
-			],
 			"base_tags": [
 				"no-art",
 				"2003-frame"
@@ -2989,10 +2804,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "jank",
-			"tags": [
-				"comic-sans",
-				"jank-frame"
-			],
 			"base_tags": [
 				"comic-sans",
 				"jank-frame"
@@ -3047,10 +2858,6 @@
 			"finish": "nonfoil",
 			"border_color": "no_border",
 			"frame": "jank",
-			"tags": [
-				"jank-frame",
-				"no-border"
-			],
 			"tag_notes": {
 				"jank-frame": "Physical Object"
 			},
@@ -3108,11 +2915,6 @@
 			"finish": "nonfoil",
 			"border_color": "yellow",
 			"frame": "pokemon",
-			"tags": [
-				"pokemon-frame",
-				"sharpie",
-				"yellow-border"
-			],
 			"base_tags": [
 				"pokemon-frame",
 				"sharpie",
@@ -3168,9 +2970,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"misframe"
-			],
 			"base_tags": [
 				"misframe"
 			]
@@ -3226,12 +3025,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"legendary"
-			],
-			"tags": [
-				"misframe",
-				"legend-frame",
-				"ransomnote",
-				"ransom-over-real-card"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Omnath, Locus of Creation"
@@ -3292,10 +3085,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"2003-frame",
-				"upside-down"
-			],
 			"base_tags": [
 				"2003-frame",
 				"upside-down"
@@ -3350,9 +3139,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "yugioh",
-			"tags": [
-				"yugioh-frame"
-			],
 			"base_tags": [
 				"yugioh-frame"
 			]
@@ -3406,9 +3192,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "yugioh",
-			"tags": [
-				"yugioh-frame"
-			],
 			"base_tags": [
 				"yugioh-frame"
 			]
@@ -3462,9 +3245,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "yugioh",
-			"tags": [
-				"yugioh-frame"
-			],
 			"base_tags": [
 				"yugioh-frame"
 			]
@@ -3518,9 +3298,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "yugioh",
-			"tags": [
-				"yugioh-frame"
-			],
 			"base_tags": [
 				"yugioh-frame"
 			]
@@ -3574,9 +3351,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "yugioh",
-			"tags": [
-				"yugioh-frame"
-			],
 			"base_tags": [
 				"yugioh-frame"
 			]
@@ -3621,9 +3395,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "yugioh",
-			"tags": [
-				"yugioh-frame"
-			],
 			"base_tags": [
 				"yugioh-frame"
 			]
@@ -3679,10 +3450,6 @@
 			"frame": "2003",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"2003-frame"
 			],
 			"base_tags": [
 				"full-art",
@@ -3741,10 +3508,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless"
@@ -3801,10 +3564,6 @@
 			"frame": "2003",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"2003-frame"
 			],
 			"base_tags": [
 				"full-art",
@@ -3863,9 +3622,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -3921,11 +3677,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"ransomnote",
-				"ransom-over-real-card"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Forest #280 from ZNR"
@@ -3985,10 +3736,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "1997",
-			"tags": [
-				"low-quality",
-				"1997-frame"
-			],
 			"base_tags": [
 				"low-quality",
 				"1997-frame"
@@ -4046,9 +3793,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -4104,9 +3848,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art"
 			],
 			"base_tags": [
 				"full-art"
@@ -4164,9 +3905,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -4222,9 +3960,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art"
 			],
 			"base_tags": [
 				"full-art"
@@ -4282,9 +4017,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -4340,11 +4072,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"no-font",
-				"misframe"
 			],
 			"base_tags": [
 				"full-art",
@@ -4404,9 +4131,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -4463,9 +4187,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -4519,9 +4240,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "yugioh",
-			"tags": [
-				"yugioh-frame"
-			],
 			"base_tags": [
 				"yugioh-frame"
 			]
@@ -4575,9 +4293,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"2003-frame"
-			],
 			"base_tags": [
 				"2003-frame"
 			]
@@ -4635,10 +4350,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"2003-frame"
-			],
 			"base_tags": [
 				"full-art",
 				"2003-frame"
@@ -4695,11 +4406,6 @@
 			"frame": "token_2015",
 			"frame_effects": [
 				"legendary"
-			],
-			"tags": [
-				"2015-token-frame",
-				"legend-frame",
-				"misframe"
 			],
 			"base_tags": [
 				"2015-token-frame",
@@ -4759,9 +4465,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -4807,10 +4510,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"misframe",
-				"2003-frame"
-			],
 			"base_tags": [
 				"misframe",
 				"2003-frame"
@@ -4865,9 +4564,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "1997",
-			"tags": [
-				"1997-frame"
-			],
 			"base_tags": [
 				"1997-frame"
 			]
@@ -4921,10 +4617,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"misframe",
-				"2003-frame"
-			],
 			"base_tags": [
 				"misframe",
 				"2003-frame"
@@ -4981,9 +4673,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"showcase"
-			],
-			"tags": [
-				"showcase-frame"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
@@ -5044,9 +4733,6 @@
 			"frame_effects": [
 				"showcase"
 			],
-			"tags": [
-				"showcase-frame"
-			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
@@ -5105,9 +4791,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"showcase"
-			],
-			"tags": [
-				"showcase-frame"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
@@ -5168,9 +4851,6 @@
 			"frame_effects": [
 				"showcase"
 			],
-			"tags": [
-				"showcase-frame"
-			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
@@ -5230,9 +4910,6 @@
 			"frame_effects": [
 				"showcase"
 			],
-			"tags": [
-				"showcase-frame"
-			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
@@ -5283,9 +4960,6 @@
 			"frame_effects": [
 				"showcase"
 			],
-			"tags": [
-				"showcase-frame"
-			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
@@ -5333,10 +5007,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"misframe",
-				"2003-frame"
-			],
 			"base_tags": [
 				"misframe",
 				"2003-frame"
@@ -5444,11 +5114,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless",
-				"pokemon"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless",
@@ -5504,9 +5169,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"pokemon"
-			],
 			"base_tags": [
 				"pokemon"
 			]
@@ -5560,9 +5222,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"pokemon"
-			],
 			"base_tags": [
 				"pokemon"
 			]
@@ -5619,11 +5278,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless",
-				"pokemon"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless",
@@ -5679,9 +5333,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"pokemon"
-			],
 			"base_tags": [
 				"pokemon"
 			]
@@ -5738,11 +5389,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless",
-				"pokemon"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless",
@@ -5798,9 +5444,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"pokemon"
-			],
 			"base_tags": [
 				"pokemon"
 			]
@@ -5854,9 +5497,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"pokemon"
-			],
 			"base_tags": [
 				"pokemon"
 			]
@@ -5910,9 +5550,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"pokemon"
-			],
 			"base_tags": [
 				"pokemon"
 			]
@@ -5966,9 +5603,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"pokemon"
-			],
 			"base_tags": [
 				"pokemon"
 			]
@@ -6022,9 +5656,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"pokemon"
-			],
 			"base_tags": [
 				"pokemon"
 			]
@@ -6078,9 +5709,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"pokemon"
-			],
 			"base_tags": [
 				"pokemon"
 			]
@@ -6136,10 +5764,6 @@
 			"frame": "future",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"future-frame",
-				"full-art"
 			],
 			"base_tags": [
 				"future-frame",
@@ -6198,10 +5822,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"future-frame",
-				"full-art"
-			],
 			"base_tags": [
 				"future-frame",
 				"full-art"
@@ -6256,9 +5876,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "future",
-			"tags": [
-				"future-frame"
-			],
 			"base_tags": [
 				"future-frame"
 			]
@@ -6619,10 +6236,6 @@
 			"frame_effects": [
 				"snow"
 			],
-			"tags": [
-				"ransomnote",
-				"ransom-over-real-card"
-			],
 			"tag_notes": {
 				"ransom-over-real-card": "Snow-Covered Island #278 from KHM"
 			},
@@ -6681,9 +6294,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"2003-frame"
-			],
 			"base_tags": [
 				"2003-frame"
 			]
@@ -6790,9 +6400,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -6848,10 +6455,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"borderless"
 			],
 			"base_tags": [
 				"full-art",
@@ -6912,9 +6515,6 @@
 				"showcase",
 				"snow"
 			],
-			"tags": [
-				"showcase-frame"
-			],
 			"tag_notes": {
 				"showcase-frame": "Viking"
 			},
@@ -6973,10 +6573,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"borderless"
 			],
 			"base_tags": [
 				"full-art",
@@ -7086,9 +6682,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -7145,9 +6738,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -7203,11 +6793,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"sideways",
-				"full-art",
-				"borderless"
 			],
 			"base_tags": [
 				"sideways",
@@ -7268,10 +6853,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"1997-frame",
-				"full-art"
-			],
 			"base_tags": [
 				"1997-frame",
 				"full-art"
@@ -7330,11 +6911,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"jank-frame",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"jank-frame",
@@ -7391,10 +6967,6 @@
 			"finish": "nonfoil",
 			"border_color": "borderless",
 			"frame": "website_app",
-			"tags": [
-				"website-app-frame",
-				"borderless"
-			],
 			"base_tags": [
 				"website-app-frame",
 				"borderless"
@@ -7452,11 +7024,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"jank-frame",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"jank-frame",
@@ -7512,10 +7079,6 @@
 			"finish": "nonfoil",
 			"border_color": "borderless",
 			"frame": "website_app",
-			"tags": [
-				"website-app-frame",
-				"borderless"
-			],
 			"base_tags": [
 				"website-app-frame",
 				"borderless"
@@ -7573,9 +7136,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art"
-			],
 			"base_tags": [
 				"full-art"
 			]
@@ -7629,9 +7189,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"intentional-low-quality"
-			],
 			"base_tags": [
 				"intentional-low-quality"
 			]
@@ -7740,10 +7297,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"1997-frame",
-				"full-art"
-			],
 			"base_tags": [
 				"1997-frame",
 				"full-art"
@@ -7798,9 +7351,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "jank",
-			"tags": [
-				"jank-frame"
-			],
 			"base_tags": [
 				"jank-frame"
 			]
@@ -7855,12 +7405,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "1993",
-			"tags": [
-				"1993-frame",
-				"double-border",
-				"ransomnote",
-				"ransom-over-real-card"
-			],
 			"tag_notes": {
 				"ransom-over-real-card": "Tropical Island"
 			},
@@ -7920,9 +7464,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "jank",
-			"tags": [
-				"jank-frame"
-			],
 			"base_tags": [
 				"jank-frame"
 			]
@@ -8026,9 +7567,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "jank",
-			"tags": [
-				"jank-frame"
-			],
 			"base_tags": [
 				"jank-frame"
 			]
@@ -8084,9 +7622,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art"
 			],
 			"base_tags": [
 				"full-art"
@@ -8144,15 +7679,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"inverted"
-			],
-			"tags": [
-				"inverted-colors",
-				"inverted-text",
-				"white-border",
-				"ub-frame",
-				"ransomnote",
-				"ransom-over-real-card",
-				"white-watermark"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Plains #306 from 40K"
@@ -8220,11 +7746,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"sideways",
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"sideways",
 				"full-art",
@@ -8280,10 +7801,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "jank",
-			"tags": [
-				"intentional-low-quality",
-				"jank-frame"
-			],
 			"base_tags": [
 				"intentional-low-quality",
 				"jank-frame"
@@ -8342,10 +7859,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"1997-frame",
-				"full-art"
-			],
 			"base_tags": [
 				"1997-frame",
 				"full-art"
@@ -8401,10 +7914,6 @@
 			"finish": "nonfoil",
 			"border_color": "borderless",
 			"frame": "2015",
-			"tags": [
-				"unusual-proportions",
-				"borderless"
-			],
 			"base_tags": [
 				"unusual-proportions",
 				"borderless"
@@ -8459,13 +7968,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "1993",
-			"tags": [
-				"1993-frame",
-				"double-border",
-				"ransomnote",
-				"ransom-over-real-card",
-				"sharpie"
-			],
 			"tag_notes": {
 				"ransom-over-real-card": "Black Lotus"
 			},
@@ -8529,11 +8031,6 @@
 			"frame_effects": [
 				"noart"
 			],
-			"tags": [
-				"no-art",
-				"2003-frame",
-				"phyrexian-text"
-			],
 			"base_tags": [
 				"no-art",
 				"2003-frame",
@@ -8592,10 +8089,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"unique-border"
-			],
 			"base_tags": [
 				"full-art",
 				"unique-border"
@@ -8653,10 +8146,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
 			"base_tags": [
 				"full-art",
 				"borderless"
@@ -8712,12 +8201,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2003",
-			"tags": [
-				"2003-frame",
-				"misframe",
-				"ransomnote",
-				"ransom-over-real-card"
-			],
 			"tag_notes": {
 				"ransom-over-real-card": "Blood Moon"
 			},
@@ -8777,10 +8260,6 @@
 			"finish": "nonfoil",
 			"border_color": "borderless",
 			"frame": "website_app",
-			"tags": [
-				"website-app-frame",
-				"borderless"
-			],
 			"base_tags": [
 				"website-app-frame",
 				"borderless"
@@ -8835,11 +8314,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "1993",
-			"tags": [
-				"1993-frame",
-				"ransomnote",
-				"ransom-over-real-card"
-			],
 			"tag_notes": {
 				"ransom-over-real-card": "Urza's Tower d from ATQ"
 			},
@@ -8898,9 +8372,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "yugioh",
-			"tags": [
-				"yugioh-frame"
-			],
 			"base_tags": [
 				"yugioh-frame"
 			]
@@ -8958,10 +8429,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"1997-frame",
-				"full-art"
-			],
 			"base_tags": [
 				"1997-frame",
 				"full-art"
@@ -9016,10 +8483,6 @@
 			"finish": "nonfoil",
 			"border_color": "borderless",
 			"frame": "website_app",
-			"tags": [
-				"website-app-frame",
-				"borderless"
-			],
 			"base_tags": [
 				"website-app-frame",
 				"borderless"
@@ -9077,10 +8540,6 @@
 			"frame_effects": [
 				"noart"
 			],
-			"tags": [
-				"monochrome",
-				"no-art"
-			],
 			"base_tags": [
 				"monochrome",
 				"no-art"
@@ -9136,9 +8595,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "jank",
-			"tags": [
-				"jank-frame"
-			],
 			"base_tags": [
 				"jank-frame"
 			]
@@ -9193,9 +8649,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "jank",
-			"tags": [
-				"jank-frame"
-			],
 			"base_tags": [
 				"jank-frame"
 			]
@@ -9249,9 +8702,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "jank",
-			"tags": [
-				"jank-frame"
-			],
 			"base_tags": [
 				"jank-frame"
 			]
@@ -9305,10 +8755,6 @@
 			"finish": "nonfoil",
 			"border_color": "borderless",
 			"frame": "website_app",
-			"tags": [
-				"website-app-frame",
-				"borderless"
-			],
 			"base_tags": [
 				"website-app-frame",
 				"borderless"
@@ -9418,10 +8864,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"1997-frame",
-				"full-art"
-			],
 			"base_tags": [
 				"1997-frame",
 				"full-art"
@@ -9476,10 +8918,6 @@
 			"finish": "nonfoil",
 			"border_color": "no_border",
 			"frame": "jank",
-			"tags": [
-				"jank-frame",
-				"no-border"
-			],
 			"base_tags": [
 				"jank-frame",
 				"no-border"
@@ -9534,9 +8972,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "jank",
-			"tags": [
-				"jank-frame"
-			],
 			"base_tags": [
 				"jank-frame"
 			]
@@ -9591,10 +9026,6 @@
 			"finish": "nonfoil",
 			"border_color": "borderless",
 			"frame": "website_app",
-			"tags": [
-				"website-app-frame",
-				"borderless"
-			],
 			"base_tags": [
 				"website-app-frame",
 				"borderless"
@@ -9686,10 +9117,6 @@
 			"frame_effects": [
 				"fullart"
 			],
-			"tags": [
-				"1997-frame",
-				"full-art"
-			],
 			"base_tags": [
 				"1997-frame",
 				"full-art"
@@ -9736,10 +9163,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [
-				"ransomnote",
-				"ransom-over-real-card"
-			],
 			"tag_notes": {
 				"ransom-over-real-card": "Encroaching Wastes"
 			},
@@ -9791,10 +9214,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"borderless"
 			],
 			"base_tags": [
 				"full-art",
@@ -9854,12 +9273,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"noart"
-			],
-			"tags": [
-				"no-art"
-			],
-			"base_tags": [
-				"no-art"
 			],
 			"all_parts": [
 				{
@@ -10038,14 +9451,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "1993",
-			"tags": [
-				"1993-frame",
-				"double-border"
-			],
-			"base_tags": [
-				"1993-frame",
-				"double-border"
-			],
 			"all_parts": [
 				{
 					"object": "related_card",
@@ -10156,14 +9561,6 @@
 			"frame": "2015",
 			"frame_effects": [
 				"fullart"
-			],
-			"tags": [
-				"full-art",
-				"borderless"
-			],
-			"base_tags": [
-				"full-art",
-				"borderless"
 			],
 			"all_parts": [
 				{
