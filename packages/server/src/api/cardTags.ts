@@ -13,17 +13,15 @@ import { HCCard } from '@hellfall/shared/types';
 import {
   addTagToBase,
   anyChange,
-  cardToFirestore,
   changeIsValid,
   deleteTagFromBase,
-  firestoreCard,
-  firestoreToCard,
   getChangesFromDifferences,
   setTags,
   tagChange,
   tagChangeIsValid,
   tagChangesAnyProps,
 } from '@hellfall/shared/utils';
+import { cardToFirestore, firestoreCard, firestoreToCard } from '@hellfall/shared/utils/firestore';
 // import {
 //   applyAddTag,
 //   applyRemoveTag,
@@ -108,27 +106,16 @@ export const cardTagsHandler = async (
     }
 
     if (req.method === 'GET') {
-      // TODO: make the tags persist through reloads
-      // const snap = await getOrSeedCardDoc(docRef);
-      // const state = resolveTagState(snap.data());
-      const card: firestoreCard = await docRef.get();
-      // const state = card.tag_state ?? {};
-      let body: string;
-      try {
-        body = JSON.stringify({ ...(card.base_tags ?? []), persistEnabled: true });
-      } catch {
-        res.statusCode = 500;
-        res.end(JSON.stringify({ ok: false, reason: 'invalid_stored_data' }));
-        return;
-      }
+      const snap = await docRef.get();
+      const card = (snap.data() ?? {}) as firestoreCard;
       res.statusCode = 200;
-      res.end(body);
+      res.end(JSON.stringify({ base_tags: card.base_tags ?? [], persistEnabled: true }));
       return;
     }
 
     if (req.method === 'POST') {
       const auth = await requireTagAuth(req, res);
-      if (!auth) return;
+      if (!auth) { return; }
 
       let reqBody: { tag?: string; change_type: 'add' | 'delete' };
       try {
@@ -151,10 +138,14 @@ export const cardTagsHandler = async (
         res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
         return;
       }
-      // const snap = await getOrSeedCardDoc(docRef);
-      // const before = resolveTagState(snap.data());
-      // const state = applyAddTag(before, norm);
-      const card: firestoreCard = await docRef.get();
+
+      const snap = await docRef.get();
+      if (!snap.exists) {
+        res.statusCode = 404;
+        res.end(JSON.stringify({ ok: false, reason: 'card_not_found' }));
+        return;
+      }
+      const card: firestoreCard = { ...(snap.data() as firestoreCard) };
       const base_tags = [...(card.base_tags ?? [])];
       if (change_type == 'add') {
         addTagToBase(base_tags, tag);
@@ -190,15 +181,8 @@ export const cardTagsHandler = async (
         delete card.base_tags;
       }
 
-      await docRef.set(card /*  { merge: true } */);
-      // await recordTagChangeset({
-      //   cardId,
-      //   action: `tag_${change_type}`,
-      //   tag,
-      //   user: { userId: auth.userId, username: auth.username },
-      //   before,
-      //   after: card.tag_state,
-      // });
+      await docRef.set(card, { merge: true });
+
       res.statusCode = 200;
       res.end(
         JSON.stringify({
@@ -209,37 +193,6 @@ export const cardTagsHandler = async (
       return;
     }
 
-    // if (req.method === 'DELETE') {
-    //   // const norm = tagFromPath ? normalizeTag(tagFromPath) : null;
-    //   // if (!norm) {
-    //   //   res.statusCode = 400;
-    //   //   res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
-    //   //   return;
-    //   // }
-    //   // const snap = await getOrSeedCardDoc(docRef);
-    //   // const before = resolveTagState(snap.data());
-    //   // const state = applyRemoveTag(before, norm);
-    //   deleteTagContributor(card, tag);
-    //   await docRef.set(cardToFirestore(card) /* { merge: true } */);
-    //   await recordTagChangeset({
-    //     cardId,
-    //     action: 'tag_remove',
-    //     tag,
-    //     user: { userId: auth.userId, username: auth.username },
-    //     before,
-    //     after: card.tag_state,
-    //   });
-    //   res.statusCode = 200;
-    //   res.end(
-    //     JSON.stringify({
-    //       ok: true,
-    //       base_tags: card.tag_state?.base_tags,
-    //       added: card.tag_state?.added,
-    //       removed: card.tag_state?.removed,
-    //     })
-    //   );
-    //   return;
-    // }
 
     res.statusCode = 405;
     res.setHeader('Allow', 'GET, POST, OPTIONS');

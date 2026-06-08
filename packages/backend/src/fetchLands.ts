@@ -2,7 +2,6 @@ import {
   HCCard,
   HCImageStatus,
   HCKind,
-  HCLegalitiesField,
   HCLegality,
   HCObject,
   HCRarity,

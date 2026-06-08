@@ -10,4 +10,3 @@ export * from './tts';
 export * from './cardModification';
 export * from './setHandling.ts';
 export * from './cubeList';
-export * from './firestore/';

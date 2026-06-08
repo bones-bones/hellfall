@@ -1,7 +1,7 @@
 import { env } from '../api/lib/env.ts';
 import { seedCatalogCache } from './catalogCache.ts';
 import { isCatalogGcsConfigured, uploadCatalogToGcs } from './catalogGcs.ts';
-import { loadHellscubeCatalogCards } from '@hellfall/shared/utils';
+import { loadHellscubeCatalogCards } from '@hellfall/shared/utils/firestore';
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 let pendingPublish = false;

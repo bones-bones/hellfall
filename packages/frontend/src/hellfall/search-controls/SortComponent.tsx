@@ -157,23 +157,6 @@ export const SortComponent = () => {
             </>
           )}
           <>
-            {/* <SecondaryButton
-            icon={plusIcon}
-            aria-label="Add sort rule"
-            onClick={handleAddInput}
-            disabled={!canAddInput}
-            marginX='4px'
-            borderRadius='m'
-            verticalAlign='top'
-          />
-          <SecondaryButton
-            icon={minusIcon}
-            aria-label="Remove sort rule"
-            onClick={handleDelInput}
-            disabled={!canDelInput}
-            borderRadius='m'
-            verticalAlign='top'
-          /> */}
             <ButtonGroup>
               <CompactButton
                 icon={plusIcon}

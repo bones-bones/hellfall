@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { VisuallyHiddenSpan } from './card/VisuallyHiddenSpan';
 import { StyledTitleLink } from './card/StyledTitleLink';
 import { TitleText } from './card/TitleText';
 
-export const HellfallEntry = ({
+export const HellfallRelatedEntry = ({
   url,
   id,
   name,
@@ -12,16 +12,14 @@ export const HellfallEntry = ({
   plainText,
   onClick,
   onClickTitle,
-  imgLinkUrl,
 }: {
   url: string;
   id: string;
   name: string;
   otherNames?: string[];
   plainText?: string;
-  onClick: React.MouseEventHandler<HTMLImageElement>;
-  onClickTitle?: React.MouseEventHandler<HTMLImageElement>;
-  imgLinkUrl?: string;
+  onClick: MouseEventHandler<HTMLImageElement>;
+  onClickTitle?: MouseEventHandler<HTMLImageElement>;
 }) => {
   const linkUrl = `/card/${encodeURIComponent(id)}`;
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -29,10 +27,9 @@ export const HellfallEntry = ({
 
   const handleClick = (
     e: React.MouseEvent,
-    customHandler?: React.MouseEventHandler<HTMLImageElement>
+    customHandler?: MouseEventHandler<HTMLImageElement>
   ) => {
     if (e.button === 1 || e.metaKey || e.ctrlKey) {
-      // Let the link handle it naturally
       return;
     }
     e.preventDefault();
@@ -44,29 +41,28 @@ export const HellfallEntry = ({
   };
 
   return (
-    <Container key={id} role="button">
+    <RelatedContainer key={id} role="button">
       {onClickTitle && (
         <StyledTitleLink
           key={id + '-title'}
           href={linkUrl}
           onClick={e => handleClick(e, onClickTitle as any)}
         >
-          <TitleText as={imgLinkUrl ? 'h3' : 'span'} style={imgLinkUrl ? { lineHeight: 0 } : {}}>
-            {name}
-          </TitleText>
+          <TitleText>{name}</TitleText>
         </StyledTitleLink>
       )}
-      <StyledImageLink
-        href={imgLinkUrl ?? linkUrl}
+      <RelatedStyledImageLink
+        href={linkUrl}
         onClick={e => handleClick(e)}
         title={plainText ?? name}
         imageLoaded={imageLoaded}
       >
-        <StyledImage
-          key={id + '-image'}
+        <RelatedStyledImage
+          key={id}
           src={url}
           referrerPolicy="no-referrer"
           aria-label={name}
+          title={plainText ?? name}
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageErrored(true)}
           style={
@@ -96,16 +92,18 @@ export const HellfallEntry = ({
               </VisuallyHiddenSpan>
             );
           })}
-      </StyledImageLink>
-    </Container>
+      </RelatedStyledImageLink>
+    </RelatedContainer>
   );
 };
 
-const Container = styled.div({
-  height: '340px',
-  display: 'inline-block',
+const RelatedContainer = styled.div({
+  display: 'flex',
+  overflow: 'auto',
+  maxheight: '500px',
+  alignItems: 'center',
+  justifyContent: 'center',
   padding: '5px',
-  position: 'relative',
   '& img': {
     maxWidth: '100%',
     width: 'auto',
@@ -114,7 +112,7 @@ const Container = styled.div({
   },
 });
 
-const StyledImageLink = styled.a<{ imageLoaded: boolean }>(
+const RelatedStyledImageLink = styled.a<{ imageLoaded: boolean }>(
   {
     display: 'block',
     textDecoration: 'none',
@@ -124,16 +122,16 @@ const StyledImageLink = styled.a<{ imageLoaded: boolean }>(
     props.imageLoaded
       ? {}
       : {
-          height: '340px',
-          width: '243px',
+          height: '320px',
+          width: '230px',
           backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
           borderRadius: '4.75% / 3.5%',
           position: 'relative',
         }
 );
 
-const StyledImage = styled.img({
-  maxWidth: '500px',
-  maxHeight: '340px',
+const RelatedStyledImage = styled.img({
+  maxHeight: '450px',
+  maxWidth: '320px',
   cursor: 'pointer',
 });

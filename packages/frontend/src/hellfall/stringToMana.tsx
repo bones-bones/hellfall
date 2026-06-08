@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
+import type { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { getIndicatorFromColors, getPip, pipToSrc } from '@hellfall/shared/utils';
 
 const getClipPath = (pip: HCCardSymbol) => {

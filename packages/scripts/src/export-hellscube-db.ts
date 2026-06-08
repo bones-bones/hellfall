@@ -3,11 +3,12 @@
  *
  * Usage: see packages/scripts/README.md
  */
-import { exportHellscubeCards } from '@hellfall/shared/utils';
+import { exportHellscubeCards } from '@hellfall/shared/utils/firestore';
 import { config } from 'dotenv';
 import { writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredentials.js';
 // import { exportHellscubeCards } from '@hellfall/shared/export/cards';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -18,6 +19,7 @@ const DEFAULT_OUT_PATH = resolve(
 );
 
 config({ path: resolve(__dirname, '../.env') });
+resolveGoogleApplicationCredentials();
 
 function parseArgs(argv: string[]) {
   let outPath = DEFAULT_OUT_PATH;
