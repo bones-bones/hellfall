@@ -115,7 +115,9 @@ export const cardTagsHandler = async (
 
     if (req.method === 'POST') {
       const auth = await requireTagAuth(req, res);
-      if (!auth) { return; }
+      if (!auth) {
+        return;
+      }
 
       let reqBody: { tag?: string; change_type: 'add' | 'delete' };
       try {
@@ -181,7 +183,7 @@ export const cardTagsHandler = async (
         delete card.base_tags;
       }
 
-      await docRef.set(card, { merge: true });
+      await docRef.set(card /* { merge: true } */);
 
       res.statusCode = 200;
       res.end(
@@ -192,7 +194,6 @@ export const cardTagsHandler = async (
       );
       return;
     }
-
 
     res.statusCode = 405;
     res.setHeader('Allow', 'GET, POST, OPTIONS');

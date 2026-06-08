@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { usePendingChangesetsState } from '../usePendingChangesets';
+import { usePendingChangesetsState } from '../hooks/usePendingChangesets';
 
 export function PendingChanges({ cardId }: { cardId: string }) {
   const { changesets, loading } = usePendingChangesetsState(cardId);

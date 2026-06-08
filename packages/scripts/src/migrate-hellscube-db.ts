@@ -27,12 +27,7 @@ import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredenti
 //   type CardTagState,
 // } from '@hellfall/shared/cardTags/cardTagMerge.ts';
 import { HCCard, tagState } from '@hellfall/shared/types';
-import {
-  CardMap,
-  mergeTagStates,
-  tagRecordsEqual,
-  updateTags,
-} from '@hellfall/shared/utils';
+import { CardMap, mergeTagStates, tagRecordsEqual, updateTags } from '@hellfall/shared/utils';
 import { cardToFirestore, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { JsonDataWrapper } from '@hellfall/shared/data';
 

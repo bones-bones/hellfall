@@ -1,22 +1,22 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useAuth } from '../auth';
-import { getAuthApiUrl } from '../auth/getAuthApiUrl';
+import { useAuth } from '../../auth';
+import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
 import {
   emptyPendingChangesetsAtom,
   emptyPendingChangesetsState,
   fetchPendingChangesets,
   pendingChangesetsAtomFamily,
   PendingChangesetsState,
-} from './atoms/pendingChangesetsAtom';
+} from '../atoms/pendingChangesetsAtom';
 
 export type {
   ChangesetUser,
   PendingChangeset,
   PendingTagStaging,
   PendingChangesetsState,
-} from './atoms/pendingChangesetsAtom';
-export { derivePendingTagStaging } from './atoms/pendingChangesetsAtom';
+} from '../atoms/pendingChangesetsAtom';
+export { derivePendingTagStaging } from '../atoms/pendingChangesetsAtom';
 
 export function usePendingChangesetsState(cardId: string | undefined): PendingChangesetsState {
   const stateAtom = useMemo(
@@ -30,10 +30,7 @@ export function usePendingChangesetsState(cardId: string | undefined): PendingCh
 export function useSyncPendingChangesets(cardId: string | undefined): () => Promise<void> {
   const baseUrl = getAuthApiUrl();
   const { user, loading: authLoading } = useAuth();
-  const stateAtom = useMemo(
-    () => (cardId ? pendingChangesetsAtomFamily(cardId) : null),
-    [cardId]
-  );
+  const stateAtom = useMemo(() => (cardId ? pendingChangesetsAtomFamily(cardId) : null), [cardId]);
   const setState = useSetAtom(stateAtom ?? emptyPendingChangesetsAtom);
 
   const reload = useCallback(async () => {

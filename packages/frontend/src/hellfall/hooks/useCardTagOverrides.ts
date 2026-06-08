@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { getAuthApiUrl } from '../auth/getAuthApiUrl';
+import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
 import { HCCard } from '@hellfall/shared/types';
 import { setTags } from '@hellfall/shared/utils';
-import { derivePendingTagStaging, PendingTagStaging } from './atoms/pendingChangesetsAtom';
+import { derivePendingTagStaging, PendingTagStaging } from '../atoms/pendingChangesetsAtom';
 import { usePendingChangesetsState, useSyncPendingChangesets } from './usePendingChangesets';
 
 type FetchResult = {
