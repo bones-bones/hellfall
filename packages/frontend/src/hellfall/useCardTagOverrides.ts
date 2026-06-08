@@ -1,35 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../auth';
 import { getAuthApiUrl } from '../auth/getAuthApiUrl';
 import { HCCard } from '@hellfall/shared/types';
-import { addTagToBase, anyChange, setTags } from '@hellfall/shared/utils';
+import { anyChange, setTags } from '@hellfall/shared/utils';
 
-// export type CardTagOverrides = {
-//   added: string[];
-//   removed: string[];
-// };
-
-export type PendingTagStaging = {
-  // after: string[];
+type PendingTagStaging = {
   toAdd: string[];
   toRemove: string[];
 };
-
-// function diffTags(current: string[], after: string[]): { toAdd: string[]; toRemove: string[] } {
-//   const currentSet = new Set(current);
-//   const afterSet = new Set(after);
-//   return {
-//     toAdd: after.filter(t => !currentSet.has(t)),
-//     toRemove: current.filter(t => !afterSet.has(t)),
-//   };
-// }
-
-// function mergeTags(baseTags: string[] | undefined, overrides: CardTagOverrides | null): string[] {
-//   const base = baseTags ?? [];
-//   if (!overrides) return base;
-//   const removedSet = new Set(overrides.removed);
-//   const added = overrides.added.filter(t => !removedSet.has(t));
-//   return base.filter(t => !removedSet.has(t)).concat(added);
-// }
 
 type FetchResult = {
   base_tags?: string[];
@@ -53,19 +31,6 @@ async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchRes
   // };
 }
 
-// async function fetchPendingTagAfter(baseUrl: string, cardId: string): Promise<string[] | null> {
-//   const res = await fetch(
-//     `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}?status=pending`,
-//     { credentials: 'include' }
-//   );
-//   if (!res.ok) return null;
-//   const data = (await res.json()) as {
-//     changesets?: Array<{ changes?: Record<string, { after?: unknown }> }>;
-//   };
-//   const cs = data.changesets?.find(c => c.changes?.tags);
-//   const after = cs?.changes?.tags?.after;
-//   return Array.isArray(after) ? (after as string[]) : null;
-// }
 
 async function fetchPendingTagStaging(
   baseUrl: string,
@@ -75,16 +40,16 @@ async function fetchPendingTagStaging(
     `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}&status=pending`,
     { credentials: 'include' }
   );
-  if (!res.ok) return null;
+  if (!res.ok) { return null };
   const data = (await res.json()) as {
     changesets?: Array<{ changes: anyChange[] }>;
   };
   const pending: PendingTagStaging = { toAdd: [], toRemove: [] };
   const tag_changes = data.changesets
     ?.map(c => c.changes)
-    .flatMap(c => c.find(change => change.location == 'tag') ?? []);
+    .flatMap(c => c.find(change => change.location === 'tag') ?? []);
   tag_changes?.forEach(change => {
-    if (change.change_type == 'add') {
+    if (change.change_type === 'add') {
       pending.toAdd.push(change.tag);
     } else {
       pending.toRemove.push(change.tag);
@@ -116,18 +81,17 @@ export function useCardTagOverrides(
   pendingTagStaging: PendingTagStaging | null;
 } {
   const baseUrl = getAuthApiUrl();
+  const { user, loading: authLoading } = useAuth();
   const displayCard = structuredClone(card);
-  // const [overrides, setOverrides] = React.useState<CardTagOverrides | null>(null);
-  // const [firestoreTags, setFirestoreTags] = React.useState<string[] | null>(null);
-  const [persistEnabled, setPersistEnabled] = React.useState(false);
-  const [loading, setLoading] = React.useState(!!baseUrl && !!card);
-  const [error, setError] = React.useState<Error | null>(null);
-  const [changesetSubmitted, setChangesetSubmitted] = React.useState(false);
-  // const [pendingAfter, setPendingAfter] = React.useState<string[] | null>(null);
-  const [pendingTagStaging, setPendingTagStaging] = React.useState<PendingTagStaging | null>(null);
+
+  const [persistEnabled, setPersistEnabled] = useState(false);
+  const [loading, setLoading] = useState(!!baseUrl && !!card);
+  const [error, setError] = useState<Error | null>(null);
+  const [changesetSubmitted, setChangesetSubmitted] = useState(false);
+  const [pendingTagStaging, setPendingTagStaging] = useState<PendingTagStaging | null>(null);
 
   const loadPending = React.useCallback(async () => {
-    if (!baseUrl || !card) {
+    if (!baseUrl || !card || !user) {
       setPendingTagStaging(null);
       return;
     }
@@ -137,9 +101,9 @@ export function useCardTagOverrides(
     } catch {
       setPendingTagStaging(null);
     }
-  }, [baseUrl, card]);
+  }, [baseUrl, card, user]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!baseUrl || !card.id) {
       // setOverrides(null);
       // setFirestoreTags(null);
@@ -148,10 +112,14 @@ export function useCardTagOverrides(
       setLoading(false);
       return;
     }
+    if (authLoading) return;
     setLoading(true);
     setError(null);
     setChangesetSubmitted(false);
-    Promise.all([fetchOverrides(baseUrl, card.id), fetchPendingTagStaging(baseUrl, card.id)])
+    const pendingPromise = user
+      ? fetchPendingTagStaging(baseUrl, card.id)
+      : Promise.resolve(null);
+    Promise.all([fetchOverrides(baseUrl, card.id), pendingPromise])
       .then(([r, pending]) => {
         const { persistEnabled: pe, base_tags } = r;
         // setOverrides(o);
@@ -170,7 +138,7 @@ export function useCardTagOverrides(
         // setPendingAfter(null);
       })
       .finally(() => setLoading(false));
-  }, [baseUrl, card]);
+  }, [baseUrl, card, user, authLoading]);
 
   // const merged = firestoreTags ?? mergeTags(baseTags, overrides);
 

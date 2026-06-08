@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../auth';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
 import { anyChange } from '@hellfall/shared/utils';
 
@@ -8,11 +9,6 @@ interface ChangesetUser {
   userId: string;
   username: string;
 }
-
-// interface FieldChange {
-//   before: unknown;
-//   after: unknown;
-// }
 
 interface PendingChangeset {
   id: string;
@@ -27,13 +23,15 @@ interface PendingChangeset {
 
 export function PendingChanges({ cardId }: { cardId: string }) {
   const baseUrl = getAuthApiUrl();
+  const { user, loading: authLoading } = useAuth();
   const [changesets, setChangesets] = useState<PendingChangeset[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    if (!baseUrl || !cardId) {
+    if (!baseUrl || !cardId || authLoading || !user) {
       setLoading(false);
+      if (!user) setChangesets([]);
       return;
     }
     setLoading(true);
@@ -49,7 +47,7 @@ export function PendingChanges({ cardId }: { cardId: string }) {
       })
       .catch(() => setChangesets([]))
       .finally(() => setLoading(false));
-  }, [baseUrl, cardId]);
+  }, [baseUrl, cardId, user, authLoading]);
 
   if (loading || changesets.length === 0) return null;
 
