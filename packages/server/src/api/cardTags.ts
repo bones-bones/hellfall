@@ -108,21 +108,10 @@ export const cardTagsHandler = async (
     }
 
     if (req.method === 'GET') {
-      // TODO: make the tags persist through reloads
-      // const snap = await getOrSeedCardDoc(docRef);
-      // const state = resolveTagState(snap.data());
-      const card: firestoreCard = await docRef.get();
-      // const state = card.tag_state ?? {};
-      let body: string;
-      try {
-        body = JSON.stringify({ ...(card.base_tags ?? []), persistEnabled: true });
-      } catch {
-        res.statusCode = 500;
-        res.end(JSON.stringify({ ok: false, reason: 'invalid_stored_data' }));
-        return;
-      }
+      const snap = await docRef.get();
+      const card = (snap.data() ?? {}) as firestoreCard;
       res.statusCode = 200;
-      res.end(body);
+      res.end(JSON.stringify({ base_tags: card.base_tags ?? [], persistEnabled: true }));
       return;
     }
 
@@ -154,7 +143,13 @@ export const cardTagsHandler = async (
       // const snap = await getOrSeedCardDoc(docRef);
       // const before = resolveTagState(snap.data());
       // const state = applyAddTag(before, norm);
-      const card: firestoreCard = await docRef.get();
+      const snap = await docRef.get();
+      if (!snap.exists) {
+        res.statusCode = 404;
+        res.end(JSON.stringify({ ok: false, reason: 'card_not_found' }));
+        return;
+      }
+      const card: firestoreCard = { ...(snap.data() as firestoreCard) };
       const base_tags = [...(card.base_tags ?? [])];
       if (change_type == 'add') {
         addTagToBase(base_tags, tag);
@@ -190,7 +185,7 @@ export const cardTagsHandler = async (
         delete card.base_tags;
       }
 
-      await docRef.set(card /*  { merge: true } */);
+      await docRef.set(card, { merge: true });
       // await recordTagChangeset({
       //   cardId,
       //   action: `tag_${change_type}`,

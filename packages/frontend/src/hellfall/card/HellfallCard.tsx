@@ -22,7 +22,7 @@ import {
   formatDiscordMarkdownInline,
   formatDiscordMarkdownInvertedItalics,
   formatDiscordMarkdownInvertedItalicsInline,
-} from '../markdownFormatter.tsx';
+} from './markdownFormatter.tsx';
 import { tagsData } from '@hellfall/shared/data';
 import { CardEditPanel } from './CardEditPanel.tsx';
 import { PendingChanges } from './PendingChanges.tsx';

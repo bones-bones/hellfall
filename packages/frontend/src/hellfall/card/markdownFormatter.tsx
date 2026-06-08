@@ -1,16 +1,15 @@
-import { Fragment, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import {
   ParserState,
   ParsedNode,
   ParseFunction,
   OutputFunction,
   parserFor,
-  RuleOutputFunction,
   Rule,
   reactFor,
   ruleOutput,
 } from 'simple-markdown';
-import { stringToMana } from './stringToMana.tsx';
+import { stringToMana } from '../stringToMana.tsx';
 import { styled, type } from '@workday/canvas-kit-react';
 
 // Helper function to check if a character is escaped
