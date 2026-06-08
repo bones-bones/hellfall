@@ -18,6 +18,7 @@
   },
   "scripts": {
     "migrate-hellscube-db": "tsx src/migrate-hellscube-db.ts",
+    "migrate-firestore-tags": "tsx src/migrate-firestore-tags.ts",
     "export-hellscube-db": "tsx src/export-hellscube-db.ts"
   }
 }

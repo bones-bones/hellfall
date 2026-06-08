@@ -1,4 +1,4 @@
-import { exportHellscubeCards } from '@hellfall/shared/utils';
+import { exportHellscubeCards } from '@hellfall/shared/utils/firestore';
 import { withCors } from './lib/cors.ts';
 import { env } from './lib/env.ts';
 import { requireAdminAuth } from './lib/requireAdminAuth.ts';

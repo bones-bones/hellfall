@@ -16,6 +16,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Firestore, type CollectionReference } from '@google-cloud/firestore';
+import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredentials.js';
 // import {
 //   applyAddTag,
 //   applyRemoveTag,
@@ -28,12 +29,11 @@ import { Firestore, type CollectionReference } from '@google-cloud/firestore';
 import { HCCard, tagState } from '@hellfall/shared/types';
 import {
   CardMap,
-  cardToFirestore,
-  firestoreCard,
   mergeTagStates,
   tagRecordsEqual,
   updateTags,
 } from '@hellfall/shared/utils';
+import { cardToFirestore, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { JsonDataWrapper } from '@hellfall/shared/data';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -41,6 +41,7 @@ const REPO_ROOT = resolve(__dirname, '../../..');
 const DEFAULT_DB_PATH = resolve(REPO_ROOT, 'packages/shared/src/data/Hellscube-Database.json');
 
 config({ path: resolve(__dirname, '../.env') });
+resolveGoogleApplicationCredentials();
 
 // type HellscubeCard = Record<string, unknown> & {
 //   id?: string;

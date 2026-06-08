@@ -1,53 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../auth';
-import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
-import { anyChange } from '@hellfall/shared/utils';
-
-interface ChangesetUser {
-  userId: string;
-  username: string;
-}
-
-interface PendingChangeset {
-  id: string;
-  cardId: string;
-  status: 'pending';
-  createdAt: string | null;
-  submittedBy: ChangesetUser;
-  // changes: Record<string, FieldChange>;
-  changes: anyChange[];
-  comment: string | null;
-}
+import { usePendingChangesetsState } from '../usePendingChangesets';
 
 export function PendingChanges({ cardId }: { cardId: string }) {
-  const baseUrl = getAuthApiUrl();
-  const { user, loading: authLoading } = useAuth();
-  const [changesets, setChangesets] = useState<PendingChangeset[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { changesets, loading } = usePendingChangesetsState(cardId);
   const [expanded, setExpanded] = useState(false);
-
-  useEffect(() => {
-    if (!baseUrl || !cardId || authLoading || !user) {
-      setLoading(false);
-      if (!user) setChangesets([]);
-      return;
-    }
-    setLoading(true);
-    fetch(`${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}&status=pending`, {
-      credentials: 'include',
-    })
-      .then(res => {
-        if (!res.ok) throw new Error(`${res.status}`);
-        return res.json();
-      })
-      .then((data: { changesets: PendingChangeset[] }) => {
-        setChangesets(data.changesets ?? []);
-      })
-      .catch(() => setChangesets([]))
-      .finally(() => setLoading(false));
-  }, [baseUrl, cardId, user, authLoading]);
 
   if (loading || changesets.length === 0) return null;
 
@@ -72,11 +30,6 @@ export function PendingChanges({ cardId }: { cardId: string }) {
               <FieldDiff key={field}>
                 <FieldName>{field}</FieldName>
                 {formatVal(change)}
-                {/* <DiffRow>
-                  <Before>{formatVal(change.before)}</Before>
-                  <Arrow>&rarr;</Arrow>
-                  <After>{formatVal(change.after)}</After>
-                </DiffRow> */}
               </FieldDiff>
             ))}
             <ReviewLink to="/review">View in Review</ReviewLink>
@@ -142,33 +95,6 @@ const FieldName = styled('div')({
   fontSize: 11,
   fontWeight: 600,
   color: '#888',
-});
-
-const DiffRow = styled('div')({
-  display: 'flex',
-  gap: 6,
-  alignItems: 'flex-start',
-  fontSize: 13,
-  fontFamily: 'monospace',
-  lineHeight: 1.4,
-});
-
-const Before = styled('span')({
-  color: '#900',
-  textDecoration: 'line-through',
-  wordBreak: 'break-word',
-  maxWidth: '40%',
-});
-
-const After = styled('span')({
-  color: '#060',
-  wordBreak: 'break-word',
-  maxWidth: '40%',
-});
-
-const Arrow = styled('span')({
-  color: '#999',
-  flexShrink: 0,
 });
 
 const ReviewLink = styled(Link)({

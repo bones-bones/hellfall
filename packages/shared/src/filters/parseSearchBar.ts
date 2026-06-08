@@ -9,14 +9,7 @@ import {
   unescapeText,
 } from './filterBuilder';
 import { dirType, dirs, sorts, sortType, inclusionOptions, includeFilter } from './types';
-import {
-  CardMap,
-  firestoreCard,
-  firestoreToCard,
-  getAllRelated,
-  getAllRelatedCollection,
-} from '../utils';
-import { CollectionReference, DocumentReference } from '@google-cloud/firestore';
+import { CardMap, getAllRelated } from '../utils';
 
 const sortRedirects: Record<string, sortType> = {
   mv: 'manavalue',
@@ -638,77 +631,6 @@ export const searchCards = (cardMap: CardMap, query: string, tagList: string[]):
       (includeList.length ? includeList.some(filter => filter.cardPassesFilter(card)) : true) &&
       (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true)
   );
-  // const includeNonExtras = makeIncludeFilter('nonextras', ':');
-  const excludeExtras = makeIncludeFilter('nonextras', ':');
-  const newCardsWithoutExtras = newCardsWithExtras.filter(card =>
-    excludeExtras.cardPassesFilter(card)
-  );
-
-  return autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
-    ? newCardsWithoutExtras
-    : newCardsWithExtras;
-};
-
-export const evaluateRelatedFilterFire = (
-  node: FilterNode,
-  card: firestoreCard,
-  cardsCol: CollectionReference<firestoreCard, firestoreCard>
-): boolean =>
-  getAllRelatedCollection(card, cardsCol).some(async related =>
-    evaluateFilterFire(node, await related.get(), cardsCol)
-  );
-
-export const evaluateFilterFire = (
-  node: FilterNode,
-  card: firestoreCard,
-  cardsCol: CollectionReference<firestoreCard, firestoreCard>
-): boolean => {
-  switch (node.type) {
-    case 'filter': {
-      if (node.filter.queryName == 'hybrid' || node.filter.queryName == 'mischybrid') {
-        return node.filter.cardPassesFilter(firestoreToCard(card, true));
-      }
-      // return node.filter.cardPassesFilter(firestoreToCard(card))
-      return node.filter.cardPassesFilter(card as unknown as HCCard.Any);
-    }
-    case 'related':
-      return evaluateRelatedFilterFire(node.child, card, cardsCol);
-    case 'not':
-      return !evaluateFilterFire(node.child, card, cardsCol);
-    case 'and':
-      return node.children.every(child => evaluateFilterFire(child, card, cardsCol));
-    case 'or':
-      return node.children.some(child => evaluateFilterFire(child, card, cardsCol));
-  }
-};
-
-export const searchCardsFire = async (
-  cardsCol: CollectionReference<firestoreCard, firestoreCard>,
-  query: string,
-  tagList: string[]
-): Promise<CardMap> => {
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query);
-  const usingClusion = Boolean(includeList.length + excludeList.length);
-  // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
-  fixTags(node, tagList);
-  if (includeList.length) {
-    const defaultInclude = makeIncludeFilter('nonextras', ':');
-    includeList.push(defaultInclude);
-  }
-  const newCardsWithExtras = new CardMap();
-  (await cardsCol.get()).forEach((card: firestoreCard) => {
-    if (
-      evaluateFilterFire(node, card, cardsCol) &&
-      (includeList.length
-        ? includeList.some(filter => filter.cardPassesFilter(card as unknown as HCCard.Any))
-        : true) &&
-      (excludeList.length
-        ? excludeList.some(filter => filter.cardPassesFilter(card as unknown as HCCard.Any))
-        : true)
-    ) {
-      newCardsWithExtras.set(firestoreToCard(card));
-    }
-  });
   // const includeNonExtras = makeIncludeFilter('nonextras', ':');
   const excludeExtras = makeIncludeFilter('nonextras', ':');
   const newCardsWithoutExtras = newCardsWithExtras.filter(card =>

@@ -13,17 +13,15 @@ import { HCCard } from '@hellfall/shared/types';
 import {
   addTagToBase,
   anyChange,
-  cardToFirestore,
   changeIsValid,
   deleteTagFromBase,
-  firestoreCard,
-  firestoreToCard,
   getChangesFromDifferences,
   setTags,
   tagChange,
   tagChangeIsValid,
   tagChangesAnyProps,
 } from '@hellfall/shared/utils';
+import { cardToFirestore, firestoreCard, firestoreToCard } from '@hellfall/shared/utils/firestore';
 // import {
 //   applyAddTag,
 //   applyRemoveTag,

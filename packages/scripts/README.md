@@ -145,8 +145,28 @@ Output shape:
 
 **Admin API:** `GET /api/admin/export-hellscube` (session cookie + `DISCORD_ADMIN_ROLE_ID`). Returns the same JSON as a download attachment.
 
+## Legacy tag field migration
+
+If Firestore docs still use the old `baseTags` / `added` / `removed` shape, run:
+
+```bash
+# Count affected docs
+yarn migrate-firestore-tags --report
+
+# Preview
+yarn migrate-firestore-tags --dry-run
+
+# Small test
+yarn migrate-firestore-tags --limit 10
+
+# Full migration
+yarn migrate-firestore-tags
+```
+
+Each matching doc gets `base_tags = merge(baseTags, { added, removed })` and the legacy fields are deleted.
+
 ## Implementation
 
-Script: `src/migrate-hellscube-db.ts`, `src/export-hellscube-db.ts`  
+Script: `src/migrate-hellscube-db.ts`, `src/migrate-firestore-tags.ts`, `src/export-hellscube-db.ts`  
 Shared export: `src/lib/exportCards.ts`  
 Tag API + audit: `packages/server/src/api/cardTags.ts`, `packages/server/src/lib/cardAudit.ts`
