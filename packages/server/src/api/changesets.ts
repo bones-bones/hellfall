@@ -7,14 +7,12 @@ import { requireAdminAuth } from './lib/requireAdminAuth.js';
 import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
 import { recardCardChangeset } from '../lib/cardAudit.js';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
+import { anyChange, changeIsValid, isValidV4UUID } from '@hellfall/shared/utils';
 import {
-  anyChange,
   applyFromCollection,
   cardToFirestore,
-  changeIsValid,
   firestoreToCard,
-  isValidV4UUID,
-} from '@hellfall/shared/utils';
+} from '@hellfall/shared/utils/firestore';
 // import {
 //   resolveTagState,
 //   tagFieldsForWrite,

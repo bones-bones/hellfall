@@ -31,6 +31,7 @@
     "server:dev": "yarn workspace @hellfall/server dev",
     "server:start": "yarn workspace @hellfall/server start",
     "migrate-hellscube-db": "yarn workspace @hellfall/scripts migrate-hellscube-db",
+    "migrate-firestore-tags": "yarn workspace @hellfall/scripts migrate-firestore-tags",
     "export-hellscube-db": "yarn workspace @hellfall/scripts export-hellscube-db"
   },
   "devDependencies": {
