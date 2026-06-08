@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { FC, PropsWithChildren } from 'react';
-import { HCBorderColor, HCMiscColors } from '@hellfall/shared/types';
+import { HCBorderColor, HCKind, HCMiscColors } from '@hellfall/shared/types';
 import { looseOpList, sorts } from '@hellfall/shared/filters';
+import { SetType } from '@hellfall/shared/types/Set/values';
 
 const mapListToCodeAnd = (textList: string[]) =>
   textList.map((text, i) => (
@@ -63,6 +64,11 @@ export const Syntax = () => {
         <br />
         <div>
           Using <code>~</code> as a placeholder for the card's name doesn't work yet.
+        </div>
+        <br />
+        <div>
+          You can also use <code>ruling:</code> to search for rulings, and you can use{' '}
+          <code>has:ruling</code> to find cards that have rulings.
         </div>
         <br />
         <div>
@@ -159,10 +165,18 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
-          You can also use <code>is:</code> with{' '}
-          {mapListToCodeOr(['draftpartner', 'token', 'tokenmaker', 'persistent'])} to find cards
-          that are that, and you can use <code>has:</code> with those terms to find cards that have
-          related cards that match them.
+          You can also use <code>is:</code> or <code>isrelated:</code> with{' '}
+          {mapListToCodeOr([
+            'draftpartner',
+            'token',
+            'tokenmaker',
+            'meldpart',
+            'meldresult',
+            'meld',
+            'persistent',
+          ])}{' '}
+          to find cards that are that, and you can use <code>has:</code> or <code>hasrelated:</code>{' '}
+          with those terms to find cards that have related cards that match them.
         </div>
         <br />
         <div>
@@ -180,14 +194,16 @@ export const Syntax = () => {
         <div>Regex hasn't been implemented yet.</div>
         <h2>Sets and Blocks</h2>
         <div>
-          Use <code>s:</code> or <code>set:</code> to find cards in a set, use <code>ts:</code> or{' '}
-          <code>tokenset:</code> to find cards made by cards in a set, and use <code>b:</code> or{' '}
-          <code>block:</code> to find both.
+          {mapListToCodeAnd(['set:', 'block:', 'group:', 'settype:'])} work. You can also use{' '}
+          <code>is:</code> with set types, and the list of available set types is{' '}
+          {mapListToCodeAnd(Object.values(SetType))}. <code>cube:</code> is an alias of{' '}
+          <code>settype:</code>
         </div>
         <br />
         <div>
           Since reprints haven't been fully implemented yet, <code>in:</code> doesn't work. You can
-          use <code>is:masterpiece</code> and <code>is:rebalanced</code> though.
+          use <code>is:masterpiece</code>, <code>is:rebalanced</code>, and <code>is:reprint</code>{' '}
+          though.
         </div>
         <div>
           <code>st:</code> also hasn't been implemented yet.
@@ -211,7 +227,7 @@ export const Syntax = () => {
           <Link to={'https://scryfall.com/docs/syntax#legality'}>Scryfall</Link> haven't been
           implemented yet.
         </div>
-        <h2>Watermarks, Layout, Border, Frame, & Foil</h2>
+        <h2>Watermarks, Layout, Border, Frame, Foil, & Other</h2>
         <div>The watermark searches from Scryfall work.</div>
         <br />
         <div>
@@ -258,9 +274,9 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
-          You can search for<Link to={'https://mtg.wiki/page/Showcase'}>showcase frames</Link> using{' '}
-          <code>showcase:</code>. You can also search for a plane to get all showcase frames from
-          that plane.
+          You can search for <Link to={'https://mtg.wiki/page/Showcase'}>showcase frames</Link>{' '}
+          using <code>showcase:</code>. You can also search for a plane to get all showcase frames
+          from that plane.
         </div>
         <br />
         <div>
@@ -280,6 +296,11 @@ export const Syntax = () => {
             'nonfoil',
           ])}
           .{' '}
+        </div>
+        <br />
+        <div>
+          You can use <code>kind:</code> (with {mapListToCodeOr(Object.values(HCKind))}) to search
+          for different kinds of cards.
         </div>
         <h2>Display/Sort</h2>
         <div>

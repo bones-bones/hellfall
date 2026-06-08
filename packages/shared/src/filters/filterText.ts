@@ -21,7 +21,7 @@ import {
   includeEqualsOp,
   opIsNegative,
   opToIncludePlural,
-  funcOp,
+  opAsBool,
 } from './filterUtils';
 import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
@@ -45,8 +45,7 @@ export const filterText: textFilter = Object.assign(
 );
 
 export const filterOracleId: textFilter = Object.assign(
-  (value1: string, operator: opType, value2: string) =>
-    funcOp(operator, (id: string) => id == value1, value2),
+  (value1: string, operator: opType, value2: string) => opAsBool(value1 == value2, operator),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string, invert?: boolean) => {

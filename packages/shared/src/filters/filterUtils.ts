@@ -26,6 +26,9 @@ export const getActualOp = (operator: looseOpType, defaultOp: opType): opType =>
   return operator;
 };
 export const opIsNegative = (op: looseOpType) => ['<', '>', '!=', '!:'].includes(op);
+
+export const opAsBool = (condition: any, op: opType): boolean => !condition != opIsNegative(op);
+
 export const opToNot = (op: looseOpType) => (opIsNegative(op) ? 'not' : '');
 export const opToDont = (op: looseOpType) => (opIsNegative(op) ? "don't" : '');
 export const opToNt = (op: looseOpType) => (opIsNegative(op) ? "n't" : '');
@@ -83,58 +86,59 @@ export const opToCRecord: Record<opType, string> = {
 export const opToShorthand = (op: opType, value: shorthandType) => {
   return value == 'c' ? opToCRecord[op] : opToMRecord[op];
 };
-/**
- * To use in filters when need to check a function with one value
- * @param op operation to use
- * @param func function
- * @param value the value to check
- * @returns
- */
-export const funcOp = <T>(op: opType, func: (value: T) => boolean | undefined, value: T) => {
-  switch (op) {
-    case '<':
-      return !func(value);
-    case '<=':
-      return func(value);
-    case '=':
-      return func(value);
-    case '>=':
-      return func(value);
-    case '>':
-      return !func(value);
-    case '!=':
-      return !func(value);
-  }
-};
-/**
- * To use in filters when need to check a function with two values
- * @param op operation to use
- * @param func function
- * @param value1 the first value to check
- * @param value2 the second value to check
- * @returns
- */
-export const funcOpTwo = <T, S>(
-  op: opType,
-  func: (value1: T, value2: S) => boolean,
-  value1: T,
-  value2: S
-) => {
-  switch (op) {
-    case '<':
-      return !func(value1, value2);
-    case '<=':
-      return func(value1, value2);
-    case '=':
-      return func(value1, value2);
-    case '>=':
-      return func(value1, value2);
-    case '>':
-      return !func(value1, value2);
-    case '!=':
-      return !func(value1, value2);
-  }
-};
+
+// /**
+//  * To use in filters when need to check a function with one value
+//  * @param op operation to use
+//  * @param func function
+//  * @param value the value to check
+//  * @returns
+//  */
+// export const funcOp = <T>(op: opType, func: (value: T) => boolean | undefined, value: T) => {
+//   switch (op) {
+//     case '<':
+//       return !func(value);
+//     case '<=':
+//       return func(value);
+//     case '=':
+//       return func(value);
+//     case '>=':
+//       return func(value);
+//     case '>':
+//       return !func(value);
+//     case '!=':
+//       return !func(value);
+//   }
+// };
+// /**
+//  * To use in filters when need to check a function with two values
+//  * @param op operation to use
+//  * @param func function
+//  * @param value1 the first value to check
+//  * @param value2 the second value to check
+//  * @returns
+//  */
+// export const funcOpTwo = <T, S>(
+//   op: opType,
+//   func: (value1: T, value2: S) => boolean|undefined,
+//   value1: T,
+//   value2: S
+// ) => {
+//   switch (op) {
+//     case '<':
+//       return !func(value1, value2);
+//     case '<=':
+//       return func(value1, value2);
+//     case '=':
+//       return func(value1, value2);
+//     case '>=':
+//       return func(value1, value2);
+//     case '>':
+//       return !func(value1, value2);
+//     case '!=':
+//       return !func(value1, value2);
+//   }
+// };
 
 /**
  * To use in filters when need to check an inclusion function and an equality function

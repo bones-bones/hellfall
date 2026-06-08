@@ -4,6 +4,7 @@ import {
   HCColors,
   HCLegalitiesField,
   HCRelatedCard,
+  SetCode,
 } from '@hellfall/shared/types';
 import { CompFilter, filterObject, IncludeFilter, sortObject } from './filterObject';
 export const NOPRINT =
@@ -106,6 +107,7 @@ export interface includeFilter extends cardFilter<HCCard.Any, string> {
 }
 export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
 export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
+export interface setFilter extends cardFilter<HCCard.Any, SetCode> {}
 export interface noteFilter extends cardFilter<HCCard.Any, string> {
   (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string):
     | boolean

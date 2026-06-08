@@ -60,6 +60,9 @@ export const allSetsList = [
 
 export type SetCode = (typeof allSetsList)[number];
 
+export const isSetCode = (value: any): value is SetCode =>
+  allSetsList.includes(value.toUpperCase());
+
 /**
  * A stored link.
  */

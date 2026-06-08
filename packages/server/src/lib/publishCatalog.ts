@@ -26,7 +26,9 @@ export async function publishCatalogSnapshot(): Promise<void> {
   }
 
   console.log(
-    `[catalog/publish] complete cards=${data.length} gcs=${isCatalogGcsConfigured()} total=${Date.now() - t0}ms bytes=${body.length}`
+    `[catalog/publish] complete cards=${data.length} gcs=${isCatalogGcsConfigured()} total=${
+      Date.now() - t0
+    }ms bytes=${body.length}`
   );
 }
 

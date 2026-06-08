@@ -106,7 +106,9 @@ async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promis
 /** POST /api/changesets — submit a new changeset */
 async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promise<void> {
   const auth = await requireTagAuth(req, res);
-  if (!auth) { return };
+  if (!auth) {
+    return;
+  }
 
   let body: { cardId?: string; changes?: unknown; comment?: string };
   try {

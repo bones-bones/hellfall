@@ -1,4 +1,4 @@
-import { HCCard, HCRelatedCard, SetCode } from '@hellfall/shared/types';
+import { HCCard, HCRelatedCard, isSetCode, SetCode } from '@hellfall/shared/types';
 import {
   includeFilter,
   inclusionOptions,
@@ -6,15 +6,19 @@ import {
   invertOptionType,
   opType,
   cardStringFilter,
+  setFilter,
 } from './types';
-import { funcOp, opToNot } from './filterUtils';
+import { opAsBool, opToNot } from './filterUtils';
 import {
   canBeInDecks,
   extraSetList,
-  getChildSets,
-  textSearchIncludes,
+  getSet,
+  inSetBlock,
+  inSetGroup,
+  inSetOrDirectChildren,
 } from '@hellfall/shared/utils';
 import { setsData } from '@hellfall/shared/data';
+import { isSetType, SetType } from '../types/Set/values';
 
 const sets = setsData.data;
 
@@ -76,95 +80,61 @@ export const filterIncludeExtras: includeFilter = Object.assign(
   }
 );
 
-/**
- * To use in filters when need to check if one set is in another
- * @param value1 the value of the card's set
- * @param value2 the value of the search's set
- * @returns
- */
-export const inChildSets = (value1: SetCode, value2: SetCode) =>
-  getChildSets(value2)?.some(set => set == value1);
-
-export const inSetOrChildren = (value1: SetCode, value2: SetCode) =>
-  value1 == value2 || inChildSets(value1, value2);
-
-/**
- * To use in filters when need to check if one set is in another's group
- * @param value1 the value of the card's set
- * @param value2 the value of the search's set
- * @returns
- */
-// export const inSetBlock = (value1:SetCode, value2:SetCode) => getChildSets(value2)?.some(set=>set == value1) || ;
-
-/**
- * To use in filters when need to check against a set
- * @param value1 the value of the card's set
- * @param operator operation to use
- * @param value2 the value of the search's set
- * @returns
- */
-// export const setOp = (value1:SetCode, operator: opType, value2:SetCode) => {
-
-//   switch (operator) {
-//     case '<':
-//       return !func(value);
-//     case '<=':
-//       return func(value);
-//     case '=':
-//       return func(value);
-//     case '>=':
-//       return func(value);
-//     case '>':
-//       return !func(value);
-//     case '!=':
-//       return !func(value);
-//   }
-// };
-
-export const filterSetCard: cardStringFilter = Object.assign(
+export const filterSet: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) =>
-    funcOp(operator, (set: string) => textSearchIncludes(set ?? '', value2), value1.set),
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => `the set is ${opToNot(operator)} "${value}"`,
-  }
-);
-
-const includeComponent = (part: HCRelatedCard) =>
-  ['token_maker', 'draft_partner'].includes(part.component);
-
-export const filterSetToken: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: opType, value2: string) => {
-    const isSetInResults = (set: string) => textSearchIncludes(set ?? '', value2);
-    const shouldIncludeMeld = (part: HCRelatedCard, set: string) => {
-      return part.component == 'meld_part' && part.set != set;
-    };
-    const tokenInSet = (token: HCCard.Any): boolean | undefined => {
-      if (value1.all_parts) {
-        if (
-          value1.all_parts
-            .filter(part => isSetInResults(part.set))
-            .some(part => includeComponent(part) || shouldIncludeMeld(part, value1.set))
-        ) {
-          return true;
-        }
-      }
-      return !value2.length && value1.kind != 'card';
-    };
-    return funcOp(operator, tokenInSet, value1);
-  },
+    opAsBool(inSetOrDirectChildren(value1.set, value2 as SetCode), operator),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: (operator: opType, value: string) =>
-      `the token set is ${opToNot(operator)} "${value}"`,
+      isSetCode(value)
+        ? `the set is ${opToNot(operator)} "${value}"`
+        : `!Unknown set code "${value}"`,
   }
 );
 
-export const filterSetBoth: cardStringFilter = Object.assign(
+export const filterBlock: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) =>
-    filterSetCard(value1, operator, value2) || filterSetToken(value1, operator, value2),
+    opAsBool(inSetBlock(value1.set, value2 as SetCode), operator),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => `the block is ${opToNot(operator)} "${value}"`,
+    toSummary: (operator: opType, value: string) =>
+      isSetCode(value)
+        ? `the block is ${opToNot(operator)} "${value}"`
+        : `!Unknown set code "${value}"`,
+  }
+);
+
+export const filterGroup: cardStringFilter = Object.assign(
+  (value1: HCCard.Any, operator: opType, value2: string) =>
+    opAsBool(inSetGroup(value1.set, value2 as SetCode), operator),
+  {
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) =>
+      isSetCode(value)
+        ? `the set is ${opToNot(operator)} from the "${value}" set group`
+        : `!Unknown set code "${value}"`,
+  }
+);
+
+export const equivSetTypes: Record<string, SetType> = {
+  maincube: SetType.Main,
+  sidecube: SetType.Side,
+  vetoed: SetType.Veto,
+};
+
+export const filterSetType: cardStringFilter = Object.assign(
+  (value1: HCCard.Any, operator: opType, value2: string) =>
+    opAsBool(
+      getSet(value1.set)?.set_type == (isSetType(value2) ? value2 : equivSetTypes[value2]),
+      operator
+    ),
+  {
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) =>
+      isSetType(value)
+        ? `the set type is ${opToNot(operator)} "${value}"`
+        : isSetType(equivSetTypes[value])
+        ? `the set type is ${opToNot(operator)} "${equivSetTypes[value]}"`
+        : `!Unknown set type "${value}"`,
   }
 );

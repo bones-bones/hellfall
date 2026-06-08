@@ -50,6 +50,8 @@ export const loadCardsHandler = async (
   console.log(
     `[cards/load] request complete catalog=${catalogMs}ms write=${
       Date.now() - t0 - catalogMs
-    }ms total=${Date.now() - t0}ms bytes=${acceptsGzip ? gzipBody.length : body.length} gzip=${acceptsGzip}`
+    }ms total=${Date.now() - t0}ms bytes=${
+      acceptsGzip ? gzipBody.length : body.length
+    } gzip=${acceptsGzip}`
   );
 };

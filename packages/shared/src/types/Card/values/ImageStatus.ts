@@ -100,3 +100,5 @@ export enum HCImageStatus {
    */
   Jank = 'jank',
 }
+export const isImageStatus = (value: any): value is HCImageStatus =>
+  Object.values(HCImageStatus).includes(value as HCImageStatus);

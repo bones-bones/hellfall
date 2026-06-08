@@ -1,6 +1,6 @@
 import { HCBorderColor } from '@hellfall/shared/types';
 import { opType, textFilter, invertOptionType } from '../types';
-import { funcOp, opToNot } from '../filterUtils';
+import { opAsBool, opToNot } from '../filterUtils';
 const toBorder: Record<string, HCBorderColor> = {
   black: HCBorderColor.Black,
   white: HCBorderColor.White,
@@ -19,11 +19,7 @@ const toBorder: Record<string, HCBorderColor> = {
 };
 export const filterBorder: textFilter = Object.assign(
   (value1: string, operator: opType, value2: string) =>
-    funcOp(
-      operator,
-      (border: string) => (border in toBorder ? value1 == toBorder[border] : false),
-      value2
-    ),
+    opAsBool(value1 == toBorder[value2], operator),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: (operator: opType, value: string) => {

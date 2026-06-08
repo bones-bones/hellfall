@@ -20,3 +20,5 @@ export enum SetType {
   /** A set made up of normal cards */
   Unfunny = 'unfunny',
 }
+export const isSetType = (value: any): value is SetType =>
+  Object.values(SetType).includes(value as SetType);

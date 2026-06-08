@@ -1,21 +1,20 @@
 import {
-  formatList,
-  HCBorderColor,
   HCCard,
   HCCardFace,
-  HCColor,
   HCColors,
-  HCFinish,
-  HCFrame,
-  HCFrameEffect,
-  HCImageStatus,
   HCKind,
-  HCLayout,
   HCLegalitiesField,
-  HCLegality,
   HCObject,
-  HCRarity,
   HCRelatedCard,
+  isBorderColor,
+  isColor,
+  isFinish,
+  isFrame,
+  isFrameEffect,
+  isImageStatus,
+  isLayout,
+  isLegalitiesField,
+  isRarity,
 } from '@hellfall/shared/types';
 import {
   CardMap,
@@ -31,7 +30,6 @@ import {
 import {
   addPropToRecord,
   deletePropFromRecord,
-  doubleListEquals,
   listEquals,
   listsAreEqual,
   listShare,
@@ -91,6 +89,7 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'rotated_image',
     'still_image',
     'mana_value',
+    // 'type_line',
     'colors',
     'draft_image_status',
     'draft_image',
@@ -156,6 +155,7 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
     'supertypes',
     'types',
     'subtypes',
+    // 'type_line',
     'oracle_text',
     'flavor_text',
     'power',
@@ -206,7 +206,7 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
 export const colorsAreValid = (colors: HCColors): boolean => {
   const colorList: HCColors = [];
   for (const color of colors) {
-    if (colorList.includes(color) || !Object.values(HCColor).includes(color as HCColor)) {
+    if (colorList.includes(color) || !isColor(color)) {
       return false;
     } else {
       colorList.push(color);
@@ -219,8 +219,7 @@ export const legalitiesAreValid = (
   legalities: HCLegalitiesField,
   current: HCLegalitiesField
 ): boolean =>
-  doubleListEquals(formatList, Object.keys(legalities)) &&
-  Object.values(legalities).every(legality => Object.values(HCLegality).includes(legality)) &&
+  isLegalitiesField(legalities) &&
   Object.entries(legalities).some(([format, legality]) => current[format] != legality);
 
 const imageProps = [
@@ -284,23 +283,23 @@ export const rootChangeIsValid = <K extends rootPropType>(
         return typeof change.value == 'number';
       }
       if (change.prop == 'rarity') {
-        return Object.values(HCRarity).includes(change.value as HCRarity);
+        return isRarity(change.value);
       }
       if (change.prop == 'layout') {
         // TODO: more complex validation for layouts
-        return Object.values(HCLayout).includes(change.value as HCLayout);
+        return isLayout(change.value);
       }
       if (change.prop == 'finish') {
-        return Object.values(HCFinish).includes(change.value as HCFinish);
+        return isFinish(change.value);
       }
       if (change.prop == 'border_color') {
-        return Object.values(HCBorderColor).includes(change.value as HCBorderColor);
+        return isBorderColor(change.value);
       }
       if (change.prop == 'frame') {
-        return Object.values(HCFrame).includes(change.value as HCFrame);
+        return isFrame(change.value);
       }
       if (change.prop == 'image_status' || change.prop == 'draft_image_status') {
-        return Object.values(HCImageStatus).includes(change.value as HCImageStatus);
+        return isImageStatus(change.value);
       }
       return typeof change.value == 'string';
     }
@@ -311,13 +310,10 @@ export const rootChangeIsValid = <K extends rootPropType>(
           change.value.length == 2 &&
           typeof change.value[0] == 'string' &&
           typeof change.value[1] == 'string' &&
-          change.value[1] != (currentValue as Record<string, string>)[change.value[0]]
+          change.value[1] != (currentValue as Record<string, string>)?.[change.value[0]]
         );
       }
-      if (
-        change.prop == 'frame_effects' &&
-        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
-      ) {
+      if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
@@ -332,10 +328,7 @@ export const rootChangeIsValid = <K extends rootPropType>(
             undefined
         );
       }
-      if (
-        change.prop == 'frame_effects' &&
-        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
-      ) {
+      if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
       return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
@@ -353,20 +346,7 @@ export const attractionLightsAreValid = (lights: number[]) => {
   }
   return true;
 };
-const faceImageProps = [
-  'image',
-  'rotated_image',
-  'still_image',
-  'draft_image',
-  'rotated_draft_image',
-  'still_draft_image',
-];
-const faceBoolProps = [
-  'id_is_scryfall',
-  'oracle_id_is_scryfall',
-  'not_directly_draftable',
-  'has_draft_partners',
-];
+
 export const faceChangeIsValid = <K extends facePropType>(
   card: HCCard.Any,
   change: faceChange<K>
@@ -426,19 +406,19 @@ export const faceChangeIsValid = <K extends facePropType>(
       }
       if (change.prop == 'layout') {
         // TODO: more complex validation for layouts
-        return Object.values(HCLayout).includes(change.value as HCLayout);
+        return isLayout(change.value);
       }
       if (change.prop == 'finish') {
-        return Object.values(HCFinish).includes(change.value as HCFinish);
+        return isFinish(change.value);
       }
       if (change.prop == 'border_color') {
-        return Object.values(HCBorderColor).includes(change.value as HCBorderColor);
+        return isBorderColor(change.value);
       }
       if (change.prop == 'frame') {
-        return Object.values(HCFrame).includes(change.value as HCFrame);
+        return isFrame(change.value);
       }
       if (change.prop == 'image_status') {
-        return Object.values(HCImageStatus).includes(change.value as HCImageStatus);
+        return isImageStatus(change.value);
       }
       if (change.prop == 'mana_value') {
         return typeof change.value == 'number';
@@ -446,20 +426,14 @@ export const faceChangeIsValid = <K extends facePropType>(
       return typeof change.value == 'string';
     }
     case 'push':
-      if (
-        change.prop == 'frame_effects' &&
-        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
-      ) {
+      if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
     case 'delete':
       return change.prop in face;
     case 'pop':
-      if (
-        change.prop == 'frame_effects' &&
-        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
-      ) {
+      if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
       return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
@@ -498,9 +472,9 @@ export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange
         case 'object':
           return value == HCObject.ObjectType.CardFace;
         case 'layout':
-          return Object.values(HCLayout).includes(value);
+          return isLayout(value);
         case 'image_status':
-          return Object.values(HCImageStatus).includes(value);
+          return isImageStatus(value);
         case 'image':
           return value.startsWith('https://');
         case 'mana_value':
@@ -1321,7 +1295,8 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
  */
 export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
   const changeList = getChangesFromDifferences(existingCard, newCard, true);
-  if (applyChanges(existingCard, changeList) && newCard.kind != 'scryfall') {
+  if (newCard.kind != 'scryfall') {
+    applyChanges(existingCard, changeList);
     setDerivedProps(existingCard);
   }
   if (newCard.kind == 'scryfall') {

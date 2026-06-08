@@ -1,16 +1,8 @@
 [
   {
-    "origin": [
-      "https://hellfall.skeleton.club",
-      "http://localhost:3000"
-    ],
-    "method": [
-      "GET"
-    ],
-    "responseHeader": [
-      "Content-Type",
-      "Content-Encoding"
-    ],
+    "origin": ["https://hellfall.skeleton.club", "http://localhost:3000"],
+    "method": ["GET"],
+    "responseHeader": ["Content-Type", "Content-Encoding"],
     "maxAgeSeconds": 3600
   }
 ]

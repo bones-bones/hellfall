@@ -33,7 +33,9 @@ async function buildCatalogBody(): Promise<string> {
     const fromGcs = await downloadCatalogBodyFromGcs();
     if (fromGcs) {
       console.log(
-        `[cards/load] buildCatalogBody source=gcs total=${Date.now() - t0}ms bytes=${fromGcs.length}`
+        `[cards/load] buildCatalogBody source=gcs total=${Date.now() - t0}ms bytes=${
+          fromGcs.length
+        }`
       );
       return fromGcs;
     }
@@ -44,7 +46,9 @@ async function buildCatalogBody(): Promise<string> {
   const { data } = readDataJson<{ data: HCCard.Any[] }>('Hellscube-Database.json');
   const body = JSON.stringify({ data });
   console.log(
-    `[cards/load] buildCatalogBody source=bundled cards=${data.length} total=${Date.now() - t0}ms bytes=${body.length}`
+    `[cards/load] buildCatalogBody source=bundled cards=${data.length} total=${
+      Date.now() - t0
+    }ms bytes=${body.length}`
   );
   return body;
 }

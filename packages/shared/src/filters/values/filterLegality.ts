@@ -1,10 +1,10 @@
 import { formatList, HCFormat, HCLegalitiesField } from '@hellfall/shared/types';
 import { legalFilter, opType, invertOptionType } from '../types';
-import { funcOp, opToNot } from '../filterUtils';
+import { opAsBool, opToNot } from '../filterUtils';
 
 export const filterLegal: legalFilter = Object.assign(
   (value1: HCLegalitiesField, operator: opType, value2: string) =>
-    funcOp(operator, format => value1[format as HCFormat] == 'legal', value2),
+    opAsBool(value1[value2] == 'legal', operator),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: (operator: opType, value: string) =>
@@ -15,7 +15,7 @@ export const filterLegal: legalFilter = Object.assign(
 );
 export const filterBanned: legalFilter = Object.assign(
   (value1: HCLegalitiesField, operator: opType, value2: string) =>
-    funcOp(operator, format => value1[format as HCFormat] == 'banned', value2),
+    opAsBool(value1[value2] == 'banned', operator),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: (operator: opType, value: string) =>
@@ -26,7 +26,7 @@ export const filterBanned: legalFilter = Object.assign(
 );
 export const filterNotLegal: legalFilter = Object.assign(
   (value1: HCLegalitiesField, operator: opType, value2: string) =>
-    funcOp(operator, format => value1[format as HCFormat] == 'not_legal', value2),
+    opAsBool(value1[value2] == 'not_legal', operator),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: (operator: opType, value: string) =>

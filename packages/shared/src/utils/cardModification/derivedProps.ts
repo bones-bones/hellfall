@@ -9,9 +9,9 @@ import {
   HCFrameEffect,
   TransformFrameEffects,
   HCFrame,
-  NoIdentityFaceLayout,
-  NoIdentityFaceLayoutType,
+  NoIdentityFaceLayouts,
   EffectFrames,
+  FrontIdentityLayouts,
 } from '@hellfall/shared/types';
 import {
   splitParens,
@@ -110,17 +110,9 @@ export const getColorIdentityProps = (
     // add each face that isn't an ignored layout or the last image in a layout that ignores the last image
     card.card_faces.forEach((entry, i) => {
       if (
-        !(
-          NoIdentityFaceLayout.includes(entry.layout as NoIdentityFaceLayoutType) &&
-          card.kind == 'card' &&
-          i
-        ) &&
-        !ignoreFaceIdentityImageStatus.includes(entry.image_status as HCImageStatus) &&
-        !(
-          HCLayoutGroup.FrontIdentityLayout.includes(
-            card.layout as HCLayoutGroup.FrontIdentityLayoutType
-          ) && i == lastImageIndex
-        ) &&
+        !(NoIdentityFaceLayouts.includes(entry.layout) && card.kind == 'card' && i) &&
+        !ignoreFaceIdentityImageStatus.includes(entry.image_status) &&
+        !(FrontIdentityLayouts.includes(card.layout) && i == lastImageIndex) &&
         !(card.layout == HCLayout.Specialize && i != 0)
       ) {
         addColorsFromFace(entry);
@@ -148,11 +140,7 @@ export const setDerivedProps = (
     i: number
   ) => {
     const effects: HCFrameEffect[] = [];
-    if (
-      face.frame
-        ? EffectFrames.includes(face.frame as HCFrame)
-        : EffectFrames.includes(card.frame as HCFrame)
-    ) {
+    if (face.frame ? EffectFrames.includes(face.frame) : EffectFrames.includes(card.frame)) {
       if (
         ((listShareLower(face.supertypes, 'legendary') &&
           !listShareLower(face.types, 'planeswalker') &&
@@ -224,9 +212,9 @@ export const setDerivedProps = (
         !card.tags?.includes('missing-transform-frame')
       ) {
         const effect = card.card_faces[0].frame_effects?.find(effect =>
-          TransformFrameEffects.includes(effect as HCFrameEffect)
+          TransformFrameEffects.includes(effect)
         );
-        effects.push((effect ? effect : HCFrameEffect.TransformDfc) as HCFrameEffect);
+        effects.push(effect ? effect : HCFrameEffect.TransformDfc);
       } else if (
         face.layout == HCLayout.Modal &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
@@ -247,9 +235,9 @@ export const setDerivedProps = (
     const type_line_list: string[] = [];
     const mana_cost_list: string[] = [];
     card.card_faces.forEach((face, i) => {
-      face.colors = orderColors(face.colors) as HCColors;
+      face.colors = orderColors(face.colors);
       if (face.color_indicator) {
-        face.color_indicator = orderColors(face.color_indicator) as HCColors;
+        face.color_indicator = orderColors(face.color_indicator);
       }
       const face_type = [
         face.supertypes?.join(' '),
@@ -279,7 +267,7 @@ export const setDerivedProps = (
     card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
   } else {
     if (card.color_indicator) {
-      card.color_indicator = orderColors(card.color_indicator) as HCColors;
+      card.color_indicator = orderColors(card.color_indicator);
     }
     card.type_line = [
       card.supertypes?.join(' '),
@@ -299,9 +287,9 @@ export const setDerivedProps = (
     card.type_line = '__' + card.type_line + '__';
   }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
-  card.colors = orderColors(card.colors) as HCColors;
-  card.color_identity = orderColors(color_identity) as HCColors;
-  card.color_identity_hybrid = orderHybrid(color_identity_hybrid) as HCColors[];
+  card.colors = orderColors(card.colors);
+  card.color_identity = orderColors(color_identity);
+  card.color_identity_hybrid = orderHybrid(color_identity_hybrid);
 };
 const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
   HCLayout.DraftPartner,

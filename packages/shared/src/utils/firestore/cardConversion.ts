@@ -20,7 +20,9 @@ export const cardToFirestore = (card: HCCard.Any): firestoreCard => {
 export const firestoreToCard = (fire: firestoreCard, noRestore?: boolean): HCCard.Any => {
   const card = { ...fire } as unknown as HCCard.Any;
   card.color_identity_hybrid = JSON.parse(fire.color_identity_hybrid!);
-  if (noRestore) { return card }
+  if (noRestore) {
+    return card;
+  }
   restoreMissingFields(card);
   return card;
 };

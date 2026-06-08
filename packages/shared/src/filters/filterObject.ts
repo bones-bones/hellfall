@@ -1,4 +1,4 @@
-import { HCCard, HCFormat } from '@hellfall/shared/types';
+import { HCCard } from '@hellfall/shared/types';
 import {
   anyFilter,
   cardFilter,

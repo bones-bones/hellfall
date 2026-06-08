@@ -1,7 +1,10 @@
-import { HCCard, HCObject, HCRelatedCard } from '@hellfall/shared/types';
+import { HCCard, HCObject, HCRelatedCard, relatedComponent } from '@hellfall/shared/types';
 import { textEquals } from '../textHandling';
 import { pushProp } from '../listHandling';
 import { CardMap, toFaces } from '../cardHandling';
+
+export const hasPartWithComp = (card: HCCard.Any, comp: relatedComponent): boolean =>
+  card.all_parts?.some(part => part.component == comp) ?? false;
 
 export const updateParts = (
   card: HCCard.Any,
