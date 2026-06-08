@@ -5,7 +5,6 @@ import {
   NamedCheckboxGroup,
   BoxlessCheckboxGroup,
   SingleCheckbox,
-  NamedHiddenCheckboxGroup /**ColorCheckboxGroup*/,
   PillSearch,
   NumberSelector,
 } from '../inputs/index.ts';
@@ -17,10 +16,9 @@ import {
   inputColors,
 } from '@workday/canvas-kit-react';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
-import { StyledComponentHolder } from '../StyledComponentHolder.tsx';
 import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
@@ -28,6 +26,7 @@ import { SortComponent } from './SortComponent.tsx';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
 import { extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
+import { StyledComponentHolder } from './StyledComponentHolder.tsx';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');

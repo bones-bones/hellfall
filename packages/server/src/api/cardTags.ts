@@ -117,7 +117,7 @@ export const cardTagsHandler = async (
 
     if (req.method === 'POST') {
       const auth = await requireTagAuth(req, res);
-      if (!auth) return;
+      if (!auth) { return; }
 
       let reqBody: { tag?: string; change_type: 'add' | 'delete' };
       try {
@@ -140,9 +140,7 @@ export const cardTagsHandler = async (
         res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
         return;
       }
-      // const snap = await getOrSeedCardDoc(docRef);
-      // const before = resolveTagState(snap.data());
-      // const state = applyAddTag(before, norm);
+
       const snap = await docRef.get();
       if (!snap.exists) {
         res.statusCode = 404;
@@ -186,14 +184,7 @@ export const cardTagsHandler = async (
       }
 
       await docRef.set(card, { merge: true });
-      // await recordTagChangeset({
-      //   cardId,
-      //   action: `tag_${change_type}`,
-      //   tag,
-      //   user: { userId: auth.userId, username: auth.username },
-      //   before,
-      //   after: card.tag_state,
-      // });
+
       res.statusCode = 200;
       res.end(
         JSON.stringify({
@@ -204,37 +195,6 @@ export const cardTagsHandler = async (
       return;
     }
 
-    // if (req.method === 'DELETE') {
-    //   // const norm = tagFromPath ? normalizeTag(tagFromPath) : null;
-    //   // if (!norm) {
-    //   //   res.statusCode = 400;
-    //   //   res.end(JSON.stringify({ ok: false, reason: 'tag_required' }));
-    //   //   return;
-    //   // }
-    //   // const snap = await getOrSeedCardDoc(docRef);
-    //   // const before = resolveTagState(snap.data());
-    //   // const state = applyRemoveTag(before, norm);
-    //   deleteTagContributor(card, tag);
-    //   await docRef.set(cardToFirestore(card) /* { merge: true } */);
-    //   await recordTagChangeset({
-    //     cardId,
-    //     action: 'tag_remove',
-    //     tag,
-    //     user: { userId: auth.userId, username: auth.username },
-    //     before,
-    //     after: card.tag_state,
-    //   });
-    //   res.statusCode = 200;
-    //   res.end(
-    //     JSON.stringify({
-    //       ok: true,
-    //       base_tags: card.tag_state?.base_tags,
-    //       added: card.tag_state?.added,
-    //       removed: card.tag_state?.removed,
-    //     })
-    //   );
-    //   return;
-    // }
 
     res.statusCode = 405;
     res.setHeader('Allow', 'GET, POST, OPTIONS');

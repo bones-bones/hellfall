@@ -11,7 +11,6 @@ import { SetLegality } from './SetLegality.tsx';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
 import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
-import { HellfallRelatedEntry } from '../HellfallEntry.tsx';
 
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useMemo, useRef } from 'react';
@@ -26,6 +25,7 @@ import {
 import { tagsData } from '@hellfall/shared/data';
 import { CardEditPanel } from './CardEditPanel.tsx';
 import { PendingChanges } from './PendingChanges.tsx';
+import { HellfallRelatedEntry } from '../HellfallRelatedEntry.tsx';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
