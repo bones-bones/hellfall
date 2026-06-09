@@ -25,7 +25,7 @@ const evaluateFilter = (
   switch (node.type) {
     case 'filter': {
       if (node.filter.queryName == 'hybrid' || node.filter.queryName == 'mischybrid') {
-        return node.filter.cardPassesFilter(firestoreToCard(card, true));
+        return node.filter.cardPassesFilter(firestoreToCard(card/* , true */));
       }
       return node.filter.cardPassesFilter(card as unknown as HCCard.Any);
     }

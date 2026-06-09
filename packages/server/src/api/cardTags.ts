@@ -16,7 +16,7 @@ import {
   changeIsValid,
   deleteTagFromBase,
   getChangesFromDifferences,
-  setTags,
+  getChangesFromTag,
   tagChange,
   tagChangeIsValid,
   tagChangesAnyProps,
@@ -154,18 +154,19 @@ export const cardTagsHandler = async (
       } else {
         deleteTagFromBase(base_tags, tag);
       }
-      const changes: anyChange[] = [{ location: 'tag', change_type, tag } as tagChange];
-      if (tagChangesAnyProps(tag)) {
-        const hcCard = firestoreToCard(card);
-        const newCard = structuredClone(hcCard);
-        setTags(newCard, base_tags);
-        changes.push(...getChangesFromDifferences(hcCard, newCard));
-        if (changes.some(change => !changeIsValid(hcCard, change))) {
-          res.statusCode = 400;
-          res.end(JSON.stringify({ ok: false, reason: 'invalid_tag_change' }));
-          return;
-        }
-      }
+      const changes = getChangesFromTag(card as unknown as HCCard.Any,change_type,tag)
+      // const changes: anyChange[] = [{ location: 'tag', change_type, tag } as tagChange];
+      // if (tagChangesAnyProps(tag)) {
+      //   const hcCard = firestoreToCard(card);
+      //   const newCard = structuredClone(hcCard);
+      //   setTags(newCard, base_tags);
+      //   changes.push(...getChangesFromDifferences(hcCard, newCard));
+      //   if (changes.some(change => !changeIsValid(hcCard, change))) {
+      //     res.statusCode = 400;
+      //     res.end(JSON.stringify({ ok: false, reason: 'invalid_tag_change' }));
+      //     return;
+      //   }
+      // }
       await changesetsCol.add({
         cardId,
         status: 'pending',

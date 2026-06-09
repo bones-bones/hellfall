@@ -1,4 +1,4 @@
-import { HCColors, HCMiscColors } from '@hellfall/shared/types';
+import { HCColor, HCColors, HCMiscColors } from '@hellfall/shared/types';
 import {
   colorContentFilter,
   colorContentListFilter,
@@ -238,7 +238,7 @@ export const filterHybridIdentityShort: hybridShortFilter = Object.assign(
 export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
   const newColors: string[] = [];
   colors
-    .map(c => (HCMiscColors.includes(c) ? MISC_BULLSHIT : c))
+    .map(c => (HCMiscColors.includes(c as HCColor) ? MISC_BULLSHIT : c))
     .forEach(c => {
       if (!newColors.includes(c)) {
         newColors.push(c);
@@ -255,10 +255,10 @@ export const hybridIdentityMiscReduce = (hybridColors: HCColors[] | string[][]):
   const newColors: string[][] = [];
   hybridColors
     .map(set => {
-      if (set.some(c => HCMiscColors.includes(c))) {
+      if (set.some(c => HCMiscColors.includes(c as HCColor))) {
         const newSet: string[] = [MISC_BULLSHIT];
         set
-          .filter(c => !HCMiscColors.includes(c))
+          .filter(c => !HCMiscColors.includes(c as HCColor))
           .forEach(c => {
             newSet.push(c);
           });

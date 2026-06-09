@@ -215,8 +215,8 @@ const buildFirestoreDoc = (
   // if (newCard.tag_state?.base_tags) {
   //   state.base_tags = newCard.tag_state?.base_tags;
   // }
-  const merged = updateTags(newCard, state);
-  return { doc: cardToFirestore(newCard), merged };
+  // const merged = updateTags(newCard, state);
+  return { doc: cardToFirestore(newCard), merged:false /* merged */ };
 
   // const baseTags = dedupeOrdered(normalizeTagList(card.tags));
   // const overrides: CardTagOverrides = {
@@ -358,16 +358,16 @@ async function main() {
   const existingById = await loadExistingDocs(collection);
   console.log(`Existing Firestore docs: ${existingById.size}`);
 
-  const orphanTransfers = pruneOrphans
-    ? collectOrphanTagTransfers(existingById, cardMap, indexes)
-    : null;
+  // const orphanTransfers = pruneOrphans
+  //   ? collectOrphanTagTransfers(existingById, cardMap, indexes)
+  //   : null;
 
-  if (orphanTransfers) {
-    console.log(
-      `Orphan tag overrides: ${orphanTransfers.stats.orphansWithOverrides} found, ` +
-        `${orphanTransfers.stats.transferred} transferred, ${orphanTransfers.stats.unmatched} unmatched`
-    );
-  }
+  // if (orphanTransfers) {
+  //   console.log(
+  //     `Orphan tag overrides: ${orphanTransfers.stats.orphansWithOverrides} found, ` +
+  //       `${orphanTransfers.stats.transferred} transferred, ${orphanTransfers.stats.unmatched} unmatched`
+  //   );
+  // }
 
   const stats = {
     writes: 0,
@@ -381,29 +381,29 @@ async function main() {
 
   for (const [docId, card] of cardMap) {
     if ((card.tags?.length ?? 0) > 0) stats.jsonWithTags++;
-    const existing = existingById.get(docId);
-    const transferred = orphanTransfers?.transfers.get(docId);
+    const existing = existingById?.get(docId);
+    // const transferred = orphanTransfers?.transfers.get(docId);
     const existingForBuild: firestoreCard | undefined =
-      transferred != null
+/*       transferred != null
         ? {
             ...existing,
             ...mergeTagStates(existing?.tag_state ?? {}, transferred),
           }
-        : existing;
+        :  */existing;
     // const hadOverrides =
     //   normalizeTagList(existingForBuild?.added).length > 0 ||
     //   normalizeTagList(existingForBuild?.removed).length > 0;
     const { doc, merged } = buildFirestoreDoc(card, existingForBuild);
     // const jsonOnlyTags = dedupeOrdered(normalizeTagList(card.tags));
     // const mergedTags = doc.tags as string[];
-    if ((existingForBuild?.tag_state?.added || existingForBuild?.tag_state?.removed) && merged) {
-      stats.tagsMergedFromOverrides++;
-    }
+    // if ((existingForBuild?.tag_state?.added || existingForBuild?.tag_state?.removed) && merged) {
+    //   stats.tagsMergedFromOverrides++;
+    // }
     if (!reportOnly) stats.writes++;
     docMap.set(docId, doc);
   }
 
-  if (pruneOrphans) {
+  if (pruneOrphans && existingById) {
     for (const id of existingById.keys()) {
       if (!cardMap.has(id)) stats.pruneDeletes++;
     }
@@ -412,10 +412,10 @@ async function main() {
   console.log('\n--- Summary ---');
   console.log(`JSON cards: ${cardMap.size()}`);
   console.log(`JSON cards with tags: ${stats.jsonWithTags}`);
-  console.log(`Firestore docs (before): ${existingById.size}`);
+  console.log(`Firestore docs (before): ${existingById?.size}`);
   console.log(`Cards with merged tags (overrides applied): ${stats.tagsMergedFromOverrides}`);
 
-  const orphanCount = [...existingById.keys()].filter(id => !cardMap.has(id)).length;
+  const orphanCount = [...(existingById?.keys()??[])].filter(id => !cardMap.has(id)).length;
   console.log(`Firestore orphans (id not in JSON): ${orphanCount}`);
 
   if (reportOnly) return;
@@ -434,27 +434,27 @@ async function main() {
   bulkWriter.onWriteError(error => error.failedAttempts < 5);
   docMap.forEach((doc, docId) => bulkWriter.set(collection.doc(docId), doc /* { merge: true } */));
 
-  if (pruneOrphans && orphanTransfers) {
-    const changesetsCol = db.collection(
-      process.env.FIRESTORE_CHANGESETS_COLLECTION?.trim() || 'changesets'
-    );
-    const pendingChangesets = await changesetsCol.where('status', '==', 'pending').get();
-    for (const cs of pendingChangesets.docs) {
-      const cardId = cs.data().cardId;
-      if (typeof cardId !== 'string') continue;
-      const targetId = orphanTransfers.orphanToTarget.get(cardId);
-      if (targetId) {
-        bulkWriter.update(cs.ref, { cardId: targetId });
-        stats.changesetsReassigned++;
-      }
-    }
+  // if (pruneOrphans && orphanTransfers) {
+  //   const changesetsCol = db.collection(
+  //     process.env.FIRESTORE_CHANGESETS_COLLECTION?.trim() || 'changesets'
+  //   );
+  //   const pendingChangesets = await changesetsCol.where('status', '==', 'pending').get();
+  //   for (const cs of pendingChangesets.docs) {
+  //     const cardId = cs.data().cardId;
+  //     if (typeof cardId !== 'string') continue;
+  //     const targetId = orphanTransfers.orphanToTarget.get(cardId);
+  //     if (targetId) {
+  //       bulkWriter.update(cs.ref, { cardId: targetId });
+  //       stats.changesetsReassigned++;
+  //     }
+  //   }
 
-    for (const id of existingById.keys()) {
-      if (!cardMap.has(id)) {
-        bulkWriter.delete(collection.doc(id));
-      }
-    }
-  }
+  //   for (const id of existingById.keys()) {
+  //     if (!cardMap.has(id)) {
+  //       bulkWriter.delete(collection.doc(id));
+  //     }
+  //   }
+  // }
 
   await bulkWriter.close();
   if (stats.changesetsReassigned > 0) {

@@ -80,27 +80,27 @@ const defaultPartProps: partMappedType = {
   set: '' as SetCode,
 };
 
-export const restoreMissingFields = (card: HCCard.Any) => {
-  getRootEntries(defaultRootProps).forEach(([prop, value]) => {
-    if (card[prop] == undefined) {
-      addPropToRoot(card, prop, value);
-    }
-  });
-  toFaces(card).forEach((face, i) => {
-    getFaceEntries(defaultFaceProps).forEach(([prop, value]) => {
-      if (face[prop] == undefined) {
-        addPropToFace(card, prop, value, i);
-      }
-    });
-  });
-  card.all_parts?.forEach(part => {
-    getPartEntries(defaultPartProps).forEach(([prop, value]) => {
-      if (part[prop] == undefined) {
-        (part as any)[prop] = value;
-      }
-    });
-  });
-};
+// export const restoreMissingFields = (card: HCCard.Any) => {
+//   getRootEntries(defaultRootProps).forEach(([prop, value]) => {
+//     if (card[prop] == undefined) {
+//       addPropToRoot(card, prop, value);
+//     }
+//   });
+//   toFaces(card).forEach((face, i) => {
+//     getFaceEntries(defaultFaceProps).forEach(([prop, value]) => {
+//       if (face[prop] == undefined) {
+//         addPropToFace(card, prop, value, i);
+//       }
+//     });
+//   });
+//   card.all_parts?.forEach(part => {
+//     getPartEntries(defaultPartProps).forEach(([prop, value]) => {
+//       if (part[prop] == undefined) {
+//         (part as any)[prop] = value;
+//       }
+//     });
+//   });
+// };
 
 // const kindToSet:Record<HCKind,string> = {
 //   card:'',

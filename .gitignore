@@ -54,3 +54,4 @@ hellfall-api-key.json
 hellscube-firestore-export.json
 packages/shared/src/data/hellscube-firestore-export.json
 packages/server/service-account.json
+packages/scripts/service-account.json
