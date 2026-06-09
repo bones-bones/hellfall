@@ -239,11 +239,11 @@ async function acceptChangeset(
   }
 
   const cardRef = cardsCol.doc(cs.cardId);
-  const fire = await cardRef.get()
+  const fire = await cardRef.get();
   const card = firestoreToCard(fire);
   const newCard = structuredClone(card);
   await applyFromCollection(newCard, cs.changes, cardsCol);
-  const update = getUpdateObject(fire, cardToFirestore(newCard))
+  const update = getUpdateObject(fire, cardToFirestore(newCard));
   if (Object.keys(update).length) {
     await cardRef.update(update);
   }

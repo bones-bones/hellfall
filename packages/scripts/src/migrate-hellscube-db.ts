@@ -28,7 +28,12 @@ import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredenti
 // } from '@hellfall/shared/cardTags/cardTagMerge.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { CardMap } from '@hellfall/shared/utils';
-import { cardToFirestore, cardUpdate, firestoreCard, getUpdateObject } from '@hellfall/shared/utils/firestore';
+import {
+  cardToFirestore,
+  cardUpdate,
+  firestoreCard,
+  getUpdateObject,
+} from '@hellfall/shared/utils/firestore';
 import { JsonDataWrapper } from '@hellfall/shared/data';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -206,17 +211,14 @@ function buildCardIndexes(cardMap: CardMap): CardIndexes {
 //   return { transfers, orphanToTarget, stats };
 // }
 
-const buildFirestoreDoc = (
-  card: HCCard.Any,
-  existing: firestoreCard | undefined
-): cardUpdate => {
+const buildFirestoreDoc = (card: HCCard.Any, existing: firestoreCard | undefined): cardUpdate => {
   const newCard = cardToFirestore(structuredClone(card));
   // const state: tagState = existing?.tag_state ?? {};
   // if (newCard.tag_state?.base_tags) {
   //   state.base_tags = newCard.tag_state?.base_tags;
   // }
   // const merged = updateTags(newCard, state);
-  return existing ? getUpdateObject(existing,newCard):newCard as cardUpdate
+  return existing ? getUpdateObject(existing, newCard) : (newCard as cardUpdate);
   // return { doc: cardToFirestore(newCard), merged: false /* merged */ };
 
   // const baseTags = dedupeOrdered(normalizeTagList(card.tags));

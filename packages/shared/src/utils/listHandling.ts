@@ -252,34 +252,31 @@ export const listsExactlyEqual = <T = any>(
 /**
  * Checks whether two arbitrary values are exactly equal.
  */
-export const arbAreEqual = <T = any>(value1: T,value2: T): boolean => {
+export const arbAreEqual = <T = any>(value1: T, value2: T): boolean => {
   if (typeof value1 != typeof value2) {
     return false;
   }
   if (typeof value1 != 'object' || typeof value2 != 'object') {
-    return value1 === value2
+    return value1 === value2;
   }
   if (value1 == null || value2 == null) {
-    return value1 === value2
+    return value1 === value2;
   }
   if (Array.isArray(value1) && Array.isArray(value2)) {
-    return listsExactlyEqual(value1,value2,arbAreEqual);
+    return listsExactlyEqual(value1, value2, arbAreEqual);
   }
-  for (const [prop,value] of Object.entries(value1)) {
-    if (!arbAreEqual(value,value2[prop as keyof T])) {
+  for (const [prop, value] of Object.entries(value1)) {
+    if (!arbAreEqual(value, value2[prop as keyof T])) {
       return false;
     }
   }
-  for (const [prop,value] of Object.entries(value2)) {
-    if (!arbAreEqual(value,value1[prop as keyof T])) {
+  for (const [prop, value] of Object.entries(value2)) {
+    if (!arbAreEqual(value, value1[prop as keyof T])) {
       return false;
     }
   }
   return true;
-}
-
-
-
+};
 
 /**
  * Correctly deals with adding a value to an optional property that's a `Record<string,string>` by creating the value of the prop first if necessary

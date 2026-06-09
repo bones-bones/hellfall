@@ -16,16 +16,15 @@ export interface SessionPayload {
   iss?: string;
 }
 
-export const DEFAULT_DEV_SESSION:SessionPayload = {
+export const DEFAULT_DEV_SESSION: SessionPayload = {
   sub: 'dev-user',
   username: 'Developer',
   avatar: null,
   email: null,
   discord_access_token: 'dev',
-  guild_roles:[DATABASE_CONTRIBUTOR],
-  roles_fetched_at:Date.now(),
-
-}
+  guild_roles: [DATABASE_CONTRIBUTOR],
+  roles_fetched_at: Date.now(),
+};
 
 const ALG = 'HS256';
 
