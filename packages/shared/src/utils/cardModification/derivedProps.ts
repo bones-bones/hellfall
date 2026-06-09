@@ -31,6 +31,10 @@ import {
   getChangesFromTag,
   sortChanges,
   applyChanges,
+  toFaces,
+  getDefaultKindLayout,
+  getDefaultTypeLayout,
+  createFaceChange,
   // setTags,
 } from '@hellfall/shared/utils';
 
@@ -152,6 +156,19 @@ export const setDerivedProps = (
     changeList.sort(sortChanges);
     applyChanges(card,changeList);
   }
+  const changes:anyChange[] = []
+  toFaces(card).forEach((face,i)=> {
+    if (face.layout == getDefaultKindLayout(card,i)) {
+      const layout = getDefaultTypeLayout(card,i)
+      if (!layout) return;
+      const change = createFaceChange('add','layout',layout,i)
+      changes.push(change)
+    }
+  })
+  if (changes.length) {
+    applyChanges(card,changes)
+  }
+  
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,
     i: number

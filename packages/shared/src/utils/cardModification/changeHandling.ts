@@ -126,6 +126,8 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'still_draft_image',
     'not_directly_draftable',
     'has_draft_partners',
+    //@ts-ignore to allow for deletion of incorrectly rooted props
+    'watermark'
   ],
   pop: [
     'keywords',
@@ -265,9 +267,9 @@ export const rootChangeIsValid = <K extends rootPropType>(
           currentValue as HCLegalitiesField
         );
       }
-      // if (change.value == currentValue) {
-      //   return false;
-      // }
+      if (change.value == currentValue) {
+        return false;
+      }
       if (boolProps.includes(change.prop)) {
         return change.value === true && change.value != currentValue;
       }
@@ -314,7 +316,7 @@ export const rootChangeIsValid = <K extends rootPropType>(
       if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
-      return typeof change.value == 'string' /* && !listShare(currentValue as string[], change.value); */
+      return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
     }
     case 'delete':
       return change.prop in card;
@@ -393,9 +395,9 @@ export const faceChangeIsValid = <K extends facePropType>(
           !listsAreEqual(change.value, currentValue as string[])
         );
       }
-      // if (change.value == currentValue) {
-      //   return false;
-      // }
+      if (change.value == currentValue) {
+        return false;
+      }
       if (boolProps.includes(change.prop)) {
         return change.value === true && change.value != currentValue;
       }
@@ -427,7 +429,7 @@ export const faceChangeIsValid = <K extends facePropType>(
       if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
-      return typeof change.value == 'string' /* && !listShare(currentValue as string[], change.value); */
+      return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
     case 'delete':
       return change.prop in face;
     case 'pop':
@@ -663,18 +665,21 @@ export const applyFaceChange = <K extends facePropType>(
 ): boolean => {
   switch (change.change_type) {
     case 'add': {
-      addPropToFace(card, change.prop, change.value!);
+      addPropToFace(card, change.prop, change.value!, change.index);
       break;
     }
     case 'push': {
-      pushPropToFace(card, change.prop, change.value!);
+      pushPropToFace(card, change.prop, change.value!, change.index);
       break;
     }
     case 'delete':
-      deletePropFromFace(card, change.prop);
+      deletePropFromFace(card, change.prop, change.index);
       break;
     case 'pop':
-      popPropFromFace(card, change.prop, change.value!);
+      popPropFromFace(card, change.prop, change.value!, change.index);
+      if (change.prop == 'frame_effects' && !(toFaces(card)[change.index??0][change.prop] as any[]).length) {
+        deletePropFromFace(card, change.prop, change.index);
+      }
       break;
   }
   return faceDeriveProps.includes(change.prop);
@@ -821,6 +826,8 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'tag_notes',
     'base_tags',
     'all_parts',
+    //@ts-ignore to allow for deletion of incorrectly rooted props
+    'watermark'
   ],
   token: [
     'flavor_name',
@@ -842,6 +849,8 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'tag_notes',
     'base_tags',
     'all_parts',
+    //@ts-ignore to allow for deletion of incorrectly rooted props
+    'watermark'
   ],
   land: [
     'flavor_name',
@@ -863,6 +872,8 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'tag_notes',
     'base_tags',
     'all_parts',
+    //@ts-ignore to allow for deletion of incorrectly rooted props
+    'watermark'
   ],
   notmagic: [
     'flavor_name',
@@ -884,6 +895,8 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'tag_notes',
     'base_tags',
     'all_parts',
+    //@ts-ignore to allow for deletion of incorrectly rooted props
+    'watermark'
   ],
 };
 const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
@@ -1310,7 +1323,8 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
       ) {
         return;
       }
-      throw console.error('invalid change got passed in');
+      // throw console.error('invalid change got passed in');
+      return
     }
     if (applyChange(card, change)) {
       setDerived = true;
@@ -1356,11 +1370,11 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
     setDerivedProps(newCard);
     return newCard;
   }
-  if (newCard.base_tags) {
-    existingCard.base_tags = newCard.base_tags;
-  } else {
-    delete existingCard.base_tags;
-  }
+  // if (newCard.base_tags) {
+  //   existingCard.base_tags = newCard.base_tags;
+  // } else {
+  //   delete existingCard.base_tags;
+  // }
   return existingCard;
 };
 /**

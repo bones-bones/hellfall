@@ -66,7 +66,7 @@ const defaultRootProps: rootMappedType = {
 
 const defaultFaceProps: faceMappedType = {
   name: '',
-  image_status: HCImageStatus.Inapplicable,
+  // image_status: HCImageStatus.Inapplicable,
   mana_cost: '',
   mana_value: 0,
   type_line: '',
@@ -175,7 +175,7 @@ export const getDefaultTypeLayout = (card:HCCard.Any,index?:number):HCLayout|und
   }
   const type = face.types?.find(type => type.toLowerCase() in typeLayouts)?.toLowerCase();
   if (type) {
-    return subtypeLayouts[type];
+    return typeLayouts[type];
   }
 
   const subtype = face.subtypes?.find(type => type.toLowerCase() in subtypeLayouts)?.toLowerCase();
@@ -184,8 +184,10 @@ export const getDefaultTypeLayout = (card:HCCard.Any,index?:number):HCLayout|und
   }
 }
 
+export const getDefaultKindLayout = (card:HCCard.Any,index?:number):HCLayout => (card.kind == 'card' && index ? HCLayout.Multi : kindToFaceLayout[card.kind])
+
 // TODO: better handle cases with multiple layout tags
-export const getDefaultFaceLayout = (card:HCCard.Any,index?:number):HCLayout => getDefaultTypeLayout(card,index) ?? (card.kind == 'card' && index ? HCLayout.Multi : kindToFaceLayout[card.kind])
+export const getDefaultFaceLayout = (card:HCCard.Any,index?:number):HCLayout => getDefaultTypeLayout(card,index) ?? getDefaultKindLayout(card, index)
 
 export const getDefaultRootValue = <K extends rootPropType>(card:HCCard.Any, prop:K):rootValueType<K>|undefined=> {
   switch (prop) {
@@ -207,7 +209,7 @@ export const getDefaultFaceValue = <K extends facePropType>(card:HCCard.Any, pro
     case 'border_color':
       return HCBorderColor.Black as faceValueType<K>;
     case 'image_status':
-      return HCImageStatus.Inapplicable as faceValueType<K>;
+      return (index ? HCImageStatus.Inapplicable : HCImageStatus.Front) as faceValueType<K>;
     case 'layout':
       return getDefaultFaceLayout(card,index) as faceValueType<K>;
     case 'frame':
@@ -271,6 +273,7 @@ export const fillFacesTo = (card: HCCard.AnyMultiFaced, index: number) => {
       ...defaultFaceProps,
       object: HCObject.ObjectType.CardFace,
       layout: card.kind == 'card' && index ? HCLayout.Multi : kindToFaceLayout[card.kind],
+      image_status: index ? HCImageStatus.Inapplicable : HCImageStatus.Front
     } as HCCardFace.MultiFaced);
   }
 };
@@ -323,17 +326,17 @@ export const toSingleFaced = (card: HCCard.AnyMultiFaced): HCCard.AnySingleFaced
   return getDefaultCard(card.kind, false, entryProps, faceProps) as HCCard.AnySingleFaced;
 };
 
-export const layoutIsDefault = (card: HCCard.Any, index?: number) => {
-  if (!('card_faces' in card)) {
-    return card.layout == kindToFaceLayout[card.kind];
-  }
-  if (index == undefined) {
-    return card.layout == kindToMultiLayout[card.kind];
-  }
-  return (
-    card.card_faces[index].layout ==
-    (index && kindToFaceLayout[card.kind] == 'normal'
-      ? HCLayout.Multi
-      : kindToFaceLayout[card.kind])
-  );
-};
+// export const layoutIsDefault = (card: HCCard.Any, index?: number) => {
+//   if (!('card_faces' in card)) {
+//     return card.layout == kindToFaceLayout[card.kind];
+//   }
+//   if (index == undefined) {
+//     return card.layout == kindToMultiLayout[card.kind];
+//   }
+//   return (
+//     card.card_faces[index].layout ==
+//     (index && kindToFaceLayout[card.kind] == 'normal'
+//       ? HCLayout.Multi
+//       : kindToFaceLayout[card.kind])
+//   );
+// };

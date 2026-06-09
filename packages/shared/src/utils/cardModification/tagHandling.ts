@@ -12,10 +12,10 @@ import {
   // tagState,
 } from '@hellfall/shared/types';
 import {
-  AcceptableValue,
-  addLayoutTag,
+  // AcceptableValue,
+  // addLayoutTag,
   addPropToRoot,
-  addTag,
+  // addTag,
   deletePropFromFace,
   deletePropFromRoot,
   // layoutTags,
@@ -25,15 +25,16 @@ import { allPropType, allValueType, anyPropType, facePropType, faceType, faceVal
 import {
   getDefaultFaceLayout,
   getDefaultFaceValue,
+  getDefaultKindLayout,
   getDefaultRootValue,
   kindToDefaultFrame,
   kindToFaceLayout,
   kindToMultiLayout,
-  layoutIsDefault,
+  // layoutIsDefault,
 } from './defaults';
 import { getSet } from '../setHandling';
-import { anyChange, changeType, createFaceChange, createRootChange, rootChange, tagChange } from './changeTypes';
-import { changeIsValid } from './changeHandling';
+import { anyChange, changeType, createFaceChange, createRootChange, createTagChange, rootChange, tagChange } from './changeTypes';
+import { changeIsValid, sortChanges } from './changeHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -73,7 +74,7 @@ const tokenFrameTags: Record<string, HCFrame> = {
   '2015-frame': HCFrame.StampToken,
   '2020-frame': HCFrame.FullToken,
 };
-export const frameEffectTags: Record<string, HCFrameEffect> = {
+export const anyFrameEffectTags: Record<string, HCFrameEffect> = {
   'miracle-frame': HCFrameEffect.Miracle,
   'nyx-frame': HCFrameEffect.Enchantment,
   'draft-frame': HCFrameEffect.Draft,
@@ -82,14 +83,6 @@ export const frameEffectTags: Record<string, HCFrameEffect> = {
   'colorshifted-frame': HCFrameEffect.Colorshifted,
   'masterpiece-frame': HCFrameEffect.Masterpiece,
   'inverted-text': HCFrameEffect.Inverted,
-  'sun-moon-transform': HCFrameEffect.SunMoonDfc,
-  'type-transform-marks': HCFrameEffect.TypeDfc,
-  'generic-transform-marks': HCFrameEffect.TransformDfc,
-  'generic-mdfc-marks': HCFrameEffect.Mdfc,
-  'compass-land-transform': HCFrameEffect.CompassLandDfc,
-  'origin-pw-transform': HCFrameEffect.OriginPwDfc,
-  'moon-eldrazi-transform': HCFrameEffect.MoonEldraziDfc,
-  'fan-transform': HCFrameEffect.FanDfc,
   'showcase-frame': HCFrameEffect.Showcase,
   'extended-art': HCFrameEffect.ExtendedArt,
   'full-art': HCFrameEffect.FullArt,
@@ -98,10 +91,20 @@ export const frameEffectTags: Record<string, HCFrameEffect> = {
   'companion-frame': HCFrameEffect.Companion,
   'etched-frame': HCFrameEffect.Etched,
   'spree-frame': HCFrameEffect.Spree,
-  'meld-frame': HCFrameEffect.Meld,
   'slab-frame': HCFrameEffect.Slab,
   'arena-frame': HCFrameEffect.Arena,
   'universes-beyond-frame': HCFrameEffect.UniversesBeyond,
+};
+export const faceFrameEffectTags: Record<string, HCFrameEffect> = {
+  'sun-moon-transform': HCFrameEffect.SunMoonDfc,
+  'type-transform-marks': HCFrameEffect.TypeDfc,
+  'generic-transform-marks': HCFrameEffect.TransformDfc,
+  'generic-mdfc-marks': HCFrameEffect.Mdfc,
+  'compass-land-transform': HCFrameEffect.CompassLandDfc,
+  'origin-pw-transform': HCFrameEffect.OriginPwDfc,
+  'moon-eldrazi-transform': HCFrameEffect.MoonEldraziDfc,
+  'fan-transform': HCFrameEffect.FanDfc,
+  'specialize-frame': HCFrameEffect.Specialize,
 };
 const frontImageTagProps: Record<string, rootPropType> = {
   'draft-image': 'draft_image',
@@ -141,25 +144,25 @@ const removableTagProps: anyPropType[] = [
 const removableFaceTagProps: facePropType[] = ['finish', 'border_color', 'frame'];
 
 
-const setTagPropsToDefault = (card: HCCard.Any) => {
-  removableTagProps.forEach(prop => deletePropFromRoot(card, prop as rootPropType));
-  card.finish = HCFinish.Nonfoil;
-  card.border_color = HCBorderColor.Black;
-  card.frame = kindToDefaultFrame[card.kind];
-  if ('card_faces' in card) {
-    card.layout = kindToMultiLayout[card.kind];
-    card.card_faces.forEach((face, i) => {
-      removableTagProps.forEach(prop => deletePropFromFace(card, prop as facePropType, i));
-      removableFaceTagProps.forEach(prop => deletePropFromFace(card, prop, i));
-      face.layout = card.kind == 'card' && i ? HCLayout.Multi : kindToFaceLayout[card.kind];
-      if (!face.image) {
-        face.image_status = i ? HCImageStatus.Inapplicable : HCImageStatus.Front;
-      }
-    });
-  } else {
-    card.layout = kindToFaceLayout[card.kind];
-  }
-};
+// const setTagPropsToDefault = (card: HCCard.Any) => {
+//   removableTagProps.forEach(prop => deletePropFromRoot(card, prop as rootPropType));
+//   card.finish = HCFinish.Nonfoil;
+//   card.border_color = HCBorderColor.Black;
+//   card.frame = kindToDefaultFrame[card.kind];
+//   if ('card_faces' in card) {
+//     card.layout = kindToMultiLayout[card.kind];
+//     card.card_faces.forEach((face, i) => {
+//       removableTagProps.forEach(prop => deletePropFromFace(card, prop as facePropType, i));
+//       removableFaceTagProps.forEach(prop => deletePropFromFace(card, prop, i));
+//       face.layout = card.kind == 'card' && i ? HCLayout.Multi : kindToFaceLayout[card.kind];
+//       if (!face.image) {
+//         face.image_status = i ? HCImageStatus.Inapplicable : HCImageStatus.Front;
+//       }
+//     });
+//   } else {
+//     card.layout = kindToFaceLayout[card.kind];
+//   }
+// };
 
 const tokenTypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
   emblem: HCLayout.Emblem,
@@ -187,32 +190,32 @@ const subtypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
   planet: HCLayout.Station,
 };
 
-const setFacePropsFromTypes = (face: faceType, shouldSetLayout: boolean, isTokenRoot?: boolean) => {
-  if (shouldSetLayout) {
-    const tokenType = face.types
-      ?.find(type => type.toLowerCase() in tokenTypeLayouts)
-      ?.toLowerCase();
-    if (tokenType) {
-      face.layout = tokenTypeLayouts[tokenType];
-      return;
-    } else if (isTokenRoot) {
-      return;
-    }
-    const type = face.types?.find(type => type.toLowerCase() in typeLayouts)?.toLowerCase();
-    if (type) {
-      face.layout = subtypeLayouts[type];
-      return;
-    }
+// const setFacePropsFromTypes = (face: faceType, shouldSetLayout: boolean, isTokenRoot?: boolean) => {
+//   if (shouldSetLayout) {
+//     const tokenType = face.types
+//       ?.find(type => type.toLowerCase() in tokenTypeLayouts)
+//       ?.toLowerCase();
+//     if (tokenType) {
+//       face.layout = tokenTypeLayouts[tokenType];
+//       return;
+//     } else if (isTokenRoot) {
+//       return;
+//     }
+//     const type = face.types?.find(type => type.toLowerCase() in typeLayouts)?.toLowerCase();
+//     if (type) {
+//       face.layout = subtypeLayouts[type];
+//       return;
+//     }
 
-    const subtype = face.subtypes
-      ?.find(type => type.toLowerCase() in subtypeLayouts)
-      ?.toLowerCase();
-    if (subtype) {
-      face.layout = subtypeLayouts[subtype];
-      return;
-    }
-  }
-};
+//     const subtype = face.subtypes
+//       ?.find(type => type.toLowerCase() in subtypeLayouts)
+//       ?.toLowerCase();
+//     if (subtype) {
+//       face.layout = subtypeLayouts[subtype];
+//       return;
+//     }
+//   }
+// };
 
 export const splitFullTag = (fullTag: string) => {
   const hasNote = fullTag.includes('<') && fullTag.endsWith('>');
@@ -263,7 +266,10 @@ export const tagChangesAnyProps = (fullTag: string): boolean => {
   if (tag in tokenFrameTags) {
     return true;
   }
-  if (tag in frameEffectTags) {
+  if (tag in anyFrameEffectTags) {
+    return true;
+  }
+  if (tag in faceFrameEffectTags) {
     return true;
   }
   if (tag in borderColorTags) {
@@ -485,13 +491,13 @@ export const preAddToFace = <K extends facePropType>(
   if (
     subnote &&
     !options?.useUrl &&
-    !options?.dontAddNote &&
-    !(subnote == '0' && tag in frameEffectTags)
+    !options?.dontAddNote /* &&
+    !(subnote == '0' && tag in frameEffectTags) */
   ) {
     tag_change.note = subnote
   }
   changes.push(tag_change)
-  return changes
+  return changes.sort(sortChanges)
 };
 
 /**
@@ -563,13 +569,13 @@ export const preAddToRoot = <K extends rootPropType>(
   if (
     note &&
     !options?.useUrl &&
-    !options?.dontAddNote &&
-    !(note == '0' && tag in frameEffectTags)
+    !options?.dontAddNote /* &&
+    !(note == '0' && tag in frameEffectTags) */
   ) {
     tag_change.note = note
   }
   changes.push(tag_change)
-  return changes
+  return changes.sort(sortChanges)
 };
 export const preAddToAny = <K extends allPropType>(
   card: HCCard.Any,
@@ -611,28 +617,30 @@ export const preAddToAny = <K extends allPropType>(
       return changes;
     }
     if (tag == 'reminder-card' && card.kind == 'token') {
-      const changes:anyChange[] = 'card_faces' in card? preAddToRoot(card,change_type,full_tag,prop,HCLayout.MultiReminder,options):[]
-        toFaces(card).forEach((face, i) => {
+      const changes:anyChange[] = preAddToRoot(card,change_type,full_tag,prop,'card_faces' in card ?HCLayout.MultiReminder:HCLayout.Reminder,options)
+      if ('card_faces' in card) {
+        card.card_faces.forEach((face, i) => {
           changes.push(createFaceChange(change_type,prop,HCLayout.Reminder,i));
         });
+      }
       return changes;
     }
     if (tag in multiLayoutTags && 'card_faces' in card) {
-      const changes:anyChange[] = card.kind != 'token' ? preAddToRoot(card,change_type,full_tag,prop,multiLayoutTags,options):[];
+      const changes:anyChange[] = preAddToRoot(card,change_type,full_tag,card.kind == 'token'? undefined:prop,card.kind == 'token'?undefined:multiLayoutTags,options)
       if (tag in multiToFaceLayoutTags) {
         card.card_faces.forEach((face, i) => {
           if (
             (i || !frontIgnoreMultiLayoutTags.includes(tag as keyof typeof multiLayoutTags)) &&
-            getDefaultFaceLayout(card,i) == face.layout
+            getDefaultKindLayout(card,i) == face.layout
           ) {
             changes.push(createFaceChange(change_type,prop,multiToFaceLayoutTags[tag as keyof typeof multiLayoutTags],i));
 
           }
         });
       }
-      return preAddToRoot(card,change_type,full_tag,prop,singleLayoutTags,options)
+      return changes
     }
-    return [];
+    return preAddToRoot(card,change_type,full_tag);
   }
   if (prop == 'layout') {
     const changes = layoutChanges(prop);
@@ -666,8 +674,10 @@ export const getChangesFromTag = (card:HCCard.Any, change_type:'add'|'delete', f
     return preAddToAny(card, change_type, full_tag, 'frame', cardFrameTags);
   } else if (tag in tokenFrameTags && card.kind == 'token') {
     return preAddToAny(card, change_type, full_tag, 'frame', tokenFrameTags);
-  } else if (tag in frameEffectTags) {
-    return preAddToAny(card, change_type, note? full_tag :`${full_tag}<0>`, 'frame_effects', frameEffectTags, { push: true });
+  } else if (tag in anyFrameEffectTags) {
+    return preAddToAny(card, change_type, note? full_tag :`${full_tag}`, 'frame_effects', anyFrameEffectTags, { push: true });
+  } else if (tag in faceFrameEffectTags) {
+    return preAddToFace(card, change_type, note? full_tag :`${full_tag}`, 'frame_effects', faceFrameEffectTags, { push: true });
   } else if (tag in faceImageTagProps) {
     return preAddToAny(card, change_type, full_tag, faceImageTagProps[tag], undefined, { useUrl: true });
   } else if (tag in borderColorTags) {
@@ -696,7 +706,7 @@ export const getChangesFromTag = (card:HCCard.Any, change_type:'add'|'delete', f
       (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
         (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
     ) {
-      return preAddToRoot(card, change_type, full_tag, 'collector_number', undefined);
+      return preAddToRoot(card, change_type, full_tag, 'collector_number', undefined, { dontAddNote: true });
     }
   }
   return preAddToRoot(card, change_type, full_tag);
