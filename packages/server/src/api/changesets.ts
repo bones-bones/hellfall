@@ -12,6 +12,7 @@ import {
   applyFromCollection,
   cardToFirestore,
   firestoreToCard,
+  getUpdateObject,
 } from '@hellfall/shared/utils/firestore';
 // import {
 //   resolveTagState,
@@ -238,9 +239,14 @@ async function acceptChangeset(
   }
 
   const cardRef = cardsCol.doc(cs.cardId);
-  const card = firestoreToCard(await cardRef.get());
-  await applyFromCollection(card, cs.changes, cardsCol);
-  await cardRef.set(cardToFirestore(card) /* , { merge: true } */);
+  const fire = await cardRef.get()
+  const card = firestoreToCard(fire);
+  const newCard = structuredClone(card);
+  await applyFromCollection(newCard, cs.changes, cardsCol);
+  const update = getUpdateObject(fire, cardToFirestore(newCard))
+  if (Object.keys(update).length) {
+    await cardRef.update(update);
+  }
 
   await recardCardChangeset({
     cardId: cs.cardId,

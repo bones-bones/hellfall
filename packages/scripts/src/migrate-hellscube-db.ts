@@ -435,7 +435,7 @@ async function main() {
 
   const bulkWriter = db.bulkWriter();
   bulkWriter.onWriteError(error => error.failedAttempts < 5);
-  docMap.forEach((doc, docId) => bulkWriter.update(collection.doc(docId), doc /* { merge: true } */));
+  docMap.forEach((doc, docId) => bulkWriter.update(collection.doc(docId), doc));
 
   // if (pruneOrphans && orphanTransfers) {
   //   const changesetsCol = db.collection(

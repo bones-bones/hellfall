@@ -44,9 +44,9 @@ export function derivePendingTagStaging(changesets: PendingChangeset[]): Pending
     for (const change of cs.changes ?? []) {
       if (change.location !== 'tag') continue;
       if (change.change_type === 'add') {
-        pending.toAdd.push(change.tag);
+        pending.toAdd.push(change.full_tag);
       } else {
-        pending.toRemove.push(change.tag);
+        pending.toRemove.push(change.full_tag);
       }
     }
   }
