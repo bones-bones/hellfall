@@ -161,7 +161,7 @@ type StringCompatibleForK<K> = K extends 'layout'
   : K extends facePropType
   ? IsStringCompatible<BaseType<faceValueType<K>>>
   : never;
-type AcceptableValue<K> = StringCompatibleForK<K>;
+export type AcceptableValue<K> = StringCompatibleForK<K>;
 /**
  * Adds a tag
  * @param card card to add tag to

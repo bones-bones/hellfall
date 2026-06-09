@@ -26,7 +26,12 @@ import {
   getMVFromCost,
   getPipColorsFromText,
   hasTokenHCID,
-  setTags,
+  getBaseDiffs,
+  anyChange,
+  getChangesFromTag,
+  sortChanges,
+  applyChanges,
+  // setTags,
 } from '@hellfall/shared/utils';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
@@ -132,9 +137,15 @@ export const setDerivedProps = (
   tags?: string[]
 ) /* :{card:HCCard.Any;relateds?:HCCard.Any[]}  */ => {
   // todo: make sure this works when tags are empty
-  if (tags /* && !(tags.length == 1 && tags[0] == '') */ && card.kind != 'scryfall') {
-    setTags(card, tags);
+  if (tags?.[0] == '') {
+    tags.shift()
   }
+  const {added, deleted} = getBaseDiffs(tags ? card.base_tags ?? []:[], tags ? tags : card.base_tags ?? []);
+  const changeList:anyChange[] = []
+  changeList.push(...added.flatMap(tag=>getChangesFromTag(card, 'add',tag)))
+  changeList.push(...deleted.flatMap(tag=>getChangesFromTag(card, 'delete',tag)))
+  changeList.sort(sortChanges);
+  applyChanges(card,changeList);
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,
     i: number

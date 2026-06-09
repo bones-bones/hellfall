@@ -57,7 +57,7 @@ import type {
   rootChange,
   tagChange,
 } from './changeTypes';
-import { addTagToBase, deleteTagFromBase, getBaseDiffs, splitFullTag } from './tagHandling';
+import { addTagToBase, deleteTagFromBase, getBaseDiffs, getChangesFromTag, splitFullTag } from './tagHandling';
 
 export type {
   allPartsChange,
@@ -583,9 +583,9 @@ export const allPartsChangeIsValid = (
 
 export const tagChangeIsValid = (card: HCCard.Any, change: tagChange): boolean => {
   if (change.change_type == 'add') {
-    return !card.base_tags?.includes(change.tag);
+    return !card.base_tags?.includes(change.full_tag);
   }
-  return card.base_tags?.includes(change.tag) ?? false;
+  return card.base_tags?.includes(change.full_tag) ?? false;
 };
 
 export const changeIsValid = (card: HCCard.Any, change: anyChange): boolean => {
@@ -737,23 +737,34 @@ export const applyAllPartsChange = (card: HCCard.Any, change: allPartsChange): b
 export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
   if (change.change_type == 'add') {
     if (card.base_tags) {
-      addTagToBase(card.base_tags, change.tag);
+      addTagToBase(card.base_tags, change.full_tag);
     } else {
-      card.base_tags = [change.tag];
+      card.base_tags = [change.full_tag];
     }
-    const {tag, note} = splitFullTag(change.tag)
+    const tag = change.tag ?? change.full_tag
     if (!card.tags) {
       card.tags = [tag];      
     } else if (!card.tags.includes(tag)) {
       card.tags.push(tag)
     }
-    if (!note) return true;
+    if (!change.note) return true;
     if (!card.tag_notes?.[tag]) {
-      addPropToRecord(card,'tag_notes',tag,note)
+      addPropToRecord(card,'tag_notes',tag,change.note)
     }
   } else {
     if (card.base_tags) {
-      deleteTagFromBase(card.base_tags, change.tag);
+      deleteTagFromBase(card.base_tags, change.full_tag);
+    }
+    const tag = change.tag ?? change.full_tag
+    if (card.tags && !card.base_tags?.some(fullTag=> splitFullTag(fullTag).tag == tag)) {
+      const index = card.tags.indexOf(tag)
+      if (index != undefined && index != -1) {
+        card.tags.splice(index,1);
+      }
+    }
+    const note = card.tag_notes?.[tag]
+    if (note && !card.base_tags?.some(fullTag=> splitFullTag(fullTag).note == note)) {
+      delete card.tag_notes![tag]
     }
   }
   return true;
@@ -972,30 +983,30 @@ export const sortChanges = (a: anyChange, b: anyChange): number =>
   locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
   changeTypeOrder.indexOf(a.change_type) - changeTypeOrder.indexOf(b.change_type);
 
-export const getChangesFromTag = ()
-
-export const getTagChangesFromDifferences = (oldBase:string[], newBase:string[]):tagChange[]=> {
-  if (doubleListEquals(oldBase,newBase)) return [];
-  const changes:tagChange[] = []
-  const {added, deleted} = getBaseDiffs(oldBase, newBase);
-  added.forEach(tag=> {
-    const change:tagChange = {
-      location:'tag',
-      change_type:'add',
-      tag
-    }
-    changes.push(change)
-  })
-  deleted.forEach(tag=> {
-    const change:tagChange = {
-      location:'tag',
-      change_type:'delete',
-      tag
-    }
-    changes.push(change)
-  })
-  return changes;  
-}
+  
+// export const getTagChangesFromDifferences = (oldBase:string[], newBase:string[]):tagChange[]=> {
+//   if (doubleListEquals(oldBase,newBase)) return [];
+//   const changes:tagChange[] = []
+//   const {added, deleted} = getBaseDiffs(oldBase, newBase);
+//   added.forEach(tag=> {
+//     const change = getChangesFromTag()
+//     const change:tagChange = {
+//       location:'tag',
+//       change_type:'add',
+//       tag
+//     }
+//     changes.push(change)
+//   })
+//   deleted.forEach(tag=> {
+//     const change:tagChange = {
+//       location:'tag',
+//       change_type:'delete',
+//       tag
+//     }
+//     changes.push(change)
+//   })
+//   return changes;  
+// }
 
 export const getChangesFromDifferences = (
   existingCard: HCCard.Any,
@@ -1273,7 +1284,10 @@ export const getChangesFromDifferences = (
       }
       changeList.push(change);
     });
-  changeList.push(...getTagChangesFromDifferences(existingCard.base_tags ?? [], newCard.base_tags ?? []))
+  const {added, deleted} = getBaseDiffs(existingCard.base_tags ?? [], newCard.base_tags ?? []);
+
+  changeList.push(...added.flatMap(tag=>getChangesFromTag(existingCard, 'add',tag)[0]??[]))
+  changeList.push(...deleted.flatMap(tag=>getChangesFromTag(existingCard, 'delete',tag)[0]??[]))
   return changeList.sort(sortChanges);
 };
 

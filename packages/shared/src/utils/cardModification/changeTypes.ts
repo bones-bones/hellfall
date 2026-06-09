@@ -32,7 +32,7 @@ export type faceChange<K extends facePropType> = {
   index?: number;
 };
 
-export const createFaceChange = <K extends facePropType>(change_type: changeType, prop: K,value?: faceValueType<K>, ):faceChange<K> => {
+export const createFaceChange = <K extends facePropType>(change_type: changeType, prop: K,value?: faceValueType<K>, index?:number):faceChange<K> => {
   const change:faceChange<K> = {
     location: 'face',
     change_type,
@@ -47,13 +47,24 @@ export const createFaceChange = <K extends facePropType>(change_type: changeType
   return change
 }
 
-
 export type cardFacesChange = {
   location: 'card_faces';
-  index: number;
   change_type: 'add' | 'delete';
+  index: number;
   face?: HCCardFace.MultiFaced;
 };
+
+export const createCardFacesChange = (change_type: 'add'|'delete', index: number, face?:HCCardFace.MultiFaced):cardFacesChange => {
+  const change:cardFacesChange = {
+    location: 'card_faces',
+    change_type,
+    index
+  }
+  if (face) {
+    change.face = face
+  }
+  return change
+}
 
 export type allPartsChange = {
   location: 'all_parts';
@@ -64,14 +75,48 @@ export type allPartsChange = {
   no_overwrite?: boolean;
 };
 
+export const createAllPartsChange = (change_type: 'add'|'delete', index: number, id?:string, part_prop?:'name'|'hcid', related?:HCRelatedCard, no_overwrite?:boolean):allPartsChange => {
+  const change:allPartsChange = {
+    location: 'all_parts',
+    change_type,
+  }
+  if (id != undefined) {
+    change.id = id
+  }
+  if (part_prop != undefined) {
+    change.part_prop = part_prop
+  }
+  if (related != undefined) {
+    change.related = related
+  }
+  if (no_overwrite != undefined) {
+    change.no_overwrite = no_overwrite
+  }
+  return change
+}
+
 export type tagChange = {
   location: 'tag';
   change_type: 'add' | 'delete';
   full_tag: string;
   tag?: string;
   note?: string;
-  // rederive_props: boolean;
 };
+
+export const createTagChange = (change_type: 'add'|'delete', full_tag:string, tag?:string, note?:string):tagChange => {
+  const change:tagChange = {
+    location: 'tag',
+    change_type,
+    full_tag
+  }
+  if (tag != undefined) {
+    change.tag = tag
+  }
+  if (note != undefined) {
+    change.note = note
+  }
+  return change
+}
 
 export type anyChange =
   | rootChange<rootPropType>

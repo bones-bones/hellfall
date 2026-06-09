@@ -34,6 +34,8 @@ import {
   getPartEntries,
   getCardEntries,
   getCardFaceEntries,
+  rootValueType,
+  faceValueType,
 } from '@hellfall/shared/utils';
 
 const defaultRootProps: rootMappedType = {
@@ -134,6 +136,85 @@ export const kindToDefaultFrame: Record<HCKind, HCFrame> = {
   scryfall: HCFrame.Stamp,
   notmagic: HCFrame.NotMagic,
 };
+
+const tokenTypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
+  emblem: HCLayout.Emblem,
+  // 'reminder card': HCLayout.Reminder,
+  stickers: HCLayout.Stickers,
+  dungeon: HCLayout.Dungeon,
+  // 'real card': HCLayout.RealCardToken,
+  'ad card': HCLayout.Misc,
+  misc: HCLayout.Misc,
+  checklist: HCLayout.Checklist,
+};
+const typeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
+  plane: HCLayout.Planar,
+  phenomenon: HCLayout.Planar,
+  scheme: HCLayout.Scheme,
+  vanguard: HCLayout.Vanguard,
+  battle: HCLayout.Battle,
+};
+const subtypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
+  saga: HCLayout.Saga,
+  class: HCLayout.Class,
+  case: HCLayout.Case,
+  spacecraft: HCLayout.Station,
+  watercraft: HCLayout.Station,
+  planet: HCLayout.Station,
+};
+
+
+export const getDefaultTypeLayout = (card:HCCard.Any,index?:number):HCLayout|undefined => {
+  const isTokenRoot = !('card_faces' in card) && card.kind == 'token';
+  const face = toFaces(card)[index ?? 0];
+  const tokenType = face.types?.find(type => type.toLowerCase() in tokenTypeLayouts)?.toLowerCase();
+  if (tokenType) {
+    return tokenTypeLayouts[tokenType];
+  } else if (isTokenRoot) {
+    return;
+  }
+  const type = face.types?.find(type => type.toLowerCase() in typeLayouts)?.toLowerCase();
+  if (type) {
+    return subtypeLayouts[type];
+  }
+
+  const subtype = face.subtypes?.find(type => type.toLowerCase() in subtypeLayouts)?.toLowerCase();
+  if (subtype) {
+    return subtypeLayouts[subtype];
+  }
+}
+
+// TODO: better handle cases with multiple layout tags
+export const getDefaultFaceLayout = (card:HCCard.Any,index?:number):HCLayout => getDefaultTypeLayout(card,index) ?? (card.kind == 'card' && index ? HCLayout.Multi : kindToFaceLayout[card.kind])
+
+export const getDefaultRootValue = <K extends rootPropType>(card:HCCard.Any, prop:K):rootValueType<K>|undefined=> {
+  switch (prop) {
+    case 'border_color':
+      return HCBorderColor.Black as rootValueType<K>;
+    case 'image_status':
+      return HCImageStatus.Inapplicable as rootValueType<K>;
+    case 'layout':
+      return ('card_faces' in card? kindToMultiLayout:kindToFaceLayout)[card.kind] as rootValueType<K>;
+    case 'collector_number':
+      return '' as rootValueType<K>;
+  }
+}
+
+export const getDefaultFaceValue = <K extends facePropType>(card:HCCard.Any, prop:K, index?:number):faceValueType<K>|undefined=> {
+  switch (prop) {
+    case 'finish':
+      return HCFinish.Nonfoil as faceValueType<K>;
+    case 'border_color':
+      return HCBorderColor.Black as faceValueType<K>;
+    case 'image_status':
+      return HCImageStatus.Inapplicable as faceValueType<K>;
+    case 'layout':
+      return getDefaultFaceLayout(card,index) as faceValueType<K>;
+    case 'frame':
+      return kindToDefaultFrame[card.kind] as faceValueType<K>;
+    
+  }
+}
 /**
  * Gets the default card given certain props
  * @param kind the kind of card
