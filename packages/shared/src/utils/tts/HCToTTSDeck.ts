@@ -24,7 +24,11 @@ const cardBackURL =
 //   HCLayout.Stickers,
 //   HCLayout.Emblem,
 // ];
-export const HCToTTSDeckStates = (idList: string[], cardMap: CardMap, multMap?:Map<string,number>): ttsDeckState[] => {
+export const HCToTTSDeckStates = (
+  idList: string[],
+  cardMap: CardMap,
+  multMap?: Map<string, number>
+): ttsDeckState[] => {
   const { cards, tokens } = getRelatedsFromCards(idList, cardMap);
   const mainDeck: ttsDeckState = {
     Name: 'DeckCustom',
@@ -68,7 +72,7 @@ export const HCToTTSDeckStates = (idList: string[], cardMap: CardMap, multMap?:M
       NumHeight: 1,
       BackIsHidden: true,
     };
-    for (let i = 0;i< (multMap?.get(card.id) ?? 1);i++) {
+    for (let i = 0; i < (multMap?.get(card.id) ?? 1); i++) {
       const mainID = (mainDeck.DeckIDs.at(-1) ?? 0) + 100;
       const mainCard: ttsCard = {
         Name: 'Card',
@@ -93,7 +97,7 @@ export const HCToTTSDeckStates = (idList: string[], cardMap: CardMap, multMap?:M
         BackIsHidden: true,
         UniqueBack: true,
       };
-      for (let i = 0;i< (multMap?.get(card.id) ?? 1);i++) {
+      for (let i = 0; i < (multMap?.get(card.id) ?? 1); i++) {
         const dfcID = (dfcDeck.DeckIDs.at(-1) ?? 0) + 100;
         const dfcCard: ttsCard = {
           Name: 'Card',
@@ -177,10 +181,15 @@ export const HCToTTSDeckStates = (idList: string[], cardMap: CardMap, multMap?:M
   return bundle;
 };
 
-export const HCToTTSDeck = (name: string, idList: string[], cardMap: CardMap, multMap?:Map<string,number>): ttsDeck => {
+export const HCToTTSDeck = (
+  name: string,
+  idList: string[],
+  cardMap: CardMap,
+  multMap?: Map<string, number>
+): ttsDeck => {
   const deck: ttsDeck = {
     SaveName: name,
-    ObjectStates: HCToTTSDeckStates(idList, cardMap,multMap),
+    ObjectStates: HCToTTSDeckStates(idList, cardMap, multMap),
   };
   return deck;
 };

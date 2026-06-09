@@ -135,14 +135,14 @@ export const getColorIdentityProps = (
     color_identity_hybrid: colorIdentityHybrid,
   };
 };
-export const applyChangesFromNewBase = (card:HCCard.Any, newBase:string[]) => {
-    const { added, deleted } = getBaseDiffs(card.base_tags ?? [],newBase);
-    const changeList: anyChange[] = [];
-    changeList.push(...added.flatMap(tag => getChangesFromTag(card, 'add', tag)));
-    changeList.push(...deleted.flatMap(tag => getChangesFromTag(card, 'delete', tag)));
-    changeList.sort(sortChanges);
-    applyChanges(card, changeList);
-}
+export const applyChangesFromNewBase = (card: HCCard.Any, newBase: string[]) => {
+  const { added, deleted } = getBaseDiffs(card.base_tags ?? [], newBase);
+  const changeList: anyChange[] = [];
+  changeList.push(...added.flatMap(tag => getChangesFromTag(card, 'add', tag)));
+  changeList.push(...deleted.flatMap(tag => getChangesFromTag(card, 'delete', tag)));
+  changeList.sort(sortChanges);
+  applyChanges(card, changeList);
+};
 
 export const setDerivedProps = (
   card: HCCard.Any,
@@ -157,7 +157,7 @@ export const setDerivedProps = (
       tags.pop();
     }
     tags = Array.from(new Set(tags));
-    applyChangesFromNewBase(card,tags);
+    applyChangesFromNewBase(card, tags);
     // const { added, deleted } = getBaseDiffs(
     //   tags ? card.base_tags ?? [] : [],
     //   tags ? tags : card.base_tags ?? []

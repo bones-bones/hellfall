@@ -154,7 +154,7 @@ export const cardTagsHandler = async (
       } else {
         deleteTagFromBase(base_tags, tag);
       }
-      const changes = getChangesFromTag(card as unknown as HCCard.Any,change_type,tag)
+      const changes = getChangesFromTag(card as unknown as HCCard.Any, change_type, tag);
       // const changes: anyChange[] = [{ location: 'tag', change_type, tag } as tagChange];
       // if (tagChangesAnyProps(tag)) {
       //   const hcCard = firestoreToCard(card);

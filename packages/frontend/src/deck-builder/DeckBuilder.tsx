@@ -47,7 +47,7 @@ export const DeckBuilder = () => {
 
   useEffect(() => {
     if (textAreaRef.current) {
-      const cards = textAreaRef.current.value.split('\n')
+      const cards = textAreaRef.current.value.split('\n');
       setToRender(cards);
       updateCards(cards);
 
@@ -98,7 +98,7 @@ export const DeckBuilder = () => {
     return [count, rest];
   };
 
-  const updateCards =(cards:string[]) => {
+  const updateCards = (cards: string[]) => {
     // if (!cardMap.size()) {
     //   return;
     // }
@@ -122,8 +122,8 @@ export const DeckBuilder = () => {
                 'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
               name: name + ' - not found',
             } as unknown as HCCard.Any);
-        if (count>1 && id != undefined) {
-          newMultMap.set(id,count)
+        if (count > 1 && id != undefined) {
+          newMultMap.set(id, count);
         }
         return Array(count).fill(card);
         // }

@@ -370,7 +370,7 @@ export const HellfallCard = ({
           {isContributor && <PendingChanges cardId={displayCard.id} />}
           {user && tagsPersistEnabled && !editing && (
             <EditCardButton type="button" onClick={() => setEditing(true)}>
-              Edit Card displayCard
+              Edit Card Data
             </EditCardButton>
           )}
           {editing && (

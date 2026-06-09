@@ -216,7 +216,7 @@ const buildFirestoreDoc = (
   //   state.base_tags = newCard.tag_state?.base_tags;
   // }
   // const merged = updateTags(newCard, state);
-  return { doc: cardToFirestore(newCard), merged:false /* merged */ };
+  return { doc: cardToFirestore(newCard), merged: false /* merged */ };
 
   // const baseTags = dedupeOrdered(normalizeTagList(card.tags));
   // const overrides: CardTagOverrides = {
@@ -383,13 +383,12 @@ async function main() {
     if ((card.tags?.length ?? 0) > 0) stats.jsonWithTags++;
     const existing = existingById?.get(docId);
     // const transferred = orphanTransfers?.transfers.get(docId);
-    const existingForBuild: firestoreCard | undefined =
-/*       transferred != null
+    const existingForBuild: firestoreCard | undefined = /*       transferred != null
         ? {
             ...existing,
             ...mergeTagStates(existing?.tag_state ?? {}, transferred),
           }
-        :  */existing;
+        :  */ existing;
     // const hadOverrides =
     //   normalizeTagList(existingForBuild?.added).length > 0 ||
     //   normalizeTagList(existingForBuild?.removed).length > 0;
@@ -415,7 +414,7 @@ async function main() {
   console.log(`Firestore docs (before): ${existingById?.size}`);
   console.log(`Cards with merged tags (overrides applied): ${stats.tagsMergedFromOverrides}`);
 
-  const orphanCount = [...(existingById?.keys()??[])].filter(id => !cardMap.has(id)).length;
+  const orphanCount = [...(existingById?.keys() ?? [])].filter(id => !cardMap.has(id)).length;
   console.log(`Firestore orphans (id not in JSON): ${orphanCount}`);
 
   if (reportOnly) return;
