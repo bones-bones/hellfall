@@ -21,7 +21,17 @@ import {
   // layoutTags,
   // layoutTagType,
 } from './modificationHandling';
-import { allPropType, allValueType, anyPropType, facePropType, faceType, faceValueType, rootPropType, rootValueType, toFaces } from '../cardHandling';
+import {
+  allPropType,
+  allValueType,
+  anyPropType,
+  facePropType,
+  faceType,
+  faceValueType,
+  rootPropType,
+  rootValueType,
+  toFaces,
+} from '../cardHandling';
 import {
   getDefaultFaceLayout,
   getDefaultFaceValue,
@@ -33,7 +43,15 @@ import {
   // layoutIsDefault,
 } from './defaults';
 import { getSet } from '../setHandling';
-import { anyChange, changeType, createFaceChange, createRootChange, createTagChange, rootChange, tagChange } from './changeTypes';
+import {
+  anyChange,
+  changeType,
+  createFaceChange,
+  createRootChange,
+  createTagChange,
+  rootChange,
+  tagChange,
+} from './changeTypes';
 import { changeIsValid, sortChanges } from './changeHandling';
 
 const frameTags: Record<string, HCFrame> = {
@@ -142,7 +160,6 @@ const removableTagProps: anyPropType[] = [
   'tag_notes',
 ];
 const removableFaceTagProps: facePropType[] = ['finish', 'border_color', 'frame'];
-
 
 // const setTagPropsToDefault = (card: HCCard.Any) => {
 //   removableTagProps.forEach(prop => deletePropFromRoot(card, prop as rootPropType));
@@ -424,8 +441,8 @@ const multiToFaceLayoutTags: Partial<
  */
 export const preAddToFace = <K extends facePropType>(
   card: HCCard.Any,
-  change_type:'add'|'delete',
-  full_tag:string,
+  change_type: 'add' | 'delete',
+  full_tag: string,
   prop?: K,
   value?: Record<string, faceValueType<K>> | faceValueType<K>,
   options?: {
@@ -436,14 +453,14 @@ export const preAddToFace = <K extends facePropType>(
     useUrl?: boolean;
     defaultToBack?: boolean;
   }
-):anyChange[] => {
+): anyChange[] => {
   const { tag, note } = splitFullTag(full_tag);
-  const changes:anyChange[] = []
-  const tag_change:tagChange = {
-    location:'tag',
+  const changes: anyChange[] = [];
+  const tag_change: tagChange = {
+    location: 'tag',
     change_type,
-    full_tag
-  }
+    full_tag,
+  };
   if (note != undefined) {
     tag_change.tag = tag;
   }
@@ -451,42 +468,49 @@ export const preAddToFace = <K extends facePropType>(
     if (note) {
       tag_change.note = note;
     }
-    changes.push(tag_change)
-    return changes
+    changes.push(tag_change);
+    return changes;
   }
   const defaultValue = getDefaultFaceValue(card, prop);
-  const getValue = (subnote?:string, tagUrl?:string):faceValueType<K>|undefined => {
+  const getValue = (subnote?: string, tagUrl?: string): faceValueType<K> | undefined => {
     if (defaultValue && change_type == 'delete') {
-      return defaultValue
+      return defaultValue;
     } else if (typeof value == 'string') {
-      return value
+      return value;
     } else if (typeof value == 'object' && !Array.isArray(value)) {
-      return value[tag]
+      return value[tag];
     } else if (subnote) {
-      return (options?.useUrl ? tagUrl : subnote) as faceValueType<K>|undefined
+      return (options?.useUrl ? tagUrl : subnote) as faceValueType<K> | undefined;
     }
-  }
-  const useBoth = note?.includes('|') && /* !options?.useRootOnly &&  */'card_faces' in card;
+  };
+  const useBoth = note?.includes('|') && /* !options?.useRootOnly &&  */ 'card_faces' in card;
   const noteIsNum =
-    Number.isInteger(Number(note)) && /* !options?.useRootOnly &&  */'card_faces' in card;
+    Number.isInteger(Number(note)) && /* !options?.useRootOnly &&  */ 'card_faces' in card;
   const [face, subnote] = [
-    useBoth ? parseInt(note?.split('|')[0]??'') : noteIsNum ? parseInt(note??'') : options?.defaultToBack && 'card_faces' in card ? 1: 0,
+    useBoth
+      ? parseInt(note?.split('|')[0] ?? '')
+      : noteIsNum
+      ? parseInt(note ?? '')
+      : options?.defaultToBack && 'card_faces' in card
+      ? 1
+      : 0,
     useBoth ? note?.split('|')[1] : noteIsNum ? undefined : note,
   ];
-  const face_change_type:changeType = change_type == 'delete' ? options?.push ? 'pop' : 'delete' : options?.push ? 'push':'add'
+  const face_change_type: changeType =
+    change_type == 'delete' ? (options?.push ? 'pop' : 'delete') : options?.push ? 'push' : 'add';
   const tagUrl =
     options?.useUrl && subnote
       ? subnote.slice(0, 4) == 'http'
         ? subnote
         : 'https://lh3.googleusercontent.com/d/' + subnote
       : undefined;
-  const resolvedValue = getValue(subnote,tagUrl);
-  const change = createFaceChange(face_change_type,prop,resolvedValue,face)
+  const resolvedValue = getValue(subnote, tagUrl);
+  const change = createFaceChange(face_change_type, prop, resolvedValue, face);
   if (defaultValue && change_type == 'delete') {
     change.change_type = 'add';
   }
   if (change.value != undefined) {
-    changes.push(change)
+    changes.push(change);
   }
   if (
     subnote &&
@@ -494,10 +518,10 @@ export const preAddToFace = <K extends facePropType>(
     !options?.dontAddNote /* &&
     !(subnote == '0' && tag in frameEffectTags) */
   ) {
-    tag_change.note = subnote
+    tag_change.note = subnote;
   }
-  changes.push(tag_change)
-  return changes.sort(sortChanges)
+  changes.push(tag_change);
+  return changes.sort(sortChanges);
 };
 
 /**
@@ -511,8 +535,8 @@ export const preAddToFace = <K extends facePropType>(
  */
 export const preAddToRoot = <K extends rootPropType>(
   card: HCCard.Any,
-  change_type:'add'|'delete',
-  full_tag:string,
+  change_type: 'add' | 'delete',
+  full_tag: string,
   prop?: K,
   value?: Record<string, rootValueType<K>> | rootValueType<K>,
   options?: {
@@ -523,14 +547,14 @@ export const preAddToRoot = <K extends rootPropType>(
     useUrl?: boolean;
     defaultToBack?: boolean;
   }
-):anyChange[] => {
+): anyChange[] => {
   const { tag, note } = splitFullTag(full_tag);
-  const changes:anyChange[] = []
-  const tag_change:tagChange = {
-    location:'tag',
+  const changes: anyChange[] = [];
+  const tag_change: tagChange = {
+    location: 'tag',
     change_type,
-    full_tag
-  }
+    full_tag,
+  };
   if (note != undefined) {
     tag_change.tag = tag;
   }
@@ -538,33 +562,36 @@ export const preAddToRoot = <K extends rootPropType>(
     if (note) {
       tag_change.note = note;
     }
-    changes.push(tag_change)
-    return changes
+    changes.push(tag_change);
+    return changes;
   }
   const defaultValue = getDefaultRootValue(card, prop);
-  const getValue = (subnote?:string, tagUrl?:string):rootValueType<K>|undefined => {
+  const getValue = (subnote?: string, tagUrl?: string): rootValueType<K> | undefined => {
     if (defaultValue && change_type == 'delete') {
-      return defaultValue
+      return defaultValue;
     } else if (typeof value == 'string') {
-      return value
+      return value;
     } else if (typeof value == 'object' && !Array.isArray(value)) {
-      return (value as Record<string, rootValueType<K>>)[tag]
+      return (value as Record<string, rootValueType<K>>)[tag];
     } else if (subnote) {
-      return (options?.useUrl ? tagUrl : subnote) as rootValueType<K>|undefined
+      return (options?.useUrl ? tagUrl : subnote) as rootValueType<K> | undefined;
     }
-  }
-  const root_change_type:changeType = change_type == 'delete' ? options?.push ? 'pop' : 'delete' : options?.push ? 'push':'add'
+  };
+  const root_change_type: changeType =
+    change_type == 'delete' ? (options?.push ? 'pop' : 'delete') : options?.push ? 'push' : 'add';
   const tagUrl =
-    options?.useUrl && note ? note.startsWith('http') ? note
+    options?.useUrl && note
+      ? note.startsWith('http')
+        ? note
         : 'https://lh3.googleusercontent.com/d/' + note
       : undefined;
-  const resolvedValue = getValue(note,tagUrl);
-  const change = createRootChange(root_change_type,prop,resolvedValue)
+  const resolvedValue = getValue(note, tagUrl);
+  const change = createRootChange(root_change_type, prop, resolvedValue);
   if (defaultValue && change_type == 'delete') {
     change.change_type = 'add';
   }
   if (change.value != undefined) {
-    changes.push(change)
+    changes.push(change);
   }
   if (
     note &&
@@ -572,15 +599,15 @@ export const preAddToRoot = <K extends rootPropType>(
     !options?.dontAddNote /* &&
     !(note == '0' && tag in frameEffectTags) */
   ) {
-    tag_change.note = note
+    tag_change.note = note;
   }
-  changes.push(tag_change)
-  return changes.sort(sortChanges)
+  changes.push(tag_change);
+  return changes.sort(sortChanges);
 };
 export const preAddToAny = <K extends allPropType>(
   card: HCCard.Any,
-  change_type:'add'|'delete',
-  full_tag:string,
+  change_type: 'add' | 'delete',
+  full_tag: string,
   prop?: K,
   value?: Record<string, allValueType<K>> | allValueType<K>,
   options?: {
@@ -591,83 +618,146 @@ export const preAddToAny = <K extends allPropType>(
     useUrl?: boolean;
     defaultToBack?: boolean;
   }
-):anyChange[] => {
+): anyChange[] => {
   const { tag, note } = splitFullTag(full_tag);
   const useBoth = note?.includes('|') && /* !options?.useRootOnly && */ 'card_faces' in card;
   const noteIsNum =
     Number.isInteger(Number(note)) && /* !options?.useRootOnly && */ 'card_faces' in card;
   const [face, subnote] = [
-    useBoth ? parseInt(note?.split('|')[0]??'') : noteIsNum ? parseInt(note??'') : options?.defaultToBack && 'card_faces' in card ? 1: undefined,
+    useBoth
+      ? parseInt(note?.split('|')[0] ?? '')
+      : noteIsNum
+      ? parseInt(note ?? '')
+      : options?.defaultToBack && 'card_faces' in card
+      ? 1
+      : undefined,
     useBoth ? note?.split('|')[1] : noteIsNum ? undefined : note,
   ];
-  const layoutChanges = (prop:'layout'):anyChange[] => {
+  const layoutChanges = (prop: 'layout'): anyChange[] => {
     if (face != undefined && tag in faceLayoutTags && 'card_faces' in card) {
-      return preAddToFace(card,change_type,full_tag,prop,faceLayoutTags,options)
+      return preAddToFace(card, change_type, full_tag, prop, faceLayoutTags, options);
     }
     if (tag in singleLayoutTags && !('card_faces' in card)) {
-      return preAddToRoot(card,change_type,full_tag,prop,singleLayoutTags,options)
+      return preAddToRoot(card, change_type, full_tag, prop, singleLayoutTags, options);
     }
     if (tag == 'meld') {
-      const changes = preAddToRoot(card,change_type,full_tag,prop,card.kind == 'token' ? HCLayout.MeldResult : HCLayout.MeldPart,options)
+      const changes = preAddToRoot(
+        card,
+        change_type,
+        full_tag,
+        prop,
+        card.kind == 'token' ? HCLayout.MeldResult : HCLayout.MeldPart,
+        options
+      );
       if ('card_faces' in card) {
         card.card_faces.forEach((face, i) => {
-          changes.push(createFaceChange(change_type,prop,i ? HCLayout.MeldResult : HCLayout.MeldPart,i));
+          changes.push(
+            createFaceChange(change_type, prop, i ? HCLayout.MeldResult : HCLayout.MeldPart, i)
+          );
         });
       }
       return changes;
     }
     if (tag == 'reminder-card' && card.kind == 'token') {
-      const changes:anyChange[] = preAddToRoot(card,change_type,full_tag,prop,'card_faces' in card ?HCLayout.MultiReminder:HCLayout.Reminder,options)
+      const changes: anyChange[] = preAddToRoot(
+        card,
+        change_type,
+        full_tag,
+        prop,
+        'card_faces' in card ? HCLayout.MultiReminder : HCLayout.Reminder,
+        options
+      );
       if ('card_faces' in card) {
         card.card_faces.forEach((face, i) => {
-          changes.push(createFaceChange(change_type,prop,HCLayout.Reminder,i));
+          changes.push(createFaceChange(change_type, prop, HCLayout.Reminder, i));
         });
       }
       return changes;
     }
     if (tag in multiLayoutTags && 'card_faces' in card) {
-      const changes:anyChange[] = preAddToRoot(card,change_type,full_tag,card.kind == 'token'? undefined:prop,card.kind == 'token'?undefined:multiLayoutTags,options)
+      const changes: anyChange[] = preAddToRoot(
+        card,
+        change_type,
+        full_tag,
+        card.kind == 'token' ? undefined : prop,
+        card.kind == 'token' ? undefined : multiLayoutTags,
+        options
+      );
       if (tag in multiToFaceLayoutTags) {
         card.card_faces.forEach((face, i) => {
           if (
             (i || !frontIgnoreMultiLayoutTags.includes(tag as keyof typeof multiLayoutTags)) &&
-            getDefaultKindLayout(card,i) == face.layout
+            getDefaultKindLayout(card, i) == face.layout
           ) {
-            changes.push(createFaceChange(change_type,prop,multiToFaceLayoutTags[tag as keyof typeof multiLayoutTags],i));
-
+            changes.push(
+              createFaceChange(
+                change_type,
+                prop,
+                multiToFaceLayoutTags[tag as keyof typeof multiLayoutTags],
+                i
+              )
+            );
           }
         });
       }
-      return changes
+      return changes;
     }
-    return preAddToRoot(card,change_type,full_tag);
-  }
+    return preAddToRoot(card, change_type, full_tag);
+  };
   if (prop == 'layout') {
     const changes = layoutChanges(prop);
-    const status = layoutTagToImageStatus[tag as layoutTagType]
+    const status = layoutTagToImageStatus[tag as layoutTagType];
     if ('card_faces' in card && status) {
-      changes.forEach(change=> {
-        if (change.location == 'face' && change.index != undefined && change.prop == 'layout' && !card.card_faces[change.index].image){
-          const statusChange = createFaceChange(change_type,'image_status',status,change.index);
+      changes.forEach(change => {
+        if (
+          change.location == 'face' &&
+          change.index != undefined &&
+          change.prop == 'layout' &&
+          !card.card_faces[change.index].image
+        ) {
+          const statusChange = createFaceChange(change_type, 'image_status', status, change.index);
           changes.push(statusChange);
         }
-      })
+      });
     }
-    return changes
+    return changes;
   }
   if (face == undefined) {
-    return preAddToRoot(card,change_type,full_tag,prop,value as Record<string, rootValueType<K>> | rootValueType<K>|undefined,options)
+    return preAddToRoot(
+      card,
+      change_type,
+      full_tag,
+      prop,
+      value as Record<string, rootValueType<K>> | rootValueType<K> | undefined,
+      options
+    );
   }
-  return preAddToFace(card,change_type,full_tag,prop,value as Record<string, faceValueType<K>> | faceValueType<K>|undefined,options)
-}
-
+  return preAddToFace(
+    card,
+    change_type,
+    full_tag,
+    prop,
+    value as Record<string, faceValueType<K>> | faceValueType<K> | undefined,
+    options
+  );
+};
 
 // TODO: add this to the tag change processing
 
-export const getChangesFromTag = (card:HCCard.Any, change_type:'add'|'delete', full_tag:string):anyChange[] => {
+export const getChangesFromTag = (
+  card: HCCard.Any,
+  change_type: 'add' | 'delete',
+  full_tag: string
+): anyChange[] => {
   const { tag, note } = splitFullTag(full_tag);
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
-    return preAddToFace(card, change_type, full_tag, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
+    return preAddToFace(
+      card,
+      change_type,
+      full_tag,
+      'watermark',
+      tag.slice(0, tag.lastIndexOf('-'))
+    );
   } else if (tag in frameTags) {
     return preAddToAny(card, change_type, full_tag, 'frame', frameTags);
   } else if (tag in cardFrameTags && card.kind != 'token') {
@@ -675,11 +765,27 @@ export const getChangesFromTag = (card:HCCard.Any, change_type:'add'|'delete', f
   } else if (tag in tokenFrameTags && card.kind == 'token') {
     return preAddToAny(card, change_type, full_tag, 'frame', tokenFrameTags);
   } else if (tag in anyFrameEffectTags) {
-    return preAddToAny(card, change_type, note? full_tag :`${full_tag}`, 'frame_effects', anyFrameEffectTags, { push: true });
+    return preAddToAny(
+      card,
+      change_type,
+      note ? full_tag : `${full_tag}`,
+      'frame_effects',
+      anyFrameEffectTags,
+      { push: true }
+    );
   } else if (tag in faceFrameEffectTags) {
-    return preAddToFace(card, change_type, note? full_tag :`${full_tag}`, 'frame_effects', faceFrameEffectTags, { push: true });
+    return preAddToFace(
+      card,
+      change_type,
+      note ? full_tag : `${full_tag}`,
+      'frame_effects',
+      faceFrameEffectTags,
+      { push: true }
+    );
   } else if (tag in faceImageTagProps) {
-    return preAddToAny(card, change_type, full_tag, faceImageTagProps[tag], undefined, { useUrl: true });
+    return preAddToAny(card, change_type, full_tag, faceImageTagProps[tag], undefined, {
+      useUrl: true,
+    });
   } else if (tag in borderColorTags) {
     return preAddToAny(card, change_type, full_tag, 'border_color', borderColorTags);
   } else if (layoutTags.includes(tag as layoutTagType)) {
@@ -688,32 +794,48 @@ export const getChangesFromTag = (card:HCCard.Any, change_type:'add'|'delete', f
     return preAddToAny(card, change_type, full_tag, 'finish', HCFinish.Foil);
   } else if (note) {
     if (tag in frontImageTagProps) {
-      const changes = preAddToRoot(card, change_type, full_tag, frontImageTagProps[tag], undefined, {
-        useUrl: true,
-        // useRootOnly: true,
-      });
+      const changes = preAddToRoot(
+        card,
+        change_type,
+        full_tag,
+        frontImageTagProps[tag],
+        undefined,
+        {
+          useUrl: true,
+          // useRootOnly: true,
+        }
+      );
       if (tag == 'draft-image') {
-        const change:rootChange<'draft_image_status'> = createRootChange(change_type,'draft_image_status',HCImageStatus.HighRes);
+        const change: rootChange<'draft_image_status'> = createRootChange(
+          change_type,
+          'draft_image_status',
+          HCImageStatus.HighRes
+        );
         changes.push(change);
       }
       return changes;
     } else if (tag == 'back-image') {
-      return preAddToFace(card, change_type, full_tag, 'image', undefined, { useUrl: true, defaultToBack: true });
+      return preAddToFace(card, change_type, full_tag, 'image', undefined, {
+        useUrl: true,
+        defaultToBack: true,
+      });
     } else if (tag == 'flavor-name') {
-      return preAddToAny(card, change_type, full_tag, 'flavor_name', undefined, { dontAddNote: true });
+      return preAddToAny(card, change_type, full_tag, 'flavor_name', undefined, {
+        dontAddNote: true,
+      });
     } else if (
       tag.toLowerCase() == card.set?.toLowerCase() ||
       (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
         (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
     ) {
-      return preAddToRoot(card, change_type, full_tag, 'collector_number', undefined, { dontAddNote: true });
+      return preAddToRoot(card, change_type, full_tag, 'collector_number', undefined, {
+        dontAddNote: true,
+      });
     }
   }
   return preAddToRoot(card, change_type, full_tag);
   // return changes.filter(change=>changeIsValid(card,change))
-
-}
-
+};
 
 // // export const addTagToState = (state: tagState, tag: string):boolean => {
 // //   const tagToAdd = splitFullTag(tag).tag

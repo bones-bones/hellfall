@@ -72,7 +72,7 @@ export const fetchHCJFronts = (): HCIDMap =>
           count: '2',
         });
       }
-      setDerivedProps(front, [pack.tag, 'BurnAfterPicking'])
+      setDerivedProps(front, [pack.tag, 'BurnAfterPicking']);
       return front;
     })
   );

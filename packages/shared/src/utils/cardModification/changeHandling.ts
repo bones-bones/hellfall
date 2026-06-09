@@ -57,7 +57,13 @@ import type {
   rootChange,
   tagChange,
 } from './changeTypes';
-import { addTagToBase, deleteTagFromBase, getBaseDiffs, getChangesFromTag, splitFullTag } from './tagHandling';
+import {
+  addTagToBase,
+  deleteTagFromBase,
+  getBaseDiffs,
+  getChangesFromTag,
+  splitFullTag,
+} from './tagHandling';
 
 export type {
   allPartsChange,
@@ -126,8 +132,6 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'still_draft_image',
     'not_directly_draftable',
     'has_draft_partners',
-    //@ts-ignore to allow for deletion of incorrectly rooted props
-    'watermark'
   ],
   pop: [
     'keywords',
@@ -677,7 +681,10 @@ export const applyFaceChange = <K extends facePropType>(
       break;
     case 'pop':
       popPropFromFace(card, change.prop, change.value!, change.index);
-      if (change.prop == 'frame_effects' && !(toFaces(card)[change.index??0][change.prop] as any[]).length) {
+      if (
+        change.prop == 'frame_effects' &&
+        !(toFaces(card)[change.index ?? 0][change.prop] as any[]).length
+      ) {
         deletePropFromFace(card, change.prop, change.index);
       }
       break;
@@ -746,30 +753,30 @@ export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
     } else {
       card.base_tags = [change.full_tag];
     }
-    const tag = change.tag ?? change.full_tag
+    const tag = change.tag ?? change.full_tag;
     if (!card.tags) {
-      card.tags = [tag];      
+      card.tags = [tag];
     } else if (!card.tags.includes(tag)) {
-      card.tags.push(tag)
+      card.tags.push(tag);
     }
     if (!change.note) return true;
     if (!card.tag_notes?.[tag]) {
-      addPropToRecord(card,'tag_notes',tag,change.note)
+      addPropToRecord(card, 'tag_notes', tag, change.note);
     }
   } else {
     if (card.base_tags) {
       deleteTagFromBase(card.base_tags, change.full_tag);
     }
-    const tag = change.tag ?? change.full_tag
-    if (card.tags && !card.base_tags?.some(fullTag=> splitFullTag(fullTag).tag == tag)) {
-      const index = card.tags.indexOf(tag)
+    const tag = change.tag ?? change.full_tag;
+    if (card.tags && !card.base_tags?.some(fullTag => splitFullTag(fullTag).tag == tag)) {
+      const index = card.tags.indexOf(tag);
       if (index != undefined && index != -1) {
-        card.tags.splice(index,1);
+        card.tags.splice(index, 1);
       }
     }
-    const note = card.tag_notes?.[tag]
-    if (note && !card.base_tags?.some(fullTag=> splitFullTag(fullTag).note == note)) {
-      delete card.tag_notes![tag]
+    const note = card.tag_notes?.[tag];
+    if (note && !card.base_tags?.some(fullTag => splitFullTag(fullTag).note == note)) {
+      delete card.tag_notes![tag];
     }
   }
   return true;
@@ -789,7 +796,7 @@ export const applyChange = (card: HCCard.Any, change: anyChange): boolean => {
     case 'all_parts':
       return applyAllPartsChange(card, change);
     case 'tag':
-      return applyTagChange(card,change);
+      return applyTagChange(card, change);
   }
 };
 
@@ -826,8 +833,6 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'tag_notes',
     'base_tags',
     'all_parts',
-    //@ts-ignore to allow for deletion of incorrectly rooted props
-    'watermark'
   ],
   token: [
     'flavor_name',
@@ -849,8 +854,6 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'tag_notes',
     'base_tags',
     'all_parts',
-    //@ts-ignore to allow for deletion of incorrectly rooted props
-    'watermark'
   ],
   land: [
     'flavor_name',
@@ -872,8 +875,6 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'tag_notes',
     'base_tags',
     'all_parts',
-    //@ts-ignore to allow for deletion of incorrectly rooted props
-    'watermark'
   ],
   notmagic: [
     'flavor_name',
@@ -895,8 +896,6 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'tag_notes',
     'base_tags',
     'all_parts',
-    //@ts-ignore to allow for deletion of incorrectly rooted props
-    'watermark'
   ],
 };
 const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
@@ -996,7 +995,6 @@ export const sortChanges = (a: anyChange, b: anyChange): number =>
   locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
   changeTypeOrder.indexOf(a.change_type) - changeTypeOrder.indexOf(b.change_type);
 
-  
 // export const getTagChangesFromDifferences = (oldBase:string[], newBase:string[]):tagChange[]=> {
 //   if (doubleListEquals(oldBase,newBase)) return [];
 //   const changes:tagChange[] = []
@@ -1018,7 +1016,7 @@ export const sortChanges = (a: anyChange, b: anyChange): number =>
 //     }
 //     changes.push(change)
 //   })
-//   return changes;  
+//   return changes;
 // }
 
 export const getChangesFromDifferences = (
@@ -1297,10 +1295,12 @@ export const getChangesFromDifferences = (
       }
       changeList.push(change);
     });
-  const {added, deleted} = getBaseDiffs(existingCard.base_tags ?? [], newCard.base_tags ?? []);
+  const { added, deleted } = getBaseDiffs(existingCard.base_tags ?? [], newCard.base_tags ?? []);
 
-  changeList.push(...added.flatMap(tag=>getChangesFromTag(existingCard, 'add',tag)[0]??[]))
-  changeList.push(...deleted.flatMap(tag=>getChangesFromTag(existingCard, 'delete',tag)[0]??[]))
+  changeList.push(...added.flatMap(tag => getChangesFromTag(existingCard, 'add', tag)[0] ?? []));
+  changeList.push(
+    ...deleted.flatMap(tag => getChangesFromTag(existingCard, 'delete', tag)[0] ?? [])
+  );
   return changeList.sort(sortChanges);
 };
 
@@ -1323,8 +1323,7 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
       ) {
         return;
       }
-      // throw console.error('invalid change got passed in');
-      return
+      throw console.error('invalid change got passed in');
     }
     if (applyChange(card, change)) {
       setDerived = true;

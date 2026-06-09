@@ -12,17 +12,21 @@ export type rootChange<K extends rootPropType> = {
   value?: rootValueType<K>;
 };
 
-export const createRootChange = <K extends rootPropType>(change_type: changeType,prop: K,value?: rootValueType<K>):rootChange<K> => {
-  const change:rootChange<K> = {
+export const createRootChange = <K extends rootPropType>(
+  change_type: changeType,
+  prop: K,
+  value?: rootValueType<K>
+): rootChange<K> => {
+  const change: rootChange<K> = {
     location: 'root',
     change_type,
-    prop
-  }
+    prop,
+  };
   if (value != undefined) {
     change.value = value;
   }
-  return change
-}
+  return change;
+};
 
 export type faceChange<K extends facePropType> = {
   location: 'face';
@@ -32,20 +36,25 @@ export type faceChange<K extends facePropType> = {
   index?: number;
 };
 
-export const createFaceChange = <K extends facePropType>(change_type: changeType, prop: K,value?: faceValueType<K>, index?:number):faceChange<K> => {
-  const change:faceChange<K> = {
+export const createFaceChange = <K extends facePropType>(
+  change_type: changeType,
+  prop: K,
+  value?: faceValueType<K>,
+  index?: number
+): faceChange<K> => {
+  const change: faceChange<K> = {
     location: 'face',
     change_type,
-    prop
-  }
+    prop,
+  };
   if (value != undefined) {
     change.value = value;
   }
   if (index != undefined) {
     change.index = index;
   }
-  return change
-}
+  return change;
+};
 
 export type cardFacesChange = {
   location: 'card_faces';
@@ -54,17 +63,21 @@ export type cardFacesChange = {
   face?: HCCardFace.MultiFaced;
 };
 
-export const createCardFacesChange = (change_type: 'add'|'delete', index: number, face?:HCCardFace.MultiFaced):cardFacesChange => {
-  const change:cardFacesChange = {
+export const createCardFacesChange = (
+  change_type: 'add' | 'delete',
+  index: number,
+  face?: HCCardFace.MultiFaced
+): cardFacesChange => {
+  const change: cardFacesChange = {
     location: 'card_faces',
     change_type,
-    index
-  }
+    index,
+  };
   if (face) {
-    change.face = face
+    change.face = face;
   }
-  return change
-}
+  return change;
+};
 
 export type allPartsChange = {
   location: 'all_parts';
@@ -75,25 +88,32 @@ export type allPartsChange = {
   no_overwrite?: boolean;
 };
 
-export const createAllPartsChange = (change_type: 'add'|'delete', index: number, id?:string, part_prop?:'name'|'hcid', related?:HCRelatedCard, no_overwrite?:boolean):allPartsChange => {
-  const change:allPartsChange = {
+export const createAllPartsChange = (
+  change_type: 'add' | 'delete',
+  index: number,
+  id?: string,
+  part_prop?: 'name' | 'hcid',
+  related?: HCRelatedCard,
+  no_overwrite?: boolean
+): allPartsChange => {
+  const change: allPartsChange = {
     location: 'all_parts',
     change_type,
-  }
+  };
   if (id != undefined) {
-    change.id = id
+    change.id = id;
   }
   if (part_prop != undefined) {
-    change.part_prop = part_prop
+    change.part_prop = part_prop;
   }
   if (related != undefined) {
-    change.related = related
+    change.related = related;
   }
   if (no_overwrite != undefined) {
-    change.no_overwrite = no_overwrite
+    change.no_overwrite = no_overwrite;
   }
-  return change
-}
+  return change;
+};
 
 export type tagChange = {
   location: 'tag';
@@ -103,20 +123,25 @@ export type tagChange = {
   note?: string;
 };
 
-export const createTagChange = (change_type: 'add'|'delete', full_tag:string, tag?:string, note?:string):tagChange => {
-  const change:tagChange = {
+export const createTagChange = (
+  change_type: 'add' | 'delete',
+  full_tag: string,
+  tag?: string,
+  note?: string
+): tagChange => {
+  const change: tagChange = {
     location: 'tag',
     change_type,
-    full_tag
-  }
+    full_tag,
+  };
   if (tag != undefined) {
-    change.tag = tag
+    change.tag = tag;
   }
   if (note != undefined) {
-    change.note = note
+    change.note = note;
   }
-  return change
-}
+  return change;
+};
 
 export type anyChange =
   | rootChange<rootPropType>

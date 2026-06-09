@@ -143,32 +143,35 @@ export const setDerivedProps = (
   // todo: make sure this works when tags are empty
   if (tags) {
     while (tags[0] == '') {
-      tags.shift()
+      tags.shift();
     }
     while (tags.at(-1) == '') {
-      tags.pop()
+      tags.pop();
     }
     tags = Array.from(new Set(tags));
-    const {added, deleted} = getBaseDiffs(tags ? card.base_tags ?? []:[], tags ? tags : card.base_tags ?? []);
-    const changeList:anyChange[] = []
-    changeList.push(...added.flatMap(tag=>getChangesFromTag(card, 'add',tag)))
-    changeList.push(...deleted.flatMap(tag=>getChangesFromTag(card, 'delete',tag)))
+    const { added, deleted } = getBaseDiffs(
+      tags ? card.base_tags ?? [] : [],
+      tags ? tags : card.base_tags ?? []
+    );
+    const changeList: anyChange[] = [];
+    changeList.push(...added.flatMap(tag => getChangesFromTag(card, 'add', tag)));
+    changeList.push(...deleted.flatMap(tag => getChangesFromTag(card, 'delete', tag)));
     changeList.sort(sortChanges);
-    applyChanges(card,changeList);
+    applyChanges(card, changeList);
   }
-  const changes:anyChange[] = []
-  toFaces(card).forEach((face,i)=> {
-    if (face.layout == getDefaultKindLayout(card,i)) {
-      const layout = getDefaultTypeLayout(card,i)
+  const changes: anyChange[] = [];
+  toFaces(card).forEach((face, i) => {
+    if (face.layout == getDefaultKindLayout(card, i)) {
+      const layout = getDefaultTypeLayout(card, i);
       if (!layout) return;
-      const change = createFaceChange('add','layout',layout,i)
-      changes.push(change)
+      const change = createFaceChange('add', 'layout', layout, i);
+      changes.push(change);
     }
-  })
+  });
   if (changes.length) {
-    applyChanges(card,changes)
+    applyChanges(card, changes);
   }
-  
+
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,
     i: number
