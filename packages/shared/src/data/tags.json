@@ -1,6 +1,5 @@
 {
 	"data": [
-		"",
 		"\"bant\"-thopters-pack",
 		"1517",
 		"1984",
@@ -446,6 +445,7 @@
 		"henry-stickman",
 		"heroic",
 		"hexagon-watermark",
+		"hidden-fblthp",
 		"hidden-stack",
 		"hieroglyph",
 		"historical-event",
@@ -880,6 +880,7 @@
 		"south-park",
 		"spade-watermark",
 		"specialize",
+		"specialize-frame",
 		"spectral-chaos",
 		"speech-matters",
 		"spell-land",
