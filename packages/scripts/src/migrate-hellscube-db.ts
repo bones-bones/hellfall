@@ -28,7 +28,7 @@ import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredenti
 // } from '@hellfall/shared/cardTags/cardTagMerge.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { CardMap } from '@hellfall/shared/utils';
-import { cardToFirestore, firestoreCard } from '@hellfall/shared/utils/firestore';
+import { cardToFirestore, cardUpdate, firestoreCard, getUpdateObject } from '@hellfall/shared/utils/firestore';
 import { JsonDataWrapper } from '@hellfall/shared/data';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -103,41 +103,41 @@ function buildCardIndexes(cardMap: CardMap): CardIndexes {
   return { docIdByHcid, docIdsByName };
 }
 
-function decodeOrphanDocId(orphanId: string): string | undefined {
-  try {
-    return decodeURIComponent(orphanId);
-  } catch {
-    return undefined;
-  }
-}
+// function decodeOrphanDocId(orphanId: string): string | undefined {
+//   try {
+//     return decodeURIComponent(orphanId);
+//   } catch {
+//     return undefined;
+//   }
+// }
 
 /** Map a legacy/orphan Firestore doc id to the current JSON card doc id. */
-function targetDocIdForOrphan(
-  orphanId: string,
-  orphan: Record<string, unknown>,
-  indexes: CardIndexes
-): string | undefined {
-  const { docIdByHcid, docIdsByName } = indexes;
+// function targetDocIdForOrphan(
+//   orphanId: string,
+//   orphan: Record<string, unknown>,
+//   indexes: CardIndexes
+// ): string | undefined {
+//   const { docIdByHcid, docIdsByName } = indexes;
 
-  if (docIdByHcid.has(orphanId)) return docIdByHcid.get(orphanId);
+//   if (docIdByHcid.has(orphanId)) return docIdByHcid.get(orphanId);
 
-  const decoded = decodeOrphanDocId(orphanId);
-  if (decoded && docIdByHcid.has(decoded)) return docIdByHcid.get(decoded);
+//   const decoded = decodeOrphanDocId(orphanId);
+//   if (decoded && docIdByHcid.has(decoded)) return docIdByHcid.get(decoded);
 
-  const hcid = orphan.hcid != null ? String(orphan.hcid) : '';
-  if (hcid && docIdByHcid.has(hcid)) return docIdByHcid.get(hcid);
+//   const hcid = orphan.hcid != null ? String(orphan.hcid) : '';
+//   if (hcid && docIdByHcid.has(hcid)) return docIdByHcid.get(hcid);
 
-  const name = typeof orphan.name === 'string' ? orphan.name.trim() : '';
-  const nameCandidates = name ? docIdsByName.get(name) : undefined;
-  if (nameCandidates?.length === 1) return nameCandidates[0];
+//   const name = typeof orphan.name === 'string' ? orphan.name.trim() : '';
+//   const nameCandidates = name ? docIdsByName.get(name) : undefined;
+//   if (nameCandidates?.length === 1) return nameCandidates[0];
 
-  if (decoded) {
-    const decodedCandidates = docIdsByName.get(decoded);
-    if (decodedCandidates?.length === 1) return decodedCandidates[0];
-  }
+//   if (decoded) {
+//     const decodedCandidates = docIdsByName.get(decoded);
+//     if (decodedCandidates?.length === 1) return decodedCandidates[0];
+//   }
 
-  return undefined;
-}
+//   return undefined;
+// }
 
 // function overridesFromDoc(doc: Record<string, unknown> | undefined): CardTagOverrides {
 //   return {
@@ -209,14 +209,15 @@ function targetDocIdForOrphan(
 const buildFirestoreDoc = (
   card: HCCard.Any,
   existing: firestoreCard | undefined
-): { doc: firestoreCard; merged: boolean } => {
-  const newCard = structuredClone(card);
+): cardUpdate => {
+  const newCard = cardToFirestore(structuredClone(card));
   // const state: tagState = existing?.tag_state ?? {};
   // if (newCard.tag_state?.base_tags) {
   //   state.base_tags = newCard.tag_state?.base_tags;
   // }
   // const merged = updateTags(newCard, state);
-  return { doc: cardToFirestore(newCard), merged: false /* merged */ };
+  return existing ? getUpdateObject(existing,newCard):newCard as cardUpdate
+  // return { doc: cardToFirestore(newCard), merged: false /* merged */ };
 
   // const baseTags = dedupeOrdered(normalizeTagList(card.tags));
   // const overrides: CardTagOverrides = {
@@ -377,7 +378,7 @@ async function main() {
     jsonWithTags: 0,
   };
 
-  const docMap = new Map<string, firestoreCard>();
+  const docMap = new Map<string, cardUpdate>();
 
   for (const [docId, card] of cardMap) {
     if ((card.tags?.length ?? 0) > 0) stats.jsonWithTags++;
@@ -392,12 +393,15 @@ async function main() {
     // const hadOverrides =
     //   normalizeTagList(existingForBuild?.added).length > 0 ||
     //   normalizeTagList(existingForBuild?.removed).length > 0;
-    const { doc, merged } = buildFirestoreDoc(card, existingForBuild);
+    const doc = buildFirestoreDoc(card, existingForBuild);
     // const jsonOnlyTags = dedupeOrdered(normalizeTagList(card.tags));
     // const mergedTags = doc.tags as string[];
     // if ((existingForBuild?.tag_state?.added || existingForBuild?.tag_state?.removed) && merged) {
     //   stats.tagsMergedFromOverrides++;
     // }
+    if (!Object.keys(doc).length) {
+      continue;
+    }
     if (!reportOnly) stats.writes++;
     docMap.set(docId, doc);
   }
@@ -431,7 +435,7 @@ async function main() {
 
   const bulkWriter = db.bulkWriter();
   bulkWriter.onWriteError(error => error.failedAttempts < 5);
-  docMap.forEach((doc, docId) => bulkWriter.set(collection.doc(docId), doc /* { merge: true } */));
+  docMap.forEach((doc, docId) => bulkWriter.update(collection.doc(docId), doc /* { merge: true } */));
 
   // if (pruneOrphans && orphanTransfers) {
   //   const changesetsCol = db.collection(

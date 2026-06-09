@@ -1,6 +1,6 @@
 import type { HandlerRequest, HandlerResponse } from './types.ts';
 import { env } from './env.ts';
-import { type SessionPayload, createSessionToken, verifySessionToken } from './jwt.ts';
+import { DEFAULT_DEV_SESSION, type SessionPayload, createSessionToken, verifySessionToken } from './jwt.ts';
 import { getUserAsGuildMember } from './discord/discord.ts';
 
 const ROLES_MAX_AGE_S = 24 * 60 * 60; // 24 hours
@@ -80,6 +80,10 @@ export async function resolveGuildRoles(
 
 /** Parse + verify the session cookie. Returns null if missing/invalid. */
 export async function getSession(req: HandlerRequest): Promise<SessionPayload | null> {
+  if (env.AUTH_SERVER_URL == 'http://localhost:3003') {
+    return DEFAULT_DEV_SESSION
+  }
+
   const token = getCookie(req, env.COOKIE_NAME);
   if (!token) return null;
   return verifySessionToken(token);

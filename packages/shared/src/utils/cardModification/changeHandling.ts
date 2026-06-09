@@ -31,7 +31,7 @@ import {
   deletePropFromRecord,
   doubleListEquals,
   listEquals,
-  listsAreEqual,
+  listsExactlyEqual,
   listShare,
 } from '../listHandling';
 import {
@@ -396,7 +396,7 @@ export const faceChangeIsValid = <K extends facePropType>(
         return (
           Array.isArray(change.value) &&
           change.value.every(v => typeof v == 'string') &&
-          !listsAreEqual(change.value, currentValue as string[])
+          !listsExactlyEqual(change.value, currentValue as string[])
         );
       }
       if (change.value == currentValue) {

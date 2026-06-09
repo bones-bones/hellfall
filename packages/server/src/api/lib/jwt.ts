@@ -1,5 +1,6 @@
 import * as jose from 'jose';
 import { env } from './env.ts';
+import { DATABASE_CONTRIBUTOR } from '../discord/constants.ts';
 
 export interface SessionPayload {
   sub: string; // Discord user id
@@ -13,6 +14,17 @@ export interface SessionPayload {
   iat?: number;
   exp?: number;
   iss?: string;
+}
+
+export const DEFAULT_DEV_SESSION:SessionPayload = {
+  sub: 'dev-user',
+  username: 'Developer',
+  avatar: null,
+  email: null,
+  discord_access_token: 'dev',
+  guild_roles:[DATABASE_CONTRIBUTOR],
+  roles_fetched_at:Date.now(),
+
 }
 
 const ALG = 'HS256';

@@ -178,13 +178,13 @@ export const cardTagsHandler = async (
         comment: `${change_type == 'add' ? 'Added' : 'Deleted'} tag: "${tag}"`,
       });
 
-      if (base_tags.length) {
-        card.base_tags = base_tags;
-      } else {
-        delete card.base_tags;
-      }
+      // if (base_tags.length) {
+      //   card.base_tags = base_tags;
+      // } else {
+      //   delete card.base_tags;
+      // }
 
-      await docRef.set(card /* { merge: true } */);
+      // await docRef.set(card /* { merge: true } */);
 
       res.statusCode = 200;
       res.end(
