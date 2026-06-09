@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
 import { HCCard } from '@hellfall/shared/types';
-import { setTags } from '@hellfall/shared/utils';
+// import { setTags } from '@hellfall/shared/utils';
 import { derivePendingTagStaging, PendingTagStaging } from '../atoms/pendingChangesetsAtom';
 import { usePendingChangesetsState, useSyncPendingChangesets } from './usePendingChangesets';
+import { applyChangesFromNewBase } from '@hellfall/shared/utils';
 
 type FetchResult = {
   base_tags?: string[];
@@ -71,7 +72,7 @@ export function useCardTagOverrides(card: HCCard.Any): {
         if (cancelled) return;
         const { persistEnabled: pe, base_tags } = r;
         if (base_tags !== undefined) {
-          setTags(card, base_tags);
+          applyChangesFromNewBase(card, base_tags);
         }
         setPersistEnabled(pe);
       })
@@ -105,7 +106,7 @@ export function useCardTagOverrides(card: HCCard.Any): {
       if (!res.ok) throw new Error('Failed to submit changeset');
       const base = (await res.json()).base_tags;
       if (base) {
-        setTags(displayCard, base);
+        applyChangesFromNewBase(displayCard, base);
       }
       setChangesetSubmitted(true);
       await reloadPendingChangesets();
@@ -129,7 +130,7 @@ export function useCardTagOverrides(card: HCCard.Any): {
       if (!res.ok) throw new Error('Failed to submit changeset');
       const base = (await res.json()).base_tags;
       if (base) {
-        setTags(displayCard, base);
+        applyChangesFromNewBase(displayCard, base);
       }
       setChangesetSubmitted(true);
       await reloadPendingChangesets();

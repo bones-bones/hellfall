@@ -31,7 +31,7 @@ export const DeckBuilder = () => {
     (searchparms.get('list') || '').replaceAll('∆', '\n')
   );
   const cardMap = new CardMap(cardsData.data);
-  const multMap = new Map<string,number>()
+  const [multMap, setMultMap] = useState<Map<string, number>>(new Map());
   // const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') ?? '');
@@ -47,8 +47,9 @@ export const DeckBuilder = () => {
 
   useEffect(() => {
     if (textAreaRef.current) {
-      setToRender(textAreaRef.current.value.split('\n'));
-      updateCards();
+      const cards = textAreaRef.current.value.split('\n')
+      setToRender(cards);
+      updateCards(cards);
 
       const searchToSet = new URLSearchParams();
       searchToSet.append('name', deckName);
@@ -97,12 +98,12 @@ export const DeckBuilder = () => {
     return [count, rest];
   };
 
-  const updateCards =() => {
+  const updateCards =(cards:string[]) => {
     // if (!cardMap.size()) {
     //   return;
     // }
-    multMap.clear()
-    const images: HCCard.Any[] = (toRender || [])
+    const newMultMap = new Map<string, number>();
+    const images: HCCard.Any[] = (cards || [])
       .filter(entry => entry != '' && !entry.startsWith('# '))
       .flatMap(name => {
         const [count, rest] = toCardArr(name);
@@ -122,11 +123,12 @@ export const DeckBuilder = () => {
               name: name + ' - not found',
             } as unknown as HCCard.Any);
         if (count>1 && id != undefined) {
-          multMap.set(id,count)
+          newMultMap.set(id,count)
         }
         return Array(count).fill(card);
         // }
       });
+    setMultMap(newMultMap);
     setRenderCards(images);
   };
   // TODO: make this push to history less often? also add url syncing
@@ -204,7 +206,8 @@ Cock and Balls to Torture and Abuse
           const val = HCToTTSDeck(
             deckName,
             renderCards.flatMap(card => card.id ?? []),
-            cardMap
+            cardMap,
+            multMap
           );
           const url =
             'data:text/plain;base64,' +
