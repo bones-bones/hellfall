@@ -696,12 +696,10 @@ export const getChangesFromTag = (card:HCCard.Any, change_type:'add'|'delete', f
       (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
         (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
     ) {
-      preAddToRoot(card, change_type, full_tag, 'collector_number', undefined);
-    } else {
-      return preAddToRoot(card, change_type, full_tag);
+      return preAddToRoot(card, change_type, full_tag, 'collector_number', undefined);
     }
   }
-  return []
+  return preAddToRoot(card, change_type, full_tag);
   // return changes.filter(change=>changeIsValid(card,change))
 
 }

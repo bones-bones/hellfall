@@ -265,9 +265,9 @@ export const rootChangeIsValid = <K extends rootPropType>(
           currentValue as HCLegalitiesField
         );
       }
-      if (change.value == currentValue) {
-        return false;
-      }
+      // if (change.value == currentValue) {
+      //   return false;
+      // }
       if (boolProps.includes(change.prop)) {
         return change.value === true && change.value != currentValue;
       }
@@ -314,7 +314,7 @@ export const rootChangeIsValid = <K extends rootPropType>(
       if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
-      return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
+      return typeof change.value == 'string' /* && !listShare(currentValue as string[], change.value); */
     }
     case 'delete':
       return change.prop in card;
@@ -393,9 +393,9 @@ export const faceChangeIsValid = <K extends facePropType>(
           !listsAreEqual(change.value, currentValue as string[])
         );
       }
-      if (change.value == currentValue) {
-        return false;
-      }
+      // if (change.value == currentValue) {
+      //   return false;
+      // }
       if (boolProps.includes(change.prop)) {
         return change.value === true && change.value != currentValue;
       }
@@ -427,7 +427,7 @@ export const faceChangeIsValid = <K extends facePropType>(
       if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
-      return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
+      return typeof change.value == 'string' /* && !listShare(currentValue as string[], change.value); */
     case 'delete':
       return change.prop in face;
     case 'pop':
@@ -1296,7 +1296,7 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
   changeList.forEach((change, index) => {
     if (!changeIsValid(card, change)) {
       if (
-        !('card_Faces' in card) &&
+        !('card_faces' in card) &&
         change.location == 'root' &&
         changeList
           .slice(0, index)

@@ -50,7 +50,7 @@ const mergeDatabases = (
   existingLands: HCIDMap,
   newLands: HCIDMap
 ): HCCard.Any[] => {
-  newCards.forEach((newCard: HCCard.Any, id: string) => {});
+  // newCards.forEach((newCard: HCCard.Any, id: string) => {});
   const mergedCards = newCards.map((newCard: HCCard.Any, id: string) => {
     const existingCard = existingCards.get(movedIds[id] ?? id);
     if (existingCard) {

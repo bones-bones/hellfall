@@ -137,15 +137,21 @@ export const setDerivedProps = (
   tags?: string[]
 ) /* :{card:HCCard.Any;relateds?:HCCard.Any[]}  */ => {
   // todo: make sure this works when tags are empty
-  if (tags?.[0] == '') {
-    tags.shift()
+  if (tags) {
+    while (tags[0] == '') {
+      tags.shift()
+    }
+    while (tags.at(-1) == '') {
+      tags.pop()
+    }
+    tags = Array.from(new Set(tags));
+    const {added, deleted} = getBaseDiffs(tags ? card.base_tags ?? []:[], tags ? tags : card.base_tags ?? []);
+    const changeList:anyChange[] = []
+    changeList.push(...added.flatMap(tag=>getChangesFromTag(card, 'add',tag)))
+    changeList.push(...deleted.flatMap(tag=>getChangesFromTag(card, 'delete',tag)))
+    changeList.sort(sortChanges);
+    applyChanges(card,changeList);
   }
-  const {added, deleted} = getBaseDiffs(tags ? card.base_tags ?? []:[], tags ? tags : card.base_tags ?? []);
-  const changeList:anyChange[] = []
-  changeList.push(...added.flatMap(tag=>getChangesFromTag(card, 'add',tag)))
-  changeList.push(...deleted.flatMap(tag=>getChangesFromTag(card, 'delete',tag)))
-  changeList.sort(sortChanges);
-  applyChanges(card,changeList);
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,
     i: number
