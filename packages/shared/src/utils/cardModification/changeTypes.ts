@@ -1,5 +1,6 @@
 import type { HCCardFace, HCRelatedCard } from '@hellfall/shared/types';
 import type { facePropType, faceValueType, rootPropType, rootValueType } from '../cardHandling';
+import { Timestamp } from '@google-cloud/firestore';
 
 export type changeType = 'add' | 'push' | 'delete' | 'pop';
 
@@ -149,3 +150,33 @@ export type anyChange =
   | cardFacesChange
   | allPartsChange
   | tagChange;
+
+export const statusFilterList = ['pending', 'accepted', 'rejected', 'all'] as const;
+
+export const changesetStatusList: ChangesetStatus[] = ['pending', 'accepted', 'rejected'];
+
+export type StatusFilter = (typeof statusFilterList)[number];
+
+export type ChangesetStatus = Exclude<StatusFilter, 'all'>;
+
+export const isChangesetStatus = (value: any): value is ChangesetStatus =>
+  changesetStatusList.includes(value as ChangesetStatus);
+export const isStatusFilter = (value: any): value is StatusFilter =>
+  statusFilterList.includes(value as StatusFilter);
+
+export interface ChangesetUser {
+  userId: string;
+  username: string;
+}
+export interface Changeset {
+  id: string;
+  cardId: string;
+  status: ChangesetStatus;
+  createdAt: Timestamp | string;
+  resolvedAt: Timestamp | string | null;
+  submittedBy: ChangesetUser;
+  resolvedBy: ChangesetUser | null;
+  changes: anyChange[];
+  comment: string | null;
+  rejectReason?: string | null;
+}

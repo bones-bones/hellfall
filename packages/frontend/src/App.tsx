@@ -64,7 +64,7 @@ const ApplicationRoutes = () => {
     { path: '/card/*', element: <CardRoute /> },
     { path: '/hellfall/*', element: <RedirectBase /> },
     { path: '/login', element: <Login /> },
-    { path: '/review', element: <ReviewPage /> },
+    { path: '/review/*', element: <ReviewPage /> },
     { path: '/Watchwolfwar', element: <WatchwolfWar /> },
     { path: '/Watchwolfresults', element: <Watchwolfresults /> },
   ]);

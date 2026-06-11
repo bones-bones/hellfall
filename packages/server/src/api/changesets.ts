@@ -7,10 +7,18 @@ import { requireAdminAuth } from './lib/requireAdminAuth.js';
 import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
 import { recardCardChangeset } from '../lib/cardAudit.js';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
-import { anyChange, changeIsValid, isValidV4UUID } from '@hellfall/shared/utils';
+import {
+  anyChange,
+  changeIsValid,
+  Changeset,
+  isChangesetStatus,
+  isValidV4UUID,
+} from '@hellfall/shared/utils';
 import {
   applyFromCollection,
+  cardsCollection,
   cardToFirestore,
+  changesetCollection,
   firestoreToCard,
   getUpdateObject,
 } from '@hellfall/shared/utils/firestore';
@@ -24,38 +32,23 @@ import {
 // } from '@hellfall/shared/cardTags/cardTagMerge';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
-const changesetsCol = db.collection(env.FIRESTORE_CHANGESETS_COLLECTION);
-const cardsCol = db.collection(env.FIRESTORE_CARDS_COLLECTION);
-
-// type FieldChange = { before: unknown; after: unknown };
-// type ChangesMap = Record<string, anyChange>;
-
-type ChangesetStatus = 'pending' | 'accepted' | 'rejected';
-
-interface ChangesetDoc {
-  cardId: string;
-  status: ChangesetStatus;
-  createdAt: Timestamp;
-  resolvedAt: Timestamp | null;
-  submittedBy: { userId: string; username: string };
-  resolvedBy: { userId: string; username: string } | null;
-  // changes: ChangesMap;
-  changes: anyChange[];
-  comment: string | null;
-}
+const changesetsCol: changesetCollection = db.collection(
+  env.FIRESTORE_CHANGESETS_COLLECTION
+) as changesetCollection;
+const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
 
 function timestampToIso(ts: Timestamp | null | undefined): string | null {
   if (!ts || typeof ts.toDate !== 'function') return null;
   return ts.toDate().toISOString();
 }
 
-function serializeChangeset(id: string, data: ChangesetDoc) {
+function serializeChangeset(data: Changeset): Changeset {
   return {
-    id,
+    id: data.id,
     cardId: data.cardId,
     status: data.status,
-    createdAt: timestampToIso(data.createdAt),
-    resolvedAt: timestampToIso(data.resolvedAt),
+    createdAt: timestampToIso(data.createdAt as Timestamp) as string,
+    resolvedAt: timestampToIso(data.resolvedAt as Timestamp),
     submittedBy: data.submittedBy,
     resolvedBy: data.resolvedBy,
     changes: data.changes,
@@ -83,21 +76,25 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
 
 /** GET /api/changesets — list changesets, filterable by ?status= and ?cardId= */
 async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promise<void> {
-  const auth = await requireReviewerAuth(req, res);
-  if (!auth) return;
+  const auth = await requireReviewerAuth(req, res, true);
+  const limAuth = await requireTagAuth(req, res);
+  if (!auth && !limAuth) return;
 
   let query = changesetsCol.orderBy('createdAt', 'desc').limit(100);
   const status = req.query?.status;
-  if (typeof status === 'string' && ['pending', 'accepted', 'rejected'].includes(status)) {
+  if (isChangesetStatus(status)) {
     query = query.where('status', '==', status);
   }
   const cardId = req.query?.cardId;
   if (typeof cardId === 'string' && cardId) {
     query = query.where('cardId', '==', cardId);
   }
+  if (!auth && limAuth) {
+    query = query.where('submittedBy.userId', '==', limAuth.userId);
+  }
 
   const snap = await query.get();
-  const items = snap.docs.map(doc => serializeChangeset(doc.id, doc.data() as ChangesetDoc));
+  const items: Changeset[] = snap.docs.map(doc => serializeChangeset(doc.data() as Changeset));
   res.statusCode = 200;
   res.end(JSON.stringify({ ok: true, changesets: items }));
 }
@@ -141,24 +138,25 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
     res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
     return;
   }
-
-  const docRef = await changesetsCol.add({
+  const id = crypto.randomUUID();
+  const docRef = await changesetsCol.doc(id).set({
+    id,
     cardId,
     status: 'pending',
     createdAt: FieldValue.serverTimestamp(),
     resolvedAt: null,
     submittedBy: { userId: auth.userId, username: auth.username },
     resolvedBy: null,
-    changes: body.changes,
+    changes: body.changes as anyChange[],
     comment: typeof body.comment === 'string' ? body.comment.trim() || null : null,
   });
 
-  const snap = await docRef.get();
+  const snap = await changesetsCol.doc(id).get();
   res.statusCode = 201;
   res.end(
     JSON.stringify({
       ok: true,
-      changeset: serializeChangeset(docRef.id, snap.data() as ChangesetDoc),
+      changeset: serializeChangeset(snap.data() as Changeset),
     })
   );
 }
@@ -183,7 +181,7 @@ async function getChangeset(
   res.end(
     JSON.stringify({
       ok: true,
-      changeset: serializeChangeset(snap.id, snap.data() as ChangesetDoc),
+      changeset: serializeChangeset(snap.data() as Changeset),
     })
   );
 }
@@ -231,7 +229,7 @@ async function acceptChangeset(
     return;
   }
 
-  const cs = csSnap.data() as ChangesetDoc;
+  const cs = csSnap.data() as Changeset;
   if (cs.status !== 'pending') {
     res.statusCode = 409;
     res.end(JSON.stringify({ ok: false, reason: 'already_resolved', status: cs.status }));
@@ -271,8 +269,9 @@ async function rejectChangeset(
   res: HandlerResponse,
   changesetId: string
 ): Promise<void> {
-  const auth = await requireAdminAuth(req, res);
-  if (!auth) return;
+  const auth = await requireAdminAuth(req, res, true);
+  const limAuth = await requireTagAuth(req, res);
+  if (!auth && !limAuth) return;
 
   const csSnap = await changesetsCol.doc(changesetId).get();
   if (!csSnap.exists) {
@@ -281,10 +280,16 @@ async function rejectChangeset(
     return;
   }
 
-  const cs = csSnap.data() as ChangesetDoc;
+  const cs = csSnap.data() as Changeset;
   if (cs.status !== 'pending') {
     res.statusCode = 409;
     res.end(JSON.stringify({ ok: false, reason: 'already_resolved', status: cs.status }));
+    return;
+  }
+
+  if (!auth && cs.submittedBy.userId != limAuth?.userId) {
+    res.statusCode = 401;
+    res.end(JSON.stringify({ ok: false, reason: 'non_admins_can_only_cancel_own_changes' }));
     return;
   }
 
@@ -298,7 +303,10 @@ async function rejectChangeset(
   await changesetsCol.doc(changesetId).update({
     status: 'rejected',
     resolvedAt: FieldValue.serverTimestamp(),
-    resolvedBy: { userId: auth.userId, username: auth.username },
+    resolvedBy: {
+      userId: auth?.userId ?? limAuth!.userId,
+      username: auth?.username ?? limAuth!.username,
+    },
     rejectReason: typeof body.reason === 'string' ? body.reason.trim() || null : null,
   });
 
@@ -307,7 +315,10 @@ async function rejectChangeset(
     action: 'changeset_reject',
     field: null,
     tag: null,
-    user: { userId: auth.userId, username: auth.username },
+    user: {
+      userId: auth?.userId ?? limAuth!.userId,
+      username: auth?.username ?? limAuth!.username,
+    },
     changes: { before: { changesetId, submittedBy: cs.submittedBy }, after: cs.changes },
   });
 

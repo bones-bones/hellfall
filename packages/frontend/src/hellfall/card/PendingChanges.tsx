@@ -26,13 +26,14 @@ export function PendingChanges({ cardId }: { cardId: string }) {
               {cs.createdAt && <> &middot; {new Date(cs.createdAt).toLocaleDateString()}</>}
             </CsMeta>
             {cs.comment && <CsComment>{cs.comment}</CsComment>}
-            {Object.entries(cs.changes).map(([field, change]) => (
-              <FieldDiff key={field}>
-                <FieldName>{field}</FieldName>
+            {cs.changes.map(change => (
+              <FieldDiff key={`${change.location}-${change.change_type}`}>
+                {/* TODO: improve formatting */}
+                {/* <FieldName>{field}</FieldName> */}
                 {formatVal(change)}
               </FieldDiff>
             ))}
-            <ReviewLink to="/review">View in Review</ReviewLink>
+            <ReviewLink to={`/review/${cardId}`}>View in Review</ReviewLink>
           </ChangesetBlock>
         ))}
     </Container>

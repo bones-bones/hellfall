@@ -469,7 +469,7 @@ export const changesForFaceTag = <K extends facePropType>(
       tag_change.note = note;
     }
     changes.push(tag_change);
-    return changes;
+    return changes.sort(sortChanges);
   }
   const defaultValue = getDefaultFaceValue(card, prop);
   const getValue = (subnote?: string, tagUrl?: string): faceValueType<K> | undefined => {
@@ -563,7 +563,7 @@ export const changesForRootTag = <K extends rootPropType>(
       tag_change.note = note;
     }
     changes.push(tag_change);
-    return changes;
+    return changes.sort(sortChanges);
   }
   const defaultValue = getDefaultRootValue(card, prop);
   const getValue = (subnote?: string, tagUrl?: string): rootValueType<K> | undefined => {
@@ -656,7 +656,7 @@ export const changesForAnyTag = <K extends allPropType>(
           );
         });
       }
-      return changes;
+      return changes.sort(sortChanges);
     }
     if (tag == 'reminder-card' && card.kind == 'token') {
       const changes: anyChange[] = changesForRootTag(
@@ -672,7 +672,7 @@ export const changesForAnyTag = <K extends allPropType>(
           changes.push(createFaceChange(change_type, prop, HCLayout.Reminder, i));
         });
       }
-      return changes;
+      return changes.sort(sortChanges);
     }
     if (tag in multiLayoutTags && 'card_faces' in card) {
       const changes: anyChange[] = changesForRootTag(
@@ -700,7 +700,7 @@ export const changesForAnyTag = <K extends allPropType>(
           }
         });
       }
-      return changes;
+      return changes.sort(sortChanges);
     }
     return changesForRootTag(card, change_type, full_tag);
   };
@@ -720,7 +720,7 @@ export const changesForAnyTag = <K extends allPropType>(
         }
       });
     }
-    return changes;
+    return changes.sort(sortChanges);
   }
   if (face == undefined) {
     return changesForRootTag(
@@ -813,7 +813,7 @@ export const getChangesFromTag = (
         );
         changes.push(change);
       }
-      return changes;
+      return changes.sort(sortChanges);
     } else if (tag == 'back-image') {
       return changesForFaceTag(card, change_type, full_tag, 'image', undefined, {
         useUrl: true,

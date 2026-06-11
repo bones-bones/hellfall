@@ -1,16 +1,10 @@
-import { HCCardFace, HCRelatedCard } from '@hellfall/shared/types';
-import {
-  anyPropType,
-  anyValueType,
-  getCardEntries,
-  getFaceEntries,
-  getFireEntries,
-} from '../cardHandling';
+import { anyPropType, getFireEntries, updateValueType } from '../cardHandling';
 import { FieldValue } from '@google-cloud/firestore';
-import { arbAreEqual, listsExactlyEqual } from '../listHandling';
+import { arbAreEqual } from '../listHandling';
 import { firestoreCard } from './firestoreTypes';
 
-export type cardUpdate = { [K in anyPropType]?: anyValueType<K> | FieldValue };
+export type cardUpdate = { [K in anyPropType]?: updateValueType<K> | FieldValue };
+
 const deleteField = FieldValue.delete();
 
 export const getUpdateObject = (oldCard: firestoreCard, newCard: firestoreCard): cardUpdate => {

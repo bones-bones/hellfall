@@ -3,12 +3,18 @@ import { Heading } from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
 import { useAuth } from '../auth';
 import { getAuthApiUrl } from '../auth/getAuthApiUrl';
-import { Changeset, StatusFilter } from './types';
+// import { Changeset, StatusFilter } from './types';
 import { ChangesetCard } from './ChangesetCard';
 import { ErrorText } from './ErrorText';
+import { Changeset, isChangesetStatus, isStatusFilter, StatusFilter } from '@hellfall/shared/utils';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom';
+import { useAtomValue } from 'jotai';
+import { useParams } from 'react-router-dom';
 
 export function ReviewPage() {
   const { user, loading: authLoading } = useAuth();
+  const { '*': cardId } = useParams();
+
   const baseUrl = getAuthApiUrl();
   const [changesets, setChangesets] = useState<Changeset[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,10 +28,21 @@ export function ReviewPage() {
     setLoading(true);
     setError(null);
     try {
-      const params = filter !== 'all' ? `?status=${filter}` : '';
-      const res = await fetch(`${baseUrl}/api/changesets${params}`, {
-        credentials: 'include',
-      });
+      // filter !== 'all' ? `?status=${filter}` : ''
+
+      const params = new URLSearchParams();
+      if (isChangesetStatus(filter)) {
+        params.append('status', filter);
+      }
+      if (cardId) {
+        params.append('cardId', cardId);
+      }
+      const res = await fetch(
+        `${baseUrl}/api/changesets${params.size ? `?${params.toString()}` : ''}`,
+        {
+          credentials: 'include',
+        }
+      );
       if (!res.ok) throw new Error(`${res.status}`);
       const data = (await res.json()) as { changesets: Changeset[] };
       setChangesets(data.changesets);
@@ -59,6 +76,7 @@ export function ReviewPage() {
       headers: { 'Content-Type': 'application/json' },
       body: '{}',
     });
+    // TODO: make users able to reject their own requests
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
       throw new Error(data.reason || `${res.status}`);
@@ -106,7 +124,12 @@ export function ReviewPage() {
       {error && <ErrorText>{error}</ErrorText>}
       {!loading && !error && changesets.length === 0 && <p>No changesets found.</p>}
       {changesets.map(cs => (
-        <ChangesetCard key={cs.id} cs={cs} isAdmin={user.isAdmin} onAction={handleAction} />
+        <ChangesetCard
+          key={cs.id}
+          cs={cs}
+          isAdmin={user.isAdmin || cs.submittedBy.userId == user.id}
+          onAction={handleAction}
+        />
       ))}
     </PageContainer>
   );
