@@ -99,6 +99,9 @@ export enum HCLayout {
   Front = 'front',
 }
 
+export const isLayout = (value: any): value is HCLayout =>
+  Object.values(HCLayout).includes(value as HCLayout);
+
 /**
  * Groupings of layouts.
  */
@@ -259,31 +262,6 @@ export namespace HCLayoutGroup {
   export type TokenLayoutType = (typeof TokenLayout)[number];
 
   /**
-   * All layouts that only use their front for color identity.
-   *
-   * @see {@link FrontIdentityLayoutType} for the type of this group.
-   */
-  export const FrontIdentityLayout = [
-    HCLayout.Specialize,
-    HCLayout.MeldPart,
-    HCLayout.DraftPartner,
-    HCLayout.ReminderOnBack,
-    HCLayout.TokenOnBack,
-    HCLayout.TokenInInset,
-    HCLayout.DungeonOnBack,
-    HCLayout.DungeonInInset,
-    HCLayout.StickersOnBack,
-  ] as const;
-
-  /**
-   * A type for all layouts that only use their front for color identity.
-   *
-   * @see {@link FrontIdentityLayout} for an array version.
-   *
-   */
-  export type FrontIdentityLayoutType = (typeof FrontIdentityLayout)[number];
-
-  /**
    * All layouts that can be the layout for a face.
    *
    * @see {@link FaceLayoutType} for the type of this group.
@@ -336,10 +314,8 @@ export namespace HCLayoutGroup {
 
 /**
  * All face layouts that can not contribute to a card's color identity .
- *
- * @see {@link NoIdentityFaceLayoutType} for the type of this group.
  */
-export const NoIdentityFaceLayout = [
+export const NoIdentityFaceLayouts = [
   HCLayout.MeldResult,
   HCLayout.Token,
   HCLayout.Emblem,
@@ -348,15 +324,21 @@ export const NoIdentityFaceLayout = [
   HCLayout.Dungeon,
   HCLayout.DraftPartner,
   HCLayout.Specialize,
-] as const;
-
+];
 /**
- * A type for all layouts that only use their front for color identity.
- *
- * @see {@link FrontIdentityLayout} for an array version.
- *
+ * All layouts that only use their front for color identity.
  */
-export type NoIdentityFaceLayoutType = (typeof NoIdentityFaceLayout)[number];
+export const FrontIdentityLayouts = [
+  HCLayout.Specialize,
+  HCLayout.MeldPart,
+  HCLayout.DraftPartner,
+  HCLayout.ReminderOnBack,
+  HCLayout.TokenOnBack,
+  HCLayout.TokenInInset,
+  HCLayout.DungeonOnBack,
+  HCLayout.DungeonInInset,
+  HCLayout.StickersOnBack,
+];
 
 export type BothLayoutType = HCLayoutGroup.FaceLayoutType & HCLayoutGroup.SingleFacedType;
 

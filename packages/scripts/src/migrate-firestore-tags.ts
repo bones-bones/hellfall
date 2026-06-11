@@ -27,7 +27,10 @@ const LEGACY_FIELDS = ['baseTags', 'added', 'removed', 'tag_state'] as const;
 
 function normalizeTagList(tags: unknown): string[] {
   if (!Array.isArray(tags)) return [];
-  return tags.map(String).map(t => t.trim()).filter(Boolean);
+  return tags
+    .map(String)
+    .map(t => t.trim())
+    .filter(Boolean);
 }
 
 function dedupeOrdered(tags: string[]): string[] {
@@ -44,9 +47,7 @@ function dedupeOrdered(tags: string[]): string[] {
 function mergeLegacyTags(baseTags: string[], added: string[], removed: string[]): string[] {
   const removedSet = new Set(removed);
   const addedNorm = added.filter(t => !removedSet.has(t));
-  return dedupeOrdered(
-    baseTags.filter(t => !removedSet.has(t)).concat(addedNorm)
-  );
+  return dedupeOrdered(baseTags.filter(t => !removedSet.has(t)).concat(addedNorm));
 }
 
 function inferBaseTags(storedTags: string[], added: string[], removed: string[]): string[] {
@@ -193,7 +194,9 @@ async function main() {
 
     if (dryRun) {
       console.log(
-        `[dry-run] ${doc.id}: base_tags=${JSON.stringify(base_tags)} (remove ${LEGACY_FIELDS.join(', ')})`
+        `[dry-run] ${doc.id}: base_tags=${JSON.stringify(base_tags)} (remove ${LEGACY_FIELDS.join(
+          ', '
+        )})`
       );
     }
 

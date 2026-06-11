@@ -90,23 +90,17 @@ Write a script to transform the database
 - make it possible to properly search for markup characters
 - use spoiler feature to allow cockatrice auto-update?
 - figure out if i need more specific extras handling if no sets are selected
-- add hcv.x to `block`? (move `both` to a different keyword)
 
 - make pips servable via the api
 - add cubecobra export
 
-- add ub frame effect
-- add tag note handling for logged in tagger
 - find better way to handle apostrophes in card text for searches
 - add link to search with relateds to card page
 - make thread for token errors
 - add is:conjured and is:remindercard
 - add conjured to layouts?
-- switch to using uuid card map instead of list of cards (both for main maps and subsets)
 - add reprint handling using oracle id
 - fix uuids of all cards that are also on scryfall
-- remove token_id
-- reduce processing churn when updating cards
 - add special cases for searching only for set (use map directly)
 - add random button for searches
 - make card uuid hard-coded on singleCard pages
@@ -119,6 +113,6 @@ Write a script to transform the database
 - switch to using root/face type pattern
 - get rid of as much of the usage of anyPropType as possible
 - switch to using mapped/entry type pattern
-- add is:maincube and is:sidecube
 - add dropdown to tag editor for tags with multiple underlying base tags
 - set up my own firebase instance
+- use new change creator functions

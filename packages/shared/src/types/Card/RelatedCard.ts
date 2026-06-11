@@ -2,15 +2,16 @@ import { HCObject } from '../Object';
 import { SetCode } from '../Set';
 
 export const relatedComponentList = [
+  'draft_partner',
   'token',
   'token_maker',
   'meld_part',
   'meld_result',
-  'combo_piece',
-  'draft_partner',
+  // 'combo_piece',
 ] as const;
 export type relatedComponent = (typeof relatedComponentList)[number];
-
+export const isComponent = (value: any): value is relatedComponent =>
+  relatedComponentList.includes(value as relatedComponent);
 /**
  * A related card entry.
  */

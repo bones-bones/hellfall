@@ -17,9 +17,12 @@ export enum HCColor {
   Beige = 'Beige',
   Grey = 'Grey',
 }
-export const HCCoreColors = ['W', 'U', 'B', 'R', 'G', 'P'];
+export const isColor = (value: any): value is HCColor =>
+  Object.values(HCColor).includes(value as HCColor);
 
-export const HCMiscColors = [
+export const HCCoreColors: HCColors = ['W', 'U', 'B', 'R', 'G', 'P'];
+
+export const HCMiscColors: HCColors = [
   'Orange',
   'Brown',
   'Yellow',
@@ -31,6 +34,7 @@ export const HCMiscColors = [
   'Beige',
   'Grey',
 ];
+
 export const HCSearchColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc'];
 // export type HCColor = HCCoreColor | HCMiscColor;
 
@@ -39,6 +43,10 @@ export const HCSearchColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc'];
 // export type HCMiscColors = HCMiscColor[];
 
 export type HCColors = `${HCColor}`[];
+
+export const isColors = (value: any): value is HCColors =>
+  Array.isArray(value) && value.every(e => isColor(e));
+
 // export const isCoreColor = (color: HCColor): boolean => {
 //   return Object.values(HCCoreColor).includes(color as unknown as HCCoreColor);
 // };

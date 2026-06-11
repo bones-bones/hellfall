@@ -17,3 +17,6 @@ export enum HCBorderColor {
   Orange = 'orange',
   Red = 'red',
 }
+
+export const isBorderColor = (value: any): value is HCBorderColor =>
+  Object.values(HCBorderColor).includes(value as HCBorderColor);

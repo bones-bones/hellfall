@@ -184,11 +184,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
             if (supers.includes(word)) {
               supertypes.push(word);
             } else if (word == 'Card') {
-              addPropToRoot(
-                card,
-                'layout',
-                HCLayout.MultiReminder as HCLayoutGroup.SingleFacedType
-              );
+              addPropToRoot(card, 'layout', HCLayout.MultiReminder);
               addPropToFace(card, 'layout', HCLayout.Reminder, i);
               types.push('Reminder Card');
             } else {
@@ -251,11 +247,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
         addPropToFace(card, 'subtypes', subtypes);
       }
     } else if (prop == 'layout') {
-      addPropToRoot(
-        card,
-        prop,
-        convertLayout(value as unknown as ScryfallLayout) as HCLayoutGroup.SingleFacedType
-      );
+      addPropToRoot(card, prop, convertLayout(value as unknown as ScryfallLayout));
     } else if (prop == 'keywords') {
       value.forEach((keyword: string) =>
         pushPropToRoot(card, prop, keyword.toLowerCase().replace('!', ''))

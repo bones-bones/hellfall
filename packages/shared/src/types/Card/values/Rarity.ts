@@ -6,3 +6,5 @@ export enum HCRarity {
   Mythic = 'mythic',
   Bonus = 'bonus',
 }
+export const isRarity = (value: any): value is HCRarity =>
+  Object.values(HCRarity).includes(value as HCRarity);

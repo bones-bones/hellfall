@@ -8,7 +8,7 @@ import {
   HCRelatedCard,
   SetCode,
 } from '@hellfall/shared/types';
-import { addToJSONToCard, getDefaultCard, HCIDMap } from '@hellfall/shared/utils';
+import { addToJSONToCard, getDefaultCard, HCIDMap, setDerivedProps } from '@hellfall/shared/utils';
 
 export type HCJPackInfo = {
   name: string;
@@ -31,7 +31,6 @@ export const packInfoToCard = (entry: HCJPackInfo): HCCard.Front =>
         image: entry.url,
         image_status: HCImageStatus.HighRes,
         type_line: 'Front Card',
-        tags: [entry.tag, 'BurnAfterPicking'],
       },
       {
         types: ['Front Card'],
@@ -73,6 +72,7 @@ export const fetchHCJFronts = (): HCIDMap =>
           count: '2',
         });
       }
+      setDerivedProps(front, [pack.tag, 'BurnAfterPicking']);
       return front;
     })
   );

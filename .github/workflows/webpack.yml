@@ -42,5 +42,11 @@ jobs:
       - name: Type check server
         run: yarn exec tsc -p packages/server/tsconfig.json --noEmit
 
+      - name: Type check scripts
+        run: yarn exec tsc -p packages/scripts/tsconfig.json --noEmit
+
+      - name: Type check backend
+        run: yarn exec tsc -p packages/backend/tsconfig.json --noEmit
+
       - name: Build
         run: yarn build

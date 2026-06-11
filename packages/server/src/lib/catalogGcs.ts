@@ -40,7 +40,10 @@ export async function downloadCatalogBodyFromGcs(): Promise<string | null> {
 }
 
 /** Upload gzip-compressed catalog JSON and manifest after a publish. Requires CATALOG_GCS_BUCKET. */
-export async function uploadCatalogToGcs(body: string, cardCount: number): Promise<CatalogManifest> {
+export async function uploadCatalogToGcs(
+  body: string,
+  cardCount: number
+): Promise<CatalogManifest> {
   const bucketName = env.CATALOG_GCS_BUCKET;
   if (!bucketName) {
     throw new Error('CATALOG_GCS_BUCKET is required to upload catalog');

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { usePendingChangesetsState } from '../usePendingChangesets';
+import { usePendingChangesetsState } from '../hooks/usePendingChangesets';
 
 export function PendingChanges({ cardId }: { cardId: string }) {
   const { changesets, loading } = usePendingChangesetsState(cardId);
@@ -26,13 +26,14 @@ export function PendingChanges({ cardId }: { cardId: string }) {
               {cs.createdAt && <> &middot; {new Date(cs.createdAt).toLocaleDateString()}</>}
             </CsMeta>
             {cs.comment && <CsComment>{cs.comment}</CsComment>}
-            {Object.entries(cs.changes).map(([field, change]) => (
-              <FieldDiff key={field}>
-                <FieldName>{field}</FieldName>
+            {cs.changes.map(change => (
+              <FieldDiff key={`${change.location}-${change.change_type}`}>
+                {/* TODO: improve formatting */}
+                {/* <FieldName>{field}</FieldName> */}
                 {formatVal(change)}
               </FieldDiff>
             ))}
-            <ReviewLink to="/review">View in Review</ReviewLink>
+            <ReviewLink to={`/review/${cardId}`}>View in Review</ReviewLink>
           </ChangesetBlock>
         ))}
     </Container>

@@ -1,6 +1,6 @@
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, isComponent, relatedComponent } from '@hellfall/shared/types';
 import { cardStringFilter, opType, invertOptionType } from './types';
-import { funcOp, opIsNegative, opToNot, opToDont, opToNt } from './filterUtils';
+import { opIsNegative, opToNot, opToDont, opToNt, opAsBool } from './filterUtils';
 import {
   getColorsFromFaces,
   getFromAll,
@@ -12,9 +12,11 @@ import {
   toNumber,
   canBeACommander,
   textListIncludesEvery,
+  hasPartWithComp,
 } from '@hellfall/shared/utils';
 
 const stateList = [
+  'ruling',
   'foil',
   'nonfoil',
   'commander',
@@ -32,6 +34,7 @@ const stateList = [
   'manland',
   'partner',
   'masterpiece',
+  'reprint',
   'rebalanced',
   'bounceland',
   'dual',
@@ -46,6 +49,7 @@ const stateList = [
 ] as const;
 type stateType = (typeof stateList)[number];
 const equivStateNames: Record<string, stateType> = {
+  rulings: 'ruling',
   alchemy: 'rebalanced',
   alchemyrebalanced: 'rebalanced',
   rebalance: 'rebalanced',
@@ -57,6 +61,7 @@ const equivStateNames: Record<string, stateType> = {
   creatureland: 'manland',
 };
 const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undefined> = {
+  ruling: (value: HCCard.Any) => !!value.rulings,
   foil: (value: HCCard.Any) => value.finish == 'foil',
   nonfoil: (value: HCCard.Any) => value.finish == 'nonfoil',
   commander: (value: HCCard.Any) => canBeACommander(value),
@@ -117,6 +122,7 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
     ),
   manland: (value: HCCard.Any) => value.tags?.includes('manland'),
   masterpiece: (value: HCCard.Any) => value.tags?.includes('masterpiece'),
+  reprint: (value: HCCard.Any) => value.tags?.includes('reprint'),
   rebalanced: (value: HCCard.Any) => value.tags?.includes('alchemy-rebalance'),
   bounceland: (value: HCCard.Any) => value.tags?.includes('bounceland'),
   dual: (value: HCCard.Any) => value.tags?.includes('og-dual'),
@@ -130,6 +136,7 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
   triome: (value: HCCard.Any) => value.tags?.includes('triome'),
 };
 const stateSummaries: Record<stateType, (operator: opType, value: string) => string> = {
+  ruling: (operator: opType, value: string) => `the cards ${opToDont(operator)} have rulings`,
   foil: (operator: opType, value: string) => `the card is ${opToNot(operator)} foil`,
   nonfoil: (operator: opType, value: string) => `the card is ${opToNot(operator)} nonfoil`,
   commander: (operator: opType, value: string) =>
@@ -155,6 +162,7 @@ const stateSummaries: Record<stateType, (operator: opType, value: string) => str
   partner: (operator: opType, value: string) =>
     `the cards ${opToDont(operator)} have multi-commander mechanics`,
   masterpiece: (operator: opType, value: string) => `the cards are${opToNt(operator)} masterpieces`,
+  reprint: (operator: opType, value: string) => `the cards are${opToNt(operator)} reprints`,
   rebalanced: (operator: opType, value: string) =>
     `the cards are${opToNt(operator)} rebalanced Alchemy cards`,
   dual: (operator: opType, value: string) => `the cards are${opToNt(operator)} dual lands`,
@@ -176,85 +184,17 @@ const stateSummaries: Record<stateType, (operator: opType, value: string) => str
   triome: (operator: opType, value: string) => `the cards are${opToNt(operator)} triomes`,
 };
 
-const isList = ['draftpartner', 'token', 'tokenmaker', 'persistent'] as const;
-type isType = (typeof isList)[number];
-const equivIsNames: Record<string, isType> = {
-  dp: 'draftpartner',
-  dps: 'draftpartner',
-  draftpartners: 'draftpartner',
-  tokens: 'token',
-  tm: 'tokenmaker',
-  tms: 'tokenmaker',
-  tokenmakers: 'tokenmaker',
-  persistents: 'persistent',
-  persistenttoken: 'persistent',
-  persistenttokens: 'persistent',
-};
-const isResolutions: Record<isType, (value: HCCard.Any) => boolean | undefined> = {
-  draftpartner: (value: HCCard.Any) => value.has_draft_partners && value.not_directly_draftable,
-  token: (value: HCCard.Any) => value.all_parts?.some(part => part.component == 'token_maker'),
-  tokenmaker: (value: HCCard.Any) => value.all_parts?.some(part => part.component == 'token'),
-  persistent: (value: HCCard.Any) =>
-    value.all_parts?.some(part => part.persistent) && !value.tags?.includes('persistent-tokens'),
-};
-const isSummaries: Record<isType, (operator: opType, value: string) => string> = {
-  draftpartner: (operator: opType, value: string) =>
-    `the cards are${opToNt(operator)} draftpartners`,
-  token: (operator: opType, value: string) => `the cards are${opToNt(operator)} tokens`,
-  tokenmaker: (operator: opType, value: string) => `the cards ${opToDont(operator)} make tokens`,
-  persistent: (operator: opType, value: string) =>
-    `the cards ${opToDont(operator)} make persistent tokens`,
-};
-
-const hasList = [
-  'indicator',
-  'frameeffect',
-  'watermark',
-  'draftpartner',
-  'token',
-  'tokenmaker',
-  'persistent',
-] as const;
-type hasType = (typeof hasList)[number];
-const equivHasNames: Record<string, hasType> = {
-  fe: 'frameeffect',
-  frameeffects: 'frameeffect',
-  wm: 'watermark',
-  dp: 'draftpartner',
-  dps: 'draftpartner',
-  draftpartners: 'draftpartner',
-  tokens: 'token',
-  tm: 'tokenmaker',
-  tms: 'tokenmaker',
-  tokenmakers: 'tokenmaker',
-  persistents: 'persistent',
-  persistenttoken: 'persistent',
-  persistenttokens: 'persistent',
-};
-const hasResolutions: Record<hasType, (value: HCCard.Any) => boolean | undefined> = {
-  indicator: (value: HCCard.Any) => Boolean(getColorsFromFaces(value, 'color_indicator').length),
-  frameeffect: (value: HCCard.Any) => Boolean(getFromAll(value, 'frame_effects').length),
-  watermark: (value: HCCard.Any) => Boolean(getFromFaces(value, 'watermark').length),
-  draftpartner: (value: HCCard.Any) => value.has_draft_partners && !value.not_directly_draftable,
-  token: (value: HCCard.Any) => value.all_parts?.some(part => part.component == 'token'),
-  tokenmaker: (value: HCCard.Any) => value.all_parts?.some(part => part.component == 'token_maker'),
-  persistent: (value: HCCard.Any) =>
-    value.all_parts?.some(part => part.persistent) && value.tags?.includes('persistent-tokens'),
-};
-const hasSummaries: Record<hasType, (operator: opType, value: string) => string> = {
-  indicator: (operator: opType, value: string) =>
-    `the cards ${opToDont(operator)} have a color indicator`,
-  frameeffect: (operator: opType, value: string) =>
-    `the cards ${opToDont(operator)} have a frame effect`,
-  watermark: (operator: opType, value: string) => `the cards ${opToDont(operator)} have watermarks`,
-  draftpartner: (operator: opType, value: string) =>
-    `the cards ${opToDont(operator)} hve draftpartners`,
-  token: (operator: opType, value: string) => `the cards ${opToDont(operator)} make tokens`,
-  tokenmaker: (operator: opType, value: string) => `the cards are${opToNt(operator)} tokens`,
-  persistent: (operator: opType, value: string) =>
-    `the cards are${opToNt(operator)} persistent tokens`,
-};
-
+// const isList = ['persistent'] as const;
+// type isType = (typeof isList)[number];
+// const equivIsNames: Record<string, isType> = {
+// };
+// const isResolutions: Record<isType, (value: HCCard.Any) => boolean | undefined> = {
+//   // persistent: (value: HCCard.Any) => value.all_parts?.some(part => part.persistent) && !value.tags?.includes('persistent-tokens'),
+// };
+// const isSummaries: Record<isType, (operator: opType, value: string) => string> = {
+//   persistent: (operator: opType, value: string) =>
+//     `the cards ${opToDont(operator)} make persistent tokens`,
+// };
 export const filterIs: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {
     const resolveIs = (criteria: string): boolean | undefined => {
@@ -264,15 +204,15 @@ export const filterIs: cardStringFilter = Object.assign(
       if (criteria in equivStateNames) {
         return stateResolutions[equivStateNames[criteria]](value1);
       }
-      if (criteria in isResolutions) {
-        return isResolutions[criteria as isType](value1);
-      }
-      if (criteria in equivIsNames) {
-        return isResolutions[equivIsNames[criteria] as isType](value1);
-      }
+      // if (criteria in isResolutions) {
+      //   return isResolutions[criteria as isType](value1);
+      // }
+      // if (criteria in equivIsNames) {
+      //   return isResolutions[equivIsNames[criteria] as isType](value1);
+      // }
       return false;
     };
-    return funcOp(operator, resolveIs, value2);
+    return opAsBool(resolveIs(value2), operator);
   },
   {
     invertOption: 'flip' as invertOptionType,
@@ -283,16 +223,40 @@ export const filterIs: cardStringFilter = Object.assign(
       if (value in equivStateNames) {
         return stateSummaries[equivStateNames[value]](operator, value);
       }
-      if (value in isSummaries) {
-        return isSummaries[value as isType](operator, value);
-      }
-      if (value in equivIsNames) {
-        return isSummaries[equivIsNames[value]](operator, value);
+      // if (value in isSummaries) {
+      //   return isSummaries[value as isType](operator, value);
+      // }
+      // if (value in equivIsNames) {
+      //   return isSummaries[equivIsNames[value]](operator, value);
+      // }
+      if (value == 'funny') {
+        return '!All hellscube cards are funny.';
       }
       return `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`;
     },
   }
 );
+
+const hasList = ['indicator', 'frameeffect', 'watermark'] as const;
+type hasType = (typeof hasList)[number];
+const equivHasNames: Record<string, hasType> = {
+  fe: 'frameeffect',
+  frameeffects: 'frameeffect',
+  wm: 'watermark',
+};
+const hasResolutions: Record<hasType, (value: HCCard.Any) => boolean | undefined> = {
+  indicator: (value: HCCard.Any) => Boolean(getColorsFromFaces(value, 'color_indicator').length),
+  frameeffect: (value: HCCard.Any) => Boolean(getFromAll(value, 'frame_effects').length),
+  watermark: (value: HCCard.Any) => Boolean(getFromFaces(value, 'watermark').length),
+};
+const hasSummaries: Record<hasType, (operator: opType, value: string) => string> = {
+  indicator: (operator: opType, value: string) =>
+    `the cards ${opToDont(operator)} have a color indicator`,
+  frameeffect: (operator: opType, value: string) =>
+    `the cards ${opToDont(operator)} have a frame effect`,
+  watermark: (operator: opType, value: string) => `the cards ${opToDont(operator)} have watermarks`,
+};
+
 export const filterHas: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {
     const resolveHas = (criteria: string): boolean | undefined => {
@@ -310,7 +274,7 @@ export const filterHas: cardStringFilter = Object.assign(
       }
       return false;
     };
-    return funcOp(operator, resolveHas, value2);
+    return opAsBool(resolveHas(value2), operator);
   },
   {
     invertOption: 'flip' as invertOptionType,
@@ -326,6 +290,9 @@ export const filterHas: cardStringFilter = Object.assign(
       }
       if (value in equivHasNames) {
         return hasSummaries[equivHasNames[value]](operator, value);
+      }
+      if (value == 'funny') {
+        return '!All hellscube cards are funny.';
       }
       return `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`;
     },

@@ -15,7 +15,7 @@ import { HCCard } from '@hellfall/shared/types';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
-import { useCardTagOverrides } from '../useCardTagOverrides.ts';
+import { useCardTagOverrides } from '../hooks/useCardTagOverrides.ts';
 import {
   formatDiscordMarkdown,
   formatDiscordMarkdownInline,
@@ -370,7 +370,7 @@ export const HellfallCard = ({
           {isContributor && <PendingChanges cardId={displayCard.id} />}
           {user && tagsPersistEnabled && !editing && (
             <EditCardButton type="button" onClick={() => setEditing(true)}>
-              Edit Card displayCard
+              Edit Card Data
             </EditCardButton>
           )}
           {editing && (

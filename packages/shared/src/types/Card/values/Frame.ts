@@ -114,3 +114,6 @@ export const NotMagicFrames: HCFrame[] = [
   HCFrame.Tarot,
   HCFrame.NotMagic,
 ];
+
+export const isFrame = (value: any): value is HCFrame =>
+  Object.values(HCFrame).includes(value as HCFrame);

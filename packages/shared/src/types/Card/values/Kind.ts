@@ -9,3 +9,5 @@ export enum HCKind {
   Scryfall = 'scryfall', // scryfall tokens
   NotMagic = 'notmagic',
 }
+export const isKind = (value: any): value is HCKind =>
+  Object.values(HCKind).includes(value as HCKind);

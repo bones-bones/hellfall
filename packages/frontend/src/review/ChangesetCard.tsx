@@ -1,9 +1,10 @@
 import { Card } from '@workday/canvas-kit-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Changeset } from './types';
+// import { Changeset } from './types';
 import styled from '@emotion/styled';
 import { ErrorText } from './ErrorText';
+import { Changeset } from '@hellfall/shared/utils';
 
 export function ChangesetCard({
   cs,
@@ -40,7 +41,7 @@ export function ChangesetCard({
             <StatusBadge data-status={cs.status}>{cs.status}</StatusBadge>
           </div>
           <Meta>
-            by {cs.submittedBy.username} &middot; {formatTime(cs.createdAt)}
+            by {cs.submittedBy.username} &middot; {formatTime(cs.createdAt as string)}
           </Meta>
         </HeaderRow>
         {cs.comment && <Comment>{cs.comment}</Comment>}
@@ -80,7 +81,7 @@ export function ChangesetCard({
         )}
         {cs.status !== 'pending' && cs.resolvedBy && (
           <Meta>
-            {cs.status} by {cs.resolvedBy.username} &middot; {formatTime(cs.resolvedAt)}
+            {cs.status} by {cs.resolvedBy.username} &middot; {formatTime(cs.resolvedAt as string)}
           </Meta>
         )}
         {error && <ErrorText>{error}</ErrorText>}

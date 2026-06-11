@@ -88,3 +88,5 @@ export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.Mdfc,
   HCFrameEffect.Specialize,
 ];
+export const isFrameEffect = (value: any): value is HCFrameEffect =>
+  Object.values(HCFrameEffect).includes(value as HCFrameEffect);

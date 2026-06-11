@@ -10,6 +10,7 @@ import {
   rootMappedType,
   rootPropType,
 } from './propTypes';
+import { firestoreCard } from '../firestore';
 
 export const getRootEntries = (record: rootMappedType) => Object.entries(record) as rootEntriesType;
 
@@ -18,6 +19,8 @@ export const getFaceEntries = (record: faceMappedType) => Object.entries(record)
 export const getPartEntries = (record: partMappedType) => Object.entries(record) as partEntriesType;
 
 export const getCardEntries = (card: HCCard.Any) => Object.entries(card) as anyEntriesType;
+
+export const getFireEntries = (card: firestoreCard) => Object.entries(card) as anyEntriesType;
 
 export const getCardFaceEntries = (card: HCCard.AnyMultiFaced, index?: number) =>
   Object.entries(card.card_faces[index ?? 0]) as faceEntriesType;

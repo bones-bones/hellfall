@@ -1,4 +1,4 @@
-import { HCCard, HCLegalitiesField, HCMiscColors } from '@hellfall/shared/types';
+import { HCCard, HCLegalitiesField, HCMiscColors, SetCode } from '@hellfall/shared/types';
 import {
   colorMiscReduce,
   filterColorContents,
@@ -33,13 +33,21 @@ import {
   NoteFilter,
   CompFilter,
 } from './filterObject';
-import { filterIncludeExtras, filterSetBoth, filterSetCard, filterSetToken } from './filterSet';
+import {
+  filterIncludeExtras,
+  filterSet,
+  filterBlock,
+  filterGroup,
+  filterSetType,
+  equivSetTypes,
+} from './filterSet';
 import {
   filterArtist,
   filterEmpty,
   filterId,
   filterOracleId,
   filterTag,
+  filterText,
   filterTextList,
 } from './filterText';
 import {
@@ -90,18 +98,23 @@ import {
 } from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import { filterKind } from './values';
+import { equivRelNames, filterHasRelated, filterIsRelated } from './filterRelated';
+import { isSetType } from '../types/Set/values';
 
 export const makeIncludeFilter: includeFilterMaker = (value: string, op: looseOpType) => {
   return new IncludeFilter('include', filterIncludeExtras, value, op, '=');
 };
 export const makeSetFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new CardStringFilter('set', filterSetCard, value, op, '=');
-};
-export const makeTokenSetFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new CardStringFilter('tokenset', filterSetToken, value, op, '=');
+  return new CardStringFilter('set', filterSet, value, op, '=');
 };
 export const makeBlockFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new CardStringFilter('block', filterSetBoth, value, op, '=');
+  return new CardStringFilter('block', filterBlock, value, op, '=');
+};
+export const makeGroupFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new CardStringFilter('group', filterGroup, value, op, '=');
+};
+export const makeSetTypeFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new CardStringFilter('settype', filterSetType, value, op, '=');
 };
 export const makeInvalidFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string, string>(
@@ -333,6 +346,19 @@ export const makeLoreFilter: filterMaker = (value: string, op: looseOpType) => {
       ].map(text => unescapeText(text)),
     'the lore',
     opToIncludeSingular
+  );
+};
+
+export const makeRulingFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new StringPropSummaryFilter<string, string>(
+    'ruling',
+    filterText,
+    value,
+    op,
+    '>=',
+    card => card.rulings,
+    'the rulings',
+    opToIncludePlural
   );
 };
 
@@ -827,6 +853,13 @@ export const makeBannedFilter: filterMaker = (value: string, op: looseOpType) =>
   );
 };
 
+export const makeIsRelatedFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new CardStringFilter('isrelated', filterIsRelated, value, op, '=');
+};
+export const makeHasRelatedFilter: filterMaker = (value: string, op: looseOpType) => {
+  return new CardStringFilter('hassrelated', filterHasRelated, value, op, '=');
+};
+
 const cardFramesToParse = ['old', 'new'];
 const frameEffectsToParse = [
   'full',
@@ -843,27 +876,40 @@ const frameEffectsToParse = [
   'ub',
   'universesbeyond',
 ];
+const layoutsToIgnore = ['modal', 'token', 'meld_part', 'meld_result', 'meld', 'draftpartner'];
 
 export const makeIsFilter: filterMaker = (value: string, op: looseOpType) => {
+  if (value in equivRelNames) {
+    return makeIsRelatedFilter(value, op);
+  }
+  if (isSetType(value) || isSetType(equivSetTypes[value])) {
+    return makeSetTypeFilter(value, op);
+  }
   if (cardFramesToParse.includes(value)) {
     return makeCardFrameFilter(value, op);
   }
   if (frameEffectsToParse.includes(value)) {
     return makeFrameEffectFilter(value, op);
   }
-  if (value in toCardLayout && value != 'modal' && value != 'token') {
+  if (value in toCardLayout && !layoutsToIgnore.includes(value)) {
     return makeCardLayoutFilter(value, op);
   }
   return new CardStringFilter('is', filterIs, value, op, '=');
 };
 export const makeHasFilter: filterMaker = (value: string, op: looseOpType) => {
+  if (value in equivRelNames) {
+    return makeHasRelatedFilter(value, op);
+  }
+  if (isSetType(value) || isSetType(equivSetTypes[value])) {
+    return makeSetTypeFilter(value, op);
+  }
   if (cardFramesToParse.includes(value)) {
     return makeCardFrameFilter(value, op);
   }
   if (frameEffectsToParse.includes(value)) {
     return makeFrameEffectFilter(value, op);
   }
-  if (value in toFaceLayout && value != 'modal' && value != 'token') {
+  if (value in toFaceLayout && !layoutsToIgnore.includes(value)) {
     return makeFaceLayoutFilter(value, op);
   }
   return new CardStringFilter('has', filterHas, value, op, '=');
@@ -940,72 +986,103 @@ const filterNames = [
   'oracleid',
   'kind',
   'name',
+  'set',
+  'block',
+  'group',
+  'settype',
+  'number',
+  'layout',
+  'facelayout',
+  'anylayout',
   'mana',
-  'type',
+  'manavalue',
   'supertype',
   'cardtype',
   'subtype',
+  'type',
   'oracle',
   'flavor',
   'lore',
-  'creator',
-  'artist',
-  'artistnote',
-  'keyword',
-  'tag',
-  'tagnote',
-  'number',
-  'manavalue',
   'power',
   'toughness',
   'pt',
   'loyalty',
   'defense',
+  'keyword',
   'legal',
   'notlegal',
   'banned',
-  'is',
-  'has',
-  'layout',
-  'facelayout',
-  'anylayout',
+  'creator',
+  'artist',
+  'artistnote',
+  'ruling',
+  'watermark',
   'border',
   'cardframe',
   'frameeffect',
   'frame',
   'showcase',
-  'watermark',
+  'tag',
+  'tagnote',
+  'isrelated',
+  'hasrelated',
+  'is',
+  'has',
+  'include',
   'invalid',
   'invalidsort',
   'invalidkeyword',
   'invalidcolor',
-  'include',
-  'set',
-  'tokenset',
-  'block',
 ] as const;
 type filterNameType = (typeof filterNames)[number];
 
 export const equivFilterNames: Record<string, filterNameType> = {
   cardid: 'id',
+  hcid: 'id',
+  oid: 'oracleid',
+  oi: 'oracleid',
+  k: 'kind',
   n: 'name',
+  s: 'set',
+  b: 'block',
+  g: 'group',
+  st: 'settype',
+  cube: 'settype',
+  cn: 'number',
+  collector: 'number',
+  collectornumber: 'number',
+  cardlayout: 'layout',
+  fl: 'facelayout',
+  al: 'anylayout',
   m: 'mana',
   cost: 'mana',
   manacost: 'mana',
+  mv: 'manavalue',
+  cmc: 'manavalue',
   t: 'type',
-  o: 'oracle',
-  text: 'oracle',
-  oracletext: 'oracle',
-  rules: 'oracle',
-  rulestext: 'oracle',
   super: 'supertype',
   supert: 'supertype',
   ct: 'cardtype',
   ctype: 'cardtype',
   sub: 'subtype',
   subt: 'subtype',
+  o: 'oracle',
+  text: 'oracle',
+  oracletext: 'oracle',
+  rules: 'oracle',
+  rulestext: 'oracle',
   ft: 'flavor',
   flavortext: 'flavor',
+  pow: 'power',
+  tou: 'toughness',
+  powtou: 'pt',
+  tough: 'toughness',
+  loy: 'loyalty',
+  def: 'defense',
+  kw: 'keyword',
+  keywords: 'keyword',
+  f: 'legal',
+  format: 'legal',
   creators: 'creator',
   a: 'artist',
   artists: 'artist',
@@ -1016,6 +1093,14 @@ export const equivFilterNames: Record<string, filterNameType> = {
   artistn: 'artistnote',
   artistns: 'artistnote',
   artistnotes: 'artistnote',
+  rulings: 'ruling',
+  bordercolor: 'border',
+  wm: 'watermark',
+  watermarks: 'watermark',
+  frameeffects: 'frameeffect',
+  fe: 'frameeffect',
+  show: 'showcase',
+  sc: 'showcase',
   otag: 'tag',
   oracletag: 'tag',
   function: 'tag',
@@ -1026,37 +1111,22 @@ export const equivFilterNames: Record<string, filterNameType> = {
   tagn: 'tagnote',
   tagns: 'tagnote',
   tagnotes: 'tagnote',
-  cn: 'number',
-  collector: 'number',
-  collectornumber: 'number',
-  mv: 'manavalue',
-  cmc: 'manavalue',
-  pow: 'power',
-  tou: 'toughness',
-  tough: 'toughness',
-  loy: 'loyalty',
-  def: 'defense',
-  kw: 'keyword',
-  keywords: 'keyword',
-  powtou: 'pt',
-  cardlayout: 'layout',
-  f: 'legal',
-  format: 'legal',
-  fl: 'facelayout',
-  al: 'anylayout',
-  bordercolor: 'border',
-  frameeffects: 'frameeffect',
-  fe: 'frameeffect',
-  wm: 'watermark',
-  watermarks: 'watermark',
+  ir: 'isrelated',
+  isrel: 'isrelated',
+  isrels: 'isrelated',
+  isrelateds: 'isrelated',
+  hr: 'hasrelated',
+  rel: 'hasrelated',
+  rels: 'hasrelated',
+  hasrel: 'hasrelated',
+  hasrels: 'hasrelated',
+  related: 'hasrelated',
+  relateds: 'hasrelated',
+  hasrelateds: 'hasrelated',
   sort: 'invalidsort',
   order: 'invalidsort',
   dir: 'invalidsort',
   direction: 'invalidsort',
-  s: 'set',
-  ts: 'tokenset',
-  tset: 'tokenset',
-  b: 'block',
 };
 
 export const filters: Record<filterNameType, filterMaker> = {
@@ -1064,49 +1134,53 @@ export const filters: Record<filterNameType, filterMaker> = {
   oracleid: makeOracleIDFilter,
   kind: makeKindFilter,
   name: makeNameFilter,
+  set: makeSetFilter,
+  block: makeBlockFilter,
+  group: makeGroupFilter,
+  settype: makeSetTypeFilter,
+  number: makeCollectorNumberFilter,
+  layout: makeCardLayoutFilter,
+  facelayout: makeFaceLayoutFilter,
+  anylayout: makeAnyLayoutFilter,
   mana: makeCostFilter,
-  type: makeTypeFilter,
+  manavalue: makeManaValueFilter,
   supertype: makeSupertypeFilter,
   cardtype: makeCardtypeFilter,
   subtype: makeSubtypeFilter,
+  type: makeTypeFilter,
   oracle: makeOracleFilter,
   flavor: makeFlavorFilter,
   lore: makeLoreFilter,
-  creator: makeCreatorFilter,
-  artist: makeArtistFilter,
-  artistnote: makeArtistNoteFilter,
-  keyword: makeKeywordFilter,
-  tag: makeTagFilter,
-  tagnote: makeTagNoteFilter,
-  number: makeCollectorNumberFilter,
-  manavalue: makeManaValueFilter,
   power: makePowerFilter,
   toughness: makeToughnessFilter,
   pt: makePTFilter,
   loyalty: makeLoyaltyFilter,
   defense: makeDefenseFilter,
+  keyword: makeKeywordFilter,
   legal: makeLegalFilter,
   notlegal: makeNotLegalFilter,
   banned: makeBannedFilter,
-  is: makeIsFilter,
-  has: makeHasFilter,
-  layout: makeCardLayoutFilter,
-  facelayout: makeFaceLayoutFilter,
-  anylayout: makeAnyLayoutFilter,
+  creator: makeCreatorFilter,
+  artist: makeArtistFilter,
+  artistnote: makeArtistNoteFilter,
+  ruling: makeRulingFilter,
+  watermark: makeWatermarkFilter,
   border: makeBorderFilter,
   cardframe: makeCardFrameFilter,
   frameeffect: makeFrameEffectFilter,
   frame: makeFrameFilter,
   showcase: makeShowcaseFilter,
-  watermark: makeWatermarkFilter,
+  tag: makeTagFilter,
+  tagnote: makeTagNoteFilter,
+  isrelated: makeIsRelatedFilter,
+  hasrelated: makeHasRelatedFilter,
+  is: makeIsFilter,
+  has: makeHasFilter,
   invalid: makeInvalidFilter,
   invalidsort: makeInvalidSortFilter,
   invalidkeyword: makeInvalidKeywordFilter,
   invalidcolor: makeInvalidColorFilter,
   include: makeIncludeFilter,
-  set: makeSetFilter,
-  tokenset: makeTokenSetFilter,
-  block: makeBlockFilter,
 };
 
 export const invertedFilterNames: Record<string, filterNameType> = {

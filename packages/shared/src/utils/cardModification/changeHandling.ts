@@ -1,21 +1,20 @@
 import {
-  formatList,
-  HCBorderColor,
   HCCard,
   HCCardFace,
-  HCColor,
   HCColors,
-  HCFinish,
-  HCFrame,
-  HCFrameEffect,
-  HCImageStatus,
   HCKind,
-  HCLayout,
   HCLegalitiesField,
-  HCLegality,
   HCObject,
-  HCRarity,
   HCRelatedCard,
+  isBorderColor,
+  isColor,
+  isFinish,
+  isFrame,
+  isFrameEffect,
+  isImageStatus,
+  isLayout,
+  isLegalitiesField,
+  isRarity,
 } from '@hellfall/shared/types';
 import {
   CardMap,
@@ -32,7 +31,7 @@ import {
   deletePropFromRecord,
   doubleListEquals,
   listEquals,
-  listsAreEqual,
+  listsExactlyEqual,
   listShare,
 } from '../listHandling';
 import {
@@ -58,7 +57,13 @@ import type {
   rootChange,
   tagChange,
 } from './changeTypes';
-import { addTagToBase, deleteTagFromBase } from './tagHandling';
+import {
+  addTagToBase,
+  deleteTagFromBase,
+  getBaseDiffs,
+  getChangesFromTag,
+  splitFullTag,
+} from './tagHandling';
 
 export type {
   allPartsChange,
@@ -88,6 +93,7 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'rotated_image',
     'still_image',
     'mana_value',
+    // 'type_line',
     'colors',
     'draft_image_status',
     'draft_image',
@@ -109,7 +115,7 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'frame_effects',
     // 'tags',
     // 'tag_notes',
-    // 'tag_state',
+    // 'base_tags',
   ],
   delete: [
     'id_is_scryfall',
@@ -135,7 +141,7 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'frame_effects',
     // 'tags',
     // 'tag_notes',
-    // 'tag_state',
+    // 'base_tags',
   ],
 };
 export const faceChangeableProps: Record<changeType, facePropType[]> = {
@@ -153,6 +159,7 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
     'supertypes',
     'types',
     'subtypes',
+    // 'type_line',
     'oracle_text',
     'flavor_text',
     'power',
@@ -203,7 +210,7 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
 export const colorsAreValid = (colors: HCColors): boolean => {
   const colorList: HCColors = [];
   for (const color of colors) {
-    if (colorList.includes(color) || !Object.values(HCColor).includes(color as HCColor)) {
+    if (colorList.includes(color) || !isColor(color)) {
       return false;
     } else {
       colorList.push(color);
@@ -216,8 +223,7 @@ export const legalitiesAreValid = (
   legalities: HCLegalitiesField,
   current: HCLegalitiesField
 ): boolean =>
-  doubleListEquals(formatList, Object.keys(legalities)) &&
-  Object.values(legalities).every(legality => Object.values(HCLegality).includes(legality)) &&
+  isLegalitiesField(legalities) &&
   Object.entries(legalities).some(([format, legality]) => current[format] != legality);
 
 const imageProps = [
@@ -281,23 +287,23 @@ export const rootChangeIsValid = <K extends rootPropType>(
         return typeof change.value == 'number';
       }
       if (change.prop == 'rarity') {
-        return Object.values(HCRarity).includes(change.value as HCRarity);
+        return isRarity(change.value);
       }
       if (change.prop == 'layout') {
         // TODO: more complex validation for layouts
-        return Object.values(HCLayout).includes(change.value as HCLayout);
+        return isLayout(change.value);
       }
       if (change.prop == 'finish') {
-        return Object.values(HCFinish).includes(change.value as HCFinish);
+        return isFinish(change.value);
       }
       if (change.prop == 'border_color') {
-        return Object.values(HCBorderColor).includes(change.value as HCBorderColor);
+        return isBorderColor(change.value);
       }
       if (change.prop == 'frame') {
-        return Object.values(HCFrame).includes(change.value as HCFrame);
+        return isFrame(change.value);
       }
       if (change.prop == 'image_status' || change.prop == 'draft_image_status') {
-        return Object.values(HCImageStatus).includes(change.value as HCImageStatus);
+        return isImageStatus(change.value);
       }
       return typeof change.value == 'string';
     }
@@ -308,13 +314,10 @@ export const rootChangeIsValid = <K extends rootPropType>(
           change.value.length == 2 &&
           typeof change.value[0] == 'string' &&
           typeof change.value[1] == 'string' &&
-          change.value[1] != (currentValue as Record<string, string>)[change.value[0]]
+          change.value[1] != (currentValue as Record<string, string>)?.[change.value[0]]
         );
       }
-      if (
-        change.prop == 'frame_effects' &&
-        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
-      ) {
+      if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
@@ -329,10 +332,7 @@ export const rootChangeIsValid = <K extends rootPropType>(
             undefined
         );
       }
-      if (
-        change.prop == 'frame_effects' &&
-        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
-      ) {
+      if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
       return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
@@ -350,20 +350,7 @@ export const attractionLightsAreValid = (lights: number[]) => {
   }
   return true;
 };
-const faceImageProps = [
-  'image',
-  'rotated_image',
-  'still_image',
-  'draft_image',
-  'rotated_draft_image',
-  'still_draft_image',
-];
-const faceBoolProps = [
-  'id_is_scryfall',
-  'oracle_id_is_scryfall',
-  'not_directly_draftable',
-  'has_draft_partners',
-];
+
 export const faceChangeIsValid = <K extends facePropType>(
   card: HCCard.Any,
   change: faceChange<K>
@@ -409,7 +396,7 @@ export const faceChangeIsValid = <K extends facePropType>(
         return (
           Array.isArray(change.value) &&
           change.value.every(v => typeof v == 'string') &&
-          !listsAreEqual(change.value, currentValue as string[])
+          !listsExactlyEqual(change.value, currentValue as string[])
         );
       }
       if (change.value == currentValue) {
@@ -423,19 +410,19 @@ export const faceChangeIsValid = <K extends facePropType>(
       }
       if (change.prop == 'layout') {
         // TODO: more complex validation for layouts
-        return Object.values(HCLayout).includes(change.value as HCLayout);
+        return isLayout(change.value);
       }
       if (change.prop == 'finish') {
-        return Object.values(HCFinish).includes(change.value as HCFinish);
+        return isFinish(change.value);
       }
       if (change.prop == 'border_color') {
-        return Object.values(HCBorderColor).includes(change.value as HCBorderColor);
+        return isBorderColor(change.value);
       }
       if (change.prop == 'frame') {
-        return Object.values(HCFrame).includes(change.value as HCFrame);
+        return isFrame(change.value);
       }
       if (change.prop == 'image_status') {
-        return Object.values(HCImageStatus).includes(change.value as HCImageStatus);
+        return isImageStatus(change.value);
       }
       if (change.prop == 'mana_value') {
         return typeof change.value == 'number';
@@ -443,20 +430,14 @@ export const faceChangeIsValid = <K extends facePropType>(
       return typeof change.value == 'string';
     }
     case 'push':
-      if (
-        change.prop == 'frame_effects' &&
-        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
-      ) {
+      if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
       return typeof change.value == 'string' && !listShare(currentValue as string[], change.value);
     case 'delete':
       return change.prop in face;
     case 'pop':
-      if (
-        change.prop == 'frame_effects' &&
-        !Object.values(HCFrameEffect).includes(change.value as HCFrameEffect)
-      ) {
+      if (change.prop == 'frame_effects' && !isFrameEffect(change.value)) {
         return false;
       }
       return typeof change.value == 'string' && !!listShare(currentValue as string[], change.value);
@@ -495,9 +476,9 @@ export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange
         case 'object':
           return value == HCObject.ObjectType.CardFace;
         case 'layout':
-          return Object.values(HCLayout).includes(value);
+          return isLayout(value);
         case 'image_status':
-          return Object.values(HCImageStatus).includes(value);
+          return isImageStatus(value);
         case 'image':
           return value.startsWith('https://');
         case 'mana_value':
@@ -608,9 +589,9 @@ export const allPartsChangeIsValid = (
 
 export const tagChangeIsValid = (card: HCCard.Any, change: tagChange): boolean => {
   if (change.change_type == 'add') {
-    return !card.base_tags?.includes(change.tag);
+    return !card.base_tags?.includes(change.full_tag);
   }
-  return card.base_tags?.includes(change.tag) ?? false;
+  return card.base_tags?.includes(change.full_tag) ?? false;
 };
 
 export const changeIsValid = (card: HCCard.Any, change: anyChange): boolean => {
@@ -688,18 +669,24 @@ export const applyFaceChange = <K extends facePropType>(
 ): boolean => {
   switch (change.change_type) {
     case 'add': {
-      addPropToFace(card, change.prop, change.value!);
+      addPropToFace(card, change.prop, change.value!, change.index);
       break;
     }
     case 'push': {
-      pushPropToFace(card, change.prop, change.value!);
+      pushPropToFace(card, change.prop, change.value!, change.index);
       break;
     }
     case 'delete':
-      deletePropFromFace(card, change.prop);
+      deletePropFromFace(card, change.prop, change.index);
       break;
     case 'pop':
-      popPropFromFace(card, change.prop, change.value!);
+      popPropFromFace(card, change.prop, change.value!, change.index);
+      if (
+        change.prop == 'frame_effects' &&
+        !(toFaces(card)[change.index ?? 0][change.prop] as any[]).length
+      ) {
+        deletePropFromFace(card, change.prop, change.index);
+      }
       break;
   }
   return faceDeriveProps.includes(change.prop);
@@ -762,13 +749,34 @@ export const applyAllPartsChange = (card: HCCard.Any, change: allPartsChange): b
 export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
   if (change.change_type == 'add') {
     if (card.base_tags) {
-      addTagToBase(card.base_tags, change.tag);
+      addTagToBase(card.base_tags, change.full_tag);
     } else {
-      card.base_tags = [change.tag];
+      card.base_tags = [change.full_tag];
+    }
+    const tag = change.tag ?? change.full_tag;
+    if (!card.tags) {
+      card.tags = [tag];
+    } else if (!card.tags.includes(tag)) {
+      card.tags.push(tag);
+    }
+    if (!change.note) return true;
+    if (!card.tag_notes?.[tag]) {
+      addPropToRecord(card, 'tag_notes', tag, change.note);
     }
   } else {
     if (card.base_tags) {
-      deleteTagFromBase(card.base_tags, change.tag);
+      deleteTagFromBase(card.base_tags, change.full_tag);
+    }
+    const tag = change.tag ?? change.full_tag;
+    if (card.tags && !card.base_tags?.some(fullTag => splitFullTag(fullTag).tag == tag)) {
+      const index = card.tags.indexOf(tag);
+      if (index != undefined && index != -1) {
+        card.tags.splice(index, 1);
+      }
+    }
+    const note = card.tag_notes?.[tag];
+    if (note && !card.base_tags?.some(fullTag => splitFullTag(fullTag).note == note)) {
+      delete card.tag_notes![tag];
     }
   }
   return true;
@@ -788,7 +796,7 @@ export const applyChange = (card: HCCard.Any, change: anyChange): boolean => {
     case 'all_parts':
       return applyAllPartsChange(card, change);
     case 'tag':
-      return false;
+      return applyTagChange(card, change);
   }
 };
 
@@ -823,6 +831,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'frame_effects',
     'tags',
     'tag_notes',
+    'base_tags',
     'all_parts',
   ],
   token: [
@@ -843,6 +852,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'frame_effects',
     'tags',
     'tag_notes',
+    'base_tags',
     'all_parts',
   ],
   land: [
@@ -863,6 +873,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'frame_effects',
     'tags',
     'tag_notes',
+    'base_tags',
     'all_parts',
   ],
   notmagic: [
@@ -883,6 +894,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'frame_effects',
     'tags',
     'tag_notes',
+    'base_tags',
     'all_parts',
   ],
 };
@@ -982,6 +994,30 @@ export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
 export const sortChanges = (a: anyChange, b: anyChange): number =>
   locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
   changeTypeOrder.indexOf(a.change_type) - changeTypeOrder.indexOf(b.change_type);
+
+// export const getTagChangesFromDifferences = (oldBase:string[], newBase:string[]):tagChange[]=> {
+//   if (doubleListEquals(oldBase,newBase)) return [];
+//   const changes:tagChange[] = []
+//   const {added, deleted} = getBaseDiffs(oldBase, newBase);
+//   added.forEach(tag=> {
+//     const change = getChangesFromTag()
+//     const change:tagChange = {
+//       location:'tag',
+//       change_type:'add',
+//       tag
+//     }
+//     changes.push(change)
+//   })
+//   deleted.forEach(tag=> {
+//     const change:tagChange = {
+//       location:'tag',
+//       change_type:'delete',
+//       tag
+//     }
+//     changes.push(change)
+//   })
+//   return changes;
+// }
 
 export const getChangesFromDifferences = (
   existingCard: HCCard.Any,
@@ -1259,6 +1295,12 @@ export const getChangesFromDifferences = (
       }
       changeList.push(change);
     });
+  const { added, deleted } = getBaseDiffs(existingCard.base_tags ?? [], newCard.base_tags ?? []);
+
+  changeList.push(...added.flatMap(tag => getChangesFromTag(existingCard, 'add', tag)[0] ?? []));
+  changeList.push(
+    ...deleted.flatMap(tag => getChangesFromTag(existingCard, 'delete', tag)[0] ?? [])
+  );
   return changeList.sort(sortChanges);
 };
 
@@ -1267,7 +1309,7 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
   changeList.forEach((change, index) => {
     if (!changeIsValid(card, change)) {
       if (
-        !('card_Faces' in card) &&
+        !('card_faces' in card) &&
         change.location == 'root' &&
         changeList
           .slice(0, index)
@@ -1318,7 +1360,8 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
  */
 export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
   const changeList = getChangesFromDifferences(existingCard, newCard, true);
-  if (applyChanges(existingCard, changeList) && newCard.kind != 'scryfall') {
+  if (newCard.kind != 'scryfall') {
+    applyChanges(existingCard, changeList);
     setDerivedProps(existingCard);
   }
   if (newCard.kind == 'scryfall') {
@@ -1326,11 +1369,11 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
     setDerivedProps(newCard);
     return newCard;
   }
-  if (newCard.base_tags) {
-    existingCard.base_tags = newCard.base_tags;
-  } else {
-    delete existingCard.base_tags;
-  }
+  // if (newCard.base_tags) {
+  //   existingCard.base_tags = newCard.base_tags;
+  // } else {
+  //   delete existingCard.base_tags;
+  // }
   return existingCard;
 };
 /**

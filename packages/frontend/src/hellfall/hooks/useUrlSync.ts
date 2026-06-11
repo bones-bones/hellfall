@@ -17,7 +17,7 @@ import {
   parseSearchQuery,
   makeSort,
 } from '@hellfall/shared/filters';
-import { listsAreEqual } from '@hellfall/shared/utils';
+import { listsExactlyEqual } from '@hellfall/shared/utils';
 
 const sortsEqual = (mem1: sortObject, mem2: sortObject) =>
   mem1.sort == mem2.sort && mem1.dir == mem2.dir;
@@ -43,7 +43,7 @@ export const useUrlSync = () => {
     if (query != newQuery) {
       setQuery(newQuery);
     }
-    if (!listsAreEqual(querySorts, parsedQuery.sortObjects, sortsEqual)) {
+    if (!listsExactlyEqual(querySorts, parsedQuery.sortObjects, sortsEqual)) {
       setQuerySorts(parsedQuery.sortObjects);
     }
 
@@ -54,16 +54,16 @@ export const useUrlSync = () => {
     if (!sortList.length) {
       sortList.push(makeSort('auto', 'auto'));
     }
-    if (!listsAreEqual(sortRules, sortList, sortsEqual)) {
+    if (!listsExactlyEqual(sortRules, sortList, sortsEqual)) {
       setSortRules(sortList);
     }
-    if (!listsAreEqual(inputSorts, newInputs)) {
+    if (!listsExactlyEqual(inputSorts, newInputs)) {
       setInputSorts(newInputs);
     }
     if (summary != parsedQuery.summary) {
       setSummary(parsedQuery.summary);
     }
-    if (!listsAreEqual(invalids, parsedQuery.invalids, invalidsEqual)) {
+    if (!listsExactlyEqual(invalids, parsedQuery.invalids, invalidsEqual)) {
       setInvalids(parsedQuery.invalids);
     }
     // Set pagination and reset active card
@@ -89,7 +89,7 @@ export const useUpdateURL = () => {
   useEffect(() => {
     const hasChanged =
       prevValues.current.query !== query ||
-      !listsAreEqual(prevValues.current.inputSorts, inputSorts) ||
+      !listsExactlyEqual(prevValues.current.inputSorts, inputSorts) ||
       prevValues.current.page !== page;
     // const activeHasChanged = prevValues.current.activeCard !== activeCard;
 

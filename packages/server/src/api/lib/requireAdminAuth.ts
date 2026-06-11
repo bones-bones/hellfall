@@ -11,36 +11,47 @@ export type AdminAuthUser = {
 /** Verifies session and DISCORD_ADMIN_ROLE_ID. Returns user or sends error and returns null. */
 export async function requireAdminAuth(
   req: HandlerRequest,
-  res: HandlerResponse
+  res: HandlerResponse,
+  failSilently?: boolean
 ): Promise<AdminAuthUser | null> {
   const payload = await getSession(req);
   if (!payload) {
-    res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
+    if (!failSilently) {
+      res.statusCode = 401;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
+    }
     return null;
   }
 
   if (!payload.discord_access_token) {
-    res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
+    if (!failSilently) {
+      res.statusCode = 401;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
+    }
     return null;
   }
 
   const guild = await resolveGuildRoles(payload, res);
   if (guild.kind === 'oauth_invalid') {
-    res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: 'discord_oauth_expired' }));
+    if (!failSilently) {
+      res.statusCode = 401;
+      res.end(JSON.stringify({ ok: false, reason: 'discord_oauth_expired' }));
+    }
     return null;
   }
   if (guild.kind === 'not_member') {
-    res.statusCode = 403;
-    res.end(JSON.stringify({ ok: false, reason: 'not_in_guild' }));
+    if (!failSilently) {
+      res.statusCode = 403;
+      res.end(JSON.stringify({ ok: false, reason: 'not_in_guild' }));
+    }
     return null;
   }
 
   if (!guild.roles.includes(env.DISCORD_ADMIN_ROLE_ID)) {
-    res.statusCode = 403;
-    res.end(JSON.stringify({ ok: false, reason: 'missing_admin_role' }));
+    if (!failSilently) {
+      res.statusCode = 403;
+      res.end(JSON.stringify({ ok: false, reason: 'missing_admin_role' }));
+    }
     return null;
   }
 

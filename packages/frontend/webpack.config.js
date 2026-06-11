@@ -274,6 +274,18 @@ export default function webpackConfig(webpackEnv) {
             {
               test: /\.html$/,
               loader: "html-loader",
+              options: {
+                sources: {
+                  urlFilter: (attribute, value, resourcePath) => {
+                    // Don't process root-absolute paths for favicon and logo
+                    if (value && value.startsWith('/') && 
+                        (value.includes('favicon.ico') || value.includes('logo.png'))) {
+                      return false;  // Don't process this URL
+                    }
+                    return true;  // Process all other URLs
+                  }
+                }
+              }
             },
             {
               test: /\.css$/i,

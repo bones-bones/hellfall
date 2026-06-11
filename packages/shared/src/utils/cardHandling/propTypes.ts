@@ -13,6 +13,10 @@ export type anyValueType<K extends anyPropType> = K extends keyof HCCard.AnySing
   ? HCCardFace.MultiFaced[K]
   : never;
 
+export type updateValueType<K extends anyPropType> = K extends 'color_identity_hybrid'
+  ? string
+  : anyValueType<K>;
+
 export type anyArrayElementType<K extends anyPropType> = Exclude<
   anyValueType<K>,
   undefined
