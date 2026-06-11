@@ -14,10 +14,17 @@ const DEFAULT_DEV_USER: AuthUser = {
   isAdmin: true,
 };
 
+const DEV_LOGGED_IN = true
+
 async function fetchMe(baseUrl: string): Promise<AuthUser | null> {
   if (baseUrl === 'http://localhost:3003') {
-    console.log('🔧 Development mode: Using default dev user');
-    return DEFAULT_DEV_USER;
+    if (DEV_LOGGED_IN) {
+      console.log('🔧 Development mode: Using default dev user');
+      return DEFAULT_DEV_USER;
+    } else {
+      console.log('🔧 Development mode: Using logged out view');
+      return null;
+    }
   }
   const res = await fetch(`${baseUrl}/api/me`, { credentials: 'include' });
   if (!res.ok) return null;
