@@ -1,6 +1,6 @@
 import { FormField, TextInput, space, styled } from '@workday/canvas-kit-react';
 import { useAtom } from 'jotai';
-import { queryAtom } from '../atoms/searchAtoms';
+import { pageAtom, queryAtom } from '../atoms/searchAtoms';
 import { useEffect, useMemo, useState } from 'react';
 import { useKeyPress } from '../../hooks';
 import { Link } from 'react-router-dom';
@@ -20,6 +20,7 @@ export const SearchBar = () => {
 
   const [query, setQuery] = useAtom(queryAtom);
   const [localQuery, setLocalQuery] = useState(query);
+  const [page, setPage] = useAtom(pageAtom)
 
   useEffect(() => {
     if (localQuery != query) {
@@ -29,6 +30,7 @@ export const SearchBar = () => {
   const handleSubmit = (formData: FormData) => {
     const searchQuery = formData.get('search') as string;
     setQuery(normalizeText(searchQuery));
+    setPage(0);
   };
 
   return (
