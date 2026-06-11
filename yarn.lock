@@ -2362,7 +2362,7 @@ __metadata:
     "@use-gesture/react": "npm:^10.2.20"
     "@workday/canvas-kit-labs-react": "npm:^9.0.21"
     "@workday/canvas-kit-preview-react": "npm:^9.0.21"
-    "@workday/canvas-kit-react": "npm:^9.0.21"
+    "@workday/canvas-kit-react": "patch:@workday/canvas-kit-react@npm%3A9.1.42#~/.yarn/patches/@workday-canvas-kit-react-npm-9.1.42-4f27caa873.patch"
     "@workday/canvas-system-icons-web": "npm:3.0.0"
     babel-eslint: "npm:^10.1.0"
     babel-jest: "npm:^26.6.0"
@@ -4748,7 +4748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@workday/canvas-kit-react@npm:^9.0.21, @workday/canvas-kit-react@npm:^9.1.42":
+"@workday/canvas-kit-react@npm:9.1.42":
   version: 9.1.42
   resolution: "@workday/canvas-kit-react@npm:9.1.42"
   dependencies:
@@ -4772,6 +4772,33 @@ __metadata:
   peerDependencies:
     react: ">=16.14"
   checksum: 10c0/986de539af3ab677cb8733c56de03d5648896c64f531c7cdd449f7872e2a8755388b2ddbe5c6114eea0f2f4726dcf448b4d7d0454b6e6d39120af05731feb3c8
+  languageName: node
+  linkType: hard
+
+"@workday/canvas-kit-react@patch:@workday/canvas-kit-react@npm%3A9.1.42#~/.yarn/patches/@workday-canvas-kit-react-npm-9.1.42-4f27caa873.patch":
+  version: 9.1.42
+  resolution: "@workday/canvas-kit-react@patch:@workday/canvas-kit-react@npm%3A9.1.42#~/.yarn/patches/@workday-canvas-kit-react-npm-9.1.42-4f27caa873.patch::version=9.1.42&hash=2ec69d"
+  dependencies:
+    "@emotion/is-prop-valid": "npm:^1.1.1"
+    "@emotion/react": "npm:^11.7.1"
+    "@emotion/styled": "npm:^11.6.0"
+    "@popperjs/core": "npm:^2.5.4"
+    "@workday/canvas-colors-web": "npm:^2.0.0"
+    "@workday/canvas-kit-popup-stack": "npm:^9.1.42"
+    "@workday/canvas-system-icons-web": "npm:^3.0.0"
+    "@workday/design-assets-types": "npm:^0.2.8"
+    chroma-js: "npm:^2.1.0"
+    csstype: "npm:^3.0.2"
+    polished: "npm:^4.1.3"
+    react-innertext: "npm:^1.1.5"
+    react-virtual: "npm:^2.10.4"
+    resize-observer-polyfill: "npm:^1.5.1"
+    rtl-css-js: "npm:^1.14.1"
+    screenfull: "npm:^5.2.0"
+    use-resize-observer: "npm:~7.0.1"
+  peerDependencies:
+    react: ">=16.14"
+  checksum: 10c0/4cb2d2d4d53d036f66441b1909831c5d0a4a24d9f1a2a469d5b53c00baa3b3071f7e57931f0dfca6d44bba07090260fe9b95e569c05fd28145f5faba2d683069
   languageName: node
   linkType: hard
 
