@@ -5,7 +5,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { inputSortAtom, queryAtom, querySortAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import styled from '@emotion/styled';
 import { sortType, dirType, getWinnowedSortOptions } from '@hellfall/shared/filters';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { plusIcon, minusIcon } from '@workday/canvas-system-icons-web';
 
 const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
@@ -94,9 +94,16 @@ export const SortComponent = () => {
               const available = getAvailableOptions(i);
               return (
                 <>
-                  <StyledSelect
+                  <Select
                     key={'sort-' + i}
-                    style={{ width: '135px' }}
+                    style={{
+                      width: '135px', 
+                      verticalAlign: 'top',
+                      display: 'inline-block',
+                      // '&:disabled': {
+                      //   cursor: 'not-allowed',
+                      // },
+                    }}
                     title={
                       sortIsOverriden(i)
                         ? 'You specified this option in your search terms'
@@ -113,9 +120,16 @@ export const SortComponent = () => {
                     onChange={e => handleSortChange(i, e.target.value as sortType)}
                   />
                   <span> : </span>
-                  <StyledSelect
+                  <Select
                     key={'dir-' + i}
-                    style={{ width: '85px' }}
+                    style={{
+                      width: '85px',
+                      verticalAlign: 'top',
+                      display: 'inline-block',
+                      // '&:disabled': {
+                      //   cursor: 'not-allowed',
+                      // },
+                      }}
                     title={
                       dirIsOverriden(i)
                         ? 'You specified this option in your search terms'
@@ -137,18 +151,32 @@ export const SortComponent = () => {
             })
           ) : (
             <>
-              <StyledSelect
+              <Select
                 key={'sort-0'}
-                style={{ width: '135px' }}
+                style={{
+                  width: '135px', 
+                  verticalAlign: 'top',
+                  display: 'inline-block',
+                  // '&:disabled': {
+                  //   cursor: 'not-allowed',
+                  // },
+                }}
                 value={'auto'}
                 disabled={false}
                 options={ALL_SORT_OPTIONS}
                 onChange={e => handleSortChange(0, e.target.value as sortType)}
               />
               <span> : </span>
-              <StyledSelect
+              <Select
                 key={'dir-0'}
-                style={{ width: '85px' }}
+                style={{
+                  width: '85px', 
+                  verticalAlign: 'top',
+                  display: 'inline-block',
+                  // '&:disabled': {
+                  //   cursor: 'not-allowed',
+                  // },
+                }}
                 value={'auto'}
                 disabled={false}
                 options={DIR_OPTIONS}
@@ -183,13 +211,13 @@ const Container = styled('div')({
   paddingRight: space.l,
   alignItems: 'center',
 });
-const StyledSelect = styled(Select)({
-  verticalAlign: 'top',
-  display: 'inline-block',
-  '&:disabled': {
-    cursor: 'not-allowed',
-  },
-});
+// const StyledSelect = styled(Select)({
+//   verticalAlign: 'top',
+//   display: 'inline-block',
+//   '&:disabled': {
+//     cursor: 'not-allowed',
+//   },
+// });
 const SortElements = styled('div')({ lineHeight: '45px', verticalAlign: 'top' });
 const CompactButton = styled(SecondaryButton)({
   width: '20px', // Fixed small width
