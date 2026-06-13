@@ -396,6 +396,14 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
       }
       return exportName;
     };
+    if (card.layout == HCLayout.Cube) {
+      card.card_faces.forEach((face,i)=> {
+        if (i) {
+          face.compress_face = true;
+        }
+      })
+      return;
+    }
     // deal with simple flips
     if (card.card_faces.length == 2 && card.layout == 'flip') {
       const fullName = card.card_faces.map((face, index) => {

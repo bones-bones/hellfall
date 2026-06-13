@@ -70,7 +70,6 @@ Write a script to transform the database
 - add community standards hider for offensive hc0s
 - add variations to hellfallcard?
 - fix order of color words in text
-- add color inference for faces
 - fix face cmc inference for transform and flip backsides
 - add phyrexian font
 - add double url (both id and name) like scryfall?
@@ -117,6 +116,7 @@ Write a script to transform the database
 - use new change creator functions
 - make mse tag autoset image quality to medium
 - rename draft images to print images?
-- make sure cube layout worked for minecraft
-- make sure andscape painter worked
+- fix andscape painter
 - go back and do cards that I skipped before
+- add host/augment as layouts? or as frame effects?
+- tenst color indicator inference for new cards

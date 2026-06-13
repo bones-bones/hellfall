@@ -76,7 +76,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
   if (Object.prototype.hasOwnProperty.call(card, 'toJSON')) {
     return card;
   }
-  const ignoreLeftovers = ['toJSON', 'tag_state'];
+  const ignoreLeftovers = ['toJSON'];
   Object.defineProperty(card, 'toJSON', {
     value: function (this: Record<string, any>) {
       const ordered: Record<string, any> = {};

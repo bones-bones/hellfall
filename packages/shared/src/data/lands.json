@@ -107,7 +107,7 @@
 				"commander": "legal"
 			},
 			"creators": [
-				"mattelonian"
+				"Mattelonian"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -175,7 +175,7 @@
 				"commander": "legal"
 			},
 			"creators": [
-				"mattelonian"
+				"Mattelonian"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -240,7 +240,7 @@
 				"commander": "legal"
 			},
 			"creators": [
-				"mattelonian"
+				"Mattelonian"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -299,7 +299,7 @@
 				"commander": "legal"
 			},
 			"creators": [
-				"mattelonian"
+				"Mattelonian"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -10099,6 +10099,26 @@
 					"set": "HCV.L",
 					"image": "https://lh3.googleusercontent.com/d/1KeYzyFBjlRcOhlPsh6XqyxXpJrmdOGIs",
 					"type_line": "Creature — Spider From Trade Caravan",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "22dd41e6-d143-4fe3-831a-219525749e37",
+					"hcid": "7608",
+					"name": "Purple Draft Common",
+					"set": "HC9.0",
+					"image": "https://lh3.googleusercontent.com/d/15kPFhnQYRJeZftF9iCP1x2XsWYRC6vR4",
+					"type_line": "Creature — Vaar Gamer",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "d3ae4b0b-0c2f-4cf2-880d-05564afb2c7e",
+					"hcid": "7685",
+					"name": "HC9: Kobolds of Starbase Kher",
+					"set": "HCV.9",
+					"image": "https://lh3.googleusercontent.com/d/1ihgLHsZvchpwBJqI8IsOLyO1JDDQx1tY",
+					"type_line": "Creature — Kobold",
 					"component": "token_maker"
 				}
 			]

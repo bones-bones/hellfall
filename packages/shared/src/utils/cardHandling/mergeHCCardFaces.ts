@@ -1,4 +1,4 @@
-import { HCCard, HCCardFace } from '@hellfall/shared/types';
+import { HCCard, HCCardFace, HCLayout } from '@hellfall/shared/types';
 const subLayouts = [
   'token',
   'emblem',
@@ -144,6 +144,9 @@ export const compressHCCardFaces = (card: HCCard.Any) => {
         newCard.card_faces[0].still_image = newCard.still_image;
       }
     }
+  }
+  if (card.layout == HCLayout.Cube) {
+    newCard.name = card.export_name ?? card.name
   }
   return newCard;
 };

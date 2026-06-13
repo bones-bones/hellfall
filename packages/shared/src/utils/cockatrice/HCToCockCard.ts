@@ -185,6 +185,9 @@ const compressHCCardFaces = (card: HCCard.Any): HCCard.Any => {
       newCard.card_faces[0].image = newCard.image;
     }
   }
+  if (card.layout == HCLayout.Cube) {
+    newCard.name = card.export_name ?? card.name
+  }
   return newCard;
 };
 /**

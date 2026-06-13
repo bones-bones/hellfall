@@ -262,14 +262,14 @@ export const getDefaultCard = (
   (Object.entries(entryProps) as rootEntriesType)
     .filter(([prop, value]) =>
       Array.isArray(value)
-        ? value.length && !(value.length == 1 && (value[0] as string) == '')
+        ? value.length && !(value.length == 1 && value[0] == '')
         : value != '' && value != undefined && !(typeof value == 'number' && isNaN(value))
     )
     .forEach(([prop, value]) => addPropToRoot(card, prop, value));
   (Object.entries(faceProps) as faceEntriesType)
     .filter(([prop, value]) =>
       Array.isArray(value)
-        ? value.length && !(prop != 'colors' && value.length == 1 && value[0] == '')
+        ? value.length && !(/* prop != 'colors' &&  */value.length == 1 && value[0] == '')
         : value != '' && value != undefined && !(typeof value == 'number' && isNaN(value))
     )
     .forEach(([prop, value]) => addPropToFace(card, prop, value, 0));

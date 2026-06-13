@@ -2556,6 +2556,17 @@
       ]
     },
     {
+      "filename": "hybrid/misc/PGG.svg",
+      "symbol": "P/GG",
+      "english": "one purple mana or two green mana",
+      "represents_mana": true,
+      "mana_value": 2,
+      "colors": [
+        "P",
+        "G"
+      ]
+    },
+    {
       "filename": "hybrid/misc/Canada.svg",
       "symbol": "Canada",
       "english": "one white mana, one red mana, or one life",

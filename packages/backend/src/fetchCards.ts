@@ -23,6 +23,8 @@ import {
   pushPropToRoot,
   orderColors,
   getPipColorsFromText,
+  listEquals,
+  toFaces,
 } from '@hellfall/shared/utils';
 import { pipsData } from '@hellfall/shared/data';
 
@@ -149,18 +151,12 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               ? parseInt(entryAt('mana_value'))
               : parseFloat(entryAt('mana_value'))
             : 999999999999999,
-        colors: cardIsMulti
-          ? orderColors(getPipColorsFromText(entryAt('mana_cost')).flatMap(c => c))
-          : entryAt('colors')
-              .split(';')
-              .map(color => HCColor[color as keyof typeof HCColor]),
+        colors: entryAt('colors')?entryAt('colors').split(';').map(color => HCColor[color as keyof typeof HCColor]):[],
       },
       {
-        colors: entryAt('colors')
-          ? entryAt('colors')
-              .split(';')
-              .map(color => HCColor[color as keyof typeof HCColor])
-          : [],
+        colors: cardIsMulti
+          ? orderColors(getPipColorsFromText(entryAt('mana_cost')).flatMap(c => c).filter(c=>c!='C'))
+          : entryAt('colors')?entryAt('colors').split(';').map(color => HCColor[color as keyof typeof HCColor]):[],
         mana_cost: entryAt('mana_cost'),
         supertypes: entryAt('supertypes').split(';'),
         types: entryAt('types').split(';'),
@@ -175,6 +171,10 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         image_status: entryAt('0image') ? HCImageStatus.HighRes : undefined,
       }
     );
+    const costColors = orderColors(getPipColorsFromText(entryAt('mana_cost')).flatMap(c => c).filter(c=>c!='C'));
+    if (!costColors.length && card.colors.length && !cardIsMulti && card.set != 'NRM') {
+      addPropToFace(card,'color_indicator',card.colors)
+    }
     for (let i = 0; i < keys.length; i++) {
       if (entry[i] && !skipKeys.includes(keys[i])) {
         if ('123'.includes(keys[i][0])) {
@@ -198,7 +198,8 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               addPropToFace(
                 card,
                 'colors',
-                orderColors(getPipColorsFromText(value).flatMap(c => c))
+                orderColors(getPipColorsFromText(value).flatMap(c => c).filter(c=>c!='C')),
+                face+index
               );
             }
             if (key == 'image') {
