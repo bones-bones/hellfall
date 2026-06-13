@@ -243,7 +243,7 @@ export const getDefaultCard = (
   const card = (
     isMultiFaced
       ? ({
-          ...defaultRootProps,
+          ...structuredClone(defaultRootProps),
           object: HCObject.ObjectType.Card,
           kind,
           layout: kindToMultiLayout[kind],
@@ -251,7 +251,7 @@ export const getDefaultCard = (
           card_faces: [] as HCCardFace.MultiFaced[],
         } as HCCard.AnyMultiFaced)
       : ({
-          ...defaultRootProps,
+          ...structuredClone(defaultRootProps),
           object: HCObject.ObjectType.Card,
           kind,
           layout: kindToFaceLayout[kind],
@@ -269,7 +269,7 @@ export const getDefaultCard = (
   (Object.entries(faceProps) as faceEntriesType)
     .filter(([prop, value]) =>
       Array.isArray(value)
-        ? value.length && !(/* prop != 'colors' &&  */value.length == 1 && value[0] == '')
+        ? value.length && !(/* prop != 'colors' &&  */ (value.length == 1 && value[0] == ''))
         : value != '' && value != undefined && !(typeof value == 'number' && isNaN(value))
     )
     .forEach(([prop, value]) => addPropToFace(card, prop, value, 0));
@@ -279,7 +279,7 @@ export const getDefaultCard = (
 export const fillFacesTo = (card: HCCard.AnyMultiFaced, index: number) => {
   while (card.card_faces.length <= index) {
     card.card_faces.push({
-      ...defaultFaceProps,
+      ...structuredClone(defaultFaceProps),
       object: HCObject.ObjectType.CardFace,
       layout: card.kind == 'card' && index ? HCLayout.Multi : kindToFaceLayout[card.kind],
       image_status: index ? HCImageStatus.Inapplicable : HCImageStatus.Front,

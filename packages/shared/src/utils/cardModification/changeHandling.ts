@@ -247,9 +247,9 @@ export const rootChangeIsValid = <K extends rootPropType>(
   card: HCCard.Any,
   change: rootChange<K>
 ) => {
-  if (card.kind == 'scryfall') {
-    return false;
-  }
+  // if (card.kind == 'scryfall') {
+  //   return false;
+  // }
   if (!rootChangeableProps[change.change_type].includes(change.prop)) {
     return false;
   }
@@ -355,9 +355,9 @@ export const faceChangeIsValid = <K extends facePropType>(
   card: HCCard.Any,
   change: faceChange<K>
 ) => {
-  if (card.kind == 'scryfall') {
-    return false;
-  }
+  // if (card.kind == 'scryfall') {
+  //   return false;
+  // }
   if (!faceChangeableProps[change.change_type].includes(change.prop)) {
     return false;
   }
@@ -445,9 +445,9 @@ export const faceChangeIsValid = <K extends facePropType>(
 };
 export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange): boolean => {
   // TODO: Make sure this properly handles when multiple card faces are being added
-  if (card.kind == 'scryfall') {
-    return false;
-  }
+  // if (card.kind == 'scryfall') {
+  //   return false;
+  // }
   if (
     !('card_faces' in card) &&
     (change.change_type == 'delete' || ![0, 1].includes(change.index))
@@ -1363,8 +1363,7 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
   if (newCard.kind != 'scryfall') {
     applyChanges(existingCard, changeList);
     setDerivedProps(existingCard);
-  }
-  if (newCard.kind == 'scryfall') {
+  } else {
     newCard.all_parts = existingCard.all_parts;
     setDerivedProps(newCard);
     return newCard;

@@ -48,7 +48,7 @@ const hcToCockLayout: Record<HCLayout, string> = {
   scheme: 'normal',
   vanguard: 'normal',
   station: 'normal',
-  cube:'normal'
+  cube: 'normal',
 };
 
 const hcFaceToCockProps = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced): CockFaceProps => {
@@ -186,7 +186,7 @@ const compressHCCardFaces = (card: HCCard.Any): HCCard.Any => {
     }
   }
   if (card.layout == HCLayout.Cube) {
-    newCard.name = card.export_name ?? card.name
+    newCard.name = card.export_name ?? card.name;
   }
   return newCard;
 };

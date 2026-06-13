@@ -123,8 +123,13 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
   }
   const card = firestoreToCard(await cardsCol.doc(cardId).get());
   if (!cardId || cardId.length > 200) {
-    res.statusCode = 400;
+    res.statusCode = 404;
     res.end(JSON.stringify({ ok: false, reason: 'card not found' }));
+    return;
+  }
+  if (card.kind == 'scryfall') {
+    res.statusCode = 400;
+    res.end(JSON.stringify({ ok: false, reason: 'no_modifying_scryfall' }));
     return;
   }
   try {
