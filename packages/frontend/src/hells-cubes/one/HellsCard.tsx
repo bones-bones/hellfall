@@ -9,8 +9,15 @@ export const HellsCard = ({ queryString }: { queryString: string }) => {
     let ignore = false;
     (async () => {
       console.log('oi', card);
+      const url = `https://api.scryfall.com/cards/random?q=${queryString} game:paper`;
 
-      const resp = await fetch(`https://api.scryfall.com/cards/random?q=${queryString} game:paper`);
+      const resp = await fetch(url, {
+        headers: {
+          'User-Agent': 'Hellfall/0.1.0',
+          Accept: 'application/json;q=0.9,*/*;q=0.8',
+        },
+      });
+
       const {
         image_uris: { normal },
       } = await resp.json();

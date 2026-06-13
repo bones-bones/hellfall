@@ -13,9 +13,11 @@ export enum HCColor {
   Teal = 'Teal',
   TEMU = 'TEMU',
   Cyan = 'Cyan',
+  Ultraviolet = 'Ultraviolet',
   Gold = 'Gold',
   Beige = 'Beige',
   Grey = 'Grey',
+  Lime = 'Lime',
 }
 export const isColor = (value: any): value is HCColor =>
   Object.values(HCColor).includes(value as HCColor);
@@ -30,9 +32,11 @@ export const HCMiscColors: HCColors = [
   'Teal',
   'TEMU',
   'Cyan',
+  'Ultraviolet',
   'Gold',
   'Beige',
   'Grey',
+  'Lime',
 ];
 
 export const HCSearchColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc'];

@@ -247,6 +247,13 @@ export const setDerivedProps = (
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         !i &&
+        card.layout == HCLayout.Cube &&
+        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !card.tags?.includes('missing-cube-frame')
+      ) {
+        effects.push(HCFrameEffect.Cube);
+      } else if (
+        !i &&
         card.layout == HCLayout.Specialize &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
         !card.tags?.includes('missing-specialize-frame')
@@ -267,6 +274,12 @@ export const setDerivedProps = (
         !card.tags?.includes('missing-mdfc-frame')
       ) {
         effects.push(HCFrameEffect.Mdfc);
+      } else if (
+        face.layout == HCLayout.Cube &&
+        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !card.tags?.includes('missing-cube-frame')
+      ) {
+        effects.push(HCFrameEffect.Cube);
       } else if (
         face.layout == HCLayout.Specialize &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
@@ -358,6 +371,7 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   HCLayout.Inset,
   HCLayout.Token,
   HCLayout.Flip,
+  HCLayout.Cube,
 ];
 
 export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
@@ -533,6 +547,6 @@ export const landToColorMapping = {
   Nebula: 'P',
   // Oasis: 'Orange',
   // Mudflats: 'Brown',
-  // 'Gas-Station': 'Yellow',
+  'Gas-Station': 'Yellow',
   // Carnival: 'Pink',
 } as Record<string, HCColor>;

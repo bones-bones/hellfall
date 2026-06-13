@@ -330,6 +330,7 @@ export const layoutTags = [
   'stickers',
   'dungeon',
   'draftpartner',
+  'cube',
 ] as const;
 export type layoutTagType = (typeof layoutTags)[number];
 const singleLayoutTags: Partial<Record<layoutTagType, HCLayoutGroup.SingleFacedType>> = {
@@ -359,6 +360,7 @@ const multiLayoutTags = {
   prepare: HCLayout.Prepare,
   aftermath: HCLayout.Aftermath,
   split: HCLayout.Split,
+  cube: HCLayout.Cube,
 } as const satisfies Partial<Record<layoutTagType, HCLayoutGroup.MultiFacedType>>;
 
 const layoutTagToImageStatus: Partial<
@@ -410,6 +412,7 @@ const faceLayoutTags: Partial<Record<layoutTagType, HCLayoutGroup.FaceLayoutType
   prepare: HCLayout.Prepare,
   aftermath: HCLayout.Aftermath,
   split: HCLayout.Split,
+  cube: HCLayout.Cube,
 };
 const multiToFaceLayoutTags: Partial<
   Record<keyof typeof multiLayoutTags, HCLayoutGroup.FaceLayoutType>
@@ -429,6 +432,7 @@ const multiToFaceLayoutTags: Partial<
   prepare: HCLayout.Prepare,
   aftermath: HCLayout.Aftermath,
   split: HCLayout.Split,
+  cube: HCLayout.Cube,
 };
 /**
  * Adds a tag

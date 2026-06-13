@@ -379,7 +379,7 @@ export const AdvancedSearch = () => {
               'HC8.1',
               'HCJ',
               'HKL',
-              'HC9'
+              'HC9',
             ]}
             onChange={setSearchSet}
           />

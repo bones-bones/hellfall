@@ -514,6 +514,19 @@
       "no_shadow": true
     },
     {
+      "filename": "colorIndicators/Misc/GUPPY.svg",
+      "symbol": "CI-GUPPY",
+      "english": "Color Indicator: GUPPY (Green, Blue, Purple, and Yellow)",
+      "represents_mana": false,
+      "colors": [
+				"G",
+				"U",
+				"P",
+				"Yellow"
+			],
+      "no_shadow": true
+    },
+    {
       "filename": "mono/colors/W.svg",
       "symbol": "W",
       "english": "one white mana",
@@ -703,6 +716,31 @@
       "mana_value": 1,
       "colors": [
         "W"
+      ]
+    },
+    {
+      "filename": "mono/misc/Lime.png",
+      "symbol": "Lime",
+      "english": "one lime mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "Lime"
+      ]
+    },
+    {
+      "filename": "mono/misc/Rainbow.png",
+      "symbol": "Rainbow",
+      "english": "one mana of any color",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "U",
+        "P",
+        "B",
+        "R",
+        "G"
       ]
     },
     {
@@ -2085,6 +2123,16 @@
       ]
     },
     {
+      "filename": "hybrid/nums/113.png",
+      "symbol": "1/13",
+      "english": "one generic mana or thirteen generic mana",
+      "represents_mana": true,
+      "mana_value": 13,
+      "colors": [
+        "C"
+      ]
+    },
+    {
       "filename": "hybrid/nums/2W.svg",
       "symbol": "2/W",
       "english": "two generic mana or one white mana",
@@ -2259,12 +2307,34 @@
       ]
     },
     {
+      "filename": "hybrid/nums/5U.svg",
+      "symbol": "5/U",
+      "english": "five generic mana or one blue mana",
+      "represents_mana": true,
+      "mana_value": 5,
+      "colors": [
+        "U",
+        "C"
+      ]
+    },
+    {
       "filename": "hybrid/nums/5INFINITY.svg",
       "symbol": "5/∞",
       "english": "five generic mana or infinite generic mana",
       "represents_mana": true,
       "mana_value": "∞",
       "colors": [
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/nums/8U.svg",
+      "symbol": "8/U",
+      "english": "eight generic mana or one blue mana",
+      "represents_mana": true,
+      "mana_value": 8,
+      "colors": [
+        "U",
         "C"
       ]
     },
@@ -2453,13 +2523,13 @@
       ]
     },
     {
-      "filename": "hybrid/misc/BBP.svg",
-      "symbol": "BB/P",
-      "english": "two black mana or one purple mana",
+      "filename": "hybrid/misc/WWP.svg",
+      "symbol": "WW/P",
+      "english": "two white mana or one purple mana",
       "represents_mana": true,
       "mana_value": 2,
       "colors": [
-        "B",
+        "W",
         "P"
       ]
     },
@@ -2471,6 +2541,17 @@
       "mana_value": 2,
       "colors": [
         "U",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/misc/BBP.svg",
+      "symbol": "BB/P",
+      "english": "two black mana or one purple mana",
+      "represents_mana": true,
+      "mana_value": 2,
+      "colors": [
+        "B",
         "P"
       ]
     },
@@ -3128,7 +3209,13 @@
     {
       "filename": "symbols/additional/J.png",
       "symbol": "J",
-      "english": "What Pool of Peanut Butter doesn't add",
+      "english": "what Pool of Peanut Butter doesn't add",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/additional/ReverseT.svg",
+      "symbol": "ReverseT",
+      "english": "tap this permanent, except the symbol's pointing left",
       "represents_mana": false
     },
     {

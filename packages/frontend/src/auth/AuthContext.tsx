@@ -14,7 +14,7 @@ const DEFAULT_DEV_USER: AuthUser = {
   isAdmin: true,
 };
 
-const DEV_LOGGED_IN = true
+const DEV_LOGGED_IN = true;
 
 async function fetchMe(baseUrl: string): Promise<AuthUser | null> {
   if (baseUrl === 'http://localhost:3003') {

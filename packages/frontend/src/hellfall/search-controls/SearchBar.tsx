@@ -20,7 +20,7 @@ export const SearchBar = () => {
 
   const [query, setQuery] = useAtom(queryAtom);
   const [localQuery, setLocalQuery] = useState(query);
-  const [page, setPage] = useAtom(pageAtom)
+  const [page, setPage] = useAtom(pageAtom);
 
   useEffect(() => {
     if (localQuery != query) {

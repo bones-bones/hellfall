@@ -414,6 +414,7 @@ const toShowcaseFrame: Record<string, string | string[]> = {
   bookcover: 'Book Cover',
   cover: ['Game Cover', 'Book Cover'],
   album: 'Album',
+  pixel: 'Pixel',
 };
 
 export const filterCardFrame: textListFilter = Object.assign(

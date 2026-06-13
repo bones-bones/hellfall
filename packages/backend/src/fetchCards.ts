@@ -21,7 +21,10 @@ import {
   addPropToRoot,
   rootPropType,
   pushPropToRoot,
+  orderColors,
+  getPipColorsFromText,
 } from '@hellfall/shared/utils';
+import { pipsData } from '@hellfall/shared/data';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -125,6 +128,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     'artists',
     'tags',
   ];
+  const pips = pipsData.data;
 
   const allCards = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
@@ -145,11 +149,11 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               ? parseInt(entryAt('mana_value'))
               : parseFloat(entryAt('mana_value'))
             : 999999999999999,
-        colors: entryAt('colors')
-          ? entryAt('colors')
+        colors: cardIsMulti
+          ? orderColors(getPipColorsFromText(entryAt('mana_cost')).flatMap(c => c))
+          : entryAt('colors')
               .split(';')
-              .map(color => HCColor[color as keyof typeof HCColor])
-          : [],
+              .map(color => HCColor[color as keyof typeof HCColor]),
       },
       {
         colors: entryAt('colors')
@@ -189,6 +193,13 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               addPropToFace(card, 'defense', value, face + index);
             } else {
               addPropToFace(card, key as facePropType, value, face + index);
+            }
+            if (key == 'mana_cost') {
+              addPropToFace(
+                card,
+                'colors',
+                orderColors(getPipColorsFromText(value).flatMap(c => c))
+              );
             }
             if (key == 'image') {
               addPropToFace(card, 'image_status', HCImageStatus.HighRes, face + index);

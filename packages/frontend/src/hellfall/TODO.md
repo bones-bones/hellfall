@@ -114,5 +114,9 @@ Write a script to transform the database
 - get rid of as much of the usage of anyPropType as possible
 - switch to using mapped/entry type pattern
 - add dropdown to tag editor for tags with multiple underlying base tags
-- set up my own firebase instance
 - use new change creator functions
+- make mse tag autoset image quality to medium
+- rename draft images to print images?
+- make sure cube layout worked for minecraft
+- make sure andscape painter worked
+- go back and do cards that I skipped before
