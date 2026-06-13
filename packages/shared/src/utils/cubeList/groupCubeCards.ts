@@ -60,9 +60,11 @@ const colorSortValue: Record<HCColor, number> = {
   Orange: 10_000_000,
   TEMU: 10_000_000,
   Cyan: 10_000_000,
+  Ultraviolet: 10_000_000,
   Gold: 10_000_000,
   Beige: 10_000_000,
   Grey: 10_000_000,
+  Lime: 10_000_000,
 };
 
 const singleColorSection: Partial<Record<HCColor, CubeListSectionId>> = {

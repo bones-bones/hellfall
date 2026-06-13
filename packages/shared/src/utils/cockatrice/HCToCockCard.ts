@@ -48,6 +48,7 @@ const hcToCockLayout: Record<HCLayout, string> = {
   scheme: 'normal',
   vanguard: 'normal',
   station: 'normal',
+  cube:'normal'
 };
 
 const hcFaceToCockProps = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced): CockFaceProps => {
