@@ -1,4 +1,4 @@
-import { BrowserRouter, useRoutes, useParams, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, useRoutes, useParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HellFall } from './hellfall';
 import { Hellscubes } from './hells-cubes';
@@ -45,8 +45,10 @@ const RedirectBase = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const newPath = location.pathname.replace('/hellfall', '') + location.search;
-    navigate(newPath, { replace: true });
+    if (location.pathname.startsWith('/hellfall')) {
+      const newPath = location.pathname.replace('/hellfall', '') + location.search;
+      navigate(newPath, { replace: true, flushSync:true });
+    }
   }, [location, navigate]);
 
   return null;
@@ -62,7 +64,6 @@ const ApplicationRoutes = () => {
     { path: '/advanced', element: <AdvancedSearch /> },
     { path: '/syntax', element: <Syntax /> },
     { path: '/card/*', element: <CardRoute /> },
-    { path: '/hellfall/*', element: <RedirectBase /> },
     { path: '/login', element: <Login /> },
     { path: '/review/*', element: <ReviewPage /> },
     { path: '/Watchwolfwar', element: <WatchwolfWar /> },
@@ -72,6 +73,7 @@ const ApplicationRoutes = () => {
 export const App = () => {
   return (
     <BrowserRouter>
+      <RedirectBase />
       <Header />
       <ApplicationRoutes />
     </BrowserRouter>
