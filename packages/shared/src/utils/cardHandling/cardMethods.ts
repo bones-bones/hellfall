@@ -305,8 +305,9 @@ export const getRelatedsFromSet = (
   }
   if (set == 'HCJ' && moveNonDraftablesToTokens) {
     const { cards, tokens } = getRelatedsFromSet(set, cardMap, false);
-    const fronts = cardMap.getAllInSet('FHCJ');
     cards.setMultiple(tokens);
+    const fronts = cards.getAllInSet('FHCJ');
+    cards.deleteMultiple(fronts.ids())
     return { cards: fronts, tokens: cards };
   }
   const cards: CardMap = cardMap.getAllInSet(set);
