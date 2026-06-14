@@ -158,15 +158,6 @@ export const setDerivedProps = (
     }
     tags = Array.from(new Set(tags));
     applyChangesFromNewBase(card, tags);
-    // const { added, deleted } = getBaseDiffs(
-    //   tags ? card.base_tags ?? [] : [],
-    //   tags ? tags : card.base_tags ?? []
-    // );
-    // const changeList: anyChange[] = [];
-    // changeList.push(...added.flatMap(tag => getChangesFromTag(card, 'add', tag)));
-    // changeList.push(...deleted.flatMap(tag => getChangesFromTag(card, 'delete', tag)));
-    // changeList.sort(sortChanges);
-    // applyChanges(card, changeList);
   }
   const changes: anyChange[] = [];
   toFaces(card).forEach((face, i) => {

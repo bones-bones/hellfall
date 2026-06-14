@@ -116,7 +116,6 @@ Write a script to transform the database
 - use new change creator functions
 - make mse tag autoset image quality to medium
 - rename draft images to print images?
-- fix andscape painter
 - go back and do cards that I skipped before
 - add host/augment as layouts? or as frame effects?
 - collapse controls on narrow layouts like scryfall does

@@ -777,6 +777,9 @@ export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
     const note = card.tag_notes?.[tag];
     if (note && !card.base_tags?.some(fullTag => splitFullTag(fullTag).note == note)) {
       delete card.tag_notes![tag];
+      if (!Object.keys(card.tag_notes!).length) {
+        delete card.tag_notes
+      }
     }
   }
   return true;
@@ -989,7 +992,8 @@ const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
 };
 
 export const changeTypeOrder = ['delete', 'pop', 'add', 'push'];
-export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
+// export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
+export const locationOrder = ['tag', 'card_faces', 'all_parts', 'root', 'face'];
 
 export const sortChanges = (a: anyChange, b: anyChange): number =>
   locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
@@ -1310,12 +1314,13 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
     if (!changeIsValid(card, change)) {
       if (
         !('card_faces' in card) &&
-        change.location == 'root' &&
+        change.location == 'face' &&
+        !change.index &&
         changeList
           .slice(0, index)
           .some(
             other =>
-              other.location == 'face' &&
+              other.location == 'root' &&
               other.change_type == change.change_type &&
               other.prop == change.prop &&
               other.value == change.value
