@@ -778,7 +778,7 @@ export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
     if (note && !card.base_tags?.some(fullTag => splitFullTag(fullTag).note == note)) {
       delete card.tag_notes![tag];
       if (!Object.keys(card.tag_notes!).length) {
-        delete card.tag_notes
+        delete card.tag_notes;
       }
     }
   }

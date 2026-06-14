@@ -42,9 +42,8 @@ Write a script to transform the database
 - full documentation
 - do better: evolution of the dreadmaw
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
-- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff, public domain removal creature (colorless)
+- add special cases for color searches/color identity searches for Blood ghast // Crip Ghast (It can be either red or blue) (can-ignore-color-identity)
 - switch italics to use serif font? (that way it's more distinct)
-- fully implement NotMagic
 - deal with later: Wild Magic Surge (both versions), Hell's Cube (both versions), Spain, Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones
 - add reminder card for attractions
 - mork:

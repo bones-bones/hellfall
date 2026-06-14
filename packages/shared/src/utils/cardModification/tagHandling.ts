@@ -18,11 +18,7 @@ import {
   rootPropType,
   rootValueType,
 } from '../cardHandling';
-import {
-  getDefaultFaceValue,
-  getDefaultKindLayout,
-  getDefaultRootValue,
-} from './defaults';
+import { getDefaultFaceValue, getDefaultKindLayout, getDefaultRootValue } from './defaults';
 import { getSet } from '../setHandling';
 import {
   anyChange,

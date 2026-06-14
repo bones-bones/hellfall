@@ -4,7 +4,7 @@ import { SecondaryButton, SecondaryButtonProps } from '@workday/canvas-kit-react
 import { useAtom, useAtomValue } from 'jotai';
 import {
   inputSortAtom,
-  // pageAtom,  
+  // pageAtom,
   queryAtom,
   querySortAtom,
   sortAtom,

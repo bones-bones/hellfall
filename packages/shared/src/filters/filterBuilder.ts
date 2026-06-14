@@ -1,4 +1,4 @@
-import { HCCard, HCLegalitiesField, HCMiscColors, SetCode } from '@hellfall/shared/types';
+import { HCCard, HCColors, HCLegalitiesField, HCMiscColors, SetCode } from '@hellfall/shared/types';
 import {
   colorMiscReduce,
   filterColorContents,
@@ -95,6 +95,7 @@ import {
   toFaces,
   getAllNames,
   toNumber,
+  listShare,
 } from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import { filterKind } from './values';
@@ -549,6 +550,73 @@ export const makeDefenseFilter: filterMaker = (value: string, op: looseOpType) =
   );
 };
 
+const choose2List = ['choose-2-colors', 'choose-2-allied-colors'];
+
+const handleChooseColors = (
+  card: HCCard.Any,
+  normalColors: HCColors,
+  value: string[] | number | shorthandType
+): HCColors => {
+  if (!listShare(choose2List, card.tags)) {
+    return normalColors;
+  }
+  if (!Array.isArray(value)) {
+    return ['W', 'U'];
+  }
+  const colors: HCColors = ['W', 'U', 'B', 'R', 'G'];
+  const retList: HCColors = [];
+  if (!card.tags?.includes('choose-2-colors')) {
+    for (const color of value as HCColors) {
+      const pos = colors.indexOf(color);
+      if (pos == -1) continue;
+      if (value.includes(colors[(pos - 1) % 5])) {
+        retList.push(colors[(pos - 1) % 5]);
+        retList.push(color);
+        return retList;
+      }
+      if (value.includes(colors[(pos + 1) % 5])) {
+        retList.push(color);
+        retList.push(colors[(pos + 1) % 5]);
+        return retList;
+      }
+    }
+    for (const color of value as HCColors) {
+      const pos = colors.indexOf(color);
+      if (pos == -1) continue;
+      retList.push(color);
+      retList.push(colors[(pos + 1) % 5]);
+      return retList;
+    }
+    return ['W', 'U'];
+  }
+  for (const color of value as HCColors) {
+    if (!colors.includes(color)) continue;
+    const otherColor = colors.find(other => other != color && value.includes(other));
+    if (otherColor) {
+      return [color, otherColor];
+    }
+  }
+  for (const color of value as HCColors) {
+    const pos = colors.indexOf(color);
+    if (pos == -1) continue;
+    retList.push(color);
+    retList.push(colors[(pos + 1) % 5]);
+    return retList;
+  }
+  return ['W', 'U'];
+};
+
+const handleChooseHybrid = (
+  card: HCCard.Any,
+  normalColors: HCColors[],
+  value: string[] | number | shorthandType
+): HCColors[] => {
+  if (!listShare(choose2List, card.tags)) {
+    return normalColors;
+  }
+  return handleChooseColors(card, [], value).map(color => [color]);
+};
+
 export const makeColorFilter: colorFilterMaker = (
   value: string[] | number | shorthandType,
   op: looseOpType
@@ -560,7 +628,7 @@ export const makeColorFilter: colorFilterMaker = (
       value,
       op,
       '>=',
-      card => card.colors
+      card => handleChooseColors(card, card.colors, value)
     );
   } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[], number>(
@@ -569,7 +637,7 @@ export const makeColorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => card.colors
+      card => handleChooseColors(card, card.colors, value)
     );
   } else {
     return new PassThroughSummaryFilter<string[], shorthandType>(
@@ -578,7 +646,7 @@ export const makeColorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => card.colors
+      card => handleChooseColors(card, card.colors, value)
     );
   }
 };
@@ -594,7 +662,7 @@ export const makeIdentityFilter: colorFilterMaker = (
       value,
       op,
       '<=',
-      card => card.color_identity
+      card => handleChooseColors(card, card.color_identity, value)
     );
   } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[], number>(
@@ -603,7 +671,7 @@ export const makeIdentityFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => card.color_identity
+      card => handleChooseColors(card, card.color_identity, value)
     );
   } else {
     return new PassThroughSummaryFilter<string[], shorthandType>(
@@ -612,7 +680,7 @@ export const makeIdentityFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => card.color_identity
+      card => handleChooseColors(card, card.color_identity, value)
     );
   }
 };
@@ -662,7 +730,7 @@ export const makeHybridFilter: colorFilterMaker = (
       value,
       op,
       '<=',
-      card => card.color_identity_hybrid
+      card => handleChooseHybrid(card, card.color_identity_hybrid, value)
     );
   } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[][], number>(
@@ -671,7 +739,7 @@ export const makeHybridFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => card.color_identity_hybrid
+      card => handleChooseHybrid(card, card.color_identity_hybrid, value)
     );
   } else {
     return new PassThroughSummaryFilter<string[][], shorthandType>(
@@ -680,7 +748,7 @@ export const makeHybridFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => card.color_identity_hybrid
+      card => handleChooseHybrid(card, card.color_identity_hybrid, value)
     );
   }
 };
@@ -695,7 +763,7 @@ export const makeMiscColorFilter: colorFilterMaker = (
       value,
       op,
       '>=',
-      card => colorMiscReduce(card.colors)
+      card => colorMiscReduce(handleChooseColors(card, card.colors, value))
     );
   } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[], number>(
@@ -704,7 +772,7 @@ export const makeMiscColorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => colorMiscReduce(card.colors)
+      card => colorMiscReduce(handleChooseColors(card, card.colors, value))
     );
   } else {
     return new PassThroughSummaryFilter<string[], shorthandType>(
@@ -713,7 +781,7 @@ export const makeMiscColorFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => colorMiscReduce(card.colors)
+      card => colorMiscReduce(handleChooseColors(card, card.colors, value))
     );
   }
 };
@@ -729,7 +797,7 @@ export const makeMiscIdentityFilter: colorFilterMaker = (
       value,
       op,
       '<=',
-      card => colorMiscReduce(card.color_identity)
+      card => colorMiscReduce(handleChooseColors(card, card.color_identity, value))
     );
   } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[], number>(
@@ -738,7 +806,7 @@ export const makeMiscIdentityFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => colorMiscReduce(card.color_identity)
+      card => colorMiscReduce(handleChooseColors(card, card.color_identity, value))
     );
   } else {
     return new PassThroughSummaryFilter<string[], shorthandType>(
@@ -747,7 +815,7 @@ export const makeMiscIdentityFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => colorMiscReduce(card.color_identity)
+      card => colorMiscReduce(handleChooseColors(card, card.color_identity, value))
     );
   }
 };
@@ -797,7 +865,7 @@ export const makeMiscHybridFilter: colorFilterMaker = (
       value,
       op,
       '<=',
-      card => hybridIdentityMiscReduce(card.color_identity_hybrid)
+      card => hybridIdentityMiscReduce(handleChooseHybrid(card, card.color_identity_hybrid, value))
     );
   } else if (typeof value == 'number') {
     return new PassThroughSummaryFilter<string[][], number>(
@@ -806,7 +874,7 @@ export const makeMiscHybridFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => hybridIdentityMiscReduce(card.color_identity_hybrid)
+      card => hybridIdentityMiscReduce(handleChooseHybrid(card, card.color_identity_hybrid, value))
     );
   } else {
     return new PassThroughSummaryFilter<string[][], shorthandType>(
@@ -815,7 +883,7 @@ export const makeMiscHybridFilter: colorFilterMaker = (
       value,
       op,
       '=',
-      card => hybridIdentityMiscReduce(card.color_identity_hybrid)
+      card => hybridIdentityMiscReduce(handleChooseHybrid(card, card.color_identity_hybrid, value))
     );
   }
 };

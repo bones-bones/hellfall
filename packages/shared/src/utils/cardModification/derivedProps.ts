@@ -338,8 +338,10 @@ export const setDerivedProps = (
   }
   const { color_identity, color_identity_hybrid } = getColorIdentityProps(card);
   card.colors = orderColors(card.colors);
-  card.color_identity = orderColors(color_identity);
-  card.color_identity_hybrid = orderHybrid(color_identity_hybrid);
+  card.color_identity = card.tags?.includes('no-color-identity') ? [] : orderColors(color_identity);
+  card.color_identity_hybrid = card.tags?.includes('no-color-identity')
+    ? []
+    : orderHybrid(color_identity_hybrid);
 };
 const alwaysDropLayouts: HCLayoutGroup.FaceLayoutType[] = [
   HCLayout.DraftPartner,
