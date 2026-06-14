@@ -1,4 +1,11 @@
-import { BrowserRouter, useRoutes, useParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter,
+  useRoutes,
+  useParams,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HellFall } from './hellfall';
 import { Hellscubes } from './hells-cubes';
@@ -48,7 +55,7 @@ const RedirectBase = () => {
   useEffect(() => {
     if (location.pathname.startsWith('/hellfall')) {
       const newPath = location.pathname.replace('/hellfall', '') + location.search;
-      navigate(newPath, { replace: true, flushSync:true });
+      navigate(newPath, { replace: true, flushSync: true });
     }
   }, [location, navigate]);
 

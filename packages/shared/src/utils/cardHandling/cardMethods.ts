@@ -307,7 +307,7 @@ export const getRelatedsFromSet = (
     const { cards, tokens } = getRelatedsFromSet(set, cardMap, false);
     cards.setMultiple(tokens);
     const fronts = cards.getAllInSet('FHCJ');
-    cards.deleteMultiple(fronts.ids())
+    cards.deleteMultiple(fronts.ids());
     return { cards: fronts, tokens: cards };
   }
   const cards: CardMap = cardMap.getAllInSet(set);

@@ -10,7 +10,6 @@ import { useSearchResults } from '../hooks/useSearchResults.ts';
 import { invalidAtom, queryAtom, summaryAtom } from '../atoms/searchAtoms.ts';
 import { SearchBar } from '../search-controls/SearchBar.tsx';
 import { space } from '@workday/canvas-kit-react';
-import { CHUNK_SIZE } from '../constants.ts';
 
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
@@ -21,10 +20,9 @@ export const SingleCard = () => {
   const query = useAtomValue(queryAtom);
   const entryToRender = cards?.find(e => e.hcid === cardId);
 
-  const { resultSet } = useSearchResults(true)
+  const { resultSet } = useSearchResults(true);
 
-
-  useUpdateURL(true)
+  useUpdateURL(true);
   useEffect(() => {
     if (!entryToRender) {
       document.title = `Loading | Hellfall`;
@@ -40,31 +38,42 @@ export const SingleCard = () => {
       ) : !entryToRender ? (
         <h2>Nothing was found...</h2>
       ) : (
-        <div style={{display:'block', justifyContent:'center'}}>
-        <br/>
-        <SearchBar/>
-        <Separator />
-        <CardContainer>
-          {query && (
-            <>
-              <Summary>
-                <strong><Link to={`/card/${encodeURIComponent(cardId!)}`}>One random card</Link> from {query == '*' ?'all of Hellscube':<Link to={`/?q=${query}`}>{resultSet.length} cards</Link>}</strong>{query != '*' && ` ${summary}`}. <Link to={`/random${query == '*' ? '':`?q=${query}`}`}>Repeat this random search</Link>
-              </Summary>
-              <Separator />
-              {invalids.map(invalid => {
-                return (
-                  <>
-                    <Invalid>{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</Invalid>
-                    <Separator />
-                  </>
-                );
-              })}
-            </>
-          )}
-          <div style={{width: '60vw', margin: '0 auto'}}>
-            <HellfallCard data={entryToRender} onSinglePage={true} />
-          </div>
-        </CardContainer>
+        <div style={{ display: 'block', justifyContent: 'center' }}>
+          <br />
+          <SearchBar />
+          <Separator />
+          <CardContainer>
+            {query && (
+              <>
+                <Summary>
+                  <strong>
+                    <Link to={`/card/${encodeURIComponent(cardId!)}`}>One random card</Link> from{' '}
+                    {query == '*' ? (
+                      'all of Hellscube'
+                    ) : (
+                      <Link to={`/?q=${query}`}>{resultSet.length} cards</Link>
+                    )}
+                  </strong>
+                  {query != '*' && ` ${summary}`}.{' '}
+                  <Link to={`/random${query == '*' ? '' : `?q=${query}`}`}>
+                    Repeat this random search
+                  </Link>
+                </Summary>
+                <Separator />
+                {invalids.map(invalid => {
+                  return (
+                    <>
+                      <Invalid>{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</Invalid>
+                      <Separator />
+                    </>
+                  );
+                })}
+              </>
+            )}
+            <div style={{ width: '60vw', margin: '0 auto' }}>
+              <HellfallCard data={entryToRender} onSinglePage={true} />
+            </div>
+          </CardContainer>
         </div>
       )}
     </Container>

@@ -14,7 +14,7 @@ import { CHUNK_SIZE } from '../constants.ts';
 import { searchCards } from '@hellfall/shared/filters';
 import { tagsData } from '@hellfall/shared/data';
 
-export const useSearchResults = (asRandom?:boolean) => {
+export const useSearchResults = (asRandom?: boolean) => {
   // const navigate = useNavigate()
 
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
@@ -35,7 +35,9 @@ export const useSearchResults = (asRandom?:boolean) => {
   });
 
   useEffect(() => {
-    const tempResults = ((asRandom && query == '*') ? cards: searchCards(cards, query, tagsData.data)).cards();
+    const tempResults = (
+      asRandom && query == '*' ? cards : searchCards(cards, query, tagsData.data)
+    ).cards();
     if (asRandom) {
       setResultSet(tempResults);
       return;

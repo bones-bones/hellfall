@@ -39,7 +39,7 @@ export const useUrlSync = () => {
   useEffect(() => {
     // const asRandom = randomPathNames.some(name=>location.pathname.startsWith(name))
     const params = new URLSearchParams(location.search);
-    const newQuery = params.get(/* asRandom ? 'random':  */'q') || '';
+    const newQuery = params.get(/* asRandom ? 'random':  */ 'q') || '';
     const parsedQuery = parseSearchQuery(newQuery);
     if (query != newQuery) {
       setQuery(newQuery);
@@ -78,11 +78,16 @@ export const useUrlSync = () => {
   }, [location.search, location.pathname]); // This triggers on back/forward navigation
 };
 
-export const getSearchParams = (query:string, asRandom?:boolean, inputSorts?:string[],page?:number):URLSearchParams => {
+export const getSearchParams = (
+  query: string,
+  asRandom?: boolean,
+  inputSorts?: string[],
+  page?: number
+): URLSearchParams => {
   const searchToSet = new URLSearchParams();
 
   if (query) {
-    searchToSet.append(/* asRandom?'random': */'q', query);
+    searchToSet.append(/* asRandom?'random': */ 'q', query);
   }
 
   if (inputSorts?.length && !asRandom) {
@@ -92,9 +97,9 @@ export const getSearchParams = (query:string, asRandom?:boolean, inputSorts?:str
     searchToSet.append('page', page.toString());
   }
   return searchToSet;
-}
+};
 
-export const useUpdateURL = (asRandom?:boolean) => {
+export const useUpdateURL = (asRandom?: boolean) => {
   const navigate = useNavigate();
   const location = useLocation();
   const query = useAtomValue(queryAtom);
@@ -112,7 +117,7 @@ export const useUpdateURL = (asRandom?:boolean) => {
 
     if (!hasChanged /* && !activeHasChanged */) return;
 
-    const searchToSet = getSearchParams(query,asRandom, inputSorts,page);
+    const searchToSet = getSearchParams(query, asRandom, inputSorts, page);
 
     // if (query) {
     //   searchToSet.append(asRandom?'random':'q', query);

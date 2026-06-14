@@ -6,8 +6,8 @@ import { useKeyPress } from '../../hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import { normalizeText } from '@hellfall/shared/utils';
 
-export const SearchBar = ({alreadyOnSearch}:{alreadyOnSearch?:boolean}) => {
-  const navigate = useNavigate()
+export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) => {
+  const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const SearchBar = ({alreadyOnSearch}:{alreadyOnSearch?:boolean}) => {
   }, [windowWidth]);
 
   const [query, setQuery] = useAtom(queryAtom);
-  const [localQuery, setLocalQuery] = useState(query == '*' && !alreadyOnSearch ? '':query);
+  const [localQuery, setLocalQuery] = useState(query == '*' && !alreadyOnSearch ? '' : query);
   const [page, setPage] = useAtom(pageAtom);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const SearchBar = ({alreadyOnSearch}:{alreadyOnSearch?:boolean}) => {
       setQuery(normalizeText(searchQuery));
       setPage(0);
     } else {
-      navigate(`/?q=${encodeURIComponent(query)}`,{replace:false})
+      navigate(`/?q=${encodeURIComponent(query)}`, { replace: false });
     }
   };
 

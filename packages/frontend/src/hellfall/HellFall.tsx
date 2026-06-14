@@ -56,19 +56,25 @@ export const HellFall = () => {
     <div>
       <ActiveCardPanel />
       <br />
-      <SearchBar alreadyOnSearch={true}/>
+      <SearchBar alreadyOnSearch={true} />
       <Separator />
       {resultSet.length != 1 && (
         <>
-      <ControlBar model={paginationModel}/>
-      <SortSeparator />
+          <ControlBar model={paginationModel} />
+          <SortSeparator />
         </>
       )}
 
       <Summary>
-        <strong>{resultSet.length == 1 ?<Link to={`/card/${encodeURIComponent(resultSet[0].hcid)}`}>Showing the one card</Link>:`${
-          resultSet.length > CHUNK_SIZE ? `${page + 1} - ${page + CHUNK_SIZE} of ` : ''
-        } ${resultSet.length} cards`}</strong>
+        <strong>
+          {resultSet.length == 1 ? (
+            <Link to={`/card/${encodeURIComponent(resultSet[0].hcid)}`}>Showing the one card</Link>
+          ) : (
+            `${resultSet.length > CHUNK_SIZE ? `${page + 1} - ${page + CHUNK_SIZE} of ` : ''} ${
+              resultSet.length
+            } cards`
+          )}
+        </strong>
         {summary && ` ${summary}`}
       </Summary>
       <Separator />
@@ -83,42 +89,43 @@ export const HellFall = () => {
 
       <Container>
         {resultSet.length == 1 ? (
-          <div style={{width: '60vw', margin: '0 auto'}}>
+          <div style={{ width: '60vw', margin: '0 auto' }}>
             <HellfallCard data={resultSet[0]} onSinglePage={true} />
           </div>
-        ):(
+        ) : (
           <div>
-
-        <CardsGrid $maxWidth={maxWidth}>
-          {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
-            <HellfallEntry
-              onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                  window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
-                } else {
-                  setActiveCardFromAtom(entry.id);
-                }
-              }}
-              key={'' + entry.id + '-' + i}
-              id={entry.hcid}
-              name={entry.name}
-              otherNames={getOtherNames(entry)}
-              plainText={toPlainText(entry)}
-              url={
-                'card_faces' in entry && entry.layout == 'meld_part' && entry.card_faces[0].image
-                  ? entry.card_faces[0].image
-                  : entry.image!
-              }
-            />
-          ))}
-        </CardsGrid>
+            <CardsGrid $maxWidth={maxWidth}>
+              {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                <HellfallEntry
+                  onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                    if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                      window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
+                    } else {
+                      setActiveCardFromAtom(entry.id);
+                    }
+                  }}
+                  key={'' + entry.id + '-' + i}
+                  id={entry.hcid}
+                  name={entry.name}
+                  otherNames={getOtherNames(entry)}
+                  plainText={toPlainText(entry)}
+                  url={
+                    'card_faces' in entry &&
+                    entry.layout == 'meld_part' &&
+                    entry.card_faces[0].image
+                      ? entry.card_faces[0].image
+                      : entry.image!
+                  }
+                />
+              ))}
+            </CardsGrid>
           </div>
         )}
       </Container>
       {resultSet.length != 1 && (
         <>
-      <Separator />
-      <ControlBar model={paginationModel}/>
+          <Separator />
+          <ControlBar model={paginationModel} />
         </>
       )}
       {/* <PaginationComponent model={paginationModel} /> */}

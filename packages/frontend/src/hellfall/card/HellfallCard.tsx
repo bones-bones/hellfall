@@ -1,7 +1,6 @@
 import {
   ButtonColors,
   Card,
-  ElementComponent,
   Heading,
   inputColors,
   PrimaryButton,
@@ -15,7 +14,15 @@ import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 
 import { Link } from 'react-router-dom';
-import { useState, useEffect, useMemo, useRef, ComponentPropsWithRef, ElementType, ComponentPropsWithoutRef, Ref } from 'react';
+import {
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  ElementType,
+  ComponentPropsWithoutRef,
+  Ref,
+} from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../hooks/useCardTagOverrides.ts';
 import {
@@ -702,38 +709,41 @@ const Separator = styled('hr')({
   marginRight: '-32px',
 });
 
-const IntButton = styled(PrimaryButton)<{ as?: React.ElementType}>({
+const IntButton = styled(PrimaryButton)<{ as?: React.ElementType }>({
   marginLeft: '30px',
   marginBottom: '15px',
-  borderRadius:'4px',
-  textDecoration:'none',
+  borderRadius: '4px',
+  textDecoration: 'none',
   '&:hover, &:focus, &:active': {
-    textDecoration: 'none'
-  }
+    textDecoration: 'none',
+  },
 });
 
-type PolymorphicStyledButtonProps<T extends ElementType> = Omit<PrimaryButtonProps, 'as' | 'ref'> & {
+type PolymorphicStyledButtonProps<T extends ElementType> = Omit<
+  PrimaryButtonProps,
+  'as' | 'ref'
+> & {
   as?: T;
   children: React.ReactNode;
   ref?: Ref<any>;
 } & Omit<ComponentPropsWithoutRef<T>, keyof PrimaryButtonProps | 'as' | 'children'>;
 
-const Button =<T extends ElementType = 'button'>({
+const Button = <T extends ElementType = 'button'>({
   as,
   children,
   ref,
   ...props
 }: PolymorphicStyledButtonProps<T>) => {
   const Component = as || 'button';
-  
+
   return as && ref ? (
     <IntButton as={Component!} ref={ref as any} {...props}>
       {children}
-    </IntButton>):(    <IntButton {...props}>
-      {children}
     </IntButton>
+  ) : (
+    <IntButton {...props}>{children}</IntButton>
   );
-}
+};
 
 const inputButtonColors: ButtonColors = {
   default: {
