@@ -1,5 +1,5 @@
 import { FieldValue, Firestore, type Timestamp } from '@google-cloud/firestore';
-import { env } from '../api/lib/env.js';
+import { env } from '../api/lib/env.ts';
 // import { tagState } from '@hellfall/shared/types';
 // import type { CardTagState } from '@hellfall/shared/cardTags/cardTagMerge';
 

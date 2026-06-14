@@ -5,11 +5,11 @@ import {
   type DocumentReference,
   type DocumentSnapshot,
 } from '@google-cloud/firestore';
-import { withCors } from './lib/cors.js';
-import { env } from './lib/env.js';
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
-import { requireTagAuth } from './lib/requireTagAuth.js';
-import { listCardChangesets, recardCardChangeset } from '../lib/cardAudit.js';
+import { withCors } from './lib/cors.ts';
+import { env } from './lib/env.ts';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
+import { requireTagAuth } from './lib/requireTagAuth.ts';
+import { listCardChangesets, recardCardChangeset } from '../lib/cardAudit.ts';
 import { HCCard } from '@hellfall/shared/types';
 import {
   addTagToBase,

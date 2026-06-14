@@ -8,7 +8,7 @@ import {
   queryAtom,
   querySortAtom,
   sortAtom,
-} from '../atoms/searchAtoms.js';
+} from '../atoms/searchAtoms.ts';
 import styled from '@emotion/styled';
 import { sortType, dirType, getWinnowedSortOptions } from '@hellfall/shared/filters';
 import { ComponentPropsWithoutRef, ElementType, Ref, useEffect, useRef, useState } from 'react';

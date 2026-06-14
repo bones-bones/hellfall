@@ -1,11 +1,11 @@
 import { FieldValue, Firestore, type Timestamp } from '@google-cloud/firestore';
-import { withCors } from './lib/cors.js';
-import { env } from './lib/env.js';
-import type { HandlerRequest, HandlerResponse } from './lib/types.js';
-import { requireTagAuth } from './lib/requireTagAuth.js';
-import { requireAdminAuth } from './lib/requireAdminAuth.js';
-import { requireReviewerAuth } from './lib/requireReviewerAuth.js';
-import { recardCardChangeset } from '../lib/cardAudit.js';
+import { withCors } from './lib/cors.ts';
+import { env } from './lib/env.ts';
+import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
+import { requireTagAuth } from './lib/requireTagAuth.ts';
+import { requireAdminAuth } from './lib/requireAdminAuth.ts';
+import { requireReviewerAuth } from './lib/requireReviewerAuth.ts';
+import { recardCardChangeset } from '../lib/cardAudit.ts';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
 import {
   anyChange,

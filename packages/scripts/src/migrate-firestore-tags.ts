@@ -16,7 +16,7 @@ import { config } from 'dotenv';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { FieldValue, Firestore } from '@google-cloud/firestore';
-import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredentials.js';
+import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredentials.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
