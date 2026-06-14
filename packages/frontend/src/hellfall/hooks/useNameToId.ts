@@ -83,6 +83,9 @@ export const nameToId = (name: string, cards: CardMap): string | undefined => {
   return (
     cards.get(name)?.id ??
     cards.find(card => card.export_name && textEquals(card.export_name, name))?.id ??
+    cards.find(card => textEquals(card.hcid, name))?.id ??
+    cards.find(card => textEquals(card.name, name))?.id ??
+    cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
     cards.find(
       card =>
         'card_faces' in card &&
@@ -90,9 +93,6 @@ export const nameToId = (name: string, cards: CardMap): string | undefined => {
         textEquals(card.card_faces[0].export_name, name)
     )?.id ??
     cards.find(card => 'card_faces' in card && textEquals(getFrontExportName(card), name))?.id ??
-    cards.find(card => textEquals(card.hcid, name))?.id ??
-    cards.find(card => textEquals(card.name, name))?.id ??
-    cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
     cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
     cards.find(
       card =>
