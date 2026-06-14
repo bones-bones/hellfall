@@ -243,7 +243,7 @@ export const listsExactlyEqual = <T = any>(
   value2: T[],
   equals: (mem1: T, mem2: T) => boolean = (mem1, mem2) => mem1 === mem2
 ): boolean => {
-  if (value1.length != value2.length) {
+  if (value1?.length != value2?.length || value1 == undefined || value2 == undefined) {
     return false;
   }
   return value1.every((value, i) => equals(value, value2[i]));

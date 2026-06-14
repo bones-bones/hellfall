@@ -332,7 +332,7 @@ export namespace HCCardFields.Gameplay {
     /**
      * True when the multiface card is a rotating card (excluding flip ones)
      */
-    is_rotating?: boolean;
+    // is_rotating?: boolean;
     /**
      * The layout of this card
      */

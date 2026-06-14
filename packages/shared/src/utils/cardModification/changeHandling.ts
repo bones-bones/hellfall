@@ -17,6 +17,7 @@ import {
   isRarity,
 } from '@hellfall/shared/types';
 import {
+  allPropType,
   CardMap,
   faceEntriesType,
   facePropType,
@@ -123,7 +124,6 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'flavor_name',
     'export_name',
     'rarity',
-    // 'image',
     'rotated_image',
     'still_image',
     'draft_image_status',
@@ -182,12 +182,9 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
   delete: [
     'flavor_name',
     'export_name',
-    'image_status',
     'image',
     'rotated_image',
     'still_image',
-    'mana_cost',
-    'mana_value',
     'supertypes',
     'types',
     'subtypes',
@@ -207,6 +204,16 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
   ],
   pop: ['frame_effects'],
 };
+
+const multiIgnoreDeleteProps:allPropType[] = [
+  'image',
+  'frame',
+  'frame_effects'
+]
+const multiIgnoreAddProps:allPropType[] = [
+  'image_status',
+]
+
 export const colorsAreValid = (colors: HCColors): boolean => {
   const colorList: HCColors = [];
   for (const color of colors) {
@@ -492,6 +499,10 @@ export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange
         case 'types':
         case 'subtypes':
           return Array.isArray(value) && value.every(v => typeof v == 'string');
+        case 'frame': 
+          return isFrame(value)
+        case 'frame_effects':
+          return Array.isArray(value) && value.every(v => isFrameEffect(v));
       }
       return (
         [
@@ -693,26 +704,25 @@ export const applyFaceChange = <K extends facePropType>(
 };
 
 export const applyCardFacesChange = (card: HCCard.Any, change: cardFacesChange): boolean => {
-  // TODO: make sure this works when using toSingleFaced/toMultiFaced (i.e. that it actually modifies the original)
   if (change.change_type == 'delete') {
     if (!('card_faces' in card)) {
       throw console.error('Tried to delete a nonexistent face');
     }
     card.card_faces.splice(change.index, 1);
     if (card.card_faces.length == 1) {
-      card = toSingleFaced(card);
+      toSingleFaced(card);
     }
   } else {
     if (!change.face) {
       throw console.error('Tried to add a nonexistent face');
     }
     if (!('card_faces' in card)) {
-      card = toMultiFaced(card);
+      toMultiFaced(card);
     }
     // if (!('card_faces' in card)) {
     //   throw console.error('Something went very, very wrong')
     // }
-    card.card_faces.splice(change.index, 0, change.face);
+    (card as HCCard.AnyMultiFaced).card_faces.splice(change.index, 0, change.face);
   }
   return true;
 };
@@ -1308,7 +1318,7 @@ export const getChangesFromDifferences = (
   return changeList.sort(sortChanges);
 };
 
-export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean => {
+export const applyChanges = (card: HCCard.Any, changeList: anyChange[], applyingFromSheet?:boolean): boolean => {
   let setDerived = false;
   changeList.forEach((change, index) => {
     if (!changeIsValid(card, change)) {
@@ -1328,12 +1338,21 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
       ) {
         return;
       }
+      if (
+        'card_faces' in card &&
+        change.location == 'face' &&
+        !change.index &&
+        ((change.change_type == 'delete' || change.change_type == 'pop') ?multiIgnoreDeleteProps:multiIgnoreAddProps).includes(change.prop as allPropType) &&
+        changeList.some(other =>other.location == 'card_faces')
+      ) {
+        return;
+      }
       throw console.error('invalid change got passed in');
     }
     if (applyChange(card, change)) {
       setDerived = true;
     }
-    if (change.location == 'card_faces') {
+    if (change.location == 'card_faces' && !applyingFromSheet) {
       const face = change.index;
       for (let i = changeList.length - 1; i > index; i--) {
         const otherChange = changeList[i];
@@ -1366,7 +1385,7 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
 export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
   const changeList = getChangesFromDifferences(existingCard, newCard, true);
   if (newCard.kind != 'scryfall') {
-    applyChanges(existingCard, changeList);
+    applyChanges(existingCard, changeList, true);
     setDerivedProps(existingCard);
   } else {
     newCard.all_parts = existingCard.all_parts;

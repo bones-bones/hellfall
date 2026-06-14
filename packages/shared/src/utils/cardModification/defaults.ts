@@ -36,6 +36,7 @@ import {
   getCardFaceEntries,
   rootValueType,
   faceValueType,
+  getChangesFromDifferences,
 } from '@hellfall/shared/utils';
 
 const defaultRootProps: rootMappedType = {
@@ -298,7 +299,7 @@ const keepInRoot: (rootPropType & facePropType)[] = [
 ];
 const onlyInFace: (keyof HCCardFace.MultiFaced)[] = ['object', 'compress_face', 'drop_face'];
 
-export const toMultiFaced = (card: HCCard.AnySingleFaced): HCCard.AnyMultiFaced => {
+export const toMultiFaced = (card: HCCard.AnySingleFaced) => {
   const entryProps: Partial<HCCard.Any> = {};
   const faceProps: Partial<faceType> = {};
   getCardEntries(card).forEach(([key, value]) => {
@@ -313,9 +314,16 @@ export const toMultiFaced = (card: HCCard.AnySingleFaced): HCCard.AnyMultiFaced 
       (faceProps as any)[key] = value;
     }
   });
-  return getDefaultCard(card.kind, true, entryProps, faceProps) as HCCard.AnyMultiFaced;
+  const newCard = getDefaultCard(card.kind, true, entryProps, faceProps);
+  getRootEntries(newCard).forEach(([prop, value]) => addPropToRoot(card,prop,value));
+  Object.keys(card).forEach(prop => {
+    if (!(prop in newCard)) {
+      delete (card as any)[prop]
+    }
+  })
 };
-export const toSingleFaced = (card: HCCard.AnyMultiFaced): HCCard.AnySingleFaced => {
+
+export const toSingleFaced = (card: HCCard.AnyMultiFaced) => {
   const entryProps: Partial<HCCard.Any> = {};
   const faceProps: Partial<faceType> = {};
   getCardEntries(card).forEach(([key, value]) => {
@@ -332,7 +340,14 @@ export const toSingleFaced = (card: HCCard.AnyMultiFaced): HCCard.AnySingleFaced
       (faceProps as any)[key] = value;
     }
   });
-  return getDefaultCard(card.kind, false, entryProps, faceProps) as HCCard.AnySingleFaced;
+  const newCard = getDefaultCard(card.kind, false, entryProps, faceProps);
+  getRootEntries(newCard).forEach(([prop, value]) =>addPropToRoot(card,prop,value));
+  Object.keys(card).forEach(prop => {
+    if (!(prop in newCard)) {
+      delete (card as any)[prop]
+    }
+  })
+
 };
 
 // export const layoutIsDefault = (card: HCCard.Any, index?: number) => {

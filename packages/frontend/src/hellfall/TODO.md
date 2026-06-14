@@ -44,7 +44,7 @@ Write a script to transform the database
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - add special cases for color searches/color identity searches for Blood ghast // Crip Ghast (It can be either red or blue) (can-ignore-color-identity)
 - switch italics to use serif font? (that way it's more distinct)
-- deal with later: Wild Magic Surge (both versions), Hell's Cube (both versions), Spain, Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones
+- deal with later: Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones, gandalf thingy
 - add reminder card for attractions
 - mork:
   - add ids
@@ -121,3 +121,4 @@ Write a script to transform the database
 - store default search settings with users like scryfall does
 - get a better random icon
 - figure out how to attach links/hrefs to the pagination buttons
+- once spain tokens get in, make sure they all get drop_face?

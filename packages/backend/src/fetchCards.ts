@@ -198,6 +198,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           const key = keys[i].slice(1);
           const entryList = face == 3 ? entry[i].split(' // ') : [entry[i]];
           entryList.forEach((value, index) => {
+            if (!value) return;
             if (['supertypes', 'types', 'subtypes'].includes(key)) {
               addPropToFace(
                 card,
