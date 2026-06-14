@@ -13,15 +13,16 @@ import {
   summaryAtom,
 } from './atoms/searchAtoms.ts';
 import { useSearchResults } from './hooks/useSearchResults.ts';
-import { SortComponent } from './search-controls/SortComponent.tsx';
+import { ControlBar } from './search-controls/SortComponent.tsx';
 import { CHUNK_SIZE } from './constants.ts';
 import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
 import { getOtherNames, toPlainText } from '@hellfall/shared/utils';
 import { SearchBar } from './search-controls/SearchBar.tsx';
 import { ActiveCardPanel } from './ActiveCardPanel.tsx';
+import { Link } from 'react-router-dom';
+import { HellfallCard } from './card/HellfallCard.tsx';
 
 export const HellFall = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const summary = useAtomValue(summaryAtom);
   const invalids = useAtomValue(invalidAtom);
   const query = useAtomValue(queryAtom);
@@ -55,15 +56,19 @@ export const HellFall = () => {
     <div>
       <ActiveCardPanel />
       <br />
-      <SearchBar />
+      <SearchBar alreadyOnSearch={true}/>
       <Separator />
-      <SortComponent />
+      {resultSet.length != 1 && (
+        <>
+      <ControlBar model={paginationModel}/>
       <SortSeparator />
+        </>
+      )}
 
-      <Summary ref={containerRef}>
-        <strong>{`${
+      <Summary>
+        <strong>{resultSet.length == 1 ?<Link to={`/card/${encodeURIComponent(resultSet[0].hcid)}`}>Showing the one card</Link>:`${
           resultSet.length > CHUNK_SIZE ? `${page + 1} - ${page + CHUNK_SIZE} of ` : ''
-        } ${resultSet.length} card${resultSet.length != 1 ? 's' : ''}`}</strong>
+        } ${resultSet.length} cards`}</strong>
         {summary && ` ${summary}`}
       </Summary>
       <Separator />
@@ -77,6 +82,13 @@ export const HellFall = () => {
       })}
 
       <Container>
+        {resultSet.length == 1 ? (
+          <div style={{width: '60vw', margin: '0 auto'}}>
+            <HellfallCard data={resultSet[0]} onSinglePage={true} />
+          </div>
+        ):(
+          <div>
+
         <CardsGrid $maxWidth={maxWidth}>
           {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
             <HellfallEntry
@@ -100,8 +112,16 @@ export const HellFall = () => {
             />
           ))}
         </CardsGrid>
+          </div>
+        )}
       </Container>
-      <PaginationComponent model={paginationModel} />
+      {resultSet.length != 1 && (
+        <>
+      <Separator />
+      <ControlBar model={paginationModel}/>
+        </>
+      )}
+      {/* <PaginationComponent model={paginationModel} /> */}
     </div>
   );
 };

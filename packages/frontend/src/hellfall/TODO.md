@@ -119,4 +119,7 @@ Write a script to transform the database
 - fix andscape painter
 - go back and do cards that I skipped before
 - add host/augment as layouts? or as frame effects?
-- tenst color indicator inference for new cards
+- collapse controls on narrow layouts like scryfall does
+- store default search settings with users like scryfall does
+- get a better random icon
+- figure out how to attach links/hrefs to the pagination buttons

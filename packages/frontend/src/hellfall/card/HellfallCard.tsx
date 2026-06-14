@@ -1,9 +1,11 @@
 import {
   ButtonColors,
   Card,
+  ElementComponent,
   Heading,
   inputColors,
   PrimaryButton,
+  PrimaryButtonProps,
   type,
 } from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
@@ -13,7 +15,7 @@ import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 
 import { Link } from 'react-router-dom';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, ComponentPropsWithRef, ElementType, ComponentPropsWithoutRef, Ref } from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../hooks/useCardTagOverrides.ts';
 import {
@@ -114,6 +116,7 @@ export const HellfallCard = ({
   const isContributor = Boolean(user?.isAdmin || user?.isContributor);
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const linkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (!windowRef.current) return;
@@ -585,27 +588,17 @@ export const HellfallCard = ({
         <br />
         <Button
           colors={inputButtonColors}
-          borderRadius="m"
-          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-            if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-              window.open(`/api/cards/${encodeURIComponent(displayCard.id)}?format=text`, '_blank');
-            } else {
-              window.location.href = `/api/cards/${encodeURIComponent(displayCard.id)}?format=text`;
-            }
-          }}
+          as={Link}
+          to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=text`}
+          ref={linkRef}
         >
           Copy-pasteable Text
         </Button>
         <Button
           colors={inputButtonColors}
-          borderRadius="m"
-          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-            if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-              window.open(`/api/cards/${encodeURIComponent(displayCard.id)}?format=json`, '_blank');
-            } else {
-              window.location.href = `/api/cards/${encodeURIComponent(displayCard.id)}?format=json`;
-            }
-          }}
+          as={Link}
+          to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=json`}
+          ref={linkRef}
         >
           Copy-pasteable JSON
         </Button>
@@ -709,12 +702,39 @@ const Separator = styled('hr')({
   marginRight: '-32px',
 });
 
-const Button = styled(PrimaryButton)({
+const IntButton = styled(PrimaryButton)<{ as?: React.ElementType}>({
   marginLeft: '30px',
   marginBottom: '15px',
-  display: 'inline-block',
-  flexDirection: 'row',
+  borderRadius:'4px',
+  textDecoration:'none',
+  '&:hover, &:focus, &:active': {
+    textDecoration: 'none'
+  }
 });
+
+type PolymorphicStyledButtonProps<T extends ElementType> = Omit<PrimaryButtonProps, 'as' | 'ref'> & {
+  as?: T;
+  children: React.ReactNode;
+  ref?: Ref<any>;
+} & Omit<ComponentPropsWithoutRef<T>, keyof PrimaryButtonProps | 'as' | 'children'>;
+
+const Button =<T extends ElementType = 'button'>({
+  as,
+  children,
+  ref,
+  ...props
+}: PolymorphicStyledButtonProps<T>) => {
+  const Component = as || 'button';
+  
+  return as && ref ? (
+    <IntButton as={Component!} ref={ref as any} {...props}>
+      {children}
+    </IntButton>):(    <IntButton {...props}>
+      {children}
+    </IntButton>
+  );
+}
+
 const inputButtonColors: ButtonColors = {
   default: {
     background: inputColors.background,

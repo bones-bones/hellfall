@@ -14,7 +14,7 @@ export const Header = () => {
         <NavRow>
           <Navigation>
             <Link to={'/'}>search</Link>, <Link to={'/advanced'}>advanced</Link>,{' '}
-            <Link to={'/card/random'}>random</Link>, <Link to={'/draft'}>draft</Link>,{' '}
+            <Link to={'/random'}>random</Link>, <Link to={'/draft'}>draft</Link>,{' '}
             <Link to={'/deck-builder'}>deck/cube builder</Link>,{' '}
             <Link to={'/hellscubes'}>cube resources</Link>,{' '}
             <Link to={'https://discord.com/channels/631288872814247966/1237418389480407061'}>

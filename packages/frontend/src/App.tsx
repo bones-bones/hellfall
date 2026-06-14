@@ -15,6 +15,7 @@ import { ReviewPage } from './review/ReviewPage.tsx';
 import { useNameToHCID, useIsHCID } from './hellfall/hooks/useNameToId.ts';
 import { AdvancedSearch } from './hellfall/search-controls/AdvancedSearch.tsx';
 import { Syntax } from './hellfall/Syntax.tsx';
+import { Random } from './hellfall/Random.tsx';
 
 const CardRoute = () => {
   const params = useParams<{ '*': string }>();
@@ -25,7 +26,7 @@ const CardRoute = () => {
   const [shouldRender, setShouldRender] = useState(false);
   useEffect(() => {
     const handleRedirect = async () => {
-      if (cardIdentifier == 'random' || (!IsHCID && cardId)) {
+      if (!IsHCID && cardId) {
         navigate(`/card/${cardId}`, { replace: true });
         return;
       }
@@ -64,6 +65,7 @@ const ApplicationRoutes = () => {
     { path: '/advanced', element: <AdvancedSearch /> },
     { path: '/syntax', element: <Syntax /> },
     { path: '/card/*', element: <CardRoute /> },
+    { path: '/random', element: <Random /> },
     { path: '/login', element: <Login /> },
     { path: '/review/*', element: <ReviewPage /> },
     { path: '/Watchwolfwar', element: <WatchwolfWar /> },

@@ -35,10 +35,11 @@ export const useUrlSync = () => {
   const [activeCard, setActiveCard] = useAtom(activeCardAtom);
   const [summary, setSummary] = useAtom(summaryAtom);
   const [invalids, setInvalids] = useAtom(invalidAtom);
-
+  // const randomPathNames = ['/card','/random']
   useEffect(() => {
+    // const asRandom = randomPathNames.some(name=>location.pathname.startsWith(name))
     const params = new URLSearchParams(location.search);
-    const newQuery = params.get('q') || '';
+    const newQuery = params.get(/* asRandom ? 'random':  */'q') || '';
     const parsedQuery = parseSearchQuery(newQuery);
     if (query != newQuery) {
       setQuery(newQuery);
@@ -77,7 +78,23 @@ export const useUrlSync = () => {
   }, [location.search, location.pathname]); // This triggers on back/forward navigation
 };
 
-export const useUpdateURL = () => {
+export const getSearchParams = (query:string, asRandom?:boolean, inputSorts?:string[],page?:number):URLSearchParams => {
+  const searchToSet = new URLSearchParams();
+
+  if (query) {
+    searchToSet.append(/* asRandom?'random': */'q', query);
+  }
+
+  if (inputSorts?.length && !asRandom) {
+    inputSorts.forEach(entry => searchToSet.append('order', entry));
+  }
+  if (page && page > 0 && !asRandom) {
+    searchToSet.append('page', page.toString());
+  }
+  return searchToSet;
+}
+
+export const useUpdateURL = (asRandom?:boolean) => {
   const navigate = useNavigate();
   const location = useLocation();
   const query = useAtomValue(queryAtom);
@@ -95,18 +112,18 @@ export const useUpdateURL = () => {
 
     if (!hasChanged /* && !activeHasChanged */) return;
 
-    const searchToSet = new URLSearchParams();
+    const searchToSet = getSearchParams(query,asRandom, inputSorts,page);
 
-    if (query) {
-      searchToSet.append('q', query);
-    }
+    // if (query) {
+    //   searchToSet.append(asRandom?'random':'q', query);
+    // }
 
-    if (inputSorts.length) {
-      inputSorts.forEach(entry => searchToSet.append('order', entry));
-    }
-    if (page > 0) {
-      searchToSet.append('page', page.toString());
-    }
+    // if (inputSorts.length && !asRandom) {
+    //   inputSorts.forEach(entry => searchToSet.append('order', entry));
+    // }
+    // if (page > 0 && !asRandom) {
+    //   searchToSet.append('page', page.toString());
+    // }
     // if (activeCard !== '') {
     //   searchToSet.append('activeCard', activeCard);
     // }
