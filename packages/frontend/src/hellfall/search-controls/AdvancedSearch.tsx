@@ -22,7 +22,7 @@ import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
-import { ControlBar } from './SortComponent.tsx';
+import { ControlBar } from './ControlBar.tsx';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
 import { extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';

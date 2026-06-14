@@ -13,7 +13,7 @@ import {
   summaryAtom,
 } from './atoms/searchAtoms.ts';
 import { useSearchResults } from './hooks/useSearchResults.ts';
-import { ControlBar } from './search-controls/SortComponent.tsx';
+import { ControlBar } from './search-controls/ControlBar.tsx';
 import { CHUNK_SIZE } from './constants.ts';
 import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
 import { getOtherNames, toPlainText } from '@hellfall/shared/utils';
