@@ -30,7 +30,11 @@ export const setToSrc = (set?: HCSet) => {
 
 export const getSetSrc = (code: SetCode) => setToSrc(getSet(code));
 
-export const getChildSets = (code: SetCode): SetCode[] | undefined => getSet(code)?.child_set_codes;
+export const getChildSets = (code: SetCode): SetCode[] | undefined => {
+  const childSetCodes = getSet(code)?.child_set_codes;
+  if (!childSetCodes) return undefined;
+  return Array.isArray(childSetCodes) ? childSetCodes : [childSetCodes];
+};
 
 export const getDirectChildSets = (code: SetCode): SetCode[] | undefined =>
   getSet(code)?.child_set_codes?.filter(child => getSet(child)?.set_type == getSet(code)?.set_type);
