@@ -44,6 +44,8 @@ export const allSetsList = [
   'HC9',
   'HC9.0',
   'HCV.9',
+  'SCL',
+  'HCV.S',
   'HCV',
   'HCT',
   'HBB',

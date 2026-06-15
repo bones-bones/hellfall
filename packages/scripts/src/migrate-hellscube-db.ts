@@ -16,7 +16,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Firestore, type CollectionReference } from '@google-cloud/firestore';
-import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredentials.js';
+import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredentials.ts';
 // import {
 //   applyAddTag,
 //   applyRemoveTag,

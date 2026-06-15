@@ -27,7 +27,7 @@ export const getActualOp = (operator: looseOpType, defaultOp: opType): opType =>
 };
 export const opIsNegative = (op: looseOpType) => ['<', '>', '!=', '!:'].includes(op);
 
-export const opAsBool = (condition: any, op: opType): boolean => !condition != opIsNegative(op);
+export const opAsBool = (condition: any, op: opType): boolean => !condition != !opIsNegative(op);
 
 export const opToNot = (op: looseOpType) => (opIsNegative(op) ? 'not' : '');
 export const opToDont = (op: looseOpType) => (opIsNegative(op) ? "don't" : '');

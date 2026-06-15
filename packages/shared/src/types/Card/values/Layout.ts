@@ -10,6 +10,8 @@ export enum HCLayout {
   Multi = 'multi',
   /** A multi-faced card that needs to be rendered as a grid (still  needs to be implemented) */
   // Grid = 'grid',
+  /** A cube multifaced card */
+  Cube = 'cube',
   /** Cards that can meld */
   MeldPart = 'meld_part',
   /** Cards/faces that are the result of melding */
@@ -171,6 +173,7 @@ export namespace HCLayoutGroup {
     HCLayout.Aftermath,
     HCLayout.Split,
     HCLayout.Prepare,
+    HCLayout.Cube,
   ] as const;
 
   /**
@@ -220,6 +223,7 @@ export namespace HCLayoutGroup {
     HCLayout.Stickers,
     HCLayout.Misc,
     HCLayout.Battle,
+    HCLayout.Cube,
   ] as const;
 
   /**
@@ -301,6 +305,7 @@ export namespace HCLayoutGroup {
     HCLayout.Prepare,
     HCLayout.NotMagic,
     HCLayout.RealCardToken,
+    HCLayout.Cube,
   ] as const;
 
   /**

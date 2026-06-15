@@ -26,7 +26,7 @@ async function fetchCardById(cardId: string): Promise<fixedScryfall> {
 
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'Hellfall/0.1.0',
+        'User-Agent': 'Hellscube/Hellfall/0.1.0',
         Accept: 'application/json;q=0.9,*/*;q=0.8',
       },
     });

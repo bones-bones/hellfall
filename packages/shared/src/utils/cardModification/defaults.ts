@@ -36,6 +36,7 @@ import {
   getCardFaceEntries,
   rootValueType,
   faceValueType,
+  getChangesFromDifferences,
 } from '@hellfall/shared/utils';
 
 const defaultRootProps: rootMappedType = {
@@ -243,7 +244,7 @@ export const getDefaultCard = (
   const card = (
     isMultiFaced
       ? ({
-          ...defaultRootProps,
+          ...structuredClone(defaultRootProps),
           object: HCObject.ObjectType.Card,
           kind,
           layout: kindToMultiLayout[kind],
@@ -251,7 +252,7 @@ export const getDefaultCard = (
           card_faces: [] as HCCardFace.MultiFaced[],
         } as HCCard.AnyMultiFaced)
       : ({
-          ...defaultRootProps,
+          ...structuredClone(defaultRootProps),
           object: HCObject.ObjectType.Card,
           kind,
           layout: kindToFaceLayout[kind],
@@ -262,14 +263,14 @@ export const getDefaultCard = (
   (Object.entries(entryProps) as rootEntriesType)
     .filter(([prop, value]) =>
       Array.isArray(value)
-        ? value.length && !(value.length == 1 && (value[0] as string) == '')
+        ? value.length && !(value.length == 1 && value[0] == '')
         : value != '' && value != undefined && !(typeof value == 'number' && isNaN(value))
     )
     .forEach(([prop, value]) => addPropToRoot(card, prop, value));
   (Object.entries(faceProps) as faceEntriesType)
     .filter(([prop, value]) =>
       Array.isArray(value)
-        ? value.length && !(prop != 'colors' && value.length == 1 && value[0] == '')
+        ? value.length && !(/* prop != 'colors' &&  */ (value.length == 1 && value[0] == ''))
         : value != '' && value != undefined && !(typeof value == 'number' && isNaN(value))
     )
     .forEach(([prop, value]) => addPropToFace(card, prop, value, 0));
@@ -279,7 +280,7 @@ export const getDefaultCard = (
 export const fillFacesTo = (card: HCCard.AnyMultiFaced, index: number) => {
   while (card.card_faces.length <= index) {
     card.card_faces.push({
-      ...defaultFaceProps,
+      ...structuredClone(defaultFaceProps),
       object: HCObject.ObjectType.CardFace,
       layout: card.kind == 'card' && index ? HCLayout.Multi : kindToFaceLayout[card.kind],
       image_status: index ? HCImageStatus.Inapplicable : HCImageStatus.Front,
@@ -298,7 +299,7 @@ const keepInRoot: (rootPropType & facePropType)[] = [
 ];
 const onlyInFace: (keyof HCCardFace.MultiFaced)[] = ['object', 'compress_face', 'drop_face'];
 
-export const toMultiFaced = (card: HCCard.AnySingleFaced): HCCard.AnyMultiFaced => {
+export const toMultiFaced = (card: HCCard.AnySingleFaced) => {
   const entryProps: Partial<HCCard.Any> = {};
   const faceProps: Partial<faceType> = {};
   getCardEntries(card).forEach(([key, value]) => {
@@ -313,9 +314,16 @@ export const toMultiFaced = (card: HCCard.AnySingleFaced): HCCard.AnyMultiFaced 
       (faceProps as any)[key] = value;
     }
   });
-  return getDefaultCard(card.kind, true, entryProps, faceProps) as HCCard.AnyMultiFaced;
+  const newCard = getDefaultCard(card.kind, true, entryProps, faceProps);
+  getRootEntries(newCard).forEach(([prop, value]) => addPropToRoot(card, prop, value));
+  Object.keys(card).forEach(prop => {
+    if (!(prop in newCard)) {
+      delete (card as any)[prop];
+    }
+  });
 };
-export const toSingleFaced = (card: HCCard.AnyMultiFaced): HCCard.AnySingleFaced => {
+
+export const toSingleFaced = (card: HCCard.AnyMultiFaced) => {
   const entryProps: Partial<HCCard.Any> = {};
   const faceProps: Partial<faceType> = {};
   getCardEntries(card).forEach(([key, value]) => {
@@ -332,7 +340,13 @@ export const toSingleFaced = (card: HCCard.AnyMultiFaced): HCCard.AnySingleFaced
       (faceProps as any)[key] = value;
     }
   });
-  return getDefaultCard(card.kind, false, entryProps, faceProps) as HCCard.AnySingleFaced;
+  const newCard = getDefaultCard(card.kind, false, entryProps, faceProps);
+  getRootEntries(newCard).forEach(([prop, value]) => addPropToRoot(card, prop, value));
+  Object.keys(card).forEach(prop => {
+    if (!(prop in newCard)) {
+      delete (card as any)[prop];
+    }
+  });
 };
 
 // export const layoutIsDefault = (card: HCCard.Any, index?: number) => {

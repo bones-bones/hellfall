@@ -8,47 +8,23 @@ import {
   HCLayout,
   HCLayoutGroup,
   SetCode,
-  // tagRecord,
-  // tagState,
 } from '@hellfall/shared/types';
-import {
-  // AcceptableValue,
-  // addLayoutTag,
-  addPropToRoot,
-  // addTag,
-  deletePropFromFace,
-  deletePropFromRoot,
-  // layoutTags,
-  // layoutTagType,
-} from './modificationHandling';
 import {
   allPropType,
   allValueType,
   anyPropType,
   facePropType,
-  faceType,
   faceValueType,
   rootPropType,
   rootValueType,
-  toFaces,
 } from '../cardHandling';
-import {
-  getDefaultFaceLayout,
-  getDefaultFaceValue,
-  getDefaultKindLayout,
-  getDefaultRootValue,
-  kindToDefaultFrame,
-  kindToFaceLayout,
-  kindToMultiLayout,
-  // layoutIsDefault,
-} from './defaults';
+import { getDefaultFaceValue, getDefaultKindLayout, getDefaultRootValue } from './defaults';
 import { getSet } from '../setHandling';
 import {
   anyChange,
   changeType,
   createFaceChange,
   createRootChange,
-  createTagChange,
   rootChange,
   tagChange,
 } from './changeTypes';
@@ -147,93 +123,6 @@ const borderColorTags: Record<string, HCBorderColor> = {
   'red-border': HCBorderColor.Red,
 };
 
-const removableTagProps: anyPropType[] = [
-  'flavor_name',
-  'watermark',
-  'frame_effects',
-  'rotated_image',
-  'still_image',
-  'draft_image',
-  'draft_image_status',
-  'rotated_draft_image',
-  'still_draft_image',
-  'tag_notes',
-];
-const removableFaceTagProps: facePropType[] = ['finish', 'border_color', 'frame'];
-
-// const setTagPropsToDefault = (card: HCCard.Any) => {
-//   removableTagProps.forEach(prop => deletePropFromRoot(card, prop as rootPropType));
-//   card.finish = HCFinish.Nonfoil;
-//   card.border_color = HCBorderColor.Black;
-//   card.frame = kindToDefaultFrame[card.kind];
-//   if ('card_faces' in card) {
-//     card.layout = kindToMultiLayout[card.kind];
-//     card.card_faces.forEach((face, i) => {
-//       removableTagProps.forEach(prop => deletePropFromFace(card, prop as facePropType, i));
-//       removableFaceTagProps.forEach(prop => deletePropFromFace(card, prop, i));
-//       face.layout = card.kind == 'card' && i ? HCLayout.Multi : kindToFaceLayout[card.kind];
-//       if (!face.image) {
-//         face.image_status = i ? HCImageStatus.Inapplicable : HCImageStatus.Front;
-//       }
-//     });
-//   } else {
-//     card.layout = kindToFaceLayout[card.kind];
-//   }
-// };
-
-const tokenTypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
-  emblem: HCLayout.Emblem,
-  // 'reminder card': HCLayout.Reminder,
-  stickers: HCLayout.Stickers,
-  dungeon: HCLayout.Dungeon,
-  // 'real card': HCLayout.RealCardToken,
-  'ad card': HCLayout.Misc,
-  misc: HCLayout.Misc,
-  checklist: HCLayout.Checklist,
-};
-const typeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
-  plane: HCLayout.Planar,
-  phenomenon: HCLayout.Planar,
-  scheme: HCLayout.Scheme,
-  vanguard: HCLayout.Vanguard,
-  battle: HCLayout.Battle,
-};
-const subtypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
-  saga: HCLayout.Saga,
-  class: HCLayout.Class,
-  case: HCLayout.Case,
-  spacecraft: HCLayout.Station,
-  watercraft: HCLayout.Station,
-  planet: HCLayout.Station,
-};
-
-// const setFacePropsFromTypes = (face: faceType, shouldSetLayout: boolean, isTokenRoot?: boolean) => {
-//   if (shouldSetLayout) {
-//     const tokenType = face.types
-//       ?.find(type => type.toLowerCase() in tokenTypeLayouts)
-//       ?.toLowerCase();
-//     if (tokenType) {
-//       face.layout = tokenTypeLayouts[tokenType];
-//       return;
-//     } else if (isTokenRoot) {
-//       return;
-//     }
-//     const type = face.types?.find(type => type.toLowerCase() in typeLayouts)?.toLowerCase();
-//     if (type) {
-//       face.layout = subtypeLayouts[type];
-//       return;
-//     }
-
-//     const subtype = face.subtypes
-//       ?.find(type => type.toLowerCase() in subtypeLayouts)
-//       ?.toLowerCase();
-//     if (subtype) {
-//       face.layout = subtypeLayouts[subtype];
-//       return;
-//     }
-//   }
-// };
-
 export const splitFullTag = (fullTag: string) => {
   const hasNote = fullTag.includes('<') && fullTag.endsWith('>');
   const [tag, note] = [
@@ -330,6 +219,7 @@ export const layoutTags = [
   'stickers',
   'dungeon',
   'draftpartner',
+  'cube',
 ] as const;
 export type layoutTagType = (typeof layoutTags)[number];
 const singleLayoutTags: Partial<Record<layoutTagType, HCLayoutGroup.SingleFacedType>> = {
@@ -359,6 +249,7 @@ const multiLayoutTags = {
   prepare: HCLayout.Prepare,
   aftermath: HCLayout.Aftermath,
   split: HCLayout.Split,
+  cube: HCLayout.Cube,
 } as const satisfies Partial<Record<layoutTagType, HCLayoutGroup.MultiFacedType>>;
 
 const layoutTagToImageStatus: Partial<
@@ -410,6 +301,7 @@ const faceLayoutTags: Partial<Record<layoutTagType, HCLayoutGroup.FaceLayoutType
   prepare: HCLayout.Prepare,
   aftermath: HCLayout.Aftermath,
   split: HCLayout.Split,
+  cube: HCLayout.Cube,
 };
 const multiToFaceLayoutTags: Partial<
   Record<keyof typeof multiLayoutTags, HCLayoutGroup.FaceLayoutType>
@@ -429,6 +321,28 @@ const multiToFaceLayoutTags: Partial<
   prepare: HCLayout.Prepare,
   aftermath: HCLayout.Aftermath,
   split: HCLayout.Split,
+  cube: HCLayout.Cube,
+};
+
+export const splitFaceTag = (
+  full_tag: string,
+  noFaces?: boolean,
+  defaultToBack?: boolean
+): { tag: string; face: number | undefined; note: string | undefined } => {
+  const { tag, note } = splitFullTag(full_tag);
+  const useBoth = note?.includes('|') && !noFaces;
+  const noteIsNum = Number.isInteger(Number(note)) && !noFaces;
+  const [face, subnote] = [
+    useBoth
+      ? parseInt(note?.split('|')[0] ?? '')
+      : noteIsNum
+      ? parseInt(note ?? '')
+      : defaultToBack && !noFaces
+      ? 1
+      : undefined,
+    useBoth ? note?.split('|')[1] : noteIsNum ? undefined : note,
+  ];
+  return { tag, face, note: subnote };
 };
 /**
  * Adds a tag
@@ -452,20 +366,25 @@ export const changesForFaceTag = <K extends facePropType>(
     // useRootOnly?: boolean;
     useUrl?: boolean;
     defaultToBack?: boolean;
+    alsoAddingFaces?: boolean;
   }
 ): anyChange[] => {
-  const { tag, note } = splitFullTag(full_tag);
+  const { tag, face, note } = splitFaceTag(
+    full_tag,
+    !('card_faces' in card || options?.alsoAddingFaces),
+    options?.defaultToBack
+  );
   const changes: anyChange[] = [];
   const tag_change: tagChange = {
     location: 'tag',
     change_type,
     full_tag,
   };
-  if (note != undefined) {
+  if (note != undefined || face != undefined) {
     tag_change.tag = tag;
   }
   if (!prop) {
-    if (note) {
+    if (note && !options?.dontAddNote) {
       tag_change.note = note;
     }
     changes.push(tag_change);
@@ -483,28 +402,15 @@ export const changesForFaceTag = <K extends facePropType>(
       return (options?.useUrl ? tagUrl : subnote) as faceValueType<K> | undefined;
     }
   };
-  const useBoth = note?.includes('|') && /* !options?.useRootOnly &&  */ 'card_faces' in card;
-  const noteIsNum =
-    Number.isInteger(Number(note)) && /* !options?.useRootOnly &&  */ 'card_faces' in card;
-  const [face, subnote] = [
-    useBoth
-      ? parseInt(note?.split('|')[0] ?? '')
-      : noteIsNum
-      ? parseInt(note ?? '')
-      : options?.defaultToBack && 'card_faces' in card
-      ? 1
-      : 0,
-    useBoth ? note?.split('|')[1] : noteIsNum ? undefined : note,
-  ];
   const face_change_type: changeType =
     change_type == 'delete' ? (options?.push ? 'pop' : 'delete') : options?.push ? 'push' : 'add';
   const tagUrl =
-    options?.useUrl && subnote
-      ? subnote.slice(0, 4) == 'http'
-        ? subnote
-        : 'https://lh3.googleusercontent.com/d/' + subnote
+    options?.useUrl && note
+      ? note.slice(0, 4) == 'http'
+        ? note
+        : 'https://lh3.googleusercontent.com/d/' + note
       : undefined;
-  const resolvedValue = getValue(subnote, tagUrl);
+  const resolvedValue = getValue(note, tagUrl);
   const change = createFaceChange(face_change_type, prop, resolvedValue, face);
   if (defaultValue && change_type == 'delete') {
     change.change_type = 'add';
@@ -513,12 +419,12 @@ export const changesForFaceTag = <K extends facePropType>(
     changes.push(change);
   }
   if (
-    subnote &&
+    note &&
     !options?.useUrl &&
     !options?.dontAddNote /* &&
     !(subnote == '0' && tag in frameEffectTags) */
   ) {
-    tag_change.note = subnote;
+    tag_change.note = note;
   }
   changes.push(tag_change);
   return changes.sort(sortChanges);
@@ -546,6 +452,7 @@ export const changesForRootTag = <K extends rootPropType>(
     // useRootOnly?: boolean;
     useUrl?: boolean;
     defaultToBack?: boolean;
+    alsoAddingFaces?: boolean;
   }
 ): anyChange[] => {
   const { tag, note } = splitFullTag(full_tag);
@@ -559,7 +466,7 @@ export const changesForRootTag = <K extends rootPropType>(
     tag_change.tag = tag;
   }
   if (!prop) {
-    if (note) {
+    if (note && !options?.dontAddNote) {
       tag_change.note = note;
     }
     changes.push(tag_change);
@@ -617,27 +524,30 @@ export const changesForAnyTag = <K extends allPropType>(
     // useRootOnly?: boolean;
     useUrl?: boolean;
     defaultToBack?: boolean;
+    alsoAddingFaces?: boolean;
   }
 ): anyChange[] => {
-  const { tag, note } = splitFullTag(full_tag);
-  const useBoth = note?.includes('|') && /* !options?.useRootOnly && */ 'card_faces' in card;
-  const noteIsNum =
-    Number.isInteger(Number(note)) && /* !options?.useRootOnly && */ 'card_faces' in card;
-  const [face, subnote] = [
-    useBoth
-      ? parseInt(note?.split('|')[0] ?? '')
-      : noteIsNum
-      ? parseInt(note ?? '')
-      : options?.defaultToBack && 'card_faces' in card
-      ? 1
-      : undefined,
-    useBoth ? note?.split('|')[1] : noteIsNum ? undefined : note,
-  ];
+  const { tag, face, note } = splitFaceTag(
+    full_tag,
+    !('card_faces' in card || options?.alsoAddingFaces),
+    options?.defaultToBack
+  );
   const layoutChanges = (prop: 'layout'): anyChange[] => {
-    if (face != undefined && tag in faceLayoutTags && 'card_faces' in card) {
+    if (
+      face != undefined &&
+      tag in faceLayoutTags &&
+      ('card_faces' in card || options?.alsoAddingFaces)
+    ) {
       return changesForFaceTag(card, change_type, full_tag, prop, faceLayoutTags, options);
     }
-    if (tag in singleLayoutTags && !('card_faces' in card)) {
+    if (
+      face != undefined &&
+      tag in singleLayoutTags &&
+      ('card_faces' in card || options?.alsoAddingFaces)
+    ) {
+      return changesForFaceTag(card, change_type, full_tag, prop, singleLayoutTags, options);
+    }
+    if (tag in singleLayoutTags && !('card_faces' in card || options?.alsoAddingFaces)) {
       return changesForRootTag(card, change_type, full_tag, prop, singleLayoutTags, options);
     }
     if (tag == 'meld') {
@@ -664,7 +574,9 @@ export const changesForAnyTag = <K extends allPropType>(
         change_type,
         full_tag,
         prop,
-        'card_faces' in card ? HCLayout.MultiReminder : HCLayout.Reminder,
+        'card_faces' in card || options?.alsoAddingFaces
+          ? HCLayout.MultiReminder
+          : HCLayout.Reminder,
         options
       );
       if ('card_faces' in card) {
@@ -674,7 +586,7 @@ export const changesForAnyTag = <K extends allPropType>(
       }
       return changes.sort(sortChanges);
     }
-    if (tag in multiLayoutTags && 'card_faces' in card) {
+    if (tag in multiLayoutTags && ('card_faces' in card || options?.alsoAddingFaces)) {
       const changes: anyChange[] = changesForRootTag(
         card,
         change_type,
@@ -683,7 +595,7 @@ export const changesForAnyTag = <K extends allPropType>(
         card.kind == 'token' ? undefined : multiLayoutTags,
         options
       );
-      if (tag in multiToFaceLayoutTags) {
+      if (tag in multiToFaceLayoutTags && 'card_faces' in card) {
         card.card_faces.forEach((face, i) => {
           if (
             (i || !frontIgnoreMultiLayoutTags.includes(tag as keyof typeof multiLayoutTags)) &&
@@ -702,7 +614,7 @@ export const changesForAnyTag = <K extends allPropType>(
       }
       return changes.sort(sortChanges);
     }
-    return changesForRootTag(card, change_type, full_tag);
+    return changesForRootTag(card, change_type, full_tag, undefined, undefined, options);
   };
   if (prop == 'layout') {
     const changes = layoutChanges(prop);
@@ -742,12 +654,24 @@ export const changesForAnyTag = <K extends allPropType>(
   );
 };
 
-// TODO: add this to the tag change processing
+const flagTags = [
+  'missing-legend-frame',
+  'legend-frame',
+  'missing-snow-frame',
+  'missing-lesson-frame',
+  'missing-vehicle-frame',
+  'missing-transform-frame',
+  'missing-mdfc-frame',
+  'missing-cube-frame',
+  'missing-specialize-frame',
+  'unnecessary-color-indicator',
+];
 
 export const getChangesFromTag = (
   card: HCCard.Any,
   change_type: 'add' | 'delete',
-  full_tag: string
+  full_tag: string,
+  alsoAddingFaces?: boolean
 ): anyChange[] => {
   const { tag, note } = splitFullTag(full_tag);
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
@@ -756,14 +680,19 @@ export const getChangesFromTag = (
       change_type,
       full_tag,
       'watermark',
-      tag.slice(0, tag.lastIndexOf('-'))
+      tag.slice(0, tag.lastIndexOf('-')),
+      { alsoAddingFaces }
     );
   } else if (tag in frameTags) {
-    return changesForAnyTag(card, change_type, full_tag, 'frame', frameTags);
+    return changesForAnyTag(card, change_type, full_tag, 'frame', frameTags, { alsoAddingFaces });
   } else if (tag in cardFrameTags && card.kind != 'token') {
-    return changesForAnyTag(card, change_type, full_tag, 'frame', cardFrameTags);
+    return changesForAnyTag(card, change_type, full_tag, 'frame', cardFrameTags, {
+      alsoAddingFaces,
+    });
   } else if (tag in tokenFrameTags && card.kind == 'token') {
-    return changesForAnyTag(card, change_type, full_tag, 'frame', tokenFrameTags);
+    return changesForAnyTag(card, change_type, full_tag, 'frame', tokenFrameTags, {
+      alsoAddingFaces,
+    });
   } else if (tag in anyFrameEffectTags) {
     return changesForAnyTag(
       card,
@@ -771,27 +700,28 @@ export const getChangesFromTag = (
       note ? full_tag : `${full_tag}`,
       'frame_effects',
       anyFrameEffectTags,
-      { push: true }
+      { push: true, alsoAddingFaces }
     );
   } else if (tag in faceFrameEffectTags) {
-    return changesForFaceTag(
-      card,
-      change_type,
-      note ? full_tag : `${full_tag}`,
-      'frame_effects',
-      faceFrameEffectTags,
-      { push: true }
-    );
+    return changesForFaceTag(card, change_type, full_tag, 'frame_effects', faceFrameEffectTags, {
+      push: true,
+      alsoAddingFaces,
+    });
   } else if (tag in faceImageTagProps) {
     return changesForAnyTag(card, change_type, full_tag, faceImageTagProps[tag], undefined, {
       useUrl: true,
+      alsoAddingFaces,
     });
   } else if (tag in borderColorTags) {
-    return changesForAnyTag(card, change_type, full_tag, 'border_color', borderColorTags);
+    return changesForAnyTag(card, change_type, full_tag, 'border_color', borderColorTags, {
+      alsoAddingFaces,
+    });
   } else if (layoutTags.includes(tag as layoutTagType)) {
-    return changesForAnyTag(card, change_type, full_tag, 'layout');
+    return changesForAnyTag(card, change_type, full_tag, 'layout', undefined, { alsoAddingFaces });
   } else if (tag == 'foil') {
-    return changesForAnyTag(card, change_type, full_tag, 'finish', HCFinish.Foil);
+    return changesForAnyTag(card, change_type, full_tag, 'finish', HCFinish.Foil, {
+      alsoAddingFaces,
+    });
   } else if (note) {
     if (tag in frontImageTagProps) {
       const changes = changesForRootTag(
@@ -818,10 +748,12 @@ export const getChangesFromTag = (
       return changesForFaceTag(card, change_type, full_tag, 'image', undefined, {
         useUrl: true,
         defaultToBack: true,
+        alsoAddingFaces,
       });
     } else if (tag == 'flavor-name') {
       return changesForAnyTag(card, change_type, full_tag, 'flavor_name', undefined, {
         dontAddNote: true,
+        alsoAddingFaces,
       });
     } else if (
       tag.toLowerCase() == card.set?.toLowerCase() ||
@@ -831,39 +763,15 @@ export const getChangesFromTag = (
       return changesForRootTag(card, change_type, full_tag, 'collector_number', undefined, {
         dontAddNote: true,
       });
+    } else if (flagTags.includes(tag)) {
+      return changesForRootTag(card, change_type, full_tag, undefined, undefined, {
+        dontAddNote: true,
+      });
     }
   }
   return changesForRootTag(card, change_type, full_tag);
   // return changes.filter(change=>changeIsValid(card,change))
 };
-
-// // export const addTagToState = (state: tagState, tag: string):boolean => {
-// //   const tagToAdd = splitFullTag(tag).tag
-// //   pushPropToRecord(state!, 'added', tagToAdd, tag);
-// //   return tagChangesVisibleProps(tagToAdd)
-// // };
-// // export const deleteTagFromState = (state: tagState, tag: string):boolean => {
-// //   const tagToDelete = splitFullTag(tag).tag;
-// //   if (state?.added?.[tagToDelete]) {
-// //     delete state.added[tagToDelete];
-// //   } else if (state?.base_tags?.[tagToDelete] && !state.deleted?.includes(tagToDelete)) {
-// //     pushProp(state, 'deleted', tagToDelete);
-// //   } else {
-// //     return false;
-// //   }
-// //   return tagChangesVisibleProps(tagToDelete)
-// // };
-
-// export const mergeTagStates = (into: tagState, donor: tagState): tagState => {
-//   const state: tagState = structuredClone(into);
-//   if (donor.added) {
-//     Object.values(donor.added).forEach(tags => tags.forEach(tag => addTagToState(state, tag)));
-//   }
-//   if (donor.deleted) {
-//     donor.deleted.forEach(tag => deleteTagFromState(state, tag));
-//   }
-//   return state;
-// };
 
 export const addTagToBase = (base_tags: string[], fullTag: string): boolean => {
   if (!base_tags.includes(fullTag)) {
@@ -906,281 +814,3 @@ export const getBaseDiffs = (
   const deleted: string[] = oldBase.filter(tag => !newBase.includes(tag));
   return { added, deleted };
 };
-
-// const getMergedTags = (
-//   oldTags: string[],
-//   newTags: string[]
-// ): { mergedTags: string[]; shouldDeriveProps: boolean } => {
-//   let shouldDeriveProps = false;
-//   // TODO: implement this on the frontend too
-//   // TODO: move error to correct spot
-//   // if (card.kind == 'scryfall') throw console.error("Can't set tags for scryfall cards");
-//   const mergedTags = [...oldTags];
-//   const { added, deleted } = getBaseDiffs(oldTags, newTags);
-//   deleted.forEach(fullTag => {
-//     if (deleteTagFromBase(mergedTags, fullTag)) {
-//       shouldDeriveProps = true;
-//     }
-//   });
-//   added.forEach(fullTag => {
-//     if (addTagToBase(mergedTags, fullTag)) {
-//       shouldDeriveProps = true;
-//     }
-//   });
-//   return { mergedTags, shouldDeriveProps };
-// };
-
-// const setPropsFromTags = (card: HCCard.Any, tags: string[], shouldDeriveProps?: boolean) => {
-//   if (card.kind == 'scryfall') return;
-//   if (!shouldDeriveProps) {
-//     deletePropFromRoot(card, 'tag_notes');
-//     if (!tags.length /* || (tags.length == 1 && tags[0] == '') */) {
-//       deletePropFromRoot(card, 'tags');
-//       return;
-//     }
-//     card.tags = tags.map(fullTag => {
-//       const { tag, note } = splitFullTag(fullTag);
-//       if (note) {
-//         // addTagNote(card, tag, note);
-//       }
-//       return tag;
-//     });
-//     card.tags = Array.from(new Set(card.tags));
-//     return;
-//   }
-//   setTagPropsToDefault(card);
-//   deletePropFromRoot(card, 'tag_notes');
-//   if (!tags.length /* || (tags.length == 1 && tags[0] == '') */) {
-//     deletePropFromRoot(card, 'tags');
-//     // deletePropFromRoot(card, 'tag_state');
-//     if ('card_faces' in card) {
-//       card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
-//     } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
-//     return;
-//   }
-//   // if (setBaseTags || !card.tag_state) {
-//   //   addPropToRoot(card, 'tag_state', {});
-//   // }
-//   card.tags = tags.map(fullTag => {
-//     const { tag, note } = splitFullTag(fullTag);
-//     // if (setBaseTags) {
-//     //   pushPropToRecord(card.tag_state!, 'base_tags', tag, fullTag);
-//     // }
-//     if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
-//       addTag(card, tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
-//     } else if (tag in frameTags) {
-//       addTag(card, tag, note, 'frame', frameTags);
-//     } else if (tag in cardFrameTags && card.kind != 'token') {
-//       addTag(card, tag, note, 'frame', cardFrameTags);
-//     } else if (tag in tokenFrameTags && card.kind == 'token') {
-//       addTag(card, tag, note, 'frame', tokenFrameTags);
-//     } else if (tag in frameEffectTags) {
-//       addTag(card, tag, note || '0', 'frame_effects', frameEffectTags, { push: true });
-//     } else if (tag in faceImageTagProps) {
-//       addTag(card, tag, note, faceImageTagProps[tag], undefined, { useUrl: true });
-//     } else if (tag in borderColorTags) {
-//       addTag(card, tag, note, 'border_color', borderColorTags);
-//     } else if (layoutTags.includes(tag as layoutTagType)) {
-//       addLayoutTag(card, tag, note);
-//     } else if (tag == 'foil') {
-//       addTag(card, tag, note, 'finish', HCFinish.Foil);
-//     } else if (note) {
-//       if (tag in frontImageTagProps) {
-//         addTag(card, tag, note, frontImageTagProps[tag] as rootPropType, undefined, {
-//           useUrl: true,
-//           useRootOnly: true,
-//         });
-//         if (tag == 'draft-image') {
-//           addPropToRoot(card, 'draft_image_status', HCImageStatus.HighRes);
-//         }
-//       } else if (tag == 'back-image') {
-//         addTag(card, tag, note, 'image', undefined, { useUrl: true, defaultToBack: true });
-//       } else if (tag == 'flavor-name') {
-//         addTag(card, tag, note, 'flavor_name', undefined, { dontAddNote: true });
-//       } else if (
-//         tag.toLowerCase() == card.set?.toLowerCase() ||
-//         (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
-//           (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
-//       ) {
-//         addTag(card, tag, undefined, 'collector_number', note);
-//       } else {
-//         addTag(card, tag, note, undefined, undefined, { useRootOnly: true });
-//       }
-//     }
-//     return tag;
-//   });
-
-//   card.tags = Array.from(new Set(card.tags));
-//   if ('card_faces' in card) {
-//     card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
-//   } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
-// };
-
-// export const setTags = (card: HCCard.Any, newBase: string[], noForceDerivedProps?: boolean) => {
-//   const base: string[] = card.base_tags ?? [];
-//   const fixedNew = newBase.length == 1 && newBase[0] == '' ? [] : newBase;
-//   const { mergedTags, shouldDeriveProps } = getMergedTags(base, fixedNew);
-//   if (mergedTags.length) {
-//     addPropToRoot(card, 'base_tags', mergedTags);
-//   } else {
-//     deletePropFromRoot(card, 'base_tags');
-//   }
-//   setPropsFromTags(card, mergedTags, shouldDeriveProps || !noForceDerivedProps);
-// };
-
-// export const handleTags = (card: HCCard.Any, tagState: tagState, setBaseTags?: boolean, deriveInvisibleProps?:boolean) => {
-//   if (card.kind == 'scryfall') return;
-//   setTagPropsToDefault(card);
-//   const shouldDeriveProps:'all'|'visible'|false|undefined = deriveInvisibleProps ?
-//   if (!tags.length || (tags.length == 1 && tags[0] == '')) {
-//     deletePropFromRoot(card, 'tags');
-//     deletePropFromRoot(card, 'tag_notes');
-//     deletePropFromRoot(card, 'tag_state');
-//     if ('card_faces' in card) {
-//       card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
-//     } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
-//     return;
-//   }
-//   if (setBaseTags || !card.tag_state) {
-//     addPropToRoot(card, 'tag_state', {});
-//   }
-//   card.tags = tags.map(fullTag => {
-//     const { tag, note } = splitFullTag(fullTag);
-//     if (setBaseTags) {
-//       pushPropToRecord(card.tag_state!, 'base_tags', tag, fullTag);
-//     }
-//     if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
-//       addTag(card, tag, note, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
-//     } else if (tag in frameTags) {
-//       addTag(card, tag, note, 'frame', frameTags);
-//     } else if (tag in cardFrameTags && card.kind != 'token') {
-//       addTag(card, tag, note, 'frame', cardFrameTags);
-//     } else if (tag in tokenFrameTags && card.kind == 'token') {
-//       addTag(card, tag, note, 'frame', tokenFrameTags);
-//     } else if (tag in frameEffectTags) {
-//       addTag(card, tag, note || '0', 'frame_effects', frameEffectTags, { push: true });
-//     } else if (tag in faceImageTagProps) {
-//       addTag(card, tag, note, faceImageTagProps[tag], undefined, { useUrl: true });
-//     } else if (tag in borderColorTags) {
-//       addTag(card, tag, note, 'border_color', borderColorTags);
-//     } else if (layoutTags.includes(tag as layoutTagType)) {
-//       addLayoutTag(card, tag, note);
-//     } else if (tag == 'foil') {
-//       addTag(card, tag, note, 'finish', HCFinish.Foil);
-//     } else if (note) {
-//       if (tag in frontImageTagProps) {
-//         addTag(card, tag, note, frontImageTagProps[tag] as rootPropType, undefined, {
-//           useUrl: true,
-//           useRootOnly: true,
-//         });
-//         if (tag == 'draft-image') {
-//           addPropToRoot(card, 'draft_image_status', HCImageStatus.HighRes);
-//         }
-//       } else if (tag == 'back-image') {
-//         addTag(card, tag, note, 'image', undefined, { useUrl: true, defaultToBack: true });
-//       } else if (tag == 'flavor-name') {
-//         addTag(card, tag, note, 'flavor_name', undefined, { dontAddNote: true });
-//       } else if (
-//         tag.toLowerCase() == card.set?.toLowerCase() ||
-//         (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
-//           (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
-//       ) {
-//         addTag(card, tag, undefined, 'collector_number', note);
-//       } else {
-//         addTag(card, tag, note, undefined, undefined, { useRootOnly: true });
-//       }
-//     }
-//     return tag;
-//   });
-
-//   card.tags = Array.from(new Set(card.tags));
-//   if ('card_faces' in card) {
-//     card.card_faces.forEach((face, i) => setFacePropsFromTypes(face, layoutIsDefault(card, i)));
-//   } else setFacePropsFromTypes(card, layoutIsDefault(card), card.kind == 'token');
-// };
-
-// export const addTagContributor = (card: HCCard.Any, tag: string) => {
-//   if (!card.tag_state) {
-//     addPropToRoot(card, 'tag_state', {});
-//   }
-//   pushPropToRecord(card.tag_state!, 'added', splitFullTag(tag).tag, tag);
-//   mergeTags(card);
-// };
-// export const deleteTagContributor = (card: HCCard.Any, tag: string) => {
-//   const tagToDelete = splitFullTag(tag).tag;
-//   if (card.tag_state?.added?.[tagToDelete]) {
-//     delete card.tag_state.added[tagToDelete];
-//   } else if (
-//     card.tag_state?.base_tags?.[tagToDelete] &&
-//     !card.tag_state.deleted?.includes(tagToDelete)
-//   ) {
-//     pushProp(card.tag_state, 'deleted', tagToDelete);
-//   } else {
-//     return;
-//   }
-//   mergeTags(card);
-// };
-
-// export const tagRecordsEqual = (record1?: tagRecord, record2?: tagRecord): boolean => {
-//   if (!record1 || !record2) {
-//     return !record1 == !record2;
-//   }
-//   if (!doubleListEquals(Object.keys(record1), Object.keys(record2))) {
-//     return false;
-//   }
-//   Object.keys(record1).forEach(tag => {
-//     if (!doubleListEquals(record1[tag], record2[tag])) {
-//       return false;
-//     }
-//   });
-//   return true;
-// };
-
-// /**
-//  * Returns true if the tags changed and false otherwise
-//  */
-// export const updateTags = (card: HCCard.Any, state: tagState): boolean => {
-//   let shouldMerge = false;
-//   if (!tagRecordsEqual(card.tag_state?.base_tags, state.base_tags)) {
-//     shouldMerge = true;
-//     if (!state.base_tags) {
-//       delete card.tag_state?.base_tags;
-//     } else {
-//       if (!card.tag_state) {
-//         addPropToRoot(card, 'tag_state', {});
-//       }
-//       card.tag_state!.base_tags = state.base_tags;
-//     }
-//   }
-//   if (!tagRecordsEqual(card.tag_state?.added, state.added)) {
-//     shouldMerge = true;
-//     if (!state.added) {
-//       delete card.tag_state?.added;
-//     } else {
-//       if (!card.tag_state) {
-//         addPropToRoot(card, 'tag_state', {});
-//       }
-//       card.tag_state!.added = state.added;
-//     }
-//   }
-//   if (
-//     !card.tag_state?.deleted != !state.deleted ||
-//     (card.tag_state?.deleted &&
-//       state.deleted &&
-//       !doubleListEquals(card.tag_state.deleted, state.deleted))
-//   ) {
-//     shouldMerge = true;
-//     if (!state.deleted) {
-//       delete card.tag_state?.deleted;
-//     } else {
-//       if (!card.tag_state) {
-//         addPropToRoot(card, 'tag_state', {});
-//       }
-//       card.tag_state!.deleted = state.deleted;
-//     }
-//   }
-//   if (shouldMerge) {
-//     mergeTags(card);
-//   }
-//   return shouldMerge;
-// };

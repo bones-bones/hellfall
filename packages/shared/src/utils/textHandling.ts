@@ -290,7 +290,8 @@ export const toExportName = (name: string) => {
   const retName = name
     .replaceAll(/[[{]/g, '(')
     .replaceAll(/[\]}]/g, ')')
-    .replaceAll('\\', '')
+    .replaceAll(/\\/g, '')
+    // .replaceAll(/[\\.]/g, '')
     .replaceAll(/\((\d+)\)/g, '$1');
   return retName.slice(0, 2) == '  ' ? retName.trimStart() : retName;
 };

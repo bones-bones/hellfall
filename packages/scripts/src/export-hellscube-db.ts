@@ -8,7 +8,7 @@ import { config } from 'dotenv';
 import { writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredentials.js';
+import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredentials.ts';
 // import { exportHellscubeCards } from '@hellfall/shared/export/cards';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

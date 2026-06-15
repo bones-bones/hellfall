@@ -22,7 +22,7 @@ import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
 import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
-import { SortComponent } from './SortComponent.tsx';
+import { ControlBar } from './ControlBar.tsx';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
 import { extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
@@ -104,17 +104,17 @@ export const AdvancedSearch = () => {
         }
         case 'Tokens': {
           if (sets.length == 1) {
-            filters.push(`tokenset:${sets[0]}`);
+            filters.push(`~set:${sets[0]}`);
           } else {
-            filters.push(`(${sets.map(set => `tokenset:${set}`).join(' or ')})`);
+            filters.push(`(${sets.map(set => `~:${set}`).join(' or ')})`);
           }
           break;
         }
         case 'Both': {
           if (sets.length == 1) {
-            filters.push(`block:${sets[0]}`);
+            filters.push(`group:${sets[0]}`);
           } else {
-            filters.push(`(${sets.map(set => `block:${set}`).join(' or ')})`);
+            filters.push(`(${sets.map(set => `group:${set}`).join(' or ')})`);
           }
           break;
         }
@@ -123,13 +123,13 @@ export const AdvancedSearch = () => {
     const orFilters: string[] = [];
     const addHandlingOr = (searchKeyword: string, searchTerm: string, defaultOp = ':') => {
       if (searchTerm.startsWith('!?')) {
-        orFilters.push('-' + searchKeyword + defaultOp + searchTerm.slice(2));
+        orFilters.push(`-${searchKeyword}${defaultOp}"${searchTerm.slice(2)}"`);
       } else if (searchTerm.startsWith('!')) {
-        filters.push('-' + searchKeyword + defaultOp + searchTerm.slice(1));
+        filters.push(`-${searchKeyword}${defaultOp}"${searchTerm.slice(1)}"`);
       } else if (searchTerm.startsWith('?')) {
-        orFilters.push(searchKeyword + defaultOp + searchTerm.slice(1));
+        orFilters.push(`${searchKeyword}${defaultOp}"${searchTerm.slice(1)}"`);
       } else {
-        filters.push(searchKeyword + defaultOp + searchTerm);
+        filters.push(`${searchKeyword}${defaultOp}"${searchTerm}"`);
       }
     };
     const addAllHandlingOr = (searchKeyword: string, searchTerm: string[], defaultOp = ':') => {
@@ -379,6 +379,7 @@ export const AdvancedSearch = () => {
               'HC8.1',
               'HCJ',
               'HKL',
+              'HC9',
             ]}
             onChange={setSearchSet}
           />
@@ -526,7 +527,7 @@ export const AdvancedSearch = () => {
         </SearchCriteriaSection>
       </SearchContainer>
       <Separator />
-      <SortComponent />
+      <ControlBar />
       <SortSeparator />
       <StartButton
         colors={inputButtonColors}
