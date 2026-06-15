@@ -13,7 +13,7 @@ jobs:
       AUTH_CLOUD_RUN_REGION: ${{ vars.AUTH_CLOUD_RUN_REGION }}
       CLOUD_RUN_SOURCE_DIR: ${{ vars.CLOUD_RUN_SOURCE_DIR || '.' }}
     permissions:
-      contents: read
+      contents: write
       id-token: write
 
     steps:
@@ -39,3 +39,22 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --quiet
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="auth-server/$(date -u +%Y.%m.%d).${{ github.run_number }}"
+          {
+            echo "## Deploy"
+            echo
+            echo "- **Service:** ${AUTH_CLOUD_RUN_SERVICE_NAME}"
+            echo "- **Region:** ${AUTH_CLOUD_RUN_REGION}"
+            echo "- **Project:** ${GCP_AUTH_SERVER_PROJECT_ID}"
+            echo "- **Commit:** [\`${GITHUB_SHA::7}\`](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA})"
+            echo "- **Triggered by:** @${GITHUB_ACTOR}"
+          } > "$RUNNER_TEMP/release-notes.md"
+          gh release create "$TAG" \
+            --title "Auth Server — $(date -u +%Y-%m-%d)" \
+            --target "${GITHUB_SHA}" \
+            --notes-file "$RUNNER_TEMP/release-notes.md"
