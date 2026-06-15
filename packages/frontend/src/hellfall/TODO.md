@@ -42,10 +42,9 @@ Write a script to transform the database
 - full documentation
 - do better: evolution of the dreadmaw
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
-- add special cases for color searches/color identity searches for Crypticspire Mantis, Gold Sable, Blood ghast // Crip Ghast (It can be either red or blue), the aux (it's colorless), The Based God, Allied Signpost, Archetype Payoff, public domain removal creature (colorless)
+- add special cases for color searches/color identity searches for Blood ghast // Crip Ghast (It can be either red or blue) (can-ignore-color-identity)
 - switch italics to use serif font? (that way it's more distinct)
-- fully implement NotMagic
-- deal with later: Wild Magic Surge (both versions), Hell's Cube (both versions), Spain, Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones
+- deal with later: Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones, gandalf thingy
 - add reminder card for attractions
 - mork:
   - add ids
@@ -70,7 +69,6 @@ Write a script to transform the database
 - add community standards hider for offensive hc0s
 - add variations to hellfallcard?
 - fix order of color words in text
-- add color inference for faces
 - fix face cmc inference for transform and flip backsides
 - add phyrexian font
 - add double url (both id and name) like scryfall?
@@ -114,5 +112,13 @@ Write a script to transform the database
 - get rid of as much of the usage of anyPropType as possible
 - switch to using mapped/entry type pattern
 - add dropdown to tag editor for tags with multiple underlying base tags
-- set up my own firebase instance
 - use new change creator functions
+- make mse tag autoset image quality to medium
+- rename draft images to print images?
+- go back and do cards that I skipped before
+- add host/augment as layouts? or as frame effects?
+- collapse controls on narrow layouts like scryfall does
+- store default search settings with users like scryfall does
+- get a better random icon
+- figure out how to attach links/hrefs to the pagination buttons
+- once spain tokens get in, make sure they all get drop_face?

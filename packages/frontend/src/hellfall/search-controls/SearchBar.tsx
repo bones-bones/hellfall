@@ -1,12 +1,13 @@
 import { FormField, TextInput, space, styled } from '@workday/canvas-kit-react';
 import { useAtom } from 'jotai';
-import { queryAtom } from '../atoms/searchAtoms';
+import { pageAtom, queryAtom } from '../atoms/searchAtoms';
 import { useEffect, useMemo, useState } from 'react';
 import { useKeyPress } from '../../hooks';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { normalizeText } from '@hellfall/shared/utils';
 
-export const SearchBar = () => {
+export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) => {
+  const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -19,16 +20,23 @@ export const SearchBar = () => {
   }, [windowWidth]);
 
   const [query, setQuery] = useAtom(queryAtom);
-  const [localQuery, setLocalQuery] = useState(query);
+  const [localQuery, setLocalQuery] = useState(query == '*' && !alreadyOnSearch ? '' : query);
+  const [page, setPage] = useAtom(pageAtom);
 
   useEffect(() => {
-    if (localQuery != query) {
+    if (localQuery != query && !(query == '*' && !alreadyOnSearch)) {
       setLocalQuery(query);
     }
   }, [query]);
+
   const handleSubmit = (formData: FormData) => {
     const searchQuery = formData.get('search') as string;
-    setQuery(normalizeText(searchQuery));
+    if (alreadyOnSearch) {
+      setQuery(normalizeText(searchQuery));
+      setPage(0);
+    } else {
+      navigate(`/?q=${encodeURIComponent(query)}`, { replace: false });
+    }
   };
 
   return (

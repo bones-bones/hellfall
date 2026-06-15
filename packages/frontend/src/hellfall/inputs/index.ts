@@ -8,4 +8,3 @@ export {
   HiddenCheckboxGroup /**ColorCheckboxGroup*/,
 } from './Checkboxes';
 export { NumericComparatorSelector as NumberSelector } from './NumberSelector.tsx';
-export { PaginationComponent } from './PaginationComponent.tsx';

@@ -14,7 +14,7 @@ import { CHUNK_SIZE } from '../constants.ts';
 import { searchCards } from '@hellfall/shared/filters';
 import { tagsData } from '@hellfall/shared/data';
 
-export const useSearchResults = () => {
+export const useSearchResults = (asRandom?: boolean) => {
   // const navigate = useNavigate()
 
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
@@ -35,8 +35,13 @@ export const useSearchResults = () => {
   });
 
   useEffect(() => {
-    const tempResults = searchCards(cards, query, tagsData.data).cards();
-
+    const tempResults = (
+      asRandom && query == '*' ? cards : searchCards(cards, query, tagsData.data)
+    ).cards();
+    if (asRandom) {
+      setResultSet(tempResults);
+      return;
+    }
     for (let i = sortRules.length - 1; i >= 0; i--) {
       tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortRules[i].filter(a, '=', b));
     }

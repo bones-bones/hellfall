@@ -475,6 +475,24 @@
       "parent_set_code": "HCV"
     },
     {
+      "id": "2b29cd50-a65a-4559-b66c-210b1e55f1d0",
+      "code": "SCL",
+      "name": "Scube Lair Drops",
+      "description": "Like real Secret Lairs, but better in every way.",
+      "set_type": "side",
+      "child_set_codes": [
+        "HCV.S"
+      ]
+    },
+    {
+      "id": "d43fde19-1d17-468a-b252-70629b93dd97",
+      "code": "HCV.S",
+      "name": "Hellscube V(eto).S",
+      "description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
+      "set_type": "veto",
+      "parent_set_code": "HCV"
+    },
+    {
       "id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
       "code": "HCV",
       "name": "Hellscube V(eto)",
@@ -492,7 +510,8 @@
         "HCV.K",
         "HCV.8",
         "HCV.J",
-        "HCV.L"
+        "HCV.L",
+        "HCV.S"
       ]
     },
     {

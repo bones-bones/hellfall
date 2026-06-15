@@ -2,6 +2,7 @@ import {
   HCCard,
   HCCardFace,
   HCColors,
+  HCFrameEffect,
   HCKind,
   HCLegalitiesField,
   HCObject,
@@ -17,6 +18,7 @@ import {
   isRarity,
 } from '@hellfall/shared/types';
 import {
+  allPropType,
   CardMap,
   faceEntriesType,
   facePropType,
@@ -123,7 +125,6 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'flavor_name',
     'export_name',
     'rarity',
-    // 'image',
     'rotated_image',
     'still_image',
     'draft_image_status',
@@ -182,12 +183,9 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
   delete: [
     'flavor_name',
     'export_name',
-    'image_status',
     'image',
     'rotated_image',
     'still_image',
-    'mana_cost',
-    'mana_value',
     'supertypes',
     'types',
     'subtypes',
@@ -207,6 +205,10 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
   ],
   pop: ['frame_effects'],
 };
+
+const multiIgnoreDeleteProps: allPropType[] = ['image', 'frame', 'frame_effects'];
+const multiIgnoreAddProps: allPropType[] = ['image_status'];
+
 export const colorsAreValid = (colors: HCColors): boolean => {
   const colorList: HCColors = [];
   for (const color of colors) {
@@ -247,9 +249,9 @@ export const rootChangeIsValid = <K extends rootPropType>(
   card: HCCard.Any,
   change: rootChange<K>
 ) => {
-  if (card.kind == 'scryfall') {
-    return false;
-  }
+  // if (card.kind == 'scryfall') {
+  //   return false;
+  // }
   if (!rootChangeableProps[change.change_type].includes(change.prop)) {
     return false;
   }
@@ -355,18 +357,18 @@ export const faceChangeIsValid = <K extends facePropType>(
   card: HCCard.Any,
   change: faceChange<K>
 ) => {
-  if (card.kind == 'scryfall') {
-    return false;
-  }
+  // if (card.kind == 'scryfall') {
+  //   return false;
+  // }
   if (!faceChangeableProps[change.change_type].includes(change.prop)) {
     return false;
   }
   if ('card_faces' in card) {
     if (
-      change.index == undefined ||
-      !Number.isInteger(change.index) ||
-      change.index < 0 ||
-      change.index >= card.card_faces.length
+      change.index != undefined &&
+      (!Number.isInteger(change.index) ||
+        change.index < 0 ||
+        change.index >= card.card_faces.length)
     ) {
       return false;
     }
@@ -445,9 +447,9 @@ export const faceChangeIsValid = <K extends facePropType>(
 };
 export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange): boolean => {
   // TODO: Make sure this properly handles when multiple card faces are being added
-  if (card.kind == 'scryfall') {
-    return false;
-  }
+  // if (card.kind == 'scryfall') {
+  //   return false;
+  // }
   if (
     !('card_faces' in card) &&
     (change.change_type == 'delete' || ![0, 1].includes(change.index))
@@ -492,6 +494,12 @@ export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange
         case 'types':
         case 'subtypes':
           return Array.isArray(value) && value.every(v => typeof v == 'string');
+        case 'frame':
+          return isFrame(value);
+        case 'border_color':
+          return isBorderColor(value);
+        case 'frame_effects':
+          return Array.isArray(value) && value.every(v => isFrameEffect(v));
       }
       return (
         [
@@ -649,6 +657,9 @@ export const applyRootChange = <K extends rootPropType>(
         deletePropFromRecord(card, 'artist_notes', change.value as string);
       }
       popPropFromRoot(card, change.prop, change.value!);
+      if (change.prop == 'frame_effects' && !card.frame_effects?.length) {
+        deletePropFromRoot(card, change.prop);
+      }
       break;
   }
   return rootDeriveProps.includes(change.prop);
@@ -683,7 +694,7 @@ export const applyFaceChange = <K extends facePropType>(
       popPropFromFace(card, change.prop, change.value!, change.index);
       if (
         change.prop == 'frame_effects' &&
-        !(toFaces(card)[change.index ?? 0][change.prop] as any[]).length
+        !toFaces(card)[change.index ?? 0].frame_effects?.length
       ) {
         deletePropFromFace(card, change.prop, change.index);
       }
@@ -693,26 +704,25 @@ export const applyFaceChange = <K extends facePropType>(
 };
 
 export const applyCardFacesChange = (card: HCCard.Any, change: cardFacesChange): boolean => {
-  // TODO: make sure this works when using toSingleFaced/toMultiFaced (i.e. that it actually modifies the original)
   if (change.change_type == 'delete') {
     if (!('card_faces' in card)) {
       throw console.error('Tried to delete a nonexistent face');
     }
     card.card_faces.splice(change.index, 1);
     if (card.card_faces.length == 1) {
-      card = toSingleFaced(card);
+      toSingleFaced(card);
     }
   } else {
     if (!change.face) {
       throw console.error('Tried to add a nonexistent face');
     }
     if (!('card_faces' in card)) {
-      card = toMultiFaced(card);
+      toMultiFaced(card);
     }
     // if (!('card_faces' in card)) {
     //   throw console.error('Something went very, very wrong')
     // }
-    card.card_faces.splice(change.index, 0, change.face);
+    (card as HCCard.AnyMultiFaced).card_faces.splice(change.index, 0, change.face);
   }
   return true;
 };
@@ -777,6 +787,9 @@ export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
     const note = card.tag_notes?.[tag];
     if (note && !card.base_tags?.some(fullTag => splitFullTag(fullTag).note == note)) {
       delete card.tag_notes![tag];
+      if (!Object.keys(card.tag_notes!).length) {
+        delete card.tag_notes;
+      }
     }
   }
   return true;
@@ -980,16 +993,17 @@ const rootIgnoreProps: Record<HCKind, rootPropType[]> = {
   notmagic: ['keywords', 'image_status', 'draft_image_status'],
 };
 const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
-  card: ['colors'],
+  // card: ['colors'],
   token: ['mana_cost', 'mana_value', 'subtypes', 'oracle_text', 'colors'],
-  land: ['colors'],
-  front: ['colors'],
-  scryfall: ['colors'],
-  notmagic: ['colors'],
+  // land: ['colors'],
+  // front: ['colors'],
+  // scryfall: ['colors'],
+  // notmagic: ['colors'],
 };
 
 export const changeTypeOrder = ['delete', 'pop', 'add', 'push'];
-export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
+// export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
+export const locationOrder = ['tag', 'card_faces', 'all_parts', 'root', 'face'];
 
 export const sortChanges = (a: anyChange, b: anyChange): number =>
   locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
@@ -1178,7 +1192,19 @@ export const getChangesFromDifferences = (
               if (value == undefined) return;
               if (pullingFromSheet) {
                 if (!value && !faceBlankableProps[existingCard.kind]?.includes(prop)) return;
-                if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
+                if (
+                  faceIgnoreProps[existingCard.kind]?.includes(prop) ||
+                  (Array.isArray(value) && !value.length)
+                )
+                  return;
+                if (
+                  prop == 'colors' &&
+                  ('color_indicator' in newFace ||
+                    'color_indicator' in existingFace ||
+                    existingFace.frame_effects?.includes(HCFrameEffect.Devoid) ||
+                    existingCard.frame_effects?.includes(HCFrameEffect.Devoid))
+                )
+                  return;
                 if (prop == 'image_status' && newFace.image) return;
               }
               const change: faceChange<typeof prop> = {
@@ -1296,30 +1322,53 @@ export const getChangesFromDifferences = (
       changeList.push(change);
     });
   const { added, deleted } = getBaseDiffs(existingCard.base_tags ?? [], newCard.base_tags ?? []);
-
-  changeList.push(...added.flatMap(tag => getChangesFromTag(existingCard, 'add', tag)[0] ?? []));
+  const alsoAddingFaces = changeList.some(
+    change => change.location == 'card_faces' && change.change_type == 'add'
+  );
   changeList.push(
-    ...deleted.flatMap(tag => getChangesFromTag(existingCard, 'delete', tag)[0] ?? [])
+    ...added.flatMap(tag => getChangesFromTag(existingCard, 'add', tag, alsoAddingFaces)[0] ?? [])
+  );
+  changeList.push(
+    ...deleted.flatMap(
+      tag => getChangesFromTag(existingCard, 'delete', tag, alsoAddingFaces)[0] ?? []
+    )
   );
   return changeList.sort(sortChanges);
 };
 
-export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean => {
+export const applyChanges = (
+  card: HCCard.Any,
+  changeList: anyChange[],
+  applyingFromSheet?: boolean
+): boolean => {
   let setDerived = false;
   changeList.forEach((change, index) => {
     if (!changeIsValid(card, change)) {
       if (
         !('card_faces' in card) &&
-        change.location == 'root' &&
+        change.location == 'face' &&
+        !change.index &&
         changeList
           .slice(0, index)
           .some(
             other =>
-              other.location == 'face' &&
+              other.location == 'root' &&
               other.change_type == change.change_type &&
               other.prop == change.prop &&
               other.value == change.value
           )
+      ) {
+        return;
+      }
+      if (
+        'card_faces' in card &&
+        change.location == 'face' &&
+        !change.index &&
+        (change.change_type == 'delete' || change.change_type == 'pop'
+          ? multiIgnoreDeleteProps
+          : multiIgnoreAddProps
+        ).includes(change.prop as allPropType) &&
+        changeList.some(other => other.location == 'card_faces')
       ) {
         return;
       }
@@ -1328,7 +1377,7 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
     if (applyChange(card, change)) {
       setDerived = true;
     }
-    if (change.location == 'card_faces') {
+    if (change.location == 'card_faces' && !applyingFromSheet) {
       const face = change.index;
       for (let i = changeList.length - 1; i > index; i--) {
         const otherChange = changeList[i];
@@ -1361,10 +1410,9 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[]): boolean
 export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
   const changeList = getChangesFromDifferences(existingCard, newCard, true);
   if (newCard.kind != 'scryfall') {
-    applyChanges(existingCard, changeList);
+    applyChanges(existingCard, changeList, true);
     setDerivedProps(existingCard);
-  }
-  if (newCard.kind == 'scryfall') {
+  } else {
     newCard.all_parts = existingCard.all_parts;
     setDerivedProps(newCard);
     return newCard;

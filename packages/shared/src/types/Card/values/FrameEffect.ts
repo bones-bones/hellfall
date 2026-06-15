@@ -15,6 +15,8 @@ export enum HCFrameEffect {
   TransformDfc = 'transformdfc',
   /** The cards have generic mdfc marks */
   Mdfc = 'mdfc',
+  /** The cards have cube marks */
+  Cube = 'cube',
   /** The cards have generic specialize marks */
   Specialize = 'specialize',
   /** The cards have meld marks */
@@ -87,6 +89,7 @@ export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.FanDfc,
   HCFrameEffect.Mdfc,
   HCFrameEffect.Specialize,
+  HCFrameEffect.Cube,
 ];
 export const isFrameEffect = (value: any): value is HCFrameEffect =>
   Object.values(HCFrameEffect).includes(value as HCFrameEffect);
