@@ -35,6 +35,8 @@ import {
   getDefaultKindLayout,
   getDefaultTypeLayout,
   createFaceChange,
+  splitFullTag,
+  splitFaceTag,
   // setTags,
 } from '@hellfall/shared/utils';
 
@@ -140,6 +142,7 @@ export const applyChangesFromNewBase = (card: HCCard.Any, newBase: string[]) => 
   const changeList: anyChange[] = [];
   changeList.push(...added.flatMap(tag => getChangesFromTag(card, 'add', tag)));
   changeList.push(...deleted.flatMap(tag => getChangesFromTag(card, 'delete', tag)));
+
   changeList.sort(sortChanges);
   applyChanges(card, changeList);
 };
@@ -172,6 +175,16 @@ export const setDerivedProps = (
     applyChanges(card, changes);
   }
 
+  const baseIncludesFlag = (flag:string, i:number):boolean|undefined => card.base_tags?.some(full_tag=> {
+    const {tag, note, face} = splitFaceTag(full_tag);
+    if (tag!=flag) {
+      return false;
+    }
+    if (face == undefined || face == i) {
+      return true;
+    }
+    return false;
+  })
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,
     i: number
@@ -182,29 +195,29 @@ export const setDerivedProps = (
         ((listShareLower(face.supertypes, 'legendary') &&
           !listShareLower(face.types, 'planeswalker') &&
           !listShareLower(face.types, 'player') &&
-          !card.tags?.includes('missing-legend-frame')) ||
-          card.tags?.includes('legend-frame')) &&
+          !baseIncludesFlag('missing-legend-frame', i)) ||
+          baseIncludesFlag('legend-frame', i)) &&
         !face.frame_effects?.includes(HCFrameEffect.Legendary)
       ) {
         effects.push(HCFrameEffect.Legendary);
       }
       if (
         listShareLower(face.supertypes, 'snow') &&
-        !card.tags?.includes('missing-snow-frame') &&
+        !baseIncludesFlag('missing-snow-frame', i) &&
         !face.frame_effects?.includes(HCFrameEffect.Snow)
       ) {
         effects.push(HCFrameEffect.Snow);
       }
       if (
         listShareLower(face.subtypes, 'lesson') &&
-        !card.tags?.includes('missing-lesson-frame') &&
+        !baseIncludesFlag('missing-lesson-frame', i) &&
         !face.frame_effects?.includes(HCFrameEffect.Lesson)
       ) {
         effects.push(HCFrameEffect.Lesson);
       }
       if (
         listShareLower(face.subtypes, 'vehicle') &&
-        !card.tags?.includes('missing-vehicle-frame') &&
+        !baseIncludesFlag('missing-vehicle-frame', i) &&
         !face.frame_effects?.includes(HCFrameEffect.Vehicle)
       ) {
         effects.push(HCFrameEffect.Vehicle);
@@ -213,9 +226,9 @@ export const setDerivedProps = (
       ((listShareLower(face.supertypes, 'legendary') &&
         !listShareLower(face.types, 'planeswalker') &&
         !listShareLower(face.types, 'player') &&
-        card.tags?.includes('hearthstone-frame') &&
-        !card.tags?.includes('missing-legend-frame')) ||
-        card.tags?.includes('legend-frame')) &&
+        baseIncludesFlag('hearthstone-frame', i) &&
+        !baseIncludesFlag('missing-legend-frame', i)) ||
+        baseIncludesFlag('legend-frame', i)) &&
       !face.frame_effects?.includes(HCFrameEffect.Legendary)
     ) {
       effects.push(HCFrameEffect.Legendary);
@@ -226,34 +239,34 @@ export const setDerivedProps = (
         !i &&
         card.layout == HCLayout.Transform &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-transform-frame')
+        !baseIncludesFlag('missing-transform-frame', i)
       ) {
         effects.push(HCFrameEffect.TransformDfc);
       } else if (
         !i &&
         card.layout == HCLayout.Modal &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-mdfc-frame')
+        !baseIncludesFlag('missing-mdfc-frame', i)
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         !i &&
         card.layout == HCLayout.Cube &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-cube-frame')
+        !baseIncludesFlag('missing-cube-frame', i)
       ) {
         effects.push(HCFrameEffect.Cube);
       } else if (
         !i &&
         card.layout == HCLayout.Specialize &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-specialize-frame')
+        !baseIncludesFlag('missing-specialize-frame', i)
       ) {
         effects.push(HCFrameEffect.Specialize);
       } else if (
         face.layout == HCLayout.Transform &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-transform-frame')
+        !baseIncludesFlag('missing-transform-frame', i)
       ) {
         const effect = card.card_faces[0].frame_effects?.find(effect =>
           TransformFrameEffects.includes(effect)
@@ -262,19 +275,19 @@ export const setDerivedProps = (
       } else if (
         face.layout == HCLayout.Modal &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-mdfc-frame')
+        !baseIncludesFlag('missing-mdfc-frame', i)
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         face.layout == HCLayout.Cube &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-cube-frame')
+        !baseIncludesFlag('missing-cube-frame', i)
       ) {
         effects.push(HCFrameEffect.Cube);
       } else if (
         face.layout == HCLayout.Specialize &&
         !listShare(face.frame_effects, TransformFrameEffects) &&
-        !card.tags?.includes('missing-specialize-frame')
+        !baseIncludesFlag('missing-specialize-frame', i)
       ) {
         effects.push(HCFrameEffect.Specialize);
       }
@@ -288,6 +301,8 @@ export const setDerivedProps = (
       face.colors = orderColors(face.colors);
       if (face.color_indicator) {
         face.color_indicator = orderColors(face.color_indicator);
+      } else if (baseIncludesFlag('unnecessary-color-indicator',i)) {
+        face.color_indicator = face.colors
       }
       const face_type = [
         face.supertypes?.join(' '),
