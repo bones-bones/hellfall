@@ -2,6 +2,7 @@ import {
   HCCard,
   HCCardFace,
   HCColors,
+  HCFrameEffect,
   HCKind,
   HCLegalitiesField,
   HCObject,
@@ -205,14 +206,8 @@ export const faceChangeableProps: Record<changeType, facePropType[]> = {
   pop: ['frame_effects'],
 };
 
-const multiIgnoreDeleteProps:allPropType[] = [
-  'image',
-  'frame',
-  'frame_effects'
-]
-const multiIgnoreAddProps:allPropType[] = [
-  'image_status',
-]
+const multiIgnoreDeleteProps: allPropType[] = ['image', 'frame', 'frame_effects'];
+const multiIgnoreAddProps: allPropType[] = ['image_status'];
 
 export const colorsAreValid = (colors: HCColors): boolean => {
   const colorList: HCColors = [];
@@ -372,8 +367,8 @@ export const faceChangeIsValid = <K extends facePropType>(
     if (
       change.index != undefined &&
       (!Number.isInteger(change.index) ||
-      change.index < 0 ||
-      change.index >= card.card_faces.length)
+        change.index < 0 ||
+        change.index >= card.card_faces.length)
     ) {
       return false;
     }
@@ -499,10 +494,10 @@ export const cardFacesChangeIsValid = (card: HCCard.Any, change: cardFacesChange
         case 'types':
         case 'subtypes':
           return Array.isArray(value) && value.every(v => typeof v == 'string');
-        case 'frame': 
-          return isFrame(value)
-        case 'border_color': 
-          return isBorderColor(value)
+        case 'frame':
+          return isFrame(value);
+        case 'border_color':
+          return isBorderColor(value);
         case 'frame_effects':
           return Array.isArray(value) && value.every(v => isFrameEffect(v));
       }
@@ -663,7 +658,7 @@ export const applyRootChange = <K extends rootPropType>(
       }
       popPropFromRoot(card, change.prop, change.value!);
       if (change.prop == 'frame_effects' && !card.frame_effects?.length) {
-        deletePropFromRoot(card, change.prop)
+        deletePropFromRoot(card, change.prop);
       }
       break;
   }
@@ -697,7 +692,9 @@ export const applyFaceChange = <K extends facePropType>(
       break;
     case 'pop':
       popPropFromFace(card, change.prop, change.value!, change.index);
-      if (change.prop == 'frame_effects' &&!toFaces(card)[change.index ?? 0].frame_effects?.length
+      if (
+        change.prop == 'frame_effects' &&
+        !toFaces(card)[change.index ?? 0].frame_effects?.length
       ) {
         deletePropFromFace(card, change.prop, change.index);
       }
@@ -996,12 +993,12 @@ const rootIgnoreProps: Record<HCKind, rootPropType[]> = {
   notmagic: ['keywords', 'image_status', 'draft_image_status'],
 };
 const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
-  card: ['colors'],
+  // card: ['colors'],
   token: ['mana_cost', 'mana_value', 'subtypes', 'oracle_text', 'colors'],
-  land: ['colors'],
-  front: ['colors'],
-  scryfall: ['colors'],
-  notmagic: ['colors'],
+  // land: ['colors'],
+  // front: ['colors'],
+  // scryfall: ['colors'],
+  // notmagic: ['colors'],
 };
 
 export const changeTypeOrder = ['delete', 'pop', 'add', 'push'];
@@ -1195,7 +1192,19 @@ export const getChangesFromDifferences = (
               if (value == undefined) return;
               if (pullingFromSheet) {
                 if (!value && !faceBlankableProps[existingCard.kind]?.includes(prop)) return;
-                if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
+                if (
+                  faceIgnoreProps[existingCard.kind]?.includes(prop) ||
+                  (Array.isArray(value) && !value.length)
+                )
+                  return;
+                if (
+                  prop == 'colors' &&
+                  ('color_indicator' in newFace ||
+                    'color_indicator' in existingFace ||
+                    existingFace.frame_effects?.includes(HCFrameEffect.Devoid) ||
+                    existingCard.frame_effects?.includes(HCFrameEffect.Devoid))
+                )
+                  return;
                 if (prop == 'image_status' && newFace.image) return;
               }
               const change: faceChange<typeof prop> = {
@@ -1313,15 +1322,25 @@ export const getChangesFromDifferences = (
       changeList.push(change);
     });
   const { added, deleted } = getBaseDiffs(existingCard.base_tags ?? [], newCard.base_tags ?? []);
-  const alsoAddingFaces = changeList.some(change=>change.location == 'card_faces' && change.change_type == 'add')
-  changeList.push(...added.flatMap(tag => getChangesFromTag(existingCard, 'add', tag, alsoAddingFaces)[0] ?? []));
+  const alsoAddingFaces = changeList.some(
+    change => change.location == 'card_faces' && change.change_type == 'add'
+  );
   changeList.push(
-    ...deleted.flatMap(tag => getChangesFromTag(existingCard, 'delete', tag, alsoAddingFaces)[0] ?? [])
+    ...added.flatMap(tag => getChangesFromTag(existingCard, 'add', tag, alsoAddingFaces)[0] ?? [])
+  );
+  changeList.push(
+    ...deleted.flatMap(
+      tag => getChangesFromTag(existingCard, 'delete', tag, alsoAddingFaces)[0] ?? []
+    )
   );
   return changeList.sort(sortChanges);
 };
 
-export const applyChanges = (card: HCCard.Any, changeList: anyChange[], applyingFromSheet?:boolean): boolean => {
+export const applyChanges = (
+  card: HCCard.Any,
+  changeList: anyChange[],
+  applyingFromSheet?: boolean
+): boolean => {
   let setDerived = false;
   changeList.forEach((change, index) => {
     if (!changeIsValid(card, change)) {
@@ -1345,8 +1364,11 @@ export const applyChanges = (card: HCCard.Any, changeList: anyChange[], applying
         'card_faces' in card &&
         change.location == 'face' &&
         !change.index &&
-        ((change.change_type == 'delete' || change.change_type == 'pop') ?multiIgnoreDeleteProps:multiIgnoreAddProps).includes(change.prop as allPropType) &&
-        changeList.some(other =>other.location == 'card_faces')
+        (change.change_type == 'delete' || change.change_type == 'pop'
+          ? multiIgnoreDeleteProps
+          : multiIgnoreAddProps
+        ).includes(change.prop as allPropType) &&
+        changeList.some(other => other.location == 'card_faces')
       ) {
         return;
       }

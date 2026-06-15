@@ -122,4 +122,3 @@ Write a script to transform the database
 - get a better random icon
 - figure out how to attach links/hrefs to the pagination buttons
 - once spain tokens get in, make sure they all get drop_face?
-- run the color inference for existing cards once

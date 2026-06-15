@@ -175,16 +175,17 @@ export const setDerivedProps = (
     applyChanges(card, changes);
   }
 
-  const baseIncludesFlag = (flag:string, i:number):boolean|undefined => card.base_tags?.some(full_tag=> {
-    const {tag, note, face} = splitFaceTag(full_tag);
-    if (tag!=flag) {
+  const baseIncludesFlag = (flag: string, i: number): boolean | undefined =>
+    card.base_tags?.some(full_tag => {
+      const { tag, note, face } = splitFaceTag(full_tag);
+      if (tag != flag) {
+        return false;
+      }
+      if (face == undefined || face == i) {
+        return true;
+      }
       return false;
-    }
-    if (face == undefined || face == i) {
-      return true;
-    }
-    return false;
-  })
+    });
   const getFrameEffectsFromFace = (
     face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,
     i: number
@@ -301,8 +302,8 @@ export const setDerivedProps = (
       face.colors = orderColors(face.colors);
       if (face.color_indicator) {
         face.color_indicator = orderColors(face.color_indicator);
-      } else if (baseIncludesFlag('unnecessary-color-indicator',i)) {
-        face.color_indicator = face.colors
+      } else if (baseIncludesFlag('unnecessary-color-indicator', i)) {
+        face.color_indicator = face.colors;
       }
       const face_type = [
         face.supertypes?.join(' '),

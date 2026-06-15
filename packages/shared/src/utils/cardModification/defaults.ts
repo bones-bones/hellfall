@@ -315,12 +315,12 @@ export const toMultiFaced = (card: HCCard.AnySingleFaced) => {
     }
   });
   const newCard = getDefaultCard(card.kind, true, entryProps, faceProps);
-  getRootEntries(newCard).forEach(([prop, value]) => addPropToRoot(card,prop,value));
+  getRootEntries(newCard).forEach(([prop, value]) => addPropToRoot(card, prop, value));
   Object.keys(card).forEach(prop => {
     if (!(prop in newCard)) {
-      delete (card as any)[prop]
+      delete (card as any)[prop];
     }
-  })
+  });
 };
 
 export const toSingleFaced = (card: HCCard.AnyMultiFaced) => {
@@ -341,13 +341,12 @@ export const toSingleFaced = (card: HCCard.AnyMultiFaced) => {
     }
   });
   const newCard = getDefaultCard(card.kind, false, entryProps, faceProps);
-  getRootEntries(newCard).forEach(([prop, value]) =>addPropToRoot(card,prop,value));
+  getRootEntries(newCard).forEach(([prop, value]) => addPropToRoot(card, prop, value));
   Object.keys(card).forEach(prop => {
     if (!(prop in newCard)) {
-      delete (card as any)[prop]
+      delete (card as any)[prop];
     }
-  })
-
+  });
 };
 
 // export const layoutIsDefault = (card: HCCard.Any, index?: number) => {
