@@ -391,8 +391,7 @@ export const HellfallCard = ({
             />
           )}
           {
-            /* displayTags.length > 0 || pendingTagStaging || */ user ? (
-              <>
+            <>
                 {tagsLoading && <SmallText>Loading tags…</SmallText>}
                 {tagsError && (
                   <SmallText style={{ color: '#c00' }}>Could not load tag overrides.</SmallText>
@@ -523,39 +522,6 @@ export const HellfallCard = ({
                   </SmallText>
                 )}
               </>
-            ) : (
-              <>
-                <SmallText key="Tags">
-                  Tags:{' '}
-                  {data.tags?.map((tagEntry, i, ar) => (
-                    <span key={tagEntry}>
-                      <TagLink>
-                        <Link
-                          to={`/?${new URLSearchParams([['q', `tag=${tagEntry}`]]).toString()}`}
-                          target="_blank"
-                        >
-                          {tagEntry}
-                        </Link>
-                      </TagLink>
-                      {data.tag_notes &&
-                        tagEntry in data.tag_notes &&
-                        (data.tag_notes[tagEntry].startsWith('https:') ? (
-                          <>
-                            <SmallLine> (</SmallLine>
-                            <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
-                            <SmallLine>)</SmallLine>
-                          </>
-                        ) : (
-                          <>
-                            <SmallLine> ({data.tag_notes[tagEntry]})</SmallLine>
-                          </>
-                        ))}
-                      {i < ar.length - 1 && ', '}
-                    </span>
-                  ))}
-                </SmallText>
-              </>
-            )
           }
           {displayCard.all_parts && (
             <>
