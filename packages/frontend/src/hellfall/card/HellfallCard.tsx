@@ -1,13 +1,14 @@
 import {
+  Box,
   ButtonColors,
   Card,
   Heading,
   inputColors,
   PrimaryButton,
-  PrimaryButtonProps,
   type,
+  Text
 } from '@workday/canvas-kit-react';
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 import { SetLegality } from './SetLegality.tsx';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
 import { formatParens, toPlainText } from '@hellfall/shared/utils';
@@ -19,9 +20,6 @@ import {
   useEffect,
   useMemo,
   useRef,
-  ElementType,
-  ComponentPropsWithoutRef,
-  Ref,
 } from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../hooks/useCardTagOverrides.ts';
@@ -34,12 +32,13 @@ import {
 import { tagsData } from '@hellfall/shared/data';
 import { CardEditPanel } from './CardEditPanel.tsx';
 import { PendingChanges } from './PendingChanges.tsx';
-import { HellfallRelatedEntry } from '../HellfallRelatedEntry.tsx';
+import { HellfallRelatedEntry } from '../entry/HellfallRelatedEntry.tsx';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
       <>
-        <MediumText>{stringToMana(entry)}</MediumText>
+        <Box cs={mediumText}>{stringToMana(entry)}</Box>
         {/* <br/> */}
       </>
     );
@@ -123,7 +122,6 @@ export const HellfallCard = ({
   const isContributor = Boolean(user?.isAdmin || user?.isContributor);
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const linkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (!windowRef.current) return;
@@ -148,30 +146,30 @@ export const HellfallCard = ({
   const { images: imagesToShow, names: imageNames } = getImages(displayCard);
 
   return (
-    <Container ref={windowRef} key={displayCard.id} style={{ lineHeight: 1 }}>
-      <title>{data.name} || Hellfall</title>
+    <Box cs={container} ref={windowRef} key={displayCard.id}>
+      {onSinglePage && <title>{data.name} || Hellfall</title>}
       {!imagesToShow.length ? (
-        <Test>
-          <ImageContainer key="image-container">
+        <Box cs={test}>
+          <Box cs={imageContainer} key="image-container">
             <img
               alt={toPlainText(displayCard)}
               src={displayCard.image!}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
             />
-          </ImageContainer>
-        </Test>
+          </Box>
+        </Box>
       ) : (
         <>
-          <ImageContainer key={imagesToShow[activeImageSide] || displayCard.image}>
+          <Box cs={imageContainer} key={imagesToShow[activeImageSide] || displayCard.image}>
             <img
               alt={toPlainText(displayCard)}
               src={imagesToShow[activeImageSide] || displayCard.image!}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
             />
-          </ImageContainer>
-          <ButtonContainer>
+          </Box>
+          <Box>
             {imagesToShow.length > 1 &&
               imagesToShow.map((_e, i) => {
                 return (
@@ -186,69 +184,68 @@ export const HellfallCard = ({
                   </button>
                 );
               })}
-          </ButtonContainer>
+          </Box>
         </>
       )}
-      <Card style={{ width: '100%' }}>
+      <Card cs={{ width: '100%' }}>
         <Card.Body padding={'zero'} marginTop={'-20px'}>
           {/* {'card_faces' in displayCard && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{displayCard.name}</StyledHeading>} */}
           {('card_faces' in displayCard ? displayCard.card_faces : [displayCard]).map((face, i) => (
             <span key={'face-' + (i + 1)}>
-              {i > 0 && <Divider />}
+              {i > 0 && <hr className={divider} />}
               {face.name &&
                 (displayCard.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
-                  <MediumLine
+                  <Text cs={mediumLineMargin}
                     key="name"
-                    style={{ marginRight: '1em' }}
                     dangerouslySetInnerHTML={{ __html: face.name }}
                   />
                 ) : triggerEscapeList.some(e => face.name.includes(e)) ? (
-                  <MediumLine key="name" style={{ marginRight: '1em' }}>
+                  <Text cs={mediumLineMargin} key="name">
                     {formatDiscordMarkdownInline(formatParens(face.name))}
-                  </MediumLine>
+                  </Text>
                 ) : (
-                  <MediumLine key="name" style={{ marginRight: '1em' }}>
+                  <Text cs={mediumLineMargin} key="name">
                     {stringToMana(face.name)}
-                  </MediumLine>
+                  </Text>
                 ))}
-              <MediumLine key="cost"> {stringToMana(face.mana_cost)}</MediumLine>
+              <Text cs={mediumLine} key="cost"> {stringToMana(face.mana_cost)}</Text>
               {face.flavor_name &&
                 (triggerEscapeList.some(e => face.name.includes(e)) ? (
                   <>
                     <br />
-                    <MediumLine key="flavor-name">
+                    <Text cs={mediumLine} key="flavor-name">
                       {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.flavor_name))}
-                    </MediumLine>
+                    </Text>
                   </>
                 ) : (
                   <>
                     <br />
-                    <MediumItalicLine key="flavor-name">
+                    <Text cs={mediumItalicLine} key="flavor-name">
                       {stringToMana(face.flavor_name)}
-                    </MediumItalicLine>
+                    </Text>
                   </>
                 ))}
               {'   '}
-              {(face.color_indicator || face.type_line) && <Separator />}
+              {(face.color_indicator || face.type_line) && <hr className={separator} />}
               {face.color_indicator && (
                 <>
-                  <MediumLine key="color-indicator">
+                  <Text cs={mediumLine} key="color-indicator">
                     {colorsToIndicator(face.color_indicator)}
-                  </MediumLine>{' '}
+                  </Text>{' '}
                 </>
               )}
               {face.type_line &&
                 (triggerEscapeList.some(e => face.type_line.includes(e)) ? (
-                  <MediumLine key="type">
+                  <Text cs={mediumLine} key="type">
                     {formatDiscordMarkdownInline(formatParens(face.type_line))}
-                  </MediumLine>
+                  </Text>
                 ) : (
-                  <MediumLine key="type">{stringToMana(face.type_line)}</MediumLine>
+                  <Text cs={mediumLine} key="type">{stringToMana(face.type_line)}</Text>
                 ))}
-              {(face.oracle_text || face.flavor_text) && <Separator />}
+              {(face.oracle_text || face.flavor_text) && <hr className={separator} />}
               {face.oracle_text &&
                 (displayCard.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
-                  <MediumText key="rules">
+                  <Box cs={mediumText} key="rules">
                     {formatDiscordMarkdown(
                       formatParens(face.oracle_text),
                       text =>
@@ -258,84 +255,84 @@ export const HellfallCard = ({
                         ),
                       true
                     )}
-                  </MediumText>
+                  </Box>
                 ) : triggerEscapeList.some(e => face.oracle_text.includes(e)) ? (
-                  <MediumText key="rules">
+                  <Box cs={mediumText} key="rules">
                     {formatDiscordMarkdown(formatParens(face.oracle_text))}
-                  </MediumText>
+                  </Box>
                 ) : (
                   <>
-                    <MediumText key="rules">{renderText(face.oracle_text.split('\\n'))}</MediumText>
+                    <Box cs={mediumText} key="rules">{renderText(face.oracle_text.split('\\n'))}</Box>
                   </>
                 ))}
               {face.flavor_text &&
                 (['*', '_', '~'].some(e => face.flavor_text?.includes(e)) ? (
-                  <MediumText key="flavor">
+                  <Box cs={mediumText} key="flavor">
                     {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
-                  </MediumText>
+                  </Box>
                 ) : (
                   <>
-                    <MediumItalics key="flavor">
+                    <Box cs={mediumItalics} key="flavor">
                       {renderText(face.flavor_text.split('\\n'))}
-                    </MediumItalics>
+                    </Box>
                   </>
                 ))}
               {(face.power || face.toughness) && (
                 <>
-                  <Separator />
-                  <MediumText key="stats">
+                  <hr className={separator} />
+                  <Box cs={mediumText} key="stats">
                     {face.power}/{face.toughness}
-                  </MediumText>
+                  </Box>
                 </>
               )}
               {face.loyalty && (
                 <>
-                  <Separator />
-                  <MediumText key="loyalty">Loyalty: {face.loyalty}</MediumText>
+                  <hr className={separator} />
+                  <Box cs={mediumText} key="loyalty">Loyalty: {face.loyalty}</Box>
                 </>
               )}
               {face.defense && (
                 <>
-                  <Separator />
-                  <MediumText key="defense">Defense: {face.defense}</MediumText>
+                  <hr className={separator} />
+                  <Box cs={mediumText} key="defense">Defense: {face.defense}</Box>
                 </>
               )}
               {face.hand_modifier && (
                 <>
-                  <Separator />
-                  <MediumText key="hand_modifier">Hand Size: {face.hand_modifier}</MediumText>
+                  <hr className={separator} />
+                  <Box cs={mediumText} key="hand_modifier">Hand Size: {face.hand_modifier}</Box>
                 </>
               )}
               {face.life_modifier && (
                 <>
-                  <Separator />
-                  <MediumText key="life_modifier">Starting Life: {face.life_modifier}</MediumText>
+                  <hr className={separator} />
+                  <Box cs={mediumText} key="life_modifier">Starting Life: {face.life_modifier}</Box>
                 </>
               )}
             </span>
           ))}
-          <Divider />
+          <hr className={divider} />
           {displayCard.set && (
             <>
-              <MediumText>
+              <Box cs={mediumText}>
                 Set:{' '}
                 {(displayCard.set == 'HCV.CDC' ? 'CDC' : displayCard.set) +
                   (displayCard.collector_number ? ' #' + displayCard.collector_number : '')}
-              </MediumText>
-              <Separator />
+              </Box>
+              <hr className={separator} />
             </>
           )}
           {Boolean(displayCard.creators.length) && (
             <>
-              <SmallText key="creator">
+              <Box cs={smallText} key="creator">
                 Creator{displayCard.creators.length == 1 ? '' : 's'}:{' '}
                 {displayCard.creators.join(',')}
-              </SmallText>
+              </Box>
             </>
           )}
           {displayCard.artists?.length && (
             <>
-              <SmallText key="artist">
+              <Box cs={smallText} key="artist">
                 Artist{displayCard.artists.length == 1 ? '' : 's'}:{' '}
                 {displayCard.artists
                   .map(
@@ -347,12 +344,12 @@ export const HellfallCard = ({
                       }`
                   )
                   .join(', ')}
-              </SmallText>
+              </Box>
             </>
           )}
           {displayCard.hcid && (
             <>
-              <SmallText key="hcid">Id: {displayCard.hcid}</SmallText>
+              <Box cs={smallText} key="hcid">Id: {displayCard.hcid}</Box>
             </>
           )}
           {
@@ -363,25 +360,25 @@ export const HellfallCard = ({
               <br />
               <SetLegality legality={displayCard.legalities.commander} /> Hellsmander
               <br />
-              <Separator />
+              <hr className={separator} />
             </>
           }
           {displayCard.rulings && (
             <>
-              <Divider />
+              <hr className={divider} />
               <div>
-                <StyledHeading size="small">Rulings</StyledHeading>
+                <Heading cs={headingStyles} size="small">Rulings</Heading>
                 {displayCard.rulings.split('\\n').map((e, i) => {
-                  return <Ruling key={i}>{e}</Ruling>;
+                  return <Box cs={ruling} key={i}>{e}</Box>;
                 })}
               </div>
             </>
           )}
           {isContributor && <PendingChanges cardId={displayCard.id} />}
           {user && tagsPersistEnabled && !editing && (
-            <EditCardButton type="button" onClick={() => setEditing(true)}>
+            <button className={editCardButton} type="button" onClick={() => setEditing(true)}>
               Edit Card Data
-            </EditCardButton>
+            </button>
           )}
           {editing && (
             <CardEditPanel
@@ -393,20 +390,20 @@ export const HellfallCard = ({
           {
             /* displayTags.length > 0 || pendingTagStaging || */ user ? (
               <>
-                {tagsLoading && <SmallText>Loading tags…</SmallText>}
+                {tagsLoading && <Box cs={smallText}>Loading tags…</Box>}
                 {tagsError && (
-                  <SmallText style={{ color: '#c00' }}>Could not load tag overrides.</SmallText>
+                  <Box cs={smallText} style={{ color: '#c00' }}>Could not load tag overrides.</Box>
                 )}
                 {tagActionError && (
-                  <SmallText style={{ color: '#c00' }}>{tagActionError}</SmallText>
+                  <Box cs={smallText} style={{ color: '#c00' }}>{tagActionError}</Box>
                 )}
-                <SmallText key="Tags">
+                <Box cs={smallText} key="Tags">
                   Tags:{' '}
                   {displayCard.tags?.map((tagEntry, i, ar) => {
                     const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
                     return (
                       <span key={tagEntry}>
-                        <TagLink $pendingRemove={pendingRemove}>
+                        <TagLink pendingRemove={pendingRemove}>
                           <Link
                             to={`/?${new URLSearchParams([['q', `tag=${tagEntry}`]]).toString()}`}
                             target="_blank"
@@ -418,19 +415,20 @@ export const HellfallCard = ({
                           tagEntry in displayCard.tag_notes &&
                           (displayCard.tag_notes[tagEntry].startsWith('https:') ? (
                             <>
-                              <SmallLine> (</SmallLine>
+                              <Text cs={smallText}> (</Text>
                               <Link to={displayCard.tag_notes[tagEntry]}>
                                 {displayCard.tag_notes[tagEntry]}
                               </Link>
-                              <SmallLine>)</SmallLine>
+                              <Text cs={smallText}>)</Text>
                             </>
                           ) : (
                             <>
-                              <SmallLine> ({displayCard.tag_notes[tagEntry]})</SmallLine>
+                              <Text cs={smallText}> ({displayCard.tag_notes[tagEntry]})</Text>
                             </>
                           ))}
                         {user && tagsPersistEnabled && (
-                          <TagRemoveButton
+                          <button
+                            className={tagRemoveButton}
                             type="button"
                             onClick={async () => {
                               setTagActionError(null);
@@ -444,7 +442,7 @@ export const HellfallCard = ({
                             aria-label={`Remove tag ${tagEntry}`}
                           >
                             ×
-                          </TagRemoveButton>
+                          </button>
                         )}
                         {i < ar.length - 1 && ', '}
                       </span>
@@ -453,7 +451,7 @@ export const HellfallCard = ({
                   {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => (
                     <span key={`pending-${tagEntry}`}>
                       {(displayCard.tags?.length || i > 0) && ', '}
-                      <TagLink $pendingAdd>
+                      <TagLink pendingAdd>
                         <Link
                           to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
                           target="_blank"
@@ -464,12 +462,12 @@ export const HellfallCard = ({
                       {i < ar.length - 1 && ', '}
                     </span>
                   ))}
-                </SmallText>
+                </Box>
                 {pendingTagStaging && (
-                  <SmallText style={{ color: '#856404' }}>Staged changes pending review.</SmallText>
+                  <Box cs={smallText} style={{ color: '#856404' }}>Staged changes pending review.</Box>
                 )}
                 {user && tagsPersistEnabled && (
-                  <TagAddRow>
+                  <Box cs={tagAddRow}>
                     <input
                       type="text"
                       list="hellfall-tag-list"
@@ -515,17 +513,17 @@ export const HellfallCard = ({
                     >
                       Add
                     </button>
-                  </TagAddRow>
+                  </Box>
                 )}
                 {changesetSubmitted && (
-                  <SmallText style={{ color: '#28a745', marginTop: 4 }}>
+                  <Box cs={smallText} style={{ color: '#28a745', marginTop: 4 }}>
                     Change submitted for review.
-                  </SmallText>
+                  </Box>
                 )}
               </>
             ) : (
               <>
-                <SmallText key="Tags">
+                <Box cs={smallText} key="Tags">
                   Tags:{' '}
                   {data.tags?.map((tagEntry, i, ar) => (
                     <span key={tagEntry}>
@@ -541,28 +539,28 @@ export const HellfallCard = ({
                         tagEntry in data.tag_notes &&
                         (data.tag_notes[tagEntry].startsWith('https:') ? (
                           <>
-                            <SmallLine> (</SmallLine>
+                            <Text cs={smallText}> (</Text>
                             <Link to={data.tag_notes[tagEntry]}>{data.tag_notes[tagEntry]}</Link>
-                            <SmallLine>)</SmallLine>
+                            <Text cs={smallText}>)</Text>
                           </>
                         ) : (
                           <>
-                            <SmallLine> ({data.tag_notes[tagEntry]})</SmallLine>
+                            <Text cs={smallText}> ({data.tag_notes[tagEntry]})</Text>
                           </>
                         ))}
                       {i < ar.length - 1 && ', '}
                     </span>
                   ))}
-                </SmallText>
+                </Box>
               </>
             )
           }
           {displayCard.all_parts && (
             <>
-              <Divider />
+              <hr className={divider} />
               <div>
-                <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
-                <RelatedGrid>
+                <Heading cs={headingStyles} size="small">Related Cards & Tokens</Heading>
+                <Box cs={relatedGrid}>
                   {displayCard.all_parts
                     .filter(e => e.id != displayCard.id)
                     .map((entry, i) => (
@@ -585,52 +583,71 @@ export const HellfallCard = ({
                         url={entry.image!}
                       />
                     ))}
-                </RelatedGrid>
+                </Box>
               </div>
             </>
           )}
         </Card.Body>
       </Card>
-      <ButtonGroup>
+      <Box cs={buttonGroup}>
         <br />
-        <Button
+        <PrimaryButton
           colors={inputButtonColors}
+          cs={buttonStyles}
           as={Link}
           to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=text`}
-          ref={linkRef}
+          // ref={linkRef}
         >
           Copy-pasteable Text
-        </Button>
-        <Button
+        </PrimaryButton>
+        <PrimaryButton
           colors={inputButtonColors}
+          cs={buttonStyles}
           as={Link}
           to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=json`}
-          ref={linkRef}
+          // ref={linkRef}
         >
           Copy-pasteable JSON
-        </Button>
-      </ButtonGroup>
-    </Container>
+        </PrimaryButton>
+      </Box>
+    </Box>
   );
 };
 
-const Ruling = styled.div({ paddingTop: '5px' });
+const ruling = createStyles({ paddingTop: '5px' });
+// const Ruling = styled.div({ paddingTop: '5px' });
 
-const Container = styled.div({
+const container = createStyles({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   fontSize: '16px',
   justifyContent: 'center',
+  lineHeight:1
 });
 
-const Test = styled.div({
+// const Container = styled.div({
+//   display: 'flex',
+//   flexDirection: 'column',
+//   alignItems: 'center',
+//   fontSize: '16px',
+//   justifyContent: 'center',
+// });
+
+const test = createStyles({
   display: 'flex',
   justifyContent: 'center',
   overflowX: 'auto',
   width: '100%',
 });
-const ImageContainer = styled.div({
+
+// const Test = styled.div({
+//   display: 'flex',
+//   justifyContent: 'center',
+//   overflowX: 'auto',
+//   width: '100%',
+// });
+const imageContainer = createStyles({
   display: 'flex',
   overflow: 'auto',
   height: '500px',
@@ -645,24 +662,95 @@ const ImageContainer = styled.div({
     objectFit: 'contain',
   },
 });
-const StyledHeading = styled(Heading)({
+// const ImageContainer = styled.div({
+//   display: 'flex',
+//   overflow: 'auto',
+//   height: '500px',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+//   maxWidth: '700px',
+//   '& img': {
+//     maxHeight: '100%',
+//     maxWidth: '100%',
+//     width: 'auto',
+//     height: 'auto',
+//     objectFit: 'contain',
+//   },
+// });
+
+
+const headingStyles = createStyles({
   marginTop: '0px',
   marginBottom: '10px',
 });
+// const StyledHeading = styled(Heading)({
+//   marginTop: '0px',
+//   marginBottom: '10px',
+// });
 
-const ButtonContainer = styled.div();
+// const ButtonContainer = styled.div();
 
-const TagLink = styled.span<{ $pendingAdd?: boolean; $pendingRemove?: boolean }>(
-  ({ $pendingAdd, $pendingRemove }) => ({
+interface TagLinkProps {
+  pendingAdd?: boolean;
+  pendingRemove?: boolean;
+  children: React.ReactNode;
+}
+const tagLinkStencil = createStencil({
+  vars:{},
+  base:{
     '& a': {
-      color: $pendingAdd ? '#28a745' : $pendingRemove ? '#888' : undefined,
-      textDecoration: $pendingRemove ? 'line-through' : undefined,
-      fontWeight: $pendingAdd ? 600 : undefined,
+      
     },
-  })
-);
+  },
+  modifiers: {
+    pendingAdd: {
+      true: {
+        '& a': {
+          color: '#28a745',
+          fontWeight: '600',
+        },
+      },
+    },
+    pendingRemove: {
+      true: {
+        '& a': {
+          color: '#888',
+          textDecoration: 'line-through',
+        },
+      },
+    },
+  }
+})
+const TagLink: React.FC<TagLinkProps> = ({ 
+  pendingAdd, 
+  pendingRemove, 
+  children,
+  ...elemProps 
+}) => {
+  // Use the Stencil with appropriate modifiers
 
-const TagRemoveButton = styled.button({
+  return (
+    <span {...elemProps} {...tagLinkStencil({
+    pendingAdd: pendingAdd || false,
+    pendingRemove: pendingRemove || false,
+  })}>
+      {children}
+    </span>
+  );
+};
+
+// const TagLink = styled.span<{ $pendingAdd?: boolean; $pendingRemove?: boolean }>(
+//   ({ $pendingAdd, $pendingRemove }) => ({
+//     '& a': {
+//       color: $pendingAdd ? '#28a745' : $pendingRemove ? '#888' : undefined,
+//       textDecoration: $pendingRemove ? 'line-through' : undefined,
+//       fontWeight: $pendingAdd ? 600 : undefined,
+//     },
+//   })
+// );
+
+
+const tagRemoveButton = createStyles({
   marginLeft: '2px',
   padding: '0 4px',
   cursor: 'pointer',
@@ -675,15 +763,36 @@ const TagRemoveButton = styled.button({
   '&:hover': { color: '#c00' },
 });
 
-const TagAddRow = styled.div({
+// const TagRemoveButton = styled.button({
+//   marginLeft: '2px',
+//   padding: '0 4px',
+//   cursor: 'pointer',
+//   background: 'transparent',
+//   border: 'none',
+//   fontSize: '1.1em',
+//   lineHeight: 1,
+//   verticalAlign: 'middle',
+//   color: '#666',
+//   '&:hover': { color: '#c00' },
+// });
+
+const tagAddRow = createStyles({
   marginTop: '6px',
   display: 'flex',
   gap: '8px',
   alignItems: 'center',
   '& input': { minWidth: '120px' },
 });
+// const TagAddRow = styled.div({
+//   marginTop: '6px',
+//   display: 'flex',
+//   gap: '8px',
+//   alignItems: 'center',
+//   '& input': { minWidth: '120px' },
+// });
 
-const RelatedGrid = styled('div')({
+
+const relatedGrid = createStyles({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
@@ -692,24 +801,57 @@ const RelatedGrid = styled('div')({
   gap: '0px',
   margin: '0 auto',
 });
+// const RelatedGrid = styled('div')({
+//   display: 'flex',
+//   flexWrap: 'wrap',
+//   justifyContent: 'center',
+//   alignItems: 'center',
+//   width: '100%',
+//   gap: '0px',
+//   margin: '0 auto',
+// });
 
-const Divider = styled('hr')({
+const divider = createStyles({
   height: '2px',
   backgroundColor: '#ccc',
   border: 'none',
   marginLeft: '-32px',
   marginRight: '-32px',
 });
+// const Divider = styled('hr')({
+//   height: '2px',
+//   backgroundColor: '#ccc',
+//   border: 'none',
+//   marginLeft: '-32px',
+//   marginRight: '-32px',
+// });
 
-const Separator = styled('hr')({
+const separator = createStyles({
   height: '1px',
   backgroundColor: '#ccc',
   border: 'none',
   marginLeft: '-32px',
   marginRight: '-32px',
 });
+// const Separator = styled('hr')({
+//   height: '1px',
+//   backgroundColor: '#ccc',
+//   border: 'none',
+//   marginLeft: '-32px',
+//   marginRight: '-32px',
+// });
 
-const IntButton = styled(PrimaryButton)<{ as?: React.ElementType }>({
+// const IntButton = styled(PrimaryButton)<{ as?: React.ElementType }>({
+//   marginLeft: '30px',
+//   marginBottom: '15px',
+//   borderRadius: '4px',
+//   textDecoration: 'none',
+//   '&:hover, &:focus, &:active': {
+//     textDecoration: 'none',
+//   },
+// });
+
+const buttonStyles = createStyles({
   marginLeft: '30px',
   marginBottom: '15px',
   borderRadius: '4px',
@@ -717,89 +859,97 @@ const IntButton = styled(PrimaryButton)<{ as?: React.ElementType }>({
   '&:hover, &:focus, &:active': {
     textDecoration: 'none',
   },
-});
+})
 
-type PolymorphicStyledButtonProps<T extends ElementType> = Omit<
-  PrimaryButtonProps,
-  'as' | 'ref'
-> & {
-  as?: T;
-  children: React.ReactNode;
-  ref?: Ref<any>;
-} & Omit<ComponentPropsWithoutRef<T>, keyof PrimaryButtonProps | 'as' | 'children'>;
-
-const Button = <T extends ElementType = 'button'>({
-  as,
-  children,
-  ref,
-  ...props
-}: PolymorphicStyledButtonProps<T>) => {
-  const Component = as || 'button';
-
-  return as && ref ? (
-    <IntButton as={Component!} ref={ref as any} {...props}>
-      {children}
-    </IntButton>
-  ) : (
-    <IntButton {...props}>{children}</IntButton>
-  );
-};
 
 const inputButtonColors: ButtonColors = {
   default: {
     background: inputColors.background,
     border: inputColors.border,
+    label: inputColors.text
   },
   hover: {
     background: inputColors.disabled.background,
     border: inputColors.focusBorder,
+    label: inputColors.text
   },
   active: {
     background: inputColors.background,
     border: inputColors.border,
+    label: inputColors.text
   },
   focus: {
     background: inputColors.disabled.background,
     border: inputColors.focusBorder,
+    label: inputColors.text
   },
   disabled: {
     background: inputColors.disabled.background,
     border: inputColors.disabled.border,
+    label: inputColors.text
   },
 };
 
-const MediumText = styled('div')({
-  fontSize: type.levels.body.medium.fontSize,
-  fontWeight: type.levels.body.medium.fontWeight,
-  marginBlock: '.5rem',
-  lineHeight: 1.125,
-});
-const MediumLine = styled('span')({
+const mediumLine = createStyles({
   fontSize: type.levels.body.medium.fontSize,
   fontWeight: type.levels.body.medium.fontWeight,
   marginBlock: '.5rem',
 });
-const MediumItalics = styled(MediumText)({ fontStyle: 'italic' });
-const MediumItalicLine = styled(MediumLine)({ fontStyle: 'italic' });
-const SmallText = styled('div')({
-  fontSize: type.levels.body.small.fontSize,
-  fontWeight: type.levels.body.small.fontWeight,
-  marginBlock: '.4rem',
-});
-const SmallLine = styled('span')({
+const mediumLineMargin = createStyles(mediumLine, { marginRight: '1em' })
+
+const mediumText = createStyles(
+  mediumLine,
+  {lineHeight: 1.125,}
+);
+const mediumItalics = createStyles(mediumText, { fontStyle: 'italic' });
+const mediumItalicLine = createStyles(mediumLine, { fontStyle: 'italic' });
+
+// const MediumText = styled('div')({
+//   fontSize: type.levels.body.medium.fontSize,
+//   fontWeight: type.levels.body.medium.fontWeight,
+//   marginBlock: '.5rem',
+//   lineHeight: 1.125,
+// });
+
+// const MediumLine = styled('span')({
+//   fontSize: type.levels.body.medium.fontSize,
+//   fontWeight: type.levels.body.medium.fontWeight,
+//   marginBlock: '.5rem',
+// });
+// const MediumItalics = styled(MediumText)({ fontStyle: 'italic' });
+// const MediumItalicLine = styled(MediumLine)({ fontStyle: 'italic' });
+
+const smallText = createStyles({
   fontSize: type.levels.body.small.fontSize,
   fontWeight: type.levels.body.small.fontWeight,
   marginBlock: '.4rem',
 });
 
-const ButtonGroup = styled('div')({
+// const SmallText = styled('div')({
+//   fontSize: type.levels.body.small.fontSize,
+//   fontWeight: type.levels.body.small.fontWeight,
+//   marginBlock: '.4rem',
+// });
+// const SmallLine = styled('span')({
+//   fontSize: type.levels.body.small.fontSize,
+//   fontWeight: type.levels.body.small.fontWeight,
+//   marginBlock: '.4rem',
+// });
+
+const buttonGroup = createStyles({
   display: 'inline-block',
   flexDirection: 'row',
   marginLeft: '4px',
   verticalAlign: 'top',
 });
+// const ButtonGroup = styled('div')({
+//   display: 'inline-block',
+//   flexDirection: 'row',
+//   marginLeft: '4px',
+//   verticalAlign: 'top',
+// });
 
-const EditCardButton = styled('button')({
+const editCardButton = createStyles({
   display: 'block',
   marginTop: 6,
   marginBottom: 4,
@@ -811,3 +961,15 @@ const EditCardButton = styled('button')({
   cursor: 'pointer',
   '&:hover': { borderColor: '#888' },
 });
+// const EditCardButton = styled('button')({
+//   display: 'block',
+//   marginTop: 6,
+//   marginBottom: 4,
+//   padding: '3px 10px',
+//   background: '#fff',
+//   border: '1px solid #ccc',
+//   borderRadius: 2,
+//   fontSize: 12,
+//   cursor: 'pointer',
+//   '&:hover': { borderColor: '#888' },
+// });

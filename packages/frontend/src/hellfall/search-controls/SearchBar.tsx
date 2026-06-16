@@ -1,10 +1,10 @@
-import { FormField, TextInput, space, styled } from '@workday/canvas-kit-react';
+import { TextInput, space, styled } from '@workday/canvas-kit-react';
 import { useAtom } from 'jotai';
 import { pageAtom, queryAtom } from '../atoms/searchAtoms';
 import { useEffect, useMemo, useState } from 'react';
-import { useKeyPress } from '../../hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import { normalizeText } from '@hellfall/shared/utils';
+import { createStyles } from '@workday/canvas-kit-styling';
 
 export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) => {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) =>
 
   return (
     <>
-      <Container>
+      <div className={containerStyles}>
         <form action={handleSubmit}>
           <SearchBox
             width={maxWidth}
@@ -52,22 +52,36 @@ export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) =>
             enterKeyHint="search"
           />
         </form>
-        <Spacer />
+        <div className={spacer} />
         <Link to={'/syntax'}>search syntax</Link>
-      </Container>
+      </div>
     </>
   );
 };
-const Spacer = styled('div')({
+// const Spacer = styled('div')({
+//   height: '5px',
+// });
+const spacer = createStyles({
   height: '5px',
 });
-const Container = styled('div')({
+const containerStyles = createStyles({
   paddingLeft: space.l,
   paddingRight: space.l,
   marginTop: '-10px',
   marginBottom: '0px',
   overflow: 'hidden',
-});
+})
+// const Container = styled('div')({
+//   paddingLeft: space.l,
+//   paddingRight: space.l,
+//   marginTop: '-10px',
+//   marginBottom: '0px',
+//   overflow: 'hidden',
+// });
+// const searchBoxStyles = createStyles({
+//   overflow: 'hidden',
+//   // border: 'none',
+// })
 const SearchBox = styled(TextInput)({
   overflow: 'hidden',
   // border: 'none',

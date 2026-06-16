@@ -1,8 +1,8 @@
 diff --git a/dist/es6/popup/lib/hooks/usePopupStack.js b/dist/es6/popup/lib/hooks/usePopupStack.js
-index 2f20cdc49bc1be1c00f86ac5bc73856e81efdb5f..2ba3e6fefc75a757b9020a78abf6793afc007c5e 100644
+index 60d0bd70cc2c1f23c10d695a8c4a6fb8f94ee270..aa2bc84de38be06edfa1e04cc0e46f96140fefdd 100644
 --- a/dist/es6/popup/lib/hooks/usePopupStack.js
 +++ b/dist/es6/popup/lib/hooks/usePopupStack.js
-@@ -56,7 +56,7 @@ export const usePopupStack = (ref, target) => {
+@@ -59,7 +59,7 @@ export const usePopupStack = (ref, target) => {
      // Without this, the timing is unpredictable when mixed with other frameworks. Other frameworks
      // should also register as soon as the element is available
      React.useLayoutEffect(() => {
@@ -12,10 +12,10 @@ index 2f20cdc49bc1be1c00f86ac5bc73856e81efdb5f..2ba3e6fefc75a757b9020a78abf6793a
          }
          const targetEl = target
 diff --git a/popup/lib/hooks/usePopupStack.ts b/popup/lib/hooks/usePopupStack.ts
-index cd083e4dd3ad47c87ec92b915a11f1129cbb0a0f..809fbc7be9fa09b8d6e2e299d72cb7108f2b6b81 100644
+index 788baa34d3a1f06fd37d29701ac0331ebc3f888b..7baec7a4fd2e0de7570eda0f7c6eb9bedac26575 100644
 --- a/popup/lib/hooks/usePopupStack.ts
 +++ b/popup/lib/hooks/usePopupStack.ts
-@@ -62,7 +62,7 @@ export const usePopupStack = <E extends HTMLElement>(
+@@ -65,7 +65,7 @@ export const usePopupStack = <E extends HTMLElement>(
    // Without this, the timing is unpredictable when mixed with other frameworks. Other frameworks
    // should also register as soon as the element is available
    React.useLayoutEffect(() => {

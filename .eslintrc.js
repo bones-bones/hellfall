@@ -52,6 +52,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 0,
     'no-empty': 0,
     'sonarjs/no-in-misuse': 'error',
+    'react/prop-types': 0,
 
     'react/no-unescaped-entities': [
       'error',

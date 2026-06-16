@@ -20,7 +20,7 @@ import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
 import { Login } from './auth/Login.tsx';
 import { ReviewPage } from './review/ReviewPage.tsx';
 import { useNameToHCID, useIsHCID } from './hellfall/hooks/useNameToId.ts';
-import { AdvancedSearch } from './hellfall/search-controls/AdvancedSearch.tsx';
+import { AdvancedSearch } from './hellfall/advanced/AdvancedSearch.tsx';
 import { Syntax } from './hellfall/Syntax.tsx';
 import { Random } from './hellfall/Random.tsx';
 

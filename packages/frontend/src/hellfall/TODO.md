@@ -122,3 +122,10 @@ Write a script to transform the database
 - get a better random icon
 - figure out how to attach links/hrefs to the pagination buttons
 - once spain tokens get in, make sure they all get drop_face?
+- finish migration to cs props
+  - div => Box
+  - span => Text
+  - p => Subtext or BodyText
+  - use normal html for now: button, some instances of p, Link, SidePanel, img, FormField
+- refactor away from className
+- 

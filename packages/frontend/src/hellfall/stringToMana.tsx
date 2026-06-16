@@ -1,6 +1,8 @@
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 import type { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { getIndicatorFromColors, getPip, pipToSrc } from '@hellfall/shared/utils';
+import { Box } from '@workday/canvas-kit-react';
+import { createStyles } from '@workday/canvas-kit-styling';
 
 const getClipPath = (pip: HCCardSymbol) => {
   if (!pip.clip_type) {
@@ -26,7 +28,7 @@ export const stringToMana = (text: string) => {
       if (entry.startsWith('{') && entry.endsWith('}')) {
         const icon = getPip(entry.slice(1, -1));
         return icon ? (
-          <PipContainer
+          <Box cs={pipContainer}
             style={
               icon.no_shadow
                 ? { margin: '1px 1px -px 1px' }
@@ -36,8 +38,8 @@ export const stringToMana = (text: string) => {
                   }
             }
           >
-            <PipSymbol src={pipToSrc(icon)} alt={entry} title={icon.english} />
-          </PipContainer>
+            <img className={pipSymbol} src={pipToSrc(icon)} alt={entry} title={icon.english} />
+          </Box>
         ) : (
           entry
         );
@@ -50,16 +52,16 @@ export const colorsToIndicator = (colors: HCColors) => {
   const pip = getIndicatorFromColors(colors);
 
   return pip ? (
-    <PipContainer>
-      <PipSymbol src={pipToSrc(pip)} alt={pip?.symbol} title={pip.english} />
-    </PipContainer>
+    <Box cs={pipContainer}>
+      <img className={pipSymbol} src={pipToSrc(pip)} alt={pip?.symbol} title={pip.english} />
+    </Box>
   ) : (
     colors.toString()
   );
 };
 
-const PipSymbol = styled('img')({ height: '18px' /**,marginTop: '10px'*/ });
-const PipContainer = styled('div')({
+const pipSymbol = createStyles({ height: '18px' /**,marginTop: '10px'*/ });
+const pipContainer = createStyles({
   display: 'inline-block',
   lineHeight: '1.25rem',
   // alignItems: 'top',

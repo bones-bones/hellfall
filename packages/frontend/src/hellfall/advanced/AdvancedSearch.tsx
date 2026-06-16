@@ -7,7 +7,7 @@ import {
   SingleCheckbox,
   PillSearch,
   NumberSelector,
-} from '../inputs/index.ts';
+} from '../advanced/index.ts';
 import {
   TextInput,
   FormField,
@@ -18,11 +18,11 @@ import {
 
 import { useAtom } from 'jotai';
 import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
-import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
+import { StyledLabel, StyledLegend } from './StyledLabel.tsx';
 import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
-import { ControlBar } from './ControlBar.tsx';
+import { ControlBar } from '../search-controls/ControlBar.tsx';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
 import { extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { HellfallEntry } from '../hellfall/HellfallEntry.tsx';
+import { HellfallEntry } from '../hellfall/entry/HellfallEntry.tsx';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { useRef, useState, useEffect } from 'react';

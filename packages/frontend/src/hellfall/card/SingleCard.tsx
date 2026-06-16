@@ -1,7 +1,7 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { HellfallCard } from './HellfallCard.tsx';
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 
 import { useEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
@@ -10,6 +10,7 @@ import { useSearchResults } from '../hooks/useSearchResults.ts';
 import { invalidAtom, queryAtom, summaryAtom } from '../atoms/searchAtoms.ts';
 import { SearchBar } from '../search-controls/SearchBar.tsx';
 import { space } from '@workday/canvas-kit-react';
+import { createStyles } from '@workday/canvas-kit-styling';
 
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
@@ -32,7 +33,7 @@ export const SingleCard = () => {
   }, [entryToRender]);
 
   return (
-    <Container>
+    <div>
       {!cards.size() ? (
         <></>
       ) : !entryToRender ? (
@@ -41,11 +42,11 @@ export const SingleCard = () => {
         <div style={{ display: 'block', justifyContent: 'center' }}>
           <br />
           <SearchBar />
-          <Separator />
-          <CardContainer>
+          <hr className={separator} />
+          <div className={containerStyles}>
             {query && (
               <>
-                <Summary>
+                <div className={summaryStyles}>
                   <strong>
                     <Link to={`/card/${encodeURIComponent(cardId!)}`}>One random card</Link> from{' '}
                     {query == '*' ? (
@@ -58,13 +59,13 @@ export const SingleCard = () => {
                   <Link to={`/random${query == '*' ? '' : `?q=${query}`}`}>
                     Repeat this random search
                   </Link>
-                </Summary>
-                <Separator />
+                </div>
+                <hr className={separator} />
                 {invalids.map(invalid => {
                   return (
                     <>
-                      <Invalid>{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</Invalid>
-                      <Separator />
+                      <div className={summaryStyles}>{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</div>
+                      <hr className={separator} />
                     </>
                   );
                 })}
@@ -73,30 +74,41 @@ export const SingleCard = () => {
             <div style={{ width: '60vw', margin: '0 auto' }}>
               <HellfallCard data={entryToRender} onSinglePage={true} />
             </div>
-          </CardContainer>
+          </div>
         </div>
       )}
-    </Container>
+    </div>
   );
 };
 
-const CardContainer = styled.div({
-  // width: '60vw',
-  // paddingTop: '50px',
-  justifyContent: 'center',
-});
-const Container = styled.div({
+// const CardContainer = styled.div({
+//   // width: '60vw',
+//   // paddingTop: '50px',
+//   justifyContent: 'center',
+// });
+const containerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
 });
-const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-const Summary = styled('div')({
+
+// const Container = styled.div({
+//   display: 'flex',
+//   justifyContent: 'center',
+// });
+const separator = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+// const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+const summaryStyles = createStyles({
   display: 'inline-block',
   paddingLeft: space.l,
   paddingRight: space.l,
-});
-const Invalid = styled('div')({
-  display: 'inline-block',
-  paddingLeft: space.l,
-  paddingRight: space.l,
-});
+})
+// const Summary = styled('div')({
+//   display: 'inline-block',
+//   paddingLeft: space.l,
+//   paddingRight: space.l,
+// });
+// const Invalid = styled('div')({
+//   display: 'inline-block',
+//   paddingLeft: space.l,
+//   paddingRight: space.l,
+// });

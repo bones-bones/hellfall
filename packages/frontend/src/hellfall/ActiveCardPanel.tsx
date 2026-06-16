@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useKeyPress } from '../hooks';
 import { useAtom, useAtomValue } from 'jotai';
 import { activeCardAtom } from './atoms/searchAtoms';
 import { cardsAtom } from './atoms/cardsAtom';
 import { SidePanel, useSidePanel } from '@workday/canvas-kit-preview-react';
-import { Card, styled, ToolbarIconButton } from '@workday/canvas-kit-react';
+import { Box, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
 import { extLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 
 interface ActiveCardPanelProps {
   origin?: 'left' | 'right'; // Optional origin prop, defaulting to "right"
@@ -36,16 +37,18 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
   });
 
   return (
-    <StyledSidePanel
+    <Box cs={sidePanelStyles}>
+    <SidePanel
       {...panelProps}
       expanded={!!activeCard}
       expandedWidth={Math.max(windowWidth * 0.535, 350)}
       collapsedWidth={0}
-      $origin={origin}
+      origin={origin}
+      {...sidePanelStencil({origin})}
     >
       <Card>
         <Card.Body padding={'zero'}>
-          <SPContainer>
+          <Box cs={spContainer}>
             <ToolbarIconButton
               icon={xIcon}
               margin={'2px 0 0 2px'}
@@ -61,25 +64,46 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
               />
             )}
             {activeCard && <HellfallCard data={activeCard} />}
-          </SPContainer>
+          </Box>
         </Card.Body>
       </Card>
-    </StyledSidePanel>
+    </SidePanel>
+    </Box>
   );
 };
 
-const StyledSidePanel = styled(SidePanel)<{ $origin: 'left' | 'right' }>(({ $origin }) => ({
-  zIndex: 40,
-  height: '100%',
-  position: 'fixed',
-  backgroundColor: 'transparent',
-  top: '35px',
-  ...($origin === 'right' ? { right: 0 } : { left: 0 }),
-  '& > div': {
-    paddingRight: '8px !important',
+
+const sidePanelStyles = createStyles({
+  '& section': {
+    zIndex: 40,
+    height: '100%',
+    position: 'fixed',
+    backgroundColor: 'transparent',
+    top: '35px',
+    '& > div': {
+      paddingRight: '8px !important',
+    },
+  }
+})
+
+const sidePanelStencil = createStencil({
+  vars:{
+    origin:'right'
   },
-}));
-const SPContainer = styled('div')({
+  base:{},
+  modifiers:{
+    origin: {
+      right: {
+        right: 0
+      },
+      left: {
+        left: 0
+      }
+    }
+  }
+})
+
+const spContainer = createStyles({
   overflowY: 'scroll',
   height: '90vh',
   overflowX: 'hidden',

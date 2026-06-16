@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { FC, PropsWithChildren } from 'react';
 import { HCBorderColor, HCKind, HCMiscColors } from '@hellfall/shared/types';
 import { looseOpList, sorts } from '@hellfall/shared/filters';
 import { SetType } from '@hellfall/shared/types/Set/values';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { Box } from '@workday/canvas-kit-react';
 
 const mapListToCodeAnd = (textList: string[]) =>
   textList.map((text, i) => (
@@ -351,52 +352,22 @@ export const Syntax = () => {
   );
 };
 
-export const BigContainerE = styled('div')({
+const bigContainerE = createStyles({
   display: 'flex',
   justifyContent: 'center',
   backgroundColor: 'lightgrey',
   minHeight: '95vh',
 });
 
-export const BigContainer: FC<PropsWithChildren> = ({ children }) => {
-  //
-  return (
-    <BigContainerE>
-      <InnerContainer>{children}</InnerContainer>
-    </BigContainerE>
-  );
-};
-export const InnerContainer = styled('div')({
+const innerContainer = createStyles({
   width: '80vw',
   backgroundColor: 'white',
   padding: '20px',
 });
-export const ManaSymbol = styled('img')({ height: '30px' });
-export const ManaSymbolSmall = styled('img')({
-  height: '20px',
-  paddingInlineEnd: '10px',
-  paddingInlineStart: '5px',
-});
-export const StyledH3 = styled('h3')({ display: 'flex', alignItems: 'center' });
-
-export const Divider = ({ color }: { color: string }) => {
+const BigContainer: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <DivContainer>
-      <DivLine />
-      <ManaSymbol src={color} />
-      <DivLine />
-    </DivContainer>
+    <Box cs={bigContainerE}>
+      <Box cs={innerContainer}>{children}</Box>
+    </Box>
   );
 };
-
-const DivLine = styled('div')({
-  height: '3px',
-  width: '20vw',
-  background: 'black',
-});
-
-const DivContainer = styled('div')({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-});

@@ -6,5 +6,5 @@ export {
   SingleCheckbox,
   NamedHiddenCheckboxGroup,
   HiddenCheckboxGroup /**ColorCheckboxGroup*/,
-} from './Checkboxes';
+} from './Checkboxes.tsx';
 export { NumericComparatorSelector as NumberSelector } from './NumberSelector.tsx';

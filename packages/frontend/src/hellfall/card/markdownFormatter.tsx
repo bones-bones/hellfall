@@ -10,7 +10,8 @@ import {
   ruleOutput,
 } from 'simple-markdown';
 import { stringToMana } from '../stringToMana.tsx';
-import { styled, type } from '@workday/canvas-kit-react';
+import { type } from '@workday/canvas-kit-react';
+import { createStyles } from '@workday/canvas-kit-styling';
 
 // Helper function to check if a character is escaped
 const isEscaped = (source: string, index: number): boolean => {
@@ -267,10 +268,10 @@ export const formatDiscordMarkdown = (
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, false, setDangerously);
     return (
-      <MediumText key={`line-${index}`}>
+      <p className={mediumText} key={`line-${index}`}>
         {/* {index > 0 && <br />} */}
         {formattedLine}
-      </MediumText>
+      </p>
     );
   });
 };
@@ -303,10 +304,10 @@ export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode =>
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, true);
     return (
-      <MediumText key={`line-${index}`}>
+      <p className={mediumText} key={`line-${index}`}>
         {/* {index > 0 && <br />} */}
         {formattedLine}
-      </MediumText>
+      </p>
     );
   });
 };
@@ -323,7 +324,7 @@ export const formatDiscordMarkdownInvertedItalicsInline = (text: string): ReactN
   const firstLine = text.split('\\n')[0];
   return formatLine(firstLine, true);
 };
-const MediumText = styled('p')({
+const mediumText = createStyles({
   fontSize: type.levels.body.medium.fontSize,
   fontWeight: type.levels.body.medium.fontWeight,
   marginBlock: '.5rem',
