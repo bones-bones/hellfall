@@ -437,7 +437,16 @@ async function main() {
 
   const bulkWriter = db.bulkWriter();
   bulkWriter.onWriteError(error => error.failedAttempts < 5);
-  docMap.forEach((doc, docId) => bulkWriter.update(collection.doc(docId), doc));
+  docMap.forEach((doc, docId) => {
+    const docRef = collection.doc(docId);
+    if (existingById.has(docId)) {
+      bulkWriter.update(docRef, doc)
+    } else {
+      bulkWriter.set(docRef, doc)
+    }
+    // (existingById.has(docId) ? bulkWriter.update : bulkWriter.set)(docRef, doc)
+  }
+  );
 
   // if (pruneOrphans && orphanTransfers) {
   //   const changesetsCol = db.collection(

@@ -21,10 +21,10 @@ export const applyFromCollection = async (
   const newRelateds = getAllRelatedCollection(card, cardsCol);
   setDerivedProps(card);
   const oldRelatedMap = new CardMap(
-    await Promise.all(oldRelateds.map(async data => firestoreToCard(await data.get())))
+    await Promise.all(oldRelateds.map(async data => firestoreToCard((await data.get()).data() ?? {})))
   );
   const newRelatedMap = new CardMap(
-    await Promise.all(newRelateds.map(async data => firestoreToCard(await data.get())))
+    await Promise.all(newRelateds.map(async data => firestoreToCard((await data.get()).data() ?? {})))
   );
   const bothRelatedMap = oldRelatedMap.getSubset(newRelatedMap.ids());
   oldRelatedMap.deleteMultiple(bothRelatedMap.ids());

@@ -44,7 +44,7 @@ Write a script to transform the database
 - FIX KEYBOARD SHORTCUTS ON HELLFALL
 - add special cases for color searches/color identity searches for Blood ghast // Crip Ghast (It can be either red or blue) (can-ignore-color-identity)
 - switch italics to use serif font? (that way it's more distinct)
-- deal with later: Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones, gandalf thingy
+- deal with later: Shambles the Skeleton // Shambled Bones // Shambled Bones // Shambled Bones // Shambled Bones
 - add reminder card for attractions
 - mork:
   - add ids

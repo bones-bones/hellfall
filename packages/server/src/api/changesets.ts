@@ -121,8 +121,8 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
     res.end(JSON.stringify({ ok: false, reason: 'invalid_card_id' }));
     return;
   }
-  const card = firestoreToCard(await cardsCol.doc(cardId).get());
-  if (!cardId || cardId.length > 200) {
+  const card = firestoreToCard((await cardsCol.doc(cardId).get()).data()!);
+  if (!card) {
     res.statusCode = 404;
     res.end(JSON.stringify({ ok: false, reason: 'card not found' }));
     return;
@@ -242,11 +242,11 @@ async function acceptChangeset(
   }
 
   const cardRef = cardsCol.doc(cs.cardId);
-  const fire = await cardRef.get();
-  const card = firestoreToCard(fire);
+  const fire = (await cardRef.get()).data();
+  const card = firestoreToCard(fire!);
   const newCard = structuredClone(card);
   await applyFromCollection(newCard, cs.changes, cardsCol);
-  const update = getUpdateObject(fire, cardToFirestore(newCard));
+  const update = getUpdateObject(fire!, cardToFirestore(newCard));
   if (Object.keys(update).length) {
     await cardRef.update(update);
   }

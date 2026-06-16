@@ -54,7 +54,8 @@ export const searchCardsFromCollection = async (
     includeList.push(defaultInclude);
   }
   const newCardsWithExtras = new CardMap();
-  (await cardsCol.get()).forEach((card: firestoreCard) => {
+  (await cardsCol.get()).forEach(snap => {
+    const card = snap.data()
     if (
       evaluateFilter(node, card, cardsCol) &&
       (includeList.length
