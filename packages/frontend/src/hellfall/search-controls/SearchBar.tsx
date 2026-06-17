@@ -70,7 +70,7 @@ const containerStyles = createStyles({
   marginTop: '-10px',
   marginBottom: '0px',
   overflow: 'hidden',
-})
+});
 // const Container = styled('div')({
 //   paddingLeft: space.l,
 //   paddingRight: space.l,

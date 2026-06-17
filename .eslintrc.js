@@ -53,6 +53,7 @@ module.exports = {
     'no-empty': 0,
     'sonarjs/no-in-misuse': 'error',
     'react/prop-types': 0,
+    'react/display-name': 0,
 
     'react/no-unescaped-entities': [
       'error',

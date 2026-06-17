@@ -170,8 +170,12 @@ export function CardEditPanel({
       <Box cs={panel}>
         <Card>
           <Card.Body>
-            <Subtext size='small' cs={successMessage} >Change submitted for review.</Subtext>
-            <button className={closeButton} onClick={onClose}>Close</button>
+            <Subtext size="small" cs={successMessage}>
+              Change submitted for review.
+            </Subtext>
+            <button className={closeButton} onClick={onClose}>
+              Close
+            </button>
           </Card.Body>
         </Card>
       </Box>
@@ -184,7 +188,9 @@ export function CardEditPanel({
         <Card.Body>
           <Box cs={panelHeader}>
             <Text cs={panelTitle}>Edit Card</Text>
-            <button className={closeButton} onClick={onClose}>&times;</button>
+            <button className={closeButton} onClick={onClose}>
+              &times;
+            </button>
           </Box>
           <Box cs={fieldsGrid}>
             {(Object.keys(FIELD_LABELS) as (keyof EditableFields)[]).map(key => {
@@ -192,11 +198,13 @@ export function CardEditPanel({
               const fieldId = `field-${key}`;
               return (
                 <Box cs={fieldRow} key={key}>
-                  <FormField orientation='vertical'>
-                    <Text as='label' cs={label}>{FIELD_LABELS[key]}</Text>
+                  <FormField orientation="vertical">
+                    <Text as="label" cs={label}>
+                      {FIELD_LABELS[key]}
+                    </Text>
                     {TEXTAREA_FIELDS.includes(key) ? (
                       <textarea
-                        {...inputAreaStencil({changed:isChanged})}
+                        {...inputAreaStencil({ changed: isChanged })}
                         id={fieldId}
                         value={fields[key]}
                         onChange={e => handleChange(key, e.target.value)}
@@ -204,11 +212,10 @@ export function CardEditPanel({
                       />
                     ) : (
                       <input
-                        {...inputStencil({changed:isChanged})}
+                        {...inputStencil({ changed: isChanged })}
                         id={fieldId}
                         value={fields[key]}
                         onChange={e => handleChange(key, e.target.value)}
-                        
                       />
                     )}
                   </FormField>
@@ -221,7 +228,9 @@ export function CardEditPanel({
               <Box cs={summaryTitle}>Changes to submit:</Box>
               {Object.entries(changedFields).map(([field, change]) => (
                 <Box cs={changeRow} key={field}>
-                  <Text cs={changeField}>{FIELD_LABELS[field as keyof EditableFields] ?? field}</Text>
+                  <Text cs={changeField}>
+                    {FIELD_LABELS[field as keyof EditableFields] ?? field}
+                  </Text>
                   <Box cs={changeValues}>
                     <Text cs={beforeValue}>{String(change.before) || '(empty)'}</Text>
                     <Text cs={arrow}>&rarr;</Text>
@@ -232,22 +241,34 @@ export function CardEditPanel({
             </Box>
           )}
           <Box cs={commentRow}>
-            <FormField orientation='vertical'>
-              <Text as='label' cs={label}>Comment (optional)</Text>
+            <FormField orientation="vertical">
+              <Text as="label" cs={label}>
+                Comment (optional)
+              </Text>
               <input
-                {...inputStencil({changed:false})}
+                {...inputStencil({ changed: false })}
                 value={comment}
                 onChange={e => setComment(e.target.value)}
                 placeholder="Describe your change..."
               />
             </FormField>
           </Box>
-          {error && <Subtext size='small' cs={errorMsg}>{error}</Subtext>}
+          {error && (
+            <Subtext size="small" cs={errorMsg}>
+              {error}
+            </Subtext>
+          )}
           <Box cs={actionRow}>
-            <button className={submitButton} disabled={!hasChanges || submitting} onClick={handleSubmit}>
+            <button
+              className={submitButton}
+              disabled={!hasChanges || submitting}
+              onClick={handleSubmit}
+            >
               {submitting ? 'Submitting...' : 'Submit for Review'}
             </button>
-            <button className={cancelButton} onClick={onClose}>Cancel</button>
+            <button className={cancelButton} onClick={onClose}>
+              Cancel
+            </button>
           </Box>
         </Card.Body>
       </Card>
@@ -290,18 +311,17 @@ const label = createStyles({
   color: '#555',
 });
 
-
 const inputStyles = {
   padding: '4px 8px',
-  boxSizing:'border-box',
+  boxSizing: 'border-box',
   border: '1px solid #ccc',
   borderRadius: '2px',
   fontSize: 14,
   fontFamily: 'inherit',
   background: '#fff',
-  width:'100%',
-  height:'auto'
-}
+  width: '100%',
+  height: 'auto',
+};
 
 const inputStencil = createStencil({
   vars: {},

@@ -1,5 +1,3 @@
-import styled from '@emotion/styled';
-
 import {
   CheckboxGroup,
   NamedCheckboxGroup,
@@ -14,11 +12,11 @@ import {
   PrimaryButton,
   ButtonColors,
   inputColors,
+  Box,
 } from '@workday/canvas-kit-react';
 
 import { useAtom } from 'jotai';
 import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
-import { StyledLabel, StyledLegend } from './StyledLabel.tsx';
 import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
@@ -26,7 +24,9 @@ import { ControlBar } from '../search-controls/ControlBar.tsx';
 import { useNavToSearch } from '../hooks/useUrlSync.ts';
 import { extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
-import { StyledComponentHolder } from './StyledComponentHolder.tsx';
+import { componentHolderStyles, labelStyles, legendStyles } from './advancedStyles.ts';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { Link } from 'react-router-dom';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');
@@ -78,6 +78,7 @@ export const AdvancedSearch = () => {
   const [sortRules, setSortRules] = useAtom(sortAtom);
 
   const [query, setQuery] = useAtom(queryAtom);
+  const [localQuery, setLocalQuery] = useState('');
 
   const navToSearch = useNavToSearch();
 
@@ -228,6 +229,44 @@ export const AdvancedSearch = () => {
     });
     return filters.join(' ');
   };
+  useEffect(() => {
+    const newQuery = toQueryString();
+    if (localQuery != newQuery) {
+      setLocalQuery(newQuery);
+    }
+  }, [
+    searchSet,
+    extraSets,
+    searchToken,
+    idSearch,
+    nameSearch,
+    costSearch,
+    typeSearch,
+    rulesSearch,
+    flavorSearch,
+    creators,
+    artists,
+    tags,
+    isCommander,
+    standardLegality,
+    fourcbLegality,
+    commanderLegality,
+    collectorNumber,
+    manaValue,
+    power,
+    toughness,
+    loyalty,
+    defense,
+    colorNumber,
+    colorIdentityNumber,
+    searchColors,
+    colorComparison,
+    searchColorIdentities,
+    colorIdentityComparison,
+    hybridIdentityRule,
+    includeExtraSets,
+    inputSorts,
+  ]);
   const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
   const pipList = pipsData.data
     .filter(pip => !excludeFiles.some(file => pip.filename.includes(file)))
@@ -237,8 +276,8 @@ export const AdvancedSearch = () => {
     <div>
       <title>Advanced Search | Hellfall</title>
       <br />
-      <SearchContainer>
-        <SearchCriteriaSection>
+      <Box cs={searchContainer}>
+        <Box cs={searchCriteriaSection}>
           <PillSearch
             label={'Name'}
             possibleValues={[]}
@@ -266,8 +305,8 @@ export const AdvancedSearch = () => {
             values={rulesSearch}
             onChange={setRulesSearch}
           />
-        </SearchCriteriaSection>
-        <SearchCriteriaSection>
+        </Box>
+        <Box cs={searchCriteriaSection}>
           <PillSearch
             label={'Flavor'}
             possibleValues={[]}
@@ -292,8 +331,8 @@ export const AdvancedSearch = () => {
             values={tags}
             onChange={setTags}
           />
-        </SearchCriteriaSection>
-        <SearchCriteriaSection>
+        </Box>
+        <Box cs={searchCriteriaSection}>
           <NamedCheckboxGroup
             label="Colors"
             values={HCSearchColors}
@@ -301,9 +340,12 @@ export const AdvancedSearch = () => {
             value={searchColors}
             onChange={setSearchColors}
           >
-            <StyledComponentHolder>
-              <StyledLabel htmlFor="StyledDropdownSelect">{'Color Comparison'}</StyledLabel>
-              <StyledDropdownSelect
+            <Box cs={componentHolderStyles}>
+              <label className={labelStyles} htmlFor="StyledDropdownSelect">
+                {'Color Comparison'}
+              </label>
+              <select
+                className={dropdownSelectStyles}
                 id="StyledDropdownSelect"
                 defaultValue={colorComparison}
                 value={colorComparison}
@@ -314,12 +356,12 @@ export const AdvancedSearch = () => {
                 {looseOpList.map(entry => {
                   return <option key={entry}>{entry}</option>;
                 })}
-              </StyledDropdownSelect>
-            </StyledComponentHolder>
+              </select>
+            </Box>
           </NamedCheckboxGroup>
           <NumberSelector label={'Color Number'} onChange={setColorNumber} value={colorNumber} />
-        </SearchCriteriaSection>
-        <SearchCriteriaSection>
+        </Box>
+        <Box cs={searchCriteriaSection}>
           <NamedCheckboxGroup
             label="Color Identity (Commander)"
             values={HCSearchColors}
@@ -327,11 +369,12 @@ export const AdvancedSearch = () => {
             value={searchColorIdentities}
             onChange={setSearchColorIdentities}
           >
-            <StyledComponentHolder>
-              <StyledLabel htmlFor="styledColorIdentitySelect">
+            <Box cs={componentHolderStyles}>
+              <label className={labelStyles} htmlFor="styledColorIdentitySelect">
                 {'Color Identity Comparison'}
-              </StyledLabel>
-              <StyledDropdownSelect
+              </label>
+              <select
+                className={dropdownSelectStyles}
                 id="styledColorIdentitySelect"
                 defaultValue={colorIdentityComparison}
                 value={colorIdentityComparison}
@@ -342,23 +385,23 @@ export const AdvancedSearch = () => {
                 {looseOpList.map(entry => {
                   return <option key={entry}>{entry}</option>;
                 })}
-              </StyledDropdownSelect>
-            </StyledComponentHolder>
-            <StyledComponentHolder>
+              </select>
+            </Box>
+            <Box cs={componentHolderStyles}>
               <SingleCheckbox
                 label={'Use Alternate Hybrid Rule'}
                 onChange={setHybridIdentityRule}
                 value={hybridIdentityRule}
               />
-            </StyledComponentHolder>
+            </Box>
           </NamedCheckboxGroup>
           <NumberSelector
             label={'Color Identity Number'}
             onChange={setColorIdentityNumber}
             value={colorIdentityNumber}
           />
-        </SearchCriteriaSection>
-        <SearchCriteriaSection>
+        </Box>
+        <Box cs={searchCriteriaSection}>
           <CheckboxGroup
             value={searchSet}
             label={'Set'}
@@ -380,33 +423,37 @@ export const AdvancedSearch = () => {
               'HCJ',
               'HKL',
               'HC9',
+              'SCL',
             ]}
             onChange={setSearchSet}
           />
-        </SearchCriteriaSection>
-        <SearchCriteriaSection>
+        </Box>
+        <Box cs={searchCriteriaSection}>
           <fieldset>
-            <StyledLegend>{'Extras'}</StyledLegend>
+            <legend className={legendStyles}>{'Extras'}</legend>
             {extrasOpen ? (
               <>
-                {/* <StyledComponentHolder> */}
+                {/* <Box cs={componentHolderStyles}> */}
                 <SingleCheckbox
                   label={'Include Extra Sets'}
                   onChange={setIncludeExtraSets}
                   value={includeExtraSets}
                 />
-                {/* </StyledComponentHolder> */}
-                <StyledComponentHolder>
+                {/* </Box> */}
+                <Box cs={componentHolderStyles}>
                   <BoxlessCheckboxGroup
                     value={extraSets}
                     label={'Extra Sets'}
                     values={extraSetList}
                     onChange={setExtraSets}
                   />
-                </StyledComponentHolder>
-                <StyledComponentHolder>
-                  <StyledLabel htmlFor="cards or tokens">{'Cards/Tokens?'}</StyledLabel>
-                  <StyledDropdownSelect
+                </Box>
+                <Box cs={componentHolderStyles}>
+                  <label className={labelStyles} htmlFor="cards or tokens">
+                    {'Cards/Tokens?'}
+                  </label>
+                  <select
+                    className={dropdownSelectStyles}
                     id="cards or tokens"
                     defaultValue={searchToken}
                     value={searchToken}
@@ -417,8 +464,8 @@ export const AdvancedSearch = () => {
                     {['Cards', 'Tokens', 'Both'].map(entry => {
                       return <option key={entry}>{entry}</option>;
                     })}
-                  </StyledDropdownSelect>
-                </StyledComponentHolder>
+                  </select>
+                </Box>
                 <br />
                 <button
                   onClick={() => {
@@ -439,12 +486,15 @@ export const AdvancedSearch = () => {
             )}
           </fieldset>
           <fieldset>
-            <StyledLegend>{'Constructed Legality'}</StyledLegend>
+            <legend className={legendStyles}>{'Constructed Legality'}</legend>
             {legalityOpen ? (
               <>
-                <StyledComponentHolder>
-                  <StyledLabel htmlFor="standard">{'Standard'}</StyledLabel>
-                  <StyledDropdownSelect
+                <Box cs={componentHolderStyles}>
+                  <label className={labelStyles} htmlFor="standard">
+                    {'Standard'}
+                  </label>
+                  <select
+                    className={dropdownSelectStyles}
                     id="standard"
                     defaultValue={standardLegality}
                     value={standardLegality}
@@ -455,11 +505,14 @@ export const AdvancedSearch = () => {
                     {['', 'legal', 'not_legal', 'banned'].map(entry => {
                       return <option key={entry}>{entry}</option>;
                     })}
-                  </StyledDropdownSelect>
-                </StyledComponentHolder>
-                <StyledComponentHolder>
-                  <StyledLabel htmlFor="4cb">{'4 Card Blind'}</StyledLabel>
-                  <StyledDropdownSelect
+                  </select>
+                </Box>
+                <Box cs={componentHolderStyles}>
+                  <label className={labelStyles} htmlFor="4cb">
+                    {'4 Card Blind'}
+                  </label>
+                  <select
+                    className={dropdownSelectStyles}
                     id="4cb"
                     defaultValue={fourcbLegality}
                     value={fourcbLegality}
@@ -470,11 +523,14 @@ export const AdvancedSearch = () => {
                     {['', 'legal', 'not_legal', 'banned'].map(entry => {
                       return <option key={entry}>{entry}</option>;
                     })}
-                  </StyledDropdownSelect>
-                </StyledComponentHolder>
-                <StyledComponentHolder>
-                  <StyledLabel htmlFor="commander">{'Hellsmander'}</StyledLabel>
-                  <StyledDropdownSelect
+                  </select>
+                </Box>
+                <Box cs={componentHolderStyles}>
+                  <label className={labelStyles} htmlFor="commander">
+                    {'Hellsmander'}
+                  </label>
+                  <select
+                    className={dropdownSelectStyles}
                     id="commander"
                     defaultValue={commanderLegality}
                     value={commanderLegality}
@@ -485,8 +541,8 @@ export const AdvancedSearch = () => {
                     {['', 'legal', 'not_legal', 'banned'].map(entry => {
                       return <option key={entry}>{entry}</option>;
                     })}
-                  </StyledDropdownSelect>
-                </StyledComponentHolder>
+                  </select>
+                </Box>
                 <SingleCheckbox
                   label={'Can Be Your Commander'}
                   onChange={setIsCommander}
@@ -511,8 +567,8 @@ export const AdvancedSearch = () => {
               </button>
             )}
           </fieldset>
-          {/* </SearchCriteriaSection>
-        <SearchCriteriaSection> */}
+          {/* </Box>
+        <Box cs={searchCriteriaSection}> */}
           <NumberSelector
             label={'Collector number'}
             onChange={setCollectorNumber}
@@ -524,24 +580,25 @@ export const AdvancedSearch = () => {
           <NumberSelector label={'Loyalty'} onChange={setLoyalty} value={loyalty} />
           <NumberSelector label={'Defense'} onChange={setDefense} value={defense} />
           {/* TODO: Add other controls and add button to start search */}
-        </SearchCriteriaSection>
-      </SearchContainer>
-      <Separator />
+        </Box>
+      </Box>
+      <hr className={separator} />
       <ControlBar />
-      <SortSeparator />
-      <StartButton
+      <hr className={sortSeparator} />
+      <PrimaryButton
         colors={inputButtonColors}
-        borderRadius="m"
-        onClick={() => {
-          const newQuery = normalizeText(toQueryString());
-          setQuery(newQuery);
-          setInputSorts([]);
-          setSortRules([]);
-          navToSearch(newQuery);
+        cs={startButton}
+        as={Link}
+        to={localQuery ? `/?q=${localQuery}` : '/'}
+        onClick={(e: React.MouseEvent) => {
+          if (!(e.button === 1 || e.metaKey || e.ctrlKey)) {
+            setInputSorts([]);
+            setSortRules([]);
+          }
         }}
       >
         Search with these options
-      </StartButton>
+      </PrimaryButton>
     </div>
   );
 };
@@ -549,39 +606,50 @@ const inputButtonColors: ButtonColors = {
   default: {
     background: inputColors.background,
     border: inputColors.border,
+    label: inputColors.text,
   },
   hover: {
     background: inputColors.disabled.background,
     border: inputColors.focusBorder,
+    label: inputColors.text,
   },
   active: {
     background: inputColors.background,
     border: inputColors.border,
+    label: inputColors.text,
   },
   focus: {
     background: inputColors.disabled.background,
     border: inputColors.focusBorder,
+    label: inputColors.text,
   },
   disabled: {
     background: inputColors.disabled.background,
     border: inputColors.disabled.border,
+    label: inputColors.text,
   },
 };
-const SearchCriteriaSection = styled('div')({
+
+const searchCriteriaSection = createStyles({
   justifyContent: 'space-evenly',
   paddingLeft: '30px',
 });
-const SearchContainer = styled('div')({ display: 'flex', flexWrap: 'wrap' });
-const StyledDropdownSelect = styled('select')({ width: '100px', height: '30px' });
-const SortSeparator = styled('hr')({
+const searchContainer = createStyles({ display: 'flex', flexWrap: 'wrap' });
+const dropdownSelectStyles = createStyles({ width: '100px', height: '30px' });
+const sortSeparator = createStyles({
   height: '1px',
   backgroundColor: '#ccc',
   border: 'none',
   marginTop: '-20px',
 });
-const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-const StartButton = styled(PrimaryButton)({
+const separator = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+const startButton = createStyles({
   marginLeft: '30px',
   marginBottom: '15px',
-  display: 'inline-block',
+  // display: 'inline-block',
+  borderRadius: '4px',
+  textDecoration: 'none',
+  '&:hover, &:focus, &:active': {
+    textDecoration: 'none',
+  },
 });

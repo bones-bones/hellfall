@@ -64,7 +64,9 @@ export const SingleCard = () => {
                 {invalids.map(invalid => {
                   return (
                     <>
-                      <div className={summaryStyles}>{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</div>
+                      <div
+                        className={summaryStyles}
+                      >{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</div>
                       <hr className={separator} />
                     </>
                   );
@@ -101,7 +103,7 @@ const summaryStyles = createStyles({
   display: 'inline-block',
   paddingLeft: space.l,
   paddingRight: space.l,
-})
+});
 // const Summary = styled('div')({
 //   display: 'inline-block',
 //   paddingLeft: space.l,

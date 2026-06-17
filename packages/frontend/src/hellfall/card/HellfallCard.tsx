@@ -6,7 +6,7 @@ import {
   inputColors,
   PrimaryButton,
   type,
-  Text
+  Text,
 } from '@workday/canvas-kit-react';
 // import styled from '@emotion/styled';
 import { SetLegality } from './SetLegality.tsx';
@@ -15,12 +15,7 @@ import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 
 import { Link } from 'react-router-dom';
-import {
-  useState,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../hooks/useCardTagOverrides.ts';
 import {
@@ -195,7 +190,8 @@ export const HellfallCard = ({
               {i > 0 && <hr className={divider} />}
               {face.name &&
                 (displayCard.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
-                  <Text cs={mediumLineMargin}
+                  <Text
+                    cs={mediumLineMargin}
                     key="name"
                     dangerouslySetInnerHTML={{ __html: face.name }}
                   />
@@ -208,7 +204,10 @@ export const HellfallCard = ({
                     {stringToMana(face.name)}
                   </Text>
                 ))}
-              <Text cs={mediumLine} key="cost"> {stringToMana(face.mana_cost)}</Text>
+              <Text cs={mediumLine} key="cost">
+                {' '}
+                {stringToMana(face.mana_cost)}
+              </Text>
               {face.flavor_name &&
                 (triggerEscapeList.some(e => face.name.includes(e)) ? (
                   <>
@@ -240,7 +239,9 @@ export const HellfallCard = ({
                     {formatDiscordMarkdownInline(formatParens(face.type_line))}
                   </Text>
                 ) : (
-                  <Text cs={mediumLine} key="type">{stringToMana(face.type_line)}</Text>
+                  <Text cs={mediumLine} key="type">
+                    {stringToMana(face.type_line)}
+                  </Text>
                 ))}
               {(face.oracle_text || face.flavor_text) && <hr className={separator} />}
               {face.oracle_text &&
@@ -262,7 +263,9 @@ export const HellfallCard = ({
                   </Box>
                 ) : (
                   <>
-                    <Box cs={mediumText} key="rules">{renderText(face.oracle_text.split('\\n'))}</Box>
+                    <Box cs={mediumText} key="rules">
+                      {renderText(face.oracle_text.split('\\n'))}
+                    </Box>
                   </>
                 ))}
               {face.flavor_text &&
@@ -288,25 +291,33 @@ export const HellfallCard = ({
               {face.loyalty && (
                 <>
                   <hr className={separator} />
-                  <Box cs={mediumText} key="loyalty">Loyalty: {face.loyalty}</Box>
+                  <Box cs={mediumText} key="loyalty">
+                    Loyalty: {face.loyalty}
+                  </Box>
                 </>
               )}
               {face.defense && (
                 <>
                   <hr className={separator} />
-                  <Box cs={mediumText} key="defense">Defense: {face.defense}</Box>
+                  <Box cs={mediumText} key="defense">
+                    Defense: {face.defense}
+                  </Box>
                 </>
               )}
               {face.hand_modifier && (
                 <>
                   <hr className={separator} />
-                  <Box cs={mediumText} key="hand_modifier">Hand Size: {face.hand_modifier}</Box>
+                  <Box cs={mediumText} key="hand_modifier">
+                    Hand Size: {face.hand_modifier}
+                  </Box>
                 </>
               )}
               {face.life_modifier && (
                 <>
                   <hr className={separator} />
-                  <Box cs={mediumText} key="life_modifier">Starting Life: {face.life_modifier}</Box>
+                  <Box cs={mediumText} key="life_modifier">
+                    Starting Life: {face.life_modifier}
+                  </Box>
                 </>
               )}
             </span>
@@ -349,7 +360,9 @@ export const HellfallCard = ({
           )}
           {displayCard.hcid && (
             <>
-              <Box cs={smallText} key="hcid">Id: {displayCard.hcid}</Box>
+              <Box cs={smallText} key="hcid">
+                Id: {displayCard.hcid}
+              </Box>
             </>
           )}
           {
@@ -367,9 +380,15 @@ export const HellfallCard = ({
             <>
               <hr className={divider} />
               <div>
-                <Heading cs={headingStyles} size="small">Rulings</Heading>
+                <Heading cs={headingStyles} size="small">
+                  Rulings
+                </Heading>
                 {displayCard.rulings.split('\\n').map((e, i) => {
-                  return <Box cs={ruling} key={i}>{e}</Box>;
+                  return (
+                    <Box cs={ruling} key={i}>
+                      {e}
+                    </Box>
+                  );
                 })}
               </div>
             </>
@@ -392,10 +411,14 @@ export const HellfallCard = ({
               <>
                 {tagsLoading && <Box cs={smallText}>Loading tags…</Box>}
                 {tagsError && (
-                  <Box cs={smallText} style={{ color: '#c00' }}>Could not load tag overrides.</Box>
+                  <Box cs={smallText} style={{ color: '#c00' }}>
+                    Could not load tag overrides.
+                  </Box>
                 )}
                 {tagActionError && (
-                  <Box cs={smallText} style={{ color: '#c00' }}>{tagActionError}</Box>
+                  <Box cs={smallText} style={{ color: '#c00' }}>
+                    {tagActionError}
+                  </Box>
                 )}
                 <Box cs={smallText} key="Tags">
                   Tags:{' '}
@@ -464,7 +487,9 @@ export const HellfallCard = ({
                   ))}
                 </Box>
                 {pendingTagStaging && (
-                  <Box cs={smallText} style={{ color: '#856404' }}>Staged changes pending review.</Box>
+                  <Box cs={smallText} style={{ color: '#856404' }}>
+                    Staged changes pending review.
+                  </Box>
                 )}
                 {user && tagsPersistEnabled && (
                   <Box cs={tagAddRow}>
@@ -559,7 +584,9 @@ export const HellfallCard = ({
             <>
               <hr className={divider} />
               <div>
-                <Heading cs={headingStyles} size="small">Related Cards & Tokens</Heading>
+                <Heading cs={headingStyles} size="small">
+                  Related Cards & Tokens
+                </Heading>
                 <Box cs={relatedGrid}>
                   {displayCard.all_parts
                     .filter(e => e.id != displayCard.id)
@@ -623,7 +650,7 @@ const container = createStyles({
   alignItems: 'center',
   fontSize: '16px',
   justifyContent: 'center',
-  lineHeight:1
+  lineHeight: 1,
 });
 
 // const Container = styled.div({
@@ -678,7 +705,6 @@ const imageContainer = createStyles({
 //   },
 // });
 
-
 const headingStyles = createStyles({
   marginTop: '0px',
   marginBottom: '10px',
@@ -696,11 +722,9 @@ interface TagLinkProps {
   children: React.ReactNode;
 }
 const tagLinkStencil = createStencil({
-  vars:{},
-  base:{
-    '& a': {
-      
-    },
+  vars: {},
+  base: {
+    '& a': {},
   },
   modifiers: {
     pendingAdd: {
@@ -719,21 +743,19 @@ const tagLinkStencil = createStencil({
         },
       },
     },
-  }
-})
-const TagLink: React.FC<TagLinkProps> = ({ 
-  pendingAdd, 
-  pendingRemove, 
-  children,
-  ...elemProps 
-}) => {
+  },
+});
+const TagLink: React.FC<TagLinkProps> = ({ pendingAdd, pendingRemove, children, ...elemProps }) => {
   // Use the Stencil with appropriate modifiers
 
   return (
-    <span {...elemProps} {...tagLinkStencil({
-    pendingAdd: pendingAdd || false,
-    pendingRemove: pendingRemove || false,
-  })}>
+    <span
+      {...elemProps}
+      {...tagLinkStencil({
+        pendingAdd: pendingAdd || false,
+        pendingRemove: pendingRemove || false,
+      })}
+    >
       {children}
     </span>
   );
@@ -748,7 +770,6 @@ const TagLink: React.FC<TagLinkProps> = ({
 //     },
 //   })
 // );
-
 
 const tagRemoveButton = createStyles({
   marginLeft: '2px',
@@ -790,7 +811,6 @@ const tagAddRow = createStyles({
 //   alignItems: 'center',
 //   '& input': { minWidth: '120px' },
 // });
-
 
 const relatedGrid = createStyles({
   display: 'flex',
@@ -859,34 +879,33 @@ const buttonStyles = createStyles({
   '&:hover, &:focus, &:active': {
     textDecoration: 'none',
   },
-})
-
+});
 
 const inputButtonColors: ButtonColors = {
   default: {
     background: inputColors.background,
     border: inputColors.border,
-    label: inputColors.text
+    label: inputColors.text,
   },
   hover: {
     background: inputColors.disabled.background,
     border: inputColors.focusBorder,
-    label: inputColors.text
+    label: inputColors.text,
   },
   active: {
     background: inputColors.background,
     border: inputColors.border,
-    label: inputColors.text
+    label: inputColors.text,
   },
   focus: {
     background: inputColors.disabled.background,
     border: inputColors.focusBorder,
-    label: inputColors.text
+    label: inputColors.text,
   },
   disabled: {
     background: inputColors.disabled.background,
     border: inputColors.disabled.border,
-    label: inputColors.text
+    label: inputColors.text,
   },
 };
 
@@ -895,12 +914,9 @@ const mediumLine = createStyles({
   fontWeight: type.levels.body.medium.fontWeight,
   marginBlock: '.5rem',
 });
-const mediumLineMargin = createStyles(mediumLine, { marginRight: '1em' })
+const mediumLineMargin = createStyles(mediumLine, { marginRight: '1em' });
 
-const mediumText = createStyles(
-  mediumLine,
-  {lineHeight: 1.125,}
-);
+const mediumText = createStyles(mediumLine, { lineHeight: 1.125 });
 const mediumItalics = createStyles(mediumText, { fontStyle: 'italic' });
 const mediumItalicLine = createStyles(mediumLine, { fontStyle: 'italic' });
 

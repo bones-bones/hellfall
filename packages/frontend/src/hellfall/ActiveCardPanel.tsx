@@ -38,40 +38,39 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
 
   return (
     <Box cs={sidePanelStyles}>
-    <SidePanel
-      {...panelProps}
-      expanded={!!activeCard}
-      expandedWidth={Math.max(windowWidth * 0.535, 350)}
-      collapsedWidth={0}
-      origin={origin}
-      {...sidePanelStencil({origin})}
-    >
-      <Card>
-        <Card.Body padding={'zero'}>
-          <Box cs={spContainer}>
-            <ToolbarIconButton
-              icon={xIcon}
-              margin={'2px 0 0 2px'}
-              onClick={() => setActiveCardFromAtom('')}
-            />
-            {activeCard && (
+      <SidePanel
+        {...panelProps}
+        expanded={!!activeCard}
+        expandedWidth={Math.max(windowWidth * 0.535, 350)}
+        collapsedWidth={0}
+        origin={origin}
+        {...sidePanelStencil({ origin })}
+      >
+        <Card>
+          <Card.Body padding={'zero'}>
+            <Box cs={spContainer}>
               <ToolbarIconButton
-                as="a"
-                icon={extLinkIcon}
+                icon={xIcon}
                 margin={'2px 0 0 2px'}
-                href={'/card/' + encodeURIComponent(activeCard.hcid)}
-                target="_blank"
+                onClick={() => setActiveCardFromAtom('')}
               />
-            )}
-            {activeCard && <HellfallCard data={activeCard} />}
-          </Box>
-        </Card.Body>
-      </Card>
-    </SidePanel>
+              {activeCard && (
+                <ToolbarIconButton
+                  as="a"
+                  icon={extLinkIcon}
+                  margin={'2px 0 0 2px'}
+                  href={'/card/' + encodeURIComponent(activeCard.hcid)}
+                  target="_blank"
+                />
+              )}
+              {activeCard && <HellfallCard data={activeCard} />}
+            </Box>
+          </Card.Body>
+        </Card>
+      </SidePanel>
     </Box>
   );
 };
-
 
 const sidePanelStyles = createStyles({
   '& section': {
@@ -83,25 +82,25 @@ const sidePanelStyles = createStyles({
     '& > div': {
       paddingRight: '8px !important',
     },
-  }
-})
+  },
+});
 
 const sidePanelStencil = createStencil({
-  vars:{
-    origin:'right'
+  vars: {
+    origin: 'right',
   },
-  base:{},
-  modifiers:{
+  base: {},
+  modifiers: {
     origin: {
       right: {
-        right: 0
+        right: 0,
       },
       left: {
-        left: 0
-      }
-    }
-  }
-})
+        left: 0,
+      },
+    },
+  },
+});
 
 const spContainer = createStyles({
   overflowY: 'scroll',

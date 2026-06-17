@@ -1,9 +1,9 @@
-import styled from '@emotion/styled';
 import { useState, useEffect, PropsWithChildren, FC } from 'react';
-import { StyledLegend } from './StyledLabel.tsx';
-import { HCSearchColors } from '@hellfall/shared/types';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { legendStyles } from './advancedStyles';
+import { Box } from '@workday/canvas-kit-react';
 
-export const SearchCheckbox = styled.input({
+export const searchCheckbox = createStyles({
   height: '18px',
   width: '18px',
   ':hover': { outline: '5px solid GREY', outlineStyle: 'auto' },
@@ -29,13 +29,14 @@ export const CheckboxGroup: FC<
 
   return (
     <fieldset>
-      <StyledLegend>{label}</StyledLegend>
+      <legend className={legendStyles}>{label}</legend>
 
-      <Container>
+      <Box cs={container}>
         {values.map(entry => {
           return (
-            <CheckEntry key={entry}>
-              <SearchCheckbox
+            <Box cs={checkEntry} key={entry}>
+              <input
+                className={searchCheckbox}
                 id={`${label}-${entry}-label-checkbox`}
                 type="checkbox"
                 checked={selected.includes(entry)}
@@ -47,11 +48,13 @@ export const CheckboxGroup: FC<
                   }
                 }}
               />
-              <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{entry}</StyledLabel>
-            </CheckEntry>
+              <label className={labelStyles} htmlFor={`${label}-${entry}-label-checkbox`}>
+                {entry}
+              </label>
+            </Box>
           );
         })}
-      </Container>
+      </Box>
       {children}
     </fieldset>
   );
@@ -76,13 +79,14 @@ export const BoxlessCheckboxGroup: FC<
 
   return (
     <div style={{ marginLeft: '-2px' }}>
-      <StyledLegend>{label}</StyledLegend>
+      <legend className={legendStyles}>{label}</legend>
 
-      <Container>
+      <Box cs={container}>
         {values.map(entry => {
           return (
-            <CheckEntry key={entry}>
-              <SearchCheckbox
+            <Box cs={checkEntry} key={entry}>
+              <input
+                className={searchCheckbox}
                 id={`${label}-${entry}-label-checkbox`}
                 type="checkbox"
                 checked={selected.includes(entry)}
@@ -94,11 +98,13 @@ export const BoxlessCheckboxGroup: FC<
                   }
                 }}
               />
-              <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{entry}</StyledLabel>
-            </CheckEntry>
+              <label className={labelStyles} htmlFor={`${label}-${entry}-label-checkbox`}>
+                {entry}
+              </label>
+            </Box>
           );
         })}
-      </Container>
+      </Box>
       {children}
     </div>
   );
@@ -125,14 +131,15 @@ export const NamedCheckboxGroup: FC<
 
   return (
     <fieldset>
-      <StyledLegend>{label}</StyledLegend>
+      <legend className={legendStyles}>{label}</legend>
 
-      <Container>
+      <Box cs={container}>
         {values.map((entry, index) => {
           const name = names[index];
           return (
-            <CheckEntry key={entry}>
-              <SearchCheckbox
+            <Box cs={checkEntry} key={entry}>
+              <input
+                className={searchCheckbox}
                 id={`${label}-${entry}-label-checkbox`}
                 type="checkbox"
                 checked={selected.includes(entry)}
@@ -144,11 +151,13 @@ export const NamedCheckboxGroup: FC<
                   }
                 }}
               />
-              <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{name}</StyledLabel>
-            </CheckEntry>
+              <label className={labelStyles} htmlFor={`${label}-${entry}-label-checkbox`}>
+                {name}
+              </label>
+            </Box>
           );
         })}
-      </Container>
+      </Box>
       {children}
     </fieldset>
   );
@@ -174,15 +183,16 @@ export const HiddenCheckboxGroup: FC<
 
   return (
     <fieldset>
-      <StyledLegend>{label}</StyledLegend>
+      <legend className={legendStyles}>{label}</legend>
 
       {open ? (
         <>
-          <Container>
+          <Box cs={container}>
             {values.map(entry => {
               return (
-                <CheckEntry key={entry}>
-                  <SearchCheckbox
+                <Box cs={checkEntry} key={entry}>
+                  <input
+                    className={searchCheckbox}
                     id={`${label}-${entry}-label-checkbox`}
                     type="checkbox"
                     checked={selected.includes(entry)}
@@ -194,11 +204,13 @@ export const HiddenCheckboxGroup: FC<
                       }
                     }}
                   />
-                  <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{entry}</StyledLabel>
-                </CheckEntry>
+                  <label className={labelStyles} htmlFor={`${label}-${entry}-label-checkbox`}>
+                    {entry}
+                  </label>
+                </Box>
               );
             })}
-          </Container>
+          </Box>
           <button
             onClick={() => {
               setOpen(false);
@@ -242,16 +254,17 @@ export const NamedHiddenCheckboxGroup: FC<
 
   return (
     <fieldset>
-      <StyledLegend>{label}</StyledLegend>
+      <legend className={legendStyles}>{label}</legend>
 
       {open ? (
         <>
-          <Container>
+          <Box cs={container}>
             {values.map((entry, index) => {
               const name = names[index];
               return (
-                <CheckEntry key={entry}>
-                  <SearchCheckbox
+                <Box cs={checkEntry} key={entry}>
+                  <input
+                    className={searchCheckbox}
                     id={`${label}-${entry}-label-checkbox`}
                     type="checkbox"
                     checked={selected.includes(entry)}
@@ -263,11 +276,13 @@ export const NamedHiddenCheckboxGroup: FC<
                       }
                     }}
                   />
-                  <StyledLabel htmlFor={`${label}-${entry}-label-checkbox`}>{name}</StyledLabel>
-                </CheckEntry>
+                  <label className={labelStyles} htmlFor={`${label}-${entry}-label-checkbox`}>
+                    {name}
+                  </label>
+                </Box>
               );
             })}
-          </Container>
+          </Box>
           {/* <br /> */}
           <button
             onClick={() => {
@@ -319,29 +334,32 @@ export const SingleCheckbox = ({
 
   return (
     <div style={{ marginLeft: '-2px' }}>
-      <CheckEntry key={label}>
-        <SearchCheckbox
+      <Box cs={checkEntry} key={label}>
+        <input
+          className={searchCheckbox}
           id={label}
           type="checkbox"
           checked={value}
           onChange={event => onChange(event.target.checked)}
         />
         {}
-        <SingleStyledLabel htmlFor={label}>{label}</SingleStyledLabel>
-      </CheckEntry>
+        <label className={singleLabelStyles} htmlFor={label}>
+          {label}
+        </label>
+      </Box>
     </div>
   );
 };
 
-const Container = styled.div({ display: 'flex', flexDirection: 'column' });
+const container = createStyles({ display: 'flex', flexDirection: 'column' });
 
-const CheckEntry = styled.div({
+const checkEntry = createStyles({
   display: 'flex',
   margin: '2px',
   height: '25px',
   alignItems: 'center',
 });
 
-const SingleStyledLabel = styled.label({ fontWeight: 'bold', marginLeft: '6px' });
+const singleLabelStyles = createStyles({ fontWeight: 'bold', marginLeft: '6px' });
 
-const StyledLabel = styled.label({ marginLeft: '6px' });
+const labelStyles = createStyles({ marginLeft: '6px' });

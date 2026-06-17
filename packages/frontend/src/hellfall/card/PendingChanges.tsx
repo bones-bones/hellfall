@@ -35,7 +35,9 @@ export function PendingChanges({ cardId }: { cardId: string }) {
                 {formatVal(change)}
               </Box>
             ))}
-            <Link className={reviewLinkStyles} to={`/review/${cardId}`}>View in Review</Link>
+            <Link className={reviewLinkStyles} to={`/review/${cardId}`}>
+              View in Review
+            </Link>
           </Box>
         ))}
     </Box>

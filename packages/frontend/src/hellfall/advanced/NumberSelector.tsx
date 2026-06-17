@@ -1,9 +1,9 @@
-import styled from '@emotion/styled';
-
 import { useState, useEffect } from 'react';
-import { StyledLegend } from './StyledLabel.tsx';
 import { looseOpList, looseOpType } from '@hellfall/shared/filters';
 import { toNumber } from '@hellfall/shared/utils';
+import { legendStyles } from './advancedStyles';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { Box } from '@workday/canvas-kit-react';
 // TODO: figure out better way to deal with 5/1
 
 export const NumericComparatorSelector = ({
@@ -28,9 +28,10 @@ export const NumericComparatorSelector = ({
   }, [localValue, localOperator, onChange]);
   return (
     <fieldset>
-      <StyledLegend>{label}</StyledLegend>
-      <Container>
-        <StyledDropdownSelect
+      <legend className={legendStyles}>{label}</legend>
+      <Box cs={container}>
+        <select
+          className={dropdownSelectStyles}
           value={localOperator}
           onChange={event => {
             setLocalOperator(event.target.value as looseOpType);
@@ -39,8 +40,9 @@ export const NumericComparatorSelector = ({
           {looseOpList.map(entry => (
             <option key={entry}>{entry}</option>
           ))}
-        </StyledDropdownSelect>{' '}
-        <StyledNumberInput
+        </select>{' '}
+        <input
+          className={numberInputStyles}
           type="number"
           value={localValue != undefined ? localValue : ''}
           onChange={event => {
@@ -51,12 +53,12 @@ export const NumericComparatorSelector = ({
             }
           }}
         />
-      </Container>
+      </Box>
     </fieldset>
   );
 };
 
-const StyledNumberInput = styled('input')({ width: '40px' });
+const numberInputStyles = createStyles({ width: '40px' });
 
-const StyledDropdownSelect = styled('select')({ width: '40px', height: '30px' });
-const Container = styled('div')({ display: 'flex' });
+const dropdownSelectStyles = createStyles({ width: '40px', height: '30px' });
+const container = createStyles({ display: 'flex' });

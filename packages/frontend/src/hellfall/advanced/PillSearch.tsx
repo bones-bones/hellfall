@@ -2,14 +2,12 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { DeprecatedMenuItem, Pill } from '@workday/canvas-kit-preview-react';
 import {
   FormField,
-  styled,
   TertiaryButton,
-  TextInput,
   Menu,
   useMenuModel,
+  TextInput,
 } from '@workday/canvas-kit-react';
-
-import { FixedSizeList } from 'react-window';
+import { createStyles } from '@workday/canvas-kit-styling';
 
 type Props = {
   possibleValues: string[];
@@ -68,7 +66,8 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
   return (
     <Menu model={menuModel}>
       <FormField label={label}>
-        <StyledTextInput
+        <TextInput
+          className={textInputStyles}
           ref={searchRef}
           onFocus={() => {
             setSelectedIndex(undefined);
@@ -91,7 +90,7 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
           }}
         />
         <Menu.Popper anchorElement={searchRef.current} placement="bottom">
-          <StyledCard>
+          <Menu.Card cs={cardStyles}>
             <div style={{ maxHeight: '200px', overflowY: 'auto', width: '275px' }}>
               {filteredItems.map((item, index) => (
                 <DeprecatedMenuItem
@@ -104,7 +103,7 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
                 </DeprecatedMenuItem>
               ))}
             </div>
-          </StyledCard>
+          </Menu.Card>
         </Menu.Popper>
 
         {selectedValues.map(entry => {
@@ -133,11 +132,11 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
   );
 };
 
-const StyledTextInput = styled(TextInput)({
+const textInputStyles = createStyles({
   marginLeft: '0px',
 });
 
-const StyledCard = styled(Menu.Card)({
+const cardStyles = createStyles({
   overflow: 'hidden',
   borderTopLeftRadius: '0px',
   borderTopRightRadius: '0px',

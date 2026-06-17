@@ -2,7 +2,16 @@
 import { Box, Text } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { useState } from 'react';
-import { clickableTitleStencil, imageStencil, linkStyles, loadedStyles, sharedContainer, titleLinkStyles, titleStencil, visuallyHiddenSpan } from './entryStyles';
+import {
+  clickableTitleStencil,
+  imageStencil,
+  linkStyles,
+  loadedStyles,
+  sharedContainer,
+  titleLinkStyles,
+  titleStencil,
+  visuallyHiddenSpan,
+} from './entryStyles';
 import { Link } from 'react-router-dom';
 
 export const HellfallEntry = ({
@@ -53,7 +62,10 @@ export const HellfallEntry = ({
           className={titleLinkStyles}
           onClick={e => handleClick(e, onClickTitle as any)}
         >
-          <Text as={imgLinkUrl ? 'h3' : 'span'} cs={clickableTitleStencil({hasURL:!!imgLinkUrl})}>
+          <Text
+            as={imgLinkUrl ? 'h3' : 'span'}
+            cs={clickableTitleStencil({ hasURL: !!imgLinkUrl })}
+          >
             {name}
           </Text>
         </Link>
@@ -62,7 +74,7 @@ export const HellfallEntry = ({
         to={imgLinkUrl ?? linkUrl}
         onClick={e => handleClick(e)}
         title={plainText ?? name}
-        {...imageLinkStencil({imageLoaded})}
+        {...imageLinkStencil({ imageLoaded })}
       >
         <img
           key={id + '-image'}
@@ -71,18 +83,25 @@ export const HellfallEntry = ({
           aria-label={name}
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageErrored(true)}
-          {...imageStencil({hideImage:!(imageLoaded || imageErrored)})}
+          {...imageStencil({ hideImage: !(imageLoaded || imageErrored) })}
         />
-        {!onClickTitle &&
-            (<Text key={id + '-name'} cs={titleStencil({imageLoaded})}>{name}</Text>)
-         /*  (imageLoaded ? (
+        {
+          !onClickTitle && (
+            <Text key={id + '-name'} cs={titleStencil({ imageLoaded })}>
+              {name}
+            </Text>
+          )
+          /*  (imageLoaded ? (
             <Text key={id + '-name'} cs={visuallyHiddenSpan}>{name}</Text>
           ) : (
-          )) */}
+          )) */
+        }
         {otherNames &&
           otherNames.map((otherName, i) => {
             return (
-              <Text key={'other-name-' + i + '-' + id} cs={visuallyHiddenSpan}>{otherName}</Text>
+              <Text key={'other-name-' + i + '-' + id} cs={visuallyHiddenSpan}>
+                {otherName}
+              </Text>
             );
           })}
       </Link>
@@ -90,7 +109,7 @@ export const HellfallEntry = ({
   );
 };
 
-const container = createStyles(sharedContainer,{
+const container = createStyles(sharedContainer, {
   height: '340px',
   display: 'inline-block',
   position: 'relative',
@@ -102,12 +121,11 @@ const imageLinkStencil = createStencil({
   modifiers: {
     imageLoaded: {
       false: {
-       ...loadedStyles,
-          height: '340px',
-          width: '243px',
-          display:'block'
+        ...loadedStyles,
+        height: '340px',
+        width: '243px',
+        display: 'block',
       },
     },
   },
-})
-
+});

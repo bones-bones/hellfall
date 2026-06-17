@@ -1,4 +1,4 @@
-import { createStencil, createStyles } from "@workday/canvas-kit-styling";
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 
 // Text
 const titleText = {
@@ -6,10 +6,9 @@ const titleText = {
   '&:hover': {
     textDecoration: 'underline',
   },
-  position:'relative',
-  zIndex:1,
+  position: 'relative',
+  zIndex: 1,
 };
-
 
 export const clickableTitleStencil = createStencil({
   vars: {},
@@ -17,11 +16,11 @@ export const clickableTitleStencil = createStencil({
   modifiers: {
     hasURL: {
       true: {
-        lineHeight:0
+        lineHeight: 0,
       },
     },
   },
-})
+});
 
 // Link
 export const titleLinkStyles = createStyles({
@@ -42,7 +41,7 @@ const visuallyHidden = {
   whiteSpace: 'nowrap',
   border: '0',
   pointerEvents: 'none',
-}
+};
 export const visuallyHiddenSpan = createStyles(visuallyHidden);
 
 export const titleStencil = createStencil({
@@ -61,7 +60,7 @@ export const titleStencil = createStencil({
       },
     },
   },
-})
+});
 
 export const sharedContainer = createStyles({
   margin: '5px',
@@ -77,13 +76,13 @@ export const linkStyles = {
   display: 'block',
   textDecoration: 'none',
   cursor: 'pointer',
-}
+};
 
 export const loadedStyles = {
   backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
   borderRadius: '4.75% / 3.5%',
   position: 'relative',
-}
+};
 
 export const imageStencil = createStencil({
   vars: {},
@@ -97,7 +96,7 @@ export const imageStencil = createStencil({
       true: {
         maxHeight: '450px',
         maxWidth: '320px',
-      }
+      },
     },
     hideImage: {
       true: {
@@ -105,8 +104,8 @@ export const imageStencil = createStencil({
         display: 'inline',
         width: 0,
         height: 0,
-        opacity: 0 
+        opacity: 0,
       },
     },
   },
-})
+});

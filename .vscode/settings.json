@@ -11,5 +11,25 @@
     { "directory": "./packages/server" },
     { "directory": "./packages/scripts" }
   ],
-  "typescript.experimental.expandableHover": true
+  "gitlens.currentLine.enabled": false,
+  "gitlens.codeLens.enabled": false,
+  "typescript.tsserver.watchOptions": {
+    "excludeDirectories": [
+      "../**/node_modules",
+      "../../**/node_modules"
+    ],
+    "excludeFiles": [
+      "**/node_modules/**/*"
+      "**/node_modules",
+    ]
+  },
+  "typescript.suggest.autoImports": true,
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+  "typescript.referencesCodeLens.enabled": false,
+  "typescript.implementationsCodeLens.enabled": false,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.quoteStyle": "single",
+  // "typescript.tsserver.log": "verbose"
 }

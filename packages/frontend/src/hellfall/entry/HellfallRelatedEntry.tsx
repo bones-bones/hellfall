@@ -1,7 +1,16 @@
 import styled from '@emotion/styled';
 import { MouseEventHandler, useState } from 'react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { clickableTitleStencil, imageStencil, linkStyles, loadedStyles, sharedContainer, titleLinkStyles, titleStencil, visuallyHiddenSpan } from './entryStyles';
+import {
+  clickableTitleStencil,
+  imageStencil,
+  linkStyles,
+  loadedStyles,
+  sharedContainer,
+  titleLinkStyles,
+  titleStencil,
+  visuallyHiddenSpan,
+} from './entryStyles';
 import { Box, Text } from '@workday/canvas-kit-react';
 import { Link } from 'react-router-dom';
 
@@ -57,7 +66,7 @@ export const HellfallRelatedEntry = ({
         to={linkUrl}
         onClick={e => handleClick(e)}
         title={plainText ?? name}
-        {...imageLinkStencil({imageLoaded})}
+        {...imageLinkStencil({ imageLoaded })}
       >
         <img
           key={id}
@@ -67,18 +76,24 @@ export const HellfallRelatedEntry = ({
           title={plainText ?? name}
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageErrored(true)}
-          {...imageStencil({hideImage:!(imageLoaded || imageErrored), isRelated:true})}
+          {...imageStencil({ hideImage: !(imageLoaded || imageErrored), isRelated: true })}
         />
-        {!onClickTitle &&
-            (<Text key={id + '-name'} cs={titleStencil({imageLoaded})}>{name}</Text>)
+        {
+          !onClickTitle && (
+            <Text key={id + '-name'} cs={titleStencil({ imageLoaded })}>
+              {name}
+            </Text>
+          )
           // (imageLoaded ? (
           //   <Text key={id + '-name'} cs={visuallyHiddenSpan}>{name}</Text>
           // ) : (
-          }
+        }
         {otherNames &&
           otherNames.map((otherName, i) => {
             return (
-              <Text key={'other-name-' + i + '-' + id} cs={visuallyHiddenSpan}>{otherName}</Text>
+              <Text key={'other-name-' + i + '-' + id} cs={visuallyHiddenSpan}>
+                {otherName}
+              </Text>
             );
           })}
       </Link>
@@ -86,7 +101,7 @@ export const HellfallRelatedEntry = ({
   );
 };
 
-const container = createStyles(sharedContainer,{
+const container = createStyles(sharedContainer, {
   display: 'flex',
   overflow: 'auto',
   maxheight: '500px',
@@ -106,4 +121,4 @@ const imageLinkStencil = createStencil({
       },
     },
   },
-})
+});

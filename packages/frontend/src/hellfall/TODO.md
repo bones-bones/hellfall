@@ -126,6 +126,6 @@ Write a script to transform the database
   - div => Box
   - span => Text
   - p => Subtext or BodyText
-  - use normal html for now: button, some instances of p, Link, SidePanel, img, FormField
+  - use normal html for now: button, some instances of p, Link, SidePanel, img, FormField, textarea, selects
 - refactor away from className
-- 
+-

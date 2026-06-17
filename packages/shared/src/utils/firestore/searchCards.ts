@@ -55,7 +55,7 @@ export const searchCardsFromCollection = async (
   }
   const newCardsWithExtras = new CardMap();
   (await cardsCol.get()).forEach(snap => {
-    const card = snap.data()
+    const card = snap.data();
     if (
       evaluateFilter(node, card, cardsCol) &&
       (includeList.length

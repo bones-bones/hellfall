@@ -28,7 +28,8 @@ export const stringToMana = (text: string) => {
       if (entry.startsWith('{') && entry.endsWith('}')) {
         const icon = getPip(entry.slice(1, -1));
         return icon ? (
-          <Box cs={pipContainer}
+          <Box
+            cs={pipContainer}
             style={
               icon.no_shadow
                 ? { margin: '1px 1px -px 1px' }
