@@ -6,7 +6,7 @@ export const downloadDraftmancer = ({
   set,
   idList,
   cardMap,
-  multMap
+  multMap,
 }: {
   name: string;
   set: SetCode;

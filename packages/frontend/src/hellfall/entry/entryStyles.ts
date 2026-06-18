@@ -1,15 +1,14 @@
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import {
-  createStenciledH3,
   createStenciledImg,
-  createStenciledLink,
+  createStenciledIntrinsic,
   createStenciledSpan,
   createStyledLink,
   createStyledSpan,
-} from '../../styling/StyledElements';
+  htmlIntrinsicProps,
+} from '../../styling';
 import { LinkProps } from 'react-router-dom';
 import { TextProps } from '@workday/canvas-kit-react';
-import { overflow } from 'html2canvas/dist/types/css/property-descriptors/overflow';
 
 // Text
 const titleText = {
@@ -39,11 +38,14 @@ interface ClickableTitleProps extends TextProps {
   as?: string;
 }
 export const ClickableTitle = createStenciledSpan<ClickableTitleProps>(clickableTitleStencil);
-interface ClickableTitleH3Props extends TextProps {
+interface ClickableTitleH3Props extends htmlIntrinsicProps {
   hasURL?: boolean;
   as?: string;
 }
-export const ClickableTitleH3 = createStenciledH3<ClickableTitleH3Props>(clickableTitleStencil);
+export const ClickableTitleH3 = createStenciledIntrinsic<ClickableTitleH3Props>(
+  'h3',
+  clickableTitleStencil
+);
 
 const titleLinkStyles = createStyles({
   display: 'inline-block',

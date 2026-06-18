@@ -22,7 +22,7 @@ import {
   createStyledLabel,
   createStyledSpan,
   createStyledSubtext,
-} from '../../styling/StyledElements';
+} from '../../styling';
 
 export type EditableFields = {
   name: string;

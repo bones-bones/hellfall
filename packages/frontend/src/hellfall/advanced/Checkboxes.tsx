@@ -1,11 +1,7 @@
 import { useState, useEffect, PropsWithChildren, FC } from 'react';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { Box } from '@workday/canvas-kit-react';
-import {
-  createStyledDiv,
-  createStyledInput,
-  createStyledLabel,
-} from '../../styling/StyledElements';
+import { createStyledDiv, createStyledInput, createStyledLabel } from '../../styling';
 import { StyledLegend } from './AdvancedComponents';
 
 const searchCheckbox = createStyles({

@@ -1,6 +1,5 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
-import styled from '@emotion/styled';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
 import { stringToMana } from '../hellfall/stringToMana.tsx';
@@ -13,7 +12,17 @@ import {
   isPlayableCubeCard,
 } from '@hellfall/shared/utils';
 import { HCCard, SetCode } from '@hellfall/shared/types';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { BoxProps } from '@workday/canvas-kit-react';
+import {
+  createStenciledDiv,
+  createStenciledIntrinsic,
+  createStyledDiv,
+  createStyledIntrinsic,
+  createStyledLink,
+  createStyledSpan,
+} from '../styling';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 
 const activeCardAtom = atom<HCCard.Any | undefined>(undefined);
 
@@ -32,13 +41,20 @@ export const CubeList = () => {
         .mapToArray(card => card)
         .sort(compareCubeListCards);
     }
-    return cardMap.getAllInSet(setCode).mapToArray(card => card);
+    return cardMap.getAllInSetDirect(setCode).mapToArray(card => card);
   }, [cardMap, setCode]);
 
   const sections = useMemo(() => groupCubeCards(cards), [cards]);
   const cubeName =
     setCode === ('All' as SetCode) ? 'All Hellscube sets' : cubeNameForCode(setCode, setCode);
   const totalCards = cards.length;
+  useEffect(() => {
+    if (!cubeName) {
+      document.title = `Loading | Hellfall`;
+    } else {
+      document.title = `${cubeName} | Hellfall`;
+    }
+  }, [cubeName]);
 
   if (!setCodeParam) {
     return null;
@@ -46,7 +62,6 @@ export const CubeList = () => {
 
   return (
     <Page>
-      <title>{cubeName} card list | Hellfall</title>
       <Sheet wide={window.innerWidth > 800}>
         <TopBar>
           <div>
@@ -62,7 +77,7 @@ export const CubeList = () => {
         {sections.length > 0 && (
           <JumpNav>
             {sections.map(({ section, cards: sectionCards }) => (
-              <JumpLink key={section.id} href={`#${section.id}`}>
+              <JumpLink key={section.id} to={`#${section.id}`}>
                 {section.label} ({sectionCards.length})
               </JumpLink>
             ))}
@@ -87,8 +102,10 @@ export const CubeList = () => {
                     <span>Type</span>
                   </GridHeader>
                   {sectionCards.map(card => (
-                    <CardRow key={card.id} onMouseEnter={() => setActiveCard(card)}>
-                      <NameCell href={`/card/${card.name}`}>{card.name}</NameCell>
+                    <CardRow key={card.id}>
+                      <NameCell to={`/card/${card.name}`} onMouseEnter={() => setActiveCard(card)}>
+                        {card.name}
+                      </NameCell>
                       <CostCell>{stringToMana(card.mana_cost || '')}</CostCell>
                       <MvCell>{card.mana_value}</MvCell>
                       <TypeCell>{formatTypeLine(card)}</TypeCell>
@@ -115,47 +132,73 @@ const CardPreview = () => {
   return <HellfallCard data={activeCard} />;
 };
 
-const Page = styled.div({
+const pageStyles = createStyles({
   backgroundColor: '#9e9e9e',
   minHeight: '100%',
   display: 'flex',
   justifyContent: 'center',
 });
+const Page = createStyledDiv(pageStyles);
 
-const Sheet = styled.div<{ wide: boolean }>(({ wide }) => ({
-  width: wide ? 'min(92vw, 1400px)' : '100%',
-  margin: wide ? '0 4vw' : 0,
-  backgroundColor: 'white',
-  padding: '24px 28px 48px',
-}));
+const sheetStencil = createStencil({
+  vars: {},
+  base: {
+    width: '100%',
+    margin: 0,
+    backgroundColor: 'white',
+    padding: '24px 28px 48px',
+  },
+  modifiers: {
+    wide: {
+      true: {
+        width: 'min(92vw, 1400px)',
+        margin: '0 4vw',
+      },
+    },
+  },
+});
+interface SheetProps extends BoxProps {
+  wide?: boolean;
+}
+const Sheet = createStenciledDiv<SheetProps>(sheetStencil);
 
-const TopBar = styled.div({
+const topBarStyles = createStyles({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'space-between',
   gap: '12px',
   marginBottom: '20px',
 });
+const TopBar = createStyledDiv(topBarStyles);
 
-const Meta = styled.p({
+const metaStyles = createStyles({
   margin: '4px 0 0',
   color: '#444',
   fontSize: '15px',
 });
+const Meta = createStyledIntrinsic('p', metaStyles);
 
-const TopLinks = styled.div({
+const topLinksStyles = createStyles({
   display: 'flex',
   gap: '16px',
   alignItems: 'flex-start',
   fontSize: '15px',
 });
+const TopLinks = createStyledDiv(topLinksStyles);
 
-const BackLink = styled(Link)({
+const backLinkStyles = createStyles({
   color: '#333',
   ':hover': { color: '#5a2d91' },
 });
+const BackLink = createStyledLink(backLinkStyles);
 
-const JumpNav = styled.nav({
+const jumpLinkStyles = createStyles({
+  color: '#333',
+  ':hover': { color: '#5a2d91' },
+});
+const JumpLink = createStyledLink(jumpLinkStyles);
+
+const jumpNavStyles = createStyles({
   display: 'flex',
   flexWrap: 'wrap',
   gap: '8px 14px',
@@ -164,59 +207,76 @@ const JumpNav = styled.nav({
   borderBottom: '1px solid #ddd',
   fontSize: '14px',
 });
+const JumpNav = createStyledIntrinsic('nav', jumpNavStyles);
 
-const JumpLink = styled.a({
-  color: '#333',
-  ':hover': { color: '#5a2d91' },
-});
-
-const Body = styled.div({
+const bodyStyles = createStyles({
   display: 'flex',
   gap: '24px',
   alignItems: 'flex-start',
 });
+const Body = createStyledDiv(bodyStyles);
 
-const ListColumn = styled.div({
+const listColumnStyles = createStyles({
   flex: '1 1 520px',
   minWidth: 0,
 });
+const ListColumn = createStyledDiv(listColumnStyles);
 
-const PreviewColumn = styled.aside<{ wide: boolean }>(({ wide }) => ({
-  flex: wide ? '0 0 340px' : '0 0 0',
-  display: wide ? 'block' : 'none',
-  position: 'sticky',
-  top: '12px',
-  maxHeight: 'calc(100vh - 48px)',
-  overflowY: 'auto',
-}));
+const previewColumnStencil = createStencil({
+  vars: {},
+  base: {
+    flex: '0 0 0',
+    display: 'none',
+    position: 'sticky',
+    top: '12px',
+    maxHeight: 'calc(100vh - 48px)',
+    overflowY: 'auto',
+  },
+  modifiers: {
+    wide: {
+      true: {
+        flex: '0 0 340px',
+        display: 'block',
+      },
+    },
+  },
+});
+interface PreviewColumnProps extends React.ComponentPropsWithoutRef<'aside'> {
+  wide?: boolean;
+}
+const PreviewColumn = createStenciledIntrinsic<PreviewColumnProps>('aside', previewColumnStencil);
 
-const PreviewPlaceholder = styled.div({
+const previewPlaceholderStyles = createStyles({
   color: '#888',
   fontSize: '14px',
   padding: '12px',
   border: '1px dashed #ccc',
 });
+const PreviewPlaceholder = createStyledDiv(previewPlaceholderStyles);
 
-const SectionBlock = styled.section({
+const sectionBlockStyles = createStyles({
   marginBottom: '32px',
   scrollMarginTop: '12px',
 });
+const SectionBlock = createStyledIntrinsic('section', sectionBlockStyles);
 
-const SectionTitle = styled.h3({
+const sectionTitleStyles = createStyles({
   margin: '0 0 8px',
   fontSize: '18px',
   borderBottom: '2px solid #C690FF',
   paddingBottom: '4px',
 });
+const SectionTitle = createStyledIntrinsic('h3', sectionTitleStyles);
 
-const SectionCount = styled.span({
+const sectionCountStyles = createStyles({
   marginLeft: '8px',
   fontWeight: 'normal',
   color: '#666',
   fontSize: '15px',
 });
+const SectionCount = createStyledSpan(sectionCountStyles);
 
-const GridHeader = styled.div({
+const gridHeaderStyles = createStyles({
   display: 'grid',
   gridTemplateColumns: 'minmax(140px, 2fr) 72px 32px minmax(100px, 1.5fr) 56px',
   gap: '8px',
@@ -227,8 +287,9 @@ const GridHeader = styled.div({
   paddingBottom: '4px',
   borderBottom: '1px solid #eee',
 });
+const GridHeader = createStyledDiv(gridHeaderStyles);
 
-const CardRow = styled.div({
+const cardRowStyles = createStyles({
   display: 'grid',
   gridTemplateColumns: 'minmax(140px, 2fr) 72px 32px minmax(100px, 1.5fr) 56px',
   gap: '8px',
@@ -237,39 +298,46 @@ const CardRow = styled.div({
   fontSize: '15px',
   ':hover': { backgroundColor: '#f5f0ff' },
 });
+const CardRow = createStyledDiv(cardRowStyles);
 
-const NameCell = styled.a({
+const nameCellStyles = createStyles({
   fontWeight: 600,
   color: 'black',
   textDecoration: 'none',
   ':hover': { textDecoration: 'underline' },
   ':visited': { color: '#444' },
 });
+const NameCell = createStyledLink(nameCellStyles);
 
-const CostCell = styled.div({
+const costCellStyles = createStyles({
   display: 'flex',
   flexWrap: 'wrap',
   alignItems: 'center',
 });
+const CostCell = createStyledDiv(costCellStyles);
 
-const MvCell = styled.div({
+const mvCellStyles = createStyles({
   textAlign: 'right',
   color: '#444',
 });
+const MvCell = createStyledDiv(mvCellStyles);
 
-const TypeCell = styled.div({
+const typeCellStyles = createStyles({
   color: '#333',
   fontSize: '14px',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 });
+const TypeCell = createStyledDiv(typeCellStyles);
 
-const ColorCell = styled.div({
+const colorCellStyles = createStyles({
   fontSize: '13px',
   color: '#555',
 });
+const ColorCell = createStyledDiv(colorCellStyles);
 
-const EmptyNote = styled.p({
+const emptyNoteStyles = createStyles({
   color: '#666',
 });
+const EmptyNote = createStyledIntrinsic('p', emptyNoteStyles);

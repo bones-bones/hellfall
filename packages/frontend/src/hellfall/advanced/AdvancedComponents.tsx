@@ -1,9 +1,5 @@
 import { createStyles } from '@workday/canvas-kit-styling';
-import {
-  createStyledDiv,
-  createStyledLabel,
-  createStyledLegend,
-} from '../../styling/StyledElements';
+import { createStyledDiv, createStyledLabel, createStyledLegend } from '../../styling';
 
 const labelStyles = createStyles({ fontWeight: 'bold' });
 export const StyledLabel = createStyledLabel(labelStyles);

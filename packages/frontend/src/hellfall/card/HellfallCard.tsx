@@ -39,7 +39,7 @@ import {
   createStyledHR,
   createStyledPrimaryButtonLink,
   createStyledSpan,
-} from '../../styling/StyledElements.tsx';
+} from '../../styling';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return (
@@ -153,7 +153,6 @@ export const HellfallCard = ({
 
   return (
     <Container ref={windowRef} key={displayCard.id}>
-      {onSinglePage && <title>{data.name} || Hellfall</title>}
       {!imagesToShow.length ? (
         <Test>
           <ImageContainer key="image-container">

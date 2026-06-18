@@ -11,7 +11,7 @@ import {
   LoadedTitle,
   VisuallyHiddenSpan,
 } from './entryStyles';
-import { createStenciledLink, createStyledDiv } from '../../styling/StyledElements';
+import { createStenciledLink, createStyledDiv } from '../../styling';
 
 export const HellfallRelatedEntry = ({
   url,

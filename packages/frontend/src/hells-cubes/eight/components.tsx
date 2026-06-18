@@ -1,55 +1,61 @@
 import styled from '@emotion/styled';
+import { Box } from '@workday/canvas-kit-react';
+import { createStyles } from '@workday/canvas-kit-styling';
 import { FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
+import { createStyledImg, createStyledIntrinsic } from '../../styling';
 
-export const BigContainerE = styled('div')({
+const bigContainerE = createStyles({
   display: 'flex',
   justifyContent: 'center',
   backgroundColor: 'lightgrey',
   minHeight: '95vh',
 });
-
-export const BigContainer: FC<PropsWithChildren> = ({ children }) => {
-  //
-  return (
-    <BigContainerE>
-      <InnerContainer>
-        <Link to="/hellscubes/eight">{'<< back'}</Link>
-        {children}
-      </InnerContainer>
-    </BigContainerE>
-  );
-};
-export const InnerContainer = styled('div')({
+const innerContainer = createStyles({
   width: '80vw',
   backgroundColor: 'white',
   padding: '20px',
 });
-export const ManaSymbol = styled('img')({ height: '30px' });
-export const ManaSymbolSmall = styled('img')({
+export const BigContainer: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <Box cs={bigContainerE}>
+      <Box cs={innerContainer}>
+        <Link to="/hellscubes/eight">{'<< back'}</Link>
+        {children}
+      </Box>
+    </Box>
+  );
+};
+
+const h3Styles = createStyles({ display: 'flex', alignItems: 'center' });
+export const StyledH3 = createStyledIntrinsic('h3', h3Styles);
+
+const manaSymbolStyles = createStyles({ height: '30px' });
+export const ManaSymbol = createStyledImg(manaSymbolStyles);
+export const manaSymbolSmallStyles = createStyles({
   height: '20px',
   paddingInlineEnd: '10px',
   paddingInlineStart: '5px',
 });
-export const StyledH3 = styled('h3')({ display: 'flex', alignItems: 'center' });
+export const ManaSymbolSmall = createStyledImg(manaSymbolSmallStyles);
 
 export const Divider = ({ color }: { color: string }) => {
   return (
-    <DivContainer>
-      <DivLine />
+    <Box cs={divContainer}>
+      <Box cs={divLine} />
       <ManaSymbol src={color} />
-      <DivLine />
-    </DivContainer>
+      <Box />
+    </Box>
   );
 };
 
-const DivLine = styled('div')({
+const divLine = createStyles({
   height: '3px',
   width: '20vw',
   background: 'black',
 });
 
-const DivContainer = styled('div')({
+const divContainer = createStyles({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

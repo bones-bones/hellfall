@@ -21,7 +21,7 @@ import { ActiveCardPanel } from './ActiveCardPanel.tsx';
 import { Link } from 'react-router-dom';
 import { HellfallCard } from './card/HellfallCard.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv, createStyledHR } from '../styling/StyledElements.tsx';
+import { createStyledDiv, createStyledHR } from '../styling';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);

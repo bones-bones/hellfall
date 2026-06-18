@@ -3,7 +3,7 @@ import type { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { getIndicatorFromColors, getPip, pipToSrc } from '@hellfall/shared/utils';
 import { BoxProps } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledDiv, createStyledImg } from '../styling/StyledElements';
+import { createStenciledDiv, createStyledImg } from '../styling';
 
 export const stringToMana = (text: string) => {
   return text

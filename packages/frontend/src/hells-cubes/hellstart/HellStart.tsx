@@ -5,6 +5,8 @@ import { HCCard } from '@hellfall/shared/types';
 import { HellfallEntry } from '../../hellfall/entry/HellfallEntry.tsx';
 import { ActiveCardPanel } from '../../hellfall/ActiveCardPanel.tsx';
 import { activeCardAtom } from '../../hellfall/atoms/searchAtoms.ts';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv } from '../../styling';
 
 export const HellStart = () => {
   const cards = useAtomValue(cardsAtom);
@@ -55,8 +57,9 @@ export const HellStart = () => {
   );
 };
 
-const Container = styled.div({
+const containerStyles = createStyles({
   marginTop: '10px',
   paddingLeft: '32px',
   paddingRight: '32px',
 });
+const Container = createStyledDiv(containerStyles);

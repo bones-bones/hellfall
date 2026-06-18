@@ -11,7 +11,7 @@ import { invalidAtom, queryAtom, summaryAtom } from '../atoms/searchAtoms.ts';
 import { SearchBar } from '../search-controls/SearchBar.tsx';
 import { space } from '@workday/canvas-kit-react';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv, createStyledHR } from '../../styling/StyledElements.tsx';
+import { createStyledDiv, createStyledHR } from '../../styling';
 
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);

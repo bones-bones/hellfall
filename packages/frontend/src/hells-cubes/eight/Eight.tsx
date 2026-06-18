@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { getPipSrc } from '@hellfall/shared/utils';
 import { Routes, Route, Link } from 'react-router-dom';
 import { AzoriousHistoric } from './AzoriousHistoric.tsx';
@@ -11,6 +10,8 @@ import { SmallReanimation } from './SmallReanimation.tsx';
 import { RakdosCrimes } from './RakdosCrimes.tsx';
 import { LandsLandsLands } from './LandsLandsLands.tsx';
 import { SimicAnimation } from './SimicAnimation.tsx';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledImg } from '../../styling';
 
 export const Eight = () => {
   return (
@@ -118,4 +119,5 @@ export const Eight = () => {
   );
 };
 
-const ManaSymbol = styled('img')({ height: '20px' });
+const manaSymbolStyles = createStyles({ height: '20px' });
+const ManaSymbol = createStyledImg(manaSymbolStyles);

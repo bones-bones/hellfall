@@ -8,7 +8,7 @@ import { Box, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
 import { extLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv } from '../styling/StyledElements';
+import { createStyledDiv } from '../styling';
 
 interface ActiveCardPanelProps {
   origin?: 'left' | 'right'; // Optional origin prop, defaulting to "right"

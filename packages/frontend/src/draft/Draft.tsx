@@ -13,6 +13,8 @@ import { keyframes } from '@emotion/react';
 import { canBeACommander, CardMap } from '@hellfall/shared/utils';
 import type { Pack, Round, TheDraft } from './types.ts';
 import { HCCard } from '@hellfall/shared/types';
+import { createStyledDiv } from '../styling/StyledElements.tsx';
+import { createStyles } from '@workday/canvas-kit-styling';
 
 function shuffle<T>(array: T[]): T[] {
   const result = [...array];
@@ -129,13 +131,16 @@ const frames = keyframes({
   '80%': { transform: 'translate(3px, -3px)' },
   '100%': { transform: 'translate(0)' },
 });
-const ErrorContainer = styled.div({
+const errorContainerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
 });
-const ErrorBanner = styled.div({
+const ErrorContainer = createStyledDiv(errorContainerStyles);
+
+const errorBannerStyles = createStyles({
   color: 'red',
   fontSize: '30px',
   fontWeight: '600',
   animation: `${frames} 0.1s linear infinite`,
 });
+const ErrorBanner = createStyledDiv(errorBannerStyles);

@@ -11,7 +11,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { CardMap, HCToTTSDeck } from '@hellfall/shared/utils';
 import { cardsData } from '@hellfall/shared/data';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledImg, createStyledTextAreaWithRef } from '../styling/StyledElements.tsx';
+import { createStyledImg, createStyledTextAreaWithRef } from '../styling';
 
 // const basics: Record<string, string> = {
 //   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -231,7 +231,7 @@ Cock and Balls to Torture and Abuse
             set: 'Custom' as SetCode,
             idList: renderCards.flatMap(card => card.id ?? []),
             cardMap,
-            multMap
+            multMap,
           });
         }}
       >
@@ -260,7 +260,6 @@ Cock and Balls to Torture and Abuse
 const DeckContainer = Box;
 const cardStyles = createStyles({ width: '250px' });
 const Card = createStyledImg(cardStyles);
-
 
 //245 × 341 px
 

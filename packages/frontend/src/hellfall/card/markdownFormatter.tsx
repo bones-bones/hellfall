@@ -12,6 +12,7 @@ import {
 import { stringToMana } from '../stringToMana.tsx';
 import { type } from '@workday/canvas-kit-react';
 import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledIntrinsic } from '../../styling';
 
 // Helper function to check if a character is escaped
 const isEscaped = (source: string, index: number): boolean => {
@@ -268,10 +269,10 @@ export const formatDiscordMarkdown = (
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, false, setDangerously);
     return (
-      <p className={mediumTextStyles} key={`line-${index}`}>
+      <MediumText key={`line-${index}`}>
         {/* {index > 0 && <br />} */}
         {formattedLine}
-      </p>
+      </MediumText>
     );
   });
 };
@@ -304,10 +305,10 @@ export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode =>
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, true);
     return (
-      <p className={mediumTextStyles} key={`line-${index}`}>
+      <MediumText key={`line-${index}`}>
         {/* {index > 0 && <br />} */}
         {formattedLine}
-      </p>
+      </MediumText>
     );
   });
 };
@@ -330,3 +331,4 @@ const mediumTextStyles = createStyles({
   marginBlock: '.5rem',
   lineHeight: 1.125,
 });
+const MediumText = createStyledIntrinsic('p', mediumTextStyles);

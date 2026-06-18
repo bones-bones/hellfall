@@ -1,5 +1,5 @@
 import { HCCard, SetCode } from '@hellfall/shared/types';
-import { getChildSets } from '../setHandling';
+import { getChildSets, getDirectChildSets } from '../setHandling';
 
 /**
  * The class for a map of cards.
@@ -101,6 +101,20 @@ export class CardMap {
     const idList = [
       ...Array.from(this.setMap.get(set) ?? []),
       ...(getChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ?? []),
+    ];
+    if (!idList) return new (this.constructor as any)() as this;
+    return this.getSubset(idList);
+  }
+
+  /**
+   * Returns the subset of the CardMap object directly in the given set as a new CardMap.
+   * @returns Returns the subset of the CardMap in the given set directly (so excluding cards with different set types e.g. vetoed cards).
+   */
+  getAllInSetDirect(set: SetCode): this {
+    const idList = [
+      ...Array.from(this.setMap.get(set) ?? []),
+      ...(getDirectChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ??
+        []),
     ];
     if (!idList) return new (this.constructor as any)() as this;
     return this.getSubset(idList);

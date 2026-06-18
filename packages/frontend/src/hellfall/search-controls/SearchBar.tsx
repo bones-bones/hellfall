@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { normalizeText } from '@hellfall/shared/utils';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv, createStyledTextInput } from '../../styling/StyledElements';
+import { createStyledDiv, createStyledTextInput } from '../../styling';
 
 export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) => {
   const navigate = useNavigate();

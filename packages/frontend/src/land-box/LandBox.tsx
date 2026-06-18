@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { HCCard } from '@hellfall/shared/types';
 import { pushProp } from '@hellfall/shared/utils';
 import { Select } from '@workday/canvas-kit-preview-react';
-import { FormField } from '@workday/canvas-kit-react';
+import { Box, BoxProps, FormField } from '@workday/canvas-kit-react';
 import { landsData } from '@hellfall/shared/data';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import { createStenciledDiv, createStyledDiv, createStyledIntrinsic } from '../styling';
 
 export const LandBox = () => {
   const lands = landsData.data as HCCard.Normal[];
@@ -84,22 +86,26 @@ export const LandBox = () => {
     </>
   );
 };
-const StyledH2 = styled.h2({
+const h2Styles = createStyles({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
 });
+const StyledH2 = createStyledIntrinsic('h2', h2Styles);
 
-const Container = styled.div({
+const containerStyles = createStyles({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
 });
-const CardsContainer = styled.div({
+const Container = createStyledDiv(containerStyles);
+
+const cardsContainerStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
   padding: '2px',
 });
+const CardsContainer = createStyledDiv(cardsContainerStyles);
 
 const getRarityNumber = (val?: string) => {
   switch (val) {
@@ -116,16 +122,22 @@ const getRarityNumber = (val?: string) => {
 
 const BigView = ({ land, clear }: { land: HCCard.Normal; clear: any }) => {
   return (
-    <BigViewContianer onClick={clear}>
-      <StyledHImage key={land.image} src={land.image} />
+    <Box cs={bigViewContainer} onClick={clear}>
+      <img
+        alt={land.name}
+        title={land.name}
+        className={hImageStyles}
+        key={land.image}
+        src={land.image}
+      />
       <CardFooter {...{ type: 'subtitle' }} rarity={land.rarity as any}>
         Set: {land.set} Creator: {land.creators[0]}
       </CardFooter>
-    </BigViewContianer>
+    </Box>
   );
 };
 
-const BigViewContianer = styled.div({
+const bigViewContainer = createStyles({
   ':hover > [type="subtitle"]': { display: 'flex' },
   position: 'fixed',
   display: 'flex',
@@ -138,42 +150,28 @@ const BigViewContianer = styled.div({
 
 const LandImageContainer = ({ land, onClick }: { land: HCCard.Normal; onClick: any }) => {
   return (
-    <ImageContainer onClick={onClick}>
-      <StyledImage key={land.image} src={land.image} />
+    <Box cs={imageContainer} onClick={onClick}>
+      <img
+        alt={land.name}
+        title={land.name}
+        className={imageStyles}
+        key={land.image}
+        src={land.image}
+      />
       <CardFooter {...{ type: 'subtitle' }} rarity={land.rarity as any}>
         Set: {land.set} Creator: {land.creators[0]}
       </CardFooter>
-    </ImageContainer>
+    </Box>
   );
 };
-
-const CardFooter = styled.div<{ rarity?: 'mythic' | 'rare' | 'uncommon' }>(({ rarity }) => {
-  let backgroundColor = 'black';
-  let borderColor = 'white';
-  let color = 'white';
-
-  if (rarity == 'mythic') {
-    backgroundColor = '#f59326';
-    borderColor = '#b43326';
-    color = 'black';
-  }
-  if (rarity == 'rare') {
-    backgroundColor = '#e9d292';
-    borderColor = '#887441';
-    color = 'black';
-  }
-  if (rarity == 'uncommon') {
-    backgroundColor = '#bae2ef';
-    borderColor = '#4b6c79';
-    color = 'black';
-  }
-
-  return {
+const cardFooterStencil = createStencil({
+  vars: {},
+  base: {
+    backgroundColor: 'black',
+    border: '4px solid white',
+    color: 'white',
     width: '100%',
-    backgroundColor,
-    border: `4px solid ${borderColor}`,
     boxSizing: 'border-box',
-    color,
     borderRadius: '5px',
     minHeight: '30px',
     position: 'absolute',
@@ -181,12 +179,36 @@ const CardFooter = styled.div<{ rarity?: 'mythic' | 'rare' | 'uncommon' }>(({ ra
     display: 'none',
     justifyContent: 'center',
     alignItems: 'center',
-  };
+  },
+  modifiers: {
+    rarity: {
+      mythic: {
+        backgroundColor: '#f59326',
+        border: '4px solid #b43326',
+        color: 'black',
+      },
+      rare: {
+        backgroundColor: '#e9d292',
+        border: '4px solid #887441',
+        color: 'black',
+      },
+      uncommon: {
+        backgroundColor: '#bae2ef',
+        border: '4px solid 4b6c79',
+        color: 'black',
+      },
+    },
+  },
 });
-const StyledImage = styled('img')({ width: '100%' });
-const StyledHImage = styled('img')({ height: '100%' });
+interface CardFooterProps extends BoxProps {
+  rarity?: 'mythic' | 'rare' | 'uncommon';
+}
+const CardFooter = createStenciledDiv<CardFooterProps>(cardFooterStencil);
 
-const ImageContainer = styled.div({
+const imageStyles = createStyles({ width: '100%' });
+const hImageStyles = createStyles({ height: '100%' });
+
+const imageContainer = createStyles({
   height: '400px',
   width: '287px',
   position: 'relative',

@@ -1,7 +1,9 @@
-import { Link, matchPath, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { specialCards } from './specialCards.tsx';
 import { useEffect } from 'react';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledLink, createStyledListItem } from '../../styling';
 
 export const HellsCubeOne = () => {
   const val = useLocation();
@@ -64,10 +66,11 @@ export const HellsCubeOne = () => {
 };
 
 // q=oracle:Human
-
-const StyledLink = styled(Link)({
+const linkStyles = createStyles({
   // textDecoration: "none",
   color: 'black',
 });
+const StyledLink = createStyledLink(linkStyles);
 
-const StyledLi = styled.li({ marginTop: '15px' });
+const liStyles = createStyles({ marginTop: '15px' });
+const StyledLi = createStyledListItem(liStyles);

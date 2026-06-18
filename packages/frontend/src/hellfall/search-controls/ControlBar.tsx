@@ -30,7 +30,7 @@ import {
   createStyledDiv,
   createStyledSecondaryButton,
   createStyledSecondaryButtonLink,
-} from '../../styling/StyledElements.tsx';
+} from '../../styling';
 
 const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
   { label: 'Auto', value: 'auto' },

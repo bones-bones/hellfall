@@ -1,15 +1,12 @@
 import { useState } from 'react';
-// import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 import { usePendingChangesetsState } from '../hooks/usePendingChangesets';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { Box, Text } from '@workday/canvas-kit-react';
 import {
   createStyledDiv,
   createStyledDivClickable,
   createStyledLink,
   createStyledSpan,
-} from '../../styling/StyledElements';
+} from '../../styling';
 
 export function PendingChanges({ cardId }: { cardId: string }) {
   const { changesets, loading } = usePendingChangesetsState(cardId);

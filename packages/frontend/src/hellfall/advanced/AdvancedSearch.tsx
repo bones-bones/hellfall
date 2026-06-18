@@ -22,7 +22,7 @@ import {
   createStyledHR,
   createStyledPrimaryButtonLink,
   createStyledSelect,
-} from '../../styling/StyledElements.tsx';
+} from '../../styling';
 import { StyledComponentHolder, StyledLabel, StyledLegend } from './AdvancedComponents.tsx';
 
 export const AdvancedSearch = () => {

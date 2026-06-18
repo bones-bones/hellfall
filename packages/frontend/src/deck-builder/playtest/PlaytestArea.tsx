@@ -3,9 +3,9 @@ import { HCCard } from '@hellfall/shared/types';
 import { HandCard } from './HandCard.tsx';
 import { PlayCard } from './PlayCard.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv } from '../../styling/StyledElements.tsx';
+import { createStyledDiv } from '../../styling';
 
-const playAreaStyles = createStyles({ border: '1px solid black' })
+const playAreaStyles = createStyles({ border: '1px solid black' });
 const PlayArea = createStyledDiv(playAreaStyles);
 // make sure images work properly
 

@@ -2,12 +2,7 @@ import { useState, useEffect } from 'react';
 import { looseOpList, looseOpType } from '@hellfall/shared/filters';
 import { toNumber } from '@hellfall/shared/utils';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { Box } from '@workday/canvas-kit-react';
-import {
-  createStyledDiv,
-  createStyledInput,
-  createStyledSelect,
-} from '../../styling/StyledElements';
+import { createStyledDiv, createStyledInput, createStyledSelect } from '../../styling';
 import { StyledLegend } from './AdvancedComponents';
 // TODO: figure out better way to deal with 5/1
 

@@ -12,17 +12,18 @@ import {
   SecondaryButton,
   TextInput,
   TextInputProps,
+  BodyText,
 } from '@workday/canvas-kit-react';
 import { handleCsProp } from '@workday/canvas-kit-styling';
-import { Ref } from 'react';
+import { createElement, Ref } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 // Making generators that are more generic than these causes massive lag
 
 /**
  * Here's how to use a styled component generator to replace emotion styled components:
- * Old code: 
+ * Old code:
  * `const x = styled(y)(z);`
- * 
+ *
  * New code:
  * `const xStyles = createStyles(z);`
  * `const x = createStyledY(xStyles);`
@@ -30,27 +31,28 @@ import { Link, LinkProps } from 'react-router-dom';
 
 /**
  * Here's how to use a stenciled component generator to replace emotion styled components with parameters:
- * Old code: 
+ * Old code:
  * `const x = styled(y)(({ prop }: { prop: type })= > ({ styles }));`
- * 
+ *
  * New code:
  * `const xStencil = createStencil(z);`
  * `interface XProps extends YProps {
  *   prop?: type
  * }
  * `const x = createStenciledY<XProps>(xStencil);`
- * 
+ *
  * `YProps` should be `React.ComponentPropsWithoutRef<y>` if `y` is an intrinsic component, and should be the props type for `y` otherwise (such as `BoxProps` for `Box`)
  */
 
 /**
- * 
+ *
  */
 /**
  * For both kinds of generators, don't try to pass the styles/stencil in a single line.
  * @example Don't do: `const x = createStyledImg(createStyles(y))`.
  * This is because doing it in a single line causes massive rerendering and defeats the purpose of static styling.
  */
+
 export const createStyledImg =
   (styles: string) =>
   ({ children, ...props }: React.ComponentPropsWithoutRef<'img'>) =>
@@ -80,6 +82,16 @@ export const createStyledLegend =
   ({ children, ...props }: React.ComponentPropsWithoutRef<'legend'>) =>
     <legend {...handleCsProp(props, styles)}>{children}</legend>;
 
+export const createStyledTable =
+  (styles: string) =>
+  ({ children, ...props }: React.ComponentPropsWithoutRef<'table'>) =>
+    <table {...handleCsProp(props, styles)}>{children}</table>;
+
+export const createStyledTableRow =
+  (styles: string) =>
+  ({ children, ...props }: React.ComponentPropsWithoutRef<'tr'>) =>
+    <tr {...handleCsProp(props, styles)}>{children}</tr>;
+
 export const createStyledInput =
   (styles: string) =>
   ({ children, ...props }: React.ComponentPropsWithoutRef<'input'>) =>
@@ -97,8 +109,12 @@ export const createStyledTextArea =
     <textarea {...handleCsProp(props, styles)}>{children}</textarea>;
 export const createStyledTextAreaWithRef =
   (styles: string) =>
-  ({ children, ref, ...props }: React.ComponentPropsWithRef<'textarea'> ) =>
-    <textarea ref={ref} {...handleCsProp(props, styles)}>{children}</textarea>;
+  ({ children, ref, ...props }: React.ComponentPropsWithRef<'textarea'>) =>
+    (
+      <textarea ref={ref} {...handleCsProp(props, styles)}>
+        {children}
+      </textarea>
+    );
 export const createStenciledTextArea =
   <T extends React.ComponentPropsWithoutRef<'textarea'>>(
     stencil: (props: Record<string, unknown>) => any
@@ -116,21 +132,21 @@ export const createStyledHR =
   ({ children, ...props }: React.ComponentPropsWithoutRef<'hr'>) =>
     <hr {...handleCsProp(props, styles)}>{children}</hr>;
 
-export const createStyledH3 =
+export const createStyledListItem =
   (styles: string) =>
-  ({ children, ...props }: React.ComponentPropsWithoutRef<'h3'>) =>
-    <h3 {...handleCsProp(props, styles)}>{children}</h3>;
-export const createStenciledH3 =
-  <T extends React.ComponentPropsWithoutRef<'h3'>>(
-    stencil: (props: Record<string, unknown>) => any
-  ) =>
-  ({ children, ...props }: T) =>
-    <h3 {...handleCsProp(props, stencil(props))}>{children}</h3>;
+  ({ children, ...props }: React.ComponentPropsWithoutRef<'li'>) =>
+    <li {...handleCsProp(props, styles)}>{children}</li>;
 
 export const createStyledButton =
   (styles: string) =>
   ({ children, ...props }: React.ComponentPropsWithoutRef<'button'>) =>
     <button {...handleCsProp(props, styles)}>{children}</button>;
+export const createStenciledButton =
+  <T extends React.ComponentPropsWithoutRef<'button'>>(
+    stencil: (props: Record<string, unknown>) => any
+  ) =>
+  ({ children, ...props }: T) =>
+    <button {...handleCsProp(props, stencil(props))}>{children}</button>;
 
 export const createStyledLink =
   (styles: string) =>
@@ -151,8 +167,12 @@ export interface BoxPropsWithRef extends BoxProps {
 }
 export const createStyledDivWithRef =
   (styles: string) =>
-  ({ children, ref, ...props }: BoxPropsWithRef ) =>
-    <Box ref={ref} {...handleCsProp(props, styles)}>{children}</Box>;
+  ({ children, ref, ...props }: BoxPropsWithRef) =>
+    (
+      <Box ref={ref} {...handleCsProp(props, styles)}>
+        {children}
+      </Box>
+    );
 export const createStenciledDiv =
   <T extends BoxProps>(stencil: (props: Record<string, unknown>) => any) =>
   ({ children, ...props }: T) =>
@@ -176,6 +196,23 @@ export const createStenciledSpan =
   ({ children, ...props }: T) =>
     <Text {...handleCsProp(props, stencil(props))}>{children}</Text>;
 
+/**
+ * Use this for <p>; font sizes are:
+ * - large = 20px
+ * - medium = 18px
+ * - small = 16px
+ */
+export const createStyledBodyText =
+  (styles: string) =>
+  ({ children, ...props }: TypeLevelProps) =>
+    <BodyText {...(handleCsProp(props, styles) as any)}>{children}</BodyText>;
+
+/**
+ * Use this for <p>; font sizes are:
+ * - large = 14px
+ * - medium = 12px
+ * - small = 10px
+ */
 export const createStyledSubtext =
   (styles: string) =>
   ({ children, ...props }: TypeLevelProps) =>
