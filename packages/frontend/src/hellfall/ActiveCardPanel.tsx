@@ -8,6 +8,7 @@ import { Box, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
 import { extLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv } from '../styling/StyledElements';
 
 interface ActiveCardPanelProps {
   origin?: 'left' | 'right'; // Optional origin prop, defaulting to "right"
@@ -37,7 +38,7 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
   });
 
   return (
-    <Box cs={sidePanelStyles}>
+    <StyledSidePanel>
       <SidePanel
         {...panelProps}
         expanded={!!activeCard}
@@ -48,7 +49,7 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
       >
         <Card>
           <Card.Body padding={'zero'}>
-            <Box cs={spContainer}>
+            <SPContainer>
               <ToolbarIconButton
                 icon={xIcon}
                 margin={'2px 0 0 2px'}
@@ -64,11 +65,11 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
                 />
               )}
               {activeCard && <HellfallCard data={activeCard} />}
-            </Box>
+            </SPContainer>
           </Card.Body>
         </Card>
       </SidePanel>
-    </Box>
+    </StyledSidePanel>
   );
 };
 
@@ -84,6 +85,7 @@ const sidePanelStyles = createStyles({
     },
   },
 });
+const StyledSidePanel = createStyledDiv(sidePanelStyles);
 
 const sidePanelStencil = createStencil({
   vars: {
@@ -102,8 +104,9 @@ const sidePanelStencil = createStencil({
   },
 });
 
-const spContainer = createStyles({
+const spContainerStyles = createStyles({
   overflowY: 'scroll',
   height: '90vh',
   overflowX: 'hidden',
 });
+const SPContainer = createStyledDiv(spContainerStyles);

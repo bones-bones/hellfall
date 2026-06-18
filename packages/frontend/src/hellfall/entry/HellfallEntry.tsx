@@ -1,18 +1,18 @@
-// import styled from '@emotion/styled';
-import { Box, Text } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { useState } from 'react';
 import {
-  clickableTitleStencil,
-  imageStencil,
   linkStyles,
   loadedStyles,
-  sharedContainer,
-  titleLinkStyles,
-  titleStencil,
-  visuallyHiddenSpan,
+  sharedContainerStyles,
+  ImageLinkProps,
+  StyledTitleLink,
+  ClickableTitle,
+  ClickableTitleH3,
+  StyledImage,
+  LoadedTitle,
+  VisuallyHiddenSpan,
 } from './entryStyles';
-import { Link } from 'react-router-dom';
+import { createStenciledLink, createStyledDiv } from '../../styling/StyledElements';
 
 export const HellfallEntry = ({
   url,
@@ -54,66 +54,60 @@ export const HellfallEntry = ({
   };
 
   return (
-    <Box cs={container} key={id} role="button">
+    <Container key={id}>
       {onClickTitle && (
-        <Link
+        <StyledTitleLink
           key={id + '-title'}
           to={linkUrl}
-          className={titleLinkStyles}
           onClick={e => handleClick(e, onClickTitle as any)}
         >
-          <Text
-            as={imgLinkUrl ? 'h3' : 'span'}
-            cs={clickableTitleStencil({ hasURL: !!imgLinkUrl })}
-          >
-            {name}
-          </Text>
-        </Link>
+          {imgLinkUrl ? (
+            <ClickableTitleH3 hasURL={!!imgLinkUrl}>{name}</ClickableTitleH3>
+          ) : (
+            <ClickableTitle hasURL={!!imgLinkUrl}>{name}</ClickableTitle>
+          )}
+        </StyledTitleLink>
       )}
-      <Link
+      <StyledImageLink
         to={imgLinkUrl ?? linkUrl}
         onClick={e => handleClick(e)}
         title={plainText ?? name}
-        {...imageLinkStencil({ imageLoaded })}
+        imageLoaded={imageLoaded}
       >
-        <img
+        <StyledImage
           key={id + '-image'}
           src={url}
           referrerPolicy="no-referrer"
           aria-label={name}
+          title={plainText ?? name}
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageErrored(true)}
-          {...imageStencil({ hideImage: !(imageLoaded || imageErrored) })}
+          hideImage={!(imageLoaded || imageErrored)}
         />
-        {
-          !onClickTitle && (
-            <Text key={id + '-name'} cs={titleStencil({ imageLoaded })}>
-              {name}
-            </Text>
-          )
-          /*  (imageLoaded ? (
-            <Text key={id + '-name'} cs={visuallyHiddenSpan}>{name}</Text>
-          ) : (
-          )) */
-        }
+        {!onClickTitle && (
+          <LoadedTitle imageLoaded={imageLoaded} key={id + '-name'}>
+            {name}
+          </LoadedTitle>
+        )}
         {otherNames &&
           otherNames.map((otherName, i) => {
             return (
-              <Text key={'other-name-' + i + '-' + id} cs={visuallyHiddenSpan}>
+              <VisuallyHiddenSpan key={'other-name-' + i + '-' + id}>
                 {otherName}
-              </Text>
+              </VisuallyHiddenSpan>
             );
           })}
-      </Link>
-    </Box>
+      </StyledImageLink>
+    </Container>
   );
 };
 
-const container = createStyles(sharedContainer, {
+const containerStyles = createStyles(sharedContainerStyles, {
   height: '340px',
   display: 'inline-block',
   position: 'relative',
 });
+const Container = createStyledDiv(containerStyles);
 
 const imageLinkStencil = createStencil({
   vars: {},
@@ -129,3 +123,4 @@ const imageLinkStencil = createStencil({
     },
   },
 });
+const StyledImageLink = createStenciledLink<ImageLinkProps>(imageLinkStencil);

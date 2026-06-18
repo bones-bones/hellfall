@@ -1,10 +1,11 @@
-import { TextInput, space, styled } from '@workday/canvas-kit-react';
+import { space } from '@workday/canvas-kit-react';
 import { useAtom } from 'jotai';
 import { pageAtom, queryAtom } from '../atoms/searchAtoms';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { normalizeText } from '@hellfall/shared/utils';
 import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledTextInput } from '../../styling/StyledElements';
 
 export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) =>
 
   return (
     <>
-      <div className={containerStyles}>
+      <Container>
         <form action={handleSubmit}>
           <SearchBox
             width={maxWidth}
@@ -52,18 +53,17 @@ export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) =>
             enterKeyHint="search"
           />
         </form>
-        <div className={spacer} />
+        <Spacer />
         <Link to={'/syntax'}>search syntax</Link>
-      </div>
+      </Container>
     </>
   );
 };
-// const Spacer = styled('div')({
-//   height: '5px',
-// });
-const spacer = createStyles({
+const spacerStyles = createStyles({
   height: '5px',
 });
+const Spacer = createStyledDiv(spacerStyles);
+
 const containerStyles = createStyles({
   paddingLeft: space.l,
   paddingRight: space.l,
@@ -71,18 +71,10 @@ const containerStyles = createStyles({
   marginBottom: '0px',
   overflow: 'hidden',
 });
-// const Container = styled('div')({
-//   paddingLeft: space.l,
-//   paddingRight: space.l,
-//   marginTop: '-10px',
-//   marginBottom: '0px',
-//   overflow: 'hidden',
-// });
-// const searchBoxStyles = createStyles({
-//   overflow: 'hidden',
-//   // border: 'none',
-// })
-const SearchBox = styled(TextInput)({
+const Container = createStyledDiv(containerStyles);
+
+const searchBoxStyles = createStyles({
   overflow: 'hidden',
   // border: 'none',
 });
+const SearchBox = createStyledTextInput(searchBoxStyles);

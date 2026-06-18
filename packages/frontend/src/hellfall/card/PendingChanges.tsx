@@ -1,9 +1,15 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { usePendingChangesetsState } from '../hooks/usePendingChangesets';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { Box, Text } from '@workday/canvas-kit-react';
+import {
+  createStyledDiv,
+  createStyledDivClickable,
+  createStyledLink,
+  createStyledSpan,
+} from '../../styling/StyledElements';
 
 export function PendingChanges({ cardId }: { cardId: string }) {
   const { changesets, loading } = usePendingChangesetsState(cardId);
@@ -12,35 +18,33 @@ export function PendingChanges({ cardId }: { cardId: string }) {
   if (loading || changesets.length === 0) return null;
 
   return (
-    <Box cs={container}>
-      <Box cs={toggleRow} onClick={() => setExpanded(prev => !prev)}>
-        <Text cs={badge}>{changesets.length}</Text>
-        <Text cs={toggleText}>
+    <Container>
+      <ToggleRow onClick={() => setExpanded(prev => !prev)}>
+        <Badge>{changesets.length}</Badge>
+        <ToggleText>
           Pending change{changesets.length !== 1 ? 's' : ''}
           {expanded ? ' ▾' : ' ▸'}
-        </Text>
-      </Box>
+        </ToggleText>
+      </ToggleRow>
       {expanded &&
         changesets.map(cs => (
-          <Box cs={changesetBlock} key={cs.id}>
-            <Box cs={csMeta}>
+          <ChangesetBlock key={cs.id}>
+            <CsMeta>
               by {cs.submittedBy.username}
               {cs.createdAt && <> &middot; {new Date(cs.createdAt).toLocaleDateString()}</>}
-            </Box>
-            {cs.comment && <Box cs={csComment}>{cs.comment}</Box>}
+            </CsMeta>
+            {cs.comment && <CsComment>{cs.comment}</CsComment>}
             {cs.changes.map(change => (
-              <Box cs={fieldDiff} key={`${change.location}-${change.change_type}`}>
+              <FieldDiff key={`${change.location}-${change.change_type}`}>
                 {/* TODO: improve formatting */}
                 {/* <FieldName>{field}</FieldName> */}
                 {formatVal(change)}
-              </Box>
+              </FieldDiff>
             ))}
-            <Link className={reviewLinkStyles} to={`/review/${cardId}`}>
-              View in Review
-            </Link>
-          </Box>
+            <ReviewLink to={`/review/${cardId}`}>View in Review</ReviewLink>
+          </ChangesetBlock>
         ))}
-    </Box>
+    </Container>
   );
 }
 
@@ -51,56 +55,65 @@ function formatVal(val: unknown): string {
   return String(val);
 }
 
-const container = createStyles({
+const containerStyles = createStyles({
   marginTop: 6,
   marginBottom: 4,
 });
+const Container = createStyledDiv(containerStyles);
 
-const toggleRow = createStyles({
+const toggleRowStyles = createStyles({
   display: 'flex',
   alignItems: 'center',
   gap: 4,
   cursor: 'pointer',
   userSelect: 'none',
 });
+const ToggleRow = createStyledDivClickable(toggleRowStyles);
 
-const badge = createStyles({
+const badgeStyles = createStyles({
   fontSize: 12,
   fontWeight: 600,
 });
+const Badge = createStyledSpan(badgeStyles);
 
-const toggleText = createStyles({
+const toggleTextStyles = createStyles({
   fontSize: 12,
   color: '#555',
 });
+const ToggleText = createStyledSpan(toggleTextStyles);
 
-const changesetBlock = createStyles({
+const changesetBlockStyles = createStyles({
   marginTop: 6,
   padding: '6px 8px',
   border: '1px solid #ccc',
 });
+const ChangesetBlock = createStyledDiv(changesetBlockStyles);
 
-const csMeta = createStyles({
+const csMetaStyles = createStyles({
   fontSize: 12,
   color: '#666',
 });
+const CsMeta = createStyledDiv(csMetaStyles);
 
-const csComment = createStyles({
+const csCommentStyles = createStyles({
   fontSize: 12,
   fontStyle: 'italic',
   color: '#555',
   marginTop: 2,
 });
+const CsComment = createStyledDiv(csCommentStyles);
 
-const fieldDiff = createStyles({
+const fieldDiffStyles = createStyles({
   marginTop: 4,
 });
+const FieldDiff = createStyledDiv(fieldDiffStyles);
 
-const fieldName = createStyles({
+const fieldNameStyles = createStyles({
   fontSize: 11,
   fontWeight: 600,
   color: '#888',
 });
+const FieldName = createStyledDiv(fieldNameStyles);
 
 const reviewLinkStyles = createStyles({
   display: 'inline-block',
@@ -109,3 +122,4 @@ const reviewLinkStyles = createStyles({
   color: 'inherit',
   '&:hover': { textDecoration: 'underline' },
 });
+const ReviewLink = createStyledLink(reviewLinkStyles);

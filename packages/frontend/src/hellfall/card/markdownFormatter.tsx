@@ -268,7 +268,7 @@ export const formatDiscordMarkdown = (
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, false, setDangerously);
     return (
-      <p className={mediumText} key={`line-${index}`}>
+      <p className={mediumTextStyles} key={`line-${index}`}>
         {/* {index > 0 && <br />} */}
         {formattedLine}
       </p>
@@ -304,7 +304,7 @@ export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode =>
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, true);
     return (
-      <p className={mediumText} key={`line-${index}`}>
+      <p className={mediumTextStyles} key={`line-${index}`}>
         {/* {index > 0 && <br />} */}
         {formattedLine}
       </p>
@@ -324,7 +324,7 @@ export const formatDiscordMarkdownInvertedItalicsInline = (text: string): ReactN
   const firstLine = text.split('\\n')[0];
   return formatLine(firstLine, true);
 };
-const mediumText = createStyles({
+const mediumTextStyles = createStyles({
   fontSize: type.levels.body.medium.fontSize,
   fontWeight: type.levels.body.medium.fontWeight,
   marginBlock: '.5rem',

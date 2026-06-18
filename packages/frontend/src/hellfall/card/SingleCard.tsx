@@ -11,6 +11,7 @@ import { invalidAtom, queryAtom, summaryAtom } from '../atoms/searchAtoms.ts';
 import { SearchBar } from '../search-controls/SearchBar.tsx';
 import { space } from '@workday/canvas-kit-react';
 import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledHR } from '../../styling/StyledElements.tsx';
 
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
@@ -42,11 +43,11 @@ export const SingleCard = () => {
         <div style={{ display: 'block', justifyContent: 'center' }}>
           <br />
           <SearchBar />
-          <hr className={separator} />
-          <div className={containerStyles}>
+          <Separator />
+          <Container>
             {query && (
               <>
-                <div className={summaryStyles}>
+                <Summary>
                   <strong>
                     <Link to={`/card/${encodeURIComponent(cardId!)}`}>One random card</Link> from{' '}
                     {query == '*' ? (
@@ -59,15 +60,13 @@ export const SingleCard = () => {
                   <Link to={`/random${query == '*' ? '' : `?q=${query}`}`}>
                     Repeat this random search
                   </Link>
-                </div>
-                <hr className={separator} />
+                </Summary>
+                <Separator />
                 {invalids.map(invalid => {
                   return (
                     <>
-                      <div
-                        className={summaryStyles}
-                      >{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</div>
-                      <hr className={separator} />
+                      <Invalid>{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</Invalid>
+                      <Separator />
                     </>
                   );
                 })}
@@ -76,7 +75,7 @@ export const SingleCard = () => {
             <div style={{ width: '60vw', margin: '0 auto' }}>
               <HellfallCard data={entryToRender} onSinglePage={true} />
             </div>
-          </div>
+          </Container>
         </div>
       )}
     </div>
@@ -92,25 +91,15 @@ const containerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
 });
+const Container = createStyledDiv(containerStyles);
 
-// const Container = styled.div({
-//   display: 'flex',
-//   justifyContent: 'center',
-// });
-const separator = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-// const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+const separatorStyles = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+const Separator = createStyledHR(separatorStyles);
+
 const summaryStyles = createStyles({
   display: 'inline-block',
   paddingLeft: space.l,
   paddingRight: space.l,
 });
-// const Summary = styled('div')({
-//   display: 'inline-block',
-//   paddingLeft: space.l,
-//   paddingRight: space.l,
-// });
-// const Invalid = styled('div')({
-//   display: 'inline-block',
-//   paddingLeft: space.l,
-//   paddingRight: space.l,
-// });
+const Summary = createStyledDiv(summaryStyles);
+const Invalid = createStyledDiv(summaryStyles);

@@ -20,6 +20,8 @@ import { SearchBar } from './search-controls/SearchBar.tsx';
 import { ActiveCardPanel } from './ActiveCardPanel.tsx';
 import { Link } from 'react-router-dom';
 import { HellfallCard } from './card/HellfallCard.tsx';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledHR } from '../styling/StyledElements.tsx';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -131,30 +133,34 @@ export const HellFall = () => {
     </div>
   );
 };
-const SortSeparator = styled('hr')({
+const sortSeparatorStyles = createStyles({
   height: '1px',
   backgroundColor: '#ccc',
   border: 'none',
   marginTop: '-20px',
 });
-const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-const Summary = styled('div')({
+const SortSeparator = createStyledHR(sortSeparatorStyles);
+
+const separatorStyles = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+const Separator = createStyledHR(separatorStyles);
+
+const summaryStyles = createStyles({
   display: 'inline-block',
   paddingLeft: space.l,
   paddingRight: space.l,
 });
-const Invalid = styled('div')({
-  display: 'inline-block',
-  paddingLeft: space.l,
-  paddingRight: space.l,
-});
-const Container = styled('div')({
+const Summary = createStyledDiv(summaryStyles);
+const Invalid = createStyledDiv(summaryStyles);
+
+const containerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
   // flexWrap: 'wrap',
   width: '100%',
 });
+const Container = createStyledDiv(containerStyles);
 
+// TODO: do this one when upgraded to v11
 const CardsGrid = styled('div')<{ $maxWidth: number }>(({ $maxWidth }) => ({
   display: 'flex',
   flexWrap: 'wrap',

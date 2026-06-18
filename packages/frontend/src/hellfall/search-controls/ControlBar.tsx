@@ -1,12 +1,10 @@
 import {
-  Box,
   FormField,
   PaginationModel,
   Select,
   space,
   useSelectModel,
 } from '@workday/canvas-kit-react';
-import { SecondaryButton } from '@workday/canvas-kit-react/button';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   inputSortAtom,
@@ -27,8 +25,12 @@ import {
   chevron2xrightIcon,
   splitIcon,
 } from '@workday/canvas-system-icons-web';
-import { Link } from 'react-router-dom';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStyledDiv,
+  createStyledSecondaryButton,
+  createStyledSecondaryButtonLink,
+} from '../../styling/StyledElements.tsx';
 
 const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
   { label: 'Auto', value: 'auto' },
@@ -250,10 +252,10 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
   const lastPage = model?.state.lastPage;
 
   return (
-    <Box cs={container}>
+    <Container>
       <FormField label="Sort By" className={formFieldStyles}>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-          <Box cs={sortElements}>
+          <SortElements>
             {sortRules.length ? (
               sortRules.map((rule, i) => (
                 <div key={`sort-wrapper-${i}`} style={{ display: 'inline-block' }}>
@@ -297,9 +299,8 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
               </div>
             )}
             <>
-              <Box cs={buttonGroup}>
-                <SecondaryButton
-                  cs={compactButton}
+              <ButtonGroup>
+                <CompactButton
                   icon={plusIcon}
                   title={
                     canAddInput
@@ -314,8 +315,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                   onClick={handleAddInput}
                   disabled={!canAddInput}
                 />
-                <SecondaryButton
-                  cs={compactButton}
+                <CompactButton
                   icon={minusIcon}
                   title={
                     canDelInput
@@ -334,13 +334,12 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                   onClick={handleDelInput}
                   disabled={!canDelInput}
                 />
-              </Box>
+              </ButtonGroup>
             </>
-          </Box>
+          </SortElements>
           {model && (
             <>
-              <SecondaryButton
-                cs={controlButton}
+              <ControlButton
                 icon={chevron2xleftIcon}
                 title={`${currentPage == 1 ? 'You are on' : 'Go to'} the first page of this search`}
                 aria-label={`${
@@ -349,8 +348,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                 onClick={model.events.first}
                 disabled={currentPage == 1}
               />
-              <SecondaryButton
-                cs={controlButton}
+              <ControlButton
                 icon={chevronLeftIcon}
                 title={`${currentPage == 1 ? 'You are on' : 'Go to'} the ${
                   currentPage == 1 ? 'first' : 'previous'
@@ -361,16 +359,13 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                 onClick={model.events.previous}
                 disabled={currentPage == 1}
               />
-              <SecondaryButton
-                cs={controlButton}
+              <ControlButtonLink
                 icon={splitIcon}
                 title="Find a random card within this search"
                 aria-label="Find a random card within this search"
-                as={Link}
                 to={`/random${query ? `?q=${query}` : ''}`}
               />
-              <SecondaryButton
-                cs={controlButton}
+              <ControlButton
                 icon={chevronRightIcon}
                 title={`${currentPage == lastPage ? 'You are on' : 'Go to'} the ${
                   currentPage == 1 ? 'last' : 'next'
@@ -381,8 +376,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                 onClick={model.events.next}
                 disabled={currentPage == lastPage}
               />
-              <SecondaryButton
-                cs={controlButton}
+              <ControlButton
                 icon={chevron2xrightIcon}
                 title={`${
                   currentPage == lastPage ? 'You are on' : 'Go to'
@@ -397,17 +391,18 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
           )}
         </div>
       </FormField>
-    </Box>
+    </Container>
   );
 };
 
-const container = createStyles({
+const containerStyles = createStyles({
   paddingLeft: space.l,
   paddingRight: space.l,
   alignItems: 'center',
   width: '100%',
   boxSizing: 'border-box',
 });
+const Container = createStyledDiv(containerStyles);
 const formFieldStyles = createStyles({
   width: '100%',
   '& > div': {
@@ -444,9 +439,11 @@ const cardStyles = {
   width: '135px !important',
   marginTop: '-4px',
   marginBottom: '-4px',
+  overflowX: 'hidden',
   '& > div': {
     marginTop: 0,
     marginBottom: 0,
+    overflowX: 'hidden' as any,
   },
 };
 const cardStencil = createStencil({
@@ -464,6 +461,7 @@ const listStyles = {
   width: '135px',
   marginTop: 0,
   marginBottom: 0,
+  overflowX: 'hidden',
 };
 const listStencil = createStencil({
   vars: {},
@@ -490,8 +488,15 @@ const itemStencil = createStencil({
     },
   },
 });
-const sortElements = createStyles({ lineHeight: '45px', verticalAlign: 'top', width: '100%' });
-const compactButton = createStyles({
+
+const sortElementsStyles = createStyles({
+  lineHeight: '45px',
+  verticalAlign: 'top',
+  width: '100%',
+});
+const SortElements = createStyledDiv(sortElementsStyles);
+
+const compactButtonStyles = createStyles({
   width: '20px', // Fixed small width
   height: '20px', // Fixed small height
   minWidth: '20px', // Override any min-width
@@ -515,15 +520,18 @@ const compactButton = createStyles({
     },
   },
 });
-const buttonGroup = createStyles({
+const CompactButton = createStyledSecondaryButton(compactButtonStyles);
+
+const buttonGroupStyles = createStyles({
   display: 'inline-block',
   flexDirection: 'column', // Stack vertically
   // gap: '4px',               // Space between buttons
   marginLeft: '4px', // Optional spacing from the selectors
   verticalAlign: 'top',
 });
+const ButtonGroup = createStyledDiv(buttonGroupStyles);
 
-const controlButton = createStyles({
+const controlButtonStyles = createStyles({
   margin: '0 2px',
   borderRadius: '4px',
   // textDecoration:'none',
@@ -534,3 +542,5 @@ const controlButton = createStyles({
     cursor: 'not-allowed',
   },
 });
+const ControlButton = createStyledSecondaryButton(controlButtonStyles);
+const ControlButtonLink = createStyledSecondaryButtonLink(controlButtonStyles);

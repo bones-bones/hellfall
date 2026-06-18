@@ -20,7 +20,7 @@
     ],
     "excludeFiles": [
       "**/node_modules/**/*"
-      "**/node_modules",
+      "**/node_modules"
     ]
   },
   "typescript.suggest.autoImports": true,
@@ -30,6 +30,6 @@
   "typescript.referencesCodeLens.enabled": false,
   "typescript.implementationsCodeLens.enabled": false,
   "typescript.preferences.importModuleSpecifier": "relative",
-  "typescript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single"
   // "typescript.tsserver.log": "verbose"
 }

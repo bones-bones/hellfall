@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 // import styled from '@emotion/styled';
-import { Box, Card, Subtext, Text, TextArea } from '@workday/canvas-kit-react';
+import { Card } from '@workday/canvas-kit-react';
 import type { HCCard } from '@hellfall/shared/types';
 import { useAuth } from '../../auth';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
@@ -14,6 +14,15 @@ import {
 } from '@hellfall/shared/utils';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { FormField } from '@workday/canvas-kit-preview-react';
+import {
+  createStenciledInput,
+  createStenciledTextArea,
+  createStyledButton,
+  createStyledDiv,
+  createStyledLabel,
+  createStyledSpan,
+  createStyledSubtext,
+} from '../../styling/StyledElements';
 
 export type EditableFields = {
   name: string;
@@ -167,149 +176,132 @@ export function CardEditPanel({
 
   if (success) {
     return (
-      <Box cs={panel}>
+      <Panel>
         <Card>
           <Card.Body>
-            <Subtext size="small" cs={successMessage}>
-              Change submitted for review.
-            </Subtext>
-            <button className={closeButton} onClick={onClose}>
-              Close
-            </button>
+            <SuccessMessage size="small">Change submitted for review.</SuccessMessage>
+            <CloseButton onClick={onClose}>Close</CloseButton>
           </Card.Body>
         </Card>
-      </Box>
+      </Panel>
     );
   }
 
   return (
-    <Box cs={panel}>
+    <Panel>
       <Card>
         <Card.Body>
-          <Box cs={panelHeader}>
-            <Text cs={panelTitle}>Edit Card</Text>
-            <button className={closeButton} onClick={onClose}>
-              &times;
-            </button>
-          </Box>
-          <Box cs={fieldsGrid}>
+          <PanelHeader>
+            <PanelTitle>Edit Card</PanelTitle>
+            <CloseButton onClick={onClose}>&times;</CloseButton>
+          </PanelHeader>
+          <FieldsGrid>
             {(Object.keys(FIELD_LABELS) as (keyof EditableFields)[]).map(key => {
               const isChanged = fields[key] !== original[key];
               const fieldId = `field-${key}`;
               return (
-                <Box cs={fieldRow} key={key}>
+                <FieldRow key={key}>
                   <FormField orientation="vertical">
-                    <Text as="label" cs={label}>
-                      {FIELD_LABELS[key]}
-                    </Text>
+                    <Label>{FIELD_LABELS[key]}</Label>
                     {TEXTAREA_FIELDS.includes(key) ? (
-                      <textarea
-                        {...inputAreaStencil({ changed: isChanged })}
+                      <StyledTextarea
+                        changed={isChanged}
                         id={fieldId}
                         value={fields[key]}
                         onChange={e => handleChange(key, e.target.value)}
                         rows={4}
                       />
                     ) : (
-                      <input
-                        {...inputStencil({ changed: isChanged })}
+                      <StyledInput
+                        changed={isChanged}
                         id={fieldId}
                         value={fields[key]}
                         onChange={e => handleChange(key, e.target.value)}
                       />
                     )}
                   </FormField>
-                </Box>
+                </FieldRow>
               );
             })}
-          </Box>
+          </FieldsGrid>
           {hasChanges && (
-            <Box cs={changeSummary}>
-              <Box cs={summaryTitle}>Changes to submit:</Box>
+            <ChangeSummary>
+              <SummaryTitle>Changes to submit:</SummaryTitle>
               {Object.entries(changedFields).map(([field, change]) => (
-                <Box cs={changeRow} key={field}>
-                  <Text cs={changeField}>
-                    {FIELD_LABELS[field as keyof EditableFields] ?? field}
-                  </Text>
-                  <Box cs={changeValues}>
-                    <Text cs={beforeValue}>{String(change.before) || '(empty)'}</Text>
-                    <Text cs={arrow}>&rarr;</Text>
-                    <Text cs={afterValue}>{String(change.after) || '(empty)'}</Text>
-                  </Box>
-                </Box>
+                <ChangeRow key={field}>
+                  <ChangeField>{FIELD_LABELS[field as keyof EditableFields] ?? field}</ChangeField>
+                  <ChangeValues>
+                    <BeforeValue>{String(change.before) || '(empty)'}</BeforeValue>
+                    <Arrow>&rarr;</Arrow>
+                    <AfterValue>{String(change.after) || '(empty)'}</AfterValue>
+                  </ChangeValues>
+                </ChangeRow>
               ))}
-            </Box>
+            </ChangeSummary>
           )}
-          <Box cs={commentRow}>
+          <CommentRow>
             <FormField orientation="vertical">
-              <Text as="label" cs={label}>
-                Comment (optional)
-              </Text>
-              <input
-                {...inputStencil({ changed: false })}
+              <Label>Comment (optional)</Label>
+              <StyledInput
                 value={comment}
                 onChange={e => setComment(e.target.value)}
                 placeholder="Describe your change..."
               />
             </FormField>
-          </Box>
-          {error && (
-            <Subtext size="small" cs={errorMsg}>
-              {error}
-            </Subtext>
-          )}
-          <Box cs={actionRow}>
-            <button
-              className={submitButton}
-              disabled={!hasChanges || submitting}
-              onClick={handleSubmit}
-            >
+          </CommentRow>
+          {error && <ErrorMsg size="small">{error}</ErrorMsg>}
+          <ActionRow>
+            <SubmitButton disabled={!hasChanges || submitting} onClick={handleSubmit}>
               {submitting ? 'Submitting...' : 'Submit for Review'}
-            </button>
-            <button className={cancelButton} onClick={onClose}>
-              Cancel
-            </button>
-          </Box>
+            </SubmitButton>
+            <CancelButton onClick={onClose}>Cancel</CancelButton>
+          </ActionRow>
         </Card.Body>
       </Card>
-    </Box>
+    </Panel>
   );
 }
 
-const panel = createStyles({
+const panelStyles = createStyles({
   marginTop: 12,
   width: '100%',
 });
+const Panel = createStyledDiv(panelStyles);
 
-const panelHeader = createStyles({
+const panelHeaderStyles = createStyles({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   marginBottom: 12,
 });
+const PanelHeader = createStyledDiv(panelHeaderStyles);
 
-const panelTitle = createStyles({
+const panelTitleStyles = createStyles({
   fontSize: 16,
   fontWeight: 600,
 });
+const PanelTitle = createStyledSpan(panelTitleStyles);
 
-const fieldsGrid = createStyles({
+const fieldsGridStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
 });
+const FieldsGrid = createStyledDiv(fieldsGridStyles);
 
-const fieldRow = createStyles({
+const fieldRowStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
   gap: 2,
 });
+const FieldRow = createStyledDiv(fieldRowStyles);
 
-const label = createStyles({
+const labelStyles = createStyles({
   fontSize: 12,
   fontWeight: 600,
   color: '#555',
 });
+const Label = createStyledLabel(labelStyles);
 
 const inputStyles = {
   padding: '4px 8px',
@@ -335,8 +327,12 @@ const inputStencil = createStencil({
     },
   },
 });
+interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
+  changed?: boolean;
+}
+const StyledInput = createStenciledInput<InputProps>(inputStencil);
 
-const inputAreaStencil = createStencil({
+const textAreaStencil = createStencil({
   vars: {},
   base: {
     ...inputStyles,
@@ -351,81 +347,97 @@ const inputAreaStencil = createStencil({
     },
   },
 });
+interface TextAreaProps extends React.ComponentPropsWithoutRef<'textarea'> {
+  changed?: boolean;
+}
+const StyledTextarea = createStenciledTextArea<TextAreaProps>(textAreaStencil);
 
-const changeSummary = createStyles({
+const changeSummaryStyles = createStyles({
   marginTop: 12,
   padding: '8px 10px',
   border: '1px solid #ccc',
 });
+const ChangeSummary = createStyledDiv(changeSummaryStyles);
 
-const summaryTitle = createStyles({
+const summaryTitleStyles = createStyles({
   fontSize: 12,
   fontWeight: 600,
   marginBottom: 6,
 });
+const SummaryTitle = createStyledDiv(summaryTitleStyles);
 
-const changeRow = createStyles({
+const changeRowStyles = createStyles({
   marginBottom: 4,
 });
+const ChangeRow = createStyledDiv(changeRowStyles);
 
-const changeField = createStyles({
+const changeFieldStyles = createStyles({
   fontSize: 12,
   fontWeight: 600,
   color: '#666',
   display: 'block',
 });
+const ChangeField = createStyledSpan(changeFieldStyles);
 
-const changeValues = createStyles({
+const changeValuesStyles = createStyles({
   display: 'flex',
   alignItems: 'flex-start',
   gap: 6,
   fontSize: 13,
   fontFamily: 'monospace',
 });
+const ChangeValues = createStyledDiv(changeValuesStyles);
 
-const beforeValue = createStyles({
+const beforeValueStyles = createStyles({
   color: '#900',
   textDecoration: 'line-through',
   wordBreak: 'break-word',
   maxWidth: '40%',
 });
+const BeforeValue = createStyledSpan(beforeValueStyles);
 
-const afterValue = createStyles({
+const afterValueStyles = createStyles({
   color: '#060',
   wordBreak: 'break-word',
   maxWidth: '40%',
 });
+const AfterValue = createStyledSpan(afterValueStyles);
 
-const arrow = createStyles({
+const arrowStyles = createStyles({
   color: '#999',
   flexShrink: 0,
 });
+const Arrow = createStyledSpan(arrowStyles);
 
-const commentRow = createStyles({
+const commentRowStyles = createStyles({
   marginTop: 10,
   display: 'flex',
   flexDirection: 'column',
   gap: 2,
 });
+const CommentRow = createStyledDiv(commentRowStyles);
 
-const errorMsg = createStyles({
+const errorMsgStyles = createStyles({
   color: '#c00',
   fontSize: 13,
   margin: '6px 0',
 });
+const ErrorMsg = createStyledSubtext(errorMsgStyles);
 
-const successMessage = createStyles({
+const successMessageStyles = createStyles({
   // fontSize: 14,
   margin: 0,
 });
+const SuccessMessage = createStyledSubtext(successMessageStyles);
 
-const actionRow = createStyles({
+const actionRowStyles = createStyles({
   display: 'flex',
   gap: 8,
   marginTop: 12,
 });
+const ActionRow = createStyledDiv(actionRowStyles);
 
-const submitButton = createStyles({
+const submitButtonStyles = createStyles({
   padding: '4px 14px',
   border: '1px solid #ccc',
   borderRadius: 2,
@@ -435,8 +447,9 @@ const submitButton = createStyles({
   '&:hover:not(:disabled)': { borderColor: '#888' },
   '&:disabled': { opacity: 0.4, cursor: 'default' },
 });
+const SubmitButton = createStyledButton(submitButtonStyles);
 
-const cancelButton = createStyles({
+const cancelButtonStyles = createStyles({
   padding: '4px 14px',
   border: '1px solid #ccc',
   borderRadius: 2,
@@ -445,8 +458,9 @@ const cancelButton = createStyles({
   background: '#fff',
   '&:hover': { borderColor: '#888' },
 });
+const CancelButton = createStyledButton(cancelButtonStyles);
 
-const closeButton = createStyles({
+const closeButtonStyles = createStyles({
   background: 'transparent',
   border: 'none',
   fontSize: 18,
@@ -456,3 +470,5 @@ const closeButton = createStyles({
   padding: '2px 6px',
   '&:hover': { color: '#000' },
 });
+
+const CloseButton = createStyledButton(closeButtonStyles);

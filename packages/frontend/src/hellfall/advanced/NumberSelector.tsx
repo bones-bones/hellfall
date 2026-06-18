@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import { looseOpList, looseOpType } from '@hellfall/shared/filters';
 import { toNumber } from '@hellfall/shared/utils';
-import { legendStyles } from './advancedStyles';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { Box } from '@workday/canvas-kit-react';
+import {
+  createStyledDiv,
+  createStyledInput,
+  createStyledSelect,
+} from '../../styling/StyledElements';
+import { StyledLegend } from './AdvancedComponents';
 // TODO: figure out better way to deal with 5/1
 
 export const NumericComparatorSelector = ({
@@ -28,10 +33,9 @@ export const NumericComparatorSelector = ({
   }, [localValue, localOperator, onChange]);
   return (
     <fieldset>
-      <legend className={legendStyles}>{label}</legend>
-      <Box cs={container}>
-        <select
-          className={dropdownSelectStyles}
+      <StyledLegend>{label}</StyledLegend>
+      <Container>
+        <StyledDropdownSelect
           value={localOperator}
           onChange={event => {
             setLocalOperator(event.target.value as looseOpType);
@@ -40,9 +44,8 @@ export const NumericComparatorSelector = ({
           {looseOpList.map(entry => (
             <option key={entry}>{entry}</option>
           ))}
-        </select>{' '}
-        <input
-          className={numberInputStyles}
+        </StyledDropdownSelect>{' '}
+        <StyledNumberInput
           type="number"
           value={localValue != undefined ? localValue : ''}
           onChange={event => {
@@ -53,12 +56,16 @@ export const NumericComparatorSelector = ({
             }
           }}
         />
-      </Box>
+      </Container>
     </fieldset>
   );
 };
 
 const numberInputStyles = createStyles({ width: '40px' });
+const StyledNumberInput = createStyledInput(numberInputStyles);
 
 const dropdownSelectStyles = createStyles({ width: '40px', height: '30px' });
-const container = createStyles({ display: 'flex' });
+const StyledDropdownSelect = createStyledSelect(dropdownSelectStyles);
+
+const containerStyles = createStyles({ display: 'flex' });
+const Container = createStyledDiv(containerStyles);

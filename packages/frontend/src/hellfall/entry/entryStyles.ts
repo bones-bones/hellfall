@@ -1,4 +1,15 @@
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStenciledH3,
+  createStenciledImg,
+  createStenciledLink,
+  createStenciledSpan,
+  createStyledLink,
+  createStyledSpan,
+} from '../../styling/StyledElements';
+import { LinkProps } from 'react-router-dom';
+import { TextProps } from '@workday/canvas-kit-react';
+import { overflow } from 'html2canvas/dist/types/css/property-descriptors/overflow';
 
 // Text
 const titleText = {
@@ -9,8 +20,10 @@ const titleText = {
   position: 'relative',
   zIndex: 1,
 };
+const titleTextStyles = createStyles(titleText);
+export const TitleText = createStyledSpan(titleTextStyles);
 
-export const clickableTitleStencil = createStencil({
+const clickableTitleStencil = createStencil({
   vars: {},
   base: titleText,
   modifiers: {
@@ -21,15 +34,25 @@ export const clickableTitleStencil = createStencil({
     },
   },
 });
+interface ClickableTitleProps extends TextProps {
+  hasURL?: boolean;
+  as?: string;
+}
+export const ClickableTitle = createStenciledSpan<ClickableTitleProps>(clickableTitleStencil);
+interface ClickableTitleH3Props extends TextProps {
+  hasURL?: boolean;
+  as?: string;
+}
+export const ClickableTitleH3 = createStenciledH3<ClickableTitleH3Props>(clickableTitleStencil);
 
-// Link
-export const titleLinkStyles = createStyles({
+const titleLinkStyles = createStyles({
   display: 'inline-block',
   textDecoration: 'none',
   cursor: 'pointer',
   whiteSpace: 'pre-wrap',
 });
-// Text
+export const StyledTitleLink = createStyledLink(titleLinkStyles);
+
 const visuallyHidden = {
   position: 'absolute',
   width: '1px',
@@ -42,9 +65,10 @@ const visuallyHidden = {
   border: '0',
   pointerEvents: 'none',
 };
-export const visuallyHiddenSpan = createStyles(visuallyHidden);
+const visuallyHiddenStyles = createStyles(visuallyHidden);
+export const VisuallyHiddenSpan = createStyledSpan(visuallyHiddenStyles);
 
-export const titleStencil = createStencil({
+const titleStencil = createStencil({
   vars: {},
   base: titleText,
   modifiers: {
@@ -61,8 +85,12 @@ export const titleStencil = createStencil({
     },
   },
 });
+interface LoadedTitleProps extends TextProps {
+  imageLoaded?: boolean;
+}
+export const LoadedTitle = createStenciledSpan<LoadedTitleProps>(titleStencil);
 
-export const sharedContainer = createStyles({
+export const sharedContainerStyles = createStyles({
   margin: '5px',
   '& img': {
     maxWidth: '100%',
@@ -82,6 +110,7 @@ export const loadedStyles = {
   backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
   borderRadius: '4.75% / 3.5%',
   position: 'relative',
+  overflow: 'hidden',
 };
 
 export const imageStencil = createStencil({
@@ -109,3 +138,12 @@ export const imageStencil = createStencil({
     },
   },
 });
+interface ImageProps extends React.ComponentPropsWithoutRef<'img'> {
+  isRelated?: boolean;
+  hideImage?: boolean;
+}
+export const StyledImage = createStenciledImg<ImageProps>(imageStencil);
+
+export interface ImageLinkProps extends LinkProps {
+  imageLoaded?: boolean;
+}
