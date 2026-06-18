@@ -129,4 +129,3 @@ Write a script to transform the database
   - use normal html for now: button, some instances of p, Link, SidePanel, img, FormField, textarea, selects
 - refactor away from className
 - cut down on boilerplate for stencils if possible (though prioritizing not causing lag)
--

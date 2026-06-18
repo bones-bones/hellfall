@@ -14,9 +14,43 @@ import {
   TextInputProps,
 } from '@workday/canvas-kit-react';
 import { handleCsProp } from '@workday/canvas-kit-styling';
+import { Ref } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 // Making generators that are more generic than these causes massive lag
 
+/**
+ * Here's how to use a styled component generator to replace emotion styled components:
+ * Old code: 
+ * `const x = styled(y)(z);`
+ * 
+ * New code:
+ * `const xStyles = createStyles(z);`
+ * `const x = createStyledY(xStyles);`
+ */
+
+/**
+ * Here's how to use a stenciled component generator to replace emotion styled components with parameters:
+ * Old code: 
+ * `const x = styled(y)(({ prop }: { prop: type })= > ({ styles }));`
+ * 
+ * New code:
+ * `const xStencil = createStencil(z);`
+ * `interface XProps extends YProps {
+ *   prop?: type
+ * }
+ * `const x = createStenciledY<XProps>(xStencil);`
+ * 
+ * `YProps` should be `React.ComponentPropsWithoutRef<y>` if `y` is an intrinsic component, and should be the props type for `y` otherwise (such as `BoxProps` for `Box`)
+ */
+
+/**
+ * 
+ */
+/**
+ * For both kinds of generators, don't try to pass the styles/stencil in a single line.
+ * @example Don't do: `const x = createStyledImg(createStyles(y))`.
+ * This is because doing it in a single line causes massive rerendering and defeats the purpose of static styling.
+ */
 export const createStyledImg =
   (styles: string) =>
   ({ children, ...props }: React.ComponentPropsWithoutRef<'img'>) =>
@@ -61,6 +95,10 @@ export const createStyledTextArea =
   (styles: string) =>
   ({ children, ...props }: React.ComponentPropsWithoutRef<'textarea'>) =>
     <textarea {...handleCsProp(props, styles)}>{children}</textarea>;
+export const createStyledTextAreaWithRef =
+  (styles: string) =>
+  ({ children, ref, ...props }: React.ComponentPropsWithRef<'textarea'> ) =>
+    <textarea ref={ref} {...handleCsProp(props, styles)}>{children}</textarea>;
 export const createStenciledTextArea =
   <T extends React.ComponentPropsWithoutRef<'textarea'>>(
     stencil: (props: Record<string, unknown>) => any
@@ -107,6 +145,14 @@ export const createStyledDiv =
   (styles: string) =>
   ({ children, ...props }: BoxProps) =>
     <Box {...handleCsProp(props, styles)}>{children}</Box>;
+export interface BoxPropsWithRef extends BoxProps {
+  ref?: React.Ref<HTMLDivElement>;
+  children?: React.ReactNode;
+}
+export const createStyledDivWithRef =
+  (styles: string) =>
+  ({ children, ref, ...props }: BoxPropsWithRef ) =>
+    <Box ref={ref} {...handleCsProp(props, styles)}>{children}</Box>;
 export const createStenciledDiv =
   <T extends BoxProps>(stencil: (props: Record<string, unknown>) => any) =>
   ({ children, ...props }: T) =>

@@ -34,6 +34,7 @@ import {
   createStenciledSpan,
   createStyledButton,
   createStyledDiv,
+  createStyledDivWithRef,
   createStyledHeading,
   createStyledHR,
   createStyledPrimaryButtonLink,
@@ -151,7 +152,7 @@ export const HellfallCard = ({
   const { images: imagesToShow, names: imageNames } = getImages(displayCard);
 
   return (
-    <Box cs={containerStyles} ref={windowRef} key={displayCard.id}>
+    <Container ref={windowRef} key={displayCard.id}>
       {onSinglePage && <title>{data.name} || Hellfall</title>}
       {!imagesToShow.length ? (
         <Test>
@@ -597,7 +598,7 @@ export const HellfallCard = ({
           Copy-pasteable JSON
         </LinkButton>
       </ButtonGroup>
-    </Box>
+    </Container>
   );
 };
 
@@ -612,7 +613,7 @@ const containerStyles = createStyles({
   justifyContent: 'center',
   lineHeight: 1,
 });
-// const Container = createStyledDiv(containerStyles);
+const Container = createStyledDivWithRef(containerStyles);
 
 const testStyles = createStyles({
   display: 'flex',

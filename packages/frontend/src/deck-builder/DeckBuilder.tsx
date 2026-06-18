@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
 import { HCCard, SetCode } from '@hellfall/shared/types';
-import styled from '@emotion/styled';
 // import { toDeck } from './toDeck.ts';
-import { TextInput, FormField } from '@workday/canvas-kit-react';
+import { TextInput, FormField, Box } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { nameToId } from '../hellfall/hooks/useNameToId.ts';
@@ -11,6 +10,8 @@ import { downloadDraftmancer } from '../hells-cubes/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CardMap, HCToTTSDeck } from '@hellfall/shared/utils';
 import { cardsData } from '@hellfall/shared/data';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledImg, createStyledTextAreaWithRef } from '../styling/StyledElements.tsx';
 
 // const basics: Record<string, string> = {
 //   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -230,6 +231,7 @@ Cock and Balls to Torture and Abuse
             set: 'Custom' as SetCode,
             idList: renderCards.flatMap(card => card.id ?? []),
             cardMap,
+            multMap
           });
         }}
       >
@@ -255,11 +257,14 @@ Cock and Balls to Torture and Abuse
     </div>
   );
 };
-const DeckContainer = styled.div({});
-const Card = styled.img({ width: '250px' });
+const DeckContainer = Box;
+const cardStyles = createStyles({ width: '250px' });
+const Card = createStyledImg(cardStyles);
+
 
 //245 × 341 px
 
 // const OtherContainer = styled.div({ display: "flex" });
 
-const StyledTextArea = styled.textarea({ width: '50%', minHeight: '400px' });
+const textAreaStyles = createStyles({ width: '50%', minHeight: '400px' });
+const StyledTextArea = createStyledTextAreaWithRef(textAreaStyles);
