@@ -29,7 +29,7 @@ export const HellFall = () => {
 
   const setActiveCardFromAtom = useSetAtom(activeCardAtom);
 
-  const [page, setPage] = useAtom(pageAtom);
+  const page = useAtomValue(pageAtom);
   const { resultSet, paginationModel } = useSearchResults();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);

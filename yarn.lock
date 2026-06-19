@@ -2322,7 +2322,7 @@ __metadata:
     "@hellfall/shared": "npm:^1.0.0"
     "@scryfall/api-types": "npm:>=1.0.0-alpha.4"
     "@types/jsdom": "npm:^16.2.13"
-    "@types/node": "npm:^20.12.8"
+    "@types/node": "npm:^20"
     dotenv: "npm:^16.4.5"
     jsdom: "npm:^17.0.0"
     p-limit: "npm:^7.3.0"
@@ -2432,7 +2432,7 @@ __metadata:
   dependencies:
     "@google-cloud/firestore": "npm:^7.1.0"
     "@hellfall/shared": "npm:^1.0.0"
-    "@types/node": "npm:^20.12.8"
+    "@types/node": "npm:^20"
     dotenv: "npm:^16.4.5"
     tsx: "npm:^4.7.0"
     typescript: "npm:^5"
@@ -2446,7 +2446,7 @@ __metadata:
     "@google-cloud/firestore": "npm:^7.1.0"
     "@google-cloud/storage": "npm:^7.14.0"
     "@hellfall/shared": "npm:^1.0.0"
-    "@types/node": "npm:^20.12.8"
+    "@types/node": "npm:^20"
     dotenv: "npm:^16.4.5"
     esbuild: "npm:^0.25.0"
     jose: "npm:^5.2.0"
@@ -2460,7 +2460,7 @@ __metadata:
   resolution: "@hellfall/shared@workspace:packages/shared"
   dependencies:
     "@google-cloud/firestore": "npm:^7.1.0"
-    "@types/node": "npm:^20.12.8"
+    "@types/node": "npm:^20"
     "@types/xmldom": "npm:^0.1.34"
     typescript: "npm:^5"
     xmldom: "npm:^0.6.0"
@@ -3926,7 +3926,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20, @types/node@npm:^20.12.8":
+"@types/node@npm:^20":
   version: 20.19.39
   resolution: "@types/node@npm:20.19.39"
   dependencies:
@@ -9318,7 +9318,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hellfall@workspace:."
   dependencies:
-    "@types/node": "npm:^20.12.8"
+    "@types/node": "npm:^20"
     eslint-plugin-sonarjs: "npm:^4.0.3"
     prettier: "npm:^2.2.1"
     tsx: "npm:^4.21.0"

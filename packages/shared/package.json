@@ -9,7 +9,7 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^20.12.8",
+    "@types/node": "^20",
     "typescript": "^5"
   },
   "exports": {

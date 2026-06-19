@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@types/jsdom": "^16.2.13",
-    "@types/node": "^20.12.8",
+    "@types/node": "^20",
     "typescript": "^5",
     "xmlbuilder": "^15.1.1"
   },

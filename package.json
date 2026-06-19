@@ -35,7 +35,7 @@
     "export-hellscube-db": "yarn workspace @hellfall/scripts export-hellscube-db"
   },
   "devDependencies": {
-    "@types/node": "^20.12.8",
+    "@types/node": "^20",
     "eslint-plugin-sonarjs": "^4.0.3",
     "prettier": "^2.2.1",
     "typescript": "^5",

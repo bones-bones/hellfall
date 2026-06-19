@@ -22,14 +22,7 @@ import {
   firestoreToCard,
   getUpdateObject,
 } from '@hellfall/shared/utils/firestore';
-// import {
-//   resolveTagState,
-//   tagFieldsForWrite,
-//   dedupeOrdered,
-//   mergeTags,
-//   normalizeTagList,
-//   type CardTagOverrides,
-// } from '@hellfall/shared/cardTags/cardTagMerge';
+
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const changesetsCol: changesetCollection = db.collection(
@@ -62,17 +55,6 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const body = Buffer.concat(chunks).toString('utf-8');
   return body ? JSON.parse(body) : {};
 }
-
-// function isValidChanges(changes: unknown): changes is ChangesMap {
-//   if (!changes || typeof changes !== 'object' || Array.isArray(changes)) return false;
-//   for (const [key, val] of Object.entries(changes as Record<string, unknown>)) {
-//     if (typeof key !== 'string') return false;
-//     if (!val || typeof val !== 'object' || Array.isArray(val)) return false;
-//     const v = val as Record<string, unknown>;
-//     if (!('before' in v) || !('after' in v)) return false;
-//   }
-//   return Object.keys(changes).length > 0;
-// }
 
 /** GET /api/changesets — list changesets, filterable by ?status= and ?cardId= */
 async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promise<void> {
@@ -173,7 +155,7 @@ async function getChangeset(
   changesetId: string
 ): Promise<void> {
   const auth = await requireReviewerAuth(req, res);
-  if (!auth) return;
+  if (!auth){ return;}
 
   const snap = await changesetsCol.doc(changesetId).get();
   if (!snap.exists) {

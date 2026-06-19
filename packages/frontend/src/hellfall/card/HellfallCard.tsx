@@ -1,7 +1,6 @@
 import {
   ButtonColors,
   Card,
-  Heading,
   inputColors,
   PrimaryButton,
   PrimaryButtonProps,
@@ -31,10 +30,12 @@ import {
   formatDiscordMarkdownInvertedItalics,
   formatDiscordMarkdownInvertedItalicsInline,
 } from './markdownFormatter.tsx';
-import { CardEditPanel } from './CardEditPanel.tsx';
 import { PendingChanges } from './PendingChanges.tsx';
-import { HellfallRelatedEntry } from '../HellfallRelatedEntry.tsx';
 import { TagSection } from './hellfall-card-components/TagSection.js';
+import { CardEditingControls } from './CardEditingControls.tsx';
+import { RelatedCards } from './hellfall-card-components/RelatedCards.js';
+import { Divider } from './visual-components/Divider.js';
+import { StyledHeading } from './visual-components/StyledHeading.js';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return <MediumText>{stringToMana(entry)}</MediumText>;
@@ -114,14 +115,15 @@ export const HellfallCard = ({
   } = useCardTagOverrides(data);
   const [activeImageSide, setActiveImageSide] = useState(0);
 
-  const [editing, setEditing] = useState(false);
   const isContributor = Boolean(user?.isAdmin || user?.isContributor);
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    if (!windowRef.current) return;
+    if (!windowRef.current) {
+      return;
+    }
 
     const resizeObserver = new ResizeObserver(entries => {
       for (const entry of entries) {
@@ -317,29 +319,24 @@ export const HellfallCard = ({
             </>
           )}
           {Boolean(displayCard.creators.length) && (
-            <>
-              <SmallText key="creator">
-                Creator{displayCard.creators.length == 1 ? '' : 's'}:{' '}
-                {displayCard.creators.join(',')}
-              </SmallText>
-            </>
+            <SmallText key="creator">
+              Creator{displayCard.creators.length == 1 ? '' : 's'}: {displayCard.creators.join(',')}
+            </SmallText>
           )}
           {displayCard.artists?.length && (
-            <>
-              <SmallText key="artist">
-                Artist{displayCard.artists.length == 1 ? '' : 's'}:{' '}
-                {displayCard.artists
-                  .map(
-                    artist =>
-                      `${artist}${
-                        displayCard.artist_notes?.[artist]
-                          ? ` (${displayCard.artist_notes[artist]})`
-                          : ''
-                      }`
-                  )
-                  .join(', ')}
-              </SmallText>
-            </>
+            <SmallText key="artist">
+              Artist{displayCard.artists.length == 1 ? '' : 's'}:{' '}
+              {displayCard.artists
+                .map(
+                  artist =>
+                    `${artist}${
+                      displayCard.artist_notes?.[artist]
+                        ? ` (${displayCard.artist_notes[artist]})`
+                        : ''
+                    }`
+                )
+                .join(', ')}
+            </SmallText>
           )}
           {displayCard.hcid && <SmallText key="hcid">Id: {displayCard.hcid}</SmallText>}
           {
@@ -364,65 +361,29 @@ export const HellfallCard = ({
               </div>
             </>
           )}
-          {isContributor && <PendingChanges cardId={displayCard.id} />}
-          {user && persistEnabled && !editing && (
-            <EditCardButton type="button" onClick={() => setEditing(true)}>
-              Edit Card Data
-            </EditCardButton>
-          )}
-          {editing && (
-            <CardEditPanel
-              card={displayCard}
-              onClose={() => setEditing(false)}
-              onSubmitted={() => setEditing(false)}
-            />
-          )}
           {
-            <TagSection
-              displayCard={displayCard}
-              tagControls={{
-                addTag,
-                deleteTag,
-                tagsError,
-                tagsLoading,
-                tagsPersistEnabled: persistEnabled,
-                changesetSubmitted,
-                pendingTagStaging,
-              }}
-            />
+            isContributor && (
+              <PendingChanges cardId={displayCard.id} />
+            ) /* todo: move isContributor into the component */
           }
-          {displayCard.all_parts && (
-            <>
-              <Divider />
-              <div>
-                <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
-                <RelatedGrid>
-                  {displayCard.all_parts
-                    .filter(e => e.id != displayCard.id)
-                    .map((entry, i) => (
-                      <HellfallRelatedEntry
-                        onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                          if (
-                            event.button === 1 ||
-                            event.metaKey ||
-                            event.ctrlKey ||
-                            !onSinglePage
-                          ) {
-                            window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
-                          } else {
-                            window.location.href = `/card/${encodeURIComponent(entry.hcid)}`;
-                          }
-                        }}
-                        key={entry.id}
-                        id={entry.hcid}
-                        name={entry.name}
-                        url={entry.image!}
-                      />
-                    ))}
-                </RelatedGrid>
-              </div>
-            </>
-          )}
+          <CardEditingControls displayCard={displayCard} persistEnabled={persistEnabled} />
+          <TagSection
+            displayCard={displayCard}
+            tagControls={{
+              addTag,
+              deleteTag,
+              tagsError,
+              tagsLoading,
+              tagsPersistEnabled: persistEnabled,
+              changesetSubmitted,
+              pendingTagStaging,
+            }}
+          />
+          <RelatedCards
+            relatedCards={displayCard.all_parts}
+            sourceCardId={displayCard.id}
+            onSinglePage={onSinglePage}
+          />
         </Card.Body>
       </Card>
       <ButtonGroup>
@@ -479,30 +440,8 @@ const ImageContainer = styled.div({
     objectFit: 'contain',
   },
 });
-const StyledHeading = styled(Heading)({
-  marginTop: '0px',
-  marginBottom: '10px',
-});
 
 const ButtonContainer = styled.div();
-
-const RelatedGrid = styled('div')({
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  gap: '0px',
-  margin: '0 auto',
-});
-
-const Divider = styled('hr')({
-  height: '2px',
-  backgroundColor: '#ccc',
-  border: 'none',
-  marginLeft: '-32px',
-  marginRight: '-32px',
-});
 
 const Separator = styled('hr')({
   height: '1px',
@@ -590,17 +529,4 @@ const ButtonGroup = styled('div')({
   flexDirection: 'row',
   marginLeft: '4px',
   verticalAlign: 'top',
-});
-
-const EditCardButton = styled('button')({
-  display: 'block',
-  marginTop: 6,
-  marginBottom: 4,
-  padding: '3px 10px',
-  background: '#fff',
-  border: '1px solid #ccc',
-  borderRadius: 2,
-  fontSize: 12,
-  cursor: 'pointer',
-  '&:hover': { borderColor: '#888' },
 });
