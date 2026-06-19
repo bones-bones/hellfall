@@ -10,7 +10,7 @@ import { buildNameToIdMap, lookupNameToId } from '../hellfall/hooks/useNameToId.
 import { downloadDraftmancer } from '../cube-resources/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CardMap, HCToTTSDeck, textPrep } from '@hellfall/shared/utils';
-import { cardsData } from '@hellfall/shared/data';
+import { loadCardsData } from '@hellfall/shared/data';
 
 // const basics: Record<string, string> = {
 //   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -30,7 +30,10 @@ export const DeckBuilder = () => {
   const [textAreaValue, setTextAreaValue] = useState<string>(
     (searchparms.get('list') || '').replaceAll('∆', '\n')
   );
-  const cardMap = useMemo(() => new CardMap(cardsData.data), []);
+  const [cardMap, setCardMap] = useState<CardMap>(() => new CardMap());
+  useEffect(() => {
+    loadCardsData().then((data) => setCardMap(new CardMap(data.data)));
+  }, []);
   const nameToIdMap = useMemo(() => buildNameToIdMap(cardMap), [cardMap]);
   const [multMap, setMultMap] = useState<Map<string, number>>(new Map());
   // const [cards, setCards] = useState<HCCard.Any[]>([]);

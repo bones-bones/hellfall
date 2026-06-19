@@ -92,6 +92,7 @@
     "jest-circus": "26.6.0",
     "jest-resolve": "26.6.0",
     "jest-watch-typeahead": "0.6.1",
+    "webpack-bundle-analyzer": "^5.3.0",
     "webpack-cli": "^5.1.4",
     "xmlbuilder": "^15.1.1"
   },
