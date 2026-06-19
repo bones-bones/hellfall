@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useUpdateURL } from './hooks/useUrlSync';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { parseSearchQuery, searchCards } from '@hellfall/shared/filters';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { searchCards } from '@hellfall/shared/filters';
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from './atoms/cardsAtom';
 import { tagsData } from '@hellfall/shared/data';
-import { SingleCard } from './card/SingleCard';
 import { allExceptNormal } from '@hellfall/shared/utils';
 
 export const Random = () => {

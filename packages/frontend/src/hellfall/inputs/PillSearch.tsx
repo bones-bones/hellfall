@@ -9,8 +9,6 @@ import {
   useMenuModel,
 } from '@workday/canvas-kit-react';
 
-import { FixedSizeList } from 'react-window';
-
 type Props = {
   possibleValues: string[];
   values: string[];

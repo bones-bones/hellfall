@@ -288,8 +288,8 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
 };
 
 const Container = styled('div')({
-  paddingLeft: space.l,
-  paddingRight: space.l,
+  paddingLeft: '36px',
+  paddingRight: '36px',
   alignItems: 'center',
   width: '100%',
   boxSizing: 'border-box',

@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { HellfallEntry } from './HellfallEntry.tsx';
 
-import { styled, space } from '@workday/canvas-kit-react';
-
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
   activeCardAtom,
@@ -14,12 +12,13 @@ import {
 import { useSearchResults } from './hooks/useSearchResults.ts';
 import { ControlBar } from './search-controls/ControlBar.tsx';
 import { CHUNK_SIZE } from './constants.ts';
-import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
+import { useUpdateURL } from './hooks/useUrlSync.ts';
 import { getOtherNames, toPlainText } from '@hellfall/shared/utils';
 import { SearchBar } from './search-controls/SearchBar.tsx';
 import { ActiveCardPanel } from './ActiveCardPanel.tsx';
 import { Link } from 'react-router-dom';
-import { HellfallCard } from './card/HellfallCard.tsx';
+import { HellfallCard } from './card';
+import styled from '@emotion/styled';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -140,13 +139,13 @@ const SortSeparator = styled('hr')({
 const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
 const Summary = styled('div')({
   display: 'inline-block',
-  paddingLeft: space.l,
-  paddingRight: space.l,
+  paddingLeft: '36px',
+  paddingRight: '36px',
 });
 const Invalid = styled('div')({
   display: 'inline-block',
-  paddingLeft: space.l,
-  paddingRight: space.l,
+  paddingLeft: '36px',
+  paddingRight: '36px',
 });
 const Container = styled('div')({
   display: 'flex',

@@ -2,7 +2,7 @@ import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import styled from '@emotion/styled';
 import { Link, useParams } from 'react-router-dom';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
-import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
+import { HellfallCard } from '../hellfall/card';
 import { stringToMana } from '../hellfall/stringToMana.tsx';
 import {
   compareCubeListCards,

@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Heading } from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
 import { useAuth } from '../auth';
 import { getAuthApiUrl } from '../auth/getAuthApiUrl';
@@ -7,8 +6,6 @@ import { getAuthApiUrl } from '../auth/getAuthApiUrl';
 import { ChangesetCard } from './ChangesetCard';
 import { ErrorText } from './ErrorText';
 import { Changeset, isChangesetStatus, isStatusFilter, StatusFilter } from '@hellfall/shared/utils';
-import { cardsAtom } from '../hellfall/atoms/cardsAtom';
-import { useAtomValue } from 'jotai';
 import { useParams } from 'react-router-dom';
 
 export function ReviewPage() {
@@ -86,7 +83,7 @@ export function ReviewPage() {
   if (authLoading) {
     return (
       <PageContainer>
-        <Heading size="medium">Review Changesets</Heading>
+        <h2>Review Changesets</h2>
         <p>Loading...</p>
       </PageContainer>
     );
@@ -95,7 +92,7 @@ export function ReviewPage() {
   if (!user) {
     return (
       <PageContainer>
-        <Heading size="medium">Review Changesets</Heading>
+        <h2>Review Changesets</h2>
         <p> log in to view changesets.</p>
       </PageContainer>
     );
@@ -104,7 +101,7 @@ export function ReviewPage() {
   if (!canViewChangesets) {
     return (
       <PageContainer>
-        <Heading size="medium">Review Changesets</Heading>
+        <h2>Review Changesets</h2>
         <p>You need admin or database contributor access to view changesets.</p>
       </PageContainer>
     );
@@ -112,7 +109,7 @@ export function ReviewPage() {
 
   return (
     <PageContainer>
-      <Heading size="medium">Review Changesets</Heading>
+      <h2>Review Changesets</h2>
       <FilterRow>
         {(['pending', 'accepted', 'rejected', 'all'] as StatusFilter[]).map(s => (
           <FilterButton key={s} data-active={filter === s} onClick={() => setFilter(s)}>

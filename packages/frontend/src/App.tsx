@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HellFall } from './hellfall';
-import { Hellscubes } from './hells-cubes';
+import { Hellscubes } from './cube-resources';
 import { DeckBuilder } from './deck-builder';
 import { Draft } from './draft';
 import { LandBox } from './land-box';

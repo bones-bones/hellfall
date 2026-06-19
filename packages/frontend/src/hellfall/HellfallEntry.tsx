@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { VisuallyHiddenSpan } from './card/VisuallyHiddenSpan';
-import { StyledTitleLink } from './card/StyledTitleLink';
-import { TitleText } from './card/TitleText';
+import { VisuallyHiddenSpan } from './card/visual-components/VisuallyHiddenSpan';
+import { StyledTitleLink } from './card/visual-components/StyledTitleLink';
+import { TitleText } from './card/visual-components/TitleText';
 
 export const HellfallEntry = ({
   url,

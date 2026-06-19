@@ -5,13 +5,13 @@ import {
   inputColors,
   PrimaryButton,
   PrimaryButtonProps,
-  type,
 } from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
-import { SetLegality } from './SetLegality.tsx';
+import { SetLegality } from './visual-components/SetLegality.js';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
 import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
+import { SmallText } from './visual-components/SmallText.js';
 
 import { Link } from 'react-router-dom';
 import {
@@ -31,18 +31,13 @@ import {
   formatDiscordMarkdownInvertedItalics,
   formatDiscordMarkdownInvertedItalicsInline,
 } from './markdownFormatter.tsx';
-import { tagsData } from '@hellfall/shared/data';
 import { CardEditPanel } from './CardEditPanel.tsx';
 import { PendingChanges } from './PendingChanges.tsx';
 import { HellfallRelatedEntry } from '../HellfallRelatedEntry.tsx';
+import { TagSection } from './hellfall-card-components/TagSection.js';
 const renderText = (text: string[]) => {
   return text.map(entry => {
-    return (
-      <>
-        <MediumText>{stringToMana(entry)}</MediumText>
-        {/* <br/> */}
-      </>
-    );
+    return <MediumText>{stringToMana(entry)}</MediumText>;
   });
 };
 const triggerEscapeList = ['*', '(', '_', '~'];
@@ -108,17 +103,17 @@ export const HellfallCard = ({
   const { user } = useAuth();
   const {
     displayCard,
+    persistEnabled,
+
     addTag,
     deleteTag,
     loading: tagsLoading,
     error: tagsError,
-    persistEnabled: tagsPersistEnabled,
     changesetSubmitted,
     pendingTagStaging,
   } = useCardTagOverrides(data);
   const [activeImageSide, setActiveImageSide] = useState(0);
-  const [newTagInput, setNewTagInput] = useState('');
-  const [tagActionError, setTagActionError] = useState<string | null>(null);
+
   const [editing, setEditing] = useState(false);
   const isContributor = Boolean(user?.isAdmin || user?.isContributor);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -151,7 +146,7 @@ export const HellfallCard = ({
     <Container ref={windowRef} key={displayCard.id} style={{ lineHeight: 1 }}>
       <title>{data.name} || Hellfall</title>
       {!imagesToShow.length ? (
-        <Test>
+        <ImageContainerContainer>
           <ImageContainer key="image-container">
             <img
               alt={toPlainText(displayCard)}
@@ -160,7 +155,7 @@ export const HellfallCard = ({
               referrerPolicy="no-referrer"
             />
           </ImageContainer>
-        </Test>
+        </ImageContainerContainer>
       ) : (
         <>
           <ImageContainer key={imagesToShow[activeImageSide] || displayCard.image}>
@@ -264,9 +259,7 @@ export const HellfallCard = ({
                     {formatDiscordMarkdown(formatParens(face.oracle_text))}
                   </MediumText>
                 ) : (
-                  <>
-                    <MediumText key="rules">{renderText(face.oracle_text.split('\\n'))}</MediumText>
-                  </>
+                  <MediumText key="rules">{renderText(face.oracle_text.split('\\n'))}</MediumText>
                 ))}
               {face.flavor_text &&
                 (['*', '_', '~'].some(e => face.flavor_text?.includes(e)) ? (
@@ -274,11 +267,9 @@ export const HellfallCard = ({
                     {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
                   </MediumText>
                 ) : (
-                  <>
-                    <MediumItalics key="flavor">
-                      {renderText(face.flavor_text.split('\\n'))}
-                    </MediumItalics>
-                  </>
+                  <MediumItalics key="flavor">
+                    {renderText(face.flavor_text.split('\\n'))}
+                  </MediumItalics>
                 ))}
               {(face.power || face.toughness) && (
                 <>
@@ -350,11 +341,7 @@ export const HellfallCard = ({
               </SmallText>
             </>
           )}
-          {displayCard.hcid && (
-            <>
-              <SmallText key="hcid">Id: {displayCard.hcid}</SmallText>
-            </>
-          )}
+          {displayCard.hcid && <SmallText key="hcid">Id: {displayCard.hcid}</SmallText>}
           {
             <>
               <SetLegality legality={displayCard.legalities.standard} /> Constructed
@@ -378,7 +365,7 @@ export const HellfallCard = ({
             </>
           )}
           {isContributor && <PendingChanges cardId={displayCard.id} />}
-          {user && tagsPersistEnabled && !editing && (
+          {user && persistEnabled && !editing && (
             <EditCardButton type="button" onClick={() => setEditing(true)}>
               Edit Card Data
             </EditCardButton>
@@ -391,137 +378,18 @@ export const HellfallCard = ({
             />
           )}
           {
-            <>
-                {tagsLoading && <SmallText>Loading tags…</SmallText>}
-                {tagsError && (
-                  <SmallText style={{ color: '#c00' }}>Could not load tag overrides.</SmallText>
-                )}
-                {tagActionError && (
-                  <SmallText style={{ color: '#c00' }}>{tagActionError}</SmallText>
-                )}
-                <SmallText key="Tags">
-                  Tags:{' '}
-                  {displayCard.tags?.map((tagEntry, i, ar) => {
-                    const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
-                    return (
-                      <span key={tagEntry}>
-                        <TagLink $pendingRemove={pendingRemove}>
-                          <Link
-                            to={`/?${new URLSearchParams([['q', `tag=${tagEntry}`]]).toString()}`}
-                            target="_blank"
-                          >
-                            {tagEntry}
-                          </Link>
-                        </TagLink>
-                        {displayCard.tag_notes &&
-                          tagEntry in displayCard.tag_notes &&
-                          (displayCard.tag_notes[tagEntry].startsWith('https:') ? (
-                            <>
-                              <SmallLine> (</SmallLine>
-                              <Link to={displayCard.tag_notes[tagEntry]}>
-                                {displayCard.tag_notes[tagEntry]}
-                              </Link>
-                              <SmallLine>)</SmallLine>
-                            </>
-                          ) : (
-                            <>
-                              <SmallLine> ({displayCard.tag_notes[tagEntry]})</SmallLine>
-                            </>
-                          ))}
-                        {user && tagsPersistEnabled && (
-                          <TagRemoveButton
-                            type="button"
-                            onClick={async () => {
-                              setTagActionError(null);
-                              try {
-                                await deleteTag(tagEntry);
-                              } catch {
-                                setTagActionError('Failed to remove tag');
-                              }
-                            }}
-                            title="Remove tag"
-                            aria-label={`Remove tag ${tagEntry}`}
-                          >
-                            ×
-                          </TagRemoveButton>
-                        )}
-                        {i < ar.length - 1 && ', '}
-                      </span>
-                    );
-                  })}
-                  {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => (
-                    <span key={`pending-${tagEntry}`}>
-                      {(displayCard.tags?.length || i > 0) && ', '}
-                      <TagLink $pendingAdd>
-                        <Link
-                          to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
-                          target="_blank"
-                        >
-                          +{tagEntry}
-                        </Link>
-                      </TagLink>
-                      {i < ar.length - 1 && ', '}
-                    </span>
-                  ))}
-                </SmallText>
-                {pendingTagStaging && (
-                  <SmallText style={{ color: '#856404' }}>Staged changes pending review.</SmallText>
-                )}
-                {user && tagsPersistEnabled && (
-                  <TagAddRow>
-                    <input
-                      type="text"
-                      list="hellfall-tag-list"
-                      value={newTagInput}
-                      onChange={e => setNewTagInput(e.target.value)}
-                      onKeyDown={async e => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          const v = newTagInput.trim();
-                          if (v) {
-                            setTagActionError(null);
-                            try {
-                              await addTag(v);
-                              setNewTagInput('');
-                            } catch {
-                              setTagActionError('Failed to add tag');
-                            }
-                          }
-                        }
-                      }}
-                      placeholder="Add tag..."
-                      aria-label="Add tag"
-                    />
-                    <datalist id="hellfall-tag-list">
-                      {(tagsData.data as string[]).map(t => (
-                        <option key={t} value={t} />
-                      ))}
-                    </datalist>
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        const v = newTagInput.trim();
-                        if (v) {
-                          setTagActionError(null);
-                          try {
-                            await addTag(v);
-                            setNewTagInput('');
-                          } catch {
-                            setTagActionError('Failed to add tag');
-                          }
-                        }
-                      }}
-                    >
-                      Add
-                    </button>
-                  </TagAddRow>
-                )}
-                {changesetSubmitted && (
-                  <SmallText style={{ color: '#28a745', marginTop: 4 }}>
-                    Change submitted for review.
-                  </SmallText>
-                )}
-              </>
+            <TagSection
+              displayCard={displayCard}
+              tagControls={{
+                addTag,
+                deleteTag,
+                tagsError,
+                tagsLoading,
+                tagsPersistEnabled: persistEnabled,
+                changesetSubmitted,
+                pendingTagStaging,
+              }}
+            />
           }
           {displayCard.all_parts && (
             <>
@@ -590,7 +458,7 @@ const Container = styled.div({
   justifyContent: 'center',
 });
 
-const Test = styled.div({
+const ImageContainerContainer = styled.div({
   display: 'flex',
   justifyContent: 'center',
   overflowX: 'auto',
@@ -617,37 +485,6 @@ const StyledHeading = styled(Heading)({
 });
 
 const ButtonContainer = styled.div();
-
-const TagLink = styled.span<{ $pendingAdd?: boolean; $pendingRemove?: boolean }>(
-  ({ $pendingAdd, $pendingRemove }) => ({
-    '& a': {
-      color: $pendingAdd ? '#28a745' : $pendingRemove ? '#888' : undefined,
-      textDecoration: $pendingRemove ? 'line-through' : undefined,
-      fontWeight: $pendingAdd ? 600 : undefined,
-    },
-  })
-);
-
-const TagRemoveButton = styled.button({
-  marginLeft: '2px',
-  padding: '0 4px',
-  cursor: 'pointer',
-  background: 'transparent',
-  border: 'none',
-  fontSize: '1.1em',
-  lineHeight: 1,
-  verticalAlign: 'middle',
-  color: '#666',
-  '&:hover': { color: '#c00' },
-});
-
-const TagAddRow = styled.div({
-  marginTop: '6px',
-  display: 'flex',
-  gap: '8px',
-  alignItems: 'center',
-  '& input': { minWidth: '120px' },
-});
 
 const RelatedGrid = styled('div')({
   display: 'flex',
@@ -735,28 +572,18 @@ const inputButtonColors: ButtonColors = {
 };
 
 const MediumText = styled('div')({
-  fontSize: type.levels.body.medium.fontSize,
-  fontWeight: type.levels.body.medium.fontWeight,
+  fontSize: '16px',
+  fontWeight: 'bold',
   marginBlock: '.5rem',
   lineHeight: 1.125,
 });
 const MediumLine = styled('span')({
-  fontSize: type.levels.body.medium.fontSize,
-  fontWeight: type.levels.body.medium.fontWeight,
+  fontSize: '16px',
+  fontWeight: 'bold',
   marginBlock: '.5rem',
 });
 const MediumItalics = styled(MediumText)({ fontStyle: 'italic' });
 const MediumItalicLine = styled(MediumLine)({ fontStyle: 'italic' });
-const SmallText = styled('div')({
-  fontSize: type.levels.body.small.fontSize,
-  fontWeight: type.levels.body.small.fontWeight,
-  marginBlock: '.4rem',
-});
-const SmallLine = styled('span')({
-  fontSize: type.levels.body.small.fontSize,
-  fontWeight: type.levels.body.small.fontWeight,
-  marginBlock: '.4rem',
-});
 
 const ButtonGroup = styled('div')({
   display: 'inline-block',

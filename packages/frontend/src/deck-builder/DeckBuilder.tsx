@@ -7,7 +7,7 @@ import { TextInput, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { nameToId } from '../hellfall/hooks/useNameToId.ts';
-import { downloadDraftmancer } from '../hells-cubes/downloadDraftmancer.ts';
+import { downloadDraftmancer } from '../cube-resources/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CardMap, HCToTTSDeck } from '@hellfall/shared/utils';
 import { cardsData } from '@hellfall/shared/data';
