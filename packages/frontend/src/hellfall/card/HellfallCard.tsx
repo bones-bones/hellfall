@@ -37,8 +37,8 @@ import { RelatedCards } from './hellfall-card-components/RelatedCards';
 import { Divider } from './visual-components/Divider';
 import { StyledHeading } from './visual-components/StyledHeading';
 const renderText = (text: string[]) => {
-  return text.map(entry => {
-    return <MediumText>{stringToMana(entry)}</MediumText>;
+  return text.map((entry, index) => {
+    return <MediumText key={index}>{stringToMana(entry)}</MediumText>;
   });
 };
 const triggerEscapeList = ['*', '(', '_', '~'];

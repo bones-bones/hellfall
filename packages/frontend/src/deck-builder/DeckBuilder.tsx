@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
 import { HCCard, SetCode } from '@hellfall/shared/types';
 import styled from '@emotion/styled';
@@ -6,10 +6,10 @@ import styled from '@emotion/styled';
 import { TextInput, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
-import { nameToId } from '../hellfall/hooks/useNameToId.ts';
+import { buildNameToIdMap, lookupNameToId } from '../hellfall/hooks/useNameToId.ts';
 import { downloadDraftmancer } from '../cube-resources/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CardMap, HCToTTSDeck } from '@hellfall/shared/utils';
+import { CardMap, HCToTTSDeck, textPrep } from '@hellfall/shared/utils';
 import { cardsData } from '@hellfall/shared/data';
 
 // const basics: Record<string, string> = {
@@ -30,7 +30,8 @@ export const DeckBuilder = () => {
   const [textAreaValue, setTextAreaValue] = useState<string>(
     (searchparms.get('list') || '').replaceAll('∆', '\n')
   );
-  const cardMap = new CardMap(cardsData.data);
+  const cardMap = useMemo(() => new CardMap(cardsData.data), []);
+  const nameToIdMap = useMemo(() => buildNameToIdMap(cardMap), [cardMap]);
   const [multMap, setMultMap] = useState<Map<string, number>>(new Map());
   // const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
@@ -80,14 +81,11 @@ export const DeckBuilder = () => {
     }
 
     if (rest[0] == '%') {
-      // handle ids
-      return cardMap.find(card => card.hcid == rest.slice(1))
-        ? [count, rest.slice(1)]
-        : [count, ''];
+      const hcid = rest.slice(1);
+      return nameToIdMap.has(textPrep(hcid)) ? [count, hcid] : [count, ''];
     }
     if (/^\d+$/.test(rest)) {
-      // handle card names that are all digits
-      const id = cardMap.find(card => card.name == rest)?.id;
+      const id = nameToIdMap.get(textPrep(rest));
       return id ? [count, id] : [count, ''];
     }
     // if (rest.toLowerCase() in basics) {
@@ -114,7 +112,7 @@ export const DeckBuilder = () => {
         //   } as unknown as HCCard.Any;
         //   return Array(count).fill(card);
         // } else {
-        const id = nameToId(rest, cardMap);
+        const id = lookupNameToId(rest, nameToIdMap, cardMap);
         const card = id
           ? cardMap.get(id)
           : ({
