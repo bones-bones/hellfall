@@ -121,7 +121,6 @@ Write a script to transform the database
 - store default search settings with users like scryfall does
 - get a better random icon
 - figure out how to attach links/hrefs to the pagination buttons
-- once spain tokens get in, make sure they all get drop_face?
 - finish migration to cs props
   - div => Box
   - span => Text
@@ -131,3 +130,5 @@ Write a script to transform the database
 - refactor away from className
 - cut down on boilerplate for stencils if possible (though prioritizing not causing lag)
 - fix card display on deck pages
+- deal with duplicate HCV.1 collector numbers
+- fix buttons for images on individual card pages

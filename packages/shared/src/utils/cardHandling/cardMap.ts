@@ -142,6 +142,17 @@ export class CardMap {
   }
 
   /**
+   * Returns the ids of the cards directly in the given set.
+   * @returns Returns the ids of the cards directly in the given set.
+   */
+  getAllIdsInSetDirect(set: SetCode): string[] {
+    return [
+      ...Array.from(this.setMap.get(set) ?? []),
+      ...(getDirectChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ?? []),
+    ];
+  }
+
+  /**
    * Returns the ids of the cards exactly in the given set.
    * @returns Returns the ids of the cards exactly in the given set.
    */
@@ -154,6 +165,14 @@ export class CardMap {
    */
   getAllInSetList(setList: SetCode[]): this {
     const idList = setList.flatMap(set => this.getAllIdsInSet(set));
+    return this.getSubset(idList);
+  }
+  /**
+   * Returns the subset of the CardMap object directly in the given sets as a new CardMap.
+   * @returns Returns the subset of the CardMap directly in the given sets.
+   */
+  getAllInSetListDirect(setList: SetCode[]): this {
+    const idList = setList.flatMap(set => this.getAllIdsInSetDirect(set));
     return this.getSubset(idList);
   }
 
@@ -172,6 +191,14 @@ export class CardMap {
    */
   getAllIdsInSetList(setList: SetCode[]): string[] {
     return setList.flatMap(set => this.getAllIdsInSet(set));
+  }
+
+  /**
+   * Returns the ids of the cards directly in the given sets.
+   * @returns Returns the ids of the cards directly in the given sets.
+   */
+  getAllIdsInSetListDirect(setList: SetCode[]): string[] {
+    return setList.flatMap(set => this.getAllIdsInSetDirect(set));
   }
 
   /**
@@ -666,6 +693,12 @@ export class CardMap {
    */
   ids(): string[] {
     return Array.from(this.idMap.keys());
+  }
+  /**
+   * Returns an array of the sets in the CardMap.
+   */
+  sets(): SetCode[] {
+    return Array.from(this.setMap.keys());
   }
 
   /**

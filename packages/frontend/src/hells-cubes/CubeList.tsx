@@ -37,7 +37,7 @@ export const CubeList = () => {
   const cards = useMemo(() => {
     if (setCode === ('All' as SetCode)) {
       return cardMap
-        .getAllInSetList([...cubeResourceSetCodes])
+        .getAllInSetListDirect([...cubeResourceSetCodes])
         .mapToArray(card => card)
         .sort(compareCubeListCards);
     }
