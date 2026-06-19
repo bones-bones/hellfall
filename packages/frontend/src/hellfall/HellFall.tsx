@@ -126,7 +126,6 @@ export const HellFall = () => {
           <ControlBar model={paginationModel} />
         </>
       )}
-      {/* <PaginationComponent model={paginationModel} /> */}
     </div>
   );
 };

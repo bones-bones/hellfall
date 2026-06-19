@@ -6,11 +6,11 @@ import {
   PrimaryButtonProps,
 } from '@workday/canvas-kit-react';
 import styled from '@emotion/styled';
-import { SetLegality } from './visual-components/SetLegality.js';
+import { SetLegality } from './visual-components/SetLegality';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
 import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
-import { SmallText } from './visual-components/SmallText.js';
+import { SmallText } from './visual-components/SmallText';
 
 import { Link } from 'react-router-dom';
 import {
@@ -31,11 +31,11 @@ import {
   formatDiscordMarkdownInvertedItalicsInline,
 } from './markdownFormatter.tsx';
 import { PendingChanges } from './PendingChanges.tsx';
-import { TagSection } from './hellfall-card-components/TagSection.js';
+import { TagSection } from './hellfall-card-components/TagSection';
 import { CardEditingControls } from './CardEditingControls.tsx';
-import { RelatedCards } from './hellfall-card-components/RelatedCards.js';
-import { Divider } from './visual-components/Divider.js';
-import { StyledHeading } from './visual-components/StyledHeading.js';
+import { RelatedCards } from './hellfall-card-components/RelatedCards';
+import { Divider } from './visual-components/Divider';
+import { StyledHeading } from './visual-components/StyledHeading';
 const renderText = (text: string[]) => {
   return text.map(entry => {
     return <MediumText>{stringToMana(entry)}</MediumText>;
