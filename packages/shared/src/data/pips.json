@@ -607,6 +607,48 @@
       ]
     },
     {
+      "filename": "mono/alternate/upsidedownG.svg",
+      "symbol": "upsidedownG",
+      "english": "one upside down green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G"
+      ]
+    },
+    {
+      "filename": "mono/alternate/orangeG.png",
+      "symbol": "orangeG",
+      "english": "one orange-colored green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G"
+      ],
+      "no_shadow": true
+    },
+    {
+      "filename": "mono/alternate/brownG.png",
+      "symbol": "brownG",
+      "english": "one brown-colored green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G"
+      ],
+      "no_shadow": true
+    },
+    {
+      "filename": "mono/alternate/Cross.png",
+      "symbol": "Cross",
+      "english": "one cross (white) mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W"
+      ]
+    },
+    {
       "filename": "mono/misc/Yellow.svg",
       "symbol": "Yellow",
       "english": "one yellow mana",
@@ -677,48 +719,6 @@
       ]
     },
     {
-      "filename": "mono/misc/upsidedownG.svg",
-      "symbol": "upsidedownG",
-      "english": "one upside down green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G"
-      ]
-    },
-    {
-      "filename": "mono/misc/orangeG.png",
-      "symbol": "orangeG",
-      "english": "one orange-colored green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G"
-      ],
-      "no_shadow": true
-    },
-    {
-      "filename": "mono/misc/brownG.png",
-      "symbol": "brownG",
-      "english": "one brown-colored green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G"
-      ],
-      "no_shadow": true
-    },
-    {
-      "filename": "mono/misc/Cross.png",
-      "symbol": "Cross",
-      "english": "one cross (white) mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W"
-      ]
-    },
-    {
       "filename": "mono/misc/Lime.png",
       "symbol": "Lime",
       "english": "one lime mana",
@@ -726,21 +726,6 @@
       "mana_value": 1,
       "colors": [
         "Lime"
-      ]
-    },
-    {
-      "filename": "mono/misc/Rainbow.png",
-      "symbol": "Rainbow",
-      "english": "one mana of any color",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W",
-        "U",
-        "P",
-        "B",
-        "R",
-        "G"
       ]
     },
     {
@@ -964,7 +949,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/-1.svg",
+      "filename": "mono/nums/weird/-1.svg",
       "symbol": "-1",
       "english": "negative one generic mana",
       "represents_mana": true,
@@ -974,7 +959,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/199.svg",
+      "filename": "mono/nums/weird/199.svg",
       "symbol": "1.99",
       "english": "one point nine nine generic mana",
       "represents_mana": true,
@@ -984,7 +969,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/100.svg",
+      "filename": "mono/nums/weird/100.svg",
       "symbol": "100",
       "english": "one hundred generic mana",
       "represents_mana": true,
@@ -994,7 +979,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/100000.svg",
+      "filename": "mono/nums/weird/100000.svg",
       "symbol": "100000",
       "english": "one hundred thousand generic mana",
       "represents_mana": true,
@@ -1004,7 +989,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/600000.svg",
+      "filename": "mono/nums/weird/600000.svg",
       "symbol": "600000",
       "english": "six hundred thousand generic mana",
       "represents_mana": true,
@@ -1014,7 +999,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/1000000.svg",
+      "filename": "mono/nums/weird/1000000.svg",
       "symbol": "1000000",
       "english": "one million generic mana",
       "represents_mana": true,
@@ -1024,7 +1009,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/1000000000000.svg",
+      "filename": "mono/nums/weird/1000000000000.svg",
       "symbol": "1000000000000",
       "english": "one trillion generic mana",
       "represents_mana": true,
@@ -1034,7 +1019,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/HALF.svg",
+      "filename": "mono/nums/weird/HALF.svg",
       "symbol": "1/2",
       "english": "one-half generic mana",
       "represents_mana": true,
@@ -1044,7 +1029,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/INFINITY.svg",
+      "filename": "mono/nums/weird/INFINITY.svg",
       "symbol": "∞",
       "alternates": [
         "infinity"
@@ -1057,7 +1042,7 @@
       ]
     },
     {
-      "filename": "mono/weirdNums/Question.svg",
+      "filename": "mono/nums/weird/Question.svg",
       "symbol": "?",
       "english": "an undetermined amount and/or type of mana",
       "represents_mana": true,
@@ -1067,7 +1052,7 @@
       ]
     },
     {
-      "filename": "mono/variables/X.svg",
+      "filename": "mono/nums/variables/X.svg",
       "symbol": "X",
       "english": "X generic mana",
       "represents_mana": true,
@@ -1077,7 +1062,7 @@
       ]
     },
     {
-      "filename": "mono/variables/Y.svg",
+      "filename": "mono/nums/variables/Y.svg",
       "symbol": "Y",
       "english": "Y generic mana",
       "represents_mana": true,
@@ -1087,7 +1072,7 @@
       ]
     },
     {
-      "filename": "mono/variables/Z.svg",
+      "filename": "mono/nums/variables/Z.svg",
       "symbol": "Z",
       "english": "Z generic mana",
       "represents_mana": true,
@@ -1097,7 +1082,7 @@
       ]
     },
     {
-      "filename": "mono/variables/GX.svg",
+      "filename": "mono/nums/variables/GX.svg",
       "symbol": "G/X",
       "english": "X green mana",
       "represents_mana": true,
@@ -1107,7 +1092,7 @@
       ]
     },
     {
-      "filename": "mono/variables/WY.svg",
+      "filename": "mono/nums/variables/WY.svg",
       "symbol": "W/Y",
       "english": "Y white mana",
       "represents_mana": true,
@@ -1117,7 +1102,7 @@
       ]
     },
     {
-      "filename": "mono/variables/UZ.svg",
+      "filename": "mono/nums/variables/UZ.svg",
       "symbol": "U/Z",
       "english": "Z blue mana",
       "represents_mana": true,
@@ -1127,7 +1112,7 @@
       ]
     },
     {
-      "filename": "mono/variables/XIV.png",
+      "filename": "mono/nums/variables/XIV.png",
       "symbol": "XIV",
       "english": "X plus four generic mana",
       "represents_mana": true,
@@ -1138,7 +1123,7 @@
       "no_shadow": true
     },
     {
-      "filename": "mono/variables/TREEX.png",
+      "filename": "mono/nums/variables/TREEX.png",
       "symbol": "TREEX",
       "english": "TREE(X) generic mana",
       "represents_mana": true,
@@ -1352,76 +1337,6 @@
       ]
     },
     {
-      "filename": "mono/effects/RadW.svg",
-      "symbol": "Rad/W",
-      "english": "a white rad counter (it's both a rad counter and one white mana, and it becomes colorless instead of lost as steps and phases end)",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W"
-      ]
-    },
-    {
-      "filename": "mono/effects/RadU.svg",
-      "symbol": "Rad/U",
-      "english": "a blue rad counter (it's both a rad counter and one blue mana, and it becomes colorless instead of lost as steps and phases end)",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "U"
-      ]
-    },
-    {
-      "filename": "mono/effects/RadB.svg",
-      "symbol": "Rad/B",
-      "english": "a black rad counter (it's both a rad counter and one black mana, and it becomes colorless instead of lost as steps and phases end)",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "B"
-      ]
-    },
-    {
-      "filename": "mono/effects/RadR.svg",
-      "symbol": "Rad/R",
-      "english": "a red rad counter (it's both a rad counter and one red mana, and it becomes colorless instead of lost as steps and phases end)",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "R"
-      ]
-    },
-    {
-      "filename": "mono/effects/RadG.svg",
-      "symbol": "Rad/G",
-      "english": "a green rad counter (it's both a rad counter and one green mana, and it becomes colorless instead of lost as steps and phases end)",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G"
-      ]
-    },
-    {
-      "filename": "mono/effects/RadP.svg",
-      "symbol": "Rad/P",
-      "english": "a purple rad counter (it's both a rad counter and one purple mana, and it becomes colorless instead of lost as steps and phases end)",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "P"
-      ]
-    },
-    {
-      "filename": "mono/effects/RadC.svg",
-      "symbol": "Rad/C",
-      "represents_mana": true,
-      "english": "a colorless rad counter (it's both a rad counter and one colorless mana)",
-      "mana_value": 1,
-      "colors": [
-        "C"
-      ]
-    },
-    {
       "filename": "mono/effects/Bitcoin.svg",
       "symbol": "Bitcoin",
       "english": "one black mana that can be used to buy a drug token instead of spent",
@@ -1483,531 +1398,9 @@
       ]
     },
     {
-      "filename": "hybrid/colors/WU.svg",
-      "symbol": "W/U",
-      "english": "one white or blue mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W",
-        "U"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/WB.svg",
-      "symbol": "W/B",
-      "english": "one white or black mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W",
-        "B"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/WR.svg",
-      "symbol": "W/R",
-      "english": "one white or red mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W",
-        "R"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/WG.svg",
-      "symbol": "W/G",
-      "english": "one white or green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W",
-        "G"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/WP.svg",
-      "symbol": "W/P",
-      "english": "one white or purple mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W",
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/WC.svg",
-      "symbol": "W/C",
-      "english": "one white or colorless mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W",
-        "C"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/UW.svg",
-      "symbol": "U/W",
-      "english": "one blue or white mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "U",
-        "W"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/UB.svg",
-      "symbol": "U/B",
-      "english": "one blue or black mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "U",
-        "B"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/UR.svg",
-      "symbol": "U/R",
-      "english": "one blue or red mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "U",
-        "R"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/UG.svg",
-      "symbol": "U/G",
-      "english": "one blue or green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "U",
-        "G"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/UP.svg",
-      "symbol": "U/P",
-      "english": "one blue or purple mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "U",
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/UC.svg",
-      "symbol": "U/C",
-      "english": "one blue or colorless mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "U",
-        "C"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/BW.svg",
-      "symbol": "B/W",
-      "english": "one black or white mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "B",
-        "W"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/BU.svg",
-      "symbol": "B/U",
-      "english": "one black or blue mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "B",
-        "U"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/BR.svg",
-      "symbol": "B/R",
-      "english": "one black or red mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "B",
-        "R"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/BG.svg",
-      "symbol": "B/G",
-      "english": "one black or green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "B",
-        "G"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/BP.svg",
-      "symbol": "B/P",
-      "english": "one black or purple mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "B",
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/BC.svg",
-      "symbol": "B/C",
-      "english": "one black or colorless mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "B",
-        "C"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/RW.svg",
-      "symbol": "R/W",
-      "english": "one red or white mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "R",
-        "W"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/RU.svg",
-      "symbol": "R/U",
-      "english": "one red or blue mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "R",
-        "U"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/RB.svg",
-      "symbol": "R/B",
-      "english": "one red or black mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "R",
-        "B"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/RG.svg",
-      "symbol": "R/G",
-      "english": "one red or green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "R",
-        "G"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/RP.svg",
-      "symbol": "R/P",
-      "english": "one red or purple mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "R",
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/RC.svg",
-      "symbol": "R/C",
-      "english": "one red or colorless mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "R",
-        "C"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/GW.svg",
-      "symbol": "G/W",
-      "english": "one green or white mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G",
-        "W"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/GU.svg",
-      "symbol": "G/U",
-      "english": "one green or blue mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G",
-        "U"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/GB.svg",
-      "symbol": "G/B",
-      "english": "one green or black mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G",
-        "B"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/GR.svg",
-      "symbol": "G/R",
-      "english": "one green or red mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G",
-        "R"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/GP.svg",
-      "symbol": "G/P",
-      "english": "one green or purple mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G",
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/GC.svg",
-      "symbol": "G/C",
-      "english": "one green or colorless mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G",
-        "C"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/PW.svg",
-      "symbol": "P/W",
-      "english": "one purple or white mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "P",
-        "W"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/PU.svg",
-      "symbol": "P/U",
-      "english": "one purple or blue mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "P",
-        "U"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/PB.svg",
-      "symbol": "P/B",
-      "english": "one purple or black mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "P",
-        "B"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/PR.svg",
-      "symbol": "P/R",
-      "english": "one purple or red mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "P",
-        "R"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/PG.svg",
-      "symbol": "P/G",
-      "english": "one purple or green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "P",
-        "G"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/PC.svg",
-      "symbol": "P/C",
-      "english": "one purple or colorless mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "P",
-        "C"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/CW.svg",
-      "symbol": "C/W",
-      "english": "one colorless or white mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "C",
-        "W"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/CU.svg",
-      "symbol": "C/U",
-      "english": "one colorless or blue mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "C",
-        "U"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/CB.svg",
-      "symbol": "C/B",
-      "english": "one colorless or black mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "C",
-        "B"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/CR.svg",
-      "symbol": "C/R",
-      "english": "one colorless or red mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "C",
-        "R"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/CG.svg",
-      "symbol": "C/G",
-      "english": "one colorless or green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "C",
-        "G"
-      ]
-    },
-    {
-      "filename": "hybrid/colors/CP.svg",
-      "symbol": "C/P",
-      "english": "one colorless or purple mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "C",
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/double/WW.svg",
-      "symbol": "W/W",
-      "english": "one white or white mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "W"
-      ]
-    },
-    {
-      "filename": "hybrid/double/UU.svg",
-      "symbol": "U/U",
-      "english": "one blue or blue mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "U"
-      ]
-    },
-    {
-      "filename": "hybrid/double/BB.svg",
-      "symbol": "B/B",
-      "english": "one black or black mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "B"
-      ]
-    },
-    {
-      "filename": "hybrid/double/RR.svg",
-      "symbol": "R/R",
-      "english": "one red or red mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "R"
-      ]
-    },
-    {
-      "filename": "hybrid/double/GG.svg",
-      "symbol": "G/G",
-      "english": "one green or green mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "G"
-      ]
-    },
-    {
-      "filename": "hybrid/double/PP.svg",
-      "symbol": "P/P",
-      "english": "one purple or purple mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/double/CC.svg",
-      "symbol": "C/C",
-      "english": "one colorless or colorless mana",
+      "filename": "mono/effects/Bear.svg",
+      "symbol": "Bear",
+      "english": "one bear mana (can be spent as mana or to create a 2/2 brown bear as a special action; can be paid for by sacrificing a bear or a 2/2 creature)",
       "represents_mana": true,
       "mana_value": 1,
       "colors": [
@@ -2015,7 +1408,77 @@
       ]
     },
     {
-      "filename": "hybrid/nums/0U.svg",
+      "filename": "mono/effects/Rad/RadW.svg",
+      "symbol": "Rad/W",
+      "english": "a white rad counter (it's both a rad counter and one white mana, and it becomes colorless instead of lost as steps and phases end)",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W"
+      ]
+    },
+    {
+      "filename": "mono/effects/Rad/RadU.svg",
+      "symbol": "Rad/U",
+      "english": "a blue rad counter (it's both a rad counter and one blue mana, and it becomes colorless instead of lost as steps and phases end)",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U"
+      ]
+    },
+    {
+      "filename": "mono/effects/Rad/RadB.svg",
+      "symbol": "Rad/B",
+      "english": "a black rad counter (it's both a rad counter and one black mana, and it becomes colorless instead of lost as steps and phases end)",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "B"
+      ]
+    },
+    {
+      "filename": "mono/effects/Rad/RadR.svg",
+      "symbol": "Rad/R",
+      "english": "a red rad counter (it's both a rad counter and one red mana, and it becomes colorless instead of lost as steps and phases end)",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "R"
+      ]
+    },
+    {
+      "filename": "mono/effects/Rad/RadG.svg",
+      "symbol": "Rad/G",
+      "english": "a green rad counter (it's both a rad counter and one green mana, and it becomes colorless instead of lost as steps and phases end)",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G"
+      ]
+    },
+    {
+      "filename": "mono/effects/Rad/RadP.svg",
+      "symbol": "Rad/P",
+      "english": "a purple rad counter (it's both a rad counter and one purple mana, and it becomes colorless instead of lost as steps and phases end)",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "P"
+      ]
+    },
+    {
+      "filename": "mono/effects/Rad/RadC.svg",
+      "symbol": "Rad/C",
+      "represents_mana": true,
+      "english": "a colorless rad counter (it's both a rad counter and one colorless mana)",
+      "mana_value": 1,
+      "colors": [
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/one/colors/0U.svg",
       "symbol": "0/U",
       "english": "zero generic mana or one blue mana",
       "represents_mana": true,
@@ -2026,7 +1489,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/0G.svg",
+      "filename": "hybrid/one/colors/0G.svg",
       "symbol": "0/G",
       "english": "zero generic mana or one green mana",
       "represents_mana": true,
@@ -2037,7 +1500,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/1W.svg",
+      "filename": "hybrid/one/colors/1W.svg",
       "symbol": "1/W",
       "english": "one generic mana or one white mana",
       "represents_mana": true,
@@ -2048,7 +1511,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/1U.svg",
+      "filename": "hybrid/one/colors/1U.svg",
       "symbol": "1/U",
       "english": "one generic mana or one blue mana",
       "represents_mana": true,
@@ -2059,7 +1522,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/1B.svg",
+      "filename": "hybrid/one/colors/1B.svg",
       "symbol": "1/B",
       "english": "one generic mana or one black mana",
       "represents_mana": true,
@@ -2070,7 +1533,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/1R.svg",
+      "filename": "hybrid/one/colors/1R.svg",
       "symbol": "1/R",
       "english": "one generic mana or one red mana",
       "represents_mana": true,
@@ -2081,7 +1544,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/1G.svg",
+      "filename": "hybrid/one/colors/1G.svg",
       "symbol": "1/G",
       "english": "one generic mana or one green mana",
       "represents_mana": true,
@@ -2092,7 +1555,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/1P.svg",
+      "filename": "hybrid/one/colors/1P.svg",
       "symbol": "1/P",
       "english": "one generic mana or one purple mana",
       "represents_mana": true,
@@ -2103,7 +1566,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/1C.svg",
+      "filename": "hybrid/one/colors/1C.svg",
       "symbol": "1/C",
       "english": "one generic mana or one colorless mana",
       "represents_mana": true,
@@ -2113,17 +1576,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/1T.svg",
-      "symbol": "1/T",
-      "english": "one generic mana or tap this permanent",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "C"
-      ]
-    },
-    {
-      "filename": "hybrid/nums/113.png",
+      "filename": "hybrid/one/colors/113.png",
       "symbol": "1/13",
       "english": "one generic mana or thirteen generic mana",
       "represents_mana": true,
@@ -2133,7 +1586,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/2W.svg",
+      "filename": "hybrid/one/colors/2W.svg",
       "symbol": "2/W",
       "english": "two generic mana or one white mana",
       "represents_mana": true,
@@ -2144,7 +1597,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/2U.svg",
+      "filename": "hybrid/one/colors/2U.svg",
       "symbol": "2/U",
       "english": "two generic mana or one blue mana",
       "represents_mana": true,
@@ -2155,7 +1608,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/2B.svg",
+      "filename": "hybrid/one/colors/2B.svg",
       "symbol": "2/B",
       "english": "two generic mana or one black mana",
       "represents_mana": true,
@@ -2166,7 +1619,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/2R.svg",
+      "filename": "hybrid/one/colors/2R.svg",
       "symbol": "2/R",
       "english": "two generic mana or one red mana",
       "represents_mana": true,
@@ -2177,7 +1630,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/2G.svg",
+      "filename": "hybrid/one/colors/2G.svg",
       "symbol": "2/G",
       "english": "two generic mana or one green mana",
       "represents_mana": true,
@@ -2188,7 +1641,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/2P.svg",
+      "filename": "hybrid/one/colors/2P.svg",
       "symbol": "2/P",
       "english": "two generic mana or one purple mana",
       "represents_mana": true,
@@ -2199,7 +1652,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/2C.svg",
+      "filename": "hybrid/one/colors/2C.svg",
       "symbol": "2/C",
       "english": "two generic mana or one colorless mana",
       "represents_mana": true,
@@ -2209,7 +1662,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/3W.svg",
+      "filename": "hybrid/one/colors/3W.svg",
       "symbol": "3/W",
       "english": "three generic mana or one white mana",
       "represents_mana": true,
@@ -2220,7 +1673,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/3U.svg",
+      "filename": "hybrid/one/colors/3U.svg",
       "symbol": "3/U",
       "english": "three generic mana or one blue mana",
       "represents_mana": true,
@@ -2231,7 +1684,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/3B.svg",
+      "filename": "hybrid/one/colors/3B.svg",
       "symbol": "3/B",
       "english": "three generic mana or one black mana",
       "represents_mana": true,
@@ -2242,7 +1695,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/3R.svg",
+      "filename": "hybrid/one/colors/3R.svg",
       "symbol": "3/R",
       "english": "three generic mana or one red mana",
       "represents_mana": true,
@@ -2253,7 +1706,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/3G.svg",
+      "filename": "hybrid/one/colors/3G.svg",
       "symbol": "3/G",
       "english": "three generic mana or one green mana",
       "represents_mana": true,
@@ -2264,7 +1717,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/3P.svg",
+      "filename": "hybrid/one/colors/3P.svg",
       "symbol": "3/P",
       "english": "three generic mana or one purple mana",
       "represents_mana": true,
@@ -2275,7 +1728,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/3C.svg",
+      "filename": "hybrid/one/colors/3C.svg",
       "symbol": "3/C",
       "english": "three generic mana or one colorless mana",
       "represents_mana": true,
@@ -2285,7 +1738,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/4U.svg",
+      "filename": "hybrid/one/colors/4U.svg",
       "symbol": "4/U",
       "english": "four generic mana or one blue mana",
       "represents_mana": true,
@@ -2296,7 +1749,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/4P.svg",
+      "filename": "hybrid/one/colors/4P.svg",
       "symbol": "4/P",
       "english": "four generic mana or one purple mana",
       "represents_mana": true,
@@ -2307,7 +1760,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/5U.svg",
+      "filename": "hybrid/one/colors/5U.svg",
       "symbol": "5/U",
       "english": "five generic mana or one blue mana",
       "represents_mana": true,
@@ -2318,7 +1771,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/5INFINITY.svg",
+      "filename": "hybrid/one/colors/5INFINITY.svg",
       "symbol": "5/∞",
       "english": "five generic mana or infinite generic mana",
       "represents_mana": true,
@@ -2328,7 +1781,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/8U.svg",
+      "filename": "hybrid/one/colors/8U.svg",
       "symbol": "8/U",
       "english": "eight generic mana or one blue mana",
       "represents_mana": true,
@@ -2339,7 +1792,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/93.svg",
+      "filename": "hybrid/one/colors/93.svg",
       "symbol": "9/3",
       "english": "nine generic mana or three generic mana",
       "represents_mana": true,
@@ -2349,7 +1802,7 @@
       ]
     },
     {
-      "filename": "hybrid/nums/INFINITYU.svg",
+      "filename": "hybrid/one/colors/INFINITYU.svg",
       "symbol": "∞/U",
       "english": "infinite generic mana or one blue mana",
       "represents_mana": true,
@@ -2360,7 +1813,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/2Yellow.svg",
+      "filename": "hybrid/one/misc/2Yellow.svg",
       "symbol": "2/Yellow",
       "english": "two generic mana or one yellow mana",
       "represents_mana": true,
@@ -2371,7 +1824,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/3Yellow.svg",
+      "filename": "hybrid/one/misc/3Yellow.svg",
       "symbol": "3/Yellow",
       "english": "three generic mana or one yellow mana",
       "represents_mana": true,
@@ -2382,7 +1835,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/2Brown.svg",
+      "filename": "hybrid/one/misc/2Brown.svg",
       "symbol": "2/Brown",
       "english": "two generic mana or one brown mana",
       "represents_mana": true,
@@ -2393,7 +1846,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/2Orange.svg",
+      "filename": "hybrid/one/misc/2Orange.svg",
       "symbol": "2/Orange",
       "english": "two generic mana or one orange mana",
       "represents_mana": true,
@@ -2404,18 +1857,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/OrangeU.svg",
-      "symbol": "Orange/U",
-      "english": "one orange or blue mana",
-      "represents_mana": true,
-      "mana_value": 1,
-      "colors": [
-        "Orange",
-        "U"
-      ]
-    },
-    {
-      "filename": "hybrid/misc/2Pink.svg",
+      "filename": "hybrid/one/misc/2Pink.svg",
       "symbol": "2/Pink",
       "english": "two generic mana or one pink mana",
       "represents_mana": true,
@@ -2426,7 +1868,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/3Pink.svg",
+      "filename": "hybrid/one/misc/3Pink.svg",
       "symbol": "3/Pink",
       "english": "three generic mana or one pink mana",
       "represents_mana": true,
@@ -2437,7 +1879,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/2Gold.svg",
+      "filename": "hybrid/one/misc/2Gold.svg",
       "symbol": "2/Gold",
       "english": "two generic mana or one gold mana",
       "represents_mana": true,
@@ -2448,7 +1890,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/2Beige.svg",
+      "filename": "hybrid/one/misc/2Beige.svg",
       "symbol": "2/Beige",
       "english": "two generic mana or one beige mana",
       "represents_mana": true,
@@ -2459,7 +1901,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/2Grey.svg",
+      "filename": "hybrid/one/misc/2Grey.svg",
       "symbol": "2/Grey",
       "english": "two generic mana or one grey mana",
       "represents_mana": true,
@@ -2470,9 +1912,19 @@
       ]
     },
     {
-      "filename": "hybrid/misc/UE.svg",
+      "filename": "hybrid/one/effects/1T.svg",
+      "symbol": "1/T",
+      "english": "one generic mana or tap this permanent",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/one/effects/UE.svg",
       "symbol": "U/E",
-      "english": "one energy counter or one blue mana",
+      "english": "one blue mana or one energy counter",
       "represents_mana": true,
       "mana_value": 1,
       "colors": [
@@ -2481,9 +1933,9 @@
       ]
     },
     {
-      "filename": "hybrid/misc/2E.svg",
+      "filename": "hybrid/one/effects/2E.svg",
       "symbol": "2/E",
-      "english": "one energy counter or two generic mana",
+      "english": "two generic mana or one energy counter",
       "represents_mana": true,
       "mana_value": 2,
       "colors": [
@@ -2491,7 +1943,560 @@
       ]
     },
     {
-      "filename": "hybrid/misc/BDoge.svg",
+      "filename": "hybrid/one/effects/4Bear.svg",
+      "symbol": "4/Bear",
+      "english": "four generic mana or sacrifice a Bear or a 2/2 creature",
+      "represents_mana": true,
+      "mana_value": 4,
+      "colors": [
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/WU.svg",
+      "symbol": "W/U",
+      "english": "one white or blue mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "U"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/WB.svg",
+      "symbol": "W/B",
+      "english": "one white or black mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "B"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/WR.svg",
+      "symbol": "W/R",
+      "english": "one white or red mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "R"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/WG.svg",
+      "symbol": "W/G",
+      "english": "one white or green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "G"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/WP.svg",
+      "symbol": "W/P",
+      "english": "one white or purple mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/WC.svg",
+      "symbol": "W/C",
+      "english": "one white or colorless mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/UW.svg",
+      "symbol": "U/W",
+      "english": "one blue or white mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U",
+        "W"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/UB.svg",
+      "symbol": "U/B",
+      "english": "one blue or black mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U",
+        "B"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/UR.svg",
+      "symbol": "U/R",
+      "english": "one blue or red mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U",
+        "R"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/UG.svg",
+      "symbol": "U/G",
+      "english": "one blue or green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U",
+        "G"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/UP.svg",
+      "symbol": "U/P",
+      "english": "one blue or purple mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/UC.svg",
+      "symbol": "U/C",
+      "english": "one blue or colorless mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U",
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/BW.svg",
+      "symbol": "B/W",
+      "english": "one black or white mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "B",
+        "W"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/BU.svg",
+      "symbol": "B/U",
+      "english": "one black or blue mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "B",
+        "U"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/BR.svg",
+      "symbol": "B/R",
+      "english": "one black or red mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "B",
+        "R"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/BG.svg",
+      "symbol": "B/G",
+      "english": "one black or green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "B",
+        "G"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/BP.svg",
+      "symbol": "B/P",
+      "english": "one black or purple mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "B",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/BC.svg",
+      "symbol": "B/C",
+      "english": "one black or colorless mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/RW.svg",
+      "symbol": "R/W",
+      "english": "one red or white mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "R",
+        "W"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/RU.svg",
+      "symbol": "R/U",
+      "english": "one red or blue mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "R",
+        "U"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/RB.svg",
+      "symbol": "R/B",
+      "english": "one red or black mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "R",
+        "B"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/RG.svg",
+      "symbol": "R/G",
+      "english": "one red or green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "R",
+        "G"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/RP.svg",
+      "symbol": "R/P",
+      "english": "one red or purple mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "R",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/RC.svg",
+      "symbol": "R/C",
+      "english": "one red or colorless mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "R",
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/GW.svg",
+      "symbol": "G/W",
+      "english": "one green or white mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G",
+        "W"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/GU.svg",
+      "symbol": "G/U",
+      "english": "one green or blue mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G",
+        "U"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/GB.svg",
+      "symbol": "G/B",
+      "english": "one green or black mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G",
+        "B"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/GR.svg",
+      "symbol": "G/R",
+      "english": "one green or red mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G",
+        "R"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/GP.svg",
+      "symbol": "G/P",
+      "english": "one green or purple mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/GC.svg",
+      "symbol": "G/C",
+      "english": "one green or colorless mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G",
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/PW.svg",
+      "symbol": "P/W",
+      "english": "one purple or white mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "P",
+        "W"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/PU.svg",
+      "symbol": "P/U",
+      "english": "one purple or blue mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "P",
+        "U"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/PB.svg",
+      "symbol": "P/B",
+      "english": "one purple or black mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "P",
+        "B"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/PR.svg",
+      "symbol": "P/R",
+      "english": "one purple or red mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "P",
+        "R"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/PG.svg",
+      "symbol": "P/G",
+      "english": "one purple or green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "P",
+        "G"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/PC.svg",
+      "symbol": "P/C",
+      "english": "one purple or colorless mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "P",
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/CW.svg",
+      "symbol": "C/W",
+      "english": "one colorless or white mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C",
+        "W"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/CU.svg",
+      "symbol": "C/U",
+      "english": "one colorless or blue mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C",
+        "U"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/CB.svg",
+      "symbol": "C/B",
+      "english": "one colorless or black mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C",
+        "B"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/CR.svg",
+      "symbol": "C/R",
+      "english": "one colorless or red mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C",
+        "R"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/CG.svg",
+      "symbol": "C/G",
+      "english": "one colorless or green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C",
+        "G"
+      ]
+    },
+    {
+      "filename": "hybrid/two/colors/CP.svg",
+      "symbol": "C/P",
+      "english": "one colorless or purple mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/double/WW.svg",
+      "symbol": "W/W",
+      "english": "one white or white mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W"
+      ]
+    },
+    {
+      "filename": "hybrid/two/double/UU.svg",
+      "symbol": "U/U",
+      "english": "one blue or blue mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U"
+      ]
+    },
+    {
+      "filename": "hybrid/two/double/BB.svg",
+      "symbol": "B/B",
+      "english": "one black or black mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "B"
+      ]
+    },
+    {
+      "filename": "hybrid/two/double/RR.svg",
+      "symbol": "R/R",
+      "english": "one red or red mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "R"
+      ]
+    },
+    {
+      "filename": "hybrid/two/double/GG.svg",
+      "symbol": "G/G",
+      "english": "one green or green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "G"
+      ]
+    },
+    {
+      "filename": "hybrid/two/double/PP.svg",
+      "symbol": "P/P",
+      "english": "one purple or purple mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/double/CC.svg",
+      "symbol": "C/C",
+      "english": "one colorless or colorless mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/two/misc/OrangeU.svg",
+      "symbol": "Orange/U",
+      "english": "one orange or blue mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "Orange",
+        "U"
+      ]
+    },
+    {
+      "filename": "hybrid/two/misc/BDoge.svg",
       "symbol": "B/Doge",
       "english": "one black mana or one-tenth colorless mana",
       "represents_mana": true,
@@ -2502,9 +2507,9 @@
       ]
     },
     {
-      "filename": "hybrid/misc/KetchupMustard.svg",
+      "filename": "hybrid/two/misc/KetchupMustard.svg",
       "symbol": "Ketchup/Mustard",
-      "english": "one red or red mana",
+      "english": "one red mana or one red mana",
       "represents_mana": true,
       "mana_value": 1,
       "colors": [
@@ -2512,62 +2517,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/UBB.svg",
-      "symbol": "U/BB",
-      "english": "one blue mana or two black mana",
-      "represents_mana": true,
-      "mana_value": 2,
-      "colors": [
-        "U",
-        "B"
-      ]
-    },
-    {
-      "filename": "hybrid/misc/WWP.svg",
-      "symbol": "WW/P",
-      "english": "two white mana or one purple mana",
-      "represents_mana": true,
-      "mana_value": 2,
-      "colors": [
-        "W",
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/misc/UUP.svg",
-      "symbol": "UU/P",
-      "english": "two blue mana or one purple mana",
-      "represents_mana": true,
-      "mana_value": 2,
-      "colors": [
-        "U",
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/misc/BBP.svg",
-      "symbol": "BB/P",
-      "english": "two black mana or one purple mana",
-      "represents_mana": true,
-      "mana_value": 2,
-      "colors": [
-        "B",
-        "P"
-      ]
-    },
-    {
-      "filename": "hybrid/misc/PGG.svg",
-      "symbol": "P/GG",
-      "english": "one purple mana or two green mana",
-      "represents_mana": true,
-      "mana_value": 2,
-      "colors": [
-        "P",
-        "G"
-      ]
-    },
-    {
-      "filename": "hybrid/misc/Canada.svg",
+      "filename": "hybrid/two/misc/Canada.svg",
       "symbol": "Canada",
       "english": "one white mana, one red mana, or one life",
       "represents_mana": true,
@@ -2579,7 +2529,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/DiscardRR.svg",
+      "filename": "hybrid/two/misc/DiscardRR.svg",
       "symbol": "Discard your hand/RR",
       "english": "discard your hand or two red mana",
       "represents_mana": true,
@@ -2590,7 +2540,7 @@
       ]
     },
     {
-      "filename": "hybrid/misc/Rakdos.png",
+      "filename": "hybrid/two/misc/Rakdos.png",
       "symbol": "Rakdos",
       "english": "one red or black mana that deals two damage to you when spent on a generic cost",
       "represents_mana": true,
@@ -2602,7 +2552,62 @@
       "no_shadow": true
     },
     {
-      "filename": "tribrid/colors/GWU.svg",
+      "filename": "hybrid/two/doubleColors/UBB.svg",
+      "symbol": "U/BB",
+      "english": "one blue mana or two black mana",
+      "represents_mana": true,
+      "mana_value": 2,
+      "colors": [
+        "U",
+        "B"
+      ]
+    },
+    {
+      "filename": "hybrid/two/doubleColors/WWP.svg",
+      "symbol": "WW/P",
+      "english": "two white mana or one purple mana",
+      "represents_mana": true,
+      "mana_value": 2,
+      "colors": [
+        "W",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/doubleColors/UUP.svg",
+      "symbol": "UU/P",
+      "english": "two blue mana or one purple mana",
+      "represents_mana": true,
+      "mana_value": 2,
+      "colors": [
+        "U",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/doubleColors/BBP.svg",
+      "symbol": "BB/P",
+      "english": "two black mana or one purple mana",
+      "represents_mana": true,
+      "mana_value": 2,
+      "colors": [
+        "B",
+        "P"
+      ]
+    },
+    {
+      "filename": "hybrid/two/doubleColors/PGG.svg",
+      "symbol": "P/GG",
+      "english": "one purple mana or two green mana",
+      "represents_mana": true,
+      "mana_value": 2,
+      "colors": [
+        "P",
+        "G"
+      ]
+    },
+    {
+      "filename": "hybrid/three/colors/GWU.svg",
       "symbol": "G/W/U",
       "english": "one green, white, or blue mana",
       "represents_mana": true,
@@ -2614,7 +2619,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/WUB.svg",
+      "filename": "hybrid/three/colors/WUB.svg",
       "symbol": "W/U/B",
       "english": "one white, blue, or black mana",
       "represents_mana": true,
@@ -2626,7 +2631,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/UBR.svg",
+      "filename": "hybrid/three/colors/UBR.svg",
       "symbol": "U/B/R",
       "english": "one blue, black, or red mana",
       "represents_mana": true,
@@ -2638,7 +2643,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/BRG.svg",
+      "filename": "hybrid/three/colors/BRG.svg",
       "symbol": "B/R/G",
       "english": "one black, red, or green mana",
       "represents_mana": true,
@@ -2650,7 +2655,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/RGW.svg",
+      "filename": "hybrid/three/colors/RGW.svg",
       "symbol": "R/G/W",
       "english": "one red, green, or white mana",
       "represents_mana": true,
@@ -2662,7 +2667,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/WBG.svg",
+      "filename": "hybrid/three/colors/WBG.svg",
       "symbol": "W/B/G",
       "english": "one white, black, or green mana",
       "represents_mana": true,
@@ -2674,7 +2679,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/BGU.svg",
+      "filename": "hybrid/three/colors/BGU.svg",
       "symbol": "B/G/U",
       "english": "one black, green, or blue mana",
       "represents_mana": true,
@@ -2686,7 +2691,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/GUR.svg",
+      "filename": "hybrid/three/colors/GUR.svg",
       "symbol": "G/U/R",
       "english": "one green, blue, or red mana",
       "represents_mana": true,
@@ -2698,7 +2703,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/URW.svg",
+      "filename": "hybrid/three/colors/URW.svg",
       "symbol": "U/R/W",
       "english": "one blue, red, or white mana",
       "represents_mana": true,
@@ -2710,7 +2715,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/RWB.svg",
+      "filename": "hybrid/three/colors/RWB.svg",
       "symbol": "R/W/B",
       "english": "one red, white, or black mana",
       "represents_mana": true,
@@ -2722,7 +2727,7 @@
       ]
     },
     {
-      "filename": "tribrid/colors/WCG.svg",
+      "filename": "hybrid/three/colors/WCG.svg",
       "symbol": "W/C/G",
       "english": "one colorless, green, or white mana",
       "represents_mana": true,
@@ -2734,7 +2739,7 @@
       ]
     },
     {
-      "filename": "tribrid/misc/GYellowP.svg",
+      "filename": "hybrid/three/misc/GYellowP.svg",
       "symbol": "G/Yellow/P",
       "english": "one green, yellow, or purple mana",
       "represents_mana": true,
@@ -2746,7 +2751,32 @@
       ]
     },
     {
-      "filename": "WUBRG.svg",
+      "filename": "hybrid/multi/Rainbow.png",
+      "symbol": "Rainbow",
+      "english": "one mana of any color",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "U",
+        "P",
+        "B",
+        "R",
+        "G"
+      ]
+    },
+    {
+      "filename": "hybrid/multi/antiU.svg",
+      "symbol": "antiU",
+      "english": "one mana of any color other than blue",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C"
+      ]
+    },
+    {
+      "filename": "hybrid/multi/WUBRG.svg",
       "symbol": "W/U/B/R/G",
       "english": "one white, blue, black, red, or green mana",
       "represents_mana": true,
@@ -2760,7 +2790,7 @@
       ]
     },
     {
-      "filename": "WUPBRG.svg",
+      "filename": "hybrid/multi/WUPBRG.svg",
       "symbol": "W/U/P/B/R/G",
       "english": "one white, blue, purple, black, red, or green mana",
       "represents_mana": true,

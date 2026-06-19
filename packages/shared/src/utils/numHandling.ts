@@ -24,6 +24,8 @@ export const toNumber = (numStr: string | undefined) => {
     '+4/+4': 2,
     '0[+1]{+2}': 3,
     '0[+1]{+7}': 8,
+    "6'":6,
+    '1"':1
   };
   if (!numStr) {
     return undefined;

@@ -132,3 +132,7 @@ Write a script to transform the database
 - fix card display on deck pages
 - deal with duplicate HCV.1 collector numbers
 - fix buttons for images on individual card pages
+- add missing artist credits
+- fix id for plateau
+- hide faces with drop_face == true from card pages?
+- resume at This // That by 8ofswords
