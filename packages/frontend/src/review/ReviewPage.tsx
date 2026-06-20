@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Heading } from '@workday/canvas-kit-react';
+import styled from '@emotion/styled';
 import { useAuth } from '../auth';
 import { getAuthApiUrl } from '../auth/getAuthApiUrl';
 // import { Changeset, StatusFilter } from './types';
@@ -7,8 +7,6 @@ import { ChangesetCard } from './ChangesetCard';
 import { ErrorText } from './ErrorText';
 import { Changeset, isChangesetStatus, isStatusFilter, StatusFilter } from '@hellfall/shared/utils';
 import { useParams } from 'react-router-dom';
-import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledButton, createStyledDiv } from '../styling';
 
 export function ReviewPage() {
   const { user, loading: authLoading } = useAuth();
@@ -85,7 +83,7 @@ export function ReviewPage() {
   if (authLoading) {
     return (
       <PageContainer>
-        <Heading size="medium">Review Changesets</Heading>
+        <h2>Review Changesets</h2>
         <p>Loading...</p>
       </PageContainer>
     );
@@ -94,7 +92,7 @@ export function ReviewPage() {
   if (!user) {
     return (
       <PageContainer>
-        <Heading size="medium">Review Changesets</Heading>
+        <h2>Review Changesets</h2>
         <p> log in to view changesets.</p>
       </PageContainer>
     );
@@ -103,7 +101,7 @@ export function ReviewPage() {
   if (!canViewChangesets) {
     return (
       <PageContainer>
-        <Heading size="medium">Review Changesets</Heading>
+        <h2>Review Changesets</h2>
         <p>You need admin or database contributor access to view changesets.</p>
       </PageContainer>
     );
@@ -111,16 +109,16 @@ export function ReviewPage() {
 
   return (
     <PageContainer>
-      <Heading size="medium">Review Changesets</Heading>
+      <h2>Review Changesets</h2>
       <FilterRow>
         {(['pending', 'accepted', 'rejected', 'all'] as StatusFilter[]).map(s => (
-          <FilterButton key={s} data_active={filter === s} onClick={() => setFilter(s)}>
+          <FilterButton key={s} data-active={filter === s} onClick={() => setFilter(s)}>
             {s}
           </FilterButton>
         ))}
       </FilterRow>
       {loading && <p>Loading...</p>}
-      {error && <ErrorText size="large">{error}</ErrorText>}
+      {error && <ErrorText>{error}</ErrorText>}
       {!loading && !error && changesets.length === 0 && <p>No changesets found.</p>}
       {changesets.map(cs => (
         <ChangesetCard
@@ -134,41 +132,28 @@ export function ReviewPage() {
   );
 }
 
-const pageContainerStyles = createStyles({
+const PageContainer = styled('div')({
   maxWidth: 900,
   margin: '0 auto',
   padding: '20px 16px',
 });
-const PageContainer = createStyledDiv(pageContainerStyles);
 
-const filterRowStyles = createStyles({
+const FilterRow = styled('div')({
   display: 'flex',
   gap: 4,
   marginBottom: 16,
 });
-const FilterRow = createStyledDiv(filterRowStyles);
 
-const filterButtonStencil = createStencil({
-  vars: {},
-  base: {
-    padding: '4px 12px',
-    border: '1px solid #ccc',
-    borderRadius: 4,
-    background: '#fff',
-    cursor: 'pointer',
-    fontSize: 13,
-  },
-  modifiers: {
-    data_active: {
-      true: {
-        background: '#C690FF',
-        color: '#fff',
-        borderColor: '#C690FF',
-      },
-    },
+const FilterButton = styled('button')({
+  padding: '4px 12px',
+  border: '1px solid #ccc',
+  borderRadius: 4,
+  background: '#fff',
+  cursor: 'pointer',
+  fontSize: 13,
+  '&[data-active="true"]': {
+    background: '#C690FF',
+    color: '#fff',
+    borderColor: '#C690FF',
   },
 });
-interface FilterButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  data_active?: boolean;
-}
-const FilterButton = createStenciledButton<FilterButtonProps>(filterButtonStencil);

@@ -6,6 +6,7 @@ import {
   landNames,
   textEquals,
   textListEquals,
+  textPrep,
 } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { unescapeText } from '@hellfall/shared/filters';
@@ -69,6 +70,55 @@ const getFrontExportName = (card: HCCard.Any) => {
 
 // const getRandom = <T = any>(arr: T[]) =>
 //   arr.length ? arr[Math.floor(Math.random() * arr.length)] : undefined;
+
+const addNameAlias = (map: Map<string, string>, alias: string | undefined, id: string) => {
+  if (!alias) {
+    return;
+  }
+  const key = textPrep(alias);
+  if (!map.has(key)) {
+    map.set(key, id);
+  }
+};
+
+export const buildNameToIdMap = (cards: CardMap): Map<string, string> => {
+  const map = new Map<string, string>();
+  cards.forEach(card => {
+    const id = card.id;
+    addNameAlias(map, card.export_name, id);
+    addNameAlias(map, card.hcid, id);
+    addNameAlias(map, card.name, id);
+    addNameAlias(map, card.flavor_name, id);
+    if ('card_faces' in card) {
+      addNameAlias(map, card.card_faces[0].export_name, id);
+      addNameAlias(map, getFrontExportName(card), id);
+      addNameAlias(map, card.card_faces[0].name, id);
+      for (const face of card.card_faces) {
+        addNameAlias(map, face.name, id);
+        addNameAlias(map, face.flavor_name, id);
+      }
+    }
+    if (card.export_name) {
+      addNameAlias(map, `${card.name} ${card.id}`, id);
+      addNameAlias(map, unescapeText(card.export_name), id);
+    }
+  });
+  return map;
+};
+
+export const lookupNameToId = (
+  name: string,
+  nameToIdMap: Map<string, string>,
+  cards: CardMap
+): string | undefined => {
+  if (textListEquals(landNames, name)) {
+    return cards
+      .getAllInSet('HBB')
+      .filter(card => textEquals(name, card.name))
+      .getRandomId();
+  }
+  return cards.get(name)?.id ?? nameToIdMap.get(textPrep(name));
+};
 
 export const nameToId = (name: string, cards: CardMap): string | undefined => {
   // if (name == 'random') {

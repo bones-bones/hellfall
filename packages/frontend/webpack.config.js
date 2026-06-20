@@ -25,6 +25,7 @@ const sharedPackageSrc = path.resolve(workspaceRoot, "packages/shared/src");
 
 const require = createRequire(import.meta.url);
 const { transformHellscubeDatabase } = require("../../config/transformHellscubeDatabase.js");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 
 // Handle the imports (in case they're default exports or CommonJS)
@@ -267,7 +268,7 @@ export default function webpackConfig(webpackEnv) {
               ],
               use: [
                 {
-                  loader: 'json-loader',
+                  loader: path.resolve(workspaceRoot, 'config/minifyJsonLoader.cjs'),
                 },
               ],
             },
@@ -306,7 +307,7 @@ export default function webpackConfig(webpackEnv) {
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
-              test: /\.(js|mjs|jsx|ts|tsx)$/,
+              test: /\.(ts|tsx)$/,
               include: [
                 paths.appSrc,
                 path.resolve(__dirname, '../shared/src')
@@ -365,12 +366,6 @@ export default function webpackConfig(webpackEnv) {
                 inputSourceMap: shouldUseSourceMap,
               },
             },
-
-            // "file" loader makes sure those assets get served by WebpackDevServer.
-            // When you `import` an asset, you get its (virtual) filename.
-            // In production, they would get copied to the `build` folder.
-            // This loader doesn't use a "test" so it will catch all modules
-            // that fall through the other loaders.
             {
               loader: "file-loader",
               // Exclude `js` files to keep "css" loader working as it injects
@@ -404,7 +399,7 @@ export default function webpackConfig(webpackEnv) {
             transform(content) {
               const raw = content.toString("utf8");
               const out = transformHellscubeDatabase(raw);
-              return Buffer.from(out, "utf8");
+              return Buffer.from(JSON.stringify(JSON.parse(out)), "utf8");
             },
           },
           {
@@ -479,6 +474,16 @@ export default function webpackConfig(webpackEnv) {
           silent: true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
+        }),
+      process.env.ANALYZE === "true" &&
+        new BundleAnalyzerPlugin({
+          analyzerMode: "static",
+          openAnalyzer: false,
+          reportFilename: "./reports/plain-report.html",
+          // HMR hot-update chunks are ephemeral; the analyzer runs async via
+          // setImmediate and often reads stats from a compile whose files are
+          // already gone by the next rebuild.
+          excludeAssets: /\.hot-update\.(js|json)$/,
         }),
     ].filter(Boolean),
 

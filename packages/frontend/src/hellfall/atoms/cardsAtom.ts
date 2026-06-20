@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 import { HCCard } from '@hellfall/shared/types';
 import { CardMap } from '@hellfall/shared/utils';
-import { cardsData } from '@hellfall/shared/data';
+import { loadCardsData } from '@hellfall/shared/data';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
 import { getCardsCatalogUrl } from '../../auth/getCardsCatalogUrl';
 
@@ -28,7 +28,7 @@ async function loadCards(): Promise<CardMap> {
   try {
     return new CardMap(await fetchCatalogData());
   } catch {
-    return new CardMap(cardsData.data);
+    return new CardMap((await loadCardsData()).data);
   }
 }
 

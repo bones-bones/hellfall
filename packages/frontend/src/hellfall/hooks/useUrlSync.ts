@@ -32,7 +32,7 @@ export const useUrlSync = () => {
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const [sortRules, setSortRules] = useAtom(sortAtom);
   const [page, setPage] = useAtom(pageAtom);
-  const [activeCard, setActiveCard] = useAtom(activeCardAtom);
+  const setActiveCard = useSetAtom(activeCardAtom);
   const [summary, setSummary] = useAtom(summaryAtom);
   const [invalids, setInvalids] = useAtom(invalidAtom);
   // const randomPathNames = ['/card','/random']

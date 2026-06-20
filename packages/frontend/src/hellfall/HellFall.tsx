@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
-import { HellfallEntry } from './entry/HellfallEntry.tsx';
-
-import { space, BoxProps } from '@workday/canvas-kit-react';
+import { HellfallEntry } from './HellfallEntry.tsx';
 
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -14,14 +12,13 @@ import {
 import { useSearchResults } from './hooks/useSearchResults.ts';
 import { ControlBar } from './search-controls/ControlBar.tsx';
 import { CHUNK_SIZE } from './constants.ts';
-import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
+import { useUpdateURL } from './hooks/useUrlSync.ts';
 import { getOtherNames, toPlainText } from '@hellfall/shared/utils';
 import { SearchBar } from './search-controls/SearchBar.tsx';
 import { ActiveCardPanel } from './ActiveCardPanel.tsx';
 import { Link } from 'react-router-dom';
-import { HellfallCard } from './card/HellfallCard.tsx';
-import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledDiv, createStyledDiv, createStyledHR } from '../styling';
+import { HellfallCard } from './card';
+import styled from '@emotion/styled';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -32,7 +29,7 @@ export const HellFall = () => {
 
   const setActiveCardFromAtom = useSetAtom(activeCardAtom);
 
-  const [page, setPage] = useAtom(pageAtom);
+  const page = useAtomValue(pageAtom);
   const { resultSet, paginationModel } = useSearchResults();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -95,7 +92,7 @@ export const HellFall = () => {
           </div>
         ) : (
           <div>
-            <CardsGrid maxWidth={`${maxWidth}px`}>
+            <CardsGrid $maxWidth={maxWidth}>
               {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
                 <HellfallEntry
                   onClick={(event: React.MouseEvent<HTMLImageElement>) => {
@@ -129,54 +126,40 @@ export const HellFall = () => {
           <ControlBar model={paginationModel} />
         </>
       )}
-      {/* <PaginationComponent model={paginationModel} /> */}
     </div>
   );
 };
-const sortSeparatorStyles = createStyles({
+const SortSeparator = styled('hr')({
   height: '1px',
   backgroundColor: '#ccc',
   border: 'none',
   marginTop: '-20px',
 });
-const SortSeparator = createStyledHR(sortSeparatorStyles);
-
-const separatorStyles = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-const Separator = createStyledHR(separatorStyles);
-
-const summaryStyles = createStyles({
+const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+const Summary = styled('div')({
   display: 'inline-block',
-  paddingLeft: space.l,
-  paddingRight: space.l,
+  paddingLeft: '36px',
+  paddingRight: '36px',
 });
-const Summary = createStyledDiv(summaryStyles);
-const Invalid = createStyledDiv(summaryStyles);
-
-const containerStyles = createStyles({
+const Invalid = styled('div')({
+  display: 'inline-block',
+  paddingLeft: '36px',
+  paddingRight: '36px',
+});
+const Container = styled('div')({
   display: 'flex',
   justifyContent: 'center',
   // flexWrap: 'wrap',
   width: '100%',
 });
-const Container = createStyledDiv(containerStyles);
 
-// TODO: do this one when upgraded to v11
-const cardsGridStencil = createStencil({
-  vars: {
-    maxWidth: '1215px',
-  },
-  base: ({ maxWidth }) => ({
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    maxWidth: maxWidth, // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
-    width: '100%',
-    gap: '0px',
-    margin: '0 auto',
-  }),
-});
-interface CardsGridProps extends BoxProps {
-  maxWidth?: string;
-}
-const CardsGrid = createStenciledDiv<CardsGridProps>(cardsGridStencil);
+const CardsGrid = styled('div')<{ $maxWidth: number }>(({ $maxWidth }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  alignItems: 'center',
+  maxWidth: $maxWidth + 'px', // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
+  width: '100%',
+  gap: '0px',
+  margin: '0 auto',
+}));
