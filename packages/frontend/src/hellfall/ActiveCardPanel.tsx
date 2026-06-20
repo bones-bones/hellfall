@@ -6,7 +6,7 @@ import { cardsAtom } from './atoms/cardsAtom';
 import { SidePanel, useSidePanel } from '@workday/canvas-kit-preview-react';
 import { Card, styled, ToolbarIconButton } from '@workday/canvas-kit-react';
 import { extLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
-import { HellfallCard } from './card/HellfallCard';
+import { HellfallCard } from './card';
 
 interface ActiveCardPanelProps {
   origin?: 'left' | 'right'; // Optional origin prop, defaulting to "right"

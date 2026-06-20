@@ -1,53 +1,31 @@
-import {
-  BrowserRouter,
-  useRoutes,
-  useParams,
-  useNavigate,
-  useLocation,
-  Navigate,
-} from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { BrowserRouter, useRoutes, useNavigate, useLocation } from 'react-router-dom';
+import { Suspense, lazy, useEffect } from 'react';
 import { HellFall } from './hellfall';
-import { Hellscubes } from './hells-cubes';
-import { DeckBuilder } from './deck-builder';
-import { Draft } from './draft';
-import { LandBox } from './land-box';
-import { SingleCard } from './hellfall/card/SingleCard.tsx';
 import { Header } from './header';
-import { Decks } from './decks/Decks.tsx';
-import { WatchwolfWar } from './watchWolf/WatchWolfWar.tsx';
-import { Watchwolfresults } from './watchWolf/WatchWolfResults.tsx';
-import { Login } from './auth/Login.tsx';
-import { ReviewPage } from './review/ReviewPage.tsx';
-import { useNameToHCID, useIsHCID } from './hellfall/hooks/useNameToId.ts';
-import { AdvancedSearch } from './hellfall/search-controls/AdvancedSearch.tsx';
-import { Syntax } from './hellfall/Syntax.tsx';
-import { Random } from './hellfall/Random.tsx';
+import { CardRoute } from './CardRoute';
+import { SuspenseLoadingCube } from './SuspenseLoadingCube';
 
-const CardRoute = () => {
-  const params = useParams<{ '*': string }>();
-  const navigate = useNavigate();
-  const cardIdentifier = params['*'];
-  const cardId = useNameToHCID(cardIdentifier || '');
-  const IsHCID = useIsHCID(cardIdentifier || '');
-  const [shouldRender, setShouldRender] = useState(false);
-  useEffect(() => {
-    const handleRedirect = async () => {
-      if (!IsHCID && cardId) {
-        navigate(`/card/${cardId}`, { replace: true });
-        return;
-      }
-      setShouldRender(true);
-    };
+const Hellscubes = lazy(() => import('./cube-resources').then(m => ({ default: m.Hellscubes })));
+const DeckBuilder = lazy(() => import('./deck-builder').then(m => ({ default: m.DeckBuilder })));
+const Draft = lazy(() => import('./draft').then(m => ({ default: m.Draft })));
+const LandBox = lazy(() => import('./land-box').then(m => ({ default: m.LandBox })));
+const Decks = lazy(() => import('./decks/Decks').then(m => ({ default: m.Decks })));
+const WatchwolfWar = lazy(() =>
+  import('./watchWolf/WatchWolfWar').then(m => ({ default: m.WatchwolfWar }))
+);
+const Watchwolfresults = lazy(() =>
+  import('./watchWolf/WatchWolfResults').then(m => ({ default: m.Watchwolfresults }))
+);
+const Login = lazy(() => import('./auth/Login').then(m => ({ default: m.Login })));
+const ReviewPage = lazy(() => import('./review/ReviewPage').then(m => ({ default: m.ReviewPage })));
+const AdvancedSearch = lazy(() =>
+  import('./hellfall/search-controls/AdvancedSearch').then(m => ({
+    default: m.AdvancedSearch,
+  }))
+);
+const Syntax = lazy(() => import('./hellfall/Syntax').then(m => ({ default: m.Syntax })));
+const Random = lazy(() => import('./hellfall/Random').then(m => ({ default: m.Random })));
 
-    handleRedirect();
-  }, [cardIdentifier, cardId, navigate]);
-
-  if (!shouldRender) {
-    return <div />;
-  }
-  return <SingleCard />;
-};
 const RedirectBase = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,6 +39,7 @@ const RedirectBase = () => {
 
   return null;
 };
+
 const ApplicationRoutes = () => {
   return useRoutes([
     { path: '/hellscubes/*', element: <Hellscubes /> },
@@ -79,12 +58,15 @@ const ApplicationRoutes = () => {
     { path: '/Watchwolfresults', element: <Watchwolfresults /> },
   ]);
 };
+
 export const App = () => {
   return (
     <BrowserRouter>
       <RedirectBase />
       <Header />
-      <ApplicationRoutes />
+      <Suspense fallback={<SuspenseLoadingCube />}>
+        <ApplicationRoutes />
+      </Suspense>
     </BrowserRouter>
   );
 };

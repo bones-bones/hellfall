@@ -2,7 +2,7 @@ import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
 import styled from '@emotion/styled';
-import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
+import { HellfallCard } from '../hellfall/card';
 import { CardEntry } from './types.ts';
 import { useParams } from 'react-router-dom';
 import { allDecks } from './allDecks.ts';

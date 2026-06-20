@@ -10,7 +10,7 @@ import {
   ruleOutput,
 } from 'simple-markdown';
 import { stringToMana } from '../stringToMana.tsx';
-import { styled, type } from '@workday/canvas-kit-react';
+import styled from '@emotion/styled';
 
 // Helper function to check if a character is escaped
 const isEscaped = (source: string, index: number): boolean => {
@@ -324,8 +324,8 @@ export const formatDiscordMarkdownInvertedItalicsInline = (text: string): ReactN
   return formatLine(firstLine, true);
 };
 const MediumText = styled('p')({
-  fontSize: type.levels.body.medium.fontSize,
-  fontWeight: type.levels.body.medium.fontWeight,
+  fontSize: '16px',
+  fontWeight: 'bold',
   marginBlock: '.5rem',
   lineHeight: 1.125,
 });

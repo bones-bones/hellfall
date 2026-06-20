@@ -1,8 +1,7 @@
-import { FormField, TextInput, space, styled } from '@workday/canvas-kit-react';
+import { TextInput, space, styled } from '@workday/canvas-kit-react';
 import { useAtom } from 'jotai';
 import { pageAtom, queryAtom } from '../atoms/searchAtoms';
 import { useEffect, useMemo, useState } from 'react';
-import { useKeyPress } from '../../hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import { normalizeText } from '@hellfall/shared/utils';
 
@@ -62,8 +61,8 @@ const Spacer = styled('div')({
   height: '5px',
 });
 const Container = styled('div')({
-  paddingLeft: space.l,
-  paddingRight: space.l,
+  paddingLeft: '36px',
+  paddingRight: '36px',
   marginTop: '-10px',
   marginBottom: '0px',
   overflow: 'hidden',

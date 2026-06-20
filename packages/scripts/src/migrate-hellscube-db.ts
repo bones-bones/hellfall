@@ -448,27 +448,13 @@ async function main() {
   }
   );
 
-  // if (pruneOrphans && orphanTransfers) {
-  //   const changesetsCol = db.collection(
-  //     process.env.FIRESTORE_CHANGESETS_COLLECTION?.trim() || 'changesets'
-  //   );
-  //   const pendingChangesets = await changesetsCol.where('status', '==', 'pending').get();
-  //   for (const cs of pendingChangesets.docs) {
-  //     const cardId = cs.data().cardId;
-  //     if (typeof cardId !== 'string') continue;
-  //     const targetId = orphanTransfers.orphanToTarget.get(cardId);
-  //     if (targetId) {
-  //       bulkWriter.update(cs.ref, { cardId: targetId });
-  //       stats.changesetsReassigned++;
-  //     }
-  //   }
-
-  //   for (const id of existingById.keys()) {
-  //     if (!cardMap.has(id)) {
-  //       bulkWriter.delete(collection.doc(id));
-  //     }
-  //   }
-  // }
+  if (pruneOrphans) {
+    for (const id of existingById.keys()) {
+      if (!cardMap.has(id)) {
+        bulkWriter.delete(collection.doc(id));
+      }
+    }
+  }
 
   await bulkWriter.close();
   if (stats.changesetsReassigned > 0) {

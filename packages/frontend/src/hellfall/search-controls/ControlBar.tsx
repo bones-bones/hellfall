@@ -46,7 +46,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const querySorts = useAtomValue(querySortAtom);
   const query = useAtomValue(queryAtom);
-  const [sortRules, setSortRules] = useAtom(sortAtom);
+  const sortRules = useAtomValue(sortAtom);
   const [canAddInput, setCanAddInput] = useState<boolean>();
   const [canDelInput, setCanDelInput] = useState<boolean>();
   const getAvailableOptions = (index: number): sortType[] =>
@@ -95,19 +95,6 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
     setInputSorts(newInputs);
   };
 
-  // const handleClick = (
-  //   e: React.MouseEvent,
-  //   customHandler: React.MouseEventHandler<HTMLAnchorElement>
-  // ) => {
-  //   if (e.button === 1 || e.metaKey || e.ctrlKey) {
-  //     // Let the link handle it naturally
-  //     return;
-  //   }
-  //   e.preventDefault();
-  //   customHandler(e as any);
-  // };
-
-  // const [page, setPage] = useAtom(pageAtom);
   const currentPage = model?.state.currentPage;
   const lastPage = model?.state.lastPage;
   const linkRef = useRef<HTMLAnchorElement>(null);
@@ -191,6 +178,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
             <>
               <ButtonGroup>
                 <CompactButton
+                  key="add-sort-rule"
                   icon={plusIcon}
                   title={
                     canAddInput
@@ -206,6 +194,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                   disabled={!canAddInput}
                 />
                 <CompactButton
+                  key="remove-sort-rule"
                   icon={minusIcon}
                   title={
                     canDelInput
@@ -230,6 +219,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
           {model && (
             <>
               <ControlButton
+                key="first-page"
                 icon={chevron2xleftIcon}
                 title={`${currentPage == 1 ? 'You are on' : 'Go to'} the first page of this search`}
                 aria-label={`${
@@ -239,6 +229,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                 disabled={currentPage == 1}
               />
               <ControlButton
+                key="previous-page"
                 icon={chevronLeftIcon}
                 title={`${currentPage == 1 ? 'You are on' : 'Go to'} the ${
                   currentPage == 1 ? 'first' : 'previous'
@@ -250,6 +241,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                 disabled={currentPage == 1}
               />
               <ControlButton
+                key="random-card"
                 icon={splitIcon}
                 title="Find a random card within this search"
                 aria-label="Find a random card within this search"
@@ -258,6 +250,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                 ref={linkRef}
               />
               <ControlButton
+                key="next-page"
                 icon={chevronRightIcon}
                 title={`${currentPage == lastPage ? 'You are on' : 'Go to'} the ${
                   currentPage == 1 ? 'last' : 'next'
@@ -269,6 +262,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                 disabled={currentPage == lastPage}
               />
               <ControlButton
+                key="last-page"
                 icon={chevron2xrightIcon}
                 title={`${
                   currentPage == lastPage ? 'You are on' : 'Go to'
@@ -288,8 +282,8 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
 };
 
 const Container = styled('div')({
-  paddingLeft: space.l,
-  paddingRight: space.l,
+  paddingLeft: '36px',
+  paddingRight: '36px',
   alignItems: 'center',
   width: '100%',
   boxSizing: 'border-box',

@@ -1,0 +1,1 @@
+export { HellfallCard } from './HellfallCard';

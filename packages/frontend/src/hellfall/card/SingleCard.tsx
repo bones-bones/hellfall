@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { HellfallCard } from './HellfallCard.tsx';
 import styled from '@emotion/styled';
@@ -9,7 +9,6 @@ import { useUpdateURL } from '../hooks/useUrlSync.ts';
 import { useSearchResults } from '../hooks/useSearchResults.ts';
 import { invalidAtom, queryAtom, summaryAtom } from '../atoms/searchAtoms.ts';
 import { SearchBar } from '../search-controls/SearchBar.tsx';
-import { space } from '@workday/canvas-kit-react';
 
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
@@ -92,11 +91,11 @@ const Container = styled.div({
 const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
 const Summary = styled('div')({
   display: 'inline-block',
-  paddingLeft: space.l,
-  paddingRight: space.l,
+  paddingLeft: '36px',
+  paddingRight: '36px',
 });
 const Invalid = styled('div')({
   display: 'inline-block',
-  paddingLeft: space.l,
-  paddingRight: space.l,
+  paddingLeft: '36px',
+  paddingRight: '36px',
 });
