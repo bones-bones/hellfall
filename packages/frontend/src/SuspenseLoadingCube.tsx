@@ -28,18 +28,18 @@ const cubeSvgStyles = createStyles({
   width: 120,
   height: 132,
 });
-const CubeSvg = createStyledSVG('svg',cubeSvgStyles);
+const CubeSvg = createStyledSVG('svg', cubeSvgStyles);
 
 const cubeFaceStyles = createStyles({
   stroke: 'rgba(160, 160, 160, 0.55)',
   strokeWidth: 1,
   strokeLinejoin: 'round',
 });
-const CubeFace = createStyledSVG('polygon',cubeFaceStyles);
+const CubeFace = createStyledSVG('polygon', cubeFaceStyles);
 
 const faceOverlayStencil = createStencil({
   vars: {
-    delay: '0'
+    delay: '0',
   },
   base: ({ delay }) => ({
     fill: '#000',
@@ -48,13 +48,12 @@ const faceOverlayStencil = createStencil({
     opacity: 0,
     animation: `${overlayPulse} 2.4s ease-in-out infinite`,
     animationDelay: delay,
-  })
-})
+  }),
+});
 interface FaceOverlayProps extends React.ComponentPropsWithoutRef<'svg'> {
-  delay: string
+  delay: string;
 }
-const FaceOverlay = createStenciledSVG<FaceOverlayProps>('polygon',faceOverlayStencil);
-
+const FaceOverlay = createStenciledSVG<FaceOverlayProps>('polygon', faceOverlayStencil);
 
 const FACES = [
   '50,12 78,28 50,44 22,28',

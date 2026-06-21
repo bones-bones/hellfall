@@ -1,27 +1,11 @@
-import {
-  ButtonColors,
-  Card,
-  inputColors,
-  PrimaryButton,
-  PrimaryButtonProps,
-} from '@workday/canvas-kit-react';
-import styled from '@emotion/styled';
+import { Box, ButtonColors, Card, inputColors, type, TextProps } from '@workday/canvas-kit-react';
 import { SetLegality } from './visual-components/SetLegality';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
 import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
-import { SmallText } from './visual-components/SmallText';
 
 import { Link } from 'react-router-dom';
-import {
-  useState,
-  useEffect,
-  useMemo,
-  useRef,
-  ElementType,
-  ComponentPropsWithoutRef,
-  Ref,
-} from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../hooks/useCardTagOverrides.ts';
 import {
@@ -31,11 +15,32 @@ import {
   formatDiscordMarkdownInvertedItalicsInline,
 } from './markdownFormatter.tsx';
 import { PendingChanges } from './PendingChanges.tsx';
+import { HellfallRelatedEntry } from '../entry/HellfallRelatedEntry.tsx';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStenciledSpan,
+  createStyledButton,
+  createStyledDiv,
+  createStyledDivWithRef,
+  createStyledHeading,
+  createStyledHR,
+  createStyledPrimaryButtonLink,
+  createStyledSpan,
+} from '../../styling';
 import { TagSection } from './hellfall-card-components/TagSection';
 import { CardEditingControls } from './CardEditingControls.tsx';
 import { RelatedCards } from './hellfall-card-components/RelatedCards';
 import { Divider } from './visual-components/Divider';
 import { StyledHeading } from './visual-components/StyledHeading';
+import {
+  MediumItalicLine,
+  MediumItalics,
+  MediumLine,
+  MediumLineMargin,
+  mediumLineMarginStyles,
+  MediumText,
+  SmallText,
+} from './visual-components/TextComponents.tsx';
 const renderText = (text: string[]) => {
   return text.map((entry, index) => {
     return <MediumText key={index}>{stringToMana(entry)}</MediumText>;
@@ -118,7 +123,6 @@ export const HellfallCard = ({
   const isContributor = Boolean(user?.isAdmin || user?.isContributor);
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const linkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (!windowRef.current) {
@@ -145,8 +149,7 @@ export const HellfallCard = ({
   const { images: imagesToShow, names: imageNames } = getImages(displayCard);
 
   return (
-    <Container ref={windowRef} key={displayCard.id} style={{ lineHeight: 1 }}>
-      <title>{data.name} || Hellfall</title>
+    <Container ref={windowRef} key={displayCard.id}>
       {!imagesToShow.length ? (
         <ImageContainerContainer>
           <ImageContainer key="image-container">
@@ -194,19 +197,17 @@ export const HellfallCard = ({
               {i > 0 && <Divider />}
               {face.name &&
                 (displayCard.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
-                  <MediumLine
+                  <span
+                    className={mediumLineMarginStyles}
                     key="name"
-                    style={{ marginRight: '1em' }}
                     dangerouslySetInnerHTML={{ __html: face.name }}
                   />
                 ) : triggerEscapeList.some(e => face.name.includes(e)) ? (
-                  <MediumLine key="name" style={{ marginRight: '1em' }}>
+                  <MediumLineMargin key="name">
                     {formatDiscordMarkdownInline(formatParens(face.name))}
-                  </MediumLine>
+                  </MediumLineMargin>
                 ) : (
-                  <MediumLine key="name" style={{ marginRight: '1em' }}>
-                    {stringToMana(face.name)}
-                  </MediumLine>
+                  <MediumLineMargin key="name">{stringToMana(face.name)}</MediumLineMargin>
                 ))}
               <MediumLine key="cost"> {stringToMana(face.mana_cost)}</MediumLine>
               {face.flavor_name &&
@@ -388,44 +389,45 @@ export const HellfallCard = ({
       </Card>
       <ButtonGroup>
         <br />
-        <Button
+        <LinkButton
           colors={inputButtonColors}
-          as={Link}
           to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=text`}
-          ref={linkRef}
         >
           Copy-pasteable Text
-        </Button>
-        <Button
+        </LinkButton>
+        <LinkButton
           colors={inputButtonColors}
-          as={Link}
           to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=json`}
-          ref={linkRef}
         >
           Copy-pasteable JSON
-        </Button>
+        </LinkButton>
       </ButtonGroup>
     </Container>
   );
 };
 
-const Ruling = styled.div({ paddingTop: '5px' });
+const rulingStyles = createStyles({ paddingTop: '5px' });
+const Ruling = createStyledDiv(rulingStyles);
 
-const Container = styled.div({
+const containerStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   fontSize: '16px',
   justifyContent: 'center',
+  lineHeight: 1,
 });
+const Container = createStyledDivWithRef(containerStyles);
 
-const ImageContainerContainer = styled.div({
+const imageContainerContainerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
   overflowX: 'auto',
   width: '100%',
 });
-const ImageContainer = styled.div({
+const ImageContainerContainer = createStyledDiv(imageContainerContainerStyles);
+
+const imageContainerStyles = createStyles({
   display: 'flex',
   overflow: 'auto',
   height: '500px',
@@ -440,18 +442,20 @@ const ImageContainer = styled.div({
     objectFit: 'contain',
   },
 });
+const ImageContainer = createStyledDiv(imageContainerStyles);
 
-const ButtonContainer = styled.div();
+const ButtonContainer = Box;
 
-const Separator = styled('hr')({
+const separatorStyles = createStyles({
   height: '1px',
   backgroundColor: '#ccc',
   border: 'none',
   marginLeft: '-32px',
   marginRight: '-32px',
 });
+const Separator = createStyledHR(separatorStyles);
 
-const IntButton = styled(PrimaryButton)<{ as?: React.ElementType }>({
+const linkButtonStyles = createStyles({
   marginLeft: '30px',
   marginBottom: '15px',
   borderRadius: '4px',
@@ -461,72 +465,39 @@ const IntButton = styled(PrimaryButton)<{ as?: React.ElementType }>({
   },
 });
 
-type PolymorphicStyledButtonProps<T extends ElementType> = Omit<
-  PrimaryButtonProps,
-  'as' | 'ref'
-> & {
-  as?: T;
-  children: React.ReactNode;
-  ref?: Ref<any>;
-} & Omit<ComponentPropsWithoutRef<T>, keyof PrimaryButtonProps | 'as' | 'children'>;
-
-const Button = <T extends ElementType = 'button'>({
-  as,
-  children,
-  ref,
-  ...props
-}: PolymorphicStyledButtonProps<T>) => {
-  const Component = as || 'button';
-
-  return as && ref ? (
-    <IntButton as={Component!} ref={ref as any} {...props}>
-      {children}
-    </IntButton>
-  ) : (
-    <IntButton {...props}>{children}</IntButton>
-  );
-};
-
 const inputButtonColors: ButtonColors = {
   default: {
     background: inputColors.background,
     border: inputColors.border,
+    label: inputColors.text,
   },
   hover: {
     background: inputColors.disabled.background,
     border: inputColors.focusBorder,
+    label: inputColors.text,
   },
   active: {
     background: inputColors.background,
     border: inputColors.border,
+    label: inputColors.text,
   },
   focus: {
     background: inputColors.disabled.background,
     border: inputColors.focusBorder,
+    label: inputColors.text,
   },
   disabled: {
     background: inputColors.disabled.background,
     border: inputColors.disabled.border,
+    label: inputColors.text,
   },
 };
+const LinkButton = createStyledPrimaryButtonLink(linkButtonStyles);
 
-const MediumText = styled('div')({
-  fontSize: '16px',
-  fontWeight: 'bold',
-  marginBlock: '.5rem',
-  lineHeight: 1.125,
-});
-const MediumLine = styled('span')({
-  fontSize: '16px',
-  fontWeight: 'bold',
-  marginBlock: '.5rem',
-});
-const MediumItalics = styled(MediumText)({ fontStyle: 'italic' });
-const MediumItalicLine = styled(MediumLine)({ fontStyle: 'italic' });
-
-const ButtonGroup = styled('div')({
+const buttonGroupStyles = createStyles({
   display: 'inline-block',
   flexDirection: 'row',
   marginLeft: '4px',
   verticalAlign: 'top',
 });
+const ButtonGroup = createStyledDiv(buttonGroupStyles);

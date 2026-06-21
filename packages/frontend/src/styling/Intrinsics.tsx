@@ -23,12 +23,13 @@ export const createStyledIntrinsic =
   ({ children, ...props }: htmlIntrinsicProps) =>
     createElement(tag, { ...handleCsProp(props, styles) }, children);
 export const createStenciledIntrinsic =
-  <T extends htmlIntrinsicProps>(
-    tag: htmlIntrinsic,
-    stencil: Stencil<any>
-  ) =>
+  <T extends htmlIntrinsicProps>(tag: htmlIntrinsic, stencil: Stencil<any>) =>
   ({ children, ...props }: T) =>
-    createElement(tag, { ...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props)) }, children);
+    createElement(
+      tag,
+      { ...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props)) },
+      children
+    );
 
 export const htmlTableCellList = ['th', 'td'] as const;
 
@@ -48,10 +49,11 @@ export const createStyledSVG =
   ({ children, ...props }: htmlSVGProps) =>
     createElement(tag, { ...handleCsProp(props, styles) }, children);
 
-  export const createStenciledSVG =
-  <T extends htmlSVGProps>(
-    tag: htmlSVG,
-    stencil: Stencil<any>
-  ) =>
+export const createStenciledSVG =
+  <T extends htmlSVGProps>(tag: htmlSVG, stencil: Stencil<any>) =>
   ({ children, ...props }: T) =>
-    createElement(tag, { ...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props)) }, children);
+    createElement(
+      tag,
+      { ...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props)) },
+      children
+    );

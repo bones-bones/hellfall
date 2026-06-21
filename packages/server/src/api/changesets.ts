@@ -23,7 +23,6 @@ import {
   getUpdateObject,
 } from '@hellfall/shared/utils/firestore';
 
-
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const changesetsCol: changesetCollection = db.collection(
   env.FIRESTORE_CHANGESETS_COLLECTION
@@ -155,7 +154,9 @@ async function getChangeset(
   changesetId: string
 ): Promise<void> {
   const auth = await requireReviewerAuth(req, res);
-  if (!auth){ return;}
+  if (!auth) {
+    return;
+  }
 
   const snap = await changesetsCol.doc(changesetId).get();
   if (!snap.exists) {

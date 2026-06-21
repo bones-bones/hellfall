@@ -96,19 +96,20 @@ export const TagSection = ({
           const pendingAdd = pendingTagStaging?.toAdd.includes(tagEntry);
 
           return (
-          <span key={`pending-${tagEntry}`}>
-            {(displayCard.tags?.length || i > 0) && ', '}
-            <TagLink pendingAdd={pendingAdd}>
-              <Link
-                to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
-                target="_blank"
-              >
-                +{tagEntry}
-              </Link>
-            </TagLink>
-            {i < ar.length - 1 && ', '}
-          </span>
-        )})}
+            <span key={`pending-${tagEntry}`}>
+              {(displayCard.tags?.length || i > 0) && ', '}
+              <TagLink pendingAdd={pendingAdd}>
+                <Link
+                  to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
+                  target="_blank"
+                >
+                  +{tagEntry}
+                </Link>
+              </TagLink>
+              {i < ar.length - 1 && ', '}
+            </span>
+          );
+        })}
       </SmallText>
       {pendingTagStaging && <PendingText>Staged changes pending review.</PendingText>}
       {user && tagsPersistEnabled && (
@@ -217,8 +218,6 @@ const tagAddRowStyles = createStyles({
   '& input': { minWidth: '120px' },
 });
 const TagAddRow = createStyledDiv(tagAddRowStyles);
-
-
 
 const errorTextStyles = createStyles(smallTextStyles, { color: '#c00' });
 const ErrorText = createStyledDiv(errorTextStyles);

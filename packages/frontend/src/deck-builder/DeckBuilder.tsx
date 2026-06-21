@@ -33,7 +33,7 @@ export const DeckBuilder = () => {
   );
   const [cardMap, setCardMap] = useState<CardMap>(() => new CardMap());
   useEffect(() => {
-    loadCardsData().then((data) => setCardMap(new CardMap(data.data)));
+    loadCardsData().then(data => setCardMap(new CardMap(data.data)));
   }, []);
   const nameToIdMap = useMemo(() => buildNameToIdMap(cardMap), [cardMap]);
   const [multMap, setMultMap] = useState<Map<string, number>>(new Map());
