@@ -36,7 +36,7 @@ async function fetchCardById(cardId: string): Promise<fixedScryfall> {
         console.warn('Rate limited! Consider increasing your delay.');
       }
       const errorData = await response.json();
-      throw new Error(`Scryfall API error: ${response.status}`);
+      throw new Error(`Scryfall API error: ${response.status} data: ${errorData}`);
     }
 
     await delay(REQUEST_DELAY_MS);
