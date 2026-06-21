@@ -1,6 +1,8 @@
-import styled from '@emotion/styled';
-import { Heading } from '@workday/canvas-kit-react';
-export const StyledHeading = styled(Heading)({
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledHeading } from '../../../styling';
+
+const headingStyles = createStyles({
   marginTop: '0px',
   marginBottom: '10px',
 });
+export const StyledHeading = createStyledHeading(headingStyles);

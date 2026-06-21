@@ -1,8 +1,9 @@
 import { HCRelatedCard } from '@hellfall/shared/types';
 import { Divider } from '../visual-components/Divider';
-import styled from '@emotion/styled';
 import { StyledHeading } from '../visual-components/StyledHeading';
-import { HellfallRelatedEntry } from '../../HellfallRelatedEntry';
+import { HellfallRelatedEntry } from '../../entry/HellfallRelatedEntry';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv } from '../../../styling';
 
 export const RelatedCards = ({
   relatedCards,
@@ -45,7 +46,7 @@ export const RelatedCards = ({
   );
 };
 
-const RelatedGrid = styled('div')({
+const relatedGridStyles = createStyles({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
@@ -54,3 +55,4 @@ const RelatedGrid = styled('div')({
   gap: '0px',
   margin: '0 auto',
 });
+const RelatedGrid = createStyledDiv(relatedGridStyles);

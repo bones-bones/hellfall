@@ -15,6 +15,7 @@ import {
   BodyText,
 } from '@workday/canvas-kit-react';
 import { handleCsProp, Stencil } from '@workday/canvas-kit-styling';
+import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 // Making generators that are more generic than these causes massive lag
 
@@ -171,7 +172,7 @@ export const createStenciledLink =
 
 export const createStyledDiv =
   (styles: string) =>
-  ({ children, ...props }: BoxProps) =>
+  ({ children, ...props }: BoxProps & React.ComponentPropsWithoutRef<'div'>) =>
     <Box {...handleCsProp(props, styles)}>{children}</Box>;
 export interface BoxPropsWithRef extends BoxProps {
   ref?: React.Ref<HTMLDivElement>;

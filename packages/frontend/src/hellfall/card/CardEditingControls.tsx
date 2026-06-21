@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { CardEditPanel } from './CardEditPanel.tsx';
 import { useAuth } from '../../auth/AuthContext.tsx';
-import styled from '@emotion/styled';
 import { HCCard } from '@hellfall/shared/types';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledButton } from '../../styling/StyledElements.tsx';
 
 export const CardEditingControls = ({
   displayCard,
@@ -32,7 +33,7 @@ export const CardEditingControls = ({
   );
 };
 
-const EditCardButton = styled('button')({
+const editCardButtonStyles = createStyles({
   display: 'block',
   marginTop: 6,
   marginBottom: 4,
@@ -44,3 +45,4 @@ const EditCardButton = styled('button')({
   cursor: 'pointer',
   '&:hover': { borderColor: '#888' },
 });
+const EditCardButton = createStyledButton(editCardButtonStyles);

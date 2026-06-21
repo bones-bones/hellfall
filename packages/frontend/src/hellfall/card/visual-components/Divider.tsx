@@ -1,9 +1,11 @@
-import styled from '@emotion/styled';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledHR } from '../../../styling';
 
-export const Divider = styled('hr')({
+const dividerStyles = createStyles({
   height: '2px',
   backgroundColor: '#ccc',
   border: 'none',
   marginLeft: '-32px',
   marginRight: '-32px',
 });
+export const Divider = createStyledHR(dividerStyles);
