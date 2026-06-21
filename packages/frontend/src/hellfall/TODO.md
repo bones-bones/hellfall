@@ -136,3 +136,7 @@ Write a script to transform the database
 - fix id for plateau
 - hide faces with drop_face == true from card pages?
 - resume at This // That by 8ofswords
+- prevent use of semicolons in submissions for list fields?
+- add better handling for card face changes affecting other changes?
+- add another map layer that maps the oracle ids to their individual ids
+- fix conjured ids

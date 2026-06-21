@@ -13,8 +13,8 @@ import {
   addPropToFace,
   addPropToRoot,
   anyEntriesType,
+  anyExactEntriesType,
   anyPropType,
-  anyValueType,
   deletePropFromFace,
   faceEntriesType,
   facePropType,
@@ -209,7 +209,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
       }
     });
   }
-  (Object.entries(entry) as anyEntriesType).forEach(([prop, value]) => {
+  (Object.entries(entry) as anyExactEntriesType).forEach(([prop, value]) => {
     if (prop == 'mana_cost') {
       addPropToRoot(card, prop, fromImportMana(value));
     } else if (italicsReplaceKeys.includes(prop as facePropType)) {
@@ -249,7 +249,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     } else if (prop == 'layout') {
       addPropToRoot(card, prop, convertLayout(value as unknown as ScryfallLayout));
     } else if (prop == 'keywords') {
-      value.forEach((keyword: string) =>
+      (value).forEach((keyword: string) =>
         pushPropToRoot(card, prop, keyword.toLowerCase().replace('!', ''))
       );
       card.keywords.forEach(keyword => {

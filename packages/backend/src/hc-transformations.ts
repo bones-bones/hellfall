@@ -17,6 +17,7 @@ import {
   HCIDMap,
   anyPropType,
   anyValueType,
+  savedOracleIds,
 } from '@hellfall/shared/utils';
 import { mergeFromSheet } from '@hellfall/shared/utils/cardModification/changeHandling';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
@@ -115,6 +116,7 @@ const mergeDatabases = (
     'HCV.L': 0,
     'HCV.P': 0,
     'HCV.CDC': 0,
+    'HCV.S': 0,
     NRM: 0,
     HCJ: 0,
     NMTG: 0,
@@ -161,6 +163,10 @@ const mergeDatabases = (
           const original = mergedList.find(c => textEquals(c.name, originalName));
           if (original?.oracle_id) {
             card.oracle_id = original.oracle_id;
+            return;
+          }
+          if (originalName.toLowerCase() in savedOracleIds) {
+            card.oracle_id = savedOracleIds[originalName.toLowerCase()];
             return;
           }
         } else if (card.tags?.includes('reprint')) {
@@ -233,7 +239,7 @@ const dataToCards = <K extends anyPropType>(
                 ...face,
                 [missingProp]:
                   typeof missingPropValue == 'function'
-                    ? missingPropValue(card as HCCard.Any)
+                    ? ((missingPropValue as (card: HCCard.Any) => anyValueType<K>)(card as HCCard.Any))
                     : missingPropValue,
               } as HCCardFace.MultiFaced;
             }
@@ -251,7 +257,7 @@ const dataToCards = <K extends anyPropType>(
                 ...part,
                 [missingProp]:
                   typeof missingPropValue == 'function'
-                    ? missingPropValue(card as HCCard.Any)
+                    ? ((missingPropValue as (card: HCCard.Any) => anyValueType<K>)(card as HCCard.Any))
                     : missingPropValue,
               } as HCRelatedCard;
             }
@@ -267,7 +273,7 @@ const dataToCards = <K extends anyPropType>(
         ...card,
         [missingProp]:
           typeof missingPropValue == 'function'
-            ? missingPropValue(card as HCCard.Any)
+                    ? ((missingPropValue as (card: HCCard.Any) => anyValueType<K>)(card as HCCard.Any))
             : missingPropValue,
       } as HCCard.Any;
     }
@@ -310,7 +316,7 @@ const loadExistingData = () => {
   const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
   return { existingCards, existingTokens, existingLands };
 };
-const ignoreDuplicateHCIDs:string[] = ['39','6730','6731','6732','6733', '2101', '2102', '2103', '6791', '6792', '6793', '6794', '6795', '6796', '6797', '6735', '7240', '7241'];
+const ignoreDuplicateHCIDs:string[] = ['39','6730','6731','6732','6733', '2101', '2102', '2103', '6791', '6792', '6793', '6794', '6795', '6796', '6797', '6735', '7240', '7241', '7772','7801'];
 const ignoreMissingNums:Partial<Record<SetCode,number[]>> = {
   'HC2.0': [93, 141, 154, 160, 187,214, 228],
   'HC2.1': [58, 93, 103, 104, 138, 190, 201, 206, 307],
