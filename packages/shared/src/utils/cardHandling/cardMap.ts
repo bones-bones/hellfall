@@ -148,7 +148,8 @@ export class CardMap {
   getAllIdsInSetDirect(set: SetCode): string[] {
     return [
       ...Array.from(this.setMap.get(set) ?? []),
-      ...(getDirectChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ?? []),
+      ...(getDirectChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ??
+        []),
     ];
   }
 

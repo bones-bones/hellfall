@@ -126,7 +126,7 @@ Write a script to transform the database
   - span => Text
   - p => Subtext or BodyText
   - use normal html for now: button, some instances of p, Link, SidePanel, img, FormField, textarea, selects
-  - use createStencil with dynamic values for CardsGrid and for mana symbols in /eight once on v11
+  - use createStencil with dynamic values for mana symbols in /eight
 - refactor away from className
 - cut down on boilerplate for stencils if possible (though prioritizing not causing lag)
 - fix card display on deck pages

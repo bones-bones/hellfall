@@ -1,5 +1,4 @@
 import { useState, useCallback, useMemo } from 'react';
-// import styled from '@emotion/styled';
 import { Card } from '@workday/canvas-kit-react';
 import type { HCCard } from '@hellfall/shared/types';
 import { useAuth } from '../../auth';

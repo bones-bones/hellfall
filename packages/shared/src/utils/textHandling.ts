@@ -244,8 +244,8 @@ export const formatParens = (text: string) => {
  * @returns stripped name
  */
 export const stripMasterpiece = (name: string) => {
-  const start = allSetsList.find(set =>name.startsWith(`${set}: `));
-  return start ? name.slice(start.length+2) : name;
+  const start = allSetsList.find(set => name.startsWith(`${set}: `));
+  return start ? name.slice(start.length + 2) : name;
 };
 /**
  * Gets the masterpiece set code of a masterpiece name.
@@ -253,7 +253,7 @@ export const stripMasterpiece = (name: string) => {
  * @returns masterpiece code
  */
 export const getMasterpiece = (name: string) => {
-  const start = allSetsList.find(set =>name.startsWith(`${set}: `));
+  const start = allSetsList.find(set => name.startsWith(`${set}: `));
   return `${start}: `;
 };
 

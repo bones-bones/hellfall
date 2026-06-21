@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { HellfallEntry } from './entry/HellfallEntry.tsx';
 
-import { styled, space } from '@workday/canvas-kit-react';
+import { space, BoxProps } from '@workday/canvas-kit-react';
 
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -20,8 +20,8 @@ import { SearchBar } from './search-controls/SearchBar.tsx';
 import { ActiveCardPanel } from './ActiveCardPanel.tsx';
 import { Link } from 'react-router-dom';
 import { HellfallCard } from './card/HellfallCard.tsx';
-import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv, createStyledHR } from '../styling';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import { createStenciledDiv, createStyledDiv, createStyledHR } from '../styling';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -95,7 +95,7 @@ export const HellFall = () => {
           </div>
         ) : (
           <div>
-            <CardsGrid $maxWidth={maxWidth}>
+            <CardsGrid maxWidth={`${maxWidth}px`}>
               {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
                 <HellfallEntry
                   onClick={(event: React.MouseEvent<HTMLImageElement>) => {
@@ -161,13 +161,22 @@ const containerStyles = createStyles({
 const Container = createStyledDiv(containerStyles);
 
 // TODO: do this one when upgraded to v11
-const CardsGrid = styled('div')<{ $maxWidth: number }>(({ $maxWidth }) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  alignItems: 'center',
-  maxWidth: $maxWidth + 'px', // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
-  width: '100%',
-  gap: '0px',
-  margin: '0 auto',
-}));
+const cardsGridStencil = createStencil({
+  vars: {
+    maxWidth: '1215px',
+  },
+  base: ({ maxWidth }) => ({
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    maxWidth: maxWidth, // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
+    width: '100%',
+    gap: '0px',
+    margin: '0 auto',
+  }),
+});
+interface CardsGridProps extends BoxProps {
+  maxWidth?: string;
+}
+const CardsGrid = createStenciledDiv<CardsGridProps>(cardsGridStencil);

@@ -47,8 +47,10 @@ const isSortFilter = (text: string): boolean => {
   return ['sort', 'order', 'dir', 'direction'].includes(keyword);
 };
 
-const isSort = (text: string): boolean => sorts.includes(text as sortType) || text in sortRedirects;
-const isDir = (text: string): boolean => dirs.includes(text as dirType) || text in dirRedirects;
+const isSort = (text: string): boolean =>
+  sorts.includes(text.toLowerCase() as sortType) || text.toLowerCase() in sortRedirects;
+const isDir = (text: string): boolean =>
+  dirs.includes(text.toLowerCase() as dirType) || text.toLowerCase() in dirRedirects;
 const sortIsValid = (text: string): boolean => {
   const { term } = splitOnFirstOp(text);
   // TODO: add multi in one term option?
@@ -177,16 +179,16 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
 };
 
 const correctSort = (text: string): sortType => {
-  if (text in sortRedirects) {
-    return sortRedirects[text];
+  if (text.toLowerCase() in sortRedirects) {
+    return sortRedirects[text.toLowerCase()];
   }
-  return text as sortType;
+  return text.toLowerCase() as sortType;
 };
 const correctDir = (text: string): dirType => {
-  if (text in dirRedirects) {
-    return dirRedirects[text];
+  if (text.toLowerCase() in dirRedirects) {
+    return dirRedirects[text.toLowerCase()];
   }
-  return text as dirType;
+  return text.toLowerCase() as dirType;
 };
 export const parseSorts = (sortList: string[]): sortObject[] => {
   const sortObs: sortObject[] = [];

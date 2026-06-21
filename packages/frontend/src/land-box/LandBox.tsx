@@ -1,13 +1,12 @@
-import styled from '@emotion/styled';
-// import { useLands } from './useLands.ts';
 import { useState } from 'react';
 import { HCCard } from '@hellfall/shared/types';
 import { pushProp } from '@hellfall/shared/utils';
-import { Select } from '@workday/canvas-kit-preview-react';
-import { Box, BoxProps, FormField } from '@workday/canvas-kit-react';
+import { Select } from '@workday/canvas-kit-react';
+import { Box, BoxProps } from '@workday/canvas-kit-react';
 import { landsData } from '@hellfall/shared/data';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledDiv, createStyledIntrinsic } from '../styling';
+import { FormField } from '@workday/canvas-kit-preview-react';
 
 export const LandBox = () => {
   const lands = landsData.data as HCCard.Normal[];
@@ -20,7 +19,10 @@ export const LandBox = () => {
       pushProp(landRecord, land.subtypes?.[0] ?? 'Wastes', land);
       return landRecord;
     }, {} as Record<string, HCCard.Normal[]>);
-
+  const options = [
+    { value: 'HBB.4', label: 'HC4' },
+    { value: 'HBB.0', label: 'Old' },
+  ];
   return (
     <>
       <title>Land Box | Hellfall</title>
@@ -34,15 +36,13 @@ export const LandBox = () => {
 –exalted`}
       </pre>
       <div>
-        <FormField label="set: ">
-          <Select
-            value={activeSet}
-            onChange={e => setActiveSet(e.target.value as any)}
-            options={[
-              { value: 'HBB.4', label: 'HC4' },
-              { value: 'HBB.0', label: 'Old' },
-            ]}
-          />
+        <FormField>
+          <FormField.Label>set: </FormField.Label>
+          <Select value={activeSet} onChange={e => setActiveSet(e.target.value as any)}>
+            {options.map(entry => (
+              <option key={entry.value}>{entry.label}</option>
+            ))}
+          </Select>
         </FormField>
       </div>
       {active && <BigView clear={() => setActive(undefined)} land={active} />}

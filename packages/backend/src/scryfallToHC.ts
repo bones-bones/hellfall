@@ -249,7 +249,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     } else if (prop == 'layout') {
       addPropToRoot(card, prop, convertLayout(value as unknown as ScryfallLayout));
     } else if (prop == 'keywords') {
-      (value).forEach((keyword: string) =>
+      value.forEach((keyword: string) =>
         pushPropToRoot(card, prop, keyword.toLowerCase().replace('!', ''))
       );
       card.keywords.forEach(keyword => {

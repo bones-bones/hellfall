@@ -6,7 +6,7 @@ import {
   PillSearch,
   NumberSelector,
 } from '../advanced/index.ts';
-import { TextInput, FormField, ButtonColors, inputColors } from '@workday/canvas-kit-react';
+import { ButtonColors, inputColors, TextInput } from '@workday/canvas-kit-react';
 
 import { useAtom } from 'jotai';
 import { inputSortAtom, sortAtom } from '../atoms/searchAtoms.ts';
@@ -24,6 +24,7 @@ import {
   createStyledSelect,
 } from '../../styling';
 import { StyledComponentHolder, StyledLabel, StyledLegend } from './AdvancedComponents.tsx';
+import { FormField } from '@workday/canvas-kit-preview-react';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');
@@ -277,7 +278,8 @@ export const AdvancedSearch = () => {
             values={nameSearch}
             onChange={setNameSearch}
           />
-          <FormField label="Id">
+          <FormField>
+            <FormField.Label>Id</FormField.Label>
             <TextInput value={idSearch} onChange={event => setIdSearch(event.target.value)} />
           </FormField>
           <PillSearch

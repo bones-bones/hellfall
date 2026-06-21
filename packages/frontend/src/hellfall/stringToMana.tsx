@@ -1,5 +1,5 @@
 // import styled from '@emotion/styled';
-import type { HCCardSymbol, HCColors } from '@hellfall/shared/types';
+import type { HCColors } from '@hellfall/shared/types';
 import { getIndicatorFromColors, getPip, pipToSrc } from '@hellfall/shared/utils';
 import { BoxProps } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';

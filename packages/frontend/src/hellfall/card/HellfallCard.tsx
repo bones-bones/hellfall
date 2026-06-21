@@ -1,14 +1,4 @@
-import {
-  Box,
-  ButtonColors,
-  Card,
-  Heading,
-  inputColors,
-  PrimaryButton,
-  type,
-  Text,
-  TextProps,
-} from '@workday/canvas-kit-react';
+import { Box, ButtonColors, Card, inputColors, type, TextProps } from '@workday/canvas-kit-react';
 // import styled from '@emotion/styled';
 import { SetLegality } from './SetLegality.tsx';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
@@ -781,10 +771,16 @@ const MediumLineMargin = createStyledSpan(mediumLineMarginStyles);
 const mediumTextStyles = createStyles(mediumLineStyles, { lineHeight: 1.125 });
 const MediumText = createStyledDiv(mediumTextStyles);
 
-const mediumItalicsStyles = createStyles(mediumTextStyles, { fontStyle: 'italic' });
+const mediumItalicsStyles = createStyles(mediumTextStyles, {
+  fontStyle: 'italic',
+  fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
+});
 const MediumItalics = createStyledDiv(mediumItalicsStyles);
 
-const mediumItalicLineStyles = createStyles(mediumLineStyles, { fontStyle: 'italic' });
+const mediumItalicLineStyles = createStyles(mediumLineStyles, {
+  fontStyle: 'italic',
+  fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
+});
 const MediumItalicLine = createStyledSpan(mediumItalicLineStyles);
 
 const smallTextStyles = createStyles({

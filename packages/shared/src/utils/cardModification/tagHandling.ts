@@ -231,7 +231,7 @@ const multiLayoutTags = {
   // meld: HCLayout.MeldPart,
   'draftpartner-faces': HCLayout.DraftPartner,
   'reminder-on-back': HCLayout.ReminderOnBack,
-  'reminder-card':HCLayout.MultiReminder,
+  'reminder-card': HCLayout.MultiReminder,
   'dungeon-in-inset': HCLayout.DungeonInInset,
   'dungeon-on-back': HCLayout.DungeonOnBack,
   'stickers-on-back': HCLayout.StickersOnBack,
@@ -349,71 +349,69 @@ export const savedOracleIds: Record<string, string> = {
   'thriving moor': 'b7c7d0c0-ada6-4c89-b47b-977e35e67b39',
   'thriving bluff': '91fceb34-0f2d-4392-be27-00dcd765637f',
   'thriving grove': 'a8052556-8962-4130-86a8-6fb7b6a324f7',
-  'food': 'a468338f-635e-4206-89d6-72d723071d45',
-  'treasure': '3c549374-6c37-42e0-8d88-a8555d46732d',
-  'elephant': '079c46cc-feb0-4998-8593-c8b739afdb82',
-  'human': '30272edf-097c-4918-84d2-9fa6c42dbe0a',
-  'clue': '496e1083-c792-40a4-adf4-fec1d559cd5e',
-  'fish': 'bdb03306-355c-41e5-96bc-f60483e59b2a',
-  'dog': '791a992f-6f67-41a0-8100-a4a6401e6148',
-  'goblin': '4465eff4-5851-4721-a248-866c686c2ab8',
-  'snake':'9ecd83ce-f866-4cbe-9712-c44aabe979c6',
-  'gold': '5aa757d8-db7a-4a60-b63e-c9777c141953',
-  'bear': 'a62a374d-ccdd-418d-9bcd-5ca8bf9b05e8',
-  'bird': 'b1a2b096-a440-4ef9-ab2a-059c79999297', // W
-  'soldier': 'eac25f12-6459-438c-a09e-93e23d2cf80d',
-  'ape': '6736e171-ed7d-4259-8a42-f5936ebad532',
+  food: 'a468338f-635e-4206-89d6-72d723071d45',
+  treasure: '3c549374-6c37-42e0-8d88-a8555d46732d',
+  elephant: '079c46cc-feb0-4998-8593-c8b739afdb82',
+  human: '30272edf-097c-4918-84d2-9fa6c42dbe0a',
+  clue: '496e1083-c792-40a4-adf4-fec1d559cd5e',
+  fish: 'bdb03306-355c-41e5-96bc-f60483e59b2a',
+  dog: '791a992f-6f67-41a0-8100-a4a6401e6148',
+  goblin: '4465eff4-5851-4721-a248-866c686c2ab8',
+  snake: '9ecd83ce-f866-4cbe-9712-c44aabe979c6',
+  gold: '5aa757d8-db7a-4a60-b63e-c9777c141953',
+  bear: 'a62a374d-ccdd-418d-9bcd-5ca8bf9b05e8',
+  bird: 'b1a2b096-a440-4ef9-ab2a-059c79999297', // W
+  soldier: 'eac25f12-6459-438c-a09e-93e23d2cf80d',
+  ape: '6736e171-ed7d-4259-8a42-f5936ebad532',
   'sand warrior': '7705873e-6fe6-4b25-965d-5f3df1680f66',
   'zombie army': '8bf1137a-163c-446f-8d34-168a7705df4e',
-  'wolf': 'b2224843-8274-4872-a7ca-2adf69cc066b',
-  'myr': 'bf690282-125f-431c-a363-39f6772324c8',
-  'squirrel': '67f21c0c-2083-4eda-9dc3-cc8aee42289f',
-  'thopter': '7c0b6b53-4ddb-4bb5-8a26-0041b2006d3f',
-  'copy': '88c78601-87f0-45e7-b2e0-e7ffcfb1cb70',
-  'skeleton': '8556740e-653e-4866-9e57-5e8da844113f',
-  'saproling': '2b7dba01-b08c-4218-9fc1-da55559d9155',
+  wolf: 'b2224843-8274-4872-a7ca-2adf69cc066b',
+  myr: 'bf690282-125f-431c-a363-39f6772324c8',
+  squirrel: '67f21c0c-2083-4eda-9dc3-cc8aee42289f',
+  thopter: '7c0b6b53-4ddb-4bb5-8a26-0041b2006d3f',
+  copy: '88c78601-87f0-45e7-b2e0-e7ffcfb1cb70',
+  skeleton: '8556740e-653e-4866-9e57-5e8da844113f',
+  saproling: '2b7dba01-b08c-4218-9fc1-da55559d9155',
   'bird u': '39593ebf-49ee-4a74-8498-952b43fa5127',
-  'servo': 'b6ca7bd1-d72e-4260-8b52-997ee1377279',
-  'zombie': 'ddc8c973-c31e-463f-be45-f3fa7d632362',
-  'shard': '08734dc6-71d9-46c1-a116-187a92ce3867',
+  servo: 'b6ca7bd1-d72e-4260-8b52-997ee1377279',
+  zombie: 'ddc8c973-c31e-463f-be45-f3fa7d632362',
+  shard: '08734dc6-71d9-46c1-a116-187a92ce3867',
   'phyrexian mite': '2667d723-01c8-4ea3-ac17-cedb3b842c3b',
   'force of will': '956381ba-6d37-4a8a-846c-bad79222dbee',
-  'goat': 'f62b776a-d4de-455a-ae5a-ca07982974db',
-  'rock': '300757bc-5dbf-4d1e-a225-fe3b6e0c9ef4',
-  'cat': '5ae6251d-cef9-4fb7-bdcd-e870a062f042', // W
-  'elk': '7bdd50bf-55fb-4fe7-9510-b0d8adf2bae9',
-  'junk': '7034bca4-8ba0-47a6-886e-ecbd829ddaec',
-  'rat': '7c753b68-b519-43ba-9c58-4902f4850626',
-  'balloon': '46a178da-30d1-40ea-8a25-f068f7175f17',
-  'blood': '03f45075-9423-454f-a256-94dcafb2a779',
-  'map': 'c050f054-1ccf-4819-bc30-a928aed60c56',
-  'insect': 'c39cd31f-c4a2-4ca8-b4f9-b2e6289743bc', // G
-  'pilot': '425c9e23-3227-44a5-8e10-0cf4d0967799',
-  'citizen': 'ffbc4833-01db-45f8-b8b4-c2e2c8235d0c',
-  'radiation': '7926aa44-a2f1-416a-a4b7-1a6991c15879',
+  goat: 'f62b776a-d4de-455a-ae5a-ca07982974db',
+  rock: '300757bc-5dbf-4d1e-a225-fe3b6e0c9ef4',
+  cat: '5ae6251d-cef9-4fb7-bdcd-e870a062f042', // W
+  elk: '7bdd50bf-55fb-4fe7-9510-b0d8adf2bae9',
+  junk: '7034bca4-8ba0-47a6-886e-ecbd829ddaec',
+  rat: '7c753b68-b519-43ba-9c58-4902f4850626',
+  balloon: '46a178da-30d1-40ea-8a25-f068f7175f17',
+  blood: '03f45075-9423-454f-a256-94dcafb2a779',
+  map: 'c050f054-1ccf-4819-bc30-a928aed60c56',
+  insect: 'c39cd31f-c4a2-4ca8-b4f9-b2e6289743bc', // G
+  pilot: '425c9e23-3227-44a5-8e10-0cf4d0967799',
+  citizen: 'ffbc4833-01db-45f8-b8b4-c2e2c8235d0c',
+  radiation: '7926aa44-a2f1-416a-a4b7-1a6991c15879',
   'cat g': 'd4454ff8-1671-4bf5-a9f2-30c9d997f975',
-  'angel': '40c64f08-ab2f-4933-8e0e-d1a1c729008f',
+  angel: '40c64f08-ab2f-4933-8e0e-d1a1c729008f',
   'poison counter': '60acebe2-e1e5-478a-ab88-6a9c1409bca5',
-  'boo': '53c0975a-a240-4889-a7cb-8bca6dfe5a1b',
-  'sword': '092f0002-2f8d-4811-8c2e-60c2dd1e0d20',
+  boo: '53c0975a-a240-4889-a7cb-8bca6dfe5a1b',
+  sword: '092f0002-2f8d-4811-8c2e-60c2dd1e0d20',
   'spirit c': '6a7a9dff-ff9e-4005-a17f-6ea0c11c1d5a',
-  'powerstone': '91da73fe-d028-43d7-bf75-f7ef30b45664',
+  powerstone: '91da73fe-d028-43d7-bf75-f7ef30b45664',
   'human soldier': 'a4095286-d51b-4527-b6ce-23aa539fc23a',
-  'monk': 'bfa57f61-3811-43da-b73e-90e3e5b0b2c2',
-  'indicate': '67876214-3777-41b1-935e-75dd5075fa53',
-  'devil': '02d1dc2f-625e-4be3-9daf-e48c44bc9bf7',
-  'hero': 'fcf819ef-28e4-46be-a28d-5865ff90e15a',
+  monk: 'bfa57f61-3811-43da-b73e-90e3e5b0b2c2',
+  indicate: '67876214-3777-41b1-935e-75dd5075fa53',
+  devil: '02d1dc2f-625e-4be3-9daf-e48c44bc9bf7',
+  hero: 'fcf819ef-28e4-46be-a28d-5865ff90e15a',
   'eldrazi spawn': '3aaf906a-e749-4e86-ac79-97650b92f271',
   'eldrazi scion': '0eb3cd4b-c34e-448c-a9ab-e7b0b4524833',
-  'spider': 'bd386399-69f0-4653-96a1-fd05b8fd148c',
-  'frog': '5973b38b-9e8b-49ec-b7e9-c3d5a810d93b',
+  spider: 'bd386399-69f0-4653-96a1-fd05b8fd148c',
+  frog: '5973b38b-9e8b-49ec-b7e9-c3d5a810d93b',
   'storm crow': '38d87b87-0c67-47a5-8093-b49aa11f6196',
-  'bat': 'ff86d8fc-5242-405e-b5e3-f9ff73296794',
-  'secret jo sesh': 'bd45ace2-220a-4a06-85fd-f1a41073a25c'
-
-
+  bat: 'ff86d8fc-5242-405e-b5e3-f9ff73296794',
+  'secret jo sesh': 'bd45ace2-220a-4a06-85fd-f1a41073a25c',
 };
-const tagCanHaveFaces = (tag:string,card?:HCCard.Any):boolean => {
+const tagCanHaveFaces = (tag: string, card?: HCCard.Any): boolean => {
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
     return true;
   } else if (tag in frameTags) {
@@ -438,15 +436,15 @@ const tagCanHaveFaces = (tag:string,card?:HCCard.Any):boolean => {
     return true;
   }
   return false;
-}
-const tagDefaultsToBack = (tag:string):boolean => {
+};
+const tagDefaultsToBack = (tag: string): boolean => {
   if (tag == 'back-image') {
     return true;
-    }
+  }
   return false;
-}
-const isDriveURLString = (text:string):boolean => /^[A-Za-z0-9_-]{33}$/.test(text);
-const tagCanUseURL = (tag:string):boolean => {
+};
+const isDriveURLString = (text: string): boolean => /^[A-Za-z0-9_-]{33}$/.test(text);
+const tagCanUseURL = (tag: string): boolean => {
   if (tag in faceImageTagProps) {
     return true;
   } else if (tag in frontImageTagProps) {
@@ -455,81 +453,110 @@ const tagCanUseURL = (tag:string):boolean => {
     return true;
   }
   return false;
-}
-const tagCanUseUUID = (tag:string):boolean => {
+};
+const tagCanUseUUID = (tag: string): boolean => {
   if (tag == 'card-in-scryfall') {
     return true;
   } else if (tag == 'has-other-printings') {
     return true;
   }
   return false;
-}
-const tagUsesNoteAsValue = (tag:string, card?:HCCard.Any):boolean => {
+};
+const tagUsesNoteAsValue = (tag: string, card?: HCCard.Any): boolean => {
   if (tag == 'flavor-name') {
     return true;
-  } else if (tag.toLowerCase() == card?.set?.toLowerCase() || (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) && (card?.set?.slice(0, 3) == 'HLC' || card?.set == 'HCV.1'))) {
+  } else if (
+    tag.toLowerCase() == card?.set?.toLowerCase() ||
+    (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
+      (card?.set?.slice(0, 3) == 'HLC' || card?.set == 'HCV.1'))
+  ) {
     return true;
   } else if (flagTags.includes(tag)) {
     return true;
   }
   return false;
-}
-type splitTagReturn = {tag:string, note?:string,value?:string, face?:number, uuid?:string, url?:string};
+};
+type splitTagReturn = {
+  tag: string;
+  note?: string;
+  value?: string;
+  face?: number;
+  uuid?: string;
+  url?: string;
+};
 // type splitTagOptions = {
 //   alsoAddingFaces?:boolean,
 //   // noFaces?: boolean,
 // }
 export const splitTagComponents = (
   full_tag: string,
-  card?:HCCard.Any,
-  alsoAddingFaces?:boolean,
+  card?: HCCard.Any,
+  alsoAddingFaces?: boolean
   // options?:splitTagOptions
 ): splitTagReturn => {
-  const splitTag:splitTagReturn = splitFullTag(full_tag);
+  const splitTag: splitTagReturn = splitFullTag(full_tag);
   if (!splitTag.note) {
     if (tagCanUseUUID(splitTag.tag)) {
-      const id = Object.entries(savedOracleIds).find(([name, id]) => card?.name.toLowerCase() == name)?.[1] ?? Object.entries(savedOracleIds).find(([name, id]) => card?.name.toLowerCase().startsWith(name))?.[1]
+      const id =
+        Object.entries(savedOracleIds).find(
+          ([name, id]) => card?.name.toLowerCase() == name
+        )?.[1] ??
+        Object.entries(savedOracleIds).find(([name, id]) =>
+          card?.name.toLowerCase().startsWith(name)
+        )?.[1];
       if (id) {
         splitTag.uuid = id;
       }
     }
-    return splitTag
+    return splitTag;
   }
   const splitNote = splitTag.note.split('|');
-  for (let i = splitNote.length-1;i>=0;i--) {
+  for (let i = splitNote.length - 1; i >= 0; i--) {
     if (tagCanUseUUID(splitTag.tag) && !splitTag.uuid) {
       if (isValidV4UUID(splitNote[i])) {
-        [splitTag.uuid] = splitNote.splice(i,1);
+        [splitTag.uuid] = splitNote.splice(i, 1);
         continue;
-
       }
       if (splitNote[i].toLowerCase() in savedOracleIds) {
-        const [name] = splitNote.splice(i,1);
-        splitTag.uuid = savedOracleIds[name.toLowerCase()]
+        const [name] = splitNote.splice(i, 1);
+        splitTag.uuid = savedOracleIds[name.toLowerCase()];
         continue;
       }
     }
-    if (tagCanUseURL(splitTag.tag) && (splitNote[i].startsWith('http') || isDriveURLString(splitNote[i])) && !splitTag.url) {
-      [splitTag.url] = splitNote.splice(i,1)
+    if (
+      tagCanUseURL(splitTag.tag) &&
+      (splitNote[i].startsWith('http') || isDriveURLString(splitNote[i])) &&
+      !splitTag.url
+    ) {
+      [splitTag.url] = splitNote.splice(i, 1);
       if (isDriveURLString(splitTag.url)) {
-        splitTag.url = `https://lh3.googleusercontent.com/d/${splitTag.url}`
+        splitTag.url = `https://lh3.googleusercontent.com/d/${splitTag.url}`;
       }
       if (tagDefaultsToBack(splitTag.tag) && ((card && 'card_faces' in card) || alsoAddingFaces)) {
-        splitTag.face = 1
+        splitTag.face = 1;
       }
-      continue
-    }
-    if (tagCanHaveFaces(splitTag.tag, card) && ((card && 'card_faces' in card) || alsoAddingFaces) && isInteger(splitNote[i]) && !splitTag.face) {
-      const [num] = splitNote.splice(i,1);
-      splitTag.face = parseInt(num)
       continue;
     }
-    if (tagUsesNoteAsValue(splitTag.tag, card) && !splitTag.value && !(flagTags.includes(splitTag.tag) && !isInteger(splitNote[i]))) {
-      [splitTag.value] = splitNote.splice(i,1);
+    if (
+      tagCanHaveFaces(splitTag.tag, card) &&
+      ((card && 'card_faces' in card) || alsoAddingFaces) &&
+      isInteger(splitNote[i]) &&
+      !splitTag.face
+    ) {
+      const [num] = splitNote.splice(i, 1);
+      splitTag.face = parseInt(num);
+      continue;
+    }
+    if (
+      tagUsesNoteAsValue(splitTag.tag, card) &&
+      !splitTag.value &&
+      !(flagTags.includes(splitTag.tag) && !isInteger(splitNote[i]))
+    ) {
+      [splitTag.value] = splitNote.splice(i, 1);
       continue;
     }
   }
-  splitTag.note = splitNote.join('|')
+  splitTag.note = splitNote.join('|');
   return splitTag;
 };
 
@@ -544,30 +571,34 @@ export const splitTagComponents = (
     alsoAddingFaces?: boolean;
   }
  */
-const tagShouldPush = (tag:string):boolean => {
+const tagShouldPush = (tag: string): boolean => {
   if (tag in anyFrameEffectTags) {
     return true;
   } else if (tag in faceFrameEffectTags) {
     return true;
   }
   return false;
-}
+};
 type TagChangeInput<K extends anyPropType> = {
-  card: HCCard.Any,
-  change_type: 'add' | 'delete',
-  full_tag: string,
-  splitTag: splitTagReturn,
+  card: HCCard.Any;
+  change_type: 'add' | 'delete';
+  full_tag: string;
+  splitTag: splitTagReturn;
   // alsoAddingFaces?:boolean,
-  prop?: K,
-  value?: Record<string, anyValueType<K>> | anyValueType<K>,
+  prop?: K;
+  value?: Record<string, anyValueType<K>> | anyValueType<K>;
   // options?: TagChangeOptions
-}
-const addPropToInput = <K extends anyPropType>(input:TagChangeInput<any>,prop:K,value?:Record<string, anyValueType<K>> | anyValueType<K>) => {
+};
+const addPropToInput = <K extends anyPropType>(
+  input: TagChangeInput<any>,
+  prop: K,
+  value?: Record<string, anyValueType<K>> | anyValueType<K>
+) => {
   (input as any).prop = prop;
   if (value != undefined) {
     (input as any).value = value;
   }
-}
+};
 
 /**
  * Adds a tag
@@ -578,8 +609,11 @@ const addPropToInput = <K extends anyPropType>(input:TagChangeInput<any>,prop:K,
  * @param value value to set the prop to, or record to access with the tag to get the value
  * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
  */
-const changesForFaceTag = <K extends facePropType>(input:TagChangeInput<K>, alsoAddingFaces?:boolean): anyChange[] => {
-  const {card, change_type, full_tag, splitTag, prop, value} = input;
+const changesForFaceTag = <K extends facePropType>(
+  input: TagChangeInput<K>,
+  alsoAddingFaces?: boolean
+): anyChange[] => {
+  const { card, change_type, full_tag, splitTag, prop, value } = input;
   const changes: anyChange[] = [];
   const tag_change: tagChange = {
     location: 'tag',
@@ -603,7 +637,14 @@ const changesForFaceTag = <K extends facePropType>(input:TagChangeInput<K>, also
       return value;
     }
   };
-  const face_change_type: changeType = change_type == 'delete' ? (tagShouldPush(splitTag.tag) ? 'pop' : 'delete') : tagShouldPush(splitTag.tag) ? 'push' : 'add';
+  const face_change_type: changeType =
+    change_type == 'delete'
+      ? tagShouldPush(splitTag.tag)
+        ? 'pop'
+        : 'delete'
+      : tagShouldPush(splitTag.tag)
+      ? 'push'
+      : 'add';
   const resolvedValue = getValue() as faceValueType<K> | undefined;
   if (!resolvedValue) {
     changes.push(tag_change);
@@ -629,8 +670,11 @@ const changesForFaceTag = <K extends facePropType>(input:TagChangeInput<K>, also
  * @param value value to set the prop to, or record to access with the tag to get the value
  * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
  */
-const changesForRootTag = <K extends rootPropType>(input:TagChangeInput<K>, alsoAddingFaces?:boolean): anyChange[] => {
-  const {card, change_type, full_tag, splitTag, prop, value} = input;
+const changesForRootTag = <K extends rootPropType>(
+  input: TagChangeInput<K>,
+  alsoAddingFaces?: boolean
+): anyChange[] => {
+  const { card, change_type, full_tag, splitTag, prop, value } = input;
   const changes: anyChange[] = [];
   const tag_change: tagChange = {
     location: 'tag',
@@ -654,7 +698,14 @@ const changesForRootTag = <K extends rootPropType>(input:TagChangeInput<K>, also
       return value;
     }
   };
-  const root_change_type: changeType = change_type == 'delete' ? (tagShouldPush(splitTag.tag) ? 'pop' : 'delete') : tagShouldPush(splitTag.tag) ? 'push' : 'add';
+  const root_change_type: changeType =
+    change_type == 'delete'
+      ? tagShouldPush(splitTag.tag)
+        ? 'pop'
+        : 'delete'
+      : tagShouldPush(splitTag.tag)
+      ? 'push'
+      : 'add';
   const resolvedValue = getValue() as rootValueType<K> | undefined;
   if (!resolvedValue) {
     changes.push(tag_change);
@@ -671,10 +722,17 @@ const changesForRootTag = <K extends rootPropType>(input:TagChangeInput<K>, also
   return changes.sort(sortChanges);
 };
 
-const changesForAnyTag = <K extends allPropType>(input:TagChangeInput<K>, alsoAddingFaces?:boolean): anyChange[] => {
-  const {card, change_type, splitTag, prop} = input;
+const changesForAnyTag = <K extends allPropType>(
+  input: TagChangeInput<K>,
+  alsoAddingFaces?: boolean
+): anyChange[] => {
+  const { card, change_type, splitTag, prop } = input;
   const layoutChanges = (prop: 'layout'): anyChange[] => {
-    if (splitTag.tag in multiLayoutTags && ('card_faces' in card || alsoAddingFaces) && splitTag.face == undefined ) {
+    if (
+      splitTag.tag in multiLayoutTags &&
+      ('card_faces' in card || alsoAddingFaces) &&
+      splitTag.face == undefined
+    ) {
       if (card.kind == 'token' && splitTag.tag != 'reminder-card') {
         input.prop = undefined;
         input.value = undefined;
@@ -684,7 +742,9 @@ const changesForAnyTag = <K extends allPropType>(input:TagChangeInput<K>, alsoAd
       const changes: anyChange[] = changesForRootTag(input);
       if (splitTag.tag in multiToFaceLayoutTags && 'card_faces' in card) {
         card.card_faces.forEach((face, i) => {
-          if ((i || !frontIgnoreMultiLayoutTags.includes(splitTag.tag as keyof typeof multiLayoutTags)) &&
+          if (
+            (i ||
+              !frontIgnoreMultiLayoutTags.includes(splitTag.tag as keyof typeof multiLayoutTags)) &&
             getDefaultKindLayout(card, i) == face.layout
           ) {
             changes.push(
@@ -700,12 +760,15 @@ const changesForAnyTag = <K extends allPropType>(input:TagChangeInput<K>, alsoAd
       }
       return changes.sort(sortChanges);
     }
-    if (splitTag.tag in faceLayoutTags && !(('card_faces' in card || alsoAddingFaces) && splitTag.face == undefined)) {
+    if (
+      splitTag.tag in faceLayoutTags &&
+      !(('card_faces' in card || alsoAddingFaces) && splitTag.face == undefined)
+    ) {
       (input as any).value = faceLayoutTags;
-      return splitTag.face == undefined ? changesForRootTag(input): changesForFaceTag(input);
+      return splitTag.face == undefined ? changesForRootTag(input) : changesForFaceTag(input);
     }
     if (splitTag.tag == 'meld') {
-      (input as any).value = card.kind == 'token' ? HCLayout.MeldResult : HCLayout.MeldPart
+      (input as any).value = card.kind == 'token' ? HCLayout.MeldResult : HCLayout.MeldPart;
       const changes = changesForRootTag(input);
       if ('card_faces' in card) {
         card.card_faces.forEach((face, i) => {
@@ -738,7 +801,7 @@ const changesForAnyTag = <K extends allPropType>(input:TagChangeInput<K>, alsoAd
     }
     return changes.sort(sortChanges);
   }
-  return splitTag.face == undefined ? changesForRootTag(input): changesForFaceTag(input);
+  return splitTag.face == undefined ? changesForRootTag(input) : changesForFaceTag(input);
 };
 
 const flagTags = [
@@ -759,60 +822,63 @@ const inputForTag = (
   change_type: 'add' | 'delete',
   full_tag: string,
   alsoAddingFaces?: boolean
-): {input: TagChangeInput<any>, location: 'face'|'root'|'any'} => {
-  const splitTag = splitTagComponents(full_tag, card,alsoAddingFaces)
-  const input:TagChangeInput<any> = {
+): { input: TagChangeInput<any>; location: 'face' | 'root' | 'any' } => {
+  const splitTag = splitTagComponents(full_tag, card, alsoAddingFaces);
+  const input: TagChangeInput<any> = {
     card,
     change_type,
     full_tag,
-    splitTag
-  }
-  const tag = splitTag.tag
+    splitTag,
+  };
+  const tag = splitTag.tag;
   // TODO: remove value resolution
-  let location:'face'|'root'|'any' = 'any'
+  let location: 'face' | 'root' | 'any' = 'any';
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
-    addPropToInput(input,'watermark',tag.slice(0, tag.lastIndexOf('-')));
+    addPropToInput(input, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
     location = 'face';
   } else if (tag in frameTags) {
-    addPropToInput(input,'frame',frameTags);
+    addPropToInput(input, 'frame', frameTags);
   } else if (tag in cardFrameTags && card.kind != 'token') {
-    addPropToInput(input,'frame',cardFrameTags);
+    addPropToInput(input, 'frame', cardFrameTags);
   } else if (tag in tokenFrameTags && card.kind == 'token') {
-    addPropToInput(input,'frame',tokenFrameTags);
+    addPropToInput(input, 'frame', tokenFrameTags);
   } else if (tag in anyFrameEffectTags) {
-    addPropToInput(input,'frame_effects',anyFrameEffectTags);
+    addPropToInput(input, 'frame_effects', anyFrameEffectTags);
   } else if (tag in faceFrameEffectTags) {
-    addPropToInput(input,'frame_effects',faceFrameEffectTags);
-    location = 'face'
+    addPropToInput(input, 'frame_effects', faceFrameEffectTags);
+    location = 'face';
   } else if (tag in faceImageTagProps) {
-    addPropToInput(input,faceImageTagProps[tag],splitTag.url)
+    addPropToInput(input, faceImageTagProps[tag], splitTag.url);
   } else if (tag in frontImageTagProps) {
-    addPropToInput(input,frontImageTagProps[tag],splitTag.url)
-    location = 'root'
+    addPropToInput(input, frontImageTagProps[tag], splitTag.url);
+    location = 'root';
   } else if (tag == 'back-image') {
-    addPropToInput(input,'image',splitTag.url)
-    location = 'face'
+    addPropToInput(input, 'image', splitTag.url);
+    location = 'face';
   } else if (tag in borderColorTags) {
-    addPropToInput(input,'border_color', borderColorTags)
+    addPropToInput(input, 'border_color', borderColorTags);
   } else if (layoutTags.includes(tag as layoutTagType)) {
-    addPropToInput(input,'layout')
+    addPropToInput(input, 'layout');
   } else if (tag == 'foil') {
-    addPropToInput(input,'finish', HCFinish.Foil)
+    addPropToInput(input, 'finish', HCFinish.Foil);
   } else if (tag == 'card-in-scryfall' || tag == 'has-other-printings') {
-    addPropToInput(input,'oracle_id',splitTag.uuid)
-    location = 'root'
+    addPropToInput(input, 'oracle_id', splitTag.uuid);
+    location = 'root';
   } else if (tag == 'exact-card-in-scryfall') {
-    addPropToInput(input,'id_is_scryfall',true)
-    location = 'root'
+    addPropToInput(input, 'id_is_scryfall', true);
+    location = 'root';
   } else if (tag == 'flavor-name') {
-    addPropToInput(input,'flavor_name',splitTag.value)
-  } else if (tag.toLowerCase() == card.set?.toLowerCase() || (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&(card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))) {
-    addPropToInput(input,'collector_number',splitTag.value)
-    location = 'root'
+    addPropToInput(input, 'flavor_name', splitTag.value);
+  } else if (
+    tag.toLowerCase() == card.set?.toLowerCase() ||
+    (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
+      (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
+  ) {
+    addPropToInput(input, 'collector_number', splitTag.value);
+    location = 'root';
   }
-  return {input, location};
+  return { input, location };
 };
-
 
 export const getChangesFromTag = (
   card: HCCard.Any,
@@ -820,10 +886,16 @@ export const getChangesFromTag = (
   full_tag: string,
   alsoAddingFaces?: boolean
 ): anyChange[] => {
-  const {input, location} = inputForTag(card,change_type,full_tag,alsoAddingFaces);
-  const changes = (location == 'any' ? changesForAnyTag : location == 'face' ? changesForFaceTag:changesForRootTag)(input,alsoAddingFaces);
+  const { input, location } = inputForTag(card, change_type, full_tag, alsoAddingFaces);
+  const changes = (
+    location == 'any'
+      ? changesForAnyTag
+      : location == 'face'
+      ? changesForFaceTag
+      : changesForRootTag
+  )(input, alsoAddingFaces);
   const tag = input.splitTag.tag;
-  
+
   if (tag == 'draft-image') {
     const change: rootChange<'draft_image_status'> = createRootChange(
       change_type,
@@ -838,15 +910,15 @@ export const getChangesFromTag = (
       true
     );
     changes.push(change);
-  // } else if (tag == 'exact-card-in-scryfall') {
-  //   const change: rootChange<'id_is_scryfall'> = createRootChange(
-  //     change_type,
-  //     'id_is_scryfall',
-  //     true
-  //   );
-  //   changes.push(change);
+    // } else if (tag == 'exact-card-in-scryfall') {
+    //   const change: rootChange<'id_is_scryfall'> = createRootChange(
+    //     change_type,
+    //     'id_is_scryfall',
+    //     true
+    //   );
+    //   changes.push(change);
   }
-  return changes.sort(sortChanges)
+  return changes.sort(sortChanges);
   // return changes.filter(change=>changeIsValid(card,change))
 };
 

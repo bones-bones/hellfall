@@ -8,7 +8,6 @@ import { useAtom, useAtomValue } from 'jotai';
 import { deckAtom, draftAtom } from './draftAtom.ts';
 import { DeckConstruction } from './DeckConstruction.tsx';
 import { CARDS_PER_PACK } from './constants.ts';
-import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 import { canBeACommander, CardMap } from '@hellfall/shared/utils';
 import type { Pack, Round, TheDraft } from './types.ts';
@@ -40,7 +39,9 @@ export const Draft = () => {
     const draft: TheDraft = [];
     if (Set) {
       if (Set === 'HC6') {
-        const nonManders = cardMap.getAllInSetDirect('HC6').filter(card => !card.not_directly_draftable);
+        const nonManders = cardMap
+          .getAllInSetDirect('HC6')
+          .filter(card => !card.not_directly_draftable);
         const commanders = new CardMap();
         nonManders.forEach((card: HCCard.Any, id: string) => {
           if (canBeACommander(card)) {
@@ -65,7 +66,9 @@ export const Draft = () => {
         }
         setDraft(draft);
       } else {
-        const filtered = cardMap.getAllInSetDirect(Set).filter(card => !card.not_directly_draftable);
+        const filtered = cardMap
+          .getAllInSetDirect(Set)
+          .filter(card => !card.not_directly_draftable);
         const shuffled = shuffle(filtered.cards());
 
         for (let i = 0; i < 3; i++) {

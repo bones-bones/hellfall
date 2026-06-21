@@ -1,12 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { DeprecatedMenuItem, Pill } from '@workday/canvas-kit-preview-react';
-import {
-  FormField,
-  TertiaryButton,
-  Menu,
-  useMenuModel,
-  TextInput,
-} from '@workday/canvas-kit-react';
+// TODO: replace DeprecatedMenuItem once I figure out how to replicate its behavior
+import { DeprecatedMenuItem, FormField, Pill } from '@workday/canvas-kit-preview-react';
+import { TertiaryButton, Menu, useMenuModel, TextInput } from '@workday/canvas-kit-react';
 import { createStyles } from '@workday/canvas-kit-styling';
 
 type Props = {
@@ -65,7 +60,8 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
 
   return (
     <Menu model={menuModel}>
-      <FormField label={label}>
+      <FormField>
+        <FormField.Label>{label}</FormField.Label>
         <TextInput
           className={textInputStyles}
           ref={searchRef}
@@ -83,9 +79,15 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
                 addSelection(searchValue);
               }
             } else if (e.key === 'ArrowDown') {
-              setSelectedIndex(selectedIndex != undefined ? selectedIndex + 1 : 0);
+              e.preventDefault();
+              setSelectedIndex(prev =>
+                prev === undefined ? 0 : Math.min(prev + 1, filteredItems.length - 1)
+              );
             } else if (e.key === 'ArrowUp') {
-              setSelectedIndex(selectedIndex && selectedIndex > 0 ? selectedIndex - 1 : undefined);
+              e.preventDefault();
+              setSelectedIndex(prev =>
+                prev === undefined ? filteredItems.length - 1 : Math.max(prev - 1, 0)
+              );
             }
           }}
         />
@@ -141,4 +143,6 @@ const cardStyles = createStyles({
   borderTopLeftRadius: '0px',
   borderTopRightRadius: '0px',
   top: '-1',
+  marginTop: '-4px',
+  marginBottom: '-4px',
 });

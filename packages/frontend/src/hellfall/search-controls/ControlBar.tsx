@@ -1,10 +1,4 @@
-import {
-  FormField,
-  PaginationModel,
-  Select,
-  space,
-  useSelectModel,
-} from '@workday/canvas-kit-react';
+import { PaginationModel, Select, space, useSelectModel } from '@workday/canvas-kit-react';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   inputSortAtom,
@@ -31,6 +25,7 @@ import {
   createStyledSecondaryButton,
   createStyledSecondaryButtonLink,
 } from '../../styling';
+import { FormField } from '@workday/canvas-kit-preview-react';
 
 const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
   { label: 'Auto', value: 'auto' },
@@ -253,7 +248,8 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
 
   return (
     <Container>
-      <FormField label="Sort By" className={formFieldStyles}>
+      <FormField className={formFieldStyles}>
+        <FormField.Label>Sort By</FormField.Label>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <SortElements>
             {sortRules.length ? (

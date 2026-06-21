@@ -14,7 +14,7 @@ import {
   TextInputProps,
   BodyText,
 } from '@workday/canvas-kit-react';
-import { handleCsProp } from '@workday/canvas-kit-styling';
+import { handleCsProp, Stencil } from '@workday/canvas-kit-styling';
 import { Link, LinkProps } from 'react-router-dom';
 // Making generators that are more generic than these causes massive lag
 
@@ -61,12 +61,13 @@ export const createStyledImg =
       </img>
     );
 export const createStenciledImg =
-  <T extends React.ComponentPropsWithoutRef<'img'>>(
-    stencil: (props: Record<string, unknown>) => any
-  ) =>
+  <T extends React.ComponentPropsWithoutRef<'img'>>(stencil: Stencil<any>) =>
   ({ children, ...props }: T) =>
     (
-      <img alt="" {...handleCsProp(props, stencil(props))}>
+      <img
+        alt=""
+        {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}
+      >
         {children}
       </img>
     );
@@ -96,11 +97,13 @@ export const createStyledInput =
   ({ children, ...props }: React.ComponentPropsWithoutRef<'input'>) =>
     <input {...handleCsProp(props, styles)}>{children}</input>;
 export const createStenciledInput =
-  <T extends React.ComponentPropsWithoutRef<'input'>>(
-    stencil: (props: Record<string, unknown>) => any
-  ) =>
+  <T extends React.ComponentPropsWithoutRef<'input'>>(stencil: Stencil<any>) =>
   ({ children, ...props }: T) =>
-    <input {...handleCsProp(props, stencil(props))}>{children}</input>;
+    (
+      <input {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}>
+        {children}
+      </input>
+    );
 
 export const createStyledTextArea =
   (styles: string) =>
@@ -115,11 +118,15 @@ export const createStyledTextAreaWithRef =
       </textarea>
     );
 export const createStenciledTextArea =
-  <T extends React.ComponentPropsWithoutRef<'textarea'>>(
-    stencil: (props: Record<string, unknown>) => any
-  ) =>
+  <T extends React.ComponentPropsWithoutRef<'textarea'>>(stencil: Stencil<any>) =>
   ({ children, ...props }: T) =>
-    <textarea {...handleCsProp(props, stencil(props))}>{children}</textarea>;
+    (
+      <textarea
+        {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}
+      >
+        {children}
+      </textarea>
+    );
 
 export const createStyledSelect =
   (styles: string) =>
@@ -141,20 +148,26 @@ export const createStyledButton =
   ({ children, ...props }: React.ComponentPropsWithoutRef<'button'>) =>
     <button {...handleCsProp(props, styles)}>{children}</button>;
 export const createStenciledButton =
-  <T extends React.ComponentPropsWithoutRef<'button'>>(
-    stencil: (props: Record<string, unknown>) => any
-  ) =>
+  <T extends React.ComponentPropsWithoutRef<'button'>>(stencil: Stencil<any>) =>
   ({ children, ...props }: T) =>
-    <button {...handleCsProp(props, stencil(props))}>{children}</button>;
+    (
+      <button {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}>
+        {children}
+      </button>
+    );
 
 export const createStyledLink =
   (styles: string) =>
   ({ children, ...props }: LinkProps) =>
     <Link {...handleCsProp(props, styles)}>{children}</Link>;
 export const createStenciledLink =
-  <T extends LinkProps>(stencil: (props: Record<string, unknown>) => any) =>
+  <T extends LinkProps>(stencil: Stencil<any>) =>
   ({ children, ...props }: T) =>
-    <Link {...handleCsProp(props, stencil(props))}>{children}</Link>;
+    (
+      <Link {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}>
+        {children}
+      </Link>
+    );
 
 export const createStyledDiv =
   (styles: string) =>
@@ -173,9 +186,13 @@ export const createStyledDivWithRef =
       </Box>
     );
 export const createStenciledDiv =
-  <T extends BoxProps>(stencil: (props: Record<string, unknown>) => any) =>
+  <T extends BoxProps>(stencil: Stencil<any>) =>
   ({ children, ...props }: T) =>
-    <Box {...handleCsProp(props, stencil(props))}>{children}</Box>;
+    (
+      <Box {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}>
+        {children}
+      </Box>
+    );
 
 export const createStyledDivClickable =
   (styles: string) =>
@@ -191,9 +208,13 @@ export const createStyledSpan =
   ({ children, ...props }: TextProps) =>
     <Text {...(handleCsProp(props, styles) as any)}>{children}</Text>;
 export const createStenciledSpan =
-  <T extends TextProps>(stencil: (props: Record<string, unknown>) => any) =>
+  <T extends TextProps>(stencil: Stencil<any>) =>
   ({ children, ...props }: T) =>
-    <Text {...handleCsProp(props, stencil(props))}>{children}</Text>;
+    (
+      <Text {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}>
+        {children}
+      </Text>
+    );
 
 /**
  * Use this for <p>; font sizes are:
