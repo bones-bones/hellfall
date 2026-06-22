@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { Box } from '@workday/canvas-kit-react';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { FC, PropsWithChildren } from 'react';

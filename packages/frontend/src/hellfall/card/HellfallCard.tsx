@@ -4,7 +4,6 @@ import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
 import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 
-import { Link } from 'react-router-dom';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../hooks/useCardTagOverrides.ts';
@@ -15,17 +14,12 @@ import {
   formatDiscordMarkdownInvertedItalicsInline,
 } from './markdownFormatter.tsx';
 import { PendingChanges } from './PendingChanges.tsx';
-import { HellfallRelatedEntry } from '../entry/HellfallRelatedEntry.tsx';
-import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import { createStyles } from '@workday/canvas-kit-styling';
 import {
-  createStenciledSpan,
-  createStyledButton,
   createStyledDiv,
   createStyledDivWithRef,
-  createStyledHeading,
   createStyledHR,
   createStyledPrimaryButtonLink,
-  createStyledSpan,
 } from '../../styling';
 import { TagSection } from './hellfall-card-components/TagSection';
 import { CardEditingControls } from './CardEditingControls.tsx';

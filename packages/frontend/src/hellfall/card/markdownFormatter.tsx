@@ -10,7 +10,9 @@ import {
   ruleOutput,
 } from 'simple-markdown';
 import { stringToMana } from '../stringToMana.tsx';
-import styled from '@emotion/styled';
+import { Text, type } from '@workday/canvas-kit-react';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledIntrinsic } from '../../styling';
 
 // Helper function to check if a character is escaped
 const isEscaped = (source: string, index: number): boolean => {
@@ -194,7 +196,14 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
           };
         },
         react: (node: ParsedNode, output: OutputFunction, state?: ParserState): React.ReactNode => {
-          return <em key={state?.key}>{output(node.content as ParsedNode[], state)}</em>;
+          return (
+            <em
+              key={state?.key}
+              style={{ fontFamily: '"MPlantin", Georgia, "Times New Roman", serif' }}
+            >
+              {output(node.content as ParsedNode[], state)}
+            </em>
+          );
         },
       } satisfies Rule,
     };
@@ -323,9 +332,15 @@ export const formatDiscordMarkdownInvertedItalicsInline = (text: string): ReactN
   const firstLine = text.split('\\n')[0];
   return formatLine(firstLine, true);
 };
-const MediumText = styled('p')({
-  fontSize: '16px',
-  fontWeight: 'bold',
+const mediumTextStyles = createStyles({
+  fontSize: type.levels.body.medium.fontSize,
+  fontWeight: type.levels.body.medium.fontWeight,
   marginBlock: '.5rem',
   lineHeight: 1.125,
+});
+const MediumText = createStyledIntrinsic('p', mediumTextStyles);
+
+const italicText = createStyles({
+  fontStyle: 'italic',
+  fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
 });

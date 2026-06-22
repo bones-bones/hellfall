@@ -1,8 +1,17 @@
-import styled from '@emotion/styled';
 import { MouseEventHandler, useState } from 'react';
-import { VisuallyHiddenSpan } from './card/visual-components/VisuallyHiddenSpan';
-import { StyledTitleLink } from './card/visual-components/StyledTitleLink';
-import { TitleText } from './card/visual-components/TitleText';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import {
+  linkStyles,
+  loadedStyles,
+  sharedContainerStyles,
+  ImageLinkProps,
+  StyledTitleLink,
+  ClickableTitle,
+  StyledImage,
+  LoadedTitle,
+  VisuallyHiddenSpan,
+} from './entryStyles';
+import { createStenciledLink, createStyledDiv } from '../../styling';
 
 export const HellfallRelatedEntry = ({
   url,
@@ -41,23 +50,23 @@ export const HellfallRelatedEntry = ({
   };
 
   return (
-    <RelatedContainer key={id} role="button">
+    <Container key={id}>
       {onClickTitle && (
         <StyledTitleLink
           key={id + '-title'}
-          href={linkUrl}
+          to={linkUrl}
           onClick={e => handleClick(e, onClickTitle as any)}
         >
-          <TitleText>{name}</TitleText>
+          <ClickableTitle>{name}</ClickableTitle>
         </StyledTitleLink>
       )}
-      <RelatedStyledImageLink
-        href={linkUrl}
+      <StyledImageLink
+        to={linkUrl}
         onClick={e => handleClick(e)}
         title={plainText ?? name}
         imageLoaded={imageLoaded}
       >
-        <RelatedStyledImage
+        <StyledImage
           key={id}
           src={url}
           referrerPolicy="no-referrer"
@@ -65,25 +74,14 @@ export const HellfallRelatedEntry = ({
           title={plainText ?? name}
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageErrored(true)}
-          style={
-            imageLoaded || imageErrored
-              ? {}
-              : { visibility: 'hidden', display: 'inline', width: 0, height: 0, opacity: 0 }
-          }
+          hideImage={!(imageLoaded || imageErrored)}
+          isRelated={true}
         />
-        {!onClickTitle &&
-          (imageLoaded ? (
-            <VisuallyHiddenSpan key={id + '-name'}>{name}</VisuallyHiddenSpan>
-          ) : (
-            <TitleText
-              /* onClick={e => handleClick(e)} */ key={id + '-name'}
-              style={
-                imageLoaded ? { visibility: 'hidden' } : { margin: '4px', position: 'absolute' }
-              }
-            >
-              {name}
-            </TitleText>
-          ))}
+        {!onClickTitle && (
+          <LoadedTitle imageLoaded={imageLoaded} key={id + '-name'}>
+            {name}
+          </LoadedTitle>
+        )}
         {otherNames &&
           otherNames.map((otherName, i) => {
             return (
@@ -92,46 +90,31 @@ export const HellfallRelatedEntry = ({
               </VisuallyHiddenSpan>
             );
           })}
-      </RelatedStyledImageLink>
-    </RelatedContainer>
+      </StyledImageLink>
+    </Container>
   );
 };
 
-const RelatedContainer = styled.div({
+const containerStyles = createStyles(sharedContainerStyles, {
   display: 'flex',
   overflow: 'auto',
   maxheight: '500px',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '5px',
-  '& img': {
-    maxWidth: '100%',
-    width: 'auto',
-    height: 'auto',
-    objectFit: 'contain',
+});
+const Container = createStyledDiv(containerStyles);
+
+const imageLinkStencil = createStencil({
+  vars: {},
+  base: linkStyles,
+  modifiers: {
+    imageLoaded: {
+      false: {
+        height: '450px',
+        width: '320px',
+        ...loadedStyles,
+      },
+    },
   },
 });
-
-const RelatedStyledImageLink = styled.a<{ imageLoaded: boolean }>(
-  {
-    display: 'block',
-    textDecoration: 'none',
-    cursor: 'pointer',
-  },
-  props =>
-    props.imageLoaded
-      ? {}
-      : {
-          height: '320px',
-          width: '230px',
-          backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
-          borderRadius: '4.75% / 3.5%',
-          position: 'relative',
-        }
-);
-
-const RelatedStyledImage = styled.img({
-  maxHeight: '450px',
-  maxWidth: '320px',
-  cursor: 'pointer',
-});
+const StyledImageLink = createStenciledLink<ImageLinkProps>(imageLinkStencil);

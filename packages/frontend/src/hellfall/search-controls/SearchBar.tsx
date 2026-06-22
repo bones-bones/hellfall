@@ -15,7 +15,7 @@ export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) =>
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   const maxWidth = useMemo(() => {
-    return windowWidth - 2 * parseInt(space.l);
+    return windowWidth - 2 * 36;
   }, [windowWidth]);
 
   const [query, setQuery] = useAtom(queryAtom);
