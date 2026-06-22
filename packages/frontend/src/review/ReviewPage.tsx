@@ -7,6 +7,7 @@ import { Changeset, isChangesetStatus, isStatusFilter, StatusFilter } from '@hel
 import { useParams } from 'react-router-dom';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledButton, createStyledDiv } from '../styling';
+import { Heading } from '@workday/canvas-kit-react';
 
 export function ReviewPage() {
   const { user, loading: authLoading } = useAuth();
