@@ -1,6 +1,7 @@
 import { HCCard } from '@hellfall/shared/types';
 import {
   anyEntriesType,
+  anyExactEntriesType,
   faceEntriesType,
   faceMappedType,
   facePropType,
@@ -20,7 +21,7 @@ export const getPartEntries = (record: partMappedType) => Object.entries(record)
 
 export const getCardEntries = (card: HCCard.Any) => Object.entries(card) as anyEntriesType;
 
-export const getFireEntries = (card: firestoreCard) => Object.entries(card) as anyEntriesType;
+export const getFireEntries = (card: firestoreCard) => Object.entries(card) as anyExactEntriesType;
 
 export const getCardFaceEntries = (card: HCCard.AnyMultiFaced, index?: number) =>
   Object.entries(card.card_faces[index ?? 0]) as faceEntriesType;
