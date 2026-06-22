@@ -36,6 +36,8 @@ import {
   MediumText,
   SmallText,
 } from './visual-components/TextComponents.tsx';
+import { useAtomValue } from 'jotai';
+import { cardsAtom } from '../atoms/cardsAtom.ts';
 const renderText = (text: string[]) => {
   return text.map((entry, index) => {
     return <MediumText key={index}>{stringToMana(entry)}</MediumText>;
@@ -118,6 +120,8 @@ export const HellfallCard = ({
   const isContributor = Boolean(user?.isAdmin || user?.isContributor);
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const cards = useAtomValue(cardsAtom);
+  const otherPrints = cards.getAllPrints(data.oracle_id).cards();
 
   useEffect(() => {
     if (!windowRef.current) {
@@ -376,8 +380,9 @@ export const HellfallCard = ({
             }}
           />
           <RelatedCards
-            relatedCards={displayCard.all_parts}
+            relatedCards={displayCard.all_parts ?? []}
             sourceCardId={displayCard.id}
+            otherPrints={otherPrints ?? []}
             onSinglePage={onSinglePage}
           />
         </Card.Body>

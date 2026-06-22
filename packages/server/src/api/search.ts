@@ -92,13 +92,14 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
 
     res.setHeader(
       'Content-Disposition',
-      `inline; filename="${format == 'json'
-        ? 'search.json'
-        : format == 'xml'
+      `inline; filename="${
+        format == 'json'
+          ? 'search.json'
+          : format == 'xml'
           ? 'cube.xml'
           : format == 'cockatrice'
-            ? 'cube.json'
-            : `${format}.json`
+          ? 'cube.json'
+          : `${format}.json`
       }"`
     );
     res.statusCode = 200;
@@ -114,8 +115,9 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
       const response: any = {
         object: 'list',
         total_cards: results.length,
-        details: `${results.length} card${results.length != 1 ? 's' : ''}${summary ? ` ${stripDoubleSpaces(summary)}` : ''
-          }`,
+        details: `${results.length} card${results.length != 1 ? 's' : ''}${
+          summary ? ` ${stripDoubleSpaces(summary)}` : ''
+        }`,
       };
       if (invalidList.length) {
         response.warnings = invalidList;
