@@ -19,7 +19,7 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
   },
-  plugins: ['react', 'sonarjs'],
+  plugins: ['react', 'sonarjs', 'deprecation'],
   rules: {
     // 'prefer-destructuring': ['error', { object: true, array: false }],
     'import/prefer-default-export': 0,
@@ -54,6 +54,7 @@ module.exports = {
     'sonarjs/no-in-misuse': 'error',
     'react/prop-types': 0,
     'react/display-name': 0,
+    'deprecation/deprecation': 'warn',
 
     'react/no-unescaped-entities': [
       'error',

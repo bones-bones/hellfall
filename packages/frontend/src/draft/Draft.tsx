@@ -13,8 +13,7 @@ import type { Pack, Round, TheDraft } from './types.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { createStyledDiv } from '../styling/StyledElements.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { FormField } from '@workday/canvas-kit-preview-react';
-import { Select } from '@workday/canvas-kit-react';
+import { FormField, Select } from '@workday/canvas-kit-react';
 
 function shuffle<T>(array: T[]): T[] {
   const result = [...array];
@@ -92,20 +91,20 @@ export const Draft = () => {
       </ErrorContainer>
     );
   }
-  const options=[
-  { value: '---', disabled: true },
-  { value: 'HLC' },
-  { value: 'HC2' },
-  { value: 'HC3' },
-  { value: 'HC4' },
-  { value: 'HC5' },
-  { value: 'HC6' },
-  { value: 'HC7' },
-  { value: 'HCK' },
-  { value: 'HC8' },
-  { value: 'HKL' },
-  { value: 'NRM' },
-]
+  const options = [
+    { value: '---', disabled: true },
+    { value: 'HLC' },
+    { value: 'HC2' },
+    { value: 'HC3' },
+    { value: 'HC4' },
+    { value: 'HC5' },
+    { value: 'HC6' },
+    { value: 'HC7' },
+    { value: 'HCK' },
+    { value: 'HC8' },
+    { value: 'HKL' },
+    { value: 'NRM' },
+  ];
 
   return (
     <>
@@ -116,13 +115,12 @@ export const Draft = () => {
       </h2>
       {cardMap && !Set && (
         <FormField>
-          <Select
-            value={Set}
-            onChange={e => setSet(e.target.value as any)}
-          >            {options.map(entry => (
+          <Select value={Set} onChange={e => setSet(e.target.value as any)}>
+            {' '}
+            {options.map(entry => (
               <option key={entry.value}>{entry.value}</option>
             ))}
-</Select>
+          </Select>
         </FormField>
       )}
       {deckToBuild.length !== 0 && <DeckConstruction cards={deckToBuild} />}

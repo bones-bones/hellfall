@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
-import { getRelatedsFromSet, HCToTTSDeck, toCockCube } from '@hellfall/shared/utils';
+import {
+  getRelatedsFromSet,
+  HCToTTSDeck,
+  toCockCube,
+  unescapeBase64,
+} from '@hellfall/shared/utils';
 import { useAtomValue } from 'jotai';
 import { ReactNode } from 'react';
 import { downloadDraftmancer } from './downloadDraftmancer.ts';
@@ -220,7 +225,7 @@ export const CubeResources = () => {
                       );
                       const url =
                         'data:text/plain;base64,' +
-                        btoa(unescape(encodeURIComponent(JSON.stringify(val, null, 2))));
+                        btoa(unescapeBase64(encodeURIComponent(JSON.stringify(val, null, 2))));
                       const a = document.createElement('a');
                       a.style.display = 'none';
                       a.href = url;
@@ -243,7 +248,8 @@ export const CubeResources = () => {
                       cardMap,
                     });
 
-                    const url = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(val)));
+                    const url =
+                      'data:text/plain;base64,' + btoa(unescapeBase64(encodeURIComponent(val)));
                     const a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;

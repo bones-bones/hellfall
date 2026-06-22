@@ -1,8 +1,9 @@
-import { Box, ButtonColors, Card, inputColors, type, TextProps } from '@workday/canvas-kit-react';
+import { Box, ButtonColors, Card, TextProps } from '@workday/canvas-kit-react';
 import { SetLegality } from './visual-components/SetLegality';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
 import { formatParens, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
+import { system } from '@workday/canvas-tokens-web';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
@@ -461,29 +462,29 @@ const linkButtonStyles = createStyles({
 
 const inputButtonColors: ButtonColors = {
   default: {
-    background: inputColors.background,
-    border: inputColors.border,
-    label: inputColors.text,
+    background: system.color.bg.default,
+    border: system.color.border.input.default,
+    label: system.color.fg.default,
   },
   hover: {
-    background: inputColors.disabled.background,
-    border: inputColors.focusBorder,
-    label: inputColors.text,
+    background: system.color.surface.raised,
+    border: system.color.brand.border.primary,
+    label: system.color.fg.default,
   },
   active: {
-    background: inputColors.background,
-    border: inputColors.border,
-    label: inputColors.text,
+    background: system.color.bg.default,
+    border: system.color.border.input.default,
+    label: system.color.fg.default,
   },
   focus: {
-    background: inputColors.disabled.background,
-    border: inputColors.focusBorder,
-    label: inputColors.text,
+    background: system.color.surface.raised,
+    border: system.color.brand.border.primary,
+    label: system.color.fg.default,
   },
   disabled: {
-    background: inputColors.disabled.background,
-    border: inputColors.disabled.border,
-    label: inputColors.text,
+    background: system.color.surface.raised,
+    border: system.color.fg.disabled,
+    label: system.color.fg.default,
   },
 };
 const LinkButton = createStyledPrimaryButtonLink(linkButtonStyles);

@@ -1,11 +1,10 @@
-import { PrimaryButton, TextInput } from '@workday/canvas-kit-react';
+import { FormField, PrimaryButton, TextInput } from '@workday/canvas-kit-react';
 import { useRef, useState } from 'react';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { HellfallEntry } from '../hellfall/entry/HellfallEntry.tsx';
 import { useAtomValue } from 'jotai';
 import { toFaces } from '@hellfall/shared/utils';
-import { FormField } from '@workday/canvas-kit-preview-react';
 
 export const AvatarOfBalls = () => {
   const cards = useAtomValue(cardsAtom);

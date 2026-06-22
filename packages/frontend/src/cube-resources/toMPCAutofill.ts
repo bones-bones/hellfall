@@ -1,3 +1,4 @@
+import { unescapeBase64 } from '@hellfall/shared/utils';
 import { recursiveAdoption } from './recursiveAdoption.ts';
 
 const BRACKETS = [612, 504, 396, 234, 216, 198, 180, 162, 144, 126, 108, 90, 72, 55, 36, 18];
@@ -111,7 +112,7 @@ export const toMPCAutofill = (cards: CardToFill[]) => {
 
     const docAsString = new XMLSerializer().serializeToString(xmlDoc.documentElement);
 
-    const url = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(docAsString)));
+    const url = 'data:text/plain;base64,' + btoa(unescapeBase64(encodeURIComponent(docAsString)));
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;

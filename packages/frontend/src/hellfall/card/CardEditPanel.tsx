@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { Card } from '@workday/canvas-kit-react';
+import { Card, FormField } from '@workday/canvas-kit-react';
 import type { HCCard } from '@hellfall/shared/types';
 import { useAuth } from '../../auth';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
@@ -12,7 +12,6 @@ import {
   toFaces,
 } from '@hellfall/shared/utils';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { FormField } from '@workday/canvas-kit-preview-react';
 import {
   createStenciledInput,
   createStenciledTextArea,

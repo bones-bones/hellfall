@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { HCCard } from '@hellfall/shared/types';
 import { pushProp } from '@hellfall/shared/utils';
-import { Select } from '@workday/canvas-kit-react';
+import { FormField, Select } from '@workday/canvas-kit-react';
 import { Box, BoxProps } from '@workday/canvas-kit-react';
 import { landsData } from '@hellfall/shared/data';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledDiv, createStyledIntrinsic } from '../styling';
-import { FormField } from '@workday/canvas-kit-preview-react';
 
 export const LandBox = () => {
   const lands = landsData.data as HCCard.Normal[];

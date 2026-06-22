@@ -6,8 +6,8 @@ import {
   PillSearch,
   NumberSelector,
 } from '../advanced/index.ts';
-import { ButtonColors, inputColors, TextInput } from '@workday/canvas-kit-react';
-
+import { ButtonColors, TextInput, FormField } from '@workday/canvas-kit-react';
+import { system } from '@workday/canvas-tokens-web';
 import { useAtom } from 'jotai';
 import { inputSortAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { useEffect, useState } from 'react';
@@ -24,7 +24,6 @@ import {
   createStyledSelect,
 } from '../../styling';
 import { StyledComponentHolder, StyledLabel, StyledLegend } from './AdvancedComponents.tsx';
-import { FormField } from '@workday/canvas-kit-preview-react';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');
@@ -580,29 +579,29 @@ export const AdvancedSearch = () => {
 };
 const inputButtonColors: ButtonColors = {
   default: {
-    background: inputColors.background,
-    border: inputColors.border,
-    label: inputColors.text,
+    background: system.color.bg.default,
+    border: system.color.border.input.default,
+    label: system.color.fg.default,
   },
   hover: {
-    background: inputColors.disabled.background,
-    border: inputColors.focusBorder,
-    label: inputColors.text,
+    background: system.color.surface.raised,
+    border: system.color.brand.border.primary,
+    label: system.color.fg.default,
   },
   active: {
-    background: inputColors.background,
-    border: inputColors.border,
-    label: inputColors.text,
+    background: system.color.bg.default,
+    border: system.color.border.input.default,
+    label: system.color.fg.default,
   },
   focus: {
-    background: inputColors.disabled.background,
-    border: inputColors.focusBorder,
-    label: inputColors.text,
+    background: system.color.surface.raised,
+    border: system.color.brand.border.primary,
+    label: system.color.fg.default,
   },
   disabled: {
-    background: inputColors.disabled.background,
-    border: inputColors.disabled.border,
-    label: inputColors.text,
+    background: system.color.surface.raised,
+    border: system.color.fg.disabled,
+    label: system.color.fg.default,
   },
 };
 

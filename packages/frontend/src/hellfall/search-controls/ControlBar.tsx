@@ -1,4 +1,4 @@
-import { PaginationModel, Select, space, useSelectModel } from '@workday/canvas-kit-react';
+import { FormField, PaginationModel, Select, useSelectModel } from '@workday/canvas-kit-react';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   inputSortAtom,
@@ -7,7 +7,6 @@ import {
   querySortAtom,
   sortAtom,
 } from '../atoms/searchAtoms.ts';
-// import styled from '@emotion/styled';
 import { sortType, dirType, getWinnowedSortOptions } from '@hellfall/shared/filters';
 import { useEffect, useState } from 'react';
 import {
@@ -25,7 +24,6 @@ import {
   createStyledSecondaryButton,
   createStyledSecondaryButtonLink,
 } from '../../styling';
-import { FormField } from '@workday/canvas-kit-preview-react';
 
 const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
   { label: 'Auto', value: 'auto' },
@@ -75,9 +73,6 @@ const SortSelect = ({
     onSelect: data => {
       handleSortChange(index, data.id as sortType);
     },
-    onChange: e => {
-      const x = 1;
-    },
   });
   useEffect(() => {
     const currentSelectedId = selectModel.state.selectedIds[0];
@@ -101,14 +96,11 @@ const SortSelect = ({
               : 'Change how cards are sorted'
           }
           disabled={sortIsOverriden(index)}
+          cs={inputStencil()}
         />
         <Select.Popper>
           <Select.Card {...cardStencil()}>
-            <Select.List {...listStencil()}>
-              {(item: { value: string; label: sortType }) => (
-                <Select.Item key={item.value}>{item.label}</Select.Item>
-              )}
-            </Select.List>
+            <Select.List {...listStencil()} />
           </Select.Card>
         </Select.Popper>
       </Select>
@@ -162,6 +154,7 @@ const DirSelect = ({
               : 'Change sort direction'
           }
           disabled={dirIsOverriden(index)}
+          cs={inputStencil({ isDir: true })}
         />
         <Select.Popper>
           <Select.Card {...cardStencil({ isDir: true })}>
@@ -425,6 +418,55 @@ const selectStencil = createStencil({
     },
   },
 });
+const inputStyles = {
+  verticalAlign: 'top',
+  display: 'inline-block',
+  width: '135px',
+  minWidth: '135px',
+  '&:disabled': {
+    cursor: 'not-allowed',
+  },
+};
+const inputStencil = createStencil({
+  vars: {},
+  base: inputStyles,
+  modifiers: {
+    isDir: {
+      true: {
+        width: '85px',
+        minWidth: '85px',
+      },
+    },
+  },
+});
+// const popperStyles = {
+//   // height:0,
+//   backgroundColor: 'white',
+//   border: '1px solid #d1d1d1',
+//   borderRadius: '4px',
+//   boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+//   padding: '4px 0',
+//   width: '135px !important',
+//   marginTop: '-4px',
+//   marginBottom: '-4px',
+//   overflowX: 'hidden',
+//   '& > div': {
+//     marginTop: 0,
+//     marginBottom: 0,
+//     overflowX: 'hidden' as any,
+//   },
+// };
+// const popperStencil = createStencil({
+//   vars: {},
+//   base: popperStyles,
+//   modifiers: {
+//     isDir: {
+//       true: {
+//         width: '85px !important',
+//       },
+//     },
+//   },
+// });
 const cardStyles = {
   // height:0,
   backgroundColor: 'white',
@@ -437,9 +479,13 @@ const cardStyles = {
   marginBottom: '-4px',
   overflowX: 'hidden',
   '& > div': {
-    marginTop: 0,
-    marginBottom: 0,
+    marginTop: '-4px !important',
+    marginBottom: '-4px !important',
     overflowX: 'hidden' as any,
+    '& > div': {
+      marginTop: 0,
+      marginBottom: 0,
+    },
   },
 };
 const cardStencil = createStencil({

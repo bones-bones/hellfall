@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
 import { HCCard, SetCode } from '@hellfall/shared/types';
 // import { toDeck } from './toDeck.ts';
-import { TextInput, Box } from '@workday/canvas-kit-react';
+import { TextInput, Box, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { buildNameToIdMap, lookupNameToId } from '../hellfall/hooks/useNameToId.ts';
@@ -10,9 +10,8 @@ import { downloadDraftmancer } from '../cube-resources/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledImg, createStyledTextAreaWithRef } from '../styling';
-import { CardMap, HCToTTSDeck, textPrep } from '@hellfall/shared/utils';
+import { CardMap, HCToTTSDeck, textPrep, unescapeBase64 } from '@hellfall/shared/utils';
 import { loadCardsData } from '@hellfall/shared/data';
-import { FormField } from '@workday/canvas-kit-preview-react';
 
 // const basics: Record<string, string> = {
 //   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -215,7 +214,7 @@ Cock and Balls to Torture and Abuse
           );
           const url =
             'data:text/plain;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(val, null, 2))));
+            btoa(unescapeBase64(encodeURIComponent(JSON.stringify(val, null, 2))));
           const a = document.createElement('a');
           a.style.display = 'none';
           a.href = url;

@@ -1,8 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Heading } from '@workday/canvas-kit-react';
 import { useAuth } from '../auth';
 import { getAuthApiUrl } from '../auth/getAuthApiUrl';
-// import { Changeset, StatusFilter } from './types';
 import { ChangesetCard } from './ChangesetCard';
 import { ErrorText } from './ErrorText';
 import { Changeset, isChangesetStatus, isStatusFilter, StatusFilter } from '@hellfall/shared/utils';

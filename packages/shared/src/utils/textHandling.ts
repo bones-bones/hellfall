@@ -400,3 +400,6 @@ export const toExportMana = (text: string, isCost: boolean = false) => {
 };
 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export const isValidV4UUID = (uuid: string): boolean => uuidRegex.test(uuid);
+
+export const unescapeBase64 = (text: string) =>
+  text.replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));

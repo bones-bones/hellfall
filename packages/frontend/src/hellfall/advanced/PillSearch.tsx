@@ -1,7 +1,13 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 // TODO: replace DeprecatedMenuItem once I figure out how to replicate its behavior
-import { DeprecatedMenuItem, FormField, Pill } from '@workday/canvas-kit-preview-react';
-import { TertiaryButton, Menu, useMenuModel, TextInput } from '@workday/canvas-kit-react';
+import { DeprecatedMenuItem, Pill } from '@workday/canvas-kit-preview-react';
+import {
+  TertiaryButton,
+  Menu,
+  useMenuModel,
+  TextInput,
+  FormField,
+} from '@workday/canvas-kit-react';
 import { createStyles } from '@workday/canvas-kit-styling';
 
 type Props = {

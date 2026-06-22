@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "eslint-plugin-deprecation": "^3.0.0",
     "eslint-plugin-sonarjs": "^4.0.3",
     "prettier": "^2.2.1",
     "typescript": "^5",
@@ -50,6 +51,7 @@
     "@workday/canvas-kit-react@npm:^9.1.42": "patch:@workday/canvas-kit-react@npm%3A9.1.42#~/.yarn/patches/@workday-canvas-kit-react-npm-9.1.42-4f27caa873.patch",
     "@workday/canvas-kit-react@npm:^10.3.63": "patch:@workday/canvas-kit-react@npm%3A10.3.63#~/.yarn/patches/@workday-canvas-kit-react-npm-10.3.63-26eed26648.patch",
     "@workday/canvas-kit-react@npm:^11.2.16": "patch:@workday/canvas-kit-react@npm%3A11.2.16#~/.yarn/patches/@workday-canvas-kit-react-npm-11.2.16-30dac9673f.patch",
-    "@workday/canvas-kit-react@npm:^12.6.30": "patch:@workday/canvas-kit-react@npm%3A12.6.30#~/.yarn/patches/@workday-canvas-kit-react-npm-12.6.30-a09c620ad4.patch"
+    "@workday/canvas-kit-react@npm:^12.6.30": "patch:@workday/canvas-kit-react@npm%3A12.6.30#~/.yarn/patches/@workday-canvas-kit-react-npm-12.6.30-a09c620ad4.patch",
+    "@workday/canvas-kit-react@npm:^13.2.57": "patch:@workday/canvas-kit-react@npm%3A13.2.57#~/.yarn/patches/@workday-canvas-kit-react-npm-13.2.57-98c6641082.patch"
   }
 }
