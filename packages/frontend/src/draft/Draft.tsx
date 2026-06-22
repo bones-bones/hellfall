@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { FormField } from '@workday/canvas-kit-react/form-field';
-import { Select } from '@workday/canvas-kit-preview-react/select';
+// import { Select } from '@workday/canvas-kit-preview-react/select';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { Area } from './Area.tsx';
 import { useAtom, useAtomValue } from 'jotai';
@@ -14,6 +13,8 @@ import type { Pack, Round, TheDraft } from './types.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { createStyledDiv } from '../styling/StyledElements.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
+import { FormField } from '@workday/canvas-kit-preview-react';
+import { Select } from '@workday/canvas-kit-react';
 
 function shuffle<T>(array: T[]): T[] {
   const result = [...array];
@@ -91,6 +92,20 @@ export const Draft = () => {
       </ErrorContainer>
     );
   }
+  const options=[
+  { value: '---', disabled: true },
+  { value: 'HLC' },
+  { value: 'HC2' },
+  { value: 'HC3' },
+  { value: 'HC4' },
+  { value: 'HC5' },
+  { value: 'HC6' },
+  { value: 'HC7' },
+  { value: 'HCK' },
+  { value: 'HC8' },
+  { value: 'HKL' },
+  { value: 'NRM' },
+]
 
   return (
     <>
@@ -100,25 +115,14 @@ export const Draft = () => {
         draftmancer instead)
       </h2>
       {cardMap && !Set && (
-        <FormField label="Select your set">
+        <FormField>
           <Select
             value={Set}
             onChange={e => setSet(e.target.value as any)}
-            options={[
-              { value: '---', disabled: true },
-              { value: 'HLC' },
-              { value: 'HC2' },
-              { value: 'HC3' },
-              { value: 'HC4' },
-              { value: 'HC5' },
-              { value: 'HC6' },
-              { value: 'HC7' },
-              { value: 'HCK' },
-              { value: 'HC8' },
-              { value: 'HKL' },
-              { value: 'NRM' },
-            ]}
-          />
+          >            {options.map(entry => (
+              <option key={entry.value}>{entry.value}</option>
+            ))}
+</Select>
         </FormField>
       )}
       {deckToBuild.length !== 0 && <DeckConstruction cards={deckToBuild} />}

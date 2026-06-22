@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
 import { HCCard, SetCode } from '@hellfall/shared/types';
 // import { toDeck } from './toDeck.ts';
-import { TextInput, FormField, Box } from '@workday/canvas-kit-react';
+import { TextInput, Box } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { buildNameToIdMap, lookupNameToId } from '../hellfall/hooks/useNameToId.ts';
@@ -12,6 +12,7 @@ import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledImg, createStyledTextAreaWithRef } from '../styling';
 import { CardMap, HCToTTSDeck, textPrep } from '@hellfall/shared/utils';
 import { loadCardsData } from '@hellfall/shared/data';
+import { FormField } from '@workday/canvas-kit-preview-react';
 
 // const basics: Record<string, string> = {
 //   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
@@ -150,7 +151,8 @@ export const DeckBuilder = () => {
             Click here to playtest
           </button>
         ))}
-      <FormField label="Deck Name">
+      <FormField>
+        <FormField.Label>Deck Name</FormField.Label>
         <TextInput
           defaultValue={deckName}
           placeholder="your deck name goes here"
