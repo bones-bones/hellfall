@@ -13,6 +13,8 @@ import {
   TextInput,
   TextInputProps,
   BodyText,
+  TertiaryButtonProps,
+  TertiaryButton,
 } from '@workday/canvas-kit-react';
 import { handleCsProp, Stencil } from '@workday/canvas-kit-styling';
 import React from 'react';
@@ -194,6 +196,18 @@ export const createStenciledDiv =
         {children}
       </Box>
     );
+export type StenciledButtonDivProps = BoxProps & React.ComponentPropsWithoutRef<'button'>;
+export const createStenciledButtonDiv =
+  <T extends BoxProps & React.ComponentPropsWithoutRef<'button'>>(stencil: Stencil<any>) =>
+  ({ children, ...props }: T) =>
+    (
+      <Box
+        as={'button'}
+        {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}
+      >
+        {children}
+      </Box>
+    );
 
 export const createStyledDivClickable =
   (styles: string) =>
@@ -270,6 +284,11 @@ export const createStyledSecondaryButton =
   (styles: string) =>
   ({ children, ...props }: SecondaryButtonProps & React.ComponentPropsWithoutRef<'button'>) =>
     <SecondaryButton {...(handleCsProp(props, styles) as any)}>{children}</SecondaryButton>;
+
+export const createStyledTertiaryButton =
+  (styles: string) =>
+  ({ children, ...props }: TertiaryButtonProps & React.ComponentPropsWithoutRef<'button'>) =>
+    <TertiaryButton {...(handleCsProp(props, styles) as any)}>{children}</TertiaryButton>;
 
 export const createStyledSecondaryButtonLink =
   (styles: string) =>

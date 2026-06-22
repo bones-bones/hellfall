@@ -1,4 +1,3 @@
-import { TextInput, space, styled } from '@workday/canvas-kit-react';
 import { useAtom } from 'jotai';
 import { pageAtom, queryAtom } from '../atoms/searchAtoms';
 import { useEffect, useMemo, useState } from 'react';

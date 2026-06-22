@@ -10,7 +10,6 @@ import {
   ruleOutput,
 } from 'simple-markdown';
 import { stringToMana } from '../stringToMana.tsx';
-import { Text, type } from '@workday/canvas-kit-react';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledIntrinsic } from '../../styling';
 
@@ -333,8 +332,8 @@ export const formatDiscordMarkdownInvertedItalicsInline = (text: string): ReactN
   return formatLine(firstLine, true);
 };
 const mediumTextStyles = createStyles({
-  fontSize: type.levels.body.medium.fontSize,
-  fontWeight: type.levels.body.medium.fontWeight,
+  fontSize: '18px',
+  fontWeight: 'normal',
   marginBlock: '.5rem',
   lineHeight: 1.125,
 });

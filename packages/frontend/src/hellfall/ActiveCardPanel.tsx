@@ -1,24 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useKeyPress } from '../hooks';
 import { useAtom, useAtomValue } from 'jotai';
 import { activeCardAtom } from './atoms/searchAtoms';
 import { cardsAtom } from './atoms/cardsAtom';
-import { SidePanel, useSidePanel } from '@workday/canvas-kit-preview-react';
+import { SidePanel, useSidePanelModel } from '@workday/canvas-kit-labs-react';
 import { Box, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
 import { extLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv } from '../styling';
+import { createStyledDiv, createStyledDivWithRef } from '../styling';
 
 interface ActiveCardPanelProps {
   origin?: 'left' | 'right'; // Optional origin prop, defaulting to "right"
 }
-
+const originMap = {
+  left: 'start' as const,
+  right: 'end' as const,
+};
 export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
   const cards = useAtomValue(cardsAtom);
   const escape = useKeyPress('Escape');
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const activeCard = cards.get(activeCardFromAtom);
+  const initialTransitionState = activeCard ? 'expanded' : 'collapsed';
+  const model = useSidePanelModel({ initialTransitionState });
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (activeCard) {
+      model.events.expand();
+    } else {
+      model.events.collapse();
+    }
+  }, [activeCard]);
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+      scrollContainerRef.current.scrollLeft = 0;
+    }
+  }, [activeCard]);
 
   useEffect(() => {
     if (escape) {
@@ -33,23 +53,20 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const { panelProps } = useSidePanel({
-    initialExpanded: !!activeCard,
-  });
-
   return (
     <StyledSidePanel>
       <SidePanel
-        {...panelProps}
-        expanded={!!activeCard}
+        model={model}
+        origin={originMap[origin]}
+        // initialTransitionState={initialTransitionState}
+        // expanded={!!activeCard}
         expandedWidth={Math.max(windowWidth * 0.535, 350)}
         collapsedWidth={0}
-        origin={origin}
         {...sidePanelStencil({ origin })}
       >
         <Card>
           <Card.Body padding={'zero'}>
-            <SPContainer>
+            <SPContainer ref={scrollContainerRef}>
               <ToolbarIconButton
                 icon={xIcon}
                 margin={'2px 0 0 2px'}
@@ -109,4 +126,4 @@ const spContainerStyles = createStyles({
   height: '90vh',
   overflowX: 'hidden',
 });
-const SPContainer = createStyledDiv(spContainerStyles);
+const SPContainer = createStyledDivWithRef(spContainerStyles);

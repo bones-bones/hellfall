@@ -277,7 +277,7 @@ export const AdvancedSearch = () => {
             values={nameSearch}
             onChange={setNameSearch}
           />
-          <FormField>
+          <FormField cs={idStyles}>
             <FormField.Label>Id</FormField.Label>
             <TextInput value={idSearch} onChange={event => setIdSearch(event.target.value)} />
           </FormField>
@@ -577,6 +577,10 @@ export const AdvancedSearch = () => {
     </div>
   );
 };
+
+const idStyles = createStyles({
+  marginBottom: '20px',
+});
 const inputButtonColors: ButtonColors = {
   default: {
     background: system.color.bg.default,

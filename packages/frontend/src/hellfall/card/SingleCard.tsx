@@ -1,7 +1,6 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { HellfallCard } from './HellfallCard.tsx';
-// import styled from '@emotion/styled';
 
 import { useEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
@@ -9,7 +8,6 @@ import { useUpdateURL } from '../hooks/useUrlSync.ts';
 import { useSearchResults } from '../hooks/useSearchResults.ts';
 import { invalidAtom, queryAtom, summaryAtom } from '../atoms/searchAtoms.ts';
 import { SearchBar } from '../search-controls/SearchBar.tsx';
-import { space } from '@workday/canvas-kit-react';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledHR } from '../../styling';
 

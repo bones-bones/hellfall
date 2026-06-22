@@ -1,14 +1,23 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 // TODO: replace DeprecatedMenuItem once I figure out how to replicate its behavior
-import { DeprecatedMenuItem, Pill } from '@workday/canvas-kit-preview-react';
+import { Pill, useMultiSelectModel } from '@workday/canvas-kit-preview-react';
 import {
   TertiaryButton,
   Menu,
   useMenuModel,
   TextInput,
   FormField,
+  BoxProps,
 } from '@workday/canvas-kit-react';
-import { createStyles } from '@workday/canvas-kit-styling';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import { listEquals } from '@hellfall/shared/utils';
+import {
+  createStenciledButtonDiv,
+  createStenciledDiv,
+  createStyledDiv,
+  createStyledTertiaryButton,
+  StenciledButtonDivProps,
+} from '../../styling';
 
 type Props = {
   possibleValues: string[];
@@ -20,128 +29,189 @@ type Props = {
 export const PillSearch = ({ possibleValues, values, label, onChange }: Props) => {
   const [menuItems, setMenuItems] = useState(possibleValues);
   const [selectedValues, setSelectedValues] = useState(values);
+  const [searchValue, setSearchValue] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
-  const menuModel = useMenuModel({ returnFocusRef: searchRef });
-  const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
-  const listRef = useRef(null);
+  // const menuModel = useMenuModel({ returnFocusRef: searchRef });
+  const [focusedIndex, setFocusedIndex] = useState<number | undefined>();
+  const [isOpen, setIsOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSelectedValues(values);
   }, [values]);
 
-  const [searchValue, setSearchValue] = useState('');
-  if (selectedIndex && listRef.current) {
-    (listRef.current as any).scrollToItem(selectedIndex);
-  }
+  const model = useMultiSelectModel({
+    items: possibleValues,
+    initialSelectedIds: values,
+  });
 
   useEffect(() => {
     onChange(selectedValues);
   }, [selectedValues]);
 
-  const addSelection = (value: string) => {
-    setSelectedValues([value, ...selectedValues].filter(Boolean));
-    setSearchValue('');
-    setMenuItems(possibleValues);
-
-    menuModel.events.hide();
-    searchRef.current?.blur();
+  const getSelectedArray = (): string[] => {
+    const selected = model.state.selectedIds;
+    if (selected === 'all') {
+      return possibleValues;
+    }
+    return selected || [];
   };
+
+  useEffect(() => {
+    const newSelected = getSelectedArray();
+    if (!listEquals(selectedValues, newSelected)) {
+      setSelectedValues(newSelected);
+    }
+  }, [model.state.selectedIds, possibleValues]);
 
   const filter = (event: ChangeEvent<HTMLInputElement>) => {
     // Doing this here instead of in useEffect loop for performance reasons
-    setSearchValue(event.target.value);
+    const value = event.target.value;
+    setSearchValue(value);
     const filteredValues = [
       ...possibleValues
-        .filter(entry => entry.toLowerCase().includes(event.target.value.toLowerCase()))
+        .filter(entry => entry.toLowerCase().includes(value.toLowerCase()))
         .filter(entry => !selectedValues.includes(entry)),
     ].filter(Boolean);
 
-    setMenuItems(filteredValues.length ? filteredValues : [event.target.value]);
+    setMenuItems(filteredValues.length ? filteredValues : [value]);
+    setIsOpen(true);
+    setFocusedIndex(undefined);
   };
 
-  const filteredItems =
-    selectedValues.length > 0
-      ? menuItems.filter(entry => !selectedValues.includes(entry))
-      : menuItems;
+  const addSelection = (value: string) => {
+    if (value && !selectedValues.includes(value)) {
+      const newSelected = [...selectedValues, value];
+      setSelectedValues(newSelected);
+      model.events.setSelectedIds(newSelected);
+    }
+    setSearchValue('');
+    setMenuItems(possibleValues);
+    setIsOpen(false);
+    setFocusedIndex(undefined);
+    inputRef.current?.focus();
+  };
+
+  const removeSelection = (item: string) => {
+    const newSelected = selectedValues.filter(val => val !== item);
+    setSelectedValues(newSelected);
+    model.events.setSelectedIds(newSelected);
+
+    // Refresh menu items when removing
+    const filtered = possibleValues
+      .filter(entry => entry.toLowerCase().includes(searchValue.toLowerCase()))
+      .filter(entry => !newSelected.includes(entry));
+    setMenuItems(filtered.length ? filtered : [searchValue]);
+  };
+  const clearAll = () => {
+    setSelectedValues([]);
+    setSearchValue('');
+    setMenuItems(possibleValues);
+    model.events.setSelectedIds([]);
+    setIsOpen(false);
+    setFocusedIndex(undefined);
+    inputRef.current?.focus();
+  };
+  const filteredItems = selectedValues.length
+    ? menuItems.filter(entry => !selectedValues.includes(entry))
+    : menuItems;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (focusedIndex != undefined && filteredItems[focusedIndex]) {
+        addSelection(filteredItems[focusedIndex]);
+      } else {
+        addSelection(searchValue);
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setFocusedIndex(prev =>
+        prev === undefined ? 0 : Math.min(prev + 1, filteredItems.length - 1)
+      );
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setFocusedIndex(prev =>
+        prev === undefined ? filteredItems.length - 1 : Math.max(prev - 1, 0)
+      );
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      setIsOpen(false);
+      setFocusedIndex(undefined);
+    }
+  };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+        setFocusedIndex(undefined);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
-    <Menu model={menuModel}>
-      <FormField>
-        <FormField.Label>{label}</FormField.Label>
+    <FormField cs={formFieldStyles}>
+      <FormField.Label>{label}</FormField.Label>
+      <div ref={containerRef} style={{ position: 'relative' }}>
         <TextInput
           className={textInputStyles}
           ref={searchRef}
           onFocus={() => {
-            setSelectedIndex(undefined);
-            menuModel.events.show();
+            // setFocusedIndex(undefined);
+            setIsOpen(true);
           }}
           onChange={filter}
           value={searchValue}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              if (selectedIndex) {
-                addSelection(filteredItems[selectedIndex]);
-              } else {
-                addSelection(searchValue);
-              }
-            } else if (e.key === 'ArrowDown') {
-              e.preventDefault();
-              setSelectedIndex(prev =>
-                prev === undefined ? 0 : Math.min(prev + 1, filteredItems.length - 1)
-              );
-            } else if (e.key === 'ArrowUp') {
-              e.preventDefault();
-              setSelectedIndex(prev =>
-                prev === undefined ? filteredItems.length - 1 : Math.max(prev - 1, 0)
-              );
-            }
-          }}
+          onKeyDown={handleKeyDown}
         />
-        <Menu.Popper anchorElement={searchRef.current} placement="bottom">
-          <Menu.Card cs={cardStyles}>
-            <div style={{ maxHeight: '200px', overflowY: 'auto', width: '275px' }}>
-              {filteredItems.map((item, index) => (
-                <DeprecatedMenuItem
-                  value={item}
-                  isFocused={selectedIndex === index}
+        {isOpen && (filteredItems.length || searchValue) && (
+          <DropdownContainer>
+            {filteredItems.map((item, index) => {
+              return (
+                <DropdownItem
                   key={item}
                   onClick={() => addSelection(item)}
+                  isFocused={focusedIndex === index}
+                  onMouseEnter={() => setFocusedIndex(index)}
+                  onMouseLeave={() => setFocusedIndex(undefined)}
                 >
                   {item}
-                </DeprecatedMenuItem>
-              ))}
-            </div>
-          </Menu.Card>
-        </Menu.Popper>
-
+                </DropdownItem>
+              );
+            })}
+          </DropdownContainer>
+        )}
+      </div>
+      <PillContainer>
         {selectedValues.map(entry => {
           return (
             <Pill key={entry} variant="removable">
               <Pill.Label color={entry.startsWith('!') ? 'RED' : 'GREEN'}>{entry}</Pill.Label>
-              <Pill.IconButton
-                onClick={() => setSelectedValues(selectedValues.filter(val => val != entry))}
-              />
+              <Pill.IconButton onClick={() => removeSelection(entry)} />
             </Pill>
           );
         })}
         {selectedValues.length > 0 && (
-          <TertiaryButton
+          <ClearButton
             onClick={() => {
-              setSelectedValues([]);
-              setSearchValue('');
-              setMenuItems(possibleValues);
+              clearAll();
             }}
           >
-            Clear selections
-          </TertiaryButton>
+            Clear selections ({selectedValues.length})
+          </ClearButton>
         )}
-      </FormField>
-    </Menu>
+      </PillContainer>
+    </FormField>
   );
 };
 
+const formFieldStyles = createStyles({ marginBottom: 0 });
 const textInputStyles = createStyles({
   marginLeft: '0px',
+  width: '275px',
 });
 
 const cardStyles = createStyles({
@@ -152,3 +222,61 @@ const cardStyles = createStyles({
   marginTop: '-4px',
   marginBottom: '-4px',
 });
+
+const pillContainerStyles = createStyles({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '4px',
+  marginBottom: '8px',
+  marginTop: '8px',
+});
+const PillContainer = createStyledDiv(pillContainerStyles);
+
+const dropdownContainerStyles = createStyles({
+  position: 'absolute',
+  top: '100%',
+  left: 0,
+  right: 0,
+  width: '275px',
+  maxHeight: '200px',
+  overflowY: 'auto',
+  backgroundColor: 'white',
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+  marginTop: '0px',
+  marginBottom: '0px',
+  zIndex: 1000,
+  overflowX: 'hidden',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+});
+const DropdownContainer = createStyledDiv(dropdownContainerStyles);
+
+const dropdownItemStencil = createStencil({
+  vars: {},
+  base: {
+    padding: '8px 16px',
+    cursor: 'pointer',
+    width: '275px',
+    backgroundColor: 'transparent',
+    border: '0',
+    // alignContent:'left',
+    // alignItems:'left',
+    textAlign: 'left',
+    overflowX: 'hidden',
+  },
+  modifiers: {
+    isFocused: {
+      true: {
+        backgroundColor: 'var(--cnvs-brand-primary-base)',
+        color: 'var(--cnvs-brand-primary-accent)',
+      },
+    },
+  },
+});
+interface DropdownItemProps extends StenciledButtonDivProps {
+  isFocused?: boolean;
+}
+const DropdownItem = createStenciledButtonDiv<DropdownItemProps>(dropdownItemStencil);
+
+const clearButtonStyles = createStyles({ height: 'auto' });
+const ClearButton = createStyledTertiaryButton(clearButtonStyles);

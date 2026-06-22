@@ -3,8 +3,8 @@ import { createStyledDiv, createStyledSpan } from '../../../styling';
 import { type } from '@workday/canvas-kit-react';
 
 export const mediumLineStyles = createStyles({
-  fontSize: '16px',
-  fontWeight: 'bold',
+  fontSize: '18px',
+  fontWeight: 'normal',
   marginBlock: '.5rem',
 });
 export const MediumLine = createStyledSpan(mediumLineStyles);
@@ -29,7 +29,7 @@ export const MediumItalicLine = createStyledSpan(mediumItalicLineStyles);
 
 export const smallTextStyles = createStyles({
   fontSize: '14px',
-  fontWeight: type.levels.body.small.fontWeight,
+  fontWeight: 'normal',
   marginBlock: '.4rem',
 });
 export const SmallText = createStyledDiv(smallTextStyles);
