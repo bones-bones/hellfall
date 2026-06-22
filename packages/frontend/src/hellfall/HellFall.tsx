@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { HellfallEntry } from './entry/HellfallEntry.tsx';
 
-import { space, BoxProps } from '@workday/canvas-kit-react';
+import { BoxProps } from '@workday/canvas-kit-react';
 
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
