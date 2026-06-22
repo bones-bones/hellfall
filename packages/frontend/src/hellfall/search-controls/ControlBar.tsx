@@ -100,7 +100,13 @@ const SortSelect = ({
         />
         <Select.Popper>
           <Select.Card {...cardStencil()}>
-            <Select.List {...listStencil()} />
+            <Select.List {...listStencil()}>
+              {(item: { value: string; label: sortType }) => (
+                <Select.Item key={item.value} {...itemStencil()}>
+                  {item.label}
+                </Select.Item>
+              )}
+            </Select.List>
           </Select.Card>
         </Select.Popper>
       </Select>
@@ -160,7 +166,9 @@ const DirSelect = ({
           <Select.Card {...cardStencil({ isDir: true })}>
             <Select.List {...listStencil({ isDir: true })}>
               {(item: { value: string; label: dirType }) => (
-                <Select.Item key={item.value}>{item.label}</Select.Item>
+                <Select.Item key={item.value} {...itemStencil({ isDir: true })}>
+                  {item.label}
+                </Select.Item>
               )}
             </Select.List>
           </Select.Card>
@@ -421,6 +429,7 @@ const selectStencil = createStencil({
 const inputStyles = {
   verticalAlign: 'top',
   display: 'inline-block',
+  borderRadius: '4px',
   width: '135px',
   minWidth: '135px',
   '&:disabled': {
@@ -439,39 +448,14 @@ const inputStencil = createStencil({
     },
   },
 });
-// const popperStyles = {
-//   // height:0,
-//   backgroundColor: 'white',
-//   border: '1px solid #d1d1d1',
-//   borderRadius: '4px',
-//   boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-//   padding: '4px 0',
-//   width: '135px !important',
-//   marginTop: '-4px',
-//   marginBottom: '-4px',
-//   overflowX: 'hidden',
-//   '& > div': {
-//     marginTop: 0,
-//     marginBottom: 0,
-//     overflowX: 'hidden' as any,
-//   },
-// };
-// const popperStencil = createStencil({
-//   vars: {},
-//   base: popperStyles,
-//   modifiers: {
-//     isDir: {
-//       true: {
-//         width: '85px !important',
-//       },
-//     },
-//   },
-// });
+// const popperStyles = createStyles({
+// })
+
 const cardStyles = {
   // height:0,
   backgroundColor: 'white',
   border: '1px solid #d1d1d1',
-  borderRadius: '4px',
+  borderRadius: 0,
   boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
   padding: '4px 0',
   width: '135px !important',
@@ -482,6 +466,7 @@ const cardStyles = {
     marginTop: '-4px !important',
     marginBottom: '-4px !important',
     overflowX: 'hidden' as any,
+    borderRadius: 0,
     '& > div': {
       marginTop: 0,
       marginBottom: 0,
@@ -504,6 +489,7 @@ const listStyles = {
   marginTop: 0,
   marginBottom: 0,
   overflowX: 'hidden',
+  borderRadius: 0,
 };
 const listStencil = createStencil({
   vars: {},
@@ -518,6 +504,12 @@ const listStencil = createStencil({
 });
 const itemStyles = {
   width: '135px',
+  borderRadius: 0,
+  '& > span': {
+    '& > svg': {
+      display: 'none',
+    },
+  },
 };
 const itemStencil = createStencil({
   vars: {},
@@ -556,7 +548,7 @@ const compactButtonStyles = createStyles({
       width: '14px', // Smaller icon
       height: '14px',
       display: 'block',
-      margin: '2px 0px 0px 2px',
+      margin: '0px 0px -0.5px 0px',
       alignSelf: 'center',
       verticalAlign: 'top',
     },

@@ -1,14 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 // TODO: replace DeprecatedMenuItem once I figure out how to replicate its behavior
-import { Pill, useMultiSelectModel } from '@workday/canvas-kit-preview-react';
-import {
-  TertiaryButton,
-  Menu,
-  useMenuModel,
-  TextInput,
-  FormField,
-  BoxProps,
-} from '@workday/canvas-kit-react';
+import { useMultiSelectModel } from '@workday/canvas-kit-preview-react';
+import { TextInput, FormField, Pill } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { listEquals } from '@hellfall/shared/utils';
 import {

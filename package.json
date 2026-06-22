@@ -46,8 +46,5 @@
   "dependencies": {
     "tsx": "^4.21.0"
   },
-  "packageManager": "yarn@4.17.0",
-  "resolutions": {
-    "@workday/canvas-kit-react@npm:^14.3.16": "patch:@workday/canvas-kit-react@npm%3A14.3.16#~/.yarn/patches/@workday-canvas-kit-react-npm-14.3.16-7a904473fe.patch"
-  }
+  "packageManager": "yarn@4.17.0"
 }

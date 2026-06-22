@@ -1,6 +1,5 @@
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledSpan } from '../../../styling';
-import { type } from '@workday/canvas-kit-react';
 
 export const mediumLineStyles = createStyles({
   fontSize: '18px',

@@ -2792,12 +2792,11 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6"
     "@typescript-eslint/parser": "npm:^5"
     "@use-gesture/react": "npm:^10.2.20"
-    "@workday/canvas-kit-codemod": "npm:^15.0.14"
-    "@workday/canvas-kit-labs-react": "npm:^14"
-    "@workday/canvas-kit-preview-react": "npm:^14"
-    "@workday/canvas-kit-react": "patch:@workday/canvas-kit-react@npm%3A14.3.16#~/.yarn/patches/@workday-canvas-kit-react-npm-14.3.16-7a904473fe.patch"
-    "@workday/canvas-kit-styling": "npm:^14"
-    "@workday/canvas-system-icons-web": "npm:3.0.0"
+    "@workday/canvas-kit-labs-react": "npm:^15"
+    "@workday/canvas-kit-preview-react": "npm:^15"
+    "@workday/canvas-kit-react": "npm:^15"
+    "@workday/canvas-kit-styling": "npm:^15"
+    "@workday/canvas-system-icons-web": "npm:^3"
     "@workday/canvas-tokens-web": "npm:^4"
     babel-eslint: "npm:^10.1.0"
     babel-jest: "npm:^26.6.0"
@@ -5229,68 +5228,62 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@workday/canvas-kit-codemod@npm:^15.0.14":
-  version: 15.0.14
-  resolution: "@workday/canvas-kit-codemod@npm:15.0.14"
-  dependencies:
-    chalk: "npm:4.1.2"
-    jscodeshift: "npm:^17.1.0"
-    yargs: "npm:^16.2.0"
-  bin:
-    canvas-kit-codemod: index.js
-  checksum: 10c0/0925569575e49455f9041e3e4eb83451134cc53f9bd0c23d4f5a585daeaa8a92d0301c718f2a507c928473a197a0f3a8e2e6edadaa28906211ff6109e79e35d5
+"@workday/canvas-expressive-icons-web@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@workday/canvas-expressive-icons-web@npm:1.0.2"
+  checksum: 10c0/d1e2e25cd9c0955c9b1ea279d9b57808b537b6f0d93754992c175c45b98d9637075c733892b03bcdff6bfac5c8f745f776abb181bbfa946ac69368541a5d7935
   languageName: node
   linkType: hard
 
-"@workday/canvas-kit-labs-react@npm:^14":
-  version: 14.3.16
-  resolution: "@workday/canvas-kit-labs-react@npm:14.3.16"
+"@workday/canvas-kit-labs-react@npm:^15":
+  version: 15.0.14
+  resolution: "@workday/canvas-kit-labs-react@npm:15.0.14"
   dependencies:
     "@emotion/react": "npm:^11.7.1"
     "@emotion/styled": "npm:^11.6.0"
-    "@workday/canvas-kit-react": "npm:^14.3.16"
-    "@workday/canvas-kit-styling": "npm:^14.3.16"
-    "@workday/canvas-system-icons-web": "npm:^3.0.36"
-    "@workday/canvas-tokens-web": "npm:^3.1.6"
+    "@workday/canvas-kit-react": "npm:^15.0.14"
+    "@workday/canvas-kit-styling": "npm:^15.0.14"
+    "@workday/canvas-system-icons-web": "npm:4.0.4"
+    "@workday/canvas-tokens-web": "npm:4.3.0"
     "@workday/design-assets-types": "npm:^0.3.0"
     chroma-js: "npm:^2.2.0"
     lodash.flatten: "npm:^4.4.0"
     rtl-css-js: "npm:^1.14.1"
   peerDependencies:
     react: ">=17.0"
-  checksum: 10c0/2f7d0330ef00ca8f761fa1ed1104511bd193b287d4274a7e4c9df9bcc1c3478f95846971d567816b14c609ecd73c3925f9319cba8a42f0d70317574543aa59cd
+  checksum: 10c0/5f4c386f868bf9ea89d12c6270942776fe06dd0e8edac7ed5d521ead084466edfb171d7e135be56dbf738caa3da2e1fdcee181f9029ca65a23538dbb23a889bd
   languageName: node
   linkType: hard
 
-"@workday/canvas-kit-popup-stack@npm:^14.3.16":
-  version: 14.3.16
-  resolution: "@workday/canvas-kit-popup-stack@npm:14.3.16"
+"@workday/canvas-kit-popup-stack@npm:^15.0.14":
+  version: 15.0.14
+  resolution: "@workday/canvas-kit-popup-stack@npm:15.0.14"
   dependencies:
     screenfull: "npm:^5.2.0"
-  checksum: 10c0/b1f7c75b9fc3d49a35544a0956c54111ef56e2599367051247e8877c2bd2d60b7ef741184c125bdbc5007c49d7e5fb229b1481a114f6dae953d6148185335921
+  checksum: 10c0/61e77bbffd341c1dfbfda7c033496dede75fef8610d0834560b80d1efcd7377bac2d61fffa31a137a94c9a37f06a1e284650a57d5a70af874aac3e887b95b0eb
   languageName: node
   linkType: hard
 
-"@workday/canvas-kit-preview-react@npm:^14, @workday/canvas-kit-preview-react@npm:^14.3.16":
-  version: 14.3.16
-  resolution: "@workday/canvas-kit-preview-react@npm:14.3.16"
+"@workday/canvas-kit-preview-react@npm:^15, @workday/canvas-kit-preview-react@npm:^15.0.14":
+  version: 15.0.14
+  resolution: "@workday/canvas-kit-preview-react@npm:15.0.14"
   dependencies:
     "@emotion/react": "npm:^11.7.1"
     "@emotion/styled": "npm:^11.6.0"
-    "@workday/canvas-kit-react": "npm:^14.3.16"
-    "@workday/canvas-kit-styling": "npm:^14.3.16"
-    "@workday/canvas-system-icons-web": "npm:^3.0.36"
-    "@workday/canvas-tokens-web": "npm:^3.1.6"
+    "@workday/canvas-kit-react": "npm:^15.0.14"
+    "@workday/canvas-kit-styling": "npm:^15.0.14"
+    "@workday/canvas-system-icons-web": "npm:4.0.4"
+    "@workday/canvas-tokens-web": "npm:4.3.0"
     "@workday/design-assets-types": "npm:^0.3.0"
   peerDependencies:
     react: ">=17.0"
-  checksum: 10c0/546d7546d4690cb9b78af4a9e9c87a4aeafd2bd888b545fb011cfa1c20e85d1bd6291a2532fa0ccfd11754dc062c6d8a32efb2328a8fe5ef7f33e5ec8165eec0
+  checksum: 10c0/4684a64b08d8ff83f3549a99e6f00a99eb00f296ff00e4c50fa5ccd35b4b9d4a4ee71257668944a6779e30173fc8045b91b9880ed6d9620001b114184f9b7445
   languageName: node
   linkType: hard
 
-"@workday/canvas-kit-react@npm:14.3.16":
-  version: 14.3.16
-  resolution: "@workday/canvas-kit-react@npm:14.3.16"
+"@workday/canvas-kit-react@npm:^15, @workday/canvas-kit-react@npm:^15.0.14":
+  version: 15.0.14
+  resolution: "@workday/canvas-kit-react@npm:15.0.14"
   dependencies:
     "@emotion/is-prop-valid": "npm:^1.1.1"
     "@emotion/react": "npm:^11.7.1"
@@ -5298,11 +5291,12 @@ __metadata:
     "@popperjs/core": "npm:^2.5.4"
     "@tanstack/react-virtual": "npm:^3.13.9"
     "@workday/canvas-colors-web": "npm:^2.0.0"
-    "@workday/canvas-kit-popup-stack": "npm:^14.3.16"
-    "@workday/canvas-kit-preview-react": "npm:^14.3.16"
-    "@workday/canvas-kit-styling": "npm:^14.3.16"
-    "@workday/canvas-system-icons-web": "npm:^3.0.36"
-    "@workday/canvas-tokens-web": "npm:^3.1.6"
+    "@workday/canvas-expressive-icons-web": "npm:1.0.2"
+    "@workday/canvas-kit-popup-stack": "npm:^15.0.14"
+    "@workday/canvas-kit-preview-react": "npm:^15.0.14"
+    "@workday/canvas-kit-styling": "npm:^15.0.14"
+    "@workday/canvas-system-icons-web": "npm:4.0.4"
+    "@workday/canvas-tokens-web": "npm:4.3.0"
     "@workday/design-assets-types": "npm:^0.3.0"
     chroma-js: "npm:^2.2.0"
     csstype: "npm:^3.0.2"
@@ -5312,60 +5306,30 @@ __metadata:
     use-resize-observer: "npm:^9.1.0"
   peerDependencies:
     react: ">=17.0"
-  checksum: 10c0/8d98dbfc4e42c206d21f49b889b084e8eade41e2fb4144c379259855202d0440c1606637382599e158ef778415227a49038a40d2b352ff30a036221277e66faa
+  checksum: 10c0/cdf0021acc21715854f937e666113a7587f7401a1b644bed570627c9062a9ba238cbd78d4043a4a0f49a7dd5b419888654bf55e0fb276c06c66df7cf70f35ab6
   languageName: node
   linkType: hard
 
-"@workday/canvas-kit-react@patch:@workday/canvas-kit-react@npm%3A14.3.16#~/.yarn/patches/@workday-canvas-kit-react-npm-14.3.16-7a904473fe.patch":
-  version: 14.3.16
-  resolution: "@workday/canvas-kit-react@patch:@workday/canvas-kit-react@npm%3A14.3.16#~/.yarn/patches/@workday-canvas-kit-react-npm-14.3.16-7a904473fe.patch::version=14.3.16&hash=cef53c"
-  dependencies:
-    "@emotion/is-prop-valid": "npm:^1.1.1"
-    "@emotion/react": "npm:^11.7.1"
-    "@emotion/styled": "npm:^11.6.0"
-    "@popperjs/core": "npm:^2.5.4"
-    "@tanstack/react-virtual": "npm:^3.13.9"
-    "@workday/canvas-colors-web": "npm:^2.0.0"
-    "@workday/canvas-kit-popup-stack": "npm:^14.3.16"
-    "@workday/canvas-kit-preview-react": "npm:^14.3.16"
-    "@workday/canvas-kit-styling": "npm:^14.3.16"
-    "@workday/canvas-system-icons-web": "npm:^3.0.36"
-    "@workday/canvas-tokens-web": "npm:^3.1.6"
-    "@workday/design-assets-types": "npm:^0.3.0"
-    chroma-js: "npm:^2.2.0"
-    csstype: "npm:^3.0.2"
-    react-innertext: "npm:^1.1.5"
-    rtl-css-js: "npm:^1.14.1"
-    screenfull: "npm:^5.2.0"
-    use-resize-observer: "npm:^9.1.0"
-  peerDependencies:
-    react: ">=17.0"
-  checksum: 10c0/2900d7b114a4e3de4d18181a24817a6284105d3cc2ddec30577b5b9e65cdfe08e625f23b1c557510eee3d95aa0b6e4b0d02877e8845c418c9ba225557291690b
-  languageName: node
-  linkType: hard
-
-"@workday/canvas-kit-styling@npm:^14, @workday/canvas-kit-styling@npm:^14.3.16":
-  version: 14.3.16
-  resolution: "@workday/canvas-kit-styling@npm:14.3.16"
+"@workday/canvas-kit-styling@npm:^15, @workday/canvas-kit-styling@npm:^15.0.14":
+  version: 15.0.14
+  resolution: "@workday/canvas-kit-styling@npm:15.0.14"
   dependencies:
     "@emotion/css": "npm:^11.7.1"
     csstype: "npm:^3.0.2"
   peerDependencies:
     react: ">=17.0"
-  checksum: 10c0/1d4172d3590b95d353fea1cbc7dcf72352c33702994cd49822617e11f182b3936990c69240f55434e3f15cdf04e67b139b1e31b51d1e96c1b53f7cbdeefb82f2
+  checksum: 10c0/21ae1a662ddf68dff5b3eab6f3ef7d09b47b9a3711781f66a52c887e62326eced023fb24df5a96693d506b9014d0b119bdda7987fb726cf16428c134c374e247
   languageName: node
   linkType: hard
 
-"@workday/canvas-system-icons-web@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@workday/canvas-system-icons-web@npm:3.0.0"
-  dependencies:
-    "@workday/design-assets-types": "npm:0.2.8"
-  checksum: 10c0/fa62b6d40c1d16236c59b7e3623fdaf27bd00d6ac36b298be24eb705d4ec5561499b79eb81db030d411b005f32a83cc0a9838dffb9551e02b173ee2e141a54f5
+"@workday/canvas-system-icons-web@npm:4.0.4":
+  version: 4.0.4
+  resolution: "@workday/canvas-system-icons-web@npm:4.0.4"
+  checksum: 10c0/f16b24f70bf7d1062deb96adb5e30c41cf0d2215abbf0720e28028fc0d1e2f3394436438a905d9c28990bb83736e3642ea3a15bc117f7f2eb2873cc2c845933f
   languageName: node
   linkType: hard
 
-"@workday/canvas-system-icons-web@npm:^3.0.36":
+"@workday/canvas-system-icons-web@npm:^3":
   version: 3.0.37
   resolution: "@workday/canvas-system-icons-web@npm:3.0.37"
   dependencies:
@@ -5374,14 +5338,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@workday/canvas-tokens-web@npm:^3.1.6":
-  version: 3.1.6
-  resolution: "@workday/canvas-tokens-web@npm:3.1.6"
-  checksum: 10c0/aa727160be4241f00196265f71b13796760d5544fbba8d8c2a4ad36c6e8d409918858b52d84e660226623434925be40b67fd25325057b6d3aade20534c38fcdf
-  languageName: node
-  linkType: hard
-
-"@workday/canvas-tokens-web@npm:^4":
+"@workday/canvas-tokens-web@npm:4.3.0, @workday/canvas-tokens-web@npm:^4":
   version: 4.3.0
   resolution: "@workday/canvas-tokens-web@npm:4.3.0"
   checksum: 10c0/990f88d53cc1a4f6f97d7cafc311fa35326a3a4748285547242f15c3f9b2688fbda1bd124ba3669144bb67f4ace53658a4e7cce4b0ad431ab0ff73c6ee081f5a
@@ -5392,13 +5349,6 @@ __metadata:
   version: 0.2.10
   resolution: "@workday/design-assets-types@npm:0.2.10"
   checksum: 10c0/251a4b53d76b38ac12b2748b08ba683958ac1b5f52900e0e52d4df80ab19dc648685d9118641f93cae17f20011b5af7dd02babb8d54d7a2cb8e79d48cdce1898
-  languageName: node
-  linkType: hard
-
-"@workday/design-assets-types@npm:0.2.8":
-  version: 0.2.8
-  resolution: "@workday/design-assets-types@npm:0.2.8"
-  checksum: 10c0/a192c453a1f193b15d0c77046dd40e847ee29705e8598057ae0085b9e02a76953228f7e6137e91657b9a6a7c4f7df2dba2bc115bb4a6b64cb7da201fdce80b40
   languageName: node
   linkType: hard
 
@@ -6674,7 +6624,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:4.1.2, chalk@npm:^4.0.0":
+"chalk@npm:^4.0.0":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -6788,17 +6738,6 @@ __metadata:
     strip-ansi: "npm:^6.0.0"
     wrap-ansi: "npm:^6.2.0"
   checksum: 10c0/35229b1bb48647e882104cac374c9a18e34bbf0bace0e2cf03000326b6ca3050d6b59545d91e17bfe3705f4a0e2988787aa5cde6331bf5cbbf0164732cef6492
-  languageName: node
-  linkType: hard
-
-"cliui@npm:^7.0.2":
-  version: 7.0.4
-  resolution: "cliui@npm:7.0.4"
-  dependencies:
-    string-width: "npm:^4.2.0"
-    strip-ansi: "npm:^6.0.0"
-    wrap-ansi: "npm:^7.0.0"
-  checksum: 10c0/6035f5daf7383470cef82b3d3db00bec70afb3423538c50394386ffbbab135e26c3689c41791f911fa71b62d13d3863c712fdd70f0fbdffd938a1e6fd09aac00
   languageName: node
   linkType: hard
 
@@ -11627,7 +11566,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jscodeshift@npm:^17.1.0, jscodeshift@npm:^17.3.0":
+"jscodeshift@npm:^17.3.0":
   version: 17.3.0
   resolution: "jscodeshift@npm:17.3.0"
   dependencies:
@@ -17152,13 +17091,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^20.2.2":
-  version: 20.2.9
-  resolution: "yargs-parser@npm:20.2.9"
-  checksum: 10c0/0685a8e58bbfb57fab6aefe03c6da904a59769bd803a722bb098bd5b0f29d274a1357762c7258fb487512811b8063fb5d2824a3415a0a4540598335b3b086c72
-  languageName: node
-  linkType: hard
-
 "yargs-parser@npm:^21.1.1":
   version: 21.1.1
   resolution: "yargs-parser@npm:21.1.1"
@@ -17182,21 +17114,6 @@ __metadata:
     y18n: "npm:^4.0.0"
     yargs-parser: "npm:^18.1.2"
   checksum: 10c0/f1ca680c974333a5822732825cca7e95306c5a1e7750eb7b973ce6dc4f97a6b0a8837203c8b194f461969bfe1fb1176d1d423036635285f6010b392fa498ab2d
-  languageName: node
-  linkType: hard
-
-"yargs@npm:^16.2.0":
-  version: 16.2.0
-  resolution: "yargs@npm:16.2.0"
-  dependencies:
-    cliui: "npm:^7.0.2"
-    escalade: "npm:^3.1.1"
-    get-caller-file: "npm:^2.0.5"
-    require-directory: "npm:^2.1.1"
-    string-width: "npm:^4.2.0"
-    y18n: "npm:^5.0.5"
-    yargs-parser: "npm:^20.2.2"
-  checksum: 10c0/b1dbfefa679848442454b60053a6c95d62f2d2e21dd28def92b647587f415969173c6e99a0f3bab4f1b67ee8283bf735ebe3544013f09491186ba9e8a9a2b651
   languageName: node
   linkType: hard
 

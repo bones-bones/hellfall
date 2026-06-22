@@ -3,8 +3,13 @@ import { useKeyPress } from '../hooks';
 import { useAtom, useAtomValue } from 'jotai';
 import { activeCardAtom } from './atoms/searchAtoms';
 import { cardsAtom } from './atoms/cardsAtom';
-import { SidePanel, useSidePanelModel } from '@workday/canvas-kit-labs-react';
-import { Box, Card, ToolbarIconButton } from '@workday/canvas-kit-react';
+import {
+  Box,
+  Card,
+  ToolbarIconButton,
+  SidePanel,
+  useSidePanelModel,
+} from '@workday/canvas-kit-react';
 import { extLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
@@ -69,14 +74,14 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
             <SPContainer ref={scrollContainerRef}>
               <ToolbarIconButton
                 icon={xIcon}
-                margin={'2px 0 0 2px'}
+                cs={toolbarIconStyles}
                 onClick={() => setActiveCardFromAtom('')}
               />
               {activeCard && (
                 <ToolbarIconButton
                   as="a"
                   icon={extLinkIcon}
-                  margin={'2px 0 0 2px'}
+                  cs={toolbarIconStyles}
                   href={'/card/' + encodeURIComponent(activeCard.hcid)}
                   target="_blank"
                 />
@@ -127,3 +132,5 @@ const spContainerStyles = createStyles({
   overflowX: 'hidden',
 });
 const SPContainer = createStyledDivWithRef(spContainerStyles);
+
+const toolbarIconStyles = createStyles({ margin: '2px 0 0 2px' });
