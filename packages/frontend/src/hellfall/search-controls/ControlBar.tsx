@@ -71,7 +71,10 @@ const SortSelect = ({
     getId: item => item.value,
     getTextValue: item => item.label,
     onSelect: data => {
-      handleSortChange(index, data.id as sortType);
+      // This check prevents the following useEffect from causing a render loop when overridden
+      if (!sortIsOverriden(index)) {
+        handleSortChange(index, data.id as sortType);
+      }
     },
   });
   useEffect(() => {
@@ -135,7 +138,10 @@ const DirSelect = ({
     getId: item => item.value,
     getTextValue: item => item.label,
     onSelect: data => {
-      handleDirChange(index, data.id as dirType);
+      // This check prevents the following useEffect from causing a render loop when overridden
+      if (!dirIsOverriden(index)) {
+        handleDirChange(index, data.id as dirType);
+      }
     },
   });
 

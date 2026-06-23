@@ -80,7 +80,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
 
     const inputSorts = typeof req.query?.order == 'string' ? [req.query?.order] : req.query?.order;
 
-    const { sortObjects, invalids, summary } = parseSearchQuery(query ?? '');
+    const { sortObjects, invalids, summary } = parseSearchQuery(query ?? '', new CardMap());
 
     const { sortList } = combineAndWinnowSorts(sortObjects, inputSorts ?? []);
 
