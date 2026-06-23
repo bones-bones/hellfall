@@ -410,6 +410,8 @@ export const savedOracleIds: Record<string, string> = {
   'storm crow': '38d87b87-0c67-47a5-8093-b49aa11f6196',
   bat: 'ff86d8fc-5242-405e-b5e3-f9ff73296794',
   'secret jo sesh': 'bd45ace2-220a-4a06-85fd-f1a41073a25c',
+  'phyrexian germ': 'a1c2af93-83c0-4974-b4db-abf95981d4e3',
+  offspring: '9caebd4a-00af-4227-9727-31181f7836df',
 };
 const tagCanHaveFaces = (tag: string, card?: HCCard.Any): boolean => {
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {

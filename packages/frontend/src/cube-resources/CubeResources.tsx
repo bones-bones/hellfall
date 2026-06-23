@@ -180,6 +180,11 @@ export const CubeResources = () => {
         "Heckscube 2: Hecklands is a return to classic 90's Magic: the Gathering. This minicube includes cards roughly of the caliber and quality of Homelands, everyone's favorite Magic set.",
     },
     {
+      name: 'Hellscube 9',
+      id: 'HC9',
+      description: 'The first 360 cards of the vintage cube with purple.',
+    },
+    {
       name: 'All Hellscube Sets',
       id: 'All' as SetCode,
       description: 'All sets!',
