@@ -1,6 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+@import '@workday/canvas-tokens-web/css/base/_variables.css';
+@import '@workday/canvas-tokens-web/css/system/_variables.css';
+@import '@workday/canvas-tokens-web/css/brand/_variables.css';
+
+@font-face {
+  font-family: 'MPlantin';
+  src: url('./assets/fonts/MPlantin-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MPlantin';
+  src: url('./assets/fonts/MPlantin-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MPlantin';
+  src: url('./assets/fonts/MPlantin-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MPlantin';
+  src: url('./assets/fonts/MPlantin-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --cnvs-base-font-family-50: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --cnvs-base-font-family-100: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --cnvs-base-font-family-200: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --cnvs-base-font-family-300: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --cnvs-base-font-family-400: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --cnvs-base-font-family-500: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --cnvs-base-font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background-color: #221111; */

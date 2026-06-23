@@ -1,11 +1,13 @@
-import styled from '@emotion/styled';
-import { SmallText } from '../visual-components/SmallText';
 import { useState } from 'react';
 import { PendingTagStaging } from '../../hooks/usePendingChangesets';
 import { Link } from 'react-router-dom';
 import { HCCard } from '@hellfall/shared/types';
 import { useAuth } from '../../../auth';
 import { tagsData } from '@hellfall/shared/data';
+import { TextProps } from '@workday/canvas-kit-react';
+import { createStenciledSpan, createStyledButton, createStyledDiv } from '../../../styling';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import { SmallLine, SmallText, smallTextStyles } from '../visual-components/TextComponents';
 
 export const TagSection = ({
   tagControls: {
@@ -38,15 +40,15 @@ export const TagSection = ({
   return (
     <>
       {tagsLoading && <SmallText>Loading tags…</SmallText>}
-      {tagsError && <SmallText style={{ color: '#c00' }}>Could not load tag overrides.</SmallText>}
-      {tagActionError && <SmallText style={{ color: '#c00' }}>{tagActionError}</SmallText>}
+      {tagsError && <ErrorText>Could not load tag overrides.</ErrorText>}
+      {tagActionError && <ErrorText>{tagActionError}</ErrorText>}
       <SmallText key="Tags">
         Tags:{' '}
         {displayCard.tags?.map((tagEntry, i, ar) => {
           const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
           return (
             <span key={tagEntry}>
-              <TagLink $pendingRemove={pendingRemove}>
+              <TagLink pendingRemove={pendingRemove}>
                 <Link
                   to={`/?${new URLSearchParams([['q', `tag=${tagEntry}`]]).toString()}`}
                   target="_blank"
@@ -90,24 +92,26 @@ export const TagSection = ({
             </span>
           );
         })}
-        {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => (
-          <span key={`pending-${tagEntry}`}>
-            {(displayCard.tags?.length || i > 0) && ', '}
-            <TagLink $pendingAdd>
-              <Link
-                to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
-                target="_blank"
-              >
-                +{tagEntry}
-              </Link>
-            </TagLink>
-            {i < ar.length - 1 && ', '}
-          </span>
-        ))}
+        {pendingTagStaging?.toAdd.map((tagEntry, i, ar) => {
+          const pendingAdd = pendingTagStaging?.toAdd.includes(tagEntry);
+
+          return (
+            <span key={`pending-${tagEntry}`}>
+              {(displayCard.tags?.length || i > 0) && ', '}
+              <TagLink pendingAdd={pendingAdd}>
+                <Link
+                  to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
+                  target="_blank"
+                >
+                  +{tagEntry}
+                </Link>
+              </TagLink>
+              {i < ar.length - 1 && ', '}
+            </span>
+          );
+        })}
       </SmallText>
-      {pendingTagStaging && (
-        <SmallText style={{ color: '#856404' }}>Staged changes pending review.</SmallText>
-      )}
+      {pendingTagStaging && <PendingText>Staged changes pending review.</PendingText>}
       {user && tagsPersistEnabled && (
         <TagAddRow>
           <input
@@ -157,32 +161,42 @@ export const TagSection = ({
           </button>
         </TagAddRow>
       )}
-      {changesetSubmitted && (
-        <SmallText style={{ color: '#28a745', marginTop: 4 }}>
-          Change submitted for review.
-        </SmallText>
-      )}
+      {changesetSubmitted && <SubmittedText>Change submitted for review.</SubmittedText>}
     </>
   );
 };
 
-const SmallLine = styled('span')({
-  fontSize: '14px',
-  fontWeight: 'normal',
-  marginBlock: '.4rem',
-});
-
-const TagLink = styled.span<{ $pendingAdd?: boolean; $pendingRemove?: boolean }>(
-  ({ $pendingAdd, $pendingRemove }) => ({
-    '& a': {
-      color: $pendingAdd ? '#28a745' : $pendingRemove ? '#888' : undefined,
-      textDecoration: $pendingRemove ? 'line-through' : undefined,
-      fontWeight: $pendingAdd ? 600 : undefined,
+const tagLinkStencil = createStencil({
+  vars: {},
+  base: {
+    '& a': {},
+  },
+  modifiers: {
+    pendingAdd: {
+      true: {
+        '& a': {
+          color: '#28a745',
+          fontWeight: '600',
+        },
+      },
     },
-  })
-);
+    pendingRemove: {
+      true: {
+        '& a': {
+          color: '#888',
+          textDecoration: 'line-through',
+        },
+      },
+    },
+  },
+});
+interface TagLinkProps extends TextProps {
+  pendingAdd?: boolean;
+  pendingRemove?: boolean;
+}
+const TagLink = createStenciledSpan<TagLinkProps>(tagLinkStencil);
 
-const TagRemoveButton = styled.button({
+const tagRemoveButtonStyles = createStyles({
   marginLeft: '2px',
   padding: '0 4px',
   cursor: 'pointer',
@@ -194,11 +208,22 @@ const TagRemoveButton = styled.button({
   color: '#666',
   '&:hover': { color: '#c00' },
 });
+const TagRemoveButton = createStyledButton(tagRemoveButtonStyles);
 
-const TagAddRow = styled.div({
+const tagAddRowStyles = createStyles({
   marginTop: '6px',
   display: 'flex',
   gap: '8px',
   alignItems: 'center',
   '& input': { minWidth: '120px' },
 });
+const TagAddRow = createStyledDiv(tagAddRowStyles);
+
+const errorTextStyles = createStyles(smallTextStyles, { color: '#c00' });
+const ErrorText = createStyledDiv(errorTextStyles);
+
+const pendingTextStyles = createStyles(smallTextStyles, { color: '#856404' });
+const PendingText = createStyledDiv(pendingTextStyles);
+
+const submittedTextStyles = createStyles(smallTextStyles, { color: '#28a745', marginTop: 4 });
+const SubmittedText = createStyledDiv(submittedTextStyles);

@@ -1,7 +1,6 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { HellfallCard } from './HellfallCard.tsx';
-import styled from '@emotion/styled';
 
 import { useEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
@@ -9,6 +8,8 @@ import { useUpdateURL } from '../hooks/useUrlSync.ts';
 import { useSearchResults } from '../hooks/useSearchResults.ts';
 import { invalidAtom, queryAtom, summaryAtom } from '../atoms/searchAtoms.ts';
 import { SearchBar } from '../search-controls/SearchBar.tsx';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledHR } from '../../styling';
 
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
@@ -31,7 +32,7 @@ export const SingleCard = () => {
   }, [entryToRender]);
 
   return (
-    <Container>
+    <div>
       {!cards.size() ? (
         <></>
       ) : !entryToRender ? (
@@ -41,7 +42,7 @@ export const SingleCard = () => {
           <br />
           <SearchBar />
           <Separator />
-          <CardContainer>
+          <Container>
             {query && (
               <>
                 <Summary>
@@ -72,30 +73,31 @@ export const SingleCard = () => {
             <div style={{ width: '60vw', margin: '0 auto' }}>
               <HellfallCard data={entryToRender} onSinglePage={true} />
             </div>
-          </CardContainer>
+          </Container>
         </div>
       )}
-    </Container>
+    </div>
   );
 };
 
-const CardContainer = styled.div({
-  // width: '60vw',
-  // paddingTop: '50px',
-  justifyContent: 'center',
-});
-const Container = styled.div({
+// const CardContainer = styled.div({
+//   // width: '60vw',
+//   // paddingTop: '50px',
+//   justifyContent: 'center',
+// });
+const containerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
 });
-const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-const Summary = styled('div')({
+const Container = createStyledDiv(containerStyles);
+
+const separatorStyles = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+const Separator = createStyledHR(separatorStyles);
+
+const summaryStyles = createStyles({
   display: 'inline-block',
   paddingLeft: '36px',
   paddingRight: '36px',
 });
-const Invalid = styled('div')({
-  display: 'inline-block',
-  paddingLeft: '36px',
-  paddingRight: '36px',
-});
+const Summary = createStyledDiv(summaryStyles);
+const Invalid = createStyledDiv(summaryStyles);

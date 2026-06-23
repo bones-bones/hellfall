@@ -3,7 +3,7 @@ import fs from 'fs';
 import { fetchTokens } from './fetchTokens.ts';
 import { fetchCards } from './fetchCards.ts';
 import { fetchUsernameMappings } from './fetchUsernameMapping.ts';
-import { HCCard, HCCardFace, HCRelatedCard, allSetsList } from '@hellfall/shared/types';
+import { HCCard, HCCardFace, HCRelatedCard, SetCode, allSetsList } from '@hellfall/shared/types';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
   stripMasterpiece,
@@ -17,6 +17,7 @@ import {
   HCIDMap,
   anyPropType,
   anyValueType,
+  savedOracleIds,
 } from '@hellfall/shared/utils';
 import { mergeFromSheet } from '@hellfall/shared/utils/cardModification/changeHandling';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
@@ -110,13 +111,12 @@ const mergeDatabases = (
     'HCV.7': 0,
     'HCV.8': 0,
     'HCV.9': 0,
-    // 'HC9.0': 0,
-    // HC9: 0,
     'HCV.J': 0,
     'HCV.K': 0,
     'HCV.L': 0,
     'HCV.P': 0,
     'HCV.CDC': 0,
+    'HCV.S': 0,
     NRM: 0,
     HCJ: 0,
     NMTG: 0,
@@ -163,6 +163,10 @@ const mergeDatabases = (
           const original = mergedList.find(c => textEquals(c.name, originalName));
           if (original?.oracle_id) {
             card.oracle_id = original.oracle_id;
+            return;
+          }
+          if (originalName.toLowerCase() in savedOracleIds) {
+            card.oracle_id = savedOracleIds[originalName.toLowerCase()];
             return;
           }
         } else if (card.tags?.includes('reprint')) {
@@ -235,7 +239,9 @@ const dataToCards = <K extends anyPropType>(
                 ...face,
                 [missingProp]:
                   typeof missingPropValue == 'function'
-                    ? missingPropValue(card as HCCard.Any)
+                    ? (missingPropValue as (card: HCCard.Any) => anyValueType<K>)(
+                        card as HCCard.Any
+                      )
                     : missingPropValue,
               } as HCCardFace.MultiFaced;
             }
@@ -253,7 +259,9 @@ const dataToCards = <K extends anyPropType>(
                 ...part,
                 [missingProp]:
                   typeof missingPropValue == 'function'
-                    ? missingPropValue(card as HCCard.Any)
+                    ? (missingPropValue as (card: HCCard.Any) => anyValueType<K>)(
+                        card as HCCard.Any
+                      )
                     : missingPropValue,
               } as HCRelatedCard;
             }
@@ -269,7 +277,7 @@ const dataToCards = <K extends anyPropType>(
         ...card,
         [missingProp]:
           typeof missingPropValue == 'function'
-            ? missingPropValue(card as HCCard.Any)
+            ? (missingPropValue as (card: HCCard.Any) => anyValueType<K>)(card as HCCard.Any)
             : missingPropValue,
       } as HCCard.Any;
     }
@@ -312,6 +320,37 @@ const loadExistingData = () => {
   const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
   return { existingCards, existingTokens, existingLands };
 };
+const ignoreDuplicateHCIDs: string[] = [
+  '39',
+  '6730',
+  '6731',
+  '6732',
+  '6733',
+  '2101',
+  '2102',
+  '2103',
+  '6791',
+  '6792',
+  '6793',
+  '6794',
+  '6795',
+  '6796',
+  '6797',
+  '6735',
+  '7240',
+  '7241',
+  '7772',
+  '7801',
+];
+const ignoreMissingNums: Partial<Record<SetCode, number[]>> = {
+  'HC2.0': [93, 141, 154, 160, 187, 214, 228],
+  'HC2.1': [58, 93, 103, 104, 138, 190, 201, 206, 307],
+  'HC3.0': [68, 72, 96, 204, 230, 271, 305, 337],
+  'HC3.1': [40, 45, 56, 62, 97, 175, 372],
+  'HC4.0': [76, 93, 129, 263, 311, 364],
+  'HC4.1': [146, 204, 261],
+  'HC8.0': [259],
+};
 const main = async () => {
   const newCards = await fetchCards();
   const usernameMappings = await fetchUsernameMappings();
@@ -319,6 +358,32 @@ const main = async () => {
   newTokens.setMultiple(fetchHCJFronts());
   newTokens.setMultiple(await fetchNotMagic());
   const newLands = await fetchLands();
+  const collectorMap = new Map<SetCode, Set<number>>(
+    newCards.sets().map(code => [code, new Set<number>()])
+  );
+  newCards.forEach(card => {
+    const num = parseInt(card.collector_number);
+    const cSet = collectorMap.get(card.set);
+    if (ignoreDuplicateHCIDs.includes(card.hcid)) {
+      return;
+    }
+    if (cSet?.has(num) || ignoreMissingNums[card.set]?.includes(num)) {
+      console.log(
+        `Set ${card.set} has a duplicate collector number at ${num} (hcid: ${card.hcid})`
+      );
+    } else if (num) {
+      cSet?.add(num);
+    }
+  });
+  collectorMap.entries().forEach(([code, nums]) => {
+    if (code == 'HCV.1' || code.startsWith('HLC')) return;
+    const max = Math.max(...Array.from(nums));
+    for (let i = 1; i < max; i++) {
+      if (!nums.has(i) && !ignoreMissingNums[code]?.includes(i)) {
+        console.log(`Set ${code} has a missing collector number at ${i}`);
+      }
+    }
+  });
 
   console.log('Running in update mode - merging with existing data...');
   const { existingCards, existingTokens, existingLands } = loadExistingData();

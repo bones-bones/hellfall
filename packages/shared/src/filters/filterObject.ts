@@ -14,7 +14,8 @@ import {
 import { getActualOp } from './filterUtils';
 import { filterNumberString } from './filterNumber';
 import { parseNote } from './filterText';
-import { unescapeText } from '.';
+import { printsFilter, unescapeText } from '.';
+import { CardMap } from '../utils';
 
 export interface anyFilterInterface<T = any, S = any> {
   queryName: string;
@@ -78,7 +79,6 @@ export class filterObject<T, S> implements filterInterface {
     public inverted?: boolean
   ) {}
   getOp = () => getActualOp(this.op, this.defaultOp);
-  // TODO: Make sure the inversion logic works
   cardPassesFilter = (card: HCCard.Any) =>
     !this.inverted !=
     !this.filter(
@@ -109,6 +109,28 @@ export class PassThroughSummaryFilter<T, S> extends filterObject<T, S> {
     );
   }
 }
+
+// export class PrintsFilter extends PassThroughSummaryFilter<HCCard.Any[],string> {
+//   constructor(
+//     queryName: string,
+//     public filter: printsFilter,
+//     value: string,
+//     op: looseOpType,
+//     defaultOp: opType,
+//     getValueToCompare: (card: HCCard.Any) => HCCard.Any[],
+//   ) {
+//     super(
+//       queryName,
+//       filter,
+//       value,
+//       op,
+//       defaultOp,
+//       getValueToCompare
+//     );
+
+//   }
+// }
+
 export class CompFilter extends filterObject<HCCard.Any, string> {
   constructor(
     queryName: string,
@@ -185,6 +207,7 @@ export class NumberPropSummaryFilter<T, S> extends filterObject<T, S> {
     );
   }
 }
+
 export class NoteFilter extends filterObject<HCCard.Any, string> {
   note?: boolean | string;
   constructor(

@@ -11,7 +11,7 @@ import {
 } from '../atoms/searchAtoms.ts';
 
 import { CHUNK_SIZE } from '../constants.ts';
-import { searchCards } from '@hellfall/shared/filters';
+import { makeSort, searchCards } from '@hellfall/shared/filters';
 import { tagsData } from '@hellfall/shared/data';
 
 export const useSearchResults = (asRandom?: boolean) => {
@@ -42,6 +42,8 @@ export const useSearchResults = (asRandom?: boolean) => {
       setResultSet(tempResults);
       return;
     }
+    const defaultSort = makeSort('name', 'auto');
+    tempResults.sort((a: HCCard.Any, b: HCCard.Any) => defaultSort.filter(a, '=', b));
     for (let i = sortRules.length - 1; i >= 0; i--) {
       tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortRules[i].filter(a, '=', b));
     }

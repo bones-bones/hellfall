@@ -1,11 +1,12 @@
-import { atom } from 'jotai';
+import { atom, useAtomValue } from 'jotai';
 import { sortObject, combineAndWinnowSorts, parseSearchQuery } from '@hellfall/shared/filters';
+import { cardsAtom } from './cardsAtom';
+import { CardMap } from '@hellfall/shared/utils';
 
 const searchParams = new URLSearchParams(document.location.search);
 
 export const queryAtom = atom<string>(searchParams.get('q') || '');
-
-const parsedQuery = parseSearchQuery(queryAtom.init);
+const parsedQuery = parseSearchQuery(queryAtom.init, new CardMap());
 
 export const querySortAtom = atom<sortObject[]>(parsedQuery.sortObjects);
 

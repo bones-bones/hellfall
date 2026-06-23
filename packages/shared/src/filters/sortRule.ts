@@ -9,7 +9,6 @@ import {
   sortFilter,
   sortType,
 } from './types';
-import { hasTokenHCID } from '../utils';
 
 const colorSortValue: Record<HCColor, number> = {
   W: 1,

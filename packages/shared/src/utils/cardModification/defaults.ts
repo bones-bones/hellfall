@@ -193,7 +193,7 @@ export const getDefaultFaceLayout = (card: HCCard.Any, index?: number): HCLayout
 
 export const getDefaultRootValue = <K extends rootPropType>(
   card: HCCard.Any,
-  prop: K
+  prop?: K
 ): rootValueType<K> | undefined => {
   switch (prop) {
     case 'border_color':
@@ -208,10 +208,9 @@ export const getDefaultRootValue = <K extends rootPropType>(
       return '' as rootValueType<K>;
   }
 };
-
 export const getDefaultFaceValue = <K extends facePropType>(
   card: HCCard.Any,
-  prop: K,
+  prop?: K,
   index?: number
 ): faceValueType<K> | undefined => {
   switch (prop) {

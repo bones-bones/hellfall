@@ -1,7 +1,12 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 import { usePendingChangesetsState } from '../hooks/usePendingChangesets';
+import { createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStyledDiv,
+  createStyledDivClickable,
+  createStyledLink,
+  createStyledSpan,
+} from '../../styling';
 
 export function PendingChanges({ cardId }: { cardId: string }) {
   const { changesets, loading } = usePendingChangesetsState(cardId);
@@ -47,61 +52,71 @@ function formatVal(val: unknown): string {
   return String(val);
 }
 
-const Container = styled('div')({
+const containerStyles = createStyles({
   marginTop: 6,
   marginBottom: 4,
 });
+const Container = createStyledDiv(containerStyles);
 
-const ToggleRow = styled('div')({
+const toggleRowStyles = createStyles({
   display: 'flex',
   alignItems: 'center',
   gap: 4,
   cursor: 'pointer',
   userSelect: 'none',
 });
+const ToggleRow = createStyledDivClickable(toggleRowStyles);
 
-const Badge = styled('span')({
+const badgeStyles = createStyles({
   fontSize: 12,
   fontWeight: 600,
 });
+const Badge = createStyledSpan(badgeStyles);
 
-const ToggleText = styled('span')({
+const toggleTextStyles = createStyles({
   fontSize: 12,
   color: '#555',
 });
+const ToggleText = createStyledSpan(toggleTextStyles);
 
-const ChangesetBlock = styled('div')({
+const changesetBlockStyles = createStyles({
   marginTop: 6,
   padding: '6px 8px',
   border: '1px solid #ccc',
 });
+const ChangesetBlock = createStyledDiv(changesetBlockStyles);
 
-const CsMeta = styled('div')({
+const csMetaStyles = createStyles({
   fontSize: 12,
   color: '#666',
 });
+const CsMeta = createStyledDiv(csMetaStyles);
 
-const CsComment = styled('div')({
+const csCommentStyles = createStyles({
   fontSize: 12,
   fontStyle: 'italic',
   color: '#555',
   marginTop: 2,
 });
+const CsComment = createStyledDiv(csCommentStyles);
 
-const FieldDiff = styled('div')({
+const fieldDiffStyles = createStyles({
   marginTop: 4,
 });
+const FieldDiff = createStyledDiv(fieldDiffStyles);
 
-const FieldName = styled('div')({
+const fieldNameStyles = createStyles({
   fontSize: 11,
   fontWeight: 600,
   color: '#888',
 });
+const FieldName = createStyledDiv(fieldNameStyles);
 
-const ReviewLink = styled(Link)({
+const reviewLinkStyles = createStyles({
   display: 'inline-block',
   marginTop: 4,
   fontSize: 12,
   color: 'inherit',
   '&:hover': { textDecoration: 'underline' },
 });
+const ReviewLink = createStyledLink(reviewLinkStyles);

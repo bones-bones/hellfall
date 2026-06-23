@@ -1,6 +1,7 @@
 import { keyframes } from '@emotion/react';
-import styled from '@emotion/styled';
+import { createStyles } from '@workday/canvas-kit-styling';
 import { useState, useEffect } from 'react';
+import { createStyledDiv, createStyledImg } from '../../styling';
 
 export const HellsCard = ({ queryString }: { queryString: string }) => {
   const [card, setCard] = useState(undefined);
@@ -37,7 +38,8 @@ export const HellsCard = ({ queryString }: { queryString: string }) => {
   return <StyledImage src={card} />;
 };
 
-const StyledImage = styled.img({ maxWidth: '300px', display: 'inline-block' });
+const imageStyles = createStyles({ maxWidth: '300px', display: 'inline-block' });
+const StyledImage = createStyledImg(imageStyles);
 
 const LoadingSkeleton = () => {
   return <Frame />;
@@ -45,7 +47,7 @@ const LoadingSkeleton = () => {
 
 const bounce = keyframes({ '50%': { backgroundColor: 'black' } });
 
-const Frame = styled.div({
+const frameStyles = createStyles({
   width: '300px',
   height: '411px',
   display: 'inline-block',
@@ -53,3 +55,4 @@ const Frame = styled.div({
   borderRadius: '10px',
   animation: `${bounce} 1.5s ease infinite`,
 });
+const Frame = createStyledDiv(frameStyles);

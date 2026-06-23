@@ -14,8 +14,20 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true
   },
   "include": ["packages/frontend/src"],
-  "exclude": ["**/node_modules", "**/dist"]
+  "exclude": ["**/node_modules", "**/dist"],
+  "watchOptions": {
+    "excludeDirectories": [
+      "node_modules",
+      "../**/node_modules",
+      "../../**/node_modules",
+      "**/dist",
+      "**/build",
+      "**/coverage"
+    ],
+    "excludeFiles": ["**/*.min.js", "**/*.bundle.js"]
+  }
 }

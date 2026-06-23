@@ -1,8 +1,18 @@
-import styled from '@emotion/styled';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { useState } from 'react';
-import { VisuallyHiddenSpan } from './card/visual-components/VisuallyHiddenSpan';
-import { StyledTitleLink } from './card/visual-components/StyledTitleLink';
-import { TitleText } from './card/visual-components/TitleText';
+import {
+  linkStyles,
+  loadedStyles,
+  sharedContainerStyles,
+  ImageLinkProps,
+  StyledTitleLink,
+  ClickableTitle,
+  ClickableTitleH3,
+  StyledImage,
+  LoadedTitle,
+  VisuallyHiddenSpan,
+} from './entryStyles';
+import { createStenciledLink, createStyledDiv } from '../../styling';
 
 export const HellfallEntry = ({
   url,
@@ -44,20 +54,22 @@ export const HellfallEntry = ({
   };
 
   return (
-    <Container key={id} role="button">
+    <Container key={id}>
       {onClickTitle && (
         <StyledTitleLink
           key={id + '-title'}
-          href={linkUrl}
+          to={linkUrl}
           onClick={e => handleClick(e, onClickTitle as any)}
         >
-          <TitleText as={imgLinkUrl ? 'h3' : 'span'} style={imgLinkUrl ? { lineHeight: 0 } : {}}>
-            {name}
-          </TitleText>
+          {imgLinkUrl ? (
+            <ClickableTitleH3 hasURL={!!imgLinkUrl}>{name}</ClickableTitleH3>
+          ) : (
+            <ClickableTitle hasURL={!!imgLinkUrl}>{name}</ClickableTitle>
+          )}
         </StyledTitleLink>
       )}
       <StyledImageLink
-        href={imgLinkUrl ?? linkUrl}
+        to={imgLinkUrl ?? linkUrl}
         onClick={e => handleClick(e)}
         title={plainText ?? name}
         imageLoaded={imageLoaded}
@@ -67,27 +79,16 @@ export const HellfallEntry = ({
           src={url}
           referrerPolicy="no-referrer"
           aria-label={name}
+          title={plainText ?? name}
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageErrored(true)}
-          style={
-            imageLoaded || imageErrored
-              ? {}
-              : { visibility: 'hidden', display: 'inline', width: 0, height: 0, opacity: 0 }
-          }
+          hideImage={!(imageLoaded || imageErrored)}
         />
-        {!onClickTitle &&
-          (imageLoaded ? (
-            <VisuallyHiddenSpan key={id + '-name'}>{name}</VisuallyHiddenSpan>
-          ) : (
-            <TitleText
-              /* onClick={e => handleClick(e)} */ key={id + '-name'}
-              style={
-                imageLoaded ? { visibility: 'hidden' } : { margin: '4px', position: 'absolute' }
-              }
-            >
-              {name}
-            </TitleText>
-          ))}
+        {!onClickTitle && (
+          <LoadedTitle imageLoaded={imageLoaded} key={id + '-name'}>
+            {name}
+          </LoadedTitle>
+        )}
         {otherNames &&
           otherNames.map((otherName, i) => {
             return (
@@ -101,39 +102,25 @@ export const HellfallEntry = ({
   );
 };
 
-const Container = styled.div({
+const containerStyles = createStyles(sharedContainerStyles, {
   height: '340px',
   display: 'inline-block',
-  padding: '5px',
   position: 'relative',
-  '& img': {
-    maxWidth: '100%',
-    width: 'auto',
-    height: 'auto',
-    objectFit: 'contain',
+});
+const Container = createStyledDiv(containerStyles);
+
+const imageLinkStencil = createStencil({
+  vars: {},
+  base: linkStyles,
+  modifiers: {
+    imageLoaded: {
+      false: {
+        ...loadedStyles,
+        height: '340px',
+        width: '243px',
+        display: 'block',
+      },
+    },
   },
 });
-
-const StyledImageLink = styled.a<{ imageLoaded: boolean }>(
-  {
-    display: 'block',
-    textDecoration: 'none',
-    cursor: 'pointer',
-  },
-  props =>
-    props.imageLoaded
-      ? {}
-      : {
-          height: '340px',
-          width: '243px',
-          backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
-          borderRadius: '4.75% / 3.5%',
-          position: 'relative',
-        }
-);
-
-const StyledImage = styled.img({
-  maxWidth: '500px',
-  maxHeight: '340px',
-  cursor: 'pointer',
-});
+const StyledImageLink = createStenciledLink<ImageLinkProps>(imageLinkStencil);

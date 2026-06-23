@@ -36,7 +36,7 @@ import {
   getDefaultTypeLayout,
   createFaceChange,
   splitFullTag,
-  splitFaceTag,
+  splitTagComponents,
   // setTags,
 } from '@hellfall/shared/utils';
 
@@ -177,11 +177,11 @@ export const setDerivedProps = (
 
   const baseIncludesFlag = (flag: string, i: number): boolean | undefined =>
     card.base_tags?.some(full_tag => {
-      const { tag, note, face } = splitFaceTag(full_tag);
+      const { tag, value } = splitTagComponents(full_tag);
       if (tag != flag) {
         return false;
       }
-      if (face == undefined || face == i) {
+      if (value == undefined || parseInt(value) == i) {
         return true;
       }
       return false;

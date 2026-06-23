@@ -1,4 +1,11 @@
-import { HCCard, HCColors, HCLegalitiesField, HCMiscColors, SetCode } from '@hellfall/shared/types';
+import {
+  HCCard,
+  HCColors,
+  HCLegalitiesField,
+  HCMiscColors,
+  isSetCode,
+  SetCode,
+} from '@hellfall/shared/types';
 import {
   colorMiscReduce,
   filterColorContents,
@@ -58,9 +65,11 @@ import {
   includeFilterMaker,
   looseOpList,
   looseOpType,
+  printsFilterMaker,
   shorthandType,
   sortMaker,
   sortType,
+  stateFilterMaker,
   stringOrNumFilterMaker,
 } from './types';
 import {
@@ -96,11 +105,20 @@ import {
   getAllNames,
   toNumber,
   listShare,
+  CardMap,
 } from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import { filterKind } from './values';
 import { equivRelNames, filterHasRelated, filterIsRelated } from './filterRelated';
 import { isSetType } from '../types/Set/values';
+import { cardsData } from '../data/data.node';
+import {
+  filterInSet,
+  filterInSetType,
+  filterIsUnique,
+  filterPrintsNumber,
+  filterSetsNumber,
+} from './filterPrints';
 
 export const makeIncludeFilter: includeFilterMaker = (value: string, op: looseOpType) => {
   return new IncludeFilter('include', filterIncludeExtras, value, op, '=');
@@ -116,6 +134,73 @@ export const makeGroupFilter: filterMaker = (value: string, op: looseOpType) => 
 };
 export const makeSetTypeFilter: filterMaker = (value: string, op: looseOpType) => {
   return new CardStringFilter('settype', filterSetType, value, op, '=');
+};
+export const makeInFilter: printsFilterMaker = (
+  value: string,
+  op: looseOpType,
+  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+) => {
+  if (isSetType(value) || isSetType(equivSetTypes[value])) {
+    return new PassThroughSummaryFilter<HCCard.Any[], string>(
+      'in',
+      filterInSetType,
+      value,
+      op,
+      '=',
+      getValueToCompare
+    );
+  } else {
+    return new PassThroughSummaryFilter<HCCard.Any[], string>(
+      'in',
+      filterInSet,
+      value,
+      op,
+      '=',
+      getValueToCompare
+    );
+  }
+};
+export const makeSetsNumberFilter: printsFilterMaker = (
+  value: string,
+  op: looseOpType,
+  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+) => {
+  return new PassThroughSummaryFilter<HCCard.Any[], string>(
+    'sets',
+    filterSetsNumber,
+    value,
+    op,
+    '=',
+    getValueToCompare
+  );
+};
+export const makePrintsNumberFilter: printsFilterMaker = (
+  value: string,
+  op: looseOpType,
+  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+) => {
+  return new PassThroughSummaryFilter<HCCard.Any[], string>(
+    'sets',
+    filterPrintsNumber,
+    value,
+    op,
+    '=',
+    getValueToCompare
+  );
+};
+export const makeIsUniqueFilter: printsFilterMaker = (
+  value: string,
+  op: looseOpType,
+  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+) => {
+  return new PassThroughSummaryFilter<HCCard.Any[], string>(
+    'sets',
+    filterIsUnique,
+    value,
+    op,
+    '=',
+    getValueToCompare
+  );
 };
 export const makeInvalidFilter: filterMaker = (value: string, op: looseOpType) => {
   return new filterObject<string, string>(
@@ -946,9 +1031,16 @@ const frameEffectsToParse = [
 ];
 const layoutsToIgnore = ['modal', 'token', 'meld_part', 'meld_result', 'meld', 'draftpartner'];
 
-export const makeIsFilter: filterMaker = (value: string, op: looseOpType) => {
+export const makeIsFilter: stateFilterMaker = (
+  value: string,
+  op: looseOpType,
+  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+) => {
   if (value in equivRelNames) {
     return makeIsRelatedFilter(value, op);
+  }
+  if (value == 'unique') {
+    return makeIsUniqueFilter(value, op, getValueToCompare);
   }
   if (isSetType(value) || isSetType(equivSetTypes[value])) {
     return makeSetTypeFilter(value, op);
@@ -964,9 +1056,16 @@ export const makeIsFilter: filterMaker = (value: string, op: looseOpType) => {
   }
   return new CardStringFilter('is', filterIs, value, op, '=');
 };
-export const makeHasFilter: filterMaker = (value: string, op: looseOpType) => {
+export const makeHasFilter: stateFilterMaker = (
+  value: string,
+  op: looseOpType,
+  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+) => {
   if (value in equivRelNames) {
     return makeHasRelatedFilter(value, op);
+  }
+  if (value == 'unique') {
+    return makeIsUniqueFilter(value, op, getValueToCompare);
   }
   if (isSetType(value) || isSetType(equivSetTypes[value])) {
     return makeSetTypeFilter(value, op);
@@ -1094,8 +1193,6 @@ const filterNames = [
   'tagnote',
   'isrelated',
   'hasrelated',
-  'is',
-  'has',
   'include',
   'invalid',
   'invalidsort',
@@ -1242,18 +1339,11 @@ export const filters: Record<filterNameType, filterMaker> = {
   tagnote: makeTagNoteFilter,
   isrelated: makeIsRelatedFilter,
   hasrelated: makeHasRelatedFilter,
-  is: makeIsFilter,
-  has: makeHasFilter,
   invalid: makeInvalidFilter,
   invalidsort: makeInvalidSortFilter,
   invalidkeyword: makeInvalidKeywordFilter,
   invalidcolor: makeInvalidColorFilter,
   include: makeIncludeFilter,
-};
-
-export const invertedFilterNames: Record<string, filterNameType> = {
-  not: 'is',
-  exclude: 'include',
 };
 
 const colorFilterNames = [
@@ -1322,6 +1412,24 @@ export const colorFilters: Record<colorFilterNameType, colorFilterMaker> = {
   miscidentity: makeMiscIdentityFilter,
   mischybrid: makeMiscHybridFilter,
 };
+
+const printsFilterNames = ['in', 'sets', 'prints', 'is', 'has'] as const;
+type printsFilterNameType = (typeof printsFilterNames)[number];
+
+export const equivPrintsFilterNames: Record<string, printsFilterNameType> = {};
+export const printsFilters: Record<printsFilterNameType, stateFilterMaker> = {
+  in: makeInFilter,
+  sets: makeSetsNumberFilter,
+  prints: makeSetsNumberFilter,
+  is: makeIsFilter,
+  has: makeHasFilter,
+};
+
+export const invertedFilterNames: Record<string, filterNameType | printsFilterNameType> = {
+  not: 'is',
+  exclude: 'include',
+};
+
 export const textIsQuote = (text: string) =>
   text.length > 1 && text[0] == text.at(-1) && ['"', "'"].includes(text[0]) && text.at(-2) != '\\';
 export const unescapeText = (text: string) => {
@@ -1460,8 +1568,13 @@ export const filterIsInverted = (text: string, invert: boolean = false): boolean
   }
   return invert;
 };
+export type otherPrintGetterType = (card: HCCard.Any) => HCCard.Any[];
 // make sure the thing doesn't strip quotes when passing text in to this from start and end of string when
-export const parseFilter = (text: string, invert: boolean = false): filterObject<any, any> => {
+export const parseFilter = (
+  text: string,
+  invert: boolean = false,
+  getOtherPrints: otherPrintGetterType
+): filterObject<any, any> => {
   const correctOp = (filter: filterObject<any, any>) => {
     if (invert) {
       switch (filter.filter.invertOption) {
@@ -1484,7 +1597,7 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
     return makeInvalidFilter('', '=');
   }
   if (text[0] == '-') {
-    return parseFilter(text.slice(1), !invert);
+    return parseFilter(text.slice(1), !invert, getOtherPrints);
   }
   if (text[0] == '"' || text[0] == "'" || !looseOpList.some(op => text.includes(op))) {
     return correctOp(makeNameFilter(text, ':'));
@@ -1498,7 +1611,13 @@ export const parseFilter = (text: string, invert: boolean = false): filterObject
     return correctOp(filters[correctKeyword as filterNameType](term, op));
   }
   if (keyword in invertedFilterNames) {
-    return parseFilter(`${invertedFilterNames[keyword]}${op}${term}`, !invert);
+    return parseFilter(`${invertedFilterNames[keyword]}${op}${term}`, !invert, getOtherPrints);
+  }
+  if (keyword in equivPrintsFilterNames || keyword in printsFilters) {
+    const correctKeyword = keyword in printsFilters ? keyword : equivPrintsFilterNames[keyword];
+    return correctOp(
+      printsFilters[correctKeyword as printsFilterNameType](term, op, getOtherPrints)
+    );
   }
   if (keyword in equivColorFilterNames || keyword in colorFilters) {
     const correctKeyword = keyword in colorFilters ? keyword : equivColorFilterNames[keyword];

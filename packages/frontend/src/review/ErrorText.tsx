@@ -1,6 +1,7 @@
-import styled from '@emotion/styled';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledSubtext } from '../styling';
 
-export const ErrorText = styled('p')({
+const errorTextStyles = createStyles({
   color: '#c00',
-  fontSize: 14,
 });
+export const ErrorText = createStyledSubtext(errorTextStyles);

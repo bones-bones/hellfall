@@ -1,17 +1,20 @@
-import { HCRelatedCard } from '@hellfall/shared/types';
+import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
 import { Divider } from '../visual-components/Divider';
-import styled from '@emotion/styled';
 import { StyledHeading } from '../visual-components/StyledHeading';
-import { HellfallRelatedEntry } from '../../HellfallRelatedEntry';
+import { HellfallRelatedEntry } from '../../entry/HellfallRelatedEntry';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv } from '../../../styling';
 
 export const RelatedCards = ({
   relatedCards,
   sourceCardId,
   onSinglePage,
+  otherPrints,
 }: {
-  relatedCards?: HCRelatedCard[];
+  relatedCards: HCRelatedCard[];
   sourceCardId: string;
   onSinglePage?: boolean;
+  otherPrints: HCCard.Any[];
 }) => {
   if (!relatedCards) {
     return null;
@@ -20,32 +23,60 @@ export const RelatedCards = ({
     <>
       <Divider />
       <div>
-        <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
-        <RelatedGrid>
-          {relatedCards
-            .filter(e => e.id != sourceCardId)
-            .map((entry, i) => (
-              <HellfallRelatedEntry
-                onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                  if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-                    window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
-                  } else {
-                    window.location.href = `/card/${encodeURIComponent(entry.hcid)}`;
-                  }
-                }}
-                key={entry.id}
-                id={entry.hcid}
-                name={entry.name}
-                url={entry.image!}
-              />
-            ))}
-        </RelatedGrid>
+        {relatedCards.length > 0 && (
+          <>
+            <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
+            <RelatedGrid>
+              {relatedCards
+                .filter(e => e.id != sourceCardId)
+                .map((entry, i) => (
+                  <HellfallRelatedEntry
+                    onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                      if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
+                        window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
+                      } else {
+                        window.location.href = `/card/${encodeURIComponent(entry.hcid)}`;
+                      }
+                    }}
+                    key={entry.id}
+                    id={entry.hcid}
+                    name={entry.name}
+                    url={entry.image!}
+                  />
+                ))}
+            </RelatedGrid>
+          </>
+        )}
+        {otherPrints.some(card => card.id != sourceCardId) && (
+          <>
+            <StyledHeading size="small">Other Prints</StyledHeading>
+            <RelatedGrid>
+              {otherPrints
+                .filter(e => e.id != sourceCardId)
+                .map((entry, i) => (
+                  <HellfallRelatedEntry
+                    onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                      if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
+                        window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
+                      } else {
+                        window.location.href = `/card/${encodeURIComponent(entry.hcid)}`;
+                      }
+                    }}
+                    key={entry.id}
+                    id={entry.hcid}
+                    name={entry.name}
+                    url={entry.image!}
+                  />
+                ))}
+            </RelatedGrid>
+          </>
+        )}
       </div>
     </>
   );
 };
 
-const RelatedGrid = styled('div')({
+const relatedGridStyles = createStyles({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
@@ -54,3 +85,4 @@ const RelatedGrid = styled('div')({
   gap: '0px',
   margin: '0 auto',
 });
+const RelatedGrid = createStyledDiv(relatedGridStyles);

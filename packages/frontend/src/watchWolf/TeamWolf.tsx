@@ -1,5 +1,3 @@
-import { getAuthApiUrl } from '../auth/getAuthApiUrl';
-
 function getWatchwolfUrl(): string {
   // const base = getAuthApiUrl();
   // return base ? `${base}/api/watchwolf` : '';

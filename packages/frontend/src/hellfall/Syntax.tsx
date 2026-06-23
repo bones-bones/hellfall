@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { FC, PropsWithChildren } from 'react';
 import { HCBorderColor, HCKind, HCMiscColors } from '@hellfall/shared/types';
 import { looseOpList, sorts } from '@hellfall/shared/filters';
 import { SetType } from '@hellfall/shared/types/Set/values';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { Box } from '@workday/canvas-kit-react';
 
 const mapListToCodeAnd = (textList: string[]) =>
   textList.map((text, i) => (
@@ -201,12 +202,19 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
-          Since reprints haven't been fully implemented yet, <code>in:</code> doesn't work. You can
-          use <code>is:masterpiece</code>, <code>is:rebalanced</code>, and <code>is:reprint</code>{' '}
-          though.
+          You can also use <code>in:</code>, in addition to <code>is:masterpiece</code>,{' '}
+          <code>is:rebalanced</code>, <code>is:reprint</code>, and <code>is:unique</code>.
         </div>
+        <br />
         <div>
-          <code>st:</code> also hasn't been implemented yet.
+          You can also use <code>st:</code> with a set type (one of{' '}
+          {mapListToCodeAnd(Object.values(SetType))}), and you can also use <code>in:</code> with
+          set types.
+        </div>
+        <br />
+        <div>
+          You can use <code>prints:</code> to compare the number of times a card has been printed,
+          or <code>sets:</code> to do the same for the number of sets a card has been in..
         </div>
         <h2>Legality</h2>
         <div>
@@ -339,7 +347,7 @@ export const Syntax = () => {
         </div>
         <h2>Not Implemented Yet</h2>
         <div>
-          Everything in Games, Promos, & Spotlights, Year, Reprints, Languages (except{' '}
+          Everything in Games, Promos, & Spotlights, Year, Languages (except{' '}
           {mapListToCodeAnd(['is:alchemy', 'is:rebalanced'])}){' '}
         </div>
         <h2>Won't Be Implemented</h2>
@@ -351,52 +359,22 @@ export const Syntax = () => {
   );
 };
 
-export const BigContainerE = styled('div')({
+const bigContainerE = createStyles({
   display: 'flex',
   justifyContent: 'center',
   backgroundColor: 'lightgrey',
   minHeight: '95vh',
 });
 
-export const BigContainer: FC<PropsWithChildren> = ({ children }) => {
-  //
-  return (
-    <BigContainerE>
-      <InnerContainer>{children}</InnerContainer>
-    </BigContainerE>
-  );
-};
-export const InnerContainer = styled('div')({
+const innerContainer = createStyles({
   width: '80vw',
   backgroundColor: 'white',
   padding: '20px',
 });
-export const ManaSymbol = styled('img')({ height: '30px' });
-export const ManaSymbolSmall = styled('img')({
-  height: '20px',
-  paddingInlineEnd: '10px',
-  paddingInlineStart: '5px',
-});
-export const StyledH3 = styled('h3')({ display: 'flex', alignItems: 'center' });
-
-export const Divider = ({ color }: { color: string }) => {
+const BigContainer: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <DivContainer>
-      <DivLine />
-      <ManaSymbol src={color} />
-      <DivLine />
-    </DivContainer>
+    <Box cs={bigContainerE}>
+      <Box cs={innerContainer}>{children}</Box>
+    </Box>
   );
 };
-
-const DivLine = styled('div')({
-  height: '3px',
-  width: '20vw',
-  background: 'black',
-});
-
-const DivContainer = styled('div')({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-});

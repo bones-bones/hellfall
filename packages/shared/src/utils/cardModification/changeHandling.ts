@@ -81,7 +81,7 @@ export type {
 export const rootChangeableProps: Record<changeType, rootPropType[]> = {
   add: [
     'id_is_scryfall',
-    // 'oracle_id',
+    'oracle_id',
     'oracle_id_is_scryfall',
     'name',
     'flavor_name',
@@ -827,6 +827,9 @@ const faceBlankableProps: Partial<Record<HCKind, facePropType[]>> = {
 // can delete
 const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
   card: [
+    'id_is_scryfall',
+    'oracle_id',
+    'oracle_id_is_scryfall',
     'flavor_name',
     'export_name',
     'collector_number',
@@ -848,6 +851,8 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'all_parts',
   ],
   token: [
+    'id_is_scryfall',
+    'oracle_id_is_scryfall',
     'flavor_name',
     'export_name',
     'collector_number',
@@ -869,6 +874,8 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'all_parts',
   ],
   land: [
+    // 'id_is_scryfall',
+    // 'oracle_id_is_scryfall',
     'flavor_name',
     'export_name',
     'collector_number',
