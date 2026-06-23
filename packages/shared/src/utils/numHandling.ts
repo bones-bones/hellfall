@@ -5,13 +5,9 @@ export const isNumber = (num: string) => {
   return isInteger(num) || num == parseFloat(num).toString();
 };
 
-export const toNumber = (numStr: string | undefined) => {
+export const toNumber = (numStr: string | undefined):number|undefined => {
   const zeroEquivs = ['?', 'N', 'X', 'Y', 'Z', '*', ''];
   const specialCases: Record<string, number> = {
-    '[7': 7,
-    '7]': 7,
-    '[3': 3,
-    '4]': 4,
     '∞': 1e25,
     '2σ': 0,
     '3*X': 0,
@@ -29,6 +25,10 @@ export const toNumber = (numStr: string | undefined) => {
   };
   if (!numStr) {
     return undefined;
+  } else if (numStr.startsWith('[')) {
+    return toNumber(numStr.slice(1));
+  } else if (numStr.endsWith(']')) {
+    return toNumber(numStr.slice(0,-1));
   } else if (numStr in specialCases) {
     return specialCases[numStr];
   } else if (zeroEquivs.includes(numStr)) {
