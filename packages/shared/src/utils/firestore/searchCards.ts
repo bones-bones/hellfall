@@ -1,11 +1,11 @@
 import type { CollectionReference } from '@google-cloud/firestore';
 import { HCCard } from '@hellfall/shared/types';
-import { makeIncludeFilter } from '../../filters/filterBuilder';
+import { makeIncludeFilter, otherPrintGetterType } from '../../filters/filterBuilder';
 import type { FilterNode } from '../../filters/parseSearchBar';
 import { fixTags, parseSearchQuery } from '../../filters/parseSearchBar';
 import { CardMap } from '../cardHandling/cardMap';
 import { firestoreToCard } from './cardConversion';
-import { getAllRelatedCollection } from './cardRefs';
+import { getAllPrintsCollection, getAllRelatedCollection } from './cardRefs';
 import type { firestoreCard } from './firestoreTypes';
 
 const evaluateRelatedFilter = (
@@ -46,7 +46,11 @@ export const searchCardsFromCollection = async (
   query: string,
   tagList: string[]
 ): Promise<CardMap> => {
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query);
+  const snapshot = await cardsCol.get();
+  const cardMap = new CardMap(
+    snapshot.docs.map(doc => firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard))
+  );
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
   const usingClusion = Boolean(includeList.length + excludeList.length);
   fixTags(node, tagList);
   if (includeList.length) {
@@ -55,7 +59,7 @@ export const searchCardsFromCollection = async (
   }
   const newCardsWithExtras = new CardMap();
   (await cardsCol.get()).forEach(snap => {
-    const card = snap.data()
+    const card = snap.data();
     if (
       evaluateFilter(node, card, cardsCol) &&
       (includeList.length

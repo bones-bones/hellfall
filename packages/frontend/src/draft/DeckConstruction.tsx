@@ -1,6 +1,8 @@
-import styled from '@emotion/styled';
 import { useState } from 'react';
 import { HCCard } from '@hellfall/shared/types';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledImg } from '../styling';
+import { Box } from '@workday/canvas-kit-react';
 
 export const DeckConstruction = ({ cards }: { cards: HCCard.Any[] }) => {
   const [localCards, setLocalCards] = useState([...cards]);
@@ -82,17 +84,22 @@ export const DeckConstruction = ({ cards }: { cards: HCCard.Any[] }) => {
   );
 };
 
-const DraftedCardsContainer = styled.div({
+const draftedCardsContainerStyles = createStyles({
   display: 'flex',
   overflowY: 'hidden',
 });
-const DeckContainer = styled.div({ display: 'flex' });
+const DraftedCardsContainer = createStyledDiv(draftedCardsContainerStyles);
 
-const DeckColumn = styled.div();
+const deckContainerStyles = createStyles({ display: 'flex' });
+const DeckContainer = createStyledDiv(deckContainerStyles);
 
-const Card = styled.img({ width: '220px' });
+const DeckColumn = Box;
 
-const CardContainer = styled.div({
+const cardStyles = createStyles({ width: '220px' });
+const Card = createStyledImg(cardStyles);
+
+const cardContainerStyles = createStyles({
   height: '40px',
   ':hover': { width: '220px', zIndex: 2, height: 'auto' },
 });
+const CardContainer = createStyledDiv(cardContainerStyles);

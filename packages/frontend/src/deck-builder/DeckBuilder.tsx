@@ -1,15 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
 import { HCCard, SetCode } from '@hellfall/shared/types';
-import styled from '@emotion/styled';
 // import { toDeck } from './toDeck.ts';
-import { TextInput, FormField } from '@workday/canvas-kit-react';
+import { TextInput, Box, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { buildNameToIdMap, lookupNameToId } from '../hellfall/hooks/useNameToId.ts';
 import { downloadDraftmancer } from '../cube-resources/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CardMap, HCToTTSDeck, textPrep } from '@hellfall/shared/utils';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledImg, createStyledTextAreaWithRef } from '../styling';
+import { CardMap, HCToTTSDeck, textPrep, unescapeBase64 } from '@hellfall/shared/utils';
 import { loadCardsData } from '@hellfall/shared/data';
 
 // const basics: Record<string, string> = {
@@ -32,7 +33,7 @@ export const DeckBuilder = () => {
   );
   const [cardMap, setCardMap] = useState<CardMap>(() => new CardMap());
   useEffect(() => {
-    loadCardsData().then((data) => setCardMap(new CardMap(data.data)));
+    loadCardsData().then(data => setCardMap(new CardMap(data.data)));
   }, []);
   const nameToIdMap = useMemo(() => buildNameToIdMap(cardMap), [cardMap]);
   const [multMap, setMultMap] = useState<Map<string, number>>(new Map());
@@ -149,7 +150,8 @@ export const DeckBuilder = () => {
             Click here to playtest
           </button>
         ))}
-      <FormField label="Deck Name">
+      <FormField>
+        <FormField.Label>Deck Name</FormField.Label>
         <TextInput
           defaultValue={deckName}
           placeholder="your deck name goes here"
@@ -212,7 +214,7 @@ Cock and Balls to Torture and Abuse
           );
           const url =
             'data:text/plain;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(val, null, 2))));
+            btoa(unescapeBase64(encodeURIComponent(JSON.stringify(val, null, 2))));
           const a = document.createElement('a');
           a.style.display = 'none';
           a.href = url;
@@ -231,6 +233,7 @@ Cock and Balls to Torture and Abuse
             set: 'Custom' as SetCode,
             idList: renderCards.flatMap(card => card.id ?? []),
             cardMap,
+            multMap,
           });
         }}
       >
@@ -256,11 +259,13 @@ Cock and Balls to Torture and Abuse
     </div>
   );
 };
-const DeckContainer = styled.div({});
-const Card = styled.img({ width: '250px' });
+const DeckContainer = Box;
+const cardStyles = createStyles({ width: '250px' });
+const Card = createStyledImg(cardStyles);
 
 //245 × 341 px
 
 // const OtherContainer = styled.div({ display: "flex" });
 
-const StyledTextArea = styled.textarea({ width: '50%', minHeight: '400px' });
+const textAreaStyles = createStyles({ width: '50%', minHeight: '400px' });
+const StyledTextArea = createStyledTextAreaWithRef(textAreaStyles);

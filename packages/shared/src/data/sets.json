@@ -325,6 +325,10 @@
       "code": "HCK",
       "name": "Heckscube",
       "description": "This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC's first forays into \"beginner-friendly\" Magic all the way back in '97.",
+      "tts_link": {
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3747475872",
+        "text": "Plugin by Sultan"
+      },
       "set_type": "side",
       "child_set_codes": [
         "HCV.K"
@@ -422,6 +426,10 @@
       "code": "HKL",
       "name": "Heckscube 2: Hecklands",
       "description": "Heckscube 2: Hecklands is a return to classic 90's Magic: the Gathering. This minicube includes cards roughly of the caliber and quality of Homelands, everyone's favorite Magic set.",
+      "tts_link": {
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3747489298",
+        "text": "Plugin by Sultan"
+      },
       "set_type": "side",
       "child_set_codes": [
         "HCV.L"

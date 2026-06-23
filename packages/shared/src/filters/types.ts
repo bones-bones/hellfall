@@ -6,7 +6,14 @@ import {
   HCRelatedCard,
   SetCode,
 } from '@hellfall/shared/types';
-import { CompFilter, filterObject, IncludeFilter, sortObject } from './filterObject';
+import {
+  CompFilter,
+  filterObject,
+  IncludeFilter,
+  PassThroughSummaryFilter,
+  sortObject,
+} from './filterObject';
+import { otherPrintGetterType } from '.';
 export const NOPRINT =
   'This should not ever print. Please report this as a bug on discord along with the search terms you used.';
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
@@ -107,6 +114,7 @@ export interface includeFilter extends cardFilter<HCCard.Any, string> {
 }
 export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
 export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
+export interface printsFilter extends cardFilter<HCCard.Any[], string> {}
 export interface setFilter extends cardFilter<HCCard.Any, SetCode> {}
 export interface noteFilter extends cardFilter<HCCard.Any, string> {
   (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string):
@@ -118,6 +126,16 @@ export interface noteFilter extends cardFilter<HCCard.Any, string> {
 export interface relatedFilter extends cardFilter<HCRelatedCard[], string> {}
 
 export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
+export type printsFilterMaker = (
+  value: string,
+  op: looseOpType,
+  getValueToCompare: otherPrintGetterType
+) => PassThroughSummaryFilter<HCCard.Any[], string>;
+export type stateFilterMaker = (
+  value: string,
+  op: looseOpType,
+  getValueToCompare: otherPrintGetterType
+) => filterObject<any, string>;
 export type compFilterMaker = (value1: string, op: looseOpType, value2: string) => CompFilter;
 export type includeFilterMaker = (value: string, op: looseOpType) => IncludeFilter;
 export type colorFilterMaker = (

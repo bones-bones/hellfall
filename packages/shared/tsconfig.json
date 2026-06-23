@@ -26,5 +26,15 @@
     "noErrorTruncation": true
   },
   "include": ["src/**/*", "src/**/*.ts", "src/**/*.d.ts"],
-  "exclude": ["src/data/*.json"]
+  "exclude": [
+    "src/data/*.json",
+    "node_modules",
+    "../node_modules",
+    "../**/node_modules",
+    "../../**/node_modules",
+    "**/dist",
+    "**/build",
+    "**/coverage",
+    "**/.next"
+  ]
 }

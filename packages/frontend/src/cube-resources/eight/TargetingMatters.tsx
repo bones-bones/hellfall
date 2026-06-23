@@ -1,4 +1,4 @@
-import { BigContainer, Divider, InnerContainer, ManaSymbolSmall, StyledH3 } from './components.tsx';
+import { BigContainer, Divider, ManaSymbolSmall, StyledH3 } from './components.tsx';
 import { getPipSrc } from '@hellfall/shared/utils';
 import { Link } from 'react-router-dom';
 export const TargetingMatters = () => {

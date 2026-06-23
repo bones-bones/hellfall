@@ -21,5 +21,17 @@
       "@hellfall/shared": ["../shared/src/index.ts"],
       "@hellfall/shared/*": ["../shared/src/*/index.ts", "../shared/src/*"]
     }
-  }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": [
+    "node_modules",
+    "../node_modules",
+    "../**/node_modules",
+    "../../**/node_modules",
+    "**/dist",
+    "**/build",
+    "**/coverage",
+    "**/.next"
+  ],
+  "references": [{ "path": "../shared" }]
 }

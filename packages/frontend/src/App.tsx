@@ -19,7 +19,7 @@ const Watchwolfresults = lazy(() =>
 const Login = lazy(() => import('./auth/Login').then(m => ({ default: m.Login })));
 const ReviewPage = lazy(() => import('./review/ReviewPage').then(m => ({ default: m.ReviewPage })));
 const AdvancedSearch = lazy(() =>
-  import('./hellfall/search-controls/AdvancedSearch').then(m => ({
+  import('./hellfall/advanced/AdvancedSearch').then(m => ({
     default: m.AdvancedSearch,
   }))
 );

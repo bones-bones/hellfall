@@ -9,7 +9,7 @@ export function loadCardsData(): Promise<JsonDataWrapper<HCCard.Any>> {
     cardsDataPromise = import(
       /* webpackChunkName: "hellscube-database" */
       './Hellscube-Database.json'
-    ).then((mod) => mod.default as JsonDataWrapper<HCCard.Any>);
+    ).then(mod => mod.default as JsonDataWrapper<HCCard.Any>);
   }
   return cardsDataPromise;
 }

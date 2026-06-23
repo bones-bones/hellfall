@@ -2,10 +2,11 @@ import { useAtom, useSetAtom } from 'jotai';
 
 import { deckAtom, draftAtom } from './draftAtom.ts';
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import { TheDraft } from './types.ts';
 import { CARDS_PER_PACK } from './constants.ts';
 import { HCCard } from '@hellfall/shared/types';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledImg } from '../styling/StyledElements.tsx';
 
 export const Area = () => {
   const [draft, setDraft] = useAtom(draftAtom);
@@ -88,13 +89,20 @@ export const Area = () => {
   );
 };
 
-const Container = styled.div({ display: 'flex', flexDirection: 'row' });
-const DraftedContainer = styled.div({ width: '20vw' });
-const PackContainer = styled.div({ width: '80vw' });
+const containerStyles = createStyles({ display: 'flex', flexDirection: 'row' });
+const Container = createStyledDiv(containerStyles);
 
-const Card = styled.img({ width: '260px' });
+const draftedContainerStyles = createStyles({ width: '20vw' });
+const DraftedContainer = createStyledDiv(draftedContainerStyles);
 
-const CardContainer = styled.div({
+const packContainerStyles = createStyles({ width: '80vw' });
+const PackContainer = createStyledDiv(packContainerStyles);
+
+const cardStyles = createStyles({ width: '260px' });
+const Card = createStyledImg(cardStyles);
+
+const cardContainerStyles = createStyles({
   height: '40px',
   ':hover': { width: '260px', zIndex: 2, height: 'auto' },
 });
+const CardContainer = createStyledDiv(cardContainerStyles);

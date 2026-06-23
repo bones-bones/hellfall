@@ -1,12 +1,20 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
-import styled from '@emotion/styled';
-import { HellfallCard } from '../hellfall/card';
+import { HellfallCard } from '../hellfall/card/HellfallCard.tsx';
 import { CardEntry } from './types.ts';
 import { useParams } from 'react-router-dom';
 import { allDecks } from './allDecks.ts';
 import { stringToMana } from '../hellfall/stringToMana.tsx';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStenciledDiv,
+  createStyledDiv,
+  createStyledIntrinsic,
+  createStyledLink,
+} from '../styling';
+import { Box, BoxProps } from '@workday/canvas-kit-react';
+import { useEffect } from 'react';
 
 const activeCardAtom = atom<HCCard.Any | undefined>(undefined);
 
@@ -94,10 +102,16 @@ export const Deck = () => {
 
     return curr;
   }, {});
+  useEffect(() => {
+    if (!deck.title) {
+      document.title = `Loading | Hellfall`;
+    } else {
+      document.title = `${deck.title} | Hellfall`;
+    }
+  }, [deck]);
 
   return (
     <BiggestContainer>
-      <title>{deck.title} | Hellfall</title>
       <BigContainer showGutter={window.innerWidth > 800}>
         <h2>{deck.title}</h2>
         <h3>By: {deck.author}</h3>
@@ -124,22 +138,41 @@ export const Deck = () => {
   );
 };
 
-const DeckHeading = styled.h3({ marginTop: '40px', marginBottom: '0px' });
-const BigContainer = styled.div(({ showGutter }: { showGutter: boolean }) => ({
-  width: showGutter ? '80vw' : '100%',
-  maxWidth: '1600px',
-  backgroundColor: 'white',
+const deckHeadingStyles = createStyles({ marginTop: '40px', marginBottom: '0px' });
+const DeckHeading = createStyledIntrinsic('h3', deckHeadingStyles);
 
-  height: '100vw',
-  ...(showGutter && { marginLeft: '10vw', marginRight: '10vw' }),
-}));
-const BiggestContainer = styled.div({
+const bigContainerStencil = createStencil({
+  vars: {},
+  base: {
+    width: '100%',
+    maxWidth: '1600px',
+    backgroundColor: 'white',
+    height: '100vw',
+  },
+  modifiers: {
+    showGutter: {
+      true: {
+        width: '80vw',
+        marginLeft: '10vw',
+        marginRight: '10vw',
+      },
+    },
+  },
+});
+interface GutterDivProps extends BoxProps {
+  showGutter?: boolean;
+}
+const BigContainer = createStenciledDiv<GutterDivProps>(bigContainerStencil);
+
+const biggestContainerStyles = createStyles({
   backgroundColor: 'grey',
   display: 'flex',
   justifyContent: 'center',
   height: '100%',
 });
-const TextContainer = styled.div({
+const BiggestContainer = createStyledDiv(biggestContainerStyles);
+
+const textContainerStyles = createStyles({
   marginLeft: '40px',
   marginRight: '40px',
   whiteSpace: 'pre-wrap',
@@ -147,6 +180,8 @@ const TextContainer = styled.div({
   marginTop: '40px',
   fontSize: '18px',
 });
+const TextContainer = createStyledDiv(textContainerStyles);
+
 const CardContainer = () => {
   const [activeCard] = useAtom(activeCardAtom);
 
@@ -161,22 +196,35 @@ const CardContainer = () => {
   );
 };
 
-const DeckCon = styled.div({
+const deckConStyles = createStyles({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
   minHeight: '600px',
   paddingLeft: '20px',
 });
+const DeckCon = createStyledDiv(deckConStyles);
 
-const ActiveCardContainer = styled.div<{ showGutter: boolean }>(({ showGutter }) => ({
-  width: '380px',
-  maxHeight: '900px',
-  top: '50px',
-  overflowY: 'scroll',
-  position: 'fixed',
-  right: showGutter ? '10vw' : '0px',
-}));
+const activeCardContainerStencil = createStencil({
+  vars: {},
+  base: {
+    width: '380px',
+    maxHeight: '900px',
+    top: '50px',
+    overflowY: 'scroll',
+    position: 'fixed',
+    right: '0px',
+  },
+  modifiers: {
+    showGutter: {
+      true: {
+        right: '10vw',
+      },
+    },
+  },
+});
+const ActiveCardContainer = createStenciledDiv<GutterDivProps>(activeCardContainerStencil);
+
 const CategorySection = ({
   cards,
   title,
@@ -201,7 +249,7 @@ const CategorySection = ({
               <CardLineContainer key={entry.name}>
                 <CardColumn onMouseOver={() => setActive(entry.hcCard)}>
                   {entry.count}{' '}
-                  <BoldSpan href={'/card/' + (entry.hcCard?.name || '')}>{entry.name}</BoldSpan>{' '}
+                  <BoldSpan to={'/card/' + (entry.hcCard?.hcid || '')}>{entry.name}</BoldSpan>{' '}
                 </CardColumn>{' '}
                 <CostColumn>{stringToMana(entry.hcCard?.mana_cost || '')}</CostColumn>
                 <MoneyColumn key={entry.name + 'cash'}>{getPrice(entry.name)}</MoneyColumn>
@@ -212,34 +260,44 @@ const CategorySection = ({
     </CatCon>
   );
 };
-const StyledH4 = styled.h4({ marginBottom: '10px' });
-const CardColumn = styled.div({});
-const CostColumn = styled.div({});
-const MoneyColumn = styled.div({
-  textAlign: 'end',
-});
-const CatCon = styled.div({
+
+const h4Styles = createStyles({ marginBottom: '10px' });
+const StyledH4 = createStyledIntrinsic('h4', h4Styles);
+
+const CardColumn = Box;
+const CostColumn = Box;
+
+const moneyColumnStyles = createStyles({ textAlign: 'end' });
+const MoneyColumn = createStyledDiv(moneyColumnStyles);
+
+const catConStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
-
   width: '100%',
 });
-const CatSecCon = styled.div({
+const CatCon = createStyledDiv(catConStyles);
+
+const catSecConStyles = createStyles({
   width: '35vw',
   display: 'grid',
   gridTemplateColumns: '3fr 1.25fr 0.5fr',
   gap: '0',
   rowGap: '2px',
 });
-const BoldSpan = styled.a({
+const CatSecCon = createStyledDiv(catSecConStyles);
+
+const boldSpanStyles = createStyles({
   fontWeight: 'bold',
   color: 'black',
   ':hover': { textDecoration: 'underline' },
   ':visited': { color: 'darkgrey' },
 });
-const CardLineContainer = styled.div({
+const BoldSpan = createStyledLink(boldSpanStyles);
+
+const cardLineContainerStyles = createStyles({
   display: 'contents',
 });
+const CardLineContainer = createStyledDiv(cardLineContainerStyles);
 
 type RenderEntry = {
   name: string;

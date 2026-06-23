@@ -1,11 +1,12 @@
 import { HCCard, SetCode } from '@hellfall/shared/types';
-import { getChildSets } from '../setHandling';
+import { getChildSets, getDirectChildSets } from '../setHandling';
 
 /**
  * The class for a map of cards.
  */
 export class CardMap {
   protected idMap = new Map<string, HCCard.Any>();
+  protected oracleMap = new Map<string, Set<string>>();
   protected setMap = new Map<SetCode, Set<string>>();
 
   /**
@@ -13,6 +14,10 @@ export class CardMap {
    */
   set(card: HCCard.Any): void {
     this.idMap.set(card.id, card);
+    if (!this.oracleMap.has(card.oracle_id)) {
+      this.oracleMap.set(card.oracle_id, new Set());
+    }
+    this.oracleMap.get(card.oracle_id)!.add(card.id);
     if (!this.setMap.has(card.set)) {
       this.setMap.set(card.set, new Set());
     }
@@ -21,6 +26,10 @@ export class CardMap {
 
   protected setWithId(id: string, card: HCCard.Any): void {
     this.idMap.set(id, card);
+    if (!this.oracleMap.has(card.oracle_id)) {
+      this.oracleMap.set(card.oracle_id, new Set());
+    }
+    this.oracleMap.get(card.oracle_id)!.add(id);
     if (!this.setMap.has(card.set)) {
       this.setMap.set(card.set, new Set());
     }
@@ -40,6 +49,11 @@ export class CardMap {
   delete(id: string): boolean {
     const value = this.idMap.get(id);
     if (!value) return false;
+    const oracle = this.oracleMap.get(value.oracle_id);
+    oracle?.delete(id);
+    if (oracle?.size == 0) {
+      this.oracleMap.delete(value.oracle_id);
+    }
     const set = this.setMap.get(value.set);
     set?.delete(id);
     if (set?.size == 0) {
@@ -94,6 +108,21 @@ export class CardMap {
   }
 
   /**
+   * Returns the ids of the cards with a given oracle_id
+   */
+  getIdsOfPrints(oracle_id: string): Set<string> | undefined {
+    return this.oracleMap.get(oracle_id);
+  }
+
+  /**
+   * Returns a subset of the CardMap object as a new CardMap, based on a provided oracle id.
+   * @returns Returns the subset of the CardMap with the given oracle id.
+   */
+  getAllPrints(oracle_id: string): this {
+    return this.getSubset(this.getIdsOfPrints(oracle_id) ?? []);
+  }
+
+  /**
    * Returns the subset of the CardMap object in the given set as a new CardMap.
    * @returns Returns the subset of the CardMap in the given set.
    */
@@ -101,6 +130,20 @@ export class CardMap {
     const idList = [
       ...Array.from(this.setMap.get(set) ?? []),
       ...(getChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ?? []),
+    ];
+    if (!idList) return new (this.constructor as any)() as this;
+    return this.getSubset(idList);
+  }
+
+  /**
+   * Returns the subset of the CardMap object directly in the given set as a new CardMap.
+   * @returns Returns the subset of the CardMap in the given set directly (so excluding cards with different set types e.g. vetoed cards).
+   */
+  getAllInSetDirect(set: SetCode): this {
+    const idList = [
+      ...Array.from(this.setMap.get(set) ?? []),
+      ...(getDirectChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ??
+        []),
     ];
     if (!idList) return new (this.constructor as any)() as this;
     return this.getSubset(idList);
@@ -128,6 +171,18 @@ export class CardMap {
   }
 
   /**
+   * Returns the ids of the cards directly in the given set.
+   * @returns Returns the ids of the cards directly in the given set.
+   */
+  getAllIdsInSetDirect(set: SetCode): string[] {
+    return [
+      ...Array.from(this.setMap.get(set) ?? []),
+      ...(getDirectChildSets(set)?.flatMap(subSet => Array.from(this.setMap.get(subSet) ?? [])) ??
+        []),
+    ];
+  }
+
+  /**
    * Returns the ids of the cards exactly in the given set.
    * @returns Returns the ids of the cards exactly in the given set.
    */
@@ -140,6 +195,14 @@ export class CardMap {
    */
   getAllInSetList(setList: SetCode[]): this {
     const idList = setList.flatMap(set => this.getAllIdsInSet(set));
+    return this.getSubset(idList);
+  }
+  /**
+   * Returns the subset of the CardMap object directly in the given sets as a new CardMap.
+   * @returns Returns the subset of the CardMap directly in the given sets.
+   */
+  getAllInSetListDirect(setList: SetCode[]): this {
+    const idList = setList.flatMap(set => this.getAllIdsInSetDirect(set));
     return this.getSubset(idList);
   }
 
@@ -158,6 +221,14 @@ export class CardMap {
    */
   getAllIdsInSetList(setList: SetCode[]): string[] {
     return setList.flatMap(set => this.getAllIdsInSet(set));
+  }
+
+  /**
+   * Returns the ids of the cards directly in the given sets.
+   * @returns Returns the ids of the cards directly in the given sets.
+   */
+  getAllIdsInSetListDirect(setList: SetCode[]): string[] {
+    return setList.flatMap(set => this.getAllIdsInSetDirect(set));
   }
 
   /**
@@ -604,11 +675,19 @@ export class CardMap {
       this.setMap.get(set)?.size || getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.size)
     );
   }
+
   /**
    * @returns boolean indicating whether the specified exact set exists or not.
    */
   hasSetExact(set: SetCode): boolean {
     return Boolean(this.setMap.get(set)?.size);
+  }
+
+  /**
+   * @returns boolean indicating whether the specified oracle id exists or not.
+   */
+  hasOracleId(oracle_id: string): boolean {
+    return this.oracleMap.has(oracle_id);
   }
 
   /**
@@ -652,6 +731,18 @@ export class CardMap {
    */
   ids(): string[] {
     return Array.from(this.idMap.keys());
+  }
+  /**
+   * Returns an array of the oracle ids in the CardMap.`
+   */
+  oracle_ids(): string[] {
+    return Array.from(this.idMap.keys());
+  }
+  /**
+   * Returns an array of the sets in the CardMap.
+   */
+  sets(): SetCode[] {
+    return Array.from(this.setMap.keys());
   }
 
   /**

@@ -1,5 +1,6 @@
-import styled from '@emotion/styled';
+import { createStencil } from '@workday/canvas-kit-styling';
 import { useState } from 'react';
+import { createStenciledImg } from '../../styling';
 
 type Props = { image: string };
 export const PlayCard = ({ image }: Props) => {
@@ -17,6 +18,21 @@ export const PlayCard = ({ image }: Props) => {
   );
 };
 
-const StyledImage = styled.img(({ tapped }: { tapped: boolean }) => ({
-  rotate: tapped ? '90deg' : '0deg',
-}));
+const imageStencil = createStencil({
+  vars: {},
+  base: {
+    rotate: '0deg',
+  },
+  modifiers: {
+    tapped: {
+      true: {
+        rotate: '90deg',
+      },
+    },
+  },
+});
+interface ImageProps extends React.ComponentPropsWithoutRef<'img'> {
+  tapped?: boolean;
+}
+
+const StyledImage = createStenciledImg<ImageProps>(imageStencil);

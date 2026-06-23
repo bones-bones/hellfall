@@ -6,7 +6,6 @@ import {
   invertOptionType,
   opType,
   cardStringFilter,
-  setFilter,
 } from './types';
 import { opAsBool, opToNot } from './filterUtils';
 import {

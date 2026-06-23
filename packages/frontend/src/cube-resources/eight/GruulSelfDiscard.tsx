@@ -1,4 +1,4 @@
-import { BigContainer, InnerContainer, ManaSymbolSmall } from './components.tsx';
+import { BigContainer, ManaSymbolSmall } from './components.tsx';
 import { getPipSrc } from '@hellfall/shared/utils';
 import { Link } from 'react-router-dom';
 export const GruulSelfDiscard = () => {

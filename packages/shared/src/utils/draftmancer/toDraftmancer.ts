@@ -8,12 +8,14 @@ export const toDraftmancerCube = ({
   cardMap,
   set,
   idList,
+  multMap,
   draftMode,
 }: {
   name: string;
   cardMap: CardMap;
   set: SetCode;
   idList?: string[];
+  multMap?: Map<string, number>;
   draftMode?: 'commander' | 'jumpstart';
 }) => {
   const { cards, tokens } = HCToDraftmancer(cardMap, set, idList, draftMode);
@@ -44,10 +46,10 @@ export const toDraftmancerCube = ({
       null,
       '\t'
     )}\n[CommanderSlot(2)]\n${commanderCards
-      .map(e => `1 ${e.name}`)
+      .map(e => `${multMap?.get(e.id) ?? 1} ${e.name}`)
       .join('\n')}\n[OtherSlot(18)]\n${nonCommanderCards
       .map(e => {
-        return `1 ${e.name}`;
+        return `${multMap?.get(e.id) ?? 1} ${e.name}`;
       })
       .join('\n')}`;
 
@@ -82,7 +84,7 @@ export const toDraftmancerCube = ({
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA"
 }
 [CustomCards]\n${JSON.stringify([...cards, ...tokens], null, '\t')}\n[MainSlot]\n${cards
-      .map(e => `1 ${e.name}`)
+      .map(e => `${multMap?.get(e.id) ?? 1} ${e.name}`)
       .join('\n')}`;
 
     return formatted;

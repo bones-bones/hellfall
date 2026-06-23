@@ -1,5 +1,3 @@
-import styled from '@emotion/styled';
-
 import {
   CheckboxGroup,
   NamedCheckboxGroup,
@@ -7,26 +5,25 @@ import {
   SingleCheckbox,
   PillSearch,
   NumberSelector,
-} from '../inputs/index.ts';
-import {
-  TextInput,
-  FormField,
-  PrimaryButton,
-  ButtonColors,
-  inputColors,
-} from '@workday/canvas-kit-react';
-
+} from '../advanced/index.ts';
+import { ButtonColors, TextInput, FormField } from '@workday/canvas-kit-react';
+import { system } from '@workday/canvas-tokens-web';
 import { useAtom } from 'jotai';
-import { inputSortAtom, queryAtom, sortAtom } from '../atoms/searchAtoms.ts';
-import { StyledLabel, StyledLegend } from '../StyledLabel.tsx';
+import { inputSortAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
-import { ControlBar } from './ControlBar.tsx';
-import { useNavToSearch } from '../hooks/useUrlSync.ts';
+import { ControlBar } from '../search-controls/ControlBar.tsx';
 import { extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
-import { StyledComponentHolder } from './StyledComponentHolder.tsx';
+import { createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStyledDiv,
+  createStyledHR,
+  createStyledPrimaryButtonLink,
+  createStyledSelect,
+} from '../../styling';
+import { StyledComponentHolder, StyledLabel, StyledLegend } from './AdvancedComponents.tsx';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');
@@ -76,10 +73,7 @@ export const AdvancedSearch = () => {
 
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const [sortRules, setSortRules] = useAtom(sortAtom);
-
-  const [query, setQuery] = useAtom(queryAtom);
-
-  const navToSearch = useNavToSearch();
+  const [localQuery, setLocalQuery] = useState('');
 
   useEffect(() => {
     setInputSorts([]);
@@ -226,8 +220,46 @@ export const AdvancedSearch = () => {
         filters.push(`sort:${dir == 'auto' ? sort : dir}`);
       }
     });
-    return filters.join(' ');
+    return normalizeText(filters.join(' '));
   };
+  useEffect(() => {
+    const newQuery = toQueryString();
+    if (localQuery != newQuery) {
+      setLocalQuery(newQuery);
+    }
+  }, [
+    searchSet,
+    extraSets,
+    searchToken,
+    idSearch,
+    nameSearch,
+    costSearch,
+    typeSearch,
+    rulesSearch,
+    flavorSearch,
+    creators,
+    artists,
+    tags,
+    isCommander,
+    standardLegality,
+    fourcbLegality,
+    commanderLegality,
+    collectorNumber,
+    manaValue,
+    power,
+    toughness,
+    loyalty,
+    defense,
+    colorNumber,
+    colorIdentityNumber,
+    searchColors,
+    colorComparison,
+    searchColorIdentities,
+    colorIdentityComparison,
+    hybridIdentityRule,
+    includeExtraSets,
+    inputSorts,
+  ]);
   const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
   const pipList = pipsData.data
     .filter(pip => !excludeFiles.some(file => pip.filename.includes(file)))
@@ -245,7 +277,8 @@ export const AdvancedSearch = () => {
             values={nameSearch}
             onChange={setNameSearch}
           />
-          <FormField label="Id">
+          <FormField cs={idStyles}>
+            <FormField.Label>Id</FormField.Label>
             <TextInput value={idSearch} onChange={event => setIdSearch(event.target.value)} />
           </FormField>
           <PillSearch
@@ -523,7 +556,6 @@ export const AdvancedSearch = () => {
           <NumberSelector label={'Toughness'} onChange={setToughness} value={toughness} />
           <NumberSelector label={'Loyalty'} onChange={setLoyalty} value={loyalty} />
           <NumberSelector label={'Defense'} onChange={setDefense} value={defense} />
-          {/* TODO: Add other controls and add button to start search */}
         </SearchCriteriaSection>
       </SearchContainer>
       <Separator />
@@ -531,13 +563,13 @@ export const AdvancedSearch = () => {
       <SortSeparator />
       <StartButton
         colors={inputButtonColors}
-        borderRadius="m"
-        onClick={() => {
-          const newQuery = normalizeText(toQueryString());
-          setQuery(newQuery);
-          setInputSorts([]);
-          setSortRules([]);
-          navToSearch(newQuery);
+        // cs={startButton}
+        to={localQuery ? `/?q=${localQuery}` : '/'}
+        onClick={(e: React.MouseEvent) => {
+          if (!(e.button === 1 || e.metaKey || e.ctrlKey)) {
+            setInputSorts([]);
+            setSortRules([]);
+          }
         }}
       >
         Search with these options
@@ -545,43 +577,69 @@ export const AdvancedSearch = () => {
     </div>
   );
 };
+
+const idStyles = createStyles({
+  marginBottom: '20px',
+});
 const inputButtonColors: ButtonColors = {
   default: {
-    background: inputColors.background,
-    border: inputColors.border,
+    background: system.color.bg.default,
+    border: system.color.border.input.default,
+    label: system.color.fg.default,
   },
   hover: {
-    background: inputColors.disabled.background,
-    border: inputColors.focusBorder,
+    background: system.color.surface.raised,
+    border: system.color.brand.border.primary,
+    label: system.color.fg.default,
   },
   active: {
-    background: inputColors.background,
-    border: inputColors.border,
+    background: system.color.bg.default,
+    border: system.color.border.input.default,
+    label: system.color.fg.default,
   },
   focus: {
-    background: inputColors.disabled.background,
-    border: inputColors.focusBorder,
+    background: system.color.surface.raised,
+    border: system.color.brand.border.primary,
+    label: system.color.fg.default,
   },
   disabled: {
-    background: inputColors.disabled.background,
-    border: inputColors.disabled.border,
+    background: system.color.surface.raised,
+    border: system.color.fg.disabled,
+    label: system.color.fg.default,
   },
 };
-const SearchCriteriaSection = styled('div')({
+
+const searchCriteriaSectionStyles = createStyles({
   justifyContent: 'space-evenly',
   paddingLeft: '30px',
 });
-const SearchContainer = styled('div')({ display: 'flex', flexWrap: 'wrap' });
-const StyledDropdownSelect = styled('select')({ width: '100px', height: '30px' });
-const SortSeparator = styled('hr')({
+const SearchCriteriaSection = createStyledDiv(searchCriteriaSectionStyles);
+
+const searchContainerStyles = createStyles({ display: 'flex', flexWrap: 'wrap' });
+const SearchContainer = createStyledDiv(searchContainerStyles);
+
+const dropdownSelectStyles = createStyles({ width: '100px', height: '30px' });
+const StyledDropdownSelect = createStyledSelect(dropdownSelectStyles);
+
+const sortSeparatorStyles = createStyles({
   height: '1px',
   backgroundColor: '#ccc',
   border: 'none',
   marginTop: '-20px',
 });
-const Separator = styled('hr')({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-const StartButton = styled(PrimaryButton)({
+const SortSeparator = createStyledHR(sortSeparatorStyles);
+
+const separatorStyles = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
+const Separator = createStyledHR(separatorStyles);
+
+const startButtonStyles = createStyles({
   marginLeft: '30px',
   marginBottom: '15px',
-  display: 'inline-block',
+  // display: 'inline-block',
+  borderRadius: '4px',
+  textDecoration: 'none',
+  '&:hover, &:focus, &:active': {
+    textDecoration: 'none',
+  },
 });
+const StartButton = createStyledPrimaryButtonLink(startButtonStyles);

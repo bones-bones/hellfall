@@ -5,7 +5,7 @@ export type anyPropType =
   | keyof HCCard.AnyMultiFaced
   | keyof HCCardFace.MultiFaced;
 
-export type anyValueType<K extends anyPropType> = K extends keyof HCCard.AnySingleFaced
+export type anyExactValueType<K extends anyPropType> = K extends keyof HCCard.AnySingleFaced
   ? HCCard.AnySingleFaced[K]
   : K extends keyof HCCard.AnyMultiFaced
   ? HCCard.AnyMultiFaced[K]
@@ -15,14 +15,14 @@ export type anyValueType<K extends anyPropType> = K extends keyof HCCard.AnySing
 
 export type updateValueType<K extends anyPropType> = K extends 'color_identity_hybrid'
   ? string
-  : anyValueType<K>;
+  : anyExactValueType<K>;
 
-export type anyArrayElementType<K extends anyPropType> = Exclude<
-  anyValueType<K>,
+export type anyValueType<K extends anyPropType> = Exclude<
+  anyExactValueType<K>,
   undefined
 > extends Array<infer U>
   ? U
-  : never;
+  : anyExactValueType<K>;
 
 export type colorPropType = 'colors' | 'color_indicator';
 // export type facePropType = keyof HCCardFace.MultiFaced;
@@ -112,8 +112,10 @@ export type rootMappedType = { [K in rootPropType]?: defaultRootValueType<K> };
 export type faceMappedType = { [K in facePropType]?: defaultFaceValueType<K> };
 export type partMappedType = { [K in partPropType]?: partValueType<K> };
 export type anyMappedType = { [K in anyPropType]?: anyValueType<K> };
+export type anyExactMappedType = { [K in anyPropType]?: anyExactValueType<K> };
 
 export type rootEntriesType = { [K in rootPropType]: [K, rootValueType<K>] }[rootPropType][];
 export type faceEntriesType = { [K in facePropType]: [K, faceValueType<K>] }[facePropType][];
 export type partEntriesType = { [K in partPropType]: [K, partValueType<K>] }[partPropType][];
 export type anyEntriesType = { [K in anyPropType]: [K, anyValueType<K>] }[anyPropType][];
+export type anyExactEntriesType = { [K in anyPropType]: [K, anyExactValueType<K>] }[anyPropType][];

@@ -24,6 +24,7 @@
     "clean:all": "yarn workspaces run clean || true && rm -rf node_modules packages/*/node_modules",
     "reinstall:all": "yarn clean && yarn install",
     "add:frontend": "yarn workspace @hellfall/frontend add",
+    "up:frontend": "yarn workspace @hellfall/frontend up",
     "add:backend": "yarn workspace @hellfall/backend add",
     "add:shared": "yarn workspace @hellfall/shared add",
     "add:server": "yarn workspace @hellfall/server add",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "eslint-plugin-deprecation": "^3.0.0",
     "eslint-plugin-sonarjs": "^4.0.3",
     "prettier": "^2.2.1",
     "typescript": "^5",
@@ -44,8 +46,5 @@
   "dependencies": {
     "tsx": "^4.21.0"
   },
-  "packageManager": "yarn@4.14.1",
-  "resolutions": {
-    "@workday/canvas-kit-react@npm:^9.1.42": "patch:@workday/canvas-kit-react@npm%3A9.1.42#~/.yarn/patches/@workday-canvas-kit-react-npm-9.1.42-4f27caa873.patch"
-  }
+  "packageManager": "yarn@4.17.0"
 }

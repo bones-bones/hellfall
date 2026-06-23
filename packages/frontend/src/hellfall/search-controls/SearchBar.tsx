@@ -1,9 +1,10 @@
-import { TextInput, space, styled } from '@workday/canvas-kit-react';
 import { useAtom } from 'jotai';
 import { pageAtom, queryAtom } from '../atoms/searchAtoms';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { normalizeText } from '@hellfall/shared/utils';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledTextInput } from '../../styling';
 
 export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) =>
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   const maxWidth = useMemo(() => {
-    return windowWidth - 2 * parseInt(space.l);
+    return windowWidth - 2 * 36;
   }, [windowWidth]);
 
   const [query, setQuery] = useAtom(queryAtom);
@@ -57,17 +58,22 @@ export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) =>
     </>
   );
 };
-const Spacer = styled('div')({
+const spacerStyles = createStyles({
   height: '5px',
 });
-const Container = styled('div')({
+const Spacer = createStyledDiv(spacerStyles);
+
+const containerStyles = createStyles({
   paddingLeft: '36px',
   paddingRight: '36px',
   marginTop: '-10px',
   marginBottom: '0px',
   overflow: 'hidden',
 });
-const SearchBox = styled(TextInput)({
+const Container = createStyledDiv(containerStyles);
+
+const searchBoxStyles = createStyles({
   overflow: 'hidden',
   // border: 'none',
 });
+const SearchBox = createStyledTextInput(searchBoxStyles);

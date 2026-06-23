@@ -440,13 +440,12 @@ async function main() {
   docMap.forEach((doc, docId) => {
     const docRef = collection.doc(docId);
     if (existingById.has(docId)) {
-      bulkWriter.update(docRef, doc)
+      bulkWriter.update(docRef, doc);
     } else {
-      bulkWriter.set(docRef, doc)
+      bulkWriter.set(docRef, doc);
     }
     // (existingById.has(docId) ? bulkWriter.update : bulkWriter.set)(docRef, doc)
-  }
-  );
+  });
 
   if (pruneOrphans) {
     for (const id of existingById.keys()) {

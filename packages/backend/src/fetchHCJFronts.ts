@@ -315,7 +315,7 @@ export const hcjFrontCards: HCJPackInfo[] = [
     secondCopyOf: '5800',
     lands: [
       { count: 6, name: 'Forest' },
-      { count: 1, name: 'Thriving Grove' },
+      // { count: 1, name: 'Thriving Grove' },
     ],
   },
   {

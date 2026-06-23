@@ -1,5 +1,6 @@
-import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import { createStenciledSVG, createStyledDiv, createStyledSVG } from './styling';
 
 const BASE_COLORS = ['#ececec', '#c8c8c8', '#a8a8a8'] as const;
 
@@ -15,32 +16,44 @@ const overlayPulse = keyframes`
   }
 `;
 
-const Container = styled('div')({
+const containerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   minHeight: 'calc(100vh - 72px)',
 });
+const Container = createStyledDiv(containerStyles);
 
-const CubeSvg = styled('svg')({
+const cubeSvgStyles = createStyles({
   width: 120,
   height: 132,
 });
+const CubeSvg = createStyledSVG('svg', cubeSvgStyles);
 
-const CubeFace = styled('polygon')({
+const cubeFaceStyles = createStyles({
   stroke: 'rgba(160, 160, 160, 0.55)',
   strokeWidth: 1,
   strokeLinejoin: 'round',
 });
+const CubeFace = createStyledSVG('polygon', cubeFaceStyles);
 
-const FaceOverlay = styled('polygon')<{ delay: string }>(({ delay }) => ({
-  fill: '#000',
-  stroke: 'none',
-  pointerEvents: 'none',
-  opacity: 0,
-  animation: `${overlayPulse} 2.4s ease-in-out infinite`,
-  animationDelay: delay,
-}));
+const faceOverlayStencil = createStencil({
+  vars: {
+    delay: '0',
+  },
+  base: ({ delay }) => ({
+    fill: '#000',
+    stroke: 'none',
+    pointerEvents: 'none',
+    opacity: 0,
+    animation: `${overlayPulse} 2.4s ease-in-out infinite`,
+    animationDelay: delay,
+  }),
+});
+interface FaceOverlayProps extends React.ComponentPropsWithoutRef<'svg'> {
+  delay: string;
+}
+const FaceOverlay = createStenciledSVG<FaceOverlayProps>('polygon', faceOverlayStencil);
 
 const FACES = [
   '50,12 78,28 50,44 22,28',

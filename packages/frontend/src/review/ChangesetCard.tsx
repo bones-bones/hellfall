@@ -1,10 +1,18 @@
-import { Card } from '@workday/canvas-kit-react';
+import { Card, TextProps } from '@workday/canvas-kit-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { Changeset } from './types';
-import styled from '@emotion/styled';
 import { ErrorText } from './ErrorText';
-import { Changeset } from '@hellfall/shared/utils';
+import { Changeset, ChangesetStatus } from '@hellfall/shared/utils';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStenciledSpan,
+  createStyledButton,
+  createStyledDiv,
+  createStyledIntrinsic,
+  createStyledSpan,
+  createStyledTable,
+} from '../styling';
 
 export function ChangesetCard({
   cs,
@@ -31,14 +39,14 @@ export function ChangesetCard({
   };
 
   return (
-    <StyledCard>
+    <Card cs={cardStyles}>
       <Card.Body>
         <HeaderRow>
           <div>
             <strong>
               <Link to={`/card/${encodeURIComponent(cs.cardId)}`}>{cs.cardId}</Link>
             </strong>
-            <StatusBadge data-status={cs.status}>{cs.status}</StatusBadge>
+            <StatusBadge data_status={cs.status}>{cs.status}</StatusBadge>
           </div>
           <Meta>
             by {cs.submittedBy.username} &middot; {formatTime(cs.createdAt as string)}
@@ -84,17 +92,17 @@ export function ChangesetCard({
             {cs.status} by {cs.resolvedBy.username} &middot; {formatTime(cs.resolvedAt as string)}
           </Meta>
         )}
-        {error && <ErrorText>{error}</ErrorText>}
+        {error && <ErrorText size="large">{error}</ErrorText>}
       </Card.Body>
-    </StyledCard>
+    </Card>
   );
 }
 
-const StyledCard = styled(Card)({
+const cardStyles = createStyles({
   marginBottom: 16,
 });
 
-const HeaderRow = styled('div')({
+const headerRowStyles = createStyles({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -102,32 +110,46 @@ const HeaderRow = styled('div')({
   gap: 8,
   marginBottom: 8,
 });
+const HeaderRow = createStyledDiv(headerRowStyles);
 
-const StatusBadge = styled('span')({
-  display: 'inline-block',
-  marginLeft: 8,
-  padding: '2px 8px',
-  borderRadius: 4,
-  fontSize: 12,
-  fontWeight: 600,
-  textTransform: 'uppercase',
-  '&[data-status="pending"]': { background: '#fff3cd', color: '#856404' },
-  '&[data-status="accepted"]': { background: '#d4edda', color: '#155724' },
-  '&[data-status="rejected"]': { background: '#f8d7da', color: '#721c24' },
+const statusBadgeStencil = createStencil({
+  vars: {},
+  base: {
+    display: 'inline-block',
+    marginLeft: 8,
+    padding: '2px 8px',
+    borderRadius: 4,
+    fontSize: 12,
+    fontWeight: 600,
+    textTransform: 'uppercase',
+  },
+  modifiers: {
+    data_status: {
+      pending: { background: '#fff3cd', color: '#856404' },
+      accepted: { background: '#d4edda', color: '#155724' },
+      rejected: { background: '#f8d7da', color: '#721c24' },
+    },
+  },
 });
+interface StatusProps extends TextProps {
+  data_status?: ChangesetStatus;
+}
+const StatusBadge = createStenciledSpan<StatusProps>(statusBadgeStencil);
 
-const Meta = styled('span')({
+const metaStyles = createStyles({
   fontSize: 13,
   color: '#666',
 });
+const Meta = createStyledSpan(metaStyles);
 
-const Comment = styled('p')({
+const commentStyles = createStyles({
   fontStyle: 'italic',
   color: '#555',
   margin: '4px 0 8px',
 });
+const Comment = createStyledIntrinsic('p', commentStyles);
 
-const ChangesTable = styled('table')({
+const changesTableStyles = createStyles({
   width: '100%',
   borderCollapse: 'collapse',
   marginTop: 8,
@@ -143,21 +165,24 @@ const ChangesTable = styled('table')({
     fontWeight: 600,
   },
 });
+const ChangesTable = createStyledTable(changesTableStyles);
 
-const DiffValue = styled('span')({
+const diffValueStyles = createStyles({
   whiteSpace: 'pre-wrap',
   wordBreak: 'break-word',
   fontFamily: 'monospace',
   fontSize: 13,
 });
+const DiffValue = createStyledSpan(diffValueStyles);
 
-const ActionRow = styled('div')({
+const actionRowStyles = createStyles({
   display: 'flex',
   gap: 8,
   marginTop: 12,
 });
+const ActionRow = createStyledDiv(actionRowStyles);
 
-const buttonBase = {
+const buttonBase = createStyles({
   padding: '6px 16px',
   border: 'none',
   borderRadius: 4,
@@ -165,21 +190,21 @@ const buttonBase = {
   cursor: 'pointer',
   fontSize: 14,
   '&:disabled': { opacity: 0.5, cursor: 'default' },
-} as const;
+});
 
-const AcceptButton = styled('button')({
-  ...buttonBase,
+const acceptButtonStyles = createStyles(buttonBase, {
   background: '#28a745',
   color: '#fff',
   '&:hover:not(:disabled)': { background: '#218838' },
 });
+const AcceptButton = createStyledButton(acceptButtonStyles);
 
-const RejectButton = styled('button')({
-  ...buttonBase,
+const rejectButtonStyles = createStyles(buttonBase, {
   background: '#dc3545',
   color: '#fff',
   '&:hover:not(:disabled)': { background: '#c82333' },
 });
+const RejectButton = createStyledButton(rejectButtonStyles);
 
 function formatValue(val: unknown): string {
   if (val == null) return '(empty)';

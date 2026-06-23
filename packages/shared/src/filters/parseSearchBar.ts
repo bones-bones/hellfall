@@ -4,6 +4,7 @@ import {
   filterIsInverted,
   makeIncludeFilter,
   makeSort,
+  otherPrintGetterType,
   parseFilter,
   splitOnFirstOp,
   unescapeText,
@@ -47,8 +48,10 @@ const isSortFilter = (text: string): boolean => {
   return ['sort', 'order', 'dir', 'direction'].includes(keyword);
 };
 
-const isSort = (text: string): boolean => sorts.includes(text as sortType) || text in sortRedirects;
-const isDir = (text: string): boolean => dirs.includes(text as dirType) || text in dirRedirects;
+const isSort = (text: string): boolean =>
+  sorts.includes(text.toLowerCase() as sortType) || text.toLowerCase() in sortRedirects;
+const isDir = (text: string): boolean =>
+  dirs.includes(text.toLowerCase() as dirType) || text.toLowerCase() in dirRedirects;
 const sortIsValid = (text: string): boolean => {
   const { term } = splitOnFirstOp(text);
   // TODO: add multi in one term option?
@@ -177,16 +180,16 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
 };
 
 const correctSort = (text: string): sortType => {
-  if (text in sortRedirects) {
-    return sortRedirects[text];
+  if (text.toLowerCase() in sortRedirects) {
+    return sortRedirects[text.toLowerCase()];
   }
-  return text as sortType;
+  return text.toLowerCase() as sortType;
 };
 const correctDir = (text: string): dirType => {
-  if (text in dirRedirects) {
-    return dirRedirects[text];
+  if (text.toLowerCase() in dirRedirects) {
+    return dirRedirects[text.toLowerCase()];
   }
-  return text as dirType;
+  return text.toLowerCase() as dirType;
 };
 export const parseSorts = (sortList: string[]): sortObject[] => {
   const sortObs: sortObject[] = [];
@@ -378,7 +381,9 @@ export const combineAndWinnowSorts = (
 const noAndList = [' or ', '(', ' and ', ' not (', 'the cards have related cards where '];
 const consumeList = [' or ', '(', ' and ', ' not (', ')'];
 export const parseSearchQuery = (
-  query: string
+  query: string,
+  cardMap: CardMap
+  // getOtherPrints?: otherPrintGetterType
 ): {
   node: FilterNode;
   sortObjects: sortObject[];
@@ -392,6 +397,8 @@ export const parseSearchQuery = (
   const invalids: [string, string][] = [];
   const cludeList: IncludeFilter[] = [];
   let autoFilterExtras = true;
+  const getOtherPrints: otherPrintGetterType = (card: HCCard.Any) =>
+    cardMap.getAllPrints(card.oracle_id).cards();
 
   const parseTokens = (
     tokens: string[],
@@ -464,8 +471,8 @@ export const parseSearchQuery = (
       }
 
       // Regular filter term
-      const filter = parseFilter(token);
-      if (['set', 'tokenset', 'block'].includes(filter.queryName)) {
+      const filter = parseFilter(token, undefined, getOtherPrints);
+      if (['set', 'tokenset', 'block', 'in', 'sets', 'prints'].includes(filter.queryName)) {
         autoFilterExtras = false;
       }
       i++;
@@ -617,7 +624,7 @@ export const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: Card
 };
 
 export const searchCards = (cardMap: CardMap, query: string, tagList: string[]): CardMap => {
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query);
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
   const usingClusion = Boolean(includeList.length + excludeList.length);
   // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
   fixTags(node, tagList);

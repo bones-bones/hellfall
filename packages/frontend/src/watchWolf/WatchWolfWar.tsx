@@ -1,5 +1,4 @@
-import styled from '@emotion/styled';
-import { HellfallEntry } from '../hellfall/HellfallEntry.tsx';
+import { HellfallEntry } from '../hellfall/entry/HellfallEntry.tsx';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { useRef, useState, useEffect } from 'react';
@@ -9,9 +8,12 @@ import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { ActiveCardPanel } from '../hellfall/ActiveCardPanel.tsx';
 import { cardSetList, toPlainText } from '@hellfall/shared/utils';
+import { PageContainer, StyleComponent, Subtitle, Title } from './Components.tsx';
+import { createStyledDiv } from '../styling/StyledElements.tsx';
+import { createStyles } from '@workday/canvas-kit-styling';
 
 export const WatchwolfWar = () => {
-  const cards = useAtomValue(cardsAtom).getAllInSetList(cardSetList);
+  const cards = useAtomValue(cardsAtom).getAllInSetListExact(cardSetList);
   const setActiveCardFromAtom = useSetAtom(activeCardAtom);
 
   const submitting = useRef(false);
@@ -104,18 +106,7 @@ export const WatchwolfWar = () => {
   );
 };
 
-const PageContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '40px',
-  fontFamily: 'Arial, sans-serif',
-  backgroundColor: '#f9f9f9',
-  minHeight: '100vh',
-});
-const Title = styled('h1')({ textAlign: 'center', marginBottom: '10px' });
-const Subtitle = styled('h3')({ textAlign: 'center', marginBottom: '30px' });
-const CardContainer = styled('div')({
+const cardContainerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
   gap: '40px',
@@ -123,7 +114,9 @@ const CardContainer = styled('div')({
   width: '100%',
   maxWidth: '800px',
 });
-const ResultsReceptaclePlaceThing = styled('div')({
+const CardContainer = createStyledDiv(cardContainerStyles);
+
+const resultsReceptaclePlaceThingStyles = createStyles({
   width: '100%',
   maxWidth: '600px',
   padding: '20px',
@@ -132,5 +125,4 @@ const ResultsReceptaclePlaceThing = styled('div')({
   boxShadow: '0 2px 8px rgb(164, 45, 168)',
   textAlign: 'center',
 });
-
-const StyleComponent = styled('div')({ color: 'purple', display: 'flex' });
+const ResultsReceptaclePlaceThing = createStyledDiv(resultsReceptaclePlaceThingStyles);

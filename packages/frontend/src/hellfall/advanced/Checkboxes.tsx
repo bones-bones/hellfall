@@ -1,14 +1,15 @@
-import styled from '@emotion/styled';
 import { useState, useEffect, PropsWithChildren, FC } from 'react';
-import { StyledLegend } from '../StyledLabel.tsx';
-import { HCSearchColors } from '@hellfall/shared/types';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledInput, createStyledLabel } from '../../styling';
+import { StyledLegend } from './AdvancedComponents';
 
-export const SearchCheckbox = styled.input({
+const searchCheckbox = createStyles({
   height: '18px',
   width: '18px',
   ':hover': { outline: '5px solid GREY', outlineStyle: 'auto' },
   margin: '0px',
 });
+const SearchCheckbox = createStyledInput(searchCheckbox);
 
 export const CheckboxGroup: FC<
   PropsWithChildren<{
@@ -333,15 +334,19 @@ export const SingleCheckbox = ({
   );
 };
 
-const Container = styled.div({ display: 'flex', flexDirection: 'column' });
+const containerStyles = createStyles({ display: 'flex', flexDirection: 'column' });
+const Container = createStyledDiv(containerStyles);
 
-const CheckEntry = styled.div({
+const checkEntryStyles = createStyles({
   display: 'flex',
   margin: '2px',
   height: '25px',
   alignItems: 'center',
 });
+const CheckEntry = createStyledDiv(checkEntryStyles);
 
-const SingleStyledLabel = styled.label({ fontWeight: 'bold', marginLeft: '6px' });
+const singleLabelStyles = createStyles({ fontWeight: 'bold', marginLeft: '6px' });
+const SingleStyledLabel = createStyledLabel(singleLabelStyles);
 
-const StyledLabel = styled.label({ marginLeft: '6px' });
+const labelStyles = createStyles({ marginLeft: '6px' });
+const StyledLabel = createStyledLabel(labelStyles);

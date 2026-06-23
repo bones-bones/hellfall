@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom';
-import { Heading, styled } from '@workday/canvas-kit-react';
 import { useAuth } from '../auth';
 import { useUrlSync } from '../hellfall/hooks/useUrlSync';
+import { createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStyledDiv,
+  createStyledHeading,
+  createStyledIntrinsic,
+  createStyledSpan,
+} from '../styling';
 
 export const Header = () => {
   useUrlSync();
@@ -48,18 +54,20 @@ export const Header = () => {
   );
 };
 
-const StyledHeading = styled(Heading)({
+const headingStyles = createStyles({
   marginTop: '0px',
   marginBottom: '5px',
 });
+const StyledHeading = createStyledHeading(headingStyles);
 
-const StyledHeader = styled('div')({
+const headerStyles = createStyles({
   backgroundColor: '#C690FF',
   borderBottom: '2px solid lightgray',
   marginTop: '0px',
 });
+const StyledHeader = createStyledDiv(headerStyles);
 
-const NavRow = styled('div')({
+const navRowStyles = createStyles({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-start',
@@ -67,15 +75,18 @@ const NavRow = styled('div')({
   width: '100%',
   fontWeight: 'normal',
 });
+const NavRow = createStyledDiv(navRowStyles);
 
-const Navigation = styled('nav')({
+const navigationStyles = createStyles({
   flex: '1 1 auto',
   minWidth: 0,
   paddingLeft: '10px',
 });
+const Navigation = createStyledIntrinsic('nav', navigationStyles);
 
-const AuthBlock = styled('span')({
+const authBlockStyles = createStyles({
   flexShrink: 0,
   paddingRight: '10px',
   whiteSpace: 'nowrap',
 });
+const AuthBlock = createStyledSpan(authBlockStyles);

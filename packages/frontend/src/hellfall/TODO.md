@@ -121,4 +121,25 @@ Write a script to transform the database
 - store default search settings with users like scryfall does
 - get a better random icon
 - figure out how to attach links/hrefs to the pagination buttons
-- once spain tokens get in, make sure they all get drop_face?
+- finish migration to cs props
+  - div => Box
+  - span => Text
+  - p => Subtext or BodyText
+  - use normal html for now: button, some instances of p, Link, SidePanel, img, FormField, textarea, selects
+  - use createStencil with dynamic values for mana symbols in /eight
+- refactor away from className
+- cut down on boilerplate for stencils if possible (though prioritizing not causing lag)
+- fix card display on deck pages
+- deal with duplicate HCV.1 collector numbers
+- fix buttons for images on individual card pages
+- add missing artist credits
+- fix id for plateau
+- hide faces with drop_face == true from card pages?
+- resume at This // That by 8ofswords
+- prevent use of semicolons in submissions for list fields?
+- add better handling for card face changes affecting other changes?
+- add another map layer that maps the oracle ids to their individual ids
+- fix conjured ids
+- add cards/prints selector for searches
+- make masterpiece names flavor names?
+- switch related card entries to being text with hover images? (should we also include the card itself in them?)

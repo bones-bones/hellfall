@@ -1,13 +1,24 @@
 import { Link } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
-import { getRelatedsFromSet, HCToTTSDeck, toCockCube } from '@hellfall/shared/utils';
+import {
+  getRelatedsFromSet,
+  HCToTTSDeck,
+  toCockCube,
+  unescapeBase64,
+} from '@hellfall/shared/utils';
 import { useAtomValue } from 'jotai';
 import { ReactNode } from 'react';
 import { downloadDraftmancer } from './downloadDraftmancer.ts';
 import { toMPCAutofill } from './toMPCAutofill.ts';
 import { getLands } from './getLands.ts';
 import { SetCode } from '@hellfall/shared/types';
+import { createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStyledDiv,
+  createStyledTable,
+  createStyledTableCell,
+  createStyledTableRow,
+} from '../styling';
 
 type CubeSetup = {
   name: string;
@@ -214,7 +225,7 @@ export const CubeResources = () => {
                       );
                       const url =
                         'data:text/plain;base64,' +
-                        btoa(unescape(encodeURIComponent(JSON.stringify(val, null, 2))));
+                        btoa(unescapeBase64(encodeURIComponent(JSON.stringify(val, null, 2))));
                       const a = document.createElement('a');
                       a.style.display = 'none';
                       a.href = url;
@@ -237,7 +248,8 @@ export const CubeResources = () => {
                       cardMap,
                     });
 
-                    const url = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(val)));
+                    const url =
+                      'data:text/plain;base64,' + btoa(unescapeBase64(encodeURIComponent(val)));
                     const a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;
@@ -354,15 +366,23 @@ export const CubeResources = () => {
   );
 };
 
-const StyledLink = styled(Link)({});
-const Container = styled.div({ padding: '10px' });
+const StyledLink = Link;
+const containerStyles = createStyles({ padding: '10px' });
+const Container = createStyledDiv(containerStyles);
 
-const StyledTable = styled('table')({
+const tableStyles = createStyles({
   border: '1px solid black',
   'tr:nth-child(even)': { backgroundColor: '#f2f2f2' },
 });
-const StyledRow = styled('tr')({
+const StyledTable = createStyledTable(tableStyles);
+
+const rowStyles = createStyles({
   ':hover': { backgroundColor: '#C690FF !important' }, // The even selector is more specific than  this one. boo, hiss
 });
-const StyledTableHeader = styled('th')({ textAlign: 'start' });
-const StyledTD = styled('td')({ overflowY: 'hidden' });
+const StyledRow = createStyledTableRow(rowStyles);
+
+const tableHeaderStyles = createStyles({ textAlign: 'start' });
+const StyledTableHeader = createStyledTableCell('th', tableHeaderStyles);
+
+const tdStyles = createStyles({ overflowY: 'hidden' });
+const StyledTD = createStyledTableCell('td', tdStyles);

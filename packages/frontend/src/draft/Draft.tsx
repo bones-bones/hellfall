@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 
-import { FormField } from '@workday/canvas-kit-react/form-field';
-import { Select } from '@workday/canvas-kit-preview-react/select';
+// import { Select } from '@workday/canvas-kit-preview-react/select';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { Area } from './Area.tsx';
 import { useAtom, useAtomValue } from 'jotai';
 import { deckAtom, draftAtom } from './draftAtom.ts';
 import { DeckConstruction } from './DeckConstruction.tsx';
 import { CARDS_PER_PACK } from './constants.ts';
-import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 import { canBeACommander, CardMap } from '@hellfall/shared/utils';
 import type { Pack, Round, TheDraft } from './types.ts';
 import { HCCard } from '@hellfall/shared/types';
+import { createStyledDiv } from '../styling/StyledElements.tsx';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { FormField, Select } from '@workday/canvas-kit-react';
 
 function shuffle<T>(array: T[]): T[] {
   const result = [...array];
@@ -38,7 +39,9 @@ export const Draft = () => {
     const draft: TheDraft = [];
     if (Set) {
       if (Set === 'HC6') {
-        const nonManders = cardMap.getAllInSet('HC6').filter(card => !card.not_directly_draftable);
+        const nonManders = cardMap
+          .getAllInSetDirect('HC6')
+          .filter(card => !card.not_directly_draftable);
         const commanders = new CardMap();
         nonManders.forEach((card: HCCard.Any, id: string) => {
           if (canBeACommander(card)) {
@@ -63,7 +66,9 @@ export const Draft = () => {
         }
         setDraft(draft);
       } else {
-        const filtered = cardMap.getAllInSet(Set).filter(card => !card.not_directly_draftable);
+        const filtered = cardMap
+          .getAllInSetDirect(Set)
+          .filter(card => !card.not_directly_draftable);
         const shuffled = shuffle(filtered.cards());
 
         for (let i = 0; i < 3; i++) {
@@ -86,6 +91,20 @@ export const Draft = () => {
       </ErrorContainer>
     );
   }
+  const options = [
+    { value: '---', disabled: true },
+    { value: 'HLC' },
+    { value: 'HC2' },
+    { value: 'HC3' },
+    { value: 'HC4' },
+    { value: 'HC5' },
+    { value: 'HC6' },
+    { value: 'HC7' },
+    { value: 'HCK' },
+    { value: 'HC8' },
+    { value: 'HKL' },
+    { value: 'NRM' },
+  ];
 
   return (
     <>
@@ -95,25 +114,13 @@ export const Draft = () => {
         draftmancer instead)
       </h2>
       {cardMap && !Set && (
-        <FormField label="Select your set">
-          <Select
-            value={Set}
-            onChange={e => setSet(e.target.value as any)}
-            options={[
-              { value: '---', disabled: true },
-              { value: 'HLC' },
-              { value: 'HC2' },
-              { value: 'HC3' },
-              { value: 'HC4' },
-              { value: 'HC5' },
-              { value: 'HC6' },
-              { value: 'HC7' },
-              { value: 'HCK' },
-              { value: 'HC8' },
-              { value: 'HKL' },
-              { value: 'NRM' },
-            ]}
-          />
+        <FormField>
+          <Select value={Set} onChange={e => setSet(e.target.value as any)}>
+            {' '}
+            {options.map(entry => (
+              <option key={entry.value}>{entry.value}</option>
+            ))}
+          </Select>
         </FormField>
       )}
       {deckToBuild.length !== 0 && <DeckConstruction cards={deckToBuild} />}
@@ -129,13 +136,16 @@ const frames = keyframes({
   '80%': { transform: 'translate(3px, -3px)' },
   '100%': { transform: 'translate(0)' },
 });
-const ErrorContainer = styled.div({
+const errorContainerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
 });
-const ErrorBanner = styled.div({
+const ErrorContainer = createStyledDiv(errorContainerStyles);
+
+const errorBannerStyles = createStyles({
   color: 'red',
   fontSize: '30px',
   fontWeight: '600',
   animation: `${frames} 0.1s linear infinite`,
 });
+const ErrorBanner = createStyledDiv(errorBannerStyles);

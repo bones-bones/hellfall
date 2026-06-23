@@ -1,10 +1,12 @@
-import styled from '@emotion/styled';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { useEffect, useMemo, useState } from 'react';
 import { TeamWolf as GetCardVotes } from './TeamWolf.tsx';
 import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
 import { ActiveCardPanel } from '../hellfall/ActiveCardPanel.tsx';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledLink } from '../styling/StyledElements.tsx';
+import { PageContainer, StyleComponent, Subtitle, Title } from './Components.tsx';
 
 interface Standing {
   Id: string;
@@ -70,14 +72,13 @@ export const Watchwolfresults = () => {
       </StyleComponent>
       <StyleComponent>
         <ResultsReceptaclePlaceThing>
-          {/* Header row, but we just re-use the ResultRow component */}
-          <ResultRow style={{ marginBottom: 6 }}>
+          <HeaderRow>
             <div>
               <strong>Card Name</strong> [Creator]
             </div>
             <span>Winrate</span>
             <span>W/L</span>
-          </ResultRow>
+          </HeaderRow>
 
           {wrGroupedStandings?.slice(0, cards.size()).map(entry => {
             const card = cards.get(entry.Id);
@@ -86,7 +87,7 @@ export const Watchwolfresults = () => {
             return (
               <ResultRow
                 key={entry.Id}
-                href={`/card/${encodeURIComponent(card.hcid)}`}
+                to={`/card/${encodeURIComponent(card.hcid)}`}
                 onClick={(event: React.MouseEvent) => {
                   if (event.button === 1 || event.metaKey || event.ctrlKey) {
                     window.open(`/card/${encodeURIComponent(card.hcid)}`, '_blank');
@@ -112,18 +113,7 @@ export const Watchwolfresults = () => {
   );
 };
 
-const PageContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '40px',
-  fontFamily: 'Arial, sans-serif',
-  backgroundColor: '#f9f9f9',
-  minHeight: '100vh',
-});
-const Title = styled('h1')({ textAlign: 'center', marginBottom: '10px' });
-const Subtitle = styled('h3')({ textAlign: 'center', marginBottom: '30px' });
-const ResultsReceptaclePlaceThing = styled('div')({
+const resultsReceptaclePlaceThingStyles = createStyles({
   width: '100%',
   maxWidth: '600px',
   padding: '8px 0px',
@@ -132,7 +122,9 @@ const ResultsReceptaclePlaceThing = styled('div')({
   boxShadow: '0 2px 8px rgb(164, 45, 168)',
   textAlign: 'center',
 });
-const ResultRow = styled('a')({
+const ResultsReceptaclePlaceThing = createStyledDiv(resultsReceptaclePlaceThingStyles);
+
+const resultRowStyles = createStyles({
   display: 'flex',
   gap: '8px',
   cursor: 'pointer',
@@ -155,5 +147,7 @@ const ResultRow = styled('a')({
     textAlign: 'left',
   },
 });
+const ResultRow = createStyledLink(resultRowStyles);
 
-const StyleComponent = styled('div')({ color: 'purple', display: 'flex' });
+const headerRowStyles = createStyles(resultRowStyles, { marginBottom: 6 });
+const HeaderRow = createStyledDiv(headerRowStyles);

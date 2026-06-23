@@ -2,9 +2,9 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 
 import { Deck } from './Deck.tsx';
 import { allDecks } from './allDecks.ts';
-import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 import { Suspense } from 'react';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledLink, createStyledListItem } from '../styling';
 
 export const Decks = () => {
   const val = useLocation();
@@ -42,9 +42,11 @@ export const Decks = () => {
   );
 };
 
-const StyledLink = styled(Link)({
+const linkStyles = createStyles({
   // textDecoration: "none",
   color: 'black',
 });
+const StyledLink = createStyledLink(linkStyles);
 
-const StyledLi = styled.li({ marginTop: '15px' });
+const liStyles = createStyles({ marginTop: '15px' });
+const StyledLi = createStyledListItem(liStyles);
