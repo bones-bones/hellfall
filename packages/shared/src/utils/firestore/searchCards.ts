@@ -50,12 +50,7 @@ export const searchCardsFromCollection = async (
   const cardMap = new CardMap(
     snapshot.docs.map(doc => firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard))
   );
-  const getOtherPrints: otherPrintGetterType = (card: HCCard.Any) =>
-    cardMap.getAllPrints(card.oracle_id).cards();
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(
-    query,
-    getOtherPrints
-  );
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
   const usingClusion = Boolean(includeList.length + excludeList.length);
   fixTags(node, tagList);
   if (includeList.length) {

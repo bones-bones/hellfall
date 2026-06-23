@@ -18,6 +18,7 @@ import {
   makeSort,
 } from '@hellfall/shared/filters';
 import { listsExactlyEqual } from '@hellfall/shared/utils';
+import { cardsAtom } from '../atoms/cardsAtom.ts';
 
 const sortsEqual = (mem1: sortObject, mem2: sortObject) =>
   mem1.sort == mem2.sort && mem1.dir == mem2.dir;
@@ -35,12 +36,13 @@ export const useUrlSync = () => {
   const setActiveCard = useSetAtom(activeCardAtom);
   const [summary, setSummary] = useAtom(summaryAtom);
   const [invalids, setInvalids] = useAtom(invalidAtom);
+  const cards = useAtomValue(cardsAtom);
   // const randomPathNames = ['/card','/random']
   useEffect(() => {
     // const asRandom = randomPathNames.some(name=>location.pathname.startsWith(name))
     const params = new URLSearchParams(location.search);
     const newQuery = params.get(/* asRandom ? 'random':  */ 'q') || '';
-    const parsedQuery = parseSearchQuery(newQuery);
+    const parsedQuery = parseSearchQuery(newQuery, cards);
     if (query != newQuery) {
       setQuery(newQuery);
     }

@@ -382,7 +382,8 @@ const noAndList = [' or ', '(', ' and ', ' not (', 'the cards have related cards
 const consumeList = [' or ', '(', ' and ', ' not (', ')'];
 export const parseSearchQuery = (
   query: string,
-  getOtherPrints: otherPrintGetterType
+  cardMap: CardMap
+  // getOtherPrints?: otherPrintGetterType
 ): {
   node: FilterNode;
   sortObjects: sortObject[];
@@ -396,6 +397,8 @@ export const parseSearchQuery = (
   const invalids: [string, string][] = [];
   const cludeList: IncludeFilter[] = [];
   let autoFilterExtras = true;
+  const getOtherPrints: otherPrintGetterType = (card: HCCard.Any) =>
+    cardMap.getAllPrints(card.oracle_id).cards();
 
   const parseTokens = (
     tokens: string[],
@@ -621,12 +624,7 @@ export const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: Card
 };
 
 export const searchCards = (cardMap: CardMap, query: string, tagList: string[]): CardMap => {
-  const getOtherPrints: otherPrintGetterType = (card: HCCard.Any) =>
-    cardMap.getAllPrints(card.oracle_id).cards();
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(
-    query,
-    getOtherPrints
-  );
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
   const usingClusion = Boolean(includeList.length + excludeList.length);
   // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
   fixTags(node, tagList);
