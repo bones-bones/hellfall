@@ -4,6 +4,7 @@ import {
   filterIsInverted,
   makeIncludeFilter,
   makeSort,
+  otherPrintGetterType,
   parseFilter,
   splitOnFirstOp,
   unescapeText,
@@ -380,7 +381,8 @@ export const combineAndWinnowSorts = (
 const noAndList = [' or ', '(', ' and ', ' not (', 'the cards have related cards where '];
 const consumeList = [' or ', '(', ' and ', ' not (', ')'];
 export const parseSearchQuery = (
-  query: string
+  query: string,
+  getOtherPrints: otherPrintGetterType
 ): {
   node: FilterNode;
   sortObjects: sortObject[];
@@ -466,8 +468,8 @@ export const parseSearchQuery = (
       }
 
       // Regular filter term
-      const filter = parseFilter(token);
-      if (['set', 'tokenset', 'block'].includes(filter.queryName)) {
+      const filter = parseFilter(token, undefined, getOtherPrints);
+      if (['set', 'tokenset', 'block', 'in', 'sets', 'prints'].includes(filter.queryName)) {
         autoFilterExtras = false;
       }
       i++;
@@ -619,7 +621,12 @@ export const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: Card
 };
 
 export const searchCards = (cardMap: CardMap, query: string, tagList: string[]): CardMap => {
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query);
+  const getOtherPrints: otherPrintGetterType = (card: HCCard.Any) =>
+    cardMap.getAllPrints(card.oracle_id).cards();
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(
+    query,
+    getOtherPrints
+  );
   const usingClusion = Boolean(includeList.length + excludeList.length);
   // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
   fixTags(node, tagList);

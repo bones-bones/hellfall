@@ -22,6 +22,7 @@ import {
   opIsNegative,
   opToIncludePlural,
   opAsBool,
+  opToNot,
 } from './filterUtils';
 import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
@@ -47,10 +48,10 @@ export const filterText: textFilter = Object.assign(
 export const filterOracleId: textFilter = Object.assign(
   (value1: string, operator: opType, value2: string) => opAsBool(value1 == value2, operator),
   {
-    invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string, invert?: boolean) => {
+    invertOption: 'flip' as invertOptionType,
+    toSummary: (operator: opType, value: string) => {
       if (isValidV4UUID(value)) {
-        return `the Oracle ID is ${filterNumber.toSummary(operator, parseInt(value), invert)}`;
+        return `the Oracle ID is ${opToNot(operator)} ${value}`;
       }
       return `!You must provide a valid v4 UUID.`;
     },

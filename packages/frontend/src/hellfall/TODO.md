@@ -140,4 +140,6 @@ Write a script to transform the database
 - add better handling for card face changes affecting other changes?
 - add another map layer that maps the oracle ids to their individual ids
 - fix conjured ids
+- add cards/prints selector for searches
+- make masterpiece names flavor names?
 - switch related card entries to being text with hover images? (should we also include the card itself in them?)
