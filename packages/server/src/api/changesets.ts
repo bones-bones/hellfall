@@ -34,9 +34,9 @@ function timestampToIso(ts: Timestamp | null | undefined): string | null {
   return ts.toDate().toISOString();
 }
 
-function serializeChangeset(data: Changeset): Changeset {
+function serializeChangeset(data: Changeset, docId?: string): Changeset {
   return {
-    id: data.id,
+    id: data.id || docId || '',
     cardId: data.cardId,
     status: data.status,
     createdAt: timestampToIso(data.createdAt as Timestamp) as string,
@@ -75,7 +75,9 @@ async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promis
   }
 
   const snap = await query.get();
-  const items: Changeset[] = snap.docs.map(doc => serializeChangeset(doc.data() as Changeset));
+  const items: Changeset[] = snap.docs.map(doc =>
+    serializeChangeset(doc.data() as Changeset, doc.id)
+  );
   res.statusCode = 200;
   res.end(JSON.stringify({ ok: true, changesets: items }));
 }
@@ -142,7 +144,7 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
   res.end(
     JSON.stringify({
       ok: true,
-      changeset: serializeChangeset(snap.data() as Changeset),
+      changeset: serializeChangeset(snap.data() as Changeset, id),
     })
   );
 }
@@ -169,7 +171,7 @@ async function getChangeset(
   res.end(
     JSON.stringify({
       ok: true,
-      changeset: serializeChangeset(snap.data() as Changeset),
+      changeset: serializeChangeset(snap.data() as Changeset, changesetId),
     })
   );
 }
