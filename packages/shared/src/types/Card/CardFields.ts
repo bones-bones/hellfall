@@ -409,29 +409,29 @@ export namespace HCCardFields.Print {
      */
     image?: string;
     /**
-     * A string with the draft image.
+     * A string with the print image.
      */
-    draft_image?: string;
+    print_image?: string;
     /**
-     * A computer-readable indicator for the state of this card's draft image.
+     * A computer-readable indicator for the state of this card's print image.
      */
-    draft_image_status?: HCImageStatus;
+    print_image_status?: HCImageStatus;
     /**
      * A string with the rotated image for this card.
      */
     rotated_image?: string;
     /**
-     * A string with the rotated draft image for this card.
+     * A string with the rotated print image for this card.
      */
-    rotated_draft_image?: string;
+    rotated_print_image?: string;
     /**
      * A string with the still image for this card.
      */
     still_image?: string;
     /**
-     * A string with the still draft image for this card.
+     * A string with the still print image for this card.
      */
-    still_draft_image?: string;
+    still_print_image?: string;
     /**
      * A list of ids to add to the draft pool when this is drafted.
      */

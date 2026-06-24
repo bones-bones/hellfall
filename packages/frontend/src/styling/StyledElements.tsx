@@ -159,6 +159,7 @@ export const createStenciledButton =
       </button>
     );
 
+/** Use `createStyledJumpLink` instead of this one for links with `#` */
 export const createStyledLink =
   (styles: string) =>
   ({ children, ...props }: LinkProps) =>
@@ -171,6 +172,13 @@ export const createStenciledLink =
         {children}
       </Link>
     );
+    
+/** Use this one instead of `createStyledLink` for links with `#` */
+export const createStyledJumpLink =
+  (styles: string) =>
+  ({ children, ...props }: React.ComponentPropsWithoutRef<'a'>) =>
+    <a {...handleCsProp(props, styles)}>{children}</a>;
+
 
 export const createStyledDiv =
   (styles: string) =>

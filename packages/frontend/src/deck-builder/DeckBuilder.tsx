@@ -249,7 +249,7 @@ Cock and Balls to Torture and Abuse
                 width="250px"
                 title={entry.name}
                 key={entry.name + i}
-                src={entry.draft_image ? entry.draft_image : entry.image}
+                src={entry.still_image ?? entry.image}
                 crossOrigin="anonymous"
               />
             );

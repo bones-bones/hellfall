@@ -82,17 +82,17 @@ const getImages = (card: HCCard.Any) => {
     imagesToShow.push(card.rotated_image);
     imageNames.push('rotated');
   }
-  if (card.draft_image) {
-    imagesToShow.push(card.draft_image);
-    imageNames.push('draft');
+  if (card.print_image) {
+    imagesToShow.push(card.print_image);
+    imageNames.push('print');
   }
-  if (card.still_draft_image) {
-    imagesToShow.push(card.still_draft_image);
-    imageNames.push('still draft');
+  if (card.still_print_image) {
+    imagesToShow.push(card.still_print_image);
+    imageNames.push('still print');
   }
-  if (card.rotated_draft_image) {
-    imagesToShow.push(card.rotated_draft_image);
-    imageNames.push('rotated draft');
+  if (card.rotated_print_image) {
+    imagesToShow.push(card.rotated_print_image);
+    imageNames.push('rotated print');
   }
   return { images: imagesToShow, names: imageNames };
 };
