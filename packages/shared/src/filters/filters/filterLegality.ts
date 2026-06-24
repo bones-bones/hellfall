@@ -1,6 +1,6 @@
-import { formatList, HCFormat, HCLegalitiesField } from '@hellfall/shared/types';
+import { formatList, HCLegalitiesField } from '@hellfall/shared/types';
 import { legalFilter, opType, invertOptionType } from '../types';
-import { createCorrectedSummary, createSummary, opAsBool, opToNot } from '../filterUtils';
+import { createCorrectedSummary, opAsBool, opToNot } from '../utils';
 
 export const filterLegal: legalFilter = Object.assign(
   (value1: HCLegalitiesField, operator: opType, value2: string) =>

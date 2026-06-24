@@ -1,4 +1,3 @@
-import { HCColor, HCColors, HCMiscColors } from '@hellfall/shared/types';
 import {
   colorContentFilter,
   colorContentListFilter,
@@ -14,10 +13,9 @@ import {
   shorthandType,
   shortToNum,
 } from '../types';
-import { canContainOp, containsOp, createNumSummary, opToShorthand } from '../filterUtils';
-import { filterNumber } from '../filterNumber';
-import { canContain, contains } from '@hellfall/shared/utils';
-const MISC_BULLSHIT = 'Misc';
+import { canContainOp, containsOp, createNumSummary, opToShorthand } from '../utils';
+import { filterNumber } from './filterNumber';
+import { canContain, contains, getHybridColorNumber } from '@hellfall/shared/utils';
 
 /**
  * Compares two sets of colors using an operator and returns a bool.
@@ -45,7 +43,7 @@ export const filterColorNumber: colorNumFilter = Object.assign(
   }
 );
 
-export const evalShortNum = (value1: number, operator: opType, value2: shorthandType) => {
+const evalShortNum = (value1: number, operator: opType, value2: shorthandType) => {
   const shortNum = shortToNum(operator, value2);
   if (value2 == 'c') {
     return filterNumber(value1, operator, shortNum);
@@ -160,44 +158,6 @@ export const filterHybridIdentityContents: hybridContentFilter = Object.assign(
   }
 );
 
-const getSubsets = (set: string[], len: number): string[][] => {
-  const result: string[][] = [];
-
-  const backtrack = (start: number, current: string[]) => {
-    if (current.length === len) {
-      result.push([...current]);
-      return;
-    }
-
-    for (let i = start; i < set.length; i++) {
-      current.push(set[i]);
-      backtrack(i + 1, current);
-      current.pop();
-    }
-  };
-
-  backtrack(0, []);
-  return result;
-};
-const findMinNum = (hybridColors: string[][]): number => {
-  const allColors = Array.from(new Set(hybridColors.flat()));
-  if (!allColors.length) {
-    return 0;
-  }
-  const isMatch = (colors: string[]) => hybridColors.every(s => colors.some(c => s.includes(c)));
-  for (let i = 1; i < allColors.length; i++) {
-    if (getSubsets(allColors, i).some(subset => isMatch(subset))) {
-      return i;
-    }
-  }
-  return allColors.length;
-};
-export const getHybridColorNumber = (hybrid: string[][]) => {
-  const monoList = hybrid.flatMap(colors => (colors.length == 1 ? colors : []));
-  const hybridColors = hybrid.filter(colors => colors.length > 1);
-  return monoList.length + findMinNum(hybridColors);
-};
-
 /**
  * Compares two sets of colors using an operator and returns a bool.
  * @param value1 The set of hybrid colors to compare (must not include 'C'; can be empty)
@@ -225,54 +185,3 @@ export const filterHybridIdentityShort: hybridShortFilter = Object.assign(
       } ${opToShorthand(operator, value)} hybrid identity`,
   }
 );
-
-/**
- * Reduces down a card's colors to one compatible with search colors.
- * @param colors card's colors
- * @returns
- */
-export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
-  const newColors: string[] = [];
-  colors
-    .map(c => (HCMiscColors.includes(c as HCColor) ? MISC_BULLSHIT : c))
-    .forEach(c => {
-      if (!newColors.includes(c)) {
-        newColors.push(c);
-      }
-    });
-  return newColors;
-};
-/**
- * Reduces down a card's hybrid identity set to one compatible with search colors.
- * @param hybridColors hybrid color identity
- * @returns
- */
-export const hybridIdentityMiscReduce = (hybridColors: HCColors[] | string[][]): string[][] => {
-  const newColors: string[][] = [];
-  hybridColors
-    .map(set => {
-      if (set.some(c => HCMiscColors.includes(c as HCColor))) {
-        const newSet: string[] = [MISC_BULLSHIT];
-        set
-          .filter(c => !HCMiscColors.includes(c as HCColor))
-          .forEach(c => {
-            newSet.push(c);
-          });
-        return newSet;
-      } else {
-        return set;
-      }
-    })
-    .forEach(colors => {
-      if (!newColors.some(set => set.every(c => colors.includes(c)))) {
-        for (let i = newColors.length - 1; i >= 0; i--) {
-          // if the new set is completely inside the existing set, delete the existing one
-          if (colors.every(c => newColors[i].includes(c))) {
-            newColors.splice(i, 1);
-          }
-        }
-        newColors.push(colors);
-      }
-    });
-  return newColors;
-};

@@ -1,6 +1,6 @@
 import { HCBorderColor } from '@hellfall/shared/types';
-import { opType, textFilter, invertOptionType, summaryFunction } from '../types';
-import { createCorrectedSummary, createSummary, opAsBool, opToNot } from '../filterUtils';
+import { opType, textFilter, invertOptionType } from '../types';
+import { createCorrectedSummary, opAsBool, opToNot } from '../utils';
 const toBorder: Record<string, HCBorderColor> = {
   black: HCBorderColor.Black,
   white: HCBorderColor.White,

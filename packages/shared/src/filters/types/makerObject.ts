@@ -10,12 +10,9 @@ import {
   sortFilter,
   sortType,
   noteFilter,
-} from './types';
-import { getActualOp } from './filterUtils';
-import { filterNumberString } from './filterNumber';
-import { parseNote } from './filterText';
-import { printsFilter, unescapeText } from '.';
-import { CardMap } from '../utils';
+} from './filterTypes';
+import { getActualOp, unescapeText } from '../utils';
+import { filterNumberString, parseNote } from '../filters';
 
 export interface anyFilterInterface<T = any, S = any> {
   queryName: string;

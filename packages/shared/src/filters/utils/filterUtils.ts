@@ -1,6 +1,6 @@
-import { unescapeText } from '.';
-import { cardFilter, looseOpType, opType, shorthandType, summaryFunction } from './types';
+import { looseOpType, opType, shorthandType, summaryFunction } from '../types';
 import { listShare, toNumber } from '@hellfall/shared/utils';
+import { unescapeText } from './parseUtils';
 
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',
@@ -33,7 +33,7 @@ export const opAsBool = (condition: any, op: opType): boolean => !condition != !
 export const opToNot = (op: looseOpType) => (opIsNegative(op) ? 'not' : '');
 export const opToDont = (op: looseOpType) => (opIsNegative(op) ? "don't" : '');
 export const opToNt = (op: looseOpType) => (opIsNegative(op) ? "n't" : '');
-export const opToIncludeSingularRecord: Record<opType, string> = {
+const opToIncludeSingularRecord: Record<opType, string> = {
   '<': 'excludes',
   '<=': 'excludes or equals',
   '=': 'equals',
@@ -44,7 +44,7 @@ export const opToIncludeSingularRecord: Record<opType, string> = {
 export const opToIncludeSingular = (op: opType, value: string, invert?: boolean) => {
   return `${opToIncludeSingularRecord[(invert ? invertOp(op) : op) as opType]} "${value}"`;
 };
-export const opToIncludePluralRecord: Record<opType, string> = {
+const opToIncludePluralRecord: Record<opType, string> = {
   '<': 'exclude',
   '<=': 'exclude or include exactly',
   '=': 'include exactly',
@@ -55,7 +55,7 @@ export const opToIncludePluralRecord: Record<opType, string> = {
 export const opToIncludePlural = (op: opType, value: string, invert?: boolean) => {
   return `${opToIncludePluralRecord[(invert ? invertOp(op) : op) as opType]} "${value}"`;
 };
-export const opToTaggedRecord: Record<opType, string> = {
+const opToTaggedRecord: Record<opType, string> = {
   '<': 'not tagged',
   '<=': 'not tagged or tagged exactly',
   '=': 'tagged exactly',
@@ -67,7 +67,7 @@ export const opToTagged = (op: opType, value: string, invert?: boolean) => {
   return `${opToTaggedRecord[(invert ? invertOp(op) : op) as opType]} "${value}"`;
 };
 
-export const opToMRecord: Record<opType, string> = {
+const opToMRecord: Record<opType, string> = {
   '<': 'monocolored',
   '<=': 'any color',
   '=': 'multicolored',
@@ -75,7 +75,7 @@ export const opToMRecord: Record<opType, string> = {
   '>': 'supermulticolored',
   '!=': 'monocolored',
 };
-export const opToCRecord: Record<opType, string> = {
+const opToCRecord: Record<opType, string> = {
   '<': 'negative color',
   '<=': 'colorless',
   '=': 'colorless',

@@ -1,22 +1,12 @@
-import { unescapeText } from '.';
-import {
-  HCCard,
-  HCRelatedCard,
-  isComponent,
-  relatedComponent,
-  relatedComponentList,
-  SetCode,
-} from '../types';
-import { hasPartWithComp, inSetOrDirectChildren } from '../utils';
-import { opAsBool, opToDont, opToNot, opToNt } from './filterUtils';
-import { cardStringFilter, invertOptionType, opType, setFilter } from './types';
+import { HCCard, relatedComponent } from '@hellfall/shared/types';
+import { hasPartWithComp } from '@hellfall/shared/utils';
+import { opAsBool, opToDont, opToNt, unescapeText } from '../utils';
+import { cardStringFilter, invertOptionType, opType } from '../types';
 
 // const includeComponent = (part: HCRelatedCard) =>
 //   ['token_maker', 'draft_partner'].includes(part.component);
 
 // just make list of query names that should be evaluated by just looking at parts?
-
-// TODO: do I need uppercase handling here?
 
 type searchRelated = relatedComponent | 'persistent' | 'meld';
 export const equivRelNames: Record<string, searchRelated> = {
@@ -44,7 +34,7 @@ export const equivRelNames: Record<string, searchRelated> = {
   persistenttoken: 'persistent',
   persistenttokens: 'persistent',
 };
-export const toFullRelName = (text: string): searchRelated | undefined =>
+const toFullRelName = (text: string): searchRelated | undefined =>
   /* isComponent(text) ? text:  */ equivRelNames[unescapeText(text)];
 
 export const filterIsRelated: cardStringFilter = Object.assign(

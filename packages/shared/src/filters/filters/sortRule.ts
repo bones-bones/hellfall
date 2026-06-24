@@ -8,7 +8,7 @@ import {
   opType,
   sortFilter,
   sortType,
-} from './types';
+} from '../types';
 
 const colorSortValue: Record<HCColor, number> = {
   W: 1,

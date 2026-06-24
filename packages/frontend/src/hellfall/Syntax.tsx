@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FC, PropsWithChildren } from 'react';
-import { HCBorderColor, HCKind, HCMiscColors } from '@hellfall/shared/types';
+import { HCBorderColor, HCKind, HCMiscColors, SetType } from '@hellfall/shared/types';
 import { looseOpList, sorts } from '@hellfall/shared/filters';
-import { SetType } from '@hellfall/shared/types/Set/values';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { Box } from '@workday/canvas-kit-react';
 

@@ -1,20 +1,8 @@
-import {
-  createNumSummary,
-  createSummary,
-  equivSetTypes,
-  filterNumberString,
-  filterSet,
-  filterSetType,
-  invertOptionType,
-  opAsBool,
-  opIsNegative,
-  opToNot,
-  opType,
-  printsFilter,
-} from '.';
-import { HCCard, isSetCode, SetCode } from '../types';
-import { isSetType } from '../types/Set/values';
-import { isNumber } from '../utils';
+import { HCCard, isSetCode, SetCode, isSetType } from '@hellfall/shared/types';
+import { invertOptionType, opType, printsFilter } from '../types';
+import { createNumSummary, createSummary, opAsBool, opIsNegative, opToNot } from '../utils';
+import { equivSetTypes, filterSet, filterSetType } from './filterSet';
+import { filterNumberString } from './filterNumber';
 
 export const filterInSet: printsFilter = Object.assign(
   (value1: HCCard.Any[], operator: opType, value2: string) =>

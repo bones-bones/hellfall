@@ -1,5 +1,5 @@
 import { opType, textFilter, invertOptionType } from '../types';
-import { createSummary, opAsBool, opToNot } from '../filterUtils';
+import { createSummary, opAsBool, opToNot } from '../utils';
 import { isKind } from '@hellfall/shared/types';
 
 export const filterKind: textFilter = Object.assign(

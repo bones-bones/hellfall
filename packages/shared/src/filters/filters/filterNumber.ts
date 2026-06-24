@@ -6,20 +6,18 @@ import {
   numStringFilter,
   numStringListFilter,
   opType,
-} from './types';
+} from '../types';
+import { createNumSummary, invertOp, splitOnFirstOp, unescapeText } from '../utils';
 import {
   colorMiscReduce,
+  getColorsFromFaces,
   getHybridColorNumber,
   hybridIdentityMiscReduce,
-} from './values/filterColors';
-import {
-  equivColorFilterNames,
-  equivFilterNames,
-  splitOnFirstOp,
-  unescapeText,
-} from './filterBuilder';
-import { createNumSummary, invertOp } from './filterUtils';
-import { getColorsFromFaces, toFaces, toNumber } from '@hellfall/shared/utils';
+  shouldChoose2,
+  toFaces,
+  toNumber,
+} from '@hellfall/shared/utils';
+import { equivColorFilterNames, equivFilterNames } from '../parse';
 
 export const filterNumber: numFilter = Object.assign(
   (value1: number, operator: opType, value2: number) => {
@@ -91,7 +89,7 @@ export const numProps = [
 ] as const;
 export type numPropType = (typeof numProps)[number];
 
-export const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
+const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
   switch (prop) {
     case 'creator':
       return [card.creators.length];
@@ -112,24 +110,28 @@ export const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number
     case 'defense':
       return toFaces(card).flatMap(e => toNumber(e.defense) ?? []);
     case 'color':
-      return [card.colors.length];
+      return [shouldChoose2(card) ? 2 : card.colors.length];
     case 'identity':
-      return [card.color_identity.length];
+      return [shouldChoose2(card) ? 2 : card.color_identity.length];
     case 'indicator':
       return getColorsFromFaces(card, 'color_indicator').map(c => c.length);
     case 'hybrid':
-      return [getHybridColorNumber(card.color_identity_hybrid)];
+      return [shouldChoose2(card) ? 2 : getHybridColorNumber(card.color_identity_hybrid)];
     case 'misccolor':
-      return [colorMiscReduce(card.colors).length];
+      return [shouldChoose2(card) ? 2 : colorMiscReduce(card.colors).length];
     case 'miscidentity':
-      return [colorMiscReduce(card.color_identity).length];
+      return [shouldChoose2(card) ? 2 : colorMiscReduce(card.color_identity).length];
     case 'miscindicator':
       return getColorsFromFaces(card, 'color_indicator').map(c => colorMiscReduce(c).length);
     case 'mischybrid':
-      return [getHybridColorNumber(hybridIdentityMiscReduce(card.color_identity_hybrid))];
+      return [
+        shouldChoose2(card)
+          ? 2
+          : getHybridColorNumber(hybridIdentityMiscReduce(card.color_identity_hybrid)),
+      ];
   }
 };
-export const toNumProp = (prop: string): numPropType | undefined =>
+const toNumProp = (prop: string): numPropType | undefined =>
   numProps.includes(prop as numPropType)
     ? (prop as numPropType)
     : prop in equivFilterNames && numProps.includes(equivFilterNames[prop] as numPropType)
@@ -137,7 +139,7 @@ export const toNumProp = (prop: string): numPropType | undefined =>
     : prop in equivColorFilterNames
     ? (equivColorFilterNames[prop] as numPropType)
     : undefined;
-export const numPropToSummary: Record<numPropType, string> = {
+const numPropToSummary: Record<numPropType, string> = {
   creator: 'the number of creators',
   artist: 'the number of artists',
   manavalue: 'the mana value',
@@ -155,10 +157,6 @@ export const numPropToSummary: Record<numPropType, string> = {
   miscindicator: 'the number of indicator colors',
   mischybrid: 'the number of hybrid identity colors',
 };
-export const isCompKeyword = (keyword: string) =>
-  numProps.includes(keyword as numPropType) ||
-  (keyword in equivFilterNames && numProps.includes(equivFilterNames[keyword] as numPropType)) ||
-  keyword in equivColorFilterNames;
 export const invertCompOp = (value: string) => {
   const { keyword, op, term } = splitOnFirstOp(value);
   return `${keyword}${invertOp(op)}${term}`;

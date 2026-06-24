@@ -1,4 +1,4 @@
-import { HCCard, HCRelatedCard, isSetCode, SetCode } from '@hellfall/shared/types';
+import { HCCard, isSetCode, SetCode, isSetType, SetType } from '@hellfall/shared/types';
 import {
   includeFilter,
   inclusionOptions,
@@ -6,8 +6,9 @@ import {
   invertOptionType,
   opType,
   cardStringFilter,
-} from './types';
-import { createCorrectedSummary, opAsBool, opToNot } from './filterUtils';
+  summaryFunction,
+} from '../types';
+import { createCorrectedSummary, opAsBool, opToNot, createSummary, unescapeText } from '../utils';
 import {
   canBeInDecks,
   extraSetList,
@@ -16,10 +17,8 @@ import {
   inSetGroup,
   inSetOrDirectChildren,
 } from '@hellfall/shared/utils';
-import { isSetType, SetType } from '../types/Set/values';
-import { createSummary, summaryFunction, unescapeText } from '.';
 
-export const inclusionNicknames: Record<string, inclusionType> = {
+const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',
   e: 'extras',
   extra: 'extras',

@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { cardStringFilter, opType, invertOptionType } from './types';
+import { cardStringFilter, opType, invertOptionType } from '../types';
 import {
   opIsNegative,
   opToNot,
@@ -7,7 +7,8 @@ import {
   opToNt,
   opAsBool,
   createCorrectedSummary,
-} from './filterUtils';
+  unescapeText,
+} from '../utils';
 import {
   getColorsFromFaces,
   getFromAll,
@@ -20,7 +21,6 @@ import {
   canBeACommander,
   textListIncludesEvery,
 } from '@hellfall/shared/utils';
-import { unescapeText } from '.';
 
 const stateList = [
   'ruling',
@@ -205,9 +205,7 @@ export const filterIs: cardStringFilter = Object.assign(
     toSummary: createCorrectedSummary(
       getIsName,
       (operator, value) =>
-        stateSummaries
-          [value as stateType] /*  ?? isSummaries[value as isType] */
-          (operator),
+        stateSummaries[value as stateType](/*  ?? isSummaries[value as isType] */ operator),
       (operator, value) =>
         unescapeText(value) == 'funny'
           ? '!All hellscube cards are funny.'

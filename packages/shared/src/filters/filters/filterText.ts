@@ -14,7 +14,7 @@ import {
   noteFilter,
   textFilter,
   textListFilter,
-} from './types';
+} from '../types';
 import {
   opToIncludeSingular,
   opToTagged,
@@ -23,10 +23,10 @@ import {
   opToIncludePlural,
   opAsBool,
   opToNot,
-} from './filterUtils';
+  prepTag,
+} from '../utils';
 import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
-import { prepTag } from './parseSearchBar';
 
 export const filterEmpty: textFilter = Object.assign(
   (value1: string, operator: looseOpType, value2: string) => true,

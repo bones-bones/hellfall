@@ -13,9 +13,8 @@ import {
   TokenFrames,
 } from '@hellfall/shared/types';
 import { invertOptionType, opType, textListFilter } from '../types';
-import { shareOp, opToDont, createSummary, createCorrectedSummary } from '../filterUtils';
+import { shareOp, opToDont, createCorrectedSummary } from '../utils';
 import { listEquals } from '@hellfall/shared/utils';
-import { unescapeText } from '../filterBuilder';
 
 const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
