@@ -1,3 +1,4 @@
+import { formatChangesetDiffValue } from '@hellfall/shared/utils';
 import { useState } from 'react';
 import { usePendingChangesetsState } from '../hooks/usePendingChangesets';
 import { createStyles } from '@workday/canvas-kit-styling';
@@ -31,11 +32,10 @@ export function PendingChanges({ cardId }: { cardId: string }) {
               {cs.createdAt && <> &middot; {new Date(cs.createdAt).toLocaleDateString()}</>}
             </CsMeta>
             {cs.comment && <CsComment>{cs.comment}</CsComment>}
-            {cs.changes.map(change => (
-              <FieldDiff key={`${change.location}-${change.change_type}`}>
-                {/* TODO: improve formatting */}
-                {/* <FieldName>{field}</FieldName> */}
-                {formatVal(change)}
+            {cs.diff?.map((row, index) => (
+              <FieldDiff key={index}>
+                <strong>{row.field}:</strong> {formatChangesetDiffValue(row.before)} &rarr;{' '}
+                {formatChangesetDiffValue(row.after)}
               </FieldDiff>
             ))}
             <ReviewLink to={`/review/${cardId}`}>View in Review</ReviewLink>
@@ -43,13 +43,6 @@ export function PendingChanges({ cardId }: { cardId: string }) {
         ))}
     </Container>
   );
-}
-
-function formatVal(val: unknown): string {
-  if (val == null) return '(empty)';
-  if (Array.isArray(val)) return val.join(', ') || '(empty)';
-  if (typeof val === 'object') return JSON.stringify(val, null, 2);
-  return String(val);
 }
 
 const containerStyles = createStyles({
@@ -104,13 +97,6 @@ const fieldDiffStyles = createStyles({
   marginTop: 4,
 });
 const FieldDiff = createStyledDiv(fieldDiffStyles);
-
-const fieldNameStyles = createStyles({
-  fontSize: 11,
-  fontWeight: 600,
-  color: '#888',
-});
-const FieldName = createStyledDiv(fieldNameStyles);
 
 const reviewLinkStyles = createStyles({
   display: 'inline-block',

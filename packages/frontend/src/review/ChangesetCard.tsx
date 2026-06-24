@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { Changeset } from './types';
 import { ErrorText } from './ErrorText';
-import { Changeset, ChangesetStatus } from '@hellfall/shared/utils';
+import { Changeset, ChangesetStatus, formatChangesetDiffValue } from '@hellfall/shared/utils';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import {
   createStenciledSpan,
@@ -66,19 +66,27 @@ export function ChangesetCard({
             </tr>
           </thead>
           <tbody>
-            {Object.entries(cs.changes).map(([field, change]) => (
-              <tr key={field}>
-                <td>
-                  <code>{field}</code>
-                </td>
-                {/* <td>
-                  <DiffValue>{formatValue(change.before)}</DiffValue>
-                </td> */}
-                <td>
-                  <DiffValue>{formatValue(change)}</DiffValue>
+            {cs.diff?.length ? (
+              cs.diff.map((row, index) => (
+                <tr key={`${row.field}-${index}`}>
+                  <td>
+                    <code>{row.field}</code>
+                  </td>
+                  <td>
+                    <DiffValue>{formatChangesetDiffValue(row.before)}</DiffValue>
+                  </td>
+                  <td>
+                    <DiffValue>{formatChangesetDiffValue(row.after)}</DiffValue>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={3}>
+                  <Meta>Could not load before/after diff for this card.</Meta>
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </ChangesTable>
         {cs.status === 'pending' && isAdmin && (
@@ -209,13 +217,6 @@ const rejectButtonStyles = createStyles(buttonBase, {
   '&:hover:not(:disabled)': { background: '#c82333' },
 });
 const RejectButton = createStyledButton(rejectButtonStyles);
-
-function formatValue(val: unknown): string {
-  if (val == null) return '(empty)';
-  if (Array.isArray(val)) return val.join(', ') || '(empty)';
-  if (typeof val === 'object') return JSON.stringify(val, null, 2);
-  return String(val);
-}
 
 function formatTime(iso: string | null): string {
   if (!iso) return '';
