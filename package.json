@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "start": "yarn workspace @hellfall/frontend start",
-    "build": "yarn workspace @hellfall/frontend build",
+    "build": "yarn workspace @hellfall/shared build && yarn workspace @hellfall/frontend build",
     "fix": "yarn workspace @hellfall/frontend fix",
     "pretty": "prettier --write .",
     "transform-hc": "yarn workspace @hellfall/backend transform-hc",
