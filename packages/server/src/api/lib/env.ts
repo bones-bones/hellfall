@@ -97,7 +97,7 @@ export const env = {
     return v || undefined;
   },
 
-  /** Debounce window before exporting Firestore → cache/GCS after changeset accept. */
+  /** Debounce window before exporting Firestore → cache/GCS after postcard ingest. */
   get CATALOG_PUBLISH_DEBOUNCE_MS(): number {
     const fromEnv = Number(process.env.CATALOG_PUBLISH_DEBOUNCE_MS);
     return Number.isFinite(fromEnv) && fromEnv >= 0 ? fromEnv : 30_000;

@@ -6,7 +6,6 @@ import { requireTagAuth } from './lib/requireTagAuth.ts';
 import { requireAdminAuth } from './lib/requireAdminAuth.ts';
 import { requireReviewerAuth } from './lib/requireReviewerAuth.ts';
 import { recardCardChangeset } from '../lib/cardAudit.ts';
-import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
 import {
   anyChange,
   changeIsValid,
@@ -244,8 +243,6 @@ async function acceptChangeset(
   });
 
   await changesetsCol.doc(changesetId).delete();
-
-  scheduleCatalogPublish();
 
   res.statusCode = 200;
   res.end(JSON.stringify({ ok: true, status: 'accepted' }));
