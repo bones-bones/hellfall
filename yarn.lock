@@ -4055,6 +4055,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/virtual-core@patch:@tanstack/virtual-core@npm%3A3.17.1#~/.yarn/patches/@tanstack-virtual-core-npm-3.17.1-583248bb07.patch":
+  version: 3.17.1
+  resolution: "@tanstack/virtual-core@patch:@tanstack/virtual-core@npm%3A3.17.1#~/.yarn/patches/@tanstack-virtual-core-npm-3.17.1-583248bb07.patch::version=3.17.1&hash=148d67"
+  checksum: 10c0/949be3d30bccce81f1c5aaa4917e53b649664fc846d4166ffdac436c39d2bcf582820b6f632705ed965b49a4c0c60c239ee4d23f9eb3b0391ca04f59daa62178
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:1":
   version: 1.1.2
   resolution: "@tootallnate/once@npm:1.1.2"
