@@ -54,6 +54,7 @@ async function flushCatalogPublish(): Promise<void> {
 
   pendingPublish = false;
   inflightPublish = publishCatalogSnapshot()
+    .then(() => undefined)
     .catch(err => {
       console.error('[catalog/publish] failed', err);
     })
