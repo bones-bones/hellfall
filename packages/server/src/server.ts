@@ -15,6 +15,7 @@ import { cardJsonHandler, cardTextHandler } from './api/cardData.ts';
 import { searchHandler } from './api/search.ts';
 import { changesetsHandler } from './api/changesets.ts';
 import { exportHellscubeHandler } from './api/exportHellscube.ts';
+import { catalogSyncHandler } from './api/catalogSync.ts';
 import { loadCardsHandler } from './api/loadCards.ts';
 import { postcardHandler } from './api/postcard.ts';
 import { cardsData } from '@hellfall/shared/data';
@@ -32,6 +33,7 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
     '/api/discord/callback': callbackHandler,
     '/api/discord/done': doneHandler,
     '/api/admin/export-hellscube': exportHellscubeHandler,
+    '/api/admin/catalog/sync': catalogSyncHandler,
   };
 
 const CARD_API_PREFIX = '/api/cards/';
