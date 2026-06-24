@@ -49,7 +49,7 @@ export function ReviewPage() {
     } finally {
       setLoading(false);
     }
-  }, [baseUrl, filter, canViewChangesets]);
+  }, [baseUrl, filter, cardId, canViewChangesets]);
 
   useEffect(() => {
     if (!user && !authLoading) {

@@ -16,6 +16,7 @@ import { searchHandler } from './api/search.ts';
 import { changesetsHandler } from './api/changesets.ts';
 import { exportHellscubeHandler } from './api/exportHellscube.ts';
 import { loadCardsHandler } from './api/loadCards.ts';
+import { postcardHandler } from './api/postcard.ts';
 import { cardsData } from '@hellfall/shared/data';
 import { seedCatalogCache, warmCatalogCache } from './lib/catalogCache.ts';
 
@@ -120,6 +121,12 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
       }
       if (cardId === 'search') {
         await searchHandler(req, res as HandlerResponse);
+        return;
+      }
+      if (cardId === 'postcard') {
+        const rest = path.slice(CARD_API_PREFIX.length + 'postcard'.length).replace(/^\//, '');
+        const action = rest.split('/').filter(Boolean)[0] || null;
+        await postcardHandler(req, res as HandlerResponse, action);
         return;
       }
       if (req.query.format === 'text') {

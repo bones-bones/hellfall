@@ -102,4 +102,10 @@ export const env = {
     const fromEnv = Number(process.env.CATALOG_PUBLISH_DEBOUNCE_MS);
     return Number.isFinite(fromEnv) && fromEnv >= 0 ? fromEnv : 30_000;
   },
+
+  /** Bearer token for mork `POST /api/cards/postcard` (server-to-server). */
+  get MORK_POSTCARD_API_KEY(): string | undefined {
+    const v = process.env.MORK_POSTCARD_API_KEY?.trim();
+    return v || undefined;
+  },
 };
