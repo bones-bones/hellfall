@@ -7,7 +7,7 @@ import {
   opType,
   cardStringFilter,
 } from './types';
-import { opAsBool, opToNot } from './filterUtils';
+import { createCorrectedSummary, opAsBool, opToNot } from './filterUtils';
 import {
   canBeInDecks,
   extraSetList,
@@ -16,10 +16,8 @@ import {
   inSetGroup,
   inSetOrDirectChildren,
 } from '@hellfall/shared/utils';
-import { setsData } from '@hellfall/shared/data';
 import { isSetType, SetType } from '../types/Set/values';
-
-const sets = setsData.data;
+import { createSummary, summaryFunction, unescapeText } from '.';
 
 export const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',
@@ -44,9 +42,19 @@ const includeToSummary: Record<inclusionType, string> = {
   vetoed: 'vetoed cards',
 };
 
+const correctValue = (value: string): inclusionType | undefined =>
+  value in inclusionNicknames
+    ? inclusionNicknames[value]
+    : inclusionOptions.includes(value as inclusionType)
+    ? (value as inclusionType)
+    : undefined;
+const validSummary: summaryFunction<string> = (operator, value, invert) =>
+  `${invert ? 'ex' : 'in'}cluding ${includeToSummary[value as inclusionType]}`;
+const invalidSummary: summaryFunction<string> = (operator, value, invert) =>
+  `!Unknown ${invert ? 'ex' : 'in'}clusion option "${value}"`;
 export const filterIncludeExtras: includeFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {
-    switch (value2) {
+    switch (correctValue(unescapeText(value2))) {
       case 'all':
         return true;
       case 'extras':
@@ -64,18 +72,7 @@ export const filterIncludeExtras: includeFilter = Object.assign(
   },
   {
     invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string, invert?: boolean) => {
-      const correctValue: inclusionType | undefined =
-        value in inclusionNicknames
-          ? inclusionNicknames[value]
-          : inclusionOptions.includes(value as inclusionType)
-          ? (value as inclusionType)
-          : undefined;
-      if (!correctValue) {
-        return `!Unknown ${invert ? 'ex' : 'in'}clusion option "${value}"`;
-      }
-      return `${invert ? 'ex' : 'in'}cluding ${includeToSummary[correctValue]}`;
-    },
+    toSummary: createCorrectedSummary(correctValue, validSummary, invalidSummary),
   }
 );
 
@@ -84,10 +81,11 @@ export const filterSet: cardStringFilter = Object.assign(
     opAsBool(inSetOrDirectChildren(value1.set, value2 as SetCode), operator),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) =>
-      isSetCode(value)
-        ? `the set is ${opToNot(operator)} "${value}"`
-        : `!Unknown set code "${value}"`,
+    toSummary: createSummary(
+      isSetCode,
+      (operator, value) => `the set is ${opToNot(operator)} "${value}"`,
+      (operator, value) => `!Unknown set code "${value}"`
+    ),
   }
 );
 
@@ -96,10 +94,11 @@ export const filterBlock: cardStringFilter = Object.assign(
     opAsBool(inSetBlock(value1.set, value2 as SetCode), operator),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) =>
-      isSetCode(value)
-        ? `the block is ${opToNot(operator)} "${value}"`
-        : `!Unknown set code "${value}"`,
+    toSummary: createSummary(
+      isSetCode,
+      (operator, value) => `the block is ${opToNot(operator)} "${value}"`,
+      (operator, value) => `!Unknown set code "${value}"`
+    ),
   }
 );
 
@@ -108,10 +107,11 @@ export const filterGroup: cardStringFilter = Object.assign(
     opAsBool(inSetGroup(value1.set, value2 as SetCode), operator),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) =>
-      isSetCode(value)
-        ? `the set is ${opToNot(operator)} from the "${value}" set group`
-        : `!Unknown set code "${value}"`,
+    toSummary: createSummary(
+      isSetCode,
+      (operator, value) => `the set is ${opToNot(operator)} from the "${value}" set group`,
+      (operator, value) => `!Unknown set code "${value}"`
+    ),
   }
 );
 
@@ -129,11 +129,10 @@ export const filterSetType: cardStringFilter = Object.assign(
     ),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) =>
-      isSetType(value)
-        ? `the set type is ${opToNot(operator)} "${value}"`
-        : isSetType(equivSetTypes[value])
-        ? `the set type is ${opToNot(operator)} "${equivSetTypes[value]}"`
-        : `!Unknown set type "${value}"`,
+    toSummary: createSummary(
+      (value: string) => isSetType(value) || isSetType(equivSetTypes[value]),
+      (operator, value) => `the set type is ${opToNot(operator)} "${value}"`,
+      (operator, value) => `!Unknown set type "${value}"`
+    ),
   }
 );

@@ -1,5 +1,6 @@
-import { cardFilter, looseOpType, opType, shorthandType } from './types';
-import { listShare } from '@hellfall/shared/utils';
+import { unescapeText } from '.';
+import { cardFilter, looseOpType, opType, shorthandType, summaryFunction } from './types';
+import { listShare, toNumber } from '@hellfall/shared/utils';
 
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',
@@ -86,6 +87,39 @@ export const opToCRecord: Record<opType, string> = {
 export const opToShorthand = (op: opType, value: shorthandType) => {
   return value == 'c' ? opToCRecord[op] : opToMRecord[op];
 };
+const fixValue = <T>(value: T): T => {
+  if (typeof value == 'string') {
+    return unescapeText(value) as T;
+  }
+  if (Array.isArray(value)) {
+    return value.map(e => fixValue(e)) as T;
+  }
+  return value;
+};
+export const createCorrectedSummary =
+  <T>(
+    correctValue: (value: T) => T | undefined,
+    validSummary: summaryFunction<T>,
+    invalidSummary: summaryFunction<T>
+  ): summaryFunction<T> =>
+  (operator: opType, value: T, invert?: boolean) =>
+    correctValue(fixValue(value))
+      ? validSummary(operator, correctValue(fixValue(value)) as T, invert)
+      : invalidSummary(operator, value, invert);
+export const createNumSummary =
+  (validSummary?: string, invalidSummary?: string): summaryFunction<number | string | undefined> =>
+  (operator: opType, value: number | string | undefined, invert?: boolean) =>
+    toNumber(value) != undefined
+      ? `${validSummary ? `${validSummary} ` : ''}${invert ? 'not ' : ''}${operator} ${value}`
+      : invalidSummary ?? `!The value must be a number (or convertible to one)`;
+export const createSummary =
+  <T>(
+    valueIsCorrect: (value: T) => boolean | undefined,
+    validSummary: summaryFunction<T>,
+    invalidSummary: summaryFunction<T>
+  ): summaryFunction<T> =>
+  (operator: opType, value: T, invert?: boolean) =>
+    (valueIsCorrect(fixValue(value)) ? validSummary : invalidSummary)(operator, value, invert);
 
 // /**
 //  * To use in filters when need to check a function with one value

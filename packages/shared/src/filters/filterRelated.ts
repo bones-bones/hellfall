@@ -1,3 +1,4 @@
+import { unescapeText } from '.';
 import {
   HCCard,
   HCRelatedCard,
@@ -44,7 +45,7 @@ export const equivRelNames: Record<string, searchRelated> = {
   persistenttokens: 'persistent',
 };
 export const toFullRelName = (text: string): searchRelated | undefined =>
-  /* isComponent(text) ? text:  */ equivRelNames[text];
+  /* isComponent(text) ? text:  */ equivRelNames[unescapeText(text)];
 
 export const filterIsRelated: cardStringFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string) => {

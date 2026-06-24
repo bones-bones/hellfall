@@ -13,8 +13,9 @@ import {
   TokenFrames,
 } from '@hellfall/shared/types';
 import { invertOptionType, opType, textListFilter } from '../types';
-import { shareOp, opToDont } from '../filterUtils';
+import { shareOp, opToDont, createSummary, createCorrectedSummary } from '../filterUtils';
 import { listEquals } from '@hellfall/shared/utils';
+import { unescapeText } from '../filterBuilder';
 
 const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
@@ -422,14 +423,11 @@ export const filterCardFrame: textListFilter = Object.assign(
     value2 in toCardFrame ? shareOp(operator, value1, toCardFrame[value2]) : false,
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      const frameName = getFrameName(value);
-      if (frameName) {
-        return `the cards ${opToDont(operator)} have ${frameName} frame`;
-      } else {
-        return `!Unknown card frame "${value}"`;
-      }
-    },
+    toSummary: createCorrectedSummary(
+      getFrameName,
+      (operator, value) => `the cards ${opToDont(operator)} have ${value} frame`,
+      (operator, value) => `!Unknown card frame "${value}"`
+    ),
   }
 );
 export const filterFrameEffect: textListFilter = Object.assign(
@@ -437,14 +435,11 @@ export const filterFrameEffect: textListFilter = Object.assign(
     value2 in toFrameEffect ? shareOp(operator, value1, toFrameEffect[value2]) : false,
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      const frameName = getFrameEffectName(value);
-      if (frameName) {
-        return `the cards ${opToDont(operator)} have ${frameName}`;
-      } else {
-        return `!Unknown frame effect "${value}"`;
-      }
-    },
+    toSummary: createCorrectedSummary(
+      getFrameEffectName,
+      (operator, value) => `the cards ${opToDont(operator)} have ${value}`,
+      (operator, value) => `!Unknown frame effect "${value}"`
+    ),
   }
 );
 
@@ -457,9 +452,9 @@ export const filterFrame: textListFilter = Object.assign(
       const frame = getFrameName(value);
       const frameEffect = getFrameEffectName(value);
       if (frame) {
-        return `the cards ${opToDont(operator)} have ${frame} frame`;
+        return filterCardFrame.toSummary(operator, value);
       } else if (frameEffect) {
-        return `the cards ${opToDont(operator)} have ${frameEffect}`;
+        return filterFrameEffect.toSummary(operator, value);
       } else {
         return `!Unknown frame "${value}"`;
       }
@@ -467,25 +462,25 @@ export const filterFrame: textListFilter = Object.assign(
   }
 );
 
+const correctValue = (value: string) => {
+  const frame = toShowcaseFrame[value];
+  if (Array.isArray(frame)) {
+    return frame.map(e => `"${e}"`).join(' or ');
+  }
+  if (frame) {
+    return `"${frame}"`;
+  }
+  return undefined;
+};
 export const filterShowcase: textListFilter = Object.assign(
   (value1: string[], operator: opType, value2: string) =>
     value2 in toShowcaseFrame ? shareOp(operator, value1, toShowcaseFrame[value2]) : false,
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      if (!(value in toShowcaseFrame)) {
-        return `!Unknown showcase frame "${value}"`;
-      }
-      const frame = toShowcaseFrame[value];
-      if (Array.isArray(frame)) {
-        return `the cards ${opToDont(operator)} have a ${frame
-          .map(e => `"${e}"`)
-          .join(' or ')} showcase frame`;
-      } else if (frame) {
-        return `the cards ${opToDont(operator)} have a "${frame}" showcase frame`;
-      } else {
-        return `!Unknown "${value}"`;
-      }
-    },
+    toSummary: createCorrectedSummary(
+      correctValue,
+      (operator, value) => `the cards ${opToDont(operator)} have a ${value} showcase frame`,
+      (operator, value) => `!Unknown showcase frame "${value}"`
+    ),
   }
 );

@@ -1,6 +1,6 @@
 import { HCBorderColor } from '@hellfall/shared/types';
-import { opType, textFilter, invertOptionType } from '../types';
-import { opAsBool, opToNot } from '../filterUtils';
+import { opType, textFilter, invertOptionType, summaryFunction } from '../types';
+import { createCorrectedSummary, createSummary, opAsBool, opToNot } from '../filterUtils';
 const toBorder: Record<string, HCBorderColor> = {
   black: HCBorderColor.Black,
   white: HCBorderColor.White,
@@ -17,18 +17,16 @@ const toBorder: Record<string, HCBorderColor> = {
   orange: HCBorderColor.Orange,
   red: HCBorderColor.Red,
 };
+const correctValue = (value: string): string | undefined => toBorder[value];
 export const filterBorder: textFilter = Object.assign(
   (value1: string, operator: opType, value2: string) =>
     opAsBool(value1 == toBorder[value2], operator),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      if (value in toBorder) {
-        // TODO: Make sure this doesn't cause double spaces
-        return `the border color is ${opToNot(operator)} "${toBorder[value]}"`;
-      } else {
-        return `!Unknown border color "${value}"`;
-      }
-    },
+    toSummary: createCorrectedSummary(
+      correctValue,
+      (operator, value) => `the border color is ${opToNot(operator)} "${value}"`,
+      (operator, value) => `!Unknown border color "${value}"`
+    ),
   }
 );

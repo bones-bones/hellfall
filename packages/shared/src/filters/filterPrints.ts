@@ -1,4 +1,6 @@
 import {
+  createNumSummary,
+  createSummary,
   equivSetTypes,
   filterNumberString,
   filterSet,
@@ -22,10 +24,11 @@ export const filterInSet: printsFilter = Object.assign(
     ),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) =>
-      isSetCode(value)
-        ? `the card was ${opToNot(operator)} in "${value}"`
-        : `!Unknown set code "${value}"`,
+    toSummary: createSummary(
+      isSetCode,
+      (operator, value) => `the card was ${opToNot(operator)} in "${value}"`,
+      (operator, value) => `!Unknown set code "${value}"`
+    ),
   }
 );
 export const filterInSetType: printsFilter = Object.assign(
@@ -36,12 +39,11 @@ export const filterInSetType: printsFilter = Object.assign(
     ),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) =>
-      isSetType(value)
-        ? `the set type is ${opToNot(operator)} "${value}"`
-        : isSetType(equivSetTypes[value])
-        ? `the set type is ${opToNot(operator)} "${equivSetTypes[value]}"`
-        : `!Unknown set type "${value}"`,
+    toSummary: createSummary(
+      (value: string) => isSetType(value) || isSetType(equivSetTypes[value]),
+      (operator, value) => `the card was in ${opToNot(operator)} "${value}"`,
+      (operator, value) => `!Unknown set type "${value}"`
+    ),
   }
 );
 export const getSetNumber = (cards: HCCard.Any[]): number => {
@@ -55,25 +57,18 @@ export const getSetNumber = (cards: HCCard.Any[]): number => {
 };
 export const filterSetsNumber: printsFilter = Object.assign(
   (value1: HCCard.Any[], operator: opType, value2: string) =>
-    isNumber(value2) ? filterNumberString(getSetNumber(value1), operator, value2) : false,
+    filterNumberString(getSetNumber(value1), operator, value2),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) =>
-      `${
-        isNumber(value) ? 'the number of times a card has appeared in a set ' : ''
-      }${filterNumberString.toSummary(operator, value)}`,
+    toSummary: createNumSummary('the number of times a card has appeared in a set'),
   }
 );
 export const filterPrintsNumber: printsFilter = Object.assign(
   (value1: HCCard.Any[], operator: opType, value2: string) =>
-    isNumber(value2) ? filterNumberString(value1.length, operator, value2) : false,
+    filterNumberString(value1.length, operator, value2),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) =>
-      `${isNumber(value) ? 'the number of prints ' : ''}${filterNumberString.toSummary(
-        operator,
-        value
-      )}`,
+    toSummary: createNumSummary('the number of prints'),
   }
 );
 

@@ -1,6 +1,13 @@
-import { HCCard, isComponent, relatedComponent } from '@hellfall/shared/types';
+import { HCCard } from '@hellfall/shared/types';
 import { cardStringFilter, opType, invertOptionType } from './types';
-import { opIsNegative, opToNot, opToDont, opToNt, opAsBool } from './filterUtils';
+import {
+  opIsNegative,
+  opToNot,
+  opToDont,
+  opToNt,
+  opAsBool,
+  createCorrectedSummary,
+} from './filterUtils';
 import {
   getColorsFromFaces,
   getFromAll,
@@ -12,8 +19,8 @@ import {
   toNumber,
   canBeACommander,
   textListIncludesEvery,
-  hasPartWithComp,
 } from '@hellfall/shared/utils';
+import { unescapeText } from '.';
 
 const stateList = [
   'ruling',
@@ -135,53 +142,43 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
   snarl: (value: HCCard.Any) => value.tags?.includes('snarl'),
   triome: (value: HCCard.Any) => value.tags?.includes('triome'),
 };
-const stateSummaries: Record<stateType, (operator: opType, value: string) => string> = {
-  ruling: (operator: opType, value: string) => `the cards ${opToDont(operator)} have rulings`,
-  foil: (operator: opType, value: string) => `the card is ${opToNot(operator)} foil`,
-  nonfoil: (operator: opType, value: string) => `the card is ${opToNot(operator)} nonfoil`,
-  commander: (operator: opType, value: string) =>
+const stateSummaries: Record<stateType, (operator: opType) => string> = {
+  ruling: (operator: opType) => `the cards ${opToDont(operator)} have rulings`,
+  foil: (operator: opType) => `the card is ${opToNot(operator)} foil`,
+  nonfoil: (operator: opType) => `the card is ${opToNot(operator)} nonfoil`,
+  commander: (operator: opType) =>
     `the card can${opIsNegative(operator) ? "'t" : ''} be your commander`,
-  phyrexian: (operator: opType, value: string) =>
-    `the cards ${opToDont(operator)} have Phyrexian mana`,
-  hybrid: (operator: opType, value: string) => `the cards ${opToDont(operator)} have hybrid mana`,
-  spell: (operator: opType, value: string) => `the cards are${opToNt(operator)} spells`,
-  permanent: (operator: opType, value: string) =>
-    `the cards ${opToDont(operator)} become permanents`,
-  historic: (operator: opType, value: string) => `the cards are${opToNt(operator)} historic`,
-  party: (operator: opType, value: string) =>
+  phyrexian: (operator: opType) => `the cards ${opToDont(operator)} have Phyrexian mana`,
+  hybrid: (operator: opType) => `the cards ${opToDont(operator)} have hybrid mana`,
+  spell: (operator: opType) => `the cards are${opToNt(operator)} spells`,
+  permanent: (operator: opType) => `the cards ${opToDont(operator)} become permanents`,
+  historic: (operator: opType) => `the cards are${opToNt(operator)} historic`,
+  party: (operator: opType) =>
     `the cards are${opToNt(operator)} Clerics, Rogues, Warriors, or Wizards`,
-  outlaw: (operator: opType, value: string) =>
+  outlaw: (operator: opType) =>
     `the cards are${opToNt(operator)} Assassins, Goons, Mercenaries, Pirates, Rogues, or Warlocks`,
-  modal: (operator: opType, value: string) => `the cards ${opToDont(operator)} have modal effects`,
-  vanilla: (operator: opType, value: string) => `the cards are${opToNt(operator)} vanilla`,
-  frenchvanilla: (operator: opType, value: string) =>
-    `the cards are${opToNt(operator)} French vanilla`,
-  bear: (operator: opType, value: string) => `the cards are${opToNt(operator)} 2/2/2 bears`,
-  manland: (operator: opType, value: string) =>
-    `the cards are${opToNt(operator)} lands that become creatures`,
-  partner: (operator: opType, value: string) =>
-    `the cards ${opToDont(operator)} have multi-commander mechanics`,
-  masterpiece: (operator: opType, value: string) => `the cards are${opToNt(operator)} masterpieces`,
-  reprint: (operator: opType, value: string) => `the cards are${opToNt(operator)} reprints`,
-  rebalanced: (operator: opType, value: string) =>
-    `the cards are${opToNt(operator)} rebalanced Alchemy cards`,
-  dual: (operator: opType, value: string) => `the cards are${opToNt(operator)} dual lands`,
-  bounceland: (operator: opType, value: string) =>
-    `the cards are${opToNt(operator)} land-bouncing duals`,
-  fastland: (operator: opType, value: string) =>
-    `the cards are${opToNt(operator)} dual lands that are 'fast'`,
-  fetchland: (operator: opType, value: string) =>
+  modal: (operator: opType) => `the cards ${opToDont(operator)} have modal effects`,
+  vanilla: (operator: opType) => `the cards are${opToNt(operator)} vanilla`,
+  frenchvanilla: (operator: opType) => `the cards are${opToNt(operator)} French vanilla`,
+  bear: (operator: opType) => `the cards are${opToNt(operator)} 2/2/2 bears`,
+  manland: (operator: opType) => `the cards are${opToNt(operator)} lands that become creatures`,
+  partner: (operator: opType) => `the cards ${opToDont(operator)} have multi-commander mechanics`,
+  masterpiece: (operator: opType) => `the cards are${opToNt(operator)} masterpieces`,
+  reprint: (operator: opType) => `the cards are${opToNt(operator)} reprints`,
+  rebalanced: (operator: opType) => `the cards are${opToNt(operator)} rebalanced Alchemy cards`,
+  dual: (operator: opType) => `the cards are${opToNt(operator)} dual lands`,
+  bounceland: (operator: opType) => `the cards are${opToNt(operator)} land-bouncing duals`,
+  fastland: (operator: opType) => `the cards are${opToNt(operator)} dual lands that are 'fast'`,
+  fetchland: (operator: opType) =>
     `the cards are${opToNt(operator)} dual lands that filter mana into other colors`,
-  filterland: (operator: opType, value: string) =>
+  filterland: (operator: opType) =>
     `the cards are${opToNt(operator)} dual lands that fetch lands from the library`,
-  painland: (operator: opType, value: string) =>
-    `the cards are${opToNt(operator)} dual lands that damage you`,
-  pathway: (operator: opType, value: string) => `the cards are${opToNt(operator)} Pathway duals`,
-  shockland: (operator: opType, value: string) =>
+  painland: (operator: opType) => `the cards are${opToNt(operator)} dual lands that damage you`,
+  pathway: (operator: opType) => `the cards are${opToNt(operator)} Pathway duals`,
+  shockland: (operator: opType) =>
     `the cards are${opToNt(operator)} dual lands that deal 2 damage to you`,
-  snarl: (operator: opType, value: string) =>
-    `the cards are${opToNt(operator)} dual lands from the snarl cycle`,
-  triome: (operator: opType, value: string) => `the cards are${opToNt(operator)} triomes`,
+  snarl: (operator: opType) => `the cards are${opToNt(operator)} dual lands from the snarl cycle`,
+  triome: (operator: opType) => `the cards are${opToNt(operator)} triomes`,
 };
 
 // const isList = ['persistent'] as const;
@@ -195,45 +192,27 @@ const stateSummaries: Record<stateType, (operator: opType, value: string) => str
 //   persistent: (operator: opType, value: string) =>
 //     `the cards ${opToDont(operator)} make persistent tokens`,
 // };
+const getIsName = (value: string) => equivStateNames[value] /* ?? equivIsNames[value] */ ?? value;
 export const filterIs: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: opType, value2: string) => {
-    const resolveIs = (criteria: string): boolean | undefined => {
-      if (criteria in stateResolutions) {
-        return stateResolutions[criteria as stateType](value1);
-      }
-      if (criteria in equivStateNames) {
-        return stateResolutions[equivStateNames[criteria]](value1);
-      }
-      // if (criteria in isResolutions) {
-      //   return isResolutions[criteria as isType](value1);
-      // }
-      // if (criteria in equivIsNames) {
-      //   return isResolutions[equivIsNames[criteria] as isType](value1);
-      // }
-      return false;
-    };
-    return opAsBool(resolveIs(value2), operator);
-  },
+  (value1: HCCard.Any, operator: opType, value2: string) =>
+    opAsBool(
+      stateResolutions[getIsName(value2) as stateType] ??
+        /* isResolutions[getIsName(value2) as isType] ?? */ (c => false)(value1),
+      operator
+    ),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      if (value in stateSummaries) {
-        return stateSummaries[value as stateType](operator, value);
-      }
-      if (value in equivStateNames) {
-        return stateSummaries[equivStateNames[value]](operator, value);
-      }
-      // if (value in isSummaries) {
-      //   return isSummaries[value as isType](operator, value);
-      // }
-      // if (value in equivIsNames) {
-      //   return isSummaries[equivIsNames[value]](operator, value);
-      // }
-      if (value == 'funny') {
-        return '!All hellscube cards are funny.';
-      }
-      return `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`;
-    },
+    toSummary: createCorrectedSummary(
+      getIsName,
+      (operator, value) =>
+        stateSummaries
+          [value as stateType] /*  ?? isSummaries[value as isType] */
+          (operator),
+      (operator, value) =>
+        unescapeText(value) == 'funny'
+          ? '!All hellscube cards are funny.'
+          : `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`
+    ),
   }
 );
 
@@ -249,52 +228,31 @@ const hasResolutions: Record<hasType, (value: HCCard.Any) => boolean | undefined
   frameeffect: (value: HCCard.Any) => Boolean(getFromAll(value, 'frame_effects').length),
   watermark: (value: HCCard.Any) => Boolean(getFromFaces(value, 'watermark').length),
 };
-const hasSummaries: Record<hasType, (operator: opType, value: string) => string> = {
-  indicator: (operator: opType, value: string) =>
-    `the cards ${opToDont(operator)} have a color indicator`,
-  frameeffect: (operator: opType, value: string) =>
-    `the cards ${opToDont(operator)} have a frame effect`,
-  watermark: (operator: opType, value: string) => `the cards ${opToDont(operator)} have watermarks`,
+const hasSummaries: Record<hasType, (operator: opType) => string> = {
+  indicator: (operator: opType) => `the cards ${opToDont(operator)} have a color indicator`,
+  frameeffect: (operator: opType) => `the cards ${opToDont(operator)} have a frame effect`,
+  watermark: (operator: opType) => `the cards ${opToDont(operator)} have watermarks`,
 };
 
+const getHasName = (value: string) => equivStateNames[value] ?? equivHasNames[value] ?? value;
 export const filterHas: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: opType, value2: string) => {
-    const resolveHas = (criteria: string): boolean | undefined => {
-      if (criteria in stateResolutions) {
-        return stateResolutions[criteria as stateType](value1);
-      }
-      if (criteria in equivStateNames) {
-        return stateResolutions[equivStateNames[criteria]](value1);
-      }
-      if (criteria in hasResolutions) {
-        return hasResolutions[criteria as hasType](value1);
-      }
-      if (criteria in equivHasNames) {
-        return hasResolutions[equivHasNames[criteria]](value1);
-      }
-      return false;
-    };
-    return opAsBool(resolveHas(value2), operator);
-  },
+  (value1: HCCard.Any, operator: opType, value2: string) =>
+    opAsBool(
+      stateResolutions[getIsName(value2) as stateType] ??
+        hasResolutions[getHasName(value2) as hasType] ??
+        (c => false)(value1),
+      operator
+    ),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      if (value in stateSummaries) {
-        return stateSummaries[value as stateType](operator, value);
-      }
-      if (value in equivStateNames) {
-        return stateSummaries[equivStateNames[value]](operator, value);
-      }
-      if (value in hasSummaries) {
-        return hasSummaries[value as hasType](operator, value);
-      }
-      if (value in equivHasNames) {
-        return hasSummaries[equivHasNames[value]](operator, value);
-      }
-      if (value == 'funny') {
-        return '!All hellscube cards are funny.';
-      }
-      return `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`;
-    },
+    toSummary: createCorrectedSummary(
+      getIsName,
+      (operator, value) =>
+        (stateSummaries[value as stateType] ?? hasSummaries[value as hasType])(operator),
+      (operator, value) =>
+        unescapeText(value) == 'funny'
+          ? '!All hellscube cards are funny.'
+          : `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`
+    ),
   }
 );

@@ -87,6 +87,31 @@ export class filterObject<T, S> implements filterInterface {
       typeof this.value == 'string' ? unescapeText(this.value) : this.value
     );
 }
+export class UUIDFilter extends filterObject<string, string> {
+  constructor(
+    queryName: string,
+    filter: cardFilter<string, string>,
+    value: string,
+    op: looseOpType,
+    defaultOp: opType,
+    getValueToCompare: (card: HCCard.Any) => string,
+    inverted?: boolean
+  ) {
+    super(
+      queryName,
+      filter,
+      value,
+      op,
+      defaultOp,
+      getValueToCompare,
+      (invert?: boolean) => this.filter.toSummary(this.getOp(), this.value, invert),
+      inverted
+    );
+    this.cardPassesFilter = (card: HCCard.Any) =>
+      !this.inverted !=
+      !this.filter(this.getValueToCompare(card), this.getOp(), this.value.toLowerCase());
+  }
+}
 export class PassThroughSummaryFilter<T, S> extends filterObject<T, S> {
   constructor(
     queryName: string,

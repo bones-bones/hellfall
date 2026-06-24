@@ -50,7 +50,7 @@ export const filterOracleId: textFilter = Object.assign(
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: (operator: opType, value: string) => {
-      if (isValidV4UUID(value)) {
+      if (isValidV4UUID(value.toLowerCase())) {
         return `the Oracle ID is ${opToNot(operator)} ${value}`;
       }
       return `!You must provide a valid v4 UUID.`;

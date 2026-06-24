@@ -28,10 +28,12 @@ export const invertOptions = ['ignore', 'flip', 'negate'] as const;
  * negate: object negates the filter's output; filter requires `invert` to be passed to summary function
  */
 export type invertOptionType = (typeof invertOptions)[number];
+export type summaryFunction<T> = (operator: opType, value: T, invert?: boolean) => string;
+
 export interface anyFilter<T = any, S = any> {
   (value1: T, operator: opType, value2: S): number | boolean | undefined;
   invertOption: invertOptionType;
-  toSummary: (operator: opType, value: S, invert?: boolean) => string;
+  toSummary: summaryFunction<S>;
 }
 export const dirs = ['asc', 'desc', 'auto'] as const;
 export type dirType = (typeof dirs)[number];

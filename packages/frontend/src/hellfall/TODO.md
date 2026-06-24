@@ -144,3 +144,4 @@ Write a script to transform the database
 - make masterpiece names flavor names?
 - switch related card entries to being text with hover images? (should we also include the card itself in them?)
 - add tag inference for image status (for actual image quality, not just explaining lack of image)
+- should I add .toLowerCase() to the summary return? scryfall seems to do that

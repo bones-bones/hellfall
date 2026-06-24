@@ -49,9 +49,9 @@ const isSortFilter = (text: string): boolean => {
 };
 
 const isSort = (text: string): boolean =>
-  sorts.includes(text.toLowerCase() as sortType) || text.toLowerCase() in sortRedirects;
+  sorts.includes(unescapeText(text) as sortType) || unescapeText(text) in sortRedirects;
 const isDir = (text: string): boolean =>
-  dirs.includes(text.toLowerCase() as dirType) || text.toLowerCase() in dirRedirects;
+  dirs.includes(unescapeText(text) as dirType) || unescapeText(text) in dirRedirects;
 const sortIsValid = (text: string): boolean => {
   const { term } = splitOnFirstOp(text);
   // TODO: add multi in one term option?
@@ -64,13 +64,13 @@ const sortIsValid = (text: string): boolean => {
   }
   return isSort(term) || isDir(term);
 };
-const isInclude = (text: string): boolean => {
-  if (text.at(0) == '-') {
-    return isInclude(text.slice(1));
-  }
-  const { keyword } = splitOnFirstOp(text);
-  return keyword == 'include' || keyword == 'exclude';
-};
+// const isInclude = (text: string): boolean => {
+//   if (text.at(0) == '-') {
+//     return isInclude(text.slice(1));
+//   }
+//   const { keyword } = splitOnFirstOp(text);
+//   return keyword == 'include' || keyword == 'exclude';
+// };
 const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
   const tokens: string[] = [];
   const len = query.length;
@@ -180,16 +180,16 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
 };
 
 const correctSort = (text: string): sortType => {
-  if (text.toLowerCase() in sortRedirects) {
-    return sortRedirects[text.toLowerCase()];
+  if (unescapeText(text) in sortRedirects) {
+    return sortRedirects[unescapeText(text)];
   }
-  return text.toLowerCase() as sortType;
+  return unescapeText(text) as sortType;
 };
 const correctDir = (text: string): dirType => {
-  if (text.toLowerCase() in dirRedirects) {
-    return dirRedirects[text.toLowerCase()];
+  if (unescapeText(text) in dirRedirects) {
+    return dirRedirects[unescapeText(text)];
   }
-  return text.toLowerCase() as dirType;
+  return unescapeText(text) as dirType;
 };
 export const parseSorts = (sortList: string[]): sortObject[] => {
   const sortObs: sortObject[] = [];

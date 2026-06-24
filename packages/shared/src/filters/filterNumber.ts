@@ -12,8 +12,13 @@ import {
   getHybridColorNumber,
   hybridIdentityMiscReduce,
 } from './values/filterColors';
-import { equivColorFilterNames, equivFilterNames, splitOnFirstOp } from './filterBuilder';
-import { invertOp } from './filterUtils';
+import {
+  equivColorFilterNames,
+  equivFilterNames,
+  splitOnFirstOp,
+  unescapeText,
+} from './filterBuilder';
+import { createNumSummary, invertOp } from './filterUtils';
 import { getColorsFromFaces, toFaces, toNumber } from '@hellfall/shared/utils';
 
 export const filterNumber: numFilter = Object.assign(
@@ -42,8 +47,8 @@ export const filterNumber: numFilter = Object.assign(
 
 export const filterNumberString: numStringFilter = Object.assign(
   (value1: number | string | undefined, operator: opType, value2: number | string | undefined) => {
-    const num1 = typeof value1 == 'string' ? toNumber(value1) : value1;
-    const num2 = typeof value2 == 'string' ? toNumber(value2) : value2;
+    const num1 = toNumber(value1);
+    const num2 = toNumber(value2);
     if (num1 == undefined || num2 == undefined) {
       return false;
     }
@@ -51,13 +56,7 @@ export const filterNumberString: numStringFilter = Object.assign(
   },
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: number | string | undefined, invert?: boolean) => {
-      const num = typeof value == 'string' ? toNumber(value) : value;
-      if (num == undefined) {
-        return `!The value must be a number (or convertible to one)`;
-      }
-      return `${invert ? 'not' : ''} ${operator} ${num}`;
-    },
+    toSummary: createNumSummary(),
   }
 );
 export const filterNumberStringList: numStringListFilter = Object.assign(
@@ -68,13 +67,7 @@ export const filterNumberStringList: numStringListFilter = Object.assign(
   ) => value1.some(value => filterNumberString(value, operator, value2)),
   {
     invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: number | string | undefined, invert?: boolean) => {
-      const num = typeof value == 'string' ? toNumber(value) : value;
-      if (num == undefined) {
-        return `!The value must be a number (or convertible to one)`;
-      }
-      return `${invert ? 'not' : ''} ${operator} ${num}`;
-    },
+    toSummary: createNumSummary(),
   }
 );
 
@@ -187,7 +180,7 @@ export const filterComp: cardStringFilter = Object.assign(
     toSummary: (operator: opType, value: string) => {
       const { keyword, op, term } = splitOnFirstOp(value);
       const first = toNumProp(keyword);
-      const second = toNumProp(term);
+      const second = toNumProp(unescapeText(term));
       if (!first) {
         return `!Unknown keyword "${first}"`;
       }

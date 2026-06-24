@@ -14,7 +14,7 @@ import {
   shorthandType,
   shortToNum,
 } from '../types';
-import { canContainOp, containsOp, opToShorthand } from '../filterUtils';
+import { canContainOp, containsOp, createNumSummary, opToShorthand } from '../filterUtils';
 import { filterNumber } from '../filterNumber';
 import { canContain, contains } from '@hellfall/shared/utils';
 const MISC_BULLSHIT = 'Misc';
@@ -41,8 +41,7 @@ export const filterColorNumber: colorNumFilter = Object.assign(
     filterNumber(value1.length, operator, value2),
   {
     invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string[] | number, invert?: boolean) =>
-      `the number of colors is ${filterNumber.toSummary(operator, value, invert)}`,
+    toSummary: createNumSummary('the number of colors is'),
   }
 );
 
@@ -97,8 +96,7 @@ export const filterColorIdentityNumber: colorNumFilter = Object.assign(
     filterNumber(value1.length, operator, value2),
   {
     invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string[] | number, invert?: boolean) =>
-      `the number of identity colors is ${filterNumber.toSummary(operator, value, invert)}`,
+    toSummary: createNumSummary('the number of identity colors is'),
   }
 );
 
@@ -129,8 +127,7 @@ export const filterColorIndicatorNumber: colorNumListFilter = Object.assign(
     value1.some(set => filterNumber(set.length, operator, value2)),
   {
     invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string[] | number, invert?: boolean) =>
-      `the number of indicator colors is ${filterNumber.toSummary(operator, value, invert)}`,
+    toSummary: createNumSummary('the number of indicator colors is'),
   }
 );
 
@@ -213,8 +210,7 @@ export const filterHybridIdentityNumber: hybridNumFilter = Object.assign(
     filterNumber(getHybridColorNumber(value1), operator, value2),
   {
     invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string[] | number, invert?: boolean) =>
-      `the number of hybrid identity colors is ${filterNumber.toSummary(operator, value, invert)}`,
+    toSummary: createNumSummary('the number of hybrid identity colors is'),
   }
 );
 
