@@ -15,7 +15,9 @@ import { cardJsonHandler, cardTextHandler } from './api/cardData.ts';
 import { searchHandler } from './api/search.ts';
 import { changesetsHandler } from './api/changesets.ts';
 import { exportHellscubeHandler } from './api/exportHellscube.ts';
+import { catalogSyncHandler } from './api/catalogSync.ts';
 import { loadCardsHandler } from './api/loadCards.ts';
+import { postcardHandler } from './api/postcard.ts';
 import { cardsData } from '@hellfall/shared/data';
 import { seedCatalogCache, warmCatalogCache } from './lib/catalogCache.ts';
 
@@ -31,6 +33,7 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
     '/api/discord/callback': callbackHandler,
     '/api/discord/done': doneHandler,
     '/api/admin/export-hellscube': exportHellscubeHandler,
+    '/api/admin/catalog/sync': catalogSyncHandler,
   };
 
 const CARD_API_PREFIX = '/api/cards/';
@@ -120,6 +123,12 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
       }
       if (cardId === 'search') {
         await searchHandler(req, res as HandlerResponse);
+        return;
+      }
+      if (cardId === 'postcard') {
+        const rest = path.slice(CARD_API_PREFIX.length + 'postcard'.length).replace(/^\//, '');
+        const action = rest.split('/').filter(Boolean)[0] || null;
+        await postcardHandler(req, res as HandlerResponse, action);
         return;
       }
       if (req.query.format === 'text') {

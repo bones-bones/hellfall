@@ -27,6 +27,10 @@ export function ChangesetCard({
   const [error, setError] = useState<string | null>(null);
 
   const handle = async (action: 'accept' | 'reject') => {
+    if (!cs.id) {
+      setError('Missing changeset id');
+      return;
+    }
     setBusy(true);
     setError(null);
     try {

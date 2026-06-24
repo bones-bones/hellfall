@@ -6,7 +6,7 @@ import { ErrorText } from './ErrorText';
 import { Changeset, isChangesetStatus, isStatusFilter, StatusFilter } from '@hellfall/shared/utils';
 import { useParams } from 'react-router-dom';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledButton, createStyledDiv } from '../styling';
+import { createStenciledButton, createStyledButton, createStyledDiv } from '../styling';
 import { Heading } from '@workday/canvas-kit-react';
 
 export function ReviewPage() {
@@ -18,6 +18,9 @@ export function ReviewPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<StatusFilter>('pending');
+  const [syncBusy, setSyncBusy] = useState(false);
+  const [syncMessage, setSyncMessage] = useState<string | null>(null);
+  const [syncError, setSyncError] = useState<string | null>(null);
 
   const canViewChangesets = Boolean(user?.isAdmin || user?.isContributor);
 
@@ -49,7 +52,7 @@ export function ReviewPage() {
     } finally {
       setLoading(false);
     }
-  }, [baseUrl, filter, canViewChangesets]);
+  }, [baseUrl, filter, cardId, canViewChangesets]);
 
   useEffect(() => {
     if (!user && !authLoading) {
@@ -81,6 +84,30 @@ export function ReviewPage() {
     }
     await fetchChangesets();
   };
+
+  const handleCatalogSync = async () => {
+    if (!baseUrl || !user?.isAdmin) return;
+    setSyncBusy(true);
+    setSyncMessage(null);
+    setSyncError(null);
+    try {
+      const res = await fetch(`${baseUrl}/api/admin/catalog/sync`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.reason || `${res.status}`);
+      const gcsNote = data.gcs ? ` (GCS v${data.version})` : '';
+      setSyncMessage(`Synced ${data.cardCount?.toLocaleString() ?? '?'} cards${gcsNote}`);
+    } catch (e) {
+      setSyncError(e instanceof Error ? e.message : 'Sync failed');
+    } finally {
+      setSyncBusy(false);
+    }
+  };
+
   if (authLoading) {
     return (
       <PageContainer>
@@ -110,7 +137,16 @@ export function ReviewPage() {
 
   return (
     <PageContainer>
-      <Heading size="medium">Review Changesets</Heading>
+      <HeaderRow>
+        <Heading size="medium">Review Changesets</Heading>
+        {user.isAdmin && (
+          <SyncButton disabled={syncBusy} onClick={handleCatalogSync}>
+            {syncBusy ? 'Syncing catalog…' : 'Sync catalog to site'}
+          </SyncButton>
+        )}
+      </HeaderRow>
+      {syncMessage && <SyncMessage>{syncMessage}</SyncMessage>}
+      {syncError && <ErrorText size="large">{syncError}</ErrorText>}
       <FilterRow>
         {(['pending', 'accepted', 'rejected', 'all'] as StatusFilter[]).map(s => (
           <FilterButton key={s} data_active={filter === s} onClick={() => setFilter(s)}>
@@ -139,6 +175,36 @@ const pageContainerStyles = createStyles({
   padding: '20px 16px',
 });
 const PageContainer = createStyledDiv(pageContainerStyles);
+
+const headerRowStyles = createStyles({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  gap: 12,
+  marginBottom: 8,
+});
+const HeaderRow = createStyledDiv(headerRowStyles);
+
+const syncButtonStyles = createStyles({
+  padding: '6px 14px',
+  border: '1px solid #C690FF',
+  borderRadius: 4,
+  background: '#C690FF',
+  color: '#fff',
+  fontWeight: 600,
+  fontSize: 13,
+  cursor: 'pointer',
+  '&:disabled': { opacity: 0.6, cursor: 'default' },
+});
+const SyncButton = createStyledButton(syncButtonStyles);
+
+const syncMessageStyles = createStyles({
+  marginBottom: 12,
+  fontSize: 14,
+  color: '#155724',
+});
+const SyncMessage = createStyledDiv(syncMessageStyles);
 
 const filterRowStyles = createStyles({
   display: 'flex',

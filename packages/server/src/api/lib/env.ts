@@ -97,9 +97,15 @@ export const env = {
     return v || undefined;
   },
 
-  /** Debounce window before exporting Firestore → cache/GCS after changeset accept. */
+  /** Debounce window before exporting Firestore → cache/GCS after postcard ingest. */
   get CATALOG_PUBLISH_DEBOUNCE_MS(): number {
     const fromEnv = Number(process.env.CATALOG_PUBLISH_DEBOUNCE_MS);
     return Number.isFinite(fromEnv) && fromEnv >= 0 ? fromEnv : 30_000;
+  },
+
+  /** Bearer token for mork `POST /api/cards/postcard` (server-to-server). */
+  get MORK_POSTCARD_API_KEY(): string | undefined {
+    const v = process.env.MORK_POSTCARD_API_KEY?.trim();
+    return v || undefined;
   },
 };
