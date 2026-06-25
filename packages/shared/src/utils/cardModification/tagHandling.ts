@@ -104,9 +104,9 @@ export const faceFrameEffectTags: Record<string, HCFrameEffect> = {
   'specialize-frame': HCFrameEffect.Specialize,
 };
 const frontImageTagProps: Record<string, rootPropType> = {
-  'draft-image': 'draft_image',
-  'rotated-draft-image': 'rotated_draft_image',
-  'still-draft-image': 'still_draft_image',
+  'print-image': 'print_image',
+  'rotated-print-image': 'rotated_print_image',
+  'still-print-image': 'still_print_image',
 };
 const faceImageTagProps: Record<string, allPropType> = {
   'rotated-image': 'rotated_image',
@@ -898,10 +898,10 @@ export const getChangesFromTag = (
   )(input, alsoAddingFaces);
   const tag = input.splitTag.tag;
 
-  if (tag == 'draft-image') {
-    const change: rootChange<'draft_image_status'> = createRootChange(
+  if (tag == 'print-image') {
+    const change: rootChange<'print_image_status'> = createRootChange(
       change_type,
-      'draft_image_status',
+      'print_image_status',
       HCImageStatus.HighRes
     );
     changes.push(change);

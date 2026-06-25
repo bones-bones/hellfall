@@ -19,6 +19,7 @@ import {
   createStenciledIntrinsic,
   createStyledDiv,
   createStyledIntrinsic,
+  createStyledJumpLink,
   createStyledLink,
   createStyledSpan,
 } from '../styling';
@@ -77,7 +78,7 @@ export const CubeList = () => {
         {sections.length > 0 && (
           <JumpNav>
             {sections.map(({ section, cards: sectionCards }) => (
-              <JumpLink key={section.id} to={`#${section.id}`}>
+              <JumpLink key={section.id} href={`#${section.id}`}>
                 {section.label} ({sectionCards.length})
               </JumpLink>
             ))}
@@ -196,7 +197,7 @@ const jumpLinkStyles = createStyles({
   color: '#333',
   ':hover': { color: '#5a2d91' },
 });
-const JumpLink = createStyledLink(jumpLinkStyles);
+const JumpLink = createStyledJumpLink(jumpLinkStyles);
 
 const jumpNavStyles = createStyles({
   display: 'flex',

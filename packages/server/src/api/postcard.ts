@@ -1,11 +1,7 @@
 import { Firestore } from '@google-cloud/firestore';
 import { HCCard, HCKind, HCImageStatus, SetCode } from '@hellfall/shared/types';
 import { getDefaultCard, isValidV4UUID, setDerivedProps } from '@hellfall/shared/utils';
-import {
-  cardToFirestore,
-  cardsCollection,
-  firestoreCard,
-} from '@hellfall/shared/utils/firestore';
+import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { withCors } from './lib/cors.ts';
 import { env } from './lib/env.ts';
 import { requirePostcardAuth } from './lib/requirePostcardAuth.ts';
@@ -61,7 +57,9 @@ function resolveCardId(docId: string, data: firestoreCard): string {
   return newCardId();
 }
 
-function buildStubCard(body: Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> & PostcardBody): HCCard.Any {
+function buildStubCard(
+  body: Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> & PostcardBody
+): HCCard.Any {
   const kind = body.kind === 'token' ? HCKind.Token : HCKind.Card;
   const setId = (kind === HCKind.Token ? 'HCT' : body.set) as SetCode;
   const hcid = body.hcid?.trim() || body.name;
@@ -98,11 +96,7 @@ async function findByHcid(hcid: string) {
 }
 
 async function findByNameAndSet(name: string, setId: string) {
-  const matches = await cardsCol
-    .where('name', '==', name)
-    .where('set', '==', setId)
-    .limit(2)
-    .get();
+  const matches = await cardsCol.where('name', '==', name).where('set', '==', setId).limit(2).get();
   if (matches.size > 1) {
     throw new Error(`multiple Firestore cards share name=${name} set=${setId}`);
   }
@@ -117,9 +111,9 @@ async function lookupDoc(hcid: string | undefined, name: string, setId: string) 
   return findByNameAndSet(name, setId);
 }
 
-function validatePostcardBody(body: PostcardBody): body is Required<
-  Pick<PostcardBody, 'name' | 'image' | 'creators'>
-> &
+function validatePostcardBody(
+  body: PostcardBody
+): body is Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> &
   PostcardBody & { set: string } {
   return Boolean(
     typeof body.name === 'string' &&
