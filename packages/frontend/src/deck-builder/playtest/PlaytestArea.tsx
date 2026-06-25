@@ -6,7 +6,7 @@ import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv } from '../../styling';
 
 const playAreaStyles = createStyles({ border: '1px solid black' });
-const PlayArea = createStyledDiv(playAreaStyles);
+const PlayArea = createStyledDiv(playAreaStyles, 'PlayArea');
 // make sure images work properly
 
 type Props = { cards: HCCard.Any[] };

@@ -24,6 +24,7 @@ import {
   createStyledSecondaryButton,
   createStyledSecondaryButtonLink,
 } from '../../styling';
+import { StyledSelect } from './StyledSelect.tsx';
 
 const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
   { label: 'Auto', value: 'auto' },
@@ -45,144 +46,144 @@ const DIR_OPTIONS: Array<{ label: string; value: dirType }> = [
 const parseSort = (order: string): sortType => order?.split(',')[0] as sortType;
 const parseDir = (order: string): dirType => order?.split(',')[1] as dirType;
 
-const SortSelect = ({
-  index,
-  sort,
-  sortIsOverriden,
-  getAvailableOptions,
-  handleSortChange,
-  inputSorts,
-}: {
-  index: number;
-  sort: sortType;
-  sortIsOverriden: (index: number) => boolean;
-  getAvailableOptions: (index: number) => sortType[];
-  handleSortChange: (index: number, newSort: sortType) => void;
-  inputSorts: string[];
-}) => {
-  const available = getAvailableOptions(index);
-  const sortOptions = ALL_SORT_OPTIONS.filter(opt => available.includes(opt.value));
-  const currentSort: sortType = sortIsOverriden(index)
-    ? sort
-    : ((inputSorts[index]?.split(',')[0] ?? sort) as sortType);
-  const selectModel = useSelectModel({
-    initialSelectedIds: [currentSort],
-    items: sortOptions,
-    getId: item => item.value,
-    getTextValue: item => item.label,
-    onSelect: data => {
-      // This check prevents the following useEffect from causing a render loop when overridden
-      if (!sortIsOverriden(index)) {
-        handleSortChange(index, data.id as sortType);
-      }
-    },
-  });
-  useEffect(() => {
-    const currentSelectedId = selectModel.state.selectedIds[0];
-    if (currentSelectedId !== currentSort) {
-      selectModel.events.select({ id: currentSort });
-    }
-  }, [currentSort]);
+// const SortSelect = ({
+//   index,
+//   sort,
+//   sortIsOverriden,
+//   getAvailableOptions,
+//   handleSortChange,
+//   inputSorts,
+// }: {
+//   index: number;
+//   sort: sortType;
+//   sortIsOverriden: (index: number) => boolean;
+//   getAvailableOptions: (index: number) => sortType[];
+//   handleSortChange: (index: number, newSort: sortType) => void;
+//   inputSorts: string[];
+// }) => {
+//   const available = getAvailableOptions(index);
+//   const sortOptions = ALL_SORT_OPTIONS.filter(opt => available.includes(opt.value));
+//   const currentSort: sortType = sortIsOverriden(index)
+//     ? sort
+//     : ((inputSorts[index]?.split(',')[0] ?? sort) as sortType);
+//   const selectModel = useSelectModel({
+//     initialSelectedIds: [currentSort],
+//     items: sortOptions,
+//     getId: item => item.value,
+//     getTextValue: item => item.label,
+//     onSelect: data => {
+//       // This check prevents the following useEffect from causing a render loop when overridden
+//       if (!sortIsOverriden(index)) {
+//         handleSortChange(index, data.id as sortType);
+//       }
+//     },
+//   });
+//   useEffect(() => {
+//     const currentSelectedId = selectModel.state.selectedIds[0];
+//     if (currentSelectedId !== currentSort) {
+//       selectModel.events.select({ id: currentSort });
+//     }
+//   }, [currentSort]);
 
-  return (
-    <div {...selectStencil()}>
-      <Select key={`sort-group-${index}`} items={sortOptions} model={selectModel}>
-        <Select.Input
-          title={
-            sortIsOverriden(index)
-              ? 'You specified this option in your search terms'
-              : 'Change how cards are sorted'
-          }
-          aria-label={
-            sortIsOverriden(index)
-              ? 'You specified this option in your search terms'
-              : 'Change how cards are sorted'
-          }
-          disabled={sortIsOverriden(index)}
-          cs={inputStencil()}
-        />
-        <Select.Popper>
-          <Select.Card {...cardStencil()}>
-            <Select.List {...listStencil()}>
-              {(item: { value: string; label: sortType }) => (
-                <Select.Item key={item.value} {...itemStencil()}>
-                  {item.label}
-                </Select.Item>
-              )}
-            </Select.List>
-          </Select.Card>
-        </Select.Popper>
-      </Select>
-    </div>
-  );
-};
-const DirSelect = ({
-  index,
-  dir,
-  dirIsOverriden,
-  handleDirChange,
-  inputSorts,
-}: {
-  index: number;
-  dir: dirType;
-  dirIsOverriden: (index: number) => boolean;
-  handleDirChange: (index: number, newDir: dirType) => void;
-  inputSorts: string[];
-}) => {
-  const currentDir: dirType = dirIsOverriden(index)
-    ? dir
-    : ((inputSorts[index]?.split(',')[1] ?? dir) as dirType);
-  const selectModel = useSelectModel({
-    initialSelectedIds: [currentDir],
-    items: DIR_OPTIONS,
-    getId: item => item.value,
-    getTextValue: item => item.label,
-    onSelect: data => {
-      // This check prevents the following useEffect from causing a render loop when overridden
-      if (!dirIsOverriden(index)) {
-        handleDirChange(index, data.id as dirType);
-      }
-    },
-  });
+//   return (
+//     <div {...selectStencil()}>
+//       <Select key={`sort-group-${index}`} items={sortOptions} model={selectModel}>
+//         <Select.Input
+//           title={
+//             sortIsOverriden(index)
+//               ? 'You specified this option in your search terms'
+//               : 'Change how cards are sorted'
+//           }
+//           aria-label={
+//             sortIsOverriden(index)
+//               ? 'You specified this option in your search terms'
+//               : 'Change how cards are sorted'
+//           }
+//           disabled={sortIsOverriden(index)}
+//           cs={inputStencil()}
+//         />
+//         <Select.Popper>
+//           <Select.Card ref={selectModel.state.containerRef} {...cardStencil()}>
+//             <Select.List {...listStencil()}>
+//               {(item: { value: string; label: sortType }) => (
+//                 <Select.Item key={item.value} {...itemStencil()}>
+//                   {item.label}
+//                 </Select.Item>
+//               )}
+//             </Select.List>
+//           </Select.Card>
+//         </Select.Popper>
+//       </Select>
+//     </div>
+//   );
+// };
+// const DirSelect = ({
+//   index,
+//   dir,
+//   dirIsOverriden,
+//   handleDirChange,
+//   inputSorts,
+// }: {
+//   index: number;
+//   dir: dirType;
+//   dirIsOverriden: (index: number) => boolean;
+//   handleDirChange: (index: number, newDir: dirType) => void;
+//   inputSorts: string[];
+// }) => {
+//   const currentDir: dirType = dirIsOverriden(index)
+//     ? dir
+//     : ((inputSorts[index]?.split(',')[1] ?? dir) as dirType);
+//   const selectModel = useSelectModel({
+//     initialSelectedIds: [currentDir],
+//     items: DIR_OPTIONS,
+//     getId: item => item.value,
+//     getTextValue: item => item.label,
+//     onSelect: data => {
+//       // This check prevents the following useEffect from causing a render loop when overridden
+//       if (!dirIsOverriden(index)) {
+//         handleDirChange(index, data.id as dirType);
+//       }
+//     },
+//   });
 
-  useEffect(() => {
-    const currentSelectedId = selectModel.state.selectedIds[0];
-    if (currentSelectedId !== currentDir) {
-      selectModel.events.select({ id: currentDir });
-    }
-  }, [currentDir]);
-  return (
-    <div {...selectStencil({ isDir: true })}>
-      <Select key={`dir-group-${index}`} items={DIR_OPTIONS} model={selectModel}>
-        <Select.Input
-          title={
-            dirIsOverriden(index)
-              ? 'You specified this option in your search terms'
-              : 'Change sort direction'
-          }
-          aria-label={
-            dirIsOverriden(index)
-              ? 'You specified this option in your search terms'
-              : 'Change sort direction'
-          }
-          disabled={dirIsOverriden(index)}
-          cs={inputStencil({ isDir: true })}
-        />
-        <Select.Popper>
-          <Select.Card {...cardStencil({ isDir: true })}>
-            <Select.List {...listStencil({ isDir: true })}>
-              {(item: { value: string; label: dirType }) => (
-                <Select.Item key={item.value} {...itemStencil({ isDir: true })}>
-                  {item.label}
-                </Select.Item>
-              )}
-            </Select.List>
-          </Select.Card>
-        </Select.Popper>
-      </Select>
-    </div>
-  );
-};
+//   useEffect(() => {
+//     const currentSelectedId = selectModel.state.selectedIds[0];
+//     if (currentSelectedId !== currentDir) {
+//       selectModel.events.select({ id: currentDir });
+//     }
+//   }, [currentDir]);
+//   return (
+//     <div {...selectStencil({ isDir: true })}>
+//       <Select key={`dir-group-${index}`} items={DIR_OPTIONS} model={selectModel}>
+//         <Select.Input
+//           title={
+//             dirIsOverriden(index)
+//               ? 'You specified this option in your search terms'
+//               : 'Change sort direction'
+//           }
+//           aria-label={
+//             dirIsOverriden(index)
+//               ? 'You specified this option in your search terms'
+//               : 'Change sort direction'
+//           }
+//           disabled={dirIsOverriden(index)}
+//           cs={inputStencil({ isDir: true })}
+//         />
+//         <Select.Popper>
+//           <Select.Card ref={selectModel.state.containerRef} {...cardStencil({ isDir: true })}>
+//             <Select.List {...listStencil({ isDir: true })}>
+//               {(item: { value: string; label: dirType }) => (
+//                 <Select.Item key={item.value} {...itemStencil({ isDir: true })}>
+//                   {item.label}
+//                 </Select.Item>
+//               )}
+//             </Select.List>
+//           </Select.Card>
+//         </Select.Popper>
+//       </Select>
+//     </div>
+//   );
+// };
 
 export const ControlBar = ({ model }: { model?: PaginationModel }) => {
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
@@ -252,7 +253,8 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
   // const [page, setPage] = useAtom(pageAtom);
   const currentPage = model?.state.currentPage;
   const lastPage = model?.state.lastPage;
-
+  const getCurrentSort = (index: number) => inputSorts[index]?.split(',')[0] as sortType;
+  const getCurrentDir = (index: number) => inputSorts[index]?.split(',')[1] as dirType;
   return (
     <Container>
       <FormField className={formFieldStyles}>
@@ -262,42 +264,61 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
             {sortRules.length ? (
               sortRules.map((rule, i) => (
                 <div key={`sort-wrapper-${i}`} style={{ display: 'inline-block' }}>
-                  <SortSelect
+                  <StyledSelect<sortType>
                     index={i}
-                    sort={rule.sort}
-                    sortIsOverriden={sortIsOverriden}
+                    value={rule.sort}
+                    isOverriden={sortIsOverriden}
                     getAvailableOptions={getAvailableOptions}
-                    handleSortChange={handleSortChange}
-                    inputSorts={inputSorts}
+                    handleValueChange={handleSortChange}
+                    width="135px"
+                    items={ALL_SORT_OPTIONS}
+                    getCurrentValue={getCurrentSort}
+                    title={
+                      sortIsOverriden(i)
+                        ? 'You specified this option in your search terms'
+                        : 'Change how cards are sorted'
+                    }
                   />
                   <span> : </span>
-                  <DirSelect
+                  <StyledSelect<dirType>
                     index={i}
-                    dir={rule.dir}
-                    dirIsOverriden={dirIsOverriden}
-                    handleDirChange={handleDirChange}
-                    inputSorts={inputSorts}
+                    value={rule.dir}
+                    isOverriden={dirIsOverriden}
+                    handleValueChange={handleDirChange}
+                    width="85px"
+                    items={DIR_OPTIONS}
+                    getCurrentValue={getCurrentDir}
+                    title={
+                      dirIsOverriden(i)
+                        ? 'You specified this option in your search terms'
+                        : 'Change sort direction'
+                    }
                   />
                   {i != sortRules.length - 1 && <span style={{ marginRight: '5px' }}> then </span>}
                 </div>
               ))
             ) : (
               <div style={{ display: 'inline-block' }}>
-                <SortSelect
+                <StyledSelect<sortType>
                   index={0}
-                  sort="auto"
-                  sortIsOverriden={sortIsOverriden}
-                  getAvailableOptions={getAvailableOptions}
-                  handleSortChange={handleSortChange}
-                  inputSorts={inputSorts}
+                  value={'auto'}
+                  isOverriden={sortIsOverriden}
+                  handleValueChange={handleSortChange}
+                  width="135px"
+                  items={ALL_SORT_OPTIONS}
+                  getCurrentValue={getCurrentSort}
+                  title={'Change how cards are sorted'}
                 />
                 <span> : </span>
-                <DirSelect
+                <StyledSelect<dirType>
                   index={0}
-                  dir="auto"
-                  dirIsOverriden={dirIsOverriden}
-                  handleDirChange={handleDirChange}
-                  inputSorts={inputSorts}
+                  value={'auto'}
+                  isOverriden={dirIsOverriden}
+                  handleValueChange={handleDirChange}
+                  width="85px"
+                  items={DIR_OPTIONS}
+                  getCurrentValue={getCurrentDir}
+                  title={'Change sort direction'}
                 />
               </div>
             )}
@@ -405,127 +426,12 @@ const containerStyles = createStyles({
   width: '100%',
   boxSizing: 'border-box',
 });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 const formFieldStyles = createStyles({
   width: '100%',
   '& > div': {
     // Target the inner div
     width: '100%',
-  },
-});
-const selectStyles = {
-  verticalAlign: 'top',
-  display: 'inline-block',
-  width: '135px',
-  '&:disabled': {
-    cursor: 'not-allowed',
-  },
-};
-const selectStencil = createStencil({
-  vars: {},
-  base: selectStyles,
-  modifiers: {
-    isDir: {
-      true: {
-        width: '85px',
-      },
-    },
-  },
-});
-const inputStyles = {
-  verticalAlign: 'top',
-  display: 'inline-block',
-  borderRadius: '4px',
-  width: '135px',
-  minWidth: '135px',
-  '&:disabled': {
-    cursor: 'not-allowed',
-  },
-};
-const inputStencil = createStencil({
-  vars: {},
-  base: inputStyles,
-  modifiers: {
-    isDir: {
-      true: {
-        width: '85px',
-        minWidth: '85px',
-      },
-    },
-  },
-});
-// const popperStyles = createStyles({
-// })
-
-const cardStyles = {
-  // height:0,
-  backgroundColor: 'white',
-  border: '1px solid #d1d1d1',
-  borderRadius: 0,
-  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-  padding: '4px 0',
-  width: '135px !important',
-  marginTop: '-4px',
-  marginBottom: '-4px',
-  overflowX: 'hidden',
-  '& > div': {
-    marginTop: '-4px !important',
-    marginBottom: '-4px !important',
-    overflowX: 'hidden' as any,
-    borderRadius: 0,
-    '& > div': {
-      marginTop: 0,
-      marginBottom: 0,
-    },
-  },
-};
-const cardStencil = createStencil({
-  vars: {},
-  base: cardStyles,
-  modifiers: {
-    isDir: {
-      true: {
-        width: '85px !important',
-      },
-    },
-  },
-});
-const listStyles = {
-  width: '135px',
-  marginTop: 0,
-  marginBottom: 0,
-  overflowX: 'hidden',
-  borderRadius: 0,
-};
-const listStencil = createStencil({
-  vars: {},
-  base: listStyles,
-  modifiers: {
-    isDir: {
-      true: {
-        width: '85px',
-      },
-    },
-  },
-});
-const itemStyles = {
-  width: '135px',
-  borderRadius: 0,
-  '& > span': {
-    '& > svg': {
-      display: 'none',
-    },
-  },
-};
-const itemStencil = createStencil({
-  vars: {},
-  base: itemStyles,
-  modifiers: {
-    isDir: {
-      true: {
-        width: '85px',
-      },
-    },
   },
 });
 
@@ -534,7 +440,7 @@ const sortElementsStyles = createStyles({
   verticalAlign: 'top',
   width: '100%',
 });
-const SortElements = createStyledDiv(sortElementsStyles);
+const SortElements = createStyledDiv(sortElementsStyles, 'SortElements');
 
 const compactButtonStyles = createStyles({
   width: '20px', // Fixed small width
@@ -560,7 +466,7 @@ const compactButtonStyles = createStyles({
     },
   },
 });
-const CompactButton = createStyledSecondaryButton(compactButtonStyles);
+const CompactButton = createStyledSecondaryButton(compactButtonStyles, 'CompactButton');
 
 const buttonGroupStyles = createStyles({
   display: 'inline-block',
@@ -569,7 +475,7 @@ const buttonGroupStyles = createStyles({
   marginLeft: '4px', // Optional spacing from the selectors
   verticalAlign: 'top',
 });
-const ButtonGroup = createStyledDiv(buttonGroupStyles);
+const ButtonGroup = createStyledDiv(buttonGroupStyles, 'ButtonGroup');
 
 const controlButtonStyles = createStyles({
   margin: '0 2px',
@@ -582,5 +488,5 @@ const controlButtonStyles = createStyles({
     cursor: 'not-allowed',
   },
 });
-const ControlButton = createStyledSecondaryButton(controlButtonStyles);
-const ControlButtonLink = createStyledSecondaryButtonLink(controlButtonStyles);
+const ControlButton = createStyledSecondaryButton(controlButtonStyles, 'ControlButton');
+const ControlButtonLink = createStyledSecondaryButtonLink(controlButtonStyles, 'ControlButtonLink');

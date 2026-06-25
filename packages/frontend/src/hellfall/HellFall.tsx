@@ -139,18 +139,18 @@ const sortSeparatorStyles = createStyles({
   border: 'none',
   marginTop: '-20px',
 });
-const SortSeparator = createStyledHR(sortSeparatorStyles);
+const SortSeparator = createStyledHR(sortSeparatorStyles, 'SortSeparator');
 
 const separatorStyles = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-const Separator = createStyledHR(separatorStyles);
+const Separator = createStyledHR(separatorStyles, 'Separator');
 
 const summaryStyles = createStyles({
   display: 'inline-block',
   paddingLeft: '36px',
   paddingRight: '36px',
 });
-const Summary = createStyledDiv(summaryStyles);
-const Invalid = createStyledDiv(summaryStyles);
+const Summary = createStyledDiv(summaryStyles, 'Summary');
+const Invalid = createStyledDiv(summaryStyles, 'Invalid');
 
 const containerStyles = createStyles({
   display: 'flex',
@@ -158,9 +158,8 @@ const containerStyles = createStyles({
   // flexWrap: 'wrap',
   width: '100%',
 });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
-// TODO: do this one when upgraded to v11
 const cardsGridStencil = createStencil({
   vars: {
     maxWidth: '1215px',
@@ -179,4 +178,4 @@ const cardsGridStencil = createStencil({
 interface CardsGridProps extends BoxProps {
   maxWidth?: string;
 }
-const CardsGrid = createStenciledDiv<CardsGridProps>(cardsGridStencil);
+const CardsGrid = createStenciledDiv<CardsGridProps>(cardsGridStencil, 'CardsGrid');

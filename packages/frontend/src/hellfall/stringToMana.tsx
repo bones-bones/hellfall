@@ -42,7 +42,7 @@ interface PipContainerProps extends BoxProps {
 }
 const pipSymbol = createStyles({ height: '18px' /**,marginTop: '10px'*/ });
 
-const PipSymbol = createStyledImg(pipSymbol);
+const PipSymbol = createStyledImg(pipSymbol, 'PipSymbol');
 
 const pipStencil = createStencil({
   vars: {},
@@ -77,4 +77,4 @@ const pipStencil = createStencil({
     },
   },
 });
-const PipContainer = createStenciledDiv<PipContainerProps>(pipStencil);
+const PipContainer = createStenciledDiv<PipContainerProps>(pipStencil, 'PipContainer');

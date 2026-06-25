@@ -27,16 +27,16 @@ export const BigContainer: FC<PropsWithChildren> = ({ children }) => {
 };
 
 const h3Styles = createStyles({ display: 'flex', alignItems: 'center' });
-export const StyledH3 = createStyledIntrinsic('h3', h3Styles);
+export const StyledH3 = createStyledIntrinsic('h3', h3Styles, 'StyledH3');
 
 const manaSymbolStyles = createStyles({ height: '30px' });
-export const ManaSymbol = createStyledImg(manaSymbolStyles);
+export const ManaSymbol = createStyledImg(manaSymbolStyles, 'ManaSymbol');
 export const manaSymbolSmallStyles = createStyles({
   height: '20px',
   paddingInlineEnd: '10px',
   paddingInlineStart: '5px',
 });
-export const ManaSymbolSmall = createStyledImg(manaSymbolSmallStyles);
+export const ManaSymbolSmall = createStyledImg(manaSymbolSmallStyles, 'ManaSymbolSmall');
 
 export const Divider = ({ color }: { color: string }) => {
   return (

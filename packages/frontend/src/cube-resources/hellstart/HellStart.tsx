@@ -61,4 +61,4 @@ const containerStyles = createStyles({
   paddingLeft: '32px',
   paddingRight: '32px',
 });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');

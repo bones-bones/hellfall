@@ -13,8 +13,7 @@ import {
   shorthandType,
   shortToNum,
 } from '../types';
-import { canContainOp, containsOp, createNumSummary, opToShorthand } from '../utils';
-import { filterNumber } from './filterNumber';
+import { canContainOp, containsOp, createNumSummary, numOp, opToShorthand } from '../utils';
 import { canContain, contains, getHybridColorNumber } from '@hellfall/shared/utils';
 
 /**
@@ -35,8 +34,7 @@ export const filterColorContents: colorContentFilter = Object.assign(
 );
 
 export const filterColorNumber: colorNumFilter = Object.assign(
-  (value1: string[], operator: opType, value2: number) =>
-    filterNumber(value1.length, operator, value2),
+  (value1: string[], operator: opType, value2: number) => numOp(value1.length, operator, value2),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: createNumSummary('the number of colors is'),
@@ -46,19 +44,19 @@ export const filterColorNumber: colorNumFilter = Object.assign(
 const evalShortNum = (value1: number, operator: opType, value2: shorthandType) => {
   const shortNum = shortToNum(operator, value2);
   if (value2 == 'c') {
-    return filterNumber(value1, operator, shortNum);
+    return numOp(value1, operator, shortNum);
   } else {
     switch (operator) {
       case '<':
       case '!=':
-        return filterNumber(value1, '<', shortNum);
+        return numOp(value1, '<', shortNum);
       case '<=':
         return true;
       case '=':
       case '>=':
-        return filterNumber(value1, '>=', shortNum);
+        return numOp(value1, '>=', shortNum);
       case '>':
-        return filterNumber(value1, operator, shortNum);
+        return numOp(value1, operator, shortNum);
     }
   }
 };
@@ -90,8 +88,7 @@ export const filterColorIdentityContents: colorContentFilter = Object.assign(
 );
 
 export const filterColorIdentityNumber: colorNumFilter = Object.assign(
-  (value1: string[], operator: opType, value2: number) =>
-    filterNumber(value1.length, operator, value2),
+  (value1: string[], operator: opType, value2: number) => numOp(value1.length, operator, value2),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: createNumSummary('the number of identity colors is'),
@@ -122,7 +119,7 @@ export const filterColorIndicatorContents: colorContentListFilter = Object.assig
 
 export const filterColorIndicatorNumber: colorNumListFilter = Object.assign(
   (value1: string[][], operator: opType, value2: number) =>
-    value1.some(set => filterNumber(set.length, operator, value2)),
+    value1.some(set => numOp(set.length, operator, value2)),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: createNumSummary('the number of indicator colors is'),
@@ -167,7 +164,7 @@ export const filterHybridIdentityContents: hybridContentFilter = Object.assign(
  */
 export const filterHybridIdentityNumber: hybridNumFilter = Object.assign(
   (value1: string[][], operator: opType, value2: number) =>
-    filterNumber(getHybridColorNumber(value1), operator, value2),
+    numOp(getHybridColorNumber(value1), operator, value2),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: createNumSummary('the number of hybrid identity colors is'),

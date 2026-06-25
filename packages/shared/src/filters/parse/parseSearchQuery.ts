@@ -1,16 +1,16 @@
 import { HCCard } from '@hellfall/shared/types';
-import { filterObject, IncludeFilter, otherPrintGetterType, sortObject } from '../types';
+import {
+  FilterNode,
+  filterObject,
+  IncludeFilter,
+  otherPrintGetterType,
+  sortObject,
+} from '../types';
 import { parseFilter } from './parseFilter';
 import { CardMap } from '@hellfall/shared/utils';
 import { isSortFilter, parseSorts, sortIsValid, winnowSortObjects } from './parseSorts';
 import { filterIsInverted, splitOnFirstOp } from '../utils';
 
-export type FilterNode =
-  | { type: 'filter'; filter: filterObject<any, any> }
-  | { type: 'not'; child: FilterNode }
-  | { type: 'related'; child: FilterNode }
-  | { type: 'and'; children: FilterNode[] }
-  | { type: 'or'; children: FilterNode[] };
 const tokenList = ['(', ')', 'or', '-', '~'];
 const charBreakList = ['(', ' '];
 

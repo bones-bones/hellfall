@@ -264,7 +264,7 @@ const panelStyles = createStyles({
   marginTop: 12,
   width: '100%',
 });
-const Panel = createStyledDiv(panelStyles);
+const Panel = createStyledDiv(panelStyles, 'Panel');
 
 const panelHeaderStyles = createStyles({
   display: 'flex',
@@ -272,34 +272,34 @@ const panelHeaderStyles = createStyles({
   alignItems: 'center',
   marginBottom: 12,
 });
-const PanelHeader = createStyledDiv(panelHeaderStyles);
+const PanelHeader = createStyledDiv(panelHeaderStyles, 'PanelHeader');
 
 const panelTitleStyles = createStyles({
   fontSize: 16,
   fontWeight: 600,
 });
-const PanelTitle = createStyledSpan(panelTitleStyles);
+const PanelTitle = createStyledSpan(panelTitleStyles, 'PanelTitle');
 
 const fieldsGridStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
 });
-const FieldsGrid = createStyledDiv(fieldsGridStyles);
+const FieldsGrid = createStyledDiv(fieldsGridStyles, 'FieldsGrid');
 
 const fieldRowStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
   gap: 2,
 });
-const FieldRow = createStyledDiv(fieldRowStyles);
+const FieldRow = createStyledDiv(fieldRowStyles, 'FieldRow');
 
 const labelStyles = createStyles({
   fontSize: 12,
   fontWeight: 600,
   color: '#555',
 });
-const Label = createStyledLabel(labelStyles);
+const Label = createStyledLabel(labelStyles, 'Label');
 
 const inputStyles = {
   padding: '4px 8px',
@@ -328,7 +328,7 @@ const inputStencil = createStencil({
 interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
   changed?: boolean;
 }
-const StyledInput = createStenciledInput<InputProps>(inputStencil);
+const StyledInput = createStenciledInput<InputProps>(inputStencil, 'StyledInput');
 
 const textAreaStencil = createStencil({
   vars: {},
@@ -348,26 +348,26 @@ const textAreaStencil = createStencil({
 interface TextAreaProps extends React.ComponentPropsWithoutRef<'textarea'> {
   changed?: boolean;
 }
-const StyledTextarea = createStenciledTextArea<TextAreaProps>(textAreaStencil);
+const StyledTextarea = createStenciledTextArea<TextAreaProps>(textAreaStencil, 'StyledTextarea');
 
 const changeSummaryStyles = createStyles({
   marginTop: 12,
   padding: '8px 10px',
   border: '1px solid #ccc',
 });
-const ChangeSummary = createStyledDiv(changeSummaryStyles);
+const ChangeSummary = createStyledDiv(changeSummaryStyles, 'ChangeSummary');
 
 const summaryTitleStyles = createStyles({
   fontSize: 12,
   fontWeight: 600,
   marginBottom: 6,
 });
-const SummaryTitle = createStyledDiv(summaryTitleStyles);
+const SummaryTitle = createStyledDiv(summaryTitleStyles, 'SummaryTitle');
 
 const changeRowStyles = createStyles({
   marginBottom: 4,
 });
-const ChangeRow = createStyledDiv(changeRowStyles);
+const ChangeRow = createStyledDiv(changeRowStyles, 'ChangeRow');
 
 const changeFieldStyles = createStyles({
   fontSize: 12,
@@ -375,7 +375,7 @@ const changeFieldStyles = createStyles({
   color: '#666',
   display: 'block',
 });
-const ChangeField = createStyledSpan(changeFieldStyles);
+const ChangeField = createStyledSpan(changeFieldStyles, 'ChangeField');
 
 const changeValuesStyles = createStyles({
   display: 'flex',
@@ -384,7 +384,7 @@ const changeValuesStyles = createStyles({
   fontSize: 13,
   fontFamily: 'monospace',
 });
-const ChangeValues = createStyledDiv(changeValuesStyles);
+const ChangeValues = createStyledDiv(changeValuesStyles, 'ChangeValues');
 
 const beforeValueStyles = createStyles({
   color: '#900',
@@ -392,20 +392,20 @@ const beforeValueStyles = createStyles({
   wordBreak: 'break-word',
   maxWidth: '40%',
 });
-const BeforeValue = createStyledSpan(beforeValueStyles);
+const BeforeValue = createStyledSpan(beforeValueStyles, 'BeforeValue');
 
 const afterValueStyles = createStyles({
   color: '#060',
   wordBreak: 'break-word',
   maxWidth: '40%',
 });
-const AfterValue = createStyledSpan(afterValueStyles);
+const AfterValue = createStyledSpan(afterValueStyles, 'AfterValue');
 
 const arrowStyles = createStyles({
   color: '#999',
   flexShrink: 0,
 });
-const Arrow = createStyledSpan(arrowStyles);
+const Arrow = createStyledSpan(arrowStyles, 'Arrow');
 
 const commentRowStyles = createStyles({
   marginTop: 10,
@@ -413,27 +413,27 @@ const commentRowStyles = createStyles({
   flexDirection: 'column',
   gap: 2,
 });
-const CommentRow = createStyledDiv(commentRowStyles);
+const CommentRow = createStyledDiv(commentRowStyles, 'CommentRow');
 
 const errorMsgStyles = createStyles({
   color: '#c00',
   fontSize: 13,
   margin: '6px 0',
 });
-const ErrorMsg = createStyledSubtext(errorMsgStyles);
+const ErrorMsg = createStyledSubtext(errorMsgStyles, 'ErrorMsg');
 
 const successMessageStyles = createStyles({
   // fontSize: 14,
   margin: 0,
 });
-const SuccessMessage = createStyledSubtext(successMessageStyles);
+const SuccessMessage = createStyledSubtext(successMessageStyles, 'SuccessMessage');
 
 const actionRowStyles = createStyles({
   display: 'flex',
   gap: 8,
   marginTop: 12,
 });
-const ActionRow = createStyledDiv(actionRowStyles);
+const ActionRow = createStyledDiv(actionRowStyles, 'ActionRow');
 
 const submitButtonStyles = createStyles({
   padding: '4px 14px',
@@ -445,7 +445,7 @@ const submitButtonStyles = createStyles({
   '&:hover:not(:disabled)': { borderColor: '#888' },
   '&:disabled': { opacity: 0.4, cursor: 'default' },
 });
-const SubmitButton = createStyledButton(submitButtonStyles);
+const SubmitButton = createStyledButton(submitButtonStyles, 'SubmitButton');
 
 const cancelButtonStyles = createStyles({
   padding: '4px 14px',
@@ -456,7 +456,7 @@ const cancelButtonStyles = createStyles({
   background: '#fff',
   '&:hover': { borderColor: '#888' },
 });
-const CancelButton = createStyledButton(cancelButtonStyles);
+const CancelButton = createStyledButton(cancelButtonStyles, 'CancelButton');
 
 const closeButtonStyles = createStyles({
   background: 'transparent',
@@ -469,4 +469,4 @@ const closeButtonStyles = createStyles({
   '&:hover': { color: '#000' },
 });
 
-const CloseButton = createStyledButton(closeButtonStyles);
+const CloseButton = createStyledButton(closeButtonStyles, 'CloseButton');

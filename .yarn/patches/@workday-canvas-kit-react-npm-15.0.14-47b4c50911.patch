@@ -1,0 +1,49 @@
+diff --git a/collection/lib/useBaseListModel.tsx b/collection/lib/useBaseListModel.tsx
+index d123e418acca215ba98f160813c8b46565280d50..bb0441cc9ef302ad9f8bff47b1f85058d9dab07e 100644
+--- a/collection/lib/useBaseListModel.tsx
++++ b/collection/lib/useBaseListModel.tsx
+@@ -168,6 +168,7 @@ export const useBaseListModel = createModelHook({
+     estimateSize: React.useCallback(() => UNSTABLE_defaultItemHeight, [UNSTABLE_defaultItemHeight]),
+     horizontal: config.orientation === 'horizontal',
+     overscan: 3, // overscan of 3 helps rapid navigation
++    directDomUpdates: true,
+   });
+ 
+   // Force Typescript to recognize the `Generic` symbol
+diff --git a/dist/commonjs/collection/lib/useBaseListModel.js b/dist/commonjs/collection/lib/useBaseListModel.js
+index 3c2e5ada7838149cc67180f45d646ba38f78bd3f..0248009f5fe855abda83fef3bfa65d5e2ede57f3 100644
+--- a/dist/commonjs/collection/lib/useBaseListModel.js
++++ b/dist/commonjs/collection/lib/useBaseListModel.js
+@@ -132,6 +132,7 @@ exports.useBaseListModel = (0, common_1.createModelHook)({
+         estimateSize: react_1.default.useCallback(() => UNSTABLE_defaultItemHeight, [UNSTABLE_defaultItemHeight]),
+         horizontal: config.orientation === 'horizontal',
+         overscan: 3, // overscan of 3 helps rapid navigation
++        directDomUpdates: true,
+     });
+     // Force Typescript to recognize the `Generic` symbol
+     const genericState = {
+diff --git a/dist/es6/collection/lib/useBaseListModel.js b/dist/es6/collection/lib/useBaseListModel.js
+index 473d8d6ce2646e93763341a3e351dffa5ad933f8..381ed99cf6c0da84c408bd3bc315cef5e70965c6 100644
+--- a/dist/es6/collection/lib/useBaseListModel.js
++++ b/dist/es6/collection/lib/useBaseListModel.js
+@@ -124,6 +124,7 @@ export const useBaseListModel = createModelHook({
+         estimateSize: React.useCallback(() => UNSTABLE_defaultItemHeight, [UNSTABLE_defaultItemHeight]),
+         horizontal: config.orientation === 'horizontal',
+         overscan: 3, // overscan of 3 helps rapid navigation
++        directDomUpdates: true,
+     });
+     // Force Typescript to recognize the `Generic` symbol
+     const genericState = {
+diff --git a/package.json b/package.json
+index 04c6dd5d90f44046b268eaf49ceeabc17689cf8f..806725f5c054a74712678379b80565780f158282 100644
+--- a/package.json
++++ b/package.json
+@@ -50,7 +50,7 @@
+     "@emotion/react": "^11.7.1",
+     "@emotion/styled": "^11.6.0",
+     "@popperjs/core": "^2.5.4",
+-    "@tanstack/react-virtual": "^3.13.9",
++    "@tanstack/react-virtual": "^3.14.3",
+     "@workday/canvas-colors-web": "^2.0.0",
+     "@workday/canvas-expressive-icons-web": "1.0.2",
+     "@workday/canvas-kit-popup-stack": "^15.0.14",

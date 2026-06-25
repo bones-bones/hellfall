@@ -107,7 +107,7 @@ const sidePanelStyles = createStyles({
     },
   },
 });
-const StyledSidePanel = createStyledDiv(sidePanelStyles);
+const StyledSidePanel = createStyledDiv(sidePanelStyles, 'StyledSidePanel');
 
 const sidePanelStencil = createStencil({
   vars: {
@@ -131,6 +131,6 @@ const spContainerStyles = createStyles({
   height: '90vh',
   overflowX: 'hidden',
 });
-const SPContainer = createStyledDivWithRef(spContainerStyles);
+const SPContainer = createStyledDivWithRef(spContainerStyles, 'SPContainer');
 
 const toolbarIconStyles = createStyles({ margin: '2px 0 0 2px' });

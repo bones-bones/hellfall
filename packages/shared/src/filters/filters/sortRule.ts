@@ -1,6 +1,5 @@
 import { HCCard, HCColor, HCKind, allSetsList } from '@hellfall/shared/types';
 import {
-  sorts,
   dirType,
   invertOptionType,
   looseOpType,

@@ -9,7 +9,7 @@ const searchCheckbox = createStyles({
   ':hover': { outline: '5px solid GREY', outlineStyle: 'auto' },
   margin: '0px',
 });
-const SearchCheckbox = createStyledInput(searchCheckbox);
+const SearchCheckbox = createStyledInput(searchCheckbox, 'SearchCheckbox');
 
 export const CheckboxGroup: FC<
   PropsWithChildren<{
@@ -335,7 +335,7 @@ export const SingleCheckbox = ({
 };
 
 const containerStyles = createStyles({ display: 'flex', flexDirection: 'column' });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const checkEntryStyles = createStyles({
   display: 'flex',
@@ -343,10 +343,10 @@ const checkEntryStyles = createStyles({
   height: '25px',
   alignItems: 'center',
 });
-const CheckEntry = createStyledDiv(checkEntryStyles);
+const CheckEntry = createStyledDiv(checkEntryStyles, 'CheckEntry');
 
 const singleLabelStyles = createStyles({ fontWeight: 'bold', marginLeft: '6px' });
-const SingleStyledLabel = createStyledLabel(singleLabelStyles);
+const SingleStyledLabel = createStyledLabel(singleLabelStyles, 'SingleStyledLabel');
 
 const labelStyles = createStyles({ marginLeft: '6px' });
-const StyledLabel = createStyledLabel(labelStyles);
+const StyledLabel = createStyledLabel(labelStyles, 'StyledLabel');

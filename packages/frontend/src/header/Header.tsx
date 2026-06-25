@@ -58,14 +58,14 @@ const headingStyles = createStyles({
   marginTop: '0px',
   marginBottom: '5px',
 });
-const StyledHeading = createStyledHeading(headingStyles);
+const StyledHeading = createStyledHeading(headingStyles, 'StyledHeading');
 
 const headerStyles = createStyles({
   backgroundColor: '#C690FF',
   borderBottom: '2px solid lightgray',
   marginTop: '0px',
 });
-const StyledHeader = createStyledDiv(headerStyles);
+const StyledHeader = createStyledDiv(headerStyles, 'StyledHeader');
 
 const navRowStyles = createStyles({
   display: 'flex',
@@ -75,18 +75,18 @@ const navRowStyles = createStyles({
   width: '100%',
   fontWeight: 'normal',
 });
-const NavRow = createStyledDiv(navRowStyles);
+const NavRow = createStyledDiv(navRowStyles, 'NavRow');
 
 const navigationStyles = createStyles({
   flex: '1 1 auto',
   minWidth: 0,
   paddingLeft: '10px',
 });
-const Navigation = createStyledIntrinsic('nav', navigationStyles);
+const Navigation = createStyledIntrinsic('nav', navigationStyles, 'Navigation');
 
 const authBlockStyles = createStyles({
   flexShrink: 0,
   paddingRight: '10px',
   whiteSpace: 'nowrap',
 });
-const AuthBlock = createStyledSpan(authBlockStyles);
+const AuthBlock = createStyledSpan(authBlockStyles, 'AuthBlock');

@@ -90,21 +90,21 @@ const h2Styles = createStyles({
   justifyContent: 'center',
   alignItems: 'center',
 });
-const StyledH2 = createStyledIntrinsic('h2', h2Styles);
+const StyledH2 = createStyledIntrinsic('h2', h2Styles, 'StyledH2');
 
 const containerStyles = createStyles({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
 });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const cardsContainerStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
   padding: '2px',
 });
-const CardsContainer = createStyledDiv(cardsContainerStyles);
+const CardsContainer = createStyledDiv(cardsContainerStyles, 'CardsContainer');
 
 const getRarityNumber = (val?: string) => {
   switch (val) {
@@ -202,7 +202,7 @@ const cardFooterStencil = createStencil({
 interface CardFooterProps extends BoxProps {
   rarity?: 'mythic' | 'rare' | 'uncommon';
 }
-const CardFooter = createStenciledDiv<CardFooterProps>(cardFooterStencil);
+const CardFooter = createStenciledDiv<CardFooterProps>(cardFooterStencil, 'CardFooter');
 
 const imageStyles = createStyles({ width: '100%' });
 const hImageStyles = createStyles({ height: '100%' });

@@ -20,7 +20,7 @@ const titleText = {
   zIndex: 1,
 };
 const titleTextStyles = createStyles(titleText);
-export const TitleText = createStyledSpan(titleTextStyles);
+export const TitleText = createStyledSpan(titleTextStyles, 'TitleText');
 
 const clickableTitleStencil = createStencil({
   vars: {},
@@ -37,7 +37,10 @@ interface ClickableTitleProps extends TextProps {
   hasURL?: boolean;
   as?: string;
 }
-export const ClickableTitle = createStenciledSpan<ClickableTitleProps>(clickableTitleStencil);
+export const ClickableTitle = createStenciledSpan<ClickableTitleProps>(
+  clickableTitleStencil,
+  'ClickableTitle'
+);
 interface ClickableTitleH3Props extends htmlIntrinsicProps {
   hasURL?: boolean;
   as?: string;
@@ -53,7 +56,7 @@ const titleLinkStyles = createStyles({
   cursor: 'pointer',
   whiteSpace: 'pre-wrap',
 });
-export const StyledTitleLink = createStyledLink(titleLinkStyles);
+export const StyledTitleLink = createStyledLink(titleLinkStyles, 'StyledTitleLink');
 
 const visuallyHidden = {
   position: 'absolute',
@@ -68,7 +71,7 @@ const visuallyHidden = {
   pointerEvents: 'none',
 };
 const visuallyHiddenStyles = createStyles(visuallyHidden);
-export const VisuallyHiddenSpan = createStyledSpan(visuallyHiddenStyles);
+export const VisuallyHiddenSpan = createStyledSpan(visuallyHiddenStyles, 'VisuallyHiddenSpan');
 
 const titleStencil = createStencil({
   vars: {},
@@ -90,7 +93,7 @@ const titleStencil = createStencil({
 interface LoadedTitleProps extends TextProps {
   imageLoaded?: boolean;
 }
-export const LoadedTitle = createStenciledSpan<LoadedTitleProps>(titleStencil);
+export const LoadedTitle = createStenciledSpan<LoadedTitleProps>(titleStencil, 'LoadedTitle');
 
 export const sharedContainerStyles = createStyles({
   margin: '5px',
@@ -144,7 +147,7 @@ interface ImageProps extends React.ComponentPropsWithoutRef<'img'> {
   isRelated?: boolean;
   hideImage?: boolean;
 }
-export const StyledImage = createStenciledImg<ImageProps>(imageStencil);
+export const StyledImage = createStenciledImg<ImageProps>(imageStencil, 'StyledImage');
 
 export interface ImageLinkProps extends LinkProps {
   imageLoaded?: boolean;

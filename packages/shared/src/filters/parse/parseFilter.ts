@@ -6,21 +6,21 @@ import {
   makeInvalidKeywordFilter,
   makeNameFilter,
 } from '../makers';
-import { filterObject, looseOpList, otherPrintGetterType } from '../types';
-import { invertOp, isCompKeyword, splitOnFirstOp, unescapeText } from '../utils';
-import { parseColorText } from './parseColors';
 import {
+  filterObject,
+  looseOpList,
+  otherPrintGetterType,
   colorFilterNameType,
-  colorFilters,
   equivColorFilterNames,
   equivFilterNames,
   equivPrintsFilterNames,
   filterNameType,
-  filters,
   invertedFilterNames,
   printsFilterNameType,
-  printsFilters,
-} from './parseMaps';
+} from '../types';
+import { invertOp, isCompKeyword, splitOnFirstOp, unescapeText } from '../utils';
+import { parseColorText } from './parseColors';
+import { colorFilters, filters, printsFilters } from './parseMaps';
 
 // make sure the thing doesn't strip quotes when passing text in to this from start and end of string when
 export const parseFilter = (

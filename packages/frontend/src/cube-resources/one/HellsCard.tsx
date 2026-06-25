@@ -39,7 +39,7 @@ export const HellsCard = ({ queryString }: { queryString: string }) => {
 };
 
 const imageStyles = createStyles({ maxWidth: '300px', display: 'inline-block' });
-const StyledImage = createStyledImg(imageStyles);
+const StyledImage = createStyledImg(imageStyles, 'StyledImage');
 
 const LoadingSkeleton = () => {
   return <Frame />;
@@ -55,4 +55,4 @@ const frameStyles = createStyles({
   borderRadius: '10px',
   animation: `${bounce} 1.5s ease infinite`,
 });
-const Frame = createStyledDiv(frameStyles);
+const Frame = createStyledDiv(frameStyles, 'Frame');

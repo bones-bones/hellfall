@@ -89,15 +89,15 @@ const containerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
 });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const separatorStyles = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-const Separator = createStyledHR(separatorStyles);
+const Separator = createStyledHR(separatorStyles, 'Separator');
 
 const summaryStyles = createStyles({
   display: 'inline-block',
   paddingLeft: '36px',
   paddingRight: '36px',
 });
-const Summary = createStyledDiv(summaryStyles);
-const Invalid = createStyledDiv(summaryStyles);
+const Summary = createStyledDiv(summaryStyles, 'Summary');
+const Invalid = createStyledDiv(summaryStyles, 'Invalid');

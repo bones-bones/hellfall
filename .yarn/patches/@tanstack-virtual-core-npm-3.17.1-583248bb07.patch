@@ -1,52 +1,15 @@
 diff --git a/dist/esm/index.js b/dist/esm/index.js
-index 25cf5bc1aff674ecbc5b2a032fd036a91699870c..e4b424f59213d6b1586c19c3270192295c143d7c 100644
+index 25cf5bc1aff674ecbc5b2a032fd036a91699870c..9de4e824f403891d26fa63d7b32faa956b7b372c 100644
 --- a/dist/esm/index.js
 +++ b/dist/esm/index.js
-@@ -410,6 +410,13 @@ class Virtualizer {
+@@ -410,6 +410,10 @@ class Virtualizer {
          );
          this.unsubs.push(
            this.options.observeElementOffset(this, (offset, isScrolling) => {
-+            if (offset === this.scrollOffset && isScrolling === true) {
-+              // this prevents continous rerenders
-+              isScrolling = false;
-+              this.isScrolling = false;
-+              this.scrollOffset = offset
-+              this.maybeNotify();
++            if (isScrolling && offset === this.scrollOffset) {
++              return
 +            }
++
              if (this._intendedScrollOffset !== null && Math.abs(offset - this._intendedScrollOffset) < 1.5) {
                offset = this._intendedScrollOffset;
              }
-@@ -422,7 +429,6 @@ class Virtualizer {
-             if (this.scrollState) {
-               this.scheduleScrollReconcile();
-             }
--            this.maybeNotify();
-           })
-         );
-         if ("addEventListener" in this.scrollElement) {
-diff --git a/src/index.ts b/src/index.ts
-index 7af791d13a0b026c380272c0e09601dd1b38c246..1b180804441a36e0a3113c736c339f2139ec1bf9 100644
---- a/src/index.ts
-+++ b/src/index.ts
-@@ -779,6 +779,13 @@ export class Virtualizer<
-           // self-write — by the time the user has moved 1.5 px, the
-           // intended value will already have been consumed by a prior
-           // scroll event and cleared.
-+          if (offset === this.scrollOffset && isScrolling === true) {
-+            // this prevents continous rerenders
-+            isScrolling = false;
-+            this.isScrolling = false;
-+            this.scrollOffset = offset
-+            this.maybeNotify();
-+          }
-           if (
-             this._intendedScrollOffset !== null &&
-             Math.abs(offset - this._intendedScrollOffset) < 1.5
-@@ -804,7 +811,6 @@ export class Virtualizer<
-           if (this.scrollState) {
-             this.scheduleScrollReconcile()
-           }
--          this.maybeNotify()
-         }),
-       )
- 

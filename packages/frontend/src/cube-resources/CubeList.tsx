@@ -139,7 +139,7 @@ const pageStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
 });
-const Page = createStyledDiv(pageStyles);
+const Page = createStyledDiv(pageStyles, 'Page');
 
 const sheetStencil = createStencil({
   vars: {},
@@ -161,7 +161,7 @@ const sheetStencil = createStencil({
 interface SheetProps extends BoxProps {
   wide?: boolean;
 }
-const Sheet = createStenciledDiv<SheetProps>(sheetStencil);
+const Sheet = createStenciledDiv<SheetProps>(sheetStencil, 'Sheet');
 
 const topBarStyles = createStyles({
   display: 'flex',
@@ -170,14 +170,14 @@ const topBarStyles = createStyles({
   gap: '12px',
   marginBottom: '20px',
 });
-const TopBar = createStyledDiv(topBarStyles);
+const TopBar = createStyledDiv(topBarStyles, 'TopBar');
 
 const metaStyles = createStyles({
   margin: '4px 0 0',
   color: '#444',
   fontSize: '15px',
 });
-const Meta = createStyledIntrinsic('p', metaStyles);
+const Meta = createStyledIntrinsic('p', metaStyles, 'Meta');
 
 const topLinksStyles = createStyles({
   display: 'flex',
@@ -185,19 +185,19 @@ const topLinksStyles = createStyles({
   alignItems: 'flex-start',
   fontSize: '15px',
 });
-const TopLinks = createStyledDiv(topLinksStyles);
+const TopLinks = createStyledDiv(topLinksStyles, 'TopLinks');
 
 const backLinkStyles = createStyles({
   color: '#333',
   ':hover': { color: '#5a2d91' },
 });
-const BackLink = createStyledLink(backLinkStyles);
+const BackLink = createStyledLink(backLinkStyles, 'BackLink');
 
 const jumpLinkStyles = createStyles({
   color: '#333',
   ':hover': { color: '#5a2d91' },
 });
-const JumpLink = createStyledJumpLink(jumpLinkStyles);
+const JumpLink = createStyledJumpLink(jumpLinkStyles, 'JumpLink');
 
 const jumpNavStyles = createStyles({
   display: 'flex',
@@ -208,20 +208,20 @@ const jumpNavStyles = createStyles({
   borderBottom: '1px solid #ddd',
   fontSize: '14px',
 });
-const JumpNav = createStyledIntrinsic('nav', jumpNavStyles);
+const JumpNav = createStyledIntrinsic('nav', jumpNavStyles, 'JumpNav');
 
 const bodyStyles = createStyles({
   display: 'flex',
   gap: '24px',
   alignItems: 'flex-start',
 });
-const Body = createStyledDiv(bodyStyles);
+const Body = createStyledDiv(bodyStyles, 'Body');
 
 const listColumnStyles = createStyles({
   flex: '1 1 520px',
   minWidth: 0,
 });
-const ListColumn = createStyledDiv(listColumnStyles);
+const ListColumn = createStyledDiv(listColumnStyles, 'ListColumn');
 
 const previewColumnStencil = createStencil({
   vars: {},
@@ -245,7 +245,11 @@ const previewColumnStencil = createStencil({
 interface PreviewColumnProps extends React.ComponentPropsWithoutRef<'aside'> {
   wide?: boolean;
 }
-const PreviewColumn = createStenciledIntrinsic<PreviewColumnProps>('aside', previewColumnStencil);
+const PreviewColumn = createStenciledIntrinsic<PreviewColumnProps>(
+  'aside',
+  previewColumnStencil,
+  'PreviewColumn'
+);
 
 const previewPlaceholderStyles = createStyles({
   color: '#888',
@@ -253,13 +257,13 @@ const previewPlaceholderStyles = createStyles({
   padding: '12px',
   border: '1px dashed #ccc',
 });
-const PreviewPlaceholder = createStyledDiv(previewPlaceholderStyles);
+const PreviewPlaceholder = createStyledDiv(previewPlaceholderStyles, 'PreviewPlaceholder');
 
 const sectionBlockStyles = createStyles({
   marginBottom: '32px',
   scrollMarginTop: '12px',
 });
-const SectionBlock = createStyledIntrinsic('section', sectionBlockStyles);
+const SectionBlock = createStyledIntrinsic('section', sectionBlockStyles, 'SectionBlock');
 
 const sectionTitleStyles = createStyles({
   margin: '0 0 8px',
@@ -267,7 +271,7 @@ const sectionTitleStyles = createStyles({
   borderBottom: '2px solid #C690FF',
   paddingBottom: '4px',
 });
-const SectionTitle = createStyledIntrinsic('h3', sectionTitleStyles);
+const SectionTitle = createStyledIntrinsic('h3', sectionTitleStyles, 'SectionTitle');
 
 const sectionCountStyles = createStyles({
   marginLeft: '8px',
@@ -275,7 +279,7 @@ const sectionCountStyles = createStyles({
   color: '#666',
   fontSize: '15px',
 });
-const SectionCount = createStyledSpan(sectionCountStyles);
+const SectionCount = createStyledSpan(sectionCountStyles, 'SectionCount');
 
 const gridHeaderStyles = createStyles({
   display: 'grid',
@@ -288,7 +292,7 @@ const gridHeaderStyles = createStyles({
   paddingBottom: '4px',
   borderBottom: '1px solid #eee',
 });
-const GridHeader = createStyledDiv(gridHeaderStyles);
+const GridHeader = createStyledDiv(gridHeaderStyles, 'GridHeader');
 
 const cardRowStyles = createStyles({
   display: 'grid',
@@ -299,7 +303,7 @@ const cardRowStyles = createStyles({
   fontSize: '15px',
   ':hover': { backgroundColor: '#f5f0ff' },
 });
-const CardRow = createStyledDiv(cardRowStyles);
+const CardRow = createStyledDiv(cardRowStyles, 'CardRow');
 
 const nameCellStyles = createStyles({
   fontWeight: 600,
@@ -308,20 +312,20 @@ const nameCellStyles = createStyles({
   ':hover': { textDecoration: 'underline' },
   ':visited': { color: '#444' },
 });
-const NameCell = createStyledLink(nameCellStyles);
+const NameCell = createStyledLink(nameCellStyles, 'NameCell');
 
 const costCellStyles = createStyles({
   display: 'flex',
   flexWrap: 'wrap',
   alignItems: 'center',
 });
-const CostCell = createStyledDiv(costCellStyles);
+const CostCell = createStyledDiv(costCellStyles, 'CostCell');
 
 const mvCellStyles = createStyles({
   textAlign: 'right',
   color: '#444',
 });
-const MvCell = createStyledDiv(mvCellStyles);
+const MvCell = createStyledDiv(mvCellStyles, 'MvCell');
 
 const typeCellStyles = createStyles({
   color: '#333',
@@ -330,15 +334,15 @@ const typeCellStyles = createStyles({
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 });
-const TypeCell = createStyledDiv(typeCellStyles);
+const TypeCell = createStyledDiv(typeCellStyles, 'TypeCell');
 
 const colorCellStyles = createStyles({
   fontSize: '13px',
   color: '#555',
 });
-const ColorCell = createStyledDiv(colorCellStyles);
+const ColorCell = createStyledDiv(colorCellStyles, 'ColorCell');
 
 const emptyNoteStyles = createStyles({
   color: '#666',
 });
-const EmptyNote = createStyledIntrinsic('p', emptyNoteStyles);
+const EmptyNote = createStyledIntrinsic('p', emptyNoteStyles, 'EmptyNote');

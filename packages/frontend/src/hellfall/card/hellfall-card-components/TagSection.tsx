@@ -194,7 +194,7 @@ interface TagLinkProps extends TextProps {
   pendingAdd?: boolean;
   pendingRemove?: boolean;
 }
-const TagLink = createStenciledSpan<TagLinkProps>(tagLinkStencil);
+const TagLink = createStenciledSpan<TagLinkProps>(tagLinkStencil, 'TagLink');
 
 const tagRemoveButtonStyles = createStyles({
   marginLeft: '2px',
@@ -208,7 +208,7 @@ const tagRemoveButtonStyles = createStyles({
   color: '#666',
   '&:hover': { color: '#c00' },
 });
-const TagRemoveButton = createStyledButton(tagRemoveButtonStyles);
+const TagRemoveButton = createStyledButton(tagRemoveButtonStyles, 'TagRemoveButton');
 
 const tagAddRowStyles = createStyles({
   marginTop: '6px',
@@ -217,13 +217,13 @@ const tagAddRowStyles = createStyles({
   alignItems: 'center',
   '& input': { minWidth: '120px' },
 });
-const TagAddRow = createStyledDiv(tagAddRowStyles);
+const TagAddRow = createStyledDiv(tagAddRowStyles, 'TagAddRow');
 
 const errorTextStyles = createStyles(smallTextStyles, { color: '#c00' });
-const ErrorText = createStyledDiv(errorTextStyles);
+const ErrorText = createStyledDiv(errorTextStyles, 'ErrorText');
 
 const pendingTextStyles = createStyles(smallTextStyles, { color: '#856404' });
-const PendingText = createStyledDiv(pendingTextStyles);
+const PendingText = createStyledDiv(pendingTextStyles, 'PendingText');
 
 const submittedTextStyles = createStyles(smallTextStyles, { color: '#28a745', marginTop: 4 });
-const SubmittedText = createStyledDiv(submittedTextStyles);
+const SubmittedText = createStyledDiv(submittedTextStyles, 'SubmittedText');

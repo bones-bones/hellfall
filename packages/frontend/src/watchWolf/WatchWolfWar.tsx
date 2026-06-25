@@ -114,7 +114,7 @@ const cardContainerStyles = createStyles({
   width: '100%',
   maxWidth: '800px',
 });
-const CardContainer = createStyledDiv(cardContainerStyles);
+const CardContainer = createStyledDiv(cardContainerStyles, 'CardContainer');
 
 const resultsReceptaclePlaceThingStyles = createStyles({
   width: '100%',
@@ -125,4 +125,7 @@ const resultsReceptaclePlaceThingStyles = createStyles({
   boxShadow: '0 2px 8px rgb(164, 45, 168)',
   textAlign: 'center',
 });
-const ResultsReceptaclePlaceThing = createStyledDiv(resultsReceptaclePlaceThingStyles);
+const ResultsReceptaclePlaceThing = createStyledDiv(
+  resultsReceptaclePlaceThingStyles,
+  'ResultsReceptaclePlaceThing'
+);

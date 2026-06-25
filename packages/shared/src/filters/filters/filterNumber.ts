@@ -6,8 +6,17 @@ import {
   numStringFilter,
   numStringListFilter,
   opType,
+  equivColorFilterNames,
+  equivFilterNames,
 } from '../types';
-import { createNumSummary, invertOp, splitOnFirstOp, unescapeText } from '../utils';
+import {
+  createNumSummary,
+  invertOp,
+  numOp,
+  numStringOp,
+  splitOnFirstOp,
+  unescapeText,
+} from '../utils';
 import {
   colorMiscReduce,
   getColorsFromFaces,
@@ -17,52 +26,23 @@ import {
   toFaces,
   toNumber,
 } from '@hellfall/shared/utils';
-import { equivColorFilterNames, equivFilterNames } from '../parse';
 
-export const filterNumber: numFilter = Object.assign(
-  (value1: number, operator: opType, value2: number) => {
-    switch (operator) {
-      case '<':
-        return value1 < value2;
-      case '<=':
-        return value1 <= value2;
-      case '=':
-        return value1 == value2;
-      case '>=':
-        return value1 >= value2;
-      case '>':
-        return value1 > value2;
-      case '!=':
-        return value1 != value2;
-    }
-  },
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: number, invert?: boolean) =>
-      `${invert ? 'not' : ''} ${operator} ${value}`,
-  }
-);
+export const filterNumber: numFilter = Object.assign(numOp, {
+  invertOption: 'flip' as invertOptionType,
+  toSummary: (operator: opType, value: number, invert?: boolean) =>
+    `${invert ? 'not' : ''} ${operator} ${value}`,
+});
 
-export const filterNumberString: numStringFilter = Object.assign(
-  (value1: number | string | undefined, operator: opType, value2: number | string | undefined) => {
-    const num1 = toNumber(value1);
-    const num2 = toNumber(value2);
-    if (num1 == undefined || num2 == undefined) {
-      return false;
-    }
-    return filterNumber(num1, operator, num2);
-  },
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: createNumSummary(),
-  }
-);
+export const filterNumberString: numStringFilter = Object.assign(numStringOp, {
+  invertOption: 'flip' as invertOptionType,
+  toSummary: createNumSummary(),
+});
 export const filterNumberStringList: numStringListFilter = Object.assign(
   (
     value1: (number | string | undefined)[],
     operator: opType,
     value2: number | string | undefined
-  ) => value1.some(value => filterNumberString(value, operator, value2)),
+  ) => value1.some(value => numStringOp(value, operator, value2)),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: createNumSummary(),
@@ -171,7 +151,7 @@ export const filterComp: cardStringFilter = Object.assign(
     }
     const firstValue = getPropNumsFromCard(value1, first);
     const secondValue = getPropNumsFromCard(value1, second);
-    return firstValue.some(v1 => secondValue.some(v2 => filterNumber(v1, op as opType, v2)));
+    return firstValue.some(v1 => secondValue.some(v2 => numOp(v1, op as opType, v2)));
   },
   {
     invertOption: 'flip' as invertOptionType,

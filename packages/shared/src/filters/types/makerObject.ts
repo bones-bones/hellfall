@@ -11,8 +11,18 @@ import {
   sortType,
   noteFilter,
 } from './filterTypes';
-import { getActualOp, unescapeText } from '../utils';
-import { filterNumberString, parseNote } from '../filters';
+import { createNumSummary, getActualOp, unescapeText } from '../utils';
+
+const parseNote = (text: string): { name: string; note?: boolean | string } => {
+  if (text.endsWith('<')) {
+    return { name: text.slice(0, -1), note: true };
+  }
+  if (text.endsWith('>') && text.includes('<')) {
+    const [name, note] = [text.split('<')[0], text.split('<')[1].slice(0, -1)];
+    return { name, note };
+  }
+  return { name: text };
+};
 
 export interface anyFilterInterface<T = any, S = any> {
   queryName: string;
@@ -200,7 +210,10 @@ export class StringPropSummaryFilter<T, S> extends filterObject<T, S> {
     );
   }
 }
-export class NumberPropSummaryFilter<T, S> extends filterObject<T, S> {
+export class NumberPropSummaryFilter<T, S extends number | string | undefined> extends filterObject<
+  T,
+  S
+> {
   constructor(
     queryName: string,
     public filter: cardFilter<T, S>,
@@ -218,13 +231,7 @@ export class NumberPropSummaryFilter<T, S> extends filterObject<T, S> {
       op,
       defaultOp,
       getValueToCompare,
-      () => {
-        const num = filterNumberString.toSummary(this.getOp(), this.value);
-        if (num.at(0) == '!') {
-          return num;
-        }
-        return `${this.summaryStart} ${num}`;
-      },
+      () => createNumSummary(summaryStart)(this.getOp(), this.value),
       inverted
     );
   }
