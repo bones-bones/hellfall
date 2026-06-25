@@ -4074,8 +4074,8 @@ __metadata:
 
 "@tanstack/virtual-core@patch:@tanstack/virtual-core@npm%3A3.17.1#~/.yarn/patches/@tanstack-virtual-core-npm-3.17.1-583248bb07.patch":
   version: 3.17.1
-  resolution: "@tanstack/virtual-core@patch:@tanstack/virtual-core@npm%3A3.17.1#~/.yarn/patches/@tanstack-virtual-core-npm-3.17.1-583248bb07.patch::version=3.17.1&hash=786b06"
-  checksum: 10c0/741ff13b89bd9e4ae0e8c41f00c1c60f16a3d7105b401781f5144459e2b54e8b80d4ae4c21535a5b4562aeea92af70b61709b96eca7a9a20502c5ca3ab3e2e73
+  resolution: "@tanstack/virtual-core@patch:@tanstack/virtual-core@npm%3A3.17.1#~/.yarn/patches/@tanstack-virtual-core-npm-3.17.1-583248bb07.patch::version=3.17.1&hash=7e53d7"
+  checksum: 10c0/e62fc1d03cf955ef359aa9c790488e4571a90662a1ffcfdb4d942ac6287f7980d90cc5d78bccb62beb6f7eaf3296a85e4df508a4ef8223eed0ce225e7b9542d9
   languageName: node
   linkType: hard
 

@@ -6,7 +6,7 @@ index 25cf5bc1aff674ecbc5b2a032fd036a91699870c..9de4e824f403891d26fa63d7b32faa95
          );
          this.unsubs.push(
            this.options.observeElementOffset(this, (offset, isScrolling) => {
-+            if (isScrolling && offset === this.scrollOffset) {
++            if (isScrolling && this._intendedScrollOffset === null && offset === this.scrollOffset) {
 +              return
 +            }
 +
