@@ -1,8 +1,9 @@
 import { HCCard } from '@hellfall/shared/types';
 import { CardMap, getAllRelated } from '@hellfall/shared/utils';
-import { FilterNode, parseSearchQuery } from './parseSearchQuery';
+import { parseSearchQuery } from './parseSearchQuery';
 import { fixTags } from '../utils';
 import { makeIncludeFilter } from '../makers';
+import { FilterNode } from '../types';
 
 const evaluateRelatedFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): boolean =>
   getAllRelated(card, cardMap).some(related => evaluateFilter(node, related, cardMap));

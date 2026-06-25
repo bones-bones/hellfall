@@ -1,7 +1,6 @@
 import { HCCard } from '@hellfall/shared/types';
 import {
   FilterNode,
-  filterObject,
   IncludeFilter,
   otherPrintGetterType,
   sortObject,
