@@ -412,6 +412,14 @@ export const savedOracleIds: Record<string, string> = {
   'secret jo sesh': 'bd45ace2-220a-4a06-85fd-f1a41073a25c',
   'phyrexian germ': 'a1c2af93-83c0-4974-b4db-abf95981d4e3',
   offspring: '9caebd4a-00af-4227-9727-31181f7836df',
+  manifest: 'f4f184ef-f456-47d8-9012-095629a5ea4d',
+  'plains token': 'be611daa-3960-445e-8872-f7915a49669f',
+  'island token': 'b3d6c1b3-49cc-4d63-89c2-166325367773',
+  'swamp token': 'd2724cff-7b87-4f95-abb9-5e7f34f2a0d2',
+  'mountain token': '832cf8d9-0872-46de-868a-89f54e6930b6',
+  'forest token': '92dbbd36-2588-44ef-afb4-25eb6cc2b7b0',
+  'nebula token': 'dc8340f7-88f1-4cda-b5b1-872054eb8925',
+  'wastes token': '8e1687da-24de-460e-9b1a-cc12776476df',
 };
 const tagCanHaveFaces = (tag: string, card?: HCCard.Any): boolean => {
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
@@ -459,7 +467,7 @@ const tagCanUseURL = (tag: string): boolean => {
 const tagCanUseUUID = (tag: string): boolean => {
   if (tag == 'card-in-scryfall') {
     return true;
-  } else if (tag == 'has-other-printings') {
+  } else if (tag == 'has-other-prints') {
     return true;
   }
   return false;
@@ -863,7 +871,7 @@ const inputForTag = (
     addPropToInput(input, 'layout');
   } else if (tag == 'foil') {
     addPropToInput(input, 'finish', HCFinish.Foil);
-  } else if (tag == 'card-in-scryfall' || tag == 'has-other-printings') {
+  } else if (tag == 'card-in-scryfall' || tag == 'has-other-prints') {
     addPropToInput(input, 'oracle_id', splitTag.uuid);
     location = 'root';
   } else if (tag == 'exact-card-in-scryfall') {

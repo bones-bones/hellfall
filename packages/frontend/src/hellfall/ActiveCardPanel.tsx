@@ -10,7 +10,7 @@ import {
   SidePanel,
   useSidePanelModel,
 } from '@workday/canvas-kit-react';
-import { extLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
+import { externalLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledDivWithRef } from '../styling';
@@ -80,7 +80,7 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
               {activeCard && (
                 <ToolbarIconButton
                   as="a"
-                  icon={extLinkIcon}
+                  icon={externalLinkIcon}
                   cs={toolbarIconStyles}
                   href={'/card/' + encodeURIComponent(activeCard.hcid)}
                   target="_blank"
