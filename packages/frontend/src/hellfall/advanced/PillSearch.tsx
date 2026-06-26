@@ -1,15 +1,16 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-// TODO: replace DeprecatedMenuItem once I figure out how to replicate its behavior
 import { useMultiSelectModel } from '@workday/canvas-kit-preview-react';
 import { TextInput, FormField, Pill } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { listEquals } from '@hellfall/shared/utils';
 import {
   createStenciledButtonDiv,
-  createStenciledDiv,
+  createStenciledButtonDivWithRef,
   createStyledDiv,
+  createStyledDivWithRef,
   createStyledTertiaryButton,
   StenciledButtonDivProps,
+  StenciledButtonDivWithRefProps,
 } from '../../styling';
 
 type Props = {
@@ -24,11 +25,37 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
   const [selectedValues, setSelectedValues] = useState(values);
   const [searchValue, setSearchValue] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
-  // const menuModel = useMenuModel({ returnFocusRef: searchRef });
   const [focusedIndex, setFocusedIndex] = useState<number | undefined>();
   const [isOpen, setIsOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
+
+  useEffect(() => {
+    const dropdownElement = dropdownRef.current;
+    if (focusedIndex !== undefined && itemRefs.current.has(focusedIndex)) {
+      const itemElement = itemRefs.current.get(focusedIndex);
+      if (itemElement && dropdownElement) {
+        const itemRect = itemElement.getBoundingClientRect();
+        const dropdownRect = dropdownElement.getBoundingClientRect();
+        if (itemRect.bottom > dropdownRect.bottom - 4) {
+          const scrollOffset = itemRect.bottom - dropdownRect.bottom + 8;
+          dropdownElement.scrollTop = Math.min(
+            dropdownElement.scrollTop + scrollOffset,
+            dropdownElement.scrollHeight - dropdownRect.height
+          );
+        } else if (itemRect.top < dropdownRect.top + 4) {
+          const scrollOffset = dropdownRect.top - itemRect.top + 8;
+          dropdownElement.scrollTop = Math.max(dropdownElement.scrollTop - scrollOffset, 0);
+        }
+        return;
+      }
+    }
+    if (dropdownElement && dropdownElement.scrollTop) {
+      dropdownElement.scrollTop = 0;
+    }
+  }, [focusedIndex]);
 
   useEffect(() => {
     setSelectedValues(values);
@@ -121,12 +148,12 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
       setFocusedIndex(prev =>
-        prev === undefined ? 0 : Math.min(prev + 1, filteredItems.length - 1)
+        prev === undefined || prev === filteredItems.length - 1 ? 0 : prev + 1
       );
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setFocusedIndex(prev =>
-        prev === undefined ? filteredItems.length - 1 : Math.max(prev - 1, 0)
+        prev === undefined || prev === 0 ? filteredItems.length - 1 : prev - 1
       );
     } else if (e.key === 'Escape') {
       e.preventDefault();
@@ -161,12 +188,19 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
           onKeyDown={handleKeyDown}
         />
         {isOpen && (filteredItems.length || searchValue) && (
-          <DropdownContainer>
+          <DropdownContainer ref={dropdownRef}>
             {filteredItems.map((item, index) => {
               return (
                 <DropdownItem
                   key={item}
                   onClick={() => addSelection(item)}
+                  ref={el => {
+                    if (el) {
+                      itemRefs.current.set(index, el);
+                    } else {
+                      itemRefs.current.delete(index);
+                    }
+                  }}
                   isFocused={focusedIndex === index}
                   onMouseEnter={() => setFocusedIndex(index)}
                   onMouseLeave={() => setFocusedIndex(undefined)}
@@ -242,7 +276,7 @@ const dropdownContainerStyles = createStyles({
   overflowX: 'hidden',
   boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
 });
-const DropdownContainer = createStyledDiv(dropdownContainerStyles, 'DropdownContainer');
+const DropdownContainer = createStyledDivWithRef(dropdownContainerStyles, 'DropdownContainer');
 
 const dropdownItemStencil = createStencil({
   vars: {},
@@ -266,10 +300,10 @@ const dropdownItemStencil = createStencil({
     },
   },
 });
-interface DropdownItemProps extends StenciledButtonDivProps {
+interface DropdownItemProps extends StenciledButtonDivWithRefProps {
   isFocused?: boolean;
 }
-const DropdownItem = createStenciledButtonDiv<DropdownItemProps>(
+const DropdownItem = createStenciledButtonDivWithRef<DropdownItemProps>(
   dropdownItemStencil,
   'DropdownItem'
 );

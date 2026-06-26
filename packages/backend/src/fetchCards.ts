@@ -23,8 +23,6 @@ import {
   pushPropToRoot,
   orderColors,
   getPipColorsFromText,
-  listEquals,
-  toFaces,
 } from '@hellfall/shared/utils';
 import { pipsData } from '@hellfall/shared/data';
 

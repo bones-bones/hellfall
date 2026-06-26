@@ -289,6 +289,23 @@ export const createStenciledButtonDiv = <T extends StenciledButtonDivProps>(
   (Component as any).displayName = displayName;
   return Component;
 };
+export type StenciledButtonDivWithRefProps = BoxProps & React.ComponentPropsWithRef<'button'>;
+export const createStenciledButtonDivWithRef = <T extends StenciledButtonDivWithRefProps>(
+  stencil: Stencil<any>,
+  displayName: string = 'StenciledButtonDiv'
+) => {
+  const Component = ({ children, ref, ...props }: T) => (
+    <Box
+      as={'button'}
+      ref={ref}
+      {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}
+    >
+      {children}
+    </Box>
+  );
+  (Component as any).displayName = displayName;
+  return Component;
+};
 export const createStyledDivClickable = (
   styles: string,
   displayName: string = 'StyledDivClickable'
