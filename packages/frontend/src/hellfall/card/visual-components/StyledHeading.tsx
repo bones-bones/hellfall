@@ -5,4 +5,4 @@ const headingStyles = createStyles({
   marginTop: '0px',
   marginBottom: '10px',
 });
-export const StyledHeading = createStyledHeading(headingStyles);
+export const StyledHeading = createStyledHeading(headingStyles, 'StyledHeading');

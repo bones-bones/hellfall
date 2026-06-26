@@ -8,4 +8,4 @@ const dividerStyles = createStyles({
   marginLeft: '-32px',
   marginRight: '-32px',
 });
-export const Divider = createStyledHR(dividerStyles);
+export const Divider = createStyledHR(dividerStyles, 'Divider');

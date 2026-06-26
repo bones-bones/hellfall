@@ -1,8 +1,14 @@
 import { HCCard, isSetCode, SetCode, isSetType } from '@hellfall/shared/types';
 import { invertOptionType, opType, printsFilter } from '../types';
-import { createNumSummary, createSummary, opAsBool, opIsNegative, opToNot } from '../utils';
+import {
+  createNumSummary,
+  createSummary,
+  numStringOp,
+  opAsBool,
+  opIsNegative,
+  opToNot,
+} from '../utils';
 import { equivSetTypes, filterSet, filterSetType } from './filterSet';
-import { filterNumberString } from './filterNumber';
 
 export const filterInSet: printsFilter = Object.assign(
   (value1: HCCard.Any[], operator: opType, value2: string) =>
@@ -45,7 +51,7 @@ export const getSetNumber = (cards: HCCard.Any[]): number => {
 };
 export const filterSetsNumber: printsFilter = Object.assign(
   (value1: HCCard.Any[], operator: opType, value2: string) =>
-    filterNumberString(getSetNumber(value1), operator, value2),
+    numStringOp(getSetNumber(value1), operator, value2),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: createNumSummary('the number of times a card has appeared in a set'),
@@ -53,7 +59,7 @@ export const filterSetsNumber: printsFilter = Object.assign(
 );
 export const filterPrintsNumber: printsFilter = Object.assign(
   (value1: HCCard.Any[], operator: opType, value2: string) =>
-    filterNumberString(value1.length, operator, value2),
+    numStringOp(value1.length, operator, value2),
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: createNumSummary('the number of prints'),

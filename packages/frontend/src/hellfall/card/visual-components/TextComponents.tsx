@@ -6,30 +6,30 @@ export const mediumLineStyles = createStyles({
   fontWeight: 'normal',
   marginBlock: '.5rem',
 });
-export const MediumLine = createStyledSpan(mediumLineStyles);
+export const MediumLine = createStyledSpan(mediumLineStyles, 'MediumLine');
 
 export const mediumLineMarginStyles = createStyles(mediumLineStyles, { marginRight: '1em' });
-export const MediumLineMargin = createStyledSpan(mediumLineMarginStyles);
+export const MediumLineMargin = createStyledSpan(mediumLineMarginStyles, 'MediumLineMargin');
 
 export const mediumTextStyles = createStyles(mediumLineStyles, { lineHeight: 1.125 });
-export const MediumText = createStyledDiv(mediumTextStyles);
+export const MediumText = createStyledDiv(mediumTextStyles, 'MediumText');
 
 export const mediumItalicsStyles = createStyles(mediumTextStyles, {
   fontStyle: 'italic',
   fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
 });
-export const MediumItalics = createStyledDiv(mediumItalicsStyles);
+export const MediumItalics = createStyledDiv(mediumItalicsStyles, 'MediumItalics');
 
 export const mediumItalicLineStyles = createStyles(mediumLineStyles, {
   fontStyle: 'italic',
   fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
 });
-export const MediumItalicLine = createStyledSpan(mediumItalicLineStyles);
+export const MediumItalicLine = createStyledSpan(mediumItalicLineStyles, 'MediumItalicLine');
 
 export const smallTextStyles = createStyles({
   fontSize: '14px',
   fontWeight: 'normal',
   marginBlock: '.4rem',
 });
-export const SmallText = createStyledDiv(smallTextStyles);
-export const SmallLine = createStyledSpan(smallTextStyles);
+export const SmallText = createStyledDiv(smallTextStyles, 'SmallText');
+export const SmallLine = createStyledSpan(smallTextStyles, 'SmallLine');

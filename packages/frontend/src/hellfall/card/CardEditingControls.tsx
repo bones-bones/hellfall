@@ -45,4 +45,4 @@ const editCardButtonStyles = createStyles({
   cursor: 'pointer',
   '&:hover': { borderColor: '#888' },
 });
-const EditCardButton = createStyledButton(editCardButtonStyles);
+const EditCardButton = createStyledButton(editCardButtonStyles, 'EditCardButton');

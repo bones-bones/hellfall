@@ -122,7 +122,10 @@ const resultsReceptaclePlaceThingStyles = createStyles({
   boxShadow: '0 2px 8px rgb(164, 45, 168)',
   textAlign: 'center',
 });
-const ResultsReceptaclePlaceThing = createStyledDiv(resultsReceptaclePlaceThingStyles);
+const ResultsReceptaclePlaceThing = createStyledDiv(
+  resultsReceptaclePlaceThingStyles,
+  'ResultsReceptaclePlaceThing'
+);
 
 const resultRowStyles = createStyles({
   display: 'flex',
@@ -147,7 +150,7 @@ const resultRowStyles = createStyles({
     textAlign: 'left',
   },
 });
-const ResultRow = createStyledLink(resultRowStyles);
+const ResultRow = createStyledLink(resultRowStyles, 'ResultRow');
 
 const headerRowStyles = createStyles(resultRowStyles, { marginBottom: 6 });
-const HeaderRow = createStyledDiv(headerRowStyles);
+const HeaderRow = createStyledDiv(headerRowStyles, 'HeaderRow');

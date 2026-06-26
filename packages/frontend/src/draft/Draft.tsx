@@ -140,7 +140,7 @@ const errorContainerStyles = createStyles({
   display: 'flex',
   justifyContent: 'center',
 });
-const ErrorContainer = createStyledDiv(errorContainerStyles);
+const ErrorContainer = createStyledDiv(errorContainerStyles, 'ErrorContainer');
 
 const errorBannerStyles = createStyles({
   color: 'red',
@@ -148,4 +148,4 @@ const errorBannerStyles = createStyles({
   fontWeight: '600',
   animation: `${frames} 0.1s linear infinite`,
 });
-const ErrorBanner = createStyledDiv(errorBannerStyles);
+const ErrorBanner = createStyledDiv(errorBannerStyles, 'ErrorBanner');

@@ -121,59 +121,6 @@ export const createSummary =
   (operator: opType, value: T, invert?: boolean) =>
     (valueIsCorrect(fixValue(value)) ? validSummary : invalidSummary)(operator, value, invert);
 
-// /**
-//  * To use in filters when need to check a function with one value
-//  * @param op operation to use
-//  * @param func function
-//  * @param value the value to check
-//  * @returns
-//  */
-// export const funcOp = <T>(op: opType, func: (value: T) => boolean | undefined, value: T) => {
-//   switch (op) {
-//     case '<':
-//       return !func(value);
-//     case '<=':
-//       return func(value);
-//     case '=':
-//       return func(value);
-//     case '>=':
-//       return func(value);
-//     case '>':
-//       return !func(value);
-//     case '!=':
-//       return !func(value);
-//   }
-// };
-// /**
-//  * To use in filters when need to check a function with two values
-//  * @param op operation to use
-//  * @param func function
-//  * @param value1 the first value to check
-//  * @param value2 the second value to check
-//  * @returns
-//  */
-// export const funcOpTwo = <T, S>(
-//   op: opType,
-//   func: (value1: T, value2: S) => boolean|undefined,
-//   value1: T,
-//   value2: S
-// ) => {
-//   switch (op) {
-//     case '<':
-//       return !func(value1, value2);
-//     case '<=':
-//       return func(value1, value2);
-//     case '=':
-//       return func(value1, value2);
-//     case '>=':
-//       return func(value1, value2);
-//     case '>':
-//       return !func(value1, value2);
-//     case '!=':
-//       return !func(value1, value2);
-//   }
-// };
-
 /**
  * To use in filters when need to check an inclusion function and an equality function
  * @param op operation to use
@@ -301,4 +248,33 @@ export const shareOp = <T = any>(op: opType, value1: T | T[], value2: T | T[]): 
     case '!=':
       return !listShare(value1, value2);
   }
+};
+
+export const numOp = (value1: number, operator: opType, value2: number): boolean => {
+  switch (operator) {
+    case '<':
+      return value1 < value2;
+    case '<=':
+      return value1 <= value2;
+    case '=':
+      return value1 == value2;
+    case '>=':
+      return value1 >= value2;
+    case '>':
+      return value1 > value2;
+    case '!=':
+      return value1 != value2;
+  }
+};
+export const numStringOp = (
+  value1: number | string | undefined,
+  operator: opType,
+  value2: number | string | undefined
+): boolean => {
+  const num1 = toNumber(value1);
+  const num2 = toNumber(value2);
+  if (num1 == undefined || num2 == undefined) {
+    return false;
+  }
+  return numOp(num1, operator, num2);
 };

@@ -261,11 +261,11 @@ Cock and Balls to Torture and Abuse
 };
 const DeckContainer = Box;
 const cardStyles = createStyles({ width: '250px' });
-const Card = createStyledImg(cardStyles);
+const Card = createStyledImg(cardStyles, 'Card');
 
 //245 × 341 px
 
 // const OtherContainer = styled.div({ display: "flex" });
 
 const textAreaStyles = createStyles({ width: '50%', minHeight: '400px' });
-const StyledTextArea = createStyledTextAreaWithRef(textAreaStyles);
+const StyledTextArea = createStyledTextAreaWithRef(textAreaStyles, 'StyledTextArea');

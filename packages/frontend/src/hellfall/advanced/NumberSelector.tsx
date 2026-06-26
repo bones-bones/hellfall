@@ -57,10 +57,10 @@ export const NumericComparatorSelector = ({
 };
 
 const numberInputStyles = createStyles({ width: '40px' });
-const StyledNumberInput = createStyledInput(numberInputStyles);
+const StyledNumberInput = createStyledInput(numberInputStyles, 'StyledNumberInput');
 
 const dropdownSelectStyles = createStyles({ width: '40px', height: '30px' });
-const StyledDropdownSelect = createStyledSelect(dropdownSelectStyles);
+const StyledDropdownSelect = createStyledSelect(dropdownSelectStyles, 'StyledDropdownSelect');
 
 const containerStyles = createStyles({ display: 'flex' });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');

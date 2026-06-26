@@ -373,21 +373,21 @@ export const CubeResources = () => {
 
 const StyledLink = Link;
 const containerStyles = createStyles({ padding: '10px' });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const tableStyles = createStyles({
   border: '1px solid black',
   'tr:nth-child(even)': { backgroundColor: '#f2f2f2' },
 });
-const StyledTable = createStyledTable(tableStyles);
+const StyledTable = createStyledTable(tableStyles, 'StyledTable');
 
 const rowStyles = createStyles({
   ':hover': { backgroundColor: '#C690FF !important' }, // The even selector is more specific than  this one. boo, hiss
 });
-const StyledRow = createStyledTableRow(rowStyles);
+const StyledRow = createStyledTableRow(rowStyles, 'StyledRow');
 
 const tableHeaderStyles = createStyles({ textAlign: 'start' });
-const StyledTableHeader = createStyledTableCell('th', tableHeaderStyles);
+const StyledTableHeader = createStyledTableCell('th', tableHeaderStyles, 'StyledTableHeader');
 
 const tdStyles = createStyles({ overflowY: 'hidden' });
-const StyledTD = createStyledTableCell('td', tdStyles);
+const StyledTD = createStyledTableCell('td', tdStyles, 'StyledTD');

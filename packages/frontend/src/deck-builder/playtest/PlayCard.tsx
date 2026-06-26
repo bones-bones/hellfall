@@ -35,4 +35,4 @@ interface ImageProps extends React.ComponentPropsWithoutRef<'img'> {
   tapped?: boolean;
 }
 
-const StyledImage = createStenciledImg<ImageProps>(imageStencil);
+const StyledImage = createStenciledImg<ImageProps>(imageStencil, 'StyledImage');

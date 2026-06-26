@@ -61,7 +61,7 @@ export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) =>
 const spacerStyles = createStyles({
   height: '5px',
 });
-const Spacer = createStyledDiv(spacerStyles);
+const Spacer = createStyledDiv(spacerStyles, 'Spacer');
 
 const containerStyles = createStyles({
   paddingLeft: '36px',
@@ -70,10 +70,10 @@ const containerStyles = createStyles({
   marginBottom: '0px',
   overflow: 'hidden',
 });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const searchBoxStyles = createStyles({
   overflow: 'hidden',
   // border: 'none',
 });
-const SearchBox = createStyledTextInput(searchBoxStyles);
+const SearchBox = createStyledTextInput(searchBoxStyles, 'SearchBox');

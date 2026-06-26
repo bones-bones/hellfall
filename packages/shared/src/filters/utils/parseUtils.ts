@@ -1,6 +1,11 @@
 import { numProps, numPropType } from '../filters';
-import { equivColorFilterNames, equivFilterNames, FilterNode } from '../parse';
-import { looseOpList, looseOpType } from '../types';
+import {
+  looseOpList,
+  looseOpType,
+  equivColorFilterNames,
+  equivFilterNames,
+  FilterNode,
+} from '../types';
 
 export const isCompKeyword = (keyword: string) =>
   numProps.includes(keyword as numPropType) ||

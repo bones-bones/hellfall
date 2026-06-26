@@ -24,8 +24,9 @@ import {
   opAsBool,
   opToNot,
   prepTag,
+  numOp,
+  createNumSummary,
 } from '../utils';
-import { filterNumber } from './filterNumber';
 import { HCCard } from '@hellfall/shared/types';
 
 export const filterEmpty: textFilter = Object.assign(
@@ -60,7 +61,7 @@ export const filterOracleId: textFilter = Object.assign(
 export const filterId: textFilter = Object.assign(
   (value1: string, operator: opType, value2: string) => {
     if (isNumber(value2)) {
-      return isNumber(value1) ? filterNumber(parseInt(value1), operator, parseInt(value2)) : false;
+      return isNumber(value1) ? numOp(parseInt(value1), operator, parseInt(value2)) : false;
     }
     return filterText(value1, operator, value2);
   },
@@ -68,7 +69,7 @@ export const filterId: textFilter = Object.assign(
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string, invert?: boolean) => {
       if (isNumber(value)) {
-        return `the id is ${filterNumber.toSummary(operator, parseInt(value), invert)}`;
+        return `the id is ${createNumSummary()(operator, parseInt(value), invert)}`;
       }
       return `the id ${opToIncludeSingular(operator, value, invert)}`;
     },
@@ -83,17 +84,6 @@ export const filterTextList: textListFilter = Object.assign(
     toSummary: (operator: opType, value: string) => NOPRINT,
   }
 );
-
-export const parseNote = (text: string): { name: string; note?: boolean | string } => {
-  if (text.endsWith('<')) {
-    return { name: text.slice(0, -1), note: true };
-  }
-  if (text.endsWith('>') && text.includes('<')) {
-    const [name, note] = [text.split('<')[0], text.split('<')[1].slice(0, -1)];
-    return { name, note };
-  }
-  return { name: text };
-};
 
 export const filterArtist: noteFilter = Object.assign(
   (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string) => {

@@ -120,4 +120,4 @@ export const Eight = () => {
 };
 
 const manaSymbolStyles = createStyles({ height: '20px' });
-const ManaSymbol = createStyledImg(manaSymbolStyles);
+const ManaSymbol = createStyledImg(manaSymbolStyles, 'ManaSymbol');

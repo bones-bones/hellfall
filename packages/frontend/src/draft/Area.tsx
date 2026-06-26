@@ -90,19 +90,19 @@ export const Area = () => {
 };
 
 const containerStyles = createStyles({ display: 'flex', flexDirection: 'row' });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const draftedContainerStyles = createStyles({ width: '20vw' });
-const DraftedContainer = createStyledDiv(draftedContainerStyles);
+const DraftedContainer = createStyledDiv(draftedContainerStyles, 'DraftedContainer');
 
 const packContainerStyles = createStyles({ width: '80vw' });
-const PackContainer = createStyledDiv(packContainerStyles);
+const PackContainer = createStyledDiv(packContainerStyles, 'PackContainer');
 
 const cardStyles = createStyles({ width: '260px' });
-const Card = createStyledImg(cardStyles);
+const Card = createStyledImg(cardStyles, 'Card');
 
 const cardContainerStyles = createStyles({
   height: '40px',
   ':hover': { width: '260px', zIndex: 2, height: 'auto' },
 });
-const CardContainer = createStyledDiv(cardContainerStyles);
+const CardContainer = createStyledDiv(cardContainerStyles, 'CardContainer');

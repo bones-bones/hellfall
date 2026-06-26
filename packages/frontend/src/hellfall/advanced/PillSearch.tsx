@@ -223,7 +223,7 @@ const pillContainerStyles = createStyles({
   marginBottom: '8px',
   marginTop: '8px',
 });
-const PillContainer = createStyledDiv(pillContainerStyles);
+const PillContainer = createStyledDiv(pillContainerStyles, 'PillContainer');
 
 const dropdownContainerStyles = createStyles({
   position: 'absolute',
@@ -242,7 +242,7 @@ const dropdownContainerStyles = createStyles({
   overflowX: 'hidden',
   boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
 });
-const DropdownContainer = createStyledDiv(dropdownContainerStyles);
+const DropdownContainer = createStyledDiv(dropdownContainerStyles, 'DropdownContainer');
 
 const dropdownItemStencil = createStencil({
   vars: {},
@@ -269,7 +269,10 @@ const dropdownItemStencil = createStencil({
 interface DropdownItemProps extends StenciledButtonDivProps {
   isFocused?: boolean;
 }
-const DropdownItem = createStenciledButtonDiv<DropdownItemProps>(dropdownItemStencil);
+const DropdownItem = createStenciledButtonDiv<DropdownItemProps>(
+  dropdownItemStencil,
+  'DropdownItem'
+);
 
 const clearButtonStyles = createStyles({ height: 'auto' });
-const ClearButton = createStyledTertiaryButton(clearButtonStyles);
+const ClearButton = createStyledTertiaryButton(clearButtonStyles, 'ClearButton');

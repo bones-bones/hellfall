@@ -174,7 +174,7 @@ const pageContainerStyles = createStyles({
   margin: '0 auto',
   padding: '20px 16px',
 });
-const PageContainer = createStyledDiv(pageContainerStyles);
+const PageContainer = createStyledDiv(pageContainerStyles, 'PageContainer');
 
 const headerRowStyles = createStyles({
   display: 'flex',
@@ -184,7 +184,7 @@ const headerRowStyles = createStyles({
   gap: 12,
   marginBottom: 8,
 });
-const HeaderRow = createStyledDiv(headerRowStyles);
+const HeaderRow = createStyledDiv(headerRowStyles, 'HeaderRow');
 
 const syncButtonStyles = createStyles({
   padding: '6px 14px',
@@ -197,21 +197,21 @@ const syncButtonStyles = createStyles({
   cursor: 'pointer',
   '&:disabled': { opacity: 0.6, cursor: 'default' },
 });
-const SyncButton = createStyledButton(syncButtonStyles);
+const SyncButton = createStyledButton(syncButtonStyles, 'SyncButton');
 
 const syncMessageStyles = createStyles({
   marginBottom: 12,
   fontSize: 14,
   color: '#155724',
 });
-const SyncMessage = createStyledDiv(syncMessageStyles);
+const SyncMessage = createStyledDiv(syncMessageStyles, 'SyncMessage');
 
 const filterRowStyles = createStyles({
   display: 'flex',
   gap: 4,
   marginBottom: 16,
 });
-const FilterRow = createStyledDiv(filterRowStyles);
+const FilterRow = createStyledDiv(filterRowStyles, 'FilterRow');
 
 const filterButtonStencil = createStencil({
   vars: {},
@@ -236,4 +236,4 @@ const filterButtonStencil = createStencil({
 interface FilterButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   data_active?: boolean;
 }
-const FilterButton = createStenciledButton<FilterButtonProps>(filterButtonStencil);
+const FilterButton = createStenciledButton<FilterButtonProps>(filterButtonStencil, 'FilterButton');
