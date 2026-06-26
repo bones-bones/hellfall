@@ -57,7 +57,7 @@ export const StyledSelect = <T extends string>({
           cs={inputStencil({ width })}
         />
         <Select.Popper>
-          <Select.Card ref={selectModel.state.containerRef} {...cardStencil({ width })}>
+          <Select.Card {...cardStencil({ width })}>
             <Select.List {...listStencil({ width })}>
               {(item: { value: string; label: T }) => (
                 <Select.Item key={item.value} {...itemStencil({ width })}>

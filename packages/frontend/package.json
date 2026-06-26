@@ -11,6 +11,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@scryfall/api-types": ">=1.0.0-alpha.4",
     "@svgr/webpack": "5.5.0",
+    "@tanstack/react-virtual": "3.14.4",
     "@use-gesture/react": "^10.2.20",
     "@workday/canvas-kit-labs-react": "^15",
     "@workday/canvas-kit-preview-react": "^15",
