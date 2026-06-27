@@ -50,7 +50,6 @@
   },
   "packageManager": "yarn@4.17.0",
   "resolutions": {
-    "@tanstack/virtual-core@npm:3.17.1": "patch:@tanstack/virtual-core@npm%3A3.17.1#~/.yarn/patches/@tanstack-virtual-core-npm-3.17.1-583248bb07.patch",
     "@workday/canvas-kit-react@npm:^15.0.14": "patch:@workday/canvas-kit-react@npm%3A15.0.14#~/.yarn/patches/@workday-canvas-kit-react-npm-15.0.14-47b4c50911.patch"
   }
 }

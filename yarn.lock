@@ -2799,6 +2799,7 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": "npm:0.4.3"
     "@scryfall/api-types": "npm:>=1.0.0-alpha.4"
     "@svgr/webpack": "npm:5.5.0"
+    "@tanstack/react-virtual": "npm:3.14.4"
     "@types/jest": "npm:^26.0.15"
     "@types/jsdom": "npm:^16.2.13"
     "@types/motion-sensors-polyfill": "npm:^0.3.0"
@@ -4053,6 +4054,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-virtual@npm:3.14.4":
+  version: 3.14.4
+  resolution: "@tanstack/react-virtual@npm:3.14.4"
+  dependencies:
+    "@tanstack/virtual-core": "npm:3.17.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/e9c24827715c8ac5996d3b6ad273b50e11a0e138ad8226baeee0e4a6c5c55122b95524d144b925b625eb1b5ef7e4e66bbd4164f5a68761157cd1dcf60c3561c8
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-virtual@npm:^3.13.9":
   version: 3.14.3
   resolution: "@tanstack/react-virtual@npm:3.14.3"
@@ -4072,10 +4085,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/virtual-core@patch:@tanstack/virtual-core@npm%3A3.17.1#~/.yarn/patches/@tanstack-virtual-core-npm-3.17.1-583248bb07.patch":
-  version: 3.17.1
-  resolution: "@tanstack/virtual-core@patch:@tanstack/virtual-core@npm%3A3.17.1#~/.yarn/patches/@tanstack-virtual-core-npm-3.17.1-583248bb07.patch::version=3.17.1&hash=7e53d7"
-  checksum: 10c0/e62fc1d03cf955ef359aa9c790488e4571a90662a1ffcfdb4d942ac6287f7980d90cc5d78bccb62beb6f7eaf3296a85e4df508a4ef8223eed0ce225e7b9542d9
+"@tanstack/virtual-core@npm:3.17.2":
+  version: 3.17.2
+  resolution: "@tanstack/virtual-core@npm:3.17.2"
+  checksum: 10c0/f388eb86cb2f5c6ca1a93346b8889a21fadd0b8a02330a0e285cd88ddb0a7cfbd0787fe028a29c9e97404040d871b2f90159afb5a8a7eb49dafe2a81c082dbb5
   languageName: node
   linkType: hard
 
@@ -5486,7 +5499,7 @@ __metadata:
 
 "@workday/canvas-kit-react@patch:@workday/canvas-kit-react@npm%3A15.0.14#~/.yarn/patches/@workday-canvas-kit-react-npm-15.0.14-47b4c50911.patch":
   version: 15.0.14
-  resolution: "@workday/canvas-kit-react@patch:@workday/canvas-kit-react@npm%3A15.0.14#~/.yarn/patches/@workday-canvas-kit-react-npm-15.0.14-47b4c50911.patch::version=15.0.14&hash=cac6ba"
+  resolution: "@workday/canvas-kit-react@patch:@workday/canvas-kit-react@npm%3A15.0.14#~/.yarn/patches/@workday-canvas-kit-react-npm-15.0.14-47b4c50911.patch::version=15.0.14&hash=6518e7"
   dependencies:
     "@emotion/is-prop-valid": "npm:^1.1.1"
     "@emotion/react": "npm:^11.7.1"
@@ -5509,7 +5522,7 @@ __metadata:
     use-resize-observer: "npm:^9.1.0"
   peerDependencies:
     react: ">=17.0"
-  checksum: 10c0/653f90d86a3ee03374991e9872a0a7c7f9e99849053dd29cd19c4cfa6fbc0092ad5028a87ef3790f5e768cc168e8ca2e981d87a101bcac793ba1e31f72b367c9
+  checksum: 10c0/64a983291c050c946da771e7312b6d9b66f6216a65d1bca7067de2cb92d54a375afd3781cf188a8afe2555bc6bcca5d07064370666f82716b9df9283c02f7e97
   languageName: node
   linkType: hard
 

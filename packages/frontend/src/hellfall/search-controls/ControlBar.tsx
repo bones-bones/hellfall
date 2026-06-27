@@ -13,10 +13,10 @@ import {
   plusIcon,
   minusIcon,
   chevronLeftIcon,
-  chevron2xleftIcon,
   chevronRightIcon,
-  chevron2xrightIcon,
   splitIcon,
+  chevron2xLeftIcon,
+  chevron2xRightIcon,
 } from '@workday/canvas-system-icons-web';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import {
@@ -364,7 +364,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
           {model && (
             <>
               <ControlButton
-                icon={chevron2xleftIcon}
+                icon={chevron2xLeftIcon}
                 title={`${currentPage == 1 ? 'You are on' : 'Go to'} the first page of this search`}
                 aria-label={`${
                   currentPage == 1 ? 'You are on' : 'Go to'
@@ -401,7 +401,7 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
                 disabled={currentPage == lastPage}
               />
               <ControlButton
-                icon={chevron2xrightIcon}
+                icon={chevron2xRightIcon}
                 title={`${
                   currentPage == lastPage ? 'You are on' : 'Go to'
                 } the last page of this search`}

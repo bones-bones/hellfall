@@ -12,6 +12,8 @@ import {
   NoIdentityFaceLayouts,
   EffectFrames,
   FrontIdentityLayouts,
+  FrontManaValueFaceLayouts,
+  NoManaValueFaceLayouts,
 } from '@hellfall/shared/types';
 import {
   splitParens,
@@ -37,6 +39,7 @@ import {
   createFaceChange,
   splitFullTag,
   splitTagComponents,
+  getColorsFromText,
   // setTags,
 } from '@hellfall/shared/utils';
 
@@ -102,6 +105,7 @@ export const getColorIdentityProps = (
 
     const splitSubtypes = face.subtypes || [];
     splitSubtypes.forEach(typeEntry => {
+      if (typeEntry == 'Carnival' && card.tags?.includes('ignore-carnival-identity')) return;
       const mappedColor = landToColorMapping[typeEntry];
       if (mappedColor) {
         addColors([mappedColor]);
@@ -175,7 +179,7 @@ export const setDerivedProps = (
     applyChanges(card, changes);
   }
 
-  const baseIncludesFlag = (flag: string, i: number): boolean | undefined =>
+  const baseIncludesFlag = (flag: string, i?: number): boolean | undefined =>
     card.base_tags?.some(full_tag => {
       const { tag, value } = splitTagComponents(full_tag);
       if (tag != flag) {
@@ -302,8 +306,11 @@ export const setDerivedProps = (
       face.colors = orderColors(face.colors);
       if (face.color_indicator) {
         face.color_indicator = orderColors(face.color_indicator);
+        face.colors = face.color_indicator;
       } else if (baseIncludesFlag('unnecessary-color-indicator', i)) {
         face.color_indicator = face.colors;
+      } else if (card.kind == 'token' && face.mana_cost && !card.tags?.includes('generic')) {
+        face.colors = getColorsFromText(face.mana_cost);
       }
       const face_type = [
         face.supertypes?.join(' '),
@@ -314,7 +321,7 @@ export const setDerivedProps = (
       face.type_line = face_type;
       type_line_list.push(face_type);
       face.mana_value =
-        i && !face.mana_cost && ['transform', 'flip'].includes(face.layout)
+        i && !face.mana_cost && FrontManaValueFaceLayouts.includes(face.layout)
           ? card.card_faces.slice(0, i).findLast(f => f.mana_cost)?.mana_value ?? 0
           : getMVFromCost(face.mana_cost);
       mana_cost_list.push(face.mana_cost);
@@ -332,8 +339,18 @@ export const setDerivedProps = (
     }
     card.mana_cost = mana_cost_list.filter(e => e).join(' // ');
   } else {
+    card.colors = orderColors(card.colors);
     if (card.color_indicator) {
       card.color_indicator = orderColors(card.color_indicator);
+    } else if (baseIncludesFlag('unnecessary-color-indicator')) {
+      card.color_indicator = card.colors;
+    } else if (
+      card.kind == 'token' &&
+      card.mana_cost &&
+      !card.tags?.includes('generic') &&
+      !card.frame_effects?.includes(HCFrameEffect.Devoid)
+    ) {
+      card.colors = getColorsFromText(card.mana_cost);
     }
     card.type_line = [
       card.supertypes?.join(' '),
@@ -344,6 +361,34 @@ export const setDerivedProps = (
     const effects = [...(card.frame_effects || []), ...getFrameEffectsFromFace(card, 0)];
     if (effects.length > 0) {
       card.frame_effects = effects;
+    }
+  }
+  if (card.kind == 'token') {
+    if ('card_faces' in card) {
+      card.mana_value = 0;
+      const colors: HCColors = [];
+      card.card_faces.forEach((face, i) => {
+        if (
+          !(
+            NoManaValueFaceLayouts.includes(face.layout) && `multi_${face.layout}` != card.layout
+          ) &&
+          !(FrontManaValueFaceLayouts.includes(face.layout) && i)
+        ) {
+          card.mana_value += face.mana_value;
+          colors.push(
+            ...(face.color_indicator ??
+              (face.mana_cost && !card.tags?.includes('generic')
+                ? getColorsFromText(face.mana_cost)
+                : face.colors))
+          );
+        }
+      });
+      card.colors = orderColors(colors);
+    } else if (card.mana_cost) {
+      card.mana_value = getMVFromCost(card.mana_cost);
+      if (!card.tags?.includes('generic') && !card.frame_effects?.includes(HCFrameEffect.Devoid)) {
+        card.colors = card.color_indicator ?? getColorsFromText(card.mana_cost);
+      }
     }
   }
   if (card.tags?.includes('italic-typeline')) {
@@ -562,8 +607,8 @@ export const landToColorMapping = {
   Moontain: 'R',
   Forest: 'G',
   Nebula: 'P',
-  // Oasis: 'Orange',
-  // Mudflats: 'Brown',
+  Oasis: 'Orange',
+  Mudflats: 'Brown',
   'Gas-Station': 'Yellow',
-  // Carnival: 'Pink',
+  Carnival: 'Pink',
 } as Record<string, HCColor>;

@@ -1368,6 +1368,20 @@ export const applyChanges = (
         return;
       }
       if (
+        change.location == 'root' &&
+        change.prop == 'artist_notes' &&
+        change.change_type == 'pop' &&
+        changeList.some(
+          other =>
+            other.location == 'root' &&
+            other.change_type == change.change_type &&
+            other.prop == 'artists' &&
+            other.value == (change.value as [string, string])[0]
+        )
+      ) {
+        return;
+      }
+      if (
         'card_faces' in card &&
         change.location == 'face' &&
         !change.index &&
