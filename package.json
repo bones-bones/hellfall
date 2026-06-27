@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "eslint": "^8.45.0",
     "eslint-plugin-deprecation": "^3.0.0",
     "eslint-plugin-sonarjs": "^4.0.3",
     "prettier": "^2.2.1",

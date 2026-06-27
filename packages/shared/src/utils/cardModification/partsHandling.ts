@@ -1,5 +1,5 @@
 import { HCCard, HCObject, HCRelatedCard, relatedComponent } from '@hellfall/shared/types';
-import { textEquals } from '../textHandling';
+import { textEquals, relatedNamesMatch } from '../textHandling';
 import { pushProp } from '../listHandling';
 import { CardMap, toFaces } from '../cardHandling';
 
@@ -108,9 +108,11 @@ export const updateParts = (
       const relatedCard =
         relateds.get(part.id) ??
         relateds.find(related => textEquals(part.hcid, related.hcid)) ??
-        relateds.find(related => textEquals(part.name, related.name));
+        relateds.find(related => relatedNamesMatch(part.name, related.name));
       if (!relatedCard) {
-        throw console.error;
+        throw new Error(
+          `updateParts: token_maker part not found for card "${card.name}" (${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
+        );
       }
       part.id = relatedCard.id;
       part.hcid = relatedCard.hcid;
@@ -166,9 +168,11 @@ export const updateParts = (
       const relatedCard =
         relateds.get(part.id) ??
         relateds.find(related => textEquals(part.hcid, related.hcid)) ??
-        relateds.find(related => textEquals(part.name, related.name));
+        relateds.find(related => relatedNamesMatch(part.name, related.name));
       if (!relatedCard) {
-        throw console.error;
+        throw new Error(
+          `updateParts: draft_partner part not found for card "${card.name}" (${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
+        );
       }
       if (!relatedCard.has_draft_partners) {
         relatedCard.has_draft_partners = true;
@@ -200,9 +204,11 @@ export const updateParts = (
         const relatedCard =
           relateds.get(part.id) ??
           relateds.find(related => textEquals(part.hcid, related.hcid)) ??
-          relateds.find(related => textEquals(part.name, related.name));
+          relateds.find(related => relatedNamesMatch(part.name, related.name));
         if (!relatedCard) {
-          throw console.error;
+          throw new Error(
+            `updateParts: meld_part not found for token "${card.name}" (${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
+          );
         }
         part.id = relatedCard.id;
         part.hcid = relatedCard.hcid;
@@ -230,10 +236,12 @@ export const updateParts = (
     };
     meldParts.set(card.id, meldResult);
     relateds.set(card);
-    meldParts.keys().forEach(id => {
+    for (const id of meldParts.keys()) {
       const relatedCard = relateds.get(id);
       if (!relatedCard) {
-        throw console.error;
+        throw new Error(
+          `updateParts: meld cross-link not found for token "${card.name}" (${card.hcid}): related id=${id}`
+        );
       }
       meldParts.forEach((part, partid) => {
         if (id != partid) {
@@ -245,7 +253,7 @@ export const updateParts = (
           }
         }
       });
-    });
+    }
   }
 };
 

@@ -1,4 +1,5 @@
 import { sheetsKey } from './env.ts';
+import { parseRelatedReferenceName } from './parseRelatedReference.ts';
 import {
   HCColor,
   HCImageStatus,
@@ -236,9 +237,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
             addPropToRoot(card, 'legalities', legalities);
           } else if (keys[i] == 'related') {
             entry[i].split(';').forEach(oldName => {
-              const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-              const name = match?.groups?.name ?? oldName;
-              const count = match?.groups?.count;
+              const { name, count } = parseRelatedReferenceName(oldName);
               const base = name.replace(/\d+$/, '');
               const shouldUseBase =
                 /\d/.test(name.at(-1)!) &&
