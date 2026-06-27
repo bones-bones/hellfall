@@ -488,7 +488,7 @@
       "no_shadow": true
     },
     {
-      "filename": "colorIndicators/Misc/Pan.svg",
+      "filename": "colorIndicators/misc/Pan.svg",
       "symbol": "CI-Pan",
       "english": "Color Indicator: Pan (Blue, Yellow, and Pink)",
       "represents_mana": false,
@@ -500,7 +500,7 @@
       "no_shadow": true
     },
     {
-      "filename": "colorIndicators/Misc/GSlot.svg",
+      "filename": "colorIndicators/misc/GSlot.svg",
       "symbol": "CI-GSlot",
       "english": "Color Indicator: Green Slot (Yellow, Pink, Brown, Purple, and Green)",
       "represents_mana": false,
@@ -514,7 +514,7 @@
       "no_shadow": true
     },
     {
-      "filename": "colorIndicators/Misc/GUPPY.svg",
+      "filename": "colorIndicators/misc/GUPPY.svg",
       "symbol": "CI-GUPPY",
       "english": "Color Indicator: GUPPY (Green, Blue, Purple, and Yellow)",
       "represents_mana": false,
