@@ -318,7 +318,7 @@ export namespace HCLayoutGroup {
 }
 
 /**
- * All face layouts that can not contribute to a card's color identity .
+ * All face layouts that can not contribute to a card's color identity.
  */
 export const NoIdentityFaceLayouts = [
   HCLayout.MeldResult,
@@ -343,6 +343,34 @@ export const FrontIdentityLayouts = [
   HCLayout.DungeonOnBack,
   HCLayout.DungeonInInset,
   HCLayout.StickersOnBack,
+];
+/**
+ * All face layouts that can not contribute to a card's mana value.
+ */
+export const NoManaValueFaceLayouts = [
+  HCLayout.Token,
+  HCLayout.Emblem,
+  HCLayout.Reminder,
+  HCLayout.Stickers,
+  HCLayout.Dungeon,
+  HCLayout.DraftPartner,
+  HCLayout.Transform,
+  HCLayout.Modal,
+  HCLayout.Specialize,
+  HCLayout.MeldResult,
+  HCLayout.Flip,
+  HCLayout.Inset,
+  HCLayout.Prepare,
+];
+
+// /**
+//  * All face layouts that use their front face for their mana value.
+//  */
+export const FrontManaValueFaceLayouts = [
+  HCLayout.Transform,
+  HCLayout.Specialize,
+  HCLayout.MeldResult,
+  HCLayout.Flip,
 ];
 
 export type BothLayoutType = HCLayoutGroup.FaceLayoutType & HCLayoutGroup.SingleFacedType;

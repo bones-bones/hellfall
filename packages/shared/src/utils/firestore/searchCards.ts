@@ -1,11 +1,9 @@
 import type { CollectionReference } from '@google-cloud/firestore';
 import { HCCard } from '@hellfall/shared/types';
-import { makeIncludeFilter, otherPrintGetterType } from '../../filters/filterBuilder';
-import type { FilterNode } from '../../filters/parseSearchBar';
-import { fixTags, parseSearchQuery } from '../../filters/parseSearchBar';
-import { CardMap } from '../cardHandling/cardMap';
+import { makeIncludeFilter, FilterNode, fixTags, parseSearchQuery } from '@hellfall/shared/filters';
+import { CardMap } from '../cardHandling';
 import { firestoreToCard } from './cardConversion';
-import { getAllPrintsCollection, getAllRelatedCollection } from './cardRefs';
+import { getAllRelatedCollection } from './cardRefs';
 import type { firestoreCard } from './firestoreTypes';
 
 const evaluateRelatedFilter = (

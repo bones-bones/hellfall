@@ -22,20 +22,20 @@ const containerStyles = createStyles({
   alignItems: 'center',
   minHeight: 'calc(100vh - 72px)',
 });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const cubeSvgStyles = createStyles({
   width: 120,
   height: 132,
 });
-const CubeSvg = createStyledSVG('svg', cubeSvgStyles);
+const CubeSvg = createStyledSVG('svg', cubeSvgStyles, 'CubeSvg');
 
 const cubeFaceStyles = createStyles({
   stroke: 'rgba(160, 160, 160, 0.55)',
   strokeWidth: 1,
   strokeLinejoin: 'round',
 });
-const CubeFace = createStyledSVG('polygon', cubeFaceStyles);
+const CubeFace = createStyledSVG('polygon', cubeFaceStyles, 'CubeFace');
 
 const faceOverlayStencil = createStencil({
   vars: {
@@ -53,7 +53,11 @@ const faceOverlayStencil = createStencil({
 interface FaceOverlayProps extends React.ComponentPropsWithoutRef<'svg'> {
   delay: string;
 }
-const FaceOverlay = createStenciledSVG<FaceOverlayProps>('polygon', faceOverlayStencil);
+const FaceOverlay = createStenciledSVG<FaceOverlayProps>(
+  'polygon',
+  faceOverlayStencil,
+  'FaceOverlay'
+);
 
 const FACES = [
   '50,12 78,28 50,44 22,28',

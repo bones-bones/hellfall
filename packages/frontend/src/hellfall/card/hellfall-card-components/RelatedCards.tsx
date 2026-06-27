@@ -85,4 +85,4 @@ const relatedGridStyles = createStyles({
   gap: '0px',
   margin: '0 auto',
 });
-const RelatedGrid = createStyledDiv(relatedGridStyles);
+const RelatedGrid = createStyledDiv(relatedGridStyles, 'RelatedGrid');

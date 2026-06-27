@@ -88,18 +88,18 @@ const draftedCardsContainerStyles = createStyles({
   display: 'flex',
   overflowY: 'hidden',
 });
-const DraftedCardsContainer = createStyledDiv(draftedCardsContainerStyles);
+const DraftedCardsContainer = createStyledDiv(draftedCardsContainerStyles, 'DraftedCardsContainer');
 
 const deckContainerStyles = createStyles({ display: 'flex' });
-const DeckContainer = createStyledDiv(deckContainerStyles);
+const DeckContainer = createStyledDiv(deckContainerStyles, 'DeckContainer');
 
 const DeckColumn = Box;
 
 const cardStyles = createStyles({ width: '220px' });
-const Card = createStyledImg(cardStyles);
+const Card = createStyledImg(cardStyles, 'Card');
 
 const cardContainerStyles = createStyles({
   height: '40px',
   ':hover': { width: '220px', zIndex: 2, height: 'auto' },
 });
-const CardContainer = createStyledDiv(cardContainerStyles);
+const CardContainer = createStyledDiv(cardContainerStyles, 'CardContainer');

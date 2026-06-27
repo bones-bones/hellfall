@@ -213,7 +213,7 @@ const headerRowStyles = createStyles({
   gap: 8,
   marginBottom: 8,
 });
-const HeaderRow = createStyledDiv(headerRowStyles);
+const HeaderRow = createStyledDiv(headerRowStyles, 'HeaderRow');
 
 const statusBadgeStencil = createStencil({
   vars: {},
@@ -237,20 +237,20 @@ const statusBadgeStencil = createStencil({
 interface StatusProps extends TextProps {
   data_status?: ChangesetStatus;
 }
-const StatusBadge = createStenciledSpan<StatusProps>(statusBadgeStencil);
+const StatusBadge = createStenciledSpan<StatusProps>(statusBadgeStencil, 'StatusBadge');
 
 const metaStyles = createStyles({
   fontSize: 13,
   color: '#666',
 });
-const Meta = createStyledSpan(metaStyles);
+const Meta = createStyledSpan(metaStyles, 'Meta');
 
 const commentStyles = createStyles({
   fontStyle: 'italic',
   color: '#555',
   margin: '4px 0 8px',
 });
-const Comment = createStyledIntrinsic('p', commentStyles);
+const Comment = createStyledIntrinsic('p', commentStyles, 'Comment');
 
 const changesTableStyles = createStyles({
   width: '100%',
@@ -268,7 +268,7 @@ const changesTableStyles = createStyles({
     fontWeight: 600,
   },
 });
-const ChangesTable = createStyledTable(changesTableStyles);
+const ChangesTable = createStyledTable(changesTableStyles, 'ChangesTable');
 
 const diffValueStyles = createStyles({
   whiteSpace: 'pre-wrap',
@@ -276,14 +276,14 @@ const diffValueStyles = createStyles({
   fontFamily: 'monospace',
   fontSize: 13,
 });
-const DiffValue = createStyledSpan(diffValueStyles);
+const DiffValue = createStyledSpan(diffValueStyles, 'DiffValue');
 
 const actionRowStyles = createStyles({
   display: 'flex',
   gap: 8,
   marginTop: 12,
 });
-const ActionRow = createStyledDiv(actionRowStyles);
+const ActionRow = createStyledDiv(actionRowStyles, 'ActionRow');
 
 const buttonBase = createStyles({
   padding: '6px 16px',
@@ -300,14 +300,14 @@ const acceptButtonStyles = createStyles(buttonBase, {
   color: '#fff',
   '&:hover:not(:disabled)': { background: '#218838' },
 });
-const AcceptButton = createStyledButton(acceptButtonStyles);
+const AcceptButton = createStyledButton(acceptButtonStyles, 'AcceptButton');
 
 const rejectButtonStyles = createStyles(buttonBase, {
   background: '#dc3545',
   color: '#fff',
   '&:hover:not(:disabled)': { background: '#c82333' },
 });
-const RejectButton = createStyledButton(rejectButtonStyles);
+const RejectButton = createStyledButton(rejectButtonStyles, 'RejectButton');
 
 function formatTime(iso: string | null): string {
   if (!iso) return '';

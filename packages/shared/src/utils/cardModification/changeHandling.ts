@@ -97,10 +97,10 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'mana_value',
     // 'type_line',
     'colors',
-    'draft_image_status',
-    'draft_image',
-    'rotated_draft_image',
-    'still_draft_image',
+    'print_image_status',
+    'print_image',
+    'rotated_print_image',
+    'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
     'legalities',
@@ -127,10 +127,10 @@ export const rootChangeableProps: Record<changeType, rootPropType[]> = {
     'rarity',
     'rotated_image',
     'still_image',
-    'draft_image_status',
-    'draft_image',
-    'rotated_draft_image',
-    'still_draft_image',
+    'print_image_status',
+    'print_image',
+    'rotated_print_image',
+    'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
   ],
@@ -232,9 +232,9 @@ const imageProps = [
   'image',
   'rotated_image',
   'still_image',
-  'draft_image',
-  'rotated_draft_image',
-  'still_draft_image',
+  'print_image',
+  'rotated_print_image',
+  'still_print_image',
 ];
 const boolProps = [
   'id_is_scryfall',
@@ -304,7 +304,7 @@ export const rootChangeIsValid = <K extends rootPropType>(
       if (change.prop == 'frame') {
         return isFrame(change.value);
       }
-      if (change.prop == 'image_status' || change.prop == 'draft_image_status') {
+      if (change.prop == 'image_status' || change.prop == 'print_image_status') {
         return isImageStatus(change.value);
       }
       return typeof change.value == 'string';
@@ -836,10 +836,10 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'image',
     'rotated_image',
     'still_image',
-    'draft_image_status',
-    'draft_image',
-    'rotated_draft_image',
-    'still_draft_image',
+    'print_image_status',
+    'print_image',
+    'rotated_print_image',
+    'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
     'artists',
@@ -859,10 +859,10 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'image',
     'rotated_image',
     'still_image',
-    'draft_image_status',
-    'draft_image',
-    'rotated_draft_image',
-    'still_draft_image',
+    'print_image_status',
+    'print_image',
+    'rotated_print_image',
+    'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
     'artists',
@@ -882,10 +882,10 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'image',
     'rotated_image',
     'still_image',
-    'draft_image_status',
-    'draft_image',
-    'rotated_draft_image',
-    'still_draft_image',
+    'print_image_status',
+    'print_image',
+    'rotated_print_image',
+    'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
     'artists',
@@ -903,10 +903,10 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'image',
     'rotated_image',
     'still_image',
-    'draft_image_status',
-    'draft_image',
-    'rotated_draft_image',
-    'still_draft_image',
+    'print_image_status',
+    'print_image',
+    'rotated_print_image',
+    'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
     'artists',
@@ -992,12 +992,12 @@ const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
 };
 
 const rootIgnoreProps: Record<HCKind, rootPropType[]> = {
-  card: ['keywords', 'image_status', 'draft_image_status'],
-  token: ['mana_cost', 'mana_value', 'colors', 'rulings', 'image_status', 'draft_image_status'],
-  land: ['keywords', 'image_status', 'draft_image_status'],
-  front: ['keywords', 'image_status', 'draft_image_status'],
+  card: ['keywords', 'image_status', 'print_image_status'],
+  token: ['mana_cost', 'mana_value', 'colors', 'rulings', 'image_status', 'print_image_status'],
+  land: ['keywords', 'image_status', 'print_image_status'],
+  front: ['keywords', 'image_status', 'print_image_status'],
   scryfall: [],
-  notmagic: ['keywords', 'image_status', 'draft_image_status'],
+  notmagic: ['keywords', 'image_status', 'print_image_status'],
 };
 const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
   // card: ['colors'],
@@ -1364,6 +1364,20 @@ export const applyChanges = (
               other.prop == change.prop &&
               other.value == change.value
           )
+      ) {
+        return;
+      }
+      if (
+        change.location == 'root' &&
+        change.prop == 'artist_notes' &&
+        change.change_type == 'pop' &&
+        changeList.some(
+          other =>
+            other.location == 'root' &&
+            other.change_type == change.change_type &&
+            other.prop == 'artists' &&
+            other.value == (change.value as [string, string])[0]
+        )
       ) {
         return;
       }

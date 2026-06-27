@@ -1,6 +1,7 @@
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { listEquals } from './listHandling';
 import { pipsData } from '@hellfall/shared/data';
+import { orderColors } from './orderColors';
 
 const transformPipsData = (data: any[]): HCCardSymbol[] => {
   return data.map(item => {
@@ -57,6 +58,13 @@ export const getPipsFromText = (text: string): HCCardSymbol[] =>
 
 export const getPipColorsFromText = (text: string): HCColors[] =>
   getPipsFromText(text).flatMap(pip => [pip.colors ?? []]) ?? ([] as HCColors[]);
+
+export const getColorsFromText = (text: string): HCColors =>
+  orderColors(
+    getPipColorsFromText(text)
+      .flatMap(c => c)
+      .filter(c => c != 'C')
+  );
 
 /**
  * Gets the total mana value of a cost string

@@ -102,7 +102,7 @@ const containerStyles = createStyles(sharedContainerStyles, {
   alignItems: 'center',
   justifyContent: 'center',
 });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const imageLinkStencil = createStencil({
   vars: {},
@@ -117,4 +117,4 @@ const imageLinkStencil = createStencil({
     },
   },
 });
-const StyledImageLink = createStenciledLink<ImageLinkProps>(imageLinkStencil);
+const StyledImageLink = createStenciledLink<ImageLinkProps>(imageLinkStencil, 'StyledImageLink');

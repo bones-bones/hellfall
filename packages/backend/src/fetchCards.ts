@@ -21,10 +21,7 @@ import {
   addPropToRoot,
   rootPropType,
   pushPropToRoot,
-  orderColors,
-  getPipColorsFromText,
-  listEquals,
-  toFaces,
+  getColorsFromText,
 } from '@hellfall/shared/utils';
 import { pipsData } from '@hellfall/shared/data';
 
@@ -159,11 +156,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
       },
       {
         colors: cardIsMulti
-          ? orderColors(
-              getPipColorsFromText(entryAt('mana_cost'))
-                .flatMap(c => c)
-                .filter(c => c != 'C')
-            )
+          ? getColorsFromText(entryAt('mana_cost'))
           : entryAt('colors')
           ? entryAt('colors')
               .split(';')
@@ -183,11 +176,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         image_status: entryAt('0image') ? HCImageStatus.HighRes : undefined,
       }
     );
-    const costColors = orderColors(
-      getPipColorsFromText(entryAt('mana_cost'))
-        .flatMap(c => c)
-        .filter(c => c != 'C')
-    );
+    const costColors = getColorsFromText(entryAt('mana_cost'));
     if (!costColors.length && card.colors.length && !cardIsMulti && card.set != 'NRM') {
       addPropToFace(card, 'color_indicator', card.colors);
     }
@@ -212,16 +201,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               addPropToFace(card, key as facePropType, value, face + index);
             }
             if (key == 'mana_cost') {
-              addPropToFace(
-                card,
-                'colors',
-                orderColors(
-                  getPipColorsFromText(value)
-                    .flatMap(c => c)
-                    .filter(c => c != 'C')
-                ),
-                face + index
-              );
+              addPropToFace(card, 'colors', getColorsFromText(value), face + index);
             }
             if (key == 'image') {
               addPropToFace(card, 'image_status', HCImageStatus.HighRes, face + index);

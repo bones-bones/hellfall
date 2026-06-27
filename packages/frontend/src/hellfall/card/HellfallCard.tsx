@@ -82,17 +82,17 @@ const getImages = (card: HCCard.Any) => {
     imagesToShow.push(card.rotated_image);
     imageNames.push('rotated');
   }
-  if (card.draft_image) {
-    imagesToShow.push(card.draft_image);
-    imageNames.push('draft');
+  if (card.print_image) {
+    imagesToShow.push(card.print_image);
+    imageNames.push('print');
   }
-  if (card.still_draft_image) {
-    imagesToShow.push(card.still_draft_image);
-    imageNames.push('still draft');
+  if (card.still_print_image) {
+    imagesToShow.push(card.still_print_image);
+    imageNames.push('still print');
   }
-  if (card.rotated_draft_image) {
-    imagesToShow.push(card.rotated_draft_image);
-    imageNames.push('rotated draft');
+  if (card.rotated_print_image) {
+    imagesToShow.push(card.rotated_print_image);
+    imageNames.push('rotated print');
   }
   return { images: imagesToShow, names: imageNames };
 };
@@ -407,7 +407,7 @@ export const HellfallCard = ({
 };
 
 const rulingStyles = createStyles({ paddingTop: '5px' });
-const Ruling = createStyledDiv(rulingStyles);
+const Ruling = createStyledDiv(rulingStyles, 'Ruling');
 
 const containerStyles = createStyles({
   display: 'flex',
@@ -417,7 +417,7 @@ const containerStyles = createStyles({
   justifyContent: 'center',
   lineHeight: 1,
 });
-const Container = createStyledDivWithRef(containerStyles);
+const Container = createStyledDivWithRef(containerStyles, 'Container');
 
 const imageContainerContainerStyles = createStyles({
   display: 'flex',
@@ -425,7 +425,10 @@ const imageContainerContainerStyles = createStyles({
   overflowX: 'auto',
   width: '100%',
 });
-const ImageContainerContainer = createStyledDiv(imageContainerContainerStyles);
+const ImageContainerContainer = createStyledDiv(
+  imageContainerContainerStyles,
+  'ImageContainerContainer'
+);
 
 const imageContainerStyles = createStyles({
   display: 'flex',
@@ -442,7 +445,7 @@ const imageContainerStyles = createStyles({
     objectFit: 'contain',
   },
 });
-const ImageContainer = createStyledDiv(imageContainerStyles);
+const ImageContainer = createStyledDiv(imageContainerStyles, 'ImageContainer');
 
 const ButtonContainer = Box;
 
@@ -453,7 +456,7 @@ const separatorStyles = createStyles({
   marginLeft: '-32px',
   marginRight: '-32px',
 });
-const Separator = createStyledHR(separatorStyles);
+const Separator = createStyledHR(separatorStyles, 'Separator');
 
 const linkButtonStyles = createStyles({
   marginLeft: '30px',
@@ -492,7 +495,7 @@ const inputButtonColors: ButtonColors = {
     label: system.color.fg.default,
   },
 };
-const LinkButton = createStyledPrimaryButtonLink(linkButtonStyles);
+const LinkButton = createStyledPrimaryButtonLink(linkButtonStyles, 'LinkButton');
 
 const buttonGroupStyles = createStyles({
   display: 'inline-block',
@@ -500,4 +503,4 @@ const buttonGroupStyles = createStyles({
   marginLeft: '4px',
   verticalAlign: 'top',
 });
-const ButtonGroup = createStyledDiv(buttonGroupStyles);
+const ButtonGroup = createStyledDiv(buttonGroupStyles, 'ButtonGroup');

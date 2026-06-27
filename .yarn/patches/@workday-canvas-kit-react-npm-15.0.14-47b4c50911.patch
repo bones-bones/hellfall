@@ -1,0 +1,36 @@
+diff --git a/dist/es6/collection/lib/useBaseListModel.js b/dist/es6/collection/lib/useBaseListModel.js
+index 473d8d6ce2646e93763341a3e351dffa5ad933f8..381ed99cf6c0da84c408bd3bc315cef5e70965c6 100644
+--- a/dist/es6/collection/lib/useBaseListModel.js
++++ b/dist/es6/collection/lib/useBaseListModel.js
+@@ -124,6 +124,7 @@ export const useBaseListModel = createModelHook({
+         estimateSize: React.useCallback(() => UNSTABLE_defaultItemHeight, [UNSTABLE_defaultItemHeight]),
+         horizontal: config.orientation === 'horizontal',
+         overscan: 3, // overscan of 3 helps rapid navigation
++        directDomUpdates: true,
+     });
+     // Force Typescript to recognize the `Generic` symbol
+     const genericState = {
+diff --git a/dist/es6/menu/lib/MenuCard.js b/dist/es6/menu/lib/MenuCard.js
+index 69e22dfd5dec2d31bbad0d7bc2f6bf67fed24168..29a101129e76c6efc3e4c9106c0c1daede716709 100644
+--- a/dist/es6/menu/lib/MenuCard.js
++++ b/dist/es6/menu/lib/MenuCard.js
+@@ -32,5 +32,5 @@ export const MenuCard = createSubcomponent('div')({
+             maxHeight: typeof maxHeight === 'number' ? px2rem(maxHeight) : maxHeight,
+             transformOriginVertical: transformOrigin.vertical,
+             transformOriginHorizontal: transformOrigin.horizontal,
+-        })), children: elemProps.children }));
++        })), ref: model.state.containerRef, children: elemProps.children }));
+ });
+diff --git a/package.json b/package.json
+index 04c6dd5d90f44046b268eaf49ceeabc17689cf8f..98d02702f7603af2b16badb44d17d03615cea284 100644
+--- a/package.json
++++ b/package.json
+@@ -50,7 +50,7 @@
+     "@emotion/react": "^11.7.1",
+     "@emotion/styled": "^11.6.0",
+     "@popperjs/core": "^2.5.4",
+-    "@tanstack/react-virtual": "^3.13.9",
++    "@tanstack/react-virtual": "^3.14.4",
+     "@workday/canvas-colors-web": "^2.0.0",
+     "@workday/canvas-expressive-icons-web": "1.0.2",
+     "@workday/canvas-kit-popup-stack": "^15.0.14",

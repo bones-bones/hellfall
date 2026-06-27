@@ -1,0 +1,50 @@
+import { HCCard } from '@hellfall/shared/types';
+import { CardMap, getAllRelated } from '@hellfall/shared/utils';
+import { parseSearchQuery } from './parseSearchQuery';
+import { fixTags } from '../utils';
+import { makeIncludeFilter } from '../makers';
+import { FilterNode } from '../types';
+
+const evaluateRelatedFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): boolean =>
+  getAllRelated(card, cardMap).some(related => evaluateFilter(node, related, cardMap));
+
+const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): boolean => {
+  switch (node.type) {
+    case 'filter':
+      return node.filter.cardPassesFilter(card);
+    case 'related':
+      return evaluateRelatedFilter(node.child, card, cardMap);
+    case 'not':
+      return !evaluateFilter(node.child, card, cardMap);
+    case 'and':
+      return node.children.every(child => evaluateFilter(child, card, cardMap));
+    case 'or':
+      return node.children.some(child => evaluateFilter(child, card, cardMap));
+  }
+};
+
+export const searchCards = (cardMap: CardMap, query: string, tagList: string[]): CardMap => {
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
+  const usingClusion = Boolean(includeList.length + excludeList.length);
+  // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
+  fixTags(node, tagList);
+  if (includeList.length) {
+    const defaultInclude = makeIncludeFilter('nonextras', ':');
+    includeList.push(defaultInclude);
+  }
+  const newCardsWithExtras = cardMap.filter(
+    card =>
+      evaluateFilter(node, card, cardMap) &&
+      (includeList.length ? includeList.some(filter => filter.cardPassesFilter(card)) : true) &&
+      (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true)
+  );
+  // const includeNonExtras = makeIncludeFilter('nonextras', ':');
+  const excludeExtras = makeIncludeFilter('nonextras', ':');
+  const newCardsWithoutExtras = newCardsWithExtras.filter(card =>
+    excludeExtras.cardPassesFilter(card)
+  );
+
+  return autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
+    ? newCardsWithoutExtras
+    : newCardsWithExtras;
+};

@@ -46,7 +46,7 @@ const linkStyles = createStyles({
   // textDecoration: "none",
   color: 'black',
 });
-const StyledLink = createStyledLink(linkStyles);
+const StyledLink = createStyledLink(linkStyles, 'StyledLink');
 
 const liStyles = createStyles({ marginTop: '15px' });
-const StyledLi = createStyledListItem(liStyles);
+const StyledLi = createStyledListItem(liStyles, 'StyledLi');

@@ -49,7 +49,7 @@ const containerStyles = createStyles({
   marginTop: 6,
   marginBottom: 4,
 });
-const Container = createStyledDiv(containerStyles);
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const toggleRowStyles = createStyles({
   display: 'flex',
@@ -58,32 +58,32 @@ const toggleRowStyles = createStyles({
   cursor: 'pointer',
   userSelect: 'none',
 });
-const ToggleRow = createStyledDivClickable(toggleRowStyles);
+const ToggleRow = createStyledDivClickable(toggleRowStyles, 'ToggleRow');
 
 const badgeStyles = createStyles({
   fontSize: 12,
   fontWeight: 600,
 });
-const Badge = createStyledSpan(badgeStyles);
+const Badge = createStyledSpan(badgeStyles, 'Badge');
 
 const toggleTextStyles = createStyles({
   fontSize: 12,
   color: '#555',
 });
-const ToggleText = createStyledSpan(toggleTextStyles);
+const ToggleText = createStyledSpan(toggleTextStyles, 'ToggleText');
 
 const changesetBlockStyles = createStyles({
   marginTop: 6,
   padding: '6px 8px',
   border: '1px solid #ccc',
 });
-const ChangesetBlock = createStyledDiv(changesetBlockStyles);
+const ChangesetBlock = createStyledDiv(changesetBlockStyles, 'ChangesetBlock');
 
 const csMetaStyles = createStyles({
   fontSize: 12,
   color: '#666',
 });
-const CsMeta = createStyledDiv(csMetaStyles);
+const CsMeta = createStyledDiv(csMetaStyles, 'CsMeta');
 
 const csCommentStyles = createStyles({
   fontSize: 12,
@@ -91,12 +91,12 @@ const csCommentStyles = createStyles({
   color: '#555',
   marginTop: 2,
 });
-const CsComment = createStyledDiv(csCommentStyles);
+const CsComment = createStyledDiv(csCommentStyles, 'CsComment');
 
 const fieldDiffStyles = createStyles({
   marginTop: 4,
 });
-const FieldDiff = createStyledDiv(fieldDiffStyles);
+const FieldDiff = createStyledDiv(fieldDiffStyles, 'FieldDiff');
 
 const reviewLinkStyles = createStyles({
   display: 'inline-block',
@@ -105,4 +105,4 @@ const reviewLinkStyles = createStyles({
   color: 'inherit',
   '&:hover': { textDecoration: 'underline' },
 });
-const ReviewLink = createStyledLink(reviewLinkStyles);
+const ReviewLink = createStyledLink(reviewLinkStyles, 'ReviewLink');

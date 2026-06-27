@@ -135,7 +135,6 @@ Write a script to transform the database
 - add missing artist credits
 - fix id for plateau
 - hide faces with drop_face == true from card pages?
-- resume at This // That by 8ofswords
 - prevent use of semicolons in submissions for list fields?
 - add better handling for card face changes affecting other changes?
 - add another map layer that maps the oracle ids to their individual ids
@@ -144,3 +143,5 @@ Write a script to transform the database
 - make masterpiece names flavor names?
 - switch related card entries to being text with hover images? (should we also include the card itself in them?)
 - add tag inference for image status (for actual image quality, not just explaining lack of image)
+- should I add .toLowerCase() to the summary return? scryfall seems to do that
+- figure out how to add displayNames to styled components

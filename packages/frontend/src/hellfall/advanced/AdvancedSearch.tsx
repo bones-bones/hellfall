@@ -613,13 +613,13 @@ const searchCriteriaSectionStyles = createStyles({
   justifyContent: 'space-evenly',
   paddingLeft: '30px',
 });
-const SearchCriteriaSection = createStyledDiv(searchCriteriaSectionStyles);
+const SearchCriteriaSection = createStyledDiv(searchCriteriaSectionStyles, 'SearchCriteriaSection');
 
 const searchContainerStyles = createStyles({ display: 'flex', flexWrap: 'wrap' });
-const SearchContainer = createStyledDiv(searchContainerStyles);
+const SearchContainer = createStyledDiv(searchContainerStyles, 'SearchContainer');
 
 const dropdownSelectStyles = createStyles({ width: '100px', height: '30px' });
-const StyledDropdownSelect = createStyledSelect(dropdownSelectStyles);
+const StyledDropdownSelect = createStyledSelect(dropdownSelectStyles, 'StyledDropdownSelect');
 
 const sortSeparatorStyles = createStyles({
   height: '1px',
@@ -627,10 +627,10 @@ const sortSeparatorStyles = createStyles({
   border: 'none',
   marginTop: '-20px',
 });
-const SortSeparator = createStyledHR(sortSeparatorStyles);
+const SortSeparator = createStyledHR(sortSeparatorStyles, 'SortSeparator');
 
 const separatorStyles = createStyles({ height: '1px', backgroundColor: '#ccc', border: 'none' });
-const Separator = createStyledHR(separatorStyles);
+const Separator = createStyledHR(separatorStyles, 'Separator');
 
 const startButtonStyles = createStyles({
   marginLeft: '30px',
@@ -642,4 +642,4 @@ const startButtonStyles = createStyles({
     textDecoration: 'none',
   },
 });
-const StartButton = createStyledPrimaryButtonLink(startButtonStyles);
+const StartButton = createStyledPrimaryButtonLink(startButtonStyles, 'StartButton');

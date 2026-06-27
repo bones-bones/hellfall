@@ -139,7 +139,7 @@ export const Deck = () => {
 };
 
 const deckHeadingStyles = createStyles({ marginTop: '40px', marginBottom: '0px' });
-const DeckHeading = createStyledIntrinsic('h3', deckHeadingStyles);
+const DeckHeading = createStyledIntrinsic('h3', deckHeadingStyles, 'DeckHeading');
 
 const bigContainerStencil = createStencil({
   vars: {},
@@ -162,7 +162,7 @@ const bigContainerStencil = createStencil({
 interface GutterDivProps extends BoxProps {
   showGutter?: boolean;
 }
-const BigContainer = createStenciledDiv<GutterDivProps>(bigContainerStencil);
+const BigContainer = createStenciledDiv<GutterDivProps>(bigContainerStencil, 'BigContainer');
 
 const biggestContainerStyles = createStyles({
   backgroundColor: 'grey',
@@ -170,7 +170,7 @@ const biggestContainerStyles = createStyles({
   justifyContent: 'center',
   height: '100%',
 });
-const BiggestContainer = createStyledDiv(biggestContainerStyles);
+const BiggestContainer = createStyledDiv(biggestContainerStyles, 'BiggestContainer');
 
 const textContainerStyles = createStyles({
   marginLeft: '40px',
@@ -180,7 +180,7 @@ const textContainerStyles = createStyles({
   marginTop: '40px',
   fontSize: '18px',
 });
-const TextContainer = createStyledDiv(textContainerStyles);
+const TextContainer = createStyledDiv(textContainerStyles, 'TextContainer');
 
 const CardContainer = () => {
   const [activeCard] = useAtom(activeCardAtom);
@@ -203,7 +203,7 @@ const deckConStyles = createStyles({
   minHeight: '600px',
   paddingLeft: '20px',
 });
-const DeckCon = createStyledDiv(deckConStyles);
+const DeckCon = createStyledDiv(deckConStyles, 'DeckCon');
 
 const activeCardContainerStencil = createStencil({
   vars: {},
@@ -223,7 +223,10 @@ const activeCardContainerStencil = createStencil({
     },
   },
 });
-const ActiveCardContainer = createStenciledDiv<GutterDivProps>(activeCardContainerStencil);
+const ActiveCardContainer = createStenciledDiv<GutterDivProps>(
+  activeCardContainerStencil,
+  'ActiveCardContainer'
+);
 
 const CategorySection = ({
   cards,
@@ -262,20 +265,20 @@ const CategorySection = ({
 };
 
 const h4Styles = createStyles({ marginBottom: '10px' });
-const StyledH4 = createStyledIntrinsic('h4', h4Styles);
+const StyledH4 = createStyledIntrinsic('h4', h4Styles, 'StyledH4');
 
 const CardColumn = Box;
 const CostColumn = Box;
 
 const moneyColumnStyles = createStyles({ textAlign: 'end' });
-const MoneyColumn = createStyledDiv(moneyColumnStyles);
+const MoneyColumn = createStyledDiv(moneyColumnStyles, 'MoneyColumn');
 
 const catConStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
 });
-const CatCon = createStyledDiv(catConStyles);
+const CatCon = createStyledDiv(catConStyles, 'CatCon');
 
 const catSecConStyles = createStyles({
   width: '35vw',
@@ -284,7 +287,7 @@ const catSecConStyles = createStyles({
   gap: '0',
   rowGap: '2px',
 });
-const CatSecCon = createStyledDiv(catSecConStyles);
+const CatSecCon = createStyledDiv(catSecConStyles, 'CatSecCon');
 
 const boldSpanStyles = createStyles({
   fontWeight: 'bold',
@@ -292,12 +295,12 @@ const boldSpanStyles = createStyles({
   ':hover': { textDecoration: 'underline' },
   ':visited': { color: 'darkgrey' },
 });
-const BoldSpan = createStyledLink(boldSpanStyles);
+const BoldSpan = createStyledLink(boldSpanStyles, 'BoldSpan');
 
 const cardLineContainerStyles = createStyles({
   display: 'contents',
 });
-const CardLineContainer = createStyledDiv(cardLineContainerStyles);
+const CardLineContainer = createStyledDiv(cardLineContainerStyles, 'CardLineContainer');
 
 type RenderEntry = {
   name: string;

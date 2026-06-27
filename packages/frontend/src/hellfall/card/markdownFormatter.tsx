@@ -337,7 +337,7 @@ const mediumTextStyles = createStyles({
   marginBlock: '.5rem',
   lineHeight: 1.125,
 });
-const MediumText = createStyledIntrinsic('p', mediumTextStyles);
+const MediumText = createStyledIntrinsic('p', mediumTextStyles, 'MediumText');
 
 const italicText = createStyles({
   fontStyle: 'italic',

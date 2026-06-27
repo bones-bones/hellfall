@@ -66,6 +66,9 @@ const colorOrderList: HCColors[] = [
   ['W', 'U', 'P', 'B', 'R', 'G'],
 ];
 
+/**
+ * also eliminates duplicates
+ */
 export const orderColors = (colors: HCColors): HCColors => {
   if (colors.length < 2) {
     return colors;

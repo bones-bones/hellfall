@@ -4,4 +4,4 @@ import { createStyledSubtext } from '../styling';
 const errorTextStyles = createStyles({
   color: '#c00',
 });
-export const ErrorText = createStyledSubtext(errorTextStyles);
+export const ErrorText = createStyledSubtext(errorTextStyles, 'ErrorText');
