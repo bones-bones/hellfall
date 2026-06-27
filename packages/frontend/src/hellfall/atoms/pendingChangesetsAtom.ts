@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
-import { anyChange } from '@hellfall/shared/utils';
+import { anyChange, ChangesetDiffRow } from '@hellfall/shared/utils';
 
 export interface ChangesetUser {
   userId: string;
@@ -15,6 +15,7 @@ export interface PendingChangeset {
   submittedBy: ChangesetUser;
   changes: anyChange[];
   comment: string | null;
+  diff?: ChangesetDiffRow[];
 }
 
 export type PendingTagStaging = {
@@ -32,7 +33,7 @@ export const emptyPendingChangesetsState: PendingChangesetsState = {
   loading: false,
 };
 
-export const pendingChangesetsAtomFamily = atomFamily((_cardId: string) =>
+export const pendingChangesetsAtomFamily = atomFamily(() =>
   atom<PendingChangesetsState>({ changesets: [], loading: true })
 );
 
@@ -61,7 +62,7 @@ export async function fetchPendingChangesets(
     `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}&status=pending`,
     { credentials: 'include' }
   );
-  if (!res.ok) throw new Error(`${res.status}`);
+  if (!res.ok) { throw new Error(`${res.status}`); }
   const data = (await res.json()) as { changesets?: PendingChangeset[] };
   return data.changesets ?? [];
 }

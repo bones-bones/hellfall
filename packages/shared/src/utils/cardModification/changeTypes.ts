@@ -168,6 +168,12 @@ export interface ChangesetUser {
   userId: string;
   username: string;
 }
+export type ChangesetDiffRow = {
+  field: string;
+  before: unknown;
+  after: unknown;
+};
+
 export interface Changeset {
   id: string;
   cardId: string;
@@ -179,4 +185,6 @@ export interface Changeset {
   changes: anyChange[];
   comment: string | null;
   rejectReason?: string | null;
+  /** Populated by the API when listing changesets for review. */
+  diff?: ChangesetDiffRow[];
 }
