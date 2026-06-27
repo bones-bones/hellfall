@@ -6,7 +6,7 @@ import { ErrorText } from './ErrorText';
 import { Changeset, isChangesetStatus, isStatusFilter, StatusFilter } from '@hellfall/shared/utils';
 import { useParams } from 'react-router-dom';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledButton, createStyledButton, createStyledDiv } from '../styling';
+import { createStenciledButton, createStyledButton, createStyledDiv, createStyledInput, createStyledSpan } from '../styling';
 import { Heading } from '@workday/canvas-kit-react';
 
 export function ReviewPage() {
@@ -21,6 +21,9 @@ export function ReviewPage() {
   const [syncBusy, setSyncBusy] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
   const [syncError, setSyncError] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkError, setBulkError] = useState<string | null>(null);
 
   const canViewChangesets = Boolean(user?.isAdmin || user?.isContributor);
 
@@ -69,6 +72,10 @@ export function ReviewPage() {
     fetchChangesets();
   }, [user, canViewChangesets, fetchChangesets]);
 
+  useEffect(() => {
+    setSelectedIds(new Set());
+  }, [filter, cardId]);
+
   const handleAction = async (id: string, action: 'accept' | 'reject') => {
     if (!baseUrl) return;
     const res = await fetch(`${baseUrl}/api/changesets/${id}/${action}`, {
@@ -82,6 +89,60 @@ export function ReviewPage() {
       const data = await res.json().catch(() => ({}));
       throw new Error(data.reason || `${res.status}`);
     }
+    await fetchChangesets();
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
+  };
+
+  const pendingChangesets = changesets.filter(cs => cs.status === 'pending' && cs.id);
+  const canBulkApprove = user?.isAdmin && filter === 'pending' && pendingChangesets.length > 0;
+  const allPendingSelected =
+    canBulkApprove && pendingChangesets.every(cs => selectedIds.has(cs.id!));
+
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (allPendingSelected) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(pendingChangesets.map(cs => cs.id!)));
+    }
+  };
+
+  const handleBulkAccept = async () => {
+    if (!baseUrl || selectedIds.size === 0) return;
+    setBulkBusy(true);
+    setBulkError(null);
+    const ids = Array.from(selectedIds);
+    const results = await Promise.allSettled(
+      ids.map(id =>
+        fetch(`${baseUrl}/api/changesets/${id}/accept`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: '{}',
+        })
+      )
+    );
+    const failed = results.filter(
+      r => r.status === 'rejected' || (r.status === 'fulfilled' && !r.value.ok)
+    );
+    if (failed.length > 0) {
+      setBulkError(`${failed.length} of ${ids.length} failed to accept`);
+    } else {
+      setSelectedIds(new Set());
+    }
+    setBulkBusy(false);
     await fetchChangesets();
   };
 
@@ -156,6 +217,27 @@ export function ReviewPage() {
       </FilterRow>
       {loading && <p>Loading...</p>}
       {error && <ErrorText size="large">{error}</ErrorText>}
+      {canBulkApprove && (
+        <BulkBar>
+          <BulkCheckbox
+            type="checkbox"
+            checked={allPendingSelected}
+            onChange={toggleSelectAll}
+            aria-label="Select all pending changesets"
+          />
+          <BulkLabel>
+            {selectedIds.size > 0
+              ? `${selectedIds.size} selected`
+              : 'Select all'}
+          </BulkLabel>
+          {selectedIds.size > 0 && (
+            <BulkAcceptButton disabled={bulkBusy} onClick={handleBulkAccept}>
+              {bulkBusy ? 'Accepting…' : `Accept ${selectedIds.size}`}
+            </BulkAcceptButton>
+          )}
+          {bulkError && <ErrorText size="medium">{bulkError}</ErrorText>}
+        </BulkBar>
+      )}
       {!loading && !error && changesets.length === 0 && <p>No changesets found.</p>}
       {changesets.map(cs => (
         <ChangesetCard
@@ -163,6 +245,9 @@ export function ReviewPage() {
           cs={cs}
           isAdmin={user.isAdmin || cs.submittedBy.userId == user.id}
           onAction={handleAction}
+          selectable={user.isAdmin && cs.status === 'pending'}
+          selected={cs.id ? selectedIds.has(cs.id) : false}
+          onToggleSelect={cs.id ? () => toggleSelect(cs.id!) : undefined}
         />
       ))}
     </PageContainer>
@@ -237,3 +322,42 @@ interface FilterButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   data_active?: boolean;
 }
 const FilterButton = createStenciledButton<FilterButtonProps>(filterButtonStencil);
+
+const bulkBarStyles = createStyles({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 10,
+  marginBottom: 12,
+  padding: '8px 12px',
+  background: '#f8f8f8',
+  borderRadius: 4,
+  border: '1px solid #ddd',
+});
+const BulkBar = createStyledDiv(bulkBarStyles);
+
+const bulkCheckboxStyles = createStyles({
+  width: 18,
+  height: 18,
+  cursor: 'pointer',
+});
+const BulkCheckbox = createStyledInput(bulkCheckboxStyles);
+
+const bulkLabelStyles = createStyles({
+  fontSize: 14,
+  color: '#333',
+});
+const BulkLabel = createStyledSpan(bulkLabelStyles);
+
+const bulkAcceptButtonStyles = createStyles({
+  padding: '6px 16px',
+  border: 'none',
+  borderRadius: 4,
+  background: '#28a745',
+  color: '#fff',
+  fontWeight: 600,
+  fontSize: 14,
+  cursor: 'pointer',
+  '&:disabled': { opacity: 0.5, cursor: 'default' },
+  '&:hover:not(:disabled)': { background: '#218838' },
+});
+const BulkAcceptButton = createStyledButton(bulkAcceptButtonStyles);

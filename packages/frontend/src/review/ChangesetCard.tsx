@@ -1,7 +1,7 @@
 import { Card, TextProps } from '@workday/canvas-kit-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { Changeset } from './types';
+import { useAtomValue } from 'jotai';
 import { ErrorText } from './ErrorText';
 import { Changeset, ChangesetStatus, formatChangesetDiffValue } from '@hellfall/shared/utils';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
@@ -9,20 +9,37 @@ import {
   createStenciledSpan,
   createStyledButton,
   createStyledDiv,
+  createStyledImg,
+  createStyledInput,
   createStyledIntrinsic,
+  createStyledLink,
   createStyledSpan,
   createStyledTable,
 } from '../styling';
+import { cardsAtom } from '../hellfall/atoms/cardsAtom';
+import { getPrimaryImageUrl, previewCardWithChanges } from './cardImage';
 
 export function ChangesetCard({
   cs,
   isAdmin,
   onAction,
+  selectable,
+  selected,
+  onToggleSelect,
 }: {
   cs: Changeset;
   isAdmin: boolean;
   onAction: (id: string, action: 'accept' | 'reject') => Promise<void>;
+  selectable?: boolean;
+  selected?: boolean;
+  onToggleSelect?: () => void;
 }) {
+  const cards = useAtomValue(cardsAtom);
+  const card = cards.get(cs.cardId);
+  const preview = card ? previewCardWithChanges(card, cs.changes) : undefined;
+  const imageUrl = preview ? getPrimaryImageUrl(preview) : undefined;
+  const cardName = preview?.name ?? card?.name;
+
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,19 +62,38 @@ export function ChangesetCard({
   return (
     <Card cs={cardStyles}>
       <Card.Body>
-        <HeaderRow>
-          <div>
-            <strong>
-              <Link to={`/card/${encodeURIComponent(cs.cardId)}`}>{cs.cardId}</Link>
-            </strong>
-            <StatusBadge data_status={cs.status}>{cs.status}</StatusBadge>
-          </div>
-          <Meta>
-            by {cs.submittedBy.username} &middot; {formatTime(cs.createdAt as string)}
-          </Meta>
-        </HeaderRow>
-        {cs.comment && <Comment>{cs.comment}</Comment>}
-        <ChangesTable>
+        <TopRow>
+          {selectable && (
+            <SelectCheckbox
+              type="checkbox"
+              checked={selected}
+              onChange={onToggleSelect}
+              aria-label={`Select changeset for ${cardName ?? cs.cardId}`}
+            />
+          )}
+          {imageUrl ? (
+            <ImageLink to={`/card/${encodeURIComponent(card?.hcid ?? cs.cardId)}`}>
+              <CardThumbnail src={imageUrl} alt={cardName ?? cs.cardId} referrerPolicy="no-referrer" />
+            </ImageLink>
+          ) : (
+            <ImagePlaceholder>No image</ImagePlaceholder>
+          )}
+          <ContentColumn>
+            <HeaderRow>
+              <div>
+                <strong>
+                  <Link to={`/card/${encodeURIComponent(card?.hcid ?? cs.cardId)}`}>
+                    {cardName ?? cs.cardId}
+                  </Link>
+                </strong>
+                <StatusBadge data_status={cs.status}>{cs.status}</StatusBadge>
+              </div>
+              <Meta>
+                by {cs.submittedBy.username} &middot; {formatTime(cs.createdAt as string)}
+              </Meta>
+            </HeaderRow>
+            {cs.comment && <Comment>{cs.comment}</Comment>}
+            <ChangesTable>
           <thead>
             <tr>
               <th>Field</th>
@@ -88,23 +124,26 @@ export function ChangesetCard({
               </tr>
             )}
           </tbody>
-        </ChangesTable>
-        {cs.status === 'pending' && isAdmin && (
-          <ActionRow>
-            <AcceptButton disabled={busy} onClick={() => handle('accept')}>
-              Accept
-            </AcceptButton>
-            <RejectButton disabled={busy} onClick={() => handle('reject')}>
-              Reject
-            </RejectButton>
-          </ActionRow>
-        )}
-        {cs.status !== 'pending' && cs.resolvedBy && (
-          <Meta>
-            {cs.status} by {cs.resolvedBy.username} &middot; {formatTime(cs.resolvedAt as string)}
-          </Meta>
-        )}
-        {error && <ErrorText size="large">{error}</ErrorText>}
+            </ChangesTable>
+            {cs.status === 'pending' && isAdmin && (
+              <ActionRow>
+                <AcceptButton disabled={busy} onClick={() => handle('accept')}>
+                  Accept
+                </AcceptButton>
+                <RejectButton disabled={busy} onClick={() => handle('reject')}>
+                  Reject
+                </RejectButton>
+              </ActionRow>
+            )}
+            {cs.status !== 'pending' && cs.resolvedBy && (
+              <Meta>
+                {cs.status} by {cs.resolvedBy.username} &middot;{' '}
+                {formatTime(cs.resolvedAt as string)}
+              </Meta>
+            )}
+            {error && <ErrorText size="large">{error}</ErrorText>}
+          </ContentColumn>
+        </TopRow>
       </Card.Body>
     </Card>
   );
@@ -113,6 +152,58 @@ export function ChangesetCard({
 const cardStyles = createStyles({
   marginBottom: 16,
 });
+
+const topRowStyles = createStyles({
+  display: 'flex',
+  gap: 12,
+  alignItems: 'flex-start',
+});
+const TopRow = createStyledDiv(topRowStyles);
+
+const selectCheckboxStyles = createStyles({
+  marginTop: 8,
+  width: 18,
+  height: 18,
+  flexShrink: 0,
+  cursor: 'pointer',
+});
+const SelectCheckbox = createStyledInput(selectCheckboxStyles);
+
+const imageLinkStyles = createStyles({
+  flexShrink: 0,
+  textDecoration: 'none',
+});
+const ImageLink = createStyledLink(imageLinkStyles);
+
+const cardThumbnailStyles = createStyles({
+  display: 'block',
+  width: 120,
+  height: 'auto',
+  borderRadius: '4.75% / 3.5%',
+  objectFit: 'contain',
+});
+const CardThumbnail = createStyledImg(cardThumbnailStyles);
+
+const imagePlaceholderStyles = createStyles({
+  flexShrink: 0,
+  width: 120,
+  height: 168,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: '#f0f0f0',
+  borderRadius: 4,
+  fontSize: 12,
+  color: '#888',
+  textAlign: 'center',
+});
+const ImagePlaceholder = createStyledDiv(imagePlaceholderStyles);
+
+const contentColumnStyles = createStyles({
+  flex: 1,
+  minWidth: 0,
+});
+const ContentColumn = createStyledDiv(contentColumnStyles);
 
 const headerRowStyles = createStyles({
   display: 'flex',
