@@ -10110,16 +10110,6 @@
 					"image": "https://lh3.googleusercontent.com/d/15kPFhnQYRJeZftF9iCP1x2XsWYRC6vR4",
 					"type_line": "Creature — Vaar Gamer",
 					"component": "token_maker"
-				},
-				{
-					"object": "related_card",
-					"id": "d3ae4b0b-0c2f-4cf2-880d-05564afb2c7e",
-					"hcid": "7685",
-					"name": "HC9: Kobolds of Starbase Kher",
-					"set": "HCV.9",
-					"image": "https://lh3.googleusercontent.com/d/1ihgLHsZvchpwBJqI8IsOLyO1JDDQx1tY",
-					"type_line": "Creature — Kobold",
-					"component": "token_maker"
 				}
 			]
 		},
@@ -10188,11 +10178,11 @@
 			"all_parts": [
 				{
 					"object": "related_card",
-					"id": "36e93eef-86c2-4718-bf1c-fff971abfde0",
-					"hcid": "6912",
-					"name": "HKL: Woah Lions",
-					"set": "HKL",
-					"image": "https://lh3.googleusercontent.com/d/1fEkKfsuo-CbVk96009q-5ay2MCA1QJpr",
+					"id": "306652ea-6275-4c52-958d-f5096ce80012",
+					"hcid": "509",
+					"name": "Woah Lions",
+					"set": "HLC.2",
+					"image": "https://lh3.googleusercontent.com/d/1SSySHAHbdPwOxNWm2JCIwl7hDv0c0tA9",
 					"type_line": "Creature — Space Cat",
 					"component": "token_maker",
 					"is_draft_partner": true

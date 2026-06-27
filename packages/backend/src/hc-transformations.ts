@@ -128,7 +128,9 @@ const mergeDatabases = (
         collectorNumberAutofillSets[entry.set] += 1;
         entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
       } else {
-        throw console.error;
+        throw new Error(
+          `Card missing collector_number and set "${entry.set}" is not in collectorNumberAutofillSets (hcid: ${entry.hcid}, name: ${entry.name})`
+        );
       }
     }
   });
@@ -138,7 +140,9 @@ const mergeDatabases = (
         collectorNumberAutofillSets[entry.set] += 1;
         entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
       } else {
-        throw console.error;
+        throw new Error(
+          `Token missing collector_number and set "${entry.set}" is not in collectorNumberAutofillSets (hcid: ${entry.hcid}, name: ${entry.name})`
+        );
       }
     }
   });
@@ -148,7 +152,9 @@ const mergeDatabases = (
         collectorNumberAutofillSets[entry.set] += 1;
         entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
       } else {
-        throw console.error;
+        throw new Error(
+          `Land missing collector_number and set "${entry.set}" is not in collectorNumberAutofillSets (hcid: ${entry.hcid}, name: ${entry.name})`
+        );
       }
     }
   });
@@ -375,15 +381,15 @@ const main = async () => {
       cSet?.add(num);
     }
   });
-  collectorMap.entries().forEach(([code, nums]) => {
-    if (code == 'HCV.1' || code.startsWith('HLC')) return;
+  for (const [code, nums] of collectorMap) {
+    if (code == 'HCV.1' || code.startsWith('HLC')) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i) && !ignoreMissingNums[code]?.includes(i)) {
         console.log(`Set ${code} has a missing collector number at ${i}`);
       }
     }
-  });
+  }
 
   console.log('Running in update mode - merging with existing data...');
   const { existingCards, existingTokens, existingLands } = loadExistingData();
@@ -526,4 +532,7 @@ const main = async () => {
   );
 };
 
-main();
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
