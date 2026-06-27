@@ -74,7 +74,6 @@ Write a script to transform the database
 - add double url (both id and name) like scryfall?
 - make popup window resizeable
 - add real-card-reference tags
-- implement smart quotes (autoconvert normal quotes to left/right quotes on page)
 - add {69}, {45}, {-2}
 - make card name text render in hellfallentry below card (so if card doesn't render, the name will)
 - add collections to deal with types, tags, keywords, etc.
@@ -145,3 +144,4 @@ Write a script to transform the database
 - add tag inference for image status (for actual image quality, not just explaining lack of image)
 - should I add .toLowerCase() to the summary return? scryfall seems to do that
 - figure out how to add displayNames to styled components
+- use number pips with lighter font weight like scryfall?

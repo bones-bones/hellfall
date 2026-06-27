@@ -62,7 +62,9 @@ export async function fetchPendingChangesets(
     `${baseUrl}/api/changesets?cardId=${encodeURIComponent(cardId)}&status=pending`,
     { credentials: 'include' }
   );
-  if (!res.ok) { throw new Error(`${res.status}`); }
+  if (!res.ok) {
+    throw new Error(`${res.status}`);
+  }
   const data = (await res.json()) as { changesets?: PendingChangeset[] };
   return data.changesets ?? [];
 }

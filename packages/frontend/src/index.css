@@ -51,6 +51,7 @@
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --cnvs-base-font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --cnvs-sys-color-fg-default: '#16161d';
 }
 body {
   margin: 0;

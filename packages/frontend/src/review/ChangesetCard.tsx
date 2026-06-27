@@ -73,7 +73,11 @@ export function ChangesetCard({
           )}
           {imageUrl ? (
             <ImageLink to={`/card/${encodeURIComponent(card?.hcid ?? cs.cardId)}`}>
-              <CardThumbnail src={imageUrl} alt={cardName ?? cs.cardId} referrerPolicy="no-referrer" />
+              <CardThumbnail
+                src={imageUrl}
+                alt={cardName ?? cs.cardId}
+                referrerPolicy="no-referrer"
+              />
             </ImageLink>
           ) : (
             <ImagePlaceholder>No image</ImagePlaceholder>
@@ -94,36 +98,36 @@ export function ChangesetCard({
             </HeaderRow>
             {cs.comment && <Comment>{cs.comment}</Comment>}
             <ChangesTable>
-          <thead>
-            <tr>
-              <th>Field</th>
-              <th>Before</th>
-              <th>After</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cs.diff?.length ? (
-              cs.diff.map((row, index) => (
-                <tr key={`${row.field}-${index}`}>
-                  <td>
-                    <code>{row.field}</code>
-                  </td>
-                  <td>
-                    <DiffValue>{formatChangesetDiffValue(row.before)}</DiffValue>
-                  </td>
-                  <td>
-                    <DiffValue>{formatChangesetDiffValue(row.after)}</DiffValue>
-                  </td>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Before</th>
+                  <th>After</th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={3}>
-                  <Meta>Could not load before/after diff for this card.</Meta>
-                </td>
-              </tr>
-            )}
-          </tbody>
+              </thead>
+              <tbody>
+                {cs.diff?.length ? (
+                  cs.diff.map((row, index) => (
+                    <tr key={`${row.field}-${index}`}>
+                      <td>
+                        <code>{row.field}</code>
+                      </td>
+                      <td>
+                        <DiffValue>{formatChangesetDiffValue(row.before)}</DiffValue>
+                      </td>
+                      <td>
+                        <DiffValue>{formatChangesetDiffValue(row.after)}</DiffValue>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={3}>
+                      <Meta>Could not load before/after diff for this card.</Meta>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
             </ChangesTable>
             {cs.status === 'pending' && isAdmin && (
               <ActionRow>

@@ -71,9 +71,11 @@ export const HellFall = () => {
           {resultSet.length == 1 ? (
             <Link to={`/card/${encodeURIComponent(resultSet[0].hcid)}`}>Showing the one card</Link>
           ) : (
-            `${resultSet.length > CHUNK_SIZE ? `${page + 1} - ${page + CHUNK_SIZE} of ` : ''} ${
-              resultSet.length
-            } cards`
+            `${
+              resultSet.length > CHUNK_SIZE
+                ? `${page + 1} - ${Math.min(page + CHUNK_SIZE, resultSet.length)} of `
+                : ''
+            } ${resultSet.length} cards`
           )}
         </strong>
         {summary && ` ${summary}`}
