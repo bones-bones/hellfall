@@ -18,19 +18,27 @@ export const formatQuotes = (text: string): string => {
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
     const prevChar = result.at(-1) ?? '';
+    const next = text[i+1] ?? '';
     if (char === '"') {
-      const isOpening = i === 0 || /[\s([{ “‘]/.test(prevChar);
+      const isOpening = i === 0 || /[\s([{ “‘]/.test(prevChar) || (prevChar == 'n' && result.at(-2) == '\\');
       if (isOpening) {
         result.push('“');
       } else {
         result.push('”');
       }
     } else if (char === "'") {
-      const isOpening = i === 0 || /[\s([{ “‘]/.test(prevChar);
+      const isOpening = i === 0 || /[\s([{ “‘]/.test(prevChar) || (prevChar == 'n' && result.at(-2) == '\\');
       if (isOpening) {
         result.push('‘');
       } else {
         result.push('’');
+      }
+    } else if (char === '-') {
+      const isMinus = i === 0 || /[/([{ ]/.test(prevChar) || (prevChar == 'n' && result.at(-2) == '\\');
+      if (isMinus) {
+        result.push('–')
+      } else {
+        result.push(char);
       }
     } else {
       result.push(char);
