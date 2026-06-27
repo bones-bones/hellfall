@@ -1,12 +1,12 @@
 // import styled from '@emotion/styled';
 import type { HCColors } from '@hellfall/shared/types';
-import { getIndicatorFromColors, getPip, pipToSrc } from '@hellfall/shared/utils';
+import { formatQuotes, getIndicatorFromColors, getPip, pipToSrc } from '@hellfall/shared/utils';
 import { BoxProps } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledImg } from '../styling';
 
 export const stringToMana = (text: string) => {
-  return text
+  return formatQuotes(text)
     .split(/({.*?})/)
     .filter(e => e !== '')
     .map(entry => {
@@ -48,6 +48,8 @@ const pipStencil = createStencil({
   vars: {},
   base: {
     display: 'inline-block',
+    fontFamily:
+      '"Lato", "Helvetica Neue", Arial, Helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     lineHeight: '1.25rem',
     // alignItems: 'top',
     padding: '0px 0.75px 0px 0.75px',

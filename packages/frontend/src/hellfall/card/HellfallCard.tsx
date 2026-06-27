@@ -1,4 +1,4 @@
-import { Box, ButtonColors, Card, TextProps } from '@workday/canvas-kit-react';
+import { Box, ButtonColors, Card } from '@workday/canvas-kit-react';
 import { SetLegality } from './visual-components/SetLegality';
 import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
 import { formatParens, toPlainText } from '@hellfall/shared/utils';
@@ -34,10 +34,12 @@ import {
   MediumLineMargin,
   mediumLineMarginStyles,
   MediumText,
+  SmallLine,
   SmallText,
 } from './visual-components/TextComponents.tsx';
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
+import { Link } from 'react-router-dom';
 const renderText = (text: string[]) => {
   return text.map((entry, index) => {
     return <MediumText key={index}>{stringToMana(entry)}</MediumText>;
@@ -320,22 +322,37 @@ export const HellfallCard = ({
           )}
           {Boolean(displayCard.creators.length) && (
             <SmallText key="creator">
-              Creator{displayCard.creators.length == 1 ? '' : 's'}: {displayCard.creators.join(',')}
+              Creator{displayCard.creators.length == 1 ? '' : 's'}:{' '}
+              {displayCard.creators.map((creator, i, ar) => (
+                <span key={creator}>
+                  <Link
+                    to={`/?${new URLSearchParams([['q', `creator="${creator}"`]]).toString()}`}
+                    target="_blank"
+                  >
+                    {creator}
+                  </Link>
+                  {i < ar.length - 1 && ', '}
+                </span>
+              ))}
             </SmallText>
           )}
           {displayCard.artists?.length && (
             <SmallText key="artist">
               Artist{displayCard.artists.length == 1 ? '' : 's'}:{' '}
-              {displayCard.artists
-                .map(
-                  artist =>
-                    `${artist}${
-                      displayCard.artist_notes?.[artist]
-                        ? ` (${displayCard.artist_notes[artist]})`
-                        : ''
-                    }`
-                )
-                .join(', ')}
+              {displayCard.artists.map((artist, i, ar) => (
+                <span key={artist}>
+                  <Link
+                    to={`/?${new URLSearchParams([['q', `artist="${artist}"`]]).toString()}`}
+                    target="_blank"
+                  >
+                    {artist}
+                  </Link>
+                  {displayCard.artist_notes && artist in displayCard.artist_notes && (
+                    <SmallLine> ({displayCard.artist_notes[artist]})</SmallLine>
+                  )}
+                  {i < ar.length - 1 && ', '}
+                </span>
+              ))}
             </SmallText>
           )}
           {displayCard.hcid && <SmallText key="hcid">Id: {displayCard.hcid}</SmallText>}

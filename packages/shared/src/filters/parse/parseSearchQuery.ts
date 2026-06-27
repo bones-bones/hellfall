@@ -73,11 +73,11 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
       let foundQuote = false;
       const quoteChar = char;
       i++; // Move past opening quote
-      let quotedContent = '';
+      const quotedContent: string[] = [];
 
       while (i < len) {
         if (query.slice(i, i + 2) === '\\' + quoteChar) {
-          quotedContent += query.slice(i, i + 2);
+          quotedContent.push(query.slice(i, i + 2));
           i += 2;
           continue;
         }
@@ -88,11 +88,11 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
           break;
         }
 
-        quotedContent += query[i];
+        quotedContent.push(query[i]);
         i++;
       }
       if (foundQuote) {
-        currentTerm += `${quoteChar}${quotedContent}${quoteChar}`;
+        currentTerm += `${quoteChar}${quotedContent.join('')}${quoteChar}`;
         tokens.push(currentTerm);
         currentTerm = '';
         continue;

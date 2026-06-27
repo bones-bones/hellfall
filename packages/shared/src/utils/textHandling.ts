@@ -8,6 +8,38 @@ export const normalizeText = (text: string): string =>
     .replaceAll(/[“”]/g, '"');
 
 /**
+ * Format smart quotes
+ * @param text - The markdown text to convert to plaintext
+ * @returns Text with smart quotes inserted
+ */
+export const formatQuotes = (text: string): string => {
+  const result: string[] = [];
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const prevChar = result.at(-1) ?? '';
+    if (char === '"') {
+      const isOpening = i === 0 || /[\s([{ “‘]/.test(prevChar);
+      if (isOpening) {
+        result.push('“');
+      } else {
+        result.push('”');
+      }
+    } else if (char === "'") {
+      const isOpening = i === 0 || /[\s([{ “‘]/.test(prevChar);
+      if (isOpening) {
+        result.push('‘');
+      } else {
+        result.push('’');
+      }
+    } else {
+      result.push(char);
+    }
+  }
+  return result.join('');
+};
+
+/**
  * Convert markdown text to plaintext by stripping formatting characters
  * Handles **bold**, *italic*, ~~strikethrough~~, and respects escaped characters
  * @param text - The markdown text to convert to plaintext
@@ -15,23 +47,21 @@ export const normalizeText = (text: string): string =>
  */
 export const textPrep = (text: string, preserveCaps: boolean = false): string => {
   if (!text) return '';
-
-  let result = '';
+  const result: string[] = [];
   let i = 0;
   const len = text.length;
-
   while (i < len) {
     // Check for escaped characters
     if (text[i] === '\\' && i + 1 < len && '[*_~()]'.includes(text[i + 1])) {
       // Remove the backslash and keep the next character as literal
-      result += text[i + 1];
+      result.push(text[i + 1]);
       i += 2;
       continue;
     }
 
     // Check for bold (**text**)
     if (text[i] === '*' && text[i + 1] === '*' && i + 2 < len) {
-      let end = text.indexOf('**', i + 2);
+      const end = text.indexOf('**', i + 2);
       if (end !== -1) {
         // Check if the opening is escaped
         let isEscaped = false;
@@ -47,7 +77,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
           // Extract the content between ** and **
           const content = text.substring(i + 2, end);
           // Recursively process content for nested formatting
-          result += textPrep(content);
+          result.push(textPrep(content));
           i = end + 2;
           continue;
         }
@@ -56,7 +86,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
 
     // Check for underline (__text__)
     if (text[i] === '_' && text[i + 1] === '_' && i + 2 < len) {
-      let end = text.indexOf('__', i + 2);
+      const end = text.indexOf('__', i + 2);
       if (end !== -1) {
         let isEscaped = false;
         let backslashCount = 0;
@@ -69,7 +99,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
 
         if (!isEscaped) {
           const content = text.substring(i + 2, end);
-          result += textPrep(content);
+          result.push(textPrep(content));
           i = end + 2;
           continue;
         }
@@ -78,7 +108,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
 
     // Check for strikethrough (~~text~~)
     if (text[i] === '~' && text[i + 1] === '~' && i + 2 < len) {
-      let end = text.indexOf('~~', i + 2);
+      const end = text.indexOf('~~', i + 2);
       if (end !== -1) {
         let isEscaped = false;
         let backslashCount = 0;
@@ -91,7 +121,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
 
         if (!isEscaped) {
           const content = text.substring(i + 2, end);
-          result += textPrep(content);
+          result.push(textPrep(content));
           i = end + 2;
           continue;
         }
@@ -100,7 +130,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
 
     // Check for italic (*text*)
     if (text[i] === '*' && (i + 1 >= len || text[i + 1] !== '*')) {
-      let end = text.indexOf('*', i + 1);
+      const end = text.indexOf('*', i + 1);
       if (end !== -1) {
         let isEscaped = false;
         let backslashCount = 0;
@@ -113,7 +143,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
 
         if (!isEscaped) {
           const content = text.substring(i + 1, end);
-          result += textPrep(content);
+          result.push(textPrep(content));
           i = end + 1;
           continue;
         }
@@ -122,7 +152,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
 
     // Check for italic (_text_)
     if (text[i] === '_' && (i + 1 >= len || text[i + 1] !== '_')) {
-      let end = text.indexOf('_', i + 1);
+      const end = text.indexOf('_', i + 1);
       if (end !== -1) {
         let isEscaped = false;
         let backslashCount = 0;
@@ -135,7 +165,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
 
         if (!isEscaped) {
           const content = text.substring(i + 1, end);
-          result += textPrep(content);
+          result.push(textPrep(content));
           i = end + 1;
           continue;
         }
@@ -143,11 +173,11 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
     }
 
     // Regular character
-    result += text[i];
+    result.push(text[i]);
     i++;
   }
 
-  const normalized = normalizeText(result);
+  const normalized = normalizeText(result.join(''));
   if (preserveCaps) {
     return normalized;
   }
@@ -222,7 +252,7 @@ export const splitParens = (text: string) => {
  * @returns correctly formatted text
  */
 export const formatParens = (text: string) => {
-  return splitParens(text)
+  return splitParens(formatQuotes(text))
     .map(parenText => {
       if (parenText.at(0) != '(' && parenText.at(-1) != ')') {
         return parenText;
