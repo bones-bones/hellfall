@@ -10,9 +10,11 @@ import {
   anyChange,
   changeIsValid,
   Changeset,
+  getChangesetDiffRows,
   isChangesetStatus,
   isValidV4UUID,
 } from '@hellfall/shared/utils';
+import type { HCCard } from '@hellfall/shared/types';
 import {
   applyFromCollection,
   cardsCollection,
@@ -33,7 +35,7 @@ function timestampToIso(ts: Timestamp | null | undefined): string | null {
   return ts.toDate().toISOString();
 }
 
-function serializeChangeset(data: Changeset, docId?: string): Changeset {
+function serializeChangeset(data: Changeset, docId?: string, diff?: Changeset['diff']): Changeset {
   return {
     id: data.id || docId || '',
     cardId: data.cardId,
@@ -44,7 +46,36 @@ function serializeChangeset(data: Changeset, docId?: string): Changeset {
     resolvedBy: data.resolvedBy,
     changes: data.changes,
     comment: data.comment,
+    ...(diff?.length ? { diff } : {}),
   };
+}
+
+async function loadCardForDiff(
+  cardId: string,
+  cache: Map<string, HCCard.Any | null>
+): Promise<HCCard.Any | null> {
+  if (cache.has(cardId)) return cache.get(cardId) ?? null;
+  const snap = await cardsCol.doc(cardId).get();
+  const card = snap.exists ? firestoreToCard(snap.data()!) : null;
+  cache.set(cardId, card);
+  return card;
+}
+
+async function serializeChangesetForApi(
+  data: Changeset,
+  docId: string | undefined,
+  cardCache: Map<string, HCCard.Any | null>
+): Promise<Changeset> {
+  if (!Array.isArray(data.changes) || data.changes.length === 0) {
+    return serializeChangeset(data, docId);
+  }
+  const card = await loadCardForDiff(data.cardId, cardCache);
+  if (!card) return serializeChangeset(data, docId);
+  try {
+    return serializeChangeset(data, docId, getChangesetDiffRows(card, data.changes));
+  } catch {
+    return serializeChangeset(data, docId);
+  }
 }
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
@@ -74,8 +105,9 @@ async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promis
   }
 
   const snap = await query.get();
-  const items: Changeset[] = snap.docs.map(doc =>
-    serializeChangeset(doc.data() as Changeset, doc.id)
+  const cardCache = new Map<string, HCCard.Any | null>();
+  const items: Changeset[] = await Promise.all(
+    snap.docs.map(doc => serializeChangesetForApi(doc.data() as Changeset, doc.id, cardCache))
   );
   res.statusCode = 200;
   res.end(JSON.stringify({ ok: true, changesets: items }));
@@ -112,6 +144,11 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
   if (card.kind == 'scryfall') {
     res.statusCode = 400;
     res.end(JSON.stringify({ ok: false, reason: 'no_modifying_scryfall' }));
+    return;
+  }
+  if (!Array.isArray(body.changes) || body.changes.length === 0) {
+    res.statusCode = 400;
+    res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
     return;
   }
   try {
@@ -170,7 +207,11 @@ async function getChangeset(
   res.end(
     JSON.stringify({
       ok: true,
-      changeset: serializeChangeset(snap.data() as Changeset, changesetId),
+      changeset: await serializeChangesetForApi(
+        snap.data() as Changeset,
+        changesetId,
+        new Map()
+      ),
     })
   );
 }
@@ -229,6 +270,11 @@ async function acceptChangeset(
   const fire = (await cardRef.get()).data();
   const card = firestoreToCard(fire!);
   const newCard = structuredClone(card);
+  if (!Array.isArray(cs.changes)) {
+    res.statusCode = 400;
+    res.end(JSON.stringify({ ok: false, reason: 'invalid_changes_format' }));
+    return;
+  }
   await applyFromCollection(newCard, cs.changes, cardsCol);
   const update = getUpdateObject(fire!, cardToFirestore(newCard));
   if (Object.keys(update).length) {
