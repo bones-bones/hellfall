@@ -207,11 +207,7 @@ async function getChangeset(
   res.end(
     JSON.stringify({
       ok: true,
-      changeset: await serializeChangesetForApi(
-        snap.data() as Changeset,
-        changesetId,
-        new Map()
-      ),
+      changeset: await serializeChangesetForApi(snap.data() as Changeset, changesetId, new Map()),
     })
   );
 }

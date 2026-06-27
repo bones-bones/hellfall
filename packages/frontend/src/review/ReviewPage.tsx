@@ -6,7 +6,13 @@ import { ErrorText } from './ErrorText';
 import { Changeset, isChangesetStatus, isStatusFilter, StatusFilter } from '@hellfall/shared/utils';
 import { useParams } from 'react-router-dom';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledButton, createStyledButton, createStyledDiv, createStyledInput, createStyledSpan } from '../styling';
+import {
+  createStenciledButton,
+  createStyledButton,
+  createStyledDiv,
+  createStyledInput,
+  createStyledSpan,
+} from '../styling';
 import { Heading } from '@workday/canvas-kit-react';
 
 export function ReviewPage() {
@@ -226,9 +232,7 @@ export function ReviewPage() {
             aria-label="Select all pending changesets"
           />
           <BulkLabel>
-            {selectedIds.size > 0
-              ? `${selectedIds.size} selected`
-              : 'Select all'}
+            {selectedIds.size > 0 ? `${selectedIds.size} selected` : 'Select all'}
           </BulkLabel>
           {selectedIds.size > 0 && (
             <BulkAcceptButton disabled={bulkBusy} onClick={handleBulkAccept}>

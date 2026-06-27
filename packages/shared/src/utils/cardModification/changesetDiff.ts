@@ -12,8 +12,7 @@ export function changeFieldLabel(change: anyChange): string {
     case 'root':
       return humanizeField(String(change.prop));
     case 'face': {
-      const suffix =
-        change.index != null && change.index > 0 ? ` (face ${change.index + 1})` : '';
+      const suffix = change.index != null && change.index > 0 ? ` (face ${change.index + 1})` : '';
       return `${humanizeField(String(change.prop))}${suffix}`;
     }
     case 'tag':
