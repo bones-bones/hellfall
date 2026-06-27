@@ -4,6 +4,7 @@ import { ScryfallCard } from '@scryfall/api-types';
 import pLimit from 'p-limit';
 import { fixedScryfall, ScryfallToHC } from './scryfallToHC.ts';
 import { setDerivedProps } from '@hellfall/shared/utils/index.ts';
+import { parseRelatedReferenceName } from './parseRelatedReference.ts';
 
 const REQUEST_DELAY_MS = 125;
 const limiter = pLimit(1);
@@ -71,9 +72,7 @@ export const fetchScryfallTokens = async () => {
             token.hcid = entry[i];
           } else if (keys[i] == 'token_maker') {
             token.all_parts = entry[i].split(';').map(oldName => {
-              const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-              const name = match?.groups?.name ?? oldName;
-              const count = match?.groups?.count;
+              const { name, count } = parseRelatedReferenceName(oldName);
               const base = name.replace(/\d+$/, '');
               const shouldUseBase =
                 /\d/.test(name.at(-1)!) &&
