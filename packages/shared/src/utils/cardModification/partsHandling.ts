@@ -1,5 +1,5 @@
 import { HCCard, HCObject, HCRelatedCard, relatedComponent } from '@hellfall/shared/types';
-import { textEquals, relatedNamesMatch } from '../textHandling';
+import { textEquals } from '../textHandling';
 import { pushProp } from '../listHandling';
 import { CardMap, toFaces } from '../cardHandling';
 
@@ -108,11 +108,13 @@ export const updateParts = (
       const relatedCard =
         relateds.get(part.id) ??
         relateds.find(related => textEquals(part.hcid, related.hcid)) ??
-        relateds.find(related => relatedNamesMatch(part.name, related.name));
+        relateds.find(related => textEquals(part.name, related.name));
       if (!relatedCard) {
-        throw new Error(
-          `updateParts: token_maker part not found for card "${card.name}" (${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
-        );
+        const partIndex = card.all_parts!.indexOf(part);
+        if (partIndex !== -1) {
+          card.all_parts!.splice(partIndex, 1);
+        }
+        return;
       }
       part.id = relatedCard.id;
       part.hcid = relatedCard.hcid;
@@ -168,7 +170,7 @@ export const updateParts = (
       const relatedCard =
         relateds.get(part.id) ??
         relateds.find(related => textEquals(part.hcid, related.hcid)) ??
-        relateds.find(related => relatedNamesMatch(part.name, related.name));
+        relateds.find(related => textEquals(part.name, related.name));
       if (!relatedCard) {
         throw new Error(
           `updateParts: draft_partner part not found for card "${card.name}" (${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
@@ -204,7 +206,7 @@ export const updateParts = (
         const relatedCard =
           relateds.get(part.id) ??
           relateds.find(related => textEquals(part.hcid, related.hcid)) ??
-          relateds.find(related => relatedNamesMatch(part.name, related.name));
+          relateds.find(related => textEquals(part.name, related.name));
         if (!relatedCard) {
           throw new Error(
             `updateParts: meld_part not found for token "${card.name}" (${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`

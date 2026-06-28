@@ -230,17 +230,6 @@ export const textEquals = (cardText?: string, searchText?: string) => {
   );
 };
 
-/** Normalize sheet/card reference names for permissive related-card lookup. */
-export const normalizeRelatedLookupName = (name: string): string =>
-  name
-    .replace(/^[A-Z][A-Z0-9.]*:\s*/, '')
-    .replace(/\s*\([^)]*\)\s*$/, '')
-    .trim();
-
-export const relatedNamesMatch = (left?: string, right?: string): boolean =>
-  textEquals(left, right) ||
-  textEquals(normalizeRelatedLookupName(left ?? ''), normalizeRelatedLookupName(right ?? ''));
-
 /**
  * Splits a string into a list of strings based on parentheses that alternate between a chunk wrapped in parentheses and one that isn't. Will ignore \( and \). Correctly handles nested parens.
  * @param text

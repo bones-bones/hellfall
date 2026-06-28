@@ -9,7 +9,6 @@ import {
   SetCode,
 } from '@hellfall/shared/types';
 import { sheetsKey } from './env.ts';
-import { parseRelatedReferenceName } from './parseRelatedReference.ts';
 import {
   addArtist,
   landToColorMapping,
@@ -123,7 +122,9 @@ export const fetchLands = async () => {
       entryAt('token_maker')
         .split(';')
         .forEach(oldName => {
-          const { name, count } = parseRelatedReferenceName(oldName);
+          const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+          const name = match?.groups?.name ?? oldName;
+          const count = match?.groups?.count;
           const base = name.replace(/\d+$/, '');
           const shouldUseBase =
             /\d/.test(name.at(-1)!) &&
