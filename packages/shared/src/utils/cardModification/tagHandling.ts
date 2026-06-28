@@ -155,7 +155,7 @@ export const tagChangesVisibleProps = (fullTag: string): boolean => {
   if (tag in frontImageTagProps) {
     return true;
   }
-  if (getSet(tag.toUpperCase() as SetCode) || ['hc1.0', 'hc1.1', 'hc1.2'].includes(tag)) {
+  if (tagIsSetTag(tag)) {
     return true;
   }
   return false;
@@ -474,14 +474,22 @@ const tagCanUseUUID = (tag: string): boolean => {
   }
   return false;
 };
+const tagIsSetTag = (tag:string, card?:HCCard.Any):boolean => {
+  if (card ? tag.toUpperCase() == card.set:getSet(tag.toUpperCase() as SetCode)) {
+    return true;
+  }
+  if (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) && (!card || (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))) {
+    return true;
+  }
+  if (tag == 'scl' && (!card || card.set?.slice(0, 3) == 'SCL')) {
+    return true;
+  }
+  return false;
+}
 const tagUsesNoteAsValue = (tag: string, card?: HCCard.Any): boolean => {
   if (tag == 'flavor-name') {
     return true;
-  } else if (
-    tag.toLowerCase() == card?.set?.toLowerCase() ||
-    (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
-      (card?.set?.slice(0, 3) == 'HLC' || card?.set == 'HCV.1'))
-  ) {
+  } else if (tagIsSetTag(tag,card)) {
     return true;
   } else if (flagTags.includes(tag)) {
     return true;
@@ -828,7 +836,6 @@ const flagTags = [
   'missing-specialize-frame',
   'unnecessary-color-indicator',
 ];
-
 const inputForTag = (
   card: HCCard.Any,
   change_type: 'add' | 'delete',
@@ -881,12 +888,7 @@ const inputForTag = (
     location = 'root';
   } else if (tag == 'flavor-name') {
     addPropToInput(input, 'flavor_name', splitTag.value);
-  } else if (
-    tag.toLowerCase() == card.set?.toLowerCase() ||
-    (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
-      (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1')) ||
-    (tag == 'scl' && card.set?.slice(0, 3) == 'SCL')
-  ) {
+  } else if (tagIsSetTag(tag,card)) {
     addPropToInput(input, 'collector_number', splitTag.value);
     location = 'root';
   }
