@@ -5,12 +5,9 @@ import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { listEquals } from '@hellfall/shared/utils';
 import {
   createStenciledButtonDiv,
-  createStenciledButtonDivWithRef,
   createStyledDiv,
-  createStyledDivWithRef,
   createStyledTertiaryButton,
   StenciledButtonDivProps,
-  StenciledButtonDivWithRefProps,
 } from '../../styling';
 
 type Props = {
@@ -276,7 +273,7 @@ const dropdownContainerStyles = createStyles({
   overflowX: 'hidden',
   boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
 });
-const DropdownContainer = createStyledDivWithRef(dropdownContainerStyles, 'DropdownContainer');
+const DropdownContainer = createStyledDiv(dropdownContainerStyles, 'DropdownContainer');
 
 const dropdownItemStencil = createStencil({
   vars: {},
@@ -300,10 +297,10 @@ const dropdownItemStencil = createStencil({
     },
   },
 });
-interface DropdownItemProps extends StenciledButtonDivWithRefProps {
+interface DropdownItemProps extends StenciledButtonDivProps {
   isFocused?: boolean;
 }
-const DropdownItem = createStenciledButtonDivWithRef<DropdownItemProps>(
+const DropdownItem = createStenciledButtonDiv<DropdownItemProps>(
   dropdownItemStencil,
   'DropdownItem'
 );
