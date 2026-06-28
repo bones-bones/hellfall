@@ -1,4 +1,4 @@
-import { FormField, PaginationModel, Select, useSelectModel } from '@workday/canvas-kit-react';
+import { FormField, PaginationModel } from '@workday/canvas-kit-react';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   inputSortAtom,
@@ -18,7 +18,7 @@ import {
   chevron2xLeftIcon,
   chevron2xRightIcon,
 } from '@workday/canvas-system-icons-web';
-import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import { createStyles } from '@workday/canvas-kit-styling';
 import {
   createStyledDiv,
   createStyledSecondaryButton,
@@ -45,145 +45,6 @@ const DIR_OPTIONS: Array<{ label: string; value: dirType }> = [
 ];
 const parseSort = (order: string): sortType => order?.split(',')[0] as sortType;
 const parseDir = (order: string): dirType => order?.split(',')[1] as dirType;
-
-// const SortSelect = ({
-//   index,
-//   sort,
-//   sortIsOverriden,
-//   getAvailableOptions,
-//   handleSortChange,
-//   inputSorts,
-// }: {
-//   index: number;
-//   sort: sortType;
-//   sortIsOverriden: (index: number) => boolean;
-//   getAvailableOptions: (index: number) => sortType[];
-//   handleSortChange: (index: number, newSort: sortType) => void;
-//   inputSorts: string[];
-// }) => {
-//   const available = getAvailableOptions(index);
-//   const sortOptions = ALL_SORT_OPTIONS.filter(opt => available.includes(opt.value));
-//   const currentSort: sortType = sortIsOverriden(index)
-//     ? sort
-//     : ((inputSorts[index]?.split(',')[0] ?? sort) as sortType);
-//   const selectModel = useSelectModel({
-//     initialSelectedIds: [currentSort],
-//     items: sortOptions,
-//     getId: item => item.value,
-//     getTextValue: item => item.label,
-//     onSelect: data => {
-//       // This check prevents the following useEffect from causing a render loop when overridden
-//       if (!sortIsOverriden(index)) {
-//         handleSortChange(index, data.id as sortType);
-//       }
-//     },
-//   });
-//   useEffect(() => {
-//     const currentSelectedId = selectModel.state.selectedIds[0];
-//     if (currentSelectedId !== currentSort) {
-//       selectModel.events.select({ id: currentSort });
-//     }
-//   }, [currentSort]);
-
-//   return (
-//     <div {...selectStencil()}>
-//       <Select key={`sort-group-${index}`} items={sortOptions} model={selectModel}>
-//         <Select.Input
-//           title={
-//             sortIsOverriden(index)
-//               ? 'You specified this option in your search terms'
-//               : 'Change how cards are sorted'
-//           }
-//           aria-label={
-//             sortIsOverriden(index)
-//               ? 'You specified this option in your search terms'
-//               : 'Change how cards are sorted'
-//           }
-//           disabled={sortIsOverriden(index)}
-//           cs={inputStencil()}
-//         />
-//         <Select.Popper>
-//           <Select.Card ref={selectModel.state.containerRef} {...cardStencil()}>
-//             <Select.List {...listStencil()}>
-//               {(item: { value: string; label: sortType }) => (
-//                 <Select.Item key={item.value} {...itemStencil()}>
-//                   {item.label}
-//                 </Select.Item>
-//               )}
-//             </Select.List>
-//           </Select.Card>
-//         </Select.Popper>
-//       </Select>
-//     </div>
-//   );
-// };
-// const DirSelect = ({
-//   index,
-//   dir,
-//   dirIsOverriden,
-//   handleDirChange,
-//   inputSorts,
-// }: {
-//   index: number;
-//   dir: dirType;
-//   dirIsOverriden: (index: number) => boolean;
-//   handleDirChange: (index: number, newDir: dirType) => void;
-//   inputSorts: string[];
-// }) => {
-//   const currentDir: dirType = dirIsOverriden(index)
-//     ? dir
-//     : ((inputSorts[index]?.split(',')[1] ?? dir) as dirType);
-//   const selectModel = useSelectModel({
-//     initialSelectedIds: [currentDir],
-//     items: DIR_OPTIONS,
-//     getId: item => item.value,
-//     getTextValue: item => item.label,
-//     onSelect: data => {
-//       // This check prevents the following useEffect from causing a render loop when overridden
-//       if (!dirIsOverriden(index)) {
-//         handleDirChange(index, data.id as dirType);
-//       }
-//     },
-//   });
-
-//   useEffect(() => {
-//     const currentSelectedId = selectModel.state.selectedIds[0];
-//     if (currentSelectedId !== currentDir) {
-//       selectModel.events.select({ id: currentDir });
-//     }
-//   }, [currentDir]);
-//   return (
-//     <div {...selectStencil({ isDir: true })}>
-//       <Select key={`dir-group-${index}`} items={DIR_OPTIONS} model={selectModel}>
-//         <Select.Input
-//           title={
-//             dirIsOverriden(index)
-//               ? 'You specified this option in your search terms'
-//               : 'Change sort direction'
-//           }
-//           aria-label={
-//             dirIsOverriden(index)
-//               ? 'You specified this option in your search terms'
-//               : 'Change sort direction'
-//           }
-//           disabled={dirIsOverriden(index)}
-//           cs={inputStencil({ isDir: true })}
-//         />
-//         <Select.Popper>
-//           <Select.Card ref={selectModel.state.containerRef} {...cardStencil({ isDir: true })}>
-//             <Select.List {...listStencil({ isDir: true })}>
-//               {(item: { value: string; label: dirType }) => (
-//                 <Select.Item key={item.value} {...itemStencil({ isDir: true })}>
-//                   {item.label}
-//                 </Select.Item>
-//               )}
-//             </Select.List>
-//           </Select.Card>
-//         </Select.Popper>
-//       </Select>
-//     </div>
-//   );
-// };
 
 export const ControlBar = ({ model }: { model?: PaginationModel }) => {
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
@@ -238,19 +99,6 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
     setInputSorts(newInputs);
   };
 
-  // const handleClick = (
-  //   e: React.MouseEvent,
-  //   customHandler: React.MouseEventHandler<HTMLAnchorElement>
-  // ) => {
-  //   if (e.button === 1 || e.metaKey || e.ctrlKey) {
-  //     // Let the link handle it naturally
-  //     return;
-  //   }
-  //   e.preventDefault();
-  //   customHandler(e as any);
-  // };
-
-  // const [page, setPage] = useAtom(pageAtom);
   const currentPage = model?.state.currentPage;
   const lastPage = model?.state.lastPage;
   const getCurrentSort = (index: number) => inputSorts[index]?.split(',')[0] as sortType;

@@ -173,7 +173,7 @@ export const createStyledSelect = (styles: string, displayName: string = 'Styled
 };
 
 export const createStyledHR = (styles: string, displayName: string = 'StyledHR') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'hr'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'hr'>) => (
     <hr {...handleCsProp(props, styles)}>{children}</hr>
   );
   (Component as any).displayName = displayName;
