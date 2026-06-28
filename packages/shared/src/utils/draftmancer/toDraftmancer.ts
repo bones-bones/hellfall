@@ -81,6 +81,7 @@ export const toDraftmancerCube = ({
 {
     "name": "${name}",
     "colorBalance": false,
+    "boostersPerPlayer": 3,
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA"
 }
 [CustomCards]\n${JSON.stringify([...cards, ...tokens], null, '\t')}\n[MainSlot]\n${cards

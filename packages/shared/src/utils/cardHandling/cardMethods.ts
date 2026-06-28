@@ -17,7 +17,6 @@ import {
   stripMasterpiece,
   stripSetCode,
   textEquals,
-  relatedNamesMatch,
 } from '../textHandling';
 import { CardMap } from './cardMap';
 import { getHc5 } from './getHc5';
@@ -269,7 +268,7 @@ export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): Car
       part =>
         cardMap.get(part.id) ??
         cardMap.find(related => textEquals(part.hcid, related.hcid)) ??
-        cardMap.find(related => relatedNamesMatch(part.name, related.name)) ??
+        cardMap.find(related => textEquals(part.name, related.name)) ??
         []
     ) ?? []
   );

@@ -80,7 +80,7 @@ function buildStubCard(
 
   card.id = newCardId();
   card.oracle_id = newCardId();
-  setDerivedProps(card);
+  setDerivedProps(card, ['not-transcribed']);
   if (!isValidV4UUID(card.id)) {
     throw new Error('failed_to_generate_card_id');
   }
