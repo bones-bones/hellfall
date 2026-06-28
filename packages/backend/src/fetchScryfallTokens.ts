@@ -3,22 +3,12 @@ import { HCLayout, HCRelatedCard, HCObject, SetCode } from '@hellfall/shared/typ
 import { ScryfallCard } from '@scryfall/api-types';
 import pLimit from 'p-limit';
 import { fixedScryfall, ScryfallToHC } from './scryfallToHC.ts';
-import { setDerivedProps } from '@hellfall/shared/utils/index.ts';
+import { parseRelatedReferenceName, setDerivedProps } from '@hellfall/shared/utils/index.ts';
 
 const REQUEST_DELAY_MS = 125;
 const limiter = pLimit(1);
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-const hardCardNames: string[] = [
-  'Crypt of u/Em9500',
-  '1d6',
-  'Avatar of BallsJr123',
-  'Sekiro for the PS4',
-  'Avatar of Discord v2',
-  'That One Time in WW1',
-  'Plagiarism by doomclaw9',
-  'Carrion Feeder from MH8',
-];
 
 async function fetchCardById(cardId: string): Promise<fixedScryfall> {
   return limiter(async () => {
@@ -71,15 +61,7 @@ export const fetchScryfallTokens = async () => {
             token.hcid = entry[i];
           } else if (keys[i] == 'token_maker') {
             token.all_parts = entry[i].split(';').map(oldName => {
-              const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-              const name = match?.groups?.name ?? oldName;
-              const count = match?.groups?.count;
-              const base = name.replace(/\d+$/, '');
-              const shouldUseBase =
-                /\d/.test(name.at(-1)!) &&
-                !hardCardNames.includes(name) &&
-                base &&
-                ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
+              const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',

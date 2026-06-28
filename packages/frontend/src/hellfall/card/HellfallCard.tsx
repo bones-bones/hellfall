@@ -16,11 +16,7 @@ import {
 } from './markdownFormatter.tsx';
 import { PendingChanges } from './PendingChanges.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
-import {
-  createStyledDiv,
-  createStyledHR,
-  createStyledPrimaryButtonLink,
-} from '../../styling';
+import { createStyledDiv, createStyledHR, createStyledPrimaryButtonLink } from '../../styling';
 import { TagSection } from './hellfall-card-components/TagSection';
 import { CardEditingControls } from './CardEditingControls.tsx';
 import { RelatedCards } from './hellfall-card-components/RelatedCards';

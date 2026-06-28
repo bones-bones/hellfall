@@ -30,15 +30,33 @@ export const setToSrc = (set?: HCSet) => {
 
 export const getSetSrc = (code: SetCode) => setToSrc(getSet(code));
 
+/**
+ * Gets the set that is the parent of another set
+ * @param code Set code to get the parent of
+ */
+export const getParentSet = (code: SetCode): SetCode | undefined => getSet(code)?.parent_set_code;
+
+/**
+ * Gets the sets that are the children of another set
+ * @param code Set code to get the children of
+ */
 export const getChildSets = (code: SetCode): SetCode[] | undefined => {
   const childSetCodes = getSet(code)?.child_set_codes;
   if (!childSetCodes) return undefined;
   return Array.isArray(childSetCodes) ? childSetCodes : [childSetCodes];
 };
 
+/**
+ * Gets the sets that are the direct children of another set (i.e. are its children and have the same set type)
+ * @param code Set code to get the direct children of
+ */
 export const getDirectChildSets = (code: SetCode): SetCode[] | undefined =>
   getSet(code)?.child_set_codes?.filter(child => getSet(child)?.set_type == getSet(code)?.set_type);
 
+/**
+ * Gets the sets that are in the same block as another set (i.e. are its group and have the same set type)
+ * @param code Set code to get the block sets of
+ */
 export const getBlockSets = (code: SetCode): SetCode[] => [
   code.toUpperCase() as SetCode,
   ...(getSet(code)?.child_set_codes?.filter(
@@ -49,6 +67,10 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
     .map(set => set.code),
 ];
 
+/**
+ * Gets the sets that are in the same group as another set (i.e. are its children or its parent)
+ * @param code Set code to get the group sets of
+ */
 export const getGroupSets = (code: SetCode): SetCode[] => [
   code.toUpperCase() as SetCode,
   ...(getSet(code)?.child_set_codes ?? []),

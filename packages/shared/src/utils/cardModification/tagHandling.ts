@@ -420,6 +420,8 @@ export const savedOracleIds: Record<string, string> = {
   'forest token': '92dbbd36-2588-44ef-afb4-25eb6cc2b7b0',
   'nebula token': 'dc8340f7-88f1-4cda-b5b1-872054eb8925',
   'wastes token': '8e1687da-24de-460e-9b1a-cc12776476df',
+  'goblin shaman': '4ece8767-a2e0-42fc-aadf-86a4ae863343',
+  'undead servant': '5bf9f397-0216-4ec9-a57b-406758dcc233',
 };
 const tagCanHaveFaces = (tag: string, card?: HCCard.Any): boolean => {
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
@@ -882,7 +884,8 @@ const inputForTag = (
   } else if (
     tag.toLowerCase() == card.set?.toLowerCase() ||
     (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
-      (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))
+      (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1')) ||
+    (tag == 'scl' && card.set?.slice(0, 3) == 'SCL')
   ) {
     addPropToInput(input, 'collector_number', splitTag.value);
     location = 'root';

@@ -321,6 +321,47 @@ export const getSetCode = (name: string) => {
   return ending ? ` (${ending})` : undefined;
 };
 
+const hardCardNames: string[] = [
+  'Crypt of u/Em9500',
+  '1d6',
+  'Avatar of BallsJr123',
+  'Sekiro for the PS4',
+  'Avatar of Discord v2',
+  'That One Time in WW1',
+  'Plagiarism by doomclaw9',
+  'Carrion Feeder from MH8',
+];
+
+export const hardTokenIds: string[] = [
+  'Clue© 19861',
+  '+21',
+  '+41',
+  'AKKI-471',
+  'Bolt M41',
+  'Rock 191',
+  "Baldur's Gate 31",
+];
+
+/**
+ * Parses the name, count, and base for a related card
+ * @param oldName name from the google sheet
+ */
+export const parseRelatedReferenceName = (
+  oldName: string
+): { name: string; count?: string; base: string; shouldUseBase: boolean } => {
+  const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+  const name = match?.groups?.name ?? oldName;
+  const count = match?.groups?.count;
+  const base = hardTokenIds.includes(name) ? name.slice(0, -1) : name.replace(/\d+$/, '');
+  const shouldUseBase =
+    hardTokenIds.includes(name) ||
+    (/\d/.test(name.at(-1)!) &&
+      !hardCardNames.includes(name) &&
+      base.length > 0 &&
+      ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!));
+  return { name, count, base, shouldUseBase };
+};
+
 /**
  * Preps a name for export to draftmancer/cockatrice
  * @param name name to prep

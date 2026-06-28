@@ -18,6 +18,8 @@ import {
   anyPropType,
   anyValueType,
   savedOracleIds,
+  getDirectChildSets,
+  getParentSet,
 } from '@hellfall/shared/utils';
 import { mergeFromSheet } from '@hellfall/shared/utils/cardModification/changeHandling';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
@@ -367,9 +369,12 @@ const main = async () => {
   const collectorMap = new Map<SetCode, Set<number>>(
     newCards.sets().map(code => [code, new Set<number>()])
   );
+  collectorMap.set('SCL', new Set<number>());
+  getDirectChildSets('SCL')?.forEach(code => collectorMap.delete(code));
   newCards.forEach(card => {
     const num = parseInt(card.collector_number);
-    const cSet = collectorMap.get(card.set);
+    const cSet =
+      collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));
     if (ignoreDuplicateHCIDs.includes(card.hcid)) {
       return;
     }

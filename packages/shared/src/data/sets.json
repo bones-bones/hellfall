@@ -487,10 +487,37 @@
       "code": "SCL",
       "name": "Scube Lair Drops",
       "description": "Like real Secret Lairs, but better in every way.",
-      "set_type": "side",
+      "set_type": "lair",
       "child_set_codes": [
-        "HCV.S"
+        "HCV.S",
+        "SCL.1",
+        "SCL.2",
+        "SCL.3"
       ]
+    },
+    {
+      "id": "18dc5033-3f45-4be7-ae04-ced7362b01d0",
+      "code": "SCL.1",
+      "name": "Scube Lair Drop: Iconic Hellscube Cards",
+      "description": "Iconic Hellscube Cards to Celebrate 5,000 Hellscube Members!",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
+      "id": "a88f00da-cd24-4747-b54b-fd284b2f6b74",
+      "code": "SCL.2",
+      "name": "Scube Lair Drop: Hellscube 1 All-Stars",
+      "description": "Hellscube 1 All-Stars",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
+      "id": "35c775f8-7e6a-436f-8a76-924b58eff7cf",
+      "code": "SCL.3",
+      "name": "Scube Lair Drop: Pride Month",
+      "description": "Pride Month Celebration!",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
     },
     {
       "id": "d43fde19-1d17-468a-b252-70629b93dd97",

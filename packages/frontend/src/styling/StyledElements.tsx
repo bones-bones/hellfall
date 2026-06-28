@@ -265,10 +265,7 @@ export const createStyledDivClickable = (
   styles: string,
   displayName: string = 'StyledDivClickable'
 ) => {
-  const Component = ({
-    children,
-    ...props
-  }: BoxProps & React.ComponentProps<'button'>) => (
+  const Component = ({ children, ...props }: BoxProps & React.ComponentProps<'button'>) => (
     <Box as={'button'} {...handleCsProp(props, styles)}>
       {children}
     </Box>

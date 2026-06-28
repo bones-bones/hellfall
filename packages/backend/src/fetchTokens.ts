@@ -17,6 +17,8 @@ import {
   addPropToRoot,
   rootPropType,
   pushPropToRoot,
+  parseRelatedReferenceName,
+  hardTokenIds,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -47,26 +49,6 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       row.push('');
     }
   });
-
-  const hardCardNames: string[] = [
-    'Crypt of u/Em9500',
-    '1d6',
-    'Avatar of BallsJr123',
-    'Sekiro for the PS4',
-    'Avatar of Discord v2',
-    'That One Time in WW1',
-    'Plagiarism by doomclaw9',
-    'Carrion Feeder from MH8',
-  ];
-  const hardTokenIds: string[] = [
-    'Clue© 19861',
-    '+21',
-    '+41',
-    'AKKI-471',
-    'Bolt M41',
-    'Rock 191',
-    "Baldur's Gate 31",
-  ];
 
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
   const splitKeys: keyType[] = ['name', 'types', 'power', 'toughness'];
@@ -119,16 +101,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           });
         } else if (keys[i] == 'token_maker') {
           entry[i].split(';').forEach(oldName => {
-            const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-            const name = match?.groups?.name ?? oldName;
-            const count = match?.groups?.count;
-            const base = hardTokenIds.includes(name) ? name.slice(0, -1) : name.replace(/\d+$/, '');
-            const shouldUseBase =
-              hardTokenIds.includes(name) ||
-              (/\d/.test(name.at(-1)!) &&
-                !hardCardNames.includes(name) &&
-                base &&
-                ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!));
+            const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: '',

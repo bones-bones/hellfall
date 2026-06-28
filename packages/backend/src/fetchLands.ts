@@ -16,22 +16,13 @@ import {
   getDefaultCard,
   HCIDMap,
   pushPropToRoot,
+  parseRelatedReferenceName,
 } from '@hellfall/shared/utils';
 
 const convertSet: Record<string, string> = {
   HC4: 'HBB.4',
   Old: 'HBB.0',
 };
-const hardCardNames: string[] = [
-  'Crypt of u/Em9500',
-  '1d6',
-  'Avatar of BallsJr123',
-  'Sekiro for the PS4',
-  'Avatar of Discord v2',
-  'That One Time in WW1',
-  'Plagiarism by doomclaw9',
-  'Carrion Feeder from MH8',
-];
 
 export const landOracleIds: Record<string, string> = {
   plains: 'bc71ebf6-2056-41f7-be35-b2e5c34afa99',
@@ -122,15 +113,7 @@ export const fetchLands = async () => {
       entryAt('token_maker')
         .split(';')
         .forEach(oldName => {
-          const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-          const name = match?.groups?.name ?? oldName;
-          const count = match?.groups?.count;
-          const base = name.replace(/\d+$/, '');
-          const shouldUseBase =
-            /\d/.test(name.at(-1)!) &&
-            !hardCardNames.includes(name) &&
-            base &&
-            ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
+          const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
           const maker: HCRelatedCard = {
             object: HCObject.ObjectType.RelatedCard,
             id: '',

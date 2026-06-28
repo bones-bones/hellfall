@@ -22,6 +22,7 @@ import {
   rootPropType,
   pushPropToRoot,
   getColorsFromText,
+  parseRelatedReferenceName,
 } from '@hellfall/shared/utils';
 import { pipsData } from '@hellfall/shared/data';
 
@@ -94,17 +95,6 @@ export const fetchCards = async (usingApproved: boolean = false) => {
       row.push('');
     }
   });
-
-  const hardCardNames: string[] = [
-    'Crypt of u/Em9500',
-    '1d6',
-    'Avatar of BallsJr123',
-    'Sekiro for the PS4',
-    'Avatar of Discord v2',
-    'That One Time in WW1',
-    'Plagiarism by doomclaw9',
-    'Carrion Feeder from MH8',
-  ];
 
   const skipKeys: keyType[] = [
     'hcid',
@@ -236,16 +226,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
             addPropToRoot(card, 'legalities', legalities);
           } else if (keys[i] == 'related') {
             entry[i].split(';').forEach(oldName => {
-              const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-              const name = match?.groups?.name ?? oldName;
-              const count = match?.groups?.count;
-              const base = name.replace(/\d+$/, '');
-              const shouldUseBase =
-                /\d/.test(name.at(-1)!) &&
-                !hardCardNames.includes(name) &&
-                base &&
-                ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
-
+              const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',
