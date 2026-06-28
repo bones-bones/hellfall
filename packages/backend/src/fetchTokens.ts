@@ -8,7 +8,6 @@ import {
   SetCode,
 } from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
-import { parseRelatedReferenceName } from './parseRelatedReference.ts';
 import {
   addArtist,
   setDerivedProps,
@@ -120,7 +119,9 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           });
         } else if (keys[i] == 'token_maker') {
           entry[i].split(';').forEach(oldName => {
-            const { name, count } = parseRelatedReferenceName(oldName);
+            const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+            const name = match?.groups?.name ?? oldName;
+            const count = match?.groups?.count;
             const base = hardTokenIds.includes(name) ? name.slice(0, -1) : name.replace(/\d+$/, '');
             const shouldUseBase =
               hardTokenIds.includes(name) ||
