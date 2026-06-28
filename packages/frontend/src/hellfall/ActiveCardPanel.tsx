@@ -13,7 +13,7 @@ import {
 import { externalLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv, createStyledDivWithRef } from '../styling';
+import { createStyledDiv } from '../styling';
 
 interface ActiveCardPanelProps {
   origin?: 'left' | 'right'; // Optional origin prop, defaulting to "right"
@@ -131,6 +131,6 @@ const spContainerStyles = createStyles({
   height: '90vh',
   overflowX: 'hidden',
 });
-const SPContainer = createStyledDivWithRef(spContainerStyles, 'SPContainer');
+const SPContainer = createStyledDiv(spContainerStyles, 'SPContainer');
 
 const toolbarIconStyles = createStyles({ margin: '2px 0 0 2px' });

@@ -43,7 +43,7 @@ import { Link, LinkProps } from 'react-router-dom';
  * }
  * `const x = createStenciledY<XProps>(xStencil, 'x');`
  *
- * `YProps` should be `React.ComponentPropsWithoutRef<y>` if `y` is an intrinsic component, and should be the props type for `y` otherwise (such as `BoxProps` for `Box`)
+ * `YProps` should be `React.ComponentProps<y>` if `y` is an intrinsic component, and should be the props type for `y` otherwise (such as `BoxProps` for `Box`)
  */
 
 /**
@@ -56,7 +56,7 @@ import { Link, LinkProps } from 'react-router-dom';
  */
 
 export const createStyledImg = (styles: string, displayName: string = 'StyledImg') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'img'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'img'>) => (
     <img alt="" {...handleCsProp(props, styles)}>
       {children}
     </img>
@@ -64,7 +64,7 @@ export const createStyledImg = (styles: string, displayName: string = 'StyledImg
   (Component as any).displayName = displayName;
   return Component;
 };
-export const createStenciledImg = <T extends React.ComponentPropsWithoutRef<'img'>>(
+export const createStenciledImg = <T extends React.ComponentProps<'img'>>(
   stencil: Stencil<any>,
   displayName: string = 'StenciledImg'
 ) => {
@@ -81,7 +81,7 @@ export const createStenciledImg = <T extends React.ComponentPropsWithoutRef<'img
 };
 
 export const createStyledLabel = (styles: string, displayName: string = 'StyledLabel') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'label'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'label'>) => (
     <label {...handleCsProp(props, styles)}>{children}</label>
   );
   (Component as any).displayName = displayName;
@@ -89,7 +89,7 @@ export const createStyledLabel = (styles: string, displayName: string = 'StyledL
 };
 
 export const createStyledLegend = (styles: string, displayName: string = 'StyledLegend') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'legend'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'legend'>) => (
     <legend {...handleCsProp(props, styles)}>{children}</legend>
   );
   (Component as any).displayName = displayName;
@@ -97,7 +97,7 @@ export const createStyledLegend = (styles: string, displayName: string = 'Styled
 };
 
 export const createStyledTable = (styles: string, displayName: string = 'StyledTable') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'table'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'table'>) => (
     <table {...handleCsProp(props, styles)}>{children}</table>
   );
   (Component as any).displayName = displayName;
@@ -105,7 +105,7 @@ export const createStyledTable = (styles: string, displayName: string = 'StyledT
 };
 
 export const createStyledTableRow = (styles: string, displayName: string = 'StyledTableRow') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'tr'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'tr'>) => (
     <tr {...handleCsProp(props, styles)}>{children}</tr>
   );
   (Component as any).displayName = displayName;
@@ -113,13 +113,13 @@ export const createStyledTableRow = (styles: string, displayName: string = 'Styl
 };
 
 export const createStyledInput = (styles: string, displayName: string = 'StyledInput') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'input'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'input'>) => (
     <input {...handleCsProp(props, styles)}>{children}</input>
   );
   (Component as any).displayName = displayName;
   return Component;
 };
-export const createStenciledInput = <T extends React.ComponentPropsWithoutRef<'input'>>(
+export const createStenciledInput = <T extends React.ComponentProps<'input'>>(
   stencil: Stencil<any>,
   displayName: string = 'StenciledInput'
 ) => {
@@ -133,25 +133,13 @@ export const createStenciledInput = <T extends React.ComponentPropsWithoutRef<'i
 };
 
 export const createStyledTextArea = (styles: string, displayName: string = 'StyledTextArea') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'textarea'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'textarea'>) => (
     <textarea {...handleCsProp(props, styles)}>{children}</textarea>
   );
   (Component as any).displayName = displayName;
   return Component;
 };
-export const createStyledTextAreaWithRef = (
-  styles: string,
-  displayName: string = 'StyledTextAreaWithRef'
-) => {
-  const Component = ({ children, ref, ...props }: React.ComponentPropsWithRef<'textarea'>) => (
-    <textarea ref={ref} {...handleCsProp(props, styles)}>
-      {children}
-    </textarea>
-  );
-  (Component as any).displayName = displayName;
-  return Component;
-};
-export const createStenciledTextArea = <T extends React.ComponentPropsWithoutRef<'textarea'>>(
+export const createStenciledTextArea = <T extends React.ComponentProps<'textarea'>>(
   stencil: Stencil<any>,
   displayName: string = 'StenciledTextArea'
 ) => {
@@ -165,7 +153,7 @@ export const createStenciledTextArea = <T extends React.ComponentPropsWithoutRef
 };
 
 export const createStyledSelect = (styles: string, displayName: string = 'StyledSelect') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'select'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'select'>) => (
     <select {...handleCsProp(props, styles)}>{children}</select>
   );
   (Component as any).displayName = displayName;
@@ -173,7 +161,7 @@ export const createStyledSelect = (styles: string, displayName: string = 'Styled
 };
 
 export const createStyledHR = (styles: string, displayName: string = 'StyledHR') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'hr'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'hr'>) => (
     <hr {...handleCsProp(props, styles)}>{children}</hr>
   );
   (Component as any).displayName = displayName;
@@ -181,7 +169,7 @@ export const createStyledHR = (styles: string, displayName: string = 'StyledHR')
 };
 
 export const createStyledListItem = (styles: string, displayName: string = 'StyledListItem') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'li'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'li'>) => (
     <li {...handleCsProp(props, styles)}>{children}</li>
   );
   (Component as any).displayName = displayName;
@@ -189,13 +177,13 @@ export const createStyledListItem = (styles: string, displayName: string = 'Styl
 };
 
 export const createStyledButton = (styles: string, displayName: string = 'StyledButton') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'button'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'button'>) => (
     <button {...handleCsProp(props, styles)}>{children}</button>
   );
   (Component as any).displayName = displayName;
   return Component;
 };
-export const createStenciledButton = <T extends React.ComponentPropsWithoutRef<'button'>>(
+export const createStenciledButton = <T extends React.ComponentProps<'button'>>(
   stencil: Stencil<any>,
   displayName: string = 'StenciledButton'
 ) => {
@@ -231,7 +219,7 @@ export const createStenciledLink = <T extends LinkProps>(
 
 /** Use this one instead of `createStyledLink` for links with `#` */
 export const createStyledJumpLink = (styles: string, displayName: string = 'StyledJumpLink') => {
-  const Component = ({ children, ...props }: React.ComponentPropsWithoutRef<'a'>) => (
+  const Component = ({ children, ...props }: React.ComponentProps<'a'>) => (
     <a {...handleCsProp(props, styles)}>{children}</a>
   );
   (Component as any).displayName = displayName;
@@ -239,24 +227,8 @@ export const createStyledJumpLink = (styles: string, displayName: string = 'Styl
 };
 
 export const createStyledDiv = (styles: string, displayName: string = 'StyledDiv') => {
-  const Component = ({ children, ...props }: BoxProps & React.ComponentPropsWithoutRef<'div'>) => (
+  const Component = ({ children, ...props }: BoxProps & React.ComponentProps<'div'>) => (
     <Box {...handleCsProp(props, styles)}>{children}</Box>
-  );
-  (Component as any).displayName = displayName;
-  return Component;
-};
-export interface BoxPropsWithRef extends BoxProps {
-  ref?: React.Ref<HTMLDivElement>;
-  children?: React.ReactNode;
-}
-export const createStyledDivWithRef = (
-  styles: string,
-  displayName: string = 'StyledDivWithRef'
-) => {
-  const Component = ({ children, ref, ...props }: BoxPropsWithRef) => (
-    <Box ref={ref} {...handleCsProp(props, styles)}>
-      {children}
-    </Box>
   );
   (Component as any).displayName = displayName;
   return Component;
@@ -273,7 +245,7 @@ export const createStenciledDiv = <T extends BoxProps>(
   (Component as any).displayName = displayName;
   return Component;
 };
-export type StenciledButtonDivProps = BoxProps & React.ComponentPropsWithoutRef<'button'>;
+export type StenciledButtonDivProps = BoxProps & React.ComponentProps<'button'>;
 export const createStenciledButtonDiv = <T extends StenciledButtonDivProps>(
   stencil: Stencil<any>,
   displayName: string = 'StenciledButtonDiv'
@@ -289,23 +261,6 @@ export const createStenciledButtonDiv = <T extends StenciledButtonDivProps>(
   (Component as any).displayName = displayName;
   return Component;
 };
-export type StenciledButtonDivWithRefProps = BoxProps & React.ComponentPropsWithRef<'button'>;
-export const createStenciledButtonDivWithRef = <T extends StenciledButtonDivWithRefProps>(
-  stencil: Stencil<any>,
-  displayName: string = 'StenciledButtonDiv'
-) => {
-  const Component = ({ children, ref, ...props }: T) => (
-    <Box
-      as={'button'}
-      ref={ref}
-      {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}
-    >
-      {children}
-    </Box>
-  );
-  (Component as any).displayName = displayName;
-  return Component;
-};
 export const createStyledDivClickable = (
   styles: string,
   displayName: string = 'StyledDivClickable'
@@ -313,7 +268,7 @@ export const createStyledDivClickable = (
   const Component = ({
     children,
     ...props
-  }: BoxProps & React.ComponentPropsWithoutRef<'button'>) => (
+  }: BoxProps & React.ComponentProps<'button'>) => (
     <Box as={'button'} {...handleCsProp(props, styles)}>
       {children}
     </Box>
@@ -379,7 +334,7 @@ export const createStyledHeading = (styles: string, displayName: string = 'Style
 };
 
 export const createStyledTextInput = (styles: string, displayName: string = 'StyledTextInput') => {
-  const Component = ({ ...props }: TextInputProps & React.ComponentPropsWithoutRef<'input'>) => (
+  const Component = ({ ...props }: TextInputProps & React.ComponentProps<'input'>) => (
     <TextInput {...handleCsProp(props, styles)} />
   );
   (Component as any).displayName = displayName;
@@ -393,7 +348,7 @@ export const createStyledPrimaryButton = (
   const Component = ({
     children,
     ...props
-  }: PrimaryButtonProps & React.ComponentPropsWithoutRef<'button'>) => (
+  }: PrimaryButtonProps & React.ComponentProps<'button'>) => (
     <PrimaryButton as={PrimaryButton} {...handleCsProp(props, styles)}>
       {children}
     </PrimaryButton>
@@ -425,7 +380,7 @@ export const createStyledSecondaryButton = (
   const Component = ({
     children,
     ...props
-  }: SecondaryButtonProps & React.ComponentPropsWithoutRef<'button'>) => (
+  }: SecondaryButtonProps & React.ComponentProps<'button'>) => (
     <SecondaryButton as={SecondaryButton} {...handleCsProp(props, styles)}>
       {children}
     </SecondaryButton>
@@ -457,7 +412,7 @@ export const createStyledTertiaryButton = (
   const Component = ({
     children,
     ...props
-  }: TertiaryButtonProps & React.ComponentPropsWithoutRef<'button'>) => (
+  }: TertiaryButtonProps & React.ComponentProps<'button'>) => (
     <TertiaryButton as={TertiaryButton} {...handleCsProp(props, styles)}>
       {children}
     </TertiaryButton>

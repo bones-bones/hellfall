@@ -9,7 +9,7 @@ import { buildNameToIdMap, lookupNameToId } from '../hellfall/hooks/useNameToId.
 import { downloadDraftmancer } from '../cube-resources/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledImg, createStyledTextAreaWithRef } from '../styling';
+import { createStyledImg, createStyledTextArea } from '../styling';
 import { CardMap, HCToTTSDeck, textPrep, unescapeBase64 } from '@hellfall/shared/utils';
 import { loadCardsData } from '@hellfall/shared/data';
 
@@ -268,4 +268,4 @@ const Card = createStyledImg(cardStyles, 'Card');
 // const OtherContainer = styled.div({ display: "flex" });
 
 const textAreaStyles = createStyles({ width: '50%', minHeight: '400px' });
-const StyledTextArea = createStyledTextAreaWithRef(textAreaStyles, 'StyledTextArea');
+const StyledTextArea = createStyledTextArea(textAreaStyles, 'StyledTextArea');
