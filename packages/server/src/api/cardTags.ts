@@ -18,26 +18,14 @@ import {
   changeIsValid,
   Changeset,
   deleteTagFromBase,
-  getChangesFromDifferences,
   getChangesFromTag,
   tagChange,
-  tagChangeIsValid,
-  tagChangesAnyProps,
 } from '@hellfall/shared/utils';
 import {
   cardsCollection,
-  cardToFirestore,
   changesetCollection,
   firestoreCard,
-  firestoreToCard,
 } from '@hellfall/shared/utils/firestore';
-// import {
-//   applyAddTag,
-//   applyRemoveTag,
-//   normalizeTag,
-//   resolveTagState,
-//   tagFieldsForWrite,
-// } from '@hellfall/shared/cardTags/cardTagMerge';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const collection: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
