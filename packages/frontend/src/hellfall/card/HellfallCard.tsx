@@ -18,7 +18,6 @@ import { PendingChanges } from './PendingChanges.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
 import {
   createStyledDiv,
-  createStyledDivWithRef,
   createStyledHR,
   createStyledPrimaryButtonLink,
 } from '../../styling';
@@ -434,7 +433,7 @@ const containerStyles = createStyles({
   justifyContent: 'center',
   lineHeight: 1,
 });
-const Container = createStyledDivWithRef(containerStyles, 'Container');
+const Container = createStyledDiv(containerStyles, 'Container');
 
 const imageContainerContainerStyles = createStyles({
   display: 'flex',

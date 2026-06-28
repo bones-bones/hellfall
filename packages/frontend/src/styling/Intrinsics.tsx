@@ -17,7 +17,7 @@ export const htmlIntrinsicList = [
 ] as const;
 
 export type htmlIntrinsic = (typeof htmlIntrinsicList)[number];
-export type htmlIntrinsicProps = React.ComponentPropsWithoutRef<'div'>;
+export type htmlIntrinsicProps = React.ComponentProps<'div'>;
 export const createStyledIntrinsic = (
   tag: htmlIntrinsic,
   styles: string,
@@ -46,7 +46,7 @@ export const createStenciledIntrinsic = <T extends htmlIntrinsicProps>(
 export const htmlTableCellList = ['th', 'td'] as const;
 
 export type htmlTableCell = (typeof htmlTableCellList)[number];
-export type htmlTableCellProps = React.ComponentPropsWithoutRef<'th'>;
+export type htmlTableCellProps = React.ComponentProps<'th'>;
 export const createStyledTableCell = (
   tag: htmlTableCell,
   styles: string,
@@ -61,7 +61,7 @@ export const createStyledTableCell = (
 export const htmlSVGList = ['svg', 'polygon'] as const;
 
 export type htmlSVG = (typeof htmlSVGList)[number];
-export type htmlSVGProps = React.ComponentPropsWithoutRef<'svg'>;
+export type htmlSVGProps = React.ComponentProps<'svg'>;
 export const createStyledSVG = (
   tag: htmlSVG,
   styles: string,
