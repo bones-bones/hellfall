@@ -2,15 +2,20 @@ import {
   addArtist,
   addPropToFace,
   addPropToRoot,
-  facePropType,
   frontIsBattle,
   getDefaultCard,
   HCIDMap,
-  rootPropType,
   setDerivedProps,
-} from '@hellfall/shared/utils/index.ts';
+} from '@hellfall/shared/utils';
 import { sheetsKey } from './env.ts';
-import { HCImageStatus, HCColor, HCColors, HCKind } from '@hellfall/shared/types';
+import {
+  HCImageStatus,
+  HCColor,
+  HCColors,
+  HCKind,
+  facePropType,
+  rootPropType,
+} from '@hellfall/shared/types';
 
 const discordToSymbolMatching: Record<string, string> = {
   '<:mana0:636012942243921931>': '{0}',

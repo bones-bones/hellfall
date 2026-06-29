@@ -98,6 +98,72 @@ export const listEquals = <T = any>(value1: T | T[], value2: T | T[]) => {
   }
 };
 
+export const listsExactlyEqual = <T = any>(
+  value1: T[],
+  value2: T[],
+  equals: (mem1: T, mem2: T) => boolean = (mem1, mem2) => mem1 === mem2
+): boolean => {
+  if (value1?.length != value2?.length || value1 == undefined || value2 == undefined) {
+    return false;
+  }
+  return value1.every((value, i) => equals(value, value2[i]));
+};
+
+const listsEqual = <T = any>(
+  value1: T[],
+  value2: T[],
+  equals: (mem1: T, mem2: T) => boolean
+): boolean => {
+  if (value1.length != value2.length) {
+    return false;
+  }
+  const set1 = structuredClone(value1);
+  const set2 = structuredClone(value2);
+  for (let i = 0; i < set2.length; i++) {
+    const index = set1.findIndex(value => equals(value, set2[i]));
+    if (index == -1) {
+      return false;
+    }
+    set1.splice(index, 1);
+  }
+  return true;
+  // if (value1?.length != value2?.length || value1 == undefined || value2 == undefined) {
+  //   return false;
+  // }
+  // return value1.every((value, i) => equals(value, value2[i]));
+};
+/**
+ * Checks whether two arbitrary values are exactly equal.
+ */
+export const arbAreEqual = <T = any>(value1: T, value2: T, ignoreOrder?: boolean): boolean => {
+  if (typeof value1 != typeof value2) {
+    return false;
+  }
+  if (typeof value1 == 'number') {
+    return value1 == value2;
+  }
+  if (typeof value1 != 'object' || typeof value2 != 'object') {
+    return value1 === value2;
+  }
+  if (value1 == null || value2 == null) {
+    return value1 === value2;
+  }
+  if (Array.isArray(value1) && Array.isArray(value2)) {
+    return (ignoreOrder ? listsEqual : listsExactlyEqual)(value1, value2, arbAreEqual);
+  }
+  for (const [prop, value] of Object.entries(value1)) {
+    if (!arbAreEqual(value, value2[prop as keyof T])) {
+      return false;
+    }
+  }
+  for (const [prop, value] of Object.entries(value2)) {
+    if (!arbAreEqual(value, value1[prop as keyof T])) {
+      return false;
+    }
+  }
+  return true;
+};
+
 /**
  * Remove shared elements from two lists
  * @param value1
@@ -237,46 +303,6 @@ export const textListShares = (
   value1: string[] | undefined,
   value2: string[] | undefined
 ): boolean => Boolean(value1?.some(text1 => value2?.some(text2 => textEquals(text1, text2))));
-
-export const listsExactlyEqual = <T = any>(
-  value1: T[],
-  value2: T[],
-  equals: (mem1: T, mem2: T) => boolean = (mem1, mem2) => mem1 === mem2
-): boolean => {
-  if (value1?.length != value2?.length || value1 == undefined || value2 == undefined) {
-    return false;
-  }
-  return value1.every((value, i) => equals(value, value2[i]));
-};
-
-/**
- * Checks whether two arbitrary values are exactly equal.
- */
-export const arbAreEqual = <T = any>(value1: T, value2: T): boolean => {
-  if (typeof value1 != typeof value2) {
-    return false;
-  }
-  if (typeof value1 != 'object' || typeof value2 != 'object') {
-    return value1 === value2;
-  }
-  if (value1 == null || value2 == null) {
-    return value1 === value2;
-  }
-  if (Array.isArray(value1) && Array.isArray(value2)) {
-    return listsExactlyEqual(value1, value2, arbAreEqual);
-  }
-  for (const [prop, value] of Object.entries(value1)) {
-    if (!arbAreEqual(value, value2[prop as keyof T])) {
-      return false;
-    }
-  }
-  for (const [prop, value] of Object.entries(value2)) {
-    if (!arbAreEqual(value, value1[prop as keyof T])) {
-      return false;
-    }
-  }
-  return true;
-};
 
 /**
  * Correctly deals with adding a value to an optional property that's a `Record<string,string>` by creating the value of the prop first if necessary

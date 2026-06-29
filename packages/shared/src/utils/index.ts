@@ -11,3 +11,4 @@ export * from './cardModification';
 export * from './setHandling.ts';
 export * from './cubeList';
 export * from './colorHandling.ts';
+export * from './changeHandling';

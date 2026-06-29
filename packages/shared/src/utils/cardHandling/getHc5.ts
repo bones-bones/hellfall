@@ -1,11 +1,8 @@
 import {
   HCCard,
-  HCCardFace,
   HCObject,
   HCLayout,
   HCLegality,
-  HCColor,
-  HCColors,
   HCImageStatus,
   HCBorderColor,
   HCFinish,

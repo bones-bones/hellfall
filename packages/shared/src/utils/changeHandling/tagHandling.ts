@@ -8,28 +8,31 @@ import {
   HCLayout,
   HCLayoutGroup,
   SetCode,
+  allPropType,
+  anyElementValueType,
+  anyPropType,
+  faceElementValueType,
+  facePropType,
+  rootElementValueType,
+  rootPropType,
 } from '@hellfall/shared/types';
 import {
-  allPropType,
-  allValueType,
-  anyPropType,
-  anyValueType,
-  facePropType,
-  faceValueType,
-  rootPropType,
-  rootValueType,
-} from '../cardHandling';
-import { getDefaultFaceValue, getDefaultKindLayout, getDefaultRootValue } from './defaults';
+  getDefaultFaceValue,
+  getDefaultKindLayout,
+  getDefaultRootValue,
+} from '../cardModification/defaults';
 import { getSet } from '../setHandling';
 import {
   anyChange,
   changeType,
   createFaceChange,
   createRootChange,
+  faceChangeablePropType,
   rootChange,
+  rootChangeablePropType,
   tagChange,
 } from './changeTypes';
-import { changeIsValid, sortChanges } from './changeHandling';
+import { sortChanges } from './changeHandling';
 import { isValidV4UUID } from '../textHandling';
 import { isInteger } from '../numHandling';
 
@@ -474,22 +477,25 @@ const tagCanUseUUID = (tag: string): boolean => {
   }
   return false;
 };
-const tagIsSetTag = (tag:string, card?:HCCard.Any):boolean => {
-  if (card ? tag.toUpperCase() == card.set:getSet(tag.toUpperCase() as SetCode)) {
+const tagIsSetTag = (tag: string, card?: HCCard.Any): boolean => {
+  if (card ? tag.toUpperCase() == card.set : getSet(tag.toUpperCase() as SetCode)) {
     return true;
   }
-  if (['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) && (!card || (card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1'))) {
+  if (
+    ['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
+    (!card || card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1')
+  ) {
     return true;
   }
   if (tag == 'scl' && (!card || card.set?.slice(0, 3) == 'SCL')) {
     return true;
   }
   return false;
-}
+};
 const tagUsesNoteAsValue = (tag: string, card?: HCCard.Any): boolean => {
   if (tag == 'flavor-name') {
     return true;
-  } else if (tagIsSetTag(tag,card)) {
+  } else if (tagIsSetTag(tag, card)) {
     return true;
   } else if (flagTags.includes(tag)) {
     return true;
@@ -606,13 +612,13 @@ type TagChangeInput<K extends anyPropType> = {
   splitTag: splitTagReturn;
   // alsoAddingFaces?:boolean,
   prop?: K;
-  value?: Record<string, anyValueType<K>> | anyValueType<K>;
+  value?: Record<string, anyElementValueType<K>> | anyElementValueType<K>;
   // options?: TagChangeOptions
 };
 const addPropToInput = <K extends anyPropType>(
   input: TagChangeInput<any>,
   prop: K,
-  value?: Record<string, anyValueType<K>> | anyValueType<K>
+  value?: Record<string, anyElementValueType<K>> | anyElementValueType<K>
 ) => {
   (input as any).prop = prop;
   if (value != undefined) {
@@ -652,7 +658,7 @@ const changesForFaceTag = <K extends facePropType>(
     if (defaultValue && change_type == 'delete') {
       return defaultValue;
     } else if (typeof value == 'object' && !Array.isArray(value)) {
-      return (value as Record<string, anyValueType<K>>)[splitTag.tag];
+      return (value as Record<string, anyElementValueType<K>>)[splitTag.tag];
     } else {
       return value;
     }
@@ -665,12 +671,17 @@ const changesForFaceTag = <K extends facePropType>(
       : tagShouldPush(splitTag.tag)
       ? 'push'
       : 'add';
-  const resolvedValue = getValue() as faceValueType<K> | undefined;
+  const resolvedValue = getValue() as faceElementValueType<K> | undefined;
   if (!resolvedValue) {
     changes.push(tag_change);
     return changes.sort(sortChanges);
   }
-  const change = createFaceChange(face_change_type, prop!, resolvedValue, splitTag.face);
+  const change = createFaceChange(
+    face_change_type,
+    prop as faceChangeablePropType<typeof face_change_type>,
+    resolvedValue,
+    splitTag.face
+  );
   if (defaultValue && change_type == 'delete') {
     change.change_type = 'add';
   }
@@ -713,7 +724,7 @@ const changesForRootTag = <K extends rootPropType>(
     if (defaultValue && change_type == 'delete') {
       return defaultValue;
     } else if (typeof value == 'object' && !Array.isArray(value)) {
-      return (value as Record<string, anyValueType<K>>)[splitTag.tag];
+      return (value as Record<string, anyElementValueType<K>>)[splitTag.tag];
     } else {
       return value;
     }
@@ -726,12 +737,18 @@ const changesForRootTag = <K extends rootPropType>(
       : tagShouldPush(splitTag.tag)
       ? 'push'
       : 'add';
-  const resolvedValue = getValue() as rootValueType<K> | undefined;
+  const resolvedValue = getValue() as
+    | rootElementValueType<rootChangeablePropType<typeof change_type>>
+    | undefined;
   if (!resolvedValue) {
     changes.push(tag_change);
     return changes.sort(sortChanges);
   }
-  const change = createRootChange(root_change_type, prop!, resolvedValue);
+  const change = createRootChange(
+    root_change_type,
+    prop as rootChangeablePropType<typeof change_type>,
+    resolvedValue
+  );
   if (defaultValue && change_type == 'delete') {
     change.change_type = 'add';
   }
@@ -888,7 +905,7 @@ const inputForTag = (
     location = 'root';
   } else if (tag == 'flavor-name') {
     addPropToInput(input, 'flavor_name', splitTag.value);
-  } else if (tagIsSetTag(tag,card)) {
+  } else if (tagIsSetTag(tag, card)) {
     addPropToInput(input, 'collector_number', splitTag.value);
     location = 'root';
   }
@@ -912,14 +929,14 @@ export const getChangesFromTag = (
   const tag = input.splitTag.tag;
 
   if (tag == 'print-image') {
-    const change: rootChange<'print_image_status'> = createRootChange(
+    const change: rootChange<typeof change_type, 'print_image_status'> = createRootChange(
       change_type,
       'print_image_status',
       HCImageStatus.HighRes
     );
     changes.push(change);
   } else if (tag == 'card-in-scryfall') {
-    const change: rootChange<'oracle_id_is_scryfall'> = createRootChange(
+    const change: rootChange<typeof change_type, 'oracle_id_is_scryfall'> = createRootChange(
       change_type,
       'oracle_id_is_scryfall',
       true

@@ -1,3 +1,5 @@
+import { doubleListEquals } from '../../../utils';
+
 export enum HCColor {
   White = 'W',
   Blue = 'U',
@@ -48,8 +50,18 @@ export const HCSearchColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc'];
 
 export type HCColors = `${HCColor}`[];
 
-export const isColors = (value: any): value is HCColors =>
-  Array.isArray(value) && value.every(e => isColor(e));
+export const isColors = (value: any): value is HCColors => {
+  if (!Array.isArray(value)) return false;
+  const colorList: HCColors = [];
+  for (const color of value) {
+    if (colorList.includes(color) || !isColor(color)) {
+      return false;
+    } else {
+      colorList.push(color);
+    }
+  }
+  return true;
+};
 
 // export const isCoreColor = (color: HCColor): boolean => {
 //   return Object.values(HCCoreColor).includes(color as unknown as HCCoreColor);

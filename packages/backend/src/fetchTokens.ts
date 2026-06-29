@@ -4,8 +4,8 @@ import {
   HCRelatedCard,
   HCObject,
   HCKind,
-  HCFrame,
   SetCode,
+  rootPropType,
 } from '@hellfall/shared/types';
 import { fetchScryfallTokens } from './fetchScryfallTokens.ts';
 import {
@@ -15,7 +15,6 @@ import {
   HCIDMap,
   addPropToFace,
   addPropToRoot,
-  rootPropType,
   pushPropToRoot,
   parseRelatedReferenceName,
   hardTokenIds,
@@ -141,9 +140,19 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     }
 
     setDerivedProps(token, entryAt('tags').split(';'));
-    if (token.tags?.includes('meld')) {
-      token.all_parts?.forEach(part => (part.component = 'meld_part'));
-    }
+    token.tags?.forEach(tag => {
+      if (tag == 'draftpartner' && token.all_parts) {
+        token.all_parts[0].is_draft_partner = true;
+        if (token.all_parts[0].component == 'token_maker') {
+          // don't overwrite melds
+          token.all_parts[0].component = 'draft_partner';
+        }
+        token.not_directly_draftable = true;
+        token.has_draft_partners = true;
+      } else if (tag == 'meld' && token.all_parts) {
+        token.all_parts?.forEach(part => (part.component = 'meld_part'));
+      }
+    });
     return token;
   });
   if (NO_SCRYFALL) {

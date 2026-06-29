@@ -8,6 +8,8 @@ import {
   HCObject,
   HCKind,
   SetCode,
+  facePropType,
+  rootPropType,
 } from '@hellfall/shared/types';
 import {
   setDerivedProps,
@@ -17,9 +19,7 @@ import {
   getDefaultCard,
   HCIDMap,
   frontIsBattle,
-  facePropType,
   addPropToRoot,
-  rootPropType,
   pushPropToRoot,
   getColorsFromText,
   parseRelatedReferenceName,
@@ -207,21 +207,27 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 ? card.set?.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
-                : HCLegality.Legal,
-              '4cb': formats.includes('Not Legal')
+                : formats.includes('Legal')
+                ? HCLegality.Legal
+                : HCLegality.NotLegal,
+              '4cb': formats.includes('Not Legal (4CB)')
                 ? HCLegality.NotLegal
                 : formats.includes('Banned (4CB)')
                 ? card.set?.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
-                : HCLegality.Legal,
-              commander: formats.includes('Not Legal')
+                : formats.includes('Legal (4CB)')
+                ? HCLegality.Legal
+                : HCLegality.NotLegal,
+              commander: formats.includes('Not Legal (Commander)')
                 ? HCLegality.NotLegal
                 : formats.includes('Banned (Commander)')
                 ? card.set?.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
-                : HCLegality.Legal,
+                : formats.includes('Legal (Commander)')
+                ? HCLegality.Legal
+                : HCLegality.NotLegal,
             };
             addPropToRoot(card, 'legalities', legalities);
           } else if (keys[i] == 'related') {

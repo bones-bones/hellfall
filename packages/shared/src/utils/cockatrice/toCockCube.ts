@@ -5,7 +5,6 @@ import { CockCardProps } from './cockTypes';
 import { CardMap, getRelatedsFromCards, getRelatedsFromSet } from '../cardHandling';
 import { hcCardToCockProps } from './HCToCockCard';
 import { prettifyXml } from './prettifyXml';
-import { makeSort } from '@hellfall/shared/filters';
 
 type RecursiveChild = (Node | RecursiveChild)[];
 

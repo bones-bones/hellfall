@@ -1,35 +1,19 @@
-import {
-  FieldValue,
-  Firestore,
-  QueryDocumentSnapshot,
-  type DocumentReference,
-  type DocumentSnapshot,
-} from '@google-cloud/firestore';
-import { withCors } from './lib/cors.ts';
-import { env } from './lib/env.ts';
-import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
-import { requireTagAuth } from './lib/requireTagAuth.ts';
+import { FieldValue, Firestore, QueryDocumentSnapshot } from '@google-cloud/firestore';
+import { withCors, env, HandlerRequest, HandlerResponse, requireTagAuth } from './lib';
 import { listCardChangesets, recardCardChangeset } from '../lib/cardAudit.ts';
 import { HCCard } from '@hellfall/shared/types';
 import {
   addTagToBase,
   anyChange,
-  arbAreEqual,
-  changeIsValid,
   Changeset,
   deleteTagFromBase,
-  getChangesFromDifferences,
   getChangesFromTag,
   tagChange,
-  tagChangeIsValid,
-  tagChangesAnyProps,
 } from '@hellfall/shared/utils';
 import {
   cardsCollection,
-  cardToFirestore,
   changesetCollection,
   firestoreCard,
-  firestoreToCard,
 } from '@hellfall/shared/utils/firestore';
 // import {
 //   applyAddTag,

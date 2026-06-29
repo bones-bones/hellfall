@@ -1,7 +1,7 @@
 // https://draftmancer.com/cubeformat.html#cube
 import { HCCard, SetCode } from '@hellfall/shared/types';
 import { HCToDraftmancer } from './HCToDraftmancer.ts';
-import { CardMap } from '../cardHandling/cardMap.ts';
+import { CardMap } from '../cardHandling';
 
 export const toDraftmancerCube = ({
   name,

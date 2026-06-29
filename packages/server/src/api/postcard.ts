@@ -2,10 +2,8 @@ import { Firestore } from '@google-cloud/firestore';
 import { HCCard, HCKind, HCImageStatus, SetCode } from '@hellfall/shared/types';
 import { getDefaultCard, isValidV4UUID, setDerivedProps } from '@hellfall/shared/utils';
 import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
-import { withCors } from './lib/cors.ts';
-import { env } from './lib/env.ts';
-import { requirePostcardAuth } from './lib/requirePostcardAuth.ts';
-import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
+import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
+import type {} from './lib/types.ts';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });

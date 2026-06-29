@@ -1,9 +1,8 @@
 import { sheetsKey } from './env.ts';
-import { HCLayout, HCRelatedCard, HCObject, SetCode } from '@hellfall/shared/types';
-import { ScryfallCard } from '@scryfall/api-types';
+import { HCRelatedCard, HCObject, SetCode } from '@hellfall/shared/types';
 import pLimit from 'p-limit';
 import { fixedScryfall, ScryfallToHC } from './scryfallToHC.ts';
-import { parseRelatedReferenceName, setDerivedProps } from '@hellfall/shared/utils/index.ts';
+import { parseRelatedReferenceName, setDerivedProps } from '@hellfall/shared/utils';
 
 const REQUEST_DELAY_MS = 125;
 const limiter = pLimit(1);

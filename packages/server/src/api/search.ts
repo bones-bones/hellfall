@@ -1,5 +1,4 @@
-import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
-import { withCors } from './lib/cors.ts';
+import { withCors, HandlerRequest, HandlerResponse } from './lib';
 import { combineAndWinnowSorts, parseSearchQuery, searchCards } from '@hellfall/shared/filters';
 import { HCCard, SetCode } from '@hellfall/shared/types';
 import {

@@ -2,8 +2,6 @@ import {
   HCCard,
   HCImageStatus,
   HCKind,
-  HCLayout,
-  HCLegality,
   HCObject,
   HCRelatedCard,
   SetCode,

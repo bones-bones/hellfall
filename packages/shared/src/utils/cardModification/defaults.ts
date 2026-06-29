@@ -14,29 +14,26 @@ import {
   HCLegality,
   HCObject,
   SetCode,
-} from '@hellfall/shared/types';
-import {
-  facePropOrder,
   facePropType,
   faceMappedType,
   faceType,
   partMappedType,
   rootEntriesType,
-  rootPropOrder,
   rootPropType,
   rootMappedType,
-  toFaces,
   faceEntriesType,
   getRootEntries,
-  addPropToRoot,
-  getFaceEntries,
-  addPropToFace,
-  getPartEntries,
-  getCardEntries,
-  getCardFaceEntries,
   rootValueType,
   faceValueType,
-  getChangesFromDifferences,
+} from '@hellfall/shared/types';
+import {
+  facePropOrder,
+  rootPropOrder,
+  toFaces,
+  addPropToRoot,
+  addPropToFace,
+  getCardEntries,
+  getCardFaceEntries,
 } from '@hellfall/shared/utils';
 
 const defaultRootProps: rootMappedType = {
@@ -80,28 +77,6 @@ const defaultPartProps: partMappedType = {
   name: '',
   set: '' as SetCode,
 };
-
-// export const restoreMissingFields = (card: HCCard.Any) => {
-//   getRootEntries(defaultRootProps).forEach(([prop, value]) => {
-//     if (card[prop] == undefined) {
-//       addPropToRoot(card, prop, value);
-//     }
-//   });
-//   toFaces(card).forEach((face, i) => {
-//     getFaceEntries(defaultFaceProps).forEach(([prop, value]) => {
-//       if (face[prop] == undefined) {
-//         addPropToFace(card, prop, value, i);
-//       }
-//     });
-//   });
-//   card.all_parts?.forEach(part => {
-//     getPartEntries(defaultPartProps).forEach(([prop, value]) => {
-//       if (part[prop] == undefined) {
-//         (part as any)[prop] = value;
-//       }
-//     });
-//   });
-// };
 
 // const kindToSet:Record<HCKind,string> = {
 //   card:'',
@@ -347,18 +322,3 @@ export const toSingleFaced = (card: HCCard.AnyMultiFaced) => {
     }
   });
 };
-
-// export const layoutIsDefault = (card: HCCard.Any, index?: number) => {
-//   if (!('card_faces' in card)) {
-//     return card.layout == kindToFaceLayout[card.kind];
-//   }
-//   if (index == undefined) {
-//     return card.layout == kindToMultiLayout[card.kind];
-//   }
-//   return (
-//     card.card_faces[index].layout ==
-//     (index && kindToFaceLayout[card.kind] == 'normal'
-//       ? HCLayout.Multi
-//       : kindToFaceLayout[card.kind])
-//   );
-// };

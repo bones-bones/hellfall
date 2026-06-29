@@ -1,7 +1,5 @@
-import { withCors } from './lib/cors.ts';
-import { requireAdminAuth } from './lib/requireAdminAuth.ts';
+import { withCors, requireAdminAuth, HandlerRequest, HandlerResponse } from './lib';
 import { publishCatalogSnapshot } from '../lib/publishCatalog.ts';
-import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
 /** POST /api/admin/catalog/sync — republish Firestore catalog to cache (+ GCS when configured). */
 export const catalogSyncHandler = async (

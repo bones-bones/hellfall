@@ -3,7 +3,15 @@ import fs from 'fs';
 import { fetchTokens } from './fetchTokens.ts';
 import { fetchCards } from './fetchCards.ts';
 import { fetchUsernameMappings } from './fetchUsernameMapping.ts';
-import { HCCard, HCCardFace, HCRelatedCard, SetCode, allSetsList } from '@hellfall/shared/types';
+import {
+  HCCard,
+  HCCardFace,
+  HCRelatedCard,
+  SetCode,
+  allSetsList,
+  anyPropType,
+  anyValueType,
+} from '@hellfall/shared/types';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
   stripMasterpiece,
@@ -15,13 +23,11 @@ import {
   getAllRelatedPermissive,
   CardMap,
   HCIDMap,
-  anyPropType,
-  anyValueType,
   savedOracleIds,
   getDirectChildSets,
   getParentSet,
+  mergeFromSheet,
 } from '@hellfall/shared/utils';
-import { mergeFromSheet } from '@hellfall/shared/utils/cardModification/changeHandling';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { addToJSONToCards } from '@hellfall/shared/utils';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -407,8 +413,6 @@ const main = async () => {
     newLands
   );
   const finalCards = new CardMap(addToJSONToCards(merged));
-  // const finalTokens = toCardMap(addToJSONToCards(merged.mergedTokens));
-  // const finalLands = toCardMap(addToJSONToCards(merged.mergedLands));
   finalCards.forEach(card => {
     if (card.all_parts) {
       if (card.layout == 'front') {

@@ -1,16 +1,20 @@
-import { HCCard, HCCardFace, HCColors, SetCode } from '@hellfall/shared/types';
-import { listShareLower } from '../listHandling';
-import { facePropOrder, partPropOrder, propOrder } from './orderProps';
-import { getIndicatorFromColors } from '../pipsHandling';
 import {
+  HCCard,
+  HCCardFace,
+  HCColors,
+  SetCode,
+  allElementValueType,
   allPropType,
   allValueType,
   colorPropType,
+  faceElementValueType,
   facePropType,
   faceType,
   faceValueType,
-  filterFaceValueType,
-} from './propTypes';
+} from '@hellfall/shared/types';
+import { listShareLower } from '../listHandling';
+import { facePropOrder, partPropOrder, propOrder } from './orderProps';
+import { getIndicatorFromColors } from '../pipsHandling';
 import {
   getMasterpiece,
   getSetCode,
@@ -26,7 +30,7 @@ import { getHc5 } from './getHc5';
  * For single-faced cards, returns an array with the card itself.
  * For multi-faced cards, returns the card_faces array.
  *
- * Make sure you only try to work with props that exist on both `HCCard.AnySingleFaced` and `HCCardFace.MultiFaced`.
+ * Make sure you only try to work with props that exist on both {@link HCCard.AnySingleFaced} and {@link HCCardFace.MultiFaced}.
  * @param card card to get the faces of
  * @returns
  */
@@ -40,13 +44,13 @@ export const toFaces = (card: HCCard.Any): faceType[] => {
 /**
  * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
  * @param card card to get the value from
- * @param prop prop to get the value of (must be a prop that exists on both `HCCard.AnySingleFaced` and `HCCardFace.MultiFaced`)
+ * @param prop prop to get the value of (must be a prop that exists on both {@link HCCard.AnySingleFaced} and {@link HCCardFace.MultiFaced})
  * @returns
  */
 export const getFromFaces = <K extends facePropType>(
   card: HCCard.Any,
   prop: K
-): filterFaceValueType<K>[] =>
+): faceElementValueType<K>[] =>
   toFaces(card).flatMap(face =>
     Array.isArray(face[prop]) ? face[prop] : [face[prop] ?? []].flat()
   );
@@ -54,7 +58,7 @@ export const getFromFaces = <K extends facePropType>(
 /**
  * Gets the value of a prop from each face of a card without flattening it (excluding the main part for multiface cards)
  * @param card card to get the value from
- * @param prop prop to get the value of (must be a prop that exists on both `HCCard.Any` and `HCCardFace.MultiFaced`)
+ * @param prop prop to get the value of (must be a prop that exists on both {@link HCCard.Any} and {@link HCCardFace.MultiFaced})
  * @returns
  */
 export const getColorsFromFaces = (card: HCCard.Any, prop: colorPropType): HCColors[] =>
@@ -67,7 +71,10 @@ export const getColorsFromFaces = (card: HCCard.Any, prop: colorPropType): HCCol
  * @returns
  */
 
-export const getFromAll = <K extends allPropType>(card: HCCard.Any, prop: K): allValueType<K>[] => [
+export const getFromAll = <K extends allPropType>(
+  card: HCCard.Any,
+  prop: K
+): allElementValueType<K>[] => [
   ...('card_faces' in card ? (Array.isArray(card[prop]) ? card[prop] : [card[prop] ?? []]) : []),
   ...getFromFaces(card, prop),
 ];

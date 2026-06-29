@@ -1,7 +1,6 @@
 import { getCatalogPublicUrl } from '../lib/catalogGcs.ts';
 import { getCatalogResponse } from '../lib/catalogCache.ts';
-import { withCors } from './lib/cors.ts';
-import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
+import { withCors, HandlerRequest, HandlerResponse } from './lib';
 
 /** GET /api/cards/load — redirects to public catalog URL when configured, else serves cached JSON. */
 export const loadCardsHandler = async (

@@ -1,9 +1,7 @@
-import { anyPropType, getFireEntries, updateValueType } from '../cardHandling';
+import { getFireEntries } from '../cardHandling';
 import { FieldValue } from '@google-cloud/firestore';
 import { arbAreEqual } from '../listHandling';
-import { firestoreCard } from './firestoreTypes';
-
-export type cardUpdate = { [K in anyPropType]?: updateValueType<K> | FieldValue };
+import { cardUpdate, firestoreCard } from './firestoreTypes';
 
 const deleteField = FieldValue.delete();
 
