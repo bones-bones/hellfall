@@ -145,4 +145,4 @@ Write a script to transform the database
 - should I add .toLowerCase() to the summary return? scryfall seems to do that
 - figure out how to add displayNames to styled components
 - use number pips with lighter font weight like scryfall?
-- make sure addcards causes `component: "draft_partner"`
+- make sure AddCards causes `component: "draft_partner"`

@@ -447,7 +447,7 @@ export const hcjFrontCards: HCJPackInfo[] = [
     url: 'https://lh3.googleusercontent.com/d/1RCywujUvML1StyynlHAd6d8sRsM-lYAf',
     tag: 'urzatron-pack',
     secondCopyOf: '5797',
-    lands: [{ count: 3, id: '5797' }],
+    lands: [{ count: 3, id: '6236' }],
   },
   {
     name: `e̶̬͋̾ ̸͖̏͛c̵͈̞̒ọ̸̉l̶̨̡̍ ̵̥̾f̴̹͚̔̌i̴̖͇̅̊v̷̳̣̿v̴̨̄ͅv̷͈͌̊v̷̡̅̇v̷͕́ỏ̴̫͖̓r̴̪̄`,

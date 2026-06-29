@@ -81,7 +81,7 @@ export const isRootChangeValueType = <T extends changeType, K extends rootChange
   prop: K,
   value: any,
   currentValue?: rootValueType<K>,
-  comparingNew?:boolean
+  comparingNew?: boolean
 ): value is rootElementValueType<K> => {
   if (change_type == 'delete') {
     return value == undefined && currentValue != undefined;
@@ -137,14 +137,16 @@ export const isRootChangeValueType = <T extends changeType, K extends rootChange
     case 'frame_effects':
       return (
         isFrameEffect(value) &&
-        !!listShare(currentValue as string[], value) == ((change_type == 'pop' && !comparingNew) ? true : false)
+        !!listShare(currentValue as string[], value) ==
+          (change_type == 'pop' && !comparingNew ? true : false)
       );
     case 'keywords':
     case 'creators':
     case 'artists':
       return (
         typeof value == 'string' &&
-        !!listShare(currentValue as string[], value) == ((change_type == 'pop' && !comparingNew) ? true : false)
+        !!listShare(currentValue as string[], value) ==
+          (change_type == 'pop' && !comparingNew ? true : false)
       );
   }
   return typeof value == 'string';
@@ -195,7 +197,7 @@ export const isFaceChangeValueType = <T extends changeType, K extends faceChange
   prop: K,
   value: any,
   currentValue?: faceValueType<K>,
-  comparingNew?:boolean
+  comparingNew?: boolean
 ): value is faceElementValueType<K> => {
   if (change_type == 'delete') {
     return value == undefined && currentValue != undefined;
@@ -240,7 +242,8 @@ export const isFaceChangeValueType = <T extends changeType, K extends faceChange
     case 'frame_effects':
       return (
         isFrameEffect(value) &&
-        !!listShare(currentValue as string[], value) == ((change_type == 'pop' && !comparingNew) ? true : false)
+        !!listShare(currentValue as string[], value) ==
+          (change_type == 'pop' && !comparingNew ? true : false)
       );
   }
   return typeof value == 'string';
@@ -249,7 +252,7 @@ export const isFaceChangeValueType = <T extends changeType, K extends faceChange
 export const faceChangeIsValid = (
   card: HCCard.Any,
   value: any,
-  comparingNew?:boolean
+  comparingNew?: boolean
 ): value is faceChange<changeType, faceChangeablePropType<changeType>> => {
   if (typeof value != 'object') return false;
   const change = value as faceChange<changeType, faceChangeablePropType<changeType>>;

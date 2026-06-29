@@ -264,7 +264,16 @@ export const getChangesFromDifferences = (
           if (intValues == undefined) return;
           const values = Array.isArray(intValues) ? intValues : Object.entries(intValues);
           values.forEach(value => {
-            if (!isRootChangeValueType(change_type, prop, value, (change_type == 'push' ? existingCard:newCard)[prop],true)) return;
+            if (
+              !isRootChangeValueType(
+                change_type,
+                prop,
+                value,
+                (change_type == 'push' ? existingCard : newCard)[prop],
+                true
+              )
+            )
+              return;
             changeList.push(createRootChange(change_type, prop, value));
           });
         }
@@ -343,7 +352,7 @@ export const getChangesFromDifferences = (
             const values = (change_type == 'push' ? newFace : existingFace)[prop];
             if (values == undefined) return;
             values.forEach(v => {
-              if (!isFaceChangeValueType(change_type, prop, v, existingFace[prop],true)) return;
+              if (!isFaceChangeValueType(change_type, prop, v, existingFace[prop], true)) return;
               changeList.push(createFaceChange(change_type, prop, v, index));
             });
           }
