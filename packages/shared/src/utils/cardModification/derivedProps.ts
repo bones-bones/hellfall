@@ -307,7 +307,7 @@ export const setDerivedProps = (
         face.colors = face.color_indicator;
       } else if (baseIncludesFlag('unnecessary-color-indicator', i)) {
         face.color_indicator = face.colors;
-      } else if (card.kind == 'token' && face.mana_cost && !card.tags?.includes('generic')) {
+      } else if (card.kind == 'token' && face.mana_cost && !baseIncludesFlag('generic', i)) {
         face.colors = getColorsFromText(face.mana_cost);
       }
       const face_type = [
@@ -345,7 +345,7 @@ export const setDerivedProps = (
     } else if (
       card.kind == 'token' &&
       card.mana_cost &&
-      !card.tags?.includes('generic') &&
+      !baseIncludesFlag('generic') &&
       !card.frame_effects?.includes(HCFrameEffect.Devoid)
     ) {
       card.colors = getColorsFromText(card.mana_cost);
