@@ -146,3 +146,4 @@ Write a script to transform the database
 - figure out how to add displayNames to styled components
 - use number pips with lighter font weight like scryfall?
 - make sure AddCards causes `component: "draft_partner"`
+- add devoid and generic tags to tag handling
