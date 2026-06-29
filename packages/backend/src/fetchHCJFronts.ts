@@ -446,7 +446,7 @@ export const hcjFrontCards: HCJPackInfo[] = [
     name: 'Urzatron',
     url: 'https://lh3.googleusercontent.com/d/1RCywujUvML1StyynlHAd6d8sRsM-lYAf',
     tag: 'urzatron-pack',
-    secondCopyOf: 'Urzodia, God Of Tron',
+    secondCopyOf: '5797',
     lands: [{ count: 3, id: '5797' }],
   },
   {

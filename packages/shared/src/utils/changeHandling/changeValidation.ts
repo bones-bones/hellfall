@@ -80,7 +80,8 @@ export const isRootChangeValueType = <T extends changeType, K extends rootChange
   change_type: T,
   prop: K,
   value: any,
-  currentValue?: rootValueType<K>
+  currentValue?: rootValueType<K>,
+  comparingNew?:boolean
 ): value is rootElementValueType<K> => {
   if (change_type == 'delete') {
     return value == undefined && currentValue != undefined;
@@ -129,21 +130,21 @@ export const isRootChangeValueType = <T extends changeType, K extends rootChange
         return false;
       }
       return (
-        (currentValue as Record<string, string>)[value[0]] !==
-        (change_type == 'push' ? value[1] : undefined)
+        (currentValue as Record<string, string>)[value[0]] !== value[1]
+        // (change_type == 'push' ? value[1] : undefined)
       );
     }
     case 'frame_effects':
       return (
         isFrameEffect(value) &&
-        !!listShare(currentValue as string[], value) == (change_type == 'pop' ? true : false)
+        !!listShare(currentValue as string[], value) == ((change_type == 'pop' && !comparingNew) ? true : false)
       );
     case 'keywords':
     case 'creators':
     case 'artists':
       return (
         typeof value == 'string' &&
-        !!listShare(currentValue as string[], value) == (change_type == 'pop' ? true : false)
+        !!listShare(currentValue as string[], value) == ((change_type == 'pop' && !comparingNew) ? true : false)
       );
   }
   return typeof value == 'string';
@@ -193,7 +194,8 @@ export const isFaceChangeValueType = <T extends changeType, K extends faceChange
   change_type: T,
   prop: K,
   value: any,
-  currentValue?: faceValueType<K>
+  currentValue?: faceValueType<K>,
+  comparingNew?:boolean
 ): value is faceElementValueType<K> => {
   if (change_type == 'delete') {
     return value == undefined && currentValue != undefined;
@@ -238,7 +240,7 @@ export const isFaceChangeValueType = <T extends changeType, K extends faceChange
     case 'frame_effects':
       return (
         isFrameEffect(value) &&
-        !!listShare(currentValue as string[], value) == (change_type == 'pop' ? true : false)
+        !!listShare(currentValue as string[], value) == ((change_type == 'pop' && !comparingNew) ? true : false)
       );
   }
   return typeof value == 'string';
@@ -246,7 +248,8 @@ export const isFaceChangeValueType = <T extends changeType, K extends faceChange
 
 export const faceChangeIsValid = (
   card: HCCard.Any,
-  value: any
+  value: any,
+  comparingNew?:boolean
 ): value is faceChange<changeType, faceChangeablePropType<changeType>> => {
   if (typeof value != 'object') return false;
   const change = value as faceChange<changeType, faceChangeablePropType<changeType>>;
@@ -276,7 +279,8 @@ export const faceChangeIsValid = (
       change.change_type,
       change.prop,
       change.value,
-      toFaces(card)[change.index ?? 0][change.prop]
+      toFaces(card)[change.index ?? 0][change.prop],
+      comparingNew
     )
   ) {
     return false;

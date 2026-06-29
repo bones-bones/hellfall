@@ -10109,7 +10109,8 @@
 					"set": "HC9.0",
 					"image": "https://lh3.googleusercontent.com/d/15kPFhnQYRJeZftF9iCP1x2XsWYRC6vR4",
 					"type_line": "Creature — Vaar Gamer",
-					"component": "token_maker"
+					"component": "token_maker",
+					"is_draft_partner": true
 				},
 				{
 					"object": "related_card",
@@ -10119,7 +10120,8 @@
 					"set": "HCV.9",
 					"image": "https://lh3.googleusercontent.com/d/1ihgLHsZvchpwBJqI8IsOLyO1JDDQx1tY",
 					"type_line": "Creature — Kobold",
-					"component": "token_maker"
+					"component": "token_maker",
+					"is_draft_partner": true
 				}
 			]
 		},

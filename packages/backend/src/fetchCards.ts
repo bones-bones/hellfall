@@ -24,7 +24,6 @@ import {
   getColorsFromText,
   parseRelatedReferenceName,
 } from '@hellfall/shared/utils';
-import { pipsData } from '@hellfall/shared/data';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -117,7 +116,6 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     'artists',
     'tags',
   ];
-  const pips = pipsData.data;
 
   const allCards = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
@@ -207,27 +205,27 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 ? card.set?.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
-                : formats.includes('Legal')
-                ? HCLegality.Legal
-                : HCLegality.NotLegal,
+                // : formats.includes('Legal') ?
+                : HCLegality.Legal,
+                // : HCLegality.NotLegal,
               '4cb': formats.includes('Not Legal (4CB)')
                 ? HCLegality.NotLegal
                 : formats.includes('Banned (4CB)')
                 ? card.set?.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
-                : formats.includes('Legal (4CB)')
-                ? HCLegality.Legal
-                : HCLegality.NotLegal,
+                // : formats.includes('Legal (4CB)') ?
+                : HCLegality.Legal,
+                // : HCLegality.NotLegal,
               commander: formats.includes('Not Legal (Commander)')
                 ? HCLegality.NotLegal
                 : formats.includes('Banned (Commander)')
                 ? card.set?.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
-                : formats.includes('Legal (Commander)')
-                ? HCLegality.Legal
-                : HCLegality.NotLegal,
+                // : formats.includes('Legal (Commander)') ?
+                : HCLegality.Legal
+                // : HCLegality.NotLegal,
             };
             addPropToRoot(card, 'legalities', legalities);
           } else if (keys[i] == 'related') {
