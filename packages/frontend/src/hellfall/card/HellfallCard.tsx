@@ -182,11 +182,12 @@ export const HellfallCard = ({
                   </button>
                 );
               })}
+            {imagesToShow.length <= 1 && <Spacer />}
           </ButtonContainer>
         </>
       )}
       <Card style={{ width: '100%' }}>
-        <Card.Body padding={'zero'} marginTop={'-20px'}>
+        <Card.Body cs={cardBodyStyles}>
           {/* {'card_faces' in displayCard && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{displayCard.name}</StyledHeading>} */}
           {('card_faces' in displayCard ? displayCard.card_faces : [displayCard]).map((face, i) => (
             <span key={'face-' + (i + 1)}>
@@ -461,12 +462,17 @@ const ImageContainer = createStyledDiv(imageContainerStyles, 'ImageContainer');
 
 const ButtonContainer = Box;
 
+const cardBodyStyles = createStyles({
+  padding: 'zero',
+  marginTop: '-12px',
+});
+
 const separatorStyles = createStyles({
   height: '1px',
   backgroundColor: '#ccc',
   border: 'none',
-  marginLeft: '-32px',
-  marginRight: '-32px',
+  marginLeft: '-24px',
+  marginRight: '-24px',
 });
 const Separator = createStyledHR(separatorStyles, 'Separator');
 
@@ -516,3 +522,7 @@ const buttonGroupStyles = createStyles({
   verticalAlign: 'top',
 });
 const ButtonGroup = createStyledDiv(buttonGroupStyles, 'ButtonGroup');
+const spacerStyles = createStyles({
+  height: '22px',
+});
+const Spacer = createStyledDiv(spacerStyles, 'Spacer');

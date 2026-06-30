@@ -5,7 +5,7 @@ const dividerStyles = createStyles({
   height: '2px',
   backgroundColor: '#ccc',
   border: 'none',
-  marginLeft: '-32px',
-  marginRight: '-32px',
+  marginLeft: '-24px',
+  marginRight: '-24px',
 });
 export const Divider = createStyledHR(dividerStyles, 'Divider');

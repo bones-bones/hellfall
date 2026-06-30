@@ -86,7 +86,7 @@ export const SingleCard = () => {
 //   justifyContent: 'center',
 // });
 const containerStyles = createStyles({
-  display: 'flex',
+  // display: 'flex',
   justifyContent: 'center',
 });
 const Container = createStyledDiv(containerStyles, 'Container');
