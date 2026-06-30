@@ -113,7 +113,8 @@ export const applyFaceChange = (
 export const applyCardFacesChange = (card: HCCard.Any, change: cardFacesChange): boolean => {
   if (change.change_type == 'delete') {
     if (!('card_faces' in card)) {
-      throw console.error('Tried to delete a nonexistent face');
+      console.error('Tried to delete a nonexistent face');
+      return false;
     }
     card.card_faces.splice(change.index, 1);
     if (card.card_faces.length == 1) {
@@ -121,13 +122,15 @@ export const applyCardFacesChange = (card: HCCard.Any, change: cardFacesChange):
     }
   } else {
     if (!change.face) {
-      throw console.error('Tried to add a nonexistent face');
+      console.error('Tried to add a nonexistent face');
+      return false;
     }
     if (!('card_faces' in card)) {
       toMultiFaced(card);
     }
     // if (!('card_faces' in card)) {
-    //   throw console.error('Something went very, very wrong')
+    //   console.error('Something went very, very wrong');
+    //   return false;
     // }
     (card as HCCard.AnyMultiFaced).card_faces.splice(change.index, 0, change.face);
   }
@@ -139,11 +142,13 @@ export const applyAllPartsChange = (card: HCCard.Any, change: allPartsChange): b
   if (change.change_type == 'delete') {
     const index = card.all_parts?.findIndex(part => part[change.part_prop ?? 'id'] == change.id);
     if (index == undefined || index == -1) {
-      throw console.error('Tried to delete a nonexistent part');
+      console.error('Tried to delete a nonexistent part');
+      return false;
     }
     card.all_parts?.splice(index, 1);
   } else if (!change.related) {
-    throw console.error('Tried to add a nonexistent part');
+    console.error('Tried to add a nonexistent part');
+    return false;
   } else {
     const part_prop = change.related.id ? 'id' : change.related.hcid ? 'hcid' : 'name';
     const part = card.all_parts?.find(part => part[part_prop] == change.related![part_prop]);

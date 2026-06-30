@@ -19,10 +19,14 @@ export type noListChangeType = Exclude<changeType, 'push' | 'pop'>;
 const noList = ['add', 'delete'];
 export const isNoListChangeType = (value: any): value is noListChangeType => noList.includes(value);
 
+const changeLocationList = ['root', 'face', 'card_faces', 'all_parts', 'tag'] as const;
 /**
  * The location of the change.
  */
-export type changeLocation = 'root' | 'face' | 'card_faces' | 'all_parts' | 'tag';
+export type changeLocation = (typeof changeLocationList)[number];
+
+export const isChangeLocation = (value: any): value is changeLocation =>
+  changeLocationList.includes(value);
 
 const rootAddProps = [
   'id_is_scryfall',

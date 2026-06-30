@@ -2,6 +2,7 @@ import type { HCCard } from '@hellfall/shared/types';
 import { toFaces } from '../cardHandling';
 import { applyChanges } from './changeHandling';
 import type { anyChange, ChangesetDiffRow } from './changeTypes';
+import { splitFullTag } from './tagHandling';
 
 function humanizeField(name: string): string {
   return name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
@@ -32,8 +33,17 @@ function readChangeDisplayValue(card: HCCard.Any, change: anyChange): unknown {
       const face = toFaces(card)[change.index ?? 0];
       return face ? (face as Record<string, unknown>)[change.prop] : undefined;
     }
-    case 'tag':
+    case 'tag': {
+      if (change.change_type == 'delete') {
+        const deletedTags = card.base_tags?.filter(
+          full_tag => splitFullTag(full_tag).tag == (change.tag ?? change.full_tag)
+        );
+        if (deletedTags && deletedTags.length) {
+          return deletedTags;
+        }
+      }
       return card.base_tags?.includes(change.full_tag) ? change.full_tag : undefined;
+    }
     case 'card_faces': {
       if (!('card_faces' in card)) return undefined;
       const face = card.card_faces[change.index];
@@ -50,6 +60,7 @@ function readChangeDisplayValue(card: HCCard.Any, change: anyChange): unknown {
   }
 }
 
+// TODO: add invalid handling
 /** Field-level before/after rows for a changeset against the current card state. */
 export function getChangesetDiffRows(card: HCCard.Any, changes: anyChange[]): ChangesetDiffRow[] {
   const working = structuredClone(card);

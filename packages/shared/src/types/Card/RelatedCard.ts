@@ -1,5 +1,7 @@
+import { isInteger } from '../../utils';
 import { HCObject } from '../Object';
-import { SetCode } from '../Set';
+import { isSetCode, SetCode } from '../Set';
+import { getPartEntries, partPropType } from './Props';
 
 export const relatedComponentList = [
   'draft_partner',
@@ -64,4 +66,34 @@ export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
    * If the token should be persistent.
    */
   persistent?: boolean;
+};
+
+export const isRelatedCard = (value: any): value is HCRelatedCard => {
+  if (typeof value != 'object') return false;
+  const face = value as HCRelatedCard;
+  if (
+    !getPartEntries(face).every(([prop, value]) => {
+      switch (prop) {
+        case 'object':
+          return value == HCObject.ObjectType.RelatedCard;
+        case 'set':
+          return isSetCode(value) || value === '';
+        case 'image':
+          return typeof value == 'string' && value.startsWith('https://');
+        case 'component':
+          return isComponent(value);
+        case 'is_draft_partner':
+        case 'persistent':
+          return value === true;
+        case 'count':
+          return typeof value == 'string' && (isInteger(value) || value == 'x');
+      }
+      return ['id', 'hcid', 'name', 'type_line'].includes(prop) && typeof prop == 'string';
+    })
+  ) {
+    return false;
+  }
+  return ['object', 'id', 'hcid', 'name', 'set', 'type_line', 'component', 'colors'].every(
+    prop => face[prop as partPropType] != undefined
+  );
 };

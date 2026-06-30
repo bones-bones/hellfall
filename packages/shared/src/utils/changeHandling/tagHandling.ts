@@ -852,7 +852,7 @@ const flagTags = [
   'missing-cube-frame',
   'missing-specialize-frame',
   'unnecessary-color-indicator',
-  'generic'
+  'generic',
 ];
 const inputForTag = (
   card: HCCard.Any,

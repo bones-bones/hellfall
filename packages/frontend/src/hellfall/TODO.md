@@ -147,3 +147,6 @@ Write a script to transform the database
 - use number pips with lighter font weight like scryfall?
 - make sure AddCards causes `component: "draft_partner"`
 - add devoid and generic tags to tag handling
+- add spacing between bottom of card image and top of text box
+- fix width of separators on individual card pages
+- add hccard.any and HCCard.anysingle/multi validation functions

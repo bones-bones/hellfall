@@ -97,7 +97,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
       );
       if (leftovers.length) {
         // You forgot a prop.
-        throw console.error(`You forgot one or more card props: ${leftovers}`);
+        throw new Error(`You forgot one or more card props: ${leftovers}`);
       }
       if (ordered.card_faces) {
         ordered.card_faces = this.card_faces.map((face: Record<string, any>) => {
@@ -112,7 +112,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
           );
           if (leftoverProps.length) {
             // You forgot a prop.
-            throw console.error(`You forgot one or more face props: ${leftovers}`);
+            throw new Error(`You forgot one or more face props: ${leftovers}`);
           }
           return orderedFace;
         });
@@ -145,7 +145,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
           );
           if (leftoverProps.length) {
             // You forgot a prop.
-            throw console.error(`You forgot one or more part props: ${leftovers}`);
+            throw new Error(`You forgot one or more part props: ${leftovers}`);
           }
           return orderedPart;
         });

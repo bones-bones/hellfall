@@ -31,7 +31,6 @@ import {
   isFaceChangeValueType,
   isRootChangePropType,
   isRootChangeValueType,
-  rootChangeIsValid,
 } from './changeValidation';
 import { toFaces } from '../cardHandling';
 import { getBaseDiffs, getChangesFromTag } from './tagHandling';

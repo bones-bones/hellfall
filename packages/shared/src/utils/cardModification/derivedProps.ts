@@ -375,7 +375,7 @@ export const setDerivedProps = (
           card.mana_value += face.mana_value;
           colors.push(
             ...(face.color_indicator ??
-              (face.mana_cost && !baseIncludesFlag('generic',i)
+              (face.mana_cost && !baseIncludesFlag('generic', i)
                 ? getColorsFromText(face.mana_cost)
                 : face.colors))
           );

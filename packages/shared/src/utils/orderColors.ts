@@ -156,7 +156,8 @@ export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): H
             }
           }
         }
-        throw console.error(); // this should be impossible unless I got my logic wrong
+        console.error(); // this should be impossible unless I got my logic wrong
+        return 0;
       }
       case 2: {
         // groupLen can be 3 or 4
@@ -172,7 +173,8 @@ export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): H
             return sortColors(set1, set2);
           }
         }
-        throw console.error(); // this should be impossible unless I got my logic wrong
+        console.error(); // this should be impossible unless I got my logic wrong
+        return 0;
       }
       case 3: {
         // groupLen is 4
@@ -182,7 +184,8 @@ export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): H
           const order = colorOrderList.find(order => listEquals(order, all))!;
           return set1[0] == order[0] ? -1 : 1;
         }
-        throw console.error(); // this should be impossible unless I got my logic wrong
+        console.error(); // this should be impossible unless I got my logic wrong
+        return 0;
       }
       case 4: {
         // groupLen is 5
@@ -192,10 +195,12 @@ export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): H
           const order = colorOrderList.find(order => listEquals(order, all))!;
           return set1[0] == order[0] ? -1 : 1;
         }
-        throw console.error(); // this should be impossible unless I got my logic wrong
+        console.error(); // this should be impossible unless I got my logic wrong
+        return 0;
       }
     }
-    throw console.error(); // this should be impossible unless I got my logic wrong
+    console.error(); // this should be impossible unless I got my logic wrong
+    return 0;
   };
   const colors = groupedColors.map(colors => orderColors(colors)) as Array<
     { length: typeof groupLen } & HCColors

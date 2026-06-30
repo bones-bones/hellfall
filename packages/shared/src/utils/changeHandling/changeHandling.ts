@@ -3,7 +3,7 @@ import { CardMap, getAllRelated } from '../cardHandling';
 import { setDerivedProps } from '../cardModification/derivedProps';
 import { cleanParts, updateParts } from '../cardModification/partsHandling';
 import { anyChange } from './changeTypes';
-import { changeIsValid } from './changeValidation';
+import { changeErrorMessage, changeIsValid } from './changeValidation';
 import { applyChange } from './changeApply';
 import { getChangesFromDifferences } from './getCardDiff';
 
@@ -24,6 +24,7 @@ export const applyChanges = (
   card: HCCard.Any,
   changeList: anyChange[],
   applyingFromSheet?: boolean
+  // applyingMode: 'sheet'|'server'|'client'='client'
 ): boolean => {
   let setDerived = false;
   changeList.forEach((change, index) => {
@@ -71,7 +72,12 @@ export const applyChanges = (
       ) {
         return;
       }
-      throw console.error('invalid change got passed in');
+      if (applyingFromSheet) {
+        throw new Error(changeErrorMessage(card, change));
+      } else {
+        console.error(changeErrorMessage(card, change));
+        return;
+      }
     }
     if (applyChange(card, change)) {
       setDerived = true;
