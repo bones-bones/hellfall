@@ -1,5 +1,5 @@
 import { withCors } from './lib/cors.ts';
-import { requireAdminAuth } from './lib/requireAdminAuth.ts';
+import { requireCatalogSyncAuth } from './lib/requireCatalogSyncAuth.ts';
 import { publishCatalogSnapshot } from '../lib/publishCatalog.ts';
 import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
 
@@ -18,7 +18,7 @@ export const catalogSyncHandler = async (
     return;
   }
 
-  const auth = await requireAdminAuth(req, res);
+  const auth = await requireCatalogSyncAuth(req, res);
   if (!auth) return;
 
   try {
