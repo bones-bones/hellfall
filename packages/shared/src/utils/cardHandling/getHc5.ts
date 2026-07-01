@@ -8,6 +8,7 @@ import {
   HCFinish,
   HCFrame,
   HCKind,
+  SetCode,
 } from '@hellfall/shared/types';
 import { addToJSONToCard, CardMap } from '@hellfall/shared/utils';
 
@@ -43,24 +44,9 @@ const PLACEHOLDER_CARD: HCCard.Normal = {
   frame: HCFrame.Stamp,
 };
 
-// function withCardMethods<T extends HCCard.Any>(
-//   card: T
-// ): T & {
-//   toJSON(): Record<string, any>;
-// } {
-//   return {
-//     ...card,
-//     toJSON(): Record<string, any> {
-//       return this as Record<string, any>;
-//     },
-//   };
-// }
-
-/** Attach toFaces() to a card-like object so it can be used wherever HCCard.Any is expected. */
-// export { withCardMethods };
-
-// export const withToJSON = <T extends HCCard.Any>(card: T) => withCardMethods(card);
-
+/**
+ * Generates the `CardMap` for {@linkcode SetCode}`HC5`
+ */
 export const getHc5 = (): CardMap =>
   new CardMap(
     Array.from({ length: 720 }, (_, i) =>

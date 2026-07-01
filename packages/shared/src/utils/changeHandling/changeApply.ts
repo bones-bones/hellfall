@@ -142,7 +142,9 @@ export const applyCardFacesChange = (card: HCCard.Any, change: cardFacesChange):
     //   console.error('Something went very, very wrong');
     //   return false;
     // }
-    (card as HCCard.AnyMultiFaced).card_faces.splice(change.index, 0, change.face);
+    if ('card_faces' in card) {
+      card.card_faces.splice(change.index, 0, change.face);
+    }
   }
   return true;
 };

@@ -66,7 +66,7 @@ export const landNames = [
   'Snow-Covered Wastes',
 ];
 
-export const getColorIdentityProps = (
+const getColorIdentityProps = (
   card: HCCard.Any
 ): { color_identity: HCColors; color_identity_hybrid: HCColors[] } => {
   const colorIdentity = new Set<string>();
@@ -139,6 +139,12 @@ export const getColorIdentityProps = (
     color_identity_hybrid: colorIdentityHybrid,
   };
 };
+
+/**
+ * First get, then apply, the changes caused by a new `base_tags` array
+ * @param card card to apply changes to
+ * @param newBase new `base_tags` array
+ */
 export const applyChangesFromNewBase = (card: HCCard.Any, newBase: string[]) => {
   const { added, deleted } = getBaseDiffs(card.base_tags ?? [], newBase);
   const changeList: anyChange[] = [];
@@ -149,6 +155,11 @@ export const applyChangesFromNewBase = (card: HCCard.Any, newBase: string[]) => 
   applyChanges(card, changeList);
 };
 
+/**
+ * set derived props for a card
+ * @param card card to set derived props of
+ * @param tags new tag list, if any
+ */
 export const setDerivedProps = (
   card: HCCard.Any,
   tags?: string[]
@@ -426,6 +437,11 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   HCLayout.Cube,
 ];
 
+/**
+ * Set the export props for a card
+ * @param card card to set the export props of
+ * @param takenNames list of names that are already taken (for the purposes of setting `export_name`)
+ */
 export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
   if ('card_faces' in card) {
     const toFinalExportName = (name: string) => {

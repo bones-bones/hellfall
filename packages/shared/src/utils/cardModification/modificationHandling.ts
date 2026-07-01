@@ -15,6 +15,12 @@ import {
   // layoutIsDefault,
 } from '@hellfall/shared/utils';
 
+/**
+ * Add a prop and value to a card root (or overwrite the existing one)
+ * @param card card to add the prop to
+ * @param prop prop to add
+ * @param value value to add
+ */
 export const addPropToRoot = <K extends rootPropType>(
   card: HCCard.Any,
   prop: K,
@@ -22,11 +28,24 @@ export const addPropToRoot = <K extends rootPropType>(
 ) => {
   (card as any)[prop] = value;
 };
+
+/**
+ * Add a prop and value to a list in the card root
+ * @param card card to add the prop to
+ * @param prop prop to add
+ * @param value value to add
+ */
 export const pushPropToRoot = <K extends rootPropType>(
   card: HCCard.Any,
   prop: K,
   value: rootElementValueType<K>
 ) => pushProp(card, prop, value);
+
+/**
+ * Delete a prop from the card root
+ * @param card card to delete the prop from
+ * @param prop prop to delete
+ */
 export const deletePropFromRoot = <K extends rootPropType>(card: HCCard.Any, prop: K) => {
   if (card[prop] == undefined) {
     return false;
@@ -34,12 +53,26 @@ export const deletePropFromRoot = <K extends rootPropType>(card: HCCard.Any, pro
   delete (card as any)[prop];
   return true;
 };
+
+/**
+ * Delete a prop and value from a list in the card root
+ * @param card card to delete the prop from
+ * @param prop prop to delete from
+ * @param value value to delete
+ */
 export const popPropFromRoot = <K extends rootPropType>(
   card: HCCard.Any,
   prop: K,
   value: rootElementValueType<K>
 ) => popProp(card, prop, value);
 
+/**
+ * Add a prop and value to a card face (or overwrite the existing one)
+ * @param card card to add the prop to
+ * @param prop prop to add
+ * @param value value to add
+ * @param index index of the face to add the prop to (defaults to `0`)
+ */
 export const addPropToFace = <K extends facePropType>(
   card: HCCard.Any,
   prop: K,
@@ -51,6 +84,14 @@ export const addPropToFace = <K extends facePropType>(
   }
   ('card_faces' in card ? card.card_faces[index ?? 0] : (card as any))[prop] = value;
 };
+
+/**
+ * Add a prop and value to a list in a card face
+ * @param card card to add the prop to
+ * @param prop prop to add
+ * @param value value to add
+ * @param index index of the face to add the prop to (defaults to `0`)
+ */
 export const pushPropToFace = <K extends facePropType>(
   card: HCCard.Any,
   prop: K,
@@ -62,6 +103,13 @@ export const pushPropToFace = <K extends facePropType>(
   }
   pushProp('card_faces' in card ? card.card_faces[index ?? 0] : card, prop, value);
 };
+
+/**
+ * Delete a prop from a card face
+ * @param card card to delete the prop from
+ * @param prop prop to delete
+ * @param index index of the face to delete the prop from (defaults to `0`)
+ */
 export const deletePropFromFace = <K extends facePropType>(
   card: HCCard.Any,
   prop: K,
@@ -73,6 +121,14 @@ export const deletePropFromFace = <K extends facePropType>(
   delete ('card_faces' in card ? card.card_faces[index ?? 0] : card)[prop];
   return true;
 };
+
+/**
+ * Delete a prop and value from a list in a card face
+ * @param card card to delete the prop from
+ * @param prop prop to delete from
+ * @param value value to delete
+ * @param index index of the face to delete the prop from (defaults to `0`)
+ */
 export const popPropFromFace = <K extends facePropType>(
   card: HCCard.Any,
   prop: K,
@@ -106,13 +162,10 @@ const addArtistNote = (card: HCCard.Any, artist: string, note: string) => {
 };
 
 /**
- * Adds a tag
- * @param card card
- * @param tag tag to add
- * @param note tag note
- * @param prop prop to set
- * @param value value to set the prop to, or record to access with the tag to get the value
- * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
+ * Adds an artist
+ * @param card card to add the artist to
+ * @param artist artist to add
+ * @param note artist note
  */
 export const addArtist = (card: HCCard.Any, artist: string, note?: string) => {
   if (note) {
