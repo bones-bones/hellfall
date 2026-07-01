@@ -3,7 +3,7 @@ import { Divider } from '../visual-components/Divider';
 import { StyledHeading } from '../visual-components/StyledHeading';
 import { HellfallRelatedEntry } from '../../entry/HellfallRelatedEntry';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv } from '../../../styling';
+import { createStyledDiv, createStyledHR } from '../../../styling';
 
 export const RelatedCards = ({
   relatedCards,
@@ -47,6 +47,7 @@ export const RelatedCards = ({
             </RelatedGrid>
           </>
         )}
+        {(relatedCards.length > 0 && otherPrints.some(card => card.id != sourceCardId)) && (<Separator/>)}
         {otherPrints.some(card => card.id != sourceCardId) && (
           <>
             <StyledHeading size="small">Other Prints</StyledHeading>
@@ -86,3 +87,11 @@ const relatedGridStyles = createStyles({
   margin: '0 auto',
 });
 const RelatedGrid = createStyledDiv(relatedGridStyles, 'RelatedGrid');
+const separatorStyles = createStyles({
+  height: '1px',
+  backgroundColor: '#ccc',
+  border: 'none',
+  marginLeft: '-24px',
+  marginRight: '-24px',
+});
+const Separator = createStyledHR(separatorStyles, 'Separator');
