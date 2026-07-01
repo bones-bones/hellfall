@@ -150,3 +150,4 @@ Write a script to transform the database
 - add spacing between bottom of card image and top of text box
 - fix width of separators on individual card pages
 - add hccard.any and HCCard.anysingle/multi validation functions
+- add replace change type?

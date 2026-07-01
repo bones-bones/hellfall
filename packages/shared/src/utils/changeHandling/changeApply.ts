@@ -1,4 +1,4 @@
-import { facePropType, HCCard, rootPropType } from '@hellfall/shared/types';
+import { facePropType, HCCard, rootPropType, rootValueType } from '@hellfall/shared/types';
 import {
   allPartsChange,
   anyChange,
@@ -6,6 +6,8 @@ import {
   changeType,
   faceChange,
   faceChangeablePropType,
+  isFaceArrayChange,
+  isRootArrayChange,
   rootChange,
   rootChangeablePropType,
   tagChange,
@@ -30,44 +32,43 @@ import { addTagToBase, deleteTagFromBase, splitFullTag } from './tagHandling';
 
 const rootDeriveProps: rootPropType[] = [];
 
+/**
+ * Apply a root change
+ * @param card card to apply the root change to
+ * @param change root change to apply to the card
+ * @returns whether the change could cause props to need to be rederived
+ */
 export const applyRootChange = (
   card: HCCard.Any,
   change: rootChange<changeType, rootChangeablePropType<changeType>>
 ): boolean => {
-  switch (change.change_type) {
-    case 'add': {
+  if (change.change_type == 'add') {
+    if (!isRootArrayChange(change)) {
       addPropToRoot(card, change.prop, change.value!);
-      break;
-    }
-    case 'push': {
-      if (Array.isArray(change.value)) {
-        const [artist, note] = change.value;
-        if (!card.artists?.includes(artist)) {
-          pushPropToRoot(card, 'artists', artist);
-        }
-        addPropToRecord(card, 'artist_notes', artist, note);
-        break;
+    } else if (Array.isArray(change.value)) {
+      const [artist, note] = change.value;
+      if (!card.artists?.includes(artist)) {
+        pushPropToRoot(card, 'artists', artist);
       }
+      addPropToRecord(card, 'artist_notes', artist, note);
+    } else {
       pushPropToRoot(card, change.prop, change.value!);
-      break;
     }
-    case 'delete':
+  } else {
+    if (!isRootArrayChange(change)) {
       deletePropFromRoot(card, change.prop);
-      break;
-    case 'pop':
-      if (Array.isArray(change.value)) {
-        const [artist, note] = change.value;
-        deletePropFromRecord(card, 'artist_notes', artist);
-        break;
+    } else if (Array.isArray(change.value)) {
+      const [artist, note] = change.value;
+      deletePropFromRecord(card, 'artist_notes', artist);
+      if (card.artist_notes && !Object.keys(card.artist_notes).length) {
+        deletePropFromRoot(card, 'artist_notes');
       }
-      if (change.prop == 'artists') {
-        deletePropFromRecord(card, 'artist_notes', change.value as string);
-      }
+    } else {
       popPropFromRoot(card, change.prop, change.value!);
       if (change.prop == 'frame_effects' && !card.frame_effects?.length) {
         deletePropFromRoot(card, change.prop);
       }
-      break;
+    }
   }
   return rootDeriveProps.includes(change.prop);
 };
@@ -81,23 +82,26 @@ const faceDeriveProps: facePropType[] = [
   'subtypes',
 ];
 
+/**
+ * Apply a face change
+ * @param card card to apply the face change to
+ * @param change face change to apply to the card
+ * @returns whether the change could cause props to need to be rederived
+ */
 export const applyFaceChange = (
   card: HCCard.Any,
   change: faceChange<changeType, faceChangeablePropType<changeType>>
 ): boolean => {
-  switch (change.change_type) {
-    case 'add': {
+  if (change.change_type == 'add') {
+    if (!isFaceArrayChange(change)) {
       addPropToFace(card, change.prop, change.value!, change.index);
-      break;
-    }
-    case 'push': {
+    } else {
       pushPropToFace(card, change.prop, change.value!, change.index);
-      break;
     }
-    case 'delete':
+  } else {
+    if (!isFaceArrayChange(change)) {
       deletePropFromFace(card, change.prop, change.index);
-      break;
-    case 'pop':
+    } else {
       popPropFromFace(card, change.prop, change.value!, change.index);
       if (
         change.prop == 'frame_effects' &&
@@ -105,11 +109,17 @@ export const applyFaceChange = (
       ) {
         deletePropFromFace(card, change.prop, change.index);
       }
-      break;
+    }
   }
   return faceDeriveProps.includes(change.prop);
 };
 
+/**
+ * Apply a card_faces change
+ * @param card card to apply the card_faces change to
+ * @param change card_faces change to apply to the card
+ * @returns whether the change could cause props to need to be rederived
+ */
 export const applyCardFacesChange = (card: HCCard.Any, change: cardFacesChange): boolean => {
   if (change.change_type == 'delete') {
     if (!('card_faces' in card)) {
@@ -137,6 +147,12 @@ export const applyCardFacesChange = (card: HCCard.Any, change: cardFacesChange):
   return true;
 };
 
+/**
+ * Apply an all_parts change
+ * @param card card to apply the all_parts change to
+ * @param change all_parts change to apply to the card
+ * @returns whether the change could cause props to need to be rederived
+ */
 export const applyAllPartsChange = (card: HCCard.Any, change: allPartsChange): boolean => {
   // TODO: make sure the new part gets pulled correctly and gets added to the other card correctly after doing this
   if (change.change_type == 'delete') {
@@ -168,6 +184,12 @@ export const applyAllPartsChange = (card: HCCard.Any, change: allPartsChange): b
   return true;
 };
 
+/**
+ * Apply a tag change
+ * @param card card to apply the tag change to
+ * @param change tag change to apply to the card
+ * @returns whether the change could cause props to need to be rederived
+ */
 export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
   if (change.change_type == 'add') {
     if (card.base_tags) {
@@ -208,7 +230,10 @@ export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
 };
 
 /**
- * Returns true if the change can affect derived props
+ * Apply a change
+ * @param card card to apply the change to
+ * @param change change to apply to the card
+ * @returns whether the change could cause props to need to be rederived
  */
 export const applyChange = (card: HCCard.Any, change: anyChange): boolean => {
   switch (change.location) {

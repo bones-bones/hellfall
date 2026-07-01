@@ -1,4 +1,5 @@
 import type {
+  anyPropType,
   faceElementValueType,
   facePropType,
   HCCardFace,
@@ -8,20 +9,18 @@ import type {
 } from '@hellfall/shared/types';
 import { Timestamp } from '@google-cloud/firestore';
 
-const changeTypeList = ['add', 'push', 'delete', 'pop'] as const;
+const changeTypeList = ['add', 'delete'] as const;
 /**
- * The type of change. Add is used for adding a new prop or completely overwriting an old one; push is for pushing a value to a list or record; delete is for completely deleting a prop; and pop is for removing a value from a list or record
+ * The type of change. Add is used for adding a new prop or completely overwriting an old one, or for pushing a value to a list or record; delete is for completely deleting a prop, or for removing a value from a list or record
  */
 export type changeType = (typeof changeTypeList)[number];
 export const isChangeType = (value: any): value is changeType => changeTypeList.includes(value);
 
-export type noListChangeType = Exclude<changeType, 'push' | 'pop'>;
-const noList = ['add', 'delete'];
-export const isNoListChangeType = (value: any): value is noListChangeType => noList.includes(value);
-
 const changeLocationList = ['root', 'face', 'card_faces', 'all_parts', 'tag'] as const;
 /**
- * The location of the change.
+ * The location of the change. 'root' is for changes that affect the card root; 'face' is for changes that would affect a face; 'card_faces' is for changes that add/delete card faces; 'all_parts' is for changes to related cards; and 'tag' is for tag changes
+ *
+ * For single-faced cards, changes use root and/or face depending on whether their prop would be on the root or the face of a multifaced card
  */
 export type changeLocation = (typeof changeLocationList)[number];
 
@@ -57,8 +56,6 @@ const rootAddProps = [
   'finish',
   'border_color',
   'frame',
-] as const satisfies rootPropType[];
-const rootPushProps = [
   'keywords',
   'creators',
   'artists',
@@ -82,16 +79,11 @@ const rootDeleteProps = [
   'still_print_image',
   'not_directly_draftable',
   'has_draft_partners',
-] as const satisfies rootPropType[];
-const rootPopProps = [
   'keywords',
   'creators',
   'artists',
   'artist_notes',
   'frame_effects',
-  // 'tags',
-  // 'tag_notes',
-  // 'base_tags',
 ] as const satisfies rootPropType[];
 
 /**
@@ -99,15 +91,36 @@ const rootPopProps = [
  */
 export const rootChangeableProps = {
   add: rootAddProps,
-  push: rootPushProps,
   delete: rootDeleteProps,
-  pop: rootPopProps,
 } as const satisfies Record<changeType, rootPropType[]>;
 
 /**
  * A union of all the props that are valid for a root change with a given change type
  */
 export type rootChangeablePropType<T extends changeType> = (typeof rootChangeableProps)[T][number];
+
+const rootArrayProps = [
+  'keywords',
+  'creators',
+  'artists',
+  'artist_notes',
+  'frame_effects',
+] as const;
+type rootArrayPropLiteral = (typeof rootArrayProps)[number];
+type rootArrayPropType<T extends changeType> = Extract<
+  rootChangeablePropType<T>,
+  rootArrayPropLiteral
+>;
+// type rootNonArrayPropType<T extends changeType> =  Exclude<rootChangeablePropType<T>,rootArrayPropLiteral>
+
+/**
+ * Whether a prop affects a list or record, meaning that 'add' pushes a value and 'delete' removes a value
+ */
+export const isRootArrayPropType = <T extends changeType>(
+  prop: rootChangeablePropType<T>
+): prop is rootArrayPropType<T> => rootArrayProps.includes(prop as any);
+// export const isRootNonArrayPropType = <T extends changeType>(prop:rootChangeablePropType<T>):prop is rootNonArrayPropType<T> => !rootArrayProps.includes(prop as any)
+
 /**
  * A change to a card root.
  */
@@ -117,7 +130,7 @@ export type rootChange<T extends changeType, K extends rootChangeablePropType<T>
    */
   location: 'root';
   /**
-   * The type of change. Add is used for adding a new prop or completely overwriting an old one; push is for pushing a value to a list or record; delete is for completely deleting a prop; and pop is for removing a value from a list or record
+   * The type of change. Add is used for adding a new prop or completely overwriting an old one, or for pushing a value to a list or record; delete is for completely deleting a prop, or for removing a value from a list or record
    */
   change_type: T;
   /**
@@ -125,10 +138,22 @@ export type rootChange<T extends changeType, K extends rootChangeablePropType<T>
    */
   prop: K;
   /**
-   * The value to change. Must be valid for the given prop. Must be omitted when using `change_type: 'delete'`
+   * The value to change. Must be valid for the given prop. Must be omitted when using `change_type: 'delete'` and {@link isRootArrayPropType(prop)} is false
    */
   value?: rootElementValueType<K>;
 };
+
+type rootArrayChange<T extends changeType, K extends rootArrayPropType<T>> = rootChange<T, K>;
+// type rootNonArrayChange<T extends changeType, K extends rootNonArrayPropType<T>> = rootChange<T,K>
+
+/**
+ * Whether a change's prop affects a list or record, meaning that 'add' pushes a value and 'delete' removes a value
+ */
+export const isRootArrayChange = <T extends changeType, K extends rootChangeablePropType<T>>(
+  change: rootChange<T, K>
+): change is rootArrayChange<T, K & rootArrayPropType<T>> =>
+  rootAddProps.includes(change.prop as any);
+// export const isRootNonArrayChange = <T extends changeType, K extends rootChangeablePropType<T>>(change: rootChange<T, K>): change is rootNonArrayChange<T,K & rootNonArrayPropType<T>> => rootAddProps.includes(change.prop as any)
 
 /**
  * Create a root change
@@ -184,8 +209,8 @@ const faceAddProps = [
   'frame',
   'compress_face',
   'drop_face',
+  'frame_effects',
 ] as const satisfies facePropType[];
-const facePushProps = ['frame_effects'] as const satisfies facePropType[];
 const faceDeleteProps = [
   'flavor_name',
   'export_name',
@@ -208,23 +233,37 @@ const faceDeleteProps = [
   'frame',
   'compress_face',
   'drop_face',
+  'frame_effects',
 ] as const satisfies facePropType[];
-const facePopProps = ['frame_effects'] as const satisfies facePropType[];
 
 /**
  * The record used to get the list of values for {@link faceChangeablePropType}
  */
 export const faceChangeableProps = {
   add: faceAddProps,
-  push: facePushProps,
   delete: faceDeleteProps,
-  pop: facePopProps,
 } as const satisfies Record<changeType, facePropType[]>;
 
 /**
  * A union of all the props that are valid for a face change with a given change type
  */
 export type faceChangeablePropType<T extends changeType> = (typeof faceChangeableProps)[T][number];
+
+const faceArrayProps = ['frame_effects'] as const;
+type faceArrayPropLiteral = (typeof faceArrayProps)[number];
+type faceArrayPropType<T extends changeType> = Extract<
+  faceChangeablePropType<T>,
+  faceArrayPropLiteral
+>;
+// type faceNonArrayPropType<T extends changeType> =  Exclude<faceChangeablePropType<T>,faceArrayPropLiteral>
+
+/**
+ * Whether a prop affects a list or record, meaning that 'add' pushes a value and 'delete' removes a value
+ */
+export const isFaceArrayPropType = <T extends changeType>(
+  prop: faceChangeablePropType<T>
+): prop is faceArrayPropType<T> => faceArrayProps.includes(prop as any);
+// export const isFaceNonArrayPropType = <T extends changeType>(prop:faceChangeablePropType<T>):prop is faceNonArrayPropType<T> => !faceArrayProps.includes(prop as any)
 
 /**
  * A change to a card face.
@@ -235,7 +274,7 @@ export type faceChange<T extends changeType, K extends faceChangeablePropType<T>
    */
   location: 'face';
   /**
-   * The type of change. Add is used for adding a new prop or completely overwriting an old one; push is for pushing a value to a list or record; delete is for completely deleting a prop; and pop is for removing a value from a list or record
+   * The type of change. Add is used for adding a new prop or completely overwriting an old one, or for pushing a value to a list or record; delete is for completely deleting a prop, or for removing a value from a list or record
    */
   change_type: T;
   /**
@@ -243,7 +282,7 @@ export type faceChange<T extends changeType, K extends faceChangeablePropType<T>
    */
   prop: K;
   /**
-   * The value to change. Must be valid for the given prop. Must be omitted when using `change_type: 'delete'`
+   * The value to change. Must be valid for the given prop. Must be omitted when using `change_type: 'delete'` and {@link isRootArrayPropType(prop)} is false
    */
   value?: faceElementValueType<K>;
   /**
@@ -251,6 +290,18 @@ export type faceChange<T extends changeType, K extends faceChangeablePropType<T>
    */
   index?: number;
 };
+
+type faceArrayChange<T extends changeType, K extends faceArrayPropType<T>> = faceChange<T, K>;
+// type faceNonArrayChange<T extends changeType, K extends faceNonArrayPropType<T>> = faceChange<T,K>
+
+/**
+ * Whether a change's prop affects a list or record, meaning that 'add' pushes a value and 'delete' removes a value
+ */
+export const isFaceArrayChange = <T extends changeType, K extends faceChangeablePropType<T>>(
+  change: faceChange<T, K>
+): change is faceArrayChange<T, K & faceArrayPropType<T>> =>
+  faceAddProps.includes(change.prop as any);
+// export const isFaceNonArrayChange = <T extends changeType, K extends faceChangeablePropType<T>>(change: faceChange<T, K>): change is faceNonArrayChange<T,K & faceNonArrayPropType<T>> => faceAddProps.includes(change.prop as any)
 
 /**
  * Create a face change
@@ -290,7 +341,7 @@ export type cardFacesChange = {
   /**
    * The type of change. Add is used for adding a new face; delete is for deleting an existing face
    */
-  change_type: noListChangeType;
+  change_type: changeType;
   /**
    * The index of the change. When adding a face, the new face will be inserted at this index.
    */
@@ -308,7 +359,7 @@ export type cardFacesChange = {
  * @param face The face to change (if adding)
  */
 export const createCardFacesChange = (
-  change_type: noListChangeType,
+  change_type: changeType,
   index: number,
   face?: HCCardFace.MultiFaced
 ): cardFacesChange => {
@@ -334,7 +385,7 @@ export type allPartsChange = {
   /**
    * The type of change. Add is used for adding a new related card or updating an existing one; delete is for deleting an existing related card
    */
-  change_type: noListChangeType;
+  change_type: changeType;
   /**
    * The id of the change. Only use when `change_type: 'delete'`
    */
@@ -362,7 +413,7 @@ export type allPartsChange = {
  * @param part_prop The prop of `related` to use to find the card to match, if `related.id` is blank
  */
 export const createAllPartsChange = (
-  change_type: noListChangeType,
+  change_type: changeType,
   id?: string,
   related?: HCRelatedCard,
   no_blank?: boolean,
@@ -398,7 +449,7 @@ export type tagChange = {
   /**
    * The type of change. Add is used for adding a new tag or updating an existing one; delete is for deleting an existing tag
    */
-  change_type: noListChangeType;
+  change_type: changeType;
   /**
    * The full tag to change.
    */
@@ -420,7 +471,7 @@ export type tagChange = {
  * @param note The note to change
  */
 export const createTagChange = (
-  change_type: noListChangeType,
+  change_type: changeType,
   full_tag: string,
   tag?: string,
   note?: string
@@ -486,3 +537,5 @@ export interface Changeset {
   /** Populated by the API when listing changesets for review. */
   diff?: ChangesetDiffRow[];
 }
+
+const x = new Set();

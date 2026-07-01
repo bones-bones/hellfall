@@ -133,7 +133,10 @@ const listsEqual = <T = any>(
   // return value1.every((value, i) => equals(value, value2[i]));
 };
 /**
- * Checks whether two arbitrary values are exactly equal.
+ * Checks whether two arbitrary values are exactly equal. (basically a version of `===` that compares objects by value rather than by reference)
+ * @param value1 the first value to compare
+ * @param value2 the second value to compare
+ * @param ignoreOrder set to true if order should be ignored when comparing lists
  */
 export const arbAreEqual = <T = any>(value1: T, value2: T, ignoreOrder?: boolean): boolean => {
   if (typeof value1 != typeof value2) {
@@ -146,6 +149,7 @@ export const arbAreEqual = <T = any>(value1: T, value2: T, ignoreOrder?: boolean
     return value1 === value2;
   }
   if (value1 == null || value2 == null) {
+    // this is necessary because `typeof null === 'object'` due to a historical bug (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#typeof_null)
     return value1 === value2;
   }
   if (Array.isArray(value1) && Array.isArray(value2)) {

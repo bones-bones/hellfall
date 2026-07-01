@@ -12,14 +12,26 @@ import { getChangesFromDifferences } from './getCardDiff';
 const multiIgnoreDeleteProps: allPropType[] = ['image', 'frame', 'frame_effects'];
 const multiIgnoreAddProps: allPropType[] = ['image_status'];
 
-export const changeTypeOrder = ['delete', 'pop', 'add', 'push'];
+export const changeTypeOrder = ['delete', 'add'];
 // export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
 export const locationOrder = ['tag', 'card_faces', 'all_parts', 'root', 'face'];
 
+/**
+ * Sort function that sorts changes based on location, then change_type
+ *
+ * To use, do `anyChange[].sort(sortChanges)`
+ */
 export const sortChanges = (a: anyChange, b: anyChange): number =>
   locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
   changeTypeOrder.indexOf(a.change_type) - changeTypeOrder.indexOf(b.change_type);
 
+/**
+ * Apply a change
+ * @param card card to apply the changes to
+ * @param changeList changes to apply to the card
+ * @param applyingFromSheet whether the changes are coming from the google sheet (also whether to throw errors or just log them)
+ * @returns whether the changes caused props to need to be rederived
+ */
 export const applyChanges = (
   card: HCCard.Any,
   changeList: anyChange[],
@@ -49,7 +61,7 @@ export const applyChanges = (
       if (
         change.location == 'root' &&
         change.prop == 'artist_notes' &&
-        change.change_type == 'pop' &&
+        change.change_type == 'delete' &&
         changeList.some(
           other =>
             other.location == 'root' &&
@@ -64,10 +76,9 @@ export const applyChanges = (
         'card_faces' in card &&
         change.location == 'face' &&
         !change.index &&
-        (change.change_type == 'delete' || change.change_type == 'pop'
-          ? multiIgnoreDeleteProps
-          : multiIgnoreAddProps
-        ).includes(change.prop as allPropType) &&
+        (change.change_type == 'delete' ? multiIgnoreDeleteProps : multiIgnoreAddProps).includes(
+          change.prop as allPropType
+        ) &&
         changeList.some(other => other.location == 'card_faces')
       ) {
         return;
@@ -131,8 +142,9 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
 };
 /**
  * Updates a card along with its related cards
- * @param existingCard The card from the card map
- * @returns
+ * @param card card to apply the changes to
+ * @param changeList changes to apply to the card
+ * @param cardMap the map of cards
  */
 export const applyFromMap = (card: HCCard.Any, changeList: anyChange[], cardMap: CardMap) => {
   const oldRelateds = getAllRelated(card, cardMap);

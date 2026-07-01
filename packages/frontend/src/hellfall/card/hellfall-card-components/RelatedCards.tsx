@@ -47,7 +47,9 @@ export const RelatedCards = ({
             </RelatedGrid>
           </>
         )}
-        {(relatedCards.length > 0 && otherPrints.some(card => card.id != sourceCardId)) && (<Separator/>)}
+        {relatedCards.length > 0 && otherPrints.some(card => card.id != sourceCardId) && (
+          <Separator />
+        )}
         {otherPrints.some(card => card.id != sourceCardId) && (
           <>
             <StyledHeading size="small">Other Prints</StyledHeading>

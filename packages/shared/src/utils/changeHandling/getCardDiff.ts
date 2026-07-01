@@ -6,7 +6,6 @@ import {
   HCFrameEffect,
   HCKind,
   rootPropType,
-  rootValueType,
 } from '@hellfall/shared/types';
 import {
   allPartsChange,
@@ -15,17 +14,15 @@ import {
   changeType,
   createFaceChange,
   createRootChange,
-  faceChange,
   faceChangeableProps,
   faceChangeablePropType,
-  isNoListChangeType,
-  rootChange,
+  isFaceArrayPropType,
+  isRootArrayPropType,
   rootChangeableProps,
   rootChangeablePropType,
 } from './changeTypes';
 import {
   allPartsChangeIsValid,
-  cardFacesChangeIsValid,
   getPartChangeIndex,
   isFaceChangePropType,
   isFaceChangeValueType,
@@ -231,54 +228,64 @@ const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
   // notmagic: ['colors'],
 };
 type add = faceChangeablePropType<'add'>;
+
+/**
+ * Gets a list of changes from the differences between existing and new versions of a card
+ * @param existingCard existing version of the card
+ * @param newCard new version of the card
+ * @param pullingFromSheet whether the new version is coming from the google sheet (if it is, will ignore differences caused by lack of data storage in the sheet)
+ */
 export const getChangesFromDifferences = (
   existingCard: HCCard.Any,
   newCard: HCCard.Any,
   pullingFromSheet?: boolean
 ): anyChange[] => {
   const changeList: anyChange[] = [];
-  (Object.entries(rootChangeableProps) as [changeType, rootPropType[]][]).forEach(
-    ([change_type, props]) => {
-      props.forEach(prop => {
-        const value = newCard[prop];
-        if (pullingFromSheet) {
+  (
+    Object.entries(rootChangeableProps) as [
+      changeType,
+      rootChangeablePropType<'add' | 'delete'>[]
+    ][]
+  ).forEach(([change_type, props]) => {
+    props.forEach(prop => {
+      const value = newCard[prop];
+      if (pullingFromSheet) {
+        if (
+          change_type == 'add' &&
+          !value &&
+          !rootBlankableProps[existingCard.kind]?.includes(prop)
+        )
+          return;
+        if (rootIgnoreProps[existingCard.kind]?.includes(prop)) return;
+        if (change_type == 'delete' && !rootRemovableProps[existingCard.kind]?.includes(prop))
+          return;
+        // if (prop == 'image_status') return
+      }
+      if (!isRootArrayPropType(prop)) {
+        if (!isRootChangePropType(change_type, prop)) return;
+        if (!isRootChangeValueType(change_type, prop, value, existingCard[prop])) return;
+        changeList.push(createRootChange(change_type, prop, value));
+      } else {
+        if (!isRootChangePropType(change_type, prop)) return;
+        const intValues = (change_type == 'add' ? newCard : existingCard)[prop];
+        if (intValues == undefined) return;
+        const values = Array.isArray(intValues) ? intValues : Object.entries(intValues);
+        values.forEach(value => {
           if (
-            change_type == 'add' &&
-            !value &&
-            !rootBlankableProps[existingCard.kind]?.includes(prop)
+            !isRootChangeValueType(
+              change_type,
+              prop,
+              value,
+              (change_type == 'add' ? existingCard : newCard)[prop],
+              true
+            )
           )
             return;
-          if (rootIgnoreProps[existingCard.kind]?.includes(prop)) return;
-          if (change_type == 'delete' && !rootRemovableProps[existingCard.kind]?.includes(prop))
-            return;
-          // if (prop == 'image_status') return
-        }
-        if (isNoListChangeType(change_type)) {
-          if (!isRootChangePropType(change_type, prop)) return;
-          if (!isRootChangeValueType(change_type, prop, value, existingCard[prop])) return;
           changeList.push(createRootChange(change_type, prop, value));
-        } else {
-          if (!isRootChangePropType(change_type, prop)) return;
-          const intValues = (change_type == 'push' ? newCard : existingCard)[prop];
-          if (intValues == undefined) return;
-          const values = Array.isArray(intValues) ? intValues : Object.entries(intValues);
-          values.forEach(value => {
-            if (
-              !isRootChangeValueType(
-                change_type,
-                prop,
-                value,
-                (change_type == 'push' ? existingCard : newCard)[prop],
-                true
-              )
-            )
-              return;
-            changeList.push(createRootChange(change_type, prop, value));
-          });
-        }
-      });
-    }
-  );
+        });
+      }
+    });
+  });
   // if ('card_faces' in existingCard != 'card_faces' in newCard) {
   //   throw console.error('You really shouldn\'t try to use this to compare between single cards and multiface cards.')
   // }
@@ -331,33 +338,36 @@ export const getChangesFromDifferences = (
         }
       }
     };
-    (Object.entries(faceChangeableProps) as [changeType, facePropType[]][]).forEach(
-      ([change_type, props]) => {
-        props.forEach(prop => {
-          const value = newFace[prop];
-          if (pullingFromSheet) {
-            if (change_type == 'add' && noBlank(prop as add, value)) return;
-            if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
-            if (change_type == 'delete' && !faceRemovableProps[existingCard.kind]?.includes(prop))
-              return;
-            if (prop == 'image_status' && newFace.image) return;
-          }
-          if (isNoListChangeType(change_type)) {
-            if (!isFaceChangePropType(change_type, prop)) return;
-            if (!isFaceChangeValueType(change_type, prop, value, existingFace[prop])) return;
-            changeList.push(createFaceChange(change_type, prop, value, index));
-          } else {
-            if (!isFaceChangePropType(change_type, prop)) return;
-            const values = (change_type == 'push' ? newFace : existingFace)[prop];
-            if (values == undefined) return;
-            values.forEach(v => {
-              if (!isFaceChangeValueType(change_type, prop, v, existingFace[prop], true)) return;
-              changeList.push(createFaceChange(change_type, prop, v, index));
-            });
-          }
-        });
-      }
-    );
+    (
+      Object.entries(faceChangeableProps) as [
+        changeType,
+        faceChangeablePropType<'add' | 'delete'>[]
+      ][]
+    ).forEach(([change_type, props]) => {
+      props.forEach(prop => {
+        const value = newFace[prop];
+        if (pullingFromSheet) {
+          if (change_type == 'add' && noBlank(prop as add, value)) return;
+          if (faceIgnoreProps[existingCard.kind]?.includes(prop)) return;
+          if (change_type == 'delete' && !faceRemovableProps[existingCard.kind]?.includes(prop))
+            return;
+          if (prop == 'image_status' && newFace.image) return;
+        }
+        if (!isFaceArrayPropType(prop)) {
+          if (!isFaceChangePropType(change_type, prop)) return;
+          if (!isFaceChangeValueType(change_type, prop, value, existingFace[prop])) return;
+          changeList.push(createFaceChange(change_type, prop, value, index));
+        } else {
+          if (!isFaceChangePropType(change_type, prop)) return;
+          const values = (change_type == 'add' ? newFace : existingFace)[prop];
+          if (values == undefined) return;
+          values.forEach(v => {
+            if (!isFaceChangeValueType(change_type, prop, v, existingFace[prop], true)) return;
+            changeList.push(createFaceChange(change_type, prop, v, index));
+          });
+        }
+      });
+    });
   }
 
   const foundIndices: number[] = [];

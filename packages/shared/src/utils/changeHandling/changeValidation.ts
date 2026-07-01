@@ -28,7 +28,8 @@ import {
   faceChangeablePropType,
   isChangeLocation,
   isChangeType,
-  isNoListChangeType,
+  isFaceArrayPropType,
+  isRootArrayPropType,
   rootChange,
   rootChangeableProps,
   rootChangeablePropType,
@@ -59,12 +60,26 @@ const isArtistArray = (value: any): value is [string, string] =>
   typeof value[0] == 'string' &&
   typeof value[1] == 'string';
 
+/**
+ * Checks whether a prop is valid for a root change with the given change_type
+ * @param change_type change_type to check
+ * @param value prop to check
+ */
 export const isRootChangePropType = <T extends changeType>(
   change_type: T,
   value: any
 ): value is rootChangeablePropType<T> =>
   (rootChangeableProps[change_type] as any).includes(value as any);
 
+/**
+ * Gets the error message for a given value for a root change
+ * @param change_type the change_type for the change
+ * @param prop the prop for the change
+ * @param value the value for the change
+ * @param currentValue the current value corresponding to the prop
+ * @param comparingNew true when `currentValue` is taken from `newCard` when finding the diff between two cards
+ * @returns `string` of the error message if the value leads to an error; `undefined` otherwise
+ */
 export const rootValueErrorMessage = <T extends changeType, K extends rootChangeablePropType<T>>(
   change_type: T,
   prop: K,
@@ -72,7 +87,7 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
   currentValue?: rootValueType<K>,
   comparingNew?: boolean
 ) => {
-  if (change_type == 'delete') {
+  if (change_type == 'delete' && !isRootArrayPropType(prop)) {
     return value == undefined && currentValue != undefined
       ? undefined
       : `invalid change for change_type == 'delete': ${
@@ -82,7 +97,9 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
         }`;
   }
   if (value == undefined) {
-    return `invalid change for change_type == '${change_type}': value == undefined, but it cannot be undefined`;
+    return `invalid change for change_type == '${change_type}'${
+      change_type == 'delete' ? ` and prop == '${prop}'` : ''
+    }: value == undefined, but it cannot be undefined`;
   }
   if (arbAreEqual(value, currentValue, true)) {
     return `invalid change: value is equal to currentValue: value == ${JSON.stringify(value)}`;
@@ -138,7 +155,7 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
         ? undefined
         : `invalid change: artist note is equal to current one: '${value[1]}'`;
       // return (
-      //   // (change_type == 'push' ? value[1] : undefined)
+      //   // (change_type == 'add' ? value[1] : undefined)
       // );
     }
     case 'frame_effects': {
@@ -147,12 +164,12 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
       }
       if (
         listShare(currentValue as string[], value) ==
-        (change_type == 'pop' && !comparingNew ? true : false)
+        (change_type == 'delete' && !comparingNew ? true : false)
       ) {
         return;
       } else {
         return `invalid change for prop == ${prop}: ${value} is ${
-          change_type == 'pop' && !comparingNew ? 'not ' : ''
+          change_type == 'delete' && !comparingNew ? 'not ' : ''
         }included in currentValue: ${JSON.stringify(currentValue ?? [])}`;
       }
     }
@@ -164,12 +181,12 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
       }
       if (
         listShare(currentValue as string[], value) ==
-        (change_type == 'pop' && !comparingNew ? true : false)
+        (change_type == 'delete' && !comparingNew ? true : false)
       ) {
         return;
       } else {
         return `invalid change for prop == ${prop}: ${value} is ${
-          change_type == 'pop' && !comparingNew ? 'not ' : ''
+          change_type == 'delete' && !comparingNew ? 'not ' : ''
         }included in currentValue: ${JSON.stringify(currentValue ?? [])}`;
       }
     }
@@ -178,6 +195,15 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
     ? undefined
     : `invalid change for prop == ${prop}: ${value} is not a string`;
 };
+
+/**
+ * Checks if a given value for a root change is valid
+ * @param change_type the change_type for the change
+ * @param prop the prop for the change
+ * @param value the value for the change
+ * @param currentValue the current value corresponding to the prop
+ * @param comparingNew true when `currentValue` is taken from `newCard` when finding the diff between two cards
+ */
 export const isRootChangeValueType = <T extends changeType, K extends rootChangeablePropType<T>>(
   change_type: T,
   prop: K,
@@ -187,6 +213,12 @@ export const isRootChangeValueType = <T extends changeType, K extends rootChange
 ): value is rootElementValueType<K> =>
   !rootValueErrorMessage(change_type, prop, value, currentValue, comparingNew);
 
+/**
+ * Gets the error message for a given root change
+ * @param card card that the change would be applied to
+ * @param value change to get the error message for
+ * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
+ */
 export const rootChangeErrorMessage = (card: HCCard.Any, value: any) => {
   if (typeof value != 'object') {
     return `invalid change: change isn't an object`;
@@ -204,6 +236,11 @@ export const rootChangeErrorMessage = (card: HCCard.Any, value: any) => {
   return rootValueErrorMessage(change.change_type, change.prop, change.value, card[change.prop]);
 };
 
+/**
+ * Checks if a given root change is valid
+ * @param card card that the change would be applied to
+ * @param value change to validate
+ */
 export const rootChangeIsValid = (
   card: HCCard.Any,
   value: any
@@ -213,12 +250,26 @@ export const rootChangeIsValid = (
 const isStringArray = (value: any): value is string[] =>
   Array.isArray(value) && value.every(v => typeof v == 'string');
 
+/**
+ * Checks whether a prop is valid for a face change with the given change_type
+ * @param change_type change_type to check
+ * @param value prop to check
+ */
 export const isFaceChangePropType = <T extends changeType>(
   change_type: T,
   value: any
 ): value is faceChangeablePropType<T> =>
   (faceChangeableProps[change_type] as any).includes(value as any);
 
+/**
+ * Gets the error message for a given value for a face change
+ * @param change_type the change_type for the change
+ * @param prop the prop for the change
+ * @param value the value for the change
+ * @param currentValue the current value corresponding to the prop
+ * @param comparingNew true when `currentValue` is taken from `newFace` when finding the diff between two cards
+ * @returns `string` of the error message if the value leads to an error; `undefined` otherwise
+ */
 export const faceValueErrorMessage = <T extends changeType, K extends faceChangeablePropType<T>>(
   change_type: T,
   prop: K,
@@ -226,7 +277,7 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
   currentValue?: faceValueType<K>,
   comparingNew?: boolean
 ) => {
-  if (change_type == 'delete') {
+  if (change_type == 'delete' && !isFaceArrayPropType(prop)) {
     return value == undefined && currentValue != undefined
       ? undefined
       : `invalid change for change_type == 'delete': ${
@@ -236,7 +287,9 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
         }`;
   }
   if (value == undefined) {
-    return `invalid change for change_type == '${change_type}': value == undefined, but it cannot be undefined`;
+    return `invalid change for change_type == '${change_type}'${
+      change_type == 'delete' ? ` and prop == '${prop}'` : ''
+    }: value == undefined, but it cannot be undefined`;
   }
   const shouldCheckOrder = ['supertypes', 'types', 'subtypes'].includes(prop);
   if (arbAreEqual(value, currentValue, !shouldCheckOrder)) {
@@ -292,12 +345,12 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
       }
       if (
         listShare(currentValue as string[], value) ==
-        (change_type == 'pop' && !comparingNew ? true : false)
+        (change_type == 'delete' && !comparingNew ? true : false)
       ) {
         return;
       } else {
         return `invalid change for prop == ${prop}: ${value} is ${
-          change_type == 'pop' && !comparingNew ? 'not ' : ''
+          change_type == 'delete' && !comparingNew ? 'not ' : ''
         }included in currentValue: ${JSON.stringify(currentValue ?? [])}`;
       }
   }
@@ -306,6 +359,14 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
     : `invalid change for prop == ${prop}: ${value} is not a string`;
 };
 
+/**
+ * Checks if a given value for a face change is valid
+ * @param change_type the change_type for the change
+ * @param prop the prop for the change
+ * @param value the value for the change
+ * @param currentValue the current value corresponding to the prop
+ * @param comparingNew true when `currentValue` is taken from `newFace` when finding the diff between two cards
+ */
 export const isFaceChangeValueType = <T extends changeType, K extends faceChangeablePropType<T>>(
   change_type: T,
   prop: K,
@@ -315,6 +376,12 @@ export const isFaceChangeValueType = <T extends changeType, K extends faceChange
 ): value is faceElementValueType<K> =>
   !faceValueErrorMessage(change_type, prop, value, currentValue, comparingNew);
 
+/**
+ * Gets the error message for a given face change
+ * @param card card that the change would be applied to
+ * @param value change to get the error message for
+ * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
+ */
 export const faceChangeErrorMessage = (card: HCCard.Any, value: any) => {
   if (typeof value != 'object') {
     return `invalid change: change isn't an object`;
@@ -327,7 +394,7 @@ export const faceChangeErrorMessage = (card: HCCard.Any, value: any) => {
     return `invalid change: change_type == '${change.change_type}', which is invalid`;
   }
   if (!isFaceChangePropType(change.change_type, change.prop)) {
-    return `invalid change: prop == '${change.prop}', which is invalid for a location of 'root' and a change_type of '${change.change_type}'`;
+    return `invalid change: prop == '${change.prop}', which is invalid for a location of 'face' and a change_type of '${change.change_type}'`;
   }
   if (change.index != undefined) {
     if (!Number.isInteger(change.index)) {
@@ -353,12 +420,23 @@ export const faceChangeErrorMessage = (card: HCCard.Any, value: any) => {
   );
 };
 
+/**
+ * Checks if a given face change is valid
+ * @param card card that the change would be applied to
+ * @param value change to validate
+ */
 export const faceChangeIsValid = (
   card: HCCard.Any,
   value: any
 ): value is faceChange<changeType, faceChangeablePropType<changeType>> =>
   !faceChangeErrorMessage(card, value);
 
+/**
+ * Gets the error message for a given card_faces change
+ * @param card card that the change would be applied to
+ * @param value change to get the error message for
+ * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
+ */
 export const cardFacesChangeErrorMessage = (card: HCCard.Any, value: any) => {
   if (typeof value != 'object') {
     return `invalid change: change isn't an object`;
@@ -367,7 +445,7 @@ export const cardFacesChangeErrorMessage = (card: HCCard.Any, value: any) => {
   if (change.location != 'card_faces') {
     return `invalid change: location == '${change.location}', which does not equal 'card_faces'`;
   }
-  if (!isNoListChangeType(change.change_type)) {
+  if (!isChangeType(change.change_type)) {
     return `invalid change: change_type == '${change.change_type}', which is invalid`;
   }
   // if (typeof change.index != 'number') {
@@ -408,6 +486,11 @@ export const cardFacesChangeErrorMessage = (card: HCCard.Any, value: any) => {
 };
 
 // TODO: Make sure this properly handles when multiple card faces are being added
+/**
+ * Checks if a given card_faces change is valid
+ * @param card card that the change would be applied to
+ * @param value change to validate
+ */
 export const cardFacesChangeIsValid = (card: HCCard.Any, value: any): value is cardFacesChange =>
   !cardFacesChangeErrorMessage(card, value);
 
@@ -418,6 +501,11 @@ export const partCheckProps: partPropType[] = [
   'persistent',
 ];
 
+/**
+ * Gets the index in `all_parts` of the affected related card; returns undefined if no index is found
+ * @param card card to get the index from
+ * @param change change to get the index of
+ */
 export const getPartChangeIndex = (
   card: HCCard.Any,
   change: allPartsChange
@@ -449,6 +537,14 @@ export const getPartChangeIndex = (
     }
   }
 };
+
+/**
+ * Gets the error message for a given all_parts change
+ * @param card card that the change would be applied to
+ * @param value change to get the error message for
+ * @param index index of the related card to change; if not supplied, this will try to find it on its own
+ * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
+ */
 export const allPartsChangeErrorMessage = (card: HCCard.Any, value: any, index?: number) => {
   if (typeof value != 'object') {
     return `invalid change: change isn't an object`;
@@ -457,7 +553,7 @@ export const allPartsChangeErrorMessage = (card: HCCard.Any, value: any, index?:
   if (change.location != 'all_parts') {
     return `invalid change: location == '${change.location}', which does not equal 'all_parts'`;
   }
-  if (!isNoListChangeType(change.change_type)) {
+  if (!isChangeType(change.change_type)) {
     return `invalid change: change_type == '${change.change_type}', which is invalid`;
   }
   if (index == undefined) {
@@ -487,12 +583,24 @@ export const allPartsChangeErrorMessage = (card: HCCard.Any, value: any, index?:
   }
 };
 
+/**
+ * Checks if a given root change is valid
+ * @param card card that the change would be applied to
+ * @param value change to validate
+ * @param index index of the related card to change; if not supplied, this will try to find it on its own
+ */
 export const allPartsChangeIsValid = (
   card: HCCard.Any,
   value: any,
   index?: number
 ): value is allPartsChange => !allPartsChangeErrorMessage(card, value, index);
 
+/**
+ * Gets the error message for a given tag change
+ * @param card card that the change would be applied to
+ * @param value change to get the error message for
+ * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
+ */
 export const tagChangeErrorMessage = (card: HCCard.Any, value: any) => {
   if (typeof value != 'object') {
     return `invalid change: change isn't an object`;
@@ -510,7 +618,7 @@ export const tagChangeErrorMessage = (card: HCCard.Any, value: any) => {
   if (change.note && typeof change.note != 'string') {
     return `invalid change: invalid note`;
   }
-  if (!isNoListChangeType(change.change_type)) {
+  if (!isChangeType(change.change_type)) {
     return `invalid change: change_type == '${change.change_type}', which is invalid`;
   }
   if (change.change_type == 'add') {
@@ -535,9 +643,20 @@ export const tagChangeErrorMessage = (card: HCCard.Any, value: any) => {
   }
 };
 
+/**
+ * Checks if a given tag change is valid
+ * @param card card that the change would be applied to
+ * @param value change to validate
+ */
 export const tagChangeIsValid = (card: HCCard.Any, value: any): value is tagChange =>
   !tagChangeErrorMessage(card, value);
 
+/**
+ * Gets the error message for a given change
+ * @param card card that the change would be applied to
+ * @param value change to get the error message for
+ * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
+ */
 export const changeErrorMessage = (card: HCCard.Any, value: any) => {
   if (typeof value != 'object') {
     return `invalid change: change isn't an object`;
@@ -560,5 +679,10 @@ export const changeErrorMessage = (card: HCCard.Any, value: any) => {
   }
 };
 
+/**
+ * Checks if a given change is valid
+ * @param card card that the change would be applied to
+ * @param value change to validate
+ */
 export const changeIsValid = (card: HCCard.Any, value: any): value is anyChange =>
   !changeErrorMessage(card, value);

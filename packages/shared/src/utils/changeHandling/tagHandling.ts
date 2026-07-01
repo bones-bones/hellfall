@@ -129,6 +129,10 @@ const borderColorTags: Record<string, HCBorderColor> = {
   'red-border': HCBorderColor.Red,
 };
 
+/**
+ * Splits a full tag into a tag and its note
+ * @param fullTag full tag to split
+ */
 export const splitFullTag = (fullTag: string) => {
   const hasNote = fullTag.includes('<') && fullTag.endsWith('>');
   const [tag, note] = [
@@ -503,17 +507,43 @@ const tagUsesNoteAsValue = (tag: string, card?: HCCard.Any): boolean => {
   return false;
 };
 type splitTagReturn = {
+  /**
+   * The tag to return
+   */
   tag: string;
+  /**
+   * The note to add to/remove from `tag_notes`
+   */
   note?: string;
+  /**
+   * The value to use for the tag's effects (used for `flavor-name`, set tags, and flag tags)
+   */
   value?: string;
+  /**
+   * The face to apply the tag's effects to
+   */
   face?: number;
+  /**
+   * The uuid to use for the tag's effects
+   */
   uuid?: string;
+  /**
+   * The url to use for the tag's effects
+   */
   url?: string;
 };
 // type splitTagOptions = {
 //   alsoAddingFaces?:boolean,
 //   // noFaces?: boolean,
 // }
+
+/**
+ * Splits a full tag into a tag and its components
+ * @param fullTag full tag to split
+ * @param card the card that the tag will be applied to; only really necessary if the tag is a uuid tag and is going off of the card name or if the tag note includes an element that specifies the face
+ * @param alsoAddingFaces whether this tag is being applied alongside changes that convert the card from a single-faced card to a multifaced card
+ * @see {@link splitTagReturn} for the return type documentation
+ */
 export const splitTagComponents = (
   full_tag: string,
   card?: HCCard.Any,
@@ -597,14 +627,14 @@ export const splitTagComponents = (
     alsoAddingFaces?: boolean;
   }
  */
-const tagShouldPush = (tag: string): boolean => {
-  if (tag in anyFrameEffectTags) {
-    return true;
-  } else if (tag in faceFrameEffectTags) {
-    return true;
-  }
-  return false;
-};
+// const tagShouldPush = (tag: string): boolean => {
+//   if (tag in anyFrameEffectTags) {
+//     return true;
+//   } else if (tag in faceFrameEffectTags) {
+//     return true;
+//   }
+//   return false;
+// };
 type TagChangeInput<K extends anyPropType> = {
   card: HCCard.Any;
   change_type: 'add' | 'delete';
@@ -663,22 +693,22 @@ const changesForFaceTag = <K extends facePropType>(
       return value;
     }
   };
-  const face_change_type: changeType =
-    change_type == 'delete'
-      ? tagShouldPush(splitTag.tag)
-        ? 'pop'
-        : 'delete'
-      : tagShouldPush(splitTag.tag)
-      ? 'push'
-      : 'add';
+  // const face_change_type: changeType =
+  //   change_type == 'delete'
+  //     ? tagShouldPush(splitTag.tag)
+  //       ? 'pop'
+  //       : 'delete'
+  //     : tagShouldPush(splitTag.tag)
+  //     ? 'push'
+  //     : 'add';
   const resolvedValue = getValue() as faceElementValueType<K> | undefined;
   if (!resolvedValue) {
     changes.push(tag_change);
     return changes.sort(sortChanges);
   }
   const change = createFaceChange(
-    face_change_type,
-    prop as faceChangeablePropType<typeof face_change_type>,
+    change_type,
+    prop as faceChangeablePropType<typeof change_type>,
     resolvedValue,
     splitTag.face
   );
@@ -692,15 +722,6 @@ const changesForFaceTag = <K extends facePropType>(
   return changes.sort(sortChanges);
 };
 
-/**
- * Adds a tag
- * @param card card to add tag to
- * @param tag tag to add
- * @param note tag note
- * @param prop prop to set
- * @param value value to set the prop to, or record to access with the tag to get the value
- * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
- */
 const changesForRootTag = <K extends rootPropType>(
   input: TagChangeInput<K>,
   alsoAddingFaces?: boolean
@@ -729,14 +750,14 @@ const changesForRootTag = <K extends rootPropType>(
       return value;
     }
   };
-  const root_change_type: changeType =
-    change_type == 'delete'
-      ? tagShouldPush(splitTag.tag)
-        ? 'pop'
-        : 'delete'
-      : tagShouldPush(splitTag.tag)
-      ? 'push'
-      : 'add';
+  // const root_change_type: changeType =
+  //   change_type == 'delete'
+  //     ? tagShouldPush(splitTag.tag)
+  //       ? 'pop'
+  //       : 'delete'
+  //     : tagShouldPush(splitTag.tag)
+  //     ? 'push'
+  //     : 'add';
   const resolvedValue = getValue() as
     | rootElementValueType<rootChangeablePropType<typeof change_type>>
     | undefined;
@@ -745,7 +766,7 @@ const changesForRootTag = <K extends rootPropType>(
     return changes.sort(sortChanges);
   }
   const change = createRootChange(
-    root_change_type,
+    change_type,
     prop as rootChangeablePropType<typeof change_type>,
     resolvedValue
   );
@@ -913,6 +934,14 @@ const inputForTag = (
   return { input, location };
 };
 
+/**
+ * Gets the changes to a card for a given change_type and full_tag
+ * @param card card to get the changes for
+ * @param change_type whether to add or delete the tag
+ * @param full_tag the full tag to use
+ * @param alsoAddingFaces whether this tag is being applied alongside changes that convert the card from a single-faced card to a multifaced card
+ * @returns
+ */
 export const getChangesFromTag = (
   card: HCCard.Any,
   change_type: 'add' | 'delete',
@@ -955,6 +984,12 @@ export const getChangesFromTag = (
   // return changes.filter(change=>changeIsValid(card,change))
 };
 
+/**
+ * Adds a full tag to a `base_tags` array
+ * @param base_tags `base_tags` array to add to
+ * @param fullTag full tag to add
+ * @returns whether the change could cause props to need to be rederived
+ */
 export const addTagToBase = (base_tags: string[], fullTag: string): boolean => {
   if (!base_tags.includes(fullTag)) {
     base_tags.push(fullTag);
@@ -963,6 +998,12 @@ export const addTagToBase = (base_tags: string[], fullTag: string): boolean => {
   return false;
 };
 
+/**
+ * Deletes a full tag from a `base_tags` array
+ * @param base_tags `base_tags` array to delete from
+ * @param fullTag full tag to delete
+ * @returns whether the change could cause props to need to be rederived
+ */
 export const deleteTagFromBase = (base_tags: string[], fullTag: string): boolean => {
   const { tag, note } = splitFullTag(fullTag);
   let changesVisible = false;
@@ -988,6 +1029,12 @@ export const deleteTagFromBase = (base_tags: string[], fullTag: string): boolean
 
 // };
 
+/**
+ * Gets the full tags added and deleted when changing from an old `base_tags` array to a new one
+ * @param oldBase old `base_tags` array
+ * @param newBase new `base_tags` array
+ * @returns arrays of the tags that were added and that were deleted
+ */
 export const getBaseDiffs = (
   oldBase: string[],
   newBase: string[]
