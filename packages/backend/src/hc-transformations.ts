@@ -129,6 +129,7 @@ const mergeDatabases = (
     HCJ: 0,
     NMTG: 0,
     SFT: 0,
+    HCT: 0,
   };
   mergedCards.forEach(entry => {
     if (!entry.collector_number) {

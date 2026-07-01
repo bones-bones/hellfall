@@ -68,6 +68,7 @@ async function flushCatalogPublish(): Promise<void> {
 /** Debounced publish (used by postcard ingest; coalesces rapid writes). */
 export function scheduleCatalogPublish(): void {
   pendingPublish = true;
+
   if (debounceTimer) clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
     debounceTimer = null;

@@ -1,22 +1,15 @@
 import { useState, useEffect } from 'react';
 import { usePaginationModel, getLastPage } from '@workday/canvas-kit-react/pagination';
-import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
+import { HCCard } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { useAtom, useAtomValue } from 'jotai';
-import {
-  queryAtom,
-  sortAtom,
-  pageAtom,
-  // shouldPushHistoryAtom,
-} from '../atoms/searchAtoms.ts';
+import { queryAtom, sortAtom, pageAtom } from '../atoms/searchAtoms.ts';
 
 import { CHUNK_SIZE } from '../constants.ts';
 import { makeSort, searchCards } from '@hellfall/shared/filters';
 import { tagsData } from '@hellfall/shared/data';
 
 export const useSearchResults = (asRandom?: boolean) => {
-  // const navigate = useNavigate()
-
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
   const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
   const query = useAtomValue(queryAtom);
@@ -58,14 +51,7 @@ export const useSearchResults = (asRandom?: boolean) => {
       paginationModel.events.goTo(1);
       setPageAtom(0);
     }
-  }, [
-    query,
-    sortRules,
-    // inputSorts,
-    page,
-    cards.size(),
-    // location.search,
-  ]);
+  }, [query, sortRules, page, cards.size()]);
 
   return { resultSet, paginationModel };
 };

@@ -17,7 +17,7 @@ function resolveDataDir(): string {
   return candidates[0];
 }
 
-export function readDataJson<T>(filename: string): T {
+export const readDataJson = <T>(filename: string): T => {
   const path = join(resolveDataDir(), filename);
   return JSON.parse(readFileSync(path, 'utf-8')) as T;
-}
+};

@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "/",
+  "engines": {
+    "node": ">=20"
+  },
   "workspaces": [
     "packages/frontend",
     "packages/backend",

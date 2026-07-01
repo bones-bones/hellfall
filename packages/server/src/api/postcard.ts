@@ -175,16 +175,16 @@ async function rollbackPostcard(body: RollbackBody) {
   }
 }
 
-function jsonHeaders(req: HandlerRequest): Record<string, string> {
+const jsonHeaders = (req: HandlerRequest): Record<string, string> => {
   return withCors({ 'Content-Type': 'application/json' }, req);
-}
+};
 
 /** POST /api/cards/postcard — mork upserts a sparse accepted card. */
-export async function postcardHandler(
+export const postcardHandler = async (
   req: HandlerRequest,
   res: HandlerResponse,
   action: string | null
-): Promise<void> {
+): Promise<void | undefined> => {
   const headers = jsonHeaders(req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
@@ -222,4 +222,4 @@ export async function postcardHandler(
     res.statusCode = status;
     res.end(JSON.stringify({ ok: false, reason: message }));
   }
-}
+};

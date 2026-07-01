@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { HellfallEntry } from './entry/HellfallEntry.tsx';
 
 import { BoxProps } from '@workday/canvas-kit-react';
@@ -14,7 +14,7 @@ import {
 import { useSearchResults } from './hooks/useSearchResults.ts';
 import { ControlBar } from './search-controls/ControlBar.tsx';
 import { CHUNK_SIZE } from './constants.ts';
-import { useUpdateURL, useUrlSync } from './hooks/useUrlSync.ts';
+import { useUpdateURL } from './hooks/useUrlSync.ts';
 import { getOtherNames, toPlainText } from '@hellfall/shared/utils';
 import { SearchBar } from './search-controls/SearchBar.tsx';
 import { ActiveCardPanel } from './ActiveCardPanel.tsx';
@@ -28,14 +28,22 @@ export const HellFall = () => {
   const invalids = useAtomValue(invalidAtom);
   const query = useAtomValue(queryAtom);
 
+  const scrollPointRef = useRef<HTMLHRElement>(null);
+
   useUpdateURL();
 
   const setActiveCardFromAtom = useSetAtom(activeCardAtom);
 
-  const [page, setPage] = useAtom(pageAtom);
+  const page = useAtomValue(pageAtom);
   const { resultSet, paginationModel } = useSearchResults();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    console.log('scrollPointRef.current', scrollPointRef.current, page);
+    if (scrollPointRef.current) {
+      scrollPointRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [page]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -50,6 +58,7 @@ export const HellFall = () => {
   }, [windowWidth]);
 
   useEffect(() => {
+    // note: leave this, there's some weird react version stuff going on
     document.title = `${query || 'Search'} | Hellfall`;
   }, [query]);
 
@@ -58,7 +67,7 @@ export const HellFall = () => {
       <ActiveCardPanel />
       <br />
       <SearchBar alreadyOnSearch={true} />
-      <Separator />
+      <Separator ref={scrollPointRef} />
       {resultSet.length != 1 && (
         <>
           <ControlBar model={paginationModel} />
@@ -131,7 +140,6 @@ export const HellFall = () => {
           <ControlBar model={paginationModel} />
         </>
       )}
-      {/* <PaginationComponent model={paginationModel} /> */}
     </div>
   );
 };
