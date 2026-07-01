@@ -40,6 +40,32 @@ jobs:
             --allow-unauthenticated \
             --quiet
 
+      - name: Regenerate catalog cache
+        env:
+          CATALOG_SYNC_API_KEY: ${{ secrets.CATALOG_SYNC_API_KEY }}
+        run: |
+          if [ -z "$CATALOG_SYNC_API_KEY" ]; then
+            echo "CATALOG_SYNC_API_KEY secret is not set; skipping catalog sync"
+            exit 0
+          fi
+
+          SERVICE_URL=$(gcloud run services describe "$AUTH_CLOUD_RUN_SERVICE_NAME" \
+            --region "$AUTH_CLOUD_RUN_REGION" \
+            --project "$GCP_AUTH_SERVER_PROJECT_ID" \
+            --format 'value(status.url)')
+
+          echo "Publishing catalog via $SERVICE_URL/api/admin/catalog/sync"
+          HTTP_CODE=$(curl -sS -o /tmp/catalog-sync.json -w '%{http_code}' \
+            -X POST "$SERVICE_URL/api/admin/catalog/sync" \
+            -H "Authorization: Bearer $CATALOG_SYNC_API_KEY" \
+            -H "Content-Type: application/json")
+          cat /tmp/catalog-sync.json
+          echo
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Catalog sync failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
+
       - name: Tag deploy
         run: |
           TAG="auth-server/$(date -u +%Y.%m.%d).${{ github.run_number }}"

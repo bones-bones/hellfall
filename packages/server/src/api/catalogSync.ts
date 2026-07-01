@@ -1,5 +1,6 @@
 import { withCors, requireAdminAuth, HandlerRequest, HandlerResponse } from './lib';
 import { publishCatalogSnapshot } from '../lib/publishCatalog.ts';
+import { requireCatalogSyncAuth } from './lib/requireCatalogSyncAuth.ts';
 
 /** POST /api/admin/catalog/sync — republish Firestore catalog to cache (+ GCS when configured). */
 export const catalogSyncHandler = async (
@@ -16,7 +17,7 @@ export const catalogSyncHandler = async (
     return;
   }
 
-  const auth = await requireAdminAuth(req, res);
+  const auth = await requireCatalogSyncAuth(req, res);
   if (!auth) return;
 
   try {

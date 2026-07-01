@@ -103,9 +103,31 @@ export const env = {
     return Number.isFinite(fromEnv) && fromEnv >= 0 ? fromEnv : 30_000;
   },
 
+  /** GCS bucket for card/token image blobs (mork postcard ingest with imageBase64). */
+  get IMAGE_GCS_BUCKET(): string | undefined {
+    const v = process.env.IMAGE_GCS_BUCKET?.trim();
+    return v || undefined;
+  },
+
+  get IMAGE_GCS_TOKEN_PREFIX(): string {
+    const v = process.env.IMAGE_GCS_TOKEN_PREFIX?.trim();
+    return v || 'tokens/';
+  },
+
+  get IMAGE_GCS_CARD_PREFIX(): string {
+    const v = process.env.IMAGE_GCS_CARD_PREFIX?.trim();
+    return v || 'cards/';
+  },
+
   /** Bearer token for mork `POST /api/cards/postcard` (server-to-server). */
   get MORK_POSTCARD_API_KEY(): string | undefined {
     const v = process.env.MORK_POSTCARD_API_KEY?.trim();
+    return v || undefined;
+  },
+
+  /** Bearer token for `POST /api/admin/catalog/sync` (deploy/CI). */
+  get CATALOG_SYNC_API_KEY(): string | undefined {
+    const v = process.env.CATALOG_SYNC_API_KEY?.trim();
     return v || undefined;
   },
 };
