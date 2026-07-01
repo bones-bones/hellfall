@@ -4,7 +4,11 @@ import { isValidV4UUID, toPlainText } from '@hellfall/shared/utils';
 import { cardMap } from './cardMap.ts';
 // import { getCardById } from './cardsStore.ts';
 
-export async function cardJsonHandler(req: HandlerRequest, res: HandlerResponse, cardId: string) {
+export const cardJsonHandler = async (
+  req: HandlerRequest,
+  res: HandlerResponse,
+  cardId: string
+) => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
@@ -31,9 +35,13 @@ export async function cardJsonHandler(req: HandlerRequest, res: HandlerResponse,
     res.statusCode = 500;
     res.end(JSON.stringify({ error: 'Internal server error' }));
   }
-}
+};
 
-export async function cardTextHandler(req: HandlerRequest, res: HandlerResponse, cardId: string) {
+export const cardTextHandler = async (
+  req: HandlerRequest,
+  res: HandlerResponse,
+  cardId: string
+) => {
   const headers = withCors({ 'Content-Type': 'text/plain; charset=utf-8' }, req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
@@ -62,4 +70,4 @@ export async function cardTextHandler(req: HandlerRequest, res: HandlerResponse,
     res.statusCode = 500;
     res.end('Internal server error');
   }
-}
+};
