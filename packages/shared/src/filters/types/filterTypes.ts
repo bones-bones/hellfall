@@ -1,11 +1,19 @@
 import { HCCard, HCLegalitiesField, HCRelatedCard, SetCode } from '@hellfall/shared/types';
 export const NOPRINT =
   'This should not ever print. Please report this as a bug on discord along with the search terms you used.';
+/**
+ * The type of an operator
+ */
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
 export const looseOpList: looseOpType[] = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
+/**
+ * The type of an operator, including loose operators
+ */
 export type looseOpType = ':' | '!:' | opType;
 export const invertOptions = ['ignore', 'flip', 'negate'] as const;
 /**
+ * The option for how to handle the inversion operator
+ *
  * ignore: object ignores the inversion operator
  *
  * flip: object inverts the operator before passing it in
@@ -13,14 +21,33 @@ export const invertOptions = ['ignore', 'flip', 'negate'] as const;
  * negate: object negates the filter's output; filter requires `invert` to be passed to summary function
  */
 export type invertOptionType = (typeof invertOptions)[number];
+
+/**
+ * A function that produces a summary for a filter
+ */
 export type summaryFunction<T> = (operator: opType, value: T, invert?: boolean) => string;
 
+/**
+ * Any filter
+ */
 export interface anyFilter<T = any, S = any> {
+  /**
+   * The result of calling this filter
+   */
   (value1: T, operator: opType, value2: S): number | boolean | undefined;
+  /**
+   * How to handle inversion of this filter
+   */
   invertOption: invertOptionType;
+  /**
+   * The function that produces a summary of this filter
+   */
   toSummary: summaryFunction<S>;
 }
 export const dirs = ['asc', 'desc', 'auto'] as const;
+/**
+ * a sort direction option
+ */
 export type dirType = (typeof dirs)[number];
 export const sorts = [
   'set',
@@ -33,21 +60,37 @@ export const sorts = [
   'colormanavalue',
   'auto',
 ] as const;
+/**
+ * a sort option
+ */
 export type sortType = (typeof sorts)[number];
 
+/**
+ * a sort filter
+ */
 export interface sortFilter extends anyFilter<HCCard.Any, HCCard.Any> {
+  /**
+   * The result of calling this. This is suitable to be used in a `.sort` function
+   */
   (value1: HCCard.Any, operator: opType, value2: HCCard.Any): number;
+  /**
+   * The sort option to use
+   */
   sort: sortType;
+  /**
+   * The direction to sort the cards
+   */
   dir: dirType;
 }
 
 /**
+ * Any card filter
+ *
  * The first type is the type of the entry. The second type is the type from the search query.
  */
 export interface cardFilter<T = any, S = any> extends anyFilter {
   (value1: T, operator: opType, value2: S): boolean | undefined;
 }
-
 export interface textFilter extends cardFilter<string, string> {}
 export interface textListFilter extends cardFilter<string[], string> {}
 export interface textRecordFilter extends cardFilter<Record<string, string>, [string, string]> {}

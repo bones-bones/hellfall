@@ -8,6 +8,8 @@ import {
   HCObject,
   HCKind,
   SetCode,
+  facePropType,
+  rootPropType,
 } from '@hellfall/shared/types';
 import {
   setDerivedProps,
@@ -17,13 +19,11 @@ import {
   getDefaultCard,
   HCIDMap,
   frontIsBattle,
-  facePropType,
   addPropToRoot,
-  rootPropType,
   pushPropToRoot,
   getColorsFromText,
+  parseRelatedReferenceName,
 } from '@hellfall/shared/utils';
-import { pipsData } from '@hellfall/shared/data';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -95,17 +95,6 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     }
   });
 
-  const hardCardNames: string[] = [
-    'Crypt of u/Em9500',
-    '1d6',
-    'Avatar of BallsJr123',
-    'Sekiro for the PS4',
-    'Avatar of Discord v2',
-    'That One Time in WW1',
-    'Plagiarism by doomclaw9',
-    'Carrion Feeder from MH8',
-  ];
-
   const skipKeys: keyType[] = [
     'hcid',
     'image',
@@ -127,7 +116,6 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     'artists',
     'tags',
   ];
-  const pips = pipsData.data;
 
   const allCards = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
@@ -217,35 +205,32 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 ? card.set?.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
-                : HCLegality.Legal,
-              '4cb': formats.includes('Not Legal')
+                : // : formats.includes('Legal') ?
+                  HCLegality.Legal,
+              // : HCLegality.NotLegal,
+              '4cb': formats.includes('Not Legal (4CB)')
                 ? HCLegality.NotLegal
                 : formats.includes('Banned (4CB)')
                 ? card.set?.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
-                : HCLegality.Legal,
-              commander: formats.includes('Not Legal')
+                : // : formats.includes('Legal (4CB)') ?
+                  HCLegality.Legal,
+              // : HCLegality.NotLegal,
+              commander: formats.includes('Not Legal (Commander)')
                 ? HCLegality.NotLegal
                 : formats.includes('Banned (Commander)')
                 ? card.set?.includes('HCV')
                   ? HCLegality.NotLegal
                   : HCLegality.Banned
-                : HCLegality.Legal,
+                : // : formats.includes('Legal (Commander)') ?
+                  HCLegality.Legal,
+              // : HCLegality.NotLegal,
             };
             addPropToRoot(card, 'legalities', legalities);
           } else if (keys[i] == 'related') {
             entry[i].split(';').forEach(oldName => {
-              const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-              const name = match?.groups?.name ?? oldName;
-              const count = match?.groups?.count;
-              const base = name.replace(/\d+$/, '');
-              const shouldUseBase =
-                /\d/.test(name.at(-1)!) &&
-                !hardCardNames.includes(name) &&
-                base &&
-                ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!);
-
+              const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',

@@ -14,7 +14,7 @@ import {
   shortToNum,
 } from '../types';
 import { canContainOp, containsOp, createNumSummary, numOp, opToShorthand } from '../utils';
-import { canContain, contains, getHybridColorNumber } from '@hellfall/shared/utils';
+import { listCanContainList, listContainsList, getHybridColorNumber } from '@hellfall/shared/utils';
 
 /**
  * Compares two sets of colors using an operator and returns a bool.
@@ -25,7 +25,7 @@ import { canContain, contains, getHybridColorNumber } from '@hellfall/shared/uti
  */
 export const filterColorContents: colorContentFilter = Object.assign(
   (value1: string[], operator: opType, value2: string[]) =>
-    containsOp(operator, contains, value1, value2),
+    containsOp(operator, listContainsList, value1, value2),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string[], invert?: boolean) =>
@@ -147,7 +147,7 @@ export const filterColorIndicatorShort: colorShortListFilter = Object.assign(
  */
 export const filterHybridIdentityContents: hybridContentFilter = Object.assign(
   (value1: string[][], operator: opType, value2: string[]) =>
-    canContainOp(operator, canContain, value1, value2),
+    canContainOp(operator, listCanContainList, value1, value2),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string[], invert?: boolean) =>

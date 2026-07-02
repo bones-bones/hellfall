@@ -1,8 +1,5 @@
 import { exportHellscubeCards } from '@hellfall/shared/utils/firestore';
-import { withCors } from './lib/cors.ts';
-import { env } from './lib/env.ts';
-import { requireAdminAuth } from './lib/requireAdminAuth.ts';
-import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
+import { withCors, env, requireAdminAuth, HandlerRequest, HandlerResponse } from './lib';
 
 /** GET /api/admin/export-hellscube — full cards collection export (admin only). */
 export const exportHellscubeHandler = async (

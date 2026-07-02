@@ -1,4 +1,4 @@
-import { anyPropType, facePropType, partPropType, rootPropType } from './propTypes';
+import { anyPropType, facePropType, partPropType, rootPropType } from '@hellfall/shared/types';
 
 export const propOrder: anyPropType[] = [
   'object',

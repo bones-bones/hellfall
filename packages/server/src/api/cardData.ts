@@ -1,5 +1,4 @@
-import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
-import { withCors } from './lib/cors.ts';
+import { HandlerRequest, HandlerResponse, withCors } from './lib';
 import { isValidV4UUID, toPlainText } from '@hellfall/shared/utils';
 import { cardMap } from './cardMap.ts';
 // import { getCardById } from './cardsStore.ts';

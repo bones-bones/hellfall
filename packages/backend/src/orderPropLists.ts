@@ -1,13 +1,7 @@
 // scripts/orderCardLists.ts
 
-import {
-  anyPropType,
-  facePropType,
-  orderCardProps,
-  orderFaceProps,
-  orderPartProps,
-  partPropType,
-} from '@hellfall/shared/utils';
+import { anyPropType, facePropType, partPropType } from '@hellfall/shared/types';
+import { orderCardProps, orderFaceProps, orderPartProps } from '@hellfall/shared/utils';
 
 const listsToOrder = {};
 

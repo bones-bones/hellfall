@@ -3,9 +3,19 @@ import { textEquals } from '../textHandling';
 import { pushProp } from '../listHandling';
 import { CardMap, toFaces } from '../cardHandling';
 
+/**
+ * Checks whether a card has any related card with a given component
+ * @param card card to check
+ * @param comp component to check for
+ */
 export const hasPartWithComp = (card: HCCard.Any, comp: relatedComponent): boolean =>
   card.all_parts?.some(part => part.component == comp) ?? false;
 
+/**
+ * Updates a card and its related cards
+ * @param card card to update
+ * @param relateds `CardMap` containing the card's related cards
+ */
 export const updateParts = (
   card: HCCard.Any,
   relateds: CardMap
@@ -259,6 +269,11 @@ export const updateParts = (
   }
 };
 
+/**
+ * Cleans the `all_parts` arrays of a card and its related cards (removing stranded parts)
+ * @param card card to update
+ * @param relateds `CardMap` containing the card's related cards
+ */
 export const cleanParts = (card: HCCard.Any, relateds: CardMap) => {
   if (card.layout == 'front') return;
   for (let i = card.all_parts?.length! - 1; i >= 0; i--) {

@@ -1,46 +1,51 @@
-import { HCCard } from '@hellfall/shared/types';
 import {
-  anyEntriesType,
-  anyExactEntriesType,
-  faceEntriesType,
-  faceMappedType,
-  facePropType,
-  partEntriesType,
-  partMappedType,
-  rootEntriesType,
-  rootMappedType,
-  rootPropType,
-} from './propTypes';
+  HCCard,
+  anyMappedType,
+  getAnyEntries,
+  getFaceEntries,
+  getRootEntries,
+} from '@hellfall/shared/types';
 import { firestoreCard } from '../firestore';
 
-export const getRootEntries = (record: rootMappedType) => Object.entries(record) as rootEntriesType;
+/**
+ * A properly typed version of calling `Object.entries()` on `HCCard.Any`
+ * @param card The card to get the entries of
+ */
+export const getCardEntries = (card: HCCard.Any) => getAnyEntries(card as anyMappedType);
 
-export const getFaceEntries = (record: faceMappedType) => Object.entries(record) as faceEntriesType;
+/**
+ * A properly typed version of calling `Object.entries()` on `firestoreCard`
+ * @param card The card to get the entries of
+ */
+export const getFireEntries = (card: firestoreCard) => getAnyEntries(card as anyMappedType);
 
-export const getPartEntries = (record: partMappedType) => Object.entries(record) as partEntriesType;
-
-export const getCardEntries = (card: HCCard.Any) => Object.entries(card) as anyEntriesType;
-
-export const getFireEntries = (card: firestoreCard) => Object.entries(card) as anyExactEntriesType;
-
+/**
+ * A properly typed version of calling `Object.entries()` on `card.card_faces[index ?? 0]`
+ * @param card The card to get the entries of
+ * @param index the index of the face to get the entries of
+ */
 export const getCardFaceEntries = (card: HCCard.AnyMultiFaced, index?: number) =>
-  Object.entries(card.card_faces[index ?? 0]) as faceEntriesType;
+  getFaceEntries(card.card_faces[index ?? 0]);
+/**
+ * A properly typed version of calling `Object.entries()` on a card root
+ * @param card The card to get the entries of
+ */
+export const getCardRootEntries = (card: HCCard.Any) => getRootEntries(card);
 
-export const getFilteredRootEntries = (card: HCCard.Any, propList: rootPropType[]) =>
-  (Object.entries(card) as rootEntriesType).filter(([key, value]) => propList.includes(key));
+// export const getFilteredRootEntries = (card: HCCard.Any, propList: rootPropType[]) => (Object.entries(card) as rootEntriesType).filter(([key, value]) => propList.includes(key));
 
-export const getFilteredFaceEntries = (
-  card: HCCard.Any,
-  propList: facePropType[],
-  index?: number
-) =>
-  (
-    Object.entries('card_faces' in card ? card.card_faces[index ?? 0] : card) as faceEntriesType
-  ).filter(([key, value]) => propList.includes(key));
+// export const getFilteredFaceEntries = (
+//   card: HCCard.Any,
+//   propList: facePropType[],
+//   index?: number
+// ) =>
+//   (
+//     Object.entries('card_faces' in card ? card.card_faces[index ?? 0] : card) as faceEntriesType
+//   ).filter(([key, value]) => propList.includes(key));
 
-export const getFilteredRootProps = (card: HCCard.Any, propList: rootPropType[]) =>
-  (Object.keys(card) as rootPropType[]).filter(key => propList.includes(key));
-export const getFilteredFaceProps = (card: HCCard.Any, propList: facePropType[], index?: number) =>
-  (Object.keys('card_faces' in card ? card.card_faces[index ?? 0] : card) as facePropType[]).filter(
-    key => propList.includes(key)
-  );
+// export const getFilteredRootProps = (card: HCCard.Any, propList: rootPropType[]) =>
+//   (Object.keys(card) as rootPropType[]).filter(key => propList.includes(key));
+// export const getFilteredFaceProps = (card: HCCard.Any, propList: facePropType[], index?: number) =>
+//   (Object.keys('card_faces' in card ? card.card_faces[index ?? 0] : card) as facePropType[]).filter(
+//     key => propList.includes(key)
+//   );

@@ -1,5 +1,4 @@
 import { HCCard, HCColor, HCColors } from '../../types';
-import { orderColors } from '../orderColors.ts';
 
 export type CubeListSectionId =
   | 'white'

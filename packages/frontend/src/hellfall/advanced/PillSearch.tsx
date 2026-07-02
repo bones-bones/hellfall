@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useMultiSelectModel } from '@workday/canvas-kit-preview-react';
 import { TextInput, FormField, Pill } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { listEquals } from '@hellfall/shared/utils';
+import { listsAreEqual } from '@hellfall/shared/utils';
 import {
   createStenciledButtonDiv,
   createStyledDiv,
@@ -77,7 +77,7 @@ export const PillSearch = ({ possibleValues, values, label, onChange }: Props) =
 
   useEffect(() => {
     const newSelected = getSelectedArray();
-    if (!listEquals(selectedValues, newSelected)) {
+    if (!listsAreEqual(selectedValues, newSelected)) {
       setSelectedValues(newSelected);
     }
   }, [model.state.selectedIds, possibleValues]);

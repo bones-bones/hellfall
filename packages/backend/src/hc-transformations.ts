@@ -3,7 +3,15 @@ import fs from 'fs';
 import { fetchTokens } from './fetchTokens.ts';
 import { fetchCards } from './fetchCards.ts';
 import { fetchUsernameMappings } from './fetchUsernameMapping.ts';
-import { HCCard, HCCardFace, HCRelatedCard, SetCode, allSetsList } from '@hellfall/shared/types';
+import {
+  HCCard,
+  HCCardFace,
+  HCRelatedCard,
+  SetCode,
+  allSetsList,
+  anyPropType,
+  anyValueType,
+} from '@hellfall/shared/types';
 import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
   stripMasterpiece,
@@ -15,11 +23,11 @@ import {
   getAllRelatedPermissive,
   CardMap,
   HCIDMap,
-  anyPropType,
-  anyValueType,
   savedOracleIds,
+  getDirectChildSets,
+  getParentSet,
+  mergeFromSheet,
 } from '@hellfall/shared/utils';
-import { mergeFromSheet } from '@hellfall/shared/utils/cardModification/changeHandling';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { addToJSONToCards } from '@hellfall/shared/utils';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -368,9 +376,12 @@ const main = async () => {
   const collectorMap = new Map<SetCode, Set<number>>(
     newCards.sets().map(code => [code, new Set<number>()])
   );
+  collectorMap.set('SCL', new Set<number>());
+  getDirectChildSets('SCL')?.forEach(code => collectorMap.delete(code));
   newCards.forEach(card => {
     const num = parseInt(card.collector_number);
-    const cSet = collectorMap.get(card.set);
+    const cSet =
+      collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));
     if (ignoreDuplicateHCIDs.includes(card.hcid)) {
       return;
     }
@@ -403,8 +414,6 @@ const main = async () => {
     newLands
   );
   const finalCards = new CardMap(addToJSONToCards(merged));
-  // const finalTokens = toCardMap(addToJSONToCards(merged.mergedTokens));
-  // const finalLands = toCardMap(addToJSONToCards(merged.mergedLands));
   finalCards.forEach(card => {
     if (card.all_parts) {
       if (card.layout == 'front') {

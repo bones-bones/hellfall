@@ -5,25 +5,26 @@ import {
   HCImageStatus,
   HCFrame,
   HCKind,
-  HCLayoutGroup,
   HCFrameEffect,
   HCFinish,
+  anyElementEntriesType,
+  anyEntriesType,
+  anyPropType,
+  faceEntriesType,
+  facePropType,
+  rootPropType,
+  getAnyEntries,
+  anyMappedType,
+  getFaceEntries,
+  faceMappedType,
 } from '@hellfall/shared/types';
 import {
   addPropToFace,
   addPropToRoot,
-  anyEntriesType,
-  anyExactEntriesType,
-  anyPropType,
   deletePropFromFace,
-  faceEntriesType,
-  facePropType,
-  faceValueType,
   fromImportMana,
   getDefaultCard,
-  pushPropToFace,
   pushPropToRoot,
-  rootPropType,
 } from '@hellfall/shared/utils';
 export type fixedScryfall = Exclude<ScryfallCard.Any, ScryfallCard.ReversibleCard>;
 
@@ -153,9 +154,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     'card_faces' in entry,
     {
       ...Object.fromEntries(
-        (Object.entries(entry) as anyEntriesType).filter(([key, value]) =>
-          sameKeys.includes(key as anyPropType)
-        )
+        getAnyEntries(entry as anyMappedType).filter(([key, value]) => sameKeys.includes(key))
       ),
       id_is_scryfall: true,
       oracle_id_is_scryfall: true,
@@ -167,8 +166,8 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
   );
   if ('card_faces' in entry && 'card_faces' in card) {
     entry.card_faces.forEach((face, i) => {
-      (Object.entries(face) as faceEntriesType).forEach(([prop, value]) => {
-        if (sameKeys.includes(prop as anyPropType)) {
+      getFaceEntries(face as faceMappedType).forEach(([prop, value]) => {
+        if (sameKeys.includes(prop)) {
           addPropToFace(card, prop, value, i);
         } else if (prop == 'mana_cost') {
           addPropToFace(card, prop, fromImportMana(value), i);
@@ -209,7 +208,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
       }
     });
   }
-  (Object.entries(entry) as anyExactEntriesType).forEach(([prop, value]) => {
+  getAnyEntries(entry as anyMappedType).forEach(([prop, value]) => {
     if (prop == 'mana_cost') {
       addPropToRoot(card, prop, fromImportMana(value));
     } else if (italicsReplaceKeys.includes(prop as facePropType)) {

@@ -1,8 +1,12 @@
-import { env } from './lib/env.ts';
-import { withCors } from './lib/cors.ts';
-import { getSession, resolveGuildRoles } from './lib/session.ts';
-import { DATABASE_CONTRIBUTOR } from './discord/constants.ts';
-import type { HandlerRequest, HandlerResponse } from './lib/types.ts';
+import {
+  env,
+  withCors,
+  getSession,
+  resolveGuildRoles,
+  HandlerRequest,
+  HandlerResponse,
+} from './lib';
+import { DATABASE_CONTRIBUTOR } from './discord';
 
 export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Promise<void> => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);

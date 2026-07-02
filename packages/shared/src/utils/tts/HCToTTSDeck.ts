@@ -1,4 +1,3 @@
-import { HCCard, HCLayout, HCLayoutGroup } from '@hellfall/shared/types';
 import {
   CardPosition,
   DeckPositions,
@@ -11,7 +10,6 @@ import {
   CardMap,
   compressHCCardFaces,
   getRelatedsFromCards,
-  mergeHCCardFaces,
   toFaces,
   toPlainText,
 } from '../cardHandling';

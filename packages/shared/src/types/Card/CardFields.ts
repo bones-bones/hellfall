@@ -25,7 +25,7 @@ import {
 
 import { HCCardFace } from './CardFace.ts';
 import { HCRelatedCard } from './RelatedCard.ts';
-import { SetCode } from '../Set/Set.ts';
+import { SetCode } from '../Set';
 // import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType';
 // import { SetType } from "../Set/values";
 

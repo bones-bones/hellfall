@@ -1,16 +1,18 @@
-import { HCCard, HCCardFace, HCColors, SetCode } from '@hellfall/shared/types';
-import { listShareLower } from '../listHandling';
-import { facePropOrder, partPropOrder, propOrder } from './orderProps';
-import { getIndicatorFromColors } from '../pipsHandling';
 import {
+  HCCard,
+  HCCardFace,
+  HCColors,
+  SetCode,
+  allElementValueType,
   allPropType,
-  allValueType,
   colorPropType,
+  faceElementValueType,
   facePropType,
   faceType,
-  faceValueType,
-  filterFaceValueType,
-} from './propTypes';
+} from '@hellfall/shared/types';
+import { listIncludesValueLower, listsShareLower } from '../listHandling';
+import { facePropOrder, partPropOrder, propOrder } from './orderProps';
+import { getIndicatorFromColors } from '../pipsHandling';
 import {
   getMasterpiece,
   getSetCode,
@@ -26,9 +28,9 @@ import { getHc5 } from './getHc5';
  * For single-faced cards, returns an array with the card itself.
  * For multi-faced cards, returns the card_faces array.
  *
- * Make sure you only try to work with props that exist on both `HCCard.AnySingleFaced` and `HCCardFace.MultiFaced`.
+ * Make sure you only try to work with props that exist on both {@link HCCard.AnySingleFaced} and {@link HCCardFace.MultiFaced}.
  * @param card card to get the faces of
- * @returns
+ * @returns an array of objects of type {@link faceType}
  */
 export const toFaces = (card: HCCard.Any): faceType[] => {
   if ('card_faces' in card) {
@@ -40,13 +42,13 @@ export const toFaces = (card: HCCard.Any): faceType[] => {
 /**
  * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
  * @param card card to get the value from
- * @param prop prop to get the value of (must be a prop that exists on both `HCCard.AnySingleFaced` and `HCCardFace.MultiFaced`)
+ * @param prop prop to get the value of (must be a prop that exists on both {@link HCCard.AnySingleFaced} and {@link HCCardFace.MultiFaced})
  * @returns
  */
 export const getFromFaces = <K extends facePropType>(
   card: HCCard.Any,
   prop: K
-): filterFaceValueType<K>[] =>
+): faceElementValueType<K>[] =>
   toFaces(card).flatMap(face =>
     Array.isArray(face[prop]) ? face[prop] : [face[prop] ?? []].flat()
   );
@@ -54,7 +56,7 @@ export const getFromFaces = <K extends facePropType>(
 /**
  * Gets the value of a prop from each face of a card without flattening it (excluding the main part for multiface cards)
  * @param card card to get the value from
- * @param prop prop to get the value of (must be a prop that exists on both `HCCard.Any` and `HCCardFace.MultiFaced`)
+ * @param prop prop to get the value of (must be a prop that exists on both {@link HCCard.Any} and {@link HCCardFace.MultiFaced})
  * @returns
  */
 export const getColorsFromFaces = (card: HCCard.Any, prop: colorPropType): HCColors[] =>
@@ -66,12 +68,18 @@ export const getColorsFromFaces = (card: HCCard.Any, prop: colorPropType): HCCol
  * @param prop prop to get the value of
  * @returns
  */
-
-export const getFromAll = <K extends allPropType>(card: HCCard.Any, prop: K): allValueType<K>[] => [
+export const getFromAll = <K extends allPropType>(
+  card: HCCard.Any,
+  prop: K
+): allElementValueType<K>[] => [
   ...('card_faces' in card ? (Array.isArray(card[prop]) ? card[prop] : [card[prop] ?? []]) : []),
   ...getFromFaces(card, prop),
 ];
 
+/**
+ * Adds `toJSON()` to a card. Uses a predefined prop order.
+ * @param card card to add `toJSON()` to
+ */
 export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
   if (Object.prototype.hasOwnProperty.call(card, 'toJSON')) {
     return card;
@@ -90,7 +98,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
       );
       if (leftovers.length) {
         // You forgot a prop.
-        throw console.error(`You forgot one or more card props: ${leftovers}`);
+        throw new Error(`You forgot one or more card props: ${leftovers}`);
       }
       if (ordered.card_faces) {
         ordered.card_faces = this.card_faces.map((face: Record<string, any>) => {
@@ -105,7 +113,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
           );
           if (leftoverProps.length) {
             // You forgot a prop.
-            throw console.error(`You forgot one or more face props: ${leftovers}`);
+            throw new Error(`You forgot one or more face props: ${leftovers}`);
           }
           return orderedFace;
         });
@@ -138,7 +146,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
           );
           if (leftoverProps.length) {
             // You forgot a prop.
-            throw console.error(`You forgot one or more part props: ${leftovers}`);
+            throw new Error(`You forgot one or more part props: ${leftovers}`);
           }
           return orderedPart;
         });
@@ -151,6 +159,11 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
   });
   return card as HCCard.Any;
 };
+
+/**
+ * Adds `toJSON()` to cards. Uses a predefined prop order.
+ * @param cards cards to add `toJSON()` to
+ */
 export const addToJSONToCards = (cards: HCCard.Any[]): HCCard.Any[] =>
   cards.map(card => addToJSONToCard(card));
 
@@ -186,11 +199,19 @@ const faceToPlainText = (face: faceType): string => {
   return text;
 };
 
+/**
+ * Converts a card to plain text.
+ * @param card card to convert to plain text
+ */
 export const toPlainText = (card: HCCard.Any) =>
   toFaces(card)
     .map(face => faceToPlainText(face))
     .join('\n---\n');
 
+/**
+ * Gets all names for a card other than its normal name (for accessibility)
+ * @param card card to get other names for
+ */
 export const getOtherNames = (card: HCCard.Any): string[] | undefined => {
   const names = [];
   if (card.tags?.includes('irregular-face-name') && 'card_faces' in card) {
@@ -209,6 +230,10 @@ export const getOtherNames = (card: HCCard.Any): string[] | undefined => {
   return names.length ? names : undefined;
 };
 
+/**
+ * Gets all names for a card that would be an exact match (for filters)
+ * @param card card to get all names for
+ */
 export const getAllNames = (card: HCCard.Any): string[] => {
   const names = [stripMasterpiece(stripSetCode(card.name))];
   if (names[0].slice(-5) == ' (HC)') {
@@ -248,19 +273,29 @@ export const getAllNames = (card: HCCard.Any): string[] => {
   return names;
 };
 
+/**
+ * Checks whether a card can be a commander.
+ * @param card card to check
+ */
 export const canBeACommander = (card: HCCard.Any) => {
   const faces = toFaces(card);
   return (
-    ((listShareLower(faces[0].supertypes, 'legendary') &&
-      (listShareLower(faces[0].types, 'creature') ||
-        listShareLower(faces[0].subtypes, ['vehicle', 'spacecraft', 'watercraft']))) ||
-      faces[0]?.oracle_text.toLowerCase().includes('can be your commander')) &&
-    !faces[0]?.oracle_text.toLowerCase().includes('irresponsible')
+    ((listIncludesValueLower(faces[0].supertypes, 'legendary') &&
+      (listIncludesValueLower(faces[0].types, 'creature') ||
+        listsShareLower(faces[0].subtypes, ['vehicle', 'spacecraft', 'watercraft']))) ||
+      faces[0].oracle_text.toLowerCase().includes('can be your commander')) &&
+    !faces[0].oracle_text.toLowerCase().includes('irresponsible')
   );
 };
 
 /**
- * This version will also try to match hcid and name, so it's slower, but it's not suitable for use on the frontend
+ * Gets all related cards to a given card
+ * @param card card to get the related cards to
+ * @param cardMap CardMap containing all cards
+ *
+ * This version will also try to match hcid and name, so it's exhaustive, but it's not suitable for use on the frontend due to its slowness
+ *
+ * For a fast version, use {@link getAllRelated}
  */
 export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap =>
   new CardMap(
@@ -274,11 +309,23 @@ export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): Car
   );
 
 /**
- * This version won't try to match hcid and name, so it's not suitable for use in hc-transformations.ts
+ * Gets all related cards to a given card
+ * @param card card to get the related cards to
+ * @param cardMap CardMap containing all cards
+ *
+ * This version won't also try to match hcid and name, so it's fast, but it's not suitable for use on the backend
+ *
+ * For an exhaustive version, use {@link getAllRelatedPermissive}
  */
 export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
   cardMap.getSubset(card.all_parts?.map(part => part.id) ?? []);
 
+/**
+ * Gets the cards and tokens for a list of card ids
+ * @param idList List of card ids to get
+ * @param cardMap CardMap containing all cards
+ * @returns
+ */
 export const getRelatedsFromCards = (
   idList: string[],
   cardMap: CardMap
@@ -295,6 +342,13 @@ export const getRelatedsFromCards = (
   );
   return { cards, tokens };
 };
+
+/**
+ * Gets the cards and tokens for a set
+ * @param set the set to get
+ * @param cardMap CardMap containing all cards
+ * @param moveNonDraftablesToTokens whether to move cards in the set that aren't directly draftable into tokens (set to true when exporting to draftmancer)
+ */
 export const getRelatedsFromSet = (
   set: SetCode,
   cardMap: CardMap,

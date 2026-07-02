@@ -13,12 +13,11 @@ import {
   getColorsFromFaces,
   getFromAll,
   getFromFaces,
-  textListEquals,
-  textListIncludes,
-  textListShares,
   toFaces,
   toNumber,
   canBeACommander,
+  textListsShare,
+  textListIncludes,
   textListIncludesEvery,
 } from '@hellfall/shared/utils';
 
@@ -80,7 +79,7 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
     value.tags?.includes('spell-land') ||
     toFaces(value).some(
       face =>
-        textListShares(face.types, [
+        textListsShare(face.types, [
           'artifact',
           'battle',
           'creature',
@@ -93,7 +92,7 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
     ),
   permanent: (value: HCCard.Any) =>
     value.tags?.includes('spell-land') ||
-    textListShares(getFromFaces(value, 'types'), [
+    textListsShare(getFromFaces(value, 'types'), [
       'artifact',
       'battle',
       'creature',
@@ -102,13 +101,13 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
       'planeswalker',
     ]),
   historic: (value: HCCard.Any) =>
-    textListEquals(getFromFaces(value, 'supertypes'), 'legendary') ||
-    textListEquals(getFromFaces(value, 'types'), 'artifact') ||
-    textListEquals(getFromFaces(value, 'subtypes'), 'saga'),
+    textListIncludes(getFromFaces(value, 'supertypes'), 'legendary') ||
+    textListIncludes(getFromFaces(value, 'types'), 'artifact') ||
+    textListIncludes(getFromFaces(value, 'subtypes'), 'saga'),
   party: (value: HCCard.Any) =>
-    textListShares(getFromFaces(value, 'subtypes'), ['cleric', 'rogue', 'warrior', 'wizard']),
+    textListsShare(getFromFaces(value, 'subtypes'), ['cleric', 'rogue', 'warrior', 'wizard']),
   outlaw: (value: HCCard.Any) =>
-    textListShares(getFromFaces(value, 'subtypes'), [
+    textListsShare(getFromFaces(value, 'subtypes'), [
       'assassin',
       'goon',
       'mercenary',
@@ -117,7 +116,7 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
       'warlock',
     ]),
   partner: (value: HCCard.Any) =>
-    textListShares(value.tags, ['partner-mechanic', 'unprinted-partner']),
+    textListsShare(value.tags, ['partner-mechanic', 'unprinted-partner']),
   modal: (value: HCCard.Any) =>
     value.tags?.includes('modal') ||
     textListIncludesEvery(getFromFaces(value, 'oracle_text'), ['•', 'choose']),

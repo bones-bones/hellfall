@@ -1,16 +1,9 @@
 import { useState, useCallback, useMemo } from 'react';
 import { Card, FormField } from '@workday/canvas-kit-react';
-import type { HCCard } from '@hellfall/shared/types';
+import { HCCard, faceMappedType, getFaceEntries } from '@hellfall/shared/types';
 import { useAuth } from '../../auth';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
-import {
-  anyChange,
-  faceChange,
-  faceMappedType,
-  faceValueType,
-  getFaceEntries,
-  toFaces,
-} from '@hellfall/shared/utils';
+import { anyChange, faceChange, faceChangeablePropType, toFaces } from '@hellfall/shared/utils';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import {
   createStenciledInput,
@@ -22,7 +15,11 @@ import {
   createStyledSubtext,
 } from '../../styling';
 
-export type EditableFields = {
+type EditableFieldsBase = {
+  [K in faceChangeablePropType<'add'>]?: any; // Optional: defines allowed keys
+};
+
+export interface EditableFields extends EditableFieldsBase {
   name: string;
   mana_cost: string;
   supertypes: string;
@@ -37,7 +34,7 @@ export type EditableFields = {
   // rarity: string;
   // set: string;
   // collector_number: string;
-};
+}
 
 function extractEditableFields(card: HCCard.Any): EditableFields {
   const face = toFaces(card)[0];
@@ -48,18 +45,18 @@ function extractEditableFields(card: HCCard.Any): EditableFields {
     types: face.types?.join(';') ?? '',
     subtypes: face.subtypes?.join(';') ?? '',
     oracle_text: face.oracle_text ?? '',
-    flavor_text: ('flavor_text' in face ? (face as any).flavor_text : '') ?? '',
-    power: ('power' in face ? (face as any).power : '') ?? '',
-    toughness: ('toughness' in face ? (face as any).toughness : '') ?? '',
-    loyalty: ('loyalty' in face ? (face as any).loyalty : '') ?? '',
-    defense: ('defense' in face ? (face as any).defense : '') ?? '',
+    flavor_text: face.flavor_text ?? '',
+    power: face.power ?? '',
+    toughness: face.toughness ?? '',
+    loyalty: face.loyalty ?? '',
+    defense: face.defense ?? '',
     // rarity: card.rarity ?? '',
     // set: card.set ?? '',
     // collector_number: card.collector_number ?? '',
   };
 }
 
-const FIELD_LABELS: Record<keyof EditableFields, string> = {
+const FIELD_LABELS: Partial<Record<keyof EditableFields, string>> = {
   name: 'Name',
   mana_cost: 'Mana Cost',
   supertypes: 'Supertypes',
@@ -82,16 +79,16 @@ const convertFieldToChange = <T extends keyof EditableFields>(
   prop: T,
   value: EditableFields[T]
 ): anyChange => {
-  const change: faceChange<T> = {
+  const change: faceChange<'add', T> = {
     location: 'face',
     change_type: 'add',
     prop,
     index: 0,
   };
   if (['supertypes', 'types', 'subtypes'].includes(prop)) {
-    change.value = value.split(';') as faceValueType<T>;
+    change.value = value.split(';');
   } else {
-    change.value = value as faceValueType<T>;
+    change.value = value;
   }
   return change;
 };

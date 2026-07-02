@@ -130,7 +130,6 @@ Write a script to transform the database
 - cut down on boilerplate for stencils if possible (though prioritizing not causing lag)
 - fix card display on deck pages
 - deal with duplicate HCV.1 collector numbers
-- fix buttons for images on individual card pages
 - add missing artist credits
 - fix id for plateau
 - hide faces with drop_face == true from card pages?
@@ -143,5 +142,9 @@ Write a script to transform the database
 - switch related card entries to being text with hover images? (should we also include the card itself in them?)
 - add tag inference for image status (for actual image quality, not just explaining lack of image)
 - should I add .toLowerCase() to the summary return? scryfall seems to do that
-- figure out how to add displayNames to styled components
 - use number pips with lighter font weight like scryfall?
+- make sure AddCards causes `component: "draft_partner"`
+- add devoid and generic tags to tag handling
+- add hccard.any and HCCard.anysingle/multi validation functions
+- add replace change type?
+- add comments to filters

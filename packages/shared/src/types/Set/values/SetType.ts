@@ -5,6 +5,9 @@ export enum SetType {
   /** A side cube */
   Side = 'side',
 
+  /** A secret lair */
+  Lair = 'lair',
+
   /** A set made up of vetoed cards */
   Veto = 'veto',
 

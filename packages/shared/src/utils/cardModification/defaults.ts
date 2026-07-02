@@ -14,29 +14,26 @@ import {
   HCLegality,
   HCObject,
   SetCode,
-} from '@hellfall/shared/types';
-import {
-  facePropOrder,
   facePropType,
   faceMappedType,
   faceType,
   partMappedType,
   rootEntriesType,
-  rootPropOrder,
   rootPropType,
   rootMappedType,
-  toFaces,
   faceEntriesType,
   getRootEntries,
-  addPropToRoot,
-  getFaceEntries,
-  addPropToFace,
-  getPartEntries,
-  getCardEntries,
-  getCardFaceEntries,
   rootValueType,
   faceValueType,
-  getChangesFromDifferences,
+} from '@hellfall/shared/types';
+import {
+  facePropOrder,
+  rootPropOrder,
+  toFaces,
+  addPropToRoot,
+  addPropToFace,
+  getCardEntries,
+  getCardFaceEntries,
 } from '@hellfall/shared/utils';
 
 const defaultRootProps: rootMappedType = {
@@ -80,28 +77,6 @@ const defaultPartProps: partMappedType = {
   name: '',
   set: '' as SetCode,
 };
-
-// export const restoreMissingFields = (card: HCCard.Any) => {
-//   getRootEntries(defaultRootProps).forEach(([prop, value]) => {
-//     if (card[prop] == undefined) {
-//       addPropToRoot(card, prop, value);
-//     }
-//   });
-//   toFaces(card).forEach((face, i) => {
-//     getFaceEntries(defaultFaceProps).forEach(([prop, value]) => {
-//       if (face[prop] == undefined) {
-//         addPropToFace(card, prop, value, i);
-//       }
-//     });
-//   });
-//   card.all_parts?.forEach(part => {
-//     getPartEntries(defaultPartProps).forEach(([prop, value]) => {
-//       if (part[prop] == undefined) {
-//         (part as any)[prop] = value;
-//       }
-//     });
-//   });
-// };
 
 // const kindToSet:Record<HCKind,string> = {
 //   card:'',
@@ -164,6 +139,12 @@ const subtypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
   planet: HCLayout.Station,
 };
 
+/**
+ * Get the default layout for a card's face based on its types
+ * @param card card to get the default layout for
+ * @param index index to get the default layout of; if undefined, defaults to `0`
+ * @returns
+ */
 export const getDefaultTypeLayout = (card: HCCard.Any, index?: number): HCLayout | undefined => {
   const isTokenRoot = !('card_faces' in card) && card.kind == 'token';
   const face = toFaces(card)[index ?? 0];
@@ -184,13 +165,31 @@ export const getDefaultTypeLayout = (card: HCCard.Any, index?: number): HCLayout
   }
 };
 
+/**
+ * Get the default layout for a card's face based on its kind
+ * @param card card to get the default layout for
+ * @param index index to get the default layout of; if undefined, defaults to `0`
+ * @returns
+ */
 export const getDefaultKindLayout = (card: HCCard.Any, index?: number): HCLayout =>
   card.kind == 'card' && index ? HCLayout.Multi : kindToFaceLayout[card.kind];
 
 // TODO: better handle cases with multiple layout tags
+/**
+ * Get the default layout for a card's face based on its types or kind
+ * @param card card to get the default layout for
+ * @param index index to get the default layout of; if undefined, defaults to `0`
+ * @returns
+ */
 export const getDefaultFaceLayout = (card: HCCard.Any, index?: number): HCLayout =>
   getDefaultTypeLayout(card, index) ?? getDefaultKindLayout(card, index);
 
+/**
+ * Get the default value for a given card and root prop
+ * @param card card to get the default value for
+ * @param prop root prop to get the default value for
+ * @returns the default value, or undefined if that prop is optional
+ */
 export const getDefaultRootValue = <K extends rootPropType>(
   card: HCCard.Any,
   prop?: K
@@ -208,6 +207,13 @@ export const getDefaultRootValue = <K extends rootPropType>(
       return '' as rootValueType<K>;
   }
 };
+/**
+ * Get the default value for a given card and face prop
+ * @param card card to get the default value for
+ * @param prop face prop to get the default value for
+ * @param index index to get the default value for; if undefined, defaults to `0`
+ * @returns the default value, or undefined if that prop is optional
+ */
 export const getDefaultFaceValue = <K extends facePropType>(
   card: HCCard.Any,
   prop?: K,
@@ -276,6 +282,11 @@ export const getDefaultCard = (
   return card;
 };
 
+/**
+ * Fills a card's faces to a given index with blank faces
+ * @param card card to add faces to
+ * @param index index to add faces until (exclusive)
+ */
 export const fillFacesTo = (card: HCCard.AnyMultiFaced, index: number) => {
   while (card.card_faces.length <= index) {
     card.card_faces.push({
@@ -298,6 +309,15 @@ const keepInRoot: (rootPropType & facePropType)[] = [
 ];
 const onlyInFace: (keyof HCCardFace.MultiFaced)[] = ['object', 'compress_face', 'drop_face'];
 
+/**
+ * Converts a card of type `HCCard.AnySingleFaced` to type `HCCard.AnyMultiFaced`
+ * @param card card to convert
+ *
+ * Warning: This messes with ts's type system, since {@link HCCard.AnySingleFaced} and
+ * {@link HCCard.AnyMultiFaced} are mutually exclusive. If you want to do things with the
+ * card after this that depend on the existence of `card_faces`, you'll need to renarrow it
+ * or cast it to `any`/`unknown`.
+ */
 export const toMultiFaced = (card: HCCard.AnySingleFaced) => {
   const entryProps: Partial<HCCard.Any> = {};
   const faceProps: Partial<faceType> = {};
@@ -322,6 +342,15 @@ export const toMultiFaced = (card: HCCard.AnySingleFaced) => {
   });
 };
 
+/**
+ * Converts a card of type `HCCard.AnyMultiFaced` to type `HCCard.AnySingleFaced`
+ * @param card card to convert
+ *
+ * Warning: This messes with ts's type system, since {@link HCCard.AnySingleFaced} and
+ * {@link HCCard.AnyMultiFaced} are mutually exclusive. If you want to do things with the
+ * card after this that depend on the nonexistence of `card_faces`, you'll need to renarrow
+ * it or cast it to `any`/`unknown`.
+ */
 export const toSingleFaced = (card: HCCard.AnyMultiFaced) => {
   const entryProps: Partial<HCCard.Any> = {};
   const faceProps: Partial<faceType> = {};
@@ -347,18 +376,3 @@ export const toSingleFaced = (card: HCCard.AnyMultiFaced) => {
     }
   });
 };
-
-// export const layoutIsDefault = (card: HCCard.Any, index?: number) => {
-//   if (!('card_faces' in card)) {
-//     return card.layout == kindToFaceLayout[card.kind];
-//   }
-//   if (index == undefined) {
-//     return card.layout == kindToMultiLayout[card.kind];
-//   }
-//   return (
-//     card.card_faces[index].layout ==
-//     (index && kindToFaceLayout[card.kind] == 'normal'
-//       ? HCLayout.Multi
-//       : kindToFaceLayout[card.kind])
-//   );
-// };

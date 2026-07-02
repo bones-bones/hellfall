@@ -105,6 +105,10 @@ export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.Mul
   return faces[0];
 };
 
+/**
+ * Compresses the card faces of a card to make it suitable for export
+ * @param card card to compress
+ */
 export const compressHCCardFaces = (card: HCCard.Any) => {
   const newCard = structuredClone(card);
   if ('card_faces' in newCard) {
