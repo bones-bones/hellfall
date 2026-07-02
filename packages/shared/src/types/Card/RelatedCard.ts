@@ -1,4 +1,4 @@
-import { isInteger } from '../../utils';
+import { isInteger } from '@hellfall/shared/utils';
 import { HCObject } from '../Object';
 import { isSetCode, SetCode } from '../Set';
 import { getPartEntries, partPropType } from './Props';

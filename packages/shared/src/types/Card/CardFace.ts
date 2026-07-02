@@ -1,12 +1,7 @@
 import { HCObject } from '../Object';
 import { HCCardFields } from './CardFields.ts';
 import { facePropType, getFaceEntries } from './Props.ts';
-import { isBorderColor } from './values/BorderColor.ts';
-import { isColors } from './values/Color.ts';
-import { isFrame } from './values/Frame.ts';
-import { isFrameEffect } from './values/FrameEffect.ts';
-import { isImageStatus } from './values/ImageStatus.ts';
-import { isLayout } from './values/Layout.ts';
+import { isBorderColor, isColors, isFrame, isFrameEffect, isImageStatus, isLayout } from './values';
 
 /**
  * A collection of types representing card faces of each possible type.

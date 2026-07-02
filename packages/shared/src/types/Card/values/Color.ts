@@ -1,5 +1,3 @@
-import { doubleListEquals } from '../../../utils';
-
 export enum HCColor {
   White = 'W',
   Blue = 'U',
