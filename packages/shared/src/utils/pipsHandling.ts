@@ -1,5 +1,5 @@
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
-import { listEquals } from './listHandling';
+import { listsAreLooselyEqual } from './listHandling';
 import { pipsData } from '@hellfall/shared/data';
 import { orderColors } from './orderColors';
 
@@ -45,10 +45,11 @@ export const getPip = (pipText: string): HCCardSymbol | undefined =>
  * Gets the pip for a color indicator from its colors
  */
 export const getIndicatorFromColors = (colors: HCColors | string[]) =>
-  pips?.find(e => e.symbol.slice(0, 3) == 'CI-' && listEquals(e.colors, colors));
+  pips?.find(e => e.symbol.slice(0, 3) == 'CI-' && listsAreLooselyEqual(e.colors, colors));
 
 /**
  * Gets all the pips from text
+ * @param text text to get the pips from
  */
 export const getPipsFromText = (text: string): HCCardSymbol[] =>
   text
@@ -56,9 +57,17 @@ export const getPipsFromText = (text: string): HCCardSymbol[] =>
     ?.map(match => getPip(match.slice(1, -1)))
     .filter(pip => pip != undefined) ?? [];
 
+/**
+ * Gets all the pips form text, then converts each pips into its colors, if any
+ * @param text text to get the pip colors from
+ */
 export const getPipColorsFromText = (text: string): HCColors[] =>
-  getPipsFromText(text).flatMap(pip => [pip.colors ?? []]) ?? ([] as HCColors[]);
+  getPipsFromText(text).flatMap(pip => [pip.colors ?? []]);
 
+/**
+ * Gets the colors included among the pips in text
+ * @param text text to get the pip colors from
+ */
 export const getColorsFromText = (text: string): HCColors =>
   orderColors(
     getPipColorsFromText(text)
@@ -72,5 +81,13 @@ export const getColorsFromText = (text: string): HCColors =>
 export const getMVFromCost = (cost: string): number =>
   getPipsFromText(cost).reduce((totalMV, pip) => totalMV + (pip.mana_value ?? 0), 0);
 
+/**
+ * gets the file src for a pip name
+ * @param name name of the pip to get the src for
+ */
 export const getPipSrc = (name: string) => `/pips/${getPip(name)?.filename}`;
+/**
+ * gets the file src for a pip
+ * @param pip pip to get the src for
+ */
 export const pipToSrc = (pip: HCCardSymbol) => `/pips/${pip.filename}`;

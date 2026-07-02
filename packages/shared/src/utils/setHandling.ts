@@ -3,19 +3,36 @@ import { allSetsList, HCSet, SetCode } from '../types';
 
 const sets = setsData.data;
 
+/**
+ * The list of sets that should only be included if include:extras is used
+ */
 export const extraSetList = sets
-  .filter(set => !['main', 'side'].includes(set.set_type))
+  .filter(set => !['main', 'side', 'lair'].includes(set.set_type))
   .map(set => set.code);
 
+/**
+ * The list of card sets
+ */
 export const cardSetList = sets
-  .filter(set => ['main', 'side', 'veto'].includes(set.set_type))
+  .filter(set => ['main', 'side', 'veto', 'lair'].includes(set.set_type))
   .map(set => set.code);
 
+/**
+ * The list of all sets except normalcube
+ */
 export const allExceptNormal = allSetsList.filter(set => set != 'NRM');
 
+/**
+ * Gets the set object given a set code
+ * @param code the set code to get the set for
+ */
 export const getSet = (code: SetCode): HCSet | undefined =>
   sets.find(set => set.code == code.toUpperCase());
 
+/**
+ * Gets the src of a set symbol image
+ * @param set the set to get the symbol image for
+ */
 export const setToSrc = (set?: HCSet) => {
   if (!set) return undefined;
   if (set.filename) {
@@ -28,6 +45,10 @@ export const setToSrc = (set?: HCSet) => {
   return undefined;
 };
 
+/**
+ * Gets the src of a set symbol image
+ * @param code the set code to get the symbol image for
+ */
 export const getSetSrc = (code: SetCode) => setToSrc(getSet(code));
 
 /**
@@ -78,19 +99,33 @@ export const getGroupSets = (code: SetCode): SetCode[] => [
 ];
 
 /**
- * To use in filters when need to check if one set is in another
- * @param value1 the value of the card's set
- * @param value2 the value of the search's set
- * @returns
+ * Checks if one set is included in another set's direct children
+ * @param value1 the set to look for
+ * @param value2 the set in whose direct children to look
  */
 export const inDirectChildSets = (value1: SetCode, value2: SetCode) =>
   getDirectChildSets(value2)?.some(code => code == value1.toUpperCase()) ?? false;
 
+/**
+ * Checks if one set is equal to another set or is included in that set's direct children
+ * @param value1 the set to look for
+ * @param value2 the set in whose direct children to look
+ */
 export const inSetOrDirectChildren = (value1: SetCode, value2: SetCode) =>
   value1.toUpperCase() == value2.toUpperCase() || inDirectChildSets(value1, value2);
 
+/**
+ * Checks if one set is included in another set's block
+ * @param value1 the set to look for
+ * @param value2 the set in whose block to look
+ */
 export const inSetBlock = (value1: SetCode, value2: SetCode) =>
   getBlockSets(value2).some(code => code == value1.toUpperCase());
 
+/**
+ * Checks if one set is included in another set's group
+ * @param value1 the set to look for
+ * @param value2 the set in whose group to look
+ */
 export const inSetGroup = (value1: SetCode, value2: SetCode) =>
   getGroupSets(value2).some(code => code == value1.toUpperCase());

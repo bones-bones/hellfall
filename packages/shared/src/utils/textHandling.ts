@@ -1,5 +1,9 @@
 import { allSetsList } from '@hellfall/shared/types';
 
+/**
+ * Normalize text (remove accents and replace smart quotes with normal quotes)
+ * @param text text to normalize
+ */
 export const normalizeText = (text: string): string =>
   text
     .normalize('NFD')
@@ -198,12 +202,12 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
   return normalized.toLowerCase();
 };
 /**
- * Checks whether search text is in text from a card
+ * Checks whether search text is contained in text from a card
  * @param cardText text from the card
  * @param searchText text to search for
  * @returns whether there is a match
  */
-export const textSearchIncludes = (cardText?: string, searchText?: string) => {
+export const textContains = (cardText?: string, searchText?: string) => {
   if (!!cardText != !!searchText) {
     return false;
   }
@@ -232,8 +236,7 @@ export const textEquals = (cardText?: string, searchText?: string) => {
 
 /**
  * Splits a string into a list of strings based on parentheses that alternate between a chunk wrapped in parentheses and one that isn't. Will ignore \( and \). Correctly handles nested parens.
- * @param text
- * @returns
+ * @param text text to split
  */
 export const splitParens = (text: string) => {
   const chunks: string[] = [];
@@ -377,6 +380,10 @@ export const toExportName = (name: string) => {
   return retName.slice(0, 2) == '  ' ? retName.trimStart() : retName;
 };
 
+/**
+ * Strips single slashes from text (for the purposes of exporting to draftmancer so that it imports correctly into cockatrice)
+ * @param text text to strip single slashes from
+ */
 export const stripSingleSlashes = (text: string) => {
   return text
     .replaceAll(/([^/])\/([^/])/g, '$1$2')
@@ -384,7 +391,7 @@ export const stripSingleSlashes = (text: string) => {
     .trim();
 };
 /**
- * Converts mana from import from scryfall
+ * Converts mana from import from scryfall (switches notation for phyrexian mana)
  * @param text text to import
  * @returns imported text
  */
@@ -449,8 +456,9 @@ const costSubstitutes: [RegExp | string, string][] = [
   ['∞/U', 'U'],
   [/^Yellow|Brown|Orange|Pink$/, '1'],
 ];
+
 /**
- * Preps text containing mana for export to draftmancer/cockatrice
+ * Preps text containing mana for export to draftmancer
  * @param text text to prep
  * @param isCost whether this is a mana cost or not
  * @returns prepped text
@@ -486,7 +494,15 @@ export const toExportMana = (text: string, isCost: boolean = false) => {
   }
 };
 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+/**
+ * Checks whether a string is a valid v4 uuid
+ * @param uuid string to check
+ */
 export const isValidV4UUID = (uuid: string): boolean => uuidRegex.test(uuid);
 
+/**
+ * Replaces the intrinsic {@link unescape} function (which is deprecated)
+ * @param text text to unescape
+ */
 export const unescapeBase64 = (text: string) =>
   text.replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));

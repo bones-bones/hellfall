@@ -1,5 +1,5 @@
 import { HCCard, HCColor, HCColors, HCMiscColors } from '@hellfall/shared/types';
-import { listShare } from './listHandling';
+import { listsShare } from './listHandling';
 import { shorthandType } from '@hellfall/shared/filters';
 
 const MISC_BULLSHIT = 'Misc';
@@ -96,7 +96,15 @@ export const hybridIdentityMiscReduce = (hybridColors: HCColors[] | string[][]):
 
 const choose2List = ['choose-2-colors', 'choose-2-allied-colors'];
 
-export const shouldChoose2 = (card: HCCard.Any) => listShare(choose2List, card.tags);
+export const shouldChoose2 = (card: HCCard.Any) => listsShare(choose2List, card.tags);
+
+/**
+ * Correctly handles cards with unusual values for color props
+ * @param card card to get the colors of
+ * @param normalColors the normal colors for the prop
+ * @param value the value that the colors will be compared to
+ * @returns the colors to compare
+ */
 export const handleChooseColors = (
   card: HCCard.Any,
   normalColors: HCColors,
@@ -151,12 +159,19 @@ export const handleChooseColors = (
   return ['W', 'U'];
 };
 
+/**
+ * Correctly handles cards with unusual values for color props
+ * @param card card to get the colors of
+ * @param normalColors the normal hybrid colors for the prop
+ * @param value the value that the colors will be compared to
+ * @returns the hybrid colors to compare
+ */
 export const handleChooseHybrid = (
   card: HCCard.Any,
   normalColors: HCColors[],
   value: string[] | number | shorthandType
 ): HCColors[] => {
-  if (!listShare(choose2List, card.tags)) {
+  if (!listsShare(choose2List, card.tags)) {
     return normalColors;
   }
   return handleChooseColors(card, [], value).map(color => [color]);

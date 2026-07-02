@@ -1,5 +1,12 @@
 import { HCColors, HCCoreColors, HCMiscColors } from '@hellfall/shared/types';
-import { listEquals, listShare, pushProp, removeIntersection, toUnion } from './listHandling';
+import {
+  listsAreLooselyEqual,
+  listsOrValuesShare,
+  listsShare,
+  pushProp,
+  removeIntersection,
+  toUnion,
+} from './listHandling';
 const colorOrderList: HCColors[] = [
   ['W'],
   ['U'],
@@ -67,7 +74,8 @@ const colorOrderList: HCColors[] = [
 ];
 
 /**
- * also eliminates duplicates
+ * Orders a set of colors. Also eliminates duplicates
+ * @param colors colors to order
  */
 export const orderColors = (colors: HCColors): HCColors => {
   if (colors.length < 2) {
@@ -102,23 +110,23 @@ export const orderColors = (colors: HCColors): HCColors => {
   return colorList;
 };
 
-export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): HCColors[] => {
+const orderColorGroups = (groupedColors: HCColors[], groupLen: number): HCColors[] => {
   const sortColors = (a: HCColors, b: HCColors): number => {
-    if (listShare(a, HCMiscColors) != listShare(b, HCMiscColors)) {
-      return listShare(a, HCMiscColors) ? 1 : -1;
+    if (listsShare(a, HCMiscColors) != listsShare(b, HCMiscColors)) {
+      return listsShare(a, HCMiscColors) ? 1 : -1;
     }
-    if (listShare(a, HCMiscColors)) {
+    if (listsShare(a, HCMiscColors)) {
       for (let i = 0; i < a.length; i++) {
-        if (listShare(a[i], HCMiscColors) && listShare(b[i], HCMiscColors)) {
+        if (listsOrValuesShare(a[i], HCMiscColors) && listsOrValuesShare(b[i], HCMiscColors)) {
           if (a[i] == b[i]) {
             continue;
           }
           return HCMiscColors.indexOf(a[i]) - HCMiscColors.indexOf(b[i]);
         }
-        if (listShare(a[i], HCMiscColors)) {
+        if (listsOrValuesShare(a[i], HCMiscColors)) {
           return 1;
         }
-        if (listShare(b[i], HCMiscColors)) {
+        if (listsOrValuesShare(b[i], HCMiscColors)) {
           return -1;
         }
       }
@@ -130,22 +138,28 @@ export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): H
       case 0: {
         // groupLen can be 2 or 3
         const all = toUnion(a, b);
-        const first = colorOrderList.find(order => listEquals(order, all))?.[0]!;
+        const first = colorOrderList.find(order => listsAreLooselyEqual(order, all))?.[0]!;
         return a.includes(first) ? -1 : 1;
       }
       case 1: {
         // groupLen can be 2 or 3
         const all = toUnion(a, b);
-        const order = colorOrderList.find(order => listEquals(order, all))!;
+        const order = colorOrderList.find(order => listsAreLooselyEqual(order, all))!;
         switch (a.length) {
           case 2: {
-            if (!listEquals(a, [order[0], order[2]]) && !listEquals(b, [order[0], order[2]])) {
-              return listEquals(a, order.slice(0, 2)) ? -1 : 1;
+            if (
+              !listsAreLooselyEqual(a, [order[0], order[2]]) &&
+              !listsAreLooselyEqual(b, [order[0], order[2]])
+            ) {
+              return listsAreLooselyEqual(a, order.slice(0, 2)) ? -1 : 1;
             }
-            if (!listEquals(a, order.slice(0, 2)) && !listEquals(b, order.slice(0, 2))) {
-              return listEquals(a, order.slice(1, 3)) ? -1 : 1;
+            if (
+              !listsAreLooselyEqual(a, order.slice(0, 2)) &&
+              !listsAreLooselyEqual(b, order.slice(0, 2))
+            ) {
+              return listsAreLooselyEqual(a, order.slice(1, 3)) ? -1 : 1;
             }
-            return listEquals(a, [order[0], order[2]]) ? -1 : 1;
+            return listsAreLooselyEqual(a, [order[0], order[2]]) ? -1 : 1;
           }
           case 3: {
             for (const color of order) {
@@ -165,7 +179,7 @@ export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): H
           case 3: {
             const { set1, set2 } = removeIntersection(a, b);
             const all = [set1[0], set2[0]];
-            const order = colorOrderList.find(order => listEquals(order, all))!;
+            const order = colorOrderList.find(order => listsAreLooselyEqual(order, all))!;
             return set1[0] == order[0] ? -1 : 1;
           }
           case 4: {
@@ -181,7 +195,7 @@ export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): H
         if (a.length == 4) {
           const { set1, set2 } = removeIntersection(a, b);
           const all = [set1[0], set2[0]];
-          const order = colorOrderList.find(order => listEquals(order, all))!;
+          const order = colorOrderList.find(order => listsAreLooselyEqual(order, all))!;
           return set1[0] == order[0] ? -1 : 1;
         }
         console.error(); // this should be impossible unless I got my logic wrong
@@ -192,7 +206,7 @@ export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): H
         if (a.length == 5) {
           const { set1, set2 } = removeIntersection(a, b);
           const all = [set1[0], set2[0]];
-          const order = colorOrderList.find(order => listEquals(order, all))!;
+          const order = colorOrderList.find(order => listsAreLooselyEqual(order, all))!;
           return set1[0] == order[0] ? -1 : 1;
         }
         console.error(); // this should be impossible unless I got my logic wrong
@@ -214,6 +228,10 @@ export const orderColorGroups = (groupedColors: HCColors[], groupLen: number): H
   return colors.sort(sortColors);
 };
 
+/**
+ * Orders a set of hybrid colors. Also eliminates duplicates
+ * @param hybridColors hybrid colors to order
+ */
 export const orderHybrid = (hybridColors: HCColors[]): HCColors[] => {
   const colorNumberRecord: Record<number, HCColors[]> = {};
   if (!hybridColors.length) {

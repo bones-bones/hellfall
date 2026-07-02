@@ -1,11 +1,24 @@
+/**
+ * Checks whether a string is an integer
+ * @param num string to check
+ */
 export const isInteger = (num: string) => {
   return num == parseInt(num).toString();
 };
+/**
+ * Checks whether a string is a number
+ * @param num string to check
+ */
 export const isNumber = (num: string) => {
   return isInteger(num) || num == parseFloat(num).toString();
 };
 
-export const toNumber = (numStr: number | string | undefined): number | undefined => {
+/**
+ * Converts a number, string, or undefined into a number. Correctly handles all values that have appeared in p/t boxes on hellscube cards.
+ * @param num number
+ * @returns undefined if `num == undefined`, num if `typeof num == 'number'`, or the conversion of num into a number otherwise
+ */
+export const toNumber = (num: number | string | undefined): number | undefined => {
   const zeroEquivs = ['?', 'N', 'X', 'Y', 'Z', '*', ''];
   const specialCases: Record<string, number> = {
     '∞': 1e25,
@@ -23,30 +36,28 @@ export const toNumber = (numStr: number | string | undefined): number | undefine
     "6'": 6,
     '1"': 1,
   };
-  if (!numStr) {
-    return undefined;
-  } else if (typeof numStr === 'number') {
-    return numStr;
-  } else if (numStr.startsWith('[')) {
-    return toNumber(numStr.slice(1));
-  } else if (numStr.endsWith(']')) {
-    return toNumber(numStr.slice(0, -1));
-  } else if (numStr in specialCases) {
-    return specialCases[numStr];
-  } else if (zeroEquivs.includes(numStr)) {
+  if (num == undefined || typeof num === 'number') {
+    return num;
+  } else if (num.startsWith('[')) {
+    return toNumber(num.slice(1));
+  } else if (num.endsWith(']')) {
+    return toNumber(num.slice(0, -1));
+  } else if (num in specialCases) {
+    return specialCases[num];
+  } else if (zeroEquivs.includes(num)) {
     return 0;
-  } else if (numStr.includes('+')) {
-    const nums = numStr.split('+');
+  } else if (num.includes('+')) {
+    const nums = num.split('+');
     const num1 = zeroEquivs.includes(nums[0]) ? 0 : parseFloat(nums[0]);
     const num2 = zeroEquivs.includes(nums[1]) ? 0 : parseFloat(nums[1]);
     return !Number.isNaN(num1) && !Number.isNaN(num2) ? num1 + num2 : undefined;
-  } else if (numStr.includes('-')) {
-    const nums = numStr.split('-');
+  } else if (num.includes('-')) {
+    const nums = num.split('-');
     const num1 = zeroEquivs.includes(nums[0]) ? 0 : parseFloat(nums[0]);
     const num2 = zeroEquivs.includes(nums[1]) ? 0 : parseFloat(nums[1]);
     return !Number.isNaN(num1) && !Number.isNaN(num2) ? num1 - num2 : undefined;
   } else {
-    const num = parseFloat(numStr);
-    return !Number.isNaN(num) ? num : undefined;
+    const num0 = parseFloat(num);
+    return !Number.isNaN(num0) ? num0 : undefined;
   }
 };

@@ -8,7 +8,7 @@ import {
   rootValueType,
 } from '@hellfall/shared/types';
 import {
-  listShareLower,
+  listIncludesValueLower,
   popProp,
   pushProp,
   fillFacesTo,
@@ -137,9 +137,10 @@ export const popPropFromFace = <K extends facePropType>(
 ) => popProp('card_faces' in card ? card.card_faces[index ?? 0] : card, prop, value);
 
 export const faceIsBattle = (card: HCCard.AnyMultiFaced, index: number) =>
-  listShareLower(card.card_faces[index]?.types, 'battle');
+  listIncludesValueLower(card.card_faces[index]?.types, 'battle');
 
-export const rootIsBattle = (card: HCCard.AnySingleFaced) => listShareLower(card.types, 'battle');
+export const rootIsBattle = (card: HCCard.AnySingleFaced) =>
+  listIncludesValueLower(card.types, 'battle');
 
 export const frontIsBattle = (card: HCCard.Any, index: number) =>
   'card_faces' in card ? faceIsBattle(card, index) : rootIsBattle(card);

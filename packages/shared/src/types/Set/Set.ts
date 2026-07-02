@@ -1,5 +1,8 @@
 import { HCObject } from '../Object';
 import { SetType } from './values';
+/**
+ * The list of all set codes
+ */
 export const allSetsList = [
   'HLC',
   'HLC.0',
@@ -60,6 +63,9 @@ export const allSetsList = [
   'NRM',
 ] as const;
 
+/**
+ * The 3-6 character code for a set
+ */
 export type SetCode = (typeof allSetsList)[number];
 
 export const isSetCode = (value: any): value is SetCode =>

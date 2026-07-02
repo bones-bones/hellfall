@@ -35,7 +35,13 @@ import {
   rootChangeablePropType,
   tagChange,
 } from './changeTypes';
-import { arbAreEqual, listShare, splitFullTag, textEquals, toFaces } from '@hellfall/shared/utils';
+import {
+  arbAreEqual,
+  listIncludesValue,
+  splitFullTag,
+  textEquals,
+  toFaces,
+} from '@hellfall/shared/utils';
 
 // const imageProps = [
 //   'image',
@@ -163,7 +169,7 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
         return `invalid change: ${value} is not a frame`;
       }
       if (
-        listShare(currentValue as string[], value) ==
+        listIncludesValue(currentValue as string[], value) ==
         (change_type == 'delete' && !comparingNew ? true : false)
       ) {
         return;
@@ -180,7 +186,7 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
         return `invalid change for prop == ${prop}: ${value} is not a string`;
       }
       if (
-        listShare(currentValue as string[], value) ==
+        listIncludesValue(currentValue as string[], value) ==
         (change_type == 'delete' && !comparingNew ? true : false)
       ) {
         return;
@@ -344,7 +350,7 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
         return `invalid change: ${value} is not a frame`;
       }
       if (
-        listShare(currentValue as string[], value) ==
+        listIncludesValue(currentValue as string[], value) ==
         (change_type == 'delete' && !comparingNew ? true : false)
       ) {
         return;

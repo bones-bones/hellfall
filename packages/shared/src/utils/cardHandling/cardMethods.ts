@@ -10,7 +10,7 @@ import {
   facePropType,
   faceType,
 } from '@hellfall/shared/types';
-import { listShareLower } from '../listHandling';
+import { listIncludesValueLower, listsShareLower } from '../listHandling';
 import { facePropOrder, partPropOrder, propOrder } from './orderProps';
 import { getIndicatorFromColors } from '../pipsHandling';
 import {
@@ -280,9 +280,9 @@ export const getAllNames = (card: HCCard.Any): string[] => {
 export const canBeACommander = (card: HCCard.Any) => {
   const faces = toFaces(card);
   return (
-    ((listShareLower(faces[0].supertypes, 'legendary') &&
-      (listShareLower(faces[0].types, 'creature') ||
-        listShareLower(faces[0].subtypes, ['vehicle', 'spacecraft', 'watercraft']))) ||
+    ((listIncludesValueLower(faces[0].supertypes, 'legendary') &&
+      (listIncludesValueLower(faces[0].types, 'creature') ||
+        listsShareLower(faces[0].subtypes, ['vehicle', 'spacecraft', 'watercraft']))) ||
       faces[0].oracle_text.toLowerCase().includes('can be your commander')) &&
     !faces[0].oracle_text.toLowerCase().includes('irresponsible')
   );

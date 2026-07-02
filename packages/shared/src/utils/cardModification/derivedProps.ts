@@ -20,10 +20,10 @@ import {
   orderColors,
   isInteger,
   orderHybrid,
-  contains,
-  containsSome,
-  listShareLower,
-  listShare,
+  listContainsList,
+  listContainsSomeList,
+  listIncludesValueLower,
+  listsShare,
   getMVFromCost,
   getPipColorsFromText,
   hasTokenHCID,
@@ -38,6 +38,7 @@ import {
   createFaceChange,
   splitTagComponents,
   getColorsFromText,
+  listIncludesValue,
   // setTags,
 } from '@hellfall/shared/utils';
 
@@ -80,12 +81,12 @@ const getColorIdentityProps = (
     if (colors && !colors.includes(HCColor.Colorless) && colors.length > 0) {
       // if the new colors do not contain some existing color set
       // if (!colorIdentityHybrid.some(colorSet => colorSet.every(color => colors.includes(color)))) {
-      // if (!colorIdentityHybrid.some(colorSet => contains(colors,colorSet))) {
-      if (!containsSome(colors, colorIdentityHybrid)) {
+      // if (!colorIdentityHybrid.some(colorSet => listContainsList(colors,colorSet))) {
+      if (!listContainsSomeList(colors, colorIdentityHybrid)) {
         for (let i = colorIdentityHybrid.length - 1; i >= 0; i--) {
           // if the new color set is completely inside an existing color set, delete the existing one
           // if (colors.every(color => colorIdentityHybrid[i].includes(color))) {
-          if (contains(colorIdentityHybrid[i], colors)) {
+          if (listContainsList(colorIdentityHybrid[i], colors)) {
             colorIdentityHybrid.splice(i, 1);
           }
         }
@@ -206,9 +207,9 @@ export const setDerivedProps = (
     const effects: HCFrameEffect[] = [];
     if (face.frame ? EffectFrames.includes(face.frame) : EffectFrames.includes(card.frame)) {
       if (
-        ((listShareLower(face.supertypes, 'legendary') &&
-          !listShareLower(face.types, 'planeswalker') &&
-          !listShareLower(face.types, 'player') &&
+        ((listIncludesValueLower(face.supertypes, 'legendary') &&
+          !listIncludesValueLower(face.types, 'planeswalker') &&
+          !listIncludesValueLower(face.types, 'player') &&
           !baseIncludesFlag('missing-legend-frame', i)) ||
           baseIncludesFlag('legend-frame', i)) &&
         !face.frame_effects?.includes(HCFrameEffect.Legendary)
@@ -216,30 +217,30 @@ export const setDerivedProps = (
         effects.push(HCFrameEffect.Legendary);
       }
       if (
-        listShareLower(face.supertypes, 'snow') &&
+        listIncludesValueLower(face.supertypes, 'snow') &&
         !baseIncludesFlag('missing-snow-frame', i) &&
         !face.frame_effects?.includes(HCFrameEffect.Snow)
       ) {
         effects.push(HCFrameEffect.Snow);
       }
       if (
-        listShareLower(face.subtypes, 'lesson') &&
+        listIncludesValueLower(face.subtypes, 'lesson') &&
         !baseIncludesFlag('missing-lesson-frame', i) &&
         !face.frame_effects?.includes(HCFrameEffect.Lesson)
       ) {
         effects.push(HCFrameEffect.Lesson);
       }
       if (
-        listShareLower(face.subtypes, 'vehicle') &&
+        listIncludesValueLower(face.subtypes, 'vehicle') &&
         !baseIncludesFlag('missing-vehicle-frame', i) &&
         !face.frame_effects?.includes(HCFrameEffect.Vehicle)
       ) {
         effects.push(HCFrameEffect.Vehicle);
       }
     } else if (
-      ((listShareLower(face.supertypes, 'legendary') &&
-        !listShareLower(face.types, 'planeswalker') &&
-        !listShareLower(face.types, 'player') &&
+      ((listIncludesValueLower(face.supertypes, 'legendary') &&
+        !listIncludesValueLower(face.types, 'planeswalker') &&
+        !listIncludesValueLower(face.types, 'player') &&
         baseIncludesFlag('hearthstone-frame', i) &&
         !baseIncludesFlag('missing-legend-frame', i)) ||
         baseIncludesFlag('legend-frame', i)) &&
@@ -252,34 +253,34 @@ export const setDerivedProps = (
       if (
         !i &&
         card.layout == HCLayout.Transform &&
-        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !listsShare(face.frame_effects, TransformFrameEffects) &&
         !baseIncludesFlag('missing-transform-frame', i)
       ) {
         effects.push(HCFrameEffect.TransformDfc);
       } else if (
         !i &&
         card.layout == HCLayout.Modal &&
-        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !listsShare(face.frame_effects, TransformFrameEffects) &&
         !baseIncludesFlag('missing-mdfc-frame', i)
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         !i &&
         card.layout == HCLayout.Cube &&
-        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !listsShare(face.frame_effects, TransformFrameEffects) &&
         !baseIncludesFlag('missing-cube-frame', i)
       ) {
         effects.push(HCFrameEffect.Cube);
       } else if (
         !i &&
         card.layout == HCLayout.Specialize &&
-        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !listsShare(face.frame_effects, TransformFrameEffects) &&
         !baseIncludesFlag('missing-specialize-frame', i)
       ) {
         effects.push(HCFrameEffect.Specialize);
       } else if (
         face.layout == HCLayout.Transform &&
-        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !listsShare(face.frame_effects, TransformFrameEffects) &&
         !baseIncludesFlag('missing-transform-frame', i)
       ) {
         const effect = card.card_faces[0].frame_effects?.find(effect =>
@@ -288,19 +289,19 @@ export const setDerivedProps = (
         effects.push(effect ? effect : HCFrameEffect.TransformDfc);
       } else if (
         face.layout == HCLayout.Modal &&
-        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !listsShare(face.frame_effects, TransformFrameEffects) &&
         !baseIncludesFlag('missing-mdfc-frame', i)
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         face.layout == HCLayout.Cube &&
-        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !listsShare(face.frame_effects, TransformFrameEffects) &&
         !baseIncludesFlag('missing-cube-frame', i)
       ) {
         effects.push(HCFrameEffect.Cube);
       } else if (
         face.layout == HCLayout.Specialize &&
-        !listShare(face.frame_effects, TransformFrameEffects) &&
+        !listsShare(face.frame_effects, TransformFrameEffects) &&
         !baseIncludesFlag('missing-specialize-frame', i)
       ) {
         effects.push(HCFrameEffect.Specialize);
@@ -507,7 +508,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
         face.drop_face = true;
       } else if (conditionalDropLayouts.includes(face.layout)) {
         if (
-          listShare(
+          listIncludesValue(
             card.all_parts?.map(part => part.name),
             face.name
           )
