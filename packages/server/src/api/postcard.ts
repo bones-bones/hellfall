@@ -5,6 +5,7 @@ import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/share
 import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
 import type {} from './lib/types.ts';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
+import { uploadImageBase64ToGcs } from '../lib/imageGcs.ts';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
@@ -14,6 +15,7 @@ type PostcardKind = 'card' | 'token';
 type PostcardBody = {
   name?: string;
   image?: string;
+  imageBase64?: string;
   creators?: string;
   set?: string;
   hcid?: string;
@@ -111,16 +113,28 @@ async function lookupDoc(hcid: string | undefined, name: string, setId: string) 
 
 function validatePostcardBody(
   body: PostcardBody
-): body is Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> &
-  PostcardBody & { set: string } {
+): body is Required<Pick<PostcardBody, 'name' | 'creators'>> &
+  PostcardBody & { set: string } & ({ image: string } | { imageBase64: string }) {
+  const hasImageUrl = typeof body.image === 'string' && body.image.trim();
+  const hasImageBase64 = typeof body.imageBase64 === 'string' && body.imageBase64.trim();
   return Boolean(
     typeof body.name === 'string' &&
       body.name.trim() &&
-      typeof body.image === 'string' &&
-      body.image.trim() &&
+      (hasImageUrl || hasImageBase64) &&
       typeof body.creators === 'string' &&
       (body.kind === 'token' || (typeof body.set === 'string' && body.set.trim()))
   );
+}
+
+async function resolveImageUrl(body: PostcardBody): Promise<string> {
+  if (typeof body.imageBase64 === 'string' && body.imageBase64.trim()) {
+    const objectName = body.hcid?.trim() || body.name?.trim() || 'image';
+    return uploadImageBase64ToGcs(body.imageBase64, objectName);
+  }
+  if (typeof body.image === 'string' && body.image.trim()) {
+    return body.image.trim();
+  }
+  throw new Error('invalid_body');
 }
 
 async function upsertPostcard(body: PostcardBody) {
@@ -130,15 +144,17 @@ async function upsertPostcard(body: PostcardBody) {
 
   const kind: PostcardKind = body.kind === 'token' ? 'token' : 'card';
   const setId = kind === 'token' ? 'HCT' : body.set;
+  const imageUrl = await resolveImageUrl(body);
+  const bodyWithImage = { ...body, image: imageUrl };
   const existing = await lookupDoc(body.hcid?.trim() || undefined, body.name, setId);
-  const stub = buildStubCard({ ...body, kind, set: setId });
+  const stub = buildStubCard({ ...bodyWithImage, kind, set: setId });
 
   if (existing?.exists) {
     const previous = existing.data() ?? {};
     const cardId = resolveCardId(existing.id, previous);
     const update: firestoreCard = {
       name: body.name,
-      image: body.image,
+      image: imageUrl,
       image_status: HCImageStatus.HighRes,
       creators: parseCreators(body.creators),
       set: setId as SetCode,
@@ -147,7 +163,7 @@ async function upsertPostcard(body: PostcardBody) {
     if (cardId !== previous.id) update.id = cardId;
     await existing.ref.update(update);
     scheduleCatalogPublish();
-    return { docId: existing.id, cardId, wasCreate: false, previous };
+    return { docId: existing.id, cardId, wasCreate: false, previous, imageUrl };
   }
 
   const fireDoc = cardToFirestore(stub);
@@ -156,7 +172,7 @@ async function upsertPostcard(body: PostcardBody) {
   }
   await cardsCol.doc(stub.id).set(fireDoc);
   scheduleCatalogPublish();
-  return { docId: stub.id, cardId: stub.id, wasCreate: true, previous: null };
+  return { docId: stub.id, cardId: stub.id, wasCreate: true, previous: null, imageUrl };
 }
 
 async function rollbackPostcard(body: RollbackBody) {
@@ -218,7 +234,8 @@ export const postcardHandler = async (
     res.end(JSON.stringify({ ok: true, ...result }));
   } catch (err) {
     const message = err instanceof Error ? err.message : 'postcard_failed';
-    const status = message === 'invalid_body' ? 400 : 500;
+    const status =
+      message === 'invalid_body' || message === 'image_gcs_not_configured' ? 400 : 500;
     res.statusCode = status;
     res.end(JSON.stringify({ ok: false, reason: message }));
   }
