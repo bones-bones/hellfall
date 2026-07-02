@@ -580,27 +580,29 @@ export const splitTagComponents = (
       }
     }
     if (
+      tagCanHaveFaces(splitTag.tag, card) &&
+      ((card && 'card_faces' in card) || alsoAddingFaces) &&
+      isInteger(splitNote[i]) && !isDriveURLString(splitNote[i]) &&
+      !splitTag.face
+    ) {
+      const [num] = splitNote.splice(i, 1);
+      splitTag.face = parseInt(num);
+      continue;
+    }
+    if (
       tagCanUseURL(splitTag.tag) &&
-      (splitNote[i].startsWith('http') || isDriveURLString(splitNote[i])) &&
+      // (splitNote[i].startsWith('http') || isDriveURLString(splitNote[i])) &&
       !splitTag.url
     ) {
       [splitTag.url] = splitNote.splice(i, 1);
       if (isDriveURLString(splitTag.url)) {
         splitTag.url = `https://lh3.googleusercontent.com/d/${splitTag.url}`;
+      } else if (!splitTag.url.startsWith('https://')) {
+        splitTag.url = `https://storage.googleapis.com/hellscube-images/${splitTag.url}`;
       }
       if (tagDefaultsToBack(splitTag.tag) && ((card && 'card_faces' in card) || alsoAddingFaces)) {
         splitTag.face = 1;
       }
-      continue;
-    }
-    if (
-      tagCanHaveFaces(splitTag.tag, card) &&
-      ((card && 'card_faces' in card) || alsoAddingFaces) &&
-      isInteger(splitNote[i]) &&
-      !splitTag.face
-    ) {
-      const [num] = splitNote.splice(i, 1);
-      splitTag.face = parseInt(num);
       continue;
     }
     if (
