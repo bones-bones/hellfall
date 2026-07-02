@@ -2,6 +2,11 @@ name: Manual Deploy Server (Cloud Run)
 
 on:
   workflow_dispatch:
+    inputs:
+      skip_catalog_sync:
+        description: Skip post-deploy catalog sync (Firestore → GCS)
+        type: boolean
+        default: false
 
 jobs:
   deploy:
@@ -12,6 +17,7 @@ jobs:
       AUTH_CLOUD_RUN_SERVICE_NAME: ${{ vars.AUTH_CLOUD_RUN_SERVICE_NAME }}
       AUTH_CLOUD_RUN_REGION: ${{ vars.AUTH_CLOUD_RUN_REGION }}
       CLOUD_RUN_SOURCE_DIR: ${{ vars.CLOUD_RUN_SOURCE_DIR || '.' }}
+      SKIP_CATALOG_SYNC_ON_DEPLOY: ${{ vars.SKIP_CATALOG_SYNC_ON_DEPLOY }}
     permissions:
       contents: write
       id-token: write
@@ -40,7 +46,12 @@ jobs:
             --allow-unauthenticated \
             --quiet
 
+      - name: Catalog sync skipped
+        if: ${{ inputs.skip_catalog_sync == true || env.SKIP_CATALOG_SYNC_ON_DEPLOY == 'true' }}
+        run: echo "Skipping post-deploy catalog sync"
+
       - name: Regenerate catalog cache
+        if: ${{ inputs.skip_catalog_sync != true && env.SKIP_CATALOG_SYNC_ON_DEPLOY != 'true' }}
         env:
           CATALOG_SYNC_API_KEY: ${{ secrets.CATALOG_SYNC_API_KEY }}
         run: |
