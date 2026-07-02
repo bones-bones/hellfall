@@ -1,6 +1,8 @@
 /**
  * Server-side env. Set these in .env for local dev or in your deployment config.
  */
+export const HELLSCUBE_GCS_BUCKET = 'hellscube-images';
+
 export const env = {
   get DISCORD_CLIENT_ID(): string {
     const v = process.env.DISCORD_CLIENT_ID;
@@ -77,10 +79,10 @@ export const env = {
     return process.env.DISCORD_ADMIN_ROLE_ID?.trim() || '';
   },
 
-  /** GCS bucket for published catalog snapshots (optional; enables cross-instance reads). */
-  get CATALOG_GCS_BUCKET(): string | undefined {
+  /** GCS bucket for published catalog snapshots and card/token images. */
+  get CATALOG_GCS_BUCKET(): string {
     const v = process.env.CATALOG_GCS_BUCKET?.trim();
-    return v || undefined;
+    return v || HELLSCUBE_GCS_BUCKET;
   },
 
   get CATALOG_GCS_OBJECT(): string {
@@ -103,20 +105,10 @@ export const env = {
     return Number.isFinite(fromEnv) && fromEnv >= 0 ? fromEnv : 30_000;
   },
 
-  /** GCS bucket for card/token image blobs (mork postcard ingest with imageBase64). */
-  get IMAGE_GCS_BUCKET(): string | undefined {
-    const v = process.env.IMAGE_GCS_BUCKET?.trim();
-    return v || undefined;
-  },
-
-  get IMAGE_GCS_TOKEN_PREFIX(): string {
-    const v = process.env.IMAGE_GCS_TOKEN_PREFIX?.trim();
-    return v || 'tokens/';
-  },
-
-  get IMAGE_GCS_CARD_PREFIX(): string {
-    const v = process.env.IMAGE_GCS_CARD_PREFIX?.trim();
-    return v || 'cards/';
+  /** GCS bucket for card and token images (mork postcard `imageBase64` uploads). */
+  get IMAGE_GCS_CARD_IMAGE_BUCKET(): string {
+    const v = process.env.IMAGE_GCS_CARD_IMAGE_BUCKET?.trim();
+    return v || HELLSCUBE_GCS_BUCKET;
   },
 
   /** Bearer token for mork `POST /api/cards/postcard` (server-to-server). */

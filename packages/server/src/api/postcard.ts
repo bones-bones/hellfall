@@ -5,6 +5,7 @@ import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/share
 import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
 import type {} from './lib/types.ts';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
+import { uploadImageBase64ToGcs } from '../lib/imageGcs.ts';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
@@ -14,6 +15,7 @@ type PostcardKind = 'card' | 'token';
 type PostcardBody = {
   name?: string;
   image?: string;
+  imageBase64?: string;
   creators?: string;
   set?: string;
   hcid?: string;
@@ -26,11 +28,53 @@ type RollbackBody = {
   previous?: firestoreCard | null;
 };
 
+function postcardBodyContext(
+  body: PostcardBody | RollbackBody | undefined,
+  action: string | null
+): Record<string, unknown> {
+  if (!body) return { action: action ?? 'upsert' };
+  if (action === 'rollback') {
+    const rollback = body as RollbackBody;
+    return {
+      action: 'rollback',
+      docId: rollback.docId,
+      wasCreate: rollback.wasCreate,
+      hasPrevious: Boolean(rollback.previous),
+    };
+  }
+  const postcard = body as PostcardBody;
+  return {
+    action: action ?? 'upsert',
+    kind: postcard.kind ?? 'card',
+    name: postcard.name,
+    hcid: postcard.hcid,
+    set: postcard.set,
+    hasImageUrl: Boolean(postcard.image?.trim()),
+    hasImageBase64: Boolean(postcard.imageBase64?.trim()),
+  };
+}
+
+function clientErrorReason(err: unknown): string {
+  return err instanceof Error ? err.message : 'postcard_failed';
+}
+
+function isClientError(err: unknown): boolean {
+  if (err instanceof SyntaxError) return true;
+  const reason = clientErrorReason(err);
+  return reason === 'invalid_body' || reason === 'image_gcs_not_configured';
+}
+
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
   for await (const chunk of req) chunks.push(chunk);
-  const body = Buffer.concat(chunks).toString('utf-8');
-  return body ? JSON.parse(body) : {};
+  const raw = Buffer.concat(chunks).toString('utf-8');
+  if (!raw) return {};
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    console.warn('[postcard] json parse failed', { bytes: raw.length }, err);
+    throw err;
+  }
 }
 
 function parseCreators(creators: string): string[] {
@@ -111,16 +155,38 @@ async function lookupDoc(hcid: string | undefined, name: string, setId: string) 
 
 function validatePostcardBody(
   body: PostcardBody
-): body is Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> &
-  PostcardBody & { set: string } {
+): body is Required<Pick<PostcardBody, 'name' | 'creators'>> &
+  PostcardBody & { set: string } & ({ image: string } | { imageBase64: string }) {
+  const hasImageUrl = typeof body.image === 'string' && body.image.trim();
+  const hasImageBase64 = typeof body.imageBase64 === 'string' && body.imageBase64.trim();
   return Boolean(
     typeof body.name === 'string' &&
       body.name.trim() &&
-      typeof body.image === 'string' &&
-      body.image.trim() &&
+      (hasImageUrl || hasImageBase64) &&
       typeof body.creators === 'string' &&
       (body.kind === 'token' || (typeof body.set === 'string' && body.set.trim()))
   );
+}
+
+async function resolveImageUrl(body: PostcardBody): Promise<string> {
+  if (typeof body.imageBase64 === 'string' && body.imageBase64.trim()) {
+    const objectName = body.hcid?.trim() || body.name?.trim() || 'image';
+    try {
+      return await uploadImageBase64ToGcs(body.imageBase64, objectName);
+    } catch (err) {
+      console.error('[postcard] gcs image upload failed', {
+        objectName,
+        bucket: env.IMAGE_GCS_CARD_IMAGE_BUCKET,
+        name: body.name,
+        hcid: body.hcid,
+      }, err);
+      throw err;
+    }
+  }
+  if (typeof body.image === 'string' && body.image.trim()) {
+    return body.image.trim();
+  }
+  throw new Error('invalid_body');
 }
 
 async function upsertPostcard(body: PostcardBody) {
@@ -130,15 +196,17 @@ async function upsertPostcard(body: PostcardBody) {
 
   const kind: PostcardKind = body.kind === 'token' ? 'token' : 'card';
   const setId = kind === 'token' ? 'HCT' : body.set;
+  const imageUrl = await resolveImageUrl(body);
+  const bodyWithImage = { ...body, image: imageUrl };
   const existing = await lookupDoc(body.hcid?.trim() || undefined, body.name, setId);
-  const stub = buildStubCard({ ...body, kind, set: setId });
+  const stub = buildStubCard({ ...bodyWithImage, kind, set: setId });
 
   if (existing?.exists) {
     const previous = existing.data() ?? {};
     const cardId = resolveCardId(existing.id, previous);
     const update: firestoreCard = {
       name: body.name,
-      image: body.image,
+      image: imageUrl,
       image_status: HCImageStatus.HighRes,
       creators: parseCreators(body.creators),
       set: setId as SetCode,
@@ -147,7 +215,7 @@ async function upsertPostcard(body: PostcardBody) {
     if (cardId !== previous.id) update.id = cardId;
     await existing.ref.update(update);
     scheduleCatalogPublish();
-    return { docId: existing.id, cardId, wasCreate: false, previous };
+    return { docId: existing.id, cardId, wasCreate: false, previous, imageUrl };
   }
 
   const fireDoc = cardToFirestore(stub);
@@ -156,7 +224,7 @@ async function upsertPostcard(body: PostcardBody) {
   }
   await cardsCol.doc(stub.id).set(fireDoc);
   scheduleCatalogPublish();
-  return { docId: stub.id, cardId: stub.id, wasCreate: true, previous: null };
+  return { docId: stub.id, cardId: stub.id, wasCreate: true, previous: null, imageUrl };
 }
 
 async function rollbackPostcard(body: RollbackBody) {
@@ -183,7 +251,7 @@ const jsonHeaders = (req: HandlerRequest): Record<string, string> => {
 export const postcardHandler = async (
   req: HandlerRequest,
   res: HandlerResponse,
-  action: string | null
+  actionParam: string | null
 ): Promise<void | undefined> => {
   const headers = jsonHeaders(req);
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
@@ -197,29 +265,47 @@ export const postcardHandler = async (
 
   if (!requirePostcardAuth(req, res)) return;
 
+  const action = actionParam ?? null;
+  let body: PostcardBody | RollbackBody | undefined;
+
   try {
-    const body = (await readJsonBody(req)) as PostcardBody | RollbackBody;
+    body = (await readJsonBody(req)) as PostcardBody | RollbackBody;
 
     if (action === 'rollback') {
       await rollbackPostcard(body as RollbackBody);
+      console.log('[postcard] rollback ok', postcardBodyContext(body, action));
       res.statusCode = 200;
       res.end(JSON.stringify({ ok: true }));
       return;
     }
 
     if (action) {
+      console.warn('[postcard] unknown action', { action });
       res.statusCode = 404;
       res.end(JSON.stringify({ ok: false, reason: 'not_found' }));
       return;
     }
 
     const result = await upsertPostcard(body as PostcardBody);
+    console.log('[postcard] upsert ok', {
+      ...postcardBodyContext(body, action),
+      docId: result.docId,
+      cardId: result.cardId,
+      wasCreate: result.wasCreate,
+      imageUrl: result.imageUrl,
+    });
     res.statusCode = 200;
     res.end(JSON.stringify({ ok: true, ...result }));
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'postcard_failed';
-    const status = message === 'invalid_body' ? 400 : 500;
+    const reason = clientErrorReason(err);
+    const status = isClientError(err) ? 400 : 500;
+    const log = status >= 500 ? console.error : console.warn;
+    log.call(console, '[postcard] failed', {
+      ...postcardBodyContext(body, action),
+      status,
+      reason,
+    }, err);
     res.statusCode = status;
-    res.end(JSON.stringify({ ok: false, reason: message }));
+    res.end(JSON.stringify({ ok: false, reason }));
   }
 };
