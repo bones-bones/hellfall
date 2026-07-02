@@ -1,9 +1,9 @@
 import {
   textEquals,
-  textSearchIncludes,
+  textContains,
   isNumber,
+  textListContains,
   textListIncludes,
-  textListEquals,
   isValidV4UUID,
 } from '@hellfall/shared/utils';
 import {
@@ -39,7 +39,7 @@ export const filterEmpty: textFilter = Object.assign(
 
 export const filterText: textFilter = Object.assign(
   (value1: string, operator: opType, value2: string) =>
-    includeEqualsOp(operator, textSearchIncludes, textEquals, value1, value2),
+    includeEqualsOp(operator, textContains, textEquals, value1, value2),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string) => NOPRINT,
@@ -78,7 +78,7 @@ export const filterId: textFilter = Object.assign(
 
 export const filterTextList: textListFilter = Object.assign(
   (value1: string[], operator: opType, value2: string) =>
-    includeEqualsOp(operator, textListIncludes, textListEquals, value1, value2),
+    includeEqualsOp(operator, textListContains, textListIncludes, value1, value2),
   {
     invertOption: 'negate' as invertOptionType,
     toSummary: (operator: opType, value: string) => NOPRINT,
@@ -97,19 +97,13 @@ export const filterArtist: noteFilter = Object.assign(
       if (!value1.artist_notes) {
         return false;
       }
-      return includeEqualsOp(
-        operator,
-        textSearchIncludes,
-        textEquals,
-        value1.artist_notes[value2],
-        note
-      );
+      return includeEqualsOp(operator, textContains, textEquals, value1.artist_notes[value2], note);
     }
     return value1.artists
       ? includeEqualsOp(
           operator,
+          textListContains,
           textListIncludes,
-          textListEquals,
           value1.artists.map(artist => prepTag(artist)),
           prepTag(value2)
         )
@@ -140,19 +134,13 @@ export const filterTag: noteFilter = Object.assign(
       if (!value1.tag_notes) {
         return false;
       }
-      return includeEqualsOp(
-        operator,
-        textSearchIncludes,
-        textEquals,
-        value1.tag_notes[value2],
-        note
-      );
+      return includeEqualsOp(operator, textContains, textEquals, value1.tag_notes[value2], note);
     }
     return value1.tags
       ? includeEqualsOp(
           operator,
+          textListContains,
           textListIncludes,
-          textListEquals,
           value1.tags.map(tag => prepTag(tag)),
           prepTag(value2)
         )

@@ -5,7 +5,7 @@ import {
   CardMap,
   landNames,
   textEquals,
-  textListEquals,
+  textListIncludes,
   textPrep,
 } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
@@ -25,7 +25,7 @@ export const useNameToHCID = (name: string): string | undefined => {
     cards.find(
       card =>
         'card_faces' in card &&
-        textListEquals(
+        textListIncludes(
           card.card_faces.map(e => e.name),
           name
         )
@@ -33,7 +33,7 @@ export const useNameToHCID = (name: string): string | undefined => {
     cards.find(
       card =>
         'card_faces' in card &&
-        textListEquals(
+        textListIncludes(
           card.card_faces.flatMap(e => e.flavor_name ?? []),
           name
         )
@@ -111,7 +111,7 @@ export const lookupNameToId = (
   nameToIdMap: Map<string, string>,
   cards: CardMap
 ): string | undefined => {
-  if (textListEquals(landNames, name)) {
+  if (textListIncludes(landNames, name)) {
     return cards
       .getAllInSet('HBB')
       .filter(card => textEquals(name, card.name))
@@ -124,7 +124,7 @@ export const nameToId = (name: string, cards: CardMap): string | undefined => {
   // if (name == 'random') {
   //   return cards.getAllInSetListExact(allExceptNormal).getRandomId();
   // }
-  if (textListEquals(landNames, name)) {
+  if (textListIncludes(landNames, name)) {
     return cards
       .getAllInSet('HBB')
       .filter(card => textEquals(name, card.name))
@@ -147,7 +147,7 @@ export const nameToId = (name: string, cards: CardMap): string | undefined => {
     cards.find(
       card =>
         'card_faces' in card &&
-        textListEquals(
+        textListIncludes(
           card.card_faces.map(e => e.name),
           name
         )
@@ -155,7 +155,7 @@ export const nameToId = (name: string, cards: CardMap): string | undefined => {
     cards.find(
       card =>
         'card_faces' in card &&
-        textListEquals(
+        textListIncludes(
           card.card_faces.flatMap(e => e.flavor_name ?? []),
           name
         )

@@ -1,5 +1,5 @@
 import { looseOpType, opType, shorthandType, summaryFunction } from '../types';
-import { listShare, toNumber } from '@hellfall/shared/utils';
+import { listsOrValuesShare, toNumber } from '@hellfall/shared/utils';
 import { unescapeText } from './parseUtils';
 
 const invertedOps: Record<looseOpType, looseOpType> = {
@@ -132,8 +132,8 @@ export const createSummary =
  */
 export const includeEqualsOp = <T, S>(
   op: opType,
-  includes: (value1: T, value2: S) => boolean,
-  equals: (value1: T, value2: S) => boolean,
+  includes: (value1: T, value2: S) => boolean | undefined,
+  equals: (value1: T, value2: S) => boolean | undefined,
   value1: T,
   value2: S
 ) => {
@@ -236,17 +236,17 @@ export const canContainOp = <T>(
 export const shareOp = <T = any>(op: opType, value1: T | T[], value2: T | T[]): boolean => {
   switch (op) {
     case '<':
-      return !listShare(value1, value2);
+      return !listsOrValuesShare(value1, value2);
     case '<=':
-      return !!listShare(value1, value2);
+      return !!listsOrValuesShare(value1, value2);
     case '=':
-      return !!listShare(value1, value2);
+      return !!listsOrValuesShare(value1, value2);
     case '>=':
-      return !!listShare(value1, value2);
+      return !!listsOrValuesShare(value1, value2);
     case '>':
-      return !listShare(value1, value2);
+      return !listsOrValuesShare(value1, value2);
     case '!=':
-      return !listShare(value1, value2);
+      return !listsOrValuesShare(value1, value2);
   }
 };
 

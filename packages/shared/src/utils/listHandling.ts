@@ -41,7 +41,7 @@ const arbAreEqualGenerator =
   <T = any>(value1: T, value2: T) =>
     arbAreEqual(value1, value2, ignoreOrder);
 
-type equalityFunction<T> = (value1: T, value2: T) => boolean;
+export type equalityFunction<T> = (value1: T, value2: T) => boolean | undefined;
 /**
  * Checks whether one list is equal to another list.
  * @param value1 First list to check
@@ -91,6 +91,17 @@ export const listsAreLooselyEqual = <T = any>(
   value2?: T[],
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
 ): boolean => listsAreEqual(value1, value2, true, equals);
+/**
+ * Checks whether one list is exactly equal to another list (not ignoring). Equivalent to {@link listsAreEqual} with `ignoreOrder: false`
+ * @param value1 First list to check
+ * @param value2 Second list to check
+ * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: false`
+ */
+export const listsAreExactlyEqual = <T = any>(
+  value1?: T[],
+  value2?: T[],
+  equals: equalityFunction<T> = arbAreEqualIgnoreOrder
+): boolean => listsAreEqual(value1, value2, false, equals);
 
 /**
  * Checks whether one list contains another list.
@@ -258,7 +269,7 @@ export const listsOrValuesShareLower = (value1: string | string[], value2: strin
   listsOrValuesShare(value1, value2, listLowerEquality);
 
 /**
- * Checks whether a text list includes a string
+ * Checks whether a text list contains a string
  * @param value1 List to check
  * @param value2 String to check
  */
@@ -267,15 +278,27 @@ export const textListContains = (value1?: string[], value2?: string) =>
 // Boolean(value1?.some(text => textSearchIncludes(text, value2)));
 
 /**
- * Checks whether a text list includes all members of a list of strings
+ * Checks whether a text list contains all members of a list of strings
  * @param value1 List to check
  * @param value2 List of strings to check
  */
 export const textListContainsEvery = (value1?: string[], value2?: string[]) =>
   value2?.every(value => textListContains(value1, value));
-export const textListIncludes = (value1: string[], value2: string) =>
+/**
+ * Checks whether a text list includes a string
+ * @param value1 List to check
+ * @param value2 String to check
+ */
+export const textListIncludes = (value1?: string[], value2?: string) =>
   listIncludesValue(value1, value2, textEquals);
-// value1.some(text => textEquals(text, value2));
+/**
+ * Checks whether a text list includes all members of a list of strings
+ * @param value1 List to check
+ * @param value2 List of strings to check
+ */
+export const textListIncludesEvery = (value1?: string[], value2?: string[]) =>
+  value2?.every(value => textListIncludes(value1, value));
+
 export const textListsShare = (value1?: string[], value2?: string[]) =>
   listsShare(value1, value2, textEquals);
 

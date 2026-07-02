@@ -14,9 +14,9 @@ import {
 } from '@hellfall/shared/types';
 import { invertOptionType, opType, textListFilter } from '../types';
 import { shareOp, opToDont, createCorrectedSummary } from '../utils';
-import { listEquals } from '@hellfall/shared/utils';
+import { listsAreEqual } from '@hellfall/shared/utils';
 
-const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
+const toCardFrameRecord: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
   '93': HCFrame.Original,
   "'93": HCFrame.Original,
@@ -103,6 +103,10 @@ const toCardFrame: Record<string, HCFrame | HCFrame[]> = {
   website: HCFrame.WebsiteApp,
   app: HCFrame.WebsiteApp,
 };
+const toCardFrame = (text: string): HCFrame[] | undefined => {
+  const frame = toCardFrameRecord[text];
+  return typeof frame == 'string' ? [frame] : frame;
+};
 const frameNames: [HCFrame[], string][] = [
   [[HCFrame.Original], "the '93 Original"],
   [[HCFrame.Classic, HCFrame.ClassicToken], "the '97 Classic"],
@@ -142,13 +146,13 @@ const frameNames: [HCFrame[], string][] = [
   [[HCFrame.WebsiteApp], 'a website or app'],
 ];
 const getFrameName = (text: string) => {
-  if (text in toCardFrame) {
-    return frameNames.find(frames => listEquals(frames[0], toCardFrame[text]))?.[1];
+  if (text in toCardFrameRecord) {
+    return frameNames.find(frames => listsAreEqual(frames[0], toCardFrame(text)))?.[1];
   }
   return undefined;
 };
 
-const toFrameEffect: Record<string, HCFrameEffect | HCFrameEffect[]> = {
+const toFrameEffectRecord: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   sunmoondfc: HCFrameEffect.SunMoonDfc,
   sunmoontransform: HCFrameEffect.SunMoonDfc,
   sunmoon: HCFrameEffect.SunMoonDfc,
@@ -259,6 +263,10 @@ const toFrameEffect: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   universebeyond: HCFrameEffect.UniversesBeyond,
   universesbeyond: HCFrameEffect.UniversesBeyond,
 };
+const toFrameEffect = (text: string): HCFrameEffect[] | undefined => {
+  const frameEffect = toFrameEffectRecord[text];
+  return typeof frameEffect == 'string' ? [frameEffect] : frameEffect;
+};
 const frameEffectNames: [HCFrameEffect[], string][] = [
   [
     [HCFrameEffect.SunMoonDfc, HCFrameEffect.MoonEldraziDfc],
@@ -327,7 +335,7 @@ const frameEffectNames: [HCFrameEffect[], string][] = [
 ];
 const getFrameEffectName = (text: string) => {
   if (text in toFrameEffect) {
-    return frameEffectNames.find(frames => listEquals(frames[0], toFrameEffect[text]))?.[1];
+    return frameEffectNames.find(frames => listsAreEqual(frames[0], toFrameEffect(text)))?.[1];
   }
   return undefined;
 };
@@ -419,7 +427,7 @@ const toShowcaseFrame: Record<string, string | string[]> = {
 
 export const filterCardFrame: textListFilter = Object.assign(
   (value1: string[], operator: opType, value2: string) =>
-    value2 in toCardFrame ? shareOp(operator, value1, toCardFrame[value2]) : false,
+    value2 in toCardFrame ? shareOp(operator, value1, toCardFrame(value2)) : false,
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: createCorrectedSummary(
@@ -431,7 +439,7 @@ export const filterCardFrame: textListFilter = Object.assign(
 );
 export const filterFrameEffect: textListFilter = Object.assign(
   (value1: string[], operator: opType, value2: string) =>
-    value2 in toFrameEffect ? shareOp(operator, value1, toFrameEffect[value2]) : false,
+    value2 in toFrameEffect ? shareOp(operator, value1, toFrameEffect(value2)) : false,
   {
     invertOption: 'flip' as invertOptionType,
     toSummary: createCorrectedSummary(

@@ -17,13 +17,15 @@ import {
   parseSearchQuery,
   makeSort,
 } from '@hellfall/shared/filters';
-import { listsExactlyEqual } from '@hellfall/shared/utils';
+import { equalityFunction, listsAreExactlyEqual } from '@hellfall/shared/utils';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 
-const sortsEqual = (mem1: sortObject, mem2: sortObject) =>
+const sortsEqual: equalityFunction<sortObject> = (mem1: sortObject, mem2: sortObject) =>
   mem1.sort == mem2.sort && mem1.dir == mem2.dir;
-const invalidsEqual = (mem1: [string, string], mem2: [string, string]) =>
-  mem1[0] == mem2[0] && mem1[1] == mem2[1];
+const invalidsEqual: equalityFunction<[string, string]> = (
+  mem1: [string, string],
+  mem2: [string, string]
+) => mem1[0] == mem2[0] && mem1[1] == mem2[1];
 
 export const useUrlSync = () => {
   const location = useLocation();
@@ -46,7 +48,7 @@ export const useUrlSync = () => {
     if (query != newQuery) {
       setQuery(newQuery);
     }
-    if (!listsExactlyEqual(querySorts, parsedQuery.sortObjects, sortsEqual)) {
+    if (!listsAreExactlyEqual(querySorts, parsedQuery.sortObjects, sortsEqual)) {
       setQuerySorts(parsedQuery.sortObjects);
     }
 
@@ -57,16 +59,16 @@ export const useUrlSync = () => {
     if (!sortList.length) {
       sortList.push(makeSort('auto', 'auto'));
     }
-    if (!listsExactlyEqual(sortRules, sortList, sortsEqual)) {
+    if (!listsAreExactlyEqual(sortRules, sortList, sortsEqual)) {
       setSortRules(sortList);
     }
-    if (!listsExactlyEqual(inputSorts, newInputs)) {
+    if (!listsAreExactlyEqual(inputSorts, newInputs)) {
       setInputSorts(newInputs);
     }
     if (summary != parsedQuery.summary) {
       setSummary(parsedQuery.summary);
     }
-    if (!listsExactlyEqual(invalids, parsedQuery.invalids, invalidsEqual)) {
+    if (!listsAreExactlyEqual(invalids, parsedQuery.invalids)) {
       setInvalids(parsedQuery.invalids);
     }
     // Set pagination and reset active card
@@ -113,7 +115,7 @@ export const useUpdateURL = (asRandom?: boolean) => {
   useEffect(() => {
     const hasChanged =
       prevValues.current.query !== query ||
-      !listsExactlyEqual(prevValues.current.inputSorts, inputSorts) ||
+      !listsAreExactlyEqual(prevValues.current.inputSorts, inputSorts) ||
       prevValues.current.page !== page;
     // const activeHasChanged = prevValues.current.activeCard !== activeCard;
 
