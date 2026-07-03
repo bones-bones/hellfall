@@ -1,4 +1,4 @@
-import { withCors, requireTagAuth, HandlerRequest, HandlerResponse } from './lib';
+import { withCors, requireDatabaseRoleAuth, HandlerRequest, HandlerResponse } from './lib';
 
 export const tagHandler = async (req: HandlerRequest, res: HandlerResponse): Promise<void> => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
@@ -11,7 +11,7 @@ export const tagHandler = async (req: HandlerRequest, res: HandlerResponse): Pro
     return;
   }
 
-  const auth = await requireTagAuth(req, res);
+  const auth = await requireDatabaseRoleAuth(req, res);
   if (!auth) return;
 
   res.statusCode = 200;

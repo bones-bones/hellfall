@@ -38,10 +38,10 @@ export async function createSessionToken(
     avatar: payload.avatar,
     email: payload.email,
   };
-  if (payload.discord_access_token) claims.discord_access_token = payload.discord_access_token;
-  if (payload.guild_roles) claims.guild_roles = payload.guild_roles;
-  if (payload.guild_nick !== undefined) claims.guild_nick = payload.guild_nick;
-  if (payload.roles_fetched_at) claims.roles_fetched_at = payload.roles_fetched_at;
+  if (payload.discord_access_token) { claims.discord_access_token = payload.discord_access_token };
+  if (payload.guild_roles) { claims.guild_roles = payload.guild_roles };
+  if (payload.guild_nick !== undefined) { claims.guild_nick = payload.guild_nick };
+  if (payload.roles_fetched_at) { claims.roles_fetched_at = payload.roles_fetched_at };
   return new jose.SignJWT(claims)
     .setProtectedHeader({ alg: ALG })
     .setIssuer(env.JWT_ISSUER)

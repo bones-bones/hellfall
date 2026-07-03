@@ -5,6 +5,6 @@ export * from './jwt';
 export * from './requireAdminAuth';
 export * from './requirePostcardAuth';
 export * from './requireReviewerAuth';
-export * from './requireTagAuth';
+export * from './requireDatabaseRoleAuth';
 export * from './session';
 export * from './types';

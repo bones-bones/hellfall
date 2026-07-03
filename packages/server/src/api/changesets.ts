@@ -4,11 +4,11 @@ import {
   env,
   HandlerRequest,
   HandlerResponse,
-  requireTagAuth,
+  requireDatabaseRoleAuth,
   requireAdminAuth,
   requireReviewerAuth,
 } from './lib';
-import {} from './lib/requireTagAuth.ts';
+import { } from './lib/requireDatabaseRoleAuth.ts';
 import { recardCardChangeset } from '../lib/cardAudit.ts';
 import {
   anyChange,
@@ -92,7 +92,7 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
 /** GET /api/changesets — list changesets, filterable by ?status= and ?cardId= */
 async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promise<void> {
   const auth = await requireReviewerAuth(req, res, true);
-  const limAuth = await requireTagAuth(req, res);
+  const limAuth = await requireDatabaseRoleAuth(req, res);
   if (!auth && !limAuth) return;
 
   let query = changesetsCol.orderBy('createdAt', 'desc').limit(100);
@@ -119,7 +119,7 @@ async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promis
 
 /** POST /api/changesets — submit a new changeset */
 async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promise<void> {
-  const auth = await requireTagAuth(req, res);
+  const auth = await requireDatabaseRoleAuth(req, res);
   if (!auth) {
     return;
   }
@@ -303,7 +303,7 @@ async function rejectChangeset(
   changesetId: string
 ): Promise<void> {
   const auth = await requireAdminAuth(req, res, true);
-  const limAuth = await requireTagAuth(req, res);
+  const limAuth = await requireDatabaseRoleAuth(req, res);
   if (!auth && !limAuth) return;
 
   const csSnap = await changesetsCol.doc(changesetId).get();

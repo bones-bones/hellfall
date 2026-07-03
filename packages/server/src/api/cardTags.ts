@@ -1,5 +1,5 @@
 import { FieldValue, Firestore, QueryDocumentSnapshot } from '@google-cloud/firestore';
-import { withCors, env, HandlerRequest, HandlerResponse, requireTagAuth } from './lib';
+import { withCors, env, HandlerRequest, HandlerResponse, requireDatabaseRoleAuth } from './lib';
 import { listCardChangesets, recardCardChangeset } from '../lib/cardAudit.ts';
 import { HCCard } from '@hellfall/shared/types';
 import {
@@ -107,7 +107,7 @@ export const cardTagsHandler = async (
         res.end();
         return;
       }
-      const auth = await requireTagAuth(req, res);
+      const auth = await requireDatabaseRoleAuth(req, res);
       if (!auth) return;
       const limitRaw = req.query?.limit;
       const limit =
@@ -129,7 +129,7 @@ export const cardTagsHandler = async (
     }
 
     if (req.method === 'POST') {
-      const auth = await requireTagAuth(req, res);
+      const auth = await requireDatabaseRoleAuth(req, res);
       if (!auth) {
         return;
       }
