@@ -28,21 +28,24 @@ export const HellFall = () => {
   const invalids = useAtomValue(invalidAtom);
   const query = useAtomValue(queryAtom);
 
-  const scrollPointRef = useRef<HTMLHRElement>(null);
-
   useUpdateURL();
 
   const setActiveCardFromAtom = useSetAtom(activeCardAtom);
 
   const page = useAtomValue(pageAtom);
+
   const { resultSet, paginationModel } = useSearchResults();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Track current and previous page numbers. this is so we can scroll users to the card list, or scroll them to the top
+  const pageNumberRef = useRef<number>(0);
+  const scrollPointRef = useRef<HTMLHRElement>(null);
   useEffect(() => {
-    console.log('scrollPointRef.current', scrollPointRef.current, page);
-    if (scrollPointRef.current) {
+    if (scrollPointRef.current && pageNumberRef.current < page) {
       scrollPointRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+    pageNumberRef.current = page;
   }, [page]);
 
   useEffect(() => {
