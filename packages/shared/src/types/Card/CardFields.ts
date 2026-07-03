@@ -23,16 +23,16 @@ import {
   // HCSecurityStamp,
 } from './values';
 
-import { HCCardFace } from './CardFace.ts';
-import { HCRelatedCard } from './RelatedCard.ts';
-import { SetCode } from '../Set';
+import type { HCCardFace } from './CardFace.ts';
+import type { HCRelatedCard } from './RelatedCard.ts';
+import type { SetCode } from '../Set';
 // import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType';
 // import { SetType } from "../Set/values";
 
 /**
  * A collection of types related to each possible card field.
  */
-export namespace HCCardFields {}
+export namespace HCCardFields { }
 
 export namespace HCCardFields.Core {
   /**

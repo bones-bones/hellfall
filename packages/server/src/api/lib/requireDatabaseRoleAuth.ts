@@ -10,12 +10,12 @@ export type TagAuthUser = {
 };
 
 /** Verifies session and DATABASE_CONTRIBUTOR role. Returns user or sends error and returns null. */
-export async function requireTagAuth(
+export const requireDatabaseRoleAuth = async (
   req: HandlerRequest,
   res: HandlerResponse
-): Promise<TagAuthUser | null> {
-  const payload = await getSession(req);
-  if (!payload) {
+): Promise<TagAuthUser | null> => {
+  const sessionPayload = await getSession(req);
+  if (!sessionPayload) {
     res.statusCode = 401;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
     return null;
@@ -28,13 +28,13 @@ export async function requireTagAuth(
     return null;
   }
 
-  if (!payload.discord_access_token) {
+  if (!sessionPayload.discord_access_token) {
     res.statusCode = 401;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
     return null;
   }
 
-  const guild = await resolveGuildRoles(payload, res);
+  const guild = await resolveGuildRoles(sessionPayload, res);
   if (guild.kind === 'oauth_invalid') {
     res.statusCode = 401;
     res.end(JSON.stringify({ ok: false, reason: 'discord_oauth_expired' }));
@@ -53,11 +53,11 @@ export async function requireTagAuth(
     return null;
   }
 
-  const username = guild.nick || payload.username || payload.sub;
+  const username = guild.nick || sessionPayload.username || sessionPayload.sub;
 
   return {
-    userId: payload.sub,
+    userId: sessionPayload.sub,
     username,
-    discord_access_token: payload.discord_access_token,
+    discord_access_token: sessionPayload.discord_access_token,
   };
 }
