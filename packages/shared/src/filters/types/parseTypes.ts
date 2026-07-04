@@ -1,7 +1,7 @@
-import { filterObject } from './makerObject';
+import { FilterObject } from './makerObject';
 
 export type FilterNode =
-  | { type: 'filter'; filter: filterObject<any, any> }
+  | { type: 'filter'; filter: FilterObject<any, any> }
   | { type: 'not'; child: FilterNode }
   | { type: 'related'; child: FilterNode }
   | { type: 'and'; children: FilterNode[] }

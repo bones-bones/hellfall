@@ -1,6 +1,4 @@
-import { HCCard, HCLegalitiesField, HCRelatedCard, SetCode } from '@hellfall/shared/types';
-export const NOPRINT =
-  'This should not ever print. Please report this as a bug on discord along with the search terms you used.';
+import { HCCard } from '@hellfall/shared/types';
 /**
  * The type of an operator
  */
@@ -132,6 +130,10 @@ export interface textFilterFunction extends cardFilterFunction<string, string> {
  */
 export interface textListFilterFunction extends cardFilterFunction<string[], string> {}
 /**
+ * Any filter that compares a list of strings from a card with a string from a search
+ */
+export interface textListsFilterFunction extends cardFilterFunction<string[], string[]> {}
+/**
  * Any filter that compares two numbers
  */
 export interface numFilterFunction extends cardFilterFunction<number, number> {}
@@ -177,13 +179,6 @@ export const shortToNum = (op: opType, value: shorthandType) => {
   }
 };
 
-/**
- * The defualt op for a given shorthand type
- */
-export const shortToOp: Record<shorthandType, opType> = {
-  c: '=',
-  m: '>=',
-};
 export type colorSearch = string[] | number | shorthandType;
 /**
  * Any filter that compares colorsfrom a card with a value from a search
@@ -237,10 +232,6 @@ export const isInclusionType = (value: any): value is inclusionType =>
 export interface includeFilterFunction extends cardFilterFunction<HCCard.Any, string> {
   // (value1: HCCard.Any, operator: opType, value2: string): boolean | undefined;
 }
-/**
- * Any filter that compares a card's legality with a format from a search
- */
-export interface legalFilterFunction extends cardFilterFunction<HCLegalitiesField, string> {}
 /**
  * Any filter that compares a card with a string from a search
  */

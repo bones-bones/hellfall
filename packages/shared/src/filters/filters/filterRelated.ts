@@ -1,7 +1,7 @@
 import { HCCard, relatedComponent } from '@hellfall/shared/types';
 import { hasPartWithComp } from '@hellfall/shared/utils';
 import { opAsBool, opToDont, opToNt, unescapeText } from '../utils';
-import { cardStringFilterFunction, invertOptionType, opType, summaryFunction } from '../types';
+import { cardStringFilterFunction, opType, summaryFunction } from '../types';
 
 // const includeComponent = (part: HCRelatedCard) =>
 //   ['token_maker', 'draft_partner'].includes(part.component);

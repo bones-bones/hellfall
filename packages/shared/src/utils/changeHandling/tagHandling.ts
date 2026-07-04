@@ -34,7 +34,7 @@ import {
 import { sortChanges } from './changeHandling';
 import { isValidV4UUID } from '../textHandling';
 import { isInteger } from '../numHandling';
-import { pushProp } from '../listHandling';
+import { ensureArray, pushProp, wrapArray } from '../listHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -606,8 +606,7 @@ const tagsToKeywords: Record<string, string | string[]> = {
 export const fillSubKeywords = (keywords: string[]) => {
   for (const keyword in keywords) {
     if (keyword in subKeywords) {
-      const subs = subKeywords[keyword];
-      (Array.isArray(subs) ? subs : [subs]).forEach(sub => {
+      ensureArray(subKeywords[keyword]).forEach(sub => {
         if (!keywords.includes(sub)) {
           keywords.push(sub);
         }
@@ -634,8 +633,7 @@ export const splitTagComponents = (
     fillSubKeywords(splitTag.keywords);
   }
   if (splitTag.tag in tagsToKeywords) {
-    const keywords = tagsToKeywords[splitTag.tag];
-    splitTag.keywords = Array.isArray(keywords) ? keywords : [keywords];
+    splitTag.keywords = ensureArray(tagsToKeywords[splitTag.tag]);
     fillSubKeywords(splitTag.keywords);
   }
   if (!splitTag.note) {

@@ -2,9 +2,9 @@ import { getFromFaces, toFaces, toNumber } from '@hellfall/shared/utils';
 import { comparisonFilter, comparisonSummary } from '../filters';
 import {
   ComparisonFilter,
-  NumberPropSummaryFilter,
+  NumberPropFilter,
   looseOpType,
-  compFilterMaker,
+  comparisonFilterMaker,
   filterMaker,
 } from '../types';
 import { numSearchFilter, numSearchListFilter } from '../utils';
@@ -13,7 +13,7 @@ export const makeCollectorNumberFilter: filterMaker<string | undefined> = (
   value: string,
   op: looseOpType
 ) => {
-  return new NumberPropSummaryFilter<string | undefined, string>(
+  return new NumberPropFilter<string | undefined, string>(
     'number',
     numSearchFilter,
     value,
@@ -23,16 +23,16 @@ export const makeCollectorNumberFilter: filterMaker<string | undefined> = (
   );
 };
 
-export const makeCompFilter: compFilterMaker = (
+export const makeCompFilter: comparisonFilterMaker = (
   value1: string,
   op: looseOpType,
   value2: string
 ) => {
-  return new ComparisonFilter('comp', comparisonFilter, comparisonSummary, value1, op, value2, '=');
+  return new ComparisonFilter('comp', comparisonFilter, comparisonSummary, value1, op, value2);
 };
 
 export const makeManaValueFilter: filterMaker<number> = (value: string, op: looseOpType) => {
-  return new NumberPropSummaryFilter<number, string>(
+  return new NumberPropFilter<number, string>(
     'manavalue',
     numSearchFilter,
     value,
@@ -45,7 +45,7 @@ export const makePowerFilter: filterMaker<(string | undefined)[]> = (
   value: string,
   op: looseOpType
 ) => {
-  return new NumberPropSummaryFilter<(string | undefined)[], string>(
+  return new NumberPropFilter<(string | undefined)[], string>(
     'power',
     numSearchListFilter,
     value,
@@ -58,7 +58,7 @@ export const makeToughnessFilter: filterMaker<(string | undefined)[]> = (
   value: string,
   op: looseOpType
 ) => {
-  return new NumberPropSummaryFilter<(string | undefined)[], string>(
+  return new NumberPropFilter<(string | undefined)[], string>(
     'toughness',
     numSearchListFilter,
     value,
@@ -72,7 +72,7 @@ export const makePTFilter: filterMaker<(number | undefined)[]> = (
   value: string,
   op: looseOpType
 ) => {
-  return new NumberPropSummaryFilter<(number | undefined)[], string>(
+  return new NumberPropFilter<(number | undefined)[], string>(
     'pt',
     numSearchListFilter,
     value,
@@ -89,7 +89,7 @@ export const makeLoyaltyFilter: filterMaker<(string | undefined)[]> = (
   value: string,
   op: looseOpType
 ) => {
-  return new NumberPropSummaryFilter<(string | undefined)[], string>(
+  return new NumberPropFilter<(string | undefined)[], string>(
     'loyalty',
     numSearchListFilter,
     value,
@@ -103,7 +103,7 @@ export const makeDefenseFilter: filterMaker<(string | undefined)[]> = (
   value: string,
   op: looseOpType
 ) => {
-  return new NumberPropSummaryFilter<(string | undefined)[], string>(
+  return new NumberPropFilter<(string | undefined)[], string>(
     'defense',
     numSearchListFilter,
     value,

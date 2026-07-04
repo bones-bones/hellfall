@@ -1,4 +1,6 @@
+// This is the dumping ground for all the records used for prop conversions
 import {
+  HCBorderColor,
   CardFrames,
   HCFrame,
   HCFrameEffect,
@@ -11,12 +13,28 @@ import {
   RetroFrames,
   RetroTokenFrames,
   TokenFrames,
+  HCLayout,
+  HCLayoutGroup,
 } from '@hellfall/shared/types';
-import { opType, summaryFunction, textListFilterFunction } from '../types';
-import { shareOp, opToDont, createCorrectedSummary } from '../utils';
-import { listsAreLooselyEqual, listsShare } from '@hellfall/shared/utils';
 
-const toCardFrameRecord: Record<string, HCFrame | HCFrame[]> = {
+export const toBorderRecord: Record<string, HCBorderColor> = {
+  black: HCBorderColor.Black,
+  white: HCBorderColor.White,
+  borderless: HCBorderColor.Borderless,
+  silver: HCBorderColor.Silver,
+  gold: HCBorderColor.Gold,
+  yellow: HCBorderColor.Yellow,
+  rainbow: HCBorderColor.Rainbow,
+  blue: HCBorderColor.Blue,
+  no: HCBorderColor.NoBorder,
+  none: HCBorderColor.NoBorder,
+  noborder: HCBorderColor.NoBorder,
+  unique: HCBorderColor.Unique,
+  orange: HCBorderColor.Orange,
+  red: HCBorderColor.Red,
+};
+
+export const toCardFrameRecord: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
   '93': HCFrame.Original,
   "'93": HCFrame.Original,
@@ -103,11 +121,7 @@ const toCardFrameRecord: Record<string, HCFrame | HCFrame[]> = {
   website: HCFrame.WebsiteApp,
   app: HCFrame.WebsiteApp,
 };
-const toCardFrame = (text: string): HCFrame[] | undefined => {
-  const frame = toCardFrameRecord[text];
-  return typeof frame == 'string' ? [frame] : frame;
-};
-const frameNames: [HCFrame[], string][] = [
+export const frameNames: [HCFrame[], string][] = [
   [[HCFrame.Original], "the '93 Original"],
   [[HCFrame.Classic, HCFrame.ClassicToken], "the '97 Classic"],
   [[HCFrame.Classic], "the '97 Classic card"],
@@ -145,12 +159,7 @@ const frameNames: [HCFrame[], string][] = [
   [NotMagicFrames, 'any nonmagic game'],
   [[HCFrame.WebsiteApp], 'a website or app'],
 ];
-const getFrameName = (text: string) => {
-  const frame = toCardFrame(text);
-  return frame ? frameNames.find(frames => listsAreLooselyEqual(frames[0], frame))?.[1] : undefined;
-};
-
-const toFrameEffectRecord: Record<string, HCFrameEffect | HCFrameEffect[]> = {
+export const toFrameEffectRecord: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   sunmoondfc: HCFrameEffect.SunMoonDfc,
   sunmoontransform: HCFrameEffect.SunMoonDfc,
   sunmoon: HCFrameEffect.SunMoonDfc,
@@ -261,11 +270,7 @@ const toFrameEffectRecord: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   universebeyond: HCFrameEffect.UniversesBeyond,
   universesbeyond: HCFrameEffect.UniversesBeyond,
 };
-const toFrameEffect = (text: string): HCFrameEffect[] | undefined => {
-  const frameEffect = toFrameEffectRecord[text];
-  return typeof frameEffect == 'string' ? [frameEffect] : frameEffect;
-};
-const frameEffectNames: [HCFrameEffect[], string][] = [
+export const frameEffectNames: [HCFrameEffect[], string][] = [
   [
     [HCFrameEffect.SunMoonDfc, HCFrameEffect.MoonEldraziDfc],
     'the sun and moon or moon and Eldrazi transform marks',
@@ -331,14 +336,8 @@ const frameEffectNames: [HCFrameEffect[], string][] = [
   [[HCFrameEffect.Arena], 'an Arena frame'],
   [[HCFrameEffect.UniversesBeyond], 'a Universes Beyond frame'],
 ];
-const getFrameEffectName = (text: string) => {
-  const frameEffect = toFrameEffect(text);
-  return frameEffect
-    ? frameEffectNames.find(frames => listsAreLooselyEqual(frames[0], frameEffect))?.[1]
-    : undefined;
-};
 
-const toShowcaseFrameRecord: Record<string, string | string[]> = {
+export const toShowcaseFrameRecord: Record<string, string | string[]> = {
   kaladesh: 'Invention',
   invention: 'Invention',
   invocation: 'Invocation',
@@ -422,61 +421,139 @@ const toShowcaseFrameRecord: Record<string, string | string[]> = {
   album: 'Album',
   pixel: 'Pixel',
 };
-const toShowcaseFrame = (text: string): string[] | undefined => {
-  const frame = toShowcaseFrameRecord[text];
-  return typeof frame == 'string' ? [frame] : frame;
+export const toCardLayoutRecord: Record<string, HCLayout | HCLayout[]> = {
+  normal: HCLayout.Normal,
+  front: HCLayout.Front,
+  meldpart: HCLayout.MeldPart,
+  meldresult: HCLayout.MeldResult,
+  meld: [HCLayout.MeldPart, HCLayout.MeldResult],
+  cube: HCLayout.Cube,
+  token: HCLayout.Token,
+  emblem: HCLayout.Emblem,
+  multitoken: HCLayout.MultiToken,
+  doublefacedtoken: HCLayout.MultiToken,
+  reminder: HCLayout.Reminder,
+  multireminder: HCLayout.MultiReminder,
+  stickers: HCLayout.Stickers,
+  sticker: HCLayout.Stickers,
+  dungeon: HCLayout.Dungeon,
+  checklist: HCLayout.Checklist,
+  misc: HCLayout.Misc,
+  notmagic: HCLayout.NotMagic,
+  multinotmagic: HCLayout.MultiNotMagic,
+  draftpartner: HCLayout.DraftPartner,
+  reminderonback: HCLayout.ReminderOnBack,
+  reminderback: HCLayout.ReminderOnBack,
+  dungeononback: HCLayout.DungeonOnBack,
+  dungeonback: HCLayout.DungeonOnBack,
+  tokenonback: HCLayout.TokenOnBack,
+  tokenback: HCLayout.TokenOnBack,
+  stickersonback: HCLayout.StickersOnBack,
+  stickeronback: HCLayout.StickersOnBack,
+  stickersback: HCLayout.StickersOnBack,
+  stickerback: HCLayout.StickersOnBack,
+  anyonback: [
+    HCLayout.ReminderOnBack,
+    HCLayout.TokenOnBack,
+    HCLayout.DungeonOnBack,
+    HCLayout.TokenOnBack,
+  ],
+  anyback: [
+    HCLayout.ReminderOnBack,
+    HCLayout.TokenOnBack,
+    HCLayout.DungeonOnBack,
+    HCLayout.TokenOnBack,
+  ],
+  tokenininset: HCLayout.TokenInInset,
+  tokeninset: HCLayout.TokenInInset,
+  dungeonininset: HCLayout.DungeonInInset,
+  dungeoninset: HCLayout.DungeonInInset,
+  anyininset: [HCLayout.TokenInInset, HCLayout.DungeonInInset],
+  inset: HCLayout.Inset,
+  adventure: HCLayout.Inset,
+  omen: HCLayout.Inset,
+  prepare: HCLayout.Prepare,
+  prepared: HCLayout.Prepare,
+  insetface: [HCLayout.Inset, HCLayout.Prepare],
+  anyinset: [HCLayout.TokenInInset, HCLayout.DungeonInInset, HCLayout.Inset, HCLayout.Prepare],
+  anytoken: [HCLayout.Token, HCLayout.MultiToken, HCLayout.TokenInInset, HCLayout.TokenOnBack],
+  anynotmagic: [HCLayout.NotMagic, HCLayout.MultiNotMagic],
+  anyreminder: [HCLayout.Reminder, HCLayout.MultiReminder, HCLayout.ReminderOnBack],
+  anystickers: [HCLayout.Stickers, HCLayout.StickersOnBack],
+  anysticker: [HCLayout.Stickers, HCLayout.StickersOnBack],
+  anydungeon: [HCLayout.Dungeon, HCLayout.DungeonInInset, HCLayout.DungeonOnBack],
+  modal: HCLayout.Modal,
+  modaldfc: HCLayout.Modal,
+  mdfc: HCLayout.Modal,
+  transform: HCLayout.Transform,
+  tdfc: HCLayout.Transform,
+  specialize: HCLayout.Specialize,
+  flip: HCLayout.Flip,
+  split: HCLayout.Split,
+  aftermath: HCLayout.Aftermath,
+  leveler: HCLayout.Leveler,
+  level: HCLayout.Leveler,
+  class: HCLayout.Class,
+  case: HCLayout.Case,
+  saga: HCLayout.Saga,
+  mutate: HCLayout.Mutate,
+  prototype: HCLayout.Prototype,
+  planar: HCLayout.Planar,
+  plane: HCLayout.Planar,
+  phenomenon: HCLayout.Planar,
+  scheme: HCLayout.Scheme,
+  vanguard: HCLayout.Vanguard,
+  station: HCLayout.Station,
+  spacecraft: HCLayout.Station,
+  planet: HCLayout.Station,
 };
-const getShowcaseName = (text: string) =>
-  toShowcaseFrame(text)
-    ?.map(e => `"${e}"`)
-    .join(' or ');
-
-export const cardFrameFilter: textListFilterFunction = (
-  value1: string[],
-  operator: opType,
-  value2: string
-) => shareOp(operator, listsShare, value1, toCardFrame(value2));
-export const cardFrameSummary = createCorrectedSummary(
-  getFrameName,
-  (operator, value) => `the cards ${opToDont(operator)} have ${value} frame`,
-  (operator, value) => `!Unknown card frame "${value}"`
-);
-
-export const frameEffectFilter: textListFilterFunction = (
-  value1: string[],
-  operator: opType,
-  value2: string
-) => shareOp(operator, listsShare, value1, toFrameEffect(value2));
-export const frameEffectSummary = createCorrectedSummary(
-  getFrameEffectName,
-  (operator, value) => `the cards ${opToDont(operator)} have ${value}`,
-  (operator, value) => `!Unknown frame effect "${value}"`
-);
-
-export const frameFilter: textListFilterFunction = (
-  value1: string[],
-  operator: opType,
-  value2: string
-) => cardFrameFilter(value1, operator, value2) || frameEffectFilter(value1, operator, value2);
-export const frameSummary: summaryFunction<string> = (operator: opType, value: string) => {
-  const frame = getFrameName(value);
-  const frameEffect = getFrameEffectName(value);
-  if (frame) {
-    return cardFrameSummary(operator, value);
-  } else if (frameEffect) {
-    return frameEffectSummary(operator, value);
-  } else {
-    return `!Unknown frame "${value}"`;
-  }
+export const toFaceLayoutRecord: Record<
+  string,
+  HCLayoutGroup.FaceLayoutType | HCLayoutGroup.FaceLayoutType[]
+> = {
+  normal: HCLayout.Normal,
+  front: HCLayout.Front,
+  meldpart: HCLayout.MeldPart,
+  meldresult: HCLayout.MeldResult,
+  meld: [HCLayout.MeldPart, HCLayout.MeldResult],
+  cube: HCLayout.Cube,
+  token: HCLayout.Token,
+  emblem: HCLayout.Emblem,
+  reminder: HCLayout.Reminder,
+  stickers: HCLayout.Stickers,
+  sticker: HCLayout.Stickers,
+  dungeon: HCLayout.Dungeon,
+  checklist: HCLayout.Checklist,
+  misc: HCLayout.Misc,
+  notmagic: HCLayout.NotMagic,
+  draftpartner: HCLayout.DraftPartner,
+  inset: HCLayout.Inset,
+  adventure: HCLayout.Inset,
+  omen: HCLayout.Inset,
+  prepare: HCLayout.Prepare,
+  prepared: HCLayout.Prepare,
+  anyinset: [HCLayout.Inset, HCLayout.Prepare],
+  modal: HCLayout.Modal,
+  mdfc: HCLayout.Modal,
+  transform: HCLayout.Transform,
+  tdfc: HCLayout.Transform,
+  specialize: HCLayout.Specialize,
+  flip: HCLayout.Flip,
+  split: HCLayout.Split,
+  aftermath: HCLayout.Aftermath,
+  leveler: HCLayout.Leveler,
+  level: HCLayout.Leveler,
+  class: HCLayout.Class,
+  case: HCLayout.Case,
+  saga: HCLayout.Saga,
+  mutate: HCLayout.Mutate,
+  prototype: HCLayout.Prototype,
+  planar: HCLayout.Planar,
+  plane: HCLayout.Planar,
+  phenomenon: HCLayout.Planar,
+  scheme: HCLayout.Scheme,
+  vanguard: HCLayout.Vanguard,
+  station: HCLayout.Station,
+  spacecraft: HCLayout.Station,
+  planet: HCLayout.Station,
 };
-
-export const showcaseFilter: textListFilterFunction = (
-  value1: string[],
-  operator: opType,
-  value2: string
-) => shareOp(operator, listsShare, value1, toShowcaseFrame(value2));
-export const showcaseSummary = createCorrectedSummary(
-  getShowcaseName,
-  (operator, value) => `the cards ${opToDont(operator)} have a ${value} showcase frame`,
-  (operator, value) => `!Unknown showcase frame "${value}"`
-);

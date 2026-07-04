@@ -25,10 +25,11 @@ import {
   getRootEntries,
   rootValueType,
   faceValueType,
+  isRootPropType,
+  allPropType,
+  isFacePropType,
 } from '@hellfall/shared/types';
 import {
-  facePropOrder,
-  rootPropOrder,
   toFaces,
   addPropToRoot,
   addPropToFace,
@@ -297,7 +298,7 @@ export const fillFacesTo = (card: HCCard.AnyMultiFaced, index: number) => {
     } as HCCardFace.MultiFaced);
   }
 };
-const keepInRoot: (rootPropType & facePropType)[] = [
+const keepInRoot: allPropType[] = [
   'image_status',
   'image',
   'rotated_image',
@@ -322,13 +323,13 @@ export const toMultiFaced = (card: HCCard.AnySingleFaced) => {
   const entryProps: Partial<HCCard.Any> = {};
   const faceProps: Partial<faceType> = {};
   getCardEntries(card).forEach(([key, value]) => {
-    if (rootPropOrder.includes(key as rootPropType) && !['layout'].includes(key)) {
+    if (isRootPropType(key) && !['layout'].includes(key)) {
       (entryProps as any)[key] = value;
     }
     if (
-      facePropOrder.includes(key as facePropType) &&
-      !keepInRoot.includes(key as rootPropType & facePropType) &&
-      !onlyInFace.includes(key as keyof HCCardFace.MultiFaced)
+      isFacePropType(key) &&
+      !keepInRoot.includes(key as allPropType) &&
+      !onlyInFace.includes(key)
     ) {
       (faceProps as any)[key] = value;
     }
@@ -355,15 +356,15 @@ export const toSingleFaced = (card: HCCard.AnyMultiFaced) => {
   const entryProps: Partial<HCCard.Any> = {};
   const faceProps: Partial<faceType> = {};
   getCardEntries(card).forEach(([key, value]) => {
-    if (rootPropOrder.includes(key as rootPropType) && !['layout'].includes(key)) {
+    if (isRootPropType(key) && !['layout'].includes(key)) {
       (entryProps as any)[key] = value;
     }
   });
   getCardFaceEntries(card, 0).forEach(([key, value]) => {
     if (
-      facePropOrder.includes(key as facePropType) &&
-      !keepInRoot.includes(key as rootPropType & facePropType) &&
-      !onlyInFace.includes(key as keyof HCCardFace.MultiFaced)
+      isFacePropType(key) &&
+      !keepInRoot.includes(key as allPropType) &&
+      !onlyInFace.includes(key)
     ) {
       (faceProps as any)[key] = value;
     }

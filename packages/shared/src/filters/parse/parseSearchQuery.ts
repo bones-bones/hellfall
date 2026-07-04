@@ -3,7 +3,7 @@ import { FilterNode, IncludeFilter, otherPrintGetterType, sortObject } from '../
 import { parseFilter } from './parseFilter';
 import { CardMap } from '@hellfall/shared/utils';
 import { isSortFilter, parseSorts, sortIsValid, winnowSortObjects } from './parseSorts';
-import { filterIsInverted, splitOnFirstOp } from '../utils';
+import { splitOnFirstOp } from '../utils';
 
 const tokenList = ['(', ')', 'or', '-', '~'];
 const charBreakList = ['(', ' '];

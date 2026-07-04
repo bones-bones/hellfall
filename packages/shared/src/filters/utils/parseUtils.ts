@@ -1,12 +1,5 @@
 import { looseOpList, looseOpType, FilterNode } from '../types';
 
-export const filterIsInverted = (text: string, invert: boolean = false): boolean => {
-  if (text[0] == '-') {
-    return filterIsInverted(text.slice(1), !invert);
-  }
-  return invert;
-};
-
 const textIsQuote = (text: string) =>
   text.length > 1 && text[0] == text.at(-1) && ['"', "'"].includes(text[0]) && text.at(-2) != '\\';
 
@@ -18,6 +11,7 @@ export const unescapeText = (text: string) => {
     .replaceAll(/(?<!\\)['"]/g, '')
     .replaceAll(/\\(['"])/g, '$1');
 };
+
 /**
  * Splits a search term on its first operator
  * @param text search term to split

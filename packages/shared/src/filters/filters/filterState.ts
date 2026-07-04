@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { cardStringFilterFunction, opType, invertOptionType, summaryFunction } from '../types';
+import { cardStringFilterFunction, opType } from '../types';
 import {
   opIsNegative,
   opToNot,

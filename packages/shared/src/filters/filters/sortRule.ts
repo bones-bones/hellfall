@@ -1,13 +1,5 @@
 import { HCCard, HCColor, HCKind, allSetsList } from '@hellfall/shared/types';
-import {
-  dirType,
-  invertOptionType,
-  looseOpType,
-  NOPRINT,
-  opType,
-  sortFilterFunction,
-  sortType,
-} from '../types';
+import { dirType, looseOpType, sortFilterFunction, sortType } from '../types';
 
 const colorSortValue: Record<HCColor, number> = {
   W: 1,
@@ -121,11 +113,4 @@ export const filterSort: sortFilterFunction = (
     }
   }
   return 0; // just in case
-  // },
-  // {
-  //   invertOption: 'ignore' as invertOptionType,
-  //   sort: 'id' as sortType,
-  //   dir: 'asc' as dirType,
-  //   toSummary: (operator: opType, value: HCCard.Any) => NOPRINT,
 };
-// );

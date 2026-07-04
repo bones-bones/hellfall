@@ -9,9 +9,21 @@ import {
   opType,
   shorthandType,
   summaryFunction,
+  textFilterFunction,
+  textListFilterFunction,
+  textListsFilterFunction,
 } from '../types';
-import { listsOrValuesShare, toNumber } from '@hellfall/shared/utils';
+import {
+  listsShare,
+  textContains,
+  textEquals,
+  textListContains,
+  textListIncludes,
+  toNumber,
+} from '@hellfall/shared/utils';
 import { unescapeText } from './parseUtils';
+
+export const xor = (value1: any, value2: any) => !value1 != !value2;
 
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',
@@ -65,7 +77,7 @@ type NotFunctionOrObject<T> = T extends Function ? never : T extends object ? ne
  * @param op operator to use
  */
 export const opAsBool = <T>(condition: NotFunctionOrObject<T>, op: opType): boolean =>
-  !condition != !opIsNegative(op);
+  xor(condition, opIsNegative(op));
 
 /**
  * Given an op, returns `'not'` if it's negative and `''` otherwise
@@ -337,27 +349,33 @@ export const containsOp = <T, S>(
  * @param value1 the first value to check
  * @param value2 the second value to check
  */
-export const shareOp = <T, S>(
-  op: opType,
-  shares: (value1: T, value2: S) => boolean,
-  value1: T,
-  value2: S
-): boolean => {
-  switch (op) {
-    case '<':
-      return !shares(value1, value2);
-    case '<=':
-      return shares(value1, value2);
-    case '=':
-      return shares(value1, value2);
-    case '>=':
-      return shares(value1, value2);
-    case '>':
-      return !shares(value1, value2);
-    case '!=':
-      return !shares(value1, value2);
-  }
-};
+// export const shareOp = <T, S>(
+//   op: opType,
+//   shares: (value1: T, value2: S) => boolean,
+//   value1: T,
+//   value2: S
+// ): boolean => {
+//   switch (op) {
+//     case '<':
+//       return !shares(value1, value2);
+//     case '<=':
+//       return shares(value1, value2);
+//     case '=':
+//       return shares(value1, value2);
+//     case '>=':
+//       return shares(value1, value2);
+//     case '>':
+//       return !shares(value1, value2);
+//     case '!=':
+//       return !shares(value1, value2);
+//   }
+// };
+
+export const shareFilter: textListsFilterFunction = <T extends string>(
+  value1: string[],
+  operator: opType,
+  value2: T[]
+) => opAsBool(listsShare(value1, value2), operator);
 
 /**
  * To use in filters when need to compare two numbers
@@ -412,3 +430,18 @@ export const numSearchListFilter: numSearchListFilterFunction = (
   operator: opType,
   value2: numSearch
 ) => value1.some(value => numSearchFilter(value, operator, value2));
+
+export const textFilter: textFilterFunction = (value1: string, operator: opType, value2: string) =>
+  includeEqualsOp(operator, textContains, textEquals, value1, value2);
+export const textListFilter: textListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: string
+) => includeEqualsOp(operator, textListContains, textListIncludes, value1, value2);
+
+export const emptyFilter: textFilterFunction = (
+  value1: string,
+  operator: looseOpType,
+  value2: string
+) => true;
+// export const emptySummary: summaryFunction<string> = (operator: opType, value: string) => '!';

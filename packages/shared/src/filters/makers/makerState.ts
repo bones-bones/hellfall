@@ -13,9 +13,13 @@ import { makeHasRelatedFilter, makeIsRelatedFilter } from './makerRelated';
 import { makeIsUniqueFilter } from './makerPrints';
 import { makeSetTypeFilter } from './makerSet';
 import { CardStringFilter, looseOpType, stateFilterMaker } from '../types';
-import { makeCardFrameFilter, makeFrameEffectFilter } from './makerFrame';
-import { makeCardLayoutFilter, makeFaceLayoutFilter } from './makerLayout';
 import { unescapeText } from '../utils';
+import {
+  makeCardFrameFilter,
+  makeCardLayoutFilter,
+  makeFaceLayoutFilter,
+  makeFrameEffectFilter,
+} from './makerText';
 
 const cardFramesToParse = ['old', 'new'];
 const frameEffectsToParse = [

@@ -1,5 +1,6 @@
 import { setsData } from '@hellfall/shared/data';
 import { allSetsList, HCSet, SetCode } from '../types';
+import { wrapArray } from './listHandling';
 
 const sets = setsData.data;
 
@@ -61,11 +62,8 @@ export const getParentSet = (code: SetCode): SetCode | undefined => getSet(code)
  * Gets the sets that are the children of another set
  * @param code Set code to get the children of
  */
-export const getChildSets = (code: SetCode): SetCode[] | undefined => {
-  const childSetCodes = getSet(code)?.child_set_codes;
-  if (!childSetCodes) return undefined;
-  return Array.isArray(childSetCodes) ? childSetCodes : [childSetCodes];
-};
+export const getChildSets = (code: SetCode): SetCode[] | undefined =>
+  wrapArray(getSet(code)?.child_set_codes);
 
 /**
  * Gets the sets that are the direct children of another set (i.e. are its children and have the same set type)

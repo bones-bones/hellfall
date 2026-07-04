@@ -1,4 +1,4 @@
-import { HCCard } from '../../types';
+import { HCCard } from '@hellfall/shared/types';
 import {
   blockFilter,
   blockSummary,

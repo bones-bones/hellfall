@@ -460,3 +460,19 @@ export const pushToRecord = (record: Record<string, string[]>, key: string, valu
     record[key] = [value];
   }
 };
+
+/**
+ * Ensures that a value is an array or undefined. If it's not an array or undefined, wraps value in an array before returning it
+ * @template T The type of the value
+ * @param value the value to ensure is an array
+ */
+export const wrapArray = <T>(value: T | T[] | undefined): T[] | undefined =>
+  !Array.isArray(value) && value != undefined ? [value] : (value as T[] | undefined);
+
+/**
+ * Ensures that a value is an array. If it's not an array or undefined, wraps value in an array before returning it; if it's undefined, returns an empty array
+ * @template T The type of the value
+ * @param value the value to ensure is an array
+ */
+export const ensureArray = <T>(value: T | T[] | undefined): T[] =>
+  value == undefined ? [] : !Array.isArray(value) ? [value] : value;

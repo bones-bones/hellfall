@@ -155,3 +155,4 @@ Write a script to transform the database
 - fix fonts (it's kicking to georgia again)
 - make search bar on card pages work correctly
 - add a/an handling to showcase frame search summary function
+- move showcase to a prop

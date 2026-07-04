@@ -1,4 +1,11 @@
-import { HCCard } from '@hellfall/shared/types';
+import {
+  anyPropOrder,
+  anyPropType,
+  HCCard,
+  isAnyPropType,
+  isFacePropType,
+  isRootPropType,
+} from '@hellfall/shared/types';
 import {
   anyFilterFunction,
   cardFilterFunction,
@@ -17,12 +24,24 @@ import {
   numSearch,
   noteSummaryFunction,
   colorSearch,
-  textFilterFunction,
 } from './filterTypes';
-import { createNumSummary, getActualOp, invertOp, unescapeText } from '../utils';
-
-const xor = (value1: any, value2: any) => !value1 != !value2;
-
+import {
+  createNumSummary,
+  emptyFilter,
+  getActualOp,
+  invertOp,
+  shareFilter,
+  textListFilter,
+  unescapeText,
+  xor,
+} from '../utils';
+import {
+  ensureArray,
+  getAllNames,
+  getFromAll,
+  getFromFaces,
+  toFaces,
+} from '@hellfall/shared/utils';
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
     return { name: text.slice(0, -1), note: true };
@@ -34,7 +53,7 @@ const parseNote = (text: string): { name: string; note?: boolean | string } => {
   return { name: text };
 };
 
-export interface anyFilterInterface<T = any, S = any> {
+interface anyFilterInterface<T = any, S = any> {
   queryName: string;
   /**
    * The filter method to use
@@ -42,7 +61,7 @@ export interface anyFilterInterface<T = any, S = any> {
   filter: anyFilterFunction<T, S>;
 }
 
-export interface sortInterface extends anyFilterInterface {
+interface sortInterface extends anyFilterInterface {
   queryName: string;
   /**
    * The filter method to use
@@ -60,7 +79,7 @@ export class sortObject implements sortInterface {
   ) {}
 }
 
-export interface filterInterface<T = any, S = any> extends anyFilterInterface {
+interface filterInterface<T = any, S = any> extends anyFilterInterface {
   queryName: string;
   /**
    * The filter method to use
@@ -88,7 +107,7 @@ export interface filterInterface<T = any, S = any> extends anyFilterInterface {
   toSummary: () => string;
 }
 
-export class filterObject<T, S> implements filterInterface {
+export class FilterObject<T, S> implements filterInterface {
   inverted: boolean;
   constructor(
     public queryName: string,
@@ -124,7 +143,7 @@ export class filterObject<T, S> implements filterInterface {
       this.inverted
     );
 }
-export class UUIDFilter extends filterObject<string, string> {
+export class UUIDFilter extends FilterObject<string, string> {
   constructor(
     queryName: string,
     filter: cardFilterFunction<string, string>,
@@ -143,10 +162,9 @@ export class UUIDFilter extends filterObject<string, string> {
       this.inverted
     );
 }
-export class InvalidFilter extends filterObject<string, string> {
+export class InvalidFilter extends FilterObject<string, string> {
   constructor(
     queryName: string,
-    filter: textFilterFunction,
     summaryStart: string,
     value: string,
     op: looseOpType,
@@ -155,7 +173,7 @@ export class InvalidFilter extends filterObject<string, string> {
   ) {
     super(
       queryName,
-      filter,
+      emptyFilter,
       () => `${summaryStart} "${value}"`,
       value,
       op,
@@ -166,7 +184,7 @@ export class InvalidFilter extends filterObject<string, string> {
   }
 }
 
-export class ColorFilter<T> extends filterObject<T, colorSearch> {
+export class ColorFilter<T> extends FilterObject<T, colorSearch> {
   constructor(
     queryName: string,
     filter: cardFilterFunction<T, colorSearch>,
@@ -183,7 +201,7 @@ export class ColorFilter<T> extends filterObject<T, colorSearch> {
     xor(this.filter(this.getValueToCompare(card), this.getOp(), this.value), this.inverted);
 }
 
-export class ComparisonFilter extends filterObject<HCCard.Any, string> {
+export class ComparisonFilter extends FilterObject<HCCard.Any, string> {
   value2: string;
   constructor(
     queryName: string,
@@ -204,25 +222,175 @@ export class ComparisonFilter extends filterObject<HCCard.Any, string> {
       this.inverted
     );
 }
-export class StringPropSummaryFilter<T, S> extends filterObject<T, S> {
+export class LegalityFilter extends FilterObject<HCCard.Any, string> {
   constructor(
     queryName: string,
-    filter: cardFilterFunction<T, S>,
-    summary: summaryFunction<S>,
-    value: S,
+    filter: comparisonFilterFunction,
+    summary: comparisonSummaryFunction,
+    value: string,
     op: looseOpType,
-    getValueToCompare: (card: HCCard.Any) => T,
-    public summaryStart: string,
+    defaultOp: opType = '='
+  ) {
+    super(queryName, filter, summary, value, op, card => card, defaultOp);
+  }
+  toSummary = () => this.summary(this.getOp(), this.queryName, this.inverted, this.value);
+  cardPassesFilter = (card: HCCard.Any) =>
+    xor(
+      this.filter(this.getValueToCompare(card), this.getOp(), this.queryName, this.value),
+      this.inverted
+    );
+}
+
+const getValuesFromProp = <T extends anyPropType>(
+  card: HCCard.Any,
+  prop: T,
+  location: 'any' | 'face' | 'root' = 'any'
+): string[] => {
+  if (prop == 'name') {
+    return getAllNames(card).map(value => unescapeText(value));
+  }
+  if (prop == ('showcase' as any)) {
+    return card.tag_notes?.['showcase-frame'].split(', ') ?? [];
+  }
+  const values: string[] = [];
+  if (isFacePropType(prop) && location != 'root') {
+    switch (prop) {
+      case 'supertypes':
+      case 'types':
+      case 'subtypes':
+        values.push(
+          ...toFaces(card).flatMap(e => (e[prop] && e[prop]?.length > 1 ? e[prop].join(' ') : []))
+        );
+        break;
+      case 'type_line':
+        values.push(...getFromFaces(card, 'supertypes'));
+        values.push(...getFromFaces(card, 'types'));
+        values.push(...getFromFaces(card, 'subtypes'));
+        break;
+    }
+    values.push(
+      ...((isRootPropType(prop) && location != 'face' ? getFromAll : (getFromFaces as any))(
+        card,
+        prop
+      ) as string[])
+    );
+  } else if (isRootPropType(prop) && location != 'face') {
+    const value = card[prop];
+    if (typeof value == 'object' && !Array.isArray(value) && value !== null) {
+      values.push(...Object.values(value));
+    } else {
+      values.push(...ensureArray<string>(card[prop] as string | string[] | undefined));
+    }
+  }
+  return values.map(value => unescapeText(value));
+};
+type queryValueType = { props: anyPropType[]; location: 'any' | 'face' | 'root' };
+const queryNamePropRecord: Record<string, anyPropType | anyPropType[]> = {
+  mana: 'mana_cost',
+  type: 'type_line',
+  cardtype: 'types',
+  oracle: 'oracle_text',
+  flavor: 'flavor_text',
+  lore: ['name', 'type_line', 'oracle_text', 'flavor_text'],
+  border: 'border_color',
+  cardframe: 'frame',
+  frame: ['frame', 'frame_effects'],
+  facelayout: 'layout',
+  anylayout: 'layout',
+};
+const queryNameLocationRecord: Record<string, 'face' | 'root'> = {
+  layout: 'root',
+  facelayout: 'face',
+};
+const queryNameToValue = (queryName: string): queryValueType => {
+  const queryValue: queryValueType = {
+    props: [],
+    location: 'any',
+  };
+  const queryProp = queryNamePropRecord[queryName];
+  if (queryProp) {
+    queryValue.props = ensureArray(queryProp);
+  }
+  if (isAnyPropType(queryName) && !queryValue.props) {
+    queryValue.props = [queryName];
+  }
+  if (!queryValue.props) {
+    const name =
+      anyPropOrder.find(prop => [queryName, `${queryName}s`].includes(prop.replaceAll('_', ''))) ??
+      (queryName as anyPropType);
+    queryValue.props = ensureArray(name);
+  }
+  if (queryName in queryNameLocationRecord) {
+    queryValue.location = queryNameLocationRecord[queryName];
+  }
+  return queryValue;
+};
+export class PropFilter extends FilterObject<string[], string> {
+  queryValue: queryValueType;
+  constructor(
+    queryName: string,
+    summary: summaryFunction<string>,
+    value: string,
+    op: looseOpType,
+    public summaryStart?: string,
     defaultOp: opType = '>=',
     invertOption: invertOptionType = 'negate'
   ) {
-    super(queryName, filter, summary, value, op, getValueToCompare, defaultOp, invertOption);
-    this.summaryStart = summaryStart;
+    super(
+      queryName,
+      textListFilter,
+      summary,
+      value,
+      op,
+      card => this.queryValue.props.flatMap(p => getValuesFromProp(card, p)),
+      defaultOp,
+      invertOption
+    );
+    this.queryValue = queryNameToValue(queryName);
   }
   toSummary = () =>
-    `${this.summaryStart} ${super.summary(this.getOp(), this.value, this.inverted)}`;
+    `${this.summaryStart ? `${this.summaryStart} ` : ''}${super.summary(
+      this.getOp(),
+      this.value,
+      this.inverted
+    )}`;
 }
-export class NumberPropSummaryFilter<T, S extends numSearch> extends filterObject<T, S> {
+export class PropConvertFilter extends FilterObject<string[], string[]> {
+  summaryValue: string;
+  queryValue: queryValueType;
+  constructor(
+    queryName: string,
+    summary: summaryFunction<string>,
+    value: string,
+    op: looseOpType,
+    public toValue: (value: string) => string[] | string | undefined = value => value,
+    public summaryStart?: string,
+    defaultOp: opType = '=',
+    invertOption: invertOptionType = 'flip'
+  ) {
+    super(
+      queryName,
+      shareFilter,
+      summary as summaryFunction<any>,
+      ensureArray(toValue(value)).map(v => unescapeText(v)),
+      op,
+      card => this.queryValue.props.flatMap(p => getValuesFromProp(card, p)),
+      defaultOp,
+      invertOption
+    );
+    this.summaryValue = value;
+    this.queryValue = queryNameToValue(queryName);
+  }
+  cardPassesFilter = (card: HCCard.Any) =>
+    xor(this.filter(this.getValueToCompare(card), this.getOp(), this.value), this.inverted);
+  toSummary = () =>
+    `${this.summaryStart ? `${this.summaryStart} ` : ''}${(super.summary as any)(
+      this.getOp(),
+      this.summaryValue,
+      this.inverted
+    )}`;
+}
+export class NumberPropFilter<T, S extends numSearch> extends FilterObject<T, S> {
   constructor(
     queryName: string,
     filter: cardFilterFunction<T, S>,
@@ -246,11 +414,11 @@ export class NumberPropSummaryFilter<T, S extends numSearch> extends filterObjec
   }
 }
 
-export class NoteFilter extends filterObject<HCCard.Any, string> {
+export class NoteFilter extends FilterObject<HCCard.Any, string> {
   note?: boolean | string;
   constructor(
     queryName: string,
-    public filter: noteFilterFunction,
+    filter: noteFilterFunction,
     summary: noteSummaryFunction,
     value: string,
     op: looseOpType,
@@ -265,7 +433,7 @@ export class NoteFilter extends filterObject<HCCard.Any, string> {
   cardPassesFilter = (card: HCCard.Any) =>
     xor(this.filter(card, this.getOp(), unescapeText(this.value), this.note), this.inverted);
 }
-export class IncludeFilter extends filterObject<HCCard.Any, string> {
+export class IncludeFilter extends FilterObject<HCCard.Any, string> {
   constructor(
     queryName: string,
     filter: includeFilterFunction,
@@ -278,7 +446,7 @@ export class IncludeFilter extends filterObject<HCCard.Any, string> {
     super(queryName, filter, summary, value, op, card => card, defaultOp, invertOption);
   }
 }
-export class CardStringFilter extends filterObject<HCCard.Any, string> {
+export class CardStringFilter extends FilterObject<HCCard.Any, string> {
   constructor(
     queryName: string,
     filter: cardStringFilterFunction,

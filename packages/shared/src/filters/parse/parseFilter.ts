@@ -1,4 +1,4 @@
-import { invertCompOp, isCompKeyword } from '../filters';
+import { isCompKeyword } from '../filters';
 import {
   makeCompFilter,
   makeInvalidColorFilter,
@@ -7,7 +7,7 @@ import {
   makeNameFilter,
 } from '../makers';
 import {
-  filterObject,
+  FilterObject,
   looseOpList,
   otherPrintGetterType,
   colorFilterNameType,
@@ -27,8 +27,8 @@ export const parseFilter = (
   text: string,
   invert: boolean = false,
   getOtherPrints: otherPrintGetterType
-): filterObject<any, any> => {
-  const correctOp = (filter: filterObject<any, any>) => {
+): FilterObject<any, any> => {
+  const correctOp = (filter: FilterObject<any, any>) => {
     if (invert) {
       filter.invert();
     }

@@ -9,9 +9,11 @@ import {
   faceElementValueType,
   facePropType,
   faceType,
+  facePropOrder,
+  partPropOrder,
+  anyPropOrder,
 } from '@hellfall/shared/types';
-import { listIncludesValueLower, listsShareLower } from '../listHandling';
-import { facePropOrder, partPropOrder, propOrder } from './orderProps';
+import { ensureArray, listIncludesValueLower, listsShareLower } from '../listHandling';
 import { getIndicatorFromColors } from '../pipsHandling';
 import {
   getMasterpiece,
@@ -48,10 +50,7 @@ export const toFaces = (card: HCCard.Any): faceType[] => {
 export const getFromFaces = <K extends facePropType>(
   card: HCCard.Any,
   prop: K
-): faceElementValueType<K>[] =>
-  toFaces(card).flatMap(face =>
-    Array.isArray(face[prop]) ? face[prop] : [face[prop] ?? []].flat()
-  );
+): faceElementValueType<K>[] => toFaces(card).flatMap(face => ensureArray(face[prop] as any));
 
 /**
  * Gets the value of a prop from each face of a card without flattening it (excluding the main part for multiface cards)
@@ -72,7 +71,7 @@ export const getFromAll = <K extends allPropType>(
   card: HCCard.Any,
   prop: K
 ): allElementValueType<K>[] => [
-  ...('card_faces' in card ? (Array.isArray(card[prop]) ? card[prop] : [card[prop] ?? []]) : []),
+  ...('card_faces' in card ? ensureArray(card[prop] as any) : []),
   ...getFromFaces(card, prop),
 ];
 
@@ -88,13 +87,13 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
   Object.defineProperty(card, 'toJSON', {
     value: function (this: Record<string, any>) {
       const ordered: Record<string, any> = {};
-      propOrder.forEach(prop => {
+      anyPropOrder.forEach(prop => {
         if (prop in this) {
           ordered[prop] = this[prop];
         }
       });
-      const leftovers = (Object.keys(this) as (typeof propOrder)[number][]).filter(
-        left => !propOrder.includes(left) && !ignoreLeftovers.includes(left)
+      const leftovers = (Object.keys(this) as (typeof anyPropOrder)[number][]).filter(
+        left => !anyPropOrder.includes(left) && !ignoreLeftovers.includes(left)
       );
       if (leftovers.length) {
         // You forgot a prop.

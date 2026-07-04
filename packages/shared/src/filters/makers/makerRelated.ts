@@ -1,4 +1,4 @@
-import { HCCard } from '../../types';
+import { HCCard } from '@hellfall/shared/types';
 import { hasRelatedFilter, hasRelatedSummary, isRelatedFilter, isRelatedSummary } from '../filters';
 import { CardStringFilter, looseOpType, filterMaker } from '../types';
 

@@ -12,7 +12,7 @@ import {
   printsNumberSummary,
   isUniqueSummary,
 } from '../filters';
-import { filterObject, printsFilterMaker, looseOpType } from '../types';
+import { FilterObject, printsFilterMaker, looseOpType } from '../types';
 import { unescapeText } from '../utils';
 
 export const makeInFilter: printsFilterMaker = (
@@ -20,7 +20,7 @@ export const makeInFilter: printsFilterMaker = (
   op: looseOpType,
   getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
 ) => {
-  return new filterObject<HCCard.Any[], string>(
+  return new FilterObject<HCCard.Any[], string>(
     'in',
     isSetType(unescapeText(value)) || isSetType(equivSetTypes[unescapeText(value)])
       ? inSetTypeFilter
@@ -39,7 +39,7 @@ export const makeSetsNumberFilter: printsFilterMaker = (
   op: looseOpType,
   getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
 ) => {
-  return new filterObject<HCCard.Any[], string>(
+  return new FilterObject<HCCard.Any[], string>(
     'sets',
     setsNumberFilter,
     setsNumberSummary,
@@ -53,8 +53,8 @@ export const makePrintsNumberFilter: printsFilterMaker = (
   op: looseOpType,
   getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
 ) => {
-  return new filterObject<HCCard.Any[], string>(
-    'sets',
+  return new FilterObject<HCCard.Any[], string>(
+    'prints',
     printsNumberFilter,
     printsNumberSummary,
     value,
@@ -67,8 +67,8 @@ export const makeIsUniqueFilter: printsFilterMaker = (
   op: looseOpType,
   getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
 ) => {
-  return new filterObject<HCCard.Any[], string>(
-    'sets',
+  return new FilterObject<HCCard.Any[], string>(
+    'is',
     isUniqueFilter,
     isUniqueSummary,
     value,
