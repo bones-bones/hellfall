@@ -1,34 +1,47 @@
 import { getFromAll } from '@hellfall/shared/utils';
-import { filterCardFrame, filterFrame, filterFrameEffect, filterShowcase } from '../filters';
-import { PassThroughSummaryFilter, looseOpType, filterMaker } from '../types';
+import {
+  cardFrameFilter,
+  frameFilter,
+  frameEffectFilter,
+  showcaseFilter,
+  cardFrameSummary,
+  frameEffectSummary,
+  frameSummary,
+  showcaseSummary,
+} from '../filters';
+import { filterObject, looseOpType, filterMaker } from '../types';
 
-export const makeCardFrameFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter('cardframe', filterCardFrame, value, op, '=', card => [
+export const makeCardFrameFilter: filterMaker<string[]> = (value: string, op: looseOpType) => {
+  return new filterObject('cardframe', cardFrameFilter, cardFrameSummary, value, op, card => [
     ...getFromAll(card, 'frame'),
     ...(card.frame ?? []),
   ]);
 };
-export const makeFrameEffectFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter('frameeffect', filterFrameEffect, value, op, '=', card => [
-    ...getFromAll(card, 'frame_effects'),
-    ...(card.frame_effects ?? []),
-  ]);
+export const makeFrameEffectFilter: filterMaker<string[]> = (value: string, op: looseOpType) => {
+  return new filterObject<string[], string>(
+    'frameeffect',
+    frameEffectFilter,
+    frameEffectSummary,
+    value,
+    op,
+    card => [...getFromAll(card, 'frame_effects'), ...(card.frame_effects ?? [])]
+  );
 };
-export const makeFrameFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter('frame', filterFrame, value, op, '=', card =>
+export const makeFrameFilter: filterMaker<string[]> = (value: string, op: looseOpType) => {
+  return new filterObject('frame', frameFilter, frameSummary, value, op, card =>
     [...getFromAll(card, 'frame'), ...(card.frame ?? [])].concat([
       ...getFromAll(card, 'frame_effects'),
       ...(card.frame_effects ?? []),
     ])
   );
 };
-export const makeShowcaseFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter(
+export const makeShowcaseFilter: filterMaker<string[]> = (value: string, op: looseOpType) => {
+  return new filterObject(
     'showcase',
-    filterShowcase,
+    showcaseFilter,
+    showcaseSummary,
     value,
     op,
-    '=',
     card => card.tag_notes?.['showcase-frame'].split(', ') ?? []
   );
 };

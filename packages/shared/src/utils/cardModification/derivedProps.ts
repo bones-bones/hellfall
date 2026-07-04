@@ -13,6 +13,7 @@ import {
   FrontIdentityLayouts,
   FrontManaValueFaceLayouts,
   NoManaValueFaceLayouts,
+  faceType,
 } from '@hellfall/shared/types';
 import {
   splitParens,
@@ -39,6 +40,9 @@ import {
   splitTagComponents,
   getColorsFromText,
   listIncludesValue,
+  textContains,
+  listIncludesValueLowerEvery,
+  fillSubKeywords,
   // setTags,
 } from '@hellfall/shared/utils';
 
@@ -200,10 +204,40 @@ export const setDerivedProps = (
       }
       return false;
     });
-  const getFrameEffectsFromFace = (
-    face: HCCard.AnySingleFaced | HCCardFace.MultiFaced,
-    i: number
-  ) => {
+  const getKeywordsFromFace = (face: faceType, i: number) => {
+    const keywords: string[] = [];
+    if (
+      listIncludesValueLower(face.types, 'enchantment') &&
+      listIncludesValueLower(face.subtypes, 'aura') &&
+      textContains(face.oracle_text, 'enchant ')
+    ) {
+      keywords.push('enchant');
+    }
+    if (
+      listIncludesValueLower(face.types, 'artifact') &&
+      listIncludesValueLower(face.subtypes, 'equipment') &&
+      ['equip (', 'equip—'].some(text => textContains(face.oracle_text, text))
+    ) {
+      keywords.push('equip');
+    }
+    if (
+      listIncludesValueLower(face.types, 'artifact') &&
+      listIncludesValueLower(face.subtypes, 'vehicle') &&
+      textContains(face.oracle_text, 'crew ')
+    ) {
+      keywords.push('crew');
+    }
+    if (
+      listIncludesValueLowerEvery(face.types, ['artifact', 'creature']) &&
+      listIncludesValueLower(face.subtypes, 'equipment') &&
+      ['reconfigure {', 'reconfigure—'].some(text => textContains(face.oracle_text, 'equip '))
+    ) {
+      keywords.push('reconfigure');
+    }
+    fillSubKeywords(keywords);
+    return keywords;
+  };
+  const getFrameEffectsFromFace = (face: faceType, i: number) => {
     const effects: HCFrameEffect[] = [];
     if (face.frame ? EffectFrames.includes(face.frame) : EffectFrames.includes(card.frame)) {
       if (
@@ -335,10 +369,16 @@ export const setDerivedProps = (
           ? card.card_faces.slice(0, i).findLast(f => f.mana_cost)?.mana_value ?? 0
           : getMVFromCost(face.mana_cost);
       mana_cost_list.push(face.mana_cost);
-      const effects = [...(face.frame_effects || []), ...getFrameEffectsFromFace(face, i)];
+      const effects = [...(face.frame_effects ?? []), ...getFrameEffectsFromFace(face, i)];
       if (effects.length > 0 && card.kind != 'scryfall') {
         face.frame_effects = effects;
       }
+      const keywords = getKeywordsFromFace(face, i);
+      keywords.forEach(keyword => {
+        if (!card.keywords.includes(keyword)) {
+          card.keywords.push(keyword);
+        }
+      });
     });
     card.type_line = type_line_list.join(' // ');
     if (card.tags?.includes('italic-typeline')) {
@@ -358,7 +398,7 @@ export const setDerivedProps = (
       card.kind == 'token' &&
       card.mana_cost &&
       !baseIncludesFlag('generic') &&
-      !card.frame_effects?.includes(HCFrameEffect.Devoid)
+      !card.keywords.includes('devoid')
     ) {
       card.colors = getColorsFromText(card.mana_cost);
     }
@@ -368,10 +408,16 @@ export const setDerivedProps = (
     ]
       .filter(Boolean)
       .join(' ') as string;
-    const effects = [...(card.frame_effects || []), ...getFrameEffectsFromFace(card, 0)];
+    const effects = [...(card.frame_effects ?? []), ...getFrameEffectsFromFace(card, 0)];
     if (effects.length > 0) {
       card.frame_effects = effects;
     }
+    const keywords = getKeywordsFromFace(card, 0);
+    keywords.forEach(keyword => {
+      if (!card.keywords.includes(keyword)) {
+        card.keywords.push(keyword);
+      }
+    });
   }
   if (card.kind == 'token') {
     if ('card_faces' in card) {
@@ -396,7 +442,7 @@ export const setDerivedProps = (
       card.colors = orderColors(colors);
     } else if (card.mana_cost) {
       card.mana_value = getMVFromCost(card.mana_cost);
-      if (!card.tags?.includes('generic') && !card.frame_effects?.includes(HCFrameEffect.Devoid)) {
+      if (!card.tags?.includes('generic') && !card.keywords.includes('devoid')) {
         card.colors = card.color_indicator ?? getColorsFromText(card.mana_cost);
       }
     }

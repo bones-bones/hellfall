@@ -243,7 +243,7 @@ export const listsOrValuesShare = <T = any>(
 const listLowerEquality: equalityFunction<string> = (value1: string, value2: string) =>
   value1.toLowerCase() === value2.toLowerCase();
 /**
- * Checks whether a list includes a value.
+ * Checks whether a list includes a value when lowercase.
  * @param list List to check
  * @param value Value to check
  * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
@@ -251,6 +251,13 @@ const listLowerEquality: equalityFunction<string> = (value1: string, value2: str
  */
 export const listIncludesValueLower = (list?: string[], value?: string) =>
   value && listIncludesValue(list ?? [], value, listLowerEquality);
+/**
+ * Checks whether a list includes all of a list of values when lowercase
+ * @param value1 List to check
+ * @param value2 List of strings to check
+ */
+export const listIncludesValueLowerEvery = (value1?: string[], value2?: string[]) =>
+  value2?.every(value => listIncludesValueLower(value1, value));
 /**
  * Checks whether one list shares any values with another list.
  * @param value1 First list to check

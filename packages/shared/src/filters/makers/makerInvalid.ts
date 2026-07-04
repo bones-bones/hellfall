@@ -1,58 +1,24 @@
-import { filterEmpty } from '../filters';
-import { filterObject, looseOpType, filterMaker } from '../types';
+import { emptyFilter, emptySummary } from '../filters';
+import { looseOpType, filterMaker, InvalidFilter } from '../types';
 
-export const makeInvalidFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new filterObject<string, string>(
-    'invalid',
-    filterEmpty,
-    value,
-    op,
-    '>=',
-    card => '',
-    () => `!Unknown "${value}"`
-  );
+export const makeInvalidFilter: filterMaker<string> = (value: string, op: looseOpType) => {
+  return new InvalidFilter('invalid', emptyFilter, '!Unknown', value, op);
 };
-export const makeInvalidSortFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new filterObject<string, string>(
-    'invalidsort',
-    filterEmpty,
-    value,
-    op,
-    '>=',
-    card => '',
-    () => `!Unknown sort choice "${value}"`
-  );
+export const makeInvalidSortFilter: filterMaker<string> = (value: string, op: looseOpType) => {
+  return new InvalidFilter('invalidsort', emptyFilter, '!Unknown sort choice', value, op);
 };
-export const makeInvalidKeywordFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new filterObject<string, string>(
-    'invalidkeyword',
-    filterEmpty,
-    value,
-    op,
-    '>=',
-    card => '',
-    () => `!Unknown keyword "${value}"`
-  );
+export const makeInvalidKeywordFilter: filterMaker<string> = (value: string, op: looseOpType) => {
+  return new InvalidFilter('invalidkeyword', emptyFilter, '!Unknown keyword', value, op);
 };
-export const makeInvalidColorFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new filterObject<string, string>(
-    'invalidcolor',
-    filterEmpty,
-    value,
-    op,
-    '>=',
-    card => '',
-    () => `!Unknown color "${value}"`
-  );
+export const makeInvalidColorFilter: filterMaker<string> = (value: string, op: looseOpType) => {
+  return new InvalidFilter('invalidcolor', emptyFilter, '!Unknown color', value, op);
 };
-// export const makeInvalidIncludeFilter: filterMaker = (value: string, op: looseOpType) => {
-//   return new filterObject<string, string>(
+// export const makeInvalidIncludeFilter: filterMaker<string>= (value: string, op: looseOpType) => {
+//   return new InvalidFilter(
 //     'invalidinclude',
 //     filterEmpty,
+//     '!Unknown include',
 //     value,
 //     op,
-//     '>=',
-//     card => '',
-//     () => `!Unknown include "${value}"`
 //   );
 // };

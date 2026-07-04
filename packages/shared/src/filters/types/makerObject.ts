@@ -1,17 +1,27 @@
 import { HCCard } from '@hellfall/shared/types';
 import {
-  anyFilter,
-  cardFilter,
-  cardStringFilter,
+  anyFilterFunction,
+  cardFilterFunction,
+  cardStringFilterFunction,
   dirType,
-  includeFilter,
+  includeFilterFunction,
   looseOpType,
   opType,
-  sortFilter,
+  sortFilterFunction,
   sortType,
-  noteFilter,
+  noteFilterFunction,
+  summaryFunction,
+  invertOptionType,
+  comparisonFilterFunction,
+  comparisonSummaryFunction,
+  numSearch,
+  noteSummaryFunction,
+  colorSearch,
+  textFilterFunction,
 } from './filterTypes';
-import { createNumSummary, getActualOp, unescapeText } from '../utils';
+import { createNumSummary, getActualOp, invertOp, unescapeText } from '../utils';
+
+const xor = (value1: any, value2: any) => !value1 != !value2;
 
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
@@ -29,7 +39,7 @@ export interface anyFilterInterface<T = any, S = any> {
   /**
    * The filter method to use
    */
-  filter: anyFilter<T, S>;
+  filter: anyFilterFunction<T, S>;
 }
 
 export interface sortInterface extends anyFilterInterface {
@@ -37,14 +47,14 @@ export interface sortInterface extends anyFilterInterface {
   /**
    * The filter method to use
    */
-  filter: sortFilter;
+  filter: sortFilterFunction;
   sort: sortType;
   dir: dirType;
 }
 export class sortObject implements sortInterface {
   constructor(
     public queryName: string,
-    public filter: sortFilter,
+    public filter: sortFilterFunction,
     public sort: sortType,
     public dir: dirType
   ) {}
@@ -55,184 +65,183 @@ export interface filterInterface<T = any, S = any> extends anyFilterInterface {
   /**
    * The filter method to use
    */
-  filter: cardFilter<T, S>;
+  filter: cardFilterFunction<T, S>;
+  summary: summaryFunction<S>;
   /**
    * The value to filter against
    */
   value: S;
   op: looseOpType;
   defaultOp: opType;
-  inverted?: boolean;
+  invertOption: invertOptionType;
+  inverted: boolean;
   /**
    * The method to get the value to compare from a card
    * @param card card to get the value from
    * @returns
    */
-  getOp: () => opType;
   getValueToCompare: (card: HCCard.Any) => T;
-  toSummary: (invert?: boolean) => string;
+
+  getOp: () => opType;
+  invert: () => void;
   cardPassesFilter: (card: HCCard.Any) => boolean;
+  toSummary: () => string;
 }
 
 export class filterObject<T, S> implements filterInterface {
+  inverted: boolean;
   constructor(
     public queryName: string,
-    public filter: cardFilter<T, S>,
+    public filter: cardFilterFunction<T, S>,
+    public summary: summaryFunction<S>,
     public value: S,
     public op: looseOpType,
-    public defaultOp: opType,
     public getValueToCompare: (card: HCCard.Any) => T,
-    public toSummary: (invert?: boolean) => string,
-    public inverted?: boolean
-  ) {}
+    public defaultOp: opType = '=',
+    public invertOption: invertOptionType = 'flip'
+  ) {
+    this.inverted = false;
+  }
   getOp = () => getActualOp(this.op, this.defaultOp);
+  invert = () => {
+    switch (this.invertOption) {
+      case 'flip': {
+        this.op = invertOp(this.op);
+        break;
+      }
+      case 'negate':
+        this.inverted = !this.inverted;
+    }
+  };
+  toSummary = () => this.summary(this.getOp(), this.value, this.inverted);
   cardPassesFilter = (card: HCCard.Any) =>
-    !this.inverted !=
-    !this.filter(
-      this.getValueToCompare(card),
-      this.getOp(),
-      typeof this.value == 'string' ? unescapeText(this.value) : this.value
+    xor(
+      this.filter(
+        this.getValueToCompare(card),
+        this.getOp(),
+        typeof this.value == 'string' ? unescapeText(this.value) : this.value
+      ),
+      this.inverted
     );
 }
 export class UUIDFilter extends filterObject<string, string> {
   constructor(
     queryName: string,
-    filter: cardFilter<string, string>,
+    filter: cardFilterFunction<string, string>,
+    summary: summaryFunction<string>,
     value: string,
     op: looseOpType,
-    defaultOp: opType,
     getValueToCompare: (card: HCCard.Any) => string,
-    inverted?: boolean
+    defaultOp: opType = '=',
+    invertOption: invertOptionType = 'flip'
   ) {
-    super(
-      queryName,
-      filter,
-      value,
-      op,
-      defaultOp,
-      getValueToCompare,
-      (invert?: boolean) => this.filter.toSummary(this.getOp(), this.value, invert),
-      inverted
-    );
-    this.cardPassesFilter = (card: HCCard.Any) =>
-      !this.inverted !=
-      !this.filter(this.getValueToCompare(card), this.getOp(), this.value.toLowerCase());
+    super(queryName, filter, summary, value, op, getValueToCompare, defaultOp, invertOption);
   }
+  cardPassesFilter = (card: HCCard.Any) =>
+    xor(
+      this.filter(this.getValueToCompare(card), this.getOp(), this.value.toLowerCase()),
+      this.inverted
+    );
 }
-export class PassThroughSummaryFilter<T, S> extends filterObject<T, S> {
+export class InvalidFilter extends filterObject<string, string> {
   constructor(
     queryName: string,
-    filter: cardFilter<T, S>,
-    value: S,
+    filter: textFilterFunction,
+    summaryStart: string,
+    value: string,
     op: looseOpType,
-    defaultOp: opType,
-    getValueToCompare: (card: HCCard.Any) => T,
-    inverted?: boolean
+    defaultOp: opType = '>=',
+    invertOption: invertOptionType = 'ignore'
   ) {
     super(
       queryName,
       filter,
+      () => `${summaryStart} "${value}"`,
       value,
       op,
+      card => '',
       defaultOp,
-      getValueToCompare,
-      (invert?: boolean) => this.filter.toSummary(this.getOp(), this.value, invert),
-      inverted
+      invertOption
     );
   }
 }
 
-// export class PrintsFilter extends PassThroughSummaryFilter<HCCard.Any[],string> {
-//   constructor(
-//     queryName: string,
-//     public filter: printsFilter,
-//     value: string,
-//     op: looseOpType,
-//     defaultOp: opType,
-//     getValueToCompare: (card: HCCard.Any) => HCCard.Any[],
-//   ) {
-//     super(
-//       queryName,
-//       filter,
-//       value,
-//       op,
-//       defaultOp,
-//       getValueToCompare
-//     );
-
-//   }
-// }
-
-export class CompFilter extends filterObject<HCCard.Any, string> {
+export class ColorFilter<T> extends filterObject<T, colorSearch> {
   constructor(
     queryName: string,
-    filter: cardStringFilter,
-    value1: string,
+    filter: cardFilterFunction<T, colorSearch>,
+    summary: summaryFunction<colorSearch>,
+    value: colorSearch,
+    op: looseOpType,
+    getValueToCompare: (card: HCCard.Any) => T,
+    defaultOp: opType = '=',
+    invertOption: invertOptionType = 'negate'
+  ) {
+    super(queryName, filter, summary, value, op, getValueToCompare, defaultOp, invertOption);
+  }
+  cardPassesFilter = (card: HCCard.Any) =>
+    xor(this.filter(this.getValueToCompare(card), this.getOp(), this.value), this.inverted);
+}
+
+export class ComparisonFilter extends filterObject<HCCard.Any, string> {
+  value2: string;
+  constructor(
+    queryName: string,
+    filter: comparisonFilterFunction,
+    summary: comparisonSummaryFunction,
+    value: string,
     op: looseOpType,
     value2: string,
-    defaultOp: opType,
-    inverted?: boolean
+    defaultOp: opType = '='
   ) {
-    super(
-      queryName,
-      filter,
-      '',
-      op,
-      defaultOp,
-      (card: HCCard.Any) => card,
-      () => this.filter.toSummary(this.getOp(), this.value),
-      inverted
-    );
-    this.value = `${value1}${this.getOp()}${value2}`;
+    super(queryName, filter, summary, value, op, card => card, defaultOp);
+    this.value2 = value2;
   }
+  toSummary = () => this.summary(this.getOp(), this.value, this.inverted, this.value2);
+  cardPassesFilter = (card: HCCard.Any) =>
+    xor(
+      this.filter(this.getValueToCompare(card), this.getOp(), this.value, this.value2),
+      this.inverted
+    );
 }
 export class StringPropSummaryFilter<T, S> extends filterObject<T, S> {
   constructor(
     queryName: string,
-    public filter: cardFilter<T, S>,
+    filter: cardFilterFunction<T, S>,
+    summary: summaryFunction<S>,
     value: S,
     op: looseOpType,
-    defaultOp: opType,
     getValueToCompare: (card: HCCard.Any) => T,
     public summaryStart: string,
-    public opFunc: (op: opType, value: S, invert?: boolean) => string,
-    inverted?: boolean
+    defaultOp: opType = '>=',
+    invertOption: invertOptionType = 'negate'
   ) {
-    super(
-      queryName,
-      filter,
-      value,
-      op,
-      defaultOp,
-      getValueToCompare,
-      (invert?: boolean) => `${this.summaryStart} ${this.opFunc(this.getOp(), this.value, invert)}`,
-      inverted
-    );
+    super(queryName, filter, summary, value, op, getValueToCompare, defaultOp, invertOption);
+    this.summaryStart = summaryStart;
   }
+  toSummary = () =>
+    `${this.summaryStart} ${super.summary(this.getOp(), this.value, this.inverted)}`;
 }
-export class NumberPropSummaryFilter<T, S extends number | string | undefined> extends filterObject<
-  T,
-  S
-> {
+export class NumberPropSummaryFilter<T, S extends numSearch> extends filterObject<T, S> {
   constructor(
     queryName: string,
-    public filter: cardFilter<T, S>,
+    filter: cardFilterFunction<T, S>,
     value: S,
     op: looseOpType,
-    defaultOp: opType,
     getValueToCompare: (card: HCCard.Any) => T,
     public summaryStart: string,
-    inverted?: boolean
+    defaultOp: opType = '=',
+    invertOption: invertOptionType = 'flip'
   ) {
     super(
       queryName,
       filter,
+      createNumSummary(summaryStart),
       value,
       op,
-      defaultOp,
       getValueToCompare,
-      () => createNumSummary(summaryStart)(this.getOp(), this.value),
-      inverted
+      defaultOp,
+      invertOption
     );
   }
 }
@@ -241,68 +250,44 @@ export class NoteFilter extends filterObject<HCCard.Any, string> {
   note?: boolean | string;
   constructor(
     queryName: string,
-    public filter: noteFilter,
+    public filter: noteFilterFunction,
+    summary: noteSummaryFunction,
     value: string,
     op: looseOpType,
-    defaultOp: opType,
-    getValueToCompare: (card: HCCard.Any) => HCCard.Any,
-    inverted?: boolean
+    defaultOp: opType = '>=',
+    invertOption: invertOptionType = 'flip'
   ) {
     const { name, note } = parseNote(value);
-    super(
-      queryName,
-      filter,
-      name,
-      op,
-      defaultOp,
-      getValueToCompare,
-      (invert?: boolean) => this.filter.toSummary(this.getOp(), this.value, invert, this.note),
-      inverted
-    );
+    super(queryName, filter, summary, name, op, card => card, defaultOp, invertOption);
     this.note = note;
   }
+  toSummary = () => this.summary(this.getOp(), this.value, this.inverted, this.note);
   cardPassesFilter = (card: HCCard.Any) =>
-    !this.inverted != !this.filter(card, this.getOp(), unescapeText(this.value), this.note);
+    xor(this.filter(card, this.getOp(), unescapeText(this.value), this.note), this.inverted);
 }
 export class IncludeFilter extends filterObject<HCCard.Any, string> {
   constructor(
     queryName: string,
-    public filter: includeFilter,
+    filter: includeFilterFunction,
+    summary: summaryFunction<string>,
     value: string,
     op: looseOpType,
-    defaultOp: opType,
-    inverted?: boolean
+    defaultOp: opType = '=',
+    invertOption: invertOptionType = 'negate'
   ) {
-    super(
-      queryName,
-      filter,
-      value,
-      op,
-      defaultOp,
-      card => card,
-      () => this.filter.toSummary(this.getOp(), this.value, this.inverted),
-      inverted
-    );
+    super(queryName, filter, summary, value, op, card => card, defaultOp, invertOption);
   }
 }
 export class CardStringFilter extends filterObject<HCCard.Any, string> {
   constructor(
     queryName: string,
-    public filter: cardStringFilter,
+    filter: cardStringFilterFunction,
+    summary: summaryFunction<string>,
     value: string,
     op: looseOpType,
-    defaultOp: opType,
-    inverted?: boolean
+    defaultOp: opType = '=',
+    invertOption: invertOptionType = 'flip'
   ) {
-    super(
-      queryName,
-      filter,
-      value,
-      op,
-      defaultOp,
-      card => card,
-      (invert?: boolean) => this.filter.toSummary(this.getOp(), this.value, invert),
-      inverted
-    );
+    super(queryName, filter, summary, value, op, card => card, defaultOp, invertOption);
   }
 }

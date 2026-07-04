@@ -7,156 +7,149 @@ import {
   isValidV4UUID,
 } from '@hellfall/shared/utils';
 import {
-  invertOptionType,
   looseOpType,
-  NOPRINT,
   opType,
-  noteFilter,
-  textFilter,
-  textListFilter,
+  noteFilterFunction,
+  textFilterFunction,
+  textListFilterFunction,
+  summaryFunction,
+  noteSummaryFunction,
 } from '../types';
 import {
-  opToIncludeSingular,
-  opToTagged,
+  includeSummarySingular,
+  taggedSummary,
   includeEqualsOp,
   opIsNegative,
-  opToIncludePlural,
+  includeSummaryPlural,
   opAsBool,
   opToNot,
   prepTag,
-  numOp,
-  createNumSummary,
+  numSearchFilter,
+  baseNumSummary,
 } from '../utils';
 import { HCCard } from '@hellfall/shared/types';
 
-export const filterEmpty: textFilter = Object.assign(
-  (value1: string, operator: looseOpType, value2: string) => true,
-  {
-    invertOption: 'ignore' as invertOptionType,
-    toSummary: (operator: opType, value: string) => '!',
-  }
-);
+export const emptyFilter: textFilterFunction = (
+  value1: string,
+  operator: looseOpType,
+  value2: string
+) => true;
+export const emptySummary: summaryFunction<string> = (operator: opType, value: string) => '!';
 
-export const filterText: textFilter = Object.assign(
-  (value1: string, operator: opType, value2: string) =>
-    includeEqualsOp(operator, textContains, textEquals, value1, value2),
-  {
-    invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string) => NOPRINT,
-  }
-);
+export const textFilter: textFilterFunction = (value1: string, operator: opType, value2: string) =>
+  includeEqualsOp(operator, textContains, textEquals, value1, value2);
 
-export const filterOracleId: textFilter = Object.assign(
-  (value1: string, operator: opType, value2: string) => opAsBool(value1 == value2, operator),
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      if (isValidV4UUID(value.toLowerCase())) {
-        return `the Oracle ID is ${opToNot(operator)} ${value}`;
-      }
-      return `!You must provide a valid v4 UUID.`;
-    },
+export const oracleIdFilter: textFilterFunction = (
+  value1: string,
+  operator: opType,
+  value2: string
+) => opAsBool(value1 == value2, operator);
+export const oracleIdSummary: summaryFunction<string> = (operator: opType, value: string) => {
+  if (isValidV4UUID(value.toLowerCase())) {
+    return `the Oracle ID is ${opToNot(operator)} ${value}`;
   }
-);
-export const filterId: textFilter = Object.assign(
-  (value1: string, operator: opType, value2: string) => {
-    if (isNumber(value2)) {
-      return isNumber(value1) ? numOp(parseInt(value1), operator, parseInt(value2)) : false;
-    }
-    return filterText(value1, operator, value2);
-  },
-  {
-    invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string, invert?: boolean) => {
-      if (isNumber(value)) {
-        return `the id is ${createNumSummary()(operator, parseInt(value), invert)}`;
-      }
-      return `the id ${opToIncludeSingular(operator, value, invert)}`;
-    },
-  }
-);
+  return `!You must provide a valid v4 UUID.`;
+};
 
-export const filterTextList: textListFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string) =>
-    includeEqualsOp(operator, textListContains, textListIncludes, value1, value2),
-  {
-    invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string) => NOPRINT,
-  }
-);
+export const idFilter: textFilterFunction = (value1: string, operator: opType, value2: string) =>
+  (isNumber(value2) ? numSearchFilter : textFilter)(value1, operator, value2);
+export const idSummary: summaryFunction<string> = (
+  operator: opType,
+  value: string,
+  invert?: boolean
+) =>
+  `the id is ${(isNumber(value) ? baseNumSummary : includeSummarySingular)(
+    operator,
+    value,
+    invert
+  )}`;
 
-export const filterArtist: noteFilter = Object.assign(
-  (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string) => {
-    if (note && typeof note != 'string') {
-      const artist = value2.slice(0, -1);
-      return (
-        value1.artist_notes && filterTextList(Object.keys(value1.artist_notes), operator, artist)
-      );
-    }
-    if (note) {
-      if (!value1.artist_notes) {
-        return false;
-      }
-      return includeEqualsOp(operator, textContains, textEquals, value1.artist_notes[value2], note);
-    }
-    return value1.artists
-      ? includeEqualsOp(
-          operator,
-          textListContains,
-          textListIncludes,
-          value1.artists.map(artist => prepTag(artist)),
-          prepTag(value2)
-        )
-      : false;
-  },
-  {
-    invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) =>
-      `the artists ${opToIncludePlural(operator, value, invert)} ${
-        note
-          ? ` and that artist${
-              typeof note == 'string'
-                ? `'s note ${opToIncludeSingular(operator, note, invert)}`
-                : ` ${opIsNegative(operator) ? 'does not have' : 'has'} a note`
-            }`
-          : ''
-      }`,
-  }
-);
+export const textListFilter: textListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: string
+) => includeEqualsOp(operator, textListContains, textListIncludes, value1, value2);
 
-export const filterTag: noteFilter = Object.assign(
-  (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string) => {
-    if (note && typeof note != 'string') {
-      const tag = value2.slice(0, -1);
-      return value1.tag_notes && filterTextList(Object.keys(value1.tag_notes), operator, tag);
-    }
-    if (note) {
-      if (!value1.tag_notes) {
-        return false;
-      }
-      return includeEqualsOp(operator, textContains, textEquals, value1.tag_notes[value2], note);
-    }
-    return value1.tags
-      ? includeEqualsOp(
-          operator,
-          textListContains,
-          textListIncludes,
-          value1.tags.map(tag => prepTag(tag)),
-          prepTag(value2)
-        )
-      : false;
-  },
-  {
-    invertOption: 'negate' as invertOptionType,
-    toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) =>
-      `the card is ${opToTagged(operator, value, invert)} ${
-        note
-          ? ` and that tag${
-              typeof note == 'string'
-                ? `'s note ${opToIncludeSingular(operator, note, invert)}`
-                : ` ${opIsNegative(operator) != !invert ? 'does not have' : 'has'} a note`
-            }`
-          : ''
-      }`,
+export const artistFilter: noteFilterFunction = (
+  value1: HCCard.Any,
+  operator: opType,
+  value2: string,
+  note?: boolean | string
+) => {
+  if (note && typeof note != 'string') {
+    const artist = value2.slice(0, -1);
+    return (
+      value1.artist_notes && textListFilter(Object.keys(value1.artist_notes), operator, artist)
+    );
   }
-);
+  if (note) {
+    if (!value1.artist_notes) {
+      return false;
+    }
+    return includeEqualsOp(operator, textContains, textEquals, value1.artist_notes[value2], note);
+  }
+  if (!value1.artists) return false;
+  return includeEqualsOp(
+    operator,
+    textListContains,
+    textListIncludes,
+    value1.artists.map(artist => prepTag(artist)),
+    prepTag(value2)
+  );
+};
+export const artistSummary: noteSummaryFunction = (
+  operator: opType,
+  value: string,
+  invert?: boolean,
+  note?: boolean | string
+) =>
+  `the artists ${includeSummaryPlural(operator, value, invert)} ${
+    note
+      ? ` and that artist${
+          typeof note == 'string'
+            ? `'s note ${includeSummarySingular(operator, note, invert)}`
+            : ` ${opIsNegative(operator) != !invert ? 'does not have' : 'has'} a note`
+        }`
+      : ''
+  }`;
+
+export const tagFilter: noteFilterFunction = (
+  value1: HCCard.Any,
+  operator: opType,
+  value2: string,
+  note?: boolean | string
+) => {
+  if (note && typeof note != 'string') {
+    const tag = value2.slice(0, -1);
+    return value1.tag_notes && textListFilter(Object.keys(value1.tag_notes), operator, tag);
+  }
+  if (note) {
+    if (!value1.tag_notes) {
+      return false;
+    }
+    return includeEqualsOp(operator, textContains, textEquals, value1.tag_notes[value2], note);
+  }
+  if (!value1.tags) return false;
+  return includeEqualsOp(
+    operator,
+    textListContains,
+    textListIncludes,
+    value1.tags.map(tag => prepTag(tag)),
+    prepTag(value2)
+  );
+};
+export const tagSummary: noteSummaryFunction = (
+  operator: opType,
+  value: string,
+  invert?: boolean,
+  note?: boolean | string
+) =>
+  `the card is ${taggedSummary(operator, value, invert)} ${
+    note
+      ? ` and that tag${
+          typeof note == 'string'
+            ? `'s note ${includeSummarySingular(operator, note, invert)}`
+            : ` ${opIsNegative(operator) != !invert ? 'does not have' : 'has'} a note`
+        }`
+      : ''
+  }`;

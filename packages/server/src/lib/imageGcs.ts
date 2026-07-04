@@ -47,7 +47,10 @@ function parseImageBase64(imageBase64: string): ParsedImage {
 
 function slugObjectName(name: string): string {
   const base = name.trim() || 'image';
-  return base.replace(/\//g, '|').replace(/[^\w\-.]+/g, '_').slice(0, 180);
+  return base
+    .replace(/\//g, '|')
+    .replace(/[^\w\-.]+/g, '_')
+    .slice(0, 180);
 }
 
 export function publicGcsUrl(bucketName: string, objectKey: string): string {

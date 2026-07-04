@@ -1,9 +1,10 @@
-import { filterHasRelated, filterIsRelated } from '../filters';
+import { HCCard } from '../../types';
+import { hasRelatedFilter, hasRelatedSummary, isRelatedFilter, isRelatedSummary } from '../filters';
 import { CardStringFilter, looseOpType, filterMaker } from '../types';
 
-export const makeIsRelatedFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new CardStringFilter('isrelated', filterIsRelated, value, op, '=');
+export const makeIsRelatedFilter: filterMaker<HCCard.Any> = (value: string, op: looseOpType) => {
+  return new CardStringFilter('isrelated', isRelatedFilter, isRelatedSummary, value, op);
 };
-export const makeHasRelatedFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new CardStringFilter('hassrelated', filterHasRelated, value, op, '=');
+export const makeHasRelatedFilter: filterMaker<HCCard.Any> = (value: string, op: looseOpType) => {
+  return new CardStringFilter('hassrelated', hasRelatedFilter, hasRelatedSummary, value, op);
 };

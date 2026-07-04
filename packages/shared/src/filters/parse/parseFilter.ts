@@ -1,4 +1,4 @@
-import { invertCompOp } from '../filters';
+import { invertCompOp, isCompKeyword } from '../filters';
 import {
   makeCompFilter,
   makeInvalidColorFilter,
@@ -18,7 +18,7 @@ import {
   invertedFilterNames,
   printsFilterNameType,
 } from '../types';
-import { invertOp, isCompKeyword, splitOnFirstOp, unescapeText } from '../utils';
+import { splitOnFirstOp, unescapeText } from '../utils';
 import { parseColorText } from './parseColors';
 import { colorFilters, filters, printsFilters } from './parseMaps';
 
@@ -30,19 +30,7 @@ export const parseFilter = (
 ): filterObject<any, any> => {
   const correctOp = (filter: filterObject<any, any>) => {
     if (invert) {
-      switch (filter.filter.invertOption) {
-        case 'flip': {
-          if (filter.queryName == 'comp') {
-            filter.value = invertCompOp(filter.value);
-          }
-          filter.op = invertOp(filter.op);
-          break;
-        }
-        case 'negate': {
-          filter.inverted = !filter.inverted;
-          break;
-        }
-      }
+      filter.invert();
     }
     return filter;
   };

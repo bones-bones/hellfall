@@ -1,16 +1,4 @@
-import { numProps, numPropType } from '../filters';
-import {
-  looseOpList,
-  looseOpType,
-  equivColorFilterNames,
-  equivFilterNames,
-  FilterNode,
-} from '../types';
-
-export const isCompKeyword = (keyword: string) =>
-  numProps.includes(keyword as numPropType) ||
-  (keyword in equivFilterNames && numProps.includes(equivFilterNames[keyword] as numPropType)) ||
-  keyword in equivColorFilterNames;
+import { looseOpList, looseOpType, FilterNode } from '../types';
 
 export const filterIsInverted = (text: string, invert: boolean = false): boolean => {
   if (text[0] == '-') {

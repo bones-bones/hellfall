@@ -241,7 +241,7 @@ export const parseSearchQuery = (
         autoFilterExtras = false;
       }
       i++;
-      const summary = filter.toSummary(filterIsInverted(token));
+      const summary = filter.toSummary();
       if (summary.at(0) == '!' || filter.queryName.startsWith('invalid')) {
         invalids.push([token, filter.toSummary().slice(1)]);
         // while (summaries.length && consumeList.includes(summaries.at(-1)!)) {

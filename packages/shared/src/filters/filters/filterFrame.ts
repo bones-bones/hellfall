@@ -12,9 +12,9 @@ import {
   RetroTokenFrames,
   TokenFrames,
 } from '@hellfall/shared/types';
-import { invertOptionType, opType, textListFilter } from '../types';
+import { opType, summaryFunction, textListFilterFunction } from '../types';
 import { shareOp, opToDont, createCorrectedSummary } from '../utils';
-import { listsAreEqual } from '@hellfall/shared/utils';
+import { listsAreLooselyEqual, listsShare } from '@hellfall/shared/utils';
 
 const toCardFrameRecord: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
@@ -146,10 +146,8 @@ const frameNames: [HCFrame[], string][] = [
   [[HCFrame.WebsiteApp], 'a website or app'],
 ];
 const getFrameName = (text: string) => {
-  if (text in toCardFrameRecord) {
-    return frameNames.find(frames => listsAreEqual(frames[0], toCardFrame(text)))?.[1];
-  }
-  return undefined;
+  const frame = toCardFrame(text);
+  return frame ? frameNames.find(frames => listsAreLooselyEqual(frames[0], frame))?.[1] : undefined;
 };
 
 const toFrameEffectRecord: Record<string, HCFrameEffect | HCFrameEffect[]> = {
@@ -334,13 +332,13 @@ const frameEffectNames: [HCFrameEffect[], string][] = [
   [[HCFrameEffect.UniversesBeyond], 'a Universes Beyond frame'],
 ];
 const getFrameEffectName = (text: string) => {
-  if (text in toFrameEffect) {
-    return frameEffectNames.find(frames => listsAreEqual(frames[0], toFrameEffect(text)))?.[1];
-  }
-  return undefined;
+  const frameEffect = toFrameEffect(text);
+  return frameEffect
+    ? frameEffectNames.find(frames => listsAreLooselyEqual(frames[0], frameEffect))?.[1]
+    : undefined;
 };
 
-const toShowcaseFrame: Record<string, string | string[]> = {
+const toShowcaseFrameRecord: Record<string, string | string[]> = {
   kaladesh: 'Invention',
   invention: 'Invention',
   invocation: 'Invocation',
@@ -424,70 +422,61 @@ const toShowcaseFrame: Record<string, string | string[]> = {
   album: 'Album',
   pixel: 'Pixel',
 };
-
-export const filterCardFrame: textListFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string) =>
-    value2 in toCardFrame ? shareOp(operator, value1, toCardFrame(value2)) : false,
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: createCorrectedSummary(
-      getFrameName,
-      (operator, value) => `the cards ${opToDont(operator)} have ${value} frame`,
-      (operator, value) => `!Unknown card frame "${value}"`
-    ),
-  }
-);
-export const filterFrameEffect: textListFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string) =>
-    value2 in toFrameEffect ? shareOp(operator, value1, toFrameEffect(value2)) : false,
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: createCorrectedSummary(
-      getFrameEffectName,
-      (operator, value) => `the cards ${opToDont(operator)} have ${value}`,
-      (operator, value) => `!Unknown frame effect "${value}"`
-    ),
-  }
-);
-
-export const filterFrame: textListFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string) =>
-    filterCardFrame(value1, operator, value2) || filterFrameEffect(value1, operator, value2),
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      const frame = getFrameName(value);
-      const frameEffect = getFrameEffectName(value);
-      if (frame) {
-        return filterCardFrame.toSummary(operator, value);
-      } else if (frameEffect) {
-        return filterFrameEffect.toSummary(operator, value);
-      } else {
-        return `!Unknown frame "${value}"`;
-      }
-    },
-  }
-);
-
-const correctValue = (value: string) => {
-  const frame = toShowcaseFrame[value];
-  if (Array.isArray(frame)) {
-    return frame.map(e => `"${e}"`).join(' or ');
-  }
-  if (frame) {
-    return `"${frame}"`;
-  }
-  return undefined;
+const toShowcaseFrame = (text: string): string[] | undefined => {
+  const frame = toShowcaseFrameRecord[text];
+  return typeof frame == 'string' ? [frame] : frame;
 };
-export const filterShowcase: textListFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string) =>
-    value2 in toShowcaseFrame ? shareOp(operator, value1, toShowcaseFrame[value2]) : false,
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: createCorrectedSummary(
-      correctValue,
-      (operator, value) => `the cards ${opToDont(operator)} have a ${value} showcase frame`,
-      (operator, value) => `!Unknown showcase frame "${value}"`
-    ),
+const getShowcaseName = (text: string) =>
+  toShowcaseFrame(text)
+    ?.map(e => `"${e}"`)
+    .join(' or ');
+
+export const cardFrameFilter: textListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: string
+) => shareOp(operator, listsShare, value1, toCardFrame(value2));
+export const cardFrameSummary = createCorrectedSummary(
+  getFrameName,
+  (operator, value) => `the cards ${opToDont(operator)} have ${value} frame`,
+  (operator, value) => `!Unknown card frame "${value}"`
+);
+
+export const frameEffectFilter: textListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: string
+) => shareOp(operator, listsShare, value1, toFrameEffect(value2));
+export const frameEffectSummary = createCorrectedSummary(
+  getFrameEffectName,
+  (operator, value) => `the cards ${opToDont(operator)} have ${value}`,
+  (operator, value) => `!Unknown frame effect "${value}"`
+);
+
+export const frameFilter: textListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: string
+) => cardFrameFilter(value1, operator, value2) || frameEffectFilter(value1, operator, value2);
+export const frameSummary: summaryFunction<string> = (operator: opType, value: string) => {
+  const frame = getFrameName(value);
+  const frameEffect = getFrameEffectName(value);
+  if (frame) {
+    return cardFrameSummary(operator, value);
+  } else if (frameEffect) {
+    return frameEffectSummary(operator, value);
+  } else {
+    return `!Unknown frame "${value}"`;
   }
+};
+
+export const showcaseFilter: textListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: string
+) => shareOp(operator, listsShare, value1, toShowcaseFrame(value2));
+export const showcaseSummary = createCorrectedSummary(
+  getShowcaseName,
+  (operator, value) => `the cards ${opToDont(operator)} have a ${value} showcase frame`,
+  (operator, value) => `!Unknown showcase frame "${value}"`
 );

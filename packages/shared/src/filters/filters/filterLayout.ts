@@ -1,7 +1,8 @@
 import { HCLayout, HCLayoutGroup } from '@hellfall/shared/types';
-import { invertOptionType, opType, textListFilter } from '../types';
+import { opType, summaryFunction, textListFilterFunction } from '../types';
 import { shareOp, opToNot, opToDont, createCorrectedSummary } from '../utils';
-export const toCardLayout: Record<string, HCLayout | HCLayout[]> = {
+import { listsShare } from '../../utils';
+export const toCardLayoutRecord: Record<string, HCLayout | HCLayout[]> = {
   normal: HCLayout.Normal,
   front: HCLayout.Front,
   meldpart: HCLayout.MeldPart,
@@ -87,7 +88,16 @@ export const toCardLayout: Record<string, HCLayout | HCLayout[]> = {
   spacecraft: HCLayout.Station,
   planet: HCLayout.Station,
 };
-export const toFaceLayout: Record<
+const toCardLayout = (text: string): HCLayout[] | undefined => {
+  const layout = toCardLayoutRecord[text];
+  return typeof layout == 'string' ? [layout] : layout;
+};
+const getCardLayoutName = (text: string) =>
+  toCardLayout(text)
+    ?.map(e => `"${e.replaceAll('_', ' ')}"`)
+    .join(' or ');
+
+export const toFaceLayoutRecord: Record<
   string,
   HCLayoutGroup.FaceLayoutType | HCLayoutGroup.FaceLayoutType[]
 > = {
@@ -138,66 +148,50 @@ export const toFaceLayout: Record<
   planet: HCLayout.Station,
 };
 
-const getCardLayoutName = (value: string) => {
-  const layout = toCardLayout[value];
-  if (Array.isArray(layout)) {
-    return layout.map(e => `"${e.replaceAll('_', ' ')}"`).join(' or ');
-  }
-  if (layout) {
-    return `"${layout.replaceAll('_', ' ')}"`;
-  }
-  return undefined;
+const toFaceLayout = (text: string): HCLayout[] | undefined => {
+  const layout = toFaceLayoutRecord[text];
+  return typeof layout == 'string' ? [layout] : layout;
 };
-const getFaceLayoutName = (value: string) => {
-  const layout = toFaceLayout[value];
-  if (Array.isArray(layout)) {
-    return layout.map(e => `"${e.replaceAll('_', ' ')}"`).join(' or ');
-  }
-  if (layout) {
-    return `"${layout.replaceAll('_', ' ')}"`;
-  }
-  return undefined;
-};
+const getFaceLayoutName = (text: string) =>
+  toFaceLayout(text)
+    ?.map(e => `"${e.replaceAll('_', ' ')}"`)
+    .join(' or ');
 
-export const filterCardLayout: textListFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string) =>
-    value2 in toCardLayout ? shareOp(operator, value1, toCardLayout[value2]) : false,
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: createCorrectedSummary(
-      getCardLayoutName,
-      (operator, value) => `the card layout is ${opToNot(operator)} ${value}`,
-      (operator, value) => `!Unknown card layout "${value}"`
-    ),
-  }
+export const cardLayoutFilter: textListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: string
+) => shareOp(operator, listsShare, value1, toCardLayout(value2));
+export const cardLayoutSummary = createCorrectedSummary(
+  getCardLayoutName,
+  (operator, value) => `the card layout is ${opToNot(operator)} ${value}`,
+  (operator, value) => `!Unknown card layout "${value}"`
 );
-export const filterFaceLayout: textListFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string) =>
-    value2 in toFaceLayout ? shareOp(operator, value1, toFaceLayout[value2]) : false,
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: createCorrectedSummary(
-      getFaceLayoutName,
-      (operator, value) => `the cards ${opToDont(operator)} have a face with layout ${value}`,
-      (operator, value) => `!Unknown face layout "${value}"`
-    ),
-  }
+
+export const faceLayoutFilter: textListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: string
+) => shareOp(operator, listsShare, value1, toFaceLayout(value2));
+export const faceLayoutSummary = createCorrectedSummary(
+  getFaceLayoutName,
+  (operator, value) => `the cards ${opToDont(operator)} have a face with layout ${value}`,
+  (operator, value) => `!Unknown face layout "${value}"`
 );
-export const filterAnyLayout: textListFilter = Object.assign(
-  (value1: string[], operator: opType, value2: string) =>
-    filterCardLayout(value1, operator, value2) || filterFaceLayout(value1, operator, value2),
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      const cardLayout = getCardLayoutName(value);
-      const faceLayout = getFaceLayoutName(value);
-      if (cardLayout) {
-        return filterCardLayout.toSummary(operator, value);
-      } else if (faceLayout) {
-        return filterFaceLayout.toSummary(operator, value);
-      } else {
-        return `!Unknown layout "${value}"`;
-      }
-    },
+
+export const anyLayoutFilter: textListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: string
+) => cardLayoutFilter(value1, operator, value2) || faceLayoutFilter(value1, operator, value2);
+export const anyLayoutSummary: summaryFunction<string> = (operator: opType, value: string) => {
+  const cardLayout = getCardLayoutName(value);
+  const faceLayout = getFaceLayoutName(value);
+  if (cardLayout) {
+    return cardLayoutSummary(operator, value);
+  } else if (faceLayout) {
+    return faceLayoutSummary(operator, value);
+  } else {
+    return `!Unknown layout "${value}"`;
   }
-);
+};

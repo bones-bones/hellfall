@@ -1,13 +1,13 @@
-import { filterBorder } from '../filters';
-import { looseOpType, PassThroughSummaryFilter, filterMaker } from '../types';
+import { borderFilter, borderSummary } from '../filters';
+import { looseOpType, filterObject, filterMaker } from '../types';
 
-export const makeBorderFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter<string, string>(
+export const makeBorderFilter: filterMaker<string> = (value: string, op: looseOpType) => {
+  return new filterObject<string, string>(
     'border',
-    filterBorder,
+    borderFilter,
+    borderSummary,
     value,
     op,
-    '=',
     card => card.border_color
   );
 };

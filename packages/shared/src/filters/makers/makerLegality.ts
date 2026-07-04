@@ -1,36 +1,49 @@
 import { HCLegalitiesField } from '@hellfall/shared/types';
-import { PassThroughSummaryFilter, looseOpType, filterMaker } from '../types';
-import { filterBanned, filterLegal, filterNotLegal } from '../filters';
+import { filterObject, looseOpType, filterMaker } from '../types';
+import {
+  bannedFilter,
+  bannedSummary,
+  legalFilter,
+  legalSummary,
+  notLegalFilter,
+  notLegalSummary,
+} from '../filters';
 
-export const makeLegalFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter<HCLegalitiesField, string>(
+export const makeLegalFilter: filterMaker<HCLegalitiesField> = (value: string, op: looseOpType) => {
+  return new filterObject<HCLegalitiesField, string>(
     'legal',
-    filterLegal,
+    legalFilter,
+    legalSummary,
     value,
     op,
-    '=',
     card => card.legalities
   );
 };
 
-export const makeNotLegalFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter<HCLegalitiesField, string>(
-    'notlegal',
-    filterNotLegal,
-    value,
-    op,
-    '=',
-    card => card.legalities
-  );
-};
-
-export const makeBannedFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter<HCLegalitiesField, string>(
+export const makeBannedFilter: filterMaker<HCLegalitiesField> = (
+  value: string,
+  op: looseOpType
+) => {
+  return new filterObject<HCLegalitiesField, string>(
     'banned',
-    filterBanned,
+    bannedFilter,
+    bannedSummary,
     value,
     op,
-    '=',
+    card => card.legalities
+  );
+};
+
+export const makeNotLegalFilter: filterMaker<HCLegalitiesField> = (
+  value: string,
+  op: looseOpType
+) => {
+  return new filterObject<HCLegalitiesField, string>(
+    'notlegal',
+    notLegalFilter,
+    notLegalSummary,
+    value,
+    op,
     card => card.legalities
   );
 };

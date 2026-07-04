@@ -71,7 +71,7 @@ import {
   printsFilterNameType,
 } from '../types';
 
-export const filters: Record<filterNameType, filterMaker> = {
+export const filters: Record<filterNameType, filterMaker<any>> = {
   id: makeIDFilter,
   oracleid: makeOracleIDFilter,
   kind: makeKindFilter,
@@ -123,7 +123,7 @@ export const filters: Record<filterNameType, filterMaker> = {
   include: makeIncludeFilter,
 };
 
-export const colorFilters: Record<colorFilterNameType, colorFilterMaker> = {
+export const colorFilters: Record<colorFilterNameType, colorFilterMaker<any>> = {
   color: makeColorFilter,
   indicator: makeIndicatorFilter,
   identity: makeIdentityFilter,

@@ -5,12 +5,18 @@ export const NOPRINT =
  * The type of an operator
  */
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
-export const looseOpList: looseOpType[] = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
+
 /**
  * The type of an operator, including loose operators
  */
 export type looseOpType = ':' | '!:' | opType;
-export const invertOptions = ['ignore', 'flip', 'negate'] as const;
+
+/**
+ * The list of all loose operators
+ */
+export const looseOpList: looseOpType[] = [':', '!:', '<', '<=', '=', '>=', '>', '!='];
+export const isLooseOp = (value: any): value is looseOpType => looseOpList.includes(value);
+const invertOptions = ['ignore', 'flip', 'negate'] as const;
 /**
  * The option for how to handle the inversion operator
  *
@@ -24,32 +30,49 @@ export type invertOptionType = (typeof invertOptions)[number];
 
 /**
  * A function that produces a summary for a filter
+ *
+ * @template T The type of the search value
  */
-export type summaryFunction<T> = (operator: opType, value: T, invert?: boolean) => string;
+export interface summaryFunction<T> {
+  /**
+   * @param operator - the operator to use
+   * @param value - the value to use (taken from the search)
+   * @param invert - whether the search is inverted (only if the filter's invertOption is `negate`)
+   */
+  (operator: opType, value: T, invert?: boolean, ...args: any[]): string;
+}
 
 /**
  * Any filter
  */
-export interface anyFilter<T = any, S = any> {
+export interface anyFilterFunction<T = any, S = any> {
   /**
    * The result of calling this filter
    */
-  (value1: T, operator: opType, value2: S): number | boolean | undefined;
-  /**
-   * How to handle inversion of this filter
-   */
-  invertOption: invertOptionType;
-  /**
-   * The function that produces a summary of this filter
-   */
-  toSummary: summaryFunction<S>;
+  (value1: T, operator: opType, value2: S, ...args: any[]): number | boolean | undefined;
+  // /**
+  //  * How to handle inversion of this filter
+  //  */
+  // invertOption: invertOptionType;
+  // /**
+  //  * The function that produces a summary of this filter
+  //  */
+  // toSummary: summaryFunction<S>;
 }
-export const dirs = ['asc', 'desc', 'auto'] as const;
+
+/**
+ * the list of sort direction options
+ */
+export const dirTypeList = ['asc', 'desc', 'auto'] as const;
 /**
  * a sort direction option
  */
-export type dirType = (typeof dirs)[number];
-export const sorts = [
+export type dirType = (typeof dirTypeList)[number];
+
+/**
+ * the list of sort options
+ */
+export const sortTypeList = [
   'set',
   'color',
   'manavalue',
@@ -63,44 +86,75 @@ export const sorts = [
 /**
  * a sort option
  */
-export type sortType = (typeof sorts)[number];
+export type sortType = (typeof sortTypeList)[number];
 
+// /**
+//  * a sort filter
+//  */
+// export type sortFilterFunction = (value1: HCCard.Any, operator: opType, value2: HCCard.Any, sort:sortType, dir:dirType) => number
 /**
- * a sort filter
+ * A function that sorts two cards
  */
-export interface sortFilter extends anyFilter<HCCard.Any, HCCard.Any> {
-  /**
-   * The result of calling this. This is suitable to be used in a `.sort` function
-   */
-  (value1: HCCard.Any, operator: opType, value2: HCCard.Any): number;
-  /**
-   * The sort option to use
-   */
-  sort: sortType;
-  /**
-   * The direction to sort the cards
-   */
-  dir: dirType;
+export interface sortFilterFunction extends anyFilterFunction<HCCard.Any, HCCard.Any> {
+  (value1: HCCard.Any, operator: opType, value2: HCCard.Any, sort: sortType, dir: dirType): number;
+  // /**
+  //  * The sort option to use
+  //  */
+  // sort: sortType;
+  // /**
+  //  * The direction to sort the cards
+  //  */
+  // dir: dirType;
 }
 
 /**
  * Any card filter
- *
- * The first type is the type of the entry. The second type is the type from the search query.
+ * @template T the type of the value from the card
+ * @template S the type of the search value
  */
-export interface cardFilter<T = any, S = any> extends anyFilter {
-  (value1: T, operator: opType, value2: S): boolean | undefined;
+export interface cardFilterFunction<T = any, S = any> extends anyFilterFunction {
+  (value1: T, operator: opType, value2: S, ...args: any[]): boolean | undefined;
+  // /**
+  //  * How to handle inversion of this filter
+  //  */
+  // invertOption: invertOptionType;
+  // /**
+  //  * The function that produces a summary of this filter
+  //  */
+  // toSummary: summaryFunction<S>;
 }
-export interface textFilter extends cardFilter<string, string> {}
-export interface textListFilter extends cardFilter<string[], string> {}
-export interface textRecordFilter extends cardFilter<Record<string, string>, [string, string]> {}
-export interface numFilter extends cardFilter<number, number> {}
-export interface numStringFilter
-  extends cardFilter<number | string | undefined, number | string | undefined> {}
-export interface numStringListFilter
-  extends cardFilter<(number | string | undefined)[], number | string> {}
-export const shorthandList = ['c', 'm'] as const;
+/**
+ * Any filter that compares a string from a card with a string from a search
+ */
+export interface textFilterFunction extends cardFilterFunction<string, string> {}
+/**
+ * Any filter that compares a list of strings from a card with a string from a search
+ */
+export interface textListFilterFunction extends cardFilterFunction<string[], string> {}
+/**
+ * Any filter that compares two numbers
+ */
+export interface numFilterFunction extends cardFilterFunction<number, number> {}
+
+export type numSearch = number | string | undefined;
+/**
+ * Any filter that compares two values that can be converted into numbers
+ */
+export interface numSearchFilterFunction extends cardFilterFunction<numSearch, numSearch> {}
+/**
+ * Any filter that compares a list of values that can be converted into numbers from a card with a value that can be converted into a number from a search
+ */
+export interface numSearchListFilterFunction extends cardFilterFunction<numSearch[], numSearch> {}
+/**
+ * The list of shorthands
+ */
+const shorthandList = ['c', 'm'] as const;
+/**
+ * A color search shorthand
+ */
 export type shorthandType = (typeof shorthandList)[number];
+export const isShorthandType = (value: any): value is shorthandType =>
+  shorthandList.includes(value);
 const multiOpToNum: Record<opType, number> = {
   '<': 2,
   '<=': 0,
@@ -109,6 +163,12 @@ const multiOpToNum: Record<opType, number> = {
   '>': 5,
   '!=': 2,
 };
+/**
+ * Get the number to compare against when using a given op
+ * @param op operator to use
+ * @param value shorthand value to use
+ * @returns number to compare against
+ */
 export const shortToNum = (op: opType, value: shorthandType) => {
   if (value == 'c') {
     return 0;
@@ -116,41 +176,93 @@ export const shortToNum = (op: opType, value: shorthandType) => {
     return multiOpToNum[op];
   }
 };
+
+/**
+ * The defualt op for a given shorthand type
+ */
 export const shortToOp: Record<shorthandType, opType> = {
   c: '=',
   m: '>=',
 };
-export interface colorContentFilter extends cardFilter<string[], string[]> {}
-export interface colorNumFilter extends cardFilter<string[], number> {}
-export interface colorShortFilter extends cardFilter<string[], shorthandType> {}
-export interface colorContentListFilter extends cardFilter<string[][], string[]> {}
-export interface colorNumListFilter extends cardFilter<string[][], number> {}
-export interface colorShortListFilter extends cardFilter<string[][], shorthandType> {}
-export interface hybridContentFilter extends cardFilter<string[][], string[]> {}
-export interface hybridNumFilter extends cardFilter<string[][], number> {}
-export interface hybridShortFilter extends cardFilter<string[][], shorthandType> {}
-// export interface setFilter extends cardFilter<string[],HCCard.Any> {}
-export const inclusionOptions = [
-  'extras',
-  'nonextras',
-  'all',
-  'extracards',
-  'tokens',
-  'vetoed',
-] as const;
+export type colorSearch = string[] | number | shorthandType;
+/**
+ * Any filter that compares colorsfrom a card with a value from a search
+ */
+export interface colorFilterFunction extends cardFilterFunction<string[], colorSearch> {}
+// /**
+//  * Any filter that compares colors from a card with a number from a search
+//  */
+// export interface colorNumFilterFunction extends cardFilterFunction<string[], number> {}
+// /**
+//  * Any filter that compares colors from a card with a shorthand from a search
+//  */
+// export interface colorShortFilterFunction extends cardFilterFunction<string[], shorthandType> {}
+/**
+ * Any filter that compares a set of colors from a card with a value from a search
+ */
+export interface colorListFilterFunction extends cardFilterFunction<string[][], colorSearch> {}
+// /**
+//  * Any filter that compares a set of colors from a card with a number from a search
+//  */
+// export interface colorNumListFilterFunction extends cardFilterFunction<string[][], number> {}
+// /**
+//  * Any filter that compares a set of colors from a card with a shorthand from a search
+//  */
+// export interface colorShortListFilterFunction extends cardFilterFunction<string[][], shorthandType> {}
+// /**
+//  * Any filter that compares hybrid colors from a card with a value from a search
+//  */
+// export interface hybridFilterFunction extends cardFilterFunction<string[][], string[]|number|shorthandType> {}
+// /**
+//  * Any filter that compares hybrid colors from a card with a number from a search
+//  */
+// export interface hybridNumFilterFunction extends cardFilterFunction<string[][], number> {}
+// /**
+//  * Any filter that compares hybrid colors from a card with a shorthand from a search
+//  */
+// export interface hybridShortFilterFunction extends cardFilterFunction<string[][], shorthandType> {}
+/**
+ * The list of options for inclusion filters
+ */
+const inclusionOptions = ['extras', 'nonextras', 'all', 'extracards', 'tokens', 'vetoed'] as const;
+/**
+ * An option for inclusion filters
+ */
 export type inclusionType = (typeof inclusionOptions)[number];
-export interface includeFilter extends cardFilter<HCCard.Any, string> {
-  (value1: HCCard.Any, operator: opType, value2: string): boolean | undefined;
+export const isInclusionType = (value: any): value is inclusionType =>
+  inclusionOptions.includes(value);
+/**
+ * An inclusion filter
+ */
+export interface includeFilterFunction extends cardFilterFunction<HCCard.Any, string> {
+  // (value1: HCCard.Any, operator: opType, value2: string): boolean | undefined;
 }
-export interface legalFilter extends cardFilter<HCLegalitiesField, string> {}
-export interface cardStringFilter extends cardFilter<HCCard.Any, string> {}
-export interface printsFilter extends cardFilter<HCCard.Any[], string> {}
-export interface setFilter extends cardFilter<HCCard.Any, SetCode> {}
-export interface noteFilter extends cardFilter<HCCard.Any, string> {
+/**
+ * Any filter that compares a card's legality with a format from a search
+ */
+export interface legalFilterFunction extends cardFilterFunction<HCLegalitiesField, string> {}
+/**
+ * Any filter that compares a card with a string from a search
+ */
+export interface cardStringFilterFunction extends cardFilterFunction<HCCard.Any, string> {}
+/**
+ * Any filter that compares all of a card's prints with a string from a search
+ */
+export interface printsFilterFunction extends cardFilterFunction<HCCard.Any[], string> {}
+/**
+ * Any filter that compares a card prints with a string from a search and its note
+ */
+export interface comparisonFilterFunction extends cardFilterFunction<HCCard.Any, string> {
+  (value1: HCCard.Any, operator: opType, value2: string, value3: string): boolean | undefined;
+}
+export interface comparisonSummaryFunction extends summaryFunction<string> {
+  (operator: opType, value: string, invert?: boolean, value2?: string): string;
+}
+export interface noteFilterFunction extends cardFilterFunction<HCCard.Any, string> {
   (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string):
     | boolean
     | undefined;
-  toSummary: (operator: opType, value: string, invert?: boolean, note?: boolean | string) => string;
 }
-
-export interface relatedFilter extends cardFilter<HCRelatedCard[], string> {}
+export interface noteSummaryFunction extends summaryFunction<string> {
+  (operator: opType, value: string, invert?: boolean, note?: boolean | string): string;
+}

@@ -148,3 +148,10 @@ Write a script to transform the database
 - add hccard.any and HCCard.anysingle/multi validation functions
 - add replace change type?
 - add comments to filters
+- make sure that down // the count gets the correct color indicator
+- add keywords.json file
+- make flavor names use the lato fonts
+- make unitalicized text in flavor text use plantin fonts
+- fix fonts (it's kicking to georgia again)
+- make search bar on card pages work correctly
+- add a/an handling to showcase frame search summary function

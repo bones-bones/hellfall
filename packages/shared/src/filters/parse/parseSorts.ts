@@ -1,5 +1,5 @@
 import { makeSort } from '../makers';
-import { dirs, dirType, sortObject, sorts, sortType } from '../types';
+import { dirTypeList, dirType, sortObject, sortTypeList, sortType } from '../types';
 import { splitOnFirstOp, unescapeText } from '../utils';
 
 const sortRedirects: Record<string, sortType> = {
@@ -20,6 +20,22 @@ const dirRedirects: Record<string, dirType> = {
   d: 'desc',
   down: 'desc',
 };
+const isSort = (text: string): text is sortType =>
+  sortTypeList.includes(unescapeText(text) as sortType) || unescapeText(text) in sortRedirects;
+const isDir = (text: string): text is dirType =>
+  dirTypeList.includes(unescapeText(text) as dirType) || unescapeText(text) in dirRedirects;
+const correctSort = (text: string): sortType => {
+  if (unescapeText(text) in sortRedirects) {
+    return sortRedirects[unescapeText(text)];
+  }
+  return unescapeText(text) as sortType;
+};
+const correctDir = (text: string): dirType => {
+  if (unescapeText(text) in dirRedirects) {
+    return dirRedirects[unescapeText(text)];
+  }
+  return unescapeText(text) as dirType;
+};
 export const isSortFilter = (text: string): boolean => {
   if (text.at(0) == '-') {
     return isSortFilter(text.slice(1));
@@ -28,10 +44,6 @@ export const isSortFilter = (text: string): boolean => {
   return ['sort', 'order', 'dir', 'direction'].includes(keyword);
 };
 
-const isSort = (text: string): boolean =>
-  sorts.includes(unescapeText(text) as sortType) || unescapeText(text) in sortRedirects;
-const isDir = (text: string): boolean =>
-  dirs.includes(unescapeText(text) as dirType) || unescapeText(text) in dirRedirects;
 export const sortIsValid = (text: string): boolean => {
   const { term } = splitOnFirstOp(text);
   // TODO: add multi in one term option?
@@ -45,18 +57,6 @@ export const sortIsValid = (text: string): boolean => {
   return isSort(term) || isDir(term);
 };
 
-const correctSort = (text: string): sortType => {
-  if (unescapeText(text) in sortRedirects) {
-    return sortRedirects[unescapeText(text)];
-  }
-  return unescapeText(text) as sortType;
-};
-const correctDir = (text: string): dirType => {
-  if (unescapeText(text) in dirRedirects) {
-    return dirRedirects[unescapeText(text)];
-  }
-  return unescapeText(text) as dirType;
-};
 export const parseSorts = (sortList: string[]): sortObject[] => {
   const sortObs: sortObject[] = [];
   for (let i = 0; i < sortList.length; i++) {
@@ -97,7 +97,7 @@ export const winnowSortObjects = (
   const winnow = (index: number) => winnowed.unshift(...sortList.splice(index, 1));
   const hasConflict = (index: number) => {
     const sort = sortList[index].sort;
-    if (!sorts.includes(sort) || !dirs.includes(sortList[index].dir)) {
+    if (!sortTypeList.includes(sort) || !dirTypeList.includes(sortList[index].dir)) {
       return true;
     }
     for (let i = index - 1; i >= 0; i--) {
@@ -130,7 +130,7 @@ export const winnowSortObjects = (
 };
 
 export const getWinnowedSortOptions = (sortList: sortObject[]): sortType[] => {
-  const options = [...sorts];
+  const options = [...sortTypeList];
   const hasConflict = (sort: string, other: string) => {
     if (
       sort == other ||
@@ -170,7 +170,7 @@ export const combineAndWinnowSorts = (
       continue;
     }
     const input =
-      sorts.includes(inputs[i].sort) && dirs.includes(inputs[i].dir)
+      sortTypeList.includes(inputs[i].sort) && dirTypeList.includes(inputs[i].dir)
         ? inputs[i]
         : makeSort(
             isSort(inputs[i].sort) ? correctSort(inputs[i].sort) : 'auto',
@@ -187,7 +187,7 @@ export const combineAndWinnowSorts = (
   }
   const hasConflict = (index: number) => {
     const sort = sortList[index].sort;
-    if (!sorts.includes(sort) || !dirs.includes(sortList[index].dir)) {
+    if (!sortTypeList.includes(sort) || !dirTypeList.includes(sortList[index].dir)) {
       return true;
     }
     for (let i = index - 1; i >= 0; i--) {

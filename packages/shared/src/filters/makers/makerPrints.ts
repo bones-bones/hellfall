@@ -1,13 +1,18 @@
 import { HCCard, isSetType } from '@hellfall/shared/types';
 import {
   equivSetTypes,
-  filterInSet,
-  filterInSetType,
-  filterSetsNumber,
-  filterPrintsNumber,
-  filterIsUnique,
+  inSetFilter,
+  inSetTypeFilter,
+  setsNumberFilter,
+  printsNumberFilter,
+  isUniqueFilter,
+  inSetTypeSummary,
+  inSetSummary,
+  setsNumberSummary,
+  printsNumberSummary,
+  isUniqueSummary,
 } from '../filters';
-import { PassThroughSummaryFilter, printsFilterMaker, looseOpType } from '../types';
+import { filterObject, printsFilterMaker, looseOpType } from '../types';
 import { unescapeText } from '../utils';
 
 export const makeInFilter: printsFilterMaker = (
@@ -15,14 +20,16 @@ export const makeInFilter: printsFilterMaker = (
   op: looseOpType,
   getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
 ) => {
-  return new PassThroughSummaryFilter<HCCard.Any[], string>(
+  return new filterObject<HCCard.Any[], string>(
     'in',
     isSetType(unescapeText(value)) || isSetType(equivSetTypes[unescapeText(value)])
-      ? filterInSetType
-      : filterInSet,
+      ? inSetTypeFilter
+      : inSetFilter,
+    isSetType(unescapeText(value)) || isSetType(equivSetTypes[unescapeText(value)])
+      ? inSetTypeSummary
+      : inSetSummary,
     value,
     op,
-    '=',
     getValueToCompare
   );
 };
@@ -32,12 +39,12 @@ export const makeSetsNumberFilter: printsFilterMaker = (
   op: looseOpType,
   getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
 ) => {
-  return new PassThroughSummaryFilter<HCCard.Any[], string>(
+  return new filterObject<HCCard.Any[], string>(
     'sets',
-    filterSetsNumber,
+    setsNumberFilter,
+    setsNumberSummary,
     value,
     op,
-    '=',
     getValueToCompare
   );
 };
@@ -46,12 +53,12 @@ export const makePrintsNumberFilter: printsFilterMaker = (
   op: looseOpType,
   getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
 ) => {
-  return new PassThroughSummaryFilter<HCCard.Any[], string>(
+  return new filterObject<HCCard.Any[], string>(
     'sets',
-    filterPrintsNumber,
+    printsNumberFilter,
+    printsNumberSummary,
     value,
     op,
-    '=',
     getValueToCompare
   );
 };
@@ -60,12 +67,12 @@ export const makeIsUniqueFilter: printsFilterMaker = (
   op: looseOpType,
   getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
 ) => {
-  return new PassThroughSummaryFilter<HCCard.Any[], string>(
+  return new filterObject<HCCard.Any[], string>(
     'sets',
-    filterIsUnique,
+    isUniqueFilter,
+    isUniqueSummary,
     value,
     op,
-    '=',
     getValueToCompare
   );
 };
