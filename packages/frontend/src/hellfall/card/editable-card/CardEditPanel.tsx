@@ -209,11 +209,27 @@ function FieldEditor({
   changed: boolean;
   onChange: (value: string) => void;
 }) {
+  const [showExplanation, setShowExplanation] = useState(false);
   const fieldId = `field-${config.key}`;
   return (
     <FieldRow>
       <FormField orientation="vertical">
-        <Label>{config.label}</Label>
+        <LabelRow>
+          <Label htmlFor={fieldId}>{config.label}</Label>
+          {config.explanation && (
+            <HelpButton
+              type="button"
+              aria-label={`Explain ${config.label}`}
+              aria-expanded={showExplanation}
+              onClick={() => setShowExplanation(open => !open)}
+            >
+              ?
+            </HelpButton>
+          )}
+        </LabelRow>
+        {showExplanation && config.explanation && (
+          <ExplanationText>{config.explanation}</ExplanationText>
+        )}
         {config.type === 'textarea' ? (
           <StyledTextarea
             changed={changed}
@@ -291,8 +307,39 @@ const FieldsGrid = createStyledDiv(fieldsGridStyles, 'FieldsGrid');
 const fieldRowStyles = createStyles({ display: 'flex', flexDirection: 'column', gap: 2 });
 const FieldRow = createStyledDiv(fieldRowStyles, 'FieldRow');
 
+const labelRowStyles = createStyles({ display: 'flex', alignItems: 'center', gap: 4 });
+const LabelRow = createStyledDiv(labelRowStyles, 'LabelRow');
+
 const labelStyles = createStyles({ fontSize: 12, fontWeight: 600, color: '#555' });
 const Label = createStyledLabel(labelStyles, 'Label');
+
+const helpButtonStyles = createStyles({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 14,
+  height: 14,
+  padding: 0,
+  border: '1px solid #aaa',
+  borderRadius: '50%',
+  background: '#f5f5f5',
+  color: '#666',
+  fontSize: 10,
+  fontWeight: 700,
+  lineHeight: 1,
+  cursor: 'pointer',
+  flexShrink: 0,
+  '&:hover': { borderColor: '#666', color: '#333' },
+});
+const HelpButton = createStyledButton(helpButtonStyles, 'HelpButton');
+
+const explanationTextStyles = createStyles({
+  fontSize: 11,
+  color: '#666',
+  marginBottom: 2,
+  lineHeight: 1.4,
+});
+const ExplanationText = createStyledDiv(explanationTextStyles, 'ExplanationText');
 
 const inputStyles = {
   padding: '4px 8px',

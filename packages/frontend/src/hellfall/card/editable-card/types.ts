@@ -3,6 +3,7 @@ export type FieldConfig = {
   label: string;
   type: FieldType;
   enumValues?: readonly string[];
+  explanation?: string;
 };
 
 export type FieldType = 'string' | 'textarea' | 'semicolon-list' | 'number' | 'boolean' | 'enum';
