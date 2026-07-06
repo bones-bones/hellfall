@@ -7,7 +7,6 @@ import {
   includeFilterFunction,
   looseOpType,
   opType,
-  sortFilterFunction,
   sortType,
   noteFilterFunction,
   summaryFunction,
@@ -29,7 +28,7 @@ import {
   textListFilter,
   unescapeText,
   xor,
-  createCorrectedSummary,
+  createCorrectedSummary, // used for a link
   textEqualsFilter,
   createLegalitySummary,
   getValuesFromProp,
@@ -38,6 +37,7 @@ import {
   numSearchListFilter,
   numSearchFilter,
   queryNameToSummary,
+  filterSort,
 } from '../utils';
 import { ensureArray } from '@hellfall/shared/utils';
 import { allPrintsGetterType } from './makerTypes';
@@ -68,7 +68,7 @@ interface sortInterface extends anyFilterInterface {
   /**
    * The filter function to use
    */
-  filter: sortFilterFunction;
+  filter: anyFilterFunction;
   /**
    * The sort option
    */
@@ -82,12 +82,17 @@ interface sortInterface extends anyFilterInterface {
  * A sort object
  */
 export class SortObject implements sortInterface {
-  constructor(
-    public queryName: string,
-    public filter: sortFilterFunction,
-    public sort: sortType,
-    public dir: dirType
-  ) {}
+  queryName: string = 'sort';
+  constructor(public sort: sortType, public dir: dirType) {}
+  /**
+   * A function that sorts two cards
+   * @param value1 the first card to sort
+   * @param operator dummy
+   * @param value2 the second card to sort
+   * @returns a number for `.sort()`
+   */
+  filter = (value1: HCCard.Any, operator: opType, value2: HCCard.Any) =>
+    filterSort(value1, operator, value2, this.sort, this.dir);
 }
 
 interface filterInterface<T = any, S = any> extends anyFilterInterface {
@@ -327,7 +332,7 @@ export class PropFilter extends FilterObject<string[], string> {
     ({ props: this.props, location: this.location } = queryNameToValue(queryName));
   }
   toSummary = () =>
-    `the ${this.summaryStart ?? queryNameToSummary(this.queryName)} ${super.summary(
+    `the ${this.summaryStart ?? queryNameToSummary(this.queryName)} ${this.summary(
       this.getOp(),
       this.value,
       this.inverted
@@ -540,7 +545,7 @@ export class NoteFilter extends FilterObject<HCCard.Any, string> {
    */
   toSummary = () => this.summary(this.getOp(), this.value, this.inverted, this.note);
   cardPassesFilter = (card: HCCard.Any) =>
-    xor(this.filter(card, this.getOp(), unescapeText(this.value), this.note), this.inverted);
+    xor(this.filter(card, this.getOp(), fixValue(this.value), fixValue(this.note)), this.inverted);
 }
 /**
  * A filter object that compares against inclusion

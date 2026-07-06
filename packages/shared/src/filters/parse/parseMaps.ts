@@ -65,7 +65,6 @@ import {
 import {
   colorFilterMaker,
   filterMaker,
-  stateFilterMaker,
   colorFilterNameType,
   filterNameType,
   printsFilterNameType,

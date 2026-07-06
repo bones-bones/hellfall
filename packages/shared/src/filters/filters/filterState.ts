@@ -54,6 +54,7 @@ const stateList = [
   'triome',
 ] as const;
 type stateType = (typeof stateList)[number];
+export const isStateType = (value: any): value is stateType => stateList.includes(value);
 const equivStateNames: Record<string, stateType> = {
   rulings: 'ruling',
   alchemy: 'rebalanced',
@@ -182,6 +183,7 @@ const stateSummaries: Record<stateType, (operator: opType) => string> = {
 
 // const isList = ['persistent'] as const;
 // type isType = (typeof isList)[number];
+// export const isIsType = (value: any): value is isType => isList.includes(value);
 // const equivIsNames: Record<string, isType> = {
 // };
 // const isResolutions: Record<isType, (value: HCCard.Any) => boolean | undefined> = {
@@ -192,7 +194,8 @@ const stateSummaries: Record<stateType, (operator: opType) => string> = {
 //     `the cards ${opToDont(operator)} make persistent tokens`,
 // };
 const getIsName = (value: string): string | undefined =>
-  equivStateNames[value] /* ?? equivIsNames[value] */ ?? value;
+  equivStateNames[value] /* ?? equivIsNames[value] */ ??
+  (isStateType(value) /* || isIsType(value) */ ? value : undefined);
 /**
  * Checks to see if a card meets the given criterion
  * @param value1 card to check
@@ -229,6 +232,7 @@ export const isSummary = createCorrectedSummary(
 
 const hasList = ['indicator', 'frameeffect', 'watermark'] as const;
 type hasType = (typeof hasList)[number];
+export const isHasType = (value: any): value is hasType => hasList.includes(value);
 const equivHasNames: Record<string, hasType> = {
   fe: 'frameeffect',
   frameeffects: 'frameeffect',
@@ -246,7 +250,9 @@ const hasSummaries: Record<hasType, (operator: opType) => string> = {
 };
 
 const getHasName = (value: string): string | undefined =>
-  equivStateNames[value] ?? equivHasNames[value] ?? value;
+  equivStateNames[value] ??
+  equivHasNames[value] ??
+  (isStateType(value) || isHasType(value) ? value : undefined);
 /**
  * Checks to see if a card meets the given criterion
  * @param value1 card to check

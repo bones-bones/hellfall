@@ -4,6 +4,7 @@ import {
   inSummary,
   getSetNumber,
   isUniqueSummary,
+  toIn,
 } from '../filters';
 import {
   printsFilterMaker,
@@ -24,7 +25,7 @@ export const makeInFilter: printsFilterMaker = (
   op: looseOpType,
   getAllPrints: allPrintsGetterType
 ) => {
-  return new InFilter('in', inSummary, value, op, getAllPrints);
+  return new InFilter('in', inSummary, value, op, getAllPrints, toIn);
 };
 
 /**

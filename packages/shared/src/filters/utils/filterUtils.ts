@@ -274,9 +274,11 @@ export const createColorSummary =
   ): summaryFunction<colorSearch> =>
   (operator: opType, value: colorSearch, invert?: boolean) => {
     if (isShorthandType(value)) {
-      return `the cards${invert ? (shortSummary ? " don't" : "n't") : ''}${
+      return `the cards${shortSummary ? '' : ' are'}${
+        invert ? (shortSummary ? " don't" : "n't") : ''
+      }${
         shortSummary ? ` have ${opToShorthand(operator, value) == 'any color' ? '' : 'a'}` : ''
-      } ${opToShorthand(operator, value)} ${shortSummary}`;
+      } ${opToShorthand(operator, value)} ${shortSummary ?? ''}`;
     }
     if (!Array.isArray(value) && typeof value != 'number') {
       return `!Unknown color "${value}"`;
@@ -285,7 +287,8 @@ export const createColorSummary =
     return createNumSummary(
       `the ${isNum ? `number of ${numberSummary}` : colorSummary} ${
         shortSummary || isNum ? 'is' : 'are'
-      }`
+      }`,
+      true
     )(operator, isNum ? value : value.join(''), invert);
   };
 

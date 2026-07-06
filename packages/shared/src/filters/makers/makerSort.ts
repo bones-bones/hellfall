@@ -1,4 +1,3 @@
-import { filterSort } from '../filters';
 import { SortObject, sortType, dirType, sortMaker } from '../types';
 
 /**
@@ -7,5 +6,5 @@ import { SortObject, sortType, dirType, sortMaker } from '../types';
  * @param dir the sort direction option from the search
  */
 export const makeSort: sortMaker = (sort: sortType, dir: dirType) => {
-  return new SortObject('sort', filterSort, sort, dir);
+  return new SortObject(sort, dir);
 };

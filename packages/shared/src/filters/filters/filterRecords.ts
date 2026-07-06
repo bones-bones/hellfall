@@ -410,6 +410,7 @@ export const toShowcaseFrameRecord: Record<string, string | string[]> = {
   dossier: 'Dossier',
   magnified: 'Magnified',
   citymural: 'City',
+  city: 'City',
   ravnica: ['Dossier', 'Magnified', 'City'],
   wanted: 'Wanted Poster',
   wantedposter: 'Wanted Poster',

@@ -267,7 +267,7 @@ export const parseSearchQuery = (
 
       // Regular filter term
       const filter = parseFilter(token, undefined, getOtherPrints);
-      if (['set', 'tokenset', 'block', 'in', 'sets', 'prints'].includes(filter.queryName)) {
+      if (['set', 'tokenset', 'block', 'in', 'sets'].includes(filter.queryName)) {
         autoFilterExtras = false;
       }
       i++;

@@ -159,3 +159,9 @@ Write a script to transform the database
 - add @template to jsdocs
 - make sure new filter code works for everything
 - figure out how to implement a link between filter names in parseMaps and query names on filter makers
+- prevent double history update when clicking link to search
+- fix double quote thing in search summaries
+- make it possible to filter against lack of a note
+- fix `fixTags`?
+- fix capitalization in search summaries
+- exclude hcj from draftpartner search?

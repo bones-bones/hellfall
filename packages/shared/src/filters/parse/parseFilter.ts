@@ -50,27 +50,13 @@ export const parseFilter = (
     return correctOp(makeNameFilter(text, ':'));
   }
   const { keyword, op, term } = splitOnFirstOp(text);
-  if (isCompKeyword(keyword) && isCompKeyword(term)) {
-    return correctOp(makeCompFilter(keyword, op, unescapeText(term)));
-  }
-  const filterName = toFilterName(keyword);
-  if (filterName) {
-    return correctOp(filters[filterName](term, op));
-  }
-  if (keyword in invertedFilterNames) {
-    return parseFilter(`${invertedFilterNames[keyword]}${op}${term}`, !invert, getAllPrints);
-  }
-  if (unescapeText(term) == 'unique' && ['is', 'has'].includes(keyword)) {
-    return correctOp(makeIsUniqueFilter(term, op, getAllPrints));
-  }
-  const printsFilterName = toPrintsFilterName(keyword);
-  if (printsFilterName) {
-    return correctOp(printsFilters[printsFilterName](term, op, getAllPrints));
-  }
   const colorFilterName = toColorFilterName(keyword);
   if (colorFilterName) {
     const parsedColors = parseColorText(term);
     if (parsedColors == undefined) {
+      if (isCompKeyword(term)) {
+        return correctOp(makeCompFilter(keyword, op, unescapeText(term)));
+      }
       return makeInvalidColorFilter(term, ':');
     }
     // using misc as a color automatically shunts the color search into a misc color search
@@ -84,6 +70,23 @@ export const parseFilter = (
       );
     }
     return correctOp(colorFilters[colorFilterName](parsedColors, op));
+  }
+  if (isCompKeyword(keyword) && isCompKeyword(term)) {
+    return correctOp(makeCompFilter(keyword, op, unescapeText(term)));
+  }
+  if (unescapeText(term) == 'unique' && ['is', 'has'].includes(keyword)) {
+    return correctOp(makeIsUniqueFilter(term, op, getAllPrints));
+  }
+  const filterName = toFilterName(keyword);
+  if (filterName) {
+    return correctOp(filters[filterName](term, op));
+  }
+  if (keyword in invertedFilterNames) {
+    return parseFilter(`${invertedFilterNames[keyword]}${op}${term}`, !invert, getAllPrints);
+  }
+  const printsFilterName = toPrintsFilterName(keyword);
+  if (printsFilterName) {
+    return correctOp(printsFilters[printsFilterName](term, op, getAllPrints));
   }
   if (term) {
     return makeInvalidKeywordFilter(keyword, ':');

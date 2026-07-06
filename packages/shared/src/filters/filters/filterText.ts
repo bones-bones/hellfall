@@ -7,6 +7,7 @@ import {
   isValidV4UUID,
   listsAreLooselyEqual,
   wrapArray,
+  getSetAndDirectChildSets,
 } from '@hellfall/shared/utils';
 import {
   opType,
@@ -31,6 +32,8 @@ import {
   textListFilter,
   createCorrectedSummary,
   createSummary,
+  xor,
+  fixValue,
 } from '../utils';
 import {
   HCCard,
@@ -96,11 +99,9 @@ export const idSummary: summaryFunction<string> = (
   value: string,
   invert?: boolean
 ) =>
-  `the id is ${(isNumber(value) ? baseNumSummary : includeSummarySingular)(
-    operator,
-    value,
-    invert
-  )}`;
+  `the id ${isNumber(value) ? 'is ' : ''}${(isNumber(value)
+    ? baseNumSummary
+    : includeSummarySingular)(operator, value, invert)}`;
 
 /**
  * Checks a card to see if its artists include an artist from a search, and possibly also checks against artist notes
@@ -118,14 +119,21 @@ export const artistFilter: noteFilterFunction = (
   if (note && typeof note != 'string') {
     const artist = value2.slice(0, -1);
     return (
-      value1.artist_notes && textListFilter(Object.keys(value1.artist_notes), operator, artist)
+      value1.artist_notes &&
+      textListFilter(fixValue(Object.keys(value1.artist_notes)), operator, fixValue(artist))
     );
   }
   if (note) {
     if (!value1.artist_notes) {
       return false;
     }
-    return includeEqualsOp(operator, textContains, textEquals, value1.artist_notes[value2], note);
+    const cardNote = Object.entries(value1.artist_notes).find(([key, value]) =>
+      textEquals(fixValue(key), value2)
+    )?.[1];
+    if (!cardNote) {
+      return false;
+    }
+    return includeEqualsOp(operator, textContains, textEquals, fixValue(cardNote), note);
   }
   if (!value1.artists) return false;
   return includeEqualsOp(
@@ -154,7 +162,7 @@ export const artistSummary: noteSummaryFunction = (
       ? ` and that artist${
           typeof note == 'string'
             ? `'s note ${includeSummarySingular(operator, note, invert)}`
-            : ` ${opIsNegative(operator) != !invert ? 'does not have' : 'has'} a note`
+            : ` ${xor(opIsNegative(operator), invert) ? 'does not have' : 'has'} a note`
         }`
       : ''
   }`;
@@ -174,13 +182,22 @@ export const tagFilter: noteFilterFunction = (
 ) => {
   if (note && typeof note != 'string') {
     const tag = value2.slice(0, -1);
-    return value1.tag_notes && textListFilter(Object.keys(value1.tag_notes), operator, tag);
+    return (
+      value1.tag_notes &&
+      textListFilter(fixValue(Object.keys(value1.tag_notes)), operator, fixValue(tag))
+    );
   }
   if (note) {
     if (!value1.tag_notes) {
       return false;
     }
-    return includeEqualsOp(operator, textContains, textEquals, value1.tag_notes[value2], note);
+    const cardNote = Object.entries(value1.tag_notes).find(([key, value]) =>
+      textEquals(fixValue(key), value2)
+    )?.[1];
+    if (!cardNote) {
+      return false;
+    }
+    return includeEqualsOp(operator, textContains, textEquals, fixValue(cardNote), note);
   }
   if (!value1.tags) return false;
   return includeEqualsOp(
@@ -209,7 +226,7 @@ export const tagSummary: noteSummaryFunction = (
       ? ` and that tag${
           typeof note == 'string'
             ? `'s note ${includeSummarySingular(operator, note, invert)}`
-            : ` ${opIsNegative(operator) != !invert ? 'does not have' : 'has'} a note`
+            : ` ${xor(opIsNegative(operator), invert) ? 'does not have' : 'has'} a note`
         }`
       : ''
   }`;
@@ -400,23 +417,23 @@ export const faceLayoutSummary = createCorrectedSummary(
  */
 export const toAnyLayout = (text: string): HCLayout[] | undefined =>
   toCardLayout(text) ?? toFaceLayout(text);
+const getAnyLayoutName = (text: string) =>
+  toAnyLayout(text)
+    ?.map(e => `"${e.replaceAll('_', ' ')}"`)
+    .join(' or ');
+
 /**
  * The summary for a layout filter
  * @param operator the operator to use
  * @param value the layout from the search
  * @param invert dummy
  */
-export const anyLayoutSummary: summaryFunction<string> = (operator: opType, value: string) => {
-  const cardLayout = getCardLayoutName(value);
-  const faceLayout = getFaceLayoutName(value);
-  if (cardLayout) {
-    return cardLayoutSummary(operator, value);
-  } else if (faceLayout) {
-    return faceLayoutSummary(operator, value);
-  } else {
-    return `!Unknown layout "${value}"`;
-  }
-};
+export const anyLayoutSummary = createCorrectedSummary(
+  getAnyLayoutName,
+  (operator, value) =>
+    `the cards ${opToDont(operator)} have layout ${value} or a face with that layout`,
+  (operator, value) => `!Unknown layout "${value}"`
+);
 
 /**
  * The summary for a set filter
@@ -460,8 +477,8 @@ export const equivSetTypes: Record<string, SetType> = {
   vetoed: SetType.Veto,
 };
 
-export const toSetType = (value: string) =>
-  equivSetTypes[value] ?? isSetType(value) ? value : undefined;
+export const toSetType = (value: string): SetType | undefined =>
+  equivSetTypes[value] ?? (isSetType(value) ? value : undefined);
 
 /**
  * The summary for a set type filter
@@ -469,21 +486,24 @@ export const toSetType = (value: string) =>
  * @param value the set type from the search
  * @param invert dummy
  */
-export const setTypeSummary = createCorrectedSummary(
+export const setTypeSummary = createCorrectedSummary<string>(
   toSetType,
   (operator, value) => `the set type is ${opToNot(operator)} "${value}"`,
   (operator, value) => `!Unknown set type "${value}"`
 );
 
-export const toIn = (value: string) => toSetType(value) ?? (isSetCode(value) ? value : undefined);
+export const toIn = (value: string): string | string[] | undefined =>
+  toSetType(value) ?? (isSetCode(value) ? getSetAndDirectChildSets(value) : undefined);
+
+const isIn = (value: string): boolean | undefined => Boolean(toSetType(value) || isSetCode(value));
 /**
  * The summary for a set inclusion filter
  * @param operator the operator to use
  * @param value the set/code from the search
  * @param invert dummy
  */
-export const inSummary = createCorrectedSummary(
-  toIn,
+export const inSummary = createSummary(
+  isIn,
   (operator, value) => `the card was ${opToNot(operator)} in "${value}"`,
   (operator, value) => `!Unknown set code "${value}"`
 );

@@ -47,7 +47,7 @@ export const getValuesFromProp = <T extends queryPropType>(
         values.push(...getAllNames(card));
         break;
       case 'showcase':
-        values.push(...(card.tag_notes?.['showcase-frame'].split(', ') ?? []));
+        values.push(...(card.tag_notes?.['showcase-frame']?.split(', ') ?? []));
         break;
       case 'settype':
         values.push(...ensureArray(getSet(card.set)?.set_type));
@@ -66,7 +66,7 @@ export const getValuesFromProp = <T extends queryPropType>(
     return getAllNames(card).map(value => unescapeText(value));
   }
   if (prop == 'showcase') {
-    return (card.tag_notes?.['showcase-frame'].split(', ') ?? []).map(v => unescapeText(v));
+    return (card.tag_notes?.['showcase-frame']?.split(', ') ?? []).map(v => unescapeText(v));
   }
   if (prop == 'settype') {
     return ensureArray(getSet(card.set)?.set_type);
@@ -113,7 +113,7 @@ const queryNamePropRecord: Record<string, queryPropType | queryPropType[]> = {
   border: 'border_color',
   cardframe: 'frame',
   frame: ['frame', 'frame_effects'],
-  cardlayout: 'layout',
+  anylayout: 'layout',
   facelayout: 'layout',
   block: 'set',
   group: 'set',
@@ -128,7 +128,7 @@ const queryNameLocationRecord: Record<string, 'face' | 'root'> = {
 export const queryNameToSummary = (queryName: string): string => {
   const queryProp = queryNamePropRecord[queryName];
   if (queryProp && !Array.isArray(queryProp)) {
-    return queryProp.replaceAll('_', '');
+    return queryProp.replaceAll('_', ' ');
   }
   if (isAnyPropType(queryName)) {
     return queryName;
@@ -153,10 +153,10 @@ export const queryNameToValue = (queryName: string): queryValueType => {
   if (queryProp) {
     queryValue.props = ensureArray(queryProp);
   }
-  if (isAnyPropType(queryName) && !queryValue.props) {
+  if (isAnyPropType(queryName) && !queryValue.props.length) {
     queryValue.props = [queryName];
   }
-  if (!queryValue.props) {
+  if (!queryValue.props.length) {
     const name =
       anyPropOrder.find(prop => [queryName, `${queryName}s`].includes(prop.replaceAll('_', ''))) ??
       (queryName as anyPropType);

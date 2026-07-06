@@ -89,8 +89,12 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
     child => getSet(child)?.set_type == getSet(code)?.set_type
   ) ?? []),
   ...sets
-    .filter(set => set.child_set_codes?.includes(code) && set.set_type == getSet(code)?.set_type)
-    .map(set => set.code),
+    .filter(
+      set =>
+        set.child_set_codes?.includes(code.toUpperCase() as SetCode) &&
+        set.set_type == getSet(code)?.set_type
+    )
+    .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
 ];
 
 /**
@@ -100,7 +104,9 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
 export const getGroupSets = (code: SetCode): SetCode[] => [
   code.toUpperCase() as SetCode,
   ...(getSet(code)?.child_set_codes ?? []),
-  ...sets.filter(set => set.child_set_codes?.includes(code)).map(set => set.code),
+  ...sets
+    .filter(set => set.child_set_codes?.includes(code.toUpperCase() as SetCode))
+    .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
 ];
 
 /**
