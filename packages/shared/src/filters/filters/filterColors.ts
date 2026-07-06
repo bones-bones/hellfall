@@ -30,7 +30,7 @@ const evalShortNum = (value1: number, operator: opType, value2: shorthandType) =
 };
 
 /**
- * Compares a set of colors with a color search using an operator and returns a bool.
+ * Compares a set of colors with a color search
  * @param value1 The set of colors from the card
  * @param operator The operator
  * @param value2 The value from the search
@@ -49,8 +49,20 @@ export const colorFilter: colorFilterFunction = (
   return evalShortNum(value1.length, operator, value2);
 };
 
+/**
+ * The summary for a color filter
+ * @param operator the operator to use
+ * @param value the search value to use
+ * @param invert whether the search is inverted
+ */
 export const colorSummary = createColorSummary('colors', 'colors');
 
+/**
+ * The summary for a color identity filter
+ * @param operator the operator to use
+ * @param value the search value to use
+ * @param invert whether the search is inverted
+ */
 export const colorIdentitySummary = createColorSummary(
   'color identity',
   'identity colors',
@@ -58,12 +70,36 @@ export const colorIdentitySummary = createColorSummary(
 );
 
 /**
- * Compares a set of color indicators with a color search using an operator and returns a bool.
+ * Compares a set of color indicators with a color search
  * @param value1 The set of color indicators from the card
  * @param operator The operator
  * @param value2 The value from the search
  */
 export const colorIndicatorFilter: colorListFilterFunction = (
+  value1: string[][],
+  operator: opType,
+  value2: colorSearch
+) => value1.some(set => colorFilter(set, operator, value2));
+
+/**
+ * The summary for a color indicator filter
+ * @param operator the operator to use
+ * @param value the search value to use
+ * @param invert whether the search is inverted
+ */
+export const colorIndicatorSummary = createColorSummary(
+  'color indicator',
+  'indicator colors',
+  'indicator'
+);
+
+/**
+ * Compares a set of hybrid colors with a color search
+ * @param value1 The set of hybrid colors from the card
+ * @param operator The operator
+ * @param value2 The value from the search
+ */
+export const hybridIdentityFilter: colorListFilterFunction = (
   value1: string[][],
   operator: opType,
   value2: colorSearch
@@ -77,26 +113,55 @@ export const colorIndicatorFilter: colorListFilterFunction = (
   return evalShortNum(getHybridColorNumber(value1), operator, value2);
 };
 
-export const colorIndicatorSummary = createColorSummary(
-  'color indicator',
-  'indicator colors',
-  'indicator'
-);
-
 /**
- * Compares a set of hybrid colors with a color search using an operator and returns a bool.
- * @param value1 The set of hybrid colors from the card
- * @param operator The operator
- * @param value2 The value from the search
+ * The summary for a hybrid identity filter
+ * @param operator the operator to use
+ * @param value the search value to use
+ * @param invert whether the search is inverted
  */
-export const hybridIdentityFilter: colorListFilterFunction = (
-  value1: string[][],
-  operator: opType,
-  value2: colorSearch
-) => value1.some(set => colorFilter(set, operator, value2));
-
 export const hybridIdentitySummary = createColorSummary(
   'hybrid color identity',
   'hybrid identity colors',
   'hybrid identity'
+);
+/**
+ * The summary for a misc color filter
+ * @param operator the operator to use
+ * @param value the search value to use
+ * @param invert whether the search is inverted
+ */
+export const miscColorSummary = createColorSummary('misc colors', 'misc colors');
+
+/**
+ * The summary for a misc color identity filter
+ * @param operator the operator to use
+ * @param value the search value to use
+ * @param invert whether the search is inverted
+ */
+export const miscColorIdentitySummary = createColorSummary(
+  'misc color identity',
+  'misc identity colors',
+  'misc identity'
+);
+/**
+ * The summary for a misc color indicator filter
+ * @param operator the operator to use
+ * @param value the search value to use
+ * @param invert whether the search is inverted
+ */
+export const miscColorIndicatorSummary = createColorSummary(
+  'misc color indicator',
+  'misc indicator colors',
+  'misc indicator'
+);
+/**
+ * The summary for a misc hybrid identity filter
+ * @param operator the operator to use
+ * @param value the search value to use
+ * @param invert whether the search is inverted
+ */
+export const miscHybridIdentitySummary = createColorSummary(
+  'misc hybrid color identity',
+  'misc hybrid identity colors',
+  'misc hybrid identity'
 );

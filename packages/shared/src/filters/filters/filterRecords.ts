@@ -17,6 +17,9 @@ import {
   HCLayoutGroup,
 } from '@hellfall/shared/types';
 
+/**
+ * The strings that can be converted to {@linkcode HCBorderColor} and their conversions
+ */
 export const toBorderRecord: Record<string, HCBorderColor> = {
   black: HCBorderColor.Black,
   white: HCBorderColor.White,
@@ -34,6 +37,9 @@ export const toBorderRecord: Record<string, HCBorderColor> = {
   red: HCBorderColor.Red,
 };
 
+/**
+ * The strings that can be converted to {@linkcode HCFrame} and their conversions
+ */
 export const toCardFrameRecord: Record<string, HCFrame | HCFrame[]> = {
   '1993': HCFrame.Original,
   '93': HCFrame.Original,
@@ -121,6 +127,9 @@ export const toCardFrameRecord: Record<string, HCFrame | HCFrame[]> = {
   website: HCFrame.WebsiteApp,
   app: HCFrame.WebsiteApp,
 };
+/**
+ * The summary strings corresponding to values from {@linkcode toCardFrameRecord}
+ */
 export const frameNames: [HCFrame[], string][] = [
   [[HCFrame.Original], "the '93 Original"],
   [[HCFrame.Classic, HCFrame.ClassicToken], "the '97 Classic"],
@@ -159,6 +168,9 @@ export const frameNames: [HCFrame[], string][] = [
   [NotMagicFrames, 'any nonmagic game'],
   [[HCFrame.WebsiteApp], 'a website or app'],
 ];
+/**
+ * The strings that can be converted to {@linkcode HCFrameEffect} and their conversions
+ */
 export const toFrameEffectRecord: Record<string, HCFrameEffect | HCFrameEffect[]> = {
   sunmoondfc: HCFrameEffect.SunMoonDfc,
   sunmoontransform: HCFrameEffect.SunMoonDfc,
@@ -270,6 +282,9 @@ export const toFrameEffectRecord: Record<string, HCFrameEffect | HCFrameEffect[]
   universebeyond: HCFrameEffect.UniversesBeyond,
   universesbeyond: HCFrameEffect.UniversesBeyond,
 };
+/**
+ * The summary strings corresponding to values from {@linkcode toFrameEffectRecord}
+ */
 export const frameEffectNames: [HCFrameEffect[], string][] = [
   [
     [HCFrameEffect.SunMoonDfc, HCFrameEffect.MoonEldraziDfc],
@@ -337,6 +352,9 @@ export const frameEffectNames: [HCFrameEffect[], string][] = [
   [[HCFrameEffect.UniversesBeyond], 'a Universes Beyond frame'],
 ];
 
+/**
+ * The strings that can be converted to showcase frames and their conversions
+ */
 export const toShowcaseFrameRecord: Record<string, string | string[]> = {
   kaladesh: 'Invention',
   invention: 'Invention',
@@ -421,6 +439,9 @@ export const toShowcaseFrameRecord: Record<string, string | string[]> = {
   album: 'Album',
   pixel: 'Pixel',
 };
+/**
+ * The strings that can be converted to {@linkcode HCLayout} and their conversions
+ */
 export const toCardLayoutRecord: Record<string, HCLayout | HCLayout[]> = {
   normal: HCLayout.Normal,
   front: HCLayout.Front,
@@ -507,6 +528,9 @@ export const toCardLayoutRecord: Record<string, HCLayout | HCLayout[]> = {
   spacecraft: HCLayout.Station,
   planet: HCLayout.Station,
 };
+/**
+ * The strings that can be converted to {@linkcode HCLayoutGroup.FaceLayoutType} and their conversions
+ */
 export const toFaceLayoutRecord: Record<
   string,
   HCLayoutGroup.FaceLayoutType | HCLayoutGroup.FaceLayoutType[]

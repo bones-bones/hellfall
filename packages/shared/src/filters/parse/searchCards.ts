@@ -23,6 +23,12 @@ const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): b
   }
 };
 
+/**
+ * Given a query, filters a {@linkcode CardMap} to return only the cards that match the query
+ * @param cardMap Map of all cards
+ * @param query query to use
+ * @param tagList The list of tags (from `tags.json`)
+ */
 export const searchCards = (cardMap: CardMap, query: string, tagList: string[]): CardMap => {
   const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
   const usingClusion = Boolean(includeList.length + excludeList.length);

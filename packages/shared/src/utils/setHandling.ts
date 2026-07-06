@@ -1,5 +1,5 @@
 import { setsData } from '@hellfall/shared/data';
-import { allSetsList, HCSet, SetCode } from '../types';
+import { allSetsList, HCSet, isSetCode, SetCode } from '../types';
 import { wrapArray } from './listHandling';
 
 const sets = setsData.data;
@@ -73,6 +73,13 @@ export const getDirectChildSets = (code: SetCode): SetCode[] | undefined =>
   getSet(code)?.child_set_codes?.filter(child => getSet(child)?.set_type == getSet(code)?.set_type);
 
 /**
+ * Gets the result of {@linkcode getDirectChildSets} except including the set itself
+ * @param code Set code to get the direct children of
+ */
+export const getSetAndDirectChildSets = (code: SetCode): SetCode[] =>
+  isSetCode(code) ? [code.toUpperCase() as SetCode, ...(getDirectChildSets(code) ?? [])] : [];
+
+/**
  * Gets the sets that are in the same block as another set (i.e. are its group and have the same set type)
  * @param code Set code to get the block sets of
  */
@@ -110,7 +117,7 @@ export const inDirectChildSets = (value1: SetCode, value2: SetCode) =>
  * @param value2 the set in whose direct children to look
  */
 export const inSetOrDirectChildren = (value1: SetCode, value2: SetCode) =>
-  value1.toUpperCase() == value2.toUpperCase() || inDirectChildSets(value1, value2);
+  getSetAndDirectChildSets(value2).some(code => code == value1.toUpperCase());
 
 /**
  * Checks if one set is included in another set's block

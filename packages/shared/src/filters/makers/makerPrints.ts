@@ -1,78 +1,68 @@
-import { HCCard, isSetType } from '@hellfall/shared/types';
 import {
-  equivSetTypes,
-  inSetFilter,
-  inSetTypeFilter,
-  setsNumberFilter,
-  printsNumberFilter,
-  isUniqueFilter,
-  inSetTypeSummary,
-  inSetSummary,
   setsNumberSummary,
   printsNumberSummary,
+  inSummary,
+  getSetNumber,
   isUniqueSummary,
 } from '../filters';
-import { FilterObject, printsFilterMaker, looseOpType } from '../types';
-import { unescapeText } from '../utils';
+import {
+  printsFilterMaker,
+  looseOpType,
+  allPrintsGetterType,
+  InFilter,
+  PrintsNumberFilter,
+} from '../types';
 
+/**
+ * Makes an {@linkcode InFilter}
+ * @param value the value from the search
+ * @param op the operator from the search
+ * @param getAllPrints a function that gets all prints of a card
+ */
 export const makeInFilter: printsFilterMaker = (
   value: string,
   op: looseOpType,
-  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+  getAllPrints: allPrintsGetterType
 ) => {
-  return new FilterObject<HCCard.Any[], string>(
-    'in',
-    isSetType(unescapeText(value)) || isSetType(equivSetTypes[unescapeText(value)])
-      ? inSetTypeFilter
-      : inSetFilter,
-    isSetType(unescapeText(value)) || isSetType(equivSetTypes[unescapeText(value)])
-      ? inSetTypeSummary
-      : inSetSummary,
-    value,
-    op,
-    getValueToCompare
-  );
+  return new InFilter('in', inSummary, value, op, getAllPrints);
 };
 
+/**
+ * Makes a sets number filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ * @param getAllPrints a function that gets all prints of a card
+ */
 export const makeSetsNumberFilter: printsFilterMaker = (
   value: string,
   op: looseOpType,
-  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+  getAllPrints: allPrintsGetterType
 ) => {
-  return new FilterObject<HCCard.Any[], string>(
-    'sets',
-    setsNumberFilter,
-    setsNumberSummary,
-    value,
-    op,
-    getValueToCompare
-  );
+  return new PrintsNumberFilter('sets', value, op, setsNumberSummary, getAllPrints, getSetNumber);
 };
+/**
+ * Makes a prints number filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ * @param getAllPrints a function that gets all prints of a card
+ */
 export const makePrintsNumberFilter: printsFilterMaker = (
   value: string,
   op: looseOpType,
-  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+  getAllPrints: allPrintsGetterType
 ) => {
-  return new FilterObject<HCCard.Any[], string>(
-    'prints',
-    printsNumberFilter,
-    printsNumberSummary,
-    value,
-    op,
-    getValueToCompare
-  );
+  return new PrintsNumberFilter('prints', value, op, printsNumberSummary, getAllPrints);
 };
+/**
+ * Makes a uniqueness filter
+ * @param value dummy
+ * @param op the operator from the search
+ * @param getAllPrints a function that gets all prints of a card
+ */
 export const makeIsUniqueFilter: printsFilterMaker = (
   value: string,
   op: looseOpType,
-  getValueToCompare: (card: HCCard.Any) => HCCard.Any[]
+  getAllPrints: allPrintsGetterType
 ) => {
-  return new FilterObject<HCCard.Any[], string>(
-    'is',
-    isUniqueFilter,
-    isUniqueSummary,
-    value,
-    op,
-    getValueToCompare
-  );
+  return new PrintsNumberFilter('is', '1', op, isUniqueSummary, getAllPrints, getSetNumber);
 };

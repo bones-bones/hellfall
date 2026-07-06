@@ -1,5 +1,8 @@
 import { FilterObject } from './makerObject';
 
+/**
+ * A filter node
+ */
 export type FilterNode =
   | { type: 'filter'; filter: FilterObject<any, any> }
   | { type: 'not'; child: FilterNode }
@@ -50,6 +53,8 @@ export const filterNames = [
   'showcase',
   'tag',
   'tagnote',
+  'is',
+  'has',
   'isrelated',
   'hasrelated',
   'include',
@@ -59,6 +64,7 @@ export const filterNames = [
   'invalidcolor',
 ] as const;
 export type filterNameType = (typeof filterNames)[number];
+export const isFilterName = (value: any): value is filterNameType => filterNames.includes(value);
 
 export const equivFilterNames: Record<string, filterNameType> = {
   cardid: 'id',
@@ -152,6 +158,8 @@ export const equivFilterNames: Record<string, filterNameType> = {
   dir: 'invalidsort',
   direction: 'invalidsort',
 };
+export const toFilterName = (value: string): filterNameType | undefined =>
+  equivFilterNames[value] ?? (isFilterName(value) ? value : undefined);
 
 const colorFilterNames = [
   'color',
@@ -164,7 +172,8 @@ const colorFilterNames = [
   'mischybrid',
 ] as const;
 export type colorFilterNameType = (typeof colorFilterNames)[number];
-
+export const isColorFilterName = (value: any): value is colorFilterNameType =>
+  colorFilterNames.includes(value);
 export const equivColorFilterNames: Record<string, colorFilterNameType> = {
   c: 'color',
   colors: 'color',
@@ -209,12 +218,17 @@ export const equivColorFilterNames: Record<string, colorFilterNameType> = {
   mischybrididentity: 'mischybrid',
   mischybridcoloridentity: 'mischybrid',
 };
+export const toColorFilterName = (value: string): colorFilterNameType | undefined =>
+  equivColorFilterNames[value] ?? (isColorFilterName(value) ? value : undefined);
 
-const printsFilterNames = ['in', 'sets', 'prints', 'is', 'has'] as const;
+const printsFilterNames = ['in', 'sets', 'prints'] as const;
 export type printsFilterNameType = (typeof printsFilterNames)[number];
-
+export const isPrintsFilterName = (value: any): value is printsFilterNameType =>
+  printsFilterNames.includes(value);
 export const equivPrintsFilterNames: Record<string, printsFilterNameType> = {};
-export const invertedFilterNames: Record<string, filterNameType | printsFilterNameType> = {
+export const toPrintsFilterName = (value: string): printsFilterNameType | undefined =>
+  equivPrintsFilterNames[value] ?? (isPrintsFilterName(value) ? value : undefined);
+export const invertedFilterNames: Record<string, filterNameType> = {
   not: 'is',
   exclude: 'include',
 };

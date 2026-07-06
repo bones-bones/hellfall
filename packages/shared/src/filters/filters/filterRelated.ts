@@ -1,14 +1,16 @@
-import { HCCard, relatedComponent } from '@hellfall/shared/types';
+import { HCCard, relatedComponent, HCRelatedCard } from '@hellfall/shared/types';
 import { hasPartWithComp } from '@hellfall/shared/utils';
 import { opAsBool, opToDont, opToNt, unescapeText } from '../utils';
-import { cardStringFilterFunction, opType, summaryFunction } from '../types';
+import { stateFilterFunction, opType, summaryFunction } from '../types';
 
 // const includeComponent = (part: HCRelatedCard) =>
 //   ['token_maker', 'draft_partner'].includes(part.component);
 
-// just make list of query names that should be evaluated by just looking at parts?
-
 type searchRelated = relatedComponent | 'persistent' | 'meld';
+/**
+ * The strings that can be converted to {@linkcode relatedComponent}`| 'persistent' | 'meld'`
+ * and their conversions
+ */
 export const equivRelNames: Record<string, searchRelated> = {
   draftpartner: 'draft_partner',
   dp: 'draft_partner',
@@ -37,7 +39,15 @@ export const equivRelNames: Record<string, searchRelated> = {
 const toFullRelName = (text: string): searchRelated | undefined =>
   /* isComponent(text) ? text:  */ equivRelNames[unescapeText(text)];
 
-export const isRelatedFilter: cardStringFilterFunction = (
+// TODO: explain this better
+/**
+ * Checks to see if a card is an {@linkcode HCRelatedCard} that meets the given criterion (by
+ * checking if it meets the inverse of that criterion as used in {@linkcode hasRelatedFilter})
+ * @param value1 card to check
+ * @param operator operator to use
+ * @param value2 criterion from the search
+ */
+export const isRelatedFilter: stateFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
   value2: string
@@ -70,6 +80,11 @@ export const isRelatedFilter: cardStringFilterFunction = (
       );
   }
 };
+/**
+ * The summary for {@link isRelatedFilter}
+ * @param operator the operator to use
+ * @param value the criterion from the search
+ */
 export const isRelatedSummary: summaryFunction<string> = (operator: opType, value: string) => {
   const comp = toFullRelName(value);
   switch (comp) {
@@ -90,7 +105,13 @@ export const isRelatedSummary: summaryFunction<string> = (operator: opType, valu
   }
   return `!Unknown related "${value}"`;
 };
-export const hasRelatedFilter: cardStringFilterFunction = (
+/**
+ * Checks to see if a card has an {@linkcode HCRelatedCard} that meets the given criterion
+ * @param value1 card to check
+ * @param operator operator to use
+ * @param value2 criterion from the search
+ */
+export const hasRelatedFilter: stateFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
   value2: string
@@ -121,6 +142,11 @@ export const hasRelatedFilter: cardStringFilterFunction = (
       );
   }
 };
+/**
+ * The summary for {@link hasRelatedFilter}
+ * @param operator the operator to use
+ * @param value the criterion from the search
+ */
 export const hasRelatedSummary: summaryFunction<string> = (operator: opType, value: string) => {
   const comp = toFullRelName(value);
   switch (comp) {

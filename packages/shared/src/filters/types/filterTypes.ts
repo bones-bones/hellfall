@@ -1,11 +1,15 @@
 import { HCCard } from '@hellfall/shared/types';
 /**
  * The type of an operator
+ *
+ * For clarity, always use `operator` as the parameter name for this
  */
 export type opType = '<' | '<=' | '=' | '>=' | '>' | '!=';
 
 /**
  * The type of an operator, including loose operators
+ *
+ * For clarity, always use `op` as the parameter name for this
  */
 export type looseOpType = ':' | '!:' | opType;
 
@@ -18,11 +22,11 @@ const invertOptions = ['ignore', 'flip', 'negate'] as const;
 /**
  * The option for how to handle the inversion operator
  *
- * ignore: object ignores the inversion operator
+ * `ignore:` object ignores the inversion operator
  *
- * flip: object inverts the operator before passing it in
+ * `flip:` object inverts the operator before passing it in
  *
- * negate: object negates the filter's output; filter requires `invert` to be passed to summary function
+ * `negate:` object negates the filter's output; filter requires `invert` to be passed to summary function
  */
 export type invertOptionType = (typeof invertOptions)[number];
 
@@ -32,11 +36,6 @@ export type invertOptionType = (typeof invertOptions)[number];
  * @template T The type of the search value
  */
 export interface summaryFunction<T> {
-  /**
-   * @param operator - the operator to use
-   * @param value - the value to use (taken from the search)
-   * @param invert - whether the search is inverted (only if the filter's invertOption is `negate`)
-   */
   (operator: opType, value: T, invert?: boolean, ...args: any[]): string;
 }
 
@@ -86,10 +85,6 @@ export const sortTypeList = [
  */
 export type sortType = (typeof sortTypeList)[number];
 
-// /**
-//  * a sort filter
-//  */
-// export type sortFilterFunction = (value1: HCCard.Any, operator: opType, value2: HCCard.Any, sort:sortType, dir:dirType) => number
 /**
  * A function that sorts two cards
  */
@@ -138,6 +133,9 @@ export interface textListsFilterFunction extends cardFilterFunction<string[], st
  */
 export interface numFilterFunction extends cardFilterFunction<number, number> {}
 
+/**
+ * A union of the types that can be the value for a number filter
+ */
 export type numSearch = number | string | undefined;
 /**
  * Any filter that compares two values that can be converted into numbers
@@ -167,55 +165,30 @@ const multiOpToNum: Record<opType, number> = {
 };
 /**
  * Get the number to compare against when using a given op
- * @param op operator to use
+ * @param operator operator to use
  * @param value shorthand value to use
  * @returns number to compare against
  */
-export const shortToNum = (op: opType, value: shorthandType) => {
+export const shortToNum = (operator: opType, value: shorthandType) => {
   if (value == 'c') {
     return 0;
   } else {
-    return multiOpToNum[op];
+    return multiOpToNum[operator];
   }
 };
 
+/**
+ * A union of the types that can be the value for a color filter
+ */
 export type colorSearch = string[] | number | shorthandType;
 /**
- * Any filter that compares colorsfrom a card with a value from a search
+ * Any filter that compares colors from a card with a value from a search
  */
 export interface colorFilterFunction extends cardFilterFunction<string[], colorSearch> {}
-// /**
-//  * Any filter that compares colors from a card with a number from a search
-//  */
-// export interface colorNumFilterFunction extends cardFilterFunction<string[], number> {}
-// /**
-//  * Any filter that compares colors from a card with a shorthand from a search
-//  */
-// export interface colorShortFilterFunction extends cardFilterFunction<string[], shorthandType> {}
 /**
  * Any filter that compares a set of colors from a card with a value from a search
  */
 export interface colorListFilterFunction extends cardFilterFunction<string[][], colorSearch> {}
-// /**
-//  * Any filter that compares a set of colors from a card with a number from a search
-//  */
-// export interface colorNumListFilterFunction extends cardFilterFunction<string[][], number> {}
-// /**
-//  * Any filter that compares a set of colors from a card with a shorthand from a search
-//  */
-// export interface colorShortListFilterFunction extends cardFilterFunction<string[][], shorthandType> {}
-// /**
-//  * Any filter that compares hybrid colors from a card with a value from a search
-//  */
-// export interface hybridFilterFunction extends cardFilterFunction<string[][], string[]|number|shorthandType> {}
-// /**
-//  * Any filter that compares hybrid colors from a card with a number from a search
-//  */
-// export interface hybridNumFilterFunction extends cardFilterFunction<string[][], number> {}
-// /**
-//  * Any filter that compares hybrid colors from a card with a shorthand from a search
-//  */
-// export interface hybridShortFilterFunction extends cardFilterFunction<string[][], shorthandType> {}
 /**
  * The list of options for inclusion filters
  */
@@ -229,31 +202,34 @@ export const isInclusionType = (value: any): value is inclusionType =>
 /**
  * An inclusion filter
  */
-export interface includeFilterFunction extends cardFilterFunction<HCCard.Any, string> {
-  // (value1: HCCard.Any, operator: opType, value2: string): boolean | undefined;
-}
+export interface includeFilterFunction extends cardFilterFunction<HCCard.Any, string> {}
 /**
- * Any filter that compares a card with a string from a search
+ * Any filter that compares a card's state with a string from a search
  */
-export interface cardStringFilterFunction extends cardFilterFunction<HCCard.Any, string> {}
+export interface stateFilterFunction extends cardFilterFunction<HCCard.Any, string> {}
 /**
- * Any filter that compares all of a card's prints with a string from a search
- */
-export interface printsFilterFunction extends cardFilterFunction<HCCard.Any[], string> {}
-/**
- * Any filter that compares a card prints with a string from a search and its note
+ * Any filter that compares two properties of a card
  */
 export interface comparisonFilterFunction extends cardFilterFunction<HCCard.Any, string> {
   (value1: HCCard.Any, operator: opType, value2: string, value3: string): boolean | undefined;
 }
+/**
+ * A function that produces a summary for a {@linkcode comparisonFilterFunction}
+ */
 export interface comparisonSummaryFunction extends summaryFunction<string> {
   (operator: opType, value: string, invert?: boolean, value2?: string): string;
 }
+/**
+ * Any filter that checks against a note record property
+ */
 export interface noteFilterFunction extends cardFilterFunction<HCCard.Any, string> {
   (value1: HCCard.Any, operator: opType, value2: string, note?: boolean | string):
     | boolean
     | undefined;
 }
+/**
+ * A function that produces a summary for a {@linkcode noteFilterFunction}
+ */
 export interface noteSummaryFunction extends summaryFunction<string> {
   (operator: opType, value: string, invert?: boolean, note?: boolean | string): string;
 }

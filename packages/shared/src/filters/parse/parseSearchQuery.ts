@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { FilterNode, IncludeFilter, otherPrintGetterType, sortObject } from '../types';
+import { FilterNode, IncludeFilter, allPrintsGetterType, SortObject } from '../types';
 import { parseFilter } from './parseFilter';
 import { CardMap } from '@hellfall/shared/utils';
 import { isSortFilter, parseSorts, sortIsValid, winnowSortObjects } from './parseSorts';
@@ -145,24 +145,54 @@ const splitCludes = (
 
 const noAndList = [' or ', '(', ' and ', ' not (', 'the cards have related cards where '];
 const consumeList = [' or ', '(', ' and ', ' not (', ')'];
+/**
+ * Parses a search query into everything needed to process it
+ * @param query the search query
+ * @param cardMap the {@linkcode CardMap} that contains all cards
+ */
 export const parseSearchQuery = (
   query: string,
   cardMap: CardMap
   // getOtherPrints?: otherPrintGetterType
 ): {
+  /**
+   * The root node of the AST
+   */
   node: FilterNode;
-  sortObjects: sortObject[];
+  /**
+   * A list of the {@linkcode SortObject | SortObjects} from the query
+   */
+  sortObjects: SortObject[];
+  /**
+   * A list of the {@linkcode IncludeFilter | IncludeFilters} that add cards to the search
+   */
   includeList: IncludeFilter[];
+  /**
+   * A list of the {@linkcode IncludeFilter | IncludeFilters} that remove cards from the search
+   */
   excludeList: IncludeFilter[];
+  /**
+   * A list of invalid filters; the first element is the text of the filter,
+   * while the second is an explanation for why it is invalid
+   */
   invalids: [string, string][];
+  /**
+   * A summary of the AST
+   */
   summary: string;
-  winnowed: sortObject[];
+  /**
+   * A list of {@link winnowSortObjects winnowed} {@linkcode SortObject | SortObjects} from the query
+   */
+  winnowed: SortObject[];
+  /**
+   * Whether or not to filter extras automatically; set to false if the filters include any that check for sets or prints
+   */
   autoFilterExtras: boolean;
 } => {
   const invalids: [string, string][] = [];
   const cludeList: IncludeFilter[] = [];
   let autoFilterExtras = true;
-  const getOtherPrints: otherPrintGetterType = (card: HCCard.Any) =>
+  const getOtherPrints: allPrintsGetterType = (card: HCCard.Any) =>
     cardMap.getAllPrints(card.oracle_id).cards();
 
   const parseTokens = (

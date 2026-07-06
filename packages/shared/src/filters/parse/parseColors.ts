@@ -1,6 +1,6 @@
 import { HCMiscColors } from '@hellfall/shared/types';
 import { isInteger } from '@hellfall/shared/utils';
-import { shorthandType } from '../types';
+import { colorSearch, shorthandType } from '../types';
 
 const shorthands: Record<string, shorthandType> = {
   colorless: 'c',
@@ -56,7 +56,11 @@ const colorNicknames: Record<string, string> = {
   artifice: 'WUBR',
 };
 
-export const parseColorText = (text: string): string[] | number | shorthandType | undefined => {
+/**
+ * Parses text from a search into a value of type {@linkcode colorSearch}, or returns undefined if the value is invalid
+ * @param text text to parse
+ */
+export const parseColorText = (text: string): colorSearch | undefined => {
   if (isInteger(text)) {
     return parseInt(text);
   }

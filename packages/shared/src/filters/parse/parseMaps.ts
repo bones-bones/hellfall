@@ -8,7 +8,7 @@ import {
   makeCardFrameFilter,
   makeCardLayoutFilter,
   makeCardtypeFilter,
-  makeCollectorNumberFilter,
+  makeCollectorNumFilter,
   makeColorFilter,
   makeCostFilter,
   makeCreatorFilter,
@@ -69,6 +69,7 @@ import {
   colorFilterNameType,
   filterNameType,
   printsFilterNameType,
+  printsFilterMaker,
 } from '../types';
 
 export const filters: Record<filterNameType, filterMaker<any>> = {
@@ -80,7 +81,7 @@ export const filters: Record<filterNameType, filterMaker<any>> = {
   block: makeBlockFilter,
   group: makeGroupFilter,
   settype: makeSetTypeFilter,
-  number: makeCollectorNumberFilter,
+  number: makeCollectorNumFilter,
   layout: makeCardLayoutFilter,
   facelayout: makeFaceLayoutFilter,
   anylayout: makeAnyLayoutFilter,
@@ -114,6 +115,8 @@ export const filters: Record<filterNameType, filterMaker<any>> = {
   showcase: makeShowcaseFilter,
   tag: makeTagFilter,
   tagnote: makeTagNoteFilter,
+  is: makeIsFilter,
+  has: makeHasFilter,
   isrelated: makeIsRelatedFilter,
   hasrelated: makeHasRelatedFilter,
   invalid: makeInvalidFilter,
@@ -134,10 +137,8 @@ export const colorFilters: Record<colorFilterNameType, colorFilterMaker<any>> = 
   mischybrid: makeMiscHybridFilter,
 };
 
-export const printsFilters: Record<printsFilterNameType, stateFilterMaker> = {
+export const printsFilters: Record<printsFilterNameType, printsFilterMaker> = {
   in: makeInFilter,
   sets: makeSetsNumberFilter,
   prints: makePrintsNumberFilter,
-  is: makeIsFilter,
-  has: makeHasFilter,
 };

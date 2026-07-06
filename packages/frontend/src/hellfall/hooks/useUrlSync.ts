@@ -12,7 +12,7 @@ import {
   invalidAtom,
 } from '../atoms/searchAtoms.ts';
 import {
-  sortObject,
+  SortObject,
   combineAndWinnowSorts,
   parseSearchQuery,
   makeSort,
@@ -20,12 +20,8 @@ import {
 import { equalityFunction, listsAreExactlyEqual } from '@hellfall/shared/utils';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 
-const sortsEqual: equalityFunction<sortObject> = (mem1: sortObject, mem2: sortObject) =>
+const sortsEqual: equalityFunction<SortObject> = (mem1: SortObject, mem2: SortObject) =>
   mem1.sort == mem2.sort && mem1.dir == mem2.dir;
-const invalidsEqual: equalityFunction<[string, string]> = (
-  mem1: [string, string],
-  mem2: [string, string]
-) => mem1[0] == mem2[0] && mem1[1] == mem2[1];
 
 export const useUrlSync = () => {
   const location = useLocation();

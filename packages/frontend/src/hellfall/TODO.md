@@ -156,3 +156,6 @@ Write a script to transform the database
 - make search bar on card pages work correctly
 - add a/an handling to showcase frame search summary function
 - move showcase to a prop
+- add @template to jsdocs
+- make sure new filter code works for everything
+- figure out how to implement a link between filter names in parseMaps and query names on filter makers

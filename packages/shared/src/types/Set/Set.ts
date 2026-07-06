@@ -122,7 +122,7 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    */
   print_link?: storedLink;
   /**
-   * A computer-readable classification for this set. See below.
+   * A computer-readable classification for this set. See {@link SetType}.
    */
   set_type: SetType;
   /**

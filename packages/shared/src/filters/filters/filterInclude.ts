@@ -3,7 +3,7 @@ import {
   includeFilterFunction,
   inclusionType,
   opType,
-  cardStringFilterFunction,
+  stateFilterFunction,
   summaryFunction,
   isInclusionType,
 } from '../types';
@@ -46,11 +46,25 @@ const validSummary: summaryFunction<string> = (operator, value, invert) =>
   `${invert ? 'ex' : 'in'}cluding ${includeToSummary[value as inclusionType]}`;
 const invalidSummary: summaryFunction<string> = (operator, value, invert) =>
   `!Unknown ${invert ? 'ex' : 'in'}clusion option "${value}"`;
+
+/**
+ * The summary for an inclusion filter
+ * @param operator the operator to use
+ * @param value the search value to use
+ * @param invert whether the search is inverted
+ */
 export const includeSummary: summaryFunction<string> = createCorrectedSummary(
   correctValue,
   validSummary,
   invalidSummary
 );
+
+/**
+ * Compares a card with an inclusion criterion
+ * @param value1 card to use
+ * @param operator dummy
+ * @param value2 inclusion criterion
+ */
 export const includeFilter: includeFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
@@ -72,57 +86,3 @@ export const includeFilter: includeFilterFunction = (
   }
   return true;
 };
-
-export const setFilter: cardStringFilterFunction = (
-  value1: HCCard.Any,
-  operator: opType,
-  value2: string
-) => opAsBool(inSetOrDirectChildren(value1.set, value2 as SetCode), operator);
-export const setSummary = createSummary(
-  isSetCode,
-  (operator, value) => `the set is ${opToNot(operator)} "${value}"`,
-  (operator, value) => `!Unknown set code "${value}"`
-);
-
-export const blockFilter: cardStringFilterFunction = (
-  value1: HCCard.Any,
-  operator: opType,
-  value2: string
-) => opAsBool(inSetBlock(value1.set, value2 as SetCode), operator);
-export const blockSummary = createSummary(
-  isSetCode,
-  (operator, value) => `the block is ${opToNot(operator)} "${value}"`,
-  (operator, value) => `!Unknown set code "${value}"`
-);
-
-export const groupFilter: cardStringFilterFunction = (
-  value1: HCCard.Any,
-  operator: opType,
-  value2: string
-) => opAsBool(inSetGroup(value1.set, value2 as SetCode), operator);
-export const groupSummary = createSummary(
-  isSetCode,
-  (operator, value) => `the set is ${opToNot(operator)} from the "${value}" set group`,
-  (operator, value) => `!Unknown set code "${value}"`
-);
-
-export const equivSetTypes: Record<string, SetType> = {
-  maincube: SetType.Main,
-  sidecube: SetType.Side,
-  vetoed: SetType.Veto,
-};
-
-export const setTypeFilter: cardStringFilterFunction = (
-  value1: HCCard.Any,
-  operator: opType,
-  value2: string
-) =>
-  opAsBool(
-    getSet(value1.set)?.set_type == (isSetType(value2) ? value2 : equivSetTypes[value2]),
-    operator
-  );
-export const setTypeSummary = createSummary(
-  (value: string) => isSetType(value) || isSetType(equivSetTypes[value]),
-  (operator, value) => `the set type is ${opToNot(operator)} "${value}"`,
-  (operator, value) => `!Unknown set type "${value}"`
-);

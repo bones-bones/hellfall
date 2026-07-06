@@ -1,5 +1,5 @@
 import { HCCard, HCColor, HCKind, allSetsList } from '@hellfall/shared/types';
-import { dirType, looseOpType, sortFilterFunction, sortType } from '../types';
+import { dirType, looseOpType, opType, sortFilterFunction, sortType } from '../types';
 
 const colorSortValue: Record<HCColor, number> = {
   W: 1,
@@ -31,7 +31,7 @@ const toTokenNumber = (card: HCCard.Any) => parseInt(card.hcid.replace(card.name
 /**
  * A function that sorts two cards
  * @param value1 the first card to sort
- * @param operator dummy operator; not used
+ * @param operator dummy
  * @param value2 the second card to sort
  * @param sort the sort option to use
  * @param dir the sort direction to use
@@ -39,7 +39,7 @@ const toTokenNumber = (card: HCCard.Any) => parseInt(card.hcid.replace(card.name
  */
 export const filterSort: sortFilterFunction = (
   value1: HCCard.Any,
-  operator: looseOpType,
+  operator: opType,
   value2: HCCard.Any,
   sort: sortType,
   dir: dirType

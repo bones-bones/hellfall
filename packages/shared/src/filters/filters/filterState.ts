@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { cardStringFilterFunction, opType } from '../types';
+import { stateFilterFunction, opType } from '../types';
 import {
   opIsNegative,
   opToNot,
@@ -193,7 +193,13 @@ const stateSummaries: Record<stateType, (operator: opType) => string> = {
 // };
 const getIsName = (value: string): string | undefined =>
   equivStateNames[value] /* ?? equivIsNames[value] */ ?? value;
-export const isFilter: cardStringFilterFunction = (
+/**
+ * Checks to see if a card meets the given criterion
+ * @param value1 card to check
+ * @param operator operator to use
+ * @param value2 criterion from the search
+ */
+export const isFilter: stateFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
   value2: string
@@ -205,6 +211,12 @@ export const isFilter: cardStringFilterFunction = (
     )(value1),
     operator
   );
+/**
+ * The summary for {@link isSummary}
+ * @param operator the operator to use
+ * @param value the criterion from the search
+ * @param invert dummy
+ */
 export const isSummary = createCorrectedSummary(
   getIsName,
   (operator, value) =>
@@ -235,7 +247,13 @@ const hasSummaries: Record<hasType, (operator: opType) => string> = {
 
 const getHasName = (value: string): string | undefined =>
   equivStateNames[value] ?? equivHasNames[value] ?? value;
-export const hasFilter: cardStringFilterFunction = (
+/**
+ * Checks to see if a card meets the given criterion
+ * @param value1 card to check
+ * @param operator operator to use
+ * @param value2 criterion from the search
+ */
+export const hasFilter: stateFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
   value2: string
@@ -248,6 +266,12 @@ export const hasFilter: cardStringFilterFunction = (
     )(value1),
     operator
   );
+/**
+ * The summary for {@link hasSummary}
+ * @param operator the operator to use
+ * @param value the criterion from the search
+ * @param invert dummy
+ */
 export const hasSummary = createCorrectedSummary(
   getIsName,
   (operator, value) =>

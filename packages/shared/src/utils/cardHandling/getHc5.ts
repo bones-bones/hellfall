@@ -45,7 +45,7 @@ const PLACEHOLDER_CARD: HCCard.Normal = {
 };
 
 /**
- * Generates the `CardMap` for {@linkcode SetCode}`HC5`
+ * Generates the `CardMap` for {@linkcode SetCode | SetCode: HC5}
  */
 export const getHc5 = (): CardMap =>
   new CardMap(
