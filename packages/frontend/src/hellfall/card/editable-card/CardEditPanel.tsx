@@ -156,7 +156,11 @@ export const CardEditPanel = ({
             </SideNote>
           )}
           <FieldsGrid>
-            {FACE_FIELD_CONFIGS.filter(cfg => isMulti || cfg.key !== 'name').map(cfg => (
+            {FACE_FIELD_CONFIGS.filter(
+              cfg =>
+                (isMulti || cfg.key !== 'name') &&
+                !cfg.shouldHide?.(card, activeFace, form.faces[activeFace] ?? {})
+            ).map(cfg => (
               <FieldEditor
                 key={`${activeFace}-${cfg.key}`}
                 config={cfg}
@@ -239,15 +243,13 @@ function FieldEditor({
             rows={3}
           />
         ) : config.type === 'boolean' ? (
-          <StyledSelect
+          <input
+            type="checkbox"
             id={fieldId}
-            value={value}
-            onChange={e => onChange(e.target.value)}
+            checked={value === 'true'}
+            onChange={e => onChange(e.target.checked ? 'true' : '')}
             style={changed ? { border: '1px solid #888', background: '#ffe' } : undefined}
-          >
-            <option value="">(unset)</option>
-            <option value="true">true</option>
-          </StyledSelect>
+          />
         ) : config.type === 'enum' && config.enumValues ? (
           <StyledSelect
             id={fieldId}
