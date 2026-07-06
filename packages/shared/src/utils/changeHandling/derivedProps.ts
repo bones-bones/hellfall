@@ -151,7 +151,7 @@ export const applyChangesFromNewBase = (card: HCCard.Any, newBase: string[]) => 
   changeList.push(...deleted.flatMap(tag => getChangesFromTag(card, 'delete', tag)));
 
   changeList.sort(sortChanges);
-  removeDuplicateChanges(changeList)
+  removeDuplicateChanges(changeList);
   applyChanges(card, changeList);
 };
 
@@ -440,6 +440,8 @@ export const setDerivedProps = (
       if (!card.tags?.includes('generic') && !card.keywords.includes('devoid')) {
         card.colors = card.color_indicator ?? getColorsFromText(card.mana_cost);
       }
+    } else if (card.color_indicator) {
+      card.colors = card.color_indicator;
     }
   }
   if (card.tags?.includes('italic-typeline')) {
@@ -675,6 +677,9 @@ export const landToColorMapping = {
  * @returns
  */
 export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
+  if (existingCard.kind != newCard.kind) {
+    existingCard.kind = newCard.kind;
+  }
   const changeList = getChangesFromDifferences(existingCard, newCard, true);
   if (newCard.kind != 'scryfall') {
     applyChanges(existingCard, changeList, true);

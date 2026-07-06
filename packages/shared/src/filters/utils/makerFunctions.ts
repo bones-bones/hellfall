@@ -13,7 +13,8 @@ import {
   NumberPropFilter,
   NoteFilter,
 } from './makerObject';
-import { colorSearch, dirType, looseOpType, sortType, allPrintsGetterType } from '../types';
+import { dirType, looseOpType, sortType, allPrintsGetterType } from '../types';
+import { colorSearch } from '@hellfall/shared/utils';
 
 /**
  * A function that creates a {@linkcode FilterObject<T, any>}

@@ -10,12 +10,12 @@ const multiIgnoreDeleteProps: allPropType[] = ['image', 'frame', 'frame_effects'
 const multiIgnoreAddProps: allPropType[] = ['image_status'];
 
 export const removeDuplicateChanges = (changeList: anyChange[]) => {
-  for (let i = changeList.length-1;i>=0;i--) {
-    if (changeList.slice(0,i).some(change=>arbAreEqual(change,changeList[i]))) {
-      changeList.splice(i,1);
+  for (let i = changeList.length - 1; i >= 0; i--) {
+    if (changeList.slice(0, i).some(change => arbAreEqual(change, changeList[i]))) {
+      changeList.splice(i, 1);
     }
   }
-}
+};
 
 /**
  * Apply a change

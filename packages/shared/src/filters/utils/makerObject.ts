@@ -33,8 +33,7 @@ import {
   numSearchListFilter,
   numSearchFilter,
 } from './filterUtils';
-import { ensureArray, colorSearch,  xor,
- } from '@hellfall/shared/utils';
+import { ensureArray, colorSearch, xor } from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import {
   queryPropType,

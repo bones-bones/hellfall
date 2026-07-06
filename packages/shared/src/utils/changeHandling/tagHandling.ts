@@ -708,6 +708,8 @@ export const splitTagComponents = (
   }
   if (splitNote.length) {
     splitTag.note = splitNote.join('|');
+  } else if (splitTag.note) {
+    delete splitTag.note;
   }
   return splitTag;
 };

@@ -1,6 +1,5 @@
 import { textEquals, textContains } from './textHandling';
 
-
 export const xor = (value1: any, value2: any) => !value1 != !value2;
 
 /**
@@ -173,7 +172,7 @@ export const listIncludesValue = <T = any>(
   list?: T[],
   value?: T,
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
-) => value && list?.some(v => equals(v, value));
+) => value != undefined && list?.some(v => equals(v, value));
 /**
  * Checks whether one list shares any values with another list.
  * @param value1 First list to check
@@ -253,7 +252,7 @@ const listLowerEquality: equalityFunction<string> = (value1: string, value2: str
  * @returns
  */
 export const listIncludesValueLower = (list?: string[], value?: string) =>
-  value && listIncludesValue(list ?? [], value, listLowerEquality);
+  value != undefined && listIncludesValue(list ?? [], value, listLowerEquality);
 /**
  * Checks whether a list includes all of a list of values when lowercase
  * @param value1 List to check

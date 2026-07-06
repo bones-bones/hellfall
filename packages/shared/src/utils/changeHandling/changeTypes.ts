@@ -78,7 +78,7 @@ const rootDeleteProps = [
   'still_print_image',
   'not_directly_draftable',
   'has_draft_partners',
-  'keywords',
+  // 'keywords',
   'creators',
   'artists',
   'artist_notes',

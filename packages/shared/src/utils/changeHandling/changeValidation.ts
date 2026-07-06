@@ -137,7 +137,8 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
       if (!isArtistArray(value)) {
         return `invalid change: ${value} is not a valid artist array`;
       }
-      return (currentValue as Record<string, string>)[value[0]] !== (change_type == 'add' ? value[1] : undefined)
+      return (currentValue as Record<string, string>)?.[value[0]] !==
+        (change_type == 'add' || comparingNew ? value[1] : undefined)
         ? undefined
         : `invalid change: artist note is equal to current one: '${value[1]}'`;
       // return (
@@ -148,7 +149,12 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
       if (!isFrameEffect(value)) {
         return `invalid change: ${value} is not a frame`;
       }
-      if (xor(listIncludesValue(currentValue as string[], value),change_type != 'delete' || comparingNew)) {
+      if (
+        xor(
+          listIncludesValue(currentValue as string[], value),
+          change_type != 'delete' || comparingNew
+        )
+      ) {
         return;
       } else {
         return `invalid change for prop == ${prop}: ${value} is ${
@@ -162,7 +168,12 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
       if (typeof value != 'string') {
         return `invalid change for prop == ${prop}: ${value} is not a string`;
       }
-      if (xor(listIncludesValue(currentValue as string[], value),change_type != 'delete' || comparingNew)) {
+      if (
+        xor(
+          listIncludesValue(currentValue as string[], value),
+          change_type != 'delete' || comparingNew
+        )
+      ) {
         return;
       } else {
         return `invalid change for prop == ${prop}: ${value} is ${
@@ -323,7 +334,12 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
       if (!isFrameEffect(value)) {
         return `invalid change: ${value} is not a frame`;
       }
-      if (xor(listIncludesValue(currentValue as string[], value),change_type != 'delete' || comparingNew)) {
+      if (
+        xor(
+          listIncludesValue(currentValue as string[], value),
+          change_type != 'delete' || comparingNew
+        )
+      ) {
         return;
       } else {
         return `invalid change for prop == ${prop}: ${value} is ${

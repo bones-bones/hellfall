@@ -25,7 +25,6 @@ import {
 import { unescapeText } from './parseUtils';
 import { isFormat } from '@hellfall/shared/types';
 
-
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',
   '<=': '>',

@@ -11,16 +11,16 @@ const isInteger = (num: string) => {
 
 export const isRelatedCard = (value: any): value is HCRelatedCard => {
   if (typeof value != 'object' || value == null) return false;
-  const face = value as HCRelatedCard;
+  const part = value as HCRelatedCard;
   if (
-    !getPartEntries(face).every(([prop, value]) => {
+    !getPartEntries(part).every(([prop, value]) => {
       switch (prop) {
         case 'object':
           return value == HCObject.ObjectType.RelatedCard;
         case 'set':
           return isSetCode(value) || value === '';
         case 'image':
-          return typeof value == 'string' && value.startsWith('https://');
+          return typeof value == 'string' && (value.startsWith('https://') || value === '');
         case 'component':
           return isComponent(value);
         case 'is_draft_partner':
@@ -29,13 +29,13 @@ export const isRelatedCard = (value: any): value is HCRelatedCard => {
         case 'count':
           return typeof value == 'string' && (isInteger(value) || value == 'x');
       }
-      return ['id', 'hcid', 'name', 'type_line'].includes(prop) && typeof prop == 'string';
+      return ['id', 'hcid', 'name', 'type_line'].includes(prop) && typeof value == 'string';
     })
   ) {
     return false;
   }
-  return ['object', 'id', 'hcid', 'name', 'set', 'type_line', 'component', 'colors'].every(
-    prop => face[prop as partPropType] != undefined
+  return ['object', 'id', 'hcid', 'image', 'name', 'set', 'type_line', 'component'].every(
+    prop => part[prop as partPropType] != undefined
   );
 };
 export const attractionLightsAreValid = (lights: number[]) => {
