@@ -1,9 +1,9 @@
 import { HCCard } from '@hellfall/shared/types';
-import { FilterNode, IncludeFilter, allPrintsGetterType, SortObject } from '../types';
+import { FilterNode, allPrintsGetterType } from '../types';
 import { parseFilter } from './parseFilter';
 import { CardMap } from '@hellfall/shared/utils';
 import { isSortFilter, parseSorts, sortIsValid, winnowSortObjects } from './parseSorts';
-import { splitOnFirstOp } from '../utils';
+import { splitOnFirstOp, IncludeFilter, SortObject } from '../utils';
 
 const tokenList = ['(', ')', 'or', '-', '~'];
 const charBreakList = ['(', ' '];

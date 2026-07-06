@@ -1,5 +1,8 @@
 import { textEquals, textContains } from './textHandling';
 
+
+export const xor = (value1: any, value2: any) => !value1 != !value2;
+
 /**
  * Checks whether two arbitrary values are exactly equal. (basically a version of `===` that compares objects by value rather than by reference)
  * @param value1 the first value to compare
@@ -61,7 +64,7 @@ export const listsAreEqual = <T = any>(
   if (value1.length != value2.length) {
     return false;
   }
-  if (ignoreOrder) {
+  if (!ignoreOrder) {
     return value1.every((value, i) => equals(value, value2[i]));
   }
   const set1 = [...value1];

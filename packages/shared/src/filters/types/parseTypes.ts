@@ -1,10 +1,10 @@
-import { FilterObject } from './makerObject';
+import { filterInterface } from './makerTypes';
 
 /**
  * A filter node
  */
 export type FilterNode =
-  | { type: 'filter'; filter: FilterObject<any, any> }
+  | { type: 'filter'; filter: filterInterface }
   | { type: 'not'; child: FilterNode }
   | { type: 'related'; child: FilterNode }
   | { type: 'and'; children: FilterNode[] }

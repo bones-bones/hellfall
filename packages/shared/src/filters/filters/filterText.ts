@@ -8,6 +8,7 @@ import {
   listsAreLooselyEqual,
   wrapArray,
   getSetAndDirectChildSets,
+  xor,
 } from '@hellfall/shared/utils';
 import {
   opType,
@@ -32,7 +33,6 @@ import {
   textListFilter,
   createCorrectedSummary,
   createSummary,
-  xor,
   fixValue,
 } from '../utils';
 import {

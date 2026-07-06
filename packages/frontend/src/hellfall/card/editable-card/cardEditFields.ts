@@ -31,8 +31,6 @@ import { isFaceDeletable } from './faces/isFaceDeleteable';
 import { parseFieldValue } from './parseFieldValue';
 import { FACE_FIELD_CONFIGS } from './constants';
 
-
-
 export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
   { key: 'name', label: 'Name', type: 'string' },
   { key: 'flavor_name', label: 'Flavor Name', type: 'string' },
@@ -71,8 +69,20 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
     type: 'enum',
     enumValues: Object.values(HCImageStatus),
   },
-  { key: 'finish', label: 'Finish', type: 'enum', enumValues: Object.values(HCFinish), explanation: '99% of the time, you want nonfoil. If someone used foiling in their card, you want foil.' },
-  { key: 'border_color', label: 'Border Color', type: 'enum', enumValues: Object.values(HCBorderColor) },
+  {
+    key: 'finish',
+    label: 'Finish',
+    type: 'enum',
+    enumValues: Object.values(HCFinish),
+    explanation:
+      '99% of the time, you want nonfoil. If someone used foiling in their card, you want foil.',
+  },
+  {
+    key: 'border_color',
+    label: 'Border Color',
+    type: 'enum',
+    enumValues: Object.values(HCBorderColor),
+  },
   { key: 'frame', label: 'Frame', type: 'enum', enumValues: Object.values(HCFrame) },
   { key: 'frame_effects', label: 'Frame Effects', type: 'semicolon-list' },
   { key: 'keywords', label: 'Keywords', type: 'semicolon-list' },
@@ -82,9 +92,6 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
   { key: 'not_directly_draftable', label: 'Not Directly Draftable', type: 'boolean' },
   { key: 'has_draft_partners', label: 'Has Draft Partners', type: 'boolean' },
 ];
-
-
-
 
 function serializeValue(value: unknown, type: FieldType): string {
   if (value == null || value === undefined) return '';
@@ -194,8 +201,6 @@ function pushRootScalarChange(
   changes.push(createRootChange('add', cfg.key, value as never));
 }
 
-
-
 function buildFaceFromFormFields(
   card: HCCard.Any,
   faceIndex: number,
@@ -223,7 +228,10 @@ export function buildChangesFromForm(
     const before = original.root[cfg.key] ?? '';
     const after = current.root[cfg.key] ?? '';
     if (before === after) continue;
-    if (cfg.type === 'semicolon-list' && isRootArrayPropType(cfg.key as rootChangeablePropType<'add'>)) {
+    if (
+      cfg.type === 'semicolon-list' &&
+      isRootArrayPropType(cfg.key as rootChangeablePropType<'add'>)
+    ) {
       pushRootListElementChanges(changes, cfg.key, before, after);
       continue;
     }
@@ -245,7 +253,10 @@ export function buildChangesFromForm(
       const before = origFace[cfg.key] ?? '';
       const after = currFace[cfg.key] ?? '';
       if (before === after) continue;
-      if (cfg.type === 'semicolon-list' && isFaceArrayPropType(cfg.key as faceChangeablePropType<'add'>)) {
+      if (
+        cfg.type === 'semicolon-list' &&
+        isFaceArrayPropType(cfg.key as faceChangeablePropType<'add'>)
+      ) {
         pushFaceListElementChanges(changes, cfg.key, i, before, after);
         continue;
       }
@@ -269,4 +280,3 @@ export function createBlankFace(card: HCCard.Any, index: number): HCCardFace.Mul
     colors: [] as HCColors,
   } as HCCardFace.MultiFaced;
 }
-

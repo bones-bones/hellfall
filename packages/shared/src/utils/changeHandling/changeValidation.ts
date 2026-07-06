@@ -35,30 +35,10 @@ import {
   rootChangeablePropType,
   tagChange,
 } from './changeTypes';
-import {
-  arbAreEqual,
-  listIncludesValue,
-  splitFullTag,
-  textEquals,
-  toFaces,
-} from '@hellfall/shared/utils';
-
-// const imageProps = [
-//   'image',
-//   'rotated_image',
-//   'still_image',
-//   'print_image',
-//   'rotated_print_image',
-//   'still_print_image',
-// ];
-// const boolProps = [
-//   'id_is_scryfall',
-//   'oracle_id_is_scryfall',
-//   'not_directly_draftable',
-//   'has_draft_partners',
-//   'compress_face',
-//   'drop_face',
-// ];
+import { arbAreEqual, listIncludesValue, xor } from '../listHandling';
+import { toFaces } from '../cardHandling';
+import { textEquals } from '../textHandling';
+import { splitFullTag } from './tagHandling';
 
 const isArtistArray = (value: any): value is [string, string] =>
   Array.isArray(value) &&
@@ -157,7 +137,7 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
       if (!isArtistArray(value)) {
         return `invalid change: ${value} is not a valid artist array`;
       }
-      return (currentValue as Record<string, string>)[value[0]] !== value[1]
+      return (currentValue as Record<string, string>)[value[0]] !== (change_type == 'add' ? value[1] : undefined)
         ? undefined
         : `invalid change: artist note is equal to current one: '${value[1]}'`;
       // return (
@@ -168,10 +148,7 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
       if (!isFrameEffect(value)) {
         return `invalid change: ${value} is not a frame`;
       }
-      if (
-        listIncludesValue(currentValue as string[], value) ==
-        (change_type == 'delete' && !comparingNew ? true : false)
-      ) {
+      if (xor(listIncludesValue(currentValue as string[], value),change_type != 'delete' || comparingNew)) {
         return;
       } else {
         return `invalid change for prop == ${prop}: ${value} is ${
@@ -185,10 +162,7 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
       if (typeof value != 'string') {
         return `invalid change for prop == ${prop}: ${value} is not a string`;
       }
-      if (
-        listIncludesValue(currentValue as string[], value) ==
-        (change_type == 'delete' && !comparingNew ? true : false)
-      ) {
+      if (xor(listIncludesValue(currentValue as string[], value),change_type != 'delete' || comparingNew)) {
         return;
       } else {
         return `invalid change for prop == ${prop}: ${value} is ${
@@ -226,7 +200,7 @@ export const isRootChangeValueType = <T extends changeType, K extends rootChange
  * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
  */
 export const rootChangeErrorMessage = (card: HCCard.Any, value: any) => {
-  if (typeof value != 'object') {
+  if (typeof value != 'object' || value == null) {
     return `invalid change: change isn't an object`;
   }
   const change = value as rootChange<changeType, rootChangeablePropType<changeType>>;
@@ -349,10 +323,7 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
       if (!isFrameEffect(value)) {
         return `invalid change: ${value} is not a frame`;
       }
-      if (
-        listIncludesValue(currentValue as string[], value) ==
-        (change_type == 'delete' && !comparingNew ? true : false)
-      ) {
+      if (xor(listIncludesValue(currentValue as string[], value),change_type != 'delete' || comparingNew)) {
         return;
       } else {
         return `invalid change for prop == ${prop}: ${value} is ${
@@ -389,7 +360,7 @@ export const isFaceChangeValueType = <T extends changeType, K extends faceChange
  * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
  */
 export const faceChangeErrorMessage = (card: HCCard.Any, value: any) => {
-  if (typeof value != 'object') {
+  if (typeof value != 'object' || value == null) {
     return `invalid change: change isn't an object`;
   }
   const change = value as faceChange<changeType, faceChangeablePropType<changeType>>;
@@ -444,7 +415,7 @@ export const faceChangeIsValid = (
  * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
  */
 export const cardFacesChangeErrorMessage = (card: HCCard.Any, value: any) => {
-  if (typeof value != 'object') {
+  if (typeof value != 'object' || value == null) {
     return `invalid change: change isn't an object`;
   }
   const change = value as cardFacesChange;
@@ -552,7 +523,7 @@ export const getPartChangeIndex = (
  * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
  */
 export const allPartsChangeErrorMessage = (card: HCCard.Any, value: any, index?: number) => {
-  if (typeof value != 'object') {
+  if (typeof value != 'object' || value == null) {
     return `invalid change: change isn't an object`;
   }
   const change = value as allPartsChange;
@@ -608,7 +579,7 @@ export const allPartsChangeIsValid = (
  * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
  */
 export const tagChangeErrorMessage = (card: HCCard.Any, value: any) => {
-  if (typeof value != 'object') {
+  if (typeof value != 'object' || value == null) {
     return `invalid change: change isn't an object`;
   }
   const change = value as tagChange;
@@ -664,7 +635,7 @@ export const tagChangeIsValid = (card: HCCard.Any, value: any): value is tagChan
  * @returns `string` of the error message if the change leads to an error; `undefined` otherwise
  */
 export const changeErrorMessage = (card: HCCard.Any, value: any) => {
-  if (typeof value != 'object') {
+  if (typeof value != 'object' || value == null) {
     return `invalid change: change isn't an object`;
   }
   const change = value as anyChange;

@@ -20,6 +20,7 @@ import {
   isRootArrayPropType,
   rootChangeableProps,
   rootChangeablePropType,
+  sortChanges,
 } from './changeTypes';
 import {
   allPartsChangeIsValid,
@@ -31,7 +32,6 @@ import {
 } from './changeValidation';
 import { toFaces } from '../cardHandling';
 import { getBaseDiffs, getChangesFromTag } from './tagHandling';
-import { sortChanges } from './changeHandling';
 
 // can add even if empty
 const rootBlankableProps: Partial<Record<HCKind, rootPropType[]>> = {

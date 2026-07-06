@@ -7,13 +7,9 @@ import {
   rootPropType,
   rootValueType,
 } from '@hellfall/shared/types';
-import {
-  listIncludesValueLower,
-  popProp,
-  pushProp,
-  fillFacesTo,
-  // layoutIsDefault,
-} from '@hellfall/shared/utils';
+import { listIncludesValueLower, popProp, pushProp } from '../listHandling';
+// @circular-ignore These are too intertwined to separate.
+import { fillFacesTo } from './defaults';
 
 /**
  * Add a prop and value to a card root (or overwrite the existing one)

@@ -38,13 +38,15 @@ import {
   toShowcaseFrame,
   watermarkSummary,
 } from '../filters';
+import { looseOpType } from '../types';
 import {
+  includeSummaryPlural,
+  includeSummarySingular,
   NoteFilter,
   NumberPropFilter,
   FilterObject,
   PropFilter,
   NoUnescapeFilter,
-  looseOpType,
   filterMaker,
   stringOrNumFilterMaker,
   propFilterMaker,
@@ -53,8 +55,7 @@ import {
   LegalityFilter,
   legalityFilterMaker,
   stateFilterMaker,
-} from '../types';
-import { includeSummaryPlural, includeSummarySingular } from '../utils';
+} from '../utils';
 
 // TODO: Should this be a `stringOrNumFilterMaker`?
 /**

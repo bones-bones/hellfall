@@ -16,35 +16,29 @@ import {
   faceType,
 } from '@hellfall/shared/types';
 import {
-  splitParens,
-  toExportName,
-  orderColors,
-  isInteger,
-  orderHybrid,
   listContainsList,
   listContainsSomeList,
-  listIncludesValueLower,
-  listsShare,
-  getMVFromCost,
-  getPipColorsFromText,
-  hasTokenHCID,
-  toFaces,
-  getDefaultKindLayout,
-  getDefaultTypeLayout,
-  getBaseDiffs,
-  anyChange,
-  getChangesFromTag,
-  sortChanges,
-  applyChanges,
-  createFaceChange,
-  splitTagComponents,
-  getColorsFromText,
   listIncludesValue,
-  textContains,
+  listIncludesValueLower,
   listIncludesValueLowerEvery,
+  listsShare,
+} from '../listHandling';
+import { getColorsFromText, getMVFromCost, getPipColorsFromText } from '../pipsHandling';
+import { splitParens, textContains, toExportName } from '../textHandling';
+import { CardMap, getAllRelated, hasTokenHCID, toFaces } from '../cardHandling';
+import { orderColors, orderHybrid } from '../orderColors';
+import { isInteger } from '../numHandling';
+import { getDefaultKindLayout, getDefaultTypeLayout } from './defaults';
+import {
   fillSubKeywords,
-  // setTags,
-} from '@hellfall/shared/utils';
+  getBaseDiffs,
+  getChangesFromTag,
+  splitTagComponents,
+} from './tagHandling';
+import { anyChange, createFaceChange, sortChanges } from './changeTypes';
+import { applyChanges, removeDuplicateChanges } from './changeHandling';
+import { getChangesFromDifferences } from './getCardDiff';
+import { cleanParts, updateParts } from './partsHandling';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -157,6 +151,7 @@ export const applyChangesFromNewBase = (card: HCCard.Any, newBase: string[]) => 
   changeList.push(...deleted.flatMap(tag => getChangesFromTag(card, 'delete', tag)));
 
   changeList.sort(sortChanges);
+  removeDuplicateChanges(changeList)
   applyChanges(card, changeList);
 };
 
@@ -673,3 +668,40 @@ export const landToColorMapping = {
   'Gas-Station': 'Yellow',
   Carnival: 'Pink',
 } as Record<string, HCColor>;
+/**
+ * Merges an existing card and a card from the google sheet
+ * @param existingCard The card from the stored database JSON
+ * @param newCard The card from the google sheet
+ * @returns
+ */
+export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
+  const changeList = getChangesFromDifferences(existingCard, newCard, true);
+  if (newCard.kind != 'scryfall') {
+    applyChanges(existingCard, changeList, true);
+    setDerivedProps(existingCard);
+  } else {
+    newCard.all_parts = existingCard.all_parts;
+    setDerivedProps(newCard);
+    return newCard;
+  }
+  // if (newCard.base_tags) {
+  //   existingCard.base_tags = newCard.base_tags;
+  // } else {
+  //   delete existingCard.base_tags;
+  // }
+  return existingCard;
+};
+/**
+ * Updates a card along with its related cards
+ * @param card card to apply the changes to
+ * @param changeList changes to apply to the card
+ * @param cardMap the map of cards
+ */
+export const applyFromMap = (card: HCCard.Any, changeList: anyChange[], cardMap: CardMap) => {
+  const oldRelateds = getAllRelated(card, cardMap);
+  if (!applyChanges(card, changeList)) return;
+  const newRelateds = getAllRelated(card, cardMap);
+  setDerivedProps(card);
+  updateParts(card, newRelateds);
+  cleanParts(card, oldRelateds);
+};

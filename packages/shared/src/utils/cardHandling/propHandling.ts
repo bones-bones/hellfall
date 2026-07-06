@@ -5,19 +5,12 @@ import {
   getFaceEntries,
   getRootEntries,
 } from '@hellfall/shared/types';
-import { firestoreCard } from '../firestore';
 
 /**
  * A properly typed version of calling `Object.entries()` on `HCCard.Any`
  * @param card The card to get the entries of
  */
 export const getCardEntries = (card: HCCard.Any) => getAnyEntries(card as anyMappedType);
-
-/**
- * A properly typed version of calling `Object.entries()` on `firestoreCard`
- * @param card The card to get the entries of
- */
-export const getFireEntries = (card: firestoreCard) => getAnyEntries(card as anyMappedType);
 
 /**
  * A properly typed version of calling `Object.entries()` on `card.card_faces[index ?? 0]`

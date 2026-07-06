@@ -6,14 +6,8 @@ import {
   isUniqueSummary,
   toIn,
 } from '../filters';
-import {
-  printsFilterMaker,
-  looseOpType,
-  allPrintsGetterType,
-  InFilter,
-  PrintsNumberFilter,
-} from '../types';
-
+import { looseOpType, allPrintsGetterType } from '../types';
+import { printsFilterMaker, InFilter, PrintsNumberFilter } from '../utils';
 /**
  * Makes an {@linkcode InFilter}
  * @param value the value from the search

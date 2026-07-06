@@ -1,30 +1,30 @@
 import {
-  colorSearch,
-  isShorthandType,
   looseOpType,
   numFilterFunction,
   numSearch,
   numSearchFilterFunction,
   numSearchListFilterFunction,
   opType,
-  shorthandType,
   summaryFunction,
   textFilterFunction,
   textListFilterFunction,
   textListsFilterFunction,
 } from '../types';
 import {
+  colorSearch,
+  isShorthandType,
+  shorthandType,
   listsShare,
   textContains,
   textEquals,
   textListContains,
   textListIncludes,
   toNumber,
+  xor,
 } from '@hellfall/shared/utils';
 import { unescapeText } from './parseUtils';
-import { isFormat } from '../../types';
+import { isFormat } from '@hellfall/shared/types';
 
-export const xor = (value1: any, value2: any) => !value1 != !value2;
 
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',

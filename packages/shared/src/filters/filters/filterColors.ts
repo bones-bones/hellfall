@@ -1,13 +1,12 @@
-import {
-  colorFilterFunction,
-  colorListFilterFunction,
-  colorSearch,
-  opType,
-  shorthandType,
-  shortToNum,
-} from '../types';
+import { colorFilterFunction, colorListFilterFunction, opType, shortToNum } from '../types';
 import { containsOp, createColorSummary, numFilter } from '../utils';
-import { listCanContainList, listContainsList, getHybridColorNumber } from '@hellfall/shared/utils';
+import {
+  listCanContainList,
+  listContainsList,
+  getHybridColorNumber,
+  colorSearch,
+  shorthandType,
+} from '@hellfall/shared/utils';
 
 const evalShortNum = (value1: number, operator: opType, value2: shorthandType) => {
   const shortNum = shortToNum(operator, value2);

@@ -1,20 +1,14 @@
-import {
-  ComparisonFilter,
-  FilterObject,
-  IncludeFilter,
-  SortObject,
-  PropConvertFilter,
-  PropFilter,
-  LegalityFilter,
-  StateFilter,
-  InFilter,
-  PrintsNumberFilter,
-  ColorFilter,
-  NumberPropFilter,
-  NoteFilter,
-} from './makerObject';
 import { HCCard } from '@hellfall/shared/types';
-import { colorSearch, dirType, looseOpType, sortType } from './filterTypes';
+import {
+  anyFilterFunction,
+  cardFilterFunction,
+  dirType,
+  invertOptionType,
+  looseOpType,
+  opType,
+  sortType,
+  summaryFunction,
+} from './filterTypes';
 
 /**
  * A function that gets all the prints of a card
@@ -22,95 +16,102 @@ import { colorSearch, dirType, looseOpType, sortType } from './filterTypes';
 export type allPrintsGetterType = (card: HCCard.Any) => HCCard.Any[];
 
 /**
- * A function that creates a {@linkcode FilterObject<T, any>}
- * @template T The type of the value from the card
- * @param value the value from the search
- * @param op the operator from the search
+ * An interface for any filter
  */
-export type filterMaker<T> = (value: string, op: looseOpType) => FilterObject<T, any>;
+export interface anyFilterInterface<T = any, S = any> {
+  queryName: string;
+  /**
+   * The filter method to use
+   */
+  filter: anyFilterFunction<T, S>;
+}
+
 /**
- * A function that can create an {@linkcode InFilter} or a {@linkcode PrintsNumberFilter}
- * @param value the value from the search
- * @param op the operator from the search
- * @param getAllPrints A function that gets all the prints of a card
+ * An interface for a SortObject
  */
-export type printsFilterMaker = (
-  value: string,
-  op: looseOpType,
-  getAllPrints: allPrintsGetterType
-) => InFilter | PrintsNumberFilter;
+export interface sortInterface extends anyFilterInterface {
+  /**
+   * The query name
+   */
+  queryName: string;
+  /**
+   * The filter function to use
+   */
+  filter: anyFilterFunction;
+  /**
+   * The sort option
+   */
+  sort: sortType;
+  /**
+   * The sort direction option
+   */
+  dir: dirType;
+}
+
 /**
- * A function that can create a {@linkcode StateFilter} or a {@linkcode PropConvertFilter}
- * @param value the value from the search
- * @param op the operator from the search
+ * An interface for a FilterObject
  */
-export type stateFilterMaker = (
-  value: string,
-  op: looseOpType
-) => StateFilter | PropConvertFilter<any>;
-/**
- * A function that creates a {@linkcode ComparisonFilter}
- * @param value1 the first value from the search
- * @param op the operator from the search
- * @param value2 the second value from the search
- */
-export type comparisonFilterMaker = (
-  value1: string,
-  op: looseOpType,
-  value2: string
-) => ComparisonFilter;
-/**
- * A function that creates a {@linkcode LegalityFilter}
- * @param value the value from the search
- * @param op the operator from the search
- */
-export type legalityFilterMaker = (value: string, op: looseOpType) => LegalityFilter;
-/**
- * A function that creates an {@linkcode IncludeFilter}
- * @param value the value from the search
- * @param op the operator from the search
- */
-export type includeFilterMaker = (value: string, op: looseOpType) => IncludeFilter;
-/**
- * A function that creates a {@linkcode PropFilter}
- * @param value the value from the search
- * @param op the operator from the search
- */
-export type propFilterMaker = (value: string, op: looseOpType) => PropFilter;
-/**
- * A function that creates a {@linkcode PropConvertFilter}
- * @param value the value from the search
- * @param op the operator from the search
- */
-export type propConvertFilterMaker = (value: string, op: looseOpType) => PropConvertFilter<any>;
-/**
- * A function that creates a {@linkcode NumberPropFilter}
- * @param value the value from the search
- * @param op the operator from the search
- */
-export type numberPropFilterMaker = (value: string, op: looseOpType) => NumberPropFilter;
-/**
- * A function that creates a {@linkcode ColorFilter}
- * @param T The type of the value from the card
- * @param value the value from the search
- * @param op the operator from the search
- */
-export type colorFilterMaker<T extends string[] | string[][]> = (
-  value: colorSearch,
-  op: looseOpType
-) => ColorFilter<T>;
-/**
- * A function that can create a {@linkcode NumberPropFilter}, a {@linkcode NoteFilter}, or a {@linkcode PropFilter}
- * @param value the value from the search
- * @param op the operator from the search
- */
-export type stringOrNumFilterMaker = (
-  value: string,
-  op: looseOpType
-) => NumberPropFilter | NoteFilter | PropFilter;
-/**
- * A function that creates a {@linkcode SortObject}
- * @param sort the sort option from the search
- * @param dir the sort direction option from the search
- */
-export type sortMaker = (sort: sortType, dir: dirType) => SortObject;
+export interface filterInterface<T = any, S = any> extends anyFilterInterface {
+  /**
+   * The query name
+   */
+  queryName: string;
+  /**
+   * The filter function to use
+   */
+  filter: cardFilterFunction<T, S>;
+  /**
+   * The summary function to use
+   */
+  summary: summaryFunction<S>;
+  /**
+   * The value to filter against
+   */
+  value: S;
+  /**
+   * The operator to use. Can be loose (i.e. `:` or `!:`)
+   */
+  op: looseOpType;
+  /**
+   * The default operator; `:` will resolve to this, while `!:`
+   * will resolve to the inverse of this (using {@linkcode invertOp})
+   */
+  defaultOp: opType;
+  /**
+   * Option that controls how `this.invert()` works
+   *
+   * `ignore:` do nothing
+   *
+   * `flip:` inverts the operator (using {@linkcode invertOp})
+   *
+   * `negate:` inverts `this.inverted`; if this option is chosen,
+   * `this.summary` shoud accept and use the `invert` parameter
+   */
+  invertOption: invertOptionType;
+  /**
+   * Whether this object is inverted; only used if `this.invertOption: 'negate'`
+   */
+  inverted: boolean;
+  /**
+   * The method to get the value to compare from a card
+   * @param card card to get the value from
+   */
+  getValueToCompare: (card: HCCard.Any) => T;
+  /**
+   * Gets the current operator, resolving defaults appropriately
+   */
+  getOp: () => opType;
+  /**
+   * Inverts this filter object based on `this.invertOption`
+   */
+  invert: () => void;
+  /**
+   * Checks if a card passes `this.filter`
+   * @param card card to check
+   */
+  cardPassesFilter: (card: HCCard.Any) => boolean;
+  /**
+   * @returns the result of `this.summary(this.getOp(), this.value, this.inverted)`
+   */
+  toSummary: () => string;
+}

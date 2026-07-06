@@ -62,14 +62,8 @@ import {
   makeTypeFilter,
   makeWatermarkFilter,
 } from '../makers';
-import {
-  colorFilterMaker,
-  filterMaker,
-  colorFilterNameType,
-  filterNameType,
-  printsFilterNameType,
-  printsFilterMaker,
-} from '../types';
+import { colorFilterNameType, filterNameType, printsFilterNameType } from '../types';
+import { colorFilterMaker, filterMaker, printsFilterMaker } from '../utils';
 
 export const filters: Record<filterNameType, filterMaker<any>> = {
   id: makeIDFilter,

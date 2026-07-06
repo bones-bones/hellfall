@@ -1,7 +1,6 @@
-import { getFireEntries } from '../cardHandling';
 import { FieldValue } from '@google-cloud/firestore';
 import { arbAreEqual } from '../listHandling';
-import { cardUpdate, firestoreCard } from './firestoreTypes';
+import { cardUpdate, firestoreCard, getFireEntries } from './firestoreTypes';
 
 const deleteField = FieldValue.delete();
 

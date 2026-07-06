@@ -4,6 +4,7 @@ import {
   handleChooseColors,
   handleChooseHybrid,
   hybridIdentityMiscReduce,
+  colorSearch,
 } from '@hellfall/shared/utils';
 import {
   colorFilter,
@@ -18,7 +19,8 @@ import {
   miscColorSummary,
   miscHybridIdentitySummary,
 } from '../filters';
-import { looseOpType, colorFilterMaker, colorSearch, ColorFilter } from '../types';
+import { looseOpType } from '../types';
+import { colorFilterMaker, ColorFilter } from '../utils';
 
 /**
  * Makes a color filter

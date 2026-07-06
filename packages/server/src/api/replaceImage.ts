@@ -1,12 +1,6 @@
 import { Firestore } from '@google-cloud/firestore';
 import { HCCard } from '@hellfall/shared/types';
-import {
-  withCors,
-  env,
-  HandlerRequest,
-  HandlerResponse,
-  requireDatabaseRoleAuth,
-} from './lib';
+import { withCors, env, HandlerRequest, HandlerResponse, requireDatabaseRoleAuth } from './lib';
 import { isImageGcsConfigured, replaceImageBase64AtGcsUrl } from '../lib/imageGcs.ts';
 import { cardsCollection, firestoreToCard } from '@hellfall/shared/utils/firestore';
 import { isValidV4UUID, toFaces } from '@hellfall/shared/utils';

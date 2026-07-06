@@ -16,11 +16,7 @@ import {
   rootElementValueType,
   rootPropType,
 } from '@hellfall/shared/types';
-import {
-  getDefaultFaceValue,
-  getDefaultKindLayout,
-  getDefaultRootValue,
-} from '../cardModification/defaults';
+import { getDefaultFaceValue, getDefaultKindLayout, getDefaultRootValue } from './defaults';
 import { getSet } from '../setHandling';
 import {
   anyChange,
@@ -30,11 +26,11 @@ import {
   rootChange,
   rootChangeablePropType,
   tagChange,
+  sortChanges,
 } from './changeTypes';
-import { sortChanges } from './changeHandling';
 import { isValidV4UUID } from '../textHandling';
 import { isInteger } from '../numHandling';
-import { ensureArray, pushProp, wrapArray } from '../listHandling';
+import { ensureArray, pushProp } from '../listHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -793,7 +789,7 @@ const changesForFaceTag = <K extends facePropType>(
     if (!prop) return;
     if (defaultValue && change_type == 'delete') {
       return defaultValue;
-    } else if (typeof value == 'object' && !Array.isArray(value)) {
+    } else if (typeof value == 'object' && value != null && !Array.isArray(value)) {
       return (value as Record<string, anyElementValueType<K>>)[splitTag.tag];
     } else {
       return value;
@@ -856,7 +852,7 @@ const changesForRootTag = <K extends rootPropType>(
     if (!prop) return;
     if (defaultValue && change_type == 'delete') {
       return defaultValue;
-    } else if (typeof value == 'object' && !Array.isArray(value)) {
+    } else if (typeof value == 'object' && value != null && !Array.isArray(value)) {
       return (value as Record<string, anyElementValueType<K>>)[splitTag.tag];
     } else {
       return value;

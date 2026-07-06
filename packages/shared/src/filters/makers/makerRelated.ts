@@ -1,5 +1,6 @@
 import { hasRelatedFilter, hasRelatedSummary, isRelatedFilter, isRelatedSummary } from '../filters';
-import { StateFilter, looseOpType, stateFilterMaker } from '../types';
+import { looseOpType } from '../types';
+import { StateFilter, stateFilterMaker } from '../utils';
 
 /**
  * Makes a filter that uses {@linkcode isRelatedFilter}

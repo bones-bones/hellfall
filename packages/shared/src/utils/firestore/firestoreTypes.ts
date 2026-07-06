@@ -1,5 +1,5 @@
 import { CollectionReference, FieldValue } from '@google-cloud/firestore';
-import { anyValueType, anyPropType, anyElementValueType } from '@hellfall/shared/types';
+import { anyValueType, anyPropType, getAnyEntries, anyMappedType } from '@hellfall/shared/types';
 import { Changeset } from '../changeHandling';
 
 /**
@@ -16,3 +16,8 @@ export type firestoreCard = { [K in anyPropType]?: fireValueType<K> };
 export type cardsCollection = CollectionReference<firestoreCard, firestoreCard>;
 
 export type changesetCollection = CollectionReference<Changeset, Changeset>;
+/**
+ * A properly typed version of calling `Object.entries()` on `firestoreCard`
+ * @param card The card to get the entries of
+ */
+export const getFireEntries = (card: firestoreCard) => getAnyEntries(card as anyMappedType);

@@ -1,4 +1,5 @@
-import { looseOpType, filterMaker, InvalidFilter } from '../types';
+import { looseOpType } from '../types';
+import { filterMaker, InvalidFilter } from '../utils';
 
 /**
  * Makes an invalid filter

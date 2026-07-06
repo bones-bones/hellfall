@@ -1,6 +1,6 @@
 import { makeSort } from '../makers';
-import { dirTypeList, dirType, SortObject, sortTypeList, sortType } from '../types';
-import { splitOnFirstOp, unescapeText } from '../utils';
+import { dirTypeList, dirType, sortTypeList, sortType } from '../types';
+import { splitOnFirstOp, unescapeText, SortObject } from '../utils';
 
 const sortRedirects: Record<string, sortType> = {
   mv: 'manavalue',

@@ -29,13 +29,9 @@ import {
   allPropType,
   isFacePropType,
 } from '@hellfall/shared/types';
-import {
-  toFaces,
-  addPropToRoot,
-  addPropToFace,
-  getCardEntries,
-  getCardFaceEntries,
-} from '@hellfall/shared/utils';
+import { getCardEntries, getCardFaceEntries, toFaces } from '../cardHandling';
+// @circular-ignore These are too intertwined to separate.
+import { addPropToFace, addPropToRoot } from './modificationHandling';
 
 const defaultRootProps: rootMappedType = {
   id: '',

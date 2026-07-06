@@ -9,8 +9,8 @@ import {
   toSetType,
 } from '../filters';
 import { makeHasRelatedFilter, makeIsRelatedFilter } from './makerRelated';
-import { StateFilter, looseOpType, stateFilterMaker } from '../types';
-import { unescapeText } from '../utils';
+import { looseOpType } from '../types';
+import { StateFilter, stateFilterMaker, unescapeText } from '../utils';
 import {
   makeCardFrameFilter,
   makeCardLayoutFilter,

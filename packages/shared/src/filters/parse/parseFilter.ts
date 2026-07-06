@@ -8,7 +8,6 @@ import {
   makeNameFilter,
 } from '../makers';
 import {
-  FilterObject,
   looseOpList,
   allPrintsGetterType,
   colorFilterNameType,
@@ -17,7 +16,7 @@ import {
   toPrintsFilterName,
   toColorFilterName,
 } from '../types';
-import { splitOnFirstOp, unescapeText } from '../utils';
+import { splitOnFirstOp, unescapeText, FilterObject } from '../utils';
 import { parseColorText } from './parseColors';
 import { colorFilters, filters, printsFilters } from './parseMaps';
 

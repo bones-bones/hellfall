@@ -1,6 +1,5 @@
 import { HCMiscColors } from '@hellfall/shared/types';
-import { isInteger } from '@hellfall/shared/utils';
-import { colorSearch, shorthandType } from '../types';
+import { isInteger, colorSearch, shorthandType } from '@hellfall/shared/utils';
 
 const shorthands: Record<string, shorthandType> = {
   colorless: 'c',

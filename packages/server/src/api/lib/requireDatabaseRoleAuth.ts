@@ -60,4 +60,4 @@ export const requireDatabaseRoleAuth = async (
     username,
     discord_access_token: sessionPayload.discord_access_token,
   };
-}
+};

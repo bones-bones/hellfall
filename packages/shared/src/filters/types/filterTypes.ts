@@ -1,4 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
+import { colorSearch, shorthandType } from '@hellfall/shared/utils';
 /**
  * The type of an operator
  *
@@ -145,16 +146,6 @@ export interface numSearchFilterFunction extends cardFilterFunction<numSearch, n
  * Any filter that compares a list of values that can be converted into numbers from a card with a value that can be converted into a number from a search
  */
 export interface numSearchListFilterFunction extends cardFilterFunction<numSearch[], numSearch> {}
-/**
- * The list of shorthands
- */
-const shorthandList = ['c', 'm'] as const;
-/**
- * A color search shorthand
- */
-export type shorthandType = (typeof shorthandList)[number];
-export const isShorthandType = (value: any): value is shorthandType =>
-  shorthandList.includes(value);
 const multiOpToNum: Record<opType, number> = {
   '<': 2,
   '<=': 0,
@@ -177,10 +168,6 @@ export const shortToNum = (operator: opType, value: shorthandType) => {
   }
 };
 
-/**
- * A union of the types that can be the value for a color filter
- */
-export type colorSearch = string[] | number | shorthandType;
 /**
  * Any filter that compares colors from a card with a value from a search
  */

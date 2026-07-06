@@ -1,11 +1,11 @@
 import { comparisonFilter, comparisonSummary } from '../filters';
+import { looseOpType } from '../types';
 import {
   ComparisonFilter,
   NumberPropFilter,
-  looseOpType,
   comparisonFilterMaker,
   numberPropFilterMaker,
-} from '../types';
+} from '../utils';
 
 /**
  * Makes a {@linkcode ComparisonFilter}

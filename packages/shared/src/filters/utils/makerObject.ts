@@ -1,6 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
 import {
-  anyFilterFunction,
   cardFilterFunction,
   stateFilterFunction,
   dirType,
@@ -15,8 +14,10 @@ import {
   comparisonSummaryFunction,
   numSearch,
   noteSummaryFunction,
-  colorSearch,
-} from './filterTypes';
+  allPrintsGetterType,
+  sortInterface,
+  filterInterface,
+} from '../types';
 import {
   createInvalidSummary,
   createNumSummary,
@@ -26,21 +27,22 @@ import {
   invertOp,
   shareFilter,
   textListFilter,
-  unescapeText,
-  xor,
   createCorrectedSummary, // used for a link
   textEqualsFilter,
   createLegalitySummary,
-  getValuesFromProp,
-  queryNameToValue,
-  queryPropType,
   numSearchListFilter,
   numSearchFilter,
+} from './filterUtils';
+import { ensureArray, colorSearch,  xor,
+ } from '@hellfall/shared/utils';
+import { filterSort } from './sortRule';
+import {
+  queryPropType,
+  getValuesFromProp,
+  queryNameToValue,
   queryNameToSummary,
-  filterSort,
-} from '../utils';
-import { ensureArray } from '@hellfall/shared/utils';
-import { allPrintsGetterType } from './makerTypes';
+} from './makerUtils';
+import { unescapeText } from './parseUtils';
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
     return { name: text.slice(0, -1), note: true };
@@ -52,32 +54,6 @@ const parseNote = (text: string): { name: string; note?: boolean | string } => {
   return { name: text };
 };
 
-interface anyFilterInterface<T = any, S = any> {
-  queryName: string;
-  /**
-   * The filter method to use
-   */
-  filter: anyFilterFunction<T, S>;
-}
-
-interface sortInterface extends anyFilterInterface {
-  /**
-   * The query name
-   */
-  queryName: string;
-  /**
-   * The filter function to use
-   */
-  filter: anyFilterFunction;
-  /**
-   * The sort option
-   */
-  sort: sortType;
-  /**
-   * The sort direction option
-   */
-  dir: dirType;
-}
 /**
  * A sort object
  */
@@ -93,71 +69,6 @@ export class SortObject implements sortInterface {
    */
   filter = (value1: HCCard.Any, operator: opType, value2: HCCard.Any) =>
     filterSort(value1, operator, value2, this.sort, this.dir);
-}
-
-interface filterInterface<T = any, S = any> extends anyFilterInterface {
-  /**
-   * The query name
-   */
-  queryName: string;
-  /**
-   * The filter function to use
-   */
-  filter: cardFilterFunction<T, S>;
-  /**
-   * The summary function to use
-   */
-  summary: summaryFunction<S>;
-  /**
-   * The value to filter against
-   */
-  value: S;
-  /**
-   * The operator to use. Can be loose (i.e. `:` or `!:`)
-   */
-  op: looseOpType;
-  /**
-   * The default operator; `:` will resolve to this, while `!:`
-   * will resolve to the inverse of this (using {@linkcode invertOp})
-   */
-  defaultOp: opType;
-  /**
-   * Option that controls how `this.invert()` works
-   *
-   * `ignore:` do nothing
-   *
-   * `flip:` inverts the operator (using {@linkcode invertOp})
-   *
-   * `negate:` inverts `this.inverted`; if this option is chosen,
-   * `this.summary` shoud accept and use the `invert` parameter
-   */
-  invertOption: invertOptionType;
-  /**
-   * Whether this object is inverted; only used if `this.invertOption: 'negate'`
-   */
-  inverted: boolean;
-  /**
-   * The method to get the value to compare from a card
-   * @param card card to get the value from
-   */
-  getValueToCompare: (card: HCCard.Any) => T;
-  /**
-   * Gets the current operator, resolving defaults appropriately
-   */
-  getOp: () => opType;
-  /**
-   * Inverts this filter object based on `this.invertOption`
-   */
-  invert: () => void;
-  /**
-   * Checks if a card passes `this.filter`
-   * @param card card to check
-   */
-  cardPassesFilter: (card: HCCard.Any) => boolean;
-  /**
-   * @returns the result of `this.summary(this.getOp(), this.value, this.inverted)`
-   */
-  toSummary: () => string;
 }
 
 /**

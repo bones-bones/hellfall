@@ -8,7 +8,7 @@ import {
   requireAdminAuth,
   requireReviewerAuth,
 } from './lib';
-import { } from './lib/requireDatabaseRoleAuth.ts';
+import {} from './lib/requireDatabaseRoleAuth.ts';
 import { recardCardChangeset } from '../lib/cardAudit.ts';
 import {
   anyChange,
