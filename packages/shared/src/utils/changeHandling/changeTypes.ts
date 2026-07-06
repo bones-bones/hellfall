@@ -152,7 +152,7 @@ type rootArrayChange<T extends changeType, K extends rootArrayPropType<T>> = roo
 export const isRootArrayChange = <T extends changeType, K extends rootChangeablePropType<T>>(
   change: rootChange<T, K>
 ): change is rootArrayChange<T, K & rootArrayPropType<T>> =>
-  rootAddProps.includes(change.prop as any);
+  isRootArrayPropType(change.prop);
 // export const isRootNonArrayChange = <T extends changeType, K extends rootChangeablePropType<T>>(change: rootChange<T, K>): change is rootNonArrayChange<T,K & rootNonArrayPropType<T>> => rootAddProps.includes(change.prop as any)
 
 /**
@@ -300,7 +300,7 @@ type faceArrayChange<T extends changeType, K extends faceArrayPropType<T>> = fac
 export const isFaceArrayChange = <T extends changeType, K extends faceChangeablePropType<T>>(
   change: faceChange<T, K>
 ): change is faceArrayChange<T, K & faceArrayPropType<T>> =>
-  faceAddProps.includes(change.prop as any);
+  isFaceArrayPropType(change.prop);
 // export const isFaceNonArrayChange = <T extends changeType, K extends faceChangeablePropType<T>>(change: faceChange<T, K>): change is faceNonArrayChange<T,K & faceNonArrayPropType<T>> => faceAddProps.includes(change.prop as any)
 
 /**

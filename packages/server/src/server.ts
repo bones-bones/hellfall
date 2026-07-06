@@ -23,6 +23,7 @@ import { loadCardsHandler } from './api/loadCards.ts';
 import { cardsData } from '@hellfall/shared/data';
 import { seedCatalogCache, warmCatalogCache } from './lib/catalogCache.ts';
 import { postcardHandler } from './api/postcard.ts';
+import { replaceImageHandler } from './api/replaceImage.ts';
 
 const PORT = Number(process.env.PORT) || 3003;
 
@@ -50,6 +51,14 @@ function parseCardIDFromPath(path: string): string | null {
 
   if (parts.length === 0) return null;
 
+  return parts[0];
+}
+
+function parseCardImagePath(path: string): string | null {
+  if (!path.startsWith(CARD_API_PREFIX)) return null;
+  const rest = path.slice(CARD_API_PREFIX.length);
+  const parts = rest.split('/').filter(Boolean);
+  if (parts.length !== 2 || parts[1] !== 'image') return null;
   return parts[0];
 }
 
@@ -103,6 +112,12 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
       const changesetId = parts[0] || null;
       const action = parts[1] || null;
       await changesetsHandler(req, res as HandlerResponse, changesetId, action);
+      return;
+    }
+
+    const cardImageId = parseCardImagePath(path);
+    if (cardImageId) {
+      await replaceImageHandler(req, res as HandlerResponse, cardImageId);
       return;
     }
 

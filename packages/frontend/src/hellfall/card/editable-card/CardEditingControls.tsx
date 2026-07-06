@@ -1,23 +1,21 @@
 import { useState } from 'react';
 import { CardEditPanel } from './CardEditPanel.tsx';
-import { useAuth } from '../../auth/AuthContext.tsx';
 import { HCCard } from '@hellfall/shared/types';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledButton } from '../../styling/StyledElements.tsx';
+import { createStyledButton } from '../../../styling/StyledElements.tsx';
 
 export const CardEditingControls = ({
   displayCard,
-  persistEnabled,
+  canEdit,
 }: {
   displayCard: HCCard.Any;
-  persistEnabled: boolean;
+  canEdit: boolean;
 }) => {
-  const { user } = useAuth();
   const [editing, setEditing] = useState(false);
 
   return (
     <>
-      {user && persistEnabled && !editing && (
+      {canEdit && !editing && (
         <EditCardButton type="button" onClick={() => setEditing(true)}>
           Edit Card Data
         </EditCardButton>

@@ -18,7 +18,8 @@ import { PendingChanges } from './PendingChanges.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledHR, createStyledPrimaryButtonLink } from '../../styling';
 import { TagSection } from './hellfall-card-components/TagSection';
-import { CardEditingControls } from './CardEditingControls.tsx';
+import { CardEditingControls } from './editable-card';
+import { ImageUploadControl, type ImageTarget } from './editable-card';
 import { RelatedCards } from './hellfall-card-components/RelatedCards';
 import { Divider } from './visual-components/Divider';
 import { StyledHeading } from './visual-components/StyledHeading';
@@ -41,57 +42,57 @@ const renderText = (text: string[]) => {
   });
 };
 const triggerEscapeList = ['*', '(', '_', '~'];
-const getImages = (card: HCCard.Any) => {
-  const imagesToShow: string[] = [];
-  const imageNames: string[] = [];
+type ImageEntry = { url: string; label: string; target: ImageTarget };
+
+const getImages = (card: HCCard.Any): ImageEntry[] => {
+  const entries: ImageEntry[] = [];
+  const push = (url: string | undefined, label: string, target: ImageTarget) => {
+    if (url) entries.push({ url, label, target });
+  };
 
   if (!('card_faces' in card) || !('image' in card.card_faces[0])) {
-    imagesToShow.push(card.image!);
-    imageNames.push('side 1');
+    push(card.image, 'side 1', { label: 'side 1', imageProp: 'image' });
   }
   if ('card_faces' in card) {
-    card.card_faces
-      .filter((face, i) => face.image || !i)
-      .forEach((face, i) => {
-        if (face.image) {
-          imagesToShow.push(face.image);
-          imageNames.push(`side ${i + 1}`);
-        }
-        if (face.still_image) {
-          imagesToShow.push(face.still_image);
-          imageNames.push(`side ${i + 1} still`);
-        }
-        if (face.rotated_image) {
-          imagesToShow.push(face.rotated_image);
-          imageNames.push(`side ${i + 1} rotated`);
-        }
-      });
+    card.card_faces.forEach((face, i) => {
+      if (face.image || !i) {
+        push(face.image, `side ${i + 1}`, {
+          label: `side ${i + 1}`,
+          faceIndex: i,
+          imageProp: 'image',
+        });
+      }
+      if (face.still_image) {
+        push(face.still_image, `side ${i + 1} still`, {
+          label: `side ${i + 1} still`,
+          faceIndex: i,
+          imageProp: 'still_image',
+        });
+      }
+      if (face.rotated_image) {
+        push(face.rotated_image, `side ${i + 1} rotated`, {
+          label: `side ${i + 1} rotated`,
+          faceIndex: i,
+          imageProp: 'rotated_image',
+        });
+      }
+    });
     if (card.image && 'image' in card.card_faces[0]) {
-      imagesToShow.push(card.image);
-      imageNames.push('full');
+      push(card.image, 'full', { label: 'full', imageProp: 'image' });
     }
   }
-  if (card.still_image) {
-    imagesToShow.push(card.still_image);
-    imageNames.push('still');
-  }
-  if (card.rotated_image) {
-    imagesToShow.push(card.rotated_image);
-    imageNames.push('rotated');
-  }
-  if (card.print_image) {
-    imagesToShow.push(card.print_image);
-    imageNames.push('print');
-  }
-  if (card.still_print_image) {
-    imagesToShow.push(card.still_print_image);
-    imageNames.push('still print');
-  }
-  if (card.rotated_print_image) {
-    imagesToShow.push(card.rotated_print_image);
-    imageNames.push('rotated print');
-  }
-  return { images: imagesToShow, names: imageNames };
+  push(card.still_image, 'still', { label: 'still', imageProp: 'still_image' });
+  push(card.rotated_image, 'rotated', { label: 'rotated', imageProp: 'rotated_image' });
+  push(card.print_image, 'print', { label: 'print', imageProp: 'print_image' });
+  push(card.still_print_image, 'still print', {
+    label: 'still print',
+    imageProp: 'still_print_image',
+  });
+  push(card.rotated_print_image, 'rotated print', {
+    label: 'rotated print',
+    imageProp: 'rotated_print_image',
+  });
+  return entries;
 };
 export const HellfallCard = ({
   data,
@@ -113,8 +114,10 @@ export const HellfallCard = ({
     pendingTagStaging,
   } = useCardTagOverrides(data);
   const [activeImageSide, setActiveImageSide] = useState(0);
+  const [imageOverrides, setImageOverrides] = useState<Record<number, string>>({});
 
   const isContributor = Boolean(user?.isAdmin || user?.isContributor);
+  const canEditCard = isContributor && persistEnabled && displayCard.kind !== 'scryfall';
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const cards = useAtomValue(cardsAtom);
@@ -141,35 +144,61 @@ export const HellfallCard = ({
     return Math.min(windowWidth - 10, 700);
   }, [windowWidth]);
 
-  // TODO: add handling for flip and aftermath
-  const { images: imagesToShow, names: imageNames } = getImages(displayCard);
+  const imageEntries = useMemo(() => getImages(displayCard), [displayCard]);
+  const activeEntry = imageEntries[activeImageSide];
+  const activeImageUrl =
+    imageOverrides[activeImageSide] ?? activeEntry?.url ?? displayCard.image ?? '';
+
+  const tagControls = {
+    addTag,
+    deleteTag,
+    tagsError,
+    tagsLoading,
+    tagsPersistEnabled: canEditCard,
+    changesetSubmitted,
+    pendingTagStaging,
+  };
 
   return (
     <Container ref={windowRef} key={displayCard.id}>
-      {!imagesToShow.length ? (
+      {!imageEntries.length ? (
         <ImageContainerContainer>
           <ImageContainer key="image-container">
             <img
               alt={toPlainText(displayCard)}
-              src={displayCard.image!}
+              src={imageOverrides[0] ?? displayCard.image!}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
             />
+            {canEditCard && displayCard.image?.includes('storage.googleapis.com') && (
+              <ImageUploadControl
+                cardId={displayCard.id}
+                target={{ label: 'image', imageProp: 'image' }}
+                onReplaced={url => setImageOverrides(prev => ({ ...prev, 0: url }))}
+              />
+            )}
           </ImageContainer>
         </ImageContainerContainer>
       ) : (
         <>
-          <ImageContainer key={imagesToShow[activeImageSide] || displayCard.image}>
+          <ImageContainer key={activeImageUrl}>
             <img
               alt={toPlainText(displayCard)}
-              src={imagesToShow[activeImageSide] || displayCard.image!}
+              src={activeImageUrl}
               style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
               referrerPolicy="no-referrer"
             />
+            {canEditCard && activeEntry?.url.includes('storage.googleapis.com') && (
+              <ImageUploadControl
+                cardId={displayCard.id}
+                target={activeEntry.target}
+                onReplaced={url => setImageOverrides(prev => ({ ...prev, [activeImageSide]: url }))}
+              />
+            )}
           </ImageContainer>
           <ButtonContainer>
-            {imagesToShow.length > 1 &&
-              imagesToShow.map((_e, i) => {
+            {imageEntries.length > 1 &&
+              imageEntries.map((entry, i) => {
                 return (
                   <button
                     key={i}
@@ -178,11 +207,11 @@ export const HellfallCard = ({
                     }}
                     disabled={i === activeImageSide}
                   >
-                    {imageNames[i]}
+                    {entry.label}
                   </button>
                 );
               })}
-            {imagesToShow.length <= 1 && <Spacer />}
+            {imageEntries.length <= 1 && <Spacer />}
           </ButtonContainer>
         </>
       )}
@@ -379,19 +408,8 @@ export const HellfallCard = ({
               <PendingChanges cardId={displayCard.id} />
             ) /* todo: move isContributor into the component */
           }
-          <CardEditingControls displayCard={displayCard} persistEnabled={persistEnabled} />
-          <TagSection
-            displayCard={displayCard}
-            tagControls={{
-              addTag,
-              deleteTag,
-              tagsError,
-              tagsLoading,
-              tagsPersistEnabled: persistEnabled,
-              changesetSubmitted,
-              pendingTagStaging,
-            }}
-          />
+          <CardEditingControls displayCard={displayCard} canEdit={canEditCard} />
+          <TagSection displayCard={displayCard} tagControls={tagControls} />
           <RelatedCards
             relatedCards={displayCard.all_parts ?? []}
             sourceCardId={displayCard.id}

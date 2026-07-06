@@ -1,5 +1,5 @@
 import { HCObject } from '../Object';
-import { HCCardFields } from './CardFields.ts';
+import type { HCCardFields } from './CardFields.ts';
 import { facePropType, getFaceEntries } from './Props.ts';
 import { isBorderColor, isColors, isFrame, isFrameEffect, isImageStatus, isLayout } from './values';
 

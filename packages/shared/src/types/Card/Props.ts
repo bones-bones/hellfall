@@ -1,8 +1,8 @@
-import { HCObject } from '../Object';
-import { HCCard } from './Card';
-import { HCCardFace } from './CardFace';
-import { HCRelatedCard } from './RelatedCard';
-import { HCLayout } from './values';
+import type { HCObject } from '../Object';
+import type { HCCard } from './Card';
+import type { HCCardFace } from './CardFace';
+import type { HCRelatedCard } from './RelatedCard';
+import type { HCLayout } from './values';
 
 const anyPropRecord = {
   object: 'object',
@@ -224,7 +224,7 @@ export type rootElementValueType<K extends rootPropType> = K extends 'artist_not
   ? [string, string]
   : K extends 'colors' | 'color_identity' | 'color_identity_hybrid' | 'base_tags'
   ? // | 'all_parts'
-    Exclude<HCCard.Any[K], undefined>
+  Exclude<HCCard.Any[K], undefined>
   : Exclude<HCCard.Any[K], undefined> extends Array<infer U>
   ? U
   : Exclude<HCCard.Any[K], undefined>;
