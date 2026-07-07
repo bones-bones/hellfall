@@ -329,6 +329,18 @@ export const createStyledHeading = (styles: string, displayName: string = 'Style
   (Component as any).displayName = displayName;
   return Component;
 };
+export const createStyledHeadingLink = (
+  styles: string,
+  displayName: string = 'StyledHeadingLink'
+) => {
+  const Component = ({ children, ...props }: TypeLevelProps & LinkProps) => (
+    <Heading as={Link} {...handleCsProp(props, styles)}>
+      {children}
+    </Heading>
+  );
+  (Component as any).displayName = displayName;
+  return Component;
+};
 
 export const createStyledTextInput = (styles: string, displayName: string = 'StyledTextInput') => {
   const Component = ({ ...props }: TextInputProps & React.ComponentProps<'input'>) => (

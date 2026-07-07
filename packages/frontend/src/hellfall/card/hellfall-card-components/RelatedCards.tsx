@@ -1,6 +1,6 @@
 import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
 import { Divider } from '../visual-components/Divider';
-import { StyledHeading } from '../visual-components/StyledHeading';
+import { StyledHeadingLink } from '../visual-components/StyledHeading';
 import { HellfallRelatedEntry } from '../../entry/HellfallRelatedEntry';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledHR } from '../../../styling';
@@ -25,7 +25,9 @@ export const RelatedCards = ({
       <div>
         {relatedCards.length > 0 && (
           <>
-            <StyledHeading size="small">Related Cards & Tokens</StyledHeading>
+            <StyledHeadingLink size="small" to={`/?q=~oracleid:${otherPrints[0].oracle_id}`}>
+              Related Cards & Tokens
+            </StyledHeadingLink>
             <RelatedGrid>
               {relatedCards
                 .filter(e => e.id != sourceCardId)
@@ -52,7 +54,9 @@ export const RelatedCards = ({
         )}
         {otherPrints.some(card => card.id != sourceCardId) && (
           <>
-            <StyledHeading size="small">Other Prints</StyledHeading>
+            <StyledHeadingLink size="small" to={`/?q=oracleid:${otherPrints[0].oracle_id}`}>
+              Other Prints
+            </StyledHeadingLink>
             <RelatedGrid>
               {otherPrints
                 .filter(e => e.id != sourceCardId)

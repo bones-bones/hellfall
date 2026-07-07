@@ -16,25 +16,21 @@ import {
   rootElementValueType,
   rootPropType,
 } from '@hellfall/shared/types';
-import {
-  getDefaultFaceValue,
-  getDefaultKindLayout,
-  getDefaultRootValue,
-} from '../cardModification/defaults';
+import { getDefaultFaceValue, getDefaultKindLayout, getDefaultRootValue } from './defaults';
 import { getSet } from '../setHandling';
 import {
   anyChange,
-  changeType,
   createFaceChange,
   createRootChange,
   faceChangeablePropType,
   rootChange,
   rootChangeablePropType,
   tagChange,
+  sortChanges,
 } from './changeTypes';
-import { sortChanges } from './changeHandling';
 import { isValidV4UUID } from '../textHandling';
 import { isInteger } from '../numHandling';
+import { ensureArray, pushProp } from '../listHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -516,9 +512,13 @@ type splitTagReturn = {
    */
   note?: string;
   /**
-   * The value to use for the tag's effects (used for `flavor-name`, set tags, and flag tags)
+   * The value to use for the tag's effects (used for `flavor-name`, set tags, flag tags)
    */
   value?: string;
+  /**
+   * The value to use for the tag's keywords (used for keywords and tags that are also keywords)
+   */
+  keywords?: string[];
   /**
    * The face to apply the tag's effects to
    */
@@ -537,6 +537,79 @@ type splitTagReturn = {
 //   // noFaces?: boolean,
 // }
 
+const subKeywords: Record<string, string | string[]> = {
+  'commander ninjutsu': 'ninjutsu',
+  gravestorm: 'storm',
+  multikicker: 'kicker',
+  'legendary landwalk': 'landwalk',
+  'nonbasic landwalk': 'landwalk',
+  megamorph: 'morph',
+  plainswalk: 'landwalk',
+  islandwalk: 'landwalk',
+  swampwalk: 'landwalk',
+  mountainwalk: 'landwalk',
+  forestwalk: 'landwalk',
+  desertwalk: 'landwalk',
+  'double agenda': 'hidden agenda',
+  'partner with': 'partner',
+  'hexproof from': 'hexproof',
+  plainscycling: 'cycling',
+  islandscycling: 'cycling',
+  swampcycling: 'cycling',
+  mountaincycling: 'cycling',
+  forestcycling: 'cycling',
+  'basic landcycling': 'cycling',
+  typecycling: 'cycling',
+  wizardcycling: 'cycling',
+  slivercycling: 'cycling',
+  landcycling: 'cycling',
+  'manifest dread': 'manifest',
+  extroll: 'extort',
+  'fast as fuck': 'split second',
+  unbearable: 'changeling',
+  stackicker: 'kicker',
+  multistackicker: ['stackicker', 'multikicker'],
+  means: 'transform',
+  spellmorph: 'morph',
+  override: 'cleave',
+  gx: 'exhaust',
+  'devotion to dreadmaw': 'devotion',
+  inklink: 'lifelink',
+  'typeline menace': 'menace',
+  denimwalk: 'walk',
+  lifesteal: 'lifelink',
+  carsist: 'persist',
+  'bands with others': 'banding',
+  'bad templatingwalk': 'walk',
+  picklelink: 'link',
+  foodlink: 'link',
+  accelerator: 'annihilator',
+  superflashback: 'flashback',
+  drive: 'delve',
+  woah: 'fear',
+  'drive-to-work': 'suspend',
+  goldlink: 'link',
+};
+
+const keywordTags = ['fuse', 'enchant', 'flip', 'transform', 'aftermath', 'meld', 'draftpartner'];
+const tagsToKeywords: Record<string, string | string[]> = {
+  'devoid-frame': 'devoid',
+  'means-end': ['means', 'end'],
+  'gx-ability': 'gx',
+  cube: 'rotate',
+};
+
+export const fillSubKeywords = (keywords: string[]) => {
+  for (const keyword in keywords) {
+    if (keyword in subKeywords) {
+      ensureArray(subKeywords[keyword]).forEach(sub => {
+        if (!keywords.includes(sub)) {
+          keywords.push(sub);
+        }
+      });
+    }
+  }
+};
 /**
  * Splits a full tag into a tag and its components
  * @param fullTag full tag to split
@@ -551,6 +624,14 @@ export const splitTagComponents = (
   // options?:splitTagOptions
 ): splitTagReturn => {
   const splitTag: splitTagReturn = splitFullTag(full_tag);
+  if (keywordTags.includes(splitTag.tag)) {
+    splitTag.keywords = [splitTag.tag];
+    fillSubKeywords(splitTag.keywords);
+  }
+  if (splitTag.tag in tagsToKeywords) {
+    splitTag.keywords = ensureArray(tagsToKeywords[splitTag.tag]);
+    fillSubKeywords(splitTag.keywords);
+  }
   if (!splitTag.note) {
     if (tagCanUseUUID(splitTag.tag)) {
       const id =
@@ -568,6 +649,13 @@ export const splitTagComponents = (
   }
   const splitNote = splitTag.note.split('|');
   for (let i = splitNote.length - 1; i >= 0; i--) {
+    if (splitTag.tag == 'keyword') {
+      const [keyword] = splitNote.splice(i, 1);
+      if (!splitTag.keywords?.includes(keyword)) {
+        pushProp(splitTag, 'keywords', keyword.toLowerCase());
+      }
+      continue;
+    }
     if (tagCanUseUUID(splitTag.tag) && !splitTag.uuid) {
       if (isValidV4UUID(splitNote[i])) {
         [splitTag.uuid] = splitNote.splice(i, 1);
@@ -582,7 +670,8 @@ export const splitTagComponents = (
     if (
       tagCanHaveFaces(splitTag.tag, card) &&
       ((card && 'card_faces' in card) || alsoAddingFaces) &&
-      isInteger(splitNote[i]) && !isDriveURLString(splitNote[i]) &&
+      isInteger(splitNote[i]) &&
+      !isDriveURLString(splitNote[i]) &&
       !splitTag.face
     ) {
       const [num] = splitNote.splice(i, 1);
@@ -614,7 +703,14 @@ export const splitTagComponents = (
       continue;
     }
   }
-  splitTag.note = splitNote.join('|');
+  if (splitTag.tag == 'keyword' && splitTag.keywords) {
+    fillSubKeywords(splitTag.keywords);
+  }
+  if (splitNote.length) {
+    splitTag.note = splitNote.join('|');
+  } else if (splitTag.note) {
+    delete splitTag.note;
+  }
   return splitTag;
 };
 
@@ -684,12 +780,18 @@ const changesForFaceTag = <K extends facePropType>(
   if (splitTag.note) {
     tag_change.note = splitTag.note;
   }
+  if (splitTag.keywords) {
+    splitTag.keywords.forEach(keyword => {
+      const change = createRootChange(change_type, 'keywords', keyword);
+      changes.push(change);
+    });
+  }
   const defaultValue = getDefaultFaceValue(card, prop);
   const getValue = () => {
     if (!prop) return;
     if (defaultValue && change_type == 'delete') {
       return defaultValue;
-    } else if (typeof value == 'object' && !Array.isArray(value)) {
+    } else if (typeof value == 'object' && value != null && !Array.isArray(value)) {
       return (value as Record<string, anyElementValueType<K>>)[splitTag.tag];
     } else {
       return value;
@@ -741,12 +843,18 @@ const changesForRootTag = <K extends rootPropType>(
   if (splitTag.note) {
     tag_change.note = splitTag.note;
   }
+  if (splitTag.keywords) {
+    splitTag.keywords.forEach(keyword => {
+      const change = createRootChange(change_type, 'keywords', keyword);
+      changes.push(change);
+    });
+  }
   const defaultValue = getDefaultRootValue(card, prop);
   const getValue = () => {
     if (!prop) return;
     if (defaultValue && change_type == 'delete') {
       return defaultValue;
-    } else if (typeof value == 'object' && !Array.isArray(value)) {
+    } else if (typeof value == 'object' && value != null && !Array.isArray(value)) {
       return (value as Record<string, anyElementValueType<K>>)[splitTag.tag];
     } else {
       return value;

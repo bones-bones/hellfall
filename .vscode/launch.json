@@ -62,6 +62,16 @@
       "internalConsoleOptions": "neverOpen"
     },
     {
+      "name": "Debug circular-check",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["circular-check", "--verbose"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
       "name": "Debug order-lists",
       "type": "node",
       "request": "launch",

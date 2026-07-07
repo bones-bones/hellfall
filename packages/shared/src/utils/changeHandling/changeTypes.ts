@@ -1,5 +1,4 @@
 import type {
-  anyPropType,
   faceElementValueType,
   facePropType,
   HCCardFace,
@@ -79,7 +78,7 @@ const rootDeleteProps = [
   'still_print_image',
   'not_directly_draftable',
   'has_draft_partners',
-  'keywords',
+  // 'keywords',
   'creators',
   'artists',
   'artist_notes',
@@ -151,8 +150,7 @@ type rootArrayChange<T extends changeType, K extends rootArrayPropType<T>> = roo
  */
 export const isRootArrayChange = <T extends changeType, K extends rootChangeablePropType<T>>(
   change: rootChange<T, K>
-): change is rootArrayChange<T, K & rootArrayPropType<T>> =>
-  isRootArrayPropType(change.prop);
+): change is rootArrayChange<T, K & rootArrayPropType<T>> => isRootArrayPropType(change.prop);
 // export const isRootNonArrayChange = <T extends changeType, K extends rootChangeablePropType<T>>(change: rootChange<T, K>): change is rootNonArrayChange<T,K & rootNonArrayPropType<T>> => rootAddProps.includes(change.prop as any)
 
 /**
@@ -299,8 +297,7 @@ type faceArrayChange<T extends changeType, K extends faceArrayPropType<T>> = fac
  */
 export const isFaceArrayChange = <T extends changeType, K extends faceChangeablePropType<T>>(
   change: faceChange<T, K>
-): change is faceArrayChange<T, K & faceArrayPropType<T>> =>
-  isFaceArrayPropType(change.prop);
+): change is faceArrayChange<T, K & faceArrayPropType<T>> => isFaceArrayPropType(change.prop);
 // export const isFaceNonArrayChange = <T extends changeType, K extends faceChangeablePropType<T>>(change: faceChange<T, K>): change is faceNonArrayChange<T,K & faceNonArrayPropType<T>> => faceAddProps.includes(change.prop as any)
 
 /**
@@ -538,4 +535,15 @@ export interface Changeset {
   diff?: ChangesetDiffRow[];
 }
 
-const x = new Set();
+export const changeTypeOrder = ['delete', 'add'];
+// export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
+export const locationOrder = ['tag', 'card_faces', 'all_parts', 'root', 'face'];
+
+/**
+ * Sort function that sorts changes based on location, then change_type
+ *
+ * To use, do `anyChange[].sort(sortChanges)`
+ */
+export const sortChanges = (a: anyChange, b: anyChange): number =>
+  locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
+  changeTypeOrder.indexOf(a.change_type) - changeTypeOrder.indexOf(b.change_type);

@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { cardStringFilter, opType, invertOptionType } from '../types';
+import { stateFilterFunction, opType } from '../types';
 import {
   opIsNegative,
   opToNot,
@@ -54,6 +54,7 @@ const stateList = [
   'triome',
 ] as const;
 type stateType = (typeof stateList)[number];
+export const isStateType = (value: any): value is stateType => stateList.includes(value);
 const equivStateNames: Record<string, stateType> = {
   rulings: 'ruling',
   alchemy: 'rebalanced',
@@ -182,6 +183,7 @@ const stateSummaries: Record<stateType, (operator: opType) => string> = {
 
 // const isList = ['persistent'] as const;
 // type isType = (typeof isList)[number];
+// export const isIsType = (value: any): value is isType => isList.includes(value);
 // const equivIsNames: Record<string, isType> = {
 // };
 // const isResolutions: Record<isType, (value: HCCard.Any) => boolean | undefined> = {
@@ -191,30 +193,46 @@ const stateSummaries: Record<stateType, (operator: opType) => string> = {
 //   persistent: (operator: opType, value: string) =>
 //     `the cards ${opToDont(operator)} make persistent tokens`,
 // };
-const getIsName = (value: string) => equivStateNames[value] /* ?? equivIsNames[value] */ ?? value;
-export const filterIs: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: opType, value2: string) =>
-    opAsBool(
+const getIsName = (value: string): string | undefined =>
+  equivStateNames[value] /* ?? equivIsNames[value] */ ??
+  (isStateType(value) /* || isIsType(value) */ ? value : undefined);
+/**
+ * Checks to see if a card meets the given criterion
+ * @param value1 card to check
+ * @param operator operator to use
+ * @param value2 criterion from the search
+ */
+export const isFilter: stateFilterFunction = (
+  value1: HCCard.Any,
+  operator: opType,
+  value2: string
+) =>
+  opAsBool(
+    (
       stateResolutions[getIsName(value2) as stateType] ??
-        /* isResolutions[getIsName(value2) as isType] ?? */ (c => false)(value1),
-      operator
-    ),
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: createCorrectedSummary(
-      getIsName,
-      (operator, value) =>
-        stateSummaries[value as stateType](/*  ?? isSummaries[value as isType] */ operator),
-      (operator, value) =>
-        unescapeText(value) == 'funny'
-          ? '!All hellscube cards are funny.'
-          : `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`
-    ),
-  }
+      /* isResolutions[getIsName(value2) as isType] ?? */ (c => false)
+    )(value1),
+    operator
+  );
+/**
+ * The summary for {@link isSummary}
+ * @param operator the operator to use
+ * @param value the criterion from the search
+ * @param invert dummy
+ */
+export const isSummary = createCorrectedSummary(
+  getIsName,
+  (operator, value) =>
+    stateSummaries[value as stateType](/*  ?? isSummaries[value as isType] */ operator),
+  (operator, value) =>
+    unescapeText(value) == 'funny'
+      ? '!All hellscube cards are funny.'
+      : `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`
 );
 
 const hasList = ['indicator', 'frameeffect', 'watermark'] as const;
 type hasType = (typeof hasList)[number];
+export const isHasType = (value: any): value is hasType => hasList.includes(value);
 const equivHasNames: Record<string, hasType> = {
   fe: 'frameeffect',
   frameeffects: 'frameeffect',
@@ -231,25 +249,41 @@ const hasSummaries: Record<hasType, (operator: opType) => string> = {
   watermark: (operator: opType) => `the cards ${opToDont(operator)} have watermarks`,
 };
 
-const getHasName = (value: string) => equivStateNames[value] ?? equivHasNames[value] ?? value;
-export const filterHas: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: opType, value2: string) =>
-    opAsBool(
+const getHasName = (value: string): string | undefined =>
+  equivStateNames[value] ??
+  equivHasNames[value] ??
+  (isStateType(value) || isHasType(value) ? value : undefined);
+/**
+ * Checks to see if a card meets the given criterion
+ * @param value1 card to check
+ * @param operator operator to use
+ * @param value2 criterion from the search
+ */
+export const hasFilter: stateFilterFunction = (
+  value1: HCCard.Any,
+  operator: opType,
+  value2: string
+) =>
+  opAsBool(
+    (
       stateResolutions[getIsName(value2) as stateType] ??
-        hasResolutions[getHasName(value2) as hasType] ??
-        (c => false)(value1),
-      operator
-    ),
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: createCorrectedSummary(
-      getIsName,
-      (operator, value) =>
-        (stateSummaries[value as stateType] ?? hasSummaries[value as hasType])(operator),
-      (operator, value) =>
-        unescapeText(value) == 'funny'
-          ? '!All hellscube cards are funny.'
-          : `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`
-    ),
-  }
+      hasResolutions[getHasName(value2) as hasType] ??
+      (c => false)
+    )(value1),
+    operator
+  );
+/**
+ * The summary for {@link hasSummary}
+ * @param operator the operator to use
+ * @param value the criterion from the search
+ * @param invert dummy
+ */
+export const hasSummary = createCorrectedSummary(
+  getIsName,
+  (operator, value) =>
+    (stateSummaries[value as stateType] ?? hasSummaries[value as hasType])(operator),
+  (operator, value) =>
+    unescapeText(value) == 'funny'
+      ? '!All hellscube cards are funny.'
+      : `!Checking if cards are ${opToNot(operator)} "${value}" is not supported`
 );

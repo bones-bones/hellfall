@@ -1,4 +1,4 @@
-import { facePropType, HCCard, rootPropType, rootValueType } from '@hellfall/shared/types';
+import { facePropType, HCCard, rootPropType } from '@hellfall/shared/types';
 import {
   allPartsChange,
   anyChange,
@@ -12,12 +12,9 @@ import {
   rootChangeablePropType,
   tagChange,
 } from './changeTypes';
+import { partCheckProps } from './changeValidation';
+import { addTagToBase, deleteTagFromBase, splitFullTag } from './tagHandling';
 import {
-  addPropToRecord,
-  deletePropFromRecord,
-  toFaces,
-  toMultiFaced,
-  toSingleFaced,
   addPropToFace,
   addPropToRoot,
   deletePropFromFace,
@@ -26,9 +23,10 @@ import {
   popPropFromRoot,
   pushPropToFace,
   pushPropToRoot,
-} from '@hellfall/shared/utils';
-import { partCheckProps } from './changeValidation';
-import { addTagToBase, deleteTagFromBase, splitFullTag } from './tagHandling';
+} from './modificationHandling';
+import { addPropToRecord, deletePropFromRecord } from '../listHandling';
+import { toFaces } from '../cardHandling';
+import { toMultiFaced, toSingleFaced } from './defaults';
 
 const rootDeriveProps: rootPropType[] = [];
 

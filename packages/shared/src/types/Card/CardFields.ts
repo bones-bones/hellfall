@@ -23,6 +23,7 @@ import {
   // HCSecurityStamp,
 } from './values';
 
+// @circular-ignore scryfall does this too, so it's probably fine
 import type { HCCardFace } from './CardFace.ts';
 import type { HCRelatedCard } from './RelatedCard.ts';
 import type { SetCode } from '../Set';
@@ -32,7 +33,7 @@ import type { SetCode } from '../Set';
 /**
  * A collection of types related to each possible card field.
  */
-export namespace HCCardFields { }
+export namespace HCCardFields {}
 
 export namespace HCCardFields.Core {
   /**

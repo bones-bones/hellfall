@@ -8,7 +8,7 @@ import {
   makeCardFrameFilter,
   makeCardLayoutFilter,
   makeCardtypeFilter,
-  makeCollectorNumberFilter,
+  makeCollectorNumFilter,
   makeColorFilter,
   makeCostFilter,
   makeCreatorFilter,
@@ -62,16 +62,10 @@ import {
   makeTypeFilter,
   makeWatermarkFilter,
 } from '../makers';
-import {
-  colorFilterMaker,
-  filterMaker,
-  stateFilterMaker,
-  colorFilterNameType,
-  filterNameType,
-  printsFilterNameType,
-} from '../types';
+import { colorFilterNameType, filterNameType, printsFilterNameType } from '../types';
+import { colorFilterMaker, filterMaker, printsFilterMaker } from '../utils';
 
-export const filters: Record<filterNameType, filterMaker> = {
+export const filters: Record<filterNameType, filterMaker<any>> = {
   id: makeIDFilter,
   oracleid: makeOracleIDFilter,
   kind: makeKindFilter,
@@ -80,7 +74,7 @@ export const filters: Record<filterNameType, filterMaker> = {
   block: makeBlockFilter,
   group: makeGroupFilter,
   settype: makeSetTypeFilter,
-  number: makeCollectorNumberFilter,
+  number: makeCollectorNumFilter,
   layout: makeCardLayoutFilter,
   facelayout: makeFaceLayoutFilter,
   anylayout: makeAnyLayoutFilter,
@@ -114,6 +108,8 @@ export const filters: Record<filterNameType, filterMaker> = {
   showcase: makeShowcaseFilter,
   tag: makeTagFilter,
   tagnote: makeTagNoteFilter,
+  is: makeIsFilter,
+  has: makeHasFilter,
   isrelated: makeIsRelatedFilter,
   hasrelated: makeHasRelatedFilter,
   invalid: makeInvalidFilter,
@@ -123,7 +119,7 @@ export const filters: Record<filterNameType, filterMaker> = {
   include: makeIncludeFilter,
 };
 
-export const colorFilters: Record<colorFilterNameType, colorFilterMaker> = {
+export const colorFilters: Record<colorFilterNameType, colorFilterMaker<any>> = {
   color: makeColorFilter,
   indicator: makeIndicatorFilter,
   identity: makeIdentityFilter,
@@ -134,10 +130,8 @@ export const colorFilters: Record<colorFilterNameType, colorFilterMaker> = {
   mischybrid: makeMiscHybridFilter,
 };
 
-export const printsFilters: Record<printsFilterNameType, stateFilterMaker> = {
+export const printsFilters: Record<printsFilterNameType, printsFilterMaker> = {
   in: makeInFilter,
   sets: makeSetsNumberFilter,
   prints: makePrintsNumberFilter,
-  is: makeIsFilter,
-  has: makeHasFilter,
 };

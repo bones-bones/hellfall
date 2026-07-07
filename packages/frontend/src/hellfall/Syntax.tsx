@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FC, PropsWithChildren } from 'react';
 import { HCBorderColor, HCKind, HCMiscColors, SetType } from '@hellfall/shared/types';
-import { looseOpList, sorts } from '@hellfall/shared/filters';
+import { looseOpList, sortTypeList } from '@hellfall/shared/filters';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { Box } from '@workday/canvas-kit-react';
 
@@ -319,8 +319,8 @@ export const Syntax = () => {
           Hellfall treats sort keywords a bit differently from Scryfall in order to allow sorting
           with multiple keywords at once. Because of this, the{' '}
           {mapListToCodeAnd(['sort:', 'order:', 'direction', 'dir:'])} keywords are all
-          interchangeable, and can have a sorting term ({mapListToCodeOr(sorts.slice(0, -1))})
-          and/or a direction term (<code>asc</code> or <code>desc</code>). If you're using both a
+          interchangeable, and can have a sorting term ({mapListToCodeOr(sortTypeList.slice(0, -1))}
+          ) and/or a direction term (<code>asc</code> or <code>desc</code>). If you're using both a
           sorting term and a direction term, separate them with a comma and put the sorting term
           first. The search will try to combine them as much as possible, so you don't have to put
           both the sort and the direction in a single term, but it helps.

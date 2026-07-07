@@ -174,12 +174,16 @@ async function resolveImageUrl(body: PostcardBody): Promise<string> {
     try {
       return await uploadImageBase64ToGcs(body.imageBase64, objectName);
     } catch (err) {
-      console.error('[postcard] gcs image upload failed', {
-        objectName,
-        bucket: env.IMAGE_GCS_CARD_IMAGE_BUCKET,
-        name: body.name,
-        hcid: body.hcid,
-      }, err);
+      console.error(
+        '[postcard] gcs image upload failed',
+        {
+          objectName,
+          bucket: env.IMAGE_GCS_CARD_IMAGE_BUCKET,
+          name: body.name,
+          hcid: body.hcid,
+        },
+        err
+      );
       throw err;
     }
   }
@@ -300,11 +304,16 @@ export const postcardHandler = async (
     const reason = clientErrorReason(err);
     const status = isClientError(err) ? 400 : 500;
     const log = status >= 500 ? console.error : console.warn;
-    log.call(console, '[postcard] failed', {
-      ...postcardBodyContext(body, action),
-      status,
-      reason,
-    }, err);
+    log.call(
+      console,
+      '[postcard] failed',
+      {
+        ...postcardBodyContext(body, action),
+        status,
+        reason,
+      },
+      err
+    );
     res.statusCode = status;
     res.end(JSON.stringify({ ok: false, reason }));
   }

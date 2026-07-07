@@ -1,6 +1,6 @@
 import { makeSort } from '../makers';
-import { dirs, dirType, sortObject, sorts, sortType } from '../types';
-import { splitOnFirstOp, unescapeText } from '../utils';
+import { dirTypeList, dirType, sortTypeList, sortType } from '../types';
+import { splitOnFirstOp, unescapeText, SortObject } from '../utils';
 
 const sortRedirects: Record<string, sortType> = {
   mv: 'manavalue',
@@ -20,6 +20,26 @@ const dirRedirects: Record<string, dirType> = {
   d: 'desc',
   down: 'desc',
 };
+const isSort = (text: string): text is sortType =>
+  sortTypeList.includes(unescapeText(text) as sortType) || unescapeText(text) in sortRedirects;
+const isDir = (text: string): text is dirType =>
+  dirTypeList.includes(unescapeText(text) as dirType) || unescapeText(text) in dirRedirects;
+const correctSort = (text: string): sortType => {
+  if (unescapeText(text) in sortRedirects) {
+    return sortRedirects[unescapeText(text)];
+  }
+  return unescapeText(text) as sortType;
+};
+const correctDir = (text: string): dirType => {
+  if (unescapeText(text) in dirRedirects) {
+    return dirRedirects[unescapeText(text)];
+  }
+  return unescapeText(text) as dirType;
+};
+/**
+ * Checks whether text can produce a sort filter (regardless of validity)
+ * @param text text to check
+ */
 export const isSortFilter = (text: string): boolean => {
   if (text.at(0) == '-') {
     return isSortFilter(text.slice(1));
@@ -28,10 +48,10 @@ export const isSortFilter = (text: string): boolean => {
   return ['sort', 'order', 'dir', 'direction'].includes(keyword);
 };
 
-const isSort = (text: string): boolean =>
-  sorts.includes(unescapeText(text) as sortType) || unescapeText(text) in sortRedirects;
-const isDir = (text: string): boolean =>
-  dirs.includes(unescapeText(text) as dirType) || unescapeText(text) in dirRedirects;
+/**
+ * Checks whether text can produce a valid sort filter, given that it passed {@linkcode isSortFilter}
+ * @param text text to check
+ */
 export const sortIsValid = (text: string): boolean => {
   const { term } = splitOnFirstOp(text);
   // TODO: add multi in one term option?
@@ -45,20 +65,13 @@ export const sortIsValid = (text: string): boolean => {
   return isSort(term) || isDir(term);
 };
 
-const correctSort = (text: string): sortType => {
-  if (unescapeText(text) in sortRedirects) {
-    return sortRedirects[unescapeText(text)];
-  }
-  return unescapeText(text) as sortType;
-};
-const correctDir = (text: string): dirType => {
-  if (unescapeText(text) in dirRedirects) {
-    return dirRedirects[unescapeText(text)];
-  }
-  return unescapeText(text) as dirType;
-};
-export const parseSorts = (sortList: string[]): sortObject[] => {
-  const sortObs: sortObject[] = [];
+/**
+ * Parses a list of strings into a list of {@linkcode SortObject | SortObjects}.
+ * This is not for use with a query, but rather for use with inputs on the frontend
+ * @param sortList a list of strings to parse; they must be formatted as `sort,dir`
+ */
+export const parseSorts = (sortList: string[]): SortObject[] => {
+  const sortObs: SortObject[] = [];
   for (let i = 0; i < sortList.length; i++) {
     const term = sortList[i];
     if (term.includes(',')) {
@@ -90,14 +103,27 @@ export const parseSorts = (sortList: string[]): sortObject[] => {
 };
 
 const bucketers = ['set', 'color', 'manavalue', 'colormanavalue', 'auto'];
+/**
+ * Winnows a list of {@linkcode SortObject | SortObjects} by removing those that can't have any effect and
+ * @param sortList a list of strings to parse; they must have already passed {@linkcode isSortFilter} and {@linkcode sortIsValid}
+ */
 export const winnowSortObjects = (
-  sortList: sortObject[]
-): { sortList: sortObject[]; winnowed: sortObject[] } => {
-  const winnowed: sortObject[] = [];
+  sortList: SortObject[]
+): {
+  /**
+   * The portion of the `sortList` parameter that can actually have an effect
+   */
+  sortList: SortObject[];
+  /**
+   * The portion of the `sortList` parameter that can't actually have an effect
+   */
+  winnowed: SortObject[];
+} => {
+  const winnowed: SortObject[] = [];
   const winnow = (index: number) => winnowed.unshift(...sortList.splice(index, 1));
   const hasConflict = (index: number) => {
     const sort = sortList[index].sort;
-    if (!sorts.includes(sort) || !dirs.includes(sortList[index].dir)) {
+    if (!sortTypeList.includes(sort) || !dirTypeList.includes(sortList[index].dir)) {
       return true;
     }
     for (let i = index - 1; i >= 0; i--) {
@@ -129,8 +155,12 @@ export const winnowSortObjects = (
   return { sortList, winnowed };
 };
 
-export const getWinnowedSortOptions = (sortList: sortObject[]): sortType[] => {
-  const options = [...sorts];
+/**
+ * Given a list of {@linkcode SortObject | SortObjects}, returns the options for {@linkcode sortType} that can have an effect, if any
+ * @param sortList list of sort objects to use
+ */
+export const getWinnowedSortOptions = (sortList: SortObject[]): sortType[] => {
+  const options = [...sortTypeList];
   const hasConflict = (sort: string, other: string) => {
     if (
       sort == other ||
@@ -156,13 +186,29 @@ export const getWinnowedSortOptions = (sortList: sortObject[]): sortType[] => {
   });
   return options;
 };
+
+/**
+ * Combines {@linkcode SortObject | SortObjects} from a query with input sorts
+ * and removes ones that can't have an effect
+ * @param querySorts sort objects from a query; will try to compress this as much as possible before combining it with inputs
+ * @param inputSorts strings for sorts from inputs; must be formatted as `sort,dir`
+ */
 export const combineAndWinnowSorts = (
-  querySorts: sortObject[],
+  querySorts: SortObject[],
   inputSorts: string[]
-): { sortList: sortObject[]; newInputs: string[] } => {
+): {
+  /**
+   * The sort list to use
+   */
+  sortList: SortObject[];
+  /**
+   * The new list for `inputSorts`; used when syncing the url
+   */
+  newInputs: string[];
+} => {
   const inputs = parseSorts(inputSorts);
-  const newInputList: sortObject[] = [];
-  const sortList: sortObject[] = [];
+  const newInputList: SortObject[] = [];
+  const sortList: SortObject[] = [];
   for (let i = 0; i < Math.max(querySorts.length, inputs.length); i++) {
     if (i >= inputs.length) {
       sortList.push(querySorts[i]);
@@ -170,7 +216,7 @@ export const combineAndWinnowSorts = (
       continue;
     }
     const input =
-      sorts.includes(inputs[i].sort) && dirs.includes(inputs[i].dir)
+      sortTypeList.includes(inputs[i].sort) && dirTypeList.includes(inputs[i].dir)
         ? inputs[i]
         : makeSort(
             isSort(inputs[i].sort) ? correctSort(inputs[i].sort) : 'auto',
@@ -187,7 +233,7 @@ export const combineAndWinnowSorts = (
   }
   const hasConflict = (index: number) => {
     const sort = sortList[index].sort;
-    if (!sorts.includes(sort) || !dirs.includes(sortList[index].dir)) {
+    if (!sortTypeList.includes(sort) || !dirTypeList.includes(sortList[index].dir)) {
       return true;
     }
     for (let i = index - 1; i >= 0; i--) {

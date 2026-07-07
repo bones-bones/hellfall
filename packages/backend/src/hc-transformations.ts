@@ -27,12 +27,13 @@ import {
   getDirectChildSets,
   getParentSet,
   mergeFromSheet,
+  cleanParts,
+  updateParts,
+  addToJSONToCards,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
-import { addToJSONToCards } from '@hellfall/shared/utils';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
 import { fetchLands } from './fetchLands.ts';
-import { cleanParts, updateParts } from '@hellfall/shared/utils/cardModification/partsHandling.ts';
 
 const usingApproved = false;
 const typeSet = new Set<string>();

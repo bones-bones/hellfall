@@ -1,29 +1,21 @@
 import { allPropType, HCCard } from '@hellfall/shared/types';
-import { CardMap, getAllRelated } from '../cardHandling';
-import { setDerivedProps } from '../cardModification/derivedProps';
-import { cleanParts, updateParts } from '../cardModification/partsHandling';
 import { anyChange } from './changeTypes';
 import { changeErrorMessage, changeIsValid } from './changeValidation';
 import { applyChange } from './changeApply';
-import { getChangesFromDifferences } from './getCardDiff';
+import { arbAreEqual } from '../listHandling';
 
 // commented out = currently done automatically via tags, but could concievable be done manually in the future
 
 const multiIgnoreDeleteProps: allPropType[] = ['image', 'frame', 'frame_effects'];
 const multiIgnoreAddProps: allPropType[] = ['image_status'];
 
-export const changeTypeOrder = ['delete', 'add'];
-// export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
-export const locationOrder = ['tag', 'card_faces', 'all_parts', 'root', 'face'];
-
-/**
- * Sort function that sorts changes based on location, then change_type
- *
- * To use, do `anyChange[].sort(sortChanges)`
- */
-export const sortChanges = (a: anyChange, b: anyChange): number =>
-  locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location) ||
-  changeTypeOrder.indexOf(a.change_type) - changeTypeOrder.indexOf(b.change_type);
+export const removeDuplicateChanges = (changeList: anyChange[]) => {
+  for (let i = changeList.length - 1; i >= 0; i--) {
+    if (changeList.slice(0, i).some(change => arbAreEqual(change, changeList[i]))) {
+      changeList.splice(i, 1);
+    }
+  }
+};
 
 /**
  * Apply a change
@@ -115,42 +107,4 @@ export const applyChanges = (
     }
   });
   return setDerived;
-};
-
-/**
- * Merges an existing card and a card from the google sheet
- * @param existingCard The card from the stored database JSON
- * @param newCard The card from the google sheet
- * @returns
- */
-export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
-  const changeList = getChangesFromDifferences(existingCard, newCard, true);
-  if (newCard.kind != 'scryfall') {
-    applyChanges(existingCard, changeList, true);
-    setDerivedProps(existingCard);
-  } else {
-    newCard.all_parts = existingCard.all_parts;
-    setDerivedProps(newCard);
-    return newCard;
-  }
-  // if (newCard.base_tags) {
-  //   existingCard.base_tags = newCard.base_tags;
-  // } else {
-  //   delete existingCard.base_tags;
-  // }
-  return existingCard;
-};
-/**
- * Updates a card along with its related cards
- * @param card card to apply the changes to
- * @param changeList changes to apply to the card
- * @param cardMap the map of cards
- */
-export const applyFromMap = (card: HCCard.Any, changeList: anyChange[], cardMap: CardMap) => {
-  const oldRelateds = getAllRelated(card, cardMap);
-  if (!applyChanges(card, changeList)) return;
-  const newRelateds = getAllRelated(card, cardMap);
-  setDerivedProps(card);
-  updateParts(card, newRelateds);
-  cleanParts(card, oldRelateds);
 };

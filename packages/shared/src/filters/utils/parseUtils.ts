@@ -1,27 +1,12 @@
-import { numProps, numPropType } from '../filters';
-import {
-  looseOpList,
-  looseOpType,
-  equivColorFilterNames,
-  equivFilterNames,
-  FilterNode,
-} from '../types';
-
-export const isCompKeyword = (keyword: string) =>
-  numProps.includes(keyword as numPropType) ||
-  (keyword in equivFilterNames && numProps.includes(equivFilterNames[keyword] as numPropType)) ||
-  keyword in equivColorFilterNames;
-
-export const filterIsInverted = (text: string, invert: boolean = false): boolean => {
-  if (text[0] == '-') {
-    return filterIsInverted(text.slice(1), !invert);
-  }
-  return invert;
-};
+import { looseOpList, looseOpType, FilterNode } from '../types';
 
 const textIsQuote = (text: string) =>
   text.length > 1 && text[0] == text.at(-1) && ['"', "'"].includes(text[0]) && text.at(-2) != '\\';
 
+/**
+ * Unescapes and strips text so that it can be used in comparisons
+ * @param text text to unescape
+ */
 export const unescapeText = (text: string) => {
   const strippedText = textIsQuote(text) ? text : text.replaceAll(/[_-]/g, '');
   return strippedText
@@ -30,6 +15,7 @@ export const unescapeText = (text: string) => {
     .replaceAll(/(?<!\\)['"]/g, '')
     .replaceAll(/\\(['"])/g, '$1');
 };
+
 /**
  * Splits a search term on its first operator
  * @param text search term to split
@@ -59,7 +45,16 @@ export const splitOnFirstOp = (
   }
   return { keyword: 'name', op: ':', term: text };
 };
+/**
+ * Fixes a tag so that it can be used in comparisons
+ * @param tag tag to prep
+ */
 export const prepTag = (tag: string) => tag.replaceAll(/[/\\'"\- _.]/g, '').toLowerCase();
+/**
+ * Fixes tag filter values
+ * @param node the root node of the AST
+ * @param tagList The list of tags (from `tags.json`)
+ */
 export const fixTags = (node: FilterNode, tagList: string[]) => {
   switch (node.type) {
     case 'filter':

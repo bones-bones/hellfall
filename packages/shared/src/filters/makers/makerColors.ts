@@ -4,169 +4,178 @@ import {
   handleChooseColors,
   handleChooseHybrid,
   hybridIdentityMiscReduce,
+  colorSearch,
 } from '@hellfall/shared/utils';
 import {
-  filterColorContents,
-  filterColorIdentityContents,
-  filterColorIdentityNumber,
-  filterColorIdentityShort,
-  filterColorIndicatorContents,
-  filterColorIndicatorNumber,
-  filterColorIndicatorShort,
-  filterColorNumber,
-  filterColorShort,
-  filterHybridIdentityContents,
-  filterHybridIdentityNumber,
-  filterHybridIdentityShort,
+  colorFilter,
+  colorIdentitySummary,
+  colorIndicatorFilter,
+  colorIndicatorSummary,
+  colorSummary,
+  hybridIdentityFilter,
+  hybridIdentitySummary,
+  miscColorIdentitySummary,
+  miscColorIndicatorSummary,
+  miscColorSummary,
+  miscHybridIdentitySummary,
 } from '../filters';
-import {
-  PassThroughSummaryFilter,
-  looseOpType,
-  shorthandType,
-  colorFilterMaker,
-  cardFilter,
-} from '../types';
+import { looseOpType } from '../types';
+import { colorFilterMaker, ColorFilter } from '../utils';
 
-export const makeColorFilter: colorFilterMaker = (
-  value: string[] | number | shorthandType,
+/**
+ * Makes a color filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeColorFilter: colorFilterMaker<string[]> = (
+  value: colorSearch,
   op: looseOpType
 ) => {
-  return new PassThroughSummaryFilter<string[], string[] | number | shorthandType>(
+  return new ColorFilter<string[]>(
     'color',
-    (Array.isArray(value)
-      ? filterColorContents
-      : typeof value == 'number'
-      ? filterColorNumber
-      : filterColorShort) as cardFilter<string[], string[] | number | shorthandType>,
+    colorFilter,
+    colorSummary,
     value,
     op,
-    Array.isArray(value) ? '>=' : '=',
-    card => handleChooseColors(card, card.colors, value)
+    card => handleChooseColors(card, card.colors, value),
+    Array.isArray(value) ? '>=' : '='
   );
 };
 
-export const makeIdentityFilter: colorFilterMaker = (
-  value: string[] | number | shorthandType,
+/**
+ * Makes a color identity filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeIdentityFilter: colorFilterMaker<string[]> = (
+  value: colorSearch,
   op: looseOpType
 ) => {
-  return new PassThroughSummaryFilter<string[], string[] | number | shorthandType>(
+  return new ColorFilter<string[]>(
     'identity',
-    (Array.isArray(value)
-      ? filterColorIdentityContents
-      : typeof value == 'number'
-      ? filterColorIdentityNumber
-      : filterColorIdentityShort) as cardFilter<string[], string[] | number | shorthandType>,
+    colorFilter,
+    colorIdentitySummary,
     value,
     op,
-    Array.isArray(value) ? '<=' : '=',
-    card => handleChooseColors(card, card.color_identity, value)
+    card => handleChooseColors(card, card.color_identity, value),
+    Array.isArray(value) ? '<=' : '='
   );
 };
 
-export const makeIndicatorFilter: colorFilterMaker = (
-  value: string[] | number | shorthandType,
+/**
+ * Makes a color indicator filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeIndicatorFilter: colorFilterMaker<string[][]> = (
+  value: colorSearch,
   op: looseOpType
 ) => {
-  return new PassThroughSummaryFilter<string[][], string[] | number | shorthandType>(
+  return new ColorFilter<string[][]>(
     'indicator',
-    (Array.isArray(value)
-      ? filterColorIndicatorContents
-      : typeof value == 'number'
-      ? filterColorIndicatorNumber
-      : filterColorIndicatorShort) as cardFilter<string[][], string[] | number | shorthandType>,
+    colorIndicatorFilter,
+    colorIndicatorSummary,
     value,
     op,
-    '=',
     card => getColorsFromFaces(card, 'color_indicator')
   );
 };
 
-export const makeHybridFilter: colorFilterMaker = (
-  value: string[] | number | shorthandType,
+/**
+ * Makes a hybrid identity filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeHybridFilter: colorFilterMaker<string[][]> = (
+  value: colorSearch,
   op: looseOpType
 ) => {
-  return new PassThroughSummaryFilter<string[][], string[] | number | shorthandType>(
+  return new ColorFilter<string[][]>(
     'hybrid',
-    (Array.isArray(value)
-      ? filterHybridIdentityContents
-      : typeof value == 'number'
-      ? filterHybridIdentityNumber
-      : filterHybridIdentityShort) as cardFilter<string[][], string[] | number | shorthandType>,
+    hybridIdentityFilter,
+    hybridIdentitySummary,
     value,
     op,
-    Array.isArray(value) ? '<=' : '=',
-    card => handleChooseHybrid(card, card.color_identity_hybrid, value)
+    card => handleChooseHybrid(card, card.color_identity_hybrid, value),
+    Array.isArray(value) ? '<=' : '='
   );
 };
 
-export const makeMiscColorFilter: colorFilterMaker = (
-  value: string[] | number | shorthandType,
+/**
+ * Makes a misc color filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeMiscColorFilter: colorFilterMaker<string[]> = (
+  value: colorSearch,
   op: looseOpType
 ) => {
-  return new PassThroughSummaryFilter<string[], string[] | number | shorthandType>(
+  return new ColorFilter<string[]>(
     'misccolor',
-    (Array.isArray(value)
-      ? filterColorContents
-      : typeof value == 'number'
-      ? filterColorNumber
-      : filterColorShort) as cardFilter<string[], string[] | number | shorthandType>,
+    colorFilter,
+    miscColorSummary,
     value,
     op,
-    Array.isArray(value) ? '>=' : '=',
-    card => colorMiscReduce(handleChooseColors(card, card.colors, value))
+    card => colorMiscReduce(handleChooseColors(card, card.colors, value)),
+    Array.isArray(value) ? '>=' : '='
   );
 };
 
-export const makeMiscIdentityFilter: colorFilterMaker = (
-  value: string[] | number | shorthandType,
+/**
+ * Makes a misc color identity filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeMiscIdentityFilter: colorFilterMaker<string[]> = (
+  value: colorSearch,
   op: looseOpType
 ) => {
-  return new PassThroughSummaryFilter<string[], string[] | number | shorthandType>(
+  return new ColorFilter<string[]>(
     'miscidentity',
-    (Array.isArray(value)
-      ? filterColorIdentityContents
-      : typeof value == 'number'
-      ? filterColorIdentityNumber
-      : filterColorIdentityShort) as cardFilter<string[], string[] | number | shorthandType>,
+    colorFilter,
+    miscColorIdentitySummary,
     value,
     op,
-    Array.isArray(value) ? '<=' : '=',
-    card => colorMiscReduce(handleChooseColors(card, card.color_identity, value))
+    card => colorMiscReduce(handleChooseColors(card, card.color_identity, value)),
+    Array.isArray(value) ? '<=' : '='
   );
 };
 
-export const makeMiscIndicatorFilter: colorFilterMaker = (
-  value: string[] | number | shorthandType,
+/**
+ * Makes a misc color indicator filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeMiscIndicatorFilter: colorFilterMaker<string[][]> = (
+  value: colorSearch,
   op: looseOpType
 ) => {
-  return new PassThroughSummaryFilter<string[][], string[] | number | shorthandType>(
+  return new ColorFilter<string[][]>(
     'miscindicator',
-    (Array.isArray(value)
-      ? filterColorIndicatorContents
-      : typeof value == 'number'
-      ? filterColorIndicatorNumber
-      : filterColorIndicatorShort) as cardFilter<string[][], string[] | number | shorthandType>,
+    colorIndicatorFilter,
+    miscColorIndicatorSummary,
     value,
     op,
-    '=',
     card => getColorsFromFaces(card, 'color_indicator').map(c => colorMiscReduce(c))
   );
 };
 
-export const makeMiscHybridFilter: colorFilterMaker = (
-  value: string[] | number | shorthandType,
+/**
+ * Makes a misc hybrid identity filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeMiscHybridFilter: colorFilterMaker<string[][]> = (
+  value: colorSearch,
   op: looseOpType
 ) => {
-  return new PassThroughSummaryFilter<string[][], string[] | number | shorthandType>(
+  return new ColorFilter<string[][]>(
     'mischybrid',
-    (Array.isArray(value)
-      ? filterHybridIdentityContents
-      : typeof value == 'number'
-      ? filterHybridIdentityNumber
-      : filterHybridIdentityShort) as cardFilter<string[][], string[] | number | shorthandType>,
+    hybridIdentityFilter,
+    miscHybridIdentitySummary,
     value,
     op,
-    Array.isArray(value) ? '<=' : '=',
-    card => hybridIdentityMiscReduce(handleChooseHybrid(card, card.color_identity_hybrid, value))
+    card => hybridIdentityMiscReduce(handleChooseHybrid(card, card.color_identity_hybrid, value)),
+    Array.isArray(value) ? '<=' : '='
   );
 };

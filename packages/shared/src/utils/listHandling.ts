@@ -1,5 +1,7 @@
 import { textEquals, textContains } from './textHandling';
 
+export const xor = (value1: any, value2: any) => !value1 != !value2;
+
 /**
  * Checks whether two arbitrary values are exactly equal. (basically a version of `===` that compares objects by value rather than by reference)
  * @param value1 the first value to compare
@@ -61,7 +63,7 @@ export const listsAreEqual = <T = any>(
   if (value1.length != value2.length) {
     return false;
   }
-  if (ignoreOrder) {
+  if (!ignoreOrder) {
     return value1.every((value, i) => equals(value, value2[i]));
   }
   const set1 = [...value1];
@@ -170,7 +172,7 @@ export const listIncludesValue = <T = any>(
   list?: T[],
   value?: T,
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
-) => value && list?.some(v => equals(v, value));
+) => value != undefined && list?.some(v => equals(v, value));
 /**
  * Checks whether one list shares any values with another list.
  * @param value1 First list to check
@@ -243,14 +245,21 @@ export const listsOrValuesShare = <T = any>(
 const listLowerEquality: equalityFunction<string> = (value1: string, value2: string) =>
   value1.toLowerCase() === value2.toLowerCase();
 /**
- * Checks whether a list includes a value.
+ * Checks whether a list includes a value when lowercase.
  * @param list List to check
  * @param value Value to check
  * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
  * @returns
  */
 export const listIncludesValueLower = (list?: string[], value?: string) =>
-  value && listIncludesValue(list ?? [], value, listLowerEquality);
+  value != undefined && listIncludesValue(list ?? [], value, listLowerEquality);
+/**
+ * Checks whether a list includes all of a list of values when lowercase
+ * @param value1 List to check
+ * @param value2 List of strings to check
+ */
+export const listIncludesValueLowerEvery = (value1?: string[], value2?: string[]) =>
+  value2?.every(value => listIncludesValueLower(value1, value));
 /**
  * Checks whether one list shares any values with another list.
  * @param value1 First list to check
@@ -453,3 +462,19 @@ export const pushToRecord = (record: Record<string, string[]>, key: string, valu
     record[key] = [value];
   }
 };
+
+/**
+ * Ensures that a value is an array or undefined. If it's not an array or undefined, wraps value in an array before returning it
+ * @template T The type of the value
+ * @param value the value to ensure is an array
+ */
+export const wrapArray = <T>(value: T | T[] | undefined): T[] | undefined =>
+  !Array.isArray(value) && value != undefined ? [value] : (value as T[] | undefined);
+
+/**
+ * Ensures that a value is an array. If it's not an array or undefined, wraps value in an array before returning it; if it's undefined, returns an empty array
+ * @template T The type of the value
+ * @param value the value to ensure is an array
+ */
+export const ensureArray = <T>(value: T | T[] | undefined): T[] =>
+  value == undefined ? [] : !Array.isArray(value) ? [value] : value;
