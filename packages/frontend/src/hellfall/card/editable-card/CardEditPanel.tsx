@@ -155,40 +155,42 @@ export const CardEditPanel = ({
               + Add Side
             </AddFaceButton>
           </FaceTabs>
-          {isMulti && activeFace > 0 && (
-            <SideNote>
-              Some layouts (transform, MDFC, etc.) are controlled by tags. Add layout tags below if
-              needed.
-            </SideNote>
-          )}
-          {groupFieldConfigs(FACE_FIELD_CONFIGS).map(group => {
-            const visibleFields = group.fields.filter(
-              cfg =>
-                (isMulti || cfg.key !== 'name') &&
-                !cfg.shouldHide?.(card, activeFace, form.faces[activeFace] ?? {})
-            );
-            if (visibleFields.length === 0) return null;
-            return (
-              <div key={group.label ?? 'default'}>
-                {group.label && <SubSectionTitle>{group.label}</SubSectionTitle>}
-                <FieldsGrid>
-                  {visibleFields.map(cfg => (
-                    <FieldEditor
-                      key={`${activeFace}-${cfg.key}`}
-                      config={cfg}
-                      value={form.faces[activeFace]?.[cfg.key] ?? ''}
-                      changed={
-                        (form.faces[activeFace]?.[cfg.key] ?? '') !==
-                        (original.faces[activeFace]?.[cfg.key] ?? '')
-                      }
-                      invalid={isFieldValueMissing(cfg, form.faces[activeFace]?.[cfg.key] ?? '')}
-                      onChange={v => setFaceField(activeFace, cfg.key, v)}
-                    />
-                  ))}
-                </FieldsGrid>
-              </div>
-            );
-          })}
+          <FacePanel>
+            {isMulti && activeFace > 0 && (
+              <SideNote>
+                Some layouts (transform, MDFC, etc.) are controlled by tags. Add layout tags below
+                if needed.
+              </SideNote>
+            )}
+            {groupFieldConfigs(FACE_FIELD_CONFIGS).map(group => {
+              const visibleFields = group.fields.filter(
+                cfg =>
+                  (isMulti || cfg.key !== 'name') &&
+                  !cfg.shouldHide?.(card, activeFace, form.faces[activeFace] ?? {})
+              );
+              if (visibleFields.length === 0) return null;
+              return (
+                <div key={group.label ?? 'default'}>
+                  {group.label && <SubSectionTitle>{group.label}</SubSectionTitle>}
+                  <FieldsGrid>
+                    {visibleFields.map(cfg => (
+                      <FieldEditor
+                        key={`${activeFace}-${cfg.key}`}
+                        config={cfg}
+                        value={form.faces[activeFace]?.[cfg.key] ?? ''}
+                        changed={
+                          (form.faces[activeFace]?.[cfg.key] ?? '') !==
+                          (original.faces[activeFace]?.[cfg.key] ?? '')
+                        }
+                        invalid={isFieldValueMissing(cfg, form.faces[activeFace]?.[cfg.key] ?? '')}
+                        onChange={v => setFaceField(activeFace, cfg.key, v)}
+                      />
+                    ))}
+                  </FieldsGrid>
+                </div>
+              );
+            })}
+          </FacePanel>
 
           {hasChanges && missingRequired.length > 0 && (
             <ValidationSummary>
@@ -558,6 +560,14 @@ const addFaceButtonStyles = createStyles({
   cursor: 'pointer',
 });
 const AddFaceButton = createStyledButton(addFaceButtonStyles, 'AddFaceButton');
+
+const facePanelStyles = createStyles({
+  border: '1px solid #ccc',
+  borderRadius: 2,
+  padding: '10px 12px',
+  marginTop: 4,
+});
+const FacePanel = createStyledDiv(facePanelStyles, 'FacePanel');
 
 const sideNoteStyles = createStyles({
   fontSize: 11,
