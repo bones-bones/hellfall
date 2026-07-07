@@ -37,13 +37,15 @@
     "migrate-hellscube-db": "yarn workspace @hellfall/scripts migrate-hellscube-db",
     "migrate-firestore-tags": "yarn workspace @hellfall/scripts migrate-firestore-tags",
     "export-hellscube-db": "yarn workspace @hellfall/scripts export-hellscube-db",
-    "circular-check": "node scripts/check-circular-deps.mjs"
+    "circular-check": "node scripts/check-circular-deps.mjs",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/node": "^20",
     "eslint": "^8.45.0",
     "eslint-plugin-deprecation": "^3.0.0",
     "eslint-plugin-sonarjs": "^4.0.3",
+    "husky": "^9.1.7",
     "prettier": "^2.2.1",
     "typescript": "^5",
     "yarn-deduplicate": "^6.0.2"

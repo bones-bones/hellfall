@@ -582,7 +582,8 @@ export const splitTagComponents = (
     if (
       tagCanHaveFaces(splitTag.tag, card) &&
       ((card && 'card_faces' in card) || alsoAddingFaces) &&
-      isInteger(splitNote[i]) && !isDriveURLString(splitNote[i]) &&
+      isInteger(splitNote[i]) &&
+      !isDriveURLString(splitNote[i]) &&
       !splitTag.face
     ) {
       const [num] = splitNote.splice(i, 1);

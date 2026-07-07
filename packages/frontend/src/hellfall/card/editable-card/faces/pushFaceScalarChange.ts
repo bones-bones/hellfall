@@ -26,4 +26,4 @@ export const pushFaceScalarChange = (
   const value = parseFieldValue(after, cfg.type);
   if (value === undefined) return;
   changes.push(createFaceChange('add', cfg.key, value as never, faceIndex));
-}
+};

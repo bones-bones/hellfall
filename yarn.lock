@@ -10428,6 +10428,7 @@ __metadata:
     eslint: "npm:^8.45.0"
     eslint-plugin-deprecation: "npm:^3.0.0"
     eslint-plugin-sonarjs: "npm:^4.0.3"
+    husky: "npm:^9.1.7"
     madge: "npm:^8.0.0"
     prettier: "npm:^2.2.1"
     tsx: "npm:^4.21.0"
@@ -10722,6 +10723,15 @@ __metadata:
   version: 1.1.1
   resolution: "human-signals@npm:1.1.1"
   checksum: 10c0/18810ed239a7a5e23fb6c32d0fd4be75d7cd337a07ad59b8dbf0794cb0761e6e628349ee04c409e605fe55344716eab5d0a47a62ba2a2d0d367c89a2b4247b1e
+  languageName: node
+  linkType: hard
+
+"husky@npm:^9.1.7":
+  version: 9.1.7
+  resolution: "husky@npm:9.1.7"
+  bin:
+    husky: bin.js
+  checksum: 10c0/35bb110a71086c48906aa7cd3ed4913fb913823715359d65e32e0b964cb1e255593b0ae8014a5005c66a68e6fa66c38dcfa8056dbbdfb8b0187c0ffe7ee3a58f
   languageName: node
   linkType: hard
 

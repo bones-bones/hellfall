@@ -32,7 +32,7 @@ import type { SetCode } from '../Set';
 /**
  * A collection of types related to each possible card field.
  */
-export namespace HCCardFields { }
+export namespace HCCardFields {}
 
 export namespace HCCardFields.Core {
   /**

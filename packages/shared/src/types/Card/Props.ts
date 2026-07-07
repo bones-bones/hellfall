@@ -58,7 +58,7 @@ export type rootElementValueType<K extends rootPropType> = K extends 'artist_not
   ? [string, string]
   : K extends 'colors' | 'color_identity' | 'color_identity_hybrid' | 'base_tags'
   ? // | 'all_parts'
-  Exclude<HCCard.Any[K], undefined>
+    Exclude<HCCard.Any[K], undefined>
   : Exclude<HCCard.Any[K], undefined> extends Array<infer U>
   ? U
   : Exclude<HCCard.Any[K], undefined>;
