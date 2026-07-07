@@ -1,7 +1,33 @@
-import { HCBorderColor, HCFinish, HCFrame, HCImageStatus, HCLayout } from '@hellfall/shared/types';
+import {
+  HCBorderColor,
+  HCFinish,
+  HCFrame,
+  HCImageStatus,
+  HCCard,
+  HCLayout,
+} from '@hellfall/shared/types';
 import { toFaces } from '@hellfall/shared/utils';
-import type { FieldConfigEntry } from './types';
+import type { FieldConfig, FieldConfigEntry } from './types';
 import { getFieldConfigs } from './types';
+
+const getFaceTypes = (
+  card: HCCard.Any,
+  faceIndex: number,
+  faceFields: Record<string, string>
+): string[] => {
+  if (faceFields.types) {
+    return faceFields.types
+      .split(';')
+      .map(t => t.trim())
+      .filter(Boolean);
+  }
+  return toFaces(card)[faceIndex]?.types ?? [];
+};
+
+function shouldHideUnlessType(requiredType: string): NonNullable<FieldConfig['shouldHide']> {
+  return (card, faceIndex, faceFields) =>
+    !getFaceTypes(card, faceIndex, faceFields).includes(requiredType);
+}
 
 export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
   { section: 'Name' },
@@ -32,49 +58,30 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
   { section: 'Stats' },
   { key: 'power', label: 'Power', type: 'string' },
   { key: 'toughness', label: 'Toughness', type: 'string' },
-  { key: 'loyalty', label: 'Loyalty', type: 'string' },
-  { key: 'defense', label: 'Defense', type: 'string' },
+  {
+    key: 'loyalty',
+    label: 'Loyalty',
+    type: 'string',
+    shouldHide: shouldHideUnlessType('Planeswalker'),
+  },
+  { key: 'defense', label: 'Defense', type: 'string', shouldHide: shouldHideUnlessType('Battle') },
   {
     key: 'hand_modifier',
     label: 'Hand Modifier',
     type: 'string',
-    shouldHide: (card, faceIndex, faceFields) => {
-      const types = faceFields.types
-        ? faceFields.types
-            .split(';')
-            .map(t => t.trim())
-            .filter(Boolean)
-        : toFaces(card)[faceIndex]?.types ?? [];
-      return !types.includes('Vanguard');
-    },
+    shouldHide: shouldHideUnlessType('Vanguard'),
   },
   {
     key: 'life_modifier',
     label: 'Life Modifier',
     type: 'string',
-    shouldHide: (card, faceIndex, faceFields) => {
-      const types = faceFields.types
-        ? faceFields.types
-            .split(';')
-            .map(t => t.trim())
-            .filter(Boolean)
-        : toFaces(card)[faceIndex]?.types ?? [];
-      return !types.includes('Vanguard');
-    },
+    shouldHide: shouldHideUnlessType('Vanguard'),
   },
   {
     key: 'attraction_lights',
     label: 'Attraction Lights',
     type: 'string',
-    shouldHide: (card, faceIndex, faceFields) => {
-      const types = faceFields.types
-        ? faceFields.types
-            .split(';')
-            .map(t => t.trim())
-            .filter(Boolean)
-        : toFaces(card)[faceIndex]?.types ?? [];
-      return !types.includes('Attraction');
-    },
+    shouldHide: shouldHideUnlessType('Attraction'),
   },
 
   { section: 'Image' },
