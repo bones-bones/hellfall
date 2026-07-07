@@ -1,22 +1,13 @@
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, SetCode } from '@hellfall/shared/types';
 import {
-  cardStringFilter,
-  invertOptionType,
-  numFilter,
-  numStringFilter,
-  numStringListFilter,
   opType,
   equivColorFilterNames,
   equivFilterNames,
+  comparisonFilterFunction,
+  comparisonSummaryFunction,
+  summaryFunction,
 } from '../types';
-import {
-  createNumSummary,
-  invertOp,
-  numOp,
-  numStringOp,
-  splitOnFirstOp,
-  unescapeText,
-} from '../utils';
+import { numFilter, opIsNegative, unescapeText } from '../utils';
 import {
   colorMiscReduce,
   getColorsFromFaces,
@@ -27,28 +18,9 @@ import {
   toNumber,
 } from '@hellfall/shared/utils';
 
-export const filterNumber: numFilter = Object.assign(numOp, {
-  invertOption: 'flip' as invertOptionType,
-  toSummary: (operator: opType, value: number, invert?: boolean) =>
-    `${invert ? 'not' : ''} ${operator} ${value}`,
-});
-
-export const filterNumberString: numStringFilter = Object.assign(numStringOp, {
-  invertOption: 'flip' as invertOptionType,
-  toSummary: createNumSummary(),
-});
-export const filterNumberStringList: numStringListFilter = Object.assign(
-  (
-    value1: (number | string | undefined)[],
-    operator: opType,
-    value2: number | string | undefined
-  ) => value1.some(value => numStringOp(value, operator, value2)),
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: createNumSummary(),
-  }
-);
-
+/**
+ * The list of props that can be compared with a comparison filter
+ */
 export const numProps = [
   'creator',
   'artist',
@@ -67,7 +39,23 @@ export const numProps = [
   'miscidentity',
   'mischybrid',
 ] as const;
+/**
+ * The type for props that can be compared with a comparison filter
+ */
 export type numPropType = (typeof numProps)[number];
+/**
+ * Validates whether a value is {@linkcode numPropType}
+ * @param value value to validate
+ */
+export const isNumProp = (value: any): value is numPropType => numProps.includes(value);
+/**
+ * Checks whether a keyword is {@linkcode numPropType} or can be converted to it
+ * @param keyword keyword to check
+ */
+export const isCompKeyword = (keyword: string) =>
+  isNumProp(keyword) ||
+  isNumProp(equivFilterNames[keyword]) ||
+  isNumProp(equivColorFilterNames[keyword]);
 
 const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
   switch (prop) {
@@ -111,14 +99,18 @@ const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
       ];
   }
 };
-const toNumProp = (prop: string): numPropType | undefined =>
-  numProps.includes(prop as numPropType)
-    ? (prop as numPropType)
-    : prop in equivFilterNames && numProps.includes(equivFilterNames[prop] as numPropType)
-    ? (equivFilterNames[prop] as numPropType)
-    : prop in equivColorFilterNames
-    ? (equivColorFilterNames[prop] as numPropType)
-    : undefined;
+const toNumProp = (prop: string): numPropType | undefined => {
+  const fixedProp = unescapeText(prop);
+  if (isNumProp(fixedProp)) {
+    return fixedProp;
+  }
+  if (isNumProp(equivFilterNames[fixedProp])) {
+    return equivFilterNames[fixedProp];
+  }
+  if (isNumProp(equivColorFilterNames[fixedProp])) {
+    return equivColorFilterNames[fixedProp];
+  }
+};
 const numPropToSummary: Record<numPropType, string> = {
   creator: 'the number of creators',
   artist: 'the number of artists',
@@ -137,38 +129,76 @@ const numPropToSummary: Record<numPropType, string> = {
   miscindicator: 'the number of indicator colors',
   mischybrid: 'the number of hybrid identity colors',
 };
-export const invertCompOp = (value: string) => {
-  const { keyword, op, term } = splitOnFirstOp(value);
-  return `${keyword}${invertOp(op)}${term}`;
-};
-export const filterComp: cardStringFilter = Object.assign(
-  (value1: HCCard.Any, operator: opType, value2: string) => {
-    const { keyword, op, term } = splitOnFirstOp(value2);
-    const first = toNumProp(keyword);
-    const second = toNumProp(term);
-    if (!first || !second) {
-      return false;
-    }
-    const firstValue = getPropNumsFromCard(value1, first);
-    const secondValue = getPropNumsFromCard(value1, second);
-    return firstValue.some(v1 => secondValue.some(v2 => numOp(v1, op as opType, v2)));
-  },
-  {
-    invertOption: 'flip' as invertOptionType,
-    toSummary: (operator: opType, value: string) => {
-      const { keyword, op, term } = splitOnFirstOp(value);
-      const first = toNumProp(keyword);
-      const second = toNumProp(unescapeText(term));
-      if (!first) {
-        return `!Unknown keyword "${first}"`;
-      }
-      if (!second) {
-        return `!Unknown value "${term}"`;
-      }
-      if (first == second) {
-        return '!The sides of your comparison must be different.';
-      }
-      return `${numPropToSummary[first]} ${op} ${numPropToSummary[second]}`;
-    },
+
+// export const invertCompOp = (value: string) => {
+//   const { keyword, op, term } = splitOnFirstOp(value);
+//   return `${keyword}${invertOp(op)}${term}`;
+// };
+/**
+ * Compares two values from a card based on values from a search
+ * @param value1 the card to use
+ * @param operator operator to use
+ * @param value2 the first value from the search
+ * @param value3 the second value from the search
+ */
+export const comparisonFilter: comparisonFilterFunction = (
+  value1: HCCard.Any,
+  operator: opType,
+  value2: string,
+  value3: string
+) => {
+  const first = toNumProp(value2);
+  const second = toNumProp(value3);
+  if (!first || !second) {
+    return false;
   }
-);
+  const firstValue = getPropNumsFromCard(value1, first);
+  const secondValue = getPropNumsFromCard(value1, second);
+  return firstValue.some(v1 => secondValue.some(v2 => numFilter(v1, operator, v2)));
+};
+
+/**
+ * The summary for a comparison filter
+ * @param operator the operator to use
+ * @param value1 the first search value to use
+ * @param invert dummy
+ * @param value2 the second search value to use
+ */
+export const comparisonSummary: comparisonSummaryFunction = (
+  operator: opType,
+  value1: string,
+  invert?: boolean,
+  value2?: string
+) => {
+  if (!value2) {
+    return '!Empty value';
+  }
+  const first = toNumProp(value1);
+  const second = toNumProp(value2);
+  if (!first) {
+    return `!Unknown keyword "${value1}"`;
+  }
+  if (!second) {
+    return `!Unknown value "${value2}"`;
+  }
+  if (first == second) {
+    return '!The sides of your comparison must be different.';
+  }
+  return `${numPropToSummary[first]} ${operator} ${numPropToSummary[second]}`;
+};
+
+export const getSetNumber = (cards: HCCard.Any[]): number => {
+  const setList: SetCode[] = [];
+  cards.forEach(card => {
+    if (!setList.includes(card.set)) {
+      setList.push(card.set);
+    }
+  });
+  return setList.length;
+};
+
+export const setsNumberSummary = 'the number of times a card has appeared in a set';
+
+export const printsNumberSummary = 'the number of prints';
+export const isUniqueSummary: summaryFunction<string> = (operator: opType, value: string) =>
+  `the card has been printed ${opIsNegative(operator) ? 'more than' : 'exactly'} once`;

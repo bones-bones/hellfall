@@ -546,6 +546,7 @@
         "HCV.8",
         "HCV.J",
         "HCV.L",
+        "HCV.9",
         "HCV.S"
       ]
     },
@@ -567,7 +568,8 @@
         "HBB.0",
         "HBB.4",
         "HBB.7",
-        "HBB.L"
+        "HBB.L",
+        "HBB.9"
       ],
       "filename": ""
     },
@@ -600,6 +602,14 @@
       "code": "HBB.L",
       "name": "Hellscube Basic Box HKL",
       "description": "Custom basic lands for HKL.",
+      "set_type": "land",
+      "parent_set_code": "HBB"
+    },
+    {
+      "id": "7a298815-362e-4fce-9d55-b0002fb260c6",
+      "code": "HBB.9",
+      "name": "Hellscube Basic Box HC9",
+      "description": "Custom basic lands for HC9.",
       "set_type": "land",
       "parent_set_code": "HBB"
     },

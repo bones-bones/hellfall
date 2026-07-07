@@ -1,8 +1,13 @@
 import type { CollectionReference } from '@google-cloud/firestore';
 import { HCCard } from '@hellfall/shared/types';
 import { CardMap } from '../cardHandling';
-import { applyChanges, anyChange } from '../changeHandling';
-import { setDerivedProps, cleanParts, updateParts } from '../cardModification';
+import {
+  applyChanges,
+  anyChange,
+  setDerivedProps,
+  cleanParts,
+  updateParts,
+} from '../changeHandling';
 import { getAllRelatedCollection } from './cardRefs';
 import { cardToFirestore, firestoreToCard } from './cardConversion';
 

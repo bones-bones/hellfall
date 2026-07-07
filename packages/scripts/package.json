@@ -9,9 +9,11 @@
   "dependencies": {
     "@google-cloud/firestore": "^7.1.0",
     "@hellfall/shared": "^1.0.0",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "madge": "^8.0.0"
   },
   "devDependencies": {
+    "@types/madge": "^5.0.3",
     "@types/node": "^20",
     "tsx": "^4.7.0",
     "typescript": "^5"
@@ -19,6 +21,7 @@
   "scripts": {
     "migrate-hellscube-db": "tsx src/migrate-hellscube-db.ts",
     "migrate-firestore-tags": "tsx src/migrate-firestore-tags.ts",
-    "export-hellscube-db": "tsx src/export-hellscube-db.ts"
+    "export-hellscube-db": "tsx src/export-hellscube-db.ts",
+    "circular-check": "node src/check-circular-deps.mts"
   }
 }

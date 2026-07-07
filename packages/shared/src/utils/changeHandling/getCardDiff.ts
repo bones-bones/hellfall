@@ -20,6 +20,7 @@ import {
   isRootArrayPropType,
   rootChangeableProps,
   rootChangeablePropType,
+  sortChanges,
 } from './changeTypes';
 import {
   allPartsChangeIsValid,
@@ -31,7 +32,6 @@ import {
 } from './changeValidation';
 import { toFaces } from '../cardHandling';
 import { getBaseDiffs, getChangesFromTag } from './tagHandling';
-import { sortChanges } from './changeHandling';
 
 // can add even if empty
 const rootBlankableProps: Partial<Record<HCKind, rootPropType[]>> = {
@@ -62,6 +62,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
+    'creators',
     'artists',
     'artist_notes',
     'frame_effects',
@@ -85,6 +86,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
+    'creators',
     'artists',
     'artist_notes',
     'frame_effects',
@@ -108,6 +110,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
+    'creators',
     'artists',
     'artist_notes',
     'frame_effects',
@@ -129,6 +132,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'still_print_image',
     'not_directly_draftable',
     'has_draft_partners',
+    'creators',
     'artists',
     'artist_notes',
     'frame_effects',

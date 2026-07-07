@@ -1,5 +1,6 @@
 import { setsData } from '@hellfall/shared/data';
-import { allSetsList, HCSet, SetCode } from '../types';
+import { allSetsList, HCSet, isSetCode, SetCode } from '../types';
+import { wrapArray } from './listHandling';
 
 const sets = setsData.data;
 
@@ -61,11 +62,8 @@ export const getParentSet = (code: SetCode): SetCode | undefined => getSet(code)
  * Gets the sets that are the children of another set
  * @param code Set code to get the children of
  */
-export const getChildSets = (code: SetCode): SetCode[] | undefined => {
-  const childSetCodes = getSet(code)?.child_set_codes;
-  if (!childSetCodes) return undefined;
-  return Array.isArray(childSetCodes) ? childSetCodes : [childSetCodes];
-};
+export const getChildSets = (code: SetCode): SetCode[] | undefined =>
+  wrapArray(getSet(code)?.child_set_codes);
 
 /**
  * Gets the sets that are the direct children of another set (i.e. are its children and have the same set type)
@@ -73,6 +71,13 @@ export const getChildSets = (code: SetCode): SetCode[] | undefined => {
  */
 export const getDirectChildSets = (code: SetCode): SetCode[] | undefined =>
   getSet(code)?.child_set_codes?.filter(child => getSet(child)?.set_type == getSet(code)?.set_type);
+
+/**
+ * Gets the result of {@linkcode getDirectChildSets} except including the set itself
+ * @param code Set code to get the direct children of
+ */
+export const getSetAndDirectChildSets = (code: SetCode): SetCode[] =>
+  isSetCode(code) ? [code.toUpperCase() as SetCode, ...(getDirectChildSets(code) ?? [])] : [];
 
 /**
  * Gets the sets that are in the same block as another set (i.e. are its group and have the same set type)
@@ -84,8 +89,12 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
     child => getSet(child)?.set_type == getSet(code)?.set_type
   ) ?? []),
   ...sets
-    .filter(set => set.child_set_codes?.includes(code) && set.set_type == getSet(code)?.set_type)
-    .map(set => set.code),
+    .filter(
+      set =>
+        set.child_set_codes?.includes(code.toUpperCase() as SetCode) &&
+        set.set_type == getSet(code)?.set_type
+    )
+    .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
 ];
 
 /**
@@ -95,7 +104,9 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
 export const getGroupSets = (code: SetCode): SetCode[] => [
   code.toUpperCase() as SetCode,
   ...(getSet(code)?.child_set_codes ?? []),
-  ...sets.filter(set => set.child_set_codes?.includes(code)).map(set => set.code),
+  ...sets
+    .filter(set => set.child_set_codes?.includes(code.toUpperCase() as SetCode))
+    .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
 ];
 
 /**
@@ -112,7 +123,7 @@ export const inDirectChildSets = (value1: SetCode, value2: SetCode) =>
  * @param value2 the set in whose direct children to look
  */
 export const inSetOrDirectChildren = (value1: SetCode, value2: SetCode) =>
-  value1.toUpperCase() == value2.toUpperCase() || inDirectChildSets(value1, value2);
+  getSetAndDirectChildSets(value2).some(code => code == value1.toUpperCase());
 
 /**
  * Checks if one set is included in another set's block

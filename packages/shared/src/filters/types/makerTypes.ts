@@ -1,31 +1,117 @@
-import {
-  CompFilter,
-  filterObject,
-  IncludeFilter,
-  PassThroughSummaryFilter,
-  sortObject,
-} from './makerObject';
 import { HCCard } from '@hellfall/shared/types';
-import { dirType, looseOpType, shorthandType, sortType } from './filterTypes';
+import {
+  anyFilterFunction,
+  cardFilterFunction,
+  dirType,
+  invertOptionType,
+  looseOpType,
+  opType,
+  sortType,
+  summaryFunction,
+} from './filterTypes';
 
-export type otherPrintGetterType = (card: HCCard.Any) => HCCard.Any[];
+/**
+ * A function that gets all the prints of a card
+ */
+export type allPrintsGetterType = (card: HCCard.Any) => HCCard.Any[];
 
-export type filterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
-export type printsFilterMaker = (
-  value: string,
-  op: looseOpType,
-  getValueToCompare: otherPrintGetterType
-) => PassThroughSummaryFilter<HCCard.Any[], string>;
-export type stateFilterMaker = (
-  value: string,
-  op: looseOpType,
-  getValueToCompare: otherPrintGetterType
-) => filterObject<any, string>;
-export type compFilterMaker = (value1: string, op: looseOpType, value2: string) => CompFilter;
-export type includeFilterMaker = (value: string, op: looseOpType) => IncludeFilter;
-export type colorFilterMaker = (
-  value: string[] | number | shorthandType,
-  op: looseOpType
-) => filterObject<any, string[]> | filterObject<any, number> | filterObject<any, shorthandType>;
-export type stringOrNumFilterMaker = (value: string, op: looseOpType) => filterObject<any, string>;
-export type sortMaker = (sort: sortType, dir: dirType) => sortObject;
+/**
+ * An interface for any filter
+ */
+export interface anyFilterInterface<T = any, S = any> {
+  queryName: string;
+  /**
+   * The filter method to use
+   */
+  filter: anyFilterFunction<T, S>;
+}
+
+/**
+ * An interface for a SortObject
+ */
+export interface sortInterface extends anyFilterInterface {
+  /**
+   * The query name
+   */
+  queryName: string;
+  /**
+   * The filter function to use
+   */
+  filter: anyFilterFunction;
+  /**
+   * The sort option
+   */
+  sort: sortType;
+  /**
+   * The sort direction option
+   */
+  dir: dirType;
+}
+
+/**
+ * An interface for a FilterObject
+ */
+export interface filterInterface<T = any, S = any> extends anyFilterInterface {
+  /**
+   * The query name
+   */
+  queryName: string;
+  /**
+   * The filter function to use
+   */
+  filter: cardFilterFunction<T, S>;
+  /**
+   * The summary function to use
+   */
+  summary: summaryFunction<S>;
+  /**
+   * The value to filter against
+   */
+  value: S;
+  /**
+   * The operator to use. Can be loose (i.e. `:` or `!:`)
+   */
+  op: looseOpType;
+  /**
+   * The default operator; `:` will resolve to this, while `!:`
+   * will resolve to the inverse of this (using {@linkcode invertOp})
+   */
+  defaultOp: opType;
+  /**
+   * Option that controls how `this.invert()` works
+   *
+   * `ignore:` do nothing
+   *
+   * `flip:` inverts the operator (using {@linkcode invertOp})
+   *
+   * `negate:` inverts `this.inverted`; if this option is chosen,
+   * `this.summary` shoud accept and use the `invert` parameter
+   */
+  invertOption: invertOptionType;
+  /**
+   * Whether this object is inverted; only used if `this.invertOption: 'negate'`
+   */
+  inverted: boolean;
+  /**
+   * The method to get the value to compare from a card
+   * @param card card to get the value from
+   */
+  getValueToCompare: (card: HCCard.Any) => T;
+  /**
+   * Gets the current operator, resolving defaults appropriately
+   */
+  getOp: () => opType;
+  /**
+   * Inverts this filter object based on `this.invertOption`
+   */
+  invert: () => void;
+  /**
+   * Checks if a card passes `this.filter`
+   * @param card card to check
+   */
+  cardPassesFilter: (card: HCCard.Any) => boolean;
+  /**
+   * @returns the result of `this.summary(this.getOp(), this.value, this.inverted)`
+   */
+  toSummary: () => string;
+}

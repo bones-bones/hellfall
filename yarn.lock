@@ -2887,8 +2887,10 @@ __metadata:
   dependencies:
     "@google-cloud/firestore": "npm:^7.1.0"
     "@hellfall/shared": "npm:^1.0.0"
+    "@types/madge": "npm:^5.0.3"
     "@types/node": "npm:^20"
     dotenv: "npm:^16.4.5"
+    madge: "npm:^8.0.0"
     tsx: "npm:^4.7.0"
     typescript: "npm:^5"
   languageName: unknown
@@ -4435,6 +4437,15 @@ __metadata:
   version: 4.0.2
   resolution: "@types/long@npm:4.0.2"
   checksum: 10c0/42ec66ade1f72ff9d143c5a519a65efc7c1c77be7b1ac5455c530ae9acd87baba065542f8847522af2e3ace2cc999f3ad464ef86e6b7352eece34daf88f8c924
+  languageName: node
+  linkType: hard
+
+"@types/madge@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "@types/madge@npm:5.0.3"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/dfc08ad4ad4cdc5af43fbd945887cbf37af199210998a5a1ec8fce28195598d7f6596d7e4c9618c01d1aea2fc0a25c78583c15275e60a479bac90dbc1efc6ae9
   languageName: node
   linkType: hard
 

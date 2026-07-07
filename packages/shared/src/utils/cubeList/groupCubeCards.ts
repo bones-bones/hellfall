@@ -1,4 +1,4 @@
-import { HCCard, HCColor, HCColors } from '../../types';
+import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
 
 export type CubeListSectionId =
   | 'white'

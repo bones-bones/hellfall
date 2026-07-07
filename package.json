@@ -37,7 +37,7 @@
     "migrate-hellscube-db": "yarn workspace @hellfall/scripts migrate-hellscube-db",
     "migrate-firestore-tags": "yarn workspace @hellfall/scripts migrate-firestore-tags",
     "export-hellscube-db": "yarn workspace @hellfall/scripts export-hellscube-db",
-    "circular-check": "node scripts/check-circular-deps.mjs",
+    "circular-check": "yarn workspace @hellfall/scripts circular-check",
     "prepare": "husky"
   },
   "devDependencies": {

@@ -1,6 +1,20 @@
 import { HCCard, HCColor, HCColors, HCMiscColors } from '@hellfall/shared/types';
 import { listsShare } from './listHandling';
-import { shorthandType } from '@hellfall/shared/filters';
+
+/**
+ * The list of shorthands
+ */
+const shorthandList = ['c', 'm'] as const;
+/**
+ * A color search shorthand
+ */
+export type shorthandType = (typeof shorthandList)[number];
+export const isShorthandType = (value: any): value is shorthandType =>
+  shorthandList.includes(value);
+/**
+ * A union of the types that can be the value for a color filter
+ */
+export type colorSearch = string[] | number | shorthandType;
 
 const MISC_BULLSHIT = 'Misc';
 

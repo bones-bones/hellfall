@@ -1,294 +1,380 @@
-import { getAllNames, getFromAll, getFromFaces, isNumber, toFaces } from '@hellfall/shared/utils';
 import {
-  filterArtist,
-  filterId,
-  filterNumberString,
-  filterOracleId,
-  filterTag,
-  filterText,
-  filterTextList,
+  getBlockSets,
+  getGroupSets,
+  getSetAndDirectChildSets,
+  isNumber,
+} from '@hellfall/shared/utils';
+import {
+  anyLayoutSummary,
+  artistFilter,
+  artistSummary,
+  blockSummary,
+  borderSummary,
+  cardFrameSummary,
+  cardLayoutSummary,
+  faceLayoutSummary,
+  frameEffectSummary,
+  frameSummary,
+  groupSummary,
+  idFilter,
+  idSummary,
+  keywordSummary,
+  kindSummary,
+  oracleIdFilter,
+  oracleIdSummary,
+  setSummary,
+  setTypeSummary,
+  showcaseSummary,
+  tagFilter,
+  tagSummary,
+  toAnyLayout,
+  toBorder,
+  toCardFrame,
+  toCardLayout,
+  toFaceLayout,
+  toFrame,
+  toFrameEffect,
+  toSetType,
+  toShowcaseFrame,
+  watermarkSummary,
 } from '../filters';
+import { looseOpType } from '../types';
 import {
-  filterObject,
+  includeSummaryPlural,
+  includeSummarySingular,
   NoteFilter,
-  NumberPropSummaryFilter,
-  PassThroughSummaryFilter,
-  StringPropSummaryFilter,
-  UUIDFilter,
-  looseOpType,
+  NumberPropFilter,
+  FilterObject,
+  PropFilter,
+  NoUnescapeFilter,
   filterMaker,
   stringOrNumFilterMaker,
-} from '../types';
-import {
-  opIsNegative,
-  opToDont,
-  opToIncludePlural,
-  opToIncludeSingular,
-  unescapeText,
+  propFilterMaker,
+  propConvertFilterMaker,
+  PropConvertFilter,
+  LegalityFilter,
+  legalityFilterMaker,
+  stateFilterMaker,
 } from '../utils';
 
-export const makeIDFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new PassThroughSummaryFilter<string, string>(
+// TODO: Should this be a `stringOrNumFilterMaker`?
+/**
+ * Makes an hcid filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeIDFilter: filterMaker<string> = (value: string, op: looseOpType) => {
+  return new FilterObject<string, string>(
     'id',
-    filterId,
+    idFilter,
+    idSummary,
     value,
     op,
+    card => card.hcid,
     '=',
-    card => card.hcid
+    'negate'
   );
 };
 
-export const makeOracleIDFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new UUIDFilter('oracleid', filterOracleId, value, op, '=', card => card.oracle_id);
-};
-
-export const makeNameFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'name',
-    filterTextList,
+/**
+ * Makes an oracle id filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeOracleIDFilter: filterMaker<string> = (value: string, op: looseOpType) => {
+  return new NoUnescapeFilter(
+    'oracleid',
+    oracleIdFilter,
+    oracleIdSummary,
     value,
     op,
-    '>=',
-    card => getAllNames(card).map(text => unescapeText(text)),
-    'the name',
-    opToIncludeSingular
+    card => card.oracle_id
   );
+};
+
+/**
+ * Makes a name filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeNameFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('name', includeSummarySingular, value, op);
 };
 // TODO: Make cost search act more like number than string (and more like scryfall)
-export const makeCostFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'mana',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card => getFromFaces(card, 'mana_cost'),
-    'the cost',
-    opToIncludeSingular
-  );
+/**
+ * Makes a mana cost filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeCostFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('mana', includeSummarySingular, value, op);
 };
 
-export const makeTypeFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'type',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card =>
-      [
-        ...getFromFaces(card, 'supertypes'),
-        ...getFromFaces(card, 'types'),
-        ...getFromFaces(card, 'subtypes'),
-        ...getFromAll(card, 'type_line'),
-      ].map(text => unescapeText(text)),
-    'the types',
-    opToIncludePlural
-  );
+/**
+ * Makes a type line filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeTypeFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('type', includeSummaryPlural, value, op, 'types');
 };
-export const makeSupertypeFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'supertype',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card =>
-      [
-        ...getFromFaces(card, 'supertypes'),
-        ...toFaces(card).flatMap(e =>
-          e.supertypes && e.supertypes?.length > 1 ? e.supertypes.join(' ') : []
-        ),
-      ].map(text => unescapeText(text)),
-    'the supertypes',
-    opToIncludePlural
-  );
+/**
+ * Makes a supertype filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeSupertypeFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('supertype', includeSummaryPlural, value, op);
 };
-export const makeCardtypeFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'cardtype',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card =>
-      [
-        ...getFromFaces(card, 'types'),
-        ...toFaces(card).flatMap(e => (e.types && e.types?.length > 1 ? e.types.join(' ') : [])),
-      ].map(text => unescapeText(text)),
-    'the card types',
-    opToIncludePlural
-  );
+/**
+ * Makes a card type filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeCardtypeFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('cardtype', includeSummaryPlural, value, op, 'card types');
 };
-export const makeSubtypeFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'subtype',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card =>
-      [
-        ...getFromFaces(card, 'subtypes'),
-        ...toFaces(card).flatMap(e =>
-          e.subtypes && e.subtypes?.length > 1 ? e.subtypes.join(' ') : []
-        ),
-      ].map(text => unescapeText(text)),
-    'the subtypes',
-    opToIncludePlural
-  );
+/**
+ * Makes a subtype filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeSubtypeFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('subtype', includeSummaryPlural, value, op);
 };
-export const makeOracleFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'oracle',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card => getFromFaces(card, 'oracle_text').map(text => unescapeText(text)),
-    'the oracle text',
-    opToIncludeSingular
-  );
+/**
+ * Makes an oracle text filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeOracleFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('oracle', includeSummarySingular, value, op);
 };
-export const makeFlavorFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'flavor',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card => getFromFaces(card, 'flavor_text').map(text => unescapeText(text)),
-    'the flavor text',
-    opToIncludeSingular
-  );
+/**
+ * Makes a flavor text filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeFlavorFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('flavor', includeSummarySingular, value, op);
 };
 
-export const makeLoreFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'lore',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card =>
-      [
-        ...getAllNames(card),
-        ...getFromFaces(card, 'supertypes'),
-        ...getFromFaces(card, 'types'),
-        ...getFromFaces(card, 'subtypes'),
-        ...getFromFaces(card, 'type_line'),
-        ...getFromFaces(card, 'oracle_text'),
-        ...getFromFaces(card, 'flavor_text'),
-      ].map(text => unescapeText(text)),
-    'the lore',
-    opToIncludeSingular
-  );
+/**
+ * Makes a lore filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeLoreFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('lore', includeSummarySingular, value, op);
 };
 
-export const makeRulingFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string, string>(
-    'ruling',
-    filterText,
-    value,
-    op,
-    '>=',
-    card => card.rulings,
-    'the rulings',
-    opToIncludePlural
-  );
+/**
+ * Makes a ruling filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeRulingFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('ruling', includeSummaryPlural, value, op);
 };
 
+/**
+ * Makes a creator filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
 export const makeCreatorFilter: stringOrNumFilterMaker = (value: string, op: looseOpType) => {
   if (!isNumber(value)) {
-    return new StringPropSummaryFilter<string[], string>(
-      'creator',
-      filterTextList,
-      value,
-      op,
-      '>=',
-      card => card.creators.map(text => unescapeText(text)),
-      'the creators',
-      opToIncludePlural
-    );
+    return new PropFilter('creator', includeSummaryPlural, value, op);
   } else {
-    return new NumberPropSummaryFilter<number, string>(
-      'creator',
-      filterNumberString,
-      value,
-      op,
-      '=',
-      card => card.creators.length,
-      'the number of creators'
-    );
+    return new NumberPropFilter('creator', value, op, 'number of creators');
   }
 };
 
-export const makeTagNoteFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'tagnote',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card => Object.values(card.tag_notes ?? []).map(text => unescapeText(text)),
-    'the tag note',
-    opToIncludeSingular
-  );
+/**
+ * Makes a tag filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeTagFilter: stateFilterMaker = (value: string, op: looseOpType) => {
+  return new NoteFilter('tag', tagFilter, tagSummary, value, op);
 };
 
+/**
+ * Makes a tag note filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeTagNoteFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('tagnote', includeSummarySingular, value, op, 'tag note');
+};
+
+/**
+ * Makes an artist filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
 export const makeArtistFilter: stringOrNumFilterMaker = (value: string, op: looseOpType) => {
   if (!isNumber(value)) {
-    return new NoteFilter('artist', filterArtist, value, op, '>=', card => card);
+    return new NoteFilter('artist', artistFilter, artistSummary, value, op);
   } else {
-    return new NumberPropSummaryFilter<number, string>(
-      'artist',
-      filterNumberString,
-      value,
-      op,
-      '=',
-      card => card.artists?.length ?? 0,
-      'the number of artists'
-    );
+    return new NumberPropFilter('artist', value, op, 'number of artists');
   }
 };
 
-export const makeArtistNoteFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'artistnote',
-    filterTextList,
-    value,
-    op,
-    '>=',
-    card => Object.values(card.artist_notes ?? []).map(text => unescapeText(text)),
-    'the artist note',
-    opToIncludeSingular
-  );
+/**
+ * Makes an artist note filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeArtistNoteFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('artistnote', includeSummarySingular, value, op, 'artist note');
 };
 
-export const makeTagFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new NoteFilter('tag', filterTag, value, op, '>=', card => card);
+/**
+ * Makes a watermark filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeWatermarkFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('watermark', watermarkSummary, value, op);
+};
+/**
+ * Makes a keyword filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeKeywordFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('keyword', keywordSummary, value, op);
 };
 
-export const makeWatermarkFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new filterObject<string[], string>(
-    'watermark',
-    filterTextList,
-    value,
-    opIsNegative(op) ? '=' : '!=',
-    '=',
-    card => getFromFaces(card, 'watermark').map(text => unescapeText(text)),
-    () => `the cards ${opToDont(op)} have the "${value}" watermark`
-  );
+/**
+ * Makes a border filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeBorderFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('border', borderSummary, value, op, toBorder);
 };
-export const makeKeywordFilter: filterMaker = (value: string, op: looseOpType) => {
-  return new StringPropSummaryFilter<string[], string>(
-    'creator',
-    filterTextList,
-    value,
-    op,
-    '=',
-    card => card.keywords.map(text => unescapeText(text)),
-    'the keywords',
-    opToIncludePlural
-  );
+/**
+ * Makes a card frame filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeCardFrameFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('cardframe', cardFrameSummary, value, op, toCardFrame);
+};
+/**
+ * Makes a frame effect filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeFrameEffectFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('frameeffect', frameEffectSummary, value, op, toFrameEffect);
+};
+/**
+ * Makes a frame filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeFrameFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('frame', frameSummary, value, op, toFrame);
+};
+/**
+ * Makes a showcase frame filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeShowcaseFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('showcase', showcaseSummary, value, op, toShowcaseFrame);
+};
+
+/**
+ * Makes a kind filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeKindFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('kind', kindSummary, value, op);
+};
+/**
+ * Makes a root layout filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeCardLayoutFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('layout', cardLayoutSummary, value, op, toCardLayout);
+};
+/**
+ * Makes a face layout filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeFaceLayoutFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('facelayout', faceLayoutSummary, value, op, toFaceLayout);
+};
+/**
+ * Makes an any layout filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeAnyLayoutFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('anylayout', anyLayoutSummary, value, op, toAnyLayout);
+};
+
+/**
+ * Makes a set filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeSetFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('set', setSummary, value, op, getSetAndDirectChildSets);
+};
+/**
+ * Makes a block filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeBlockFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('block', blockSummary, value, op, getBlockSets);
+};
+/**
+ * Makes a group filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeGroupFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('group', groupSummary, value, op, getGroupSets);
+};
+/**
+ * Makes a set type filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeSetTypeFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new PropConvertFilter('settype', setTypeSummary, value, op, toSetType);
+};
+
+/**
+ * Makes a legal filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeLegalFilter: legalityFilterMaker = (value: string, op: looseOpType) => {
+  return new LegalityFilter('legal', value, op);
+};
+/**
+ * Makes a banned filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeBannedFilter: legalityFilterMaker = (value: string, op: looseOpType) => {
+  return new LegalityFilter('banned', value, op);
+};
+/**
+ * Makes a notlegal filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeNotLegalFilter: legalityFilterMaker = (value: string, op: looseOpType) => {
+  return new LegalityFilter('notlegal', value, op);
 };
