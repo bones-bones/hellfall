@@ -195,14 +195,7 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
           };
         },
         react: (node: ParsedNode, output: OutputFunction, state?: ParserState): React.ReactNode => {
-          return (
-            <em
-              key={state?.key}
-              style={{ fontFamily: '"MPlantin", Georgia, "Times New Roman", serif' }}
-            >
-              {output(node.content as ParsedNode[], state)}
-            </em>
-          );
+          return <em key={state?.key}>{output(node.content as ParsedNode[], state)}</em>;
         },
       } satisfies Rule,
     };
@@ -339,7 +332,7 @@ const mediumTextStyles = createStyles({
 });
 const MediumText = createStyledIntrinsic('p', mediumTextStyles, 'MediumText');
 
-const italicText = createStyles({
-  fontStyle: 'italic',
-  fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
-});
+// const italicText = createStyles({
+//   fontStyle: 'italic',
+//   fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
+// });

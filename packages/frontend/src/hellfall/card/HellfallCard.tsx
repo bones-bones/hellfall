@@ -24,6 +24,8 @@ import { RelatedCards } from './hellfall-card-components/RelatedCards';
 import { Divider } from './visual-components/Divider';
 import { StyledHeading } from './visual-components/StyledHeading';
 import {
+  FlavorItalics,
+  FlavorText,
   MediumItalicLine,
   MediumItalics,
   MediumLine,
@@ -292,13 +294,13 @@ export const HellfallCard = ({
                 ))}
               {face.flavor_text &&
                 (['*', '_', '~'].some(e => face.flavor_text?.includes(e)) ? (
-                  <MediumText key="flavor">
+                  <FlavorText key="flavor">
                     {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
-                  </MediumText>
+                  </FlavorText>
                 ) : (
-                  <MediumItalics key="flavor">
+                  <FlavorItalics key="flavor">
                     {renderText(face.flavor_text.split('\\n'))}
-                  </MediumItalics>
+                  </FlavorItalics>
                 ))}
               {(face.power || face.toughness) && (
                 <>

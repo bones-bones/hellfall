@@ -18,7 +18,7 @@ export const Random = () => {
   const resultSet = query ? searchCards(cards, query, tagsData.data) : cards;
   const card = resultSet.getRandomCard();
   useEffect(() => {
-    navigate(`/card/${encodeURIComponent(card.hcid)}?q=${query || '*'}`);
+    navigate(`/card/${encodeURIComponent(card.hcid)}?q=${query || '*'}`, { replace: true });
   }, [card, query, navigate]); // Dependencies ensure navigation happens when needed
 
   // Return null or a loading indicator while redirecting

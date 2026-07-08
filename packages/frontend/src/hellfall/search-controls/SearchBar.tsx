@@ -35,7 +35,7 @@ export const SearchBar = ({ alreadyOnSearch }: { alreadyOnSearch?: boolean }) =>
       setQuery(normalizeText(searchQuery));
       setPage(0);
     } else {
-      navigate(`/?q=${encodeURIComponent(query)}`, { replace: false });
+      navigate(`/?q=${encodeURIComponent(searchQuery)}`, { replace: false });
     }
   };
 

@@ -151,7 +151,9 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     'card_faces' in entry,
     {
       ...Object.fromEntries(
-        getAnyEntries(entry as unknown as anyMappedType).filter(([key, value]) => sameKeys.includes(key))
+        getAnyEntries(entry as unknown as anyMappedType).filter(([key, value]) =>
+          sameKeys.includes(key)
+        )
       ),
       id_is_scryfall: true,
       oracle_id_is_scryfall: true,

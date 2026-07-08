@@ -98,6 +98,17 @@ export const getSearchParams = (
   }
   return searchToSet;
 };
+const sortsOnlyAddedAuto = (prevSorts: string[], currentSorts: string[]) => {
+  if (prevSorts.length) {
+    return false;
+  }
+  if (currentSorts.length > 1) {
+    return false;
+  }
+  return currentSorts[0] === 'auto,auto';
+};
+const sortsActuallyChanged = (prevSorts: string[], currentSorts: string[]) =>
+  !listsAreExactlyEqual(prevSorts, currentSorts) && !sortsOnlyAddedAuto(prevSorts, currentSorts);
 
 export const useUpdateURL = (asRandom?: boolean) => {
   const navigate = useNavigate();
@@ -111,36 +122,24 @@ export const useUpdateURL = (asRandom?: boolean) => {
   useEffect(() => {
     const hasChanged =
       prevValues.current.query !== query ||
-      !listsAreExactlyEqual(prevValues.current.inputSorts, inputSorts) ||
+      sortsActuallyChanged(prevValues.current.inputSorts, inputSorts) ||
       prevValues.current.page !== page;
-    // const activeHasChanged = prevValues.current.activeCard !== activeCard;
+    const autoIsOnlyDiff =
+      !hasChanged && sortsOnlyAddedAuto(prevValues.current.inputSorts, inputSorts);
 
-    if (!hasChanged /* && !activeHasChanged */) return;
+    if (!hasChanged && !autoIsOnlyDiff) return;
 
     const searchToSet = getSearchParams(query, asRandom, inputSorts, page);
 
-    // if (query) {
-    //   searchToSet.append(asRandom?'random':'q', query);
-    // }
-
-    // if (inputSorts.length && !asRandom) {
-    //   inputSorts.forEach(entry => searchToSet.append('order', entry));
-    // }
-    // if (page > 0 && !asRandom) {
-    //   searchToSet.append('page', page.toString());
-    // }
-    // if (activeCard !== '') {
-    //   searchToSet.append('activeCard', activeCard);
-    // }
     const newUrl = `${searchToSet.size ? `?${searchToSet.toString()}` : ''}`;
     const currentUrl = location.search;
 
     if (newUrl != currentUrl) {
       navigate(newUrl, {
-        replace: false /* !hasChanged */,
+        replace: autoIsOnlyDiff,
       });
     }
-    prevValues.current = { query, inputSorts, page /*, activeCard */ };
+    prevValues.current = { query, inputSorts, page };
   });
 };
 

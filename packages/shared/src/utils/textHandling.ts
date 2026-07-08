@@ -9,7 +9,8 @@ export const normalizeText = (text: string): string =>
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replaceAll(/[‘’]/g, "'")
-    .replaceAll(/[“”]/g, '"');
+    .replaceAll(/[“”]/g, '"')
+    .replaceAll(/ {2,}/g, ' ');
 
 /**
  * Format smart quotes
