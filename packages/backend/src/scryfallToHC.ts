@@ -151,7 +151,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     'card_faces' in entry,
     {
       ...Object.fromEntries(
-        getAnyEntries(entry as anyMappedType).filter(([key, value]) => sameKeys.includes(key))
+        getAnyEntries(entry as unknown as anyMappedType).filter(([key, value]) => sameKeys.includes(key))
       ),
       id_is_scryfall: true,
       oracle_id_is_scryfall: true,
@@ -205,7 +205,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
       }
     });
   }
-  getAnyEntries(entry as anyMappedType).forEach(([prop, value]) => {
+  getAnyEntries(entry as unknown as anyMappedType).forEach(([prop, value]) => {
     if (prop == 'mana_cost') {
       addPropToRoot(card, prop, fromImportMana(value));
     } else if (italicsReplaceKeys.includes(prop as facePropType)) {
