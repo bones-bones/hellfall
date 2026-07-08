@@ -1,4 +1,4 @@
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, HCFormat } from '@hellfall/shared/types';
 import {
   cardFilterFunction,
   stateFilterFunction,
@@ -506,7 +506,7 @@ export class LegalityFilter extends FilterObject<string, string> {
       createLegalitySummary(queryName),
       value,
       op,
-      card => card.legalities[this.value],
+      card => card.legalities[this.value as HCFormat],
       defaultOp,
       invertOption
     );
