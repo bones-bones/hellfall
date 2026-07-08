@@ -57,7 +57,11 @@ export const isCompKeyword = (keyword: string) =>
   isNumProp(equivFilterNames[keyword]) ||
   isNumProp(equivColorFilterNames[keyword]);
 
-const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
+const getPropNumsFromCard = (
+  card: HCCard.Any,
+  prop: numPropType,
+  dropFaces?: boolean
+): number[] => {
   switch (prop) {
     case 'creator':
       return [card.creators.length];
@@ -66,23 +70,23 @@ const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
     case 'manavalue':
       return [card.mana_value];
     case 'power':
-      return toFaces(card).flatMap(e => toNumber(e.power) ?? []);
+      return toFaces(card, dropFaces).flatMap(e => toNumber(e.power) ?? []);
     case 'toughness':
-      return toFaces(card).flatMap(e => toNumber(e.toughness) ?? []);
+      return toFaces(card, dropFaces).flatMap(e => toNumber(e.toughness) ?? []);
     case 'pt':
-      return toFaces(card).flatMap(e =>
+      return toFaces(card, dropFaces).flatMap(e =>
         !e.power && !e.toughness ? [] : (toNumber(e.power) ?? 0) + (toNumber(e.toughness) ?? 0)
       );
     case 'loyalty':
-      return toFaces(card).flatMap(e => toNumber(e.loyalty) ?? []);
+      return toFaces(card, dropFaces).flatMap(e => toNumber(e.loyalty) ?? []);
     case 'defense':
-      return toFaces(card).flatMap(e => toNumber(e.defense) ?? []);
+      return toFaces(card, dropFaces).flatMap(e => toNumber(e.defense) ?? []);
     case 'color':
       return [shouldChoose2(card) ? 2 : card.colors.length];
     case 'identity':
       return [shouldChoose2(card) ? 2 : card.color_identity.length];
     case 'indicator':
-      return getColorsFromFaces(card, 'color_indicator').map(c => c.length);
+      return getColorsFromFaces(card, 'color_indicator', dropFaces).map(c => c.length);
     case 'hybrid':
       return [shouldChoose2(card) ? 2 : getHybridColorNumber(card.color_identity_hybrid)];
     case 'misccolor':
@@ -90,7 +94,9 @@ const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
     case 'miscidentity':
       return [shouldChoose2(card) ? 2 : colorMiscReduce(card.color_identity).length];
     case 'miscindicator':
-      return getColorsFromFaces(card, 'color_indicator').map(c => colorMiscReduce(c).length);
+      return getColorsFromFaces(card, 'color_indicator', dropFaces).map(
+        c => colorMiscReduce(c).length
+      );
     case 'mischybrid':
       return [
         shouldChoose2(card)
@@ -140,20 +146,22 @@ const numPropToSummary: Record<numPropType, string> = {
  * @param operator operator to use
  * @param value2 the first value from the search
  * @param value3 the second value from the search
+ * @param dropFaces whether to exclude faces with `drop_face: true` where appropriate
  */
 export const comparisonFilter: comparisonFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
   value2: string,
-  value3: string
+  value3: string,
+  dropFaces?: boolean
 ) => {
   const first = toNumProp(value2);
   const second = toNumProp(value3);
   if (!first || !second) {
     return false;
   }
-  const firstValue = getPropNumsFromCard(value1, first);
-  const secondValue = getPropNumsFromCard(value1, second);
+  const firstValue = getPropNumsFromCard(value1, first, dropFaces);
+  const secondValue = getPropNumsFromCard(value1, second, dropFaces);
   return firstValue.some(v1 => secondValue.some(v2 => numFilter(v1, operator, v2)));
 };
 

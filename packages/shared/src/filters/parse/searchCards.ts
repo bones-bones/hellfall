@@ -1,9 +1,10 @@
 import { HCCard } from '@hellfall/shared/types';
 import { CardMap, getAllRelated } from '@hellfall/shared/utils';
 import { parseSearchQuery } from './parseSearchQuery';
-import { fixTags } from '../utils';
+import { fixTags, fixDrop, fixValue } from '../utils';
 import { makeIncludeFilter } from '../makers';
 import { FilterNode } from '../types';
+import { correctInclude } from '../filters';
 
 const evaluateRelatedFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): boolean =>
   getAllRelated(card, cardMap).some(related => evaluateFilter(node, related, cardMap));
@@ -34,6 +35,13 @@ export const searchCards = (cardMap: CardMap, query: string, tagList: string[]):
   const usingClusion = Boolean(includeList.length + excludeList.length);
   // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
   fixTags(node, tagList);
+  if (
+    includeList.some(
+      include => correctInclude(fixValue(include.value)) == 'drop' && !include.inverted
+    )
+  ) {
+    fixDrop(node);
+  }
   if (includeList.length) {
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);

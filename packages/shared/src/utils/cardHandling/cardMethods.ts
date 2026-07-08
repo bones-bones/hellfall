@@ -39,13 +39,17 @@ import { CardMap } from './cardMap';
  *
  * Make sure you only try to work with props of type {@linkcode facePropType}.
  * @param card card to get the faces of
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  * @returns an array of objects of type {@link faceType}
  */
-export const toFaces = (card: HCCard.Any): faceType[] => {
+export const toFaces = (card: HCCard.Any, dropFaces?: boolean): faceType[] => {
   if ('card_faces' in card) {
-    return card.card_faces as faceType[];
+    if (dropFaces) {
+      return card.card_faces.filter(face => !face.drop_face);
+    }
+    return card.card_faces;
   }
-  return [card] as faceType[];
+  return [card];
 };
 
 /**
@@ -53,33 +57,48 @@ export const toFaces = (card: HCCard.Any): faceType[] => {
  * @template K type of the prop (must extend {@linkcode facePropType})
  * @param card card to get the value from
  * @param prop prop to get the value of
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  */
 export const getFromFaces = <K extends facePropType>(
   card: HCCard.Any,
-  prop: K
-): faceElementValueType<K>[] => toFaces(card).flatMap(face => ensureArray(face[prop] as any));
+  prop: K,
+  dropFaces?: boolean
+): faceElementValueType<K>[] =>
+  toFaces(card, dropFaces).flatMap(face => ensureArray(face[prop] as any));
 
 /**
  * Gets the value of a prop from each face of a card without flattening it
  * (excluding the main part for multiface cards)
  * @param card card to get the value from
  * @param prop prop to get the value of (must be `color` or `color_indicator`)
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  */
-export const getColorsFromFaces = (card: HCCard.Any, prop: colorPropType): HCColors[] =>
-  toFaces(card).flatMap(face => [face[prop] ?? []]);
+export const getColorsFromFaces = (
+  card: HCCard.Any,
+  prop: colorPropType,
+  dropFaces?: boolean
+): HCColors[] => toFaces(card, dropFaces).flatMap(face => [face[prop] ?? []]);
 
 /**
  * Gets the value of a prop from each face of a card (including the main part for multiface cards)
  * @template K type of the prop (must extend {@linkcode allPropType})
  * @param card card to get the value from
  * @param prop prop to get the value of
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  */
 export const getFromAll = <K extends allPropType>(
   card: HCCard.Any,
-  prop: K
+  prop: K,
+  dropFaces?: boolean
 ): allElementValueType<K>[] => [
-  ...('card_faces' in card ? ensureArray(card[prop] as any) : []),
-  ...getFromFaces(card, prop),
+  ...('card_faces' in card
+    ? ensureArray(
+        (['mana_cost', 'type_line'].includes(prop) && dropFaces
+          ? getFromFaces(card, prop, dropFaces).join(' // ')
+          : card[prop]) as any
+      )
+    : []),
+  ...getFromFaces(card, prop, dropFaces),
 ];
 
 /**
@@ -239,8 +258,9 @@ export const getOtherNames = (card: HCCard.Any): string[] | undefined => {
 /**
  * Gets all names for a card that would be an exact match (for filters)
  * @param card card to get all names for
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  */
-export const getAllNames = (card: HCCard.Any): string[] => {
+export const getAllNames = (card: HCCard.Any, dropFaces?: boolean): string[] => {
   const names = [stripMasterpiece(stripSetCode(card.name))];
   if (names[0].slice(-5) == ' (HC)') {
     names.push(card.name);
@@ -254,16 +274,18 @@ export const getAllNames = (card: HCCard.Any): string[] => {
   const start = getMasterpiece(card.name);
   const ending = getSetCode(card.name);
   if ('card_faces' in card) {
-    card.card_faces.forEach((face, i) => {
+    toFaces(card, dropFaces).forEach((face, i) => {
       if (face.flavor_name) {
         names.push(face.flavor_name);
       }
       names.push(face.name);
       let name = face.name;
-      card.card_faces.slice(i + 1).forEach(f => {
-        name += ` // ${f.name}`;
-        names.push(name);
-      });
+      toFaces(card, dropFaces)
+        .slice(i + 1)
+        .forEach(f => {
+          name += ` // ${f.name}`;
+          names.push(name);
+        });
     });
   }
   if (start || ending) {

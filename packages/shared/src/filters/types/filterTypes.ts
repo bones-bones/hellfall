@@ -179,7 +179,15 @@ export interface colorListFilterFunction extends cardFilterFunction<string[][], 
 /**
  * The list of options for inclusion filters
  */
-const inclusionOptions = ['extras', 'nonextras', 'all', 'extracards', 'tokens', 'vetoed'] as const;
+const inclusionOptions = [
+  'extras',
+  'nonextras',
+  'all',
+  'extracards',
+  'tokens',
+  'vetoed',
+  'drop',
+] as const;
 /**
  * An option for inclusion filters
  */
@@ -198,7 +206,9 @@ export interface stateFilterFunction extends cardFilterFunction<HCCard.Any, stri
  * Any filter that compares two properties of a card
  */
 export interface comparisonFilterFunction extends cardFilterFunction<HCCard.Any, string> {
-  (value1: HCCard.Any, operator: opType, value2: string, value3: string): boolean | undefined;
+  (value1: HCCard.Any, operator: opType, value2: string, value3: string, dropFaces?: boolean):
+    | boolean
+    | undefined;
 }
 /**
  * A function that produces a summary for a {@linkcode comparisonFilterFunction}

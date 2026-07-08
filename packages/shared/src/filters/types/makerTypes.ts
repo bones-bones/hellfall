@@ -93,6 +93,10 @@ export interface filterInterface<T = any, S = any> extends anyFilterInterface {
    */
   inverted: boolean;
   /**
+   * Whether to exclude faces with `drop_face: true` where appropriate
+   */
+  dropFaces: boolean;
+  /**
    * The method to get the value to compare from a card
    * @param card card to get the value from
    */
@@ -105,6 +109,10 @@ export interface filterInterface<T = any, S = any> extends anyFilterInterface {
    * Inverts this filter object based on `this.invertOption`
    */
   invert: () => void;
+  /**
+   * Don't drop faces
+   */
+  keepFaces: () => void;
   /**
    * Checks if a card passes `this.filter`
    * @param card card to check

@@ -344,6 +344,12 @@ export const Syntax = () => {
           or <code>include:veto</code> to add vetoed cards. If you want to exclude cards that{' '}
           <em>aren't</em> extras, use <code>exclude:nonextras</code>.
         </div>
+        <br />
+        <div>
+          By default, the search excludes dropped faces (those that are tokens that exist and
+          similar) from searches that check for rules-related text (e.g. power, toughness, mana
+          cost, oracle text, etc.). To include dropped faces, use <code>include:dropped</code>.
+        </div>
         <h2>Not Implemented Yet</h2>
         <div>
           Everything in Games, Promos, & Spotlights, Year, Languages (except{' '}

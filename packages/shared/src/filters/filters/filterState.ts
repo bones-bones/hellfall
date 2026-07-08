@@ -67,18 +67,21 @@ const equivStateNames: Record<string, stateType> = {
   trikeland: 'triome',
   creatureland: 'manland',
 };
-const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undefined> = {
+const stateResolutions: Record<
+  stateType,
+  (value: HCCard.Any, dropFaces?: boolean) => boolean | undefined
+> = {
   ruling: (value: HCCard.Any) => !!value.rulings,
   foil: (value: HCCard.Any) => value.finish == 'foil',
   nonfoil: (value: HCCard.Any) => value.finish == 'nonfoil',
   commander: (value: HCCard.Any) => canBeACommander(value),
-  phyrexian: (value: HCCard.Any) =>
-    getFromFaces(value, 'mana_cost').some(cost => /\{H\//.test(cost)),
-  hybrid: (value: HCCard.Any) =>
-    getFromFaces(value, 'mana_cost').some(cost => /(?<!\{H)\//.test(cost)),
-  spell: (value: HCCard.Any) =>
+  phyrexian: (value: HCCard.Any, dropFaces?: boolean) =>
+    getFromFaces(value, 'mana_cost', dropFaces).some(cost => /\{H\//.test(cost)),
+  hybrid: (value: HCCard.Any, dropFaces?: boolean) =>
+    getFromFaces(value, 'mana_cost', dropFaces).some(cost => /(?<!\{H)\//.test(cost)),
+  spell: (value: HCCard.Any, dropFaces?: boolean) =>
     value.tags?.includes('spell-land') ||
-    toFaces(value).some(
+    toFaces(value, dropFaces).some(
       face =>
         textListsShare(face.types, [
           'artifact',
@@ -91,9 +94,9 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
           'gleeporzob',
         ]) && !textListIncludes(face.types, 'land')
     ),
-  permanent: (value: HCCard.Any) =>
+  permanent: (value: HCCard.Any, dropFaces?: boolean) =>
     value.tags?.includes('spell-land') ||
-    textListsShare(getFromFaces(value, 'types'), [
+    textListsShare(getFromFaces(value, 'types', dropFaces), [
       'artifact',
       'battle',
       'creature',
@@ -101,14 +104,19 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
       'land',
       'planeswalker',
     ]),
-  historic: (value: HCCard.Any) =>
-    textListIncludes(getFromFaces(value, 'supertypes'), 'legendary') ||
-    textListIncludes(getFromFaces(value, 'types'), 'artifact') ||
-    textListIncludes(getFromFaces(value, 'subtypes'), 'saga'),
-  party: (value: HCCard.Any) =>
-    textListsShare(getFromFaces(value, 'subtypes'), ['cleric', 'rogue', 'warrior', 'wizard']),
-  outlaw: (value: HCCard.Any) =>
-    textListsShare(getFromFaces(value, 'subtypes'), [
+  historic: (value: HCCard.Any, dropFaces?: boolean) =>
+    textListIncludes(getFromFaces(value, 'supertypes', dropFaces), 'legendary') ||
+    textListIncludes(getFromFaces(value, 'types', dropFaces), 'artifact') ||
+    textListIncludes(getFromFaces(value, 'subtypes', dropFaces), 'saga'),
+  party: (value: HCCard.Any, dropFaces?: boolean) =>
+    textListsShare(getFromFaces(value, 'subtypes', dropFaces), [
+      'cleric',
+      'rogue',
+      'warrior',
+      'wizard',
+    ]),
+  outlaw: (value: HCCard.Any, dropFaces?: boolean) =>
+    textListsShare(getFromFaces(value, 'subtypes', dropFaces), [
       'assassin',
       'goon',
       'mercenary',
@@ -118,13 +126,13 @@ const stateResolutions: Record<stateType, (value: HCCard.Any) => boolean | undef
     ]),
   partner: (value: HCCard.Any) =>
     textListsShare(value.tags, ['partner-mechanic', 'unprinted-partner']),
-  modal: (value: HCCard.Any) =>
+  modal: (value: HCCard.Any, dropFaces?: boolean) =>
     value.tags?.includes('modal') ||
-    textListIncludesEvery(getFromFaces(value, 'oracle_text'), ['•', 'choose']),
+    textListIncludesEvery(getFromFaces(value, 'oracle_text', dropFaces), ['•', 'choose']),
   vanilla: (value: HCCard.Any) => value.tags?.includes('vanilla'),
   frenchvanilla: (value: HCCard.Any) => value.tags?.includes('french-vanilla'),
-  bear: (value: HCCard.Any) =>
-    toFaces(value).some(
+  bear: (value: HCCard.Any, dropFaces?: boolean) =>
+    toFaces(value, dropFaces).some(
       face => toNumber(face.power) == 2 && toNumber(face.toughness) == 2 && face.mana_value == 2
     ),
   manland: (value: HCCard.Any) => value.tags?.includes('manland'),
@@ -201,17 +209,19 @@ const getIsName = (value: string): string | undefined =>
  * @param value1 card to check
  * @param operator operator to use
  * @param value2 criterion from the search
+ * @param dropFaces whether to exclude faces with `drop_face: true` where appropriate
  */
 export const isFilter: stateFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
-  value2: string
+  value2: string,
+  dropFaces?: boolean
 ) =>
   opAsBool(
     (
       stateResolutions[getIsName(value2) as stateType] ??
       /* isResolutions[getIsName(value2) as isType] ?? */ (c => false)
-    )(value1),
+    )(value1, dropFaces),
     operator
   );
 /**
@@ -238,8 +248,12 @@ const equivHasNames: Record<string, hasType> = {
   frameeffects: 'frameeffect',
   wm: 'watermark',
 };
-const hasResolutions: Record<hasType, (value: HCCard.Any) => boolean | undefined> = {
-  indicator: (value: HCCard.Any) => Boolean(getColorsFromFaces(value, 'color_indicator').length),
+const hasResolutions: Record<
+  hasType,
+  (value: HCCard.Any, dropFaces?: boolean) => boolean | undefined
+> = {
+  indicator: (value: HCCard.Any, dropFaces?: boolean) =>
+    Boolean(getColorsFromFaces(value, 'color_indicator', dropFaces).length),
   frameeffect: (value: HCCard.Any) => Boolean(getFromAll(value, 'frame_effects').length),
   watermark: (value: HCCard.Any) => Boolean(getFromFaces(value, 'watermark').length),
 };
@@ -258,18 +272,20 @@ const getHasName = (value: string): string | undefined =>
  * @param value1 card to check
  * @param operator operator to use
  * @param value2 criterion from the search
+ * @param dropFaces whether to exclude faces with `drop_face: true` where appropriate
  */
 export const hasFilter: stateFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
-  value2: string
+  value2: string,
+  dropFaces?: boolean
 ) =>
   opAsBool(
     (
       stateResolutions[getIsName(value2) as stateType] ??
       hasResolutions[getHasName(value2) as hasType] ??
       (c => false)
-    )(value1),
+    )(value1, dropFaces),
     operator
   );
 /**

@@ -8,5 +8,5 @@ import { IncludeFilter, includeFilterMaker } from '../utils';
  * @param op the operator from the search
  */
 export const makeIncludeFilter: includeFilterMaker = (value: string, op: looseOpType) => {
-  return new IncludeFilter('include', includeFilter, includeSummary, value, op);
+  return new IncludeFilter('include', value, op);
 };

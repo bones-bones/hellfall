@@ -3,8 +3,11 @@ import {
   makeIncludeFilter,
   FilterNode,
   fixTags,
+  fixDrop,
   parseSearchQuery,
   searchCards,
+  correctInclude,
+  fixValue,
 } from '@hellfall/shared/filters';
 import { CardMap } from '../cardHandling';
 import { firestoreToCard } from './cardConversion';
@@ -64,6 +67,13 @@ export const searchCardsFromCollection = async (
   const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
   const usingClusion = Boolean(includeList.length + excludeList.length);
   fixTags(node, tagList);
+  if (
+    includeList.some(
+      include => correctInclude(fixValue(include.value)) == 'drop' && !include.inverted
+    )
+  ) {
+    fixDrop(node);
+  }
   if (includeList.length) {
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);

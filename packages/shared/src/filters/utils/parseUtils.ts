@@ -67,11 +67,32 @@ export const fixTags = (node: FilterNode, tagList: string[]) => {
       }
       break;
     case 'not':
+    case 'related':
       fixTags(node.child, tagList);
       break;
     case 'and':
     case 'or':
       node.children.forEach(child => fixTags(child, tagList));
+      break;
+  }
+};
+
+/**
+ * Fixes `dropFaces`
+ * @param node the root node of the AST
+ */
+export const fixDrop = (node: FilterNode) => {
+  switch (node.type) {
+    case 'filter':
+      node.filter.keepFaces();
+      break;
+    case 'not':
+    case 'related':
+      fixDrop(node.child);
+      break;
+    case 'and':
+    case 'or':
+      node.children.forEach(child => fixDrop(child));
       break;
   }
 };
