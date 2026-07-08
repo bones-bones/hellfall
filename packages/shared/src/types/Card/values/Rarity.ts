@@ -1,3 +1,6 @@
+/**
+ * All card rarities
+ */
 export enum HCRarity {
   Common = 'common',
   Uncommon = 'uncommon',
@@ -6,5 +9,9 @@ export enum HCRarity {
   Mythic = 'mythic',
   Bonus = 'bonus',
 }
-export const isRarity = (value: any): value is HCRarity =>
-  Object.values(HCRarity).includes(value as HCRarity);
+
+/**
+ * Checks if a value is a {@linkcode HCRarity}
+ * @param value the value to check
+ */
+export const isRarity = (value: any): value is HCRarity => Object.values(HCRarity).includes(value);

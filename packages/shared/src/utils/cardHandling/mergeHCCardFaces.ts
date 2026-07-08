@@ -31,7 +31,7 @@ const concatProps = [
 // these props are concatenated, separated by '\\n\\n---\\n\\n'
 const multiLineConcatProps = ['oracle_text', 'flavor_text'];
 // these props are combined in some other way
-const combineProps = ['mana_value', 'colors'];
+const combineProps = ['mana_value', 'colors', 'types'];
 // these props always overwrite the main face when they exist
 const overwriteProps = ['layout'];
 // these props are stored when the main face's prop doesn't exist but they do
@@ -68,6 +68,12 @@ export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.Mul
                   }
                 });
                 break;
+              }
+              case 'types': {
+                if (!faces[0][key]) {
+                  // This ensures ' // Do' has the right main type
+                  faces[0][key] = face[key];
+                }
               }
             }
           } else if (addProps.includes(key)) {
@@ -106,7 +112,7 @@ export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.Mul
 };
 
 /**
- * Compresses the card faces of a card to make it suitable for export
+ * Compresses the card faces of a card to make it suitable for export (Not for use with cockatrice)
  * @param card card to compress
  */
 export const compressHCCardFaces = (card: HCCard.Any) => {

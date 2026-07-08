@@ -237,7 +237,8 @@ type add = faceChangeablePropType<'add'>;
  * Gets a list of changes from the differences between existing and new versions of a card
  * @param existingCard existing version of the card
  * @param newCard new version of the card
- * @param pullingFromSheet whether the new version is coming from the google sheet (if it is, will ignore differences caused by lack of data storage in the sheet)
+ * @param pullingFromSheet whether the new version is coming from the google sheet
+ * (if it is, will ignore differences caused by lack of data storage in the sheet)
  */
 export const getChangesFromDifferences = (
   existingCard: HCCard.Any,
@@ -291,7 +292,9 @@ export const getChangesFromDifferences = (
     });
   });
   // if ('card_faces' in existingCard != 'card_faces' in newCard) {
-  //   throw console.error('You really shouldn\'t try to use this to compare between single cards and multiface cards.')
+  //   throw console.error(
+  //     "You really shouldn't try to use this to compare between single cards and multiface cards."
+  //   );
   // }
   for (
     let index = 0;

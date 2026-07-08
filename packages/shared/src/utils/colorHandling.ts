@@ -9,6 +9,10 @@ const shorthandList = ['c', 'm'] as const;
  * A color search shorthand
  */
 export type shorthandType = (typeof shorthandList)[number];
+/**
+ * Checks if a value is {@linkcode shorthandType}
+ * @param value value to check
+ */
 export const isShorthandType = (value: any): value is shorthandType =>
   shorthandList.includes(value);
 /**
@@ -18,6 +22,11 @@ export type colorSearch = string[] | number | shorthandType;
 
 const MISC_BULLSHIT = 'Misc';
 
+/**
+ * Gets all subsets of a given length from a set
+ * @param set set to get the subsets of
+ * @param len length of subsets to get
+ */
 const getSubsets = (set: string[], len: number): string[][] => {
   const result: string[][] = [];
 
@@ -37,6 +46,10 @@ const getSubsets = (set: string[], len: number): string[][] => {
   backtrack(0, []);
   return result;
 };
+/**
+ * Finds the minimum number of colors that can match a hybrid identity
+ * @param hybridColors hybrid identity to check
+ */
 const findMinNum = (hybridColors: string[][]): number => {
   const allColors = Array.from(new Set(hybridColors.flat()));
   if (!allColors.length) {
@@ -50,6 +63,10 @@ const findMinNum = (hybridColors: string[][]): number => {
   }
   return allColors.length;
 };
+/**
+ * Gets the number of colors from a hybrid identity for number comparisons
+ * @param hybrid hybrid identity array to get the number from
+ */
 export const getHybridColorNumber = (hybrid: string[][]) => {
   const monoList = hybrid.flatMap(colors => (colors.length == 1 ? colors : []));
   const hybridColors = hybrid.filter(colors => colors.length > 1);
@@ -57,9 +74,8 @@ export const getHybridColorNumber = (hybrid: string[][]) => {
 };
 
 /**
- * Reduces down a card's colors to one compatible with search colors.
- * @param colors card's colors
- * @returns
+ * Reduces down a set of colors to one compatible with misc searches by replacing all misc colors with {@linkcode MISC_BULLSHIT} and removing resultant duplicates
+ * @param colors colors to reduce
  */
 export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
   const newColors: string[] = [];
@@ -74,9 +90,8 @@ export const colorMiscReduce = (colors: HCColors | string[]): string[] => {
 };
 
 /**
- * Reduces down a card's hybrid identity set to one compatible with search colors.
- * @param hybridColors hybrid color identity
- * @returns
+ * Reduces down a hybrid identity set to one compatible with misc searches by replacing all misc colors with {@linkcode MISC_BULLSHIT} and removing resultant duplicates
+ * @param hybridColors hybrid identity to reduce
  */
 export const hybridIdentityMiscReduce = (hybridColors: HCColors[] | string[][]): string[][] => {
   const newColors: string[][] = [];
@@ -110,6 +125,10 @@ export const hybridIdentityMiscReduce = (hybridColors: HCColors[] | string[][]):
 
 const choose2List = ['choose-2-colors', 'choose-2-allied-colors'];
 
+/**
+ * Checks if a card has unusual values for color props
+ * @param card card to check
+ */
 export const shouldChoose2 = (card: HCCard.Any) => listsShare(choose2List, card.tags);
 
 /**
@@ -117,7 +136,7 @@ export const shouldChoose2 = (card: HCCard.Any) => listsShare(choose2List, card.
  * @param card card to get the colors of
  * @param normalColors the normal colors for the prop
  * @param value the value that the colors will be compared to
- * @returns the colors to compare
+ * @returns the colors to compare; if {@linkcode shouldChoose2 | !shouldChoose2(card)}, will return `normalColors`
  */
 export const handleChooseColors = (
   card: HCCard.Any,
@@ -178,7 +197,7 @@ export const handleChooseColors = (
  * @param card card to get the colors of
  * @param normalColors the normal hybrid colors for the prop
  * @param value the value that the colors will be compared to
- * @returns the hybrid colors to compare
+ * @returns the hybrid colors to compare; if {@linkcode shouldChoose2 | !shouldChoose2(card)}, will return `normalColors`
  */
 export const handleChooseHybrid = (
   card: HCCard.Any,

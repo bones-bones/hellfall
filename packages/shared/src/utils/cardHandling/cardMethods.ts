@@ -37,7 +37,7 @@ import { CardMap } from './cardMap';
  * For single-faced cards, returns an array with the card itself.
  * For multi-faced cards, returns the card_faces array.
  *
- * Make sure you only try to work with props that exist on both {@link HCCard.AnySingleFaced} and {@link HCCardFace.MultiFaced}.
+ * Make sure you only try to work with props of type {@linkcode facePropType}.
  * @param card card to get the faces of
  * @returns an array of objects of type {@link faceType}
  */
@@ -50,9 +50,9 @@ export const toFaces = (card: HCCard.Any): faceType[] => {
 
 /**
  * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
+ * @template K type of the prop (must extend {@linkcode facePropType})
  * @param card card to get the value from
- * @param prop prop to get the value of (must be a prop that exists on both {@link HCCard.AnySingleFaced} and {@link HCCardFace.MultiFaced})
- * @returns
+ * @param prop prop to get the value of
  */
 export const getFromFaces = <K extends facePropType>(
   card: HCCard.Any,
@@ -60,19 +60,19 @@ export const getFromFaces = <K extends facePropType>(
 ): faceElementValueType<K>[] => toFaces(card).flatMap(face => ensureArray(face[prop] as any));
 
 /**
- * Gets the value of a prop from each face of a card without flattening it (excluding the main part for multiface cards)
+ * Gets the value of a prop from each face of a card without flattening it
+ * (excluding the main part for multiface cards)
  * @param card card to get the value from
- * @param prop prop to get the value of (must be a prop that exists on both {@link HCCard.Any} and {@link HCCardFace.MultiFaced})
- * @returns
+ * @param prop prop to get the value of (must be `color` or `color_indicator`)
  */
 export const getColorsFromFaces = (card: HCCard.Any, prop: colorPropType): HCColors[] =>
   toFaces(card).flatMap(face => [face[prop] ?? []]);
 
 /**
  * Gets the value of a prop from each face of a card (including the main part for multiface cards)
+ * @template K type of the prop (must extend {@linkcode allPropType})
  * @param card card to get the value from
  * @param prop prop to get the value of
- * @returns
  */
 export const getFromAll = <K extends allPropType>(
   card: HCCard.Any,
@@ -347,9 +347,10 @@ export const getHc5 = (): CardMap =>
  * @param card card to get the related cards to
  * @param cardMap CardMap containing all cards
  *
- * This version will also try to match hcid and name, so it's exhaustive, but it's not suitable for use on the frontend due to its slowness
+ * This version will also try to match hcid and name, so it's exhaustive,
+ * but it's not suitable for use on the frontend due to its slowness
  *
- * For a fast version, use {@link getAllRelated}
+ * For a fast version, use {@linkcode getAllRelated}
  */
 export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap =>
   new CardMap(
@@ -367,9 +368,10 @@ export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): Car
  * @param card card to get the related cards to
  * @param cardMap CardMap containing all cards
  *
- * This version won't also try to match hcid and name, so it's fast, but it's not suitable for use on the backend
+ * This version won't also try to match hcid and name, so it's fast,
+ * but it's not suitable for use on the backend
  *
- * For an exhaustive version, use {@link getAllRelatedPermissive}
+ * For an exhaustive version, use {@linkcode getAllRelatedPermissive}
  */
 export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
   cardMap.getSubset(card.all_parts?.map(part => part.id) ?? []);
@@ -384,7 +386,6 @@ export const getRelatedsFromCards = (
   idList: string[],
   cardMap: CardMap
 ): { cards: CardMap; tokens: CardMap } => {
-  // TODO: don't use this for 'all'
   const cards: CardMap = cardMap.getSubset(idList);
   const tokens: CardMap = cardMap.getSubset(
     cards.flatMap(
@@ -401,7 +402,8 @@ export const getRelatedsFromCards = (
  * Gets the cards and tokens for a set
  * @param set the set to get
  * @param cardMap CardMap containing all cards
- * @param moveNonDraftablesToTokens whether to move cards in the set that aren't directly draftable into tokens (set to true when exporting to draftmancer)
+ * @param moveNonDraftablesToTokens whether to move cards in the set that aren't directly draftable
+ * into tokens (set to true when exporting to draftmancer)
  */
 export const getRelatedsFromSet = (
   set: SetCode,

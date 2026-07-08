@@ -1,15 +1,20 @@
-import type { CollectionReference } from '@google-cloud/firestore';
 import { HCCard } from '@hellfall/shared/types';
-import { makeIncludeFilter, FilterNode, fixTags, parseSearchQuery } from '@hellfall/shared/filters';
+import {
+  makeIncludeFilter,
+  FilterNode,
+  fixTags,
+  parseSearchQuery,
+  searchCards,
+} from '@hellfall/shared/filters';
 import { CardMap } from '../cardHandling';
 import { firestoreToCard } from './cardConversion';
 import { getAllRelatedCollection } from './cardRefs';
-import type { firestoreCard } from './firestoreTypes';
+import type { cardsCollection, firestoreCard } from './firestoreTypes';
 
 const evaluateRelatedFilter = (
   node: FilterNode,
   card: firestoreCard,
-  cardsCol: CollectionReference<firestoreCard, firestoreCard>
+  cardsCol: cardsCollection
 ): boolean =>
   getAllRelatedCollection(card, cardsCol).some(async related =>
     evaluateFilter(node, await related.get(), cardsCol)
@@ -18,7 +23,7 @@ const evaluateRelatedFilter = (
 const evaluateFilter = (
   node: FilterNode,
   card: firestoreCard,
-  cardsCol: CollectionReference<firestoreCard, firestoreCard>
+  cardsCol: cardsCollection
 ): boolean => {
   switch (node.type) {
     case 'filter': {
@@ -38,9 +43,17 @@ const evaluateFilter = (
   }
 };
 
-/** Firestore-backed search; browser code should use `searchCards` from `@hellfall/shared/filters`. */
+/**
+ * Given a query, filters a {@linkcode cardsCollection} to return only the cards that match the query
+ *
+ * Firestore-backed search; browser code should use {@linkcode searchCards} from `@hellfall/shared/filters`.
+ * @param cardsCol Collection of all cards
+ * @param query query to use
+ * @param tagList The list of tags (from `tags.json`)
+ * @returns a {@linkcode CardMap} containing the search results
+ */
 export const searchCardsFromCollection = async (
-  cardsCol: CollectionReference<firestoreCard, firestoreCard>,
+  cardsCol: cardsCollection,
   query: string,
   tagList: string[]
 ): Promise<CardMap> => {

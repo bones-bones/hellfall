@@ -1,7 +1,8 @@
-import { HCCard, HCCardFace, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
+import { faceType, HCCard, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
 import { CockCardProps, CockFaceProps, CockRelatedProps } from './cockTypes';
 import { orderColors } from '../orderColors';
-import { canBeInDecks, hasTokenHCID, mergeHCCardFaces, toFaces } from '../cardHandling';
+import { canBeInDecks, hasTokenHCID, mergeHCCardFaces } from '../cardHandling';
+import { listIncludesValueLower } from '../listHandling';
 
 const hcToCockLayout: Record<HCLayout, string> = {
   normal: 'normal',
@@ -50,14 +51,51 @@ const hcToCockLayout: Record<HCLayout, string> = {
   station: 'normal',
   cube: 'normal',
 };
+const otherPermanentTypes = ['planeswalker', 'enchantment', 'artifact'];
+const nonPermanentTypes = ['instant', 'sorcery', 'gleeporzob', 'interrupt'];
 
-const hcFaceToCockProps = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced): CockFaceProps => {
+const toTitleCase = (text: string) =>
+  `${text[0]?.toUpperCase() ?? ''}${text.slice(1).toLowerCase()}`;
+
+/**
+ * Gets the main type for a face
+ * @param face face to get the main type of
+ */
+const getMainType = (face: faceType): string => {
+  if (face.types) {
+    if (listIncludesValueLower(face.types, 'creature')) {
+      return 'Creature';
+    }
+    if (listIncludesValueLower(face.types, 'land')) {
+      return 'Land';
+    }
+    const otherPermanent = face.types.findLast(type =>
+      listIncludesValueLower(otherPermanentTypes, type)
+    );
+    if (otherPermanent) {
+      return toTitleCase(otherPermanent);
+    }
+    const nonPermanent = face.types.findLast(type =>
+      listIncludesValueLower(nonPermanentTypes, type)
+    );
+    if (nonPermanent) {
+      return toTitleCase(nonPermanent);
+    }
+  }
+  return toTitleCase((face.types ?? face.supertypes ?? face.subtypes ?? '').at(-1) ?? '');
+};
+
+/**
+ * Converts an HC face to cockatrice face props
+ * @param face face to convert
+ */
+const hcFaceToCockProps = (face: faceType): CockFaceProps => {
   const cockFace: CockFaceProps = {
     name: face.export_name || face.name,
     text: face.oracle_text.replaceAll(/\\n/g, '\n').replaceAll(/\{(.)\}/g, '$1'),
     layout: hcToCockLayout[face.layout],
     type: face.type_line,
-    maintype: face.types?.at(-1) || face.supertypes?.at(-1) || face.subtypes?.at(-1) || '',
+    maintype: getMainType(face),
     manacost: face.mana_cost,
     cmc: face.mana_value,
   };
@@ -96,6 +134,7 @@ const hcFaceToCockProps = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced):
   }
   return cockFace;
 };
+
 /**
  * Convert an hc all_parts array to a cockatrice related props array
  * @param all_parts hc all_parts array
@@ -155,6 +194,11 @@ const hcAllPartsToCockRelated = (all_parts: HCRelatedCard[]): CockRelatedProps[]
   });
   return cockRelateds;
 };
+
+/**
+ * Compresses the card faces of a card to make it suitable for export (only for use with cockatrice)
+ * @param card card to compress
+ */
 const compressHCCardFaces = (card: HCCard.Any): HCCard.Any => {
   const newCard = structuredClone(card);
   if ('card_faces' in newCard) {
@@ -199,7 +243,7 @@ export const hcCardToCockProps = (uncompressedCard: HCCard.Any): CockCardProps =
   const card = compressHCCardFaces(uncompressedCard);
   const cockCard: CockCardProps = {
     coloridentity: card.color_identity.join(''),
-    id: card.id,
+    uuid: card.id,
     hcid: card.hcid,
     props: [],
     set: card.set,

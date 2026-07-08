@@ -156,7 +156,7 @@ export const applyChangesFromNewBase = (card: HCCard.Any, newBase: string[]) => 
 };
 
 /**
- * set derived props for a card
+ * Sets derived props for a card
  * @param card card to set derived props of
  * @param tags new tag list, if any
  */
@@ -482,7 +482,7 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
 ];
 
 /**
- * Set the export props for a card
+ * Sets the export props for a card
  * @param card card to set the export props of
  * @param takenNames list of names that are already taken (for the purposes of setting `export_name`)
  */
@@ -670,11 +670,11 @@ export const landToColorMapping = {
   'Gas-Station': 'Yellow',
   Carnival: 'Pink',
 } as Record<string, HCColor>;
+
 /**
  * Merges an existing card and a card from the google sheet
  * @param existingCard The card from the stored database JSON
  * @param newCard The card from the google sheet
- * @returns
  */
 export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): HCCard.Any => {
   if (existingCard.kind != newCard.kind) {
@@ -696,6 +696,7 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
   // }
   return existingCard;
 };
+
 /**
  * Updates a card along with its related cards
  * @param card card to apply the changes to

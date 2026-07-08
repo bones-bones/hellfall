@@ -1,14 +1,22 @@
 import { textEquals, textContains } from './textHandling';
 
+/**
+ * Performs a logical XOR on two values after converting them to booleans
+ * @param value1 the first value to compare
+ * @param value2 the second value to compare
+ * @returns Whether the boolean conversions of the values are different
+ */
 export const xor = (value1: any, value2: any) => !value1 != !value2;
 
 /**
- * Checks whether two arbitrary values are exactly equal. (basically a version of `===` that compares objects by value rather than by reference)
+ * Checks whether two arbitrary values are exactly equal.
+ * (basically a version of `===` that compares objects by value rather than by reference)
+ * @template T the type of the values to compare
  * @param value1 the first value to compare
  * @param value2 the second value to compare
  * @param ignoreOrder set to true if order should be ignored when comparing lists
  */
-export const arbAreEqual = <T = any>(value1: T, value2: T, ignoreOrder?: boolean): boolean => {
+export const arbAreEqual = <T>(value1: T, value2: T, ignoreOrder?: boolean): boolean => {
   if (typeof value1 != typeof value2) {
     return false;
   }
@@ -19,7 +27,8 @@ export const arbAreEqual = <T = any>(value1: T, value2: T, ignoreOrder?: boolean
     return value1 === value2;
   }
   if (value1 == null || value2 == null) {
-    // this is necessary because `typeof null === 'object'` due to a historical bug (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#typeof_null)
+    // this is necessary because `typeof null === 'object'` due to a historical bug
+    // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#typeof_null)
     return value1 === value2;
   }
   if (Array.isArray(value1) && Array.isArray(value2)) {
@@ -37,21 +46,27 @@ export const arbAreEqual = <T = any>(value1: T, value2: T, ignoreOrder?: boolean
   }
   return true;
 };
-const arbAreEqualIgnoreOrder = <T = any>(value1: T, value2: T) => arbAreEqual(value1, value2, true);
+const arbAreEqualIgnoreOrder = <T>(value1: T, value2: T) => arbAreEqual(value1, value2, true);
 const arbAreEqualGenerator =
   (ignoreOrder?: boolean) =>
-  <T = any>(value1: T, value2: T) =>
+  <T>(value1: T, value2: T) =>
     arbAreEqual(value1, value2, ignoreOrder);
 
-export type equalityFunction<T> = (value1: T, value2: T) => boolean | undefined;
 /**
- * Checks whether one list is equal to another list.
- * @param value1 First list to check
- * @param value2 Second list to check
- * @param ignoreOrder whether to ignore the order of the items
- * @param equals equality function to use; defaults to {@link arbAreEqual}
+ * A function that compares two values to see if they are equal
+ * @template T the type of the values to compare
  */
-export const listsAreEqual = <T = any>(
+export type equalityFunction<T> = (value1: T, value2: T) => boolean | undefined;
+
+/**
+ * Checks whether two lists are equal
+ * @template T the type of the elements of the lists
+ * @param value1 first list to check
+ * @param value2 second list to check
+ * @param ignoreOrder whether to ignore the order of the items
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual}
+ */
+export const listsAreEqual = <T>(
   value1?: T[],
   value2?: T[],
   ignoreOrder?: boolean,
@@ -83,35 +98,38 @@ export const listsAreEqual = <T = any>(
 };
 
 /**
- * Checks whether one list is loosely equal to another list (ignoring order). Equivalent to {@link listsAreEqual} with `ignoreOrder: true`
- * @param value1 First list to check
- * @param value2 Second list to check
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
+ * Checks whether two lists are loosely equal (ignoring order). Equivalent to {@linkcode listsAreEqual} with `ignoreOrder: true`
+ * @template T the type of the elements of the lists
+ * @param value1 first list to check
+ * @param value2 second list to check
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual} with `ignoreOrder: true`
  */
-export const listsAreLooselyEqual = <T = any>(
+export const listsAreLooselyEqual = <T>(
   value1?: T[],
   value2?: T[],
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
 ): boolean => listsAreEqual(value1, value2, true, equals);
 /**
- * Checks whether one list is exactly equal to another list (not ignoring). Equivalent to {@link listsAreEqual} with `ignoreOrder: false`
- * @param value1 First list to check
- * @param value2 Second list to check
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: false`
+ * Checks whether two lists are exactly equal (not ignoring order). Equivalent to {@linkcode listsAreEqual} with `ignoreOrder: false`
+ * @template T the type of the elements of the lists
+ * @param value1 first list to check
+ * @param value2 second list to check
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual} with `ignoreOrder: false`
  */
-export const listsAreExactlyEqual = <T = any>(
+export const listsAreExactlyEqual = <T>(
   value1?: T[],
   value2?: T[],
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
 ): boolean => listsAreEqual(value1, value2, false, equals);
 
 /**
- * Checks whether one list contains another list.
- * @param value1 List to check whether it contains the other list
- * @param value2 List to check whether it is contained by the other list
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
+ * Checks whether one list contains another list
+ * @template T the type of the elements of the lists
+ * @param value1 list to check whether it contains the other list
+ * @param value2 list to check whether it is contained by the other list
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual} with `ignoreOrder: true`
  */
-export const listContainsList = <T = any>(
+export const listContainsList = <T>(
   value1: T[],
   value2: T[],
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
@@ -128,31 +146,65 @@ export const listContainsList = <T = any>(
   return true;
 };
 /**
- * Checks whether one list contains another list as a strict subset (i.e. doesn't equal it).
- * @param value1 List to check whether it contains the other list
- * @param value2 List to check whether it is contained by the other list
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
+ * Checks whether one list contains another list as a strict subset (i.e. doesn't equal it)
+ * @template T the type of the elements of the lists
+ * @param value1 list to check whether it contains the other list
+ * @param value2 list to check whether it is contained by the other list
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual} with `ignoreOrder: true`
  * @returns
  */
-export const listContainsListAsSubset = <T = any>(
+export const listContainsListAsSubset = <T>(
   value1: T[],
   value2: T[],
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
 ) => listContainsList(value1, value2, equals) && !arbAreEqualIgnoreOrder(value1, value2);
 
 /**
- * Checks whether a list contains some list from a list of lists.
- * @param value1 List to check whether it contains some list
- * @param value2 List of lists to check whether it has a member that is contained by the list
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
+ * Checks whether a list contains some list from a list of lists
+ * @template T the type of the elements of the lists
+ * @param value1 list to check whether it contains some list
+ * @param value2 list of lists to check whether it has a member that is contained by the list
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual} with `ignoreOrder: true`
  * @returns
  */
-export const listContainsSomeList = <T = any>(
+export const listContainsSomeList = <T>(
   value1: T[],
   value2: T[][],
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
 ): boolean => value2.some(value => listContainsList(value1, value, equals));
 
+/**
+ * Checks whether a list includes a value
+ * @template T the type of the elements of the list and of the value
+ * @param list list to check
+ * @param value value to check
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual} with `ignoreOrder: true`
+ * @returns
+ */
+export const listIncludesValue = <T>(
+  list?: T[],
+  value?: T,
+  equals: equalityFunction<T> = arbAreEqualIgnoreOrder
+) => value != undefined && list?.some(v => equals(v, value));
+
+/**
+ * Checks whether two lists share any values
+ * @template T the type of the elements of the lists
+ * @param value1 first list to check
+ * @param value2 second list to check
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual} with `ignoreOrder: true`
+ * @returns
+ */
+export const listsShare = <T>(
+  value1?: T[],
+  value2?: T[],
+  equals: equalityFunction<T> = arbAreEqualIgnoreOrder
+) => (value1 ?? []).some(value => listIncludesValue(value2 ?? [], value, equals));
+
+/**
+ * Calculates the maximum depth of a list (if value isn't a list, returns 0)
+ * @param value value to calculate the depth of
+ */
 const depth = (value: any): number => {
   if (!Array.isArray(value)) {
     return 0;
@@ -162,38 +214,14 @@ const depth = (value: any): number => {
 };
 
 /**
- * Checks whether a list includes a value.
- * @param list List to check
- * @param value Value to check
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
+ * Checks whether one list can contain another list
+ * @template T the type of the elements of the lists
+ * @param value1 list to check whether it contains the other list
+ * @param value2 list to check whether it is contained by the other list
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual} with `ignoreOrder: true`
  * @returns
  */
-export const listIncludesValue = <T = any>(
-  list?: T[],
-  value?: T,
-  equals: equalityFunction<T> = arbAreEqualIgnoreOrder
-) => value != undefined && list?.some(v => equals(v, value));
-/**
- * Checks whether one list shares any values with another list.
- * @param value1 First list to check
- * @param value2 Second list to check
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
- * @returns
- */
-export const listsShare = <T = any>(
-  value1?: T[],
-  value2?: T[],
-  equals: equalityFunction<T> = arbAreEqualIgnoreOrder
-) => (value1 ?? []).some(value => listIncludesValue(value2 ?? [], value, equals));
-
-/**
- * Checks whether one list can contain another list.
- * @param value1 List to check whether it contains the other list
- * @param value2 List to check whether it is contained by the other list
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
- * @returns
- */
-export const listCanContainList = <T = any>(
+export const listCanContainList = <T>(
   value1: T[][] | T[],
   value2: T[][] | T[],
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
@@ -216,11 +244,12 @@ export const listCanContainList = <T = any>(
 
 /**
  * Checks whether two values and/or lists share any values. They must have the same type but either one can be either a list or a value.
- * @param value1 First value/list to check
- * @param value2 Second value/list to check
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
+ * @template T the type of the elements of the lists or of the values
+ * @param value1 first value/list to check
+ * @param value2 second value/list to check
+ * @param equals {@link equalityFunction | equality function} to use; defaults to {@linkcode arbAreEqual} with `ignoreOrder: true`
  */
-export const listsOrValuesShare = <T = any>(
+export const listsOrValuesShare = <T>(
   value1: T | T[],
   value2: T | T[],
   equals: equalityFunction<T> = arbAreEqualIgnoreOrder
@@ -244,28 +273,26 @@ export const listsOrValuesShare = <T = any>(
 
 const listLowerEquality: equalityFunction<string> = (value1: string, value2: string) =>
   value1.toLowerCase() === value2.toLowerCase();
+
 /**
- * Checks whether a list includes a value when lowercase.
- * @param list List to check
- * @param value Value to check
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
- * @returns
+ * Checks whether a list includes a value; lowercases strings before comparing them
+ * @param list list to check
+ * @param value value to check
  */
 export const listIncludesValueLower = (list?: string[], value?: string) =>
   value != undefined && listIncludesValue(list ?? [], value, listLowerEquality);
 /**
- * Checks whether a list includes all of a list of values when lowercase
- * @param value1 List to check
- * @param value2 List of strings to check
+ * Checks whether a list includes all of a list of values; lowercases strings before comparing them
+ * @param value1 list to check
+ * @param value2 list of strings to check
  */
 export const listIncludesValueLowerEvery = (value1?: string[], value2?: string[]) =>
   value2?.every(value => listIncludesValueLower(value1, value));
+
 /**
- * Checks whether one list shares any values with another list.
- * @param value1 First list to check
- * @param value2 Second list to check
- * @param equals equality function to use; defaults to {@link arbAreEqual} with `ignoreOrder: true`
- * @returns
+ * Checks whether two lists share any values; lowercases strings before comparing them
+ * @param value1 first list to check
+ * @param value2 second list to check
  */
 export const listsShareLower = (value1?: string[], value2?: string[]) =>
   listsShare(value1, value2, listLowerEquality);
@@ -279,44 +306,52 @@ export const listsOrValuesShareLower = (value1: string | string[], value2: strin
 
 /**
  * Checks whether a text list contains a string
- * @param value1 List to check
- * @param value2 String to check
+ * (i.e. whether the list includes a string that {@link textContains contains} the string to check)
+ * @param value1 list to check
+ * @param value2 string to check
  */
 export const textListContains = (value1?: string[], value2?: string) =>
   listIncludesValue(value1, value2, textContains);
-// Boolean(value1?.some(text => textSearchIncludes(text, value2)));
 
 /**
  * Checks whether a text list contains all members of a list of strings
- * @param value1 List to check
- * @param value2 List of strings to check
+ * (i.e. whether the list includes a string that {@link textContains contains} the string to check)
+ * @param value1 list to check
+ * @param value2 list of strings to check
  */
 export const textListContainsEvery = (value1?: string[], value2?: string[]) =>
   value2?.every(value => textListContains(value1, value));
+
 /**
- * Checks whether a text list includes a string
- * @param value1 List to check
- * @param value2 String to check
+ * Checks whether a text list includes a string (using {@linkcode textEquals})
+ * @param value1 list to check
+ * @param value2 string to check
  */
 export const textListIncludes = (value1?: string[], value2?: string) =>
   listIncludesValue(value1, value2, textEquals);
 /**
- * Checks whether a text list includes all members of a list of strings
- * @param value1 List to check
- * @param value2 List of strings to check
+ * Checks whether a text list includes all members of a list of strings (using {@linkcode textEquals})
+ * @param value1 list to check
+ * @param value2 list of strings to check
  */
 export const textListIncludesEvery = (value1?: string[], value2?: string[]) =>
   value2?.every(value => textListIncludes(value1, value));
 
+/**
+ * Checks whether two text lists share any values, using {@linkcode textEquals}
+ * @param value1 first list to check
+ * @param value2 second list to check
+ */
 export const textListsShare = (value1?: string[], value2?: string[]) =>
   listsShare(value1, value2, textEquals);
 
 /**
- * Remove shared elements from two lists
- * @param value1 First list to remove elements from
- * @param value2 Second list to remove elements form
+ * Remove shared elements from two lists (does not modify the original lists)
+ * @param value1 first list to remove elements from
+ * @param value2 fecond list to remove elements form
+ * @returns versions of both lists with their intersections removed
  */
-export const removeIntersection = <T = any>(value1: T[], value2: T[]): { set1: T[]; set2: T[] } => {
+export const removeIntersection = <T>(value1: T[], value2: T[]): { set1: T[]; set2: T[] } => {
   const set1 = [...value1];
   const set2 = [...value2];
   for (let i = value2.length; i >= 0; i--) {
@@ -332,10 +367,11 @@ export const removeIntersection = <T = any>(value1: T[], value2: T[]): { set1: T
 
 /**
  * Gets the union of two lists
- * @param value1 First list to get the union of
- * @param value2 Second list to get the union of
+ * @param value1 first list to get the union of
+ * @param value2 second list to get the union of
+ * @returns a list of all values that are in both lists
  */
-export const toUnion = <T = any>(value1: T[], value2: T[]) => {
+export const toUnion = <T>(value1: T[], value2: T[]) => {
   const union = [...value1];
   value2.forEach(value => {
     if (!union.includes(value)) {
@@ -347,24 +383,27 @@ export const toUnion = <T = any>(value1: T[], value2: T[]) => {
 
 /**
  * Correctly deals with pushing a value to an optional property by creating the value of the prop first if necessary
+ * @template T the type of the object to push to
  * @param ob object that has the prop
  * @param prop prop to push to
  * @param value value to push
  */
-export const pushProp = <T = any>(ob: T, prop: keyof T, value: any) => {
+export const pushProp = <T>(ob: T, prop: keyof T, value: any) => {
   if (ob[prop] == undefined) {
     (ob as any)[prop] = [value];
   } else if (Array.isArray(ob[prop])) {
     ob[prop].push(value);
   }
 };
+
 /**
  * Correctly deals with popping a value from an optional property
+ * @template T the type of the object to pop from
  * @param ob object that has the prop
  * @param prop prop to pop from
  * @param value value to pop
  */
-export const popProp = <T = any>(ob: T, prop: keyof T, value: any) => {
+export const popProp = <T>(ob: T, prop: keyof T, value: any) => {
   if (ob[prop] == undefined) {
     return false;
   } else if (Array.isArray(ob[prop])) {
@@ -376,13 +415,15 @@ export const popProp = <T = any>(ob: T, prop: keyof T, value: any) => {
 };
 
 /**
- * Correctly deals with adding a value to an optional property that's a `Record<string,string>` by creating the value of the prop first if necessary
+ * Correctly deals with adding a value to an optional property that's a `Record<string,string>`
+ * by creating the value of the prop first if necessary
+ * @template T the type of the object to add to
  * @param ob object that has the prop
  * @param prop prop to add to
  * @param key key to add
  * @param value value to add
  */
-export const addPropToRecord = <T = any>(ob: T, prop: keyof T, key: string, value: string) => {
+export const addPropToRecord = <T>(ob: T, prop: keyof T, key: string, value: string) => {
   if (ob[prop] == undefined) {
     (ob as any)[prop] = {};
   }
@@ -390,13 +431,15 @@ export const addPropToRecord = <T = any>(ob: T, prop: keyof T, key: string, valu
   record[key] = value;
 };
 /**
- * Correctly deals with pushing a value to an optional property that's a `Record<string,string[]>` by creating the value of the prop first if necessary
+ * Correctly deals with pushing a value to an optional property that's a `Record<string,string[]>`
+ * by creating the value of the prop first if necessary
+ * @template T the type of the object to push to
  * @param ob object that has the prop
  * @param prop prop to push to
  * @param key key to push to
  * @param value value to push
  */
-export const pushPropToRecord = <T = any>(ob: T, prop: keyof T, key: string, value: string) => {
+export const pushPropToRecord = <T>(ob: T, prop: keyof T, key: string, value: string) => {
   if (ob[prop] == undefined) {
     (ob as any)[prop] = {};
   }
@@ -409,12 +452,13 @@ export const pushPropToRecord = <T = any>(ob: T, prop: keyof T, key: string, val
 };
 
 /**
- * Correctly deals with deleting a value from an optional property that's a `Record<string,string>
+ * Correctly deals with deleting a value from an optional property that's a `Record<string,string>`
+ * @template T the type of the object to delete from
  * @param ob object that has the prop
  * @param prop prop to delete from
  * @param key key to delete
  */
-export const deletePropFromRecord = <T = any>(ob: T, prop: keyof T, key: string) => {
+export const deletePropFromRecord = <T>(ob: T, prop: keyof T, key: string) => {
   if (ob[prop] == undefined) {
     return false;
   }
@@ -427,13 +471,14 @@ export const deletePropFromRecord = <T = any>(ob: T, prop: keyof T, key: string)
 };
 
 /**
- * Correctly deals with popping a value from an optional property that's a `Record<string,string[]>
+ * Correctly deals with popping a value from an optional property that's a `Record<string,string[]>`
+ * @template T the type of the object to delete from
  * @param ob object that has the prop
  * @param prop prop to delete from
  * @param key key to pop from
  * @param value value to pop
  */
-export const popPropFromRecord = <T = any>(ob: T, prop: keyof T, key: string, value: string) => {
+export const popPropFromRecord = <T>(ob: T, prop: keyof T, key: string, value: string) => {
   if (ob[prop] == undefined) {
     return false;
   }
@@ -472,7 +517,8 @@ export const wrapArray = <T>(value: T | T[] | undefined): T[] | undefined =>
   !Array.isArray(value) && value != undefined ? [value] : (value as T[] | undefined);
 
 /**
- * Ensures that a value is an array. If it's not an array or undefined, wraps value in an array before returning it; if it's undefined, returns an empty array
+ * Ensures that a value is an array. If it's not an array or undefined, wraps value in an array before returning it;
+ * if it's undefined, returns an empty array
  * @template T The type of the value
  * @param value the value to ensure is an array
  */

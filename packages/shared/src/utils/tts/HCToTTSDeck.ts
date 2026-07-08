@@ -22,7 +22,14 @@ const cardBackURL =
 //   HCLayout.Stickers,
 //   HCLayout.Emblem,
 // ];
-export const HCToTTSDeckStates = (
+
+/**
+ * Gets the tts deck states for a deck
+ * @param idList the ids to get
+ * @param cardMap the map of all cards
+ * @param multMap the ids that have multiple copies and their corresponding number of copies, if any
+ */
+const HCToTTSDeckStates = (
   idList: string[],
   cardMap: CardMap,
   multMap?: Map<string, number>
@@ -179,6 +186,13 @@ export const HCToTTSDeckStates = (
   return bundle;
 };
 
+/**
+ * Gets a tts deck object
+ * @param name the name of the deck
+ * @param idList the ids to get
+ * @param cardMap the map of all cards
+ * @param multMap the ids that have multiple copies and their corresponding number of copies, if any
+ */
 export const HCToTTSDeck = (
   name: string,
   idList: string[],

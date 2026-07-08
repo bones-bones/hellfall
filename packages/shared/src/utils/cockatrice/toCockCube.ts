@@ -1,6 +1,6 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { DOMParser, XMLSerializer } from 'xmldom';
-import { HCCard, SetCode } from '@hellfall/shared/types';
+import { SetCode } from '@hellfall/shared/types';
 import { CockCardProps } from './cockTypes';
 import { CardMap, getRelatedsFromCards, getRelatedsFromSet } from '../cardHandling';
 import { hcCardToCockProps } from './HCToCockCard';
@@ -8,6 +8,11 @@ import { prettifyXml } from './prettifyXml';
 
 type RecursiveChild = (Node | RecursiveChild)[];
 
+/**
+ * Recursively applies nodes to a parent node
+ * @param parent parent node
+ * @param children child nodes
+ */
 export const recursiveAdoption = (parent: Node, children: RecursiveChild) => {
   for (let i = 0; i < children.length; i++) {
     if (children[i] instanceof Array) {
@@ -18,6 +23,12 @@ export const recursiveAdoption = (parent: Node, children: RecursiveChild) => {
   }
 };
 
+/**
+ * Gets a cockatrice cube JSON
+ * @param cardMap the map of all cards
+ * @param set the set to get, if any
+ * @param idList the ids to get, if any
+ */
 export const toCockCubeJSON = (
   cardMap: CardMap,
   set?: SetCode,
@@ -42,13 +53,16 @@ export const toCockCubeJSON = (
   cockTokens.forEach(token => addRelatedNames(token));
   const cards = Array.from(cockCards.values());
   const tokens = Array.from(cockTokens.values());
-  /**
-   * Adds names to all related entries
-   * @param card card props to add related names to
-   */
   return { cards, tokens };
 };
 
+/**
+ * Gets a cockatrice cube XML doc
+ * @param name the name to use
+ * @param cardMap the map of all cards
+ * @param set the set to get
+ * @param idList the ids to get, if any
+ */
 export const toCockCube = ({
   name,
   cardMap,
@@ -104,7 +118,7 @@ export const toCockCube = ({
       const setElement = xmlDoc.createElement('set');
       setElement.setAttribute('rarity', 'common');
       setElement.setAttribute('picURL', face.picurl || entry.props[0].picurl || '');
-      setElement.setAttribute('uuid', entry.id);
+      setElement.setAttribute('uuid', entry.uuid);
       setElement.setAttribute('muid', 'hc' + entry.hcid + (i ? 'b' : ''));
       if (entry.collector_number) {
         setElement.setAttribute('num', entry.collector_number);
@@ -221,16 +235,16 @@ export const toCockCube = ({
         }
       }
       const mainTypeToTableRow: Record<string, number> = {
-        instant: 3,
-        sorcery: 3,
-        creature: 2,
-        land: 0,
+        Instant: 3,
+        Sorcery: 3,
+        Gleeporzob: 3,
+        Interrupt: 3,
+        Creature: 2,
+        Land: 0,
       };
       const tablerow = xmlDoc.createElement('tablerow');
       tablerow.textContent = (
-        face.maintype.toLowerCase() in mainTypeToTableRow
-          ? mainTypeToTableRow[face.maintype.toLowerCase()]
-          : 1
+        face.maintype in mainTypeToTableRow ? mainTypeToTableRow[face.maintype] : 1
       ).toString();
 
       recursiveAdoption(tempCard, [name, text, setElement, tablerow, prop, ...maybeElements]);

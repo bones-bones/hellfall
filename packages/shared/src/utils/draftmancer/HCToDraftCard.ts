@@ -5,6 +5,10 @@ import { stripSingleSlashes, toExportMana } from '../textHandling';
 import { orderColors } from '../orderColors';
 const validColors = ['W', 'U', 'B', 'R', 'G'];
 
+/**
+ * Converts a single-faced card into a {@linkcode DraftmancerCustomCard}
+ * @param card card to convert
+ */
 const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard => {
   const draftCard: DraftmancerCustomCard = {
     id: card.id,
@@ -36,6 +40,10 @@ const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard =
   return draftCard;
 };
 
+/**
+ * Converts a card face to a {@linkcode DraftmancerCardFace}
+ * @param face face to convert
+ */
 const HCFaceToDraftFace = (face: HCCardFace.MultiFaced): DraftmancerCardFace => {
   const draftFace: DraftmancerCardFace = {
     name: stripSingleSlashes(face.export_name || face.name),
@@ -63,6 +71,10 @@ const HCFaceToDraftFace = (face: HCCardFace.MultiFaced): DraftmancerCardFace => 
   return draftFace;
 };
 
+/**
+ * Extracts the front of a multifaced card as a {@linkcode DraftmancerCustomCard}
+ * @param card card to extract from
+ */
 const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => {
   const face = card.card_faces[0];
   const draftCard: DraftmancerCustomCard = {
@@ -97,6 +109,10 @@ const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => 
   return draftCard;
 };
 
+/**
+ * Converts a card into a {@linkcode DraftmancerCustomCard}
+ * @param card card to convert
+ */
 export const HCCardToDraftmancerCard = (card: HCCard.Any): DraftmancerCustomCard => {
   const draftCard = 'card_faces' in card ? extractFrontFace(card) : convertSingleFace(card);
   if (canBeACommander(card)) {
@@ -107,7 +123,9 @@ export const HCCardToDraftmancerCard = (card: HCCard.Any): DraftmancerCustomCard
   }
   return draftCard;
 };
-// this is for \_\_\_\_\_\_\_ Balls
+/**
+ * The list of sticker sheet scryfall ids for \_\_\_\_\_\_\_ Balls
+ */
 export const StickerSheetScryfallIds = [
   '34c3979d-60e7-44b5-bb9f-1b6b0f2b70c3',
   '016bf660-16c3-41b7-a988-211921c21eb8',

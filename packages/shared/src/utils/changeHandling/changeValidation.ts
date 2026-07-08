@@ -48,6 +48,7 @@ const isArtistArray = (value: any): value is [string, string] =>
 
 /**
  * Checks whether a prop is valid for a root change with the given change_type
+ * @template T the {@linkcode changeType} to check
  * @param change_type change_type to check
  * @param value prop to check
  */
@@ -59,6 +60,8 @@ export const isRootChangePropType = <T extends changeType>(
 
 /**
  * Gets the error message for a given value for a root change
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode rootChangeablePropType} for the change
  * @param change_type the change_type for the change
  * @param prop the prop for the change
  * @param value the value for the change
@@ -189,6 +192,8 @@ export const rootValueErrorMessage = <T extends changeType, K extends rootChange
 
 /**
  * Checks if a given value for a root change is valid
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode rootChangeablePropType} for the change
  * @param change_type the change_type for the change
  * @param prop the prop for the change
  * @param value the value for the change
@@ -243,6 +248,7 @@ const isStringArray = (value: any): value is string[] =>
 
 /**
  * Checks whether a prop is valid for a face change with the given change_type
+ * @template T the {@linkcode changeType} to check
  * @param change_type change_type to check
  * @param value prop to check
  */
@@ -254,6 +260,8 @@ export const isFaceChangePropType = <T extends changeType>(
 
 /**
  * Gets the error message for a given value for a face change
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode faceChangeablePropType} for the change
  * @param change_type the change_type for the change
  * @param prop the prop for the change
  * @param value the value for the change
@@ -354,6 +362,8 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
 
 /**
  * Checks if a given value for a face change is valid
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode faceChangeablePropType} for the change
  * @param change_type the change_type for the change
  * @param prop the prop for the change
  * @param value the value for the change

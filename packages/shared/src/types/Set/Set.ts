@@ -72,6 +72,10 @@ export const allSetsList = [
  */
 export type SetCode = (typeof allSetsList)[number];
 
+/**
+ * Checks if a value is a {@linkcode SetCode}
+ * @param value the value to check
+ */
 export const isSetCode = (value: any): value is SetCode =>
   allSetsList.includes(value.toUpperCase());
 
@@ -90,7 +94,7 @@ export type storedLink = {
 };
 
 /**
- * Description of a Magic card set.
+ * Description of a Hellscube card set.
  *
  * @see {@link https://scryfall.com/docs/api/sets}
  */

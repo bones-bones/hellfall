@@ -9,6 +9,10 @@ const isInteger = (num: string) => {
   return num == parseInt(num).toString();
 };
 
+/**
+ * Checks if a value is a {@linkcode HCRelatedCard}
+ * @param value the value to check
+ */
 export const isRelatedCard = (value: any): value is HCRelatedCard => {
   if (typeof value != 'object' || value == null) return false;
   const part = value as HCRelatedCard;
@@ -50,6 +54,10 @@ export const attractionLightsAreValid = (lights: number[]) => {
   return true;
 };
 
+/**
+ * Checks if a value is a {@linkcode HCCardFace.MultiFaced}
+ * @param value the value to check
+ */
 export const isCardFace = (value: any): value is HCCardFace.MultiFaced => {
   if (typeof value != 'object' || value == null) return false;
   const face = value as HCCardFace.MultiFaced;

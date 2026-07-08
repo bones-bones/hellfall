@@ -183,7 +183,8 @@ export const updateParts = (
         relateds.find(related => textEquals(part.name, related.name));
       if (!relatedCard) {
         throw new Error(
-          `updateParts: draft_partner part not found for card "${card.name}" (${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
+          `updateParts: draft_partner part not found for card "${card.name}" ` +
+            `(${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
         );
       }
       if (!relatedCard.has_draft_partners) {
@@ -219,7 +220,8 @@ export const updateParts = (
           relateds.find(related => textEquals(part.name, related.name));
         if (!relatedCard) {
           throw new Error(
-            `updateParts: meld_part not found for token "${card.name}" (${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
+            `updateParts: meld_part not found for token "${card.name}" ` +
+              `(${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
           );
         }
         part.id = relatedCard.id;

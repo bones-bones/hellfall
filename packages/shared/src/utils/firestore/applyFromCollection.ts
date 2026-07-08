@@ -11,6 +11,12 @@ import {
 import { getAllRelatedCollection } from './cardRefs';
 import { cardToFirestore, firestoreToCard } from './cardConversion';
 
+/**
+ * Updates a card along with its related cards
+ * @param card card to apply the changes to
+ * @param changeList changes to apply to the card
+ * @param cardsCol the collection of cards
+ */
 export const applyFromCollection = async (
   card: HCCard.Any,
   changeList: anyChange[],

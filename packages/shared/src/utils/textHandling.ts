@@ -235,7 +235,9 @@ export const textEquals = (cardText?: string, searchText?: string) => {
 };
 
 /**
- * Splits a string into a list of strings based on parentheses that alternate between a chunk wrapped in parentheses and one that isn't. Will ignore \( and \). Correctly handles nested parens.
+ * Splits a string into a list of strings based on parentheses that alternate
+ * between a chunk wrapped in parentheses and one that isn't. Will ignore \( and \).
+ * Correctly handles nested parens.
  * @param text text to split
  */
 export const splitParens = (text: string) => {
@@ -381,7 +383,8 @@ export const toExportName = (name: string) => {
 };
 
 /**
- * Strips single slashes from text (for the purposes of exporting to draftmancer so that it imports correctly into cockatrice)
+ * Strips single slashes from text (for the purposes of exporting to draftmancer
+ * so that it imports correctly into cockatrice)
  * @param text text to strip single slashes from
  */
 export const stripSingleSlashes = (text: string) => {
@@ -501,7 +504,7 @@ const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a
 export const isValidV4UUID = (uuid: string): boolean => uuidRegex.test(uuid);
 
 /**
- * Replaces the intrinsic {@link unescape} function (which is deprecated)
+ * Replaces the intrinsic {@linkcode unescape} function (which is deprecated)
  * @param text text to unescape
  */
 export const unescapeBase64 = (text: string) =>

@@ -14,9 +14,11 @@ export const isNumber = (num: string) => {
 };
 
 /**
- * Converts a number, string, or undefined into a number. Correctly handles all values that have appeared in p/t boxes on hellscube cards.
- * @param num number
- * @returns undefined if `num == undefined`, num if `typeof num == 'number'`, or the conversion of num into a number otherwise
+ * Converts a number, string, or undefined into a number.
+ * Correctly handles all values that have appeared in p/t boxes on hellscube cards.
+ * @param num number to convert
+ * @returns undefined if `num == undefined`, num if `typeof num == 'number'`,
+ * or the conversion of num into a number otherwise
  */
 export const toNumber = (num: number | string | undefined): number | undefined => {
   const zeroEquivs = ['?', 'N', 'X', 'Y', 'Z', '*', ''];

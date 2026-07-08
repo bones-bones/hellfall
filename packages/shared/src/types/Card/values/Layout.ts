@@ -1,8 +1,7 @@
+// TODO: Decide whether to do array for cards that arguably fit multiple layouts
 /**
  * The set of card layouts.
  */
-
-// TODO: Decide whether to do array for cards that arguably fit multiple layouts
 export enum HCLayout {
   /** A standard Magic card with one face or face */
   Normal = 'normal',
@@ -101,8 +100,11 @@ export enum HCLayout {
   Front = 'front',
 }
 
-export const isLayout = (value: any): value is HCLayout =>
-  Object.values(HCLayout).includes(value as HCLayout);
+/**
+ * Checks if a value is a {@linkcode HCLayout}
+ * @param value the value to check
+ */
+export const isLayout = (value: any): value is HCLayout => Object.values(HCLayout).includes(value);
 
 /**
  * Groupings of layouts.
@@ -363,9 +365,9 @@ export const NoManaValueFaceLayouts = [
   HCLayout.Prepare,
 ];
 
-// /**
-//  * All face layouts that use their front face for their mana value.
-//  */
+/**
+ * All face layouts that use their front face for their mana value.
+ */
 export const FrontManaValueFaceLayouts = [
   HCLayout.Transform,
   HCLayout.Specialize,

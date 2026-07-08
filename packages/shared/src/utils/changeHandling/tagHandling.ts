@@ -502,6 +502,9 @@ const tagUsesNoteAsValue = (tag: string, card?: HCCard.Any): boolean => {
   }
   return false;
 };
+/**
+ * The return object from splitting a tag
+ */
 type splitTagReturn = {
   /**
    * The tag to return
@@ -532,10 +535,6 @@ type splitTagReturn = {
    */
   url?: string;
 };
-// type splitTagOptions = {
-//   alsoAddingFaces?:boolean,
-//   // noFaces?: boolean,
-// }
 
 const subKeywords: Record<string, string | string[]> = {
   'commander ninjutsu': 'ninjutsu',
@@ -613,15 +612,16 @@ export const fillSubKeywords = (keywords: string[]) => {
 /**
  * Splits a full tag into a tag and its components
  * @param fullTag full tag to split
- * @param card the card that the tag will be applied to; only really necessary if the tag is a uuid tag and is going off of the card name or if the tag note includes an element that specifies the face
- * @param alsoAddingFaces whether this tag is being applied alongside changes that convert the card from a single-faced card to a multifaced card
- * @see {@link splitTagReturn} for the return type documentation
+ * @param card the card that the tag will be applied to; only really necessary if the tag is a uuid tag
+ * and is going off of the card name or if the tag note includes an element that specifies the face
+ * @param alsoAddingFaces whether this tag is being applied alongside changes that convert the card
+ * from a single-faced card to a multifaced card
+ * @see {@linkcode splitTagReturn} for the return type documentation
  */
 export const splitTagComponents = (
   full_tag: string,
   card?: HCCard.Any,
   alsoAddingFaces?: boolean
-  // options?:splitTagOptions
 ): splitTagReturn => {
   const splitTag: splitTagReturn = splitFullTag(full_tag);
   if (keywordTags.includes(splitTag.tag)) {
@@ -714,35 +714,45 @@ export const splitTagComponents = (
   return splitTag;
 };
 
-/* type TagChangeOptions = {
-    // dontAddNote?: boolean;
-    // replaceNote?: boolean;
-    // push?: boolean;
-    // useRootOnly?: boolean;
-    // useUrl?: boolean;
-    // useUUID?:boolean;
-    // defaultToBack?: boolean;
-    alsoAddingFaces?: boolean;
-  }
+/**
+ * The input for a tag change
+ * @template K The type of the prop to modify, if any
  */
-// const tagShouldPush = (tag: string): boolean => {
-//   if (tag in anyFrameEffectTags) {
-//     return true;
-//   } else if (tag in faceFrameEffectTags) {
-//     return true;
-//   }
-//   return false;
-// };
 type TagChangeInput<K extends anyPropType> = {
+  /**
+   * The card that the tag change will be applied to
+   */
   card: HCCard.Any;
+  /**
+   * The type of change. Add is used for adding a new tag or updating an existing one;
+   * delete is for deleting an existing tag
+   */
   change_type: 'add' | 'delete';
+  /**
+   * The full tag to change.
+   */
   full_tag: string;
+  /**
+   * The split tag to change. See {@linkcode splitTagReturn} for documentation
+   */
   splitTag: splitTagReturn;
-  // alsoAddingFaces?:boolean,
+  /**
+   * The prop to change, if any
+   */
   prop?: K;
+  /**
+   * The value to change, if any.
+   */
   value?: Record<string, anyElementValueType<K>> | anyElementValueType<K>;
-  // options?: TagChangeOptions
 };
+
+/**
+ * Adds a prop with a given value to a {@linkcode TagChangeInput}
+ * @template K The type of the prop to add
+ * @param input the input object to add the prop to
+ * @param prop the prop to add
+ * @param value the value to add, if any
+ */
 const addPropToInput = <K extends anyPropType>(
   input: TagChangeInput<any>,
   prop: K,
@@ -755,13 +765,10 @@ const addPropToInput = <K extends anyPropType>(
 };
 
 /**
- * Adds a tag
- * @param card card to add tag to
- * @param tag tag to add
- * @param note tag note
- * @param prop prop to set
- * @param value value to set the prop to, or record to access with the tag to get the value
- * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
+ * Gets the changes for a tag that applies to a card face
+ * @template K The type of the prop to add
+ * @param input the {@linkcode TagChangeInput} to use
+ * @param alsoAddingFaces dummy
  */
 const changesForFaceTag = <K extends facePropType>(
   input: TagChangeInput<K>,
@@ -797,14 +804,6 @@ const changesForFaceTag = <K extends facePropType>(
       return value;
     }
   };
-  // const face_change_type: changeType =
-  //   change_type == 'delete'
-  //     ? tagShouldPush(splitTag.tag)
-  //       ? 'pop'
-  //       : 'delete'
-  //     : tagShouldPush(splitTag.tag)
-  //     ? 'push'
-  //     : 'add';
   const resolvedValue = getValue() as faceElementValueType<K> | undefined;
   if (!resolvedValue) {
     changes.push(tag_change);
@@ -826,6 +825,12 @@ const changesForFaceTag = <K extends facePropType>(
   return changes.sort(sortChanges);
 };
 
+/**
+ * Gets the changes for a tag that applies to a card root
+ * @template K The type of the prop to add
+ * @param input the {@linkcode TagChangeInput} to use
+ * @param alsoAddingFaces dummy
+ */
 const changesForRootTag = <K extends rootPropType>(
   input: TagChangeInput<K>,
   alsoAddingFaces?: boolean
@@ -860,14 +865,6 @@ const changesForRootTag = <K extends rootPropType>(
       return value;
     }
   };
-  // const root_change_type: changeType =
-  //   change_type == 'delete'
-  //     ? tagShouldPush(splitTag.tag)
-  //       ? 'pop'
-  //       : 'delete'
-  //     : tagShouldPush(splitTag.tag)
-  //     ? 'push'
-  //     : 'add';
   const resolvedValue = getValue() as
     | rootElementValueType<rootChangeablePropType<typeof change_type>>
     | undefined;
@@ -890,6 +887,13 @@ const changesForRootTag = <K extends rootPropType>(
   return changes.sort(sortChanges);
 };
 
+/**
+ * Gets the changes for a tag that applies to any part of a card
+ * @template K The type of the prop to add
+ * @param input the {@linkcode TagChangeInput} to use
+ * @param alsoAddingFaces whether this tag is being applied alongside changes
+ * that convert the card from a single-faced card to a multifaced card
+ */
 const changesForAnyTag = <K extends allPropType>(
   input: TagChangeInput<K>,
   alsoAddingFaces?: boolean
@@ -985,6 +989,15 @@ const flagTags = [
   'unnecessary-color-indicator',
   'generic',
 ];
+/**
+ * Gets the input and the
+ * @param card card to get the input for
+ * @param change_type whether to add or delete the tag
+ * @param full_tag the full tag to use
+ * @param alsoAddingFaces whether this tag is being applied alongside changes
+ * that convert the card from a single-faced card to a multifaced card
+ * @returns the {@linkcode TagChangeInput} to use and the location to apply the input to
+ */
 const inputForTag = (
   card: HCCard.Any,
   change_type: 'add' | 'delete',
@@ -999,7 +1012,7 @@ const inputForTag = (
     splitTag,
   };
   const tag = splitTag.tag;
-  // TODO: remove value resolution
+  // TODO: remove value resolution (i.e. `resolveValue` functions) if possible
   let location: 'face' | 'root' | 'any' = 'any';
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
     addPropToInput(input, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
@@ -1049,8 +1062,8 @@ const inputForTag = (
  * @param card card to get the changes for
  * @param change_type whether to add or delete the tag
  * @param full_tag the full tag to use
- * @param alsoAddingFaces whether this tag is being applied alongside changes that convert the card from a single-faced card to a multifaced card
- * @returns
+ * @param alsoAddingFaces whether this tag is being applied alongside changes
+ * that convert the card from a single-faced card to a multifaced card
  */
 export const getChangesFromTag = (
   card: HCCard.Any,
@@ -1131,12 +1144,14 @@ export const deleteTagFromBase = (base_tags: string[], fullTag: string): boolean
   return changesVisible;
 };
 
-// export const replaceTagInBase = (base_tags: string[], fullTag: string, noteToReplace?:string):boolean => {
-//   const {tag, note} = splitFullTag(fullTag)
+// export const replaceTagInBase = (
+//   base_tags: string[],
+//   fullTag: string,
+//   noteToReplace?: string
+// ): boolean => {
+//   const { tag, note } = splitFullTag(fullTag);
 //   if (note == 'undefined') {
-
 //   }
-
 // };
 
 /**

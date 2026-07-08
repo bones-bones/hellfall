@@ -1,3 +1,6 @@
+/**
+ * A color for a card
+ */
 export enum HCColor {
   White = 'W',
   Blue = 'U',
@@ -19,11 +22,20 @@ export enum HCColor {
   Grey = 'Grey',
   Lime = 'Lime',
 }
-export const isColor = (value: any): value is HCColor =>
-  Object.values(HCColor).includes(value as HCColor);
+/**
+ * Checks if a value is a {@linkcode HCColor}
+ * @param value the value to check
+ */
+export const isColor = (value: any): value is HCColor => Object.values(HCColor).includes(value);
 
+/**
+ * The list of core colors
+ */
 export const HCCoreColors: HCColors = ['W', 'U', 'B', 'R', 'G', 'P'];
 
+/**
+ * The list of colors that can be reduced to `Misc` for misc searches
+ */
 export const HCMiscColors: HCColors = [
   'Orange',
   'Brown',
@@ -39,6 +51,9 @@ export const HCMiscColors: HCColors = [
   'Lime',
 ];
 
+/**
+ * The list of colors to use in the advanced search dropdown
+ */
 export const HCSearchColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc'];
 // export type HCColor = HCCoreColor | HCMiscColor;
 
@@ -48,6 +63,10 @@ export const HCSearchColors = ['W', 'U', 'B', 'R', 'G', 'P', 'C', 'Misc'];
 
 export type HCColors = `${HCColor}`[];
 
+/**
+ * Checks if a value is {@linkcode HCColors}. Also returns false if there are any duplicate colors
+ * @param value the value to check
+ */
 export const isColors = (value: any): value is HCColors => {
   if (!Array.isArray(value)) return false;
   const colorList: HCColors = [];

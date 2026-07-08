@@ -1,3 +1,6 @@
+/**
+ * The frames that a card can have
+ */
 export enum HCFrame {
   /** The original Magic card frame, starting from Limited Edition Alpha. */
   Original = '1993',
@@ -46,10 +49,25 @@ export enum HCFrame {
   /** Any cards with a website or app frame. */
   WebsiteApp = 'website_app',
 }
+/**
+ * The retro frames
+ */
 export const RetroFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic, HCFrame.ClassicToken];
+/**
+ * The retro card frames
+ */
 export const RetroCardFrames: HCFrame[] = [HCFrame.Original, HCFrame.Classic];
+/**
+ * The retro token frames
+ */
 export const RetroTokenFrames: HCFrame[] = [HCFrame.ClassicToken];
+/**
+ * The frames that many frame effects are restricted to
+ */
 export const EffectFrames: HCFrame[] = [HCFrame.Stamp, HCFrame.StampToken, HCFrame.FullToken];
+/**
+ * The new frames
+ */
 export const NewFrames: HCFrame[] = [
   HCFrame.Modern,
   HCFrame.Stamp,
@@ -60,6 +78,9 @@ export const NewFrames: HCFrame[] = [
   HCFrame.StampToken,
   HCFrame.FullToken,
 ];
+/**
+ * The new card frames
+ */
 export const NewCardFrames: HCFrame[] = [
   HCFrame.Modern,
   HCFrame.Stamp,
@@ -67,11 +88,17 @@ export const NewCardFrames: HCFrame[] = [
   HCFrame.Playtest,
   HCFrame.Shattered,
 ];
+/**
+ * The new token frames
+ */
 export const NewTokenFrames: HCFrame[] = [
   HCFrame.ModernToken,
   HCFrame.StampToken,
   HCFrame.FullToken,
 ];
+/**
+ * The card frames
+ */
 export const CardFrames: HCFrame[] = [
   HCFrame.Original,
   HCFrame.Classic,
@@ -81,13 +108,18 @@ export const CardFrames: HCFrame[] = [
   HCFrame.Playtest,
   HCFrame.Shattered,
 ];
+/**
+ * The token frames
+ */
 export const TokenFrames: HCFrame[] = [
   HCFrame.ClassicToken,
   HCFrame.ModernToken,
   HCFrame.StampToken,
   HCFrame.FullToken,
 ];
-
+/**
+ * The frames that appear on normal magic cards
+ */
 export const MagicFrames: HCFrame[] = [
   HCFrame.Original,
   HCFrame.Classic,
@@ -102,6 +134,9 @@ export const MagicFrames: HCFrame[] = [
   HCFrame.FullToken,
 ];
 
+/**
+ * The frames from nonmagic games
+ */
 export const NotMagicFrames: HCFrame[] = [
   HCFrame.Pokemon,
   HCFrame.Yugioh,
@@ -115,5 +150,8 @@ export const NotMagicFrames: HCFrame[] = [
   HCFrame.NotMagic,
 ];
 
-export const isFrame = (value: any): value is HCFrame =>
-  Object.values(HCFrame).includes(value as HCFrame);
+/**
+ * Checks if a value is a {@linkcode HCFrame}
+ * @param value the value to check
+ */
+export const isFrame = (value: any): value is HCFrame => Object.values(HCFrame).includes(value);

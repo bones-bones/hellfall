@@ -1,4 +1,11 @@
-export const formatList = ['standard', '4cb', 'commander'];
+export const formatList = ['standard', '4cb', 'commander'] as const;
+/**
+ * The formats that exist
+ */
 export type HCFormat = (typeof formatList)[number];
 
-export const isFormat = (value: any): value is HCFormat => formatList.includes(value as HCFormat);
+/**
+ * Checks if a value is a {@linkcode HCFormat}
+ * @param value the value to check
+ */
+export const isFormat = (value: any): value is HCFormat => formatList.includes(value);

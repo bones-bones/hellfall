@@ -140,7 +140,6 @@ const subtypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
  * Get the default layout for a card's face based on its types
  * @param card card to get the default layout for
  * @param index index to get the default layout of; if undefined, defaults to `0`
- * @returns
  */
 export const getDefaultTypeLayout = (card: HCCard.Any, index?: number): HCLayout | undefined => {
   const isTokenRoot = !('card_faces' in card) && card.kind == 'token';
@@ -166,7 +165,6 @@ export const getDefaultTypeLayout = (card: HCCard.Any, index?: number): HCLayout
  * Get the default layout for a card's face based on its kind
  * @param card card to get the default layout for
  * @param index index to get the default layout of; if undefined, defaults to `0`
- * @returns
  */
 export const getDefaultKindLayout = (card: HCCard.Any, index?: number): HCLayout =>
   card.kind == 'card' && index ? HCLayout.Multi : kindToFaceLayout[card.kind];
@@ -176,13 +174,13 @@ export const getDefaultKindLayout = (card: HCCard.Any, index?: number): HCLayout
  * Get the default layout for a card's face based on its types or kind
  * @param card card to get the default layout for
  * @param index index to get the default layout of; if undefined, defaults to `0`
- * @returns
  */
 export const getDefaultFaceLayout = (card: HCCard.Any, index?: number): HCLayout =>
   getDefaultTypeLayout(card, index) ?? getDefaultKindLayout(card, index);
 
 /**
  * Get the default value for a given card and root prop
+ * @template K the {@linkcode rootPropType} to get the default value for
  * @param card card to get the default value for
  * @param prop root prop to get the default value for
  * @returns the default value, or undefined if that prop is optional
@@ -206,6 +204,7 @@ export const getDefaultRootValue = <K extends rootPropType>(
 };
 /**
  * Get the default value for a given card and face prop
+ * @template K the {@linkcode facePropType} to get the default value for
  * @param card card to get the default value for
  * @param prop face prop to get the default value for
  * @param index index to get the default value for; if undefined, defaults to `0`
@@ -234,8 +233,8 @@ export const getDefaultFaceValue = <K extends facePropType>(
  * @param kind the kind of card
  * @param isMultiFaced whether the card is multifaced
  * @param entryProps props to add to the root; ignores values of '', [], and [''].
- * @param faceProps props to add to the first face or to the root, depending on whether the card is multifaced; ignores values of '', [], and [''].
- * @returns
+ * @param faceProps props to add to the first face or to the root,
+ * depending on whether the card is multifaced; ignores values of '', [], and [''].
  */
 export const getDefaultCard = (
   kind: HCKind,
@@ -310,8 +309,8 @@ const onlyInFace: (keyof HCCardFace.MultiFaced)[] = ['object', 'compress_face', 
  * Converts a card of type `HCCard.AnySingleFaced` to type `HCCard.AnyMultiFaced`
  * @param card card to convert
  *
- * Warning: This messes with ts's type system, since {@link HCCard.AnySingleFaced} and
- * {@link HCCard.AnyMultiFaced} are mutually exclusive. If you want to do things with the
+ * Warning: This messes with ts's type system, since {@linkcode HCCard.AnySingleFaced} and
+ * {@linkcode HCCard.AnyMultiFaced} are mutually exclusive. If you want to do things with the
  * card after this that depend on the existence of `card_faces`, you'll need to renarrow it
  * or cast it to `any`/`unknown`.
  */
@@ -343,8 +342,8 @@ export const toMultiFaced = (card: HCCard.AnySingleFaced) => {
  * Converts a card of type `HCCard.AnyMultiFaced` to type `HCCard.AnySingleFaced`
  * @param card card to convert
  *
- * Warning: This messes with ts's type system, since {@link HCCard.AnySingleFaced} and
- * {@link HCCard.AnyMultiFaced} are mutually exclusive. If you want to do things with the
+ * Warning: This messes with ts's type system, since {@linkcode HCCard.AnySingleFaced} and
+ * {@linkcode HCCard.AnyMultiFaced} are mutually exclusive. If you want to do things with the
  * card after this that depend on the nonexistence of `card_faces`, you'll need to renarrow
  * it or cast it to `any`/`unknown`.
  */

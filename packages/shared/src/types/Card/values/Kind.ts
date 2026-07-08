@@ -9,5 +9,9 @@ export enum HCKind {
   Scryfall = 'scryfall', // scryfall tokens
   NotMagic = 'notmagic',
 }
+/**
+ * Checks if a value is a {@linkcode HCKind}
+ * @param value the value to check
+ */
 export const isKind = (value: any): value is HCKind =>
   Object.values(HCKind).includes(value as HCKind);

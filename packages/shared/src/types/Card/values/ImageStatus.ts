@@ -1,3 +1,6 @@
+/**
+ * The image statuses that a card image can have
+ */
 export enum HCImageStatus {
   /**
    * This card's image is missing. It has not been added yet.
@@ -100,5 +103,9 @@ export enum HCImageStatus {
    */
   Jank = 'jank',
 }
+/**
+ * Checks if a value is an {@linkcode HCImageStatus}
+ * @param value the value to check
+ */
 export const isImageStatus = (value: any): value is HCImageStatus =>
-  Object.values(HCImageStatus).includes(value as HCImageStatus);
+  Object.values(HCImageStatus).includes(value);

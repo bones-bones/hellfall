@@ -1,3 +1,6 @@
+/**
+ * The frame effects that a card can have
+ */
 export enum HCFrameEffect {
   /** The sun and moon transform marks */
   SunMoonDfc = 'sunmoondfc',
@@ -76,6 +79,9 @@ export enum HCFrameEffect {
   /** The cards have the Universes Beyond frame effect */
   UniversesBeyond = 'universesbeyond',
 }
+/**
+ * The frame effects that are markers for multi-sided cards
+ */
 export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.SunMoonDfc,
   HCFrameEffect.CompassLandDfc,
@@ -91,5 +97,9 @@ export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.Specialize,
   HCFrameEffect.Cube,
 ];
+/**
+ * Checks if a value is a {@linkcode HCFrameEffect}
+ * @param value the value to check
+ */
 export const isFrameEffect = (value: any): value is HCFrameEffect =>
-  Object.values(HCFrameEffect).includes(value as HCFrameEffect);
+  Object.values(HCFrameEffect).includes(value);
