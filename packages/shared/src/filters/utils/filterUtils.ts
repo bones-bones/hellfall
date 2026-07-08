@@ -220,6 +220,29 @@ export const createCorrectedSummary =
     correctValue(fixValue(value)) != undefined
       ? validSummary(operator, correctValue(fixValue(value)) as T, invert)
       : invalidSummary(operator, value, invert);
+/**
+ * Creates a corrected {@linkcode summaryFunction<T>}
+ * @template T the type of the value to use
+ * @param correctValue a function that takes the inputted search value and corrects
+ * it to one that can be displayed, or returns `undefined` if the value is invalid
+ * @param usingFirst a function that takes the inputted search value and outputs a value
+ * that determines which of two summaries is used
+ * @param validSummary a {@linkcode summaryFunction<T>} to be used when the value is valid
+ * @param invalidSummary a {@linkcode summaryFunction<T>} to be used when the value
+ * is invalid; make sure that the first character is `!`
+ */
+
+export const createCorrectedDoubleSummary =
+  <T>(
+    correctValue: (value: T) => T | undefined,
+    usingFirst: (value: T) => boolean | undefined,
+    validSummary: summaryFunction<T>,
+    invalidSummary: summaryFunction<T>
+  ): summaryFunction<T> =>
+  (operator: opType, value: T) =>
+    correctValue(fixValue(value)) != undefined
+      ? validSummary(operator, correctValue(fixValue(value)) as T, usingFirst(fixValue(value)))
+      : invalidSummary(operator, value);
 
 /**
  * The base number summary function. Handles operators and invert

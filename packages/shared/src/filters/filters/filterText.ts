@@ -34,6 +34,7 @@ import {
   createCorrectedSummary,
   createSummary,
   fixValue,
+  createCorrectedDoubleSummary,
 } from '../utils';
 import {
   HCCard,
@@ -49,6 +50,7 @@ import {
 import {
   frameEffectNames,
   frameNames,
+  layoutNames,
   toBorderRecord,
   toCardFrameRecord,
   toCardLayoutRecord,
@@ -367,25 +369,36 @@ export const kindSummary = createSummary(
   (operator, value) => `!Unknown kind "${value}"`
 );
 
+const verbDescriptions = ['flip', 'transform', 'meld'];
 /**
  * Converts a string to the corresponding card {@linkcode HCLayout | HCLayout[]}, if any
  * @param value string to convert
  */
 export const toCardLayout = (text: string): HCLayout[] | undefined =>
   wrapArray(toCardLayoutRecord[text]);
-const getCardLayoutName = (text: string) =>
-  toCardLayout(text)
-    ?.map(e => `"${e.replaceAll('_', ' ')}"`)
-    .join(' or ');
+const cardLayoutHasDescription = (text: string) => {
+  const layout = toCardLayout(text);
+  if (!layout) return;
+  return layoutNames.some(layouts => listsAreLooselyEqual(layouts[0], layout));
+};
+const getCardLayoutName = (text: string) => {
+  const layout = toCardLayout(text);
+  if (!layout) return;
+  const description = layoutNames.find(layouts => listsAreLooselyEqual(layouts[0], layout))?.[1];
+  return description ?? layout.map(e => `"${e.replaceAll('_', ' ')}"`).join(' or ');
+};
 /**
  * The summary for a card layout filter
  * @param operator the operator to use
  * @param value the card layout from the search
- * @param invert dummy
  */
-export const cardLayoutSummary = createCorrectedSummary(
+export const cardLayoutSummary = createCorrectedDoubleSummary(
   getCardLayoutName,
-  (operator, value) => `the card layout is ${opToNot(operator)} ${value}`,
+  cardLayoutHasDescription,
+  (operator, value, hasDescription) =>
+    `the card${
+      hasDescription ? `s${verbDescriptions.includes(value) ? '' : ' are'}` : ' layout is'
+    } ${(verbDescriptions.includes(value) ? opToDont : opToNot)(operator)} ${value}`,
   (operator, value) => `!Unknown card layout "${value}"`
 );
 
@@ -395,19 +408,30 @@ export const cardLayoutSummary = createCorrectedSummary(
  */
 export const toFaceLayout = (text: string): HCLayout[] | undefined =>
   wrapArray(toFaceLayoutRecord[text]);
-const getFaceLayoutName = (text: string) =>
-  toFaceLayout(text)
-    ?.map(e => `"${e.replaceAll('_', ' ')}"`)
-    .join(' or ');
+const faceLayoutHasDescription = (text: string) => {
+  const layout = toFaceLayout(text);
+  if (!layout) return;
+  return layoutNames.some(layouts => listsAreLooselyEqual(layouts[0], layout));
+};
+const getFaceLayoutName = (text: string) => {
+  const layout = toFaceLayout(text);
+  if (!layout) return;
+  const description = layoutNames.find(layouts => listsAreLooselyEqual(layouts[0], layout))?.[1];
+  return description ?? layout.map(e => `"${e.replaceAll('_', ' ')}"`).join(' or ');
+};
 /**
  * The summary for a face layout filter
  * @param operator the operator to use
  * @param value the face layout from the search
  * @param invert dummy
  */
-export const faceLayoutSummary = createCorrectedSummary(
+export const faceLayoutSummary = createCorrectedDoubleSummary(
   getFaceLayoutName,
-  (operator, value) => `the cards ${opToDont(operator)} have a face with layout ${value}`,
+  faceLayoutHasDescription,
+  (operator, value, hasDescription) =>
+    `the cards ${opToDont(operator)} have faces ${
+      hasDescription ? `that${verbDescriptions.includes(value) ? '' : ' are'}` : 'with layout'
+    } ${value}`,
   (operator, value) => `!Unknown face layout "${value}"`
 );
 
@@ -417,10 +441,17 @@ export const faceLayoutSummary = createCorrectedSummary(
  */
 export const toAnyLayout = (text: string): HCLayout[] | undefined =>
   toCardLayout(text) ?? toFaceLayout(text);
-const getAnyLayoutName = (text: string) =>
-  toAnyLayout(text)
-    ?.map(e => `"${e.replaceAll('_', ' ')}"`)
-    .join(' or ');
+const anyLayoutHasDescription = (text: string) => {
+  const layout = toAnyLayout(text);
+  if (!layout) return;
+  return layoutNames.some(layouts => listsAreLooselyEqual(layouts[0], layout));
+};
+const getAnyLayoutName = (text: string) => {
+  const layout = toAnyLayout(text);
+  if (!layout) return;
+  const description = layoutNames.find(layouts => listsAreLooselyEqual(layouts[0], layout))?.[1];
+  return description ?? layout.map(e => `"${e.replaceAll('_', ' ')}"`).join(' or ');
+};
 
 /**
  * The summary for a layout filter
@@ -428,10 +459,23 @@ const getAnyLayoutName = (text: string) =>
  * @param value the layout from the search
  * @param invert dummy
  */
-export const anyLayoutSummary = createCorrectedSummary(
+export const anyLayoutSummary = createCorrectedDoubleSummary(
   getAnyLayoutName,
-  (operator, value) =>
-    `the cards ${opToDont(operator)} have layout ${value} or a face with that layout`,
+  anyLayoutHasDescription,
+  (operator, value, hasDescription) =>
+    `the cards ${
+      hasDescription
+        ? verbDescriptions.includes(value)
+          ? opToDont(operator)
+          : `are ${opToNot(operator)}`
+        : `${opToDont(operator)} have layout`
+    } ${value} or ${
+      hasDescription
+        ? `${opToDont(operator)} have faces that${
+            verbDescriptions.includes(value) ? '' : ' are'
+          } ${value}`
+        : `faces with that layout`
+    }`,
   (operator, value) => `!Unknown layout "${value}"`
 );
 
