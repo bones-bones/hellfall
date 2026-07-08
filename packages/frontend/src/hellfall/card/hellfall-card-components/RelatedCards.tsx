@@ -1,5 +1,5 @@
 import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
-import { Divider } from '../visual-components/Divider';
+import { Divider, Separator } from '../visual-components/Divider';
 import { StyledHeadingLink } from '../visual-components/StyledHeading';
 import { HellfallRelatedEntry } from '../../entry/HellfallRelatedEntry';
 import { createStyles } from '@workday/canvas-kit-styling';
@@ -93,11 +93,3 @@ const relatedGridStyles = createStyles({
   margin: '0 auto',
 });
 const RelatedGrid = createStyledDiv(relatedGridStyles, 'RelatedGrid');
-const separatorStyles = createStyles({
-  height: '1px',
-  backgroundColor: '#ccc',
-  border: 'none',
-  marginLeft: '-24px',
-  marginRight: '-24px',
-});
-const Separator = createStyledHR(separatorStyles, 'Separator');
