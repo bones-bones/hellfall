@@ -18,9 +18,10 @@ import {
 } from '../../../styling';
 import { ROOT_FIELD_CONFIGS, buildEditFormState, buildChangesFromForm } from './cardEditFields.ts';
 import { useSyncPendingChangesets } from '../../hooks/usePendingChangesets.ts';
-import { EditFormState, FieldConfig } from './types.ts';
+import { EditFormState, FieldConfig, groupFieldConfigs } from './types.ts';
 import { addPendingFace } from './faces/addPendingFace.ts';
 import { FACE_FIELD_CONFIGS } from './constants.ts';
+import { getMissingRequiredFields, isFieldValueMissing } from './fieldValidation.ts';
 
 export const CardEditPanel = ({
   card,
@@ -44,6 +45,13 @@ export const CardEditPanel = ({
 
   const changes = useMemo(() => buildChangesFromForm(card, original, form), [card, original, form]);
   const hasChanges = changes.length > 0;
+  const faceCount = form.faces.length;
+  const isMulti = 'card_faces' in card || form.faces.length > original.faces.length;
+  const missingRequired = useMemo(
+    () => getMissingRequiredFields(card, form, isMulti),
+    [card, form, isMulti]
+  );
+  const canSubmit = hasChanges && missingRequired.length === 0;
 
   const setRootField = useCallback((key: string, value: string) => {
     setForm(prev => ({ ...prev, root: { ...prev.root, [key]: value } }));
@@ -58,7 +66,7 @@ export const CardEditPanel = ({
   }, []);
 
   const handleSubmit = async () => {
-    if (!baseUrl || !hasChanges) return;
+    if (!baseUrl || !canSubmit) return;
     setSubmitting(true);
     setError(null);
     try {
@@ -101,9 +109,6 @@ export const CardEditPanel = ({
     );
   }
 
-  const faceCount = form.faces.length;
-  const isMulti = 'card_faces' in card || form.faces.length > original.faces.length;
-
   return (
     <Panel>
       <Card>
@@ -121,6 +126,7 @@ export const CardEditPanel = ({
                 config={cfg}
                 value={form.root[cfg.key] ?? ''}
                 changed={(form.root[cfg.key] ?? '') !== (original.root[cfg.key] ?? '')}
+                invalid={isFieldValueMissing(cfg, form.root[cfg.key] ?? '')}
                 onChange={v => setRootField(cfg.key, v)}
               />
             ))}
@@ -149,31 +155,53 @@ export const CardEditPanel = ({
               + Add Side
             </AddFaceButton>
           </FaceTabs>
-          {isMulti && activeFace > 0 && (
-            <SideNote>
-              Some layouts (transform, MDFC, etc.) are controlled by tags. Add layout tags below if
-              needed.
-            </SideNote>
-          )}
-          <FieldsGrid>
-            {FACE_FIELD_CONFIGS.filter(
-              cfg =>
-                (isMulti || cfg.key !== 'name') &&
-                !cfg.shouldHide?.(card, activeFace, form.faces[activeFace] ?? {})
-            ).map(cfg => (
-              <FieldEditor
-                key={`${activeFace}-${cfg.key}`}
-                config={cfg}
-                value={form.faces[activeFace]?.[cfg.key] ?? ''}
-                changed={
-                  (form.faces[activeFace]?.[cfg.key] ?? '') !==
-                  (original.faces[activeFace]?.[cfg.key] ?? '')
-                }
-                onChange={v => setFaceField(activeFace, cfg.key, v)}
-              />
-            ))}
-          </FieldsGrid>
+          <FacePanel>
+            {isMulti && activeFace > 0 && (
+              <SideNote>
+                Some layouts (transform, MDFC, etc.) are controlled by tags. Add layout tags below
+                if needed.
+              </SideNote>
+            )}
+            {groupFieldConfigs(FACE_FIELD_CONFIGS).map(group => {
+              const visibleFields = group.fields.filter(
+                cfg =>
+                  (isMulti || cfg.key !== 'name') &&
+                  !cfg.shouldHide?.(card, activeFace, form.faces[activeFace] ?? {})
+              );
+              if (visibleFields.length === 0) return null;
+              return (
+                <div key={group.label ?? 'default'}>
+                  {group.label && <SubSectionTitle>{group.label}</SubSectionTitle>}
+                  <FieldsGrid>
+                    {visibleFields.map(cfg => (
+                      <FieldEditor
+                        key={`${activeFace}-${cfg.key}`}
+                        config={cfg}
+                        value={form.faces[activeFace]?.[cfg.key] ?? ''}
+                        changed={
+                          (form.faces[activeFace]?.[cfg.key] ?? '') !==
+                          (original.faces[activeFace]?.[cfg.key] ?? '')
+                        }
+                        invalid={isFieldValueMissing(cfg, form.faces[activeFace]?.[cfg.key] ?? '')}
+                        onChange={v => setFaceField(activeFace, cfg.key, v)}
+                      />
+                    ))}
+                  </FieldsGrid>
+                </div>
+              );
+            })}
+          </FacePanel>
 
+          {hasChanges && missingRequired.length > 0 && (
+            <ValidationSummary>
+              <SummaryTitle>Required fields missing</SummaryTitle>
+              {missingRequired.map(({ scope, faceIndex, config }) => (
+                <ValidationItem key={`${scope}-${faceIndex ?? 'root'}-${config.key}`}>
+                  {scope === 'face' ? `Side ${faceIndex! + 1}: ${config.label}` : config.label}
+                </ValidationItem>
+              ))}
+            </ValidationSummary>
+          )}
           {hasChanges && (
             <ChangeSummary>
               <SummaryTitle>{changes.length} change(s) to submit</SummaryTitle>
@@ -191,7 +219,7 @@ export const CardEditPanel = ({
           </CommentRow>
           {error && <ErrorMsg size="small">{error}</ErrorMsg>}
           <ActionRow>
-            <SubmitButton disabled={!hasChanges || submitting} onClick={handleSubmit}>
+            <SubmitButton disabled={!canSubmit || submitting} onClick={handleSubmit}>
               {submitting ? 'Submitting...' : 'Submit for Review'}
             </SubmitButton>
             <CancelButton onClick={onClose}>Cancel</CancelButton>
@@ -206,20 +234,26 @@ function FieldEditor({
   config,
   value,
   changed,
+  invalid = false,
   onChange,
 }: {
   config: FieldConfig;
   value: string;
   changed: boolean;
+  invalid?: boolean;
   onChange: (value: string) => void;
 }) {
   const [showExplanation, setShowExplanation] = useState(false);
   const fieldId = `field-${config.key}`;
+  const isReadOnly = config.readOnly === true;
   return (
     <FieldRow>
       <FormField orientation="vertical">
         <LabelRow>
-          <Label htmlFor={fieldId}>{config.label}</Label>
+          <Label htmlFor={fieldId}>
+            {config.label}
+            {config.required && <RequiredMark aria-hidden="true"> *</RequiredMark>}
+          </Label>
           {config.explanation && (
             <HelpButton
               type="button"
@@ -237,8 +271,11 @@ function FieldEditor({
         {config.type === 'textarea' ? (
           <StyledTextarea
             changed={changed}
+            invalid={invalid}
             id={fieldId}
             value={value}
+            readOnly={isReadOnly}
+            required={config.required}
             onChange={e => onChange(e.target.value)}
             rows={3}
           />
@@ -247,15 +284,31 @@ function FieldEditor({
             type="checkbox"
             id={fieldId}
             checked={value === 'true'}
+            disabled={isReadOnly}
+            required={config.required}
             onChange={e => onChange(e.target.checked ? 'true' : '')}
-            style={changed ? { border: '1px solid #888', background: '#ffe' } : undefined}
+            style={
+              changed
+                ? { border: '1px solid #888', background: '#ffe' }
+                : invalid
+                ? { outline: '1px solid #c00' }
+                : undefined
+            }
           />
         ) : config.type === 'enum' && config.enumValues ? (
           <StyledSelect
             id={fieldId}
             value={value}
+            disabled={isReadOnly}
+            required={config.required}
             onChange={e => onChange(e.target.value)}
-            style={changed ? { border: '1px solid #888', background: '#ffe' } : undefined}
+            style={
+              changed
+                ? { border: '1px solid #888', background: '#ffe' }
+                : invalid
+                ? { border: '1px solid #c00' }
+                : undefined
+            }
           >
             <option value="">(unset)</option>
             {config.enumValues.map(v => (
@@ -267,8 +320,11 @@ function FieldEditor({
         ) : (
           <StyledInput
             changed={changed}
+            invalid={invalid}
             id={fieldId}
             value={value}
+            readOnly={isReadOnly}
+            required={config.required}
             onChange={e => onChange(e.target.value)}
           />
         )}
@@ -299,6 +355,15 @@ const sectionTitleStyles = createStyles({
 });
 const SectionTitle = createStyledDiv(sectionTitleStyles, 'SectionTitle');
 
+const subSectionTitleStyles = createStyles({
+  fontSize: 12,
+  fontWeight: 600,
+  marginTop: 10,
+  marginBottom: 4,
+  color: '#666',
+});
+const SubSectionTitle = createStyledDiv(subSectionTitleStyles, 'SubSectionTitle');
+
 const fieldsGridStyles = createStyles({
   display: 'flex',
   flexDirection: 'column',
@@ -314,6 +379,9 @@ const LabelRow = createStyledDiv(labelRowStyles, 'LabelRow');
 
 const labelStyles = createStyles({ fontSize: 12, fontWeight: 600, color: '#555' });
 const Label = createStyledLabel(labelStyles, 'Label');
+
+const requiredMarkStyles = createStyles({ color: '#c00' });
+const RequiredMark = createStyledSpan(requiredMarkStyles, 'RequiredMark');
 
 const helpButtonStyles = createStyles({
   display: 'inline-flex',
@@ -358,10 +426,14 @@ const inputStyles = {
 const inputStencil = createStencil({
   vars: {},
   base: inputStyles,
-  modifiers: { changed: { true: { border: '1px solid #888', background: '#ffe' } } },
+  modifiers: {
+    changed: { true: { border: '1px solid #888', background: '#ffe' } },
+    invalid: { true: { border: '1px solid #c00' } },
+  },
 });
 interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
   changed?: boolean;
+  invalid?: boolean;
 }
 const StyledInput = createStenciledInput<InputProps>(inputStencil, 'StyledInput');
 
@@ -371,10 +443,14 @@ const StyledSelect = createStyledSelect(selectStyles, 'StyledSelect');
 const textAreaStencil = createStencil({
   vars: {},
   base: { ...inputStyles, resize: 'vertical' as const },
-  modifiers: { changed: { true: { border: '1px solid #888', background: '#ffe' } } },
+  modifiers: {
+    changed: { true: { border: '1px solid #888', background: '#ffe' } },
+    invalid: { true: { border: '1px solid #c00' } },
+  },
 });
 interface TextAreaProps extends React.ComponentPropsWithoutRef<'textarea'> {
   changed?: boolean;
+  invalid?: boolean;
 }
 const StyledTextarea = createStenciledTextArea<TextAreaProps>(textAreaStencil, 'StyledTextarea');
 
@@ -384,6 +460,17 @@ const changeSummaryStyles = createStyles({
   border: '1px solid #ccc',
 });
 const ChangeSummary = createStyledDiv(changeSummaryStyles, 'ChangeSummary');
+
+const validationSummaryStyles = createStyles({
+  marginTop: 12,
+  padding: '8px 10px',
+  border: '1px solid #c00',
+  background: '#fff5f5',
+});
+const ValidationSummary = createStyledDiv(validationSummaryStyles, 'ValidationSummary');
+
+const validationItemStyles = createStyles({ fontSize: 12, color: '#900' });
+const ValidationItem = createStyledDiv(validationItemStyles, 'ValidationItem');
 
 const summaryTitleStyles = createStyles({ fontSize: 12, fontWeight: 600 });
 const SummaryTitle = createStyledDiv(summaryTitleStyles, 'SummaryTitle');
@@ -473,6 +560,14 @@ const addFaceButtonStyles = createStyles({
   cursor: 'pointer',
 });
 const AddFaceButton = createStyledButton(addFaceButtonStyles, 'AddFaceButton');
+
+const facePanelStyles = createStyles({
+  border: '1px solid #ccc',
+  borderRadius: 2,
+  padding: '10px 12px',
+  marginTop: 4,
+});
+const FacePanel = createStyledDiv(facePanelStyles, 'FacePanel');
 
 const sideNoteStyles = createStyles({
   fontSize: 11,

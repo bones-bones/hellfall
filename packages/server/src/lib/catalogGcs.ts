@@ -64,6 +64,9 @@ export async function uploadCatalogToGcs(
   });
   await bucket.file(env.CATALOG_GCS_MANIFEST_OBJECT).save(JSON.stringify(manifest), {
     contentType: 'application/json',
+    metadata: {
+      cacheControl: 'public, max-age=300',
+    },
   });
   return manifest;
 }
