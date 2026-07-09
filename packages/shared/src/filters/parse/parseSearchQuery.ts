@@ -4,6 +4,7 @@ import { parseFilter } from './parseFilter';
 import { CardMap } from '@hellfall/shared/utils';
 import { isSortFilter, parseSorts, sortIsValid, winnowSortObjects } from './parseSorts';
 import { splitOnFirstOp, IncludeFilter, SortObject } from '../utils';
+import { makeIncludeFilter } from '../makers';
 
 const tokenList = ['(', ')', 'or', '-', '~'];
 const charBreakList = ['(', ' '];
@@ -123,6 +124,16 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
   return { tokens, sortList };
 };
 
+const parseClude = (text:string) => {
+  const { keyword, op, term } = splitOnFirstOp(text);
+  const clude = makeIncludeFilter(term,':');
+  if (keyword == 'exclude') {
+    clude.invert()
+  }
+  return clude
+}
+
+
 const splitCludes = (
   cludeList: IncludeFilter[]
 ): { includeList: IncludeFilter[]; excludeList: IncludeFilter[]; cludeSummary: string } => {
@@ -149,10 +160,12 @@ const consumeList = [' or ', '(', ' and ', ' not (', ')'];
  * Parses a search query into everything needed to process it
  * @param query the search query
  * @param cardMap the {@linkcode CardMap} that contains all cards
+ * @param defaultCludes The user's list of default inclusions/exclusions, if any
  */
 export const parseSearchQuery = (
   query: string,
-  cardMap: CardMap
+  cardMap: CardMap,
+  defaultCludes?:string[]
   // getOtherPrints?: otherPrintGetterType
 ): {
   /**
@@ -361,7 +374,11 @@ export const parseSearchQuery = (
   while ([' and ', ' or '].includes(summaries.at(0) ?? '')) {
     summaries.shift();
   }
+  if (!cludeList.length && defaultCludes?.length) {
+    defaultCludes.forEach(clude=>cludeList.push(parseClude(clude)))
+  }
   const { includeList, excludeList, cludeSummary } = splitCludes(cludeList);
+
   const summary = `${summaries.length ? ('where ' + summaries.join('')).trimEnd() : ''}${
     summaries.length && cludeSummary ? ', ' : ''
   }${cludeSummary}`;

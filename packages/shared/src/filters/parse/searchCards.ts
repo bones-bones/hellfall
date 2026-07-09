@@ -29,9 +29,10 @@ const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): b
  * @param cardMap Map of all cards
  * @param query query to use
  * @param tagList The list of tags (from `tags.json`)
+ * @param defaultCludes The user's list of default inclusions/exclusions, if any
  */
-export const searchCards = (cardMap: CardMap, query: string, tagList: string[]): CardMap => {
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
+export const searchCards = (cardMap: CardMap, query: string, tagList: string[], defaultCludes?:string[]): CardMap => {
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap, defaultCludes);
   const usingClusion = Boolean(includeList.length + excludeList.length);
   // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
   fixTags(node, tagList);

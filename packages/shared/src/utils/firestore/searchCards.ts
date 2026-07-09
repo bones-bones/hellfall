@@ -53,18 +53,20 @@ const evaluateFilter = (
  * @param cardsCol Collection of all cards
  * @param query query to use
  * @param tagList The list of tags (from `tags.json`)
+ * @param defaultCludes The user's list of default inclusions/exclusions, if any
  * @returns a {@linkcode CardMap} containing the search results
  */
 export const searchCardsFromCollection = async (
   cardsCol: cardsCollection,
   query: string,
-  tagList: string[]
+  tagList: string[],
+  defaultCludes?:string[]
 ): Promise<CardMap> => {
   const snapshot = await cardsCol.get();
   const cardMap = new CardMap(
     snapshot.docs.map(doc => firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard))
   );
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap, defaultCludes);
   const usingClusion = Boolean(includeList.length + excludeList.length);
   fixTags(node, tagList);
   if (
