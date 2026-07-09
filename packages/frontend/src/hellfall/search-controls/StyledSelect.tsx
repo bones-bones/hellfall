@@ -2,58 +2,94 @@ import { Select, useSelectModel } from '@workday/canvas-kit-react';
 import { createStencil } from '@workday/canvas-kit-styling';
 import { useEffect } from 'react';
 
+/**
+ * An array of select items
+ * @template T The type of the value for the select
+ */
 export type SelectItems<T extends string> = { label: string; value: T }[];
 
+/**
+ * Use this as a styled version of {@linkcode Select}
+ * @template T The type of the value for the select
+ */
 export const StyledSelect = <T extends string>({
-  index,
+  key,
   items,
-  value,
+  initialValue,
   width,
   title,
-  getCurrentValue,
-  getAvailableOptions,
-  isOverriden,
-  handleValueChange,
+  currentValue,
+  availableValues,
+  disabled,
+  onSelect,
 }: {
-  index: number;
-  value: T;
+  /**
+   * The key to use
+   */
+  key: string;
+  /**
+   * The items to use; must be of type {@linkcode SelectItems<T>}
+   */
   items: SelectItems<T>;
+  /**
+   * The initial value to use
+   */
+  initialValue: T;
+  /**
+   * The width of the select box
+   */
   width: string;
+  /**
+   * The title to use (used both for accessibility and mouseover)
+   */
   title: string;
-  getCurrentValue: (index: number) => T | undefined;
-  getAvailableOptions?: (index: number) => T[];
-  isOverriden: (index: number) => boolean;
-  handleValueChange: (index: number, newValue: T) => void;
+  /**
+   * The current value, if any
+   */
+  currentValue?: T;
+  /**
+   * The available values, if any; if omitted, uses all items
+   */
+  availableValues?: T[];
+  /**
+   * Whether this select is disabled; if true, will ignore `currentValue`
+   */
+  disabled?: boolean;
+  /**
+   * What to do when a new value is selected
+   * @param newValue The new value from the select
+   */
+  onSelect: (newValue: T) => void;
 }) => {
-  const available = getAvailableOptions?.(index);
-  const options = items.filter(opt => (available ? available.includes(opt.value) : true));
-  const currentValue: T = isOverriden(index) ? value : getCurrentValue(index) ?? value;
+  // const available = getAvailableValues?.(index);
+  const options = items.filter(opt => availableValues?.includes(opt.value) ?? true);
+  const value: T = disabled ? initialValue : currentValue ?? initialValue;
   const selectModel = useSelectModel({
-    initialSelectedIds: [currentValue],
+    initialSelectedIds: [value],
     items: options,
     getId: item => item.value,
     getTextValue: item => item.label,
     onSelect: data => {
-      // This check prevents the following useEffect from causing a render loop when overridden
-      if (!isOverriden(index)) {
-        handleValueChange(index, data.id as T);
+      // This check prevents the following useEffect from causing a render loop when disabled
+      if (!disabled) {
+        onSelect(data.id as T);
       }
     },
   });
   useEffect(() => {
     const currentSelectedId = selectModel.state.selectedIds[0];
-    if (currentSelectedId !== currentValue) {
-      selectModel.events.select({ id: currentValue });
+    if (currentSelectedId !== value) {
+      selectModel.events.select({ id: value });
     }
-  }, [currentValue]);
+  }, [value]);
 
   return (
     <div {...selectStencil({ width })}>
-      <Select key={`sort-group-${index}`} items={options} model={selectModel}>
+      <Select key={key} items={options} model={selectModel}>
         <Select.Input
           title={title}
           aria-label={title}
-          disabled={isOverriden(index)}
+          disabled={disabled}
           cs={inputStencil({ width })}
         />
         <Select.Popper>

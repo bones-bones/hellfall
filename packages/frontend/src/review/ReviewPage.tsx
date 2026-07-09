@@ -15,7 +15,7 @@ import {
 } from '../styling';
 import { Heading } from '@workday/canvas-kit-react';
 
-export function ReviewPage() {
+export const ReviewPage = () => {
   const { user, loading: authLoading } = useAuth();
   const { '*': cardId } = useParams();
 
@@ -256,7 +256,7 @@ export function ReviewPage() {
       ))}
     </PageContainer>
   );
-}
+};
 
 const pageContainerStyles = createStyles({
   maxWidth: 900,

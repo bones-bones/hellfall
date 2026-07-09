@@ -1,4 +1,4 @@
-import { FormField, PaginationModel } from '@workday/canvas-kit-react';
+import { BoxProps, FormField, PaginationModel } from '@workday/canvas-kit-react';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   inputSortAtom,
@@ -18,15 +18,16 @@ import {
   chevron2xLeftIcon,
   chevron2xRightIcon,
 } from '@workday/canvas-system-icons-web';
-import { createStyles } from '@workday/canvas-kit-styling';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import {
+  createStenciledDiv,
   createStyledDiv,
   createStyledSecondaryButton,
   createStyledSecondaryButtonLink,
 } from '../../styling';
-import { StyledSelect } from './StyledSelect.tsx';
+import { SelectItems, StyledSelect } from './StyledSelect.tsx';
 
-const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
+const ALL_SORT_OPTIONS: SelectItems<sortType> = [
   { label: 'Auto', value: 'auto' },
   { label: 'Name', value: 'name' },
   { label: 'Id', value: 'id' },
@@ -38,7 +39,7 @@ const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
   { label: 'Mana Value', value: 'manavalue' },
 ];
 
-const DIR_OPTIONS: Array<{ label: string; value: dirType }> = [
+const DIR_OPTIONS: SelectItems<dirType> = [
   { label: 'Auto', value: 'auto' },
   { label: 'Asc', value: 'asc' },
   { label: 'Desc', value: 'desc' },
@@ -46,7 +47,7 @@ const DIR_OPTIONS: Array<{ label: string; value: dirType }> = [
 const parseSort = (order: string): sortType => order?.split(',')[0] as sortType;
 const parseDir = (order: string): dirType => order?.split(',')[1] as dirType;
 
-export const ControlBar = ({ model }: { model?: PaginationModel }) => {
+export const ControlBar = ({ model, noLabel }: { model?: PaginationModel; noLabel?: boolean }) => {
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const querySorts = useAtomValue(querySortAtom);
   const query = useAtomValue(queryAtom);
@@ -55,9 +56,9 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
   const [canDelInput, setCanDelInput] = useState<boolean>();
   const getAvailableOptions = (index: number): sortType[] =>
     getWinnowedSortOptions(sortRules.slice(0, index));
-  const sortIsOverriden = (index: number): boolean =>
+  const sortIsOverridden = (index: number): boolean =>
     index < inputSorts.length && parseSort(inputSorts[index]) != sortRules[index]?.sort;
-  const dirIsOverriden = (index: number): boolean =>
+  const dirIsOverridden = (index: number): boolean =>
     index < inputSorts.length && parseDir(inputSorts[index]) != sortRules[index]?.dir;
   const handleSortChange = (index: number, newSort: sortType) => {
     if (!sortRules.length) {
@@ -104,40 +105,40 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
   const getCurrentSort = (index: number) => inputSorts[index]?.split(',')[0] as sortType;
   const getCurrentDir = (index: number) => inputSorts[index]?.split(',')[1] as dirType;
   return (
-    <Container>
+    <Container noLabel={noLabel}>
       <FormField className={formFieldStyles}>
-        <FormField.Label>Sort By</FormField.Label>
+        {!noLabel && <FormField.Label>Sort By</FormField.Label>}
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <SortElements>
             {sortRules.length ? (
               sortRules.map((rule, i) => (
                 <div key={`sort-wrapper-${i}`} style={{ display: 'inline-block' }}>
                   <StyledSelect<sortType>
-                    index={i}
-                    value={rule.sort}
-                    isOverriden={sortIsOverriden}
-                    getAvailableOptions={getAvailableOptions}
-                    handleValueChange={handleSortChange}
+                    key={`sort-group-${i}`}
+                    initialValue={rule.sort}
+                    disabled={sortIsOverridden(i)}
+                    availableValues={getAvailableOptions(i)}
+                    onSelect={(newValue: sortType) => handleSortChange(i, newValue)}
                     width="135px"
                     items={ALL_SORT_OPTIONS}
-                    getCurrentValue={getCurrentSort}
+                    currentValue={getCurrentSort(i)}
                     title={
-                      sortIsOverriden(i)
+                      sortIsOverridden(i)
                         ? 'You specified this option in your search terms'
                         : 'Change how cards are sorted'
                     }
                   />
                   <span> : </span>
                   <StyledSelect<dirType>
-                    index={i}
-                    value={rule.dir}
-                    isOverriden={dirIsOverriden}
-                    handleValueChange={handleDirChange}
+                    key={`dir-group-${i}`}
+                    initialValue={rule.dir}
+                    disabled={dirIsOverridden(i)}
+                    onSelect={(newValue: dirType) => handleDirChange(i, newValue)}
                     width="85px"
                     items={DIR_OPTIONS}
-                    getCurrentValue={getCurrentDir}
+                    currentValue={getCurrentDir(i)}
                     title={
-                      dirIsOverriden(i)
+                      dirIsOverridden(i)
                         ? 'You specified this option in your search terms'
                         : 'Change sort direction'
                     }
@@ -148,24 +149,24 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
             ) : (
               <div style={{ display: 'inline-block' }}>
                 <StyledSelect<sortType>
-                  index={0}
-                  value={'auto'}
-                  isOverriden={sortIsOverriden}
-                  handleValueChange={handleSortChange}
+                  key={`sort-group-${0}`}
+                  initialValue={'auto'}
+                  disabled={sortIsOverridden(0)}
+                  onSelect={(newValue: sortType) => handleSortChange(0, newValue)}
                   width="135px"
                   items={ALL_SORT_OPTIONS}
-                  getCurrentValue={getCurrentSort}
+                  currentValue={getCurrentSort(0)}
                   title={'Change how cards are sorted'}
                 />
                 <span> : </span>
                 <StyledSelect<dirType>
-                  index={0}
-                  value={'auto'}
-                  isOverriden={dirIsOverriden}
-                  handleValueChange={handleDirChange}
+                  key={`dir-group-${0}`}
+                  initialValue={'auto'}
+                  disabled={dirIsOverridden(0)}
+                  onSelect={(newValue: dirType) => handleDirChange(0, newValue)}
                   width="85px"
                   items={DIR_OPTIONS}
-                  getCurrentValue={getCurrentDir}
+                  currentValue={getCurrentDir(0)}
                   title={'Change sort direction'}
                 />
               </div>
@@ -267,14 +268,28 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
   );
 };
 
-const containerStyles = createStyles({
-  paddingLeft: '36px',
-  paddingRight: '36px',
-  alignItems: 'center',
-  width: '100%',
-  boxSizing: 'border-box',
+const containerStencil = createStencil({
+  vars: {},
+  base: {
+    paddingLeft: '36px',
+    paddingRight: '36px',
+    alignItems: 'center',
+    width: '100%',
+    boxSizing: 'border-box',
+  },
+  modifiers: {
+    noLabel: {
+      true: {
+        paddingLeft: '0',
+        paddingRight: '0',
+      },
+    },
+  },
 });
-const Container = createStyledDiv(containerStyles, 'Container');
+interface ContainerProps extends BoxProps {
+  noLabel?: boolean;
+}
+const Container = createStenciledDiv<ContainerProps>(containerStencil, 'Container');
 const formFieldStyles = createStyles({
   width: '100%',
   '& > div': {

@@ -1,11 +1,12 @@
+import { StyledComponentHolder, StyledLabel, StyledLegend } from './AdvancedComponents.tsx';
+import { PillSearch } from './PillSearch.tsx';
 import {
+  BoxlessCheckboxGroup,
   CheckboxGroup,
   NamedCheckboxGroup,
-  BoxlessCheckboxGroup,
-  SingleCheckbox,
-  PillSearch,
   NumberSelector,
-} from '../advanced/index.ts';
+  SingleCheckbox,
+} from './index.ts';
 import { ButtonColors, TextInput, FormField } from '@workday/canvas-kit-react';
 import { system } from '@workday/canvas-tokens-web';
 import { useAtom } from 'jotai';
@@ -23,7 +24,6 @@ import {
   createStyledPrimaryButtonLink,
   createStyledSelect,
 } from '../../styling';
-import { StyledComponentHolder, StyledLabel, StyledLegend } from './AdvancedComponents.tsx';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');
@@ -76,7 +76,7 @@ export const AdvancedSearch = () => {
   const [localQuery, setLocalQuery] = useState('');
 
   useEffect(() => {
-    setInputSorts([]);
+    setInputSorts(['auto,auto']);
     setSortRules([]);
   }, []);
   useEffect(() => {

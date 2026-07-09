@@ -132,7 +132,6 @@ Write a script to transform the database
 - deal with duplicate HCV.1 collector numbers
 - add missing artist credits
 - fix id for plateau
-- hide faces with drop_face == true from card pages?
 - prevent use of semicolons in submissions for list fields?
 - add better handling for card face changes affecting other changes?
 - add another map layer that maps the oracle ids to their individual ids
