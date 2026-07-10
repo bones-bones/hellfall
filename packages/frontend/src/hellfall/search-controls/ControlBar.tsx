@@ -81,7 +81,9 @@ export const ControlBar = ({
     index < inputSorts.length && parseDir(inputSorts[index]) != sortRules[index]?.dir;
   const handleSortChange = (index: number, newSort: sortType) => {
     const newInputs =
-      sortRules.length && inputSorts.length ? [...inputSorts] : /* user?.defaultSorts ?? */ ['auto,auto'];
+      sortRules.length && inputSorts.length
+        ? [...inputSorts]
+        : /* user?.defaultSorts ?? */ ['auto,auto'];
     if (newSort != parseSort(newInputs[index])) {
       newInputs[index] = `${newSort},${parseDir(
         newInputs[index] ?? /* user?.defaultSorts?.[index] ?? */ 'auto,auto'
@@ -93,7 +95,9 @@ export const ControlBar = ({
   };
   const handleDirChange = (index: number, newDir: dirType) => {
     const newInputs =
-      sortRules.length && inputSorts.length ? [...inputSorts] : /* user?.defaultSorts ?? */ ['auto,auto'];
+      sortRules.length && inputSorts.length
+        ? [...inputSorts]
+        : /* user?.defaultSorts ?? */ ['auto,auto'];
     if (newDir != parseDir(newInputs[index])) {
       newInputs[index] = `${parseSort(
         newInputs[index] ?? /* user?.defaultSorts?.[index] ?? */ 'auto,auto'

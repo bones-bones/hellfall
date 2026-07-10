@@ -3,7 +3,6 @@ import {
   cardFilterFunction,
   stateFilterFunction,
   dirType,
-  includeFilterFunction,
   looseOpType,
   opType,
   sortType,
@@ -33,7 +32,7 @@ import {
   numSearchListFilter,
   numSearchFilter,
 } from './filterUtils';
-import { ensureArray, colorSearch, xor } from '@hellfall/shared/utils';
+import { ensureArray, colorSearch, xor, stripQuotes } from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import {
   queryPropType,
@@ -106,7 +105,12 @@ export class FilterObject<T, S> implements filterInterface {
   keepFaces = () => {
     this.dropFaces = false;
   };
-  toSummary = () => this.summary(this.getOp(), this.value, this.inverted);
+  toSummary = () =>
+    this.summary(
+      this.getOp(),
+      typeof this.value == 'string' ? (stripQuotes(this.value) as S) : this.value,
+      this.inverted
+    );
   cardPassesFilter = (card: HCCard.Any) =>
     xor(
       this.filter(this.getValueToCompare(card), this.getOp(), fixValue(this.value), this.dropFaces),
@@ -262,7 +266,7 @@ export class PropFilter extends FilterObject<string[], string> {
   toSummary = () =>
     `the ${this.summaryStart ?? queryNameToSummary(this.queryName)} ${this.summary(
       this.getOp(),
-      this.value,
+      stripQuotes(this.value),
       this.inverted
     )}`;
 }
@@ -327,7 +331,7 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       defaultOp,
       invertOption
     );
-    this.summaryValue = value;
+    this.summaryValue = stripQuotes(value);
     this.dropFaces = true;
     ({ props: this.props, location: this.location } = queryNameToValue(queryName));
   }
@@ -476,7 +480,7 @@ export class NoteFilter extends FilterObject<HCCard.Any, string> {
   /**
    * @returns the result of `this.summary(this.getOp(), this.summaryValue, this.inverted, this.note)`
    */
-  toSummary = () => this.summary(this.getOp(), this.value, this.inverted, this.note);
+  toSummary = () => this.summary(this.getOp(), stripQuotes(this.value), this.inverted, this.note);
   cardPassesFilter = (card: HCCard.Any) =>
     xor(this.filter(card, this.getOp(), fixValue(this.value), fixValue(this.note)), this.inverted);
 }

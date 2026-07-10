@@ -1,7 +1,5 @@
+import { textIsQuote } from '@hellfall/shared/utils';
 import { looseOpList, looseOpType, FilterNode } from '../types';
-
-const textIsQuote = (text: string) =>
-  text.length > 1 && text[0] == text.at(-1) && ['"', "'"].includes(text[0]) && text.at(-2) != '\\';
 
 /**
  * Unescapes and strips text so that it can be used in comparisons

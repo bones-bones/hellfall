@@ -31,9 +31,7 @@ export const useSearchResults = (asRandom?: boolean) => {
 
   useEffect(() => {
     const tempResults = (
-      asRandom && query == '*'
-        ? cards
-        : searchCards(cards, query, tagsData.data, /* user?.defaultCludes */)
+      asRandom && query == '*' ? cards : searchCards(cards, query /*, user?.defaultCludes */)
     ).cards();
     if (asRandom) {
       setResultSet(tempResults);
@@ -55,7 +53,7 @@ export const useSearchResults = (asRandom?: boolean) => {
       paginationModel.events.goTo(1);
       setPageAtom(0);
     }
-  }, [query, sortRules, page, cards.size(), /* user */]);
+  }, [query, sortRules, page, cards.size() /*, user */]);
 
   return { resultSet, paginationModel };
 };

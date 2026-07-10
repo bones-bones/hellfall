@@ -451,7 +451,7 @@ const main = async () => {
     });
 
     if ('tags' in entry) {
-      entry.tags?.forEach(e => tagSet.add(e));
+      entry.tags?.forEach(e => tagSet.add(e.replaceAll('"', '')));
     }
   });
 

@@ -52,14 +52,12 @@ const evaluateFilter = (
  * Firestore-backed search; browser code should use {@linkcode searchCards} from `@hellfall/shared/filters`.
  * @param cardsCol Collection of all cards
  * @param query query to use
- * @param tagList The list of tags (from `tags.json`)
  * @param defaultCludes The user's list of default inclusions/exclusions, if any
  * @returns a {@linkcode CardMap} containing the search results
  */
 export const searchCardsFromCollection = async (
   cardsCol: cardsCollection,
   query: string,
-  tagList: string[],
   defaultCludes?: string[]
 ): Promise<CardMap> => {
   const snapshot = await cardsCol.get();
@@ -72,7 +70,7 @@ export const searchCardsFromCollection = async (
     defaultCludes
   );
   const usingClusion = Boolean(includeList.length + excludeList.length);
-  fixTags(node, tagList);
+  // fixTags(node, tagList);
   if (
     includeList.some(
       include => correctInclude(fixValue(include.value)) == 'drop' && !include.inverted

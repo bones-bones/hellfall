@@ -151,9 +151,7 @@ Write a script to transform the database
 - move showcase to a prop
 - add @template to jsdocs
 - figure out how to implement a link between filter names in parseMaps and query names on filter makers
-- fix double quote thing in search summaries?
 - make it possible to filter against lack of a note
-- fix `fixTags`?
 - fix capitalization in search summaries
 - exclude hcj from draftpartner search?
 - add checkbox/dropdown for clusion to advanced search page
@@ -161,7 +159,6 @@ Write a script to transform the database
   - `import { useAuth }`
   - `const { user`
   - `user?.defaultSorts`
-  - `location.pathname, /* user */`
+  - `/*, user */`
   - `user?.defaultCludes`
-  - `cards.size(), user`
   - `/settings`

@@ -82,7 +82,7 @@ export const useUrlSync = () => {
       setPage(parseInt(params.get('page') || '0'));
     }
     setActiveCard('');
-  }, [location.search, location.pathname, /* user */]); // This triggers on back/forward navigation
+  }, [location.search, location.pathname /*, user */]); // This triggers on back/forward navigation
 };
 
 const getSearchParams = (

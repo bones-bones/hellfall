@@ -50,7 +50,9 @@ export const TagSection = ({
             <span key={tagEntry}>
               <TagLink pendingRemove={pendingRemove}>
                 <Link
-                  to={`/?${new URLSearchParams([['q', `tag=${tagEntry}`]]).toString()}`}
+                  to={`/?${new URLSearchParams([
+                    ['q', `tag=${tagEntry.replaceAll('"', '')}`],
+                  ]).toString()}`}
                   target="_blank"
                 >
                   {tagEntry}
@@ -100,7 +102,9 @@ export const TagSection = ({
               {(displayCard.tags?.length || i > 0) && ', '}
               <TagLink pendingAdd={pendingAdd}>
                 <Link
-                  to={`/?${new URLSearchParams([['q', `tag:${tagEntry}`]]).toString()}`}
+                  to={`/?${new URLSearchParams([
+                    ['q', `tag:${tagEntry.replaceAll('"', '')}`],
+                  ]).toString()}`}
                   target="_blank"
                 >
                   +{tagEntry}

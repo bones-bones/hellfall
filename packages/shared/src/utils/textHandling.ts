@@ -510,3 +510,16 @@ export const isValidV4UUID = (uuid: string): boolean => uuidRegex.test(uuid);
  */
 export const unescapeBase64 = (text: string) =>
   text.replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));
+
+/**
+ * Checks if text is a quoted string (i.e. starts and ends with quotation marks)
+ * @param text text to check
+ */
+export const textIsQuote = (text: string) =>
+  text.length > 1 && text[0] == text.at(-1) && ['"', "'"].includes(text[0]) && text.at(-2) != '\\';
+
+/**
+ * Strips quotes from start and end of text if it's a quoted string (i.e. starts and ends with quotation marks)
+ * @param text text to strip
+ */
+export const stripQuotes = (text: string) => (textIsQuote(text) ? text.slice(1, -1) : text);
