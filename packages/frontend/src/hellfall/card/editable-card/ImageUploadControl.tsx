@@ -74,7 +74,7 @@ export function ImageUploadControl({
         }}
       />
       <UploadButton type="button" disabled={uploading} onClick={() => inputRef.current?.click()}>
-        {uploading ? 'Uploading…' : `Replace ${target.label}`}
+        {uploading ? 'Uploading…' : `Upload new image for ${target.label}`}
       </UploadButton>
       {error && <ErrorText size="small">{error}</ErrorText>}
     </UploadRow>

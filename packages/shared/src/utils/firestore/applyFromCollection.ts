@@ -8,8 +8,8 @@ import {
   cleanParts,
   updateParts,
 } from '../changeHandling';
-import { getAllRelatedCollection } from './cardRefs';
-import { cardToFirestore, firestoreToCard } from './cardConversion';
+import { ensureRelatedPartsResolved, fetchRelatedCardsFromCollection } from './cardRefs';
+import { cardToFirestore } from './cardConversion';
 
 /**
  * Updates a card along with its related cards
@@ -22,36 +22,23 @@ export const applyFromCollection = async (
   changeList: anyChange[],
   cardsCol: CollectionReference
 ) => {
-  const oldRelateds: ReturnType<typeof getAllRelatedCollection> = getAllRelatedCollection(
-    card,
+  const oldParts = card.all_parts ? structuredClone(card.all_parts) : undefined;
+  if (!applyChanges(card, changeList)) return;
+  setDerivedProps(card);
+
+  const oldRelatedMap = await fetchRelatedCardsFromCollection(
+    { ...card, all_parts: oldParts },
     cardsCol
   );
-  if (!applyChanges(card, changeList)) return;
-  const newRelateds = getAllRelatedCollection(card, cardsCol);
-  setDerivedProps(card);
-  const oldRelatedMap = new CardMap(
-    await Promise.all(
-      oldRelateds.map(async data => firestoreToCard((await data.get()).data() ?? {}))
-    )
-  );
-  const newRelatedMap = new CardMap(
-    await Promise.all(
-      newRelateds.map(async data => firestoreToCard((await data.get()).data() ?? {}))
-    )
-  );
-  const bothRelatedMap = oldRelatedMap.getSubset(newRelatedMap.ids());
-  oldRelatedMap.deleteMultiple(bothRelatedMap.ids());
-  newRelatedMap.deleteMultiple(bothRelatedMap.ids());
-  updateParts(card, newRelatedMap);
-  updateParts(card, bothRelatedMap);
-  cleanParts(card, bothRelatedMap);
+  const newRelatedMap = await fetchRelatedCardsFromCollection(card, cardsCol);
+  const allRelatedMap = new CardMap([...oldRelatedMap.cards(), ...newRelatedMap.cards()]);
+
+  await ensureRelatedPartsResolved(card, allRelatedMap, cardsCol);
+
+  updateParts(card, allRelatedMap);
   cleanParts(card, oldRelatedMap);
-  oldRelateds.forEach(
-    async data =>
-      await data.set(cardToFirestore(oldRelatedMap.get(data.id) ?? bothRelatedMap.get(data.id)!))
-  );
-  newRelateds.forEach(
-    async data =>
-      await data.set(cardToFirestore(newRelatedMap.get(data.id) ?? bothRelatedMap.get(data.id)!))
+
+  await Promise.all(
+    allRelatedMap.cards().map(related => cardsCol.doc(related.id).set(cardToFirestore(related)))
   );
 };

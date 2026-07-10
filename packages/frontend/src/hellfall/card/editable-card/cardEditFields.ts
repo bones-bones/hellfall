@@ -29,7 +29,7 @@ import type { EditFormState, FieldConfig, FieldType } from './types';
 import { isFaceChangeable } from './faces/isFaceChangeable';
 import { isFaceDeletable } from './faces/isFaceDeleteable';
 import { parseFieldValue } from './parseFieldValue';
-import { FACE_FIELD_CONFIGS } from './constants';
+import { FACE_FIELDS } from './constants';
 
 export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
   { key: 'name', label: 'Name', type: 'string' },
@@ -121,14 +121,14 @@ export function buildEditFormState(card: HCCard.Any): EditFormState {
     ),
     faces: faces.map((_face, i) =>
       Object.fromEntries(
-        FACE_FIELD_CONFIGS.map(cfg => [cfg.key, readFaceValue(card, i, cfg.key, cfg.type)])
+        FACE_FIELDS.map(cfg => [cfg.key, readFaceValue(card, i, cfg.key, cfg.type)])
       )
     ),
   };
 }
 
 function isRootChangeable(key: string): key is rootChangeablePropType<'add'> {
-  return ROOT_FIELD_CONFIGS.some(cfg => cfg.key === key);
+  return ROOT_FIELD_CONFIGS.some(cfg => cfg.key === key && !cfg.readOnly);
 }
 
 function isRootDeletable(key: string): key is rootChangeablePropType<'delete'> {
@@ -207,7 +207,7 @@ function buildFaceFromFormFields(
   fields: Record<string, string>
 ): HCCardFace.MultiFaced {
   const face = createBlankFace(card, faceIndex);
-  for (const cfg of FACE_FIELD_CONFIGS) {
+  for (const cfg of FACE_FIELDS) {
     const raw = fields[cfg.key] ?? '';
     if (!raw.trim() && cfg.type !== 'boolean') continue;
     const value = parseFieldValue(raw, cfg.type);
@@ -225,6 +225,7 @@ export function buildChangesFromForm(
   const changes: anyChange[] = [];
 
   for (const cfg of ROOT_FIELD_CONFIGS) {
+    if (cfg.readOnly) continue;
     const before = original.root[cfg.key] ?? '';
     const after = current.root[cfg.key] ?? '';
     if (before === after) continue;
@@ -249,7 +250,8 @@ export function buildChangesFromForm(
     }
     const origFace = original.faces[i] ?? {};
     const currFace = current.faces[i] ?? {};
-    for (const cfg of FACE_FIELD_CONFIGS) {
+    for (const cfg of FACE_FIELDS) {
+      if (cfg.readOnly) continue;
       const before = origFace[cfg.key] ?? '';
       const after = currFace[cfg.key] ?? '';
       if (before === after) continue;

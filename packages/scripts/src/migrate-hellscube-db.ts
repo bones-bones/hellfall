@@ -26,8 +26,8 @@ import { resolveGoogleApplicationCredentials } from './lib/resolveGoogleCredenti
 //   type CardTagOverrides,
 //   type CardTagState,
 // } from '@hellfall/shared/cardTags/cardTagMerge.ts';
-import { HCCard } from '@hellfall/shared/types';
-import { CardMap } from '@hellfall/shared/utils';
+import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
+import { CardMap, textEquals } from '@hellfall/shared/utils';
 import {
   cardToFirestore,
   cardUpdate,
@@ -106,6 +106,101 @@ function buildCardIndexes(cardMap: CardMap): CardIndexes {
     }
   });
   return { docIdByHcid, docIdsByName };
+}
+
+type StalePartRef = {
+  cardName: string;
+  cardHcid: string;
+  cardId: string;
+  part: HCRelatedCard;
+  resolvedId?: string;
+};
+
+/** Resolve an all_parts entry to a card id in the migration JSON (id → hcid → name). */
+function resolvePartTargetId(
+  part: HCRelatedCard,
+  cardMap: CardMap,
+  indexes: CardIndexes
+): string | undefined {
+  if (part.id && cardMap.has(part.id)) {
+    return part.id;
+  }
+  if (part.hcid) {
+    const byHcid = indexes.docIdByHcid.get(part.hcid);
+    if (byHcid) {
+      return byHcid;
+    }
+  }
+  if (part.name && part.set) {
+    const byNameAndSet = cardMap
+      .cards()
+      .filter(card => textEquals(card.name, part.name) && card.set === part.set);
+    if (byNameAndSet.length === 1) {
+      return byNameAndSet[0].id;
+    }
+  }
+  if (part.name) {
+    const byName = indexes.docIdsByName.get(part.name.trim());
+    if (byName?.length === 1) {
+      return byName[0];
+    }
+  }
+  return undefined;
+}
+
+function findStaleAllPartRefs(cardMap: CardMap, indexes: CardIndexes): StalePartRef[] {
+  const stale: StalePartRef[] = [];
+  cardMap.forEach(card => {
+    if (!card.all_parts?.length) {
+      return;
+    }
+    for (const part of card.all_parts) {
+      if (!part.id && !part.hcid && !part.name) {
+        continue;
+      }
+      const resolvedId = resolvePartTargetId(part, cardMap, indexes);
+      if (!resolvedId) {
+        stale.push({
+          cardName: card.name,
+          cardHcid: card.hcid,
+          cardId: card.id,
+          part,
+        });
+        continue;
+      }
+      if (part.id && part.id !== resolvedId) {
+        stale.push({
+          cardName: card.name,
+          cardHcid: card.hcid,
+          cardId: card.id,
+          part,
+          resolvedId,
+        });
+      }
+    }
+  });
+  return stale;
+}
+
+function warnStaleAllPartRefs(stale: StalePartRef[]): void {
+  if (!stale.length) {
+    console.log('Stale all_parts refs: 0');
+    return;
+  }
+  console.warn(
+    `\nStale all_parts refs: ${stale.length} (part.id missing or does not match resolved card)`
+  );
+  for (const ref of stale) {
+    const { part, cardName, cardHcid, cardId, resolvedId } = ref;
+    const detail = resolvedId
+      ? `resolved id=${resolvedId} via hcid/name`
+      : 'no matching card in JSON';
+    console.warn(
+      `  "${cardName}" (${cardHcid}, id=${cardId}): ` +
+        `part id=${part.id || '(empty)'}, hcid=${part.hcid}, name=${part.name} — ${detail}`
+    );
+  }
+  console.warn('Run yarn transform-hc before migrate to refresh all_parts cross-links.\n');
 }
 
 // function decodeOrphanDocId(orphanId: string): string | undefined {
@@ -356,6 +451,7 @@ async function main() {
   const db = new Firestore({ databaseId });
   const collection = db.collection(collectionName);
   const indexes = buildCardIndexes(cardMap);
+  const stalePartRefs = findStaleAllPartRefs(cardMap, indexes);
 
   console.log('Loading existing docs...');
   const existingById = await loadExistingDocs(collection);
@@ -422,6 +518,7 @@ async function main() {
 
   const orphanCount = [...(existingById?.keys() ?? [])].filter(id => !cardMap.has(id)).length;
   console.log(`Firestore orphans (id not in JSON): ${orphanCount}`);
+  warnStaleAllPartRefs(stalePartRefs);
 
   if (reportOnly) return;
 
