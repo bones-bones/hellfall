@@ -8,31 +8,22 @@ import {
   cleanParts,
   updateParts,
 } from '../changeHandling';
-import { getAllRelatedCollection } from './cardRefs';
-import { cardToFirestore, firestoreToCard } from './cardConversion';
+import { fetchRelatedCardsFromCollection } from './cardRefs';
+import { cardToFirestore } from './cardConversion';
 
 export const applyFromCollection = async (
   card: HCCard.Any,
   changeList: anyChange[],
   cardsCol: CollectionReference
 ) => {
-  const oldRelateds: ReturnType<typeof getAllRelatedCollection> = getAllRelatedCollection(
-    card,
+  const oldParts = card.all_parts ? structuredClone(card.all_parts) : undefined;
+  if (!applyChanges(card, changeList)) return;
+  setDerivedProps(card);
+  const oldRelatedMap = await fetchRelatedCardsFromCollection(
+    { ...card, all_parts: oldParts },
     cardsCol
   );
-  if (!applyChanges(card, changeList)) return;
-  const newRelateds = getAllRelatedCollection(card, cardsCol);
-  setDerivedProps(card);
-  const oldRelatedMap = new CardMap(
-    await Promise.all(
-      oldRelateds.map(async data => firestoreToCard((await data.get()).data() ?? {}))
-    )
-  );
-  const newRelatedMap = new CardMap(
-    await Promise.all(
-      newRelateds.map(async data => firestoreToCard((await data.get()).data() ?? {}))
-    )
-  );
+  const newRelatedMap = await fetchRelatedCardsFromCollection(card, cardsCol);
   const bothRelatedMap = oldRelatedMap.getSubset(newRelatedMap.ids());
   oldRelatedMap.deleteMultiple(bothRelatedMap.ids());
   newRelatedMap.deleteMultiple(bothRelatedMap.ids());
@@ -40,12 +31,9 @@ export const applyFromCollection = async (
   updateParts(card, bothRelatedMap);
   cleanParts(card, bothRelatedMap);
   cleanParts(card, oldRelatedMap);
-  oldRelateds.forEach(
-    async data =>
-      await data.set(cardToFirestore(oldRelatedMap.get(data.id) ?? bothRelatedMap.get(data.id)!))
-  );
-  newRelateds.forEach(
-    async data =>
-      await data.set(cardToFirestore(newRelatedMap.get(data.id) ?? bothRelatedMap.get(data.id)!))
+  await Promise.all(
+    [oldRelatedMap, bothRelatedMap, newRelatedMap].flatMap((relatedMap: CardMap) =>
+      relatedMap.cards().map(related => cardsCol.doc(related.id).set(cardToFirestore(related)))
+    )
   );
 };
