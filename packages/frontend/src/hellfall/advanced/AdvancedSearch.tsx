@@ -24,6 +24,7 @@ import {
   createStyledPrimaryButtonLink,
   createStyledSelect,
 } from '../../styling';
+import { useSyncSorts } from '../hooks/useUrlSync.ts';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');
@@ -74,14 +75,7 @@ export const AdvancedSearch = () => {
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const [sortRules, setSortRules] = useAtom(sortAtom);
   const [localQuery, setLocalQuery] = useState('');
-
-  useEffect(() => {
-    setInputSorts(['auto,auto']);
-    setSortRules([]);
-  }, []);
-  useEffect(() => {
-    setSortRules(parseSorts(inputSorts));
-  }, [inputSorts]);
+  useSyncSorts();
 
   const toQueryString = () => {
     const filters: string[] = [];

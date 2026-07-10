@@ -15,16 +15,28 @@ import {
   SortObject,
   combineAndWinnowSorts,
   parseSearchQuery,
-  makeSort,
+  parseSorts,
 } from '@hellfall/shared/filters';
 import { equalityFunction, listsAreExactlyEqual } from '@hellfall/shared/utils';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
+// import { useAuth } from '../../auth/AuthContext.tsx';
+// @circular-ignore Used only for links
+import { ControlBar } from '../search-controls/ControlBar'; // used for link
 
 const sortsEqual: equalityFunction<SortObject> = (mem1: SortObject, mem2: SortObject) =>
   mem1.sort == mem2.sort && mem1.dir == mem2.dir;
 
+/**
+ * Syncs atoms ({@linkcode queryAtom}, {@linkcode querySortAtom}, {@linkcode inputSortAtom},
+ * {@linkcode sortAtom}, {@linkcode pageAtom}, {@linkcode summaryAtom}, and {@linkcode invalidAtom})
+ * with the url on page/location changes
+ *
+ * If you're only using the {@linkcode ControlBar} but the page isn't the search page,
+ * use {@linkcode useSyncSorts} instead of this hook.
+ */
 export const useUrlSync = () => {
   const location = useLocation();
+  // const { user } = useAuth();
 
   const [query, setQuery] = useAtom(queryAtom);
   const [querySorts, setQuerySorts] = useAtom(querySortAtom);
@@ -35,9 +47,7 @@ export const useUrlSync = () => {
   const [summary, setSummary] = useAtom(summaryAtom);
   const [invalids, setInvalids] = useAtom(invalidAtom);
   const cards = useAtomValue(cardsAtom);
-  // const randomPathNames = ['/card','/random']
   useEffect(() => {
-    // const asRandom = randomPathNames.some(name=>location.pathname.startsWith(name))
     const params = new URLSearchParams(location.search);
     const newQuery = params.get(/* asRandom ? 'random':  */ 'q') || '';
     const parsedQuery = parseSearchQuery(newQuery, cards);
@@ -53,7 +63,7 @@ export const useUrlSync = () => {
       params.getAll('order')
     );
     if (!sortList.length) {
-      sortList.push(makeSort('auto', 'auto'));
+      sortList.push(...parseSorts(/* user?.defaultSorts ?? */ ['auto,auto']));
     }
     if (!listsAreExactlyEqual(sortRules, sortList, sortsEqual)) {
       setSortRules(sortList);
@@ -67,18 +77,15 @@ export const useUrlSync = () => {
     if (!listsAreExactlyEqual(invalids, parsedQuery.invalids)) {
       setInvalids(parsedQuery.invalids);
     }
-    // Set pagination and reset active card
+    // Set pagination
     if (page != parseInt(params.get('page') || '0')) {
       setPage(parseInt(params.get('page') || '0'));
     }
-    // if (activeCard != (params.get('activeCard') || '')) {
-    //   setActiveCard(params.get('activeCard') || '');
-    // }
     setActiveCard('');
-  }, [location.search, location.pathname]); // This triggers on back/forward navigation
+  }, [location.search, location.pathname, /* user */]); // This triggers on back/forward navigation
 };
 
-export const getSearchParams = (
+const getSearchParams = (
   query: string,
   asRandom?: boolean,
   inputSorts?: string[],
@@ -87,7 +94,7 @@ export const getSearchParams = (
   const searchToSet = new URLSearchParams();
 
   if (query) {
-    searchToSet.append(/* asRandom?'random': */ 'q', query);
+    searchToSet.append('q', query);
   }
 
   if (inputSorts?.length && !asRandom) {
@@ -98,14 +105,15 @@ export const getSearchParams = (
   }
   return searchToSet;
 };
-const sortsOnlyAddedAuto = (prevSorts: string[], currentSorts: string[]) => {
+const sortsOnlyAddedAuto = (
+  prevSorts: string[],
+  currentSorts: string[],
+  defaultSorts?: string[]
+) => {
   if (prevSorts.length) {
     return false;
   }
-  if (currentSorts.length > 1) {
-    return false;
-  }
-  return currentSorts[0] === 'auto,auto';
+  return listsAreExactlyEqual(currentSorts, defaultSorts ?? ['auto,auto']);
 };
 const sortsActuallyChanged = (prevSorts: string[], currentSorts: string[]) =>
   !listsAreExactlyEqual(prevSorts, currentSorts) && !sortsOnlyAddedAuto(prevSorts, currentSorts);
@@ -116,8 +124,7 @@ export const useUpdateURL = (asRandom?: boolean) => {
   const query = useAtomValue(queryAtom);
   const inputSorts = useAtomValue(inputSortAtom);
   const page = useAtomValue(pageAtom);
-  // const activeCard = useAtomValue(activeCardAtom);
-  const prevValues = useRef({ query, inputSorts, page /*, activeCard */ });
+  const prevValues = useRef({ query, inputSorts, page });
 
   useEffect(() => {
     const hasChanged =
@@ -157,4 +164,26 @@ export const useNavToSearch = () => {
     });
   };
   return navToSearch;
+};
+
+/**
+ * Syncs {@linkcode inputSortAtom} and {@linkcode sortAtom} with the {@linkcode ControlBar} without
+ * using the full {@linkcode useUrlSync} hook
+ *
+ * This hook is necessary if you're using `ControlBar` outside of the search page
+ */
+export const useSyncSorts = () => {
+  // const { user } = useAuth();
+  const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
+  const [sortRules, setSortRules] = useAtom(sortAtom);
+  useEffect(() => {
+    setInputSorts(/* user?.defaultSorts ?? */ ['auto,auto']);
+    setSortRules([]);
+  }, []);
+  useEffect(() => {
+    setSortRules(parseSorts(inputSorts));
+  }, [inputSorts]);
+  // useEffect(() => {
+  //   setInputSorts(user?.defaultSorts ?? ['auto,auto']);
+  // }, [user]);
 };

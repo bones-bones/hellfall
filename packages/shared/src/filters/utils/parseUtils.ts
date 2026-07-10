@@ -19,11 +19,24 @@ export const unescapeText = (text: string) => {
 /**
  * Splits a search term on its first operator
  * @param text search term to split
- * @returns keyword, op, and term, all with unescapeText applied. Defaults to returning a name search.
  */
 export const splitOnFirstOp = (
   text: string
-): { keyword: string; op: looseOpType; term: string } => {
+): {
+  /**
+   * The keyword from the search term. Has {@linkcode unescapeText} applied to it.
+   * Also includes any prefixes. If omitted, will return `'name'`
+   */
+  keyword: string;
+  /**
+   * The operator from the search term. If omitted, will return `':'`
+   */
+  op: looseOpType;
+  /**
+   * The term from the search term. Note: Does not have {@linkcode unescapeText} applied to it.
+   */
+  term: string;
+} => {
   for (let i = 1; i < text.length - 1; i++) {
     if (looseOpList.includes(text.slice(i, i + 2) as looseOpType) && i < text.length - 2) {
       return {

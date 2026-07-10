@@ -12,6 +12,8 @@ const DEFAULT_DEV_USER: AuthUser = {
   email: null,
   isContributor: true,
   isAdmin: true,
+  defaultCludes: ['include:extras'],
+  defaultSorts: ['set,desc', 'number,asc'],
 };
 
 const DEV_LOGGED_IN = true;

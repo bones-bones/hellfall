@@ -124,15 +124,14 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
   return { tokens, sortList };
 };
 
-const parseClude = (text:string) => {
+const parseClude = (text: string) => {
   const { keyword, op, term } = splitOnFirstOp(text);
-  const clude = makeIncludeFilter(term,':');
+  const clude = makeIncludeFilter(term, ':');
   if (keyword == 'exclude') {
-    clude.invert()
+    clude.invert();
   }
-  return clude
-}
-
+  return clude;
+};
 
 const splitCludes = (
   cludeList: IncludeFilter[]
@@ -165,7 +164,7 @@ const consumeList = [' or ', '(', ' and ', ' not (', ')'];
 export const parseSearchQuery = (
   query: string,
   cardMap: CardMap,
-  defaultCludes?:string[]
+  defaultCludes?: string[]
   // getOtherPrints?: otherPrintGetterType
 ): {
   /**
@@ -375,7 +374,7 @@ export const parseSearchQuery = (
     summaries.shift();
   }
   if (!cludeList.length && defaultCludes?.length) {
-    defaultCludes.forEach(clude=>cludeList.push(parseClude(clude)))
+    defaultCludes.forEach(clude => cludeList.push(parseClude(clude)));
   }
   const { includeList, excludeList, cludeSummary } = splitCludes(cludeList);
 

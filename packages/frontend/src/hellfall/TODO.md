@@ -156,3 +156,12 @@ Write a script to transform the database
 - fix `fixTags`?
 - fix capitalization in search summaries
 - exclude hcj from draftpartner search?
+- add checkbox/dropdown for clusion to advanced search page
+- search strings for code to uncomment once server side user implementation is done:
+  - `import { useAuth }`
+  - `const { user`
+  - `user?.defaultSorts`
+  - `location.pathname, /* user */`
+  - `user?.defaultCludes`
+  - `cards.size(), user`
+  - `/settings`

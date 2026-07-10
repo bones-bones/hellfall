@@ -8,8 +8,10 @@ import { queryAtom, sortAtom, pageAtom } from '../atoms/searchAtoms.ts';
 import { CHUNK_SIZE } from '../constants.ts';
 import { makeSort, searchCards } from '@hellfall/shared/filters';
 import { tagsData } from '@hellfall/shared/data';
+// import { useAuth } from '../../auth/AuthContext.tsx';
 
 export const useSearchResults = (asRandom?: boolean) => {
+  // const { user } = useAuth();
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
   const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
   const query = useAtomValue(queryAtom);
@@ -29,7 +31,9 @@ export const useSearchResults = (asRandom?: boolean) => {
 
   useEffect(() => {
     const tempResults = (
-      asRandom && query == '*' ? cards : searchCards(cards, query, tagsData.data)
+      asRandom && query == '*'
+        ? cards
+        : searchCards(cards, query, tagsData.data, /* user?.defaultCludes */)
     ).cards();
     if (asRandom) {
       setResultSet(tempResults);
@@ -51,7 +55,7 @@ export const useSearchResults = (asRandom?: boolean) => {
       paginationModel.events.goTo(1);
       setPageAtom(0);
     }
-  }, [query, sortRules, page, cards.size()]);
+  }, [query, sortRules, page, cards.size(), /* user */]);
 
   return { resultSet, paginationModel };
 };

@@ -5,6 +5,17 @@ export interface AuthUser {
   email: string | null;
   isContributor: boolean;
   isAdmin: boolean;
+  defaultCludes?: string[];
+  defaultSorts?: string[];
+  /**
+   * @todo This hasn't been implemented yet. Once it is, this will control the card/all prints toggle
+   */
+  defaultPrints?: boolean;
+  /**
+   * @todo This hasn't been implemented yet. Once it is, this will control the card format display
+   * option (i.e. images/checklist/text/full)
+   */
+  defaultFormat?: string;
 }
 
 export interface AuthState {

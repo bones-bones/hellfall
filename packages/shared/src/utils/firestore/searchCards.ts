@@ -60,13 +60,17 @@ export const searchCardsFromCollection = async (
   cardsCol: cardsCollection,
   query: string,
   tagList: string[],
-  defaultCludes?:string[]
+  defaultCludes?: string[]
 ): Promise<CardMap> => {
   const snapshot = await cardsCol.get();
   const cardMap = new CardMap(
     snapshot.docs.map(doc => firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard))
   );
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap, defaultCludes);
+  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(
+    query,
+    cardMap,
+    defaultCludes
+  );
   const usingClusion = Boolean(includeList.length + excludeList.length);
   fixTags(node, tagList);
   if (

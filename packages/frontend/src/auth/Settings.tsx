@@ -7,10 +7,9 @@ import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { ControlBar } from '../hellfall/search-controls/ControlBar';
 import { Box, ButtonColors } from '@workday/canvas-kit-react';
 import { system } from '@workday/canvas-tokens-web';
-import { useAtom } from 'jotai';
-import { inputSortAtom, sortAtom } from '../hellfall/atoms/searchAtoms';
-import { inclusionType, parseSorts } from '@hellfall/shared/filters';
+import { inclusionType, parseSorts, splitOnFirstOp } from '@hellfall/shared/filters';
 import { SelectItems, StyledSelect } from '../hellfall/search-controls/StyledSelect';
+import { useSyncSorts } from '../hellfall/hooks/useUrlSync';
 
 type filterChoice = 'include' | 'exclude' | 'auto';
 const OPTIONS: SelectItems<filterChoice> = [
@@ -18,35 +17,32 @@ const OPTIONS: SelectItems<filterChoice> = [
   { label: 'Always', value: 'include' },
   { label: 'Never', value: 'exclude' },
 ];
-// const FilterOption = ({title, filter, value, noAlways, index}:{title:string; filter:inclusionType; value:filterChoice; noAlways?:boolean, index:number}) => {
-//   const getAvailableValues = () => OPTIONS.flatMap(opt => opt.value == 'include' && noAlways ? [] : opt.value)
-
-//   return (
-//     <StyledSelect<filterChoice>>
-
-//     </>
-//   );
-
-// }
+type cludeFilter = Extract<inclusionType, 'extracards' | 'tokens' | 'vetoed' | 'drop'>;
 
 export const Settings = () => {
   const { user, loading } = useAuth();
   const authConfigured = !!getAuthApiUrl();
   const navigate = useNavigate();
-  const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
-  const [sortRules, setSortRules] = useAtom(sortAtom);
-  const [cardsChoice, setCardsChoice] = useState<filterChoice>('auto');
-  const [tokensChoice, setTokensChoice] = useState<filterChoice>('auto');
-  const [vetoChoice, setVetoChoice] = useState<filterChoice>('auto');
-
+  const getClude = (filter: cludeFilter) => {
+    if (!user?.defaultCludes) return;
+    for (const clude in user.defaultCludes) {
+      const { keyword, op, term } = splitOnFirstOp(clude);
+      if (term == filter) {
+        return keyword as 'include' | 'exclude';
+      }
+    }
+  };
+  useSyncSorts();
+  const [cardsChoice, setCardsChoice] = useState<filterChoice>(getClude('extracards') ?? 'auto');
+  const [tokensChoice, setTokensChoice] = useState<filterChoice>(getClude('tokens') ?? 'auto');
+  const [vetoChoice, setVetoChoice] = useState<filterChoice>(getClude('vetoed') ?? 'auto');
+  const [dropChoice, setDropChoice] = useState<filterChoice>(getClude('drop') ?? 'auto');
   useEffect(() => {
-    setInputSorts(['auto,auto']);
-    setSortRules([]);
-  }, []);
-  useEffect(() => {
-    setSortRules(parseSorts(inputSorts));
-  }, [inputSorts]);
-
+    setCardsChoice(getClude('extracards') ?? 'auto');
+    setTokensChoice(getClude('tokens') ?? 'auto');
+    setVetoChoice(getClude('vetoed') ?? 'auto');
+    setDropChoice(getClude('drop') ?? 'auto');
+  }, [user]);
 
   useEffect(() => {
     const handleRedirect = async () => {
@@ -99,7 +95,7 @@ export const Settings = () => {
         <Button
           colors={inputButtonColors}
           onClick={() => {
-            const x = 1;
+            // TODO: add actual handling here
           }}
         >
           Update display preferences
@@ -133,19 +129,28 @@ export const Settings = () => {
         />
         <FilterOption>Include vetoed cards: </FilterOption>
         <StyledSelect<filterChoice>
-          key="veto"
+          key="vetoed"
           items={OPTIONS}
           initialValue={vetoChoice}
           width="150px"
           title="Whether to include vetoed cards"
           onSelect={setVetoChoice}
         />
+        <FilterOption>Include dropped card faces: </FilterOption>
+        <StyledSelect<filterChoice>
+          key="drop"
+          items={OPTIONS}
+          initialValue={dropChoice}
+          width="150px"
+          title="Whether to include dropped card faces"
+          onSelect={setDropChoice}
+        />
       </FilterContainer>
       <br />
       <Button
         colors={inputButtonColors}
         onClick={() => {
-          const x = 1;
+          // TODO: add actual handling here
         }}
       >
         Update filter preferences
