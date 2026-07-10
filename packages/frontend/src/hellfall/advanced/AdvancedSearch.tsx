@@ -6,6 +6,7 @@ import {
   NamedCheckboxGroup,
   NumberSelector,
   SingleCheckbox,
+  InlineCheckbox,
 } from './index.ts';
 import { ButtonColors, TextInput, FormField } from '@workday/canvas-kit-react';
 import { system } from '@workday/canvas-tokens-web';
@@ -13,7 +14,7 @@ import { useAtom } from 'jotai';
 import { inputSortAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
-import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
+import { looseOpList, looseOpType } from '@hellfall/shared/filters';
 import { ControlBar } from '../search-controls/ControlBar.tsx';
 import { extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
@@ -49,7 +50,6 @@ export const AdvancedSearch = () => {
     [undefined, ':']
   );
   const [searchSet, setSearchSet] = useState<string[]>([]);
-  const [includeExtraSets, setIncludeExtraSets] = useState(false);
   const [extraSets, setExtraSets] = useState<string[]>([]);
   const [searchToken, setSearchToken] = useState<'Cards' | 'Tokens' | 'Both'>('Cards');
   const [extrasOpen, setExtrasOpen] = useState(false);
@@ -71,6 +71,12 @@ export const AdvancedSearch = () => {
   const [toughness, setToughness] = useState<[number | undefined, looseOpType]>([undefined, ':']);
   const [loyalty, setLoyalty] = useState<[number | undefined, looseOpType]>([undefined, ':']);
   const [defense, setDefense] = useState<[number | undefined, looseOpType]>([undefined, ':']);
+
+  const [includeExtras, setIncludeExtras] = useState(false);
+  const [includeExtraCards, setIncludeExtraCards] = useState(false);
+  const [includeTokens, setIncludeTokens] = useState(false);
+  const [includeVetoed, setIncludeVetoed] = useState(false);
+  const [includeDropped, setIncludeDropped] = useState(false);
 
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const [sortRules, setSortRules] = useAtom(sortAtom);
@@ -203,8 +209,20 @@ export const AdvancedSearch = () => {
         filters.push(`(${orFilters.join(' or ')})`);
       }
     }
-    if (includeExtraSets) {
+    if (includeExtras) {
       filters.push('include:extras');
+    }
+    if (includeExtraCards) {
+      filters.push('include:extracards');
+    }
+    if (includeTokens) {
+      filters.push('include:tokens');
+    }
+    if (includeVetoed) {
+      filters.push('include:vetoed');
+    }
+    if (includeDropped) {
+      filters.push('include:dropped');
     }
     inputSorts.forEach(input => {
       const [sort, dir] = input.split(',', 2);
@@ -251,7 +269,11 @@ export const AdvancedSearch = () => {
     searchColorIdentities,
     colorIdentityComparison,
     hybridIdentityRule,
-    includeExtraSets,
+    includeExtras,
+    includeExtraCards,
+    includeTokens,
+    includeVetoed,
+    includeDropped,
     inputSorts,
   ]);
   const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
@@ -416,12 +438,6 @@ export const AdvancedSearch = () => {
             <StyledLegend>{'Extras'}</StyledLegend>
             {extrasOpen ? (
               <>
-                {/* <StyledComponentHolder> */}
-                <SingleCheckbox
-                  label={'Include Extra Sets'}
-                  onChange={setIncludeExtraSets}
-                  value={includeExtraSets}
-                />
                 {/* </StyledComponentHolder> */}
                 <StyledComponentHolder>
                   <BoxlessCheckboxGroup
@@ -553,12 +569,38 @@ export const AdvancedSearch = () => {
         </SearchCriteriaSection>
       </SearchContainer>
       <Separator />
-      <ControlBar />
+      <ControlBar>
+        <InlineCheckbox
+          label={'Include all extras'}
+          onChange={setIncludeExtras}
+          value={includeExtras}
+        />
+        <InlineCheckbox
+          label={'Include extra cards'}
+          onChange={setIncludeExtraCards}
+          value={includeExtraCards}
+        />
+        <InlineCheckbox
+          label={'Include tokens'}
+          onChange={setIncludeTokens}
+          value={includeTokens}
+        />
+        <InlineCheckbox
+          label={'Include vetoed cards'}
+          onChange={setIncludeVetoed}
+          value={includeVetoed}
+        />
+        <InlineCheckbox
+          label={'Include dropped faces'}
+          onChange={setIncludeDropped}
+          value={includeDropped}
+        />
+      </ControlBar>
       <SortSeparator />
       <StartButton
         colors={inputButtonColors}
         // cs={startButton}
-        to={localQuery ? `/?q=${localQuery}` : '/'}
+        to={localQuery ? `/?q=${encodeURIComponent(localQuery)}` : '/'}
         onClick={(e: React.MouseEvent) => {
           if (!(e.button === 1 || e.metaKey || e.ctrlKey)) {
             setInputSorts([]);

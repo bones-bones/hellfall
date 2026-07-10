@@ -1,24 +1,11 @@
-import { BoxProps, FormField, PaginationModel } from '@workday/canvas-kit-react';
+import { BoxProps, FormField } from '@workday/canvas-kit-react';
 import { useAtom, useAtomValue } from 'jotai';
 import { inputSortAtom, queryAtom, querySortAtom, sortAtom } from '../atoms/searchAtoms.ts';
 import { sortType, dirType, getWinnowedSortOptions, parseSorts } from '@hellfall/shared/filters';
-import { useEffect, useState } from 'react';
-import {
-  plusIcon,
-  minusIcon,
-  chevronLeftIcon,
-  chevronRightIcon,
-  splitIcon,
-  chevron2xLeftIcon,
-  chevron2xRightIcon,
-} from '@workday/canvas-system-icons-web';
+import { ReactNode, useEffect, useState } from 'react';
+import { plusIcon, minusIcon } from '@workday/canvas-system-icons-web';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import {
-  createStenciledDiv,
-  createStyledDiv,
-  createStyledSecondaryButton,
-  createStyledSecondaryButtonLink,
-} from '../../styling';
+import { createStenciledDiv, createStyledDiv, createStyledSecondaryButton } from '../../styling';
 import { SelectItems, StyledSelect } from './StyledSelect.tsx';
 // @circular-ignore Used only for links
 import { useUrlSync, useSyncSorts } from '../hooks/useUrlSync.ts';
@@ -46,25 +33,21 @@ const parseSort = (order: string): sortType => order?.split(',')[0] as sortType;
 const parseDir = (order: string): dirType => order?.split(',')[1] as dirType;
 
 /**
- * User control bar. Has both sort controls and pagination controls. The pagination controls can be
- * omitted by omitting `model`.
+ * User control bar. Has sort controls. If you want to have something on the right, pass it as children.
  *
  * In order for this component to work properly, either {@linkcode useUrlSync} or {@linkcode useSyncSorts}
  * must be called in the body of the component that uses this. (Otherwise sort options won't sync.)
  */
 export const ControlBar = ({
-  model,
   noLabel,
+  children,
 }: {
-  /**
-   * The {@linkcode PaginationModel} to use. If omitted, the pagination controls will also be omitted
-   */
-  model?: PaginationModel;
   /**
    * Whether to hide the label. If true, also removes the padding on this component.
    * Use this if you want to use different layout styling on the control bar.
    */
   noLabel?: boolean;
+  children?: ReactNode;
 }) => {
   // const { user } = useAuth();
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
@@ -131,8 +114,6 @@ export const ControlBar = ({
     setInputSorts(newInputs);
   };
 
-  const currentPage = model?.state.currentPage;
-  const lastPage = model?.state.lastPage;
   const getCurrentSort = (index: number) => inputSorts[index]?.split(',')[0] as sortType;
   const getCurrentDir = (index: number) => inputSorts[index]?.split(',')[1] as dirType;
   return (
@@ -218,58 +199,7 @@ export const ControlBar = ({
               </ButtonGroup>
             </>
           </SortElements>
-          {model && (
-            <>
-              <ControlButton
-                icon={chevron2xLeftIcon}
-                title={`${currentPage == 1 ? 'You are on' : 'Go to'} the first page of this search`}
-                aria-label={`${
-                  currentPage == 1 ? 'You are on' : 'Go to'
-                } the first page of this search`}
-                onClick={model.events.first}
-                disabled={currentPage == 1}
-              />
-              <ControlButton
-                icon={chevronLeftIcon}
-                title={`${currentPage == 1 ? 'You are on' : 'Go to'} the ${
-                  currentPage == 1 ? 'first' : 'previous'
-                } page of this search`}
-                aria-label={`${currentPage == 1 ? 'You are on' : 'Go to'} the ${
-                  currentPage == 1 ? 'first' : 'previous'
-                } page of this search`}
-                onClick={model.events.previous}
-                disabled={currentPage == 1}
-              />
-              <ControlButtonLink
-                icon={splitIcon}
-                title="Find a random card within this search"
-                aria-label="Find a random card within this search"
-                to={`/random${query ? `?q=${query}` : ''}`}
-              />
-              <ControlButton
-                icon={chevronRightIcon}
-                title={`${currentPage == lastPage ? 'You are on' : 'Go to'} the ${
-                  currentPage == 1 ? 'last' : 'next'
-                } page of this search`}
-                aria-label={`${currentPage == lastPage ? 'You are on' : 'Go to'} the ${
-                  currentPage == 1 ? 'last' : 'next'
-                } page of this search`}
-                onClick={model.events.next}
-                disabled={currentPage == lastPage}
-              />
-              <ControlButton
-                icon={chevron2xRightIcon}
-                title={`${
-                  currentPage == lastPage ? 'You are on' : 'Go to'
-                } the last page of this search`}
-                aria-label={`${
-                  currentPage == lastPage ? 'You are on' : 'Go to'
-                } the last page of this search`}
-                onClick={model.events.last}
-                disabled={currentPage == lastPage}
-              />
-            </>
-          )}
+          {children}
         </div>
       </FormField>
     </Container>
@@ -347,17 +277,3 @@ const buttonGroupStyles = createStyles({
   verticalAlign: 'top',
 });
 const ButtonGroup = createStyledDiv(buttonGroupStyles, 'ButtonGroup');
-
-const controlButtonStyles = createStyles({
-  margin: '0 2px',
-  borderRadius: '4px',
-  // textDecoration:'none',
-  // '&:hover, &:focus, &:active': {
-  //   textDecoration: 'none'
-  // },
-  '&:disabled': {
-    cursor: 'not-allowed',
-  },
-});
-const ControlButton = createStyledSecondaryButton(controlButtonStyles, 'ControlButton');
-const ControlButtonLink = createStyledSecondaryButtonLink(controlButtonStyles, 'ControlButtonLink');

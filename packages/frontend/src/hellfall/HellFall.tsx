@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 import { HellfallCard } from './card/HellfallCard.tsx';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledDiv, createStyledHR } from '../styling';
+import { PaginationBar } from './search-controls/PaginationBar.tsx';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -73,7 +74,9 @@ export const HellFall = () => {
       <Separator ref={scrollPointRef} />
       {resultSet.length != 1 && (
         <>
-          <ControlBar model={paginationModel} />
+          <ControlBar>
+            <PaginationBar model={paginationModel} />
+          </ControlBar>
           <SortSeparator />
         </>
       )}
@@ -140,7 +143,9 @@ export const HellFall = () => {
       {resultSet.length != 1 && (
         <>
           <Separator />
-          <ControlBar model={paginationModel} />
+          <ControlBar>
+            <PaginationBar model={paginationModel} />
+          </ControlBar>
         </>
       )}
     </div>
