@@ -154,7 +154,6 @@ Write a script to transform the database
 - make it possible to filter against lack of a note
 - fix capitalization in search summaries
 - exclude hcj from draftpartner search?
-- add checkbox/dropdown for clusion to advanced search page
 - search strings for code to uncomment once server side user implementation is done:
   - `import { useAuth }`
   - `const { user`

@@ -425,6 +425,8 @@ export const savedOracleIds: Record<string, string> = {
   'wastes token': '8e1687da-24de-460e-9b1a-cc12776476df',
   'goblin shaman': '4ece8767-a2e0-42fc-aadf-86a4ae863343',
   'undead servant': '5bf9f397-0216-4ec9-a57b-406758dcc233',
+  'baby': 'a0101448-b5ca-47ce-aefe-a7a795c5e005',
+  
 };
 const tagCanHaveFaces = (tag: string, card?: HCCard.Any): boolean => {
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
