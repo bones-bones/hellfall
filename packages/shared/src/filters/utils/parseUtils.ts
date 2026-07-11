@@ -61,32 +61,32 @@ export const splitOnFirstOp = (
  * @param tag tag to prep
  */
 export const prepTag = (tag: string) => tag.replaceAll(/[/\\'"\- _.]/g, '').toLowerCase();
-/**
- * Fixes tag filter values
- * @param node the root node of the AST
- * @param tagList The list of tags (from `tags.json`)
- */
-export const fixTags = (node: FilterNode, tagList: string[]) => {
-  switch (node.type) {
-    case 'filter':
-      if (node.filter.queryName == 'tag') {
-        const tag = prepTag(node.filter.value);
-        const correctedTag = tagList.find(fixed => prepTag(fixed) == tag);
-        if (correctedTag) {
-          node.filter.value = correctedTag;
-        }
-      }
-      break;
-    case 'not':
-    case 'related':
-      fixTags(node.child, tagList);
-      break;
-    case 'and':
-    case 'or':
-      node.children.forEach(child => fixTags(child, tagList));
-      break;
-  }
-};
+// /**
+//  * Fixes tag filter values
+//  * @param node the root node of the AST
+//  * @param tagList The list of tags (from `tags.json`)
+//  */
+// export const fixTags = (node: FilterNode, tagList: string[]) => {
+//   switch (node.type) {
+//     case 'filter':
+//       if (node.filter.queryName == 'tag') {
+//         const tag = prepTag(node.filter.value);
+//         const correctedTag = tagList.find(fixed => prepTag(fixed) == tag);
+//         if (correctedTag) {
+//           node.filter.value = correctedTag;
+//         }
+//       }
+//       break;
+//     case 'not':
+//     case 'related':
+//       fixTags(node.child, tagList);
+//       break;
+//     case 'and':
+//     case 'or':
+//       node.children.forEach(child => fixTags(child, tagList));
+//       break;
+//   }
+// };
 
 /**
  * Fixes `dropFaces`

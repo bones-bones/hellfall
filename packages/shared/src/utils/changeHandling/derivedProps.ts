@@ -561,7 +561,7 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     if (card.card_faces.filter(face => !face.compress_face && !face.drop_face).length > 2) {
       let hasIgnored = false;
       card.card_faces.forEach((face, i) => {
-        if (i && baseIncludesFlag(card,'no-compress',i) && !hasIgnored) {
+        if (i && baseIncludesFlag(card, 'no-compress', i) && !hasIgnored) {
           hasIgnored = true; // this way only one face can be ignored
         } else if (i && !face.compress_face && !face.drop_face) {
           face.compress_face = true;

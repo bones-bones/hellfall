@@ -989,7 +989,7 @@ const flagTags = [
   'missing-specialize-frame',
   'unnecessary-color-indicator',
   'generic',
-  'no-compress'
+  'no-compress',
 ];
 
 /**

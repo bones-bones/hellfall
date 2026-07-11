@@ -9,6 +9,14 @@ import { textEquals, textContains } from './textHandling';
 export const xor = (value1: any, value2: any) => !value1 != !value2;
 
 /**
+ * Checks if two values are equal after converting them to booleans
+ * @param value1 the first value to compare
+ * @param value2 the second value to compare
+ * @returns Whether the boolean conversions of the values are the same
+ */
+export const xnor = (value1: any, value2: any) => !value1 == !value2;
+
+/**
  * Checks whether two arbitrary values are exactly equal.
  * (basically a version of `===` that compares objects by value rather than by reference)
  * @template T the type of the values to compare

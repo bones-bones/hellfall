@@ -2,7 +2,7 @@ import { HCCard } from '@hellfall/shared/types';
 import {
   makeIncludeFilter,
   FilterNode,
-  fixTags,
+  // fixTags,
   fixDrop,
   parseSearchQuery,
   searchCards,

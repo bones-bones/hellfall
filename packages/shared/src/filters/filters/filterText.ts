@@ -9,6 +9,7 @@ import {
   wrapArray,
   getSetAndDirectChildSets,
   xor,
+  xnor,
 } from '@hellfall/shared/utils';
 import {
   opType,
@@ -118,11 +119,15 @@ export const artistFilter: noteFilterFunction = (
   value2: string,
   note?: boolean | string
 ) => {
-  if (note && typeof note != 'string') {
-    const artist = value2.slice(0, -1);
-    return (
-      value1.artist_notes &&
-      textListFilter(fixValue(Object.keys(value1.artist_notes)), operator, fixValue(artist))
+  if (note != undefined && typeof note != 'string') {
+    return opAsBool(
+      textListIncludes(fixValue(value1.artists), fixValue(value2)) &&
+        !!textListFilter(
+          fixValue(Object.keys(value1?.artist_notes ?? {})),
+          operator,
+          fixValue(value2)
+        ) == note,
+      operator
     );
   }
   if (note) {
@@ -160,11 +165,11 @@ export const artistSummary: noteSummaryFunction = (
   note?: boolean | string
 ) =>
   `the artists ${includeSummaryPlural(operator, value, invert)} ${
-    note
+    note != undefined
       ? ` and that artist${
           typeof note == 'string'
             ? `'s note ${includeSummarySingular(operator, note, invert)}`
-            : ` ${xor(opIsNegative(operator), invert) ? 'does not have' : 'has'} a note`
+            : ` ${xor(opIsNegative(operator) == note, invert) ? 'does not have' : 'has'} a note`
         }`
       : ''
   }`;
@@ -182,11 +187,15 @@ export const tagFilter: noteFilterFunction = (
   value2: string,
   note?: boolean | string
 ) => {
-  if (note && typeof note != 'string') {
-    const tag = value2.slice(0, -1);
-    return (
-      value1.tag_notes &&
-      textListFilter(fixValue(Object.keys(value1.tag_notes)), operator, fixValue(tag))
+  if (note != undefined && typeof note != 'string') {
+    return opAsBool(
+      textListIncludes(fixValue(value1.tags), fixValue(value2)) &&
+        !!textListFilter(
+          fixValue(Object.keys(value1?.tag_notes ?? {})),
+          operator,
+          fixValue(value2)
+        ) == note,
+      operator
     );
   }
   if (note) {
@@ -224,11 +233,11 @@ export const tagSummary: noteSummaryFunction = (
   note?: boolean | string
 ) =>
   `the card is ${taggedSummary(operator, value, invert)} ${
-    note
+    note != undefined
       ? ` and that tag${
           typeof note == 'string'
             ? `'s note ${includeSummarySingular(operator, note, invert)}`
-            : ` ${xor(opIsNegative(operator), invert) ? 'does not have' : 'has'} a note`
+            : ` ${xor(opIsNegative(operator) == note, invert) ? 'does not have' : 'has'} a note`
         }`
       : ''
   }`;

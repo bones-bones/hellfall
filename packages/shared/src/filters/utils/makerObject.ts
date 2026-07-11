@@ -50,6 +50,9 @@ const parseNote = (text: string): { name: string; note?: boolean | string } => {
     const [name, note] = [text.split('<')[0], text.split('<')[1].slice(0, -1)];
     return { name, note };
   }
+  if (text.endsWith('>')) {
+    return { name: text.slice(0, -1), note: false };
+  }
   return { name: text };
 };
 

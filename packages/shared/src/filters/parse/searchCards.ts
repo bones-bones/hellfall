@@ -1,7 +1,7 @@
 import { HCCard } from '@hellfall/shared/types';
 import { CardMap, getAllRelated } from '@hellfall/shared/utils';
 import { parseSearchQuery } from './parseSearchQuery';
-import { fixTags, fixDrop, fixValue } from '../utils';
+import { /* fixTags,  */ fixDrop, fixValue } from '../utils';
 import { makeIncludeFilter } from '../makers';
 import { FilterNode } from '../types';
 import { correctInclude } from '../filters';

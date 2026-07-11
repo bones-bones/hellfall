@@ -95,6 +95,11 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
+          You can also use <code>tag:x{'<'}</code> or <code>tag:x{'>'}</code> to search for the
+          presence or absence of a note on tag <code>x</code>, respectively.
+        </div>
+        <br />
+        <div>
           You can also use <code>tagnote:</code> or <code>tn:</code> to search against just the tag
           notes.{' '}
         </div>
