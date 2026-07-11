@@ -989,7 +989,27 @@ const flagTags = [
   'missing-specialize-frame',
   'unnecessary-color-indicator',
   'generic',
+  'no-compress'
 ];
+
+/**
+ * Checks if a card has a flag tag
+ * @param card card to check
+ * @param flag flag tag to check
+ * @param i index to check, if any
+ */
+export const baseIncludesFlag = (card: HCCard.Any, flag: string, i?: number): boolean | undefined =>
+  card.base_tags?.some(full_tag => {
+    const { tag, value } = splitTagComponents(full_tag);
+    if (tag != flag) {
+      return false;
+    }
+    if (value == undefined || parseInt(value) == i) {
+      return true;
+    }
+    return false;
+  });
+
 /**
  * Gets the input and the
  * @param card card to get the input for

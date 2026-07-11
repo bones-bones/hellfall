@@ -30,6 +30,7 @@ import { orderColors, orderHybrid } from '../orderColors';
 import { isInteger } from '../numHandling';
 import { getDefaultKindLayout, getDefaultTypeLayout } from './defaults';
 import {
+  baseIncludesFlag,
   fillSubKeywords,
   getBaseDiffs,
   getChangesFromTag,
@@ -188,17 +189,6 @@ export const setDerivedProps = (
     applyChanges(card, changes);
   }
 
-  const baseIncludesFlag = (flag: string, i?: number): boolean | undefined =>
-    card.base_tags?.some(full_tag => {
-      const { tag, value } = splitTagComponents(full_tag);
-      if (tag != flag) {
-        return false;
-      }
-      if (value == undefined || parseInt(value) == i) {
-        return true;
-      }
-      return false;
-    });
   const getKeywordsFromFace = (face: faceType, i: number) => {
     const keywords: string[] = [];
     if (
@@ -239,29 +229,29 @@ export const setDerivedProps = (
         ((listIncludesValueLower(face.supertypes, 'legendary') &&
           !listIncludesValueLower(face.types, 'planeswalker') &&
           !listIncludesValueLower(face.types, 'player') &&
-          !baseIncludesFlag('missing-legend-frame', i)) ||
-          baseIncludesFlag('legend-frame', i)) &&
+          !baseIncludesFlag(card, 'missing-legend-frame', i)) ||
+          baseIncludesFlag(card, 'legend-frame', i)) &&
         !face.frame_effects?.includes(HCFrameEffect.Legendary)
       ) {
         effects.push(HCFrameEffect.Legendary);
       }
       if (
         listIncludesValueLower(face.supertypes, 'snow') &&
-        !baseIncludesFlag('missing-snow-frame', i) &&
+        !baseIncludesFlag(card, 'missing-snow-frame', i) &&
         !face.frame_effects?.includes(HCFrameEffect.Snow)
       ) {
         effects.push(HCFrameEffect.Snow);
       }
       if (
         listIncludesValueLower(face.subtypes, 'lesson') &&
-        !baseIncludesFlag('missing-lesson-frame', i) &&
+        !baseIncludesFlag(card, 'missing-lesson-frame', i) &&
         !face.frame_effects?.includes(HCFrameEffect.Lesson)
       ) {
         effects.push(HCFrameEffect.Lesson);
       }
       if (
         listIncludesValueLower(face.subtypes, 'vehicle') &&
-        !baseIncludesFlag('missing-vehicle-frame', i) &&
+        !baseIncludesFlag(card, 'missing-vehicle-frame', i) &&
         !face.frame_effects?.includes(HCFrameEffect.Vehicle)
       ) {
         effects.push(HCFrameEffect.Vehicle);
@@ -270,9 +260,9 @@ export const setDerivedProps = (
       ((listIncludesValueLower(face.supertypes, 'legendary') &&
         !listIncludesValueLower(face.types, 'planeswalker') &&
         !listIncludesValueLower(face.types, 'player') &&
-        baseIncludesFlag('hearthstone-frame', i) &&
-        !baseIncludesFlag('missing-legend-frame', i)) ||
-        baseIncludesFlag('legend-frame', i)) &&
+        baseIncludesFlag(card, 'hearthstone-frame', i) &&
+        !baseIncludesFlag(card, 'missing-legend-frame', i)) ||
+        baseIncludesFlag(card, 'legend-frame', i)) &&
       !face.frame_effects?.includes(HCFrameEffect.Legendary)
     ) {
       effects.push(HCFrameEffect.Legendary);
@@ -283,34 +273,34 @@ export const setDerivedProps = (
         !i &&
         card.layout == HCLayout.Transform &&
         !listsShare(face.frame_effects, TransformFrameEffects) &&
-        !baseIncludesFlag('missing-transform-frame', i)
+        !baseIncludesFlag(card, 'missing-transform-frame', i)
       ) {
         effects.push(HCFrameEffect.TransformDfc);
       } else if (
         !i &&
         card.layout == HCLayout.Modal &&
         !listsShare(face.frame_effects, TransformFrameEffects) &&
-        !baseIncludesFlag('missing-mdfc-frame', i)
+        !baseIncludesFlag(card, 'missing-mdfc-frame', i)
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         !i &&
         card.layout == HCLayout.Cube &&
         !listsShare(face.frame_effects, TransformFrameEffects) &&
-        !baseIncludesFlag('missing-cube-frame', i)
+        !baseIncludesFlag(card, 'missing-cube-frame', i)
       ) {
         effects.push(HCFrameEffect.Cube);
       } else if (
         !i &&
         card.layout == HCLayout.Specialize &&
         !listsShare(face.frame_effects, TransformFrameEffects) &&
-        !baseIncludesFlag('missing-specialize-frame', i)
+        !baseIncludesFlag(card, 'missing-specialize-frame', i)
       ) {
         effects.push(HCFrameEffect.Specialize);
       } else if (
         face.layout == HCLayout.Transform &&
         !listsShare(face.frame_effects, TransformFrameEffects) &&
-        !baseIncludesFlag('missing-transform-frame', i)
+        !baseIncludesFlag(card, 'missing-transform-frame', i)
       ) {
         const effect = card.card_faces[0].frame_effects?.find(effect =>
           TransformFrameEffects.includes(effect)
@@ -319,19 +309,19 @@ export const setDerivedProps = (
       } else if (
         face.layout == HCLayout.Modal &&
         !listsShare(face.frame_effects, TransformFrameEffects) &&
-        !baseIncludesFlag('missing-mdfc-frame', i)
+        !baseIncludesFlag(card, 'missing-mdfc-frame', i)
       ) {
         effects.push(HCFrameEffect.Mdfc);
       } else if (
         face.layout == HCLayout.Cube &&
         !listsShare(face.frame_effects, TransformFrameEffects) &&
-        !baseIncludesFlag('missing-cube-frame', i)
+        !baseIncludesFlag(card, 'missing-cube-frame', i)
       ) {
         effects.push(HCFrameEffect.Cube);
       } else if (
         face.layout == HCLayout.Specialize &&
         !listsShare(face.frame_effects, TransformFrameEffects) &&
-        !baseIncludesFlag('missing-specialize-frame', i)
+        !baseIncludesFlag(card, 'missing-specialize-frame', i)
       ) {
         effects.push(HCFrameEffect.Specialize);
       }
@@ -346,9 +336,9 @@ export const setDerivedProps = (
       if (face.color_indicator) {
         face.color_indicator = orderColors(face.color_indicator);
         face.colors = face.color_indicator;
-      } else if (baseIncludesFlag('unnecessary-color-indicator', i)) {
+      } else if (baseIncludesFlag(card, 'unnecessary-color-indicator', i)) {
         face.color_indicator = face.colors;
-      } else if (card.kind == 'token' && face.mana_cost && !baseIncludesFlag('generic', i)) {
+      } else if (card.kind == 'token' && face.mana_cost && !baseIncludesFlag(card, 'generic', i)) {
         face.colors = getColorsFromText(face.mana_cost);
       }
       const face_type = [
@@ -387,12 +377,12 @@ export const setDerivedProps = (
     card.colors = orderColors(card.colors);
     if (card.color_indicator) {
       card.color_indicator = orderColors(card.color_indicator);
-    } else if (baseIncludesFlag('unnecessary-color-indicator')) {
+    } else if (baseIncludesFlag(card, 'unnecessary-color-indicator')) {
       card.color_indicator = card.colors;
     } else if (
       card.kind == 'token' &&
       card.mana_cost &&
-      !baseIncludesFlag('generic') &&
+      !baseIncludesFlag(card, 'generic') &&
       !card.keywords.includes('devoid')
     ) {
       card.colors = getColorsFromText(card.mana_cost);
@@ -428,7 +418,7 @@ export const setDerivedProps = (
           card.mana_value += face.mana_value;
           colors.push(
             ...(face.color_indicator ??
-              (face.mana_cost && !baseIncludesFlag('generic', i)
+              (face.mana_cost && !baseIncludesFlag(card, 'generic', i)
                 ? getColorsFromText(face.mana_cost)
                 : face.colors))
           );
@@ -569,8 +559,11 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     });
     // compress down to 1 side and use front image if there are still too many sides
     if (card.card_faces.filter(face => !face.compress_face && !face.drop_face).length > 2) {
-      card.card_faces.slice(1).forEach(face => {
-        if (!face.compress_face && !face.drop_face) {
+      let hasIgnored = false;
+      card.card_faces.forEach((face, i) => {
+        if (i && baseIncludesFlag(card,'no-compress',i) && !hasIgnored) {
+          hasIgnored = true; // this way only one face can be ignored
+        } else if (i && !face.compress_face && !face.drop_face) {
           face.compress_face = true;
         }
       });

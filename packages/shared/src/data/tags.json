@@ -680,6 +680,7 @@
 		"no-artist-credit",
 		"no-border",
 		"no-color-identity",
+		"no-compress",
 		"no-control",
 		"no-fetch",
 		"no-font",
