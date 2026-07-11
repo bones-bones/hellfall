@@ -25,7 +25,12 @@ export const RelatedCards = ({
       <div>
         {relatedCards.length > 0 && (
           <>
-            <StyledHeadingLink size="small" to={`/?q=~oracleid:${otherPrints[0].oracle_id}`}>
+            <StyledHeadingLink
+              size="small"
+              to={`/?q=${encodeURIComponent(
+                `~oracleid:${otherPrints[0].oracle_id} include:extras`
+              )}`}
+            >
               Related Cards & Tokens
             </StyledHeadingLink>
             <RelatedGrid>
@@ -54,7 +59,12 @@ export const RelatedCards = ({
         )}
         {otherPrints.some(card => card.id != sourceCardId) && (
           <>
-            <StyledHeadingLink size="small" to={`/?q=oracleid:${otherPrints[0].oracle_id}`}>
+            <StyledHeadingLink
+              size="small"
+              to={`/?q=${encodeURIComponent(
+                `oracleid:${otherPrints[0].oracle_id} include:extras`
+              )}`}
+            >
               Other Prints
             </StyledHeadingLink>
             <RelatedGrid>
