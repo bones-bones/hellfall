@@ -149,9 +149,7 @@ Write a script to transform the database
 - add keywords.json file
 - add a/an handling to showcase frame search summary function
 - move showcase to a prop
-- add @template to jsdocs
 - figure out how to implement a link between filter names in parseMaps and query names on filter makers
-- make it possible to filter against lack of a note
 - fix capitalization in search summaries
 - exclude hcj from draftpartner search?
 - search strings for code to uncomment once server side user implementation is done:
@@ -161,3 +159,4 @@ Write a script to transform the database
   - `/*, user */`
   - `user?.defaultCludes`
   - `/settings`
+- make pagination atom persist on reload

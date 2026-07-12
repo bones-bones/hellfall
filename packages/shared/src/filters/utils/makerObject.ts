@@ -275,6 +275,7 @@ export class PropFilter extends FilterObject<string[], string> {
 }
 /**
  * A filter object that gets props from a card and that converts a value from a search into an array
+ * @template T The type of the value
  */
 export class PropConvertFilter<T extends string> extends FilterObject<string[], string[]> {
   /**

@@ -50,6 +50,8 @@ export interface sortInterface extends anyFilterInterface {
 
 /**
  * An interface for a FilterObject
+ * @template T the type of the value from the card
+ * @template S the type of the value from the search
  */
 export interface filterInterface<T = any, S = any> extends anyFilterInterface {
   /**

@@ -589,6 +589,16 @@ const subKeywords: Record<string, string | string[]> = {
   woah: 'fear',
   'drive-to-work': 'suspend',
   goldlink: 'link',
+  'dead weapon': 'living weapon',
+  homiecycling: 'cycling',
+  crewshido: ['crew', 'bushido'],
+  'gruul prowess': 'prowess',
+  'colossal dreadmorph': 'morph',
+  'planeswalker monstrosity': 'monstrosity',
+  muderlink: 'link',
+  'land bestow': 'bestow',
+  damagewalk: 'walk',
+  'keyword scavenge': 'scavenge',
 };
 
 const keywordTags = ['fuse', 'enchant', 'flip', 'transform', 'aftermath', 'meld', 'draftpartner'];
@@ -597,6 +607,7 @@ const tagsToKeywords: Record<string, string | string[]> = {
   'means-end': ['means', 'end'],
   'gx-ability': 'gx',
   cube: 'rotate',
+  'mutate-layout': 'mutate',
 };
 
 export const fillSubKeywords = (keywords: string[]) => {

@@ -5,6 +5,7 @@ import { Changeset } from '../changeHandling';
 /**
  * The exact value that corresponds to {@linkcode anyPropType} in firestore.
  * Use this for {@linkcode cardUpdate}
+ * @template K the type of the prop to get the type of value for
  */
 export type fireValueType<K extends anyPropType> = K extends 'color_identity_hybrid'
   ? string
