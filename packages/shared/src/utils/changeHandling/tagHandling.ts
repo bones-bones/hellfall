@@ -149,15 +149,6 @@ export const tagChangesVisibleProps = (fullTag: string): boolean => {
   if (tag == 'back-image') {
     return true;
   }
-  if (tag in frontImageTagProps) {
-    return true;
-  }
-  if (tag in frontImageTagProps) {
-    return true;
-  }
-  if (tag in frontImageTagProps) {
-    return true;
-  }
   if (tagIsSetTag(tag)) {
     return true;
   }
@@ -601,6 +592,17 @@ const subKeywords: Record<string, string | string[]> = {
   'keyword scavenge': 'scavenge',
   cardcycling: 'cycling',
   fungmass: 'amass',
+  'defend rear end': 'undying',
+  underload: 'overload',
+  flyingwalk: 'walk',
+  millwalk: 'walk',
+  manafest: 'manifest',
+  'counter delve': 'delve',
+  myrsist: 'persist',
+  outkast: 'outlast',
+  walkwalk: 'walk',
+  'keyword graft': 'graft',
+  servolink: 'link',
 };
 
 const keywordTags = ['fuse', 'enchant', 'flip', 'transform', 'aftermath', 'meld', 'draftpartner'];
