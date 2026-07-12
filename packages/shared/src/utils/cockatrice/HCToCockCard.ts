@@ -224,6 +224,10 @@ const compressHCCardFaces = (card: HCCard.Any): HCCard.Any => {
       }
     }
 
+    if (goingToCompressAll && newCard.card_faces[0].image) {
+      // This is only true when compressing down to 1 side and when there is a full image
+      newCard.card_faces[0].layout = HCLayout.Multi;
+    }
     // compress down to 1 side and use front image if there are still too many sides
     if (goingToCompressAll || !newCard.card_faces[0].image) {
       newCard.card_faces[0].image = newCard.image;
