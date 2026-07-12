@@ -48,8 +48,8 @@ declare module 'simple-markdown' {
   }
   export interface ParserState {
     key?: number;
-    // inline?: boolean;
     setDangerously?: boolean;
+    useItalicFont?: boolean;
     [key: string]: Rule;
   }
 

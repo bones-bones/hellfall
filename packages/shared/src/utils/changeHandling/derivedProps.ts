@@ -201,7 +201,14 @@ export const setDerivedProps = (
     if (
       listIncludesValueLower(face.types, 'artifact') &&
       listIncludesValueLower(face.subtypes, 'equipment') &&
-      ['equip (', 'equip—'].some(text => textContains(face.oracle_text, text))
+      ['equip {', 'equip—'].some(text => textContains(face.oracle_text, text))
+    ) {
+      keywords.push('equip');
+    }
+    if (
+      listIncludesValueLower(face.types, 'artifact') &&
+      listIncludesValueLower(face.subtypes, 'fortification') &&
+      ['fortify {', 'fortify—'].some(text => textContains(face.oracle_text, text))
     ) {
       keywords.push('equip');
     }

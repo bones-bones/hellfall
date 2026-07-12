@@ -93,12 +93,13 @@ export const CardFace = ({
                   'HTML Injection in the Hellfall Website Elemental',
                   face.name.replaceAll('2em', 'em')
                 ),
+              true,
               true
             )}
           </MediumText>
         ) : triggerEscapeList.some(e => face.oracle_text.includes(e)) ? (
           <MediumText key="rules">
-            {formatDiscordMarkdown(formatParens(face.oracle_text))}
+            {formatDiscordMarkdown(formatParens(face.oracle_text), undefined, false, true)}
           </MediumText>
         ) : (
           <MediumText key="rules">{renderText(face.oracle_text.split('\\n'))}</MediumText>

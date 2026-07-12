@@ -195,6 +195,16 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
           };
         },
         react: (node: ParsedNode, output: OutputFunction, state?: ParserState): React.ReactNode => {
+          if (state?.useItalicFont) {
+            return (
+              <em
+                key={state?.key}
+                style={{ fontFamily: '"MPlantin", Georgia, "Times New Roman", serif' }}
+              >
+                {output(node.content as ParsedNode[], state)}
+              </em>
+            );
+          }
           return <em key={state?.key}>{output(node.content as ParsedNode[], state)}</em>;
         },
       } satisfies Rule,
@@ -206,7 +216,8 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
 const formatLine = (
   line: string,
   invertedItalics: boolean = false,
-  setDangerously?: boolean
+  setDangerously?: boolean,
+  useItalicFont?: boolean
 ): ReactNode => {
   if (!line) return null;
 
@@ -216,22 +227,40 @@ const formatLine = (
     const reactOutput = reactFor(ruleOutput(rules, 'react'));
 
     // Parse the line into an AST
-    const parsed = parser(line, { /* inline: true, */ setDangerously } as ParserState);
+    const parsed = parser(line, { setDangerously, useItalicFont } as ParserState);
 
     if (!parsed || parsed.length === 0) {
       const content = stringToMana(line);
       if (invertedItalics) {
-        return <em style={{ fontStyle: 'italic' }}>{content}</em>;
+        return (
+          <em
+            style={{
+              fontStyle: 'italic',
+              fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
+            }}
+          >
+            {content}
+          </em>
+        );
       }
       return content;
     }
 
     // Render the parsed nodes
-    const rendered = reactOutput(parsed, { setDangerously } as ParserState);
+    const rendered = reactOutput(parsed, { setDangerously, useItalicFont } as ParserState);
 
     // If inverted italics mode, wrap the entire result in <em>
     if (invertedItalics) {
-      return <em style={{ fontStyle: 'italic' }}>{rendered}</em>;
+      return (
+        <em
+          style={{
+            fontStyle: 'italic',
+            fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
+          }}
+        >
+          {rendered}
+        </em>
+      );
     }
 
     return rendered;
@@ -241,7 +270,16 @@ const formatLine = (
     // Fallback to plain text with mana symbols
     const content = stringToMana(line);
     if (invertedItalics) {
-      return <em style={{ fontStyle: 'italic' }}>{content}</em>;
+      return (
+        <em
+          style={{
+            fontStyle: 'italic',
+            fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
+          }}
+        >
+          {content}
+        </em>
+      );
     }
     return content;
   }
@@ -257,7 +295,8 @@ const formatLine = (
 export const formatDiscordMarkdown = (
   text: string,
   textModifier?: (text: string) => string,
-  setDangerously?: boolean
+  setDangerously?: boolean,
+  useItalicFont?: boolean
 ): ReactNode => {
   if (!text) return null;
 
@@ -266,7 +305,7 @@ export const formatDiscordMarkdown = (
     : text.split('\\n');
 
   return lines.map((line, index) => {
-    const formattedLine = formatLine(line, false, setDangerously);
+    const formattedLine = formatLine(line, false, setDangerously, useItalicFont);
     return (
       <MediumText key={`line-${index}`}>
         {/* {index > 0 && <br />} */}

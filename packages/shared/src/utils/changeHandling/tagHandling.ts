@@ -599,6 +599,8 @@ const subKeywords: Record<string, string | string[]> = {
   'land bestow': 'bestow',
   damagewalk: 'walk',
   'keyword scavenge': 'scavenge',
+  cardcycling: 'cycling',
+  fungmass: 'amass',
 };
 
 const keywordTags = ['fuse', 'enchant', 'flip', 'transform', 'aftermath', 'meld', 'draftpartner'];
