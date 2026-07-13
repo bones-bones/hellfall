@@ -603,6 +603,22 @@ const subKeywords: Record<string, string | string[]> = {
   walkwalk: 'walk',
   'keyword graft': 'graft',
   servolink: 'link',
+  ratlink: 'link',
+  shardcade: 'cascade',
+  gravegraft: 'graft',
+  'surprise suspend': 'suspend',
+  overmode: ['overload', 'fuse'],
+  revoke: 'evoke',
+  overspend: ['suspend', 'overload'],
+  fertilize: 'proliferate',
+  crample: 'trample',
+  casketscade: 'cascade',
+  upload: 'overload',
+  'flash-fuse': ['flashback', 'fuse'],
+  moonwalk: 'walk',
+  turtlesplice: 'splice',
+  screwtate: 'mutate',
+  'half prowl': 'prowl',
 };
 
 const keywordTags = ['fuse', 'enchant', 'flip', 'transform', 'aftermath', 'meld', 'draftpartner'];
@@ -1005,6 +1021,7 @@ const flagTags = [
   'unnecessary-color-indicator',
   'generic',
   'no-compress',
+  'irregular-mana-value',
 ];
 
 /**

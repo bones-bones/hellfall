@@ -222,7 +222,7 @@ export const setDerivedProps = (
     if (
       listIncludesValueLowerEvery(face.types, ['artifact', 'creature']) &&
       listIncludesValueLower(face.subtypes, 'equipment') &&
-      ['reconfigure {', 'reconfigure—'].some(text => textContains(face.oracle_text, 'equip '))
+      ['reconfigure {', 'reconfigure—'].some(text => textContains(face.oracle_text, text))
     ) {
       keywords.push('reconfigure');
     }
@@ -356,10 +356,12 @@ export const setDerivedProps = (
         .join(' ') as string;
       face.type_line = face_type;
       type_line_list.push(face_type);
-      face.mana_value =
-        i && !face.mana_cost && FrontManaValueFaceLayouts.includes(face.layout)
-          ? card.card_faces.slice(0, i).findLast(f => f.mana_cost)?.mana_value ?? 0
-          : getMVFromCost(face.mana_cost);
+      if (!baseIncludesFlag(card, 'irregular-mana-value', i)) {
+        face.mana_value =
+          i && !face.mana_cost && FrontManaValueFaceLayouts.includes(face.layout)
+            ? card.card_faces.slice(0, i).findLast(f => f.mana_cost)?.mana_value ?? 0
+            : getMVFromCost(face.mana_cost);
+      }
       mana_cost_list.push(face.mana_cost);
       const effects = [...(face.frame_effects ?? []), ...getFrameEffectsFromFace(face, i)];
       if (effects.length > 0 && card.kind != 'scryfall') {

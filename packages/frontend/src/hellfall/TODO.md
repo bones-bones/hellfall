@@ -160,3 +160,4 @@ Write a script to transform the database
   - `user?.defaultCludes`
   - `/settings`
 - make pagination atom persist on reload
+- make daybound/nightbound creatures not have the `transform` keyword

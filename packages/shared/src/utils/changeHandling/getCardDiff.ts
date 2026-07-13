@@ -31,7 +31,7 @@ import {
   isRootChangeValueType,
 } from './changeValidation';
 import { toFaces } from '../cardHandling';
-import { getBaseDiffs, getChangesFromTag } from './tagHandling';
+import { baseIncludesFlag, getBaseDiffs, getChangesFromTag } from './tagHandling';
 
 // can add even if empty
 const rootBlankableProps: Partial<Record<HCKind, rootPropType[]>> = {
@@ -216,12 +216,12 @@ const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
 };
 
 const rootIgnoreProps: Record<HCKind, rootPropType[]> = {
-  card: ['keywords', 'image_status', 'print_image_status'],
+  card: ['image_status', 'print_image_status'],
   token: ['mana_cost', 'mana_value', 'colors', 'rulings', 'image_status', 'print_image_status'],
-  land: ['keywords', 'image_status', 'print_image_status'],
-  front: ['keywords', 'image_status', 'print_image_status'],
+  land: ['image_status', 'print_image_status'],
+  front: ['image_status', 'print_image_status'],
   scryfall: [],
-  notmagic: ['keywords', 'image_status', 'print_image_status'],
+  notmagic: ['image_status', 'print_image_status'],
 };
 const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
   // card: ['colors'],
@@ -258,7 +258,8 @@ export const getChangesFromDifferences = (
         if (
           change_type == 'add' &&
           !value &&
-          !rootBlankableProps[existingCard.kind]?.includes(prop)
+          (!rootBlankableProps[existingCard.kind]?.includes(prop) ||
+            (prop == 'mana_value' && baseIncludesFlag(existingCard, 'irregular-mana-value')))
         )
           return;
         if (rootIgnoreProps[existingCard.kind]?.includes(prop)) return;
@@ -327,7 +328,11 @@ export const getChangesFromDifferences = (
       continue;
     }
     const noBlank = <K extends add>(prop: K, value?: faceValueType<K>) => {
-      if (!value && !faceBlankableProps[existingCard.kind]?.includes(prop)) {
+      if (
+        !value &&
+        (!faceBlankableProps[existingCard.kind]?.includes(prop) ||
+          (prop == 'mana_value' && baseIncludesFlag(existingCard, 'irregular-mana-value', index)))
+      ) {
         return true;
       }
       if (Array.isArray(value) && !value.length) {
