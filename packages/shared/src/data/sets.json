@@ -528,6 +528,25 @@
       "parent_set_code": "HCV"
     },
     {
+      "id": "bf391f9e-bdb8-4947-9f18-fa84568ad989",
+      "code": "HDH",
+      "name": "Hellder Dragon Highlander",
+      "description": "Hellmander Precons",
+      "set_type": "side",
+      "child_set_codes": [
+        "HCV.H"
+      ],
+      "filename": "hdh.svg"
+    },
+    {
+      "id": "f5ca4bb5-7037-46c4-91d2-fff683bf7317",
+      "code": "HCV.L",
+      "name": "Hellscube V(eto).L",
+      "description": "Cards vetoed or slotsed from HKL.",
+      "set_type": "veto",
+      "parent_set_code": "HCV"
+    },
+    {
       "id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
       "code": "HCV",
       "name": "Hellscube V(eto)",
@@ -547,7 +566,8 @@
         "HCV.J",
         "HCV.L",
         "HCV.9",
-        "HCV.S"
+        "HCV.S",
+        "HCV.H"
       ]
     },
     {

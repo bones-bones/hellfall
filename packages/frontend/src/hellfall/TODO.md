@@ -161,3 +161,4 @@ Write a script to transform the database
   - `/settings`
 - make pagination atom persist on reload
 - make daybound/nightbound creatures not have the `transform` keyword
+- add conversions for long set names

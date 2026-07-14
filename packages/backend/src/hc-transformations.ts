@@ -126,6 +126,7 @@ const mergeDatabases = (
     'HCV.P': 0,
     'HCV.CDC': 0,
     'HCV.S': 0,
+    'HCV.H': 0,
     NRM: 0,
     HCJ: 0,
     NMTG: 0,
