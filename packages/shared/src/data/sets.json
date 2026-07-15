@@ -230,7 +230,7 @@
       "code": "HCC",
       "name": "HC Constructed",
       "description": "Commanders cut from HC6 due to slots.",
-      "set_type": "veto"
+      "set_type": "side"
     },
     {
       "id": "e38f8294-0f9b-4ce9-bdb3-2d67db56e317",
