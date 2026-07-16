@@ -21,7 +21,7 @@ import {
   frontIsBattle,
   addPropToRoot,
   pushPropToRoot,
-  getColorsFromText,
+  pipMap,
   parseRelatedReferenceName,
 } from '@hellfall/shared/utils';
 
@@ -144,7 +144,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
       },
       {
         colors: cardIsMulti
-          ? getColorsFromText(entryAt('mana_cost'))
+          ? pipMap.getColorsFromText(entryAt('mana_cost'))
           : entryAt('colors')
           ? entryAt('colors')
               .split(';')
@@ -164,7 +164,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         image_status: entryAt('0image') ? HCImageStatus.HighRes : undefined,
       }
     );
-    const costColors = getColorsFromText(entryAt('mana_cost'));
+    const costColors = pipMap.getColorsFromText(entryAt('mana_cost'));
     if (!costColors.length && card.colors.length && !cardIsMulti && card.set != 'NRM') {
       addPropToFace(card, 'color_indicator', card.colors);
     }
@@ -189,7 +189,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               addPropToFace(card, key as facePropType, value, face + index);
             }
             if (key == 'mana_cost') {
-              addPropToFace(card, 'colors', getColorsFromText(value), face + index);
+              addPropToFace(card, 'colors', pipMap.getColorsFromText(value), face + index);
             }
             if (key == 'image') {
               addPropToFace(card, 'image_status', HCImageStatus.HighRes, face + index);
