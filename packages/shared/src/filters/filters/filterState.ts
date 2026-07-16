@@ -19,6 +19,8 @@ import {
   textListsShare,
   textListIncludes,
   textListIncludesEvery,
+  cardIsPermanent,
+  cardIsHistoric,
 } from '@hellfall/shared/utils';
 
 const stateList = [
@@ -74,7 +76,7 @@ const stateResolutions: Record<
   ruling: (value: HCCard.Any) => !!value.rulings,
   foil: (value: HCCard.Any) => value.finish == 'foil',
   nonfoil: (value: HCCard.Any) => value.finish == 'nonfoil',
-  commander: (value: HCCard.Any) => canBeACommander(value),
+  commander: canBeACommander,
   phyrexian: (value: HCCard.Any, dropFaces?: boolean) =>
     getFromFaces(value, 'mana_cost', dropFaces).some(cost => /\{H\//.test(cost)),
   hybrid: (value: HCCard.Any, dropFaces?: boolean) =>
@@ -94,20 +96,8 @@ const stateResolutions: Record<
           'gleeporzob',
         ]) && !textListIncludes(face.types, 'land')
     ),
-  permanent: (value: HCCard.Any, dropFaces?: boolean) =>
-    value.tags?.includes('spell-land') ||
-    textListsShare(getFromFaces(value, 'types', dropFaces), [
-      'artifact',
-      'battle',
-      'creature',
-      'enchantment',
-      'land',
-      'planeswalker',
-    ]),
-  historic: (value: HCCard.Any, dropFaces?: boolean) =>
-    textListIncludes(getFromFaces(value, 'supertypes', dropFaces), 'legendary') ||
-    textListIncludes(getFromFaces(value, 'types', dropFaces), 'artifact') ||
-    textListIncludes(getFromFaces(value, 'subtypes', dropFaces), 'saga'),
+  permanent: cardIsPermanent,
+  historic: cardIsHistoric,
   party: (value: HCCard.Any, dropFaces?: boolean) =>
     textListsShare(getFromFaces(value, 'subtypes', dropFaces), [
       'cleric',

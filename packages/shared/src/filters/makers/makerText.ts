@@ -68,7 +68,7 @@ export const makeIDFilter: filterMaker<string> = (value: string, op: looseOpType
     'id',
     idFilter,
     idSummary,
-    value,
+    `"${value}"`,
     op,
     card => card.hcid,
     '=',
@@ -86,7 +86,7 @@ export const makeOracleIDFilter: filterMaker<string> = (value: string, op: loose
     'oracleid',
     oracleIdFilter,
     oracleIdSummary,
-    value,
+    `"${value}"`,
     op,
     card => card.oracle_id
   );
@@ -106,7 +106,7 @@ export const makeNameFilter: propFilterMaker = (value: string, op: looseOpType) 
  * @param value the value from the search
  * @param op the operator from the search
  */
-export const makeCostTextFilter: propFilterMaker = (value: string, op: looseOpType) => {
+export const makeManaTextFilter: propFilterMaker = (value: string, op: looseOpType) => {
   return new PropFilter('manatext', includeSummarySingular, value, op, 'text of the mana cost');
 };
 

@@ -16,7 +16,7 @@ import {
 export const makeCompFilter: comparisonFilterMaker = (
   value1: string,
   op: looseOpType,
-  value2: string
+  value2?: string
 ) => {
   return new ComparisonFilter('comp', comparisonFilter, comparisonSummary, value1, op, value2);
 };

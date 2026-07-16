@@ -157,7 +157,7 @@ export class NoUnescapeFilter<T, S> extends FilterObject<T, S> {
 export class InvalidFilter extends FilterObject<string, string> {
   constructor(
     queryName: string,
-    summaryStart?: string,
+    summaryStart?: string | summaryFunction<string>,
     value: string = '',
     op: looseOpType = ':',
     defaultOp: opType = '=',
@@ -166,7 +166,7 @@ export class InvalidFilter extends FilterObject<string, string> {
     super(
       queryName,
       emptyFilter,
-      createInvalidSummary(summaryStart),
+      typeof summaryStart != 'function' ? createInvalidSummary(summaryStart) : summaryStart,
       value,
       op,
       card => '',
@@ -240,7 +240,7 @@ export class ComparisonFilter extends FilterObject<HCCard.Any, string> {
     /**
      * The second value to filter against
      */
-    public value2: string,
+    public value2?: string,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {

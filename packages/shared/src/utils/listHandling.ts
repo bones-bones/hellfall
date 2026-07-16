@@ -336,6 +336,14 @@ export const textListContains = (value1?: string[], value2?: string) =>
   listIncludesValue(value1, value2, textContains);
 
 /**
+ * Checks whether a text list contains some member of a list of strings
+ * (i.e. whether the list includes a string that {@link textContains contains} the string to check)
+ * @param value1 list to check
+ * @param value2 list of strings to check
+ */
+export const textListContainsSome = (value1?: string[], value2?: string[]) =>
+  value2?.some(value => textListContains(value1, value));
+/**
  * Checks whether a text list contains all members of a list of strings
  * (i.e. whether the list includes a string that {@link textContains contains} the string to check)
  * @param value1 list to check

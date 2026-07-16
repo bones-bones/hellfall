@@ -63,3 +63,10 @@ export const toNumber = (num: number | string | undefined): number | undefined =
     return !Number.isNaN(num0) ? num0 : undefined;
   }
 };
+
+/**
+ * Does an actual modulo operation (since js's builtin one returns negative if the first value is negative)
+ * @param n The first number to compare
+ * @param m The second number to compare
+ */
+export const mod = (n: number, m: number) => ((n % m) + m) % m;

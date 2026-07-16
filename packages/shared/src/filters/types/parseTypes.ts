@@ -10,6 +10,9 @@ export type FilterNode =
   | { type: 'and'; children: FilterNode[] }
   | { type: 'or'; children: FilterNode[] };
 
+/**
+ * The names for a regular filter
+ */
 export const filterNames = [
   'id',
   'oracleid',
@@ -65,9 +68,18 @@ export const filterNames = [
   'invalidkeyword',
   'invalidcolor',
 ] as const;
+/**
+ * The type for a name for a regular filter
+ */
 export type filterNameType = (typeof filterNames)[number];
+/**
+ * Checks if a value is {@linkcode filterNameType}
+ * @param value value to check
+ */
 export const isFilterName = (value: any): value is filterNameType => filterNames.includes(value);
-
+/**
+ * Equivalent strings for {@linkcode filterNameType}
+ */
 export const equivFilterNames: Record<string, filterNameType> = {
   cardid: 'id',
   hcid: 'id',
@@ -170,9 +182,23 @@ export const equivFilterNames: Record<string, filterNameType> = {
   dir: 'invalidsort',
   direction: 'invalidsort',
 };
+/**
+ * Converts a string to {@linkcode filterNameType} if possible; returns `undefined` otherwise
+ * @param value value to convert
+ */
 export const toFilterName = (value: string): filterNameType | undefined =>
   equivFilterNames[value] ?? (isFilterName(value) ? value : undefined);
+/**
+ * Equivalent strings for inverted filters
+ */
+export const invertedFilterNames: Record<string, filterNameType> = {
+  not: 'is',
+  exclude: 'include',
+};
 
+/**
+ * The names for a color filter
+ */
 const colorFilterNames = [
   'color',
   'indicator',
@@ -183,9 +209,19 @@ const colorFilterNames = [
   'miscidentity',
   'mischybrid',
 ] as const;
+/**
+ * The type for a name for a color filter
+ */
 export type colorFilterNameType = (typeof colorFilterNames)[number];
+/**
+ * Checks if a value is {@linkcode colorFilterNameType}
+ * @param value value to check
+ */
 export const isColorFilterName = (value: any): value is colorFilterNameType =>
   colorFilterNames.includes(value);
+/**
+ * Equivalent strings for {@linkcode colorFilterNameType}
+ */
 export const equivColorFilterNames: Record<string, colorFilterNameType> = {
   c: 'color',
   colors: 'color',
@@ -231,17 +267,102 @@ export const equivColorFilterNames: Record<string, colorFilterNameType> = {
   mischybrididentity: 'mischybrid',
   mischybridcoloridentity: 'mischybrid',
 };
+/**
+ * Converts a string to {@linkcode colorFilterNameType} if possible; returns `undefined` otherwise
+ * @param value value to convert
+ */
 export const toColorFilterName = (value: string): colorFilterNameType | undefined =>
   equivColorFilterNames[value] ?? (isColorFilterName(value) ? value : undefined);
 
+/**
+ * The names for a prints filter
+ */
 const printsFilterNames = ['in', 'sets', 'prints'] as const;
+/**
+ * The type for a name for a prints filter
+ */
 export type printsFilterNameType = (typeof printsFilterNames)[number];
+/**
+ * Checks if a value is {@linkcode printsFilterNameType}
+ * @param value value to check
+ */
 export const isPrintsFilterName = (value: any): value is printsFilterNameType =>
   printsFilterNames.includes(value);
+/**
+ * Equivalent strings for {@linkcode printsFilterNameType}
+ */
 export const equivPrintsFilterNames: Record<string, printsFilterNameType> = {};
+/**
+ * Converts a string to {@linkcode printsFilterNameType} if possible; returns `undefined` otherwise
+ * @param value value to convert
+ */
 export const toPrintsFilterName = (value: string): printsFilterNameType | undefined =>
   equivPrintsFilterNames[value] ?? (isPrintsFilterName(value) ? value : undefined);
-export const invertedFilterNames: Record<string, filterNameType> = {
-  not: 'is',
-  exclude: 'include',
+
+/**
+ * The names for a devotion filter
+ */
+const devotionFilterNames = [
+  'devotion',
+  'dreadmaw',
+  'gray',
+  'god',
+  'fatass',
+  'locus',
+  'hybrid',
+  'fish',
+  'awesome',
+  'history',
+  "urza's",
+] as const;
+/**
+ * The type for a name for a devotion filter
+ */
+export type devotionFilterNameType = (typeof devotionFilterNames)[number];
+/**
+ * The names for a devotion filter that can be a keyword on their own
+ */
+export const devotionKeywordFilterNames: devotionFilterNameType[] = ['devotion', 'dreadmaw'];
+/**
+ * The names for a devotion filter that can take a number
+ */
+export const devotionNumberFilterNames: devotionFilterNameType[] = [
+  'dreadmaw',
+  'gray',
+  'hybrid',
+  'history',
+];
+/**
+ * Checks if a value is {@linkcode devotionFilterNameType}
+ * @param value value to check
+ */
+export const isDevotionFilterName = (value: any): value is devotionFilterNameType =>
+  devotionFilterNames.includes(value);
+/**
+ * Equivalent strings for {@linkcode devotionFilterNameType}
+ */
+export const equivDevotionFilterNames: Record<string, devotionFilterNameType> = {
+  d: 'devotion',
+  dev: 'devotion',
+  dm: 'dreadmaw',
+  maw: 'dreadmaw',
+  grey: 'gray',
+  gods: 'god',
+  fat: 'fatass',
+  ass: 'fatass',
+  asses: 'fatass',
+  fatasses: 'fatass',
+  hybriddev: 'hybrid',
+  hd: 'hybrid',
+  hybridd: 'hybrid',
+  hist: 'history',
+  historic: 'history',
+  urzas: "urza's",
+  urza: "urza's",
 };
+/**
+ * Converts a string to {@linkcode devotionFilterNameType} if possible; returns `undefined` otherwise
+ * @param value value to convert
+ */
+export const toDevotionFilterName = (value: string): devotionFilterNameType | undefined =>
+  equivDevotionFilterNames[value] ?? (isDevotionFilterName(value) ? value : undefined);

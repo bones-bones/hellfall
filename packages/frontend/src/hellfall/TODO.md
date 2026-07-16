@@ -165,3 +165,6 @@ Write a script to transform the database
 - add devotion search
 - add produces search
 - sync rulings between prints of a card
+- use comp filter to implement odd/even filter
+- add examples to syntax page
+- add `include:spell` for devotion searches?

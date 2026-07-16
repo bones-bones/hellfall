@@ -7,12 +7,13 @@ import {
   comparisonSummaryFunction,
   summaryFunction,
 } from '../types';
-import { numFilter, opIsNegative } from '../utils';
+import { numFilter, opAsBool, opIsNegative, opToNot } from '../utils';
 import {
   colorMiscReduce,
   getColorsFromFaces,
   getHybridColorNumber,
   hybridIdentityMiscReduce,
+  mod,
   shouldChoose2,
   toFaces,
   toNumber,
@@ -39,16 +40,31 @@ export const numProps = [
   'miscindicator',
   'miscidentity',
   'mischybrid',
+  'odd',
+  'even',
 ] as const;
 /**
  * The type for props that can be compared with a comparison filter
  */
 export type numPropType = (typeof numProps)[number];
+
 /**
  * Validates whether a value is {@linkcode numPropType}
  * @param value value to validate
  */
 export const isNumProp = (value: any): value is numPropType => numProps.includes(value);
+
+/**
+ * The type for props that can be compared with a comparison filter and can be keywords
+ */
+export type trueNumPropType = Exclude<numPropType, 'odd' | 'even'>;
+/**
+ * Validates whether a value is {@linkcode trueNumPropType}
+ * @param value value to validate
+ */
+export const isTrueNumProp = (value: any): value is trueNumPropType =>
+  isNumProp(value) && !['odd', 'even'].includes(value);
+
 /**
  * Checks whether a keyword is {@linkcode numPropType} or can be converted to it
  * @param keyword keyword to check
@@ -60,7 +76,7 @@ export const isCompKeyword = (keyword: string) =>
 
 const getPropNumsFromCard = (
   card: HCCard.Any,
-  prop: numPropType,
+  prop: trueNumPropType,
   dropFaces?: boolean
 ): number[] => {
   switch (prop) {
@@ -118,7 +134,7 @@ const toNumProp = (prop: string): numPropType | undefined => {
     return equivColorFilterNames[fixedProp];
   }
 };
-const numPropToSummary: Record<numPropType, string> = {
+const numPropToSummary: Record<trueNumPropType, string> = {
   creator: 'the number of creators',
   artist: 'the number of artists',
   manavalue: 'the mana value',
@@ -161,7 +177,16 @@ export const comparisonFilter: comparisonFilterFunction = (
   if (!first || !second) {
     return false;
   }
+  if (!isTrueNumProp(first)) {
+    return false;
+  }
   const firstValue = getPropNumsFromCard(value1, first, dropFaces);
+  if (!isTrueNumProp(second)) {
+    return opAsBool(
+      firstValue.some(v => mod(v, 2) == Number(second == 'odd')),
+      operator
+    );
+  }
   const secondValue = getPropNumsFromCard(value1, second, dropFaces);
   return firstValue.some(v1 => secondValue.some(v2 => numFilter(v1, operator, v2)));
 };
@@ -184,11 +209,14 @@ export const comparisonSummary: comparisonSummaryFunction = (
   }
   const first = toNumProp(value1);
   const second = toNumProp(value2);
-  if (!first) {
+  if (!isTrueNumProp(first)) {
     return `!Unknown keyword "${value1}"`;
   }
   if (!second) {
     return `!Unknown value "${value2}"`;
+  }
+  if (!isTrueNumProp(second)) {
+    return `${numPropToSummary[first]} is ${opToNot(operator)} ${second}`;
   }
   if (first == second) {
     return '!The sides of your comparison must be different.';

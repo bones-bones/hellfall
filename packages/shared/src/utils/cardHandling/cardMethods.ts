@@ -21,7 +21,13 @@ import {
   HCFinish,
   HCFrame,
 } from '@hellfall/shared/types';
-import { ensureArray, listIncludesValueLower, listsShareLower } from '../listHandling';
+import {
+  ensureArray,
+  listIncludesValueLower,
+  listsShareLower,
+  textListIncludes,
+  textListsShare,
+} from '../listHandling';
 import {
   getMasterpiece,
   getSetCode,
@@ -79,6 +85,14 @@ export const getColorsFromFaces = (
   dropFaces?: boolean
 ): HCColors[] => toFaces(card, dropFaces).flatMap(face => [face[prop] ?? []]);
 
+const fixCosts = (value: string[]) => {
+  const filtered = value.filter(Boolean);
+  if (filtered.length) {
+    return filtered;
+  }
+  return [''];
+};
+
 /**
  * Gets the mana cost of each face of a card (excluding the main part for multiface cards)
  * @param card card to get the costs from
@@ -86,6 +100,90 @@ export const getColorsFromFaces = (
  */
 export const getCostsFromFaces = (card: HCCard.Any, dropFaces?: boolean): string[] =>
   toFaces(card, dropFaces).map(face => face.mana_cost);
+
+/**
+ * Gets the mana cost of each face of a card, dropping duplicate blanks
+ * @param card card to get the costs from
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const getFixedCostsFromFaces = (card: HCCard.Any, dropFaces?: boolean): string[] =>
+  fixCosts(getCostsFromFaces(card, dropFaces));
+
+/**
+ * Checks whether a face is a permanent
+ * @param face face to check
+ */
+export const faceIsPermanent = (face: faceType) =>
+  textListsShare(face.types, [
+    'artifact',
+    'battle',
+    'creature',
+    'enchantment',
+    'land',
+    'planeswalker',
+  ]);
+
+/**
+ * Checks whether a card is a permanent
+ * @param card card to check
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const cardIsPermanent = (card: HCCard.Any, dropFaces?: boolean) =>
+  toFaces(card, dropFaces).some(face => faceIsPermanent(face));
+
+/**
+ * Converts the card to an array of its faces that are permanents.
+ * For single-faced cards, returns an array with the card itself.
+ * For multi-faced cards, returns the card_faces array.
+ *
+ * Make sure you only try to work with props of type {@linkcode facePropType}.
+ * @param card card to get the faces of
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ * @returns an array of objects of type {@link faceType}
+ */
+export const toPermanentFaces = (card: HCCard.Any, dropFaces?: boolean) =>
+  toFaces(card, dropFaces).filter(faceIsPermanent);
+/**
+ * Gets the mana cost of each permanent face of a card, dropping duplicate blanks
+ * @param card card to get the costs from
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const getCostsFromPermanentFaces = (card: HCCard.Any, dropFaces?: boolean) =>
+  fixCosts(
+    toFaces(card, dropFaces)
+      .filter(faceIsPermanent)
+      .map(face => face.mana_cost)
+  );
+
+/**
+ * Checks whether a face is historic
+ * @param face face to check
+ */
+export const faceIsHistoric = (face: faceType) =>
+  textListIncludes(face.supertypes, 'legendary') ||
+  textListIncludes(face.types, 'artifact') ||
+  textListIncludes(face.subtypes, 'saga');
+
+/**
+ * Checks whether a card is historic
+ * @param card card to check
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const cardIsHistoric = (card: HCCard.Any, dropFaces?: boolean) =>
+  toFaces(card, dropFaces).some(face => faceIsHistoric(face));
+
+/**
+ * Gets the mana cost of each historic permanent face of a card, dropping duplicate blanks
+ * @param card card to get the costs from
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const getCostsFromHistoricPermanentFaces = (card: HCCard.Any, dropFaces?: boolean) =>
+  fixCosts(
+    toFaces(card, dropFaces)
+      .filter(faceIsPermanent)
+      .filter(faceIsHistoric)
+      .map(face => face.mana_cost)
+  );
 
 /**
  * Gets the value of a prop from each face of a card (including the main part for multiface cards)

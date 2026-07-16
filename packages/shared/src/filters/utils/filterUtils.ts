@@ -257,7 +257,7 @@ export const createNumSummary =
 export const createInvalidSummary =
   (summaryStart?: string): summaryFunction<string> =>
   (operator: opType, value: string) =>
-    `!Unknown ${summaryStart ? `${summaryStart} ` : ''} "${value}"`;
+    `!Unknown ${summaryStart ? `${summaryStart} ` : ''} ${value}`;
 
 /**
  * Creates a {@linkcode summaryFunction<colorSearch>}

@@ -96,3 +96,20 @@ export const pipsContainPipsGeneric = (
   const g2 = extractGenerics(pips2);
   return listContainsList(pips1, pips2, pipsAreEqual) && g1 >= g2;
 };
+/**
+ * Checks whether two lists of pips are equal once generic pips are removed
+ *
+ * The inputs can either be lists of pips, or can be search strings
+ * @param value1 first list of pips
+ * @param value2 second list of pips
+ */
+export const pipsEqualPipsNongeneric = (
+  value1: string | HCCardSymbol[],
+  value2: string | HCCardSymbol[]
+) => {
+  const pips1 = [...ensurePips(value1)];
+  const pips2 = [...ensurePips(value2)];
+  extractGenerics(pips1);
+  extractGenerics(pips2);
+  return listsAreLooselyEqual(pips1, pips2, pipsAreEqual);
+};

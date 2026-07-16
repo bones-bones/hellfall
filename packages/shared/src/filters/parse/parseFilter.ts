@@ -16,10 +16,13 @@ import {
   toFilterName,
   toPrintsFilterName,
   toColorFilterName,
+  toDevotionFilterName,
+  devotionKeywordFilterNames,
 } from '../types';
 import { splitOnFirstOp, FilterObject } from '../utils';
 import { parseColorText } from './parseColors';
 import { colorFilters, filters, printsFilters } from './parseMaps';
+import { parseDevotion } from './parseDevotion';
 
 // make sure the thing doesn't strip quotes when passing text in to this from start and end of string when
 /**
@@ -73,6 +76,10 @@ export const parseFilter = (
   }
   if (isCompKeyword(keyword) && isCompKeyword(term)) {
     return correctOp(makeCompFilter(keyword, op, unescapeText(term)));
+  }
+  const devotionName = toDevotionFilterName(keyword);
+  if (devotionName && devotionKeywordFilterNames.includes(devotionName)) {
+    return parseDevotion(devotionName, op, unescapeText(term));
   }
   if (unescapeText(term) == 'unique' && ['is', 'has'].includes(keyword)) {
     return correctOp(makeIsUniqueFilter(term, op, getAllPrints));

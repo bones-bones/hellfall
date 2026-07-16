@@ -127,16 +127,29 @@ export const Syntax = () => {
         </div>
         <h2>Mana Costs</h2>
         <div>
+          Everything in <Link to={'https://scryfall.com/docs/syntax#mana'}>Mana Costs</Link> except{' '}
+          <code>produces:</code> works.
+        </div>
+        <br />
+        <div>
           <code>mana:</code> works in hellfall just like in scryfall, though you can use{' '}
           <code>manatext:</code> instead if you want the functionality of a regular text search
           term.
         </div>
         <br />
-        {/* TODO: add these */}
         <div>
-          {' '}
-          {mapListToCodeAnd(['manavalue:even', 'manavalue:odd', 'devotion:', 'produces:'])} haven't
-          been implemented yet.{' '}
+          <code>devotion:</code> works in hellfall like it does in scryfall except better. You can
+          use the same syntax as in scryfall, but you can also use <code>d:</code> as a shorthand,
+          and you can use a specific type of devotion after the keyword (e.g.{' '}
+          <code>d:dreadmaw</code> or <code>d:u/b</code>) to search for cards that give devotion to
+          that.
+        </div>
+        <br />
+        <div>
+          Also, for types of devotion that cards can have more than one of, you can use an operator
+          and a number after the term (e.g. <code>d:dreadmaw{'='}6</code> or <code>d:u/b:3</code>).
+          You can also directly search for devotion to dreadmaw using <code>dreadmaw:</code> or{' '}
+          <code>dm:</code>. (The dreadmaw search doesn't match art yet.)
         </div>
         <h2>Numbers</h2>
         <div>
