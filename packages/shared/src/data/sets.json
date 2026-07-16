@@ -492,7 +492,8 @@
         "HCV.S",
         "SCL.1",
         "SCL.2",
-        "SCL.3"
+        "SCL.3",
+        "SCL.4"
       ]
     },
     {
@@ -516,6 +517,14 @@
       "code": "SCL.3",
       "name": "Scube Lair Drop: Pride Month",
       "description": "Pride Month Celebration!",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
+      "id": "9ca79db9-2757-4f8f-9205-0245a24269aa",
+      "code": "SCL.4",
+      "name": "Scube Lair Drop: Basic Land Box 1",
+      "description": "Basic Land Box 1",
       "set_type": "lair",
       "parent_set_code": "SCL"
     },
@@ -630,6 +639,14 @@
       "code": "HBB.9",
       "name": "Hellscube Basic Box HC9",
       "description": "Custom basic lands for HC9.",
+      "set_type": "land",
+      "parent_set_code": "HBB"
+    },
+    {
+      "id": "ad05b828-cfee-4ef7-b6e9-0d7b9d553e89",
+      "code": "HBB.S",
+      "name": "Hellscube Basic Box: Lair Rejects",
+      "description": "Basic lands that got rejected from an SCL Basic Box.",
       "set_type": "land",
       "parent_set_code": "HBB"
     },

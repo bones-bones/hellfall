@@ -186,6 +186,7 @@ const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
     'supertypes',
     'types',
     'subtypes',
+    'flavor_text',
     'power',
     'toughness',
     'loyalty',

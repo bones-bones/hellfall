@@ -162,9 +162,7 @@ Write a script to transform the database
 - make pagination atom persist on reload
 - make daybound/nightbound creatures not have the `transform` keyword
 - add conversions for long set names
-- add devotion search
 - add produces search
 - sync rulings between prints of a card
-- use comp filter to implement odd/even filter
 - add examples to syntax page
 - add `include:spell` for devotion searches?

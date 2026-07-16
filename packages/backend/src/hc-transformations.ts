@@ -378,9 +378,29 @@ const main = async () => {
   const collectorMap = new Map<SetCode, Set<number>>(
     newCards.sets().map(code => [code, new Set<number>()])
   );
+
+  newLands
+    .sets()
+    .filter(set => set.startsWith('SCL'))
+    .forEach(code => collectorMap.set(code, new Set<number>()));
   collectorMap.set('SCL', new Set<number>());
   getDirectChildSets('SCL')?.forEach(code => collectorMap.delete(code));
   newCards.forEach(card => {
+    const num = parseInt(card.collector_number);
+    const cSet =
+      collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));
+    if (ignoreDuplicateHCIDs.includes(card.hcid)) {
+      return;
+    }
+    if (cSet?.has(num) || ignoreMissingNums[card.set]?.includes(num)) {
+      console.log(
+        `Set ${card.set} has a duplicate collector number at ${num} (hcid: ${card.hcid})`
+      );
+    } else if (num) {
+      cSet?.add(num);
+    }
+  });
+  newLands.forEach(card => {
     const num = parseInt(card.collector_number);
     const cSet =
       collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));

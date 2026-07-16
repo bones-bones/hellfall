@@ -60,6 +60,7 @@ export const fetchLands = async () => {
     'set',
     'rarity',
     'token_maker',
+    'flavor_text',
     'tags',
     'collector_number',
     'artists',
@@ -95,6 +96,7 @@ export const fetchLands = async () => {
       {
         supertypes: ['Basic'],
         types: ['Land'],
+        flavor_text: entryAt('flavor_text'),
       }
     ) as HCCard.AnySingleFaced;
 
