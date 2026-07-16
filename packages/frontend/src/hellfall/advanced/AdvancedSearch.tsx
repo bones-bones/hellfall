@@ -34,6 +34,8 @@ export const AdvancedSearch = () => {
   const [typeSearch, setTypeSearch] = useState<string[]>([]);
   const [rulesSearch, setRulesSearch] = useState<string[]>([]);
   const [flavorSearch, setFlavorSearch] = useState<string[]>([]);
+  const [loreSearch, setLoreSearch] = useState<string[]>([]);
+  const [printedSearch, setPrintedSearch] = useState<string[]>([]);
   const [creators, setCreators] = useState<string[]>([]);
   const [artists, setArtists] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
@@ -146,6 +148,12 @@ export const AdvancedSearch = () => {
     }
     if (flavorSearch.length) {
       addAllHandlingOr('flavor', flavorSearch);
+    }
+    if (loreSearch.length) {
+      addAllHandlingOr('lore', loreSearch);
+    }
+    if (printedSearch.length) {
+      addAllHandlingOr('printed', printedSearch);
     }
     if (creators.length) {
       addAllHandlingOr('creator', creators);
@@ -287,12 +295,7 @@ export const AdvancedSearch = () => {
       <br />
       <SearchContainer>
         <SearchCriteriaSection>
-          <PillSearch
-            label={'Name'}
-            possibleValues={[]}
-            values={nameSearch}
-            onChange={setNameSearch}
-          />
+          <PillSearch label={'Name'} values={nameSearch} onChange={setNameSearch} />
           <FormField cs={idStyles}>
             <FormField.Label>Id</FormField.Label>
             <TextInput value={idSearch} onChange={event => setIdSearch(event.target.value)} />
@@ -309,32 +312,19 @@ export const AdvancedSearch = () => {
             values={typeSearch}
             onChange={setTypeSearch}
           />
-          <PillSearch
-            label={'Text'}
-            possibleValues={[]}
-            values={rulesSearch}
-            onChange={setRulesSearch}
-          />
+          <PillSearch label={'Text'} values={rulesSearch} onChange={setRulesSearch} />
         </SearchCriteriaSection>
         <SearchCriteriaSection>
-          <PillSearch
-            label={'Flavor'}
-            possibleValues={[]}
-            values={flavorSearch}
-            onChange={setFlavorSearch}
-          />
+          <PillSearch label={'Flavor'} values={flavorSearch} onChange={setFlavorSearch} />
+          <PillSearch label={'Lore'} values={loreSearch} onChange={setLoreSearch} />
+          <PillSearch label={'Printed'} values={printedSearch} onChange={setPrintedSearch} />
           <PillSearch
             label={'Creator(s)'}
             possibleValues={creatorsData.data}
             values={creators}
             onChange={setCreators}
           />
-          <PillSearch
-            label={'Artist(s)'}
-            possibleValues={[]}
-            values={artists}
-            onChange={setArtists}
-          />
+          <PillSearch label={'Artist(s)'} values={artists} onChange={setArtists} />
           <PillSearch
             label={'Tags'}
             possibleValues={tagsData.data}

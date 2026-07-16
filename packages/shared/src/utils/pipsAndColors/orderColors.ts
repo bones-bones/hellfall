@@ -6,7 +6,7 @@ import {
   pushProp,
   removeIntersection,
   toUnion,
-} from './listHandling';
+} from '../listHandling';
 const colorOrderList: HCColors[] = [
   ['W'],
   ['U'],

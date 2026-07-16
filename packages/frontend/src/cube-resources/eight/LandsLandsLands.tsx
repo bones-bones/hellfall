@@ -1,5 +1,5 @@
 import { BigContainer, ManaSymbolSmall } from './components.tsx';
-import { getPipSrc } from '@hellfall/shared/utils';
+import { pipMap } from '@hellfall/shared/utils';
 import { Link } from 'react-router-dom';
 export const LandsLandsLands = () => {
   return (
@@ -11,7 +11,7 @@ export const LandsLandsLands = () => {
         <h1>Lands.</h1>
         <div>
           We love &apos;em. We need &apos;em. But none of the other folks undertand &apos;em like we
-          do. <ManaSymbolSmall src={getPipSrc('G/W')} />
+          do. <ManaSymbolSmall src={pipMap.getPipSrc('G/W')} />
           gamers- the God-fearing folk who live off the lands, who feel them underneath our toes and
           who connect with their utility.
         </div>
@@ -36,7 +36,7 @@ export const LandsLandsLands = () => {
         <div>
           But we&apos;re not just activating our lands. Our sisters over in{' '}
           <Link to="/hellscubes/eight/golgari-landistocrats">
-            <img alt="B/G" height="12px" src={getPipSrc('B/G')} /> Lands
+            <img alt="B/G" height="12px" src={pipMap.getPipSrc('B/G')} /> Lands
           </Link>{' '}
           have the right of it that lands should go in the graveyard- but why stop there? Why not
           lands with suspend hopping into exile? Lands in hands being beheld for extra effects,
@@ -65,7 +65,7 @@ export const LandsLandsLands = () => {
           <li>
             Don&apos;t make all the lands colorless. The lands are ours. If I see one filthy{' '}
             <Link to="/hellscubes/eight/paradox-incorporated">
-              Paradox <img alt="U/R" height="12px" src={getPipSrc('U/R')} /> gamer
+              Paradox <img alt="U/R" height="12px" src={pipMap.getPipSrc('U/R')} /> gamer
             </Link>{' '}
             playing with our utillity lands, I&apos;m going to be knocking in skulls.
           </li>

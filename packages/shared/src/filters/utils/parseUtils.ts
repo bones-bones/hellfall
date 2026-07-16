@@ -1,18 +1,5 @@
-import { textIsQuote } from '@hellfall/shared/utils';
+import { unescapeText } from '@hellfall/shared/utils';
 import { looseOpList, looseOpType, FilterNode } from '../types';
-
-/**
- * Unescapes and strips text so that it can be used in comparisons
- * @param text text to unescape
- */
-export const unescapeText = (text: string) => {
-  const strippedText = textIsQuote(text) ? text : text.replaceAll(/[_-]/g, '');
-  return strippedText
-    .toLowerCase()
-    .replaceAll(/^['"]/g, '')
-    .replaceAll(/(?<!\\)['"]/g, '')
-    .replaceAll(/\\(['"])/g, '$1');
-};
 
 /**
  * Splits a search term on its first operator

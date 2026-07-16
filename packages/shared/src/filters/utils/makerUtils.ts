@@ -8,6 +8,7 @@ import {
 } from '@hellfall/shared/types';
 import {
   ensureArray,
+  fixValue,
   getAllNames,
   getFromAll,
   getFromFaces,
@@ -16,7 +17,6 @@ import {
   toNumber,
 } from '@hellfall/shared/utils';
 import { numSearch } from '../types';
-import { fixValue } from './filterUtils';
 
 const otherPropList = ['showcase', 'settype', 'pt'] as const;
 type otherPropType = (typeof otherPropList)[number];
@@ -49,12 +49,14 @@ const shouldDropFaces = (prop: anyPropType) => shouldDropList.includes(prop);
  * @param prop prop to get the values of
  * @param location location on the card to get the values from
  * @param dropFaces whether to exclude faces with `drop_face: true` where appropriate
+ * @param keepDashes Whether to keep dashes in text
  */
 export const getValuesFromProp = <T extends queryPropType>(
   card: HCCard.Any,
   prop: T,
   location: 'any' | 'face' | 'root' = 'any',
-  dropFaces?: boolean
+  dropFaces?: boolean,
+  keepDashes?: boolean
 ): numSearch[] => {
   const values: numSearch[] = [];
   if (earlyProps.includes(prop)) {
@@ -76,7 +78,7 @@ export const getValuesFromProp = <T extends queryPropType>(
         );
         break;
     }
-    return fixValue(values);
+    return fixValue(values, keepDashes ? 'keep' : 'fix');
   }
   if (isFacePropType(prop) && location != 'root') {
     switch (prop) {
@@ -110,16 +112,18 @@ export const getValuesFromProp = <T extends queryPropType>(
       values.push(...ensureArray<numSearch>(card[prop] as numSearch | numSearch[]));
     }
   }
-  return fixValue(values);
+  return fixValue(values, keepDashes ? 'keep' : 'fix');
 };
 type queryValueType = { props: queryPropType[]; location: 'any' | 'face' | 'root' };
 const queryNamePropRecord: Record<string, queryPropType | queryPropType[]> = {
   mana: 'mana_cost',
+  manatext: 'mana_cost',
   type: 'type_line',
   cardtype: 'types',
   oracle: 'oracle_text',
   flavor: 'flavor_text',
   lore: ['name', 'type_line', 'oracle_text', 'flavor_text'],
+  printed: ['name', 'type_line', 'oracle_text', 'flavor_text', 'artists', 'mana_cost'],
   border: 'border_color',
   cardframe: 'frame',
   frame: ['frame', 'frame_effects'],
@@ -134,6 +138,7 @@ const queryNameLocationRecord: Record<string, 'face' | 'root'> = {
   layout: 'root',
   facelayout: 'face',
   manavalue: 'root',
+  mana: 'face',
 };
 export const queryNameToSummary = (queryName: string): string => {
   const queryProp = queryNamePropRecord[queryName];

@@ -21,8 +21,8 @@ import {
   textListIncludes,
   toNumber,
   xor,
+  fixValue,
 } from '@hellfall/shared/utils';
-import { unescapeText } from './parseUtils';
 import { isFormat } from '@hellfall/shared/types';
 
 const invertedOps: Record<looseOpType, looseOpType> = {
@@ -177,29 +177,6 @@ const opToCRecord: Record<opType, string> = {
  */
 const opToShorthand: summaryFunction<shorthandType> = (operator: opType, value: shorthandType) =>
   value == 'c' ? opToCRecord[operator] : opToMRecord[operator];
-
-/**
- * Fixes a value by unescaping all text; can go inside arrays, but not other objects
- * @template T type of the value to fix
- * @param value value to fix
- * @param option how to fix the text; fix does unescape; others just do the corresponding text transformation
- */
-export const fixValue = <T>(value: T, option: 'upper' | 'lower' | 'fix' = 'fix'): T => {
-  if (typeof value == 'string') {
-    switch (option) {
-      case 'fix':
-        return unescapeText(value) as T;
-      case 'upper':
-        return value.toUpperCase() as T;
-      case 'lower':
-        return value.toLowerCase() as T;
-    }
-  }
-  if (Array.isArray(value)) {
-    return value.map(e => fixValue(e, option)) as T;
-  }
-  return value;
-};
 
 /**
  * Creates a corrected {@linkcode summaryFunction<T>}
@@ -410,6 +387,38 @@ export const containsOp = <T, S>(
     case '!=': {
       return !contains(value1, value2) || !contains(value2, value1);
     }
+  }
+};
+/**
+ * Compares a value from a card with a value from a search
+ * using a containment function and an equality function
+ * @template T the type of the value from the card
+ * @template S the type of the value from the search
+ * @param contains the containment function to use
+ * @param equals the equality function to use
+ * @param value1 the value from the card
+ * @param value2 the value from the search
+ */
+export const containEqualsOp = <T, S>(
+  operator: opType,
+  contains: (value1: T | S, value2: T | S) => boolean,
+  equals: (value1: T, value2: S) => boolean | undefined,
+  value1: T,
+  value2: S
+) => {
+  switch (operator) {
+    case '<':
+      return containsOp(operator, contains, value1, value2);
+    case '<=':
+      return containsOp(operator, contains, value1, value2);
+    case '=':
+      return containsOp(operator, contains, value1, value2);
+    case '>=':
+      return containsOp(operator, contains, value1, value2);
+    case '>':
+      return containsOp(operator, contains, value1, value2);
+    case '!=':
+      return containsOp(operator, contains, value1, value2);
   }
 };
 

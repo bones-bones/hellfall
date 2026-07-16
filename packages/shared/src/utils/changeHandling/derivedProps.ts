@@ -23,19 +23,12 @@ import {
   listIncludesValueLowerEvery,
   listsShare,
 } from '../listHandling';
-import { getColorsFromText, getMVFromCost, getPipColorsFromText } from '../pipsHandling';
 import { splitParens, textContains, toExportName } from '../textHandling';
 import { CardMap, getAllRelated, hasTokenHCID, toFaces } from '../cardHandling';
-import { orderColors, orderHybrid } from '../orderColors';
+import { orderColors, orderHybrid, pipMap } from '../pipsAndColors';
 import { isInteger } from '../numHandling';
 import { getDefaultKindLayout, getDefaultTypeLayout } from './defaults';
-import {
-  baseIncludesFlag,
-  fillSubKeywords,
-  getBaseDiffs,
-  getChangesFromTag,
-  splitTagComponents,
-} from './tagHandling';
+import { baseIncludesFlag, fillSubKeywords, getBaseDiffs, getChangesFromTag } from './tagHandling';
 import { anyChange, createFaceChange, sortChanges } from './changeTypes';
 import { applyChanges, removeDuplicateChanges } from './changeHandling';
 import { getChangesFromDifferences } from './getCardDiff';
@@ -94,12 +87,12 @@ const getColorIdentityProps = (
     }
   };
   const addColorsFromFace = (face: HCCard.AnySingleFaced | HCCardFace.MultiFaced) => {
-    getPipColorsFromText(face.mana_cost).forEach(colorSet => addColors(colorSet));
+    pipMap.getPipColorsFromText(face.mana_cost).forEach(colorSet => addColors(colorSet));
 
     const minusReminderText = splitParens(face.oracle_text)
       .filter(e => e[0] && e[0] != '(')
       .join('');
-    getPipColorsFromText(minusReminderText).forEach(colorSet => addColors(colorSet));
+    pipMap.getPipColorsFromText(minusReminderText).forEach(colorSet => addColors(colorSet));
 
     const splitSubtypes = face.subtypes || [];
     splitSubtypes.forEach(typeEntry => {
@@ -346,7 +339,7 @@ export const setDerivedProps = (
       } else if (baseIncludesFlag(card, 'unnecessary-color-indicator', i)) {
         face.color_indicator = face.colors;
       } else if (card.kind == 'token' && face.mana_cost && !baseIncludesFlag(card, 'generic', i)) {
-        face.colors = getColorsFromText(face.mana_cost);
+        face.colors = pipMap.getColorsFromText(face.mana_cost);
       }
       const face_type = [
         face.supertypes?.join(' '),
@@ -360,7 +353,7 @@ export const setDerivedProps = (
         face.mana_value =
           i && !face.mana_cost && FrontManaValueFaceLayouts.includes(face.layout)
             ? card.card_faces.slice(0, i).findLast(f => f.mana_cost)?.mana_value ?? 0
-            : getMVFromCost(face.mana_cost);
+            : pipMap.getMVFromCost(face.mana_cost);
       }
       mana_cost_list.push(face.mana_cost);
       const effects = [...(face.frame_effects ?? []), ...getFrameEffectsFromFace(face, i)];
@@ -394,7 +387,7 @@ export const setDerivedProps = (
       !baseIncludesFlag(card, 'generic') &&
       !card.keywords.includes('devoid')
     ) {
-      card.colors = getColorsFromText(card.mana_cost);
+      card.colors = pipMap.getColorsFromText(card.mana_cost);
     }
     card.type_line = [
       card.supertypes?.join(' '),
@@ -428,16 +421,16 @@ export const setDerivedProps = (
           colors.push(
             ...(face.color_indicator ??
               (face.mana_cost && !baseIncludesFlag(card, 'generic', i)
-                ? getColorsFromText(face.mana_cost)
+                ? pipMap.getColorsFromText(face.mana_cost)
                 : face.colors))
           );
         }
       });
       card.colors = orderColors(colors);
     } else if (card.mana_cost) {
-      card.mana_value = getMVFromCost(card.mana_cost);
+      card.mana_value = pipMap.getMVFromCost(card.mana_cost);
       if (!card.tags?.includes('generic') && !card.keywords.includes('devoid')) {
-        card.colors = card.color_indicator ?? getColorsFromText(card.mana_cost);
+        card.colors = card.color_indicator ?? pipMap.getColorsFromText(card.mana_cost);
       }
     } else if (card.color_indicator) {
       card.colors = card.color_indicator;

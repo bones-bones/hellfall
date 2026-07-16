@@ -7,7 +7,7 @@ import {
   comparisonSummaryFunction,
   summaryFunction,
 } from '../types';
-import { numFilter, opIsNegative, unescapeText } from '../utils';
+import { numFilter, opIsNegative } from '../utils';
 import {
   colorMiscReduce,
   getColorsFromFaces,
@@ -16,6 +16,7 @@ import {
   shouldChoose2,
   toFaces,
   toNumber,
+  unescapeText,
 } from '@hellfall/shared/utils';
 
 /**

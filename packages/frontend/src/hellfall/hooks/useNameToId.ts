@@ -7,9 +7,9 @@ import {
   textEquals,
   textListIncludes,
   textPrep,
+  unescapeText,
 } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
-import { unescapeText } from '@hellfall/shared/filters';
 
 export const useNameToHCID = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);

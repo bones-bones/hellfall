@@ -1,4 +1,4 @@
-import { HCCard, HCFormat } from '@hellfall/shared/types';
+import { HCCard, HCCardSymbol, HCFormat } from '@hellfall/shared/types';
 import {
   cardFilterFunction,
   stateFilterFunction,
@@ -21,7 +21,6 @@ import {
   createInvalidSummary,
   createNumSummary,
   emptyFilter,
-  fixValue,
   getActualOp,
   invertOp,
   shareFilter,
@@ -32,7 +31,15 @@ import {
   numSearchListFilter,
   numSearchFilter,
 } from './filterUtils';
-import { ensureArray, colorSearch, xor, stripQuotes } from '@hellfall/shared/utils';
+import {
+  ensureArray,
+  colorSearch,
+  xor,
+  stripQuotes,
+  pipSearch,
+  fixValue,
+  unescapeText,
+} from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import {
   queryPropType,
@@ -40,7 +47,6 @@ import {
   queryNameToValue,
   queryNameToSummary,
 } from './makerUtils';
-import { unescapeText } from './parseUtils';
 import { includeFilter, includeSummary } from './filterInclude';
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
@@ -195,6 +201,33 @@ export class ColorFilter<T extends string[] | string[][]> extends FilterObject<T
 }
 
 /**
+ * A pip filter object
+ * @param T The type of the value from the card
+ */
+export class PipFilter<T extends HCCardSymbol[] | HCCardSymbol[][]> extends FilterObject<
+  T,
+  pipSearch
+> {
+  constructor(
+    queryName: string,
+    filter: cardFilterFunction<T, pipSearch>,
+    summary: summaryFunction<pipSearch>,
+    value: pipSearch,
+    op: looseOpType,
+    getValueToCompare: (card: HCCard.Any, dropFaces?: boolean) => T,
+    defaultOp: opType = '>=',
+    invertOption: invertOptionType = 'negate'
+  ) {
+    super(queryName, filter, summary, value, op, getValueToCompare, defaultOp, invertOption);
+  }
+  cardPassesFilter = (card: HCCard.Any) =>
+    xor(
+      this.filter(this.getValueToCompare(card, this.dropFaces), this.getOp(), this.value),
+      this.inverted
+    );
+}
+
+/**
  * A comparison filter object
  */
 export class ComparisonFilter extends FilterObject<HCCard.Any, string> {
@@ -248,6 +281,10 @@ export class PropFilter extends FilterObject<string[], string> {
      * Text to be put in front of `this.summary` when calling `this.toSummary()`, if any
      */
     public summaryStart?: string,
+    /**
+     * Whether to drop dashes in text
+     */
+    public dropDashes?: boolean,
     defaultOp: opType = '>=',
     invertOption: invertOptionType = 'negate'
   ) {
@@ -259,7 +296,8 @@ export class PropFilter extends FilterObject<string[], string> {
       op,
       card =>
         this.props.flatMap(
-          p => getValuesFromProp(card, p, this.location, this.dropFaces) as string[]
+          p =>
+            getValuesFromProp(card, p, this.location, this.dropFaces, !this.dropDashes) as string[]
         ),
       defaultOp,
       invertOption
@@ -319,6 +357,10 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
      * This object calls {@linkcode ensureArray} on the output before setting `this.value` to it.
      */
     toValue: (value: T) => T[] | T | undefined = value => value,
+    /**
+     * Whether to keep dashes in text
+     */
+    public keepDashes?: boolean,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
@@ -326,11 +368,14 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       queryName,
       shareFilter,
       summary as summaryFunction<any>,
-      ensureArray(toValue(unescapeText(value) as T)).map(v => unescapeText(v)),
+      ensureArray(toValue(unescapeText(value, keepDashes) as T)).map(v =>
+        unescapeText(v, keepDashes)
+      ),
       op,
       card =>
         this.props.flatMap(
-          p => getValuesFromProp(card, p, this.location, this.dropFaces) as string[]
+          p =>
+            getValuesFromProp(card, p, this.location, this.dropFaces, this.keepDashes) as string[]
         ),
       defaultOp,
       invertOption
@@ -366,10 +411,23 @@ export class InFilter extends PropConvertFilter<string> {
      * This object calls {@linkcode ensureArray} on the output before setting `this.value` to it.
      */
     toValue: (value: string) => string[] | string | undefined = value => value,
+    /**
+     * Whether to keep dashes in text
+     */
+    keepDashes?: boolean,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
-    super(queryName, summary as summaryFunction<any>, value, op, toValue, defaultOp, invertOption);
+    super(
+      queryName,
+      summary as summaryFunction<any>,
+      value,
+      op,
+      toValue,
+      keepDashes,
+      defaultOp,
+      invertOption
+    );
     this.summaryValue = value;
     ({ props: this.props, location: this.location } = queryNameToValue(queryName));
   }

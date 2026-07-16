@@ -198,7 +198,14 @@ export const HellfallCard = ({
       <Card style={{ width: '100%' }}>
         <Card.Body cs={cardBodyStyles}>
           {/* {'card_faces' in displayCard && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{displayCard.name}</StyledHeading>} */}
-          {toFaces(displayCard).map((face, i) => CardFaceContainer({ face, i, setDangerously }))}
+          {toFaces(displayCard).map((face, i) => (
+            <CardFaceContainer
+              key={`face-${i}`}
+              face={face}
+              i={i}
+              setDangerously={setDangerously}
+            />
+          ))}
           <Divider />
           {displayCard.set && (
             <>

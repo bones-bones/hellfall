@@ -1,5 +1,5 @@
 import { BigContainer, Divider, ManaSymbolSmall, StyledH3 } from './components.tsx';
-import { getPipSrc } from '@hellfall/shared/utils';
+import { pipMap } from '@hellfall/shared/utils';
 import { Link } from 'react-router-dom';
 export const TargetingMatters = () => {
   return (
@@ -13,7 +13,7 @@ export const TargetingMatters = () => {
         Nadu Was Doing For A While).
       </div>
       <br />
-      <Divider color={getPipSrc('R/W')!} />
+      <Divider color={pipMap.getPipSrc('R/W')!} />
       <h2>Things That Target</h2>
       <div>
         This happens a lot anyway. Equipments, Auras, Dilu Horses and Giant Growths just to name a
@@ -23,7 +23,7 @@ export const TargetingMatters = () => {
         Overload spells. Just some food for thought.
       </div>
       <br />
-      <Divider color={getPipSrc('R/W')!} />
+      <Divider color={pipMap.getPipSrc('R/W')!} />
       <h2>Things That Get Targetted</h2>
       <div>
         This is the part that is less automatic. You gotta include payoffs for being targetted. This
@@ -33,11 +33,11 @@ export const TargetingMatters = () => {
         even make Indicate hand tokens. Please do that. Please make Indicate hand tokens.
       </div>
       <br />
-      <Divider color={getPipSrc('R/W')!} />
+      <Divider color={pipMap.getPipSrc('R/W')!} />
       <h2>Brothers In Arms</h2>
       <Link to="/hellscubes/eight/rakdos-crimes">
         <StyledH3>
-          <ManaSymbolSmall src={getPipSrc('B/R')} /> {'Rakdos Crimes'}
+          <ManaSymbolSmall src={pipMap.getPipSrc('B/R')} /> {'Rakdos Crimes'}
         </StyledH3>
       </Link>
       <div>
@@ -48,7 +48,7 @@ export const TargetingMatters = () => {
       </div>
       <Link to="/hellscubes/eight/small-reanimator">
         <StyledH3>
-          <ManaSymbolSmall src={getPipSrc('W/B')} /> Orzhov Small Reanimator
+          <ManaSymbolSmall src={pipMap.getPipSrc('W/B')} /> Orzhov Small Reanimator
         </StyledH3>
       </Link>
       <div>
@@ -58,13 +58,13 @@ export const TargetingMatters = () => {
       </div>
       <Link to="/hellscubes/eight/azorious-historic">
         <StyledH3>
-          <ManaSymbolSmall src={getPipSrc('W/U')} /> Azorius Historic
+          <ManaSymbolSmall src={pipMap.getPipSrc('W/U')} /> Azorius Historic
         </StyledH3>
       </Link>
       <div>Equipments are historic. Little bit thin, but it&apos;s something.</div>
       <Link to="/hellscubes/eight/gruul-self-discard">
         <StyledH3>
-          <ManaSymbolSmall src={getPipSrc('R/G')} /> Gruul Self-Discard
+          <ManaSymbolSmall src={pipMap.getPipSrc('R/G')} /> Gruul Self-Discard
         </StyledH3>
       </Link>
       <div>

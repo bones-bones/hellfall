@@ -7,3 +7,4 @@ export * from './makerInclude';
 export * from './makerSort';
 export * from './makerState';
 export * from './makerText';
+export * from './makerPips';

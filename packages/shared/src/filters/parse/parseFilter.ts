@@ -1,3 +1,4 @@
+import { unescapeText } from '@hellfall/shared/utils';
 import { isCompKeyword } from '../filters';
 import {
   makeCompFilter,
@@ -16,7 +17,7 @@ import {
   toPrintsFilterName,
   toColorFilterName,
 } from '../types';
-import { splitOnFirstOp, unescapeText, FilterObject } from '../utils';
+import { splitOnFirstOp, FilterObject } from '../utils';
 import { parseColorText } from './parseColors';
 import { colorFilters, filters, printsFilters } from './parseMaps';
 
@@ -90,5 +91,5 @@ export const parseFilter = (
   if (term) {
     return makeInvalidKeywordFilter(keyword, ':');
   }
-  return correctOp(makeNameFilter(unescapeText(text), ':'));
+  return correctOp(makeNameFilter(text, ':'));
 };

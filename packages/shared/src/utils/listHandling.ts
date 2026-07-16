@@ -313,6 +313,20 @@ export const listsOrValuesShareLower = (value1: string | string[], value2: strin
   listsOrValuesShare(value1, value2, listLowerEquality);
 
 /**
+ * Checks whether two lists are loosely equal (ignoring order); lowercases strings before comparing them
+ * @param value1 first list to check
+ * @param value2 second list to check
+ */
+export const listsAreLooselyEqualLower = (value1?: string[], value2?: string[]): boolean =>
+  listsAreEqual(value1, value2, true, listLowerEquality);
+/**
+ * Checks whether two lists are exactly equal (not ignoring order); lowercases strings before comparing them
+ * @param value1 first list to check
+ * @param value2 second list to check
+ */
+export const listsAreExactlyEqualLower = (value1?: string[], value2?: string[]): boolean =>
+  listsAreEqual(value1, value2, false, listLowerEquality);
+/**
  * Checks whether a text list contains a string
  * (i.e. whether the list includes a string that {@link textContains contains} the string to check)
  * @param value1 list to check

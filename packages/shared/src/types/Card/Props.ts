@@ -48,12 +48,12 @@ const anyPropRecord = {
   still_print_image: 'still_print_image',
   not_directly_draftable: 'not_directly_draftable',
   has_draft_partners: 'has_draft_partners',
-  keywords: 'keywords',
-  legalities: 'legalities',
+  keywords: 'keywords', // use
+  legalities: 'legalities', // use
   creators: 'creators',
   artists: 'artists',
   artist_notes: 'artist_notes',
-  rulings: 'rulings',
+  rulings: 'rulings', // use
   finish: 'finish',
   watermark: 'watermark',
   border_color: 'border_color',

@@ -669,6 +669,8 @@ const subKeywords: Record<string, string | string[]> = {
   remutate: ['mutate', 'reconfigure'],
   devourlink: ['devour', 'link'],
   '2ble strike': 'double strike',
+  'untapped landwalk': 'landwalk',
+  yeehaw: 'job select',
 };
 
 const keywordTags = [

@@ -1,6 +1,6 @@
 import { faceType, HCCard, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
 import { CockCardProps, CockFaceProps, CockRelatedProps } from './cockTypes';
-import { orderColors } from '../orderColors';
+import { orderColors } from '../pipsAndColors';
 import { canBeInDecks, hasTokenHCID, mergeHCCardFaces } from '../cardHandling';
 import { listIncludesValueLower } from '../listHandling';
 

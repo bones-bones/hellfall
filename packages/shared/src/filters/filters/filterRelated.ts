@@ -1,6 +1,6 @@
 import { HCCard, relatedComponent, HCRelatedCard } from '@hellfall/shared/types';
-import { hasPartWithComp } from '@hellfall/shared/utils';
-import { opAsBool, opToDont, opToNt, unescapeText } from '../utils';
+import { hasPartWithComp, unescapeText } from '@hellfall/shared/utils';
+import { opAsBool, opToDont, opToNt } from '../utils';
 import { stateFilterFunction, opType, summaryFunction } from '../types';
 
 // const includeComponent = (part: HCRelatedCard) =>

@@ -1,5 +1,5 @@
 import { HCCard } from '@hellfall/shared/types';
-import { canBeInDecks, extraSetList } from '@hellfall/shared/utils';
+import { canBeInDecks, extraSetList, unescapeText } from '@hellfall/shared/utils';
 import {
   includeFilterFunction,
   inclusionType,
@@ -8,7 +8,6 @@ import {
   summaryFunction,
 } from '../types';
 import { createCorrectedSummary } from './filterUtils';
-import { unescapeText } from './parseUtils';
 
 const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',

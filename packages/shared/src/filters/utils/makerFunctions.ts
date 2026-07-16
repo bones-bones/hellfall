@@ -12,9 +12,11 @@ import {
   ColorFilter,
   NumberPropFilter,
   NoteFilter,
+  PipFilter,
 } from './makerObject';
 import { dirType, looseOpType, sortType, allPrintsGetterType } from '../types';
-import { colorSearch } from '@hellfall/shared/utils';
+import { colorSearch, pipSearch } from '@hellfall/shared/utils';
+import { HCCardSymbol } from '../../types';
 
 /**
  * A function that creates a {@linkcode FilterObject<T, any>}
@@ -94,6 +96,16 @@ export type colorFilterMaker<T extends string[] | string[][]> = (
   value: colorSearch,
   op: looseOpType
 ) => ColorFilter<T>;
+/**
+ * A function that creates a {@linkcode PipFilter}
+ * @param T The type of the value from the card
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export type pipFilterMaker<T extends HCCardSymbol[] | HCCardSymbol[][]> = (
+  value: pipSearch,
+  op: looseOpType
+) => PipFilter<T>;
 /**
  * A function that can create a {@linkcode NumberPropFilter}, a {@linkcode NoteFilter}, or a {@linkcode PropFilter}
  * @param value the value from the search

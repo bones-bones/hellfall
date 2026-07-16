@@ -22,7 +22,6 @@ import {
   HCFrame,
 } from '@hellfall/shared/types';
 import { ensureArray, listIncludesValueLower, listsShareLower } from '../listHandling';
-import { getIndicatorFromColors } from '../pipsHandling';
 import {
   getMasterpiece,
   getSetCode,
@@ -31,6 +30,7 @@ import {
   textEquals,
 } from '../textHandling';
 import { CardMap } from './cardMap';
+import { pipMap } from '../pipsAndColors';
 
 /**
  * Converts the card to an array of its faces.
@@ -78,6 +78,14 @@ export const getColorsFromFaces = (
   prop: colorPropType,
   dropFaces?: boolean
 ): HCColors[] => toFaces(card, dropFaces).flatMap(face => [face[prop] ?? []]);
+
+/**
+ * Gets the mana cost of each face of a card (excluding the main part for multiface cards)
+ * @param card card to get the costs from
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const getCostsFromFaces = (card: HCCard.Any, dropFaces?: boolean): string[] =>
+  toFaces(card, dropFaces).map(face => face.mana_cost);
 
 /**
  * Gets the value of a prop from each face of a card (including the main part for multiface cards)
@@ -198,7 +206,7 @@ const faceToPlainText = (face: faceType): string => {
     text += ` ${face.mana_cost}`;
   }
   if (face.color_indicator) {
-    text += `\n${getIndicatorFromColors(face.color_indicator)?.english}`;
+    text += `\n${pipMap.getIndicator(face.color_indicator)?.english}`;
   }
   if (face.type_line) {
     text += `\n${face.type_line}`;

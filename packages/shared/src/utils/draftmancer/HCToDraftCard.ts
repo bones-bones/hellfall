@@ -2,7 +2,7 @@ import { HCCard, HCCardFace } from '@hellfall/shared/types';
 import { DraftmancerCardFace, DraftmancerCustomCard } from './draftTypes';
 import { canBeACommander, hasTokenHCID } from '../cardHandling';
 import { stripSingleSlashes, toExportMana } from '../textHandling';
-import { orderColors } from '../orderColors';
+import { orderColors } from '../pipsAndColors';
 const validColors = ['W', 'U', 'B', 'R', 'G'];
 
 /**

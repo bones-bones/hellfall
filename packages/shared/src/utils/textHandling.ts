@@ -523,3 +523,43 @@ export const textIsQuote = (text: string) =>
  * @param text text to strip
  */
 export const stripQuotes = (text: string) => (textIsQuote(text) ? text.slice(1, -1) : text);
+
+/**
+ * Unescapes and strips text so that it can be used in comparisons
+ * @param text text to unescape
+ * @param keepDashes whether to keep dashes (for correct handling of text fields)
+ */
+export const unescapeText = (text: string, keepDashes?: boolean) => {
+  const strippedText = textIsQuote(text) || keepDashes ? text : text.replaceAll(/[_-]/g, '');
+  return strippedText
+    .toLowerCase()
+    .replaceAll(/^['"]/g, '')
+    .replaceAll(/(?<!\\)['"]/g, '')
+    .replaceAll(/\\(['"])/g, '$1');
+};
+
+/**
+ * Fixes a value by unescaping all text; can go inside arrays, but not other objects
+ * @template T type of the value to fix
+ * @param value value to fix
+ * @param option how to fix the text; fix does unescape; keep keeps dashes;
+ * others just do the corresponding text transformation
+ */
+export const fixValue = <T>(value: T, option: 'upper' | 'lower' | 'fix' | 'keep' = 'fix'): T => {
+  if (typeof value == 'string') {
+    switch (option) {
+      case 'fix':
+        return unescapeText(value) as T;
+      case 'keep':
+        return unescapeText(value, true) as T;
+      case 'upper':
+        return value.toUpperCase() as T;
+      case 'lower':
+        return value.toLowerCase() as T;
+    }
+  }
+  if (Array.isArray(value)) {
+    return value.map(e => fixValue(e, option)) as T;
+  }
+  return value;
+};

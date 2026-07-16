@@ -7,9 +7,9 @@ import {
   opToNt,
   opAsBool,
   createCorrectedSummary,
-  unescapeText,
 } from '../utils';
 import {
+  unescapeText,
   getColorsFromFaces,
   getFromAll,
   getFromFaces,

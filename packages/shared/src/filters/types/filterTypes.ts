@@ -1,5 +1,5 @@
-import { HCCard } from '@hellfall/shared/types';
-import { colorSearch, shorthandType } from '@hellfall/shared/utils';
+import { HCCard, HCCardSymbol } from '@hellfall/shared/types';
+import { colorSearch, pipSearch, shorthandType } from '@hellfall/shared/utils';
 /**
  * The type of an operator
  *
@@ -176,6 +176,14 @@ export interface colorFilterFunction extends cardFilterFunction<string[], colorS
  * Any filter that compares a set of colors from a card with a value from a search
  */
 export interface colorListFilterFunction extends cardFilterFunction<string[][], colorSearch> {}
+/**
+ * Any filter that compares pips from a card with a value from a search
+ */
+export interface pipFilterFunction extends cardFilterFunction<HCCardSymbol[], pipSearch> {}
+/**
+ * Any filter that compares a set of pips from a card with a value from a search
+ */
+export interface pipListFilterFunction extends cardFilterFunction<HCCardSymbol[][], pipSearch> {}
 /**
  * The list of options for inclusion filters
  */

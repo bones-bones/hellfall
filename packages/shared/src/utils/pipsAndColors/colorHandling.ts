@@ -1,5 +1,5 @@
 import { HCCard, HCColor, HCColors, HCMiscColors } from '@hellfall/shared/types';
-import { listsShare } from './listHandling';
+import { listsShare } from '../listHandling';
 
 /**
  * The list of shorthands
@@ -27,7 +27,7 @@ const MISC_BULLSHIT = 'Misc';
  * @param set set to get the subsets of
  * @param len length of subsets to get
  */
-const getSubsets = (set: string[], len: number): string[][] => {
+const getSubsets = (set: string[], len?: number): string[][] => {
   const result: string[][] = [];
 
   const backtrack = (start: number, current: string[]) => {

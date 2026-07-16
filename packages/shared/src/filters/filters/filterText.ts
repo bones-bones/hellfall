@@ -10,6 +10,7 @@ import {
   getSetAndDirectChildSets,
   xor,
   xnor,
+  fixValue,
 } from '@hellfall/shared/utils';
 import {
   opType,
@@ -34,7 +35,6 @@ import {
   textListFilter,
   createCorrectedSummary,
   createSummary,
-  fixValue,
   createCorrectedDoubleSummary,
 } from '../utils';
 import {

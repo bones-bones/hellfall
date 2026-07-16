@@ -5,3 +5,4 @@ export * from '../utils/filterInclude';
 export * from './filterState';
 export * from './filterText';
 export * from './filterRelated';
+export * from './filterPips';

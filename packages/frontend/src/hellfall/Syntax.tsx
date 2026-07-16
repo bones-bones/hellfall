@@ -67,6 +67,17 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
+          You can use <code>lore:</code> to search against a card's name, type line, oracle text,
+          and flavor text
+        </div>
+        <br />
+        <div>
+          You can also use <code>printed:</code> or <code>p:</code> to search against everything in{' '}
+          <code>lore:</code>, plus artist credit and mana cost. This one also searches against
+          dropped faces and is useful for ransomnoting.
+        </div>
+        <br />
+        <div>
           You can also use <code>ruling:</code> to search for rulings, and you can use{' '}
           <code>has:ruling</code> to find cards that have rulings.
         </div>
@@ -115,11 +126,10 @@ export const Syntax = () => {
           directly.
         </div>
         <h2>Mana Costs</h2>
-        {/* TODO: Implement good mana search */}
         <div>
-          A lot of the functionality of the scryfall mana search hasn't been added yet, so{' '}
-          <code>mana:</code> currently acts like a regular text search term, though{' '}
-          <code>is:hybrid</code> and <code>is:phyrexian</code> do work.
+          <code>mana:</code> works in hellfall just like in scryfall, though you can use{' '}
+          <code>manatext:</code> instead if you want the functionality of a regular text search
+          term.
         </div>
         <br />
         {/* TODO: add these */}
@@ -353,7 +363,8 @@ export const Syntax = () => {
         <div>
           By default, the search excludes dropped faces (those that are tokens that exist and
           similar) from searches that check for rules-related text (e.g. power, toughness, mana
-          cost, oracle text, etc.). To include dropped faces, use <code>include:dropped</code>.
+          cost, oracle text, etc.), though it includes them for <code>printed:</code>. To include
+          dropped faces, use <code>include:dropped</code>.
         </div>
         <h2>Not Implemented Yet</h2>
         <div>

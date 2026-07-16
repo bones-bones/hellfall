@@ -1,6 +1,6 @@
 // import styled from '@emotion/styled';
 import type { HCColors } from '@hellfall/shared/types';
-import { formatQuotes, getIndicatorFromColors, getPip, pipToSrc } from '@hellfall/shared/utils';
+import { formatQuotes, pipMap, pipToSrc } from '@hellfall/shared/utils';
 import { BoxProps } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledImg } from '../styling';
@@ -11,7 +11,7 @@ export const stringToMana = (text: string) => {
     .filter(e => e !== '')
     .map(entry => {
       if (entry.startsWith('{') && entry.endsWith('}')) {
-        const icon = getPip(entry.slice(1, -1));
+        const icon = pipMap.get(entry);
         return icon ? (
           <PipContainer useShadow={!icon.no_shadow} clip_type={icon.clip_type}>
             <PipSymbol src={pipToSrc(icon)} alt={entry} title={icon.english} />
@@ -25,7 +25,7 @@ export const stringToMana = (text: string) => {
 };
 
 export const colorsToIndicator = (colors: HCColors) => {
-  const pip = getIndicatorFromColors(colors);
+  const pip = pipMap.getIndicator(colors);
 
   return pip ? (
     <PipContainer>

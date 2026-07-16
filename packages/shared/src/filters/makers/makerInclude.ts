@@ -1,4 +1,3 @@
-import { includeFilter, includeSummary } from '../filters';
 import { looseOpType } from '../types';
 import { IncludeFilter, includeFilterMaker } from '../utils';
 
