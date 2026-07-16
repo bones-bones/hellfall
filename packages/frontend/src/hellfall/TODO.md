@@ -166,3 +166,4 @@ Write a script to transform the database
 - sync rulings between prints of a card
 - add examples to syntax page
 - add `include:spell` for devotion searches?
+- strip quotes from artist names like for tags?

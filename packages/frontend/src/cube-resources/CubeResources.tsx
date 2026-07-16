@@ -181,7 +181,7 @@ export const CubeResources = () => {
     },
     {
       name: 'Hellscube 9',
-      id: 'HC9',
+      id: 'HC9.0',
       description: 'The first 360 cards of the vintage cube with purple.',
     },
     {

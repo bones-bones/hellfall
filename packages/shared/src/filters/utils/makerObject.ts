@@ -608,5 +608,8 @@ export class LegalityFilter extends FilterObject<string, string> {
     );
   }
   cardPassesFilter = (card: HCCard.Any) =>
-    xor(this.filter(this.getValueToCompare(card), this.getOp(), this.queryName), this.inverted);
+    xor(
+      this.filter(fixValue(this.getValueToCompare(card)), this.getOp(), this.queryName),
+      this.inverted
+    );
 }
