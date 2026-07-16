@@ -7,12 +7,12 @@ import {
   parseSearchQuery,
   searchCards,
   correctInclude,
-  fixValue,
 } from '@hellfall/shared/filters';
 import { CardMap } from '../cardHandling';
 import { firestoreToCard } from './cardConversion';
 import { getAllRelatedCollection } from './cardRefs';
 import type { cardsCollection, firestoreCard } from './firestoreTypes';
+import { fixValue } from '../textHandling';
 
 const evaluateRelatedFilter = (
   node: FilterNode,

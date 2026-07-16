@@ -163,8 +163,5 @@ Write a script to transform the database
 - make daybound/nightbound creatures not have the `transform` keyword
 - add conversions for long set names
 - add devotion search
-- add better mana search
 - add produces search
-- make the pips a map?
 - sync rulings between prints of a card
-- move current mana cost search logic to `manatext`

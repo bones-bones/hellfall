@@ -56,7 +56,7 @@ export const manaSummary: summaryFunction<pipSearch> = (
   invert?: boolean
 ) => {
   if (typeof value == 'number') {
-    return createNumSummary('the number of pips in the mana cost')(operator, value, invert);
+    return createNumSummary('the number of pips in the mana cost is')(operator, value, invert);
   }
   if (typeof value == 'string') {
     const invalids = pipMap.getNonPipsFromSearch(value);
@@ -64,7 +64,7 @@ export const manaSummary: summaryFunction<pipSearch> = (
       return `!Unknown pips ${invalids.map(s => `{${s}}`).join(', ')}`;
     }
   }
-  return createNumSummary('the mana cost', true)(
+  return createNumSummary('the mana cost is', true)(
     operator,
     ensurePips(value)
       .map(p => `{${p.symbol}}`)
