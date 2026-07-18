@@ -9,6 +9,22 @@ import {
   sortType,
   summaryFunction,
 } from './filterTypes';
+import {
+  anyFilterNameType,
+  colorFilterNameType,
+  filterNameType,
+  printsFilterNameType,
+} from './parseTypes';
+
+/**
+ * A filter node
+ */
+export type FilterNode =
+  | { type: 'filter'; filter: filterInterface }
+  | { type: 'not'; child: FilterNode }
+  | { type: 'related'; child: FilterNode }
+  | { type: 'and'; children: FilterNode[] }
+  | { type: 'or'; children: FilterNode[] };
 
 /**
  * A function that gets all the prints of a card
@@ -19,7 +35,7 @@ export type allPrintsGetterType = (card: HCCard.Any) => HCCard.Any[];
  * An interface for any filter
  */
 export interface anyFilterInterface<T = any, S = any> {
-  queryName: string;
+  queryName: anyFilterNameType | 'sort';
   /**
    * The filter method to use
    */
@@ -33,7 +49,7 @@ export interface sortInterface extends anyFilterInterface {
   /**
    * The query name
    */
-  queryName: string;
+  queryName: 'sort';
   /**
    * The filter function to use
    */
@@ -57,7 +73,7 @@ export interface filterInterface<T = any, S = any> extends anyFilterInterface {
   /**
    * The query name
    */
-  queryName: string;
+  queryName: anyFilterNameType;
   /**
    * The filter function to use
    */

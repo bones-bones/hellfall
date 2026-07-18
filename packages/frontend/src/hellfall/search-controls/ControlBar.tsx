@@ -1,16 +1,50 @@
-import { BoxProps, FormField } from '@workday/canvas-kit-react';
+import { BoxProps, FormField, TextProps } from '@workday/canvas-kit-react';
 import { useAtom, useAtomValue } from 'jotai';
-import { inputSortAtom, queryAtom, querySortAtom, sortAtom } from '../atoms/searchAtoms.ts';
-import { sortType, dirType, getWinnowedSortOptions, parseSorts } from '@hellfall/shared/filters';
+import {
+  inputDisplayAtom,
+  inputSortAtom,
+  inputUniqueAtom,
+  queryDisplayAtom,
+  querySortAtom,
+  queryUniqueAtom,
+  sortAtom,
+} from '../atoms/searchAtoms.ts';
+import {
+  sortType,
+  dirType,
+  getWinnowedSortOptions,
+  parseSorts,
+  uniqueType,
+  displayType,
+} from '@hellfall/shared/filters';
 import { ReactNode, useEffect, useState } from 'react';
 import { plusIcon, minusIcon } from '@workday/canvas-system-icons-web';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledDiv, createStyledDiv, createStyledSecondaryButton } from '../../styling';
+import {
+  createStenciledDiv,
+  createStenciledSpan,
+  createStyledDiv,
+  createStyledSecondaryButton,
+  createStyledSpan,
+} from '../../styling';
 import { SelectItems, StyledSelect } from './StyledSelect.tsx';
 // @circular-ignore Used only for links
 import { useUrlSync, useSyncSorts } from '../hooks/useUrlSync.ts';
 // import { useAuth } from '../../auth/AuthContext.tsx';
 import { listsAreExactlyEqual } from '@hellfall/shared/utils';
+
+const UNIQUE_OPTIONS: SelectItems<uniqueType> = [
+  { label: 'Cards', value: 'cards' },
+  { label: 'All prints', value: 'prints' },
+  // {label: 'Unique art', label:'arts'}
+];
+
+const DISPLAY_OPTIONS: SelectItems<displayType> = [
+  { label: 'Images', value: 'grid' },
+  { label: 'Checklist', value: 'checklist' },
+  { label: 'Text Only', value: 'text' },
+  { label: 'Full', value: 'full' },
+];
 
 const ALL_SORT_OPTIONS: SelectItems<sortType> = [
   { label: 'Auto', value: 'auto' },
@@ -39,20 +73,23 @@ const parseDir = (order: string): dirType => order?.split(',')[1] as dirType;
  * must be called in the body of the component that uses this. (Otherwise sort options won't sync.)
  */
 export const ControlBar = ({
-  noLabel,
+  noPad,
   children,
 }: {
   /**
    * Whether to hide the label. If true, also removes the padding on this component.
    * Use this if you want to use different layout styling on the control bar.
    */
-  noLabel?: boolean;
+  noPad?: boolean;
   children?: ReactNode;
 }) => {
   // const { user } = useAuth();
+  const [inputUnique, setInputUnique] = useAtom(inputUniqueAtom);
+  const queryUnique = useAtomValue(queryUniqueAtom);
+  const [inputDisplay, setInputDisplay] = useAtom(inputDisplayAtom);
+  const queryDisplay = useAtomValue(queryDisplayAtom);
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const querySorts = useAtomValue(querySortAtom);
-  const query = useAtomValue(queryAtom);
   const [sortRules, setSortRules] = useAtom(sortAtom);
   const [canAddInput, setCanAddInput] = useState<boolean>();
   const [canDelInput, setCanDelInput] = useState<boolean>();
@@ -62,6 +99,16 @@ export const ControlBar = ({
     index < inputSorts.length && parseSort(inputSorts[index]) != sortRules[index]?.sort;
   const dirIsOverridden = (index: number): boolean =>
     index < inputSorts.length && parseDir(inputSorts[index]) != sortRules[index]?.dir;
+  const handleUniqueChange = (newUnique: uniqueType) => {
+    if (newUnique != inputUnique) {
+      setInputUnique(newUnique);
+    }
+  };
+  const handleDisplayChange = (newDisplay: displayType) => {
+    if (newDisplay != inputDisplay) {
+      setInputDisplay(newDisplay);
+    }
+  };
   const handleSortChange = (index: number, newSort: sortType) => {
     const newInputs =
       sortRules.length && inputSorts.length
@@ -117,11 +164,40 @@ export const ControlBar = ({
   const getCurrentSort = (index: number) => inputSorts[index]?.split(',')[0] as sortType;
   const getCurrentDir = (index: number) => inputSorts[index]?.split(',')[1] as dirType;
   return (
-    <Container noLabel={noLabel}>
+    <Container noPad={noPad}>
       <FormField className={formFieldStyles}>
-        {!noLabel && <FormField.Label>Sort By</FormField.Label>}
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <SortElements>
+            <StyledSelect<uniqueType>
+              key={`unique-group`}
+              initialValue={inputUnique}
+              disabled={!!queryUnique}
+              onSelect={(newValue: uniqueType) => handleUniqueChange(newValue)}
+              width="135px"
+              items={UNIQUE_OPTIONS}
+              currentValue={queryUnique}
+              title={
+                queryUnique
+                  ? 'You specified this option in your search terms'
+                  : 'Change how cards are found'
+              }
+            />
+            <BarText> as </BarText>
+            <StyledSelect<displayType>
+              key={`display-group`}
+              initialValue={inputDisplay}
+              disabled={!!queryDisplay}
+              onSelect={(newValue: displayType) => handleDisplayChange(newValue)}
+              width="135px"
+              items={DISPLAY_OPTIONS}
+              currentValue={queryDisplay}
+              title={
+                queryDisplay
+                  ? 'You specified this option in your search terms'
+                  : 'Change how cards are displayed'
+              }
+            />
+            <BarText> sorted by </BarText>
             {(sortRules.length
               ? sortRules
               : parseSorts(inputSorts.length ? inputSorts : ['auto,auto'])
@@ -142,7 +218,7 @@ export const ControlBar = ({
                       : 'Change how cards are sorted'
                   }
                 />
-                <span> : </span>
+                <BarText> : </BarText>
                 <StyledSelect<dirType>
                   key={`dir-group-${i}`}
                   initialValue={rule.dir}
@@ -157,7 +233,7 @@ export const ControlBar = ({
                       : 'Change sort direction'
                   }
                 />
-                {i != sortRules.length - 1 && <span style={{ marginRight: '5px' }}> then </span>}
+                {i != sortRules.length - 1 && <BarText isThen> then </BarText>}
               </div>
             ))}
             <>
@@ -216,7 +292,7 @@ const containerStencil = createStencil({
     boxSizing: 'border-box',
   },
   modifiers: {
-    noLabel: {
+    noPad: {
       true: {
         paddingLeft: '0',
         paddingRight: '0',
@@ -225,7 +301,7 @@ const containerStencil = createStencil({
   },
 });
 interface ContainerProps extends BoxProps {
-  noLabel?: boolean;
+  noPad?: boolean;
 }
 const Container = createStenciledDiv<ContainerProps>(containerStencil, 'Container');
 const formFieldStyles = createStyles({
@@ -235,6 +311,25 @@ const formFieldStyles = createStyles({
     width: '100%',
   },
 });
+
+const barTextStencil = createStencil({
+  vars: {},
+  base: {
+    position: 'relative',
+    top: '-2px',
+  },
+  modifiers: {
+    isThen: {
+      true: {
+        marginRight: '5px',
+      },
+    },
+  },
+});
+interface BarTextProps extends TextProps {
+  isThen?: boolean;
+}
+const BarText = createStenciledSpan<BarTextProps>(barTextStencil);
 
 const sortElementsStyles = createStyles({
   lineHeight: '45px',

@@ -1,6 +1,35 @@
-import { HCCard, SetCode } from '@hellfall/shared/types';
+import { HCCard, HCKind, SetCode } from '@hellfall/shared/types';
 import { getChildSets, getDirectChildSets } from '../setHandling';
 
+/**
+ * the list of preference options
+ */
+export const preferTypeList = ['newest', 'oldest'] as const;
+/**
+ * a preference option
+ */
+export type preferType = (typeof preferTypeList)[number];
+
+const newestSort = (value1: HCCard.Any, value2: HCCard.Any) => {
+  if (value1.kind != value2.kind) {
+    return Object.values(HCKind).indexOf(value1.kind) - Object.values(HCKind).indexOf(value2.kind);
+  }
+  switch (value1.kind) {
+    case 'card':
+      return parseInt(value1.hcid) - parseInt(value2.hcid);
+    case 'land':
+      return parseInt(value1.hcid.slice(1)) - parseInt(value2.hcid.slice(1));
+  }
+  return parseInt(value1.collector_number) - parseInt(value2.collector_number);
+};
+const oldestSort = (value1: HCCard.Any, value2: HCCard.Any) => -1 * newestSort(value1, value2);
+const preferToSort: Record<preferType, (value1: HCCard.Any, value2: HCCard.Any) => number> = {
+  newest: newestSort,
+  oldest: oldestSort,
+};
+
+export const getPreference = (cards: HCCard.Any[], prefer: preferType): HCCard.Any =>
+  cards.sort(preferToSort[prefer])[0];
 /**
  * The class for a map of cards.
  */
@@ -143,6 +172,36 @@ export class CardMap {
    */
   getAllPrints(oracle_id: string): this {
     return this.getSubset(this.getIdsOfPrints(oracle_id) ?? []);
+  }
+
+  /**
+   * Returns a subset of the CardMap object as a new CardMap, based on a provided list of oracle ids.
+   * @param oracleList the oracle ids to use
+   * @param prefer the version of the card to prefer, if any
+   */
+  getCardsByOracleIds(oracleList: string[], prefer: preferType = 'newest'): this {
+    const subMap = new (this.constructor as any)() as this;
+    oracleList.forEach(id => {
+      const cards = this.getAllPrints(id).cards();
+      if (cards.length) {
+        subMap.set(getPreference(cards, prefer));
+      }
+    });
+    return subMap;
+  }
+  /**
+   * Returns a subset of the CardMap object as a new CardMap, based on a prefer option.
+   * @param prefer the version of the card to prefer
+   */
+  getPreferred(prefer: preferType): this {
+    const subMap = new (this.constructor as any)() as this;
+    this.oracle_ids().forEach(id => {
+      const cards = this.getAllPrints(id).cards();
+      if (cards.length) {
+        subMap.set(getPreference(cards, prefer));
+      }
+    });
+    return subMap;
   }
 
   /**
@@ -605,6 +664,46 @@ export class CardMap {
   filter(predicate: (...args: any[]) => any): this {
     const subMap = new (this.constructor as any)() as this;
     for (const [id, card] of this) {
+      switch (predicate.length) {
+        case 3: {
+          if (predicate(card, id, card.set)) {
+            subMap.set(card);
+          }
+          break;
+        }
+        case 2: {
+          if (predicate(card, id)) {
+            subMap.set(card);
+          }
+          break;
+        }
+        default: {
+          if (predicate(card)) {
+            subMap.set(card);
+          }
+        }
+      }
+    }
+    return subMap;
+  }
+  /**
+   * Returns the cards that meet the condition specified in a callback function,
+   * excluding cards with the same oracle id
+   *
+   * If you're only checking the ids or sets, just use {@linkcode getSubset}
+   * or {@linkcode getAllInSet} instead, since those'll be much faster
+   * @param predicate A function that accepts up to three arguments.
+   * The filter method calls the predicate function one time for each card.
+   */
+  filterOracle(predicate: (card: HCCard.Any) => any): this;
+  filterOracle(predicate: (card: HCCard.Any, id: string) => any): this;
+  filterOracle(predicate: (card: HCCard.Any, id: string, set: SetCode) => any): this;
+  filterOracle(predicate: (...args: any[]) => any): this {
+    const subMap = new (this.constructor as any)() as this;
+    for (const [id, card] of this) {
+      if (subMap.hasOracleId(card.oracle_id)) {
+        continue;
+      }
       switch (predicate.length) {
         case 3: {
           if (predicate(card, id, card.set)) {

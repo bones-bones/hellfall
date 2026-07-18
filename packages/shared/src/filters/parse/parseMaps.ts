@@ -63,6 +63,9 @@ import {
   makeToughnessFilter,
   makeTypeFilter,
   makeWatermarkFilter,
+  makeInvalidUniqueFilter,
+  makeInvalidDisplayFilter,
+  makeInvalidPreferFilter,
 } from '../makers';
 import { colorFilterNameType, filterNameType, printsFilterNameType } from '../types';
 import { colorFilterMaker, filterMaker, printsFilterMaker } from '../utils';
@@ -117,6 +120,9 @@ export const filters: Record<filterNameType, filterMaker<any>> = {
   isrelated: makeIsRelatedFilter,
   hasrelated: makeHasRelatedFilter,
   invalid: makeInvalidFilter,
+  invalidunique: makeInvalidUniqueFilter,
+  invaliddisplay: makeInvalidDisplayFilter,
+  invalidprefer: makeInvalidPreferFilter,
   invalidsort: makeInvalidSortFilter,
   invalidkeyword: makeInvalidKeywordFilter,
   invalidcolor: makeInvalidColorFilter,

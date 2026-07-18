@@ -59,6 +59,24 @@ export interface anyFilterFunction<T = any, S = any> {
 }
 
 /**
+ * the list of unique options
+ */
+export const uniqueTypeList = ['cards', 'prints' /* 'arts' */] as const;
+/**
+ * a unique option
+ */
+export type uniqueType = (typeof uniqueTypeList)[number];
+
+/**
+ * the list of display options
+ */
+export const displayTypeList = ['grid', 'checklist', 'text', 'full'] as const;
+/**
+ * a display option
+ */
+export type displayType = (typeof displayTypeList)[number];
+
+/**
  * the list of sort direction options
  */
 export const dirTypeList = ['asc', 'desc', 'auto'] as const;

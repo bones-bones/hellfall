@@ -4,7 +4,6 @@ import { InvalidFilter, invalidMaker } from '../utils';
 /**
  * Makes an invalid filter
  * @param value the value to display as unknown
- * @param op dummy
  */
 export const makeInvalidFilter: invalidMaker = (
   value: string,
@@ -13,9 +12,29 @@ export const makeInvalidFilter: invalidMaker = (
   return new InvalidFilter('invalid', summaryStart, value);
 };
 /**
+ * Makes an invalid unique filter
+ * @param value the unique mode to display as unknown
+ */
+export const makeInvalidUniqueFilter: invalidMaker = (value: string) => {
+  return new InvalidFilter('invalidunique', 'unique mode', `"${value}"`);
+};
+/**
+ * Makes an invalid display filter
+ * @param value the display mode to display as unknown
+ */
+export const makeInvalidDisplayFilter: invalidMaker = (value: string) => {
+  return new InvalidFilter('invaliddisplay', 'display mode', `"${value}"`);
+};
+/**
+ * Makes an invalid preference filter
+ * @param value the preference mode to display as unknown
+ */
+export const makeInvalidPreferFilter: invalidMaker = (value: string) => {
+  return new InvalidFilter('invalidprefer', 'preference mode', `"${value}"`);
+};
+/**
  * Makes an invalid sort filter
  * @param value the sort choice to display as unknown
- * @param op dummy
  */
 export const makeInvalidSortFilter: invalidMaker = (value: string) => {
   return new InvalidFilter('invalidsort', 'sort choice', `"${value}"`);
@@ -23,7 +42,6 @@ export const makeInvalidSortFilter: invalidMaker = (value: string) => {
 /**
  * Makes an invalid keyword filter
  * @param value the keyword to display as unknown
- * @param op dummy
  */
 export const makeInvalidKeywordFilter: invalidMaker = (value: string) => {
   return new InvalidFilter('invalidkeyword', 'keyword', `"${value}"`);
@@ -31,7 +49,6 @@ export const makeInvalidKeywordFilter: invalidMaker = (value: string) => {
 /**
  * Makes an invalid color filter
  * @param value the color to display as unknown
- * @param op dummy
  */
 export const makeInvalidColorFilter: invalidMaker = (value: string) => {
   return new InvalidFilter('invalidcolor', 'color', `"${value}"`);

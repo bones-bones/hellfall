@@ -7,8 +7,9 @@ import {
   parseSearchQuery,
   searchCards,
   correctInclude,
+  uniqueType,
 } from '@hellfall/shared/filters';
-import { CardMap } from '../cardHandling';
+import { CardMap, preferType } from '../cardHandling';
 import { firestoreToCard } from './cardConversion';
 import { getAllRelatedCollection } from './cardRefs';
 import type { cardsCollection, firestoreCard } from './firestoreTypes';
@@ -52,25 +53,28 @@ const evaluateFilter = (
  * Firestore-backed search; browser code should use {@linkcode searchCards} from `@hellfall/shared/filters`.
  * @param cardsCol Collection of all cards
  * @param query query to use
+ * @param uniqueMode the {@linkcode uniqueType} to use, if any
+ * @param preferMode the {@linkcode preferType} to use, if any
  * @param defaultCludes The user's list of default inclusions/exclusions, if any
  * @returns a {@linkcode CardMap} containing the search results
  */
 export const searchCardsFromCollection = async (
   cardsCol: cardsCollection,
   query: string,
+  uniqueMode?: uniqueType,
+  preferMode?: preferType,
   defaultCludes?: string[]
 ): Promise<CardMap> => {
   const snapshot = await cardsCol.get();
   const cardMap = new CardMap(
     snapshot.docs.map(doc => firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard))
   );
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(
+  const { node, includeList, excludeList, autoFilterExtras, unique, prefer } = parseSearchQuery(
     query,
     cardMap,
     defaultCludes
   );
   const usingClusion = Boolean(includeList.length + excludeList.length);
-  // fixTags(node, tagList);
   if (
     includeList.some(
       include => correctInclude(fixValue(include.value)) == 'drop' && !include.inverted
@@ -82,6 +86,8 @@ export const searchCardsFromCollection = async (
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);
   }
+  const uMode = unique ?? uniqueMode ?? 'prints';
+  const pMode = prefer ?? preferMode ?? 'newest';
   const newCardsWithExtras = new CardMap();
   (await cardsCol.get()).forEach(snap => {
     const card = snap.data();
@@ -102,7 +108,12 @@ export const searchCardsFromCollection = async (
     excludeExtras.cardPassesFilter(card)
   );
 
-  return autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
-    ? newCardsWithoutExtras
-    : newCardsWithExtras;
+  const passed =
+    autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
+      ? newCardsWithoutExtras
+      : newCardsWithExtras;
+  if (uMode == 'cards') {
+    return passed.getPreferred(pMode);
+  }
+  return passed;
 };

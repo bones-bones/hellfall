@@ -1,9 +1,9 @@
 import { HCCard } from '@hellfall/shared/types';
-import { CardMap, getAllRelated, fixValue } from '@hellfall/shared/utils';
+import { CardMap, getAllRelated, fixValue, preferType } from '@hellfall/shared/utils';
 import { parseSearchQuery } from './parseSearchQuery';
 import { /* fixTags,  */ fixDrop } from '../utils';
 import { makeIncludeFilter } from '../makers';
-import { FilterNode } from '../types';
+import { FilterNode, uniqueType } from '../types';
 import { correctInclude } from '../filters';
 
 const evaluateRelatedFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): boolean =>
@@ -28,10 +28,18 @@ const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): b
  * Given a query, filters a {@linkcode CardMap} to return only the cards that match the query
  * @param cardMap Map of all cards
  * @param query query to use
+ * @param uniqueMode the {@linkcode uniqueType} to use, if any
+ * @param preferMode the {@linkcode preferType} to use, if any
  * @param defaultCludes The user's list of default inclusions/exclusions, if any
  */
-export const searchCards = (cardMap: CardMap, query: string, defaultCludes?: string[]): CardMap => {
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(
+export const searchCards = (
+  cardMap: CardMap,
+  query: string,
+  uniqueMode?: uniqueType,
+  preferMode?: preferType,
+  defaultCludes?: string[]
+): CardMap => {
+  const { node, includeList, excludeList, autoFilterExtras, unique, prefer } = parseSearchQuery(
     query,
     cardMap,
     defaultCludes
@@ -49,6 +57,8 @@ export const searchCards = (cardMap: CardMap, query: string, defaultCludes?: str
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);
   }
+  const uMode = unique ?? uniqueMode ?? 'prints';
+  const pMode = prefer ?? preferMode ?? 'newest';
   const newCardsWithExtras = cardMap.filter(
     card =>
       evaluateFilter(node, card, cardMap) &&
@@ -61,7 +71,12 @@ export const searchCards = (cardMap: CardMap, query: string, defaultCludes?: str
     excludeExtras.cardPassesFilter(card)
   );
 
-  return autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
-    ? newCardsWithoutExtras
-    : newCardsWithExtras;
+  const passed =
+    autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
+      ? newCardsWithoutExtras
+      : newCardsWithExtras;
+  if (uMode == 'cards') {
+    return passed.getPreferred(pMode);
+  }
+  return passed;
 };

@@ -1,15 +1,3 @@
-import { filterInterface } from './makerTypes';
-
-/**
- * A filter node
- */
-export type FilterNode =
-  | { type: 'filter'; filter: filterInterface }
-  | { type: 'not'; child: FilterNode }
-  | { type: 'related'; child: FilterNode }
-  | { type: 'and'; children: FilterNode[] }
-  | { type: 'or'; children: FilterNode[] };
-
 /**
  * The names for a regular filter
  */
@@ -64,6 +52,9 @@ export const filterNames = [
   'hasrelated',
   'include',
   'invalid',
+  'invalidunique',
+  'invaliddisplay',
+  'invalidprefer',
   'invalidsort',
   'invalidkeyword',
   'invalidcolor',
@@ -366,3 +357,10 @@ export const equivDevotionFilterNames: Record<string, devotionFilterNameType> = 
  */
 export const toDevotionFilterName = (value: string): devotionFilterNameType | undefined =>
   equivDevotionFilterNames[value] ?? (isDevotionFilterName(value) ? value : undefined);
+
+export type anyFilterNameType =
+  | filterNameType
+  | colorFilterNameType
+  | printsFilterNameType
+  | 'devotion'
+  | 'comp';

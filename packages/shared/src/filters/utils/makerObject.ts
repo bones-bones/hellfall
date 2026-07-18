@@ -16,6 +16,10 @@ import {
   allPrintsGetterType,
   sortInterface,
   filterInterface,
+  anyFilterNameType,
+  filterNameType,
+  colorFilterNameType,
+  printsFilterNameType,
 } from '../types';
 import {
   createInvalidSummary,
@@ -66,7 +70,7 @@ const parseNote = (text: string): { name: string; note?: boolean | string } => {
  * A sort object
  */
 export class SortObject implements sortInterface {
-  queryName: string = 'sort';
+  queryName: 'sort' = 'sort';
   constructor(public sort: sortType, public dir: dirType) {}
   /**
    * A function that sorts two cards
@@ -88,7 +92,7 @@ export class FilterObject<T, S> implements filterInterface {
   inverted: boolean;
   dropFaces: boolean;
   constructor(
-    public queryName: string,
+    public queryName: anyFilterNameType,
     public filter: cardFilterFunction<T, S>,
     public summary: summaryFunction<S>,
     public value: S,
@@ -133,7 +137,7 @@ export class FilterObject<T, S> implements filterInterface {
  */
 export class NoUnescapeFilter<T, S> extends FilterObject<T, S> {
   constructor(
-    queryName: string,
+    queryName: filterNameType,
     filter: cardFilterFunction<T, S>,
     summary: summaryFunction<S>,
     value: S,
@@ -156,7 +160,7 @@ export class NoUnescapeFilter<T, S> extends FilterObject<T, S> {
  */
 export class InvalidFilter extends FilterObject<string, string> {
   constructor(
-    queryName: string,
+    queryName: filterNameType,
     summaryStart?: string | summaryFunction<string>,
     value: string = '',
     op: looseOpType = ':',
@@ -182,7 +186,7 @@ export class InvalidFilter extends FilterObject<string, string> {
  */
 export class ColorFilter<T extends string[] | string[][]> extends FilterObject<T, colorSearch> {
   constructor(
-    queryName: string,
+    queryName: colorFilterNameType,
     filter: cardFilterFunction<T, colorSearch>,
     summary: summaryFunction<colorSearch>,
     value: colorSearch,
@@ -209,7 +213,7 @@ export class PipFilter<T extends HCCardSymbol[] | HCCardSymbol[][]> extends Filt
   pipSearch
 > {
   constructor(
-    queryName: string,
+    queryName: filterNameType,
     filter: cardFilterFunction<T, pipSearch>,
     summary: summaryFunction<pipSearch>,
     value: pipSearch,
@@ -232,7 +236,7 @@ export class PipFilter<T extends HCCardSymbol[] | HCCardSymbol[][]> extends Filt
  */
 export class ComparisonFilter extends FilterObject<HCCard.Any, string> {
   constructor(
-    queryName: string,
+    queryName: filterNameType | 'comp' | 'devotion',
     filter: comparisonFilterFunction,
     summary: comparisonSummaryFunction,
     value: string,
@@ -273,7 +277,7 @@ export class PropFilter extends FilterObject<string[], string> {
    */
   location: 'any' | 'face' | 'root';
   constructor(
-    queryName: string,
+    queryName: filterNameType,
     summary: summaryFunction<string>,
     value: string,
     op: looseOpType,
@@ -329,7 +333,7 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
    */
   location: 'any' | 'face' | 'root';
   constructor(
-    queryName: string,
+    queryName: filterNameType | printsFilterNameType,
     /**
      * The summary function to use
      *
@@ -397,7 +401,7 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
  */
 export class InFilter extends PropConvertFilter<string> {
   constructor(
-    queryName: string,
+    queryName: printsFilterNameType,
     summary: summaryFunction<string>,
     value: string,
     op: looseOpType,
@@ -450,7 +454,7 @@ export class NumberPropFilter extends FilterObject<numSearch[], numSearch> {
    */
   location: 'any' | 'face' | 'root';
   constructor(
-    queryName: string,
+    queryName: filterNameType,
     value: numSearch,
     op: looseOpType,
     /**
@@ -485,7 +489,7 @@ export class NumberPropFilter extends FilterObject<numSearch[], numSearch> {
  */
 export class PrintsNumberFilter extends FilterObject<number, string> {
   constructor(
-    queryName: string,
+    queryName: printsFilterNameType | 'is',
     value: string,
     op: looseOpType,
     /**
@@ -527,7 +531,7 @@ export class NoteFilter extends FilterObject<HCCard.Any, string> {
    */
   note?: boolean | string;
   constructor(
-    queryName: string,
+    queryName: filterNameType,
     filter: noteFilterFunction,
     summary: noteSummaryFunction,
     value: string,
@@ -551,7 +555,7 @@ export class NoteFilter extends FilterObject<HCCard.Any, string> {
  */
 export class IncludeFilter extends FilterObject<HCCard.Any, string> {
   constructor(
-    queryName: string,
+    queryName: filterNameType,
     value: string,
     op: looseOpType,
     defaultOp: opType = '=',
@@ -574,7 +578,7 @@ export class IncludeFilter extends FilterObject<HCCard.Any, string> {
  */
 export class StateFilter extends FilterObject<HCCard.Any, string> {
   constructor(
-    queryName: string,
+    queryName: filterNameType,
     filter: stateFilterFunction,
     summary: summaryFunction<string>,
     value: string,
@@ -590,7 +594,7 @@ export class StateFilter extends FilterObject<HCCard.Any, string> {
  */
 export class LegalityFilter extends FilterObject<string, string> {
   constructor(
-    queryName: string,
+    queryName: filterNameType,
     value: string,
     op: looseOpType,
     defaultOp: opType = '=',

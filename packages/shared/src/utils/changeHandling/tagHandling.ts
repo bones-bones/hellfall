@@ -671,6 +671,11 @@ const subKeywords: Record<string, string | string[]> = {
   '2ble strike': 'double strike',
   'untapped landwalk': 'landwalk',
   yeehaw: 'job select',
+  'pre-errata companion': 'companion',
+  cashback: 'flashback',
+  rainbowcycling: 'cycling',
+  'double cleave': 'cleave',
+  wardtection: ['ward', 'protection'],
 };
 
 const keywordTags = [

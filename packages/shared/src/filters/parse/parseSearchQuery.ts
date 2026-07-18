@@ -1,10 +1,18 @@
 import { HCCard } from '@hellfall/shared/types';
-import { FilterNode, allPrintsGetterType } from '../types';
+import { FilterNode, allPrintsGetterType, displayType, uniqueType } from '../types';
 import { parseFilter } from './parseFilter';
-import { CardMap } from '@hellfall/shared/utils';
+import { CardMap, preferType, unescapeText } from '@hellfall/shared/utils';
 import { isSortFilter, parseSorts, sortIsValid, winnowSortObjects } from './parseSorts';
 import { splitOnFirstOp, IncludeFilter, SortObject } from '../utils';
 import { makeIncludeFilter } from '../makers';
+import {
+  isDisplayMode,
+  isPreferMode,
+  isUniqueMode,
+  toDisplay,
+  toPrefer,
+  toUnique,
+} from './parseModes';
 
 const tokenList = ['(', ')', 'or', '-', '~'];
 const charBreakList = ['(', ' '];
@@ -16,7 +24,15 @@ const charBreakList = ['(', ' '];
 //   const { keyword } = splitOnFirstOp(text);
 //   return keyword == 'include' || keyword == 'exclude';
 // };
-const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
+const tokenize = (
+  query: string
+): {
+  tokens: string[];
+  sortList: string[];
+  unique?: uniqueType;
+  display?: displayType;
+  prefer?: preferType;
+} => {
   const tokens: string[] = [];
   const len = query.length;
   let currentTerm = '';
@@ -108,20 +124,52 @@ const tokenize = (query: string): { tokens: string[]; sortList: string[] } => {
     tokens.push(currentTerm);
   }
   const sortList: string[] = [];
+  let unique: uniqueType | undefined;
+  let display: displayType | undefined;
+  let prefer: preferType | undefined;
   for (let i = tokens.length - 1; i >= 0; i--) {
     const token = tokens[i];
     if (isSortFilter(token)) {
       if (sortIsValid(token)) {
         sortList.unshift(splitOnFirstOp(tokens.splice(i, 1)[0]).term);
-        // } else {
-        //   tokens[i] = `invalidsort:${token}`;
       }
+      continue;
     }
-    // if (isInclude(token)) {
-    //   includeList.unshift(splitOnFirstOp(tokens.splice(i, 1)[0]).term);
-    // }
+    if (isUniqueMode(token)) {
+      const { term } = splitOnFirstOp(tokens[i]);
+      const u = toUnique(unescapeText(term));
+      if (u) {
+        tokens.splice(i, 1);
+        unique = u;
+      } else {
+        tokens[i] = `invalidunique:${term}`;
+      }
+      continue;
+    }
+    if (isDisplayMode(token)) {
+      const { term } = splitOnFirstOp(tokens[i]);
+      const d = toDisplay(unescapeText(term));
+      if (d) {
+        tokens.splice(i, 1);
+        display = d;
+      } else {
+        tokens[i] = `invaliddisplay:${term}`;
+      }
+      continue;
+    }
+    if (isPreferMode(token)) {
+      const { term } = splitOnFirstOp(tokens[i]);
+      const p = toPrefer(unescapeText(term));
+      if (p) {
+        tokens.splice(i, 1);
+        prefer = p;
+      } else {
+        tokens[i] = `invalidprefer:${term}`;
+      }
+      continue;
+    }
   }
-  return { tokens, sortList };
+  return { tokens, sortList, unique, display };
 };
 
 const parseClude = (text: string) => {
@@ -175,6 +223,18 @@ export const parseSearchQuery = (
    * A list of the {@linkcode SortObject | SortObjects} from the query
    */
   sortObjects: SortObject[];
+  /**
+   * The {@linkcode uniqueType} from the query, if any
+   */
+  unique?: uniqueType;
+  /**
+   * The {@linkcode displayType} from the query, if any
+   */
+  display?: displayType;
+  /**
+   * The {@linkcode preferType} from the query, if any
+   */
+  prefer?: preferType;
   /**
    * A list of the {@linkcode IncludeFilter | IncludeFilters} that add cards to the search
    */
@@ -364,7 +424,7 @@ export const parseSearchQuery = (
     }
     return { node: leftNode || { type: 'and', children: [] }, nextPos: i, summaries };
   };
-  const { tokens, sortList } = tokenize(query);
+  const { tokens, sortList, unique, display, prefer } = tokenize(query);
   const { node, summaries } = parseTokens(tokens, 0, []);
   const { sortList: sortObjects, winnowed } = winnowSortObjects(parseSorts(sortList));
   while ([' not ', ' and ', ' or ', '('].includes(summaries.at(-1) ?? '')) {
@@ -384,6 +444,9 @@ export const parseSearchQuery = (
   return {
     node,
     sortObjects,
+    unique,
+    display,
+    prefer,
     includeList,
     excludeList,
     invalids,

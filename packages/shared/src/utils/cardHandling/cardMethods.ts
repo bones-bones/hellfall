@@ -1,6 +1,5 @@
 import {
   HCCard,
-  HCCardFace,
   HCColors,
   SetCode,
   allElementValueType,

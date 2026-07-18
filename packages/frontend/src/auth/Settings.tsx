@@ -90,7 +90,7 @@ export const Settings = () => {
         specifically choose search options these defaults will be used instead.{' '}
       </div>
       <br />
-      <ControlBar noLabel={true} />
+      <ControlBar noPad={true} />
       <ButtonContainer>
         <Button
           colors={inputButtonColors}
