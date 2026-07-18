@@ -1,3 +1,5 @@
+import { displayType, uniqueType } from '@hellfall/shared/filters';
+
 export interface AuthUser {
   id: string;
   username: string;
@@ -7,15 +9,8 @@ export interface AuthUser {
   isAdmin: boolean;
   defaultCludes?: string[];
   defaultSorts?: string[];
-  /**
-   * @todo This hasn't been implemented yet. Once it is, this will control the card/all prints toggle
-   */
-  defaultPrints?: boolean;
-  /**
-   * @todo This hasn't been implemented yet. Once it is, this will control the card format display
-   * option (i.e. images/checklist/text/full)
-   */
-  defaultFormat?: string;
+  defaultUnique?: uniqueType;
+  defaultDisplay?: displayType;
 }
 
 export interface AuthState {
