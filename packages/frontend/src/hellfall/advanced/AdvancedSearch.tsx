@@ -11,7 +11,12 @@ import {
 import { ButtonColors, TextInput, FormField } from '@workday/canvas-kit-react';
 import { system } from '@workday/canvas-tokens-web';
 import { useAtom } from 'jotai';
-import { inputSortAtom, sortAtom } from '../atoms/searchAtoms.ts';
+import {
+  inputDisplayAtom,
+  inputSortAtom,
+  inputUniqueAtom,
+  sortAtom,
+} from '../atoms/searchAtoms.ts';
 import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType } from '@hellfall/shared/filters';
@@ -79,7 +84,10 @@ export const AdvancedSearch = () => {
   const [includeTokens, setIncludeTokens] = useState(false);
   const [includeVetoed, setIncludeVetoed] = useState(false);
   const [includeDropped, setIncludeDropped] = useState(false);
-
+  const defaultUnique = 'prints';
+  const [inputUnique, setInputUnique] = useAtom(inputUniqueAtom);
+  const defaultDisplay = 'grid';
+  const [inputDisplay, setInputDisplay] = useAtom(inputDisplayAtom);
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const [sortRules, setSortRules] = useAtom(sortAtom);
   const [localQuery, setLocalQuery] = useState('');
@@ -232,6 +240,12 @@ export const AdvancedSearch = () => {
     if (includeDropped) {
       filters.push('include:dropped');
     }
+    if (inputUnique != defaultUnique) {
+      filters.push(`unique:${inputUnique}`);
+    }
+    if (inputDisplay != defaultDisplay) {
+      filters.push(`display:${inputDisplay}`);
+    }
     inputSorts.forEach(input => {
       const [sort, dir] = input.split(',', 2);
       if (sort != 'auto' && dir != 'auto') {
@@ -282,6 +296,8 @@ export const AdvancedSearch = () => {
     includeTokens,
     includeVetoed,
     includeDropped,
+    inputUnique,
+    inputDisplay,
     inputSorts,
   ]);
   const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
@@ -593,6 +609,8 @@ export const AdvancedSearch = () => {
         to={localQuery ? `/?q=${encodeURIComponent(localQuery)}` : '/'}
         onClick={(e: React.MouseEvent) => {
           if (!(e.button === 1 || e.metaKey || e.ctrlKey)) {
+            setInputUnique(defaultUnique);
+            setInputDisplay(defaultDisplay);
             setInputSorts([]);
             setSortRules([]);
           }

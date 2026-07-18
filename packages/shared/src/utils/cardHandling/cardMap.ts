@@ -892,7 +892,7 @@ export class CardMap {
    * Returns an array of the oracle ids in the CardMap.`
    */
   oracle_ids(): string[] {
-    return Array.from(this.idMap.keys());
+    return Array.from(this.oracleMap.keys());
   }
   /**
    * Returns an array of the sets in the CardMap.

@@ -99,7 +99,11 @@ export const HellFall = () => {
       {invalids.map(invalid => {
         return (
           <>
-            <Invalid>{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</Invalid>
+            <Invalid>{`${
+              invalid[0].startsWith('invalid')
+                ? ''
+                : `Invalid expression "${invalid[0]}" was ignored.`
+            } ${invalid[1]}`}</Invalid>
             <Separator />
           </>
         );

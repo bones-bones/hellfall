@@ -178,6 +178,7 @@ export class InvalidFilter extends FilterObject<string, string> {
       invertOption
     );
   }
+  toSummary = () => this.summary(this.getOp(), this.value, this.inverted);
 }
 
 /**

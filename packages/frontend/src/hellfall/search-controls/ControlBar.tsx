@@ -170,12 +170,11 @@ export const ControlBar = ({
           <SortElements>
             <StyledSelect<uniqueType>
               key={`unique-group`}
-              initialValue={inputUnique}
+              initialValue={queryUnique ?? inputUnique}
               disabled={!!queryUnique}
               onSelect={(newValue: uniqueType) => handleUniqueChange(newValue)}
               width="135px"
               items={UNIQUE_OPTIONS}
-              currentValue={queryUnique}
               title={
                 queryUnique
                   ? 'You specified this option in your search terms'
@@ -185,12 +184,11 @@ export const ControlBar = ({
             <BarText> as </BarText>
             <StyledSelect<displayType>
               key={`display-group`}
-              initialValue={inputDisplay}
+              initialValue={queryDisplay ?? inputDisplay}
               disabled={!!queryDisplay}
               onSelect={(newValue: displayType) => handleDisplayChange(newValue)}
               width="135px"
               items={DISPLAY_OPTIONS}
-              currentValue={queryDisplay}
               title={
                 queryDisplay
                   ? 'You specified this option in your search terms'
