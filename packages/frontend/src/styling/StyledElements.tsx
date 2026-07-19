@@ -15,6 +15,8 @@ import {
   BodyText,
   TertiaryButtonProps,
   TertiaryButton,
+  TableProps,
+  Table,
 } from '@workday/canvas-kit-react';
 import { handleCsProp, Stencil } from '@workday/canvas-kit-styling';
 import React from 'react';
@@ -97,21 +99,66 @@ export const createStyledLegend = (styles: string, displayName: string = 'Styled
 };
 
 export const createStyledTable = (styles: string, displayName: string = 'StyledTable') => {
-  const Component = ({ children, ...props }: React.ComponentProps<'table'>) => (
-    <table {...handleCsProp(props, styles)}>{children}</table>
+  const Component = ({ children, ...props }: TableProps) => (
+    <Table {...handleCsProp(props, styles)}>{children}</Table>
   );
   (Component as any).displayName = displayName;
   return Component;
 };
 
+export const createStyledTableHead = (styles: string, displayName: string = 'StyledTableHead') => {
+  const Component = ({ children, ...props }: React.ComponentProps<'thead'>) => (
+    <Table.Head {...handleCsProp(props, styles)}>{children}</Table.Head>
+  );
+  (Component as any).displayName = displayName;
+  return Component;
+};
+export const createStyledTableHeader = (
+  styles: string,
+  displayName: string = 'StyledTableHeader'
+) => {
+  const Component = ({ children, ...props }: React.ComponentProps<'th'>) => (
+    <Table.Header {...handleCsProp(props, styles)}>{children}</Table.Header>
+  );
+  (Component as any).displayName = displayName;
+  return Component;
+};
+
+export const createStenciledTableHeader = <T extends React.ComponentProps<'th'>>(
+  stencil: Stencil<any>,
+  displayName: string = 'StenciledTableHeader'
+) => {
+  const Component = ({ children, ...props }: T) => (
+    <Table.Header
+      {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}
+    >
+      {children}
+    </Table.Header>
+  );
+  (Component as any).displayName = displayName;
+  return Component;
+};
+export const createStyledTableBody = (styles: string, displayName: string = 'StyledTableBody') => {
+  const Component = ({ children, ...props }: React.ComponentProps<'tbody'>) => (
+    <Table.Body {...handleCsProp(props, styles)}>{children}</Table.Body>
+  );
+  (Component as any).displayName = displayName;
+  return Component;
+};
 export const createStyledTableRow = (styles: string, displayName: string = 'StyledTableRow') => {
   const Component = ({ children, ...props }: React.ComponentProps<'tr'>) => (
-    <tr {...handleCsProp(props, styles)}>{children}</tr>
+    <Table.Row {...handleCsProp(props, styles)}>{children}</Table.Row>
   );
   (Component as any).displayName = displayName;
   return Component;
 };
-
+export const createStyledTableCell = (styles: string, displayName: string = 'StyledTableCell') => {
+  const Component = ({ children, ...props }: React.ComponentProps<'td'>) => (
+    <Table.Cell {...handleCsProp(props, styles)}>{children}</Table.Cell>
+  );
+  (Component as any).displayName = displayName;
+  return Component;
+};
 export const createStyledInput = (styles: string, displayName: string = 'StyledInput') => {
   const Component = ({ children, ...props }: React.ComponentProps<'input'>) => (
     <input {...handleCsProp(props, styles)}>{children}</input>
@@ -358,9 +405,7 @@ export const createStyledPrimaryButton = (
     children,
     ...props
   }: PrimaryButtonProps & React.ComponentProps<'button'>) => (
-    <PrimaryButton as={PrimaryButton} {...handleCsProp(props, styles)}>
-      {children}
-    </PrimaryButton>
+    <PrimaryButton {...handleCsProp(props, styles)}>{children}</PrimaryButton>
   );
   (Component as any).displayName = displayName;
   return Component;
@@ -390,9 +435,7 @@ export const createStyledSecondaryButton = (
     children,
     ...props
   }: SecondaryButtonProps & React.ComponentProps<'button'>) => (
-    <SecondaryButton as={SecondaryButton} {...handleCsProp(props, styles)}>
-      {children}
-    </SecondaryButton>
+    <SecondaryButton {...handleCsProp(props, styles)}>{children}</SecondaryButton>
   );
   (Component as any).displayName = displayName;
   return Component;
@@ -422,9 +465,7 @@ export const createStyledTertiaryButton = (
     children,
     ...props
   }: TertiaryButtonProps & React.ComponentProps<'button'>) => (
-    <TertiaryButton as={TertiaryButton} {...handleCsProp(props, styles)}>
-      {children}
-    </TertiaryButton>
+    <TertiaryButton {...handleCsProp(props, styles)}>{children}</TertiaryButton>
   );
   (Component as any).displayName = displayName;
   return Component;

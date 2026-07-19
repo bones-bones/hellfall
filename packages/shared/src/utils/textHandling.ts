@@ -43,7 +43,7 @@ export const formatQuotes = (text: string): string => {
     } else if (char === '-') {
       const isMinus =
         i === 0 ||
-        /[/([{ ]/.test(prevChar) ||
+        /[/([ ]/.test(prevChar) ||
         (prevChar == 'n' && result.at(-2) == '\\') ||
         (/[0-9]/.test(prevChar) && /[0-9]/.test(nextChar));
       if (isMinus) {
@@ -530,7 +530,8 @@ export const stripQuotes = (text: string) => (textIsQuote(text) ? text.slice(1, 
  * @param keepDashes whether to keep dashes (for correct handling of text fields)
  */
 export const unescapeText = (text: string, keepDashes?: boolean) => {
-  const strippedText = textIsQuote(text) || keepDashes ? text : text.replaceAll(/[_-]/g, '');
+  const strippedText =
+    textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_-–]/g, '');
   return strippedText
     .toLowerCase()
     .replaceAll(/^['"]/g, '')

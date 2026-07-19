@@ -189,7 +189,7 @@ const PageContainer: FC<PropsWithChildren> = ({ children }) => {
 const buttonContainerStyles = createStyles({
   marginTop: '-20px',
 });
-const ButtonContainer = createStyledDiv(buttonContainerStyles);
+const ButtonContainer = createStyledDiv(buttonContainerStyles, 'ButtonContainer');
 
 const FilterOption = Box;
 const buttonStyles = createStyles({
@@ -210,7 +210,7 @@ const filterContainerStyles = createStyles({
   alignItems: 'center',
   marginBottom: '-11px',
 });
-const FilterContainer = createStyledDiv(filterContainerStyles);
+const FilterContainer = createStyledDiv(filterContainerStyles, 'FilterContainer');
 
 const inputButtonColors: ButtonColors = {
   default: {

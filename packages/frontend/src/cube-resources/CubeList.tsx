@@ -24,8 +24,8 @@ import {
   createStyledSpan,
 } from '../styling';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-
-const activeCardAtom = atom<HCCard.Any | undefined>(undefined);
+import { activeCardAtom } from '../hellfall/atoms/searchAtoms.ts';
+import { ActiveCardPanel } from '../hellfall/ActiveCardPanel.tsx';
 
 const cubeNameForCode = (setCode: SetCode, fallback: string) => getSet(setCode)?.name ?? fallback;
 
@@ -63,6 +63,7 @@ export const CubeList = () => {
 
   return (
     <Page>
+      <ActiveCardPanel maxWidth={400} />
       <Sheet wide={window.innerWidth > 800}>
         <TopBar>
           <div>
@@ -104,7 +105,10 @@ export const CubeList = () => {
                   </GridHeader>
                   {sectionCards.map(card => (
                     <CardRow key={card.id}>
-                      <NameCell to={`/card/${card.name}`} onMouseEnter={() => setActiveCard(card)}>
+                      <NameCell
+                        to={`/card/${card.name}`}
+                        onMouseEnter={() => setActiveCard(card.id)}
+                      >
                         {card.name}
                       </NameCell>
                       <CostCell>{stringToMana(card.mana_cost || '')}</CostCell>
@@ -116,21 +120,10 @@ export const CubeList = () => {
               ))
             )}
           </ListColumn>
-          <PreviewColumn wide={window.innerWidth > 900}>
-            <CardPreview />
-          </PreviewColumn>
         </Body>
       </Sheet>
     </Page>
   );
-};
-
-const CardPreview = () => {
-  const [activeCard] = useAtom(activeCardAtom);
-  if (!activeCard) {
-    return <PreviewPlaceholder>hover a card</PreviewPlaceholder>;
-  }
-  return <HellfallCard data={activeCard} />;
 };
 
 const pageStyles = createStyles({

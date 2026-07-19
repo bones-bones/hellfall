@@ -6,9 +6,11 @@ import { BoxProps } from '@workday/canvas-kit-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
   activeCardAtom,
+  inputDisplayAtom,
   invalidAtom,
   pageAtom,
   queryAtom,
+  queryDisplayAtom,
   summaryAtom,
 } from './atoms/searchAtoms.ts';
 import { useSearchResults } from './hooks/useSearchResults.ts';
@@ -23,6 +25,7 @@ import { HellfallCard } from './card/HellfallCard.tsx';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledDiv, createStyledHR } from '../styling';
 import { PaginationBar } from './search-controls/PaginationBar.tsx';
+import { Checklist } from './Checklist.tsx';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -38,6 +41,9 @@ export const HellFall = () => {
   const { resultSet, paginationModel } = useSearchResults();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const inputDisplay = useAtomValue(inputDisplayAtom);
+  const queryDisplay = useAtomValue(queryDisplayAtom);
+  const display = queryDisplay ?? inputDisplay;
 
   // Track current and previous page numbers. this is so we can scroll users to the card list, or scroll them to the top
   const pageNumberRef = useRef<number>(0);
@@ -109,41 +115,47 @@ export const HellFall = () => {
         );
       })}
 
-      <Container>
-        {resultSet.length == 1 ? (
+      {resultSet.length == 1 ? (
+        <Container>
           <div style={{ width: '60vw', margin: '0 auto' }}>
             <HellfallCard data={resultSet[0]} onSinglePage={true} />
           </div>
-        ) : (
-          <div>
-            <CardsGrid maxWidth={`${maxWidth}px`}>
-              {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
-                <HellfallEntry
-                  onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                    if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                      window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
-                    } else {
-                      setActiveCardFromAtom(entry.id);
+        </Container>
+      ) : (
+        <div>
+          {display == 'checklist' ? (
+            <Checklist cards={resultSet.slice(page, page + CHUNK_SIZE)} />
+          ) : (
+            <Container>
+              <CardsGrid maxWidth={`${maxWidth}px`}>
+                {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                  <HellfallEntry
+                    onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                      if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                        window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
+                      } else {
+                        setActiveCardFromAtom(entry.id);
+                      }
+                    }}
+                    key={'' + entry.id + '-' + i}
+                    id={entry.hcid}
+                    name={entry.name}
+                    otherNames={getOtherNames(entry)}
+                    plainText={toPlainText(entry)}
+                    url={
+                      'card_faces' in entry &&
+                      entry.layout == 'meld_part' &&
+                      entry.card_faces[0].image
+                        ? entry.card_faces[0].image
+                        : entry.image!
                     }
-                  }}
-                  key={'' + entry.id + '-' + i}
-                  id={entry.hcid}
-                  name={entry.name}
-                  otherNames={getOtherNames(entry)}
-                  plainText={toPlainText(entry)}
-                  url={
-                    'card_faces' in entry &&
-                    entry.layout == 'meld_part' &&
-                    entry.card_faces[0].image
-                      ? entry.card_faces[0].image
-                      : entry.image!
-                  }
-                />
-              ))}
-            </CardsGrid>
-          </div>
-        )}
-      </Container>
+                  />
+                ))}
+              </CardsGrid>
+            </Container>
+          )}
+        </div>
+      )}
       {resultSet.length != 1 && (
         <>
           <Separator />

@@ -13,7 +13,6 @@ export type SelectItems<T extends string> = { label: string; value: T }[];
  * @template T The type of the value for the select
  */
 export const StyledSelect = <T extends string>({
-  key,
   items,
   initialValue,
   width,
@@ -23,10 +22,6 @@ export const StyledSelect = <T extends string>({
   disabled,
   onSelect,
 }: {
-  /**
-   * The key to use
-   */
-  key: string;
   /**
    * The items to use; must be of type {@linkcode SelectItems<T>}
    */
@@ -85,7 +80,7 @@ export const StyledSelect = <T extends string>({
 
   return (
     <div {...selectStencil({ width })}>
-      <Select key={key} items={options} model={selectModel}>
+      <Select items={options} model={selectModel}>
         <Select.Input
           title={title}
           aria-label={title}
@@ -115,7 +110,7 @@ const selectStencil = createStencil({
   base: ({ width }) => ({
     verticalAlign: 'top',
     display: 'inline-block',
-    width,
+    width: width,
     '&:disabled': {
       cursor: 'not-allowed',
     },
@@ -129,7 +124,7 @@ const inputStencil = createStencil({
     verticalAlign: 'top',
     display: 'inline-block',
     borderRadius: '4px',
-    width,
+    width: width,
     minWidth: width,
     '&:disabled': {
       cursor: 'not-allowed',
@@ -149,7 +144,7 @@ const cardStencil = createStencil({
     borderRadius: 0,
     boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
     padding: '4px 0',
-    width: `${width} !important`,
+    width: width,
     marginTop: '-4px',
     marginBottom: '-4px',
     overflowX: 'hidden',
@@ -170,7 +165,7 @@ const listStencil = createStencil({
     width: '135px',
   },
   base: ({ width }) => ({
-    width,
+    width: width,
     marginTop: 0,
     marginBottom: 0,
     overflowX: 'hidden',
@@ -182,7 +177,7 @@ const itemStencil = createStencil({
     width: '135px',
   },
   base: ({ width }) => ({
-    width,
+    width: width,
     borderRadius: 0,
     '& > span': {
       '& > svg': {

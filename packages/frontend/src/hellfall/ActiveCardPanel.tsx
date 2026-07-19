@@ -17,12 +17,13 @@ import { createStyledDiv } from '../styling';
 
 interface ActiveCardPanelProps {
   origin?: 'left' | 'right'; // Optional origin prop, defaulting to "right"
+  maxWidth?: number;
 }
 const originMap = {
   left: 'start' as const,
   right: 'end' as const,
 };
-export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
+export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelProps) => {
   const cards = useAtomValue(cardsAtom);
   const escape = useKeyPress('Escape');
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
@@ -65,7 +66,11 @@ export const ActiveCardPanel = ({ origin = 'right' }: ActiveCardPanelProps) => {
         origin={originMap[origin]}
         // initialTransitionState={initialTransitionState}
         // expanded={!!activeCard}
-        expandedWidth={Math.max(windowWidth * 0.535, 350)}
+        expandedWidth={
+          maxWidth
+            ? Math.min(maxWidth, Math.max(windowWidth * 0.535, 350))
+            : Math.max(windowWidth * 0.535, 350)
+        }
         collapsedWidth={0}
         {...sidePanelStencil({ origin })}
       >

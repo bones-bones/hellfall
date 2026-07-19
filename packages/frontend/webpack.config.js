@@ -112,7 +112,7 @@ export default function webpackConfig(webpackEnv) {
       ? shouldUseSourceMap
         ? "source-map"
         : false
-      : isEnvDevelopment && "eval-source-map",
+      : isEnvDevelopment && "source-map",
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: paths.appIndexJs,
@@ -332,8 +332,7 @@ export default function webpackConfig(webpackEnv) {
                       },
                     },
                   ],
-                  // isEnvDevelopment &&
-                  //   "react-refresh/babel",
+                  // isEnvDevelopment && "react-refresh/babel",
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -429,15 +428,7 @@ export default function webpackConfig(webpackEnv) {
       // https://github.com/facebook/react/tree/master/packages/react-refresh
       // isEnvDevelopment &&
       //   new ReactRefreshWebpackPlugin({
-      //     overlay: {
-      //       entry: webpackDevClientEntry,
-      //       // The expected exports are slightly different from what the overlay exports,
-      //       // so an interop is included here to enable feedback on module-level errors.
-      //       module: reactRefreshOverlayEntry,
-      //       // Since we ship a custom dev client and overlay integration,
-      //       // the bundled socket handling logic can be eliminated.
-      //       sockIntegration: false,
-      //     },
+      //     overlay: false,
       //   }),
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.

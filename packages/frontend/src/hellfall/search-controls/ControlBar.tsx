@@ -173,7 +173,7 @@ export const ControlBar = ({
               initialValue={queryUnique ?? inputUnique}
               disabled={!!queryUnique}
               onSelect={(newValue: uniqueType) => handleUniqueChange(newValue)}
-              width="135px"
+              width="110px"
               items={UNIQUE_OPTIONS}
               title={
                 queryUnique
@@ -187,7 +187,7 @@ export const ControlBar = ({
               initialValue={queryDisplay ?? inputDisplay}
               disabled={!!queryDisplay}
               onSelect={(newValue: displayType) => handleDisplayChange(newValue)}
-              width="135px"
+              width="110px"
               items={DISPLAY_OPTIONS}
               title={
                 queryDisplay
@@ -231,7 +231,7 @@ export const ControlBar = ({
                       : 'Change sort direction'
                   }
                 />
-                {i != sortRules.length - 1 && <BarText isThen> then </BarText>}
+                {i != sortRules.length - 1 && <BarText data-is-then> then </BarText>}
               </div>
             ))}
             <>
@@ -317,7 +317,7 @@ const barTextStencil = createStencil({
     top: '-2px',
   },
   modifiers: {
-    isThen: {
+    'data-is-then': {
       true: {
         marginRight: '5px',
       },
@@ -325,7 +325,7 @@ const barTextStencil = createStencil({
   },
 });
 interface BarTextProps extends TextProps {
-  isThen?: boolean;
+  'data-is-then'?: boolean;
 }
 const BarText = createStenciledSpan<BarTextProps>(barTextStencil);
 

@@ -43,21 +43,6 @@ export const createStenciledIntrinsic = <T extends htmlIntrinsicProps>(
   return Component;
 };
 
-export const htmlTableCellList = ['th', 'td'] as const;
-
-export type htmlTableCell = (typeof htmlTableCellList)[number];
-export type htmlTableCellProps = React.ComponentProps<'th'>;
-export const createStyledTableCell = (
-  tag: htmlTableCell,
-  styles: string,
-  displayName: string = 'StyledTableCell'
-) => {
-  const Component = ({ children, ...props }: htmlTableCellProps) =>
-    createElement(tag, { ...handleCsProp(props, styles) }, children);
-  (Component as any).displayName = displayName;
-  return Component;
-};
-
 export const htmlSVGList = ['svg', 'polygon'] as const;
 
 export type htmlSVG = (typeof htmlSVGList)[number];

@@ -17,6 +17,7 @@ import {
   createStyledDiv,
   createStyledTable,
   createStyledTableCell,
+  createStyledTableHeader,
   createStyledTableRow,
 } from '../styling';
 
@@ -387,7 +388,7 @@ const rowStyles = createStyles({
 const StyledRow = createStyledTableRow(rowStyles, 'StyledRow');
 
 const tableHeaderStyles = createStyles({ textAlign: 'start' });
-const StyledTableHeader = createStyledTableCell('th', tableHeaderStyles, 'StyledTableHeader');
+const StyledTableHeader = createStyledTableHeader(tableHeaderStyles, 'StyledTableHeader');
 
 const tdStyles = createStyles({ overflowY: 'hidden' });
-const StyledTD = createStyledTableCell('td', tdStyles, 'StyledTD');
+const StyledTD = createStyledTableCell(tdStyles, 'StyledTD');

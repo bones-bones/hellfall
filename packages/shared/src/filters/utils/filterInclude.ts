@@ -75,7 +75,10 @@ export const includeFilter: includeFilterFunction = (
     case 'tokens':
       return !canBeInDecks(value1);
     case 'nonextras':
-      return !extraSetList.includes(value1.set);
+      return (
+        !extraSetList.includes(value1.set) ||
+        Object.values(value1.legalities).some(l => l == 'legal')
+      );
     case 'vetoed':
       return value1.set.includes('HCV');
   }

@@ -375,9 +375,9 @@ export const InlineCheckbox = ({
 };
 
 const boxlessContainerStyles = createStyles({ marginLeft: '-2px' });
-const BoxlessContainer = createStyledDiv(boxlessContainerStyles);
+const BoxlessContainer = createStyledDiv(boxlessContainerStyles, 'BoxlessContainer');
 const inlineContainerStyles = createStyles({ marginLeft: '10px', minWidth: 'fit-content' });
-const InlineContainer = createStyledDiv(inlineContainerStyles);
+const InlineContainer = createStyledDiv(inlineContainerStyles, 'InlineContainer');
 const containerStyles = createStyles({ display: 'flex', flexDirection: 'column' });
 const Container = createStyledDiv(containerStyles, 'Container');
 

@@ -676,6 +676,8 @@ const subKeywords: Record<string, string | string[]> = {
   rainbowcycling: 'cycling',
   'double cleave': 'cleave',
   wardtection: ['ward', 'protection'],
+  fishlink: 'link',
+  'bestow artifact': 'bestow',
 };
 
 const keywordTags = [
