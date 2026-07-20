@@ -72,7 +72,7 @@ export const useUrlSync = () => {
     if (queryUnique != parsedQuery.unique) {
       setQueryUnique(parsedQuery.unique);
     }
-    const unique = params.get('unique');
+    const unique = params.get('unique') ?? 'prints';
     if (isUniqueType(unique) && unique != inputUnique) {
       setInputUnique(unique);
     }
@@ -80,7 +80,7 @@ export const useUrlSync = () => {
     if (queryDisplay != parsedQuery.display) {
       setQueryDisplay(parsedQuery.display);
     }
-    const display = params.get('as');
+    const display = params.get('as') ?? 'grid';
     if (isDisplayType(display) && display != inputDisplay) {
       setInputDisplay(display);
     }
@@ -148,7 +148,7 @@ const getSearchParams = (
   return searchToSet;
 };
 const valueOnlyAddedDefault = <T>(prevValue: T, currentValue: T, defaultValue: T) => {
-  if (Array.isArray(prevValue) && prevValue.length) {
+  if ((Array.isArray(prevValue) && prevValue.length) || prevValue == currentValue) {
     return false;
   }
   return arbAreEqual(currentValue, defaultValue);

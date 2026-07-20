@@ -1,9 +1,9 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { HellfallEntry } from './entry/HellfallEntry.tsx';
 
-import { BoxProps } from '@workday/canvas-kit-react';
+import { BoxProps, Card } from '@workday/canvas-kit-react';
 
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
   activeCardAtom,
   inputDisplayAtom,
@@ -17,7 +17,7 @@ import { useSearchResults } from './hooks/useSearchResults.ts';
 import { ControlBar } from './search-controls/ControlBar.tsx';
 import { CHUNK_SIZE } from './constants.ts';
 import { useUpdateURL } from './hooks/useUrlSync.ts';
-import { getOtherNames, toPlainText } from '@hellfall/shared/utils';
+import { getOtherNames, toFaces, toPlainText } from '@hellfall/shared/utils';
 import { SearchBar } from './search-controls/SearchBar.tsx';
 import { ActiveCardPanel } from './ActiveCardPanel.tsx';
 import { Link } from 'react-router-dom';
@@ -26,6 +26,7 @@ import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledDiv, createStyledHR } from '../styling';
 import { PaginationBar } from './search-controls/PaginationBar.tsx';
 import { Checklist } from './Checklist.tsx';
+import { CardFaceContainer } from './card/hellfall-card-components/CardFace.tsx';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -125,6 +126,36 @@ export const HellFall = () => {
         <div>
           {display == 'checklist' ? (
             <Checklist cards={resultSet.slice(page, page + CHUNK_SIZE)} />
+          ) : display == 'text' ? (
+            <Container>
+              <TextGrid>
+                {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                  <Card key={`${entry.id}-${i}`} cs={cardStyles}>
+                    <Card.Body cs={cardBodyStyles}>
+                      {toFaces(entry).map((face, j) => (
+                        <CardFaceContainer key={`face-${j}`} face={face} i={j} />
+                      ))}
+                    </Card.Body>
+                  </Card>
+                ))}
+              </TextGrid>
+            </Container>
+          ) : display == 'full' ? (
+            <Container>
+              <div style={{ display: 'block', width: '100%' }}>
+                {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                  <>
+                    <div
+                      key={`${entry.id}-${i}`}
+                      style={{ width: '60vw', margin: '0 auto', display: 'block' }}
+                    >
+                      <HellfallCard data={entry} onSinglePage={true} />
+                    </div>
+                    <Separator />
+                  </>
+                ))}
+              </div>
+            </Container>
           ) : (
             <Container>
               <CardsGrid maxWidth={`${maxWidth}px`}>
@@ -137,7 +168,7 @@ export const HellFall = () => {
                         setActiveCardFromAtom(entry.id);
                       }
                     }}
-                    key={'' + entry.id + '-' + i}
+                    key={`${entry.id}-${i}`}
                     id={entry.hcid}
                     name={entry.name}
                     otherNames={getOtherNames(entry)}
@@ -213,3 +244,30 @@ interface CardsGridProps extends BoxProps {
   maxWidth?: string;
 }
 const CardsGrid = createStenciledDiv<CardsGridProps>(cardsGridStencil, 'CardsGrid');
+
+const textGridStyles = createStyles({
+  display: 'grid',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  gap: '10px',
+  margin: '0 auto',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+});
+
+const TextGrid = createStyledDiv(textGridStyles, 'TextGrid');
+
+const cardStyles = createStyles({
+  display: 'inline-block',
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  alignItems: 'top',
+  borderRadius: '4px',
+  borderTop: '3px solid black',
+  borderBottom: '3px solid black',
+  paddingTop: '10px',
+  paddingBottom: '5px',
+  margin: '5px',
+});
+const cardBodyStyles = createStyles({});

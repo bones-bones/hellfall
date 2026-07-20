@@ -168,4 +168,3 @@ Write a script to transform the database
 - add `include:spell` for devotion searches?
 - strip quotes from artist names like for tags?
 - fix flip display for bulbasaur
-- optimize the width of the new seach mode select elements

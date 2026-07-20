@@ -16,7 +16,7 @@ export const RelatedCards = ({
   onSinglePage?: boolean;
   otherPrints: HCCard.Any[];
 }) => {
-  if (!relatedCards) {
+  if (!relatedCards.length && otherPrints.every(print => print.id == sourceCardId)) {
     return null;
   }
   return (

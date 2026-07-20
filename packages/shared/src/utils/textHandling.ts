@@ -531,7 +531,7 @@ export const stripQuotes = (text: string) => (textIsQuote(text) ? text.slice(1, 
  */
 export const unescapeText = (text: string, keepDashes?: boolean) => {
   const strippedText =
-    textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_-–]/g, '');
+    textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
   return strippedText
     .toLowerCase()
     .replaceAll(/^['"]/g, '')

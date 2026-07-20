@@ -195,7 +195,7 @@ export const HellfallCard = ({
           </ButtonContainer>
         </>
       )}
-      <Card style={{ width: '100%' }}>
+      <Card cs={cardStyles}>
         <Card.Body cs={cardBodyStyles}>
           {/* {'card_faces' in displayCard && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{displayCard.name}</StyledHeading>} */}
           {toFaces(displayCard).map((face, i) => (
@@ -352,9 +352,16 @@ const ImageContainer = createStyledDiv(imageContainerStyles, 'ImageContainer');
 
 const ButtonContainer = Box;
 
+const cardStyles = createStyles({
+  width: '100%',
+  borderRadius: '4px',
+  borderTop: '3px solid black',
+  borderBottom: '3px solid black',
+});
+
 const cardBodyStyles = createStyles({
-  padding: 'zero',
   marginTop: '-12px',
+  marginBottom: '-5px',
 });
 
 const linkButtonStyles = createStyles({
