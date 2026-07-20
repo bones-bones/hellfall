@@ -169,3 +169,5 @@ Write a script to transform the database
 - strip quotes from artist names like for tags?
 - fix flip display for bulbasaur
 - remove `card-in-scryfall` from nebulas
+- squash dom bugs
+- replace the set selector with a pill version

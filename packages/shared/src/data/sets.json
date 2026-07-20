@@ -521,14 +521,6 @@
       "parent_set_code": "SCL"
     },
     {
-      "id": "9ca79db9-2757-4f8f-9205-0245a24269aa",
-      "code": "SCL.4",
-      "name": "Scube Lair Drop: Basic Land Box 1",
-      "description": "Basic Land Box 1",
-      "set_type": "lair",
-      "parent_set_code": "SCL"
-    },
-    {
       "id": "d43fde19-1d17-468a-b252-70629b93dd97",
       "code": "HCV.S",
       "name": "Hellscube V(eto).S",
@@ -548,10 +540,45 @@
       "filename": "hdh.svg"
     },
     {
-      "id": "f5ca4bb5-7037-46c4-91d2-fff683bf7317",
-      "code": "HCV.L",
-      "name": "Hellscube V(eto).L",
-      "description": "Cards vetoed or slotsed from HKL.",
+      "id": "05a4c3b8-d4c0-43e4-a1db-f0a7cfb0bf92",
+      "code": "HCV.H",
+      "name": "Hellscube V(eto).H",
+      "description": "Cards vetoed or slotsed from HDH.",
+      "set_type": "veto",
+      "parent_set_code": "HCV"
+    },
+    {
+      "id": "9ca79db9-2757-4f8f-9205-0245a24269aa",
+      "code": "SCL.4",
+      "name": "Scube Lair Drop: Basic Land Box 1",
+      "description": "Basic Land Box 1",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
+      "id": "75c224b2-4bdf-4923-9f1a-3e1b0279152a",
+      "code": "SCL.5",
+      "name": "Scube Lair Drop: Hellscube 2 All-Stars",
+      "description": "Hellscube 2 All-Stars",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
+      "id": "aec96c19-ae44-4e8a-a61a-0fe3995e3f8a",
+      "code": "SOH",
+      "name": "Sands of Hell",
+      "description": "Desert cube",
+      "set_type": "side",
+      "child_set_codes": [
+        "HCV.D"
+      ],
+      "filename": "soh.svg"
+    },
+    {
+      "id": "e4a504f7-14b0-49b4-a3ba-26d8d72213a4",
+      "code": "HCV.D",
+      "name": "Hellscube V(eto).D",
+      "description": "Cards vetoed or slotsed from SOH.",
       "set_type": "veto",
       "parent_set_code": "HCV"
     },
@@ -576,7 +603,8 @@
         "HCV.L",
         "HCV.9",
         "HCV.S",
-        "HCV.H"
+        "HCV.H",
+        "HCV.D"
       ]
     },
     {

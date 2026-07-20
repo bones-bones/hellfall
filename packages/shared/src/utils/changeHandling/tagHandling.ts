@@ -678,6 +678,11 @@ const subKeywords: Record<string, string | string[]> = {
   wardtection: ['ward', 'protection'],
   fishlink: 'link',
   'bestow artifact': 'bestow',
+  'mana-value-5-sorcery cycling': 'cycling',
+  'cascade up': 'cascade',
+  'bicycling': 'cycling',
+  'choose a background': 'partner',
+  'lore':'partner',
 };
 
 const keywordTags = [
