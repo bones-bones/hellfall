@@ -28,8 +28,8 @@ const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): b
  * Given a query, filters a {@linkcode CardMap} to return only the cards that match the query
  * @param cardMap Map of all cards
  * @param query query to use
- * @param uniqueMode the {@linkcode uniqueType} to use, if any
- * @param preferMode the {@linkcode preferType} to use, if any
+ * @param uniqueMode the {@linkcode uniqueType} from the input to use, if any
+ * @param preferMode the {@linkcode preferType} from the input to use, if any
  * @param defaultCludes The user's list of default inclusions/exclusions, if any
  */
 export const searchCards = (

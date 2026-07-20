@@ -53,8 +53,8 @@ const evaluateFilter = (
  * Firestore-backed search; browser code should use {@linkcode searchCards} from `@hellfall/shared/filters`.
  * @param cardsCol Collection of all cards
  * @param query query to use
- * @param uniqueMode the {@linkcode uniqueType} to use, if any
- * @param preferMode the {@linkcode preferType} to use, if any
+ * @param uniqueMode the {@linkcode uniqueType} from the input to use, if any
+ * @param preferMode the {@linkcode preferType} from the input to use, if any
  * @param defaultCludes The user's list of default inclusions/exclusions, if any
  * @returns a {@linkcode CardMap} containing the search results
  */
