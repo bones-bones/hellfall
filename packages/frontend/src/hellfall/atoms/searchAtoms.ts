@@ -25,7 +25,7 @@ export const sortAtom = atom<SortObject[]>(
 
 export const queryUniqueAtom = atom<uniqueType | undefined>(parsedQuery.unique);
 
-const getUnique = (text: any): uniqueType => (isUniqueType(text) ? text : 'prints');
+const getUnique = (text: any): uniqueType => (isUniqueType(text) ? text : 'cards');
 
 export const inputUniqueAtom = atom<uniqueType>(getUnique(searchParams.get('unique')));
 

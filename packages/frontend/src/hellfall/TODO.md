@@ -168,3 +168,4 @@ Write a script to transform the database
 - add `include:spell` for devotion searches?
 - strip quotes from artist names like for tags?
 - fix flip display for bulbasaur
+- remove `card-in-scryfall` from nebulas

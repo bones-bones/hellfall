@@ -57,7 +57,7 @@ export const searchCards = (
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);
   }
-  const uMode = unique ?? uniqueMode ?? 'prints';
+  const uMode = unique ?? uniqueMode ?? 'cards';
   const pMode = prefer ?? preferMode ?? 'newest';
   const newCardsWithExtras = cardMap.filter(
     card =>

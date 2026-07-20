@@ -84,7 +84,7 @@ export const AdvancedSearch = () => {
   const [includeTokens, setIncludeTokens] = useState(false);
   const [includeVetoed, setIncludeVetoed] = useState(false);
   const [includeDropped, setIncludeDropped] = useState(false);
-  const defaultUnique = 'prints';
+  const defaultUnique = 'cards';
   const [inputUnique, setInputUnique] = useAtom(inputUniqueAtom);
   const defaultDisplay = 'grid';
   const [inputDisplay, setInputDisplay] = useAtom(inputDisplayAtom);

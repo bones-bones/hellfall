@@ -72,7 +72,7 @@ export const useUrlSync = () => {
     if (queryUnique != parsedQuery.unique) {
       setQueryUnique(parsedQuery.unique);
     }
-    const unique = params.get('unique') ?? 'prints';
+    const unique = params.get('unique') ?? 'cards';
     if (isUniqueType(unique) && unique != inputUnique) {
       setInputUnique(unique);
     }
@@ -162,7 +162,7 @@ export const useUpdateURL = (asRandom?: boolean) => {
   const location = useLocation();
   const query = useAtomValue(queryAtom);
   const inputUnique = useAtomValue(inputUniqueAtom);
-  const defaultUnique = 'prints';
+  const defaultUnique = 'cards';
   const inputDisplay = useAtomValue(inputDisplayAtom);
   const defaultDisplay = 'grid';
   const inputSorts = useAtomValue(inputSortAtom);

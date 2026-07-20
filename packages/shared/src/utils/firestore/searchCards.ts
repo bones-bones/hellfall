@@ -86,7 +86,7 @@ export const searchCardsFromCollection = async (
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);
   }
-  const uMode = unique ?? uniqueMode ?? 'prints';
+  const uMode = unique ?? uniqueMode ?? 'cards';
   const pMode = prefer ?? preferMode ?? 'newest';
   const newCardsWithExtras = new CardMap();
   (await cardsCol.get()).forEach(snap => {
