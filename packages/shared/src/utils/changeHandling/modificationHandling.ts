@@ -13,6 +13,7 @@ import { fillFacesTo } from './defaults';
 
 /**
  * Add a prop and value to a card root (or overwrite the existing one)
+ * @template K the {@linkcode rootPropType} of the prop
  * @param card card to add the prop to
  * @param prop prop to add
  * @param value value to add
@@ -27,6 +28,7 @@ export const addPropToRoot = <K extends rootPropType>(
 
 /**
  * Add a prop and value to a list in the card root
+ * @template K the {@linkcode rootPropType} of the prop
  * @param card card to add the prop to
  * @param prop prop to add
  * @param value value to add
@@ -39,6 +41,7 @@ export const pushPropToRoot = <K extends rootPropType>(
 
 /**
  * Delete a prop from the card root
+ * @template K the {@linkcode rootPropType} of the prop
  * @param card card to delete the prop from
  * @param prop prop to delete
  */
@@ -52,6 +55,7 @@ export const deletePropFromRoot = <K extends rootPropType>(card: HCCard.Any, pro
 
 /**
  * Delete a prop and value from a list in the card root
+ * @template K the {@linkcode rootPropType} of the prop
  * @param card card to delete the prop from
  * @param prop prop to delete from
  * @param value value to delete
@@ -64,6 +68,7 @@ export const popPropFromRoot = <K extends rootPropType>(
 
 /**
  * Add a prop and value to a card face (or overwrite the existing one)
+ * @template K the {@linkcode facePropType} of the prop
  * @param card card to add the prop to
  * @param prop prop to add
  * @param value value to add
@@ -83,6 +88,7 @@ export const addPropToFace = <K extends facePropType>(
 
 /**
  * Add a prop and value to a list in a card face
+ * @template K the {@linkcode facePropType} of the prop
  * @param card card to add the prop to
  * @param prop prop to add
  * @param value value to add
@@ -102,6 +108,7 @@ export const pushPropToFace = <K extends facePropType>(
 
 /**
  * Delete a prop from a card face
+ * @template K the {@linkcode facePropType} of the prop
  * @param card card to delete the prop from
  * @param prop prop to delete
  * @param index index of the face to delete the prop from (defaults to `0`)
@@ -120,6 +127,7 @@ export const deletePropFromFace = <K extends facePropType>(
 
 /**
  * Delete a prop and value from a list in a card face
+ * @template K the {@linkcode facePropType} of the prop
  * @param card card to delete the prop from
  * @param prop prop to delete from
  * @param value value to delete

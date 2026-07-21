@@ -48,12 +48,12 @@ const anyPropRecord = {
   still_print_image: 'still_print_image',
   not_directly_draftable: 'not_directly_draftable',
   has_draft_partners: 'has_draft_partners',
-  keywords: 'keywords',
-  legalities: 'legalities',
+  keywords: 'keywords', // use
+  legalities: 'legalities', // use
   creators: 'creators',
   artists: 'artists',
   artist_notes: 'artist_notes',
-  rulings: 'rulings',
+  rulings: 'rulings', // use
   finish: 'finish',
   watermark: 'watermark',
   border_color: 'border_color',
@@ -178,7 +178,9 @@ export type anyPropType =
   | keyof HCCardFace.MultiFaced;
 export const isAnyPropType = (value: any): value is anyPropType => anyPropOrder.includes(value);
 /**
- * The exact value that corresponds to {@link anyPropType}. Use this if you're overwriting lists/records wholesale
+ * The exact value that corresponds to {@linkcode anyPropType}.
+ * Use this if you're overwriting lists/records wholesale
+ * @template K the type of the prop to get the type of value for
  */
 export type anyValueType<K extends anyPropType> = K extends keyof HCCard.AnySingleFaced
   ? HCCard.AnySingleFaced[K]
@@ -188,7 +190,9 @@ export type anyValueType<K extends anyPropType> = K extends keyof HCCard.AnySing
   ? HCCardFace.MultiFaced[K]
   : never;
 /**
- * The value that corresponds to {@link anyPropType}. For arrays, uses the value of members of that array
+ * The value that corresponds to {@linkcode anyPropType}.
+ * For arrays, uses the value of members of that array
+ * @template K the type of the prop to get the type of value for
  */
 export type anyElementValueType<K extends anyPropType> = Exclude<
   anyValueType<K>,
@@ -198,27 +202,26 @@ export type anyElementValueType<K extends anyPropType> = Exclude<
   : anyValueType<K>;
 
 export type colorPropType = 'colors' | 'color_indicator';
-// export type facePropType = keyof HCCardFace.MultiFaced;
-// // export type excludeFacePropType = Exclude<facePropType, 'layout'>;
-// export type faceElementValueType<K extends facePropType> = HCCardFace.MultiFaced[K];
-// export type faceArrayElementType<K extends keyof HCCardFace.MultiFaced> = Exclude<
-//   HCCardFace.MultiFaced[K],
-//   undefined
-// > extends Array<infer U>
-//   ? U
-//   : never;
 
 /**
  * Any prop of a root
  */
 export type rootPropType = keyof HCCard.Any;
+/**
+ * Checks if a value is {@linkcode rootPropType}
+ * @param value value to check
+ */
 export const isRootPropType = (value: any): value is rootPropType => rootPropOrder.includes(value);
 /**
- * The exact value that corresponds to {@link rootPropType}. Use this if you're overwriting lists/records wholesale
+ * The exact value that corresponds to {@linkcode rootPropType}.
+ * Use this if you're overwriting lists/records wholesale
+ * @template K the type of the prop to get the type of value for
  */
 export type rootValueType<K extends rootPropType> = Exclude<HCCard.Any[K], undefined>;
 /**
- * The value that corresponds to {@link rootPropType}. For arrays other than color ones and `base_tags`, uses the value of members of that array
+ * The value that corresponds to {@linkcode rootPropType}.
+ * For arrays other than color ones and `base_tags`, uses the value of members of that array
+ * @template K the type of the prop to get the type of value for
  */
 export type rootElementValueType<K extends rootPropType> = K extends 'artist_notes'
   ? [string, string]
@@ -232,24 +235,33 @@ export type rootElementValueType<K extends rootPropType> = K extends 'artist_not
 type IntersectKeys<T, U> = Pick<T, keyof T & keyof U>;
 
 /**
- * An object that represents a generic card face. Only contains props that are on both {@link HCCardFace.MultiFaced} and {@link HCCard.AnySingleFaced}
+ * An object that represents a generic card face. Only contains props that are on
+ * both {@linkcode HCCardFace.MultiFaced} and {@linkcode HCCard.AnySingleFaced}
  */
 export type faceType = Omit<
   IntersectKeys<HCCardFace.MultiFaced, HCCard.AnySingleFaced>,
   'object' | 'layout'
-> & { layout?: HCLayout; object: HCObject.ObjectType.Card | HCObject.ObjectType.CardFace };
+> & { layout: HCLayout; object: HCObject.ObjectType.Card | HCObject.ObjectType.CardFace };
 
 /**
  * Any prop of a face
  */
 export type facePropType = keyof faceType;
+/**
+ * Checks if a value is {@linkcode facePropType}
+ * @param value the value to check
+ */
 export const isFacePropType = (value: any): value is facePropType => facePropOrder.includes(value);
 /**
- * The exact value that corresponds to {@link facePropType}. Use this if you're overwriting lists/records wholesale
+ * The exact value that corresponds to {@linkcode facePropType}.
+ * Use this if you're overwriting lists/records wholesale
+ * @template K the type of the prop to get the type of value for
  */
 export type faceValueType<K extends facePropType> = Exclude<faceType[K], undefined>;
 /**
- * The value that corresponds to {@link facePropType}. For arrays other than color ones and `attraction_lights`, uses the value of members of that array
+ * The value that corresponds to {@linkcode facePropType}.
+ * For arrays other than color ones and `attraction_lights`, uses the value of members of that array
+ * @template K the type of the prop to get the type of value for
  */
 export type faceElementValueType<K extends facePropType> = K extends
   | 'colors'
@@ -264,16 +276,9 @@ export type faceElementValueType<K extends facePropType> = K extends
   ? U
   : Exclude<faceType[K], undefined>;
 
-// export type faceElementValueType<K extends facePropType> =
-// // K extends 'colors'
-//   // ? Exclude<faceType[K], undefined>
-//   // :
-//   Exclude<faceType[K], undefined> extends Array<infer U>
-//   ? U
-//   : Exclude<faceType[K], undefined>;
-
 /**
- * An object that represents a generic card or card face. Only contains props that are on both {@link HCCardFace.MultiFaced} and {@link HCCard.Any}
+ * An object that represents a generic card or card face. Only contains props that are on
+ * both {@linkcode HCCardFace.MultiFaced} and {@linkcode HCCard.Any}
  */
 export type allType = Omit<IntersectKeys<faceType, HCCard.AnyMultiFaced>, 'object' | 'layout'> & {
   layout?: HCLayout;
@@ -283,14 +288,22 @@ export type allType = Omit<IntersectKeys<faceType, HCCard.AnyMultiFaced>, 'objec
  * Any prop that can be all cards and faces
  */
 export type allPropType = keyof allType;
+/**
+ * Checks if a value is {@linkcode allPropType}
+ * @param value the value to check
+ */
 export const isAllPropType = (value: any): value is allPropType =>
   rootPropOrder.includes(value) && facePropOrder.includes(value);
 /**
- * The exact value that corresponds to {@link allPropType}. Use this if you're overwriting lists/records wholesale
+ * The exact value that corresponds to {@linkcode allPropType}.
+ * Use this if you're overwriting lists/records wholesale
+ * @template K the type of the prop to get the type of value for
  */
 export type allValueType<K extends allPropType> = Exclude<allType[K], undefined>;
 /**
- * The value that corresponds to {@link allPropType}. For arrays, uses the value of members of that array
+ * The value that corresponds to {@linkcode allPropType}.
+ * For arrays, uses the value of members of that array
+ * @template K the type of the prop to get the type of value for
  */
 export type allElementValueType<K extends keyof allType> = Exclude<
   allType[K],
@@ -299,86 +312,82 @@ export type allElementValueType<K extends keyof allType> = Exclude<
   ? U
   : Exclude<allType[K], undefined>;
 
-// export type cardFaceType = { [F in facePropType]: faceElementValueType<F> /* & {layout?: HCLayout} */ };
-// export type faceType = HCCard.AnySingleFaced | HCCardFace.MultiFaced;
-// export type cardObjectType = {
-//   [K in propType]?: valueType<K>;
-// } & {
-// //   layout?: HCLayout;
-// //   card_faces: cardFaceType[];
-// // };
-
 /**
  * Any prop of a related card
  */
 export type partPropType = keyof HCRelatedCard;
+/**
+ * Checks if a value is {@linkcode partPropType}
+ * @param value the value to check
+ */
 export const isPartPropType = (value: any): value is partPropType => partPropOrder.includes(value);
 /**
- * The value that corresponds to {@link partPropType}.
+ * The value that corresponds to {@linkcode partPropType}.
+ * @template K the type of the prop to get the type of value for
  */
 export type partValueType<K extends partPropType> = HCRelatedCard[K];
 
 /**
- * An object that maps {@link anyPropType} to {@link anyValueType}
+ * An object that maps {@linkcode anyPropType} to {@linkcode anyValueType}
  */
 export type anyMappedType = { [K in anyPropType]?: anyValueType<K> };
 /**
- * An object that maps {@link anyPropType} to {@link anyElementValueType}
+ * An object that maps {@linkcode anyPropType} to {@linkcode anyElementValueType}
  */
 export type anyElementMappedType = { [K in anyPropType]?: anyElementValueType<K> };
 /**
- * An object that maps {@link rootPropType} to {@link rootValueType}
+ * An object that maps {@linkcode rootPropType} to {@linkcode rootValueType}
  */
 export type rootMappedType = { [K in rootPropType]?: rootValueType<K> };
 /**
- * An object that maps {@link rootPropType} to {@link rootElementValueType}
+ * An object that maps {@linkcode rootPropType} to {@linkcode rootElementValueType}
  */
 export type rootElementMappedType = { [K in rootPropType]?: rootElementValueType<K> };
 /**
- * An object that maps {@link facePropType} to {@link faceValueType}
+ * An object that maps {@linkcode facePropType} to {@linkcode faceValueType}
  */
 export type faceMappedType = { [K in facePropType]?: faceValueType<K> };
 /**
- * An object that maps {@link facePropType} to {@link faceElementValueType}
+ * An object that maps {@linkcode facePropType} to {@linkcode faceElementValueType}
  */
 export type faceElementMappedType = { [K in facePropType]?: faceElementValueType<K> };
 /**
- * An object that maps {@link partPropType} to {@link partValueType}
+ * An object that maps {@linkcode partPropType} to {@linkcode partValueType}
  */
 export type partMappedType = { [K in partPropType]?: partValueType<K> };
 
 /**
- * The return type of calling {@link Object.entries()} on {@link anyMappedType}
+ * The return type of calling {@linkcode Object.entries()} on {@linkcode anyMappedType}
  */
 export type anyEntriesType = { [K in anyPropType]: [K, anyValueType<K>] }[anyPropType][];
 /**
- * The return type of calling {@link Object.entries()} on {@link anyElementMappedType}
+ * The return type of calling {@linkcode Object.entries()} on {@linkcode anyElementMappedType}
  */
 export type anyElementEntriesType = {
   [K in anyPropType]: [K, anyElementValueType<K>];
 }[anyPropType][];
 /**
- * The return type of calling {@link Object.entries()} on {@link rootMappedType}
+ * The return type of calling {@linkcode Object.entries()} on {@linkcode rootMappedType}
  */
 export type rootEntriesType = { [K in rootPropType]: [K, rootValueType<K>] }[rootPropType][];
 /**
- * The return type of calling {@link Object.entries()} on {@link rootElementMappedType}
+ * The return type of calling {@linkcode Object.entries()} on {@linkcode rootElementMappedType}
  */
 export type rootElementEntriesType = {
   [K in rootPropType]: [K, rootElementValueType<K>];
 }[rootPropType][];
 /**
- * The return type of calling {@link Object.entries()} on {@link faceMappedType}
+ * The return type of calling {@linkcode Object.entries()} on {@linkcode faceMappedType}
  */
 export type faceEntriesType = { [K in facePropType]: [K, faceValueType<K>] }[facePropType][];
 /**
- * The return type of calling {@link Object.entries()} on {@link faceElementMappedType}
+ * The return type of calling {@linkcode Object.entries()} on {@linkcode faceElementMappedType}
  */
 export type faceElementEntriesType = {
   [K in facePropType]: [K, faceElementValueType<K>];
 }[facePropType][];
 /**
- * The return type of calling {@link Object.entries()} on {@link partMappedType}
+ * The return type of calling {@linkcode Object.entries()} on {@linkcode partMappedType}
  */
 export type partEntriesType = { [K in partPropType]: [K, partValueType<K>] }[partPropType][];
 

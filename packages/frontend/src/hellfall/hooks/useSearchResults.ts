@@ -3,18 +3,20 @@ import { usePaginationModel, getLastPage } from '@workday/canvas-kit-react/pagin
 import { HCCard } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { useAtom, useAtomValue } from 'jotai';
-import { queryAtom, sortAtom, pageAtom } from '../atoms/searchAtoms.ts';
+import { queryAtom, sortAtom, pageAtom, inputUniqueAtom } from '../atoms/searchAtoms.ts';
 
 import { CHUNK_SIZE } from '../constants.ts';
 import { makeSort, searchCards } from '@hellfall/shared/filters';
-import { tagsData } from '@hellfall/shared/data';
+// import { useAuth } from '../../auth/AuthContext.tsx';
 
 export const useSearchResults = (asRandom?: boolean) => {
+  // const { user } = useAuth();
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
   const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
   const query = useAtomValue(queryAtom);
   const sortRules = useAtomValue(sortAtom);
   const [page, setPageAtom] = useAtom(pageAtom);
+  const inputUnique = useAtomValue(inputUniqueAtom);
 
   const lastPage = getLastPage(CHUNK_SIZE, resultSet.length);
 
@@ -29,7 +31,9 @@ export const useSearchResults = (asRandom?: boolean) => {
 
   useEffect(() => {
     const tempResults = (
-      asRandom && query == '*' ? cards : searchCards(cards, query, tagsData.data)
+      asRandom && query == '*'
+        ? cards
+        : searchCards(cards, query, inputUnique /*, user?.defaultPrefer, user?.defaultCludes */)
     ).cards();
     if (asRandom) {
       setResultSet(tempResults);
@@ -51,7 +55,7 @@ export const useSearchResults = (asRandom?: boolean) => {
       paginationModel.events.goTo(1);
       setPageAtom(0);
     }
-  }, [query, sortRules, page, cards.size()]);
+  }, [query, sortRules, page, cards.size(), inputUnique /*, user */]);
 
   return { resultSet, paginationModel };
 };

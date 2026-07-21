@@ -1,19 +1,12 @@
 import { Box, ButtonColors, Card } from '@workday/canvas-kit-react';
 import { SetLegality } from './visual-components/SetLegality';
-import { colorsToIndicator, stringToMana } from '../stringToMana.tsx';
-import { formatParens, toPlainText } from '@hellfall/shared/utils';
+import { toFaces, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { system } from '@workday/canvas-tokens-web';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth';
 import { useCardTagOverrides } from '../hooks/useCardTagOverrides.ts';
-import {
-  formatDiscordMarkdown,
-  formatDiscordMarkdownInline,
-  formatDiscordMarkdownInvertedItalics,
-  formatDiscordMarkdownInvertedItalicsInline,
-} from './markdownFormatter.tsx';
 import { PendingChanges } from './PendingChanges.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledHR, createStyledPrimaryButtonLink } from '../../styling';
@@ -21,27 +14,13 @@ import { TagSection } from './hellfall-card-components/TagSection';
 import { CardEditingControls } from './editable-card';
 import { ImageUploadControl, type ImageTarget } from './editable-card';
 import { RelatedCards } from './hellfall-card-components/RelatedCards';
-import { Divider } from './visual-components/Divider';
+import { Divider, Separator } from './visual-components/Divider';
 import { StyledHeading } from './visual-components/StyledHeading';
-import {
-  MediumItalicLine,
-  MediumItalics,
-  MediumLine,
-  MediumLineMargin,
-  mediumLineMarginStyles,
-  MediumText,
-  SmallLine,
-  SmallText,
-} from './visual-components/TextComponents.tsx';
+import { MediumText, SmallLine, SmallText } from './visual-components/TextComponents.tsx';
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { Link } from 'react-router-dom';
-const renderText = (text: string[]) => {
-  return text.map((entry, index) => {
-    return <MediumText key={index}>{stringToMana(entry)}</MediumText>;
-  });
-};
-const triggerEscapeList = ['*', '(', '_', '~'];
+import { CardFaceContainer } from './hellfall-card-components/CardFace.tsx';
 type ImageEntry = { url: string; label: string; target: ImageTarget };
 
 const getImages = (card: HCCard.Any): ImageEntry[] => {
@@ -158,6 +137,7 @@ export const HellfallCard = ({
     changesetSubmitted,
     pendingTagStaging,
   };
+  const setDangerously = displayCard.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d';
 
   return (
     <Container ref={windowRef} key={displayCard.id}>
@@ -215,124 +195,16 @@ export const HellfallCard = ({
           </ButtonContainer>
         </>
       )}
-      <Card style={{ width: '100%' }}>
+      <Card cs={cardStyles}>
         <Card.Body cs={cardBodyStyles}>
           {/* {'card_faces' in displayCard && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{displayCard.name}</StyledHeading>} */}
-          {('card_faces' in displayCard ? displayCard.card_faces : [displayCard]).map((face, i) => (
-            <span key={'face-' + (i + 1)}>
-              {i > 0 && <Divider />}
-              {face.name &&
-                (displayCard.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
-                  <span
-                    className={mediumLineMarginStyles}
-                    key="name"
-                    dangerouslySetInnerHTML={{ __html: face.name }}
-                  />
-                ) : triggerEscapeList.some(e => face.name.includes(e)) ? (
-                  <MediumLineMargin key="name">
-                    {formatDiscordMarkdownInline(formatParens(face.name))}
-                  </MediumLineMargin>
-                ) : (
-                  <MediumLineMargin key="name">{stringToMana(face.name)}</MediumLineMargin>
-                ))}
-              <MediumLine key="cost"> {stringToMana(face.mana_cost)}</MediumLine>
-              {face.flavor_name &&
-                (triggerEscapeList.some(e => face.name.includes(e)) ? (
-                  <>
-                    <br />
-                    <MediumLine key="flavor-name">
-                      {formatDiscordMarkdownInvertedItalicsInline(formatParens(face.flavor_name))}
-                    </MediumLine>
-                  </>
-                ) : (
-                  <>
-                    <br />
-                    <MediumItalicLine key="flavor-name">
-                      {stringToMana(face.flavor_name)}
-                    </MediumItalicLine>
-                  </>
-                ))}
-              {'   '}
-              {(face.color_indicator || face.type_line) && <Separator />}
-              {face.color_indicator && (
-                <>
-                  <MediumLine key="color-indicator">
-                    {colorsToIndicator(face.color_indicator)}
-                  </MediumLine>{' '}
-                </>
-              )}
-              {face.type_line &&
-                (triggerEscapeList.some(e => face.type_line.includes(e)) ? (
-                  <MediumLine key="type">
-                    {formatDiscordMarkdownInline(formatParens(face.type_line))}
-                  </MediumLine>
-                ) : (
-                  <MediumLine key="type">{stringToMana(face.type_line)}</MediumLine>
-                ))}
-              {(face.oracle_text || face.flavor_text) && <Separator />}
-              {face.oracle_text &&
-                (displayCard.id == 'e1a6c7dc-7f25-4e02-9365-e4f79613e65d' ? (
-                  <MediumText key="rules">
-                    {formatDiscordMarkdown(
-                      formatParens(face.oracle_text),
-                      text =>
-                        text.replaceAll(
-                          'HTML Injection in the Hellfall Website Elemental',
-                          face.name.replaceAll('2em', 'em')
-                        ),
-                      true
-                    )}
-                  </MediumText>
-                ) : triggerEscapeList.some(e => face.oracle_text.includes(e)) ? (
-                  <MediumText key="rules">
-                    {formatDiscordMarkdown(formatParens(face.oracle_text))}
-                  </MediumText>
-                ) : (
-                  <MediumText key="rules">{renderText(face.oracle_text.split('\\n'))}</MediumText>
-                ))}
-              {face.flavor_text &&
-                (['*', '_', '~'].some(e => face.flavor_text?.includes(e)) ? (
-                  <MediumText key="flavor">
-                    {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
-                  </MediumText>
-                ) : (
-                  <MediumItalics key="flavor">
-                    {renderText(face.flavor_text.split('\\n'))}
-                  </MediumItalics>
-                ))}
-              {(face.power || face.toughness) && (
-                <>
-                  <Separator />
-                  <MediumText key="stats">
-                    {face.power}/{face.toughness}
-                  </MediumText>
-                </>
-              )}
-              {face.loyalty && (
-                <>
-                  <Separator />
-                  <MediumText key="loyalty">Loyalty: {face.loyalty}</MediumText>
-                </>
-              )}
-              {face.defense && (
-                <>
-                  <Separator />
-                  <MediumText key="defense">Defense: {face.defense}</MediumText>
-                </>
-              )}
-              {face.hand_modifier && (
-                <>
-                  <Separator />
-                  <MediumText key="hand_modifier">Hand Size: {face.hand_modifier}</MediumText>
-                </>
-              )}
-              {face.life_modifier && (
-                <>
-                  <Separator />
-                  <MediumText key="life_modifier">Starting Life: {face.life_modifier}</MediumText>
-                </>
-              )}
-            </span>
+          {toFaces(displayCard).map((face, i) => (
+            <CardFaceContainer
+              key={`face-${i}`}
+              face={face}
+              i={i}
+              setDangerously={setDangerously}
+            />
           ))}
           <Divider />
           {displayCard.set && (
@@ -480,19 +352,17 @@ const ImageContainer = createStyledDiv(imageContainerStyles, 'ImageContainer');
 
 const ButtonContainer = Box;
 
-const cardBodyStyles = createStyles({
-  padding: 'zero',
-  marginTop: '-12px',
+const cardStyles = createStyles({
+  width: '100%',
+  borderRadius: '4px',
+  borderTop: '3px solid black',
+  borderBottom: '3px solid black',
 });
 
-const separatorStyles = createStyles({
-  height: '1px',
-  backgroundColor: '#ccc',
-  border: 'none',
-  marginLeft: '-24px',
-  marginRight: '-24px',
+const cardBodyStyles = createStyles({
+  marginTop: '-12px',
+  marginBottom: '-5px',
 });
-const Separator = createStyledHR(separatorStyles, 'Separator');
 
 const linkButtonStyles = createStyles({
   marginLeft: '30px',

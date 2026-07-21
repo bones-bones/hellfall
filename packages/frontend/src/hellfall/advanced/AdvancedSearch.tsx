@@ -1,18 +1,25 @@
+import { StyledComponentHolder, StyledLabel, StyledLegend } from './AdvancedComponents.tsx';
+import { PillSearch } from './PillSearch.tsx';
 import {
+  BoxlessCheckboxGroup,
   CheckboxGroup,
   NamedCheckboxGroup,
-  BoxlessCheckboxGroup,
-  SingleCheckbox,
-  PillSearch,
   NumberSelector,
-} from '../advanced/index.ts';
+  SingleCheckbox,
+  InlineCheckbox,
+} from './index.ts';
 import { ButtonColors, TextInput, FormField } from '@workday/canvas-kit-react';
 import { system } from '@workday/canvas-tokens-web';
 import { useAtom } from 'jotai';
-import { inputSortAtom, sortAtom } from '../atoms/searchAtoms.ts';
+import {
+  inputDisplayAtom,
+  inputSortAtom,
+  inputUniqueAtom,
+  sortAtom,
+} from '../atoms/searchAtoms.ts';
 import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
-import { looseOpList, looseOpType, parseSorts } from '@hellfall/shared/filters';
+import { looseOpList, looseOpType } from '@hellfall/shared/filters';
 import { ControlBar } from '../search-controls/ControlBar.tsx';
 import { extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
@@ -23,7 +30,7 @@ import {
   createStyledPrimaryButtonLink,
   createStyledSelect,
 } from '../../styling';
-import { StyledComponentHolder, StyledLabel, StyledLegend } from './AdvancedComponents.tsx';
+import { useSyncSorts } from '../hooks/useUrlSync.ts';
 
 export const AdvancedSearch = () => {
   const [idSearch, setIdSearch] = useState<string>('');
@@ -32,6 +39,8 @@ export const AdvancedSearch = () => {
   const [typeSearch, setTypeSearch] = useState<string[]>([]);
   const [rulesSearch, setRulesSearch] = useState<string[]>([]);
   const [flavorSearch, setFlavorSearch] = useState<string[]>([]);
+  const [loreSearch, setLoreSearch] = useState<string[]>([]);
+  const [printedSearch, setPrintedSearch] = useState<string[]>([]);
   const [creators, setCreators] = useState<string[]>([]);
   const [artists, setArtists] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
@@ -48,7 +57,6 @@ export const AdvancedSearch = () => {
     [undefined, ':']
   );
   const [searchSet, setSearchSet] = useState<string[]>([]);
-  const [includeExtraSets, setIncludeExtraSets] = useState(false);
   const [extraSets, setExtraSets] = useState<string[]>([]);
   const [searchToken, setSearchToken] = useState<'Cards' | 'Tokens' | 'Both'>('Cards');
   const [extrasOpen, setExtrasOpen] = useState(false);
@@ -71,17 +79,19 @@ export const AdvancedSearch = () => {
   const [loyalty, setLoyalty] = useState<[number | undefined, looseOpType]>([undefined, ':']);
   const [defense, setDefense] = useState<[number | undefined, looseOpType]>([undefined, ':']);
 
+  const [includeExtras, setIncludeExtras] = useState(false);
+  const [includeExtraCards, setIncludeExtraCards] = useState(false);
+  const [includeTokens, setIncludeTokens] = useState(false);
+  const [includeVetoed, setIncludeVetoed] = useState(false);
+  const [includeDropped, setIncludeDropped] = useState(false);
+  const defaultUnique = 'cards';
+  const [inputUnique, setInputUnique] = useAtom(inputUniqueAtom);
+  const defaultDisplay = 'grid';
+  const [inputDisplay, setInputDisplay] = useAtom(inputDisplayAtom);
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const [sortRules, setSortRules] = useAtom(sortAtom);
   const [localQuery, setLocalQuery] = useState('');
-
-  useEffect(() => {
-    setInputSorts([]);
-    setSortRules([]);
-  }, []);
-  useEffect(() => {
-    setSortRules(parseSorts(inputSorts));
-  }, [inputSorts]);
+  useSyncSorts();
 
   const toQueryString = () => {
     const filters: string[] = [];
@@ -147,6 +157,12 @@ export const AdvancedSearch = () => {
     if (flavorSearch.length) {
       addAllHandlingOr('flavor', flavorSearch);
     }
+    if (loreSearch.length) {
+      addAllHandlingOr('lore', loreSearch);
+    }
+    if (printedSearch.length) {
+      addAllHandlingOr('printed', printedSearch);
+    }
     if (creators.length) {
       addAllHandlingOr('creator', creators);
     }
@@ -209,8 +225,26 @@ export const AdvancedSearch = () => {
         filters.push(`(${orFilters.join(' or ')})`);
       }
     }
-    if (includeExtraSets) {
+    if (includeExtras) {
       filters.push('include:extras');
+    }
+    if (includeExtraCards) {
+      filters.push('include:extracards');
+    }
+    if (includeTokens) {
+      filters.push('include:tokens');
+    }
+    if (includeVetoed) {
+      filters.push('include:vetoed');
+    }
+    if (includeDropped) {
+      filters.push('include:dropped');
+    }
+    if (inputUnique != defaultUnique) {
+      filters.push(`unique:${inputUnique}`);
+    }
+    if (inputDisplay != defaultDisplay) {
+      filters.push(`display:${inputDisplay}`);
     }
     inputSorts.forEach(input => {
       const [sort, dir] = input.split(',', 2);
@@ -257,7 +291,13 @@ export const AdvancedSearch = () => {
     searchColorIdentities,
     colorIdentityComparison,
     hybridIdentityRule,
-    includeExtraSets,
+    includeExtras,
+    includeExtraCards,
+    includeTokens,
+    includeVetoed,
+    includeDropped,
+    inputUnique,
+    inputDisplay,
     inputSorts,
   ]);
   const excludeFiles = ['symbols/emoji/', 'colorIndicators/'];
@@ -271,12 +311,7 @@ export const AdvancedSearch = () => {
       <br />
       <SearchContainer>
         <SearchCriteriaSection>
-          <PillSearch
-            label={'Name'}
-            possibleValues={[]}
-            values={nameSearch}
-            onChange={setNameSearch}
-          />
+          <PillSearch label={'Name'} values={nameSearch} onChange={setNameSearch} />
           <FormField cs={idStyles}>
             <FormField.Label>Id</FormField.Label>
             <TextInput value={idSearch} onChange={event => setIdSearch(event.target.value)} />
@@ -293,32 +328,19 @@ export const AdvancedSearch = () => {
             values={typeSearch}
             onChange={setTypeSearch}
           />
-          <PillSearch
-            label={'Text'}
-            possibleValues={[]}
-            values={rulesSearch}
-            onChange={setRulesSearch}
-          />
+          <PillSearch label={'Text'} values={rulesSearch} onChange={setRulesSearch} />
         </SearchCriteriaSection>
         <SearchCriteriaSection>
-          <PillSearch
-            label={'Flavor'}
-            possibleValues={[]}
-            values={flavorSearch}
-            onChange={setFlavorSearch}
-          />
+          <PillSearch label={'Flavor'} values={flavorSearch} onChange={setFlavorSearch} />
+          <PillSearch label={'Lore'} values={loreSearch} onChange={setLoreSearch} />
+          <PillSearch label={'Printed'} values={printedSearch} onChange={setPrintedSearch} />
           <PillSearch
             label={'Creator(s)'}
             possibleValues={creatorsData.data}
             values={creators}
             onChange={setCreators}
           />
-          <PillSearch
-            label={'Artist(s)'}
-            possibleValues={[]}
-            values={artists}
-            onChange={setArtists}
-          />
+          <PillSearch label={'Artist(s)'} values={artists} onChange={setArtists} />
           <PillSearch
             label={'Tags'}
             possibleValues={tagsData.data}
@@ -422,12 +444,6 @@ export const AdvancedSearch = () => {
             <StyledLegend>{'Extras'}</StyledLegend>
             {extrasOpen ? (
               <>
-                {/* <StyledComponentHolder> */}
-                <SingleCheckbox
-                  label={'Include Extra Sets'}
-                  onChange={setIncludeExtraSets}
-                  value={includeExtraSets}
-                />
                 {/* </StyledComponentHolder> */}
                 <StyledComponentHolder>
                   <BoxlessCheckboxGroup
@@ -559,14 +575,42 @@ export const AdvancedSearch = () => {
         </SearchCriteriaSection>
       </SearchContainer>
       <Separator />
-      <ControlBar />
+      <ControlBar>
+        <InlineCheckbox
+          label={'Include all extras'}
+          onChange={setIncludeExtras}
+          value={includeExtras}
+        />
+        <InlineCheckbox
+          label={'Include extra cards'}
+          onChange={setIncludeExtraCards}
+          value={includeExtraCards}
+        />
+        <InlineCheckbox
+          label={'Include tokens'}
+          onChange={setIncludeTokens}
+          value={includeTokens}
+        />
+        <InlineCheckbox
+          label={'Include vetoed cards'}
+          onChange={setIncludeVetoed}
+          value={includeVetoed}
+        />
+        <InlineCheckbox
+          label={'Include dropped faces'}
+          onChange={setIncludeDropped}
+          value={includeDropped}
+        />
+      </ControlBar>
       <SortSeparator />
       <StartButton
         colors={inputButtonColors}
         // cs={startButton}
-        to={localQuery ? `/?q=${localQuery}` : '/'}
+        to={localQuery ? `/?q=${encodeURIComponent(localQuery)}` : '/'}
         onClick={(e: React.MouseEvent) => {
           if (!(e.button === 1 || e.metaKey || e.ctrlKey)) {
+            setInputUnique(defaultUnique);
+            setInputDisplay(defaultDisplay);
             setInputSorts([]);
             setSortRules([]);
           }

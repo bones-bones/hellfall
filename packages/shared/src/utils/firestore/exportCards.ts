@@ -18,8 +18,10 @@ export type HellscubeExportOptions = {
   collectionName?: string;
 };
 
-/** Export all documents from the Hellscube cards collection as stored in Firestore. */
-
+/**
+ * Export all documents from the Hellscube cards collection as stored in Firestore.
+ * @param options The options to use
+ */
 export async function exportCardMap(options: HellscubeExportOptions = {}): Promise<CardMap> {
   const databaseId =
     options.databaseId?.trim() || process.env.FIRESTORE_DATABASE_ID?.trim() || 'hellscube';
@@ -33,7 +35,10 @@ export async function exportCardMap(options: HellscubeExportOptions = {}): Promi
   return data;
 }
 
-/** Load the playable catalog in one pass (skips tag-only stub documents when possible). */
+/**
+ * Load the playable catalog in one pass
+ * @param options The options to use
+ */
 export async function loadHellscubeCatalogCards(
   options: HellscubeExportOptions = {}
 ): Promise<HCCard.Any[]> {
@@ -59,6 +64,10 @@ export async function loadHellscubeCatalogCards(
   return cards;
 }
 
+/**
+ * Export all documents from the Hellscube cards collection as stored in Firestore.
+ * @param options The options to use
+ */
 export async function exportHellscubeCards(
   options: HellscubeExportOptions = {}
 ): Promise<HellscubeExportPayload> {

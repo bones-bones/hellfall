@@ -1,3 +1,6 @@
+/**
+ * A type of set
+ */
 export enum SetType {
   /** A main cube */
   Main = 'main',
@@ -23,5 +26,9 @@ export enum SetType {
   /** A set made up of normal cards */
   Unfunny = 'unfunny',
 }
+/**
+ * Checks if a value is a {@linkcode SetType}
+ * @param value the value to check
+ */
 export const isSetType = (value: any): value is SetType =>
   Object.values(SetType).includes(value as SetType);

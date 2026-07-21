@@ -1,6 +1,7 @@
+import { unescapeText } from '@hellfall/shared/utils';
 import { makeSort } from '../makers';
 import { dirTypeList, dirType, sortTypeList, sortType } from '../types';
-import { splitOnFirstOp, unescapeText, SortObject } from '../utils';
+import { splitOnFirstOp, SortObject } from '../utils';
 
 const sortRedirects: Record<string, sortType> = {
   mv: 'manavalue',

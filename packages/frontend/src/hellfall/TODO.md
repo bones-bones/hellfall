@@ -132,7 +132,6 @@ Write a script to transform the database
 - deal with duplicate HCV.1 collector numbers
 - add missing artist credits
 - fix id for plateau
-- hide faces with drop_face == true from card pages?
 - prevent use of semicolons in submissions for list fields?
 - add better handling for card face changes affecting other changes?
 - add another map layer that maps the oracle ids to their individual ids
@@ -147,21 +146,29 @@ Write a script to transform the database
 - add devoid and generic tags to tag handling
 - add hccard.any and HCCard.anysingle/multi validation functions
 - add replace change type?
-- add comments to filters
-- make sure that down // the count gets the correct color indicator
 - add keywords.json file
-- make flavor names use the lato fonts
-- make unitalicized text in flavor text use plantin fonts
-- fix fonts (it's kicking to georgia again)
-- make search bar on card pages work correctly
 - add a/an handling to showcase frame search summary function
 - move showcase to a prop
-- add @template to jsdocs
-- make sure new filter code works for everything
 - figure out how to implement a link between filter names in parseMaps and query names on filter makers
-- prevent double history update when clicking link to search
-- fix double quote thing in search summaries
-- make it possible to filter against lack of a note
-- fix `fixTags`?
 - fix capitalization in search summaries
 - exclude hcj from draftpartner search?
+- search strings for code to uncomment once server side user implementation is done:
+  - `import { useAuth }`
+  - `const { user`
+  - `user?.defaultSorts`
+  - `/*, user */`
+  - `user?.defaultCludes`
+  - `/settings`
+- make pagination atom persist on reload
+- make daybound/nightbound creatures not have the `transform` keyword
+- add conversions for long set names
+- add produces search
+- sync rulings between prints of a card
+- add examples to syntax page
+- add `include:spell` for devotion searches?
+- strip quotes from artist names like for tags?
+- fix flip display for bulbasaur
+- remove `card-in-scryfall` from nebulas
+- squash dom bugs
+- replace the set selector with a pill version
+- strip masterpiece/reprint names on fetch?

@@ -1,8 +1,17 @@
 // https://draftmancer.com/cubeformat.html#cube
-import { HCCard, SetCode } from '@hellfall/shared/types';
+import { SetCode } from '@hellfall/shared/types';
 import { HCToDraftmancer } from './HCToDraftmancer.ts';
 import { CardMap } from '../cardHandling';
 
+/**
+ * Gets a draftmancer cube txt file
+ * @param name the name to use
+ * @param cardMap the map of all cards
+ * @param set the set to get
+ * @param idList the ids to get, if any
+ * @param multMap the ids that have multiple copies and their corresponding number of copies, if any
+ * @param draftMode the draft mode, if any
+ */
 export const toDraftmancerCube = ({
   name,
   cardMap,

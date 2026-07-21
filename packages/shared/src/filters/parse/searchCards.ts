@@ -1,9 +1,10 @@
 import { HCCard } from '@hellfall/shared/types';
-import { CardMap, getAllRelated } from '@hellfall/shared/utils';
+import { CardMap, getAllRelated, fixValue, preferType } from '@hellfall/shared/utils';
 import { parseSearchQuery } from './parseSearchQuery';
-import { fixTags } from '../utils';
+import { /* fixTags,  */ fixDrop } from '../utils';
 import { makeIncludeFilter } from '../makers';
-import { FilterNode } from '../types';
+import { FilterNode, uniqueType } from '../types';
+import { correctInclude } from '../filters';
 
 const evaluateRelatedFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): boolean =>
   getAllRelated(card, cardMap).some(related => evaluateFilter(node, related, cardMap));
@@ -27,17 +28,37 @@ const evaluateFilter = (node: FilterNode, card: HCCard.Any, cardMap: CardMap): b
  * Given a query, filters a {@linkcode CardMap} to return only the cards that match the query
  * @param cardMap Map of all cards
  * @param query query to use
- * @param tagList The list of tags (from `tags.json`)
+ * @param uniqueMode the {@linkcode uniqueType} from the input to use, if any
+ * @param preferMode the {@linkcode preferType} from the input to use, if any
+ * @param defaultCludes The user's list of default inclusions/exclusions, if any
  */
-export const searchCards = (cardMap: CardMap, query: string, tagList: string[]): CardMap => {
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
+export const searchCards = (
+  cardMap: CardMap,
+  query: string,
+  uniqueMode?: uniqueType,
+  preferMode?: preferType,
+  defaultCludes?: string[]
+): CardMap => {
+  const { node, includeList, excludeList, autoFilterExtras, unique, prefer } = parseSearchQuery(
+    query,
+    cardMap,
+    defaultCludes
+  );
   const usingClusion = Boolean(includeList.length + excludeList.length);
   // so when do I want include to default to true? when includelist.length == 0, and when the only include is the default? then why default?
-  fixTags(node, tagList);
+  if (
+    includeList.some(
+      include => correctInclude(fixValue(include.value)) == 'drop' && !include.inverted
+    )
+  ) {
+    fixDrop(node);
+  }
   if (includeList.length) {
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);
   }
+  const uMode = unique ?? uniqueMode ?? 'cards';
+  const pMode = prefer ?? preferMode ?? 'newest';
   const newCardsWithExtras = cardMap.filter(
     card =>
       evaluateFilter(node, card, cardMap) &&
@@ -50,7 +71,12 @@ export const searchCards = (cardMap: CardMap, query: string, tagList: string[]):
     excludeExtras.cardPassesFilter(card)
   );
 
-  return autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
-    ? newCardsWithoutExtras
-    : newCardsWithExtras;
+  const passed =
+    autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
+      ? newCardsWithoutExtras
+      : newCardsWithExtras;
+  if (uMode == 'cards') {
+    return passed.getPreferred(pMode);
+  }
+  return passed;
 };

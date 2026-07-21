@@ -1,15 +1,24 @@
-import type { CollectionReference } from '@google-cloud/firestore';
 import { HCCard } from '@hellfall/shared/types';
-import { makeIncludeFilter, FilterNode, fixTags, parseSearchQuery } from '@hellfall/shared/filters';
-import { CardMap } from '../cardHandling';
+import {
+  makeIncludeFilter,
+  FilterNode,
+  // fixTags,
+  fixDrop,
+  parseSearchQuery,
+  searchCards,
+  correctInclude,
+  uniqueType,
+} from '@hellfall/shared/filters';
+import { CardMap, preferType } from '../cardHandling';
 import { firestoreToCard } from './cardConversion';
 import { getAllRelatedCollection } from './cardRefs';
-import type { firestoreCard } from './firestoreTypes';
+import type { cardsCollection, firestoreCard } from './firestoreTypes';
+import { fixValue } from '../textHandling';
 
 const evaluateRelatedFilter = (
   node: FilterNode,
   card: firestoreCard,
-  cardsCol: CollectionReference<firestoreCard, firestoreCard>
+  cardsCol: cardsCollection
 ): boolean =>
   getAllRelatedCollection(card, cardsCol).some(async related =>
     evaluateFilter(node, await related.get(), cardsCol)
@@ -18,7 +27,7 @@ const evaluateRelatedFilter = (
 const evaluateFilter = (
   node: FilterNode,
   card: firestoreCard,
-  cardsCol: CollectionReference<firestoreCard, firestoreCard>
+  cardsCol: cardsCollection
 ): boolean => {
   switch (node.type) {
     case 'filter': {
@@ -38,23 +47,47 @@ const evaluateFilter = (
   }
 };
 
-/** Firestore-backed search; browser code should use `searchCards` from `@hellfall/shared/filters`. */
+/**
+ * Given a query, filters a {@linkcode cardsCollection} to return only the cards that match the query
+ *
+ * Firestore-backed search; browser code should use {@linkcode searchCards} from `@hellfall/shared/filters`.
+ * @param cardsCol Collection of all cards
+ * @param query query to use
+ * @param uniqueMode the {@linkcode uniqueType} from the input to use, if any
+ * @param preferMode the {@linkcode preferType} from the input to use, if any
+ * @param defaultCludes The user's list of default inclusions/exclusions, if any
+ * @returns a {@linkcode CardMap} containing the search results
+ */
 export const searchCardsFromCollection = async (
-  cardsCol: CollectionReference<firestoreCard, firestoreCard>,
+  cardsCol: cardsCollection,
   query: string,
-  tagList: string[]
+  uniqueMode?: uniqueType,
+  preferMode?: preferType,
+  defaultCludes?: string[]
 ): Promise<CardMap> => {
   const snapshot = await cardsCol.get();
   const cardMap = new CardMap(
     snapshot.docs.map(doc => firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard))
   );
-  const { node, includeList, excludeList, autoFilterExtras } = parseSearchQuery(query, cardMap);
+  const { node, includeList, excludeList, autoFilterExtras, unique, prefer } = parseSearchQuery(
+    query,
+    cardMap,
+    defaultCludes
+  );
   const usingClusion = Boolean(includeList.length + excludeList.length);
-  fixTags(node, tagList);
+  if (
+    includeList.some(
+      include => correctInclude(fixValue(include.value)) == 'drop' && !include.inverted
+    )
+  ) {
+    fixDrop(node);
+  }
   if (includeList.length) {
     const defaultInclude = makeIncludeFilter('nonextras', ':');
     includeList.push(defaultInclude);
   }
+  const uMode = unique ?? uniqueMode ?? 'cards';
+  const pMode = prefer ?? preferMode ?? 'newest';
   const newCardsWithExtras = new CardMap();
   (await cardsCol.get()).forEach(snap => {
     const card = snap.data();
@@ -75,7 +108,12 @@ export const searchCardsFromCollection = async (
     excludeExtras.cardPassesFilter(card)
   );
 
-  return autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
-    ? newCardsWithoutExtras
-    : newCardsWithExtras;
+  const passed =
+    autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
+      ? newCardsWithoutExtras
+      : newCardsWithExtras;
+  if (uMode == 'cards') {
+    return passed.getPreferred(pMode);
+  }
+  return passed;
 };

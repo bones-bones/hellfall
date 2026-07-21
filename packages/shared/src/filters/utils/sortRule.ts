@@ -59,27 +59,21 @@ export const filterSort: sortFilterFunction = (
       return (value1.mana_value - value2.mana_value) * dirMult;
     }
     case 'number': {
-      if (!value1.collector_number && !value2.collector_number) {
-        if (parseInt(value1.hcid) == parseInt(value2.hcid)) {
-          return (value1.hcid.charCodeAt(-1) - value2.hcid.charCodeAt(-1)) * dirMult;
-        }
-        return (parseInt(value1.hcid) - parseInt(value2.hcid)) * dirMult;
-      }
-      if ('collector_number' in value1 != 'collector_number' in value2) {
-        return 'collector_number' in value1 ? -dirMult : dirMult;
-      }
-      return (parseInt(value1.collector_number!) - parseInt(value2.collector_number!)) * dirMult;
+      return (parseInt(value1.collector_number) - parseInt(value2.collector_number)) * dirMult;
     }
     case 'id': {
       if (value1.kind != value2.kind) {
-        return Object.values(HCKind).indexOf(value1.kind);
+        return (
+          (Object.values(HCKind).indexOf(value1.kind) -
+            Object.values(HCKind).indexOf(value2.kind)) *
+          dirMult
+        );
       }
-      if (value1.kind == 'card' && value2.kind == 'card') {
-        return (parseInt(value1.hcid) - parseInt(value2.hcid)) * dirMult;
-      }
-
-      if ((value1.kind == 'token' || value2.kind == 'token') && value1.kind != value2.kind) {
-        return value1.kind == 'token' ? -dirMult : dirMult;
+      switch (value1.kind) {
+        case 'card':
+          return (parseInt(value1.hcid) - parseInt(value2.hcid)) * dirMult;
+        case 'land':
+          return (parseInt(value1.hcid.slice(1)) - parseInt(value2.hcid.slice(1))) * dirMult;
       }
       if (value1.name == value2.name) {
         return (toTokenNumber(value1) - toTokenNumber(value2)) * dirMult;
@@ -95,21 +89,10 @@ export const filterSort: sortFilterFunction = (
     case 'set':
       return (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
     case 'setnumber': {
-      const set = (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
-      if (!set) {
-        if (!value1.collector_number && !value2.collector_number) {
-          if (parseInt(value1.id) == parseInt(value2.id)) {
-            return (value1.id.charCodeAt(-1) - value2.id.charCodeAt(-1)) * dirMult;
-          }
-          return (parseInt(value1.id) - parseInt(value2.id)) * dirMult;
-        }
-        if ('collector_number' in value1 != 'collector_number' in value2) {
-          return 'collector_number' in value1 ? -dirMult : dirMult;
-        }
-        return (parseInt(value1.collector_number!) - parseInt(value2.collector_number!)) * dirMult;
-      } else {
-        return set;
-      }
+      return (
+        (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set) ||
+          parseInt(value1.collector_number!) - parseInt(value2.collector_number!)) * dirMult
+      );
     }
   }
   return 0; // just in case

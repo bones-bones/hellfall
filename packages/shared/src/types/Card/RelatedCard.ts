@@ -9,7 +9,14 @@ export const relatedComponentList = [
   'meld_result',
   // 'combo_piece',
 ] as const;
+/**
+ * An option for the relationship between the related card and this card
+ */
 export type relatedComponent = (typeof relatedComponentList)[number];
+/**
+ * Checks if a value is a {@linkcode relatedComponent}
+ * @param value the value to check
+ */
 export const isComponent = (value: any): value is relatedComponent =>
   relatedComponentList.includes(value as relatedComponent);
 /**

@@ -7,15 +7,17 @@ import {
   comparisonSummaryFunction,
   summaryFunction,
 } from '../types';
-import { numFilter, opIsNegative, unescapeText } from '../utils';
+import { numFilter, opAsBool, opIsNegative, opToNot } from '../utils';
 import {
   colorMiscReduce,
   getColorsFromFaces,
   getHybridColorNumber,
   hybridIdentityMiscReduce,
+  mod,
   shouldChoose2,
   toFaces,
   toNumber,
+  unescapeText,
 } from '@hellfall/shared/utils';
 
 /**
@@ -38,16 +40,31 @@ export const numProps = [
   'miscindicator',
   'miscidentity',
   'mischybrid',
+  'odd',
+  'even',
 ] as const;
 /**
  * The type for props that can be compared with a comparison filter
  */
 export type numPropType = (typeof numProps)[number];
+
 /**
  * Validates whether a value is {@linkcode numPropType}
  * @param value value to validate
  */
 export const isNumProp = (value: any): value is numPropType => numProps.includes(value);
+
+/**
+ * The type for props that can be compared with a comparison filter and can be keywords
+ */
+export type trueNumPropType = Exclude<numPropType, 'odd' | 'even'>;
+/**
+ * Validates whether a value is {@linkcode trueNumPropType}
+ * @param value value to validate
+ */
+export const isTrueNumProp = (value: any): value is trueNumPropType =>
+  isNumProp(value) && !['odd', 'even'].includes(value);
+
 /**
  * Checks whether a keyword is {@linkcode numPropType} or can be converted to it
  * @param keyword keyword to check
@@ -57,7 +74,11 @@ export const isCompKeyword = (keyword: string) =>
   isNumProp(equivFilterNames[keyword]) ||
   isNumProp(equivColorFilterNames[keyword]);
 
-const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
+const getPropNumsFromCard = (
+  card: HCCard.Any,
+  prop: trueNumPropType,
+  dropFaces?: boolean
+): number[] => {
   switch (prop) {
     case 'creator':
       return [card.creators.length];
@@ -66,23 +87,23 @@ const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
     case 'manavalue':
       return [card.mana_value];
     case 'power':
-      return toFaces(card).flatMap(e => toNumber(e.power) ?? []);
+      return toFaces(card, dropFaces).flatMap(e => toNumber(e.power) ?? []);
     case 'toughness':
-      return toFaces(card).flatMap(e => toNumber(e.toughness) ?? []);
+      return toFaces(card, dropFaces).flatMap(e => toNumber(e.toughness) ?? []);
     case 'pt':
-      return toFaces(card).flatMap(e =>
+      return toFaces(card, dropFaces).flatMap(e =>
         !e.power && !e.toughness ? [] : (toNumber(e.power) ?? 0) + (toNumber(e.toughness) ?? 0)
       );
     case 'loyalty':
-      return toFaces(card).flatMap(e => toNumber(e.loyalty) ?? []);
+      return toFaces(card, dropFaces).flatMap(e => toNumber(e.loyalty) ?? []);
     case 'defense':
-      return toFaces(card).flatMap(e => toNumber(e.defense) ?? []);
+      return toFaces(card, dropFaces).flatMap(e => toNumber(e.defense) ?? []);
     case 'color':
       return [shouldChoose2(card) ? 2 : card.colors.length];
     case 'identity':
       return [shouldChoose2(card) ? 2 : card.color_identity.length];
     case 'indicator':
-      return getColorsFromFaces(card, 'color_indicator').map(c => c.length);
+      return getColorsFromFaces(card, 'color_indicator', dropFaces).map(c => c.length);
     case 'hybrid':
       return [shouldChoose2(card) ? 2 : getHybridColorNumber(card.color_identity_hybrid)];
     case 'misccolor':
@@ -90,7 +111,9 @@ const getPropNumsFromCard = (card: HCCard.Any, prop: numPropType): number[] => {
     case 'miscidentity':
       return [shouldChoose2(card) ? 2 : colorMiscReduce(card.color_identity).length];
     case 'miscindicator':
-      return getColorsFromFaces(card, 'color_indicator').map(c => colorMiscReduce(c).length);
+      return getColorsFromFaces(card, 'color_indicator', dropFaces).map(
+        c => colorMiscReduce(c).length
+      );
     case 'mischybrid':
       return [
         shouldChoose2(card)
@@ -111,7 +134,7 @@ const toNumProp = (prop: string): numPropType | undefined => {
     return equivColorFilterNames[fixedProp];
   }
 };
-const numPropToSummary: Record<numPropType, string> = {
+const numPropToSummary: Record<trueNumPropType, string> = {
   creator: 'the number of creators',
   artist: 'the number of artists',
   manavalue: 'the mana value',
@@ -140,20 +163,31 @@ const numPropToSummary: Record<numPropType, string> = {
  * @param operator operator to use
  * @param value2 the first value from the search
  * @param value3 the second value from the search
+ * @param dropFaces whether to exclude faces with `drop_face: true` where appropriate
  */
 export const comparisonFilter: comparisonFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
   value2: string,
-  value3: string
+  value3: string,
+  dropFaces?: boolean
 ) => {
   const first = toNumProp(value2);
   const second = toNumProp(value3);
   if (!first || !second) {
     return false;
   }
-  const firstValue = getPropNumsFromCard(value1, first);
-  const secondValue = getPropNumsFromCard(value1, second);
+  if (!isTrueNumProp(first)) {
+    return false;
+  }
+  const firstValue = getPropNumsFromCard(value1, first, dropFaces);
+  if (!isTrueNumProp(second)) {
+    return opAsBool(
+      firstValue.some(v => mod(v, 2) == Number(second == 'odd')),
+      operator
+    );
+  }
+  const secondValue = getPropNumsFromCard(value1, second, dropFaces);
   return firstValue.some(v1 => secondValue.some(v2 => numFilter(v1, operator, v2)));
 };
 
@@ -175,11 +209,14 @@ export const comparisonSummary: comparisonSummaryFunction = (
   }
   const first = toNumProp(value1);
   const second = toNumProp(value2);
-  if (!first) {
+  if (!isTrueNumProp(first)) {
     return `!Unknown keyword "${value1}"`;
   }
   if (!second) {
     return `!Unknown value "${value2}"`;
+  }
+  if (!isTrueNumProp(second)) {
+    return `${numPropToSummary[first]} is ${opToNot(operator)} ${second}`;
   }
   if (first == second) {
     return '!The sides of your comparison must be different.';

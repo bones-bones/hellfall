@@ -1,21 +1,17 @@
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import {
-  allExceptNormal,
   CardMap,
   landNames,
   textEquals,
   textListIncludes,
   textPrep,
+  unescapeText,
 } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
-import { unescapeText } from '@hellfall/shared/filters';
 
 export const useNameToHCID = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);
-  // if (name == 'random') {
-  //   return cards.getAllInSetListExact(allExceptNormal).getRandomId();
-  // }
   return (
     cards.get(name)?.hcid ??
     cards.find(card => textEquals(card.hcid, name))?.hcid ??
@@ -68,9 +64,6 @@ const getFrontExportName = (card: HCCard.Any) => {
   return card.name;
 };
 
-// const getRandom = <T = any>(arr: T[]) =>
-//   arr.length ? arr[Math.floor(Math.random() * arr.length)] : undefined;
-
 const addNameAlias = (map: Map<string, string>, alias: string | undefined, id: string) => {
   if (!alias) {
     return;
@@ -121,9 +114,6 @@ export const lookupNameToId = (
 };
 
 export const nameToId = (name: string, cards: CardMap): string | undefined => {
-  // if (name == 'random') {
-  //   return cards.getAllInSetListExact(allExceptNormal).getRandomId();
-  // }
   if (textListIncludes(landNames, name)) {
     return cards
       .getAllInSet('HBB')

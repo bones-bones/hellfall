@@ -68,7 +68,7 @@ export const makeIDFilter: filterMaker<string> = (value: string, op: looseOpType
     'id',
     idFilter,
     idSummary,
-    value,
+    `"${value}"`,
     op,
     card => card.hcid,
     '=',
@@ -86,7 +86,7 @@ export const makeOracleIDFilter: filterMaker<string> = (value: string, op: loose
     'oracleid',
     oracleIdFilter,
     oracleIdSummary,
-    value,
+    `"${value}"`,
     op,
     card => card.oracle_id
   );
@@ -102,12 +102,12 @@ export const makeNameFilter: propFilterMaker = (value: string, op: looseOpType) 
 };
 // TODO: Make cost search act more like number than string (and more like scryfall)
 /**
- * Makes a mana cost filter
+ * Makes a mana cost text filter
  * @param value the value from the search
  * @param op the operator from the search
  */
-export const makeCostFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('mana', includeSummarySingular, value, op);
+export const makeManaTextFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  return new PropFilter('manatext', includeSummarySingular, value, op, 'text of the mana cost');
 };
 
 /**
@@ -166,6 +166,17 @@ export const makeFlavorFilter: propFilterMaker = (value: string, op: looseOpType
  */
 export const makeLoreFilter: propFilterMaker = (value: string, op: looseOpType) => {
   return new PropFilter('lore', includeSummarySingular, value, op);
+};
+
+/**
+ * Makes a printed filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makePrintedFilter: propFilterMaker = (value: string, op: looseOpType) => {
+  const filter = new PropFilter('printed', includeSummarySingular, value, op);
+  filter.keepFaces();
+  return filter;
 };
 
 /**

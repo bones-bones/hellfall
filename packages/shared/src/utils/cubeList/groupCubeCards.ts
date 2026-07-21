@@ -1,4 +1,5 @@
 import { HCCard, HCColor, HCColors } from '@hellfall/shared/types';
+import { toFaces } from '../cardHandling';
 
 export type CubeListSectionId =
   | 'white'
@@ -113,24 +114,37 @@ export const getColorSection = (card: HCCard.Any): CubeListSectionId => {
   }
   return singleColorSection[colors[0]] ?? 'other';
 };
-
-export const formatTypeLine = (card: HCCard.Any): string => {
-  if ('card_faces' in card) {
-    const face = card.card_faces[0];
-
-    const firstPart = [...(face.supertypes ?? []), ...(face.types ?? [])].join(' ');
-    const secondPart = [...(face.subtypes ?? [])].join(' ');
-    const parts = [firstPart, secondPart].filter(Boolean).join(' — ');
-
-    return parts;
-  }
-
-  const firstPart = [...(card.supertypes ?? []), ...(card.types ?? [])].join(' ');
-  const secondPart = [...(card.subtypes ?? [])].join(' ');
-  const parts = [firstPart, secondPart].filter(Boolean).join(' — ');
-
-  return parts;
+const replaceLegendary = (text: string): string => {
+  return text.replaceAll(/legendary/gi, match => {
+    if (match === match.toUpperCase()) return 'LGD.';
+    if (match === match.toLowerCase()) return 'lgd.';
+    return 'Lgd.';
+  });
 };
+
+export const formatTypeLine = (card: HCCard.Any): string =>
+  toFaces(card, true)
+    .map(face =>
+      [...(face.supertypes ?? []), ...(face.types ?? [])].map(replaceLegendary).join(' ')
+    )
+    .join(' // '); /* {
+  
+  // if ('card_faces' in card) {
+  //   const face = card.card_faces[0];
+
+  //   const firstPart = [...(face.supertypes ?? []), ...(face.types ?? [])].join(' ');
+  //   const secondPart = [...(face.subtypes ?? [])].join(' ');
+  //   const parts = [firstPart, secondPart].filter(Boolean).join(' — ');
+
+  //   return parts;
+  // }
+
+  // const firstPart = [...(card.supertypes ?? []), ...(card.types ?? [])].join(' ');
+  // const secondPart = [...(card.subtypes ?? [])].join(' ');
+  // const parts = [firstPart, secondPart].filter(Boolean).join(' — ');
+
+  // return parts;
+}; */
 
 const colorNumber = (card: HCCard.Any) =>
   getCardColors(card)

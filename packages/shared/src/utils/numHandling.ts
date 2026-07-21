@@ -14,9 +14,11 @@ export const isNumber = (num: string) => {
 };
 
 /**
- * Converts a number, string, or undefined into a number. Correctly handles all values that have appeared in p/t boxes on hellscube cards.
- * @param num number
- * @returns undefined if `num == undefined`, num if `typeof num == 'number'`, or the conversion of num into a number otherwise
+ * Converts a number, string, or undefined into a number.
+ * Correctly handles all values that have appeared in p/t boxes on hellscube cards.
+ * @param num number to convert
+ * @returns undefined if `num == undefined`, num if `typeof num == 'number'`,
+ * or the conversion of num into a number otherwise
  */
 export const toNumber = (num: number | string | undefined): number | undefined => {
   const zeroEquivs = ['?', 'N', 'X', 'Y', 'Z', '*', ''];
@@ -61,3 +63,10 @@ export const toNumber = (num: number | string | undefined): number | undefined =
     return !Number.isNaN(num0) ? num0 : undefined;
   }
 };
+
+/**
+ * Does an actual modulo operation (since js's builtin one returns negative if the first value is negative)
+ * @param n The first number to compare
+ * @param m The second number to compare
+ */
+export const mod = (n: number, m: number) => ((n % m) + m) % m;

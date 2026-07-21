@@ -11,6 +11,13 @@ import {
 import { HCCardToDraftmancerCard, StickerSheetScryfallIds } from './HCToDraftCard';
 import { stripSingleSlashes } from '../textHandling';
 
+/**
+ * Gets a draftmancer cube JSON
+ * @param cardMap the map of all cards
+ * @param set the set to get, if any
+ * @param idList the ids to get, if any
+ * @param draftMode the draft mode, if any (currently unused)
+ */
 export const HCToDraftmancer = (
   cardMap: CardMap,
   set?: SetCode,

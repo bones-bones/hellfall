@@ -52,6 +52,12 @@ export const allSetsList = [
   'SCL.2',
   'SCL.3',
   'HCV.S',
+  'HDH',
+  'HCV.H',
+  'SCL.4',
+  'SCL.5',
+  'SOH',
+  'HCV.D',
   'HCV',
   'HCT',
   'HBB',
@@ -61,6 +67,7 @@ export const allSetsList = [
   // 'HBB.J',
   'HBB.L',
   'HBB.9',
+  'HBB.S',
   'FHCJ',
   'SFT',
   'NMTG',
@@ -72,6 +79,10 @@ export const allSetsList = [
  */
 export type SetCode = (typeof allSetsList)[number];
 
+/**
+ * Checks if a value is a {@linkcode SetCode}
+ * @param value the value to check
+ */
 export const isSetCode = (value: any): value is SetCode =>
   allSetsList.includes(value.toUpperCase());
 
@@ -90,7 +101,7 @@ export type storedLink = {
 };
 
 /**
- * Description of a Magic card set.
+ * Description of a Hellscube card set.
  *
  * @see {@link https://scryfall.com/docs/api/sets}
  */

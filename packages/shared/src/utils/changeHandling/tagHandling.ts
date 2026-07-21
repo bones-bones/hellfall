@@ -149,15 +149,6 @@ export const tagChangesVisibleProps = (fullTag: string): boolean => {
   if (tag == 'back-image') {
     return true;
   }
-  if (tag in frontImageTagProps) {
-    return true;
-  }
-  if (tag in frontImageTagProps) {
-    return true;
-  }
-  if (tag in frontImageTagProps) {
-    return true;
-  }
   if (tagIsSetTag(tag)) {
     return true;
   }
@@ -425,6 +416,7 @@ export const savedOracleIds: Record<string, string> = {
   'wastes token': '8e1687da-24de-460e-9b1a-cc12776476df',
   'goblin shaman': '4ece8767-a2e0-42fc-aadf-86a4ae863343',
   'undead servant': '5bf9f397-0216-4ec9-a57b-406758dcc233',
+  baby: 'a0101448-b5ca-47ce-aefe-a7a795c5e005',
 };
 const tagCanHaveFaces = (tag: string, card?: HCCard.Any): boolean => {
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
@@ -502,6 +494,9 @@ const tagUsesNoteAsValue = (tag: string, card?: HCCard.Any): boolean => {
   }
   return false;
 };
+/**
+ * The return object from splitting a tag
+ */
 type splitTagReturn = {
   /**
    * The tag to return
@@ -532,10 +527,6 @@ type splitTagReturn = {
    */
   url?: string;
 };
-// type splitTagOptions = {
-//   alsoAddingFaces?:boolean,
-//   // noFaces?: boolean,
-// }
 
 const subKeywords: Record<string, string | string[]> = {
   'commander ninjutsu': 'ninjutsu',
@@ -553,15 +544,16 @@ const subKeywords: Record<string, string | string[]> = {
   'double agenda': 'hidden agenda',
   'partner with': 'partner',
   'hexproof from': 'hexproof',
-  plainscycling: 'cycling',
-  islandscycling: 'cycling',
-  swampcycling: 'cycling',
-  mountaincycling: 'cycling',
-  forestcycling: 'cycling',
-  'basic landcycling': 'cycling',
+  plainscycling: 'landcycling',
+  islandscycling: 'landcycling',
+  swampcycling: 'landcycling',
+  mountaincycling: 'landcycling',
+  forestcycling: 'landcycling',
+  nebulacycling: 'landcycling',
+  'basic landcycling': 'landcycling',
   typecycling: 'cycling',
-  wizardcycling: 'cycling',
-  slivercycling: 'cycling',
+  wizardcycling: 'typecycling',
+  slivercycling: 'typecycling',
   landcycling: 'cycling',
   'manifest dread': 'manifest',
   extroll: 'extort',
@@ -589,14 +581,132 @@ const subKeywords: Record<string, string | string[]> = {
   woah: 'fear',
   'drive-to-work': 'suspend',
   goldlink: 'link',
+  'dead weapon': 'living weapon',
+  homiecycling: 'cycling',
+  crewshido: ['crew', 'bushido'],
+  'gruul prowess': 'prowess',
+  'colossal dreadmorph': 'morph',
+  'planeswalker monstrosity': 'monstrosity',
+  muderlink: 'link',
+  'land bestow': 'bestow',
+  damagewalk: 'walk',
+  'keyword scavenge': 'scavenge',
+  cardcycling: 'cycling',
+  fungmass: 'amass',
+  'defend rear end': 'undying',
+  underload: 'overload',
+  flyingwalk: 'walk',
+  millwalk: 'walk',
+  manafest: 'manifest',
+  'counter delve': 'delve',
+  myrsist: 'persist',
+  outkast: 'outlast',
+  walkwalk: 'walk',
+  'keyword graft': 'graft',
+  servolink: 'link',
+  ratlink: 'link',
+  shardcade: 'cascade',
+  gravegraft: 'graft',
+  'surprise suspend': 'suspend',
+  overmode: ['overload', 'fuse'],
+  revoke: 'evoke',
+  overspend: ['suspend', 'overload'],
+  fertilize: 'proliferate',
+  crample: 'trample',
+  casketscade: 'cascade',
+  upload: 'overload',
+  'flash-fuse': ['flashback', 'fuse'],
+  moonwalk: 'walk',
+  turtlesplice: 'splice',
+  screwtate: 'mutate',
+  'half prowl': 'prowl',
+  cluelink: 'link',
+  murderlink: 'link',
+  science: 'miracle',
+  'mad sus': ['madness', 'suspend'],
+  'zone-verload gx': ['overload', 'gx'],
+  subtypecycling: 'typecycling',
+  squirrellink: 'link',
+  asscade: 'cascade',
+  'counter scavenge': 'scavenge',
+  dirtwalk: 'walk',
+  asleepen: 'awaken',
+  'return to monke': 'dash',
+  musclecycling: 'cycling',
+  gatefall: 'landfall',
+  graphed: 'graft',
+  slowback: ['flashback', 'suspend'],
+  dive: 'delve',
+  'mega domain': 'domain',
+  internalize: 'eternalize',
+  crowtouch: 'touch',
+  sideboardjutsu: 'ninjutsu',
+  unicycling: 'cycling',
+  multiflicker: 'multikicker',
+  hyperlink: ['surveil', 'link'],
+  izzetcrew: 'crew',
+  scrylink: ['scry', 'link'],
+  'religious delirium': 'delirium',
+  sidekick: 'kicker',
+  bearcycling: 'typecycling',
+  'big extort': 'extort',
+  'big afterlife': 'afterlife',
+  'big haunt': 'haunt',
+  sexproof: 'hexproof',
+  shardlink: 'link',
+  'reverse screwtate': 'screwtate',
+  blend: 'mutate',
+  blendifier: 'annihilator',
+  'living fortification': 'living weapon',
+  'cleave land': 'cleave',
+  amasslink: ['amass', 'link'],
+  detainlink: ['detain', 'link'],
+  cascadelink: ['cascade', 'link'],
+  voidtouch: 'touch',
+  'overclock cipher': 'cipher',
+  foodtouch: 'touch',
+  votekicker: 'kicker',
+  remutate: ['mutate', 'reconfigure'],
+  devourlink: ['devour', 'link'],
+  '2ble strike': 'double strike',
+  'untapped landwalk': 'landwalk',
+  yeehaw: 'job select',
+  'pre-errata companion': 'companion',
+  cashback: 'flashback',
+  rainbowcycling: 'cycling',
+  'double cleave': 'cleave',
+  wardtection: ['ward', 'protection'],
+  fishlink: 'link',
+  'bestow artifact': 'bestow',
+  'mana-value-5-sorcery cycling': 'cycling',
+  'cascade up': 'cascade',
+  'bicycling': 'cycling',
+  'choose a background': 'partner',
+  'lore':'partner',
+  'third wheel': 'partner',
+  'discoverlink': ['discover','link'],
+  'choose a signature spell': 'partner',
+  'do man':'domain',
 };
 
-const keywordTags = ['fuse', 'enchant', 'flip', 'transform', 'aftermath', 'meld', 'draftpartner'];
+const keywordTags = [
+  'fuse',
+  'enchant',
+  'flip',
+  'transform',
+  'aftermath',
+  'meld',
+  'draftpartner',
+  'grunch',
+];
 const tagsToKeywords: Record<string, string | string[]> = {
   'devoid-frame': 'devoid',
   'means-end': ['means', 'end'],
   'gx-ability': 'gx',
   cube: 'rotate',
+  'mutate-layout': 'mutate',
+  'partner-mechanic': 'partner',
+  'unprinted-partner': 'partner',
 };
 
 export const fillSubKeywords = (keywords: string[]) => {
@@ -613,15 +723,16 @@ export const fillSubKeywords = (keywords: string[]) => {
 /**
  * Splits a full tag into a tag and its components
  * @param fullTag full tag to split
- * @param card the card that the tag will be applied to; only really necessary if the tag is a uuid tag and is going off of the card name or if the tag note includes an element that specifies the face
- * @param alsoAddingFaces whether this tag is being applied alongside changes that convert the card from a single-faced card to a multifaced card
- * @see {@link splitTagReturn} for the return type documentation
+ * @param card the card that the tag will be applied to; only really necessary if the tag is a uuid tag
+ * and is going off of the card name or if the tag note includes an element that specifies the face
+ * @param alsoAddingFaces whether this tag is being applied alongside changes that convert the card
+ * from a single-faced card to a multifaced card
+ * @see {@linkcode splitTagReturn} for the return type documentation
  */
 export const splitTagComponents = (
   full_tag: string,
   card?: HCCard.Any,
   alsoAddingFaces?: boolean
-  // options?:splitTagOptions
 ): splitTagReturn => {
   const splitTag: splitTagReturn = splitFullTag(full_tag);
   if (keywordTags.includes(splitTag.tag)) {
@@ -714,35 +825,45 @@ export const splitTagComponents = (
   return splitTag;
 };
 
-/* type TagChangeOptions = {
-    // dontAddNote?: boolean;
-    // replaceNote?: boolean;
-    // push?: boolean;
-    // useRootOnly?: boolean;
-    // useUrl?: boolean;
-    // useUUID?:boolean;
-    // defaultToBack?: boolean;
-    alsoAddingFaces?: boolean;
-  }
+/**
+ * The input for a tag change
+ * @template K The type of the prop to modify, if any
  */
-// const tagShouldPush = (tag: string): boolean => {
-//   if (tag in anyFrameEffectTags) {
-//     return true;
-//   } else if (tag in faceFrameEffectTags) {
-//     return true;
-//   }
-//   return false;
-// };
 type TagChangeInput<K extends anyPropType> = {
+  /**
+   * The card that the tag change will be applied to
+   */
   card: HCCard.Any;
+  /**
+   * The type of change. Add is used for adding a new tag or updating an existing one;
+   * delete is for deleting an existing tag
+   */
   change_type: 'add' | 'delete';
+  /**
+   * The full tag to change.
+   */
   full_tag: string;
+  /**
+   * The split tag to change. See {@linkcode splitTagReturn} for documentation
+   */
   splitTag: splitTagReturn;
-  // alsoAddingFaces?:boolean,
+  /**
+   * The prop to change, if any
+   */
   prop?: K;
+  /**
+   * The value to change, if any.
+   */
   value?: Record<string, anyElementValueType<K>> | anyElementValueType<K>;
-  // options?: TagChangeOptions
 };
+
+/**
+ * Adds a prop with a given value to a {@linkcode TagChangeInput}
+ * @template K The type of the prop to add
+ * @param input the input object to add the prop to
+ * @param prop the prop to add
+ * @param value the value to add, if any
+ */
 const addPropToInput = <K extends anyPropType>(
   input: TagChangeInput<any>,
   prop: K,
@@ -755,13 +876,10 @@ const addPropToInput = <K extends anyPropType>(
 };
 
 /**
- * Adds a tag
- * @param card card to add tag to
- * @param tag tag to add
- * @param note tag note
- * @param prop prop to set
- * @param value value to set the prop to, or record to access with the tag to get the value
- * @param options whether to replace the note instead of just concatting it; whether to push the value to an array; whether to only add to the root; whether to parse the note as an url
+ * Gets the changes for a tag that applies to a card face
+ * @template K The type of the prop to add
+ * @param input the {@linkcode TagChangeInput} to use
+ * @param alsoAddingFaces dummy
  */
 const changesForFaceTag = <K extends facePropType>(
   input: TagChangeInput<K>,
@@ -797,14 +915,6 @@ const changesForFaceTag = <K extends facePropType>(
       return value;
     }
   };
-  // const face_change_type: changeType =
-  //   change_type == 'delete'
-  //     ? tagShouldPush(splitTag.tag)
-  //       ? 'pop'
-  //       : 'delete'
-  //     : tagShouldPush(splitTag.tag)
-  //     ? 'push'
-  //     : 'add';
   const resolvedValue = getValue() as faceElementValueType<K> | undefined;
   if (!resolvedValue) {
     changes.push(tag_change);
@@ -826,6 +936,12 @@ const changesForFaceTag = <K extends facePropType>(
   return changes.sort(sortChanges);
 };
 
+/**
+ * Gets the changes for a tag that applies to a card root
+ * @template K The type of the prop to add
+ * @param input the {@linkcode TagChangeInput} to use
+ * @param alsoAddingFaces dummy
+ */
 const changesForRootTag = <K extends rootPropType>(
   input: TagChangeInput<K>,
   alsoAddingFaces?: boolean
@@ -860,14 +976,6 @@ const changesForRootTag = <K extends rootPropType>(
       return value;
     }
   };
-  // const root_change_type: changeType =
-  //   change_type == 'delete'
-  //     ? tagShouldPush(splitTag.tag)
-  //       ? 'pop'
-  //       : 'delete'
-  //     : tagShouldPush(splitTag.tag)
-  //     ? 'push'
-  //     : 'add';
   const resolvedValue = getValue() as
     | rootElementValueType<rootChangeablePropType<typeof change_type>>
     | undefined;
@@ -890,6 +998,13 @@ const changesForRootTag = <K extends rootPropType>(
   return changes.sort(sortChanges);
 };
 
+/**
+ * Gets the changes for a tag that applies to any part of a card
+ * @template K The type of the prop to add
+ * @param input the {@linkcode TagChangeInput} to use
+ * @param alsoAddingFaces whether this tag is being applied alongside changes
+ * that convert the card from a single-faced card to a multifaced card
+ */
 const changesForAnyTag = <K extends allPropType>(
   input: TagChangeInput<K>,
   alsoAddingFaces?: boolean
@@ -984,7 +1099,37 @@ const flagTags = [
   'missing-specialize-frame',
   'unnecessary-color-indicator',
   'generic',
+  'no-compress',
+  'irregular-mana-value',
 ];
+
+/**
+ * Checks if a card has a flag tag
+ * @param card card to check
+ * @param flag flag tag to check
+ * @param i index to check, if any
+ */
+export const baseIncludesFlag = (card: HCCard.Any, flag: string, i?: number): boolean | undefined =>
+  card.base_tags?.some(full_tag => {
+    const { tag, value } = splitTagComponents(full_tag);
+    if (tag != flag) {
+      return false;
+    }
+    if (value == undefined || parseInt(value) == i) {
+      return true;
+    }
+    return false;
+  });
+
+/**
+ * Gets the input and the
+ * @param card card to get the input for
+ * @param change_type whether to add or delete the tag
+ * @param full_tag the full tag to use
+ * @param alsoAddingFaces whether this tag is being applied alongside changes
+ * that convert the card from a single-faced card to a multifaced card
+ * @returns the {@linkcode TagChangeInput} to use and the location to apply the input to
+ */
 const inputForTag = (
   card: HCCard.Any,
   change_type: 'add' | 'delete',
@@ -999,7 +1144,7 @@ const inputForTag = (
     splitTag,
   };
   const tag = splitTag.tag;
-  // TODO: remove value resolution
+  // TODO: remove value resolution (i.e. `resolveValue` functions) if possible
   let location: 'face' | 'root' | 'any' = 'any';
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
     addPropToInput(input, 'watermark', tag.slice(0, tag.lastIndexOf('-')));
@@ -1049,8 +1194,8 @@ const inputForTag = (
  * @param card card to get the changes for
  * @param change_type whether to add or delete the tag
  * @param full_tag the full tag to use
- * @param alsoAddingFaces whether this tag is being applied alongside changes that convert the card from a single-faced card to a multifaced card
- * @returns
+ * @param alsoAddingFaces whether this tag is being applied alongside changes
+ * that convert the card from a single-faced card to a multifaced card
  */
 export const getChangesFromTag = (
   card: HCCard.Any,
@@ -1131,12 +1276,14 @@ export const deleteTagFromBase = (base_tags: string[], fullTag: string): boolean
   return changesVisible;
 };
 
-// export const replaceTagInBase = (base_tags: string[], fullTag: string, noteToReplace?:string):boolean => {
-//   const {tag, note} = splitFullTag(fullTag)
+// export const replaceTagInBase = (
+//   base_tags: string[],
+//   fullTag: string,
+//   noteToReplace?: string
+// ): boolean => {
+//   const { tag, note } = splitFullTag(fullTag);
 //   if (note == 'undefined') {
-
 //   }
-
 // };
 
 /**

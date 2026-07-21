@@ -39,6 +39,7 @@ export const Header = () => {
             <AuthBlock>
               <span title={user.email ?? undefined} data-logged-in>
                 {user.username}
+                {/* <Link to="/settings">{user.username}</Link> */}
               </span>
               {user.isAdmin && (
                 <>

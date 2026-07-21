@@ -67,6 +67,17 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
+          You can use <code>lore:</code> to search against a card's name, type line, oracle text,
+          and flavor text
+        </div>
+        <br />
+        <div>
+          You can also use <code>printed:</code> or <code>p:</code> to search against everything in{' '}
+          <code>lore:</code>, plus artist credit and mana cost. This one also searches against
+          dropped faces and is useful for ransomnoting.
+        </div>
+        <br />
+        <div>
           You can also use <code>ruling:</code> to search for rulings, and you can use{' '}
           <code>has:ruling</code> to find cards that have rulings.
         </div>
@@ -95,6 +106,11 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
+          You can also use <code>tag:x{'<'}</code> or <code>tag:x{'>'}</code> to search for the
+          presence or absence of a note on tag <code>x</code>, respectively.
+        </div>
+        <br />
+        <div>
           You can also use <code>tagnote:</code> or <code>tn:</code> to search against just the tag
           notes.{' '}
         </div>
@@ -110,18 +126,30 @@ export const Syntax = () => {
           directly.
         </div>
         <h2>Mana Costs</h2>
-        {/* TODO: Implement good mana search */}
         <div>
-          A lot of the functionality of the scryfall mana search hasn't been added yet, so{' '}
-          <code>mana:</code> currently acts like a regular text search term, though{' '}
-          <code>is:hybrid</code> and <code>is:phyrexian</code> do work.
+          Everything in <Link to={'https://scryfall.com/docs/syntax#mana'}>Mana Costs</Link> except{' '}
+          <code>produces:</code> works.
         </div>
         <br />
-        {/* TODO: add these */}
         <div>
-          {' '}
-          {mapListToCodeAnd(['manavalue:even', 'manavalue:odd', 'devotion:', 'produces:'])} haven't
-          been implemented yet.{' '}
+          <code>mana:</code> works in hellfall just like in scryfall, though you can use{' '}
+          <code>manatext:</code> instead if you want the functionality of a regular text search
+          term.
+        </div>
+        <br />
+        <div>
+          <code>devotion:</code> works in hellfall like it does in scryfall except better. You can
+          use the same syntax as in scryfall, but you can also use <code>d:</code> as a shorthand,
+          and you can use a specific type of devotion after the keyword (e.g.{' '}
+          <code>d:dreadmaw</code> or <code>d:u/b</code>) to search for cards that give devotion to
+          that.
+        </div>
+        <br />
+        <div>
+          Also, for types of devotion that cards can have more than one of, you can use an operator
+          and a number after the term (e.g. <code>d:dreadmaw{'='}6</code> or <code>d:u/b:3</code>).
+          You can also directly search for devotion to dreadmaw using <code>dreadmaw:</code> or{' '}
+          <code>dm:</code>. (The dreadmaw search doesn't match art yet.)
         </div>
         <h2>Numbers</h2>
         <div>
@@ -311,8 +339,10 @@ export const Syntax = () => {
         </div>
         <h2>Display/Sort</h2>
         <div>
-          <code>unique:</code>, <code>display:</code>, and <code>prefer:</code> aren't implemented
-          yet.
+          <code>unique:</code>, <code>display:</code>, and <code>prefer:</code> are implemented now,
+          but they're a bit basic for now. <code>prefer:</code> currently only takes{' '}
+          <code>oldest</code> and <code>newest</code>, while <code>unique:</code> can't do unique
+          arts yet, and <code>display:full</code> is not that good right now.
         </div>
         <br />
         <div>
@@ -343,6 +373,13 @@ export const Syntax = () => {
           <code>include:extracards</code> to add cards, <code>include:tokens</code> to add tokens,
           or <code>include:veto</code> to add vetoed cards. If you want to exclude cards that{' '}
           <em>aren't</em> extras, use <code>exclude:nonextras</code>.
+        </div>
+        <br />
+        <div>
+          By default, the search excludes dropped faces (those that are tokens that exist and
+          similar) from searches that check for rules-related text (e.g. power, toughness, mana
+          cost, oracle text, etc.), though it includes them for <code>printed:</code>. To include
+          dropped faces, use <code>include:dropped</code>.
         </div>
         <h2>Not Implemented Yet</h2>
         <div>

@@ -13,7 +13,8 @@ type Layout<T extends HCLayout> = Pick<HCCardFields.Core.HCReferences, 'layout'>
  * A collection of types representing HC cards of each possible layout.
  *
  * This collection is focused around two core varieties of cards:
- * - {@link HCCard.AnySingleFaced} describes any card with one face and no `card_faces` property, e.g. {@link HCCard.Normal Normal} or {@link HCCard.Saga Saga}.
+ * - {@link HCCard.AnySingleFaced} describes any card with one face and no `card_faces` property,
+ * e.g. {@link HCCard.Normal Normal} or {@link HCCard.Saga Saga}.
  * - {@link HCCard.AnyMultiFacedFaced} describes any card with multiple faces.
  *
  * It also provides a broader grouping:
@@ -21,7 +22,8 @@ type Layout<T extends HCLayout> = Pick<HCCardFields.Core.HCReferences, 'layout'>
  *
  * There is also an alias for each possible layout: {@link HCCard.Normal}, {@link HCCard.MeldPart}, etc.
  *
- * We recommend starting from {@link HCCard.Any} to describe generic API responses, and you will need to do type narrowing to access more specific fields.
+ * We recommend starting from {@link HCCard.Any} to describe generic API responses,
+ * and you will need to do type narrowing to access more specific fields.
  *
  * @example // Type narrowing by layout
  * const mysteryCard: HCCard.Any = getCard();
@@ -160,7 +162,8 @@ export namespace HCCard {
    *
    * An object of this value may be any card at all.
    *
-   * Since this may be of any layout, common fields are available, but layout-specific fields (e.g. card_faces) will be unavailable until you perform type narrowing on it.
+   * Since this may be of any layout, common fields are available, but layout-specific fields
+   * (e.g. card_faces) will be unavailable until you perform type narrowing on it.
    */
   export type Any = AnySingleFaced | AnyMultiFaced;
 }

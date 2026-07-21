@@ -1,20 +1,30 @@
 // import styled from '@emotion/styled';
 import type { HCColors } from '@hellfall/shared/types';
-import { formatQuotes, getIndicatorFromColors, getPip, pipToSrc } from '@hellfall/shared/utils';
+import { formatQuotes, pipMap, pipToSrc } from '@hellfall/shared/utils';
 import { BoxProps } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledDiv, createStyledImg } from '../styling';
+import { createStenciledDiv, createStenciledImg, createStyledImg } from '../styling';
 
-export const stringToMana = (text: string) => {
+export const stringToMana = (text: string, pipSize: string = '18px') => {
   return formatQuotes(text)
     .split(/({.*?})/)
     .filter(e => e !== '')
-    .map(entry => {
+    .map((entry, i) => {
       if (entry.startsWith('{') && entry.endsWith('}')) {
-        const icon = getPip(entry.slice(1, -1));
+        const icon = pipMap.get(entry);
         return icon ? (
-          <PipContainer useShadow={!icon.no_shadow} clip_type={icon.clip_type}>
-            <PipSymbol src={pipToSrc(icon)} alt={entry} title={icon.english} />
+          <PipContainer
+            key={`container-${i}`}
+            useShadow={!icon.no_shadow}
+            clip_type={icon.clip_type}
+          >
+            <PipSymbol
+              key={`pip-${i}`}
+              src={pipToSrc(icon)}
+              height={pipSize}
+              alt={entry}
+              title={icon.english}
+            />
           </PipContainer>
         ) : (
           entry
@@ -25,7 +35,7 @@ export const stringToMana = (text: string) => {
 };
 
 export const colorsToIndicator = (colors: HCColors) => {
-  const pip = getIndicatorFromColors(colors);
+  const pip = pipMap.getIndicator(colors);
 
   return pip ? (
     <PipContainer>
@@ -36,14 +46,24 @@ export const colorsToIndicator = (colors: HCColors) => {
   );
 };
 
+const pipSymbol = createStencil({
+  vars: {
+    height: '18px',
+  },
+  base: ({ height }) => ({
+    height: height,
+  }),
+});
+
+interface symbolProps extends React.ComponentProps<'img'> {
+  height?: string;
+}
+const PipSymbol = createStenciledImg<symbolProps>(pipSymbol, 'PipSymbol');
+
 interface PipContainerProps extends BoxProps {
   useShadow?: boolean;
   clip_type?: 'right-half' | 'top-left-third' | 'bottom-third';
 }
-const pipSymbol = createStyles({ height: '18px' /**,marginTop: '10px'*/ });
-
-const PipSymbol = createStyledImg(pipSymbol, 'PipSymbol');
-
 const pipStencil = createStencil({
   vars: {},
   base: {

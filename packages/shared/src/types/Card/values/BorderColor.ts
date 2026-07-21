@@ -18,5 +18,9 @@ export enum HCBorderColor {
   Red = 'red',
 }
 
+/**
+ * Checks if a value is a {@linkcode HCBorderColor}
+ * @param value the value to check
+ */
 export const isBorderColor = (value: any): value is HCBorderColor =>
   Object.values(HCBorderColor).includes(value as HCBorderColor);

@@ -1,3 +1,5 @@
+import { displayType, uniqueType } from '@hellfall/shared/filters';
+
 export interface AuthUser {
   id: string;
   username: string;
@@ -5,6 +7,10 @@ export interface AuthUser {
   email: string | null;
   isContributor: boolean;
   isAdmin: boolean;
+  defaultCludes?: string[];
+  defaultSorts?: string[];
+  defaultUnique?: uniqueType;
+  defaultDisplay?: displayType;
 }
 
 export interface AuthState {

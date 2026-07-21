@@ -510,6 +510,7 @@ export const toCardLayoutRecord: Record<string, HCLayout | HCLayout[]> = {
   transform: HCLayout.Transform,
   tdfc: HCLayout.Transform,
   specialize: HCLayout.Specialize,
+  dfc: [HCLayout.Transform, HCLayout.Modal, HCLayout.MeldPart, HCLayout.Specialize],
   flip: HCLayout.Flip,
   split: HCLayout.Split,
   aftermath: HCLayout.Aftermath,
@@ -529,6 +530,7 @@ export const toCardLayoutRecord: Record<string, HCLayout | HCLayout[]> = {
   spacecraft: HCLayout.Station,
   planet: HCLayout.Station,
 };
+
 /**
  * The strings that can be converted to {@linkcode HCLayoutGroup.FaceLayoutType} and their conversions
  */
@@ -563,6 +565,7 @@ export const toFaceLayoutRecord: Record<
   transform: HCLayout.Transform,
   tdfc: HCLayout.Transform,
   specialize: HCLayout.Specialize,
+  dfc: [HCLayout.Transform, HCLayout.Modal, HCLayout.MeldPart, HCLayout.Specialize],
   flip: HCLayout.Flip,
   split: HCLayout.Split,
   aftermath: HCLayout.Aftermath,
@@ -582,3 +585,16 @@ export const toFaceLayoutRecord: Record<
   spacecraft: HCLayout.Station,
   planet: HCLayout.Station,
 };
+/**
+ * The summary strings corresponding to values from {@linkcode toCardLayoutRecord} and {@linkcode toFaceLayoutRecord}
+ */
+export const layoutNames: [HCLayout[], string][] = [
+  [[HCLayout.Split], 'split'],
+  [[HCLayout.Flip], 'flip'], // TODO: make this one not use is/are/have
+  [[HCLayout.Transform], 'transform'], // TODO: make this one not use is/are/have
+  [[HCLayout.Modal], 'modal DFCs'],
+  [[HCLayout.MeldPart, HCLayout.MeldResult], 'meld'], // TODO: make this one not use is/are/have
+  [[HCLayout.MeldPart], 'parts of a meld'],
+  [[HCLayout.MeldResult], 'the result of a meld'],
+  [[HCLayout.Transform, HCLayout.Modal, HCLayout.MeldPart, HCLayout.Specialize], 'double-sided'],
+];

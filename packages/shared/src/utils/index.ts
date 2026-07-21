@@ -1,8 +1,6 @@
 export * from './numHandling.ts';
 export * from './listHandling';
-export * from './orderColors.ts';
 export * from './textHandling.ts';
-export * from './pipsHandling.ts';
 export * from './cardHandling';
 export * from './cockatrice';
 export * from './draftmancer';
@@ -10,5 +8,5 @@ export * from './tts';
 // export * from './cardModification';
 export * from './setHandling.ts';
 export * from './cubeList';
-export * from './colorHandling.ts';
 export * from './changeHandling';
+export * from './pipsAndColors';

@@ -1,12 +1,12 @@
 import { BigContainer, ManaSymbol, ManaSymbolSmall } from './components.tsx';
-import { getPipSrc } from '@hellfall/shared/utils';
+import { pipMap } from '@hellfall/shared/utils';
 import { Link } from 'react-router-dom';
 export const ParadoxIncorporated = () => {
   return (
     <BigContainer>
       <title>Paradox Incorporated | Hellfall</title>
       <h1>
-        Paradox Incorporated <ManaSymbol src={getPipSrc('U/R')} />
+        Paradox Incorporated <ManaSymbol src={pipMap.getPipSrc('U/R')} />
       </h1>
       <div>
         Welcome to the Paradox Employee Handbook! We at Paradox Incorporated are committed to
@@ -78,7 +78,7 @@ export const ParadoxIncorporated = () => {
       </div>
       <h3>
         <Link to="/hellscubes/eight/gruul-self-discard">
-          <ManaSymbolSmall src={getPipSrc('R/G')} /> RG Discard
+          <ManaSymbolSmall src={pipMap.getPipSrc('R/G')} /> RG Discard
         </Link>
       </h3>
       <div>

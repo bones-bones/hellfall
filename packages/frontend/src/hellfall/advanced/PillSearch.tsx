@@ -11,13 +11,13 @@ import {
 } from '../../styling';
 
 type Props = {
-  possibleValues: string[];
+  possibleValues?: string[];
   values: string[];
   label: string;
   onChange: (value: string[]) => void;
 };
 
-export const PillSearch = ({ possibleValues, values, label, onChange }: Props) => {
+export const PillSearch = ({ possibleValues = [], values, label, onChange }: Props) => {
   const [menuItems, setMenuItems] = useState(possibleValues);
   const [selectedValues, setSelectedValues] = useState(values);
   const [searchValue, setSearchValue] = useState('');

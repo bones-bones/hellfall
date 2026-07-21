@@ -12,9 +12,12 @@ import {
   ColorFilter,
   NumberPropFilter,
   NoteFilter,
+  PipFilter,
+  InvalidFilter,
 } from './makerObject';
-import { dirType, looseOpType, sortType, allPrintsGetterType } from '../types';
-import { colorSearch } from '@hellfall/shared/utils';
+import { dirType, looseOpType, sortType, allPrintsGetterType, summaryFunction } from '../types';
+import { colorSearch, pipSearch } from '@hellfall/shared/utils';
+import { HCCardSymbol } from '@hellfall/shared/types';
 
 /**
  * A function that creates a {@linkcode FilterObject<T, any>}
@@ -23,6 +26,17 @@ import { colorSearch } from '@hellfall/shared/utils';
  * @param op the operator from the search
  */
 export type filterMaker<T> = (value: string, op: looseOpType) => FilterObject<T, any>;
+
+/**
+ * A function that creates an {@linkcode InvalidFilter}
+ * @param value the value from the search
+ * @param summaryStart the start of the summary
+ */
+export type invalidMaker = (
+  value: string,
+  summaryStart?: string | summaryFunction<string>
+) => InvalidFilter;
+
 /**
  * A function that can create an {@linkcode InFilter} or a {@linkcode PrintsNumberFilter}
  * @param value the value from the search
@@ -52,7 +66,7 @@ export type stateFilterMaker = (
 export type comparisonFilterMaker = (
   value1: string,
   op: looseOpType,
-  value2: string
+  value2?: string
 ) => ComparisonFilter;
 /**
  * A function that creates a {@linkcode LegalityFilter}
@@ -94,6 +108,16 @@ export type colorFilterMaker<T extends string[] | string[][]> = (
   value: colorSearch,
   op: looseOpType
 ) => ColorFilter<T>;
+/**
+ * A function that creates a {@linkcode PipFilter}
+ * @param T The type of the value from the card
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export type pipFilterMaker<T extends HCCardSymbol[] | HCCardSymbol[][]> = (
+  value: pipSearch,
+  op: looseOpType
+) => PipFilter<T>;
 /**
  * A function that can create a {@linkcode NumberPropFilter}, a {@linkcode NoteFilter}, or a {@linkcode PropFilter}
  * @param value the value from the search

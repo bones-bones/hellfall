@@ -86,7 +86,7 @@ const rootDeleteProps = [
 ] as const satisfies rootPropType[];
 
 /**
- * The record used to get the list of values for {@link rootChangeablePropType}
+ * The record used to get the list of values for {@linkcode rootChangeablePropType}
  */
 export const rootChangeableProps = {
   add: rootAddProps,
@@ -95,6 +95,7 @@ export const rootChangeableProps = {
 
 /**
  * A union of all the props that are valid for a root change with a given change type
+ * @template T the {@linkcode changeType} to get the props for
  */
 export type rootChangeablePropType<T extends changeType> = (typeof rootChangeableProps)[T][number];
 
@@ -110,18 +111,27 @@ type rootArrayPropType<T extends changeType> = Extract<
   rootChangeablePropType<T>,
   rootArrayPropLiteral
 >;
-// type rootNonArrayPropType<T extends changeType> =  Exclude<rootChangeablePropType<T>,rootArrayPropLiteral>
+// type rootNonArrayPropType<T extends changeType> = Exclude<
+//   rootChangeablePropType<T>,
+//   rootArrayPropLiteral
+// >;
 
 /**
- * Whether a prop affects a list or record, meaning that 'add' pushes a value and 'delete' removes a value
+ * Checks whether a prop affects a list or record, meaning that 'add' pushes a value
+ * and 'delete' removes a value
+ * @template T the {@linkcode changeType} to check
  */
 export const isRootArrayPropType = <T extends changeType>(
   prop: rootChangeablePropType<T>
 ): prop is rootArrayPropType<T> => rootArrayProps.includes(prop as any);
-// export const isRootNonArrayPropType = <T extends changeType>(prop:rootChangeablePropType<T>):prop is rootNonArrayPropType<T> => !rootArrayProps.includes(prop as any)
+// export const isRootNonArrayPropType = <T extends changeType>(
+//   prop: rootChangeablePropType<T>
+// ): prop is rootNonArrayPropType<T> => !rootArrayProps.includes(prop as any);
 
 /**
  * A change to a card root.
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode rootChangeablePropType} for the change
  */
 export type rootChange<T extends changeType, K extends rootChangeablePropType<T>> = {
   /**
@@ -129,7 +139,9 @@ export type rootChange<T extends changeType, K extends rootChangeablePropType<T>
    */
   location: 'root';
   /**
-   * The type of change. Add is used for adding a new prop or completely overwriting an old one, or for pushing a value to a list or record; delete is for completely deleting a prop, or for removing a value from a list or record
+   * The type of change. Add is used for adding a new prop or completely overwriting an old one,
+   * or for pushing a value to a list or record; delete is for completely deleting a prop,
+   * or for removing a value from a list or record
    */
   change_type: T;
   /**
@@ -137,7 +149,8 @@ export type rootChange<T extends changeType, K extends rootChangeablePropType<T>
    */
   prop: K;
   /**
-   * The value to change. Must be valid for the given prop. Must be omitted when using `change_type: 'delete'` and {@link isRootArrayPropType(prop)} is false
+   * The value to change. Must be valid for the given prop. Must be omitted when using
+   * `change_type: 'delete'` and {@linkcode isRootArrayPropType isRootArrayPropType(prop)} is false
    */
   value?: rootElementValueType<K>;
 };
@@ -146,15 +159,23 @@ type rootArrayChange<T extends changeType, K extends rootArrayPropType<T>> = roo
 // type rootNonArrayChange<T extends changeType, K extends rootNonArrayPropType<T>> = rootChange<T,K>
 
 /**
- * Whether a change's prop affects a list or record, meaning that 'add' pushes a value and 'delete' removes a value
+ * Checks whether a change's prop affects a list or record, meaning that 'add' pushes a value
+ * and 'delete' removes a value
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode rootChangeablePropType} for the change
  */
 export const isRootArrayChange = <T extends changeType, K extends rootChangeablePropType<T>>(
   change: rootChange<T, K>
 ): change is rootArrayChange<T, K & rootArrayPropType<T>> => isRootArrayPropType(change.prop);
-// export const isRootNonArrayChange = <T extends changeType, K extends rootChangeablePropType<T>>(change: rootChange<T, K>): change is rootNonArrayChange<T,K & rootNonArrayPropType<T>> => rootAddProps.includes(change.prop as any)
+// export const isRootNonArrayChange = <T extends changeType, K extends rootChangeablePropType<T>>(
+//   change: rootChange<T, K>
+// ): change is rootNonArrayChange<T, K & rootNonArrayPropType<T>> =>
+//   rootAddProps.includes(change.prop as any);
 
 /**
  * Create a root change
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode rootChangeablePropType} for the change
  * @param change_type The type of change to use
  * @param prop The prop to change
  * @param value The value to change
@@ -235,7 +256,7 @@ const faceDeleteProps = [
 ] as const satisfies facePropType[];
 
 /**
- * The record used to get the list of values for {@link faceChangeablePropType}
+ * The record used to get the list of values for {@linkcode faceChangeablePropType}
  */
 export const faceChangeableProps = {
   add: faceAddProps,
@@ -244,6 +265,7 @@ export const faceChangeableProps = {
 
 /**
  * A union of all the props that are valid for a face change with a given change type
+ * @template T the {@linkcode changeType} to get the props for
  */
 export type faceChangeablePropType<T extends changeType> = (typeof faceChangeableProps)[T][number];
 
@@ -253,18 +275,27 @@ type faceArrayPropType<T extends changeType> = Extract<
   faceChangeablePropType<T>,
   faceArrayPropLiteral
 >;
-// type faceNonArrayPropType<T extends changeType> =  Exclude<faceChangeablePropType<T>,faceArrayPropLiteral>
+// type faceNonArrayPropType<T extends changeType> = Exclude<
+//   faceChangeablePropType<T>,
+//   faceArrayPropLiteral
+// >;
 
 /**
- * Whether a prop affects a list or record, meaning that 'add' pushes a value and 'delete' removes a value
+ * Checks whether a prop affects a list or record, meaning that 'add' pushes a value
+ * and 'delete' removes a value
+ * @template T the {@linkcode changeType} to check
  */
 export const isFaceArrayPropType = <T extends changeType>(
   prop: faceChangeablePropType<T>
 ): prop is faceArrayPropType<T> => faceArrayProps.includes(prop as any);
-// export const isFaceNonArrayPropType = <T extends changeType>(prop:faceChangeablePropType<T>):prop is faceNonArrayPropType<T> => !faceArrayProps.includes(prop as any)
+// export const isFaceNonArrayPropType = <T extends changeType>(
+//   prop:faceChangeablePropType<T>
+// ): prop is faceNonArrayPropType<T> => !faceArrayProps.includes(prop as any)
 
 /**
  * A change to a card face.
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode faceChangeablePropType} for the change
  */
 export type faceChange<T extends changeType, K extends faceChangeablePropType<T>> = {
   /**
@@ -272,7 +303,9 @@ export type faceChange<T extends changeType, K extends faceChangeablePropType<T>
    */
   location: 'face';
   /**
-   * The type of change. Add is used for adding a new prop or completely overwriting an old one, or for pushing a value to a list or record; delete is for completely deleting a prop, or for removing a value from a list or record
+   * The type of change. Add is used for adding a new prop or completely overwriting an old one,
+   * or for pushing a value to a list or record; delete is for completely deleting a prop,
+   * or for removing a value from a list or record
    */
   change_type: T;
   /**
@@ -280,7 +313,8 @@ export type faceChange<T extends changeType, K extends faceChangeablePropType<T>
    */
   prop: K;
   /**
-   * The value to change. Must be valid for the given prop. Must be omitted when using `change_type: 'delete'` and {@link isRootArrayPropType(prop)} is false
+   * The value to change. Must be valid for the given prop. Must be omitted when using
+   * `change_type: 'delete'` and {@linkcode isRootArrayPropType isRootArrayPropType(prop)} is false
    */
   value?: faceElementValueType<K>;
   /**
@@ -293,15 +327,23 @@ type faceArrayChange<T extends changeType, K extends faceArrayPropType<T>> = fac
 // type faceNonArrayChange<T extends changeType, K extends faceNonArrayPropType<T>> = faceChange<T,K>
 
 /**
- * Whether a change's prop affects a list or record, meaning that 'add' pushes a value and 'delete' removes a value
+ * Checks whether a change's prop affects a list or record, meaning that 'add' pushes a value
+ * and 'delete' removes a value
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode faceChangeablePropType} for the change
  */
 export const isFaceArrayChange = <T extends changeType, K extends faceChangeablePropType<T>>(
   change: faceChange<T, K>
 ): change is faceArrayChange<T, K & faceArrayPropType<T>> => isFaceArrayPropType(change.prop);
-// export const isFaceNonArrayChange = <T extends changeType, K extends faceChangeablePropType<T>>(change: faceChange<T, K>): change is faceNonArrayChange<T,K & faceNonArrayPropType<T>> => faceAddProps.includes(change.prop as any)
+// export const isFaceNonArrayChange = <T extends changeType, K extends faceChangeablePropType<T>>(
+//   change: faceChange<T, K>
+// ): change is faceNonArrayChange<T, K & faceNonArrayPropType<T>> =>
+//   faceAddProps.includes(change.prop as any);
 
 /**
  * Create a face change
+ * @template T the {@linkcode changeType} for the change
+ * @template K the {@linkcode faceChangeablePropType} for the change
  * @param change_type The type of change to use
  * @param prop The prop to change
  * @param value The value to change
@@ -380,7 +422,8 @@ export type allPartsChange = {
    */
   location: 'all_parts';
   /**
-   * The type of change. Add is used for adding a new related card or updating an existing one; delete is for deleting an existing related card
+   * The type of change. Add is used for adding a new related card or updating an existing one;
+   * delete is for deleting an existing related card
    */
   change_type: changeType;
   /**
@@ -444,7 +487,8 @@ export type tagChange = {
    */
   location: 'tag';
   /**
-   * The type of change. Add is used for adding a new tag or updating an existing one; delete is for deleting an existing tag
+   * The type of change. Add is used for adding a new tag or updating an existing one;
+   * delete is for deleting an existing tag
    */
   change_type: changeType;
   /**

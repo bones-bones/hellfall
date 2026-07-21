@@ -87,7 +87,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
       stripDoubleSpaces(`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`)
     );
 
-    const resultMap = searchCards(cardMap, query ?? '', tagsData.data);
+    const resultMap = searchCards(cardMap, query ?? '');
 
     res.setHeader(
       'Content-Disposition',

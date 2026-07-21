@@ -1,27 +1,32 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { HellfallEntry } from './entry/HellfallEntry.tsx';
 
-import { BoxProps } from '@workday/canvas-kit-react';
+import { BoxProps, Card } from '@workday/canvas-kit-react';
 
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
   activeCardAtom,
+  inputDisplayAtom,
   invalidAtom,
   pageAtom,
   queryAtom,
+  queryDisplayAtom,
   summaryAtom,
 } from './atoms/searchAtoms.ts';
 import { useSearchResults } from './hooks/useSearchResults.ts';
 import { ControlBar } from './search-controls/ControlBar.tsx';
 import { CHUNK_SIZE } from './constants.ts';
 import { useUpdateURL } from './hooks/useUrlSync.ts';
-import { getOtherNames, toPlainText } from '@hellfall/shared/utils';
+import { getOtherNames, toFaces, toPlainText } from '@hellfall/shared/utils';
 import { SearchBar } from './search-controls/SearchBar.tsx';
 import { ActiveCardPanel } from './ActiveCardPanel.tsx';
 import { Link } from 'react-router-dom';
 import { HellfallCard } from './card/HellfallCard.tsx';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledDiv, createStyledHR } from '../styling';
+import { PaginationBar } from './search-controls/PaginationBar.tsx';
+import { Checklist } from './Checklist.tsx';
+import { CardFaceContainer } from './card/hellfall-card-components/CardFace.tsx';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -37,6 +42,9 @@ export const HellFall = () => {
   const { resultSet, paginationModel } = useSearchResults();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const inputDisplay = useAtomValue(inputDisplayAtom);
+  const queryDisplay = useAtomValue(queryDisplayAtom);
+  const display = queryDisplay ?? inputDisplay;
 
   // Track current and previous page numbers. this is so we can scroll users to the card list, or scroll them to the top
   const pageNumberRef = useRef<number>(0);
@@ -73,7 +81,9 @@ export const HellFall = () => {
       <Separator ref={scrollPointRef} />
       {resultSet.length != 1 && (
         <>
-          <ControlBar model={paginationModel} />
+          <ControlBar>
+            <PaginationBar model={paginationModel} />
+          </ControlBar>
           <SortSeparator />
         </>
       )}
@@ -96,51 +106,93 @@ export const HellFall = () => {
       {invalids.map(invalid => {
         return (
           <>
-            <Invalid>{`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`}</Invalid>
+            <Invalid>{`${
+              invalid[0].startsWith('invalid')
+                ? ''
+                : `Invalid expression "${invalid[0]}" was ignored.`
+            } ${invalid[1]}`}</Invalid>
             <Separator />
           </>
         );
       })}
 
-      <Container>
-        {resultSet.length == 1 ? (
+      {resultSet.length == 1 ? (
+        <Container>
           <div style={{ width: '60vw', margin: '0 auto' }}>
             <HellfallCard data={resultSet[0]} onSinglePage={true} />
           </div>
-        ) : (
-          <div>
-            <CardsGrid maxWidth={`${maxWidth}px`}>
-              {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
-                <HellfallEntry
-                  onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                    if (event.button === 1 || event.metaKey || event.ctrlKey) {
-                      window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
-                    } else {
-                      setActiveCardFromAtom(entry.id);
+        </Container>
+      ) : (
+        <div>
+          {display == 'checklist' ? (
+            <Checklist cards={resultSet.slice(page, page + CHUNK_SIZE)} />
+          ) : display == 'text' ? (
+            <Container>
+              <TextGrid>
+                {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                  <Card key={`${entry.id}-${i}`} cs={cardStyles}>
+                    <Card.Body cs={cardBodyStyles}>
+                      {toFaces(entry).map((face, j) => (
+                        <CardFaceContainer key={`face-${j}`} face={face} i={j} />
+                      ))}
+                    </Card.Body>
+                  </Card>
+                ))}
+              </TextGrid>
+            </Container>
+          ) : display == 'full' ? (
+            <Container>
+              <div style={{ display: 'block', width: '100%' }}>
+                {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                  <>
+                    <div
+                      key={`${entry.id}-${i}`}
+                      style={{ width: '60vw', margin: '0 auto', display: 'block' }}
+                    >
+                      <HellfallCard data={entry} onSinglePage={true} />
+                    </div>
+                    <Separator />
+                  </>
+                ))}
+              </div>
+            </Container>
+          ) : (
+            <Container>
+              <CardsGrid maxWidth={`${maxWidth}px`}>
+                {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                  <HellfallEntry
+                    onClick={(event: React.MouseEvent<HTMLImageElement>) => {
+                      if (event.button === 1 || event.metaKey || event.ctrlKey) {
+                        window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
+                      } else {
+                        setActiveCardFromAtom(entry.id);
+                      }
+                    }}
+                    key={`${entry.id}-${i}`}
+                    id={entry.hcid}
+                    name={entry.name}
+                    otherNames={getOtherNames(entry)}
+                    plainText={toPlainText(entry)}
+                    url={
+                      'card_faces' in entry &&
+                      entry.layout == 'meld_part' &&
+                      entry.card_faces[0].image
+                        ? entry.card_faces[0].image
+                        : entry.image!
                     }
-                  }}
-                  key={'' + entry.id + '-' + i}
-                  id={entry.hcid}
-                  name={entry.name}
-                  otherNames={getOtherNames(entry)}
-                  plainText={toPlainText(entry)}
-                  url={
-                    'card_faces' in entry &&
-                    entry.layout == 'meld_part' &&
-                    entry.card_faces[0].image
-                      ? entry.card_faces[0].image
-                      : entry.image!
-                  }
-                />
-              ))}
-            </CardsGrid>
-          </div>
-        )}
-      </Container>
+                  />
+                ))}
+              </CardsGrid>
+            </Container>
+          )}
+        </div>
+      )}
       {resultSet.length != 1 && (
         <>
           <Separator />
-          <ControlBar model={paginationModel} />
+          <ControlBar>
+            <PaginationBar model={paginationModel} />
+          </ControlBar>
         </>
       )}
     </div>
@@ -192,3 +244,30 @@ interface CardsGridProps extends BoxProps {
   maxWidth?: string;
 }
 const CardsGrid = createStenciledDiv<CardsGridProps>(cardsGridStencil, 'CardsGrid');
+
+const textGridStyles = createStyles({
+  display: 'grid',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  gap: '10px',
+  margin: '0 auto',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+});
+
+const TextGrid = createStyledDiv(textGridStyles, 'TextGrid');
+
+const cardStyles = createStyles({
+  display: 'inline-block',
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  alignItems: 'top',
+  borderRadius: '4px',
+  borderTop: '3px solid black',
+  borderBottom: '3px solid black',
+  paddingTop: '10px',
+  paddingBottom: '5px',
+  margin: '5px',
+});
+const cardBodyStyles = createStyles({});

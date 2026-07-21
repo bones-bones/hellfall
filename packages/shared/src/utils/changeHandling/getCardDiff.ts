@@ -31,7 +31,7 @@ import {
   isRootChangeValueType,
 } from './changeValidation';
 import { toFaces } from '../cardHandling';
-import { getBaseDiffs, getChangesFromTag } from './tagHandling';
+import { baseIncludesFlag, getBaseDiffs, getChangesFromTag } from './tagHandling';
 
 // can add even if empty
 const rootBlankableProps: Partial<Record<HCKind, rootPropType[]>> = {
@@ -186,6 +186,7 @@ const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
     'supertypes',
     'types',
     'subtypes',
+    'flavor_text',
     'power',
     'toughness',
     'loyalty',
@@ -216,12 +217,12 @@ const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
 };
 
 const rootIgnoreProps: Record<HCKind, rootPropType[]> = {
-  card: ['keywords', 'image_status', 'print_image_status'],
+  card: ['image_status', 'print_image_status'],
   token: ['mana_cost', 'mana_value', 'colors', 'rulings', 'image_status', 'print_image_status'],
-  land: ['keywords', 'image_status', 'print_image_status'],
-  front: ['keywords', 'image_status', 'print_image_status'],
+  land: ['image_status', 'print_image_status'],
+  front: ['image_status', 'print_image_status'],
   scryfall: [],
-  notmagic: ['keywords', 'image_status', 'print_image_status'],
+  notmagic: ['image_status', 'print_image_status'],
 };
 const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
   // card: ['colors'],
@@ -237,7 +238,8 @@ type add = faceChangeablePropType<'add'>;
  * Gets a list of changes from the differences between existing and new versions of a card
  * @param existingCard existing version of the card
  * @param newCard new version of the card
- * @param pullingFromSheet whether the new version is coming from the google sheet (if it is, will ignore differences caused by lack of data storage in the sheet)
+ * @param pullingFromSheet whether the new version is coming from the google sheet
+ * (if it is, will ignore differences caused by lack of data storage in the sheet)
  */
 export const getChangesFromDifferences = (
   existingCard: HCCard.Any,
@@ -257,7 +259,8 @@ export const getChangesFromDifferences = (
         if (
           change_type == 'add' &&
           !value &&
-          !rootBlankableProps[existingCard.kind]?.includes(prop)
+          (!rootBlankableProps[existingCard.kind]?.includes(prop) ||
+            (prop == 'mana_value' && baseIncludesFlag(existingCard, 'irregular-mana-value')))
         )
           return;
         if (rootIgnoreProps[existingCard.kind]?.includes(prop)) return;
@@ -291,7 +294,9 @@ export const getChangesFromDifferences = (
     });
   });
   // if ('card_faces' in existingCard != 'card_faces' in newCard) {
-  //   throw console.error('You really shouldn\'t try to use this to compare between single cards and multiface cards.')
+  //   throw console.error(
+  //     "You really shouldn't try to use this to compare between single cards and multiface cards."
+  //   );
   // }
   for (
     let index = 0;
@@ -324,7 +329,11 @@ export const getChangesFromDifferences = (
       continue;
     }
     const noBlank = <K extends add>(prop: K, value?: faceValueType<K>) => {
-      if (!value && !faceBlankableProps[existingCard.kind]?.includes(prop)) {
+      if (
+        !value &&
+        (!faceBlankableProps[existingCard.kind]?.includes(prop) ||
+          (prop == 'mana_value' && baseIncludesFlag(existingCard, 'irregular-mana-value', index)))
+      ) {
         return true;
       }
       if (Array.isArray(value) && !value.length) {

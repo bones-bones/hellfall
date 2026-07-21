@@ -17,6 +17,7 @@ const Watchwolfresults = lazy(() =>
   import('./watchWolf/WatchWolfResults').then(m => ({ default: m.Watchwolfresults }))
 );
 const Login = lazy(() => import('./auth/Login').then(m => ({ default: m.Login })));
+// const Settings = lazy(() => import('./auth/Settings').then(m => ({ default: m.Settings })));
 const ReviewPage = lazy(() => import('./review/ReviewPage').then(m => ({ default: m.ReviewPage })));
 const AdvancedSearch = lazy(() =>
   import('./hellfall/advanced/AdvancedSearch').then(m => ({
@@ -53,6 +54,7 @@ const ApplicationRoutes = () => {
     { path: '/card/*', element: <CardRoute /> },
     { path: '/random', element: <Random /> },
     { path: '/login', element: <Login /> },
+    // { path: '/settings', element: <Settings /> },
     { path: '/review/*', element: <ReviewPage /> },
     { path: '/Watchwolfwar', element: <WatchwolfWar /> },
     { path: '/Watchwolfresults', element: <Watchwolfresults /> },

@@ -80,7 +80,7 @@ export const parseColorText = (text: string): colorSearch | undefined => {
         currentText = currentText.replaceAll(color.toLowerCase(), '');
       }
     });
-    if (text.includes('misc')) {
+    if (currentText.includes('misc')) {
       colorList.push('Misc');
       currentText = currentText.replaceAll('misc', '');
     }

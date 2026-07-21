@@ -9,7 +9,8 @@ export const normalizeText = (text: string): string =>
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replaceAll(/[‘’]/g, "'")
-    .replaceAll(/[“”]/g, '"');
+    .replaceAll(/[“”]/g, '"')
+    .replaceAll(/ {2,}/g, ' ');
 
 /**
  * Format smart quotes
@@ -42,7 +43,7 @@ export const formatQuotes = (text: string): string => {
     } else if (char === '-') {
       const isMinus =
         i === 0 ||
-        /[/([{ ]/.test(prevChar) ||
+        /[/([ ]/.test(prevChar) ||
         (prevChar == 'n' && result.at(-2) == '\\') ||
         (/[0-9]/.test(prevChar) && /[0-9]/.test(nextChar));
       if (isMinus) {
@@ -235,7 +236,9 @@ export const textEquals = (cardText?: string, searchText?: string) => {
 };
 
 /**
- * Splits a string into a list of strings based on parentheses that alternate between a chunk wrapped in parentheses and one that isn't. Will ignore \( and \). Correctly handles nested parens.
+ * Splits a string into a list of strings based on parentheses that alternate
+ * between a chunk wrapped in parentheses and one that isn't. Will ignore \( and \).
+ * Correctly handles nested parens.
  * @param text text to split
  */
 export const splitParens = (text: string) => {
@@ -381,7 +384,8 @@ export const toExportName = (name: string) => {
 };
 
 /**
- * Strips single slashes from text (for the purposes of exporting to draftmancer so that it imports correctly into cockatrice)
+ * Strips single slashes from text (for the purposes of exporting to draftmancer
+ * so that it imports correctly into cockatrice)
  * @param text text to strip single slashes from
  */
 export const stripSingleSlashes = (text: string) => {
@@ -501,8 +505,62 @@ const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a
 export const isValidV4UUID = (uuid: string): boolean => uuidRegex.test(uuid);
 
 /**
- * Replaces the intrinsic {@link unescape} function (which is deprecated)
+ * Replaces the intrinsic {@linkcode unescape} function (which is deprecated)
  * @param text text to unescape
  */
 export const unescapeBase64 = (text: string) =>
   text.replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));
+
+/**
+ * Checks if text is a quoted string (i.e. starts and ends with quotation marks)
+ * @param text text to check
+ */
+export const textIsQuote = (text: string) =>
+  text.length > 1 && text[0] == text.at(-1) && ['"', "'"].includes(text[0]) && text.at(-2) != '\\';
+
+/**
+ * Strips quotes from start and end of text if it's a quoted string (i.e. starts and ends with quotation marks)
+ * @param text text to strip
+ */
+export const stripQuotes = (text: string) => (textIsQuote(text) ? text.slice(1, -1) : text);
+
+/**
+ * Unescapes and strips text so that it can be used in comparisons
+ * @param text text to unescape
+ * @param keepDashes whether to keep dashes (for correct handling of text fields)
+ */
+export const unescapeText = (text: string, keepDashes?: boolean) => {
+  const strippedText =
+    textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
+  return strippedText
+    .toLowerCase()
+    .replaceAll(/^['"]/g, '')
+    .replaceAll(/(?<!\\)['"]/g, '')
+    .replaceAll(/\\(['"])/g, '$1');
+};
+
+/**
+ * Fixes a value by unescaping all text; can go inside arrays, but not other objects
+ * @template T type of the value to fix
+ * @param value value to fix
+ * @param option how to fix the text; fix does unescape; keep keeps dashes;
+ * others just do the corresponding text transformation
+ */
+export const fixValue = <T>(value: T, option: 'upper' | 'lower' | 'fix' | 'keep' = 'fix'): T => {
+  if (typeof value == 'string') {
+    switch (option) {
+      case 'fix':
+        return unescapeText(value) as T;
+      case 'keep':
+        return unescapeText(value, true) as T;
+      case 'upper':
+        return value.toUpperCase() as T;
+      case 'lower':
+        return value.toLowerCase() as T;
+    }
+  }
+  if (Array.isArray(value)) {
+    return value.map(e => fixValue(e, option)) as T;
+  }
+  return value;
+};

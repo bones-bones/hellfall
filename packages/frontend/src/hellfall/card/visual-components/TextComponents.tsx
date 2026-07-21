@@ -16,13 +16,19 @@ export const MediumText = createStyledDiv(mediumTextStyles, 'MediumText');
 
 export const mediumItalicsStyles = createStyles(mediumTextStyles, {
   fontStyle: 'italic',
-  fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
 });
 export const MediumItalics = createStyledDiv(mediumItalicsStyles, 'MediumItalics');
 
+export const flavorStyles = createStyles(mediumTextStyles, {
+  fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
+});
+export const FlavorText = createStyledDiv(flavorStyles, 'FlavorText');
+
+export const flavorItalicsStyles = createStyles(flavorStyles, mediumItalicsStyles);
+export const FlavorItalics = createStyledDiv(flavorItalicsStyles, 'FlavorItalics');
+
 export const mediumItalicLineStyles = createStyles(mediumLineStyles, {
   fontStyle: 'italic',
-  fontFamily: '"MPlantin", Georgia, "Times New Roman", serif',
 });
 export const MediumItalicLine = createStyledSpan(mediumItalicLineStyles, 'MediumItalicLine');
 

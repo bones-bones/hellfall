@@ -71,7 +71,7 @@ export const DeckBuilder = () => {
         // );
       }
     }
-  }, [textAreaValue, deckName]);
+  }, [textAreaValue, deckName, cardMap]);
 
   const toCardArr = (value: string): [number, string] => {
     const index = /^(?!0+\s)\d+\s/.test(value) ? value.indexOf(' ') : 0;

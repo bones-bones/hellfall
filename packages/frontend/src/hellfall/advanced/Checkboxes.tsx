@@ -76,7 +76,7 @@ export const BoxlessCheckboxGroup: FC<
   }, [selected, onChange]);
 
   return (
-    <div style={{ marginLeft: '-2px' }}>
+    <BoxlessContainer>
       <StyledLegend>{label}</StyledLegend>
 
       <Container>
@@ -101,7 +101,7 @@ export const BoxlessCheckboxGroup: FC<
         })}
       </Container>
       {children}
-    </div>
+    </BoxlessContainer>
   );
 };
 
@@ -319,7 +319,7 @@ export const SingleCheckbox = ({
   }, [selected, onChange]);
 
   return (
-    <div style={{ marginLeft: '-2px' }}>
+    <BoxlessContainer>
       <CheckEntry key={label}>
         <SearchCheckbox
           id={label}
@@ -327,13 +327,57 @@ export const SingleCheckbox = ({
           checked={value}
           onChange={event => onChange(event.target.checked)}
         />
-        {}
         <SingleStyledLabel htmlFor={label}>{label}</SingleStyledLabel>
       </CheckEntry>
-    </div>
+    </BoxlessContainer>
   );
 };
 
+export const InlineCheckbox = ({
+  onChange,
+  value,
+  label,
+}: {
+  label: string;
+  onChange: (value: boolean) => void;
+  value: boolean;
+}) => {
+  // : FC<
+  //   PropsWithChildren<{
+  //     // values: string[];
+  //     label: string;
+  //     onChange: (value: boolean) => void;
+  //     value?: boolean;
+  //   }>
+  // > = ({ onChange, value = false, label, children }) => {
+  const [selected, setSelected] = useState<boolean>(value);
+
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
+  useEffect(() => {
+    onChange(selected);
+  }, [selected, onChange]);
+
+  return (
+    <InlineContainer>
+      <CheckEntry key={label}>
+        <SearchCheckbox
+          id={label}
+          type="checkbox"
+          checked={value}
+          onChange={event => onChange(event.target.checked)}
+        />
+        <SingleStyledLabel htmlFor={label}>{label}</SingleStyledLabel>
+      </CheckEntry>
+    </InlineContainer>
+  );
+};
+
+const boxlessContainerStyles = createStyles({ marginLeft: '-2px' });
+const BoxlessContainer = createStyledDiv(boxlessContainerStyles, 'BoxlessContainer');
+const inlineContainerStyles = createStyles({ marginLeft: '10px', minWidth: 'fit-content' });
+const InlineContainer = createStyledDiv(inlineContainerStyles, 'InlineContainer');
 const containerStyles = createStyles({ display: 'flex', flexDirection: 'column' });
 const Container = createStyledDiv(containerStyles, 'Container');
 

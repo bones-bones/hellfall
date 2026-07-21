@@ -77,7 +77,7 @@ export const makeIndicatorFilter: colorFilterMaker<string[][]> = (
     colorIndicatorSummary,
     value,
     op,
-    card => getColorsFromFaces(card, 'color_indicator')
+    (card, dropFaces) => getColorsFromFaces(card, 'color_indicator', dropFaces)
   );
 };
 
@@ -156,7 +156,8 @@ export const makeMiscIndicatorFilter: colorFilterMaker<string[][]> = (
     miscColorIndicatorSummary,
     value,
     op,
-    card => getColorsFromFaces(card, 'color_indicator').map(c => colorMiscReduce(c))
+    (card, dropFaces) =>
+      getColorsFromFaces(card, 'color_indicator', dropFaces).map(c => colorMiscReduce(c))
   );
 };
 

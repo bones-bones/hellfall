@@ -1,5 +1,5 @@
-import { HCCard } from '@hellfall/shared/types';
-import { colorSearch, shorthandType } from '@hellfall/shared/utils';
+import { HCCard, HCCardSymbol } from '@hellfall/shared/types';
+import { colorSearch, pipSearch, shorthandType } from '@hellfall/shared/utils';
 /**
  * The type of an operator
  *
@@ -57,6 +57,24 @@ export interface anyFilterFunction<T = any, S = any> {
   //  */
   // toSummary: summaryFunction<S>;
 }
+
+/**
+ * the list of unique options
+ */
+export const uniqueTypeList = ['cards', 'prints' /* 'arts' */] as const;
+/**
+ * a unique option
+ */
+export type uniqueType = (typeof uniqueTypeList)[number];
+
+/**
+ * the list of display options
+ */
+export const displayTypeList = ['grid', 'checklist', 'text', 'full'] as const;
+/**
+ * a display option
+ */
+export type displayType = (typeof displayTypeList)[number];
 
 /**
  * the list of sort direction options
@@ -177,9 +195,25 @@ export interface colorFilterFunction extends cardFilterFunction<string[], colorS
  */
 export interface colorListFilterFunction extends cardFilterFunction<string[][], colorSearch> {}
 /**
+ * Any filter that compares pips from a card with a value from a search
+ */
+export interface pipFilterFunction extends cardFilterFunction<HCCardSymbol[], pipSearch> {}
+/**
+ * Any filter that compares a set of pips from a card with a value from a search
+ */
+export interface pipListFilterFunction extends cardFilterFunction<HCCardSymbol[][], pipSearch> {}
+/**
  * The list of options for inclusion filters
  */
-const inclusionOptions = ['extras', 'nonextras', 'all', 'extracards', 'tokens', 'vetoed'] as const;
+const inclusionOptions = [
+  'extras',
+  'nonextras',
+  'all',
+  'extracards',
+  'tokens',
+  'vetoed',
+  'drop',
+] as const;
 /**
  * An option for inclusion filters
  */
@@ -198,7 +232,9 @@ export interface stateFilterFunction extends cardFilterFunction<HCCard.Any, stri
  * Any filter that compares two properties of a card
  */
 export interface comparisonFilterFunction extends cardFilterFunction<HCCard.Any, string> {
-  (value1: HCCard.Any, operator: opType, value2: string, value3: string): boolean | undefined;
+  (value1: HCCard.Any, operator: opType, value2: string, value3: string, dropFaces?: boolean):
+    | boolean
+    | undefined;
 }
 /**
  * A function that produces a summary for a {@linkcode comparisonFilterFunction}

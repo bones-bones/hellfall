@@ -5,6 +5,11 @@ import { textEquals } from '../textHandling';
 import { firestoreToCard } from './cardConversion';
 import type { firestoreCard } from './firestoreTypes';
 
+/**
+ * Gets all related cards to a given card
+ * @param card card to get the related cards to
+ * @param cardsCol collection containing all cards
+ */
 export const getAllRelatedCollection = (
   card: HCCard.Any | firestoreCard,
   cardsCol: CollectionReference
@@ -39,7 +44,11 @@ const partMatchesCard = (part: RelatedPartRef, card: HCCard.Any): boolean => {
   return false;
 };
 
-/** Firestore document id is authoritative — stored card.id field can drift from the doc key. */
+/**
+ * Gets all prints of a given oracle id
+ * @param oracle_id the oracle id to use
+ * @param cardsCol collection containing all cards
+ */
 export const firestoreDocToCard = (doc: DocumentSnapshot): HCCard.Any => {
   const card = firestoreToCard((doc.data() ?? {}) as firestoreCard);
   card.id = doc.id;

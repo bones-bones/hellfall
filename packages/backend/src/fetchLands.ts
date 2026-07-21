@@ -60,6 +60,7 @@ export const fetchLands = async () => {
     'set',
     'rarity',
     'token_maker',
+    'flavor_text',
     'tags',
     'collector_number',
     'artists',
@@ -95,6 +96,7 @@ export const fetchLands = async () => {
       {
         supertypes: ['Basic'],
         types: ['Land'],
+        flavor_text: entryAt('flavor_text'),
       }
     ) as HCCard.AnySingleFaced;
 
@@ -102,6 +104,11 @@ export const fetchLands = async () => {
     if (splitName[0] == 'Snow-Covered') {
       land.supertypes?.push('Snow');
       splitName.shift();
+      land.legalities.standard = HCLegality.NotLegal;
+      land.legalities.commander = HCLegality.NotLegal;
+    }
+    if (splitName[0] == 'Nebula') {
+      land.legalities.standard = HCLegality.NotLegal;
     }
     if (splitName[0] in landToColorMapping) {
       land.subtypes = [splitName[0]];

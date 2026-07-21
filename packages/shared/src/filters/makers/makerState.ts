@@ -10,7 +10,7 @@ import {
 } from '../filters';
 import { makeHasRelatedFilter, makeIsRelatedFilter } from './makerRelated';
 import { looseOpType } from '../types';
-import { StateFilter, stateFilterMaker, unescapeText } from '../utils';
+import { StateFilter, stateFilterMaker } from '../utils';
 import {
   makeCardFrameFilter,
   makeCardLayoutFilter,
@@ -18,6 +18,7 @@ import {
   makeFrameEffectFilter,
   makeSetTypeFilter,
 } from './makerText';
+import { unescapeText } from '@hellfall/shared/utils';
 
 const cardFramesToParse = ['old', 'new'];
 const frameEffectsToParse = [

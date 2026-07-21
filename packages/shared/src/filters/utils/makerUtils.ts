@@ -8,6 +8,7 @@ import {
 } from '@hellfall/shared/types';
 import {
   ensureArray,
+  fixValue,
   getAllNames,
   getFromAll,
   getFromFaces,
@@ -15,9 +16,7 @@ import {
   toFaces,
   toNumber,
 } from '@hellfall/shared/utils';
-import { unescapeText } from './parseUtils';
 import { numSearch } from '../types';
-import { fixValue } from './filterUtils';
 
 const otherPropList = ['showcase', 'settype', 'pt'] as const;
 type otherPropType = (typeof otherPropList)[number];
@@ -28,23 +27,42 @@ export type queryPropType = anyPropType | otherPropType;
 export const isQueryPropType = (value: any): value is queryPropType =>
   isAnyPropType(value) || otherPropList.includes(value);
 const earlyProps = ['name', ...otherPropList];
+
+const shouldDropList: anyPropType[] = [
+  'power',
+  'toughness',
+  'loyalty',
+  'defense',
+  'mana_cost',
+  'type_line',
+  'supertypes',
+  'types',
+  'subtypes',
+  'oracle_text',
+  // 'flavor_text',
+];
+const shouldDropFaces = (prop: anyPropType) => shouldDropList.includes(prop);
 /**
  * Gets the values from a prop
  * @param T type of the prop
  * @param card card to get the values from
  * @param prop prop to get the values of
  * @param location location on the card to get the values from
+ * @param dropFaces whether to exclude faces with `drop_face: true` where appropriate
+ * @param keepDashes Whether to keep dashes in text
  */
 export const getValuesFromProp = <T extends queryPropType>(
   card: HCCard.Any,
   prop: T,
-  location: 'any' | 'face' | 'root' = 'any'
+  location: 'any' | 'face' | 'root' = 'any',
+  dropFaces?: boolean,
+  keepDashes?: boolean
 ): numSearch[] => {
   const values: numSearch[] = [];
   if (earlyProps.includes(prop)) {
     switch (prop) {
       case 'name':
-        values.push(...getAllNames(card));
+        values.push(...getAllNames(card, dropFaces));
         break;
       case 'showcase':
         values.push(...(card.tag_notes?.['showcase-frame']?.split(', ') ?? []));
@@ -54,22 +72,13 @@ export const getValuesFromProp = <T extends queryPropType>(
         break;
       case 'pt':
         values.push(
-          ...toFaces(card).flatMap(e =>
+          ...toFaces(card, dropFaces).flatMap(e =>
             !e.power && !e.toughness ? [] : (toNumber(e.power) ?? 0) + (toNumber(e.toughness) ?? 0)
           )
         );
         break;
     }
-    return fixValue(values);
-  }
-  if (prop == 'name') {
-    return getAllNames(card).map(value => unescapeText(value));
-  }
-  if (prop == 'showcase') {
-    return (card.tag_notes?.['showcase-frame']?.split(', ') ?? []).map(v => unescapeText(v));
-  }
-  if (prop == 'settype') {
-    return ensureArray(getSet(card.set)?.set_type);
+    return fixValue(values, keepDashes ? 'keep' : 'fix');
   }
   if (isFacePropType(prop) && location != 'root') {
     switch (prop) {
@@ -77,19 +86,22 @@ export const getValuesFromProp = <T extends queryPropType>(
       case 'types':
       case 'subtypes':
         values.push(
-          ...toFaces(card).flatMap(e => (e[prop] && e[prop]?.length > 1 ? e[prop].join(' ') : []))
+          ...toFaces(card, dropFaces).flatMap(e =>
+            e[prop] && e[prop]?.length > 1 ? e[prop].join(' ') : []
+          )
         );
         break;
       case 'type_line':
-        values.push(...getFromFaces(card, 'supertypes'));
-        values.push(...getFromFaces(card, 'types'));
-        values.push(...getFromFaces(card, 'subtypes'));
+        values.push(...getFromFaces(card, 'supertypes', dropFaces));
+        values.push(...getFromFaces(card, 'types', dropFaces));
+        values.push(...getFromFaces(card, 'subtypes', dropFaces));
         break;
     }
     values.push(
       ...((isRootPropType(prop) && location != 'face' ? getFromAll : (getFromFaces as any))(
         card,
-        prop
+        prop,
+        dropFaces && shouldDropFaces(prop)
       ) as numSearch[])
     );
   } else if (isRootPropType(prop) && location != 'face') {
@@ -100,16 +112,18 @@ export const getValuesFromProp = <T extends queryPropType>(
       values.push(...ensureArray<numSearch>(card[prop] as numSearch | numSearch[]));
     }
   }
-  return fixValue(values);
+  return fixValue(values, keepDashes ? 'keep' : 'fix');
 };
 type queryValueType = { props: queryPropType[]; location: 'any' | 'face' | 'root' };
 const queryNamePropRecord: Record<string, queryPropType | queryPropType[]> = {
   mana: 'mana_cost',
+  manatext: 'mana_cost',
   type: 'type_line',
   cardtype: 'types',
   oracle: 'oracle_text',
   flavor: 'flavor_text',
   lore: ['name', 'type_line', 'oracle_text', 'flavor_text'],
+  printed: ['name', 'type_line', 'oracle_text', 'flavor_text', 'artists', 'mana_cost'],
   border: 'border_color',
   cardframe: 'frame',
   frame: ['frame', 'frame_effects'],
@@ -124,6 +138,7 @@ const queryNameLocationRecord: Record<string, 'face' | 'root'> = {
   layout: 'root',
   facelayout: 'face',
   manavalue: 'root',
+  mana: 'face',
 };
 export const queryNameToSummary = (queryName: string): string => {
   const queryProp = queryNamePropRecord[queryName];

@@ -1,6 +1,5 @@
 import {
   HCCard,
-  HCCardFace,
   HCColors,
   SetCode,
   allElementValueType,
@@ -21,8 +20,13 @@ import {
   HCFinish,
   HCFrame,
 } from '@hellfall/shared/types';
-import { ensureArray, listIncludesValueLower, listsShareLower } from '../listHandling';
-import { getIndicatorFromColors } from '../pipsHandling';
+import {
+  ensureArray,
+  listIncludesValueLower,
+  listsShareLower,
+  textListIncludes,
+  textListsShare,
+} from '../listHandling';
 import {
   getMasterpiece,
   getSetCode,
@@ -31,55 +35,175 @@ import {
   textEquals,
 } from '../textHandling';
 import { CardMap } from './cardMap';
+import { pipMap } from '../pipsAndColors';
 
 /**
  * Converts the card to an array of its faces.
  * For single-faced cards, returns an array with the card itself.
  * For multi-faced cards, returns the card_faces array.
  *
- * Make sure you only try to work with props that exist on both {@link HCCard.AnySingleFaced} and {@link HCCardFace.MultiFaced}.
+ * Make sure you only try to work with props of type {@linkcode facePropType}.
  * @param card card to get the faces of
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  * @returns an array of objects of type {@link faceType}
  */
-export const toFaces = (card: HCCard.Any): faceType[] => {
+export const toFaces = (card: HCCard.Any, dropFaces?: boolean): faceType[] => {
   if ('card_faces' in card) {
-    return card.card_faces as faceType[];
+    if (dropFaces) {
+      return card.card_faces.filter(face => !face.drop_face);
+    }
+    return card.card_faces;
   }
-  return [card] as faceType[];
+  return [card];
 };
 
 /**
  * Gets the value of a prop from each face of a card (excluding the main part for multiface cards)
+ * @template K type of the prop (must extend {@linkcode facePropType})
  * @param card card to get the value from
- * @param prop prop to get the value of (must be a prop that exists on both {@link HCCard.AnySingleFaced} and {@link HCCardFace.MultiFaced})
- * @returns
+ * @param prop prop to get the value of
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  */
 export const getFromFaces = <K extends facePropType>(
   card: HCCard.Any,
-  prop: K
-): faceElementValueType<K>[] => toFaces(card).flatMap(face => ensureArray(face[prop] as any));
+  prop: K,
+  dropFaces?: boolean
+): faceElementValueType<K>[] =>
+  toFaces(card, dropFaces).flatMap(face => ensureArray(face[prop] as any));
 
 /**
- * Gets the value of a prop from each face of a card without flattening it (excluding the main part for multiface cards)
+ * Gets the value of a prop from each face of a card without flattening it
+ * (excluding the main part for multiface cards)
  * @param card card to get the value from
- * @param prop prop to get the value of (must be a prop that exists on both {@link HCCard.Any} and {@link HCCardFace.MultiFaced})
- * @returns
+ * @param prop prop to get the value of (must be `color` or `color_indicator`)
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  */
-export const getColorsFromFaces = (card: HCCard.Any, prop: colorPropType): HCColors[] =>
-  toFaces(card).flatMap(face => [face[prop] ?? []]);
+export const getColorsFromFaces = (
+  card: HCCard.Any,
+  prop: colorPropType,
+  dropFaces?: boolean
+): HCColors[] => toFaces(card, dropFaces).flatMap(face => [face[prop] ?? []]);
+
+const fixCosts = (value: string[]) => {
+  const filtered = value.filter(Boolean);
+  if (filtered.length) {
+    return filtered;
+  }
+  return [''];
+};
+
+/**
+ * Gets the mana cost of each face of a card (excluding the main part for multiface cards)
+ * @param card card to get the costs from
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const getCostsFromFaces = (card: HCCard.Any, dropFaces?: boolean): string[] =>
+  toFaces(card, dropFaces).map(face => face.mana_cost);
+
+/**
+ * Gets the mana cost of each face of a card, dropping duplicate blanks
+ * @param card card to get the costs from
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const getFixedCostsFromFaces = (card: HCCard.Any, dropFaces?: boolean): string[] =>
+  fixCosts(getCostsFromFaces(card, dropFaces));
+
+/**
+ * Checks whether a face is a permanent
+ * @param face face to check
+ */
+export const faceIsPermanent = (face: faceType) =>
+  textListsShare(face.types, [
+    'artifact',
+    'battle',
+    'creature',
+    'enchantment',
+    'land',
+    'planeswalker',
+  ]);
+
+/**
+ * Checks whether a card is a permanent
+ * @param card card to check
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const cardIsPermanent = (card: HCCard.Any, dropFaces?: boolean) =>
+  toFaces(card, dropFaces).some(face => faceIsPermanent(face));
+
+/**
+ * Converts the card to an array of its faces that are permanents.
+ * For single-faced cards, returns an array with the card itself.
+ * For multi-faced cards, returns the card_faces array.
+ *
+ * Make sure you only try to work with props of type {@linkcode facePropType}.
+ * @param card card to get the faces of
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ * @returns an array of objects of type {@link faceType}
+ */
+export const toPermanentFaces = (card: HCCard.Any, dropFaces?: boolean) =>
+  toFaces(card, dropFaces).filter(faceIsPermanent);
+/**
+ * Gets the mana cost of each permanent face of a card, dropping duplicate blanks
+ * @param card card to get the costs from
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const getCostsFromPermanentFaces = (card: HCCard.Any, dropFaces?: boolean) =>
+  fixCosts(
+    toFaces(card, dropFaces)
+      .filter(faceIsPermanent)
+      .map(face => face.mana_cost)
+  );
+
+/**
+ * Checks whether a face is historic
+ * @param face face to check
+ */
+export const faceIsHistoric = (face: faceType) =>
+  textListIncludes(face.supertypes, 'legendary') ||
+  textListIncludes(face.types, 'artifact') ||
+  textListIncludes(face.subtypes, 'saga');
+
+/**
+ * Checks whether a card is historic
+ * @param card card to check
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const cardIsHistoric = (card: HCCard.Any, dropFaces?: boolean) =>
+  toFaces(card, dropFaces).some(face => faceIsHistoric(face));
+
+/**
+ * Gets the mana cost of each historic permanent face of a card, dropping duplicate blanks
+ * @param card card to get the costs from
+ * @param dropFaces whether to exclude faces with `drop_face: true`
+ */
+export const getCostsFromHistoricPermanentFaces = (card: HCCard.Any, dropFaces?: boolean) =>
+  fixCosts(
+    toFaces(card, dropFaces)
+      .filter(faceIsPermanent)
+      .filter(faceIsHistoric)
+      .map(face => face.mana_cost)
+  );
 
 /**
  * Gets the value of a prop from each face of a card (including the main part for multiface cards)
+ * @template K type of the prop (must extend {@linkcode allPropType})
  * @param card card to get the value from
  * @param prop prop to get the value of
- * @returns
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  */
 export const getFromAll = <K extends allPropType>(
   card: HCCard.Any,
-  prop: K
+  prop: K,
+  dropFaces?: boolean
 ): allElementValueType<K>[] => [
-  ...('card_faces' in card ? ensureArray(card[prop] as any) : []),
-  ...getFromFaces(card, prop),
+  ...('card_faces' in card
+    ? ensureArray(
+        (['mana_cost', 'type_line'].includes(prop) && dropFaces
+          ? getFromFaces(card, prop, dropFaces).join(' // ')
+          : card[prop]) as any
+      )
+    : []),
+  ...getFromFaces(card, prop, dropFaces),
 ];
 
 /**
@@ -179,7 +303,7 @@ const faceToPlainText = (face: faceType): string => {
     text += ` ${face.mana_cost}`;
   }
   if (face.color_indicator) {
-    text += `\n${getIndicatorFromColors(face.color_indicator)?.english}`;
+    text += `\n${pipMap.getIndicator(face.color_indicator)?.english}`;
   }
   if (face.type_line) {
     text += `\n${face.type_line}`;
@@ -239,8 +363,9 @@ export const getOtherNames = (card: HCCard.Any): string[] | undefined => {
 /**
  * Gets all names for a card that would be an exact match (for filters)
  * @param card card to get all names for
+ * @param dropFaces whether to exclude faces with `drop_face: true`
  */
-export const getAllNames = (card: HCCard.Any): string[] => {
+export const getAllNames = (card: HCCard.Any, dropFaces?: boolean): string[] => {
   const names = [stripMasterpiece(stripSetCode(card.name))];
   if (names[0].slice(-5) == ' (HC)') {
     names.push(card.name);
@@ -254,16 +379,18 @@ export const getAllNames = (card: HCCard.Any): string[] => {
   const start = getMasterpiece(card.name);
   const ending = getSetCode(card.name);
   if ('card_faces' in card) {
-    card.card_faces.forEach((face, i) => {
+    toFaces(card, dropFaces).forEach((face, i) => {
       if (face.flavor_name) {
         names.push(face.flavor_name);
       }
       names.push(face.name);
       let name = face.name;
-      card.card_faces.slice(i + 1).forEach(f => {
-        name += ` // ${f.name}`;
-        names.push(name);
-      });
+      toFaces(card, dropFaces)
+        .slice(i + 1)
+        .forEach(f => {
+          name += ` // ${f.name}`;
+          names.push(name);
+        });
     });
   }
   if (start || ending) {
@@ -347,9 +474,10 @@ export const getHc5 = (): CardMap =>
  * @param card card to get the related cards to
  * @param cardMap CardMap containing all cards
  *
- * This version will also try to match hcid and name, so it's exhaustive, but it's not suitable for use on the frontend due to its slowness
+ * This version will also try to match hcid and name, so it's exhaustive,
+ * but it's not suitable for use on the frontend due to its slowness
  *
- * For a fast version, use {@link getAllRelated}
+ * For a fast version, use {@linkcode getAllRelated}
  */
 export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap =>
   new CardMap(
@@ -367,9 +495,10 @@ export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): Car
  * @param card card to get the related cards to
  * @param cardMap CardMap containing all cards
  *
- * This version won't also try to match hcid and name, so it's fast, but it's not suitable for use on the backend
+ * This version won't also try to match hcid and name, so it's fast,
+ * but it's not suitable for use on the backend
  *
- * For an exhaustive version, use {@link getAllRelatedPermissive}
+ * For an exhaustive version, use {@linkcode getAllRelatedPermissive}
  */
 export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
   cardMap.getSubset(card.all_parts?.map(part => part.id) ?? []);
@@ -384,7 +513,6 @@ export const getRelatedsFromCards = (
   idList: string[],
   cardMap: CardMap
 ): { cards: CardMap; tokens: CardMap } => {
-  // TODO: don't use this for 'all'
   const cards: CardMap = cardMap.getSubset(idList);
   const tokens: CardMap = cardMap.getSubset(
     cards.flatMap(
@@ -401,7 +529,8 @@ export const getRelatedsFromCards = (
  * Gets the cards and tokens for a set
  * @param set the set to get
  * @param cardMap CardMap containing all cards
- * @param moveNonDraftablesToTokens whether to move cards in the set that aren't directly draftable into tokens (set to true when exporting to draftmancer)
+ * @param moveNonDraftablesToTokens whether to move cards in the set that aren't directly draftable
+ * into tokens (set to true when exporting to draftmancer)
  */
 export const getRelatedsFromSet = (
   set: SetCode,

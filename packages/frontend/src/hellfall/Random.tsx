@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { searchCards } from '@hellfall/shared/filters';
+import { isUniqueMode, searchCards, toUnique } from '@hellfall/shared/filters';
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from './atoms/cardsAtom';
 import { tagsData } from '@hellfall/shared/data';
@@ -14,11 +14,11 @@ export const Random = () => {
     .getAllInSetListExact(allExceptNormal);
   const params = new URLSearchParams(location.search);
   const query = params.get(/* asRandom ? 'random':  */ 'q') || '';
-  // const parsedQuery = parseSearchQuery(query);
-  const resultSet = query ? searchCards(cards, query, tagsData.data) : cards;
+  const unique = toUnique(params.get('unique') ?? 'cards') ?? 'cards';
+  const resultSet = query ? searchCards(cards, query, unique) : cards;
   const card = resultSet.getRandomCard();
   useEffect(() => {
-    navigate(`/card/${encodeURIComponent(card.hcid)}?q=${query || '*'}`);
+    navigate(`/card/${encodeURIComponent(card.hcid)}?q=${query || '*'}`, { replace: true });
   }, [card, query, navigate]); // Dependencies ensure navigation happens when needed
 
   // Return null or a loading indicator while redirecting

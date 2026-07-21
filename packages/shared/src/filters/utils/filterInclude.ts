@@ -1,21 +1,13 @@
-import { HCCard, isSetCode, SetCode, isSetType, SetType } from '@hellfall/shared/types';
+import { HCCard } from '@hellfall/shared/types';
+import { canBeInDecks, extraSetList, unescapeText } from '@hellfall/shared/utils';
 import {
   includeFilterFunction,
   inclusionType,
-  opType,
-  stateFilterFunction,
-  summaryFunction,
   isInclusionType,
+  opType,
+  summaryFunction,
 } from '../types';
-import { createCorrectedSummary, opAsBool, opToNot, createSummary, unescapeText } from '../utils';
-import {
-  canBeInDecks,
-  extraSetList,
-  getSet,
-  inSetBlock,
-  inSetGroup,
-  inSetOrDirectChildren,
-} from '@hellfall/shared/utils';
+import { createCorrectedSummary } from './filterUtils';
 
 const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',
@@ -29,6 +21,8 @@ const inclusionNicknames: Record<string, inclusionType> = {
   nonextra: 'nonextras',
   v: 'vetoed',
   veto: 'vetoed',
+  d: 'drop',
+  dropped: 'drop',
 };
 
 const includeToSummary: Record<inclusionType, string> = {
@@ -38,9 +32,10 @@ const includeToSummary: Record<inclusionType, string> = {
   tokens: 'tokens',
   nonextras: 'nonextras',
   vetoed: 'vetoed cards',
+  drop: 'dropped faces',
 };
 
-const correctValue = (value: string): string | undefined =>
+export const correctInclude = (value: string): string | undefined =>
   isInclusionType(value) ? value : inclusionNicknames[value];
 const validSummary: summaryFunction<string> = (operator, value, invert) =>
   `${invert ? 'ex' : 'in'}cluding ${includeToSummary[value as inclusionType]}`;
@@ -54,7 +49,7 @@ const invalidSummary: summaryFunction<string> = (operator, value, invert) =>
  * @param invert whether the search is inverted
  */
 export const includeSummary: summaryFunction<string> = createCorrectedSummary(
-  correctValue,
+  correctInclude,
   validSummary,
   invalidSummary
 );
@@ -70,7 +65,7 @@ export const includeFilter: includeFilterFunction = (
   operator: opType,
   value2: string
 ) => {
-  switch (correctValue(unescapeText(value2))) {
+  switch (correctInclude(unescapeText(value2))) {
     case 'all':
       return true;
     case 'extras':
@@ -80,7 +75,10 @@ export const includeFilter: includeFilterFunction = (
     case 'tokens':
       return !canBeInDecks(value1);
     case 'nonextras':
-      return !extraSetList.includes(value1.set);
+      return (
+        !extraSetList.includes(value1.set) ||
+        Object.values(value1.legalities).some(l => l == 'legal')
+      );
     case 'vetoed':
       return value1.set.includes('HCV');
   }

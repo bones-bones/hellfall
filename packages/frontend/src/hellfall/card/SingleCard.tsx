@@ -1,8 +1,8 @@
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { HellfallCard } from './HellfallCard.tsx';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useAtomValue } from 'jotai';
 import { useUpdateURL } from '../hooks/useUrlSync.ts';
 import { useSearchResults } from '../hooks/useSearchResults.ts';

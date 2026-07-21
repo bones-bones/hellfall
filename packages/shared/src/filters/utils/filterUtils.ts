@@ -21,8 +21,8 @@ import {
   textListIncludes,
   toNumber,
   xor,
+  fixValue,
 } from '@hellfall/shared/utils';
-import { unescapeText } from './parseUtils';
 import { isFormat } from '@hellfall/shared/types';
 
 const invertedOps: Record<looseOpType, looseOpType> = {
@@ -179,29 +179,6 @@ const opToShorthand: summaryFunction<shorthandType> = (operator: opType, value: 
   value == 'c' ? opToCRecord[operator] : opToMRecord[operator];
 
 /**
- * Fixes a value by unescaping all text; can go inside arrays, but not other objects
- * @template T type of the value to fix
- * @param value value to fix
- * @param option how to fix the text; fix does unescape; others just do the corresponding text transformation
- */
-export const fixValue = <T>(value: T, option: 'upper' | 'lower' | 'fix' = 'fix'): T => {
-  if (typeof value == 'string') {
-    switch (option) {
-      case 'fix':
-        return unescapeText(value) as T;
-      case 'upper':
-        return value.toUpperCase() as T;
-      case 'lower':
-        return value.toLowerCase() as T;
-    }
-  }
-  if (Array.isArray(value)) {
-    return value.map(e => fixValue(e, option)) as T;
-  }
-  return value;
-};
-
-/**
  * Creates a corrected {@linkcode summaryFunction<T>}
  * @template T the type of the value to use
  * @param correctValue a function that takes the inputted search value and corrects
@@ -220,6 +197,29 @@ export const createCorrectedSummary =
     correctValue(fixValue(value)) != undefined
       ? validSummary(operator, correctValue(fixValue(value)) as T, invert)
       : invalidSummary(operator, value, invert);
+/**
+ * Creates a corrected {@linkcode summaryFunction<T>}
+ * @template T the type of the value to use
+ * @param correctValue a function that takes the inputted search value and corrects
+ * it to one that can be displayed, or returns `undefined` if the value is invalid
+ * @param usingFirst a function that takes the inputted search value and outputs a value
+ * that determines which of two summaries is used
+ * @param validSummary a {@linkcode summaryFunction<T>} to be used when the value is valid
+ * @param invalidSummary a {@linkcode summaryFunction<T>} to be used when the value
+ * is invalid; make sure that the first character is `!`
+ */
+
+export const createCorrectedDoubleSummary =
+  <T>(
+    correctValue: (value: T) => T | undefined,
+    usingFirst: (value: T) => boolean | undefined,
+    validSummary: summaryFunction<T>,
+    invalidSummary: summaryFunction<T>
+  ): summaryFunction<T> =>
+  (operator: opType, value: T) =>
+    correctValue(fixValue(value)) != undefined
+      ? validSummary(operator, correctValue(fixValue(value)) as T, usingFirst(fixValue(value)))
+      : invalidSummary(operator, value);
 
 /**
  * The base number summary function. Handles operators and invert
@@ -257,7 +257,7 @@ export const createNumSummary =
 export const createInvalidSummary =
   (summaryStart?: string): summaryFunction<string> =>
   (operator: opType, value: string) =>
-    `!Unknown ${summaryStart ? `${summaryStart} ` : ''} "${value}"`;
+    `!Unknown ${summaryStart ? `${summaryStart} ` : ''} ${value}`;
 
 /**
  * Creates a {@linkcode summaryFunction<colorSearch>}
@@ -387,6 +387,38 @@ export const containsOp = <T, S>(
     case '!=': {
       return !contains(value1, value2) || !contains(value2, value1);
     }
+  }
+};
+/**
+ * Compares a value from a card with a value from a search
+ * using a containment function and an equality function
+ * @template T the type of the value from the card
+ * @template S the type of the value from the search
+ * @param contains the containment function to use
+ * @param equals the equality function to use
+ * @param value1 the value from the card
+ * @param value2 the value from the search
+ */
+export const containEqualsOp = <T, S>(
+  operator: opType,
+  contains: (value1: T | S, value2: T | S) => boolean,
+  equals: (value1: T, value2: S) => boolean | undefined,
+  value1: T,
+  value2: S
+) => {
+  switch (operator) {
+    case '<':
+      return containsOp(operator, contains, value1, value2);
+    case '<=':
+      return containsOp(operator, contains, value1, value2);
+    case '=':
+      return containsOp(operator, contains, value1, value2);
+    case '>=':
+      return containsOp(operator, contains, value1, value2);
+    case '>':
+      return containsOp(operator, contains, value1, value2);
+    case '!=':
+      return containsOp(operator, contains, value1, value2);
   }
 };
 

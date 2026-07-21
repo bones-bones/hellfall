@@ -1,5 +1,5 @@
 import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
-import { Divider } from '../visual-components/Divider';
+import { Divider, Separator } from '../visual-components/Divider';
 import { StyledHeadingLink } from '../visual-components/StyledHeading';
 import { HellfallRelatedEntry } from '../../entry/HellfallRelatedEntry';
 import { createStyles } from '@workday/canvas-kit-styling';
@@ -16,7 +16,7 @@ export const RelatedCards = ({
   onSinglePage?: boolean;
   otherPrints: HCCard.Any[];
 }) => {
-  if (!relatedCards) {
+  if (!relatedCards.length && otherPrints.every(print => print.id == sourceCardId)) {
     return null;
   }
   return (
@@ -25,7 +25,12 @@ export const RelatedCards = ({
       <div>
         {relatedCards.length > 0 && (
           <>
-            <StyledHeadingLink size="small" to={`/?q=~oracleid:${otherPrints[0].oracle_id}`}>
+            <StyledHeadingLink
+              size="small"
+              to={`/?q=${encodeURIComponent(
+                `~oracleid:${otherPrints[0].oracle_id} include:extras`
+              )}`}
+            >
               Related Cards & Tokens
             </StyledHeadingLink>
             <RelatedGrid>
@@ -54,7 +59,12 @@ export const RelatedCards = ({
         )}
         {otherPrints.some(card => card.id != sourceCardId) && (
           <>
-            <StyledHeadingLink size="small" to={`/?q=oracleid:${otherPrints[0].oracle_id}`}>
+            <StyledHeadingLink
+              size="small"
+              to={`/?q=${encodeURIComponent(
+                `oracleid:${otherPrints[0].oracle_id} include:extras`
+              )}`}
+            >
               Other Prints
             </StyledHeadingLink>
             <RelatedGrid>
@@ -93,11 +103,3 @@ const relatedGridStyles = createStyles({
   margin: '0 auto',
 });
 const RelatedGrid = createStyledDiv(relatedGridStyles, 'RelatedGrid');
-const separatorStyles = createStyles({
-  height: '1px',
-  backgroundColor: '#ccc',
-  border: 'none',
-  marginLeft: '-24px',
-  marginRight: '-24px',
-});
-const Separator = createStyledHR(separatorStyles, 'Separator');

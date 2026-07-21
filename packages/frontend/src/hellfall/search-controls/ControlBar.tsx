@@ -1,32 +1,52 @@
-import { FormField, PaginationModel } from '@workday/canvas-kit-react';
+import { BoxProps, FormField, TextProps } from '@workday/canvas-kit-react';
 import { useAtom, useAtomValue } from 'jotai';
 import {
+  inputDisplayAtom,
   inputSortAtom,
-  // pageAtom,
-  queryAtom,
+  inputUniqueAtom,
+  queryDisplayAtom,
   querySortAtom,
+  queryUniqueAtom,
   sortAtom,
 } from '../atoms/searchAtoms.ts';
-import { sortType, dirType, getWinnowedSortOptions } from '@hellfall/shared/filters';
-import { useEffect, useState } from 'react';
 import {
-  plusIcon,
-  minusIcon,
-  chevronLeftIcon,
-  chevronRightIcon,
-  splitIcon,
-  chevron2xLeftIcon,
-  chevron2xRightIcon,
-} from '@workday/canvas-system-icons-web';
-import { createStyles } from '@workday/canvas-kit-styling';
+  sortType,
+  dirType,
+  getWinnowedSortOptions,
+  parseSorts,
+  uniqueType,
+  displayType,
+} from '@hellfall/shared/filters';
+import { ReactNode, useEffect, useState } from 'react';
+import { plusIcon, minusIcon } from '@workday/canvas-system-icons-web';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import {
+  createStenciledDiv,
+  createStenciledSpan,
   createStyledDiv,
   createStyledSecondaryButton,
-  createStyledSecondaryButtonLink,
+  createStyledSpan,
 } from '../../styling';
-import { StyledSelect } from './StyledSelect.tsx';
+import { SelectItems, StyledSelect } from './StyledSelect.tsx';
+// @circular-ignore Used only for links
+import { useUrlSync, useSyncSorts } from '../hooks/useUrlSync.ts';
+// import { useAuth } from '../../auth/AuthContext.tsx';
+import { listsAreExactlyEqual } from '@hellfall/shared/utils';
 
-const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
+const UNIQUE_OPTIONS: SelectItems<uniqueType> = [
+  { label: 'Cards', value: 'cards' },
+  { label: 'All prints', value: 'cards' },
+  // {label: 'Unique art', label:'arts'}
+];
+
+const DISPLAY_OPTIONS: SelectItems<displayType> = [
+  { label: 'Images', value: 'grid' },
+  { label: 'Checklist', value: 'checklist' },
+  { label: 'Text Only', value: 'text' },
+  { label: 'Full', value: 'full' },
+];
+
+const ALL_SORT_OPTIONS: SelectItems<sortType> = [
   { label: 'Auto', value: 'auto' },
   { label: 'Name', value: 'name' },
   { label: 'Id', value: 'id' },
@@ -38,7 +58,7 @@ const ALL_SORT_OPTIONS: Array<{ label: string; value: sortType }> = [
   { label: 'Mana Value', value: 'manavalue' },
 ];
 
-const DIR_OPTIONS: Array<{ label: string; value: dirType }> = [
+const DIR_OPTIONS: SelectItems<dirType> = [
   { label: 'Auto', value: 'auto' },
   { label: 'Asc', value: 'asc' },
   { label: 'Desc', value: 'desc' },
@@ -46,34 +66,76 @@ const DIR_OPTIONS: Array<{ label: string; value: dirType }> = [
 const parseSort = (order: string): sortType => order?.split(',')[0] as sortType;
 const parseDir = (order: string): dirType => order?.split(',')[1] as dirType;
 
-export const ControlBar = ({ model }: { model?: PaginationModel }) => {
+/**
+ * User control bar. Has sort controls. If you want to have something on the right, pass it as children.
+ *
+ * In order for this component to work properly, either {@linkcode useUrlSync} or {@linkcode useSyncSorts}
+ * must be called in the body of the component that uses this. (Otherwise sort options won't sync.)
+ */
+export const ControlBar = ({
+  noPad,
+  children,
+}: {
+  /**
+   * Whether to hide the label. If true, also removes the padding on this component.
+   * Use this if you want to use different layout styling on the control bar.
+   */
+  noPad?: boolean;
+  children?: ReactNode;
+}) => {
+  // const { user } = useAuth();
+  const [inputUnique, setInputUnique] = useAtom(inputUniqueAtom);
+  const queryUnique = useAtomValue(queryUniqueAtom);
+  const [inputDisplay, setInputDisplay] = useAtom(inputDisplayAtom);
+  const queryDisplay = useAtomValue(queryDisplayAtom);
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const querySorts = useAtomValue(querySortAtom);
-  const query = useAtomValue(queryAtom);
   const [sortRules, setSortRules] = useAtom(sortAtom);
   const [canAddInput, setCanAddInput] = useState<boolean>();
   const [canDelInput, setCanDelInput] = useState<boolean>();
   const getAvailableOptions = (index: number): sortType[] =>
     getWinnowedSortOptions(sortRules.slice(0, index));
-  const sortIsOverriden = (index: number): boolean =>
+  const sortIsOverridden = (index: number): boolean =>
     index < inputSorts.length && parseSort(inputSorts[index]) != sortRules[index]?.sort;
-  const dirIsOverriden = (index: number): boolean =>
+  const dirIsOverridden = (index: number): boolean =>
     index < inputSorts.length && parseDir(inputSorts[index]) != sortRules[index]?.dir;
-  const handleSortChange = (index: number, newSort: sortType) => {
-    if (!sortRules.length) {
-      handleAddInput();
+  const handleUniqueChange = (newUnique: uniqueType) => {
+    if (newUnique != inputUnique) {
+      setInputUnique(newUnique);
     }
-    const newInputs = sortRules.length ? [...inputSorts] : ['auto,auto'];
-    newInputs[index] = `${newSort},${parseDir(inputSorts[index] ?? 'auto,auto')}`;
-    setInputSorts(newInputs);
+  };
+  const handleDisplayChange = (newDisplay: displayType) => {
+    if (newDisplay != inputDisplay) {
+      setInputDisplay(newDisplay);
+    }
+  };
+  const handleSortChange = (index: number, newSort: sortType) => {
+    const newInputs =
+      sortRules.length && inputSorts.length
+        ? [...inputSorts]
+        : /* user?.defaultSorts ?? */ ['auto,auto'];
+    if (newSort != parseSort(newInputs[index])) {
+      newInputs[index] = `${newSort},${parseDir(
+        newInputs[index] ?? /* user?.defaultSorts?.[index] ?? */ 'auto,auto'
+      )}`;
+    }
+    if (!listsAreExactlyEqual(newInputs, inputSorts)) {
+      setInputSorts(newInputs);
+    }
   };
   const handleDirChange = (index: number, newDir: dirType) => {
-    if (!sortRules.length) {
-      handleAddInput();
+    const newInputs =
+      sortRules.length && inputSorts.length
+        ? [...inputSorts]
+        : /* user?.defaultSorts ?? */ ['auto,auto'];
+    if (newDir != parseDir(newInputs[index])) {
+      newInputs[index] = `${parseSort(
+        newInputs[index] ?? /* user?.defaultSorts?.[index] ?? */ 'auto,auto'
+      )},${newDir}`;
     }
-    const newInputs = sortRules.length ? [...inputSorts] : ['auto,auto'];
-    newInputs[index] = `${parseSort(inputSorts[index] ?? 'auto,auto')},${newDir}`;
-    setInputSorts(newInputs);
+    if (!listsAreExactlyEqual(newInputs, inputSorts)) {
+      setInputSorts(newInputs);
+    }
   };
   useEffect(() => {
     setCanAddInput(
@@ -99,77 +161,79 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
     setInputSorts(newInputs);
   };
 
-  const currentPage = model?.state.currentPage;
-  const lastPage = model?.state.lastPage;
   const getCurrentSort = (index: number) => inputSorts[index]?.split(',')[0] as sortType;
   const getCurrentDir = (index: number) => inputSorts[index]?.split(',')[1] as dirType;
   return (
-    <Container>
+    <Container noPad={noPad}>
       <FormField className={formFieldStyles}>
-        <FormField.Label>Sort By</FormField.Label>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <SortElements>
-            {sortRules.length ? (
-              sortRules.map((rule, i) => (
-                <div key={`sort-wrapper-${i}`} style={{ display: 'inline-block' }}>
-                  <StyledSelect<sortType>
-                    index={i}
-                    value={rule.sort}
-                    isOverriden={sortIsOverriden}
-                    getAvailableOptions={getAvailableOptions}
-                    handleValueChange={handleSortChange}
-                    width="135px"
-                    items={ALL_SORT_OPTIONS}
-                    getCurrentValue={getCurrentSort}
-                    title={
-                      sortIsOverriden(i)
-                        ? 'You specified this option in your search terms'
-                        : 'Change how cards are sorted'
-                    }
-                  />
-                  <span> : </span>
-                  <StyledSelect<dirType>
-                    index={i}
-                    value={rule.dir}
-                    isOverriden={dirIsOverriden}
-                    handleValueChange={handleDirChange}
-                    width="85px"
-                    items={DIR_OPTIONS}
-                    getCurrentValue={getCurrentDir}
-                    title={
-                      dirIsOverriden(i)
-                        ? 'You specified this option in your search terms'
-                        : 'Change sort direction'
-                    }
-                  />
-                  {i != sortRules.length - 1 && <span style={{ marginRight: '5px' }}> then </span>}
-                </div>
-              ))
-            ) : (
-              <div style={{ display: 'inline-block' }}>
+            <StyledSelect<uniqueType>
+              key={`unique-group`}
+              initialValue={queryUnique ?? inputUnique}
+              disabled={!!queryUnique}
+              onSelect={(newValue: uniqueType) => handleUniqueChange(newValue)}
+              width="110px"
+              items={UNIQUE_OPTIONS}
+              title={
+                queryUnique
+                  ? 'You specified this option in your search terms'
+                  : 'Change how cards are found'
+              }
+            />
+            <BarText> as </BarText>
+            <StyledSelect<displayType>
+              key={`display-group`}
+              initialValue={queryDisplay ?? inputDisplay}
+              disabled={!!queryDisplay}
+              onSelect={(newValue: displayType) => handleDisplayChange(newValue)}
+              width="110px"
+              items={DISPLAY_OPTIONS}
+              title={
+                queryDisplay
+                  ? 'You specified this option in your search terms'
+                  : 'Change how cards are displayed'
+              }
+            />
+            <BarText> sorted by </BarText>
+            {(sortRules.length
+              ? sortRules
+              : parseSorts(inputSorts.length ? inputSorts : ['auto,auto'])
+            ).map((rule, i) => (
+              <div key={`sort-wrapper-${i}`} style={{ display: 'inline-block' }}>
                 <StyledSelect<sortType>
-                  index={0}
-                  value={'auto'}
-                  isOverriden={sortIsOverriden}
-                  handleValueChange={handleSortChange}
+                  key={`sort-group-${i}`}
+                  initialValue={rule.sort}
+                  disabled={sortIsOverridden(i)}
+                  availableValues={getAvailableOptions(i)}
+                  onSelect={(newValue: sortType) => handleSortChange(i, newValue)}
                   width="135px"
                   items={ALL_SORT_OPTIONS}
-                  getCurrentValue={getCurrentSort}
-                  title={'Change how cards are sorted'}
+                  currentValue={getCurrentSort(i)}
+                  title={
+                    sortIsOverridden(i)
+                      ? 'You specified this option in your search terms'
+                      : 'Change how cards are sorted'
+                  }
                 />
-                <span> : </span>
+                <BarText> : </BarText>
                 <StyledSelect<dirType>
-                  index={0}
-                  value={'auto'}
-                  isOverriden={dirIsOverriden}
-                  handleValueChange={handleDirChange}
+                  key={`dir-group-${i}`}
+                  initialValue={rule.dir}
+                  disabled={dirIsOverridden(i)}
+                  onSelect={(newValue: dirType) => handleDirChange(i, newValue)}
                   width="85px"
                   items={DIR_OPTIONS}
-                  getCurrentValue={getCurrentDir}
-                  title={'Change sort direction'}
+                  currentValue={getCurrentDir(i)}
+                  title={
+                    dirIsOverridden(i)
+                      ? 'You specified this option in your search terms'
+                      : 'Change sort direction'
+                  }
                 />
+                {i != sortRules.length - 1 && <BarText data-is-then> then </BarText>}
               </div>
-            )}
+            ))}
             <>
               <ButtonGroup>
                 <CompactButton
@@ -209,72 +273,35 @@ export const ControlBar = ({ model }: { model?: PaginationModel }) => {
               </ButtonGroup>
             </>
           </SortElements>
-          {model && (
-            <>
-              <ControlButton
-                icon={chevron2xLeftIcon}
-                title={`${currentPage == 1 ? 'You are on' : 'Go to'} the first page of this search`}
-                aria-label={`${
-                  currentPage == 1 ? 'You are on' : 'Go to'
-                } the first page of this search`}
-                onClick={model.events.first}
-                disabled={currentPage == 1}
-              />
-              <ControlButton
-                icon={chevronLeftIcon}
-                title={`${currentPage == 1 ? 'You are on' : 'Go to'} the ${
-                  currentPage == 1 ? 'first' : 'previous'
-                } page of this search`}
-                aria-label={`${currentPage == 1 ? 'You are on' : 'Go to'} the ${
-                  currentPage == 1 ? 'first' : 'previous'
-                } page of this search`}
-                onClick={model.events.previous}
-                disabled={currentPage == 1}
-              />
-              <ControlButtonLink
-                icon={splitIcon}
-                title="Find a random card within this search"
-                aria-label="Find a random card within this search"
-                to={`/random${query ? `?q=${query}` : ''}`}
-              />
-              <ControlButton
-                icon={chevronRightIcon}
-                title={`${currentPage == lastPage ? 'You are on' : 'Go to'} the ${
-                  currentPage == 1 ? 'last' : 'next'
-                } page of this search`}
-                aria-label={`${currentPage == lastPage ? 'You are on' : 'Go to'} the ${
-                  currentPage == 1 ? 'last' : 'next'
-                } page of this search`}
-                onClick={model.events.next}
-                disabled={currentPage == lastPage}
-              />
-              <ControlButton
-                icon={chevron2xRightIcon}
-                title={`${
-                  currentPage == lastPage ? 'You are on' : 'Go to'
-                } the last page of this search`}
-                aria-label={`${
-                  currentPage == lastPage ? 'You are on' : 'Go to'
-                } the last page of this search`}
-                onClick={model.events.last}
-                disabled={currentPage == lastPage}
-              />
-            </>
-          )}
+          {children}
         </div>
       </FormField>
     </Container>
   );
 };
 
-const containerStyles = createStyles({
-  paddingLeft: '36px',
-  paddingRight: '36px',
-  alignItems: 'center',
-  width: '100%',
-  boxSizing: 'border-box',
+const containerStencil = createStencil({
+  vars: {},
+  base: {
+    paddingLeft: '36px',
+    paddingRight: '36px',
+    alignItems: 'center',
+    width: '100%',
+    boxSizing: 'border-box',
+  },
+  modifiers: {
+    noPad: {
+      true: {
+        paddingLeft: '0',
+        paddingRight: '0',
+      },
+    },
+  },
 });
-const Container = createStyledDiv(containerStyles, 'Container');
+interface ContainerProps extends BoxProps {
+  noPad?: boolean;
+}
+const Container = createStenciledDiv<ContainerProps>(containerStencil, 'Container');
 const formFieldStyles = createStyles({
   width: '100%',
   '& > div': {
@@ -282,6 +309,25 @@ const formFieldStyles = createStyles({
     width: '100%',
   },
 });
+
+const barTextStencil = createStencil({
+  vars: {},
+  base: {
+    position: 'relative',
+    top: '-2px',
+  },
+  modifiers: {
+    'data-is-then': {
+      true: {
+        marginRight: '5px',
+      },
+    },
+  },
+});
+interface BarTextProps extends TextProps {
+  'data-is-then'?: boolean;
+}
+const BarText = createStenciledSpan<BarTextProps>(barTextStencil);
 
 const sortElementsStyles = createStyles({
   lineHeight: '45px',
@@ -324,17 +370,3 @@ const buttonGroupStyles = createStyles({
   verticalAlign: 'top',
 });
 const ButtonGroup = createStyledDiv(buttonGroupStyles, 'ButtonGroup');
-
-const controlButtonStyles = createStyles({
-  margin: '0 2px',
-  borderRadius: '4px',
-  // textDecoration:'none',
-  // '&:hover, &:focus, &:active': {
-  //   textDecoration: 'none'
-  // },
-  '&:disabled': {
-    cursor: 'not-allowed',
-  },
-});
-const ControlButton = createStyledSecondaryButton(controlButtonStyles, 'ControlButton');
-const ControlButtonLink = createStyledSecondaryButtonLink(controlButtonStyles, 'ControlButtonLink');
