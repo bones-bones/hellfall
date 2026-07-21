@@ -683,6 +683,10 @@ const subKeywords: Record<string, string | string[]> = {
   'bicycling': 'cycling',
   'choose a background': 'partner',
   'lore':'partner',
+  'third wheel': 'partner',
+  'discoverlink': ['discover','link'],
+  'choose a signature spell': 'partner',
+  'do man':'domain',
 };
 
 const keywordTags = [
@@ -701,6 +705,8 @@ const tagsToKeywords: Record<string, string | string[]> = {
   'gx-ability': 'gx',
   cube: 'rotate',
   'mutate-layout': 'mutate',
+  'partner-mechanic': 'partner',
+  'unprinted-partner': 'partner',
 };
 
 export const fillSubKeywords = (keywords: string[]) => {

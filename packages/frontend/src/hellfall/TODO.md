@@ -171,3 +171,4 @@ Write a script to transform the database
 - remove `card-in-scryfall` from nebulas
 - squash dom bugs
 - replace the set selector with a pill version
+- strip masterpiece/reprint names on fetch?
