@@ -1,4 +1,8 @@
-export { catalogSyncHandler } from './catalogSync.ts';
+export {
+  catalogSyncHandler,
+  catalogSyncStatusHandler,
+  catalogSyncRunHandler,
+} from './catalogSync.ts';
 export { cardJsonHandler, cardTextHandler } from './cardData.ts';
 export { logoutHandler } from './logout.ts';
 export { exportHellscubeHandler } from './exportHellscube.ts';

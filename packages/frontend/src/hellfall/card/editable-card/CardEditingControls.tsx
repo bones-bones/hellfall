@@ -1,33 +1,19 @@
-import { useState } from 'react';
-import { CardEditPanel } from './CardEditPanel.tsx';
-import { HCCard } from '@hellfall/shared/types';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledButton } from '../../../styling/StyledElements.tsx';
 
 export const CardEditingControls = ({
-  displayCard,
   canEdit,
+  onEditStart,
 }: {
-  displayCard: HCCard.Any;
   canEdit: boolean;
+  onEditStart: () => void;
 }) => {
-  const [editing, setEditing] = useState(false);
+  if (!canEdit) return null;
 
   return (
-    <>
-      {canEdit && !editing && (
-        <EditCardButton type="button" onClick={() => setEditing(true)}>
-          Edit Card Data
-        </EditCardButton>
-      )}
-      {editing && (
-        <CardEditPanel
-          card={displayCard}
-          onClose={() => setEditing(false)}
-          onSubmitted={() => setEditing(false)}
-        />
-      )}
-    </>
+    <EditCardButton type="button" onClick={onEditStart}>
+      Edit Card Data
+    </EditCardButton>
   );
 };
 

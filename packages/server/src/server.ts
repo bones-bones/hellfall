@@ -13,6 +13,8 @@ import { searchHandler } from './api/search.ts';
 import { changesetsHandler } from './api/changesets.ts';
 import {
   catalogSyncHandler,
+  catalogSyncStatusHandler,
+  catalogSyncRunHandler,
   cardJsonHandler,
   cardTextHandler,
   logoutHandler,
@@ -42,6 +44,17 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
 
 const CARD_API_PREFIX = '/api/cards/';
 const CHANGESETS_PREFIX = '/api/changesets';
+const CATALOG_SYNC_PREFIX = '/api/admin/catalog/sync';
+
+function parseCatalogSyncPath(path: string): { jobId: string; action: 'status' | 'run' } | null {
+  if (path === CATALOG_SYNC_PREFIX) return null;
+  if (!path.startsWith(CATALOG_SYNC_PREFIX + '/')) return null;
+  const rest = path.slice(CATALOG_SYNC_PREFIX.length + 1);
+  const parts = rest.split('/').filter(Boolean);
+  if (parts.length === 1) return { jobId: parts[0], action: 'status' };
+  if (parts.length === 2 && parts[1] === 'run') return { jobId: parts[0], action: 'run' };
+  return null;
+}
 
 function parseCardIDFromPath(path: string): string | null {
   if (!path.startsWith(CARD_API_PREFIX)) return null;
@@ -112,6 +125,16 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
       const changesetId = parts[0] || null;
       const action = parts[1] || null;
       await changesetsHandler(req, res as HandlerResponse, changesetId, action);
+      return;
+    }
+
+    const catalogSync = parseCatalogSyncPath(path);
+    if (catalogSync) {
+      if (catalogSync.action === 'run') {
+        await catalogSyncRunHandler(req, res as HandlerResponse, catalogSync.jobId);
+      } else {
+        await catalogSyncStatusHandler(req, res as HandlerResponse, catalogSync.jobId);
+      }
       return;
     }
 

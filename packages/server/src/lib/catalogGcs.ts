@@ -42,7 +42,9 @@ export async function downloadCatalogBodyFromGcs(): Promise<string | null> {
 /** Upload gzip-compressed catalog JSON and manifest after a publish. Requires CATALOG_GCS_BUCKET. */
 export async function uploadCatalogToGcs(
   body: string,
-  cardCount: number
+  cardCount: number,
+  /** Reuse a gzip buffer already built for the in-memory cache (avoids a second gzip of ~14MB). */
+  gzipBody?: Buffer
 ): Promise<CatalogManifest> {
   const bucketName = env.CATALOG_GCS_BUCKET;
   if (!bucketName) {
@@ -53,9 +55,9 @@ export async function uploadCatalogToGcs(
     version: new Date().toISOString(),
     cardCount,
   };
-  const gzipBody = gzipSync(body);
+  const compressed = gzipBody ?? gzipSync(body);
   const bucket = getStorage().bucket(bucketName);
-  await bucket.file(env.CATALOG_GCS_OBJECT).save(gzipBody, {
+  await bucket.file(env.CATALOG_GCS_OBJECT).save(compressed, {
     contentType: 'application/json',
     metadata: {
       contentEncoding: 'gzip',
