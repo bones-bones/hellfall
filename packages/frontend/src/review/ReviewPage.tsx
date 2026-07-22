@@ -1,9 +1,10 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useAuth } from '../auth';
 import { getAuthApiUrl } from '../auth/getAuthApiUrl';
+import { getCatalogManifestUrl } from '../auth/getCardsCatalogUrl';
 import { ChangesetCard } from './ChangesetCard';
 import { ErrorText } from './ErrorText';
-import { Changeset, isChangesetStatus, isStatusFilter, StatusFilter } from '@hellfall/shared/utils';
+import { Changeset, isChangesetStatus, StatusFilter } from '@hellfall/shared/utils';
 import { useParams } from 'react-router-dom';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import {
@@ -15,6 +16,38 @@ import {
 } from '../styling';
 import { Heading } from '@workday/canvas-kit-react';
 
+type CatalogManifest = { version?: string; cardCount?: number };
+
+async function fetchCatalogManifest(): Promise<CatalogManifest | null> {
+  const url = getCatalogManifestUrl();
+  if (!url) return null;
+  try {
+    const res = await fetch(`${url}?t=${Date.now()}`, { cache: 'no-store' });
+    if (!res.ok) return null;
+    return (await res.json()) as CatalogManifest;
+  } catch {
+    return null;
+  }
+}
+
+/** Poll GCS manifest until version changes (or timeout). Survives HTTP disconnects. */
+async function waitForManifestUpdate(
+  previousVersion: string | undefined,
+  onTick: (elapsedSec: number) => void,
+  timeoutMs = 10 * 60 * 1000
+): Promise<CatalogManifest | null> {
+  const started = Date.now();
+  while (Date.now() - started < timeoutMs) {
+    onTick(Math.floor((Date.now() - started) / 1000));
+    const manifest = await fetchCatalogManifest();
+    if (manifest?.version && manifest.version !== previousVersion) {
+      return manifest;
+    }
+    await new Promise(r => setTimeout(r, 3000));
+  }
+  return null;
+}
+
 export const ReviewPage = () => {
   const { user, loading: authLoading } = useAuth();
   const { '*': cardId } = useParams();
@@ -25,11 +58,13 @@ export const ReviewPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<StatusFilter>('pending');
   const [syncBusy, setSyncBusy] = useState(false);
+  const [syncElapsedSec, setSyncElapsedSec] = useState(0);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
   const [syncError, setSyncError] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkBusy, setBulkBusy] = useState(false);
   const [bulkError, setBulkError] = useState<string | null>(null);
+  const syncTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const canViewChangesets = Boolean(user?.isAdmin || user?.isContributor);
 
@@ -155,22 +190,72 @@ export const ReviewPage = () => {
   const handleCatalogSync = async () => {
     if (!baseUrl || !user?.isAdmin) return;
     setSyncBusy(true);
-    setSyncMessage(null);
+    setSyncElapsedSec(0);
+    setSyncMessage('Starting catalog sync…');
     setSyncError(null);
+
+    const syncStarted = Date.now();
+    if (syncTimerRef.current) clearInterval(syncTimerRef.current);
+    syncTimerRef.current = setInterval(() => {
+      setSyncElapsedSec(Math.floor((Date.now() - syncStarted) / 1000));
+    }, 1000);
+
+    const before = await fetchCatalogManifest();
+
     try {
-      const res = await fetch(`${baseUrl}/api/admin/catalog/sync`, {
+      const acceptRes = await fetch(`${baseUrl}/api/admin/catalog/sync`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: '{}',
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.reason || `${res.status}`);
+      const accept = await acceptRes.json().catch(() => ({}));
+      if (!acceptRes.ok || !accept.jobId) {
+        throw new Error(accept.message || accept.reason || `${acceptRes.status}`);
+      }
+
+      setSyncMessage(`Sync accepted (${accept.jobId.slice(0, 8)}…). Publishing…`);
+
+      // Long request: keeps Cloud Run CPU allocated for the publish without a bigger instance.
+      const runRes = await fetch(`${baseUrl}/api/admin/catalog/sync/${accept.jobId}/run`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+      });
+      const data = await runRes.json().catch(() => ({}));
+      if (!runRes.ok) {
+        throw new Error(data.message || data.reason || `${runRes.status}`);
+      }
+
       const gcsNote = data.gcs ? ` (GCS v${data.version})` : '';
-      setSyncMessage(`Synced ${data.cardCount?.toLocaleString() ?? '?'} cards${gcsNote}`);
+      setSyncMessage(
+        `Synced ${data.cardCount?.toLocaleString() ?? '?'} cards in ${Math.round(
+          (data.durationMs ?? Date.now() - syncStarted) / 1000
+        )}s${gcsNote}`
+      );
     } catch (e) {
-      setSyncError(e instanceof Error ? e.message : 'Sync failed');
+      const msg = e instanceof Error ? e.message : 'Sync failed';
+      setSyncMessage(`Request ended (${msg}). Checking whether GCS catalog updated…`);
+      const updated = await waitForManifestUpdate(before?.version, sec => setSyncElapsedSec(sec));
+      if (updated) {
+        setSyncError(null);
+        setSyncMessage(
+          `Catalog updated on GCS: ${updated.cardCount?.toLocaleString() ?? '?'} cards (v${
+            updated.version
+          }). HTTP response was dropped, but publish succeeded.`
+        );
+      } else {
+        setSyncMessage(null);
+        setSyncError(
+          `${msg}. GCS manifest did not change — sync likely failed (check Cloud Run logs).`
+        );
+      }
     } finally {
+      if (syncTimerRef.current) {
+        clearInterval(syncTimerRef.current);
+        syncTimerRef.current = null;
+      }
       setSyncBusy(false);
     }
   };
@@ -208,7 +293,7 @@ export const ReviewPage = () => {
         <Heading size="medium">Review Changesets</Heading>
         {user.isAdmin && (
           <SyncButton disabled={syncBusy} onClick={handleCatalogSync}>
-            {syncBusy ? 'Syncing catalog…' : 'Sync catalog to site'}
+            {syncBusy ? `Syncing catalog… ${syncElapsedSec}s` : 'Sync catalog to site'}
           </SyncButton>
         )}
       </HeaderRow>

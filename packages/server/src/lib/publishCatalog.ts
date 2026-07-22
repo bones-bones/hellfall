@@ -1,5 +1,6 @@
+import { gzipSync } from 'node:zlib';
 import { env } from '../api/lib/env.ts';
-import { seedCatalogCache } from './catalogCache.ts';
+import { seedCatalogCacheBody } from './catalogCache.ts';
 import { isCatalogGcsConfigured, uploadCatalogToGcs } from './catalogGcs.ts';
 import { loadHellscubeCatalogCards } from '@hellfall/shared/utils/firestore';
 
@@ -15,21 +16,36 @@ export type CatalogPublishResult = {
   durationMs: number;
 };
 
+function heapMb(): string {
+  const { heapUsed, rss } = process.memoryUsage();
+  return `heap=${Math.round(heapUsed / 1024 / 1024)}MB rss=${Math.round(rss / 1024 / 1024)}MB`;
+}
+
 /** Full Firestore export → in-memory cache (+ GCS when configured). */
 export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
   const t0 = Date.now();
-  const data = await loadHellscubeCatalogCards({
+  console.log(`[catalog/publish] start ${heapMb()}`);
+
+  let data = await loadHellscubeCatalogCards({
     databaseId: env.FIRESTORE_DATABASE_ID,
     collectionName: env.FIRESTORE_CARDS_COLLECTION,
   });
-  const body = JSON.stringify({ data });
+  const cardCount = data.length;
+  console.log(`[catalog/publish] loaded cards=${cardCount} ${heapMb()}`);
 
-  seedCatalogCache(data);
+  const body = JSON.stringify({ data });
+  // Drop the card array so GC can reclaim it before gzip/upload (body holds the copy).
+  data = [];
+  const gzipBody = gzipSync(body);
+  seedCatalogCacheBody(body, gzipBody);
+  console.log(
+    `[catalog/publish] serialized bytes=${body.length} gzip=${gzipBody.length} ${heapMb()}`
+  );
 
   let version: string | undefined;
   const gcs = isCatalogGcsConfigured();
   if (gcs) {
-    const manifest = await uploadCatalogToGcs(body, data.length);
+    const manifest = await uploadCatalogToGcs(body, cardCount, gzipBody);
     version = manifest.version;
     console.log(
       `[catalog/publish] gcs version=${manifest.version} cards=${manifest.cardCount} bytes=${body.length}`
@@ -38,10 +54,12 @@ export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
 
   const durationMs = Date.now() - t0;
   console.log(
-    `[catalog/publish] complete cards=${data.length} gcs=${gcs} total=${durationMs}ms bytes=${body.length}`
+    `[catalog/publish] complete cards=${cardCount} gcs=${gcs} total=${durationMs}ms bytes=${
+      body.length
+    } ${heapMb()}`
   );
 
-  return { cardCount: data.length, gcs, version, bytes: body.length, durationMs };
+  return { cardCount, gcs, version, bytes: body.length, durationMs };
 }
 
 async function flushCatalogPublish(): Promise<void> {

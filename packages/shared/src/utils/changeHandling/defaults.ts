@@ -198,6 +198,8 @@ export const getDefaultRootValue = <K extends rootPropType>(
       return ('card_faces' in card ? kindToMultiLayout : kindToFaceLayout)[
         card.kind
       ] as rootValueType<K>;
+    case 'frame':
+      return kindToDefaultFrame[card.kind] as rootValueType<K>;
     case 'collector_number':
       return '' as rootValueType<K>;
   }

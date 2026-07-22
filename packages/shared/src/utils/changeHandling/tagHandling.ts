@@ -680,13 +680,13 @@ const subKeywords: Record<string, string | string[]> = {
   'bestow artifact': 'bestow',
   'mana-value-5-sorcery cycling': 'cycling',
   'cascade up': 'cascade',
-  'bicycling': 'cycling',
+  bicycling: 'cycling',
   'choose a background': 'partner',
-  'lore':'partner',
+  lore: 'partner',
   'third wheel': 'partner',
-  'discoverlink': ['discover','link'],
+  discoverlink: ['discover', 'link'],
   'choose a signature spell': 'partner',
-  'do man':'domain',
+  'do man': 'domain',
 };
 
 const keywordTags = [

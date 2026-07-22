@@ -1,8 +1,9 @@
 import type { HCCard } from '@hellfall/shared/types';
 import { toFaces } from '../cardHandling';
-import { applyChanges } from './changeHandling';
+import { applyChanges, normalizeChangeList } from './changeHandling';
 import type { anyChange, ChangesetDiffRow } from './changeTypes';
 import { splitFullTag } from './tagHandling';
+import { changeIsValid } from './changeValidation';
 
 function humanizeField(name: string): string {
   return name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
@@ -60,13 +61,16 @@ function readChangeDisplayValue(card: HCCard.Any, change: anyChange): unknown {
   }
 }
 
-// TODO: add invalid handling
 /** Field-level before/after rows for a changeset against the current card state. */
-export function getChangesetDiffRows(card: HCCard.Any, changes: anyChange[]): ChangesetDiffRow[] {
+export function getChangesetDiffRows(card: HCCard.Any, changes: unknown): ChangesetDiffRow[] {
+  const normalized = normalizeChangeList(changes);
   const working = structuredClone(card);
   const rows: ChangesetDiffRow[] = [];
 
-  for (const change of changes) {
+  for (const change of normalized) {
+    if (!changeIsValid(working, change)) {
+      continue;
+    }
     const before = readChangeDisplayValue(working, change);
     const preview = structuredClone(working);
     applyChanges(preview, [change]);

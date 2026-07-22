@@ -4,6 +4,33 @@ import { changeErrorMessage, changeIsValid } from './changeValidation';
 import { applyChange } from './changeApply';
 import { arbAreEqual } from '../listHandling';
 
+const isChangeLike = (value: unknown): value is anyChange =>
+  value != null && typeof value === 'object' && 'location' in value && 'change_type' in value;
+
+/** Coerce stored/API change payloads into a change array (handles legacy single-object shapes). */
+export const normalizeChangeList = (changes: unknown): anyChange[] => {
+  const normalizeChange = (change: anyChange): anyChange => {
+    if (change.location === 'tag' && !change.full_tag && typeof change.tag === 'string') {
+      return { ...change, full_tag: change.tag };
+    }
+    return change;
+  };
+
+  if (Array.isArray(changes)) {
+    return changes.filter(isChangeLike).map(normalizeChange);
+  }
+  if (isChangeLike(changes)) {
+    return [normalizeChange(changes)];
+  }
+  if (changes != null && typeof changes === 'object') {
+    const parsed = Object.values(changes as Record<string, unknown>)
+      .filter(isChangeLike)
+      .map(normalizeChange);
+    if (parsed.length) return parsed;
+  }
+  return [];
+};
+
 // commented out = currently done automatically via tags, but could concievable be done manually in the future
 
 const multiIgnoreDeleteProps: allPropType[] = ['image', 'frame', 'frame_effects'];
@@ -26,19 +53,20 @@ export const removeDuplicateChanges = (changeList: anyChange[]) => {
  */
 export const applyChanges = (
   card: HCCard.Any,
-  changeList: anyChange[],
+  changeList: anyChange[] | unknown,
   applyingFromSheet?: boolean
   // applyingMode: 'sheet'|'server'|'client'='client'
 ): boolean => {
+  const changes = Array.isArray(changeList) ? changeList : normalizeChangeList(changeList);
   let setDerived = false;
-  changeList.forEach((change, index) => {
+  changes.forEach((change, index) => {
     if (!(changeIsValid(card, change) as boolean)) {
       // bool cast is necessary for proper error handling
       if (
         !('card_faces' in card) &&
         change.location == 'face' &&
         !change.index &&
-        changeList
+        changes
           .slice(0, index)
           .some(
             other =>
@@ -54,7 +82,7 @@ export const applyChanges = (
         change.location == 'root' &&
         change.prop == 'artist_notes' &&
         change.change_type == 'delete' &&
-        changeList.some(
+        changes.some(
           other =>
             other.location == 'root' &&
             other.change_type == change.change_type &&
@@ -71,7 +99,7 @@ export const applyChanges = (
         (change.change_type == 'delete' ? multiIgnoreDeleteProps : multiIgnoreAddProps).includes(
           change.prop as allPropType
         ) &&
-        changeList.some(other => other.location == 'card_faces')
+        changes.some(other => other.location == 'card_faces')
       ) {
         return;
       }
@@ -87,8 +115,8 @@ export const applyChanges = (
     }
     if (change.location == 'card_faces' && !applyingFromSheet) {
       const face = change.index;
-      for (let i = changeList.length - 1; i > index; i--) {
-        const otherChange = changeList[i];
+      for (let i = changes.length - 1; i > index; i--) {
+        const otherChange = changes[i];
         if (
           otherChange.location == 'root' ||
           otherChange.location == 'all_parts' ||
@@ -97,7 +125,7 @@ export const applyChanges = (
         )
           continue;
         if (change.change_type == 'delete' && otherChange.index == face) {
-          changeList.splice(i, 1);
+          changes.splice(i, 1);
           continue;
         }
         if (otherChange.index >= face) {
