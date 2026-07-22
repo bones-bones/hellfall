@@ -5,6 +5,8 @@ import {
   numSearchFilterFunction,
   numSearchListFilterFunction,
   opType,
+  regexFilterFunction,
+  regexListFilterFunction,
   summaryFunction,
   textFilterFunction,
   textListFilterFunction,
@@ -22,8 +24,10 @@ import {
   toNumber,
   xor,
   fixValue,
+  xnor,
 } from '@hellfall/shared/utils';
 import { isFormat } from '@hellfall/shared/types';
+import { regexErrorMessage } from './parseRegex';
 
 const invertedOps: Record<looseOpType, looseOpType> = {
   '<': '>=',
@@ -70,6 +74,8 @@ export const getActualOp = (op: looseOpType, defaultOp: opType): opType => {
  */
 export const opIsNegative = (op: looseOpType) => ['<', '>', '!=', '!:'].includes(op);
 
+const opXorInvert = (op: looseOpType, invert?: boolean) => xnor(opIsNegative(op), invert);
+
 type NotFunctionOrObject<T> = T extends Function ? never : T extends object ? never : T;
 /**
  * Evaluates a condition using an operator as a boolean
@@ -85,10 +91,12 @@ export const opAsBool = <T>(condition: NotFunctionOrObject<T>, operator: opType)
  */
 export const opToNot = (op: looseOpType) => (opIsNegative(op) ? 'not' : '');
 /**
- * Given an op, returns `"don't"` if it's negative and `''` otherwise
+ * Given an op and possibly an invert, returns `"don't"` if it's negative and `''` otherwise
  * @param op op to use
+ * @param inver whether the filter is inverted
  */
-export const opToDont = (op: looseOpType) => (opIsNegative(op) ? "don't" : '');
+export const opToDont = (op: looseOpType, invert?: boolean) =>
+  opXorInvert(op, invert) ? "don't" : '';
 /**
  * Given an op, returns `"n't"` if it's negative and `''` otherwise
  * @param op op to use
@@ -141,6 +149,59 @@ const opToTaggedRecord: Record<opType, string> = {
   '>': 'tagged but not exactly',
   '!=': 'not tagged exactly',
 };
+const opToDoesnt = (operator: opType, invert?: boolean) =>
+  opXorInvert(operator, invert) ? "doesn't" : '';
+/**
+ * Gives a chunk of a singular regex summary
+ * @param operator operator to use
+ * @param value value to use
+ * @param invert whether the filter is inverted
+ */
+export const regexSummarySingular: summaryFunction<string> = (
+  operator: opType,
+  value: string,
+  invert?: boolean
+) => {
+  const errorMessage = regexErrorMessage(value);
+  if (value) {
+    return `!Invalid regular expression: ${errorMessage}`;
+  }
+  return `${opToDoesnt(operator, invert)} match${
+    opXorInvert(operator, invert) ? '' : 'es'
+  } the regex ${value}`;
+};
+/**
+ * Gives a chunk of a plural regex summary
+ * @param operator operator to use
+ * @param value value to use
+ * @param invert whether the filter is inverted
+ */
+export const regexSummaryPlural: summaryFunction<string> = (
+  operator: opType,
+  value: string,
+  invert?: boolean
+) => {
+  const errorMessage = regexErrorMessage(value);
+  if (value) {
+    return `!Invalid regular expression: ${errorMessage}`;
+  }
+  return `${opToDont(operator, invert)} match the regex ${value}`;
+};
+
+/**
+ * Returns the appropriate summary for a prop filter.
+ * @param isPlural whether the prop is plural
+ * @param isRegex whether the value is a regex
+ */
+export const propSummary = (isPlural?: boolean, isRegex?: boolean): summaryFunction<string> =>
+  isRegex
+    ? isPlural
+      ? regexSummaryPlural
+      : regexSummarySingular
+    : isPlural
+    ? includeSummaryPlural
+    : includeSummarySingular;
+
 /**
  * Gives a chunk of a tag summary
  * @param operator operator to use
@@ -226,7 +287,6 @@ export const createCorrectedDoubleSummary =
  * @param operator operator to use
  * @param value value to use
  * @param invert whether to invert it
- * @returns
  */
 export const baseNumSummary: summaryFunction<numSearch> = (
   operator: opType,
@@ -562,3 +622,31 @@ export const shareFilter: textListsFilterFunction = <T extends string>(
  */
 export const emptyFilter: textFilterFunction = (value1: string, operator: opType, value2: string) =>
   true;
+
+/**
+ * Compares text from a card with a regex from a search
+ * @param value1 text from the card
+ * @param operator operator to use
+ * @param value2 regex from the search
+ */
+export const regexFilter: regexFilterFunction = (
+  value1: string,
+  operator: opType,
+  value2: RegExp
+) => opAsBool(value2.test(value1), operator);
+
+/**
+ * Compares a text list from a card with a regex from a search
+ * @param value1 text list from the card
+ * @param operator operator to use
+ * @param value2 regex from the search
+ */
+export const regexListFilter: regexListFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: RegExp
+) =>
+  opAsBool(
+    value1.some(value => value2.test(value)),
+    operator
+  );

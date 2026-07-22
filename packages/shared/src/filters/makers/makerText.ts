@@ -16,8 +16,6 @@ import {
   frameEffectSummary,
   frameSummary,
   groupSummary,
-  idFilter,
-  idSummary,
   keywordSummary,
   kindSummary,
   oracleIdFilter,
@@ -40,11 +38,8 @@ import {
 } from '../filters';
 import { looseOpType } from '../types';
 import {
-  includeSummaryPlural,
-  includeSummarySingular,
   NoteFilter,
   NumberPropFilter,
-  FilterObject,
   PropFilter,
   NoUnescapeFilter,
   filterMaker,
@@ -55,26 +50,8 @@ import {
   LegalityFilter,
   legalityFilterMaker,
   stateFilterMaker,
+  maybeNumberPropFilterMaker,
 } from '../utils';
-
-// TODO: Should this be a `stringOrNumFilterMaker`?
-/**
- * Makes an hcid filter
- * @param value the value from the search
- * @param op the operator from the search
- */
-export const makeIDFilter: filterMaker<string> = (value: string, op: looseOpType) => {
-  return new FilterObject<string, string>(
-    'id',
-    idFilter,
-    idSummary,
-    `"${value}"`,
-    op,
-    card => card.hcid,
-    '=',
-    'negate'
-  );
-};
 
 /**
  * Makes an oracle id filter
@@ -93,12 +70,24 @@ export const makeOracleIDFilter: filterMaker<string> = (value: string, op: loose
 };
 
 /**
+ * Makes an hcid filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeIDFilter: maybeNumberPropFilterMaker = (value: string, op: looseOpType) => {
+  if (isNumber(value)) {
+    return new NumberPropFilter('id', value, op, 'id');
+  }
+  return new PropFilter('id', value, op, 'id');
+};
+
+/**
  * Makes a name filter
  * @param value the value from the search
  * @param op the operator from the search
  */
 export const makeNameFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('name', includeSummarySingular, value, op);
+  return new PropFilter('name', value, op);
 };
 // TODO: Make cost search act more like number than string (and more like scryfall)
 /**
@@ -107,7 +96,7 @@ export const makeNameFilter: propFilterMaker = (value: string, op: looseOpType) 
  * @param op the operator from the search
  */
 export const makeManaTextFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('manatext', includeSummarySingular, value, op, 'text of the mana cost');
+  return new PropFilter('manatext', value, op, 'text of the mana cost');
 };
 
 /**
@@ -116,7 +105,7 @@ export const makeManaTextFilter: propFilterMaker = (value: string, op: looseOpTy
  * @param op the operator from the search
  */
 export const makeTypeFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('type', includeSummaryPlural, value, op, 'types');
+  return new PropFilter('type', value, op, 'types', true);
 };
 /**
  * Makes a supertype filter
@@ -124,7 +113,7 @@ export const makeTypeFilter: propFilterMaker = (value: string, op: looseOpType) 
  * @param op the operator from the search
  */
 export const makeSupertypeFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('supertype', includeSummaryPlural, value, op);
+  return new PropFilter('supertype', value, op, undefined, true);
 };
 /**
  * Makes a card type filter
@@ -132,7 +121,7 @@ export const makeSupertypeFilter: propFilterMaker = (value: string, op: looseOpT
  * @param op the operator from the search
  */
 export const makeCardtypeFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('cardtype', includeSummaryPlural, value, op, 'card types');
+  return new PropFilter('cardtype', value, op, 'card types', true);
 };
 /**
  * Makes a subtype filter
@@ -140,7 +129,7 @@ export const makeCardtypeFilter: propFilterMaker = (value: string, op: looseOpTy
  * @param op the operator from the search
  */
 export const makeSubtypeFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('subtype', includeSummaryPlural, value, op);
+  return new PropFilter('subtype', value, op, undefined, true);
 };
 /**
  * Makes an oracle text filter
@@ -148,7 +137,7 @@ export const makeSubtypeFilter: propFilterMaker = (value: string, op: looseOpTyp
  * @param op the operator from the search
  */
 export const makeOracleFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('oracle', includeSummarySingular, value, op);
+  return new PropFilter('oracle', value, op);
 };
 /**
  * Makes a flavor text filter
@@ -156,7 +145,7 @@ export const makeOracleFilter: propFilterMaker = (value: string, op: looseOpType
  * @param op the operator from the search
  */
 export const makeFlavorFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('flavor', includeSummarySingular, value, op);
+  return new PropFilter('flavor', value, op);
 };
 
 /**
@@ -165,7 +154,7 @@ export const makeFlavorFilter: propFilterMaker = (value: string, op: looseOpType
  * @param op the operator from the search
  */
 export const makeLoreFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('lore', includeSummarySingular, value, op);
+  return new PropFilter('lore', value, op);
 };
 
 /**
@@ -174,7 +163,7 @@ export const makeLoreFilter: propFilterMaker = (value: string, op: looseOpType) 
  * @param op the operator from the search
  */
 export const makePrintedFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  const filter = new PropFilter('printed', includeSummarySingular, value, op);
+  const filter = new PropFilter('printed', value, op);
   filter.keepFaces();
   return filter;
 };
@@ -185,7 +174,7 @@ export const makePrintedFilter: propFilterMaker = (value: string, op: looseOpTyp
  * @param op the operator from the search
  */
 export const makeRulingFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('ruling', includeSummaryPlural, value, op);
+  return new PropFilter('ruling', value, op, undefined, true);
 };
 
 /**
@@ -195,7 +184,7 @@ export const makeRulingFilter: propFilterMaker = (value: string, op: looseOpType
  */
 export const makeCreatorFilter: stringOrNumFilterMaker = (value: string, op: looseOpType) => {
   if (!isNumber(value)) {
-    return new PropFilter('creator', includeSummaryPlural, value, op);
+    return new PropFilter('creator', value, op, undefined, true);
   } else {
     return new NumberPropFilter('creator', value, op, 'number of creators');
   }
@@ -216,7 +205,7 @@ export const makeTagFilter: stateFilterMaker = (value: string, op: looseOpType) 
  * @param op the operator from the search
  */
 export const makeTagNoteFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('tagnote', includeSummarySingular, value, op, 'tag note');
+  return new PropFilter('tagnote', value, op, 'tag note');
 };
 
 /**
@@ -238,7 +227,7 @@ export const makeArtistFilter: stringOrNumFilterMaker = (value: string, op: loos
  * @param op the operator from the search
  */
 export const makeArtistNoteFilter: propFilterMaker = (value: string, op: looseOpType) => {
-  return new PropFilter('artistnote', includeSummarySingular, value, op, 'artist note');
+  return new PropFilter('artistnote', value, op, 'artist note');
 };
 
 /**

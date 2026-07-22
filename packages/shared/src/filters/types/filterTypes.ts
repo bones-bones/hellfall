@@ -144,9 +144,17 @@ export interface textFilterFunction extends cardFilterFunction<string, string> {
  */
 export interface textListFilterFunction extends cardFilterFunction<string[], string> {}
 /**
- * Any filter that compares a list of strings from a card with a string from a search
+ * Any filter that compares a list of strings from a card with a list of strings from a search
  */
 export interface textListsFilterFunction extends cardFilterFunction<string[], string[]> {}
+/**
+ * Any filter that compares a string from a card with a regex from a search
+ */
+export interface regexFilterFunction extends cardFilterFunction<string, RegExp> {}
+/**
+ * Any filter that compares a list of strings from a card with a regex from a search
+ */
+export interface regexListFilterFunction extends cardFilterFunction<string[], RegExp> {}
 /**
  * Any filter that compares two numbers
  */

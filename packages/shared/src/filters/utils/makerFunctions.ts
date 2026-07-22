@@ -99,6 +99,15 @@ export type propConvertFilterMaker = (value: string, op: looseOpType) => PropCon
  */
 export type numberPropFilterMaker = (value: string, op: looseOpType) => NumberPropFilter;
 /**
+ * A function that creates a {@linkcode PropFilter} or a {@linkcode NumberPropFilter}
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export type maybeNumberPropFilterMaker = (
+  value: string,
+  op: looseOpType
+) => PropFilter | NumberPropFilter;
+/**
  * A function that creates a {@linkcode ColorFilter}
  * @param T The type of the value from the card
  * @param value the value from the search

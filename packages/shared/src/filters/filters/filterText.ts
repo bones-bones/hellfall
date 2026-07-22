@@ -84,29 +84,6 @@ export const oracleIdSummary: summaryFunction<string> = (operator: opType, value
 };
 
 /**
- * Compares an hcid from a card with an hcid from a search
- * @param value1 hcid from the card
- * @param operator operator to use
- * @param value2 hcid from the search
- */
-export const idFilter: textFilterFunction = (value1: string, operator: opType, value2: string) =>
-  (isNumber(value2) ? numSearchFilter : textFilter)(value1, operator, value2);
-/**
- * The summary for an hcid filter
- * @param operator the operator to use
- * @param value the search hcid to use
- * @param invert whether the search is inverted
- */
-export const idSummary: summaryFunction<string> = (
-  operator: opType,
-  value: string,
-  invert?: boolean
-) =>
-  `the id ${isNumber(value) ? 'is ' : ''}${(isNumber(value)
-    ? baseNumSummary
-    : includeSummarySingular)(operator, value, invert)}`;
-
-/**
  * Checks a card to see if its artists include an artist from a search, and possibly also checks against artist notes
  * @param value1 card to use
  * @param operator operator to use

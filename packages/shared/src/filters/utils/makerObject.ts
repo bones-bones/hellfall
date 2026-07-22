@@ -34,6 +34,8 @@ import {
   createLegalitySummary,
   numSearchListFilter,
   numSearchFilter,
+  propSummary,
+  regexListFilter,
 } from './filterUtils';
 import {
   ensureArray,
@@ -43,6 +45,7 @@ import {
   pipSearch,
   fixValue,
   unescapeText,
+  isRegexText,
 } from '@hellfall/shared/utils';
 import { filterSort } from './sortRule';
 import {
@@ -52,6 +55,7 @@ import {
   queryNameToSummary,
 } from './makerUtils';
 import { includeFilter, includeSummary } from './filterInclude';
+import { regexErrorMessage, searchToRegex } from './parseRegex';
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
     return { name: text.slice(0, -1), note: true };
@@ -277,9 +281,12 @@ export class PropFilter extends FilterObject<string[], string> {
    * The location on a card that this filter needs to get props from, if any
    */
   location: 'any' | 'face' | 'root';
+  /**
+   * The regex to use, if any
+   */
+  regex?: RegExp;
   constructor(
     queryName: filterNameType,
-    summary: summaryFunction<string>,
     value: string,
     op: looseOpType,
     /**
@@ -287,16 +294,21 @@ export class PropFilter extends FilterObject<string[], string> {
      */
     public summaryStart?: string,
     /**
+     * Whether this filter needs a plural summary
+     */
+    isPlural?: boolean,
+    /**
      * Whether to drop dashes in text
      */
     public dropDashes?: boolean,
     defaultOp: opType = '>=',
     invertOption: invertOptionType = 'negate'
   ) {
+    const shouldUseRegex = isRegexText(value);
     super(
       queryName,
       textListFilter,
-      summary,
+      propSummary(isPlural, shouldUseRegex),
       value,
       op,
       card =>
@@ -307,6 +319,9 @@ export class PropFilter extends FilterObject<string[], string> {
       defaultOp,
       invertOption
     );
+    if (shouldUseRegex && !regexErrorMessage(value)) {
+      this.regex = searchToRegex(value);
+    }
     ({ props: this.props, location: this.location } = queryNameToValue(queryName));
   }
   toSummary = () =>
@@ -315,6 +330,18 @@ export class PropFilter extends FilterObject<string[], string> {
       stripQuotes(this.value),
       this.inverted
     )}`;
+  cardPassesFilter = (card: HCCard.Any) =>
+    xor(
+      this.regex
+        ? regexListFilter(this.getValueToCompare(card), this.getOp(), this.regex)
+        : this.filter(
+            this.getValueToCompare(card),
+            this.getOp(),
+            fixValue(this.value),
+            this.dropFaces
+          ),
+      this.inverted
+    );
 }
 /**
  * A filter object that gets props from a card and that converts a value from a search into an array

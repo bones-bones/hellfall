@@ -44,11 +44,11 @@ export type HCCardSymbol = HCObject.Object<HCObject.ObjectType.CardSymbol> & {
   /**
    * True if the symbol is a hybrid mana symbol. Note that monocolor Phyrexian symbols aren't considered hybrid.
    */
-  // hybrid: boolean;
+  hybrid: boolean;
   /**
    * True if the symbol is a Phyrexian mana symbol, i.e. it can be paid with 2 life.
    */
-  // phyrexian: boolean;
+  phyrexian: boolean;
   /**
    * An array of alternate versions of this symbol.
    */

@@ -133,6 +133,7 @@ const queryNamePropRecord: Record<string, queryPropType | queryPropType[]> = {
   group: 'set',
   in: ['set', 'settype'],
   number: 'collector_number',
+  id: 'hcid',
 };
 const queryNameLocationRecord: Record<string, 'face' | 'root'> = {
   layout: 'root',

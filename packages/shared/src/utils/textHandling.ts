@@ -512,11 +512,10 @@ export const unescapeBase64 = (text: string) =>
   text.replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));
 
 /**
- * Checks if text is a quoted string (i.e. starts and ends with quotation marks)
+ * Checks if text is a quoted string (i.e. starts and ends with quotation marks or slashes)
  * @param text text to check
  */
-export const textIsQuote = (text: string) =>
-  text.length > 1 && text[0] == text.at(-1) && ['"', "'"].includes(text[0]) && text.at(-2) != '\\';
+export const textIsQuote = (text: string) => /^(['"/]).*\1$/.test(text) && text.at(-2) != '\\';
 
 /**
  * Strips quotes from start and end of text if it's a quoted string (i.e. starts and ends with quotation marks)
@@ -524,12 +523,21 @@ export const textIsQuote = (text: string) =>
  */
 export const stripQuotes = (text: string) => (textIsQuote(text) ? text.slice(1, -1) : text);
 
+const regexTest = /^\/.*\/$/;
+/**
+ * Checks whether a string can be used as a regex, regardless of validity
+ * @param text test to check
+ */
+export const isRegexText = (text: string) => regexTest.test(text);
 /**
  * Unescapes and strips text so that it can be used in comparisons
  * @param text text to unescape
  * @param keepDashes whether to keep dashes (for correct handling of text fields)
  */
 export const unescapeText = (text: string, keepDashes?: boolean) => {
+  if (isRegexText(text)) {
+    return text;
+  }
   const strippedText =
     textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
   return strippedText

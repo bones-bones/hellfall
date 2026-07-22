@@ -703,6 +703,16 @@ const subKeywords: Record<string, string | string[]> = {
   flush: 'flash',
   construction: 'suspend',
   'maternal death': 'offspring',
+  convoken: 'convoke',
+  rummagelink: 'link',
+  sleeptouch: 'touch',
+  naplink: 'link',
+  sporecounterlink: 'link',
+  squadspring: ['squad', 'offspring'],
+  "urza'scycling": 'landcycling',
+  pipverge: 'converge',
+  'commander suspend': 'suspend',
+  'annihilate voters': 'annihilator',
 };
 
 const keywordTags = [

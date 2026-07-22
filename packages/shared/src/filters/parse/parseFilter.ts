@@ -49,7 +49,7 @@ export const parseFilter = (
   if (text[0] == '-') {
     return parseFilter(text.slice(1), !invert, getAllPrints);
   }
-  if (text[0] == '"' || text[0] == "'" || !looseOpList.some(op => text.includes(op))) {
+  if (/^['"/]/.test(text) || !looseOpList.some(op => text.includes(op))) {
     return correctOp(makeNameFilter(text, ':'));
   }
   const { keyword, op, term } = splitOnFirstOp(text);

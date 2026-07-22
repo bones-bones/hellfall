@@ -1486,7 +1486,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/0G.svg",
@@ -1497,7 +1498,8 @@
       "colors": [
         "G",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/1W.svg",
@@ -1508,7 +1510,8 @@
       "colors": [
         "W",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/1U.svg",
@@ -1519,7 +1522,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/1B.svg",
@@ -1530,7 +1534,8 @@
       "colors": [
         "B",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/1R.svg",
@@ -1541,7 +1546,8 @@
       "colors": [
         "R",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/1G.svg",
@@ -1552,7 +1558,8 @@
       "colors": [
         "G",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/1P.svg",
@@ -1563,7 +1570,8 @@
       "colors": [
         "P",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/1C.svg",
@@ -1573,7 +1581,8 @@
       "mana_value": 1,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/113.png",
@@ -1583,7 +1592,8 @@
       "mana_value": 13,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/2W.svg",
@@ -1594,7 +1604,8 @@
       "colors": [
         "W",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/2U.svg",
@@ -1605,7 +1616,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/2B.svg",
@@ -1616,7 +1628,8 @@
       "colors": [
         "B",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/2R.svg",
@@ -1627,7 +1640,8 @@
       "colors": [
         "R",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/2G.svg",
@@ -1638,7 +1652,8 @@
       "colors": [
         "G",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/2P.svg",
@@ -1649,7 +1664,8 @@
       "colors": [
         "P",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/2C.svg",
@@ -1659,7 +1675,8 @@
       "mana_value": 2,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/3W.svg",
@@ -1670,7 +1687,8 @@
       "colors": [
         "W",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/3U.svg",
@@ -1681,7 +1699,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/3B.svg",
@@ -1692,7 +1711,8 @@
       "colors": [
         "B",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/3R.svg",
@@ -1703,7 +1723,8 @@
       "colors": [
         "R",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/3G.svg",
@@ -1714,7 +1735,8 @@
       "colors": [
         "G",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/3P.svg",
@@ -1725,7 +1747,8 @@
       "colors": [
         "P",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/3C.svg",
@@ -1735,7 +1758,8 @@
       "mana_value": 3,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/4U.svg",
@@ -1746,7 +1770,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/4P.svg",
@@ -1757,7 +1782,8 @@
       "colors": [
         "P",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/5U.svg",
@@ -1768,7 +1794,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/5INFINITY.svg",
@@ -1778,7 +1805,8 @@
       "mana_value": "∞",
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/8U.svg",
@@ -1789,7 +1817,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/93.svg",
@@ -1799,7 +1828,8 @@
       "mana_value": 9,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/colors/INFINITYU.svg",
@@ -1810,7 +1840,8 @@
       "colors": [
         "C",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/misc/2Yellow.svg",
@@ -1821,7 +1852,8 @@
       "colors": [
         "Yellow",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/misc/3Yellow.svg",
@@ -1832,7 +1864,8 @@
       "colors": [
         "Yellow",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/misc/2Brown.svg",
@@ -1843,7 +1876,8 @@
       "colors": [
         "Brown",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/misc/2Orange.svg",
@@ -1854,7 +1888,8 @@
       "colors": [
         "Orange",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/misc/2Pink.svg",
@@ -1865,7 +1900,8 @@
       "colors": [
         "Pink",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/misc/3Pink.svg",
@@ -1876,7 +1912,8 @@
       "colors": [
         "Pink",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/misc/2Gold.svg",
@@ -1887,7 +1924,8 @@
       "colors": [
         "Gold",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/misc/2Beige.svg",
@@ -1898,7 +1936,8 @@
       "colors": [
         "Beige",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/misc/2Grey.svg",
@@ -1909,7 +1948,8 @@
       "colors": [
         "Grey",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/effects/1T.svg",
@@ -1919,7 +1959,8 @@
       "mana_value": 1,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/effects/UE.svg",
@@ -1930,7 +1971,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/effects/2E.svg",
@@ -1940,7 +1982,8 @@
       "mana_value": 2,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/one/effects/4Bear.svg",
@@ -1950,7 +1993,8 @@
       "mana_value": 4,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/WU.svg",
@@ -1961,7 +2005,8 @@
       "colors": [
         "W",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/WB.svg",
@@ -1972,7 +2017,8 @@
       "colors": [
         "W",
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/WR.svg",
@@ -1983,7 +2029,8 @@
       "colors": [
         "W",
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/WG.svg",
@@ -1994,7 +2041,8 @@
       "colors": [
         "W",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/WP.svg",
@@ -2005,7 +2053,8 @@
       "colors": [
         "W",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/WC.svg",
@@ -2016,7 +2065,8 @@
       "colors": [
         "W",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/UW.svg",
@@ -2027,7 +2077,8 @@
       "colors": [
         "U",
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/UB.svg",
@@ -2038,7 +2089,8 @@
       "colors": [
         "U",
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/UR.svg",
@@ -2049,7 +2101,8 @@
       "colors": [
         "U",
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/UG.svg",
@@ -2060,7 +2113,8 @@
       "colors": [
         "U",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/UP.svg",
@@ -2071,7 +2125,8 @@
       "colors": [
         "U",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/UC.svg",
@@ -2082,7 +2137,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/BW.svg",
@@ -2093,7 +2149,8 @@
       "colors": [
         "B",
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/BU.svg",
@@ -2104,7 +2161,8 @@
       "colors": [
         "B",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/BR.svg",
@@ -2115,7 +2173,8 @@
       "colors": [
         "B",
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/BG.svg",
@@ -2126,7 +2185,8 @@
       "colors": [
         "B",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/BP.svg",
@@ -2137,7 +2197,8 @@
       "colors": [
         "B",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/BC.svg",
@@ -2148,7 +2209,8 @@
       "colors": [
         "B",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/RW.svg",
@@ -2159,7 +2221,8 @@
       "colors": [
         "R",
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/RU.svg",
@@ -2170,7 +2233,8 @@
       "colors": [
         "R",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/RB.svg",
@@ -2181,7 +2245,8 @@
       "colors": [
         "R",
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/RG.svg",
@@ -2192,7 +2257,8 @@
       "colors": [
         "R",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/RP.svg",
@@ -2203,7 +2269,8 @@
       "colors": [
         "R",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/RC.svg",
@@ -2214,7 +2281,8 @@
       "colors": [
         "R",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/GW.svg",
@@ -2225,7 +2293,8 @@
       "colors": [
         "G",
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/GU.svg",
@@ -2236,7 +2305,8 @@
       "colors": [
         "G",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/GB.svg",
@@ -2247,7 +2317,8 @@
       "colors": [
         "G",
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/GR.svg",
@@ -2258,7 +2329,8 @@
       "colors": [
         "G",
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/GP.svg",
@@ -2269,7 +2341,8 @@
       "colors": [
         "G",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/GC.svg",
@@ -2280,7 +2353,8 @@
       "colors": [
         "G",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/PW.svg",
@@ -2291,7 +2365,8 @@
       "colors": [
         "P",
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/PU.svg",
@@ -2302,7 +2377,8 @@
       "colors": [
         "P",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/PB.svg",
@@ -2313,7 +2389,8 @@
       "colors": [
         "P",
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/PR.svg",
@@ -2324,7 +2401,8 @@
       "colors": [
         "P",
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/PG.svg",
@@ -2335,7 +2413,8 @@
       "colors": [
         "P",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/PC.svg",
@@ -2346,7 +2425,8 @@
       "colors": [
         "P",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/CW.svg",
@@ -2357,7 +2437,8 @@
       "colors": [
         "C",
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/CU.svg",
@@ -2368,7 +2449,8 @@
       "colors": [
         "C",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/CB.svg",
@@ -2379,7 +2461,8 @@
       "colors": [
         "C",
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/CR.svg",
@@ -2390,7 +2473,8 @@
       "colors": [
         "C",
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/CG.svg",
@@ -2401,7 +2485,8 @@
       "colors": [
         "C",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/colors/CP.svg",
@@ -2412,7 +2497,8 @@
       "colors": [
         "C",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/double/WW.svg",
@@ -2422,7 +2508,8 @@
       "mana_value": 1,
       "colors": [
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/double/UU.svg",
@@ -2432,7 +2519,8 @@
       "mana_value": 1,
       "colors": [
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/double/BB.svg",
@@ -2442,7 +2530,8 @@
       "mana_value": 1,
       "colors": [
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/double/RR.svg",
@@ -2452,7 +2541,8 @@
       "mana_value": 1,
       "colors": [
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/double/GG.svg",
@@ -2462,7 +2552,8 @@
       "mana_value": 1,
       "colors": [
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/double/PP.svg",
@@ -2472,7 +2563,8 @@
       "mana_value": 1,
       "colors": [
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/double/CC.svg",
@@ -2482,7 +2574,8 @@
       "mana_value": 1,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/misc/OrangeU.svg",
@@ -2493,7 +2586,8 @@
       "colors": [
         "Orange",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/misc/BDoge.svg",
@@ -2504,7 +2598,8 @@
       "colors": [
         "B",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/misc/KetchupMustard.svg",
@@ -2514,7 +2609,8 @@
       "mana_value": 1,
       "colors": [
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/misc/Canada.svg",
@@ -2526,7 +2622,8 @@
         "W",
         "R",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/misc/DiscardRR.svg",
@@ -2537,7 +2634,8 @@
       "colors": [
         "R",
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/misc/Rakdos.png",
@@ -2549,6 +2647,7 @@
         "Black",
         "Red"
       ],
+      "hybrid": true,
       "no_shadow": true
     },
     {
@@ -2560,7 +2659,8 @@
       "colors": [
         "U",
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/doubleColors/WWP.svg",
@@ -2571,7 +2671,8 @@
       "colors": [
         "W",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/doubleColors/UUP.svg",
@@ -2582,7 +2683,8 @@
       "colors": [
         "U",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/doubleColors/BBP.svg",
@@ -2593,7 +2695,8 @@
       "colors": [
         "B",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/two/doubleColors/PGG.svg",
@@ -2604,7 +2707,8 @@
       "colors": [
         "P",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/GWU.svg",
@@ -2616,7 +2720,8 @@
         "G",
         "W",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/WUB.svg",
@@ -2628,7 +2733,8 @@
         "W",
         "U",
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/UBR.svg",
@@ -2640,7 +2746,8 @@
         "U",
         "B",
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/BRG.svg",
@@ -2652,7 +2759,8 @@
         "B",
         "R",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/RGW.svg",
@@ -2664,7 +2772,8 @@
         "R",
         "G",
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/WBG.svg",
@@ -2676,7 +2785,8 @@
         "W",
         "B",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/BGU.svg",
@@ -2688,7 +2798,8 @@
         "B",
         "G",
         "U"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/GUR.svg",
@@ -2700,7 +2811,8 @@
         "G",
         "U",
         "R"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/URW.svg",
@@ -2712,7 +2824,8 @@
         "U",
         "R",
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/RWB.svg",
@@ -2724,7 +2837,8 @@
         "R",
         "W",
         "B"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/colors/WCG.svg",
@@ -2736,7 +2850,8 @@
         "C",
         "G",
         "W"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/three/misc/GYellowP.svg",
@@ -2748,7 +2863,8 @@
         "G",
         "Yellow",
         "P"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/multi/Rainbow.png",
@@ -2763,7 +2879,8 @@
         "B",
         "R",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/multi/antiU.svg",
@@ -2773,7 +2890,8 @@
       "mana_value": 1,
       "colors": [
         "C"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/multi/WUBRG.svg",
@@ -2787,7 +2905,8 @@
         "B",
         "R",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "hybrid/multi/WUPBRG.svg",
@@ -2802,7 +2921,8 @@
         "B",
         "R",
         "G"
-      ]
+      ],
+      "hybrid": true
     },
     {
       "filename": "phyrexian/mono/PhW.svg",
@@ -2813,7 +2933,8 @@
       "colors": [
         "W",
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/mono/PhU.svg",
@@ -2824,7 +2945,8 @@
       "colors": [
         "U",
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/mono/PhB.svg",
@@ -2835,7 +2957,8 @@
       "colors": [
         "B",
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/mono/PhR.svg",
@@ -2846,7 +2969,8 @@
       "colors": [
         "R",
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/mono/PhG.svg",
@@ -2857,7 +2981,8 @@
       "colors": [
         "G",
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/mono/PhG.svg",
@@ -2867,7 +2992,8 @@
       "mana_value": 0,
       "colors": [
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/mono/PhP.svg",
@@ -2878,7 +3004,8 @@
       "colors": [
         "P",
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/mono/PhC.svg",
@@ -2888,7 +3015,8 @@
       "mana_value": 1,
       "colors": [
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhWU.svg",
@@ -2900,7 +3028,9 @@
         "W",
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhUB.svg",
@@ -2912,7 +3042,9 @@
         "U",
         "B",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhBR.svg",
@@ -2924,7 +3056,9 @@
         "B",
         "R",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhRG.svg",
@@ -2936,7 +3070,9 @@
         "R",
         "G",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhGW.svg",
@@ -2948,7 +3084,9 @@
         "G",
         "W",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhWB.svg",
@@ -2960,7 +3098,9 @@
         "W",
         "B",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhBG.svg",
@@ -2972,7 +3112,9 @@
         "B",
         "G",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhGU.svg",
@@ -2984,7 +3126,9 @@
         "G",
         "U",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhUR.svg",
@@ -2996,7 +3140,9 @@
         "U",
         "R",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/hybrid/PhRW.svg",
@@ -3008,7 +3154,9 @@
         "R",
         "W",
         "C"
-      ]
+      ],
+      "hybrid": true,
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/misc/PhBrown.svg",
@@ -3019,7 +3167,8 @@
       "colors": [
         "Brown",
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "phyrexian/misc/PhYellow.svg",
@@ -3030,7 +3179,8 @@
       "colors": [
         "Yellow",
         "C"
-      ]
+      ],
+      "phyrexian": true
     },
     {
       "filename": "symbols/base/T.svg",
@@ -3149,7 +3299,8 @@
       "filename": "symbols/additional/PhT.svg",
       "symbol": "H/T",
       "english": "tap this permanent or two life",
-      "represents_mana": false
+      "represents_mana": false,
+      "phyrexian": true
     },
     {
       "filename": "symbols/additional/Brick.svg",

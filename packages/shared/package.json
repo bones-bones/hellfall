@@ -56,6 +56,7 @@
   "dependencies": {
     "@google-cloud/firestore": "^7.1.0",
     "@types/xmldom": "^0.1.34",
+    "redos-detector": "^6.1.4",
     "xmldom": "^0.6.0"
   }
 }
