@@ -11,14 +11,20 @@ type CacheEntry = { body: string; gzipBody: Buffer; loadedAt: number };
 let cache: CacheEntry | null = null;
 let inflight: Promise<CacheEntry> | null = null;
 
-function makeCacheEntry(body: string): CacheEntry {
-  return { body, gzipBody: gzipSync(body), loadedAt: Date.now() };
+function makeCacheEntry(body: string, gzipBody?: Buffer): CacheEntry {
+  return { body, gzipBody: gzipBody ?? gzipSync(body), loadedAt: Date.now() };
+}
+
+/** Seed cache from an already-serialized `{ data: HCCard[] }` body (avoids a second stringify). */
+export function seedCatalogCacheBody(body: string, gzipBody?: Buffer): void {
+  if (!body) return;
+  cache = makeCacheEntry(body, gzipBody);
 }
 
 /** Reuse cards already loaded at server startup (avoids a second full Firestore read). */
 export function seedCatalogCache(cards: HCCard.Any[]): void {
   if (cards.length === 0) return;
-  cache = makeCacheEntry(JSON.stringify({ data: cards }));
+  seedCatalogCacheBody(JSON.stringify({ data: cards }));
 }
 
 function cacheTtlMs(): number {

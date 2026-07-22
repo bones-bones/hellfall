@@ -17,6 +17,7 @@ import {
   getChangesetDiffRows,
   isChangesetStatus,
   isValidV4UUID,
+  normalizeChangeList,
 } from '@hellfall/shared/utils';
 import type { HCCard } from '@hellfall/shared/types';
 import {
@@ -48,7 +49,7 @@ function serializeChangeset(data: Changeset, docId?: string, diff?: Changeset['d
     resolvedAt: timestampToIso(data.resolvedAt as Timestamp),
     submittedBy: data.submittedBy,
     resolvedBy: data.resolvedBy,
-    changes: data.changes,
+    changes: normalizeChangeList(data.changes),
     comment: data.comment,
     ...(diff?.length ? { diff } : {}),
   };
@@ -70,7 +71,7 @@ async function serializeChangesetForApi(
   docId: string | undefined,
   cardCache: Map<string, HCCard.Any | null>
 ): Promise<Changeset> {
-  if (!Array.isArray(data.changes) || data.changes.length === 0) {
+  if (normalizeChangeList(data.changes).length === 0) {
     return serializeChangeset(data, docId);
   }
   const card = await loadCardForDiff(data.cardId, cardCache);

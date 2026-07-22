@@ -52,6 +52,11 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
     }
   }, [escape]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [cardEditing, setCardEditing] = useState(false);
+
+  useEffect(() => {
+    setCardEditing(false);
+  }, [activeCardFromAtom]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -67,7 +72,9 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
         // initialTransitionState={initialTransitionState}
         // expanded={!!activeCard}
         expandedWidth={
-          maxWidth
+          cardEditing
+            ? Math.min(Math.max(windowWidth * 0.92, 720), 1400)
+            : maxWidth
             ? Math.min(maxWidth, Math.max(windowWidth * 0.535, 350))
             : Math.max(windowWidth * 0.535, 350)
         }
@@ -76,7 +83,10 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
       >
         <Card>
           <Card.Body padding={'zero'}>
-            <SPContainer ref={scrollContainerRef}>
+            <SPContainer
+              ref={scrollContainerRef}
+              style={{ overflowX: cardEditing ? 'auto' : 'hidden' }}
+            >
               <ToolbarIconButton
                 icon={xIcon}
                 cs={toolbarIconStyles}
@@ -91,7 +101,7 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
                   target="_blank"
                 />
               )}
-              {activeCard && <HellfallCard data={activeCard} />}
+              {activeCard && <HellfallCard data={activeCard} onEditingChange={setCardEditing} />}
             </SPContainer>
           </Card.Body>
         </Card>
@@ -134,7 +144,6 @@ const sidePanelStencil = createStencil({
 const spContainerStyles = createStyles({
   overflowY: 'scroll',
   height: '90vh',
-  overflowX: 'hidden',
 });
 const SPContainer = createStyledDiv(spContainerStyles, 'SPContainer');
 

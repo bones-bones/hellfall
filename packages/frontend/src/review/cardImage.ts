@@ -1,5 +1,5 @@
 import type { HCCard } from '@hellfall/shared/types';
-import { applyChanges } from '@hellfall/shared/utils';
+import { applyChanges, changeIsValid, normalizeChangeList } from '@hellfall/shared/utils';
 import type { anyChange } from '@hellfall/shared/utils';
 
 export function getPrimaryImageUrl(card: HCCard.Any): string | undefined {
@@ -9,8 +9,13 @@ export function getPrimaryImageUrl(card: HCCard.Any): string | undefined {
   return card.image;
 }
 
-export function previewCardWithChanges(card: HCCard.Any, changes: anyChange[]): HCCard.Any {
+export function previewCardWithChanges(
+  card: HCCard.Any,
+  changes: anyChange[] | unknown
+): HCCard.Any {
   const preview = structuredClone(card);
-  applyChanges(preview, changes);
+  const normalized = normalizeChangeList(changes);
+  const applicable = normalized.filter(change => changeIsValid(preview, change));
+  applyChanges(preview, applicable);
   return preview;
 }

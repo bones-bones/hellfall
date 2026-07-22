@@ -41,7 +41,7 @@ export const Header = () => {
                 {user.username}
                 {/* <Link to="/settings">{user.username}</Link> */}
               </span>
-              {user.isAdmin && (
+              {(user.isAdmin || user.isContributor) && (
                 <>
                   , <Link to="/review">review</Link>
                 </>

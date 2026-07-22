@@ -38,12 +38,15 @@ jobs:
 
       - name: Deploy auth server to Cloud Run
         run: |
+          # Longer request timeout only (no memory/CPU bump). Catalog sync is async:
+          # POST /sync → 202, then POST /sync/:id/run holds the request while publishing.
           gcloud run deploy "$AUTH_CLOUD_RUN_SERVICE_NAME" \
             --source "$CLOUD_RUN_SOURCE_DIR" \
             --project "$GCP_AUTH_SERVER_PROJECT_ID" \
             --region "$AUTH_CLOUD_RUN_REGION" \
             --platform managed \
             --allow-unauthenticated \
+            --timeout=900 \
             --quiet
 
       - name: Catalog sync skipped
@@ -65,15 +68,28 @@ jobs:
             --project "$GCP_AUTH_SERVER_PROJECT_ID" \
             --format 'value(status.url)')
 
-          echo "Publishing catalog via $SERVICE_URL/api/admin/catalog/sync"
-          HTTP_CODE=$(curl -sS -o /tmp/catalog-sync.json -w '%{http_code}' \
+          echo "Accepting catalog sync via $SERVICE_URL/api/admin/catalog/sync"
+          HTTP_CODE=$(curl -sS --max-time 60 -o /tmp/catalog-sync-accept.json -w '%{http_code}' \
             -X POST "$SERVICE_URL/api/admin/catalog/sync" \
+            -H "Authorization: Bearer $CATALOG_SYNC_API_KEY" \
+            -H "Content-Type: application/json")
+          cat /tmp/catalog-sync-accept.json
+          echo
+          if [ "$HTTP_CODE" != "202" ]; then
+            echo "Catalog sync accept failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
+
+          JOB_ID=$(python3 -c 'import json; print(json.load(open("/tmp/catalog-sync-accept.json"))["jobId"])')
+          echo "Running catalog sync job $JOB_ID"
+          HTTP_CODE=$(curl -sS --max-time 900 -o /tmp/catalog-sync.json -w '%{http_code}' \
+            -X POST "$SERVICE_URL/api/admin/catalog/sync/$JOB_ID/run" \
             -H "Authorization: Bearer $CATALOG_SYNC_API_KEY" \
             -H "Content-Type: application/json")
           cat /tmp/catalog-sync.json
           echo
           if [ "$HTTP_CODE" != "200" ]; then
-            echo "Catalog sync failed with HTTP $HTTP_CODE"
+            echo "Catalog sync run failed with HTTP $HTTP_CODE"
             exit 1
           fi
 
