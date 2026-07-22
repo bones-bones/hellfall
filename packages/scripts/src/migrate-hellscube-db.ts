@@ -431,7 +431,7 @@ async function main() {
   //   return docId != null && isValidFirestoreDocId(docId);
   // });
 
-  const skippedInvalidId = parsed.data.length - cardMap.size();
+  const skippedInvalidId = parsed.data.length - cardMap.size;
   if (skippedInvalidId > 0) {
     console.warn(`Skipped ${skippedInvalidId} cards with missing/invalid Firestore doc id`);
   }
@@ -446,7 +446,7 @@ async function main() {
   //     .filter((id): id is string => id != null && isValidFirestoreDocId(id))
   // );
 
-  console.log(`Cards to migrate: ${cardMap.size()} (of ${cardMap.size()} in JSON)`);
+  console.log(`Cards to migrate: ${cardMap.size} (of ${cardMap.size} in JSON)`);
 
   const db = new Firestore({ databaseId });
   const collection = db.collection(collectionName);
@@ -511,7 +511,7 @@ async function main() {
   }
 
   console.log('\n--- Summary ---');
-  console.log(`JSON cards: ${cardMap.size()}`);
+  console.log(`JSON cards: ${cardMap.size}`);
   console.log(`JSON cards with tags: ${stats.jsonWithTags}`);
   console.log(`Firestore docs (before): ${existingById?.size}`);
   console.log(`Cards with merged tags (overrides applied): ${stats.tagsMergedFromOverrides}`);

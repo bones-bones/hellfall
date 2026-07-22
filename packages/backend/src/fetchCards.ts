@@ -117,185 +117,187 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     'tags',
   ];
 
-  const allCards = rest.map(entry => {
-    const entryAt = (key: keyType) => entry[keys.indexOf(key)];
-    const cardIsMulti = entry.slice(keys.indexOf('1mana_cost')).some(value => value);
-    const card = getDefaultCard(
-      HCKind.Card,
-      cardIsMulti,
-      {
-        hcid: entryAt('hcid'),
-        image: entryAt('image'),
-        image_status: HCImageStatus.HighRes,
-        creators: entryAt('creators').split(';'),
-        set: entryAt('set') as SetCode,
-        rulings: entryAt('rulings'),
-        mana_value:
-          entryAt('mana_value') != '∞'
-            ? isInteger(entryAt('mana_value'))
-              ? parseInt(entryAt('mana_value'))
-              : parseFloat(entryAt('mana_value'))
-            : 999999999999999,
-        colors: entryAt('colors')
-          ? entryAt('colors')
-              .split(';')
-              .map(color => HCColor[color as keyof typeof HCColor])
-          : [],
-      },
-      {
-        colors: cardIsMulti
-          ? pipMap.getColorsFromText(entryAt('mana_cost'))
-          : entryAt('colors')
-          ? entryAt('colors')
-              .split(';')
-              .map(color => HCColor[color as keyof typeof HCColor])
-          : [],
-        mana_cost: entryAt('mana_cost'),
-        supertypes: entryAt('supertypes').split(';'),
-        types: entryAt('types').split(';'),
-        subtypes: entryAt('subtypes').split(';'),
-        power: entryAt('power'),
-        toughness: entryAt('toughness'),
-        loyalty: !entryAt('types').toLowerCase().includes('battle') ? entryAt('loyalty') : '',
-        defense: entryAt('types').toLowerCase().includes('battle') ? entryAt('loyalty') : '',
-        oracle_text: entryAt('oracle_text'),
-        flavor_text: entryAt('flavor_text'),
-        image: entryAt('0image'),
-        image_status: entryAt('0image') ? HCImageStatus.HighRes : undefined,
+  const allCards = rest
+    .map(entry => entry.map(t => t.replaceAll('\\n', '\n')))
+    .map(entry => {
+      const entryAt = (key: keyType) => entry[keys.indexOf(key)];
+      const cardIsMulti = entry.slice(keys.indexOf('1mana_cost')).some(value => value);
+      const card = getDefaultCard(
+        HCKind.Card,
+        cardIsMulti,
+        {
+          hcid: entryAt('hcid'),
+          image: entryAt('image'),
+          image_status: HCImageStatus.HighRes,
+          creators: entryAt('creators').split(';'),
+          set: entryAt('set') as SetCode,
+          rulings: entryAt('rulings'),
+          mana_value:
+            entryAt('mana_value') != '∞'
+              ? isInteger(entryAt('mana_value'))
+                ? parseInt(entryAt('mana_value'))
+                : parseFloat(entryAt('mana_value'))
+              : 999999999999999,
+          colors: entryAt('colors')
+            ? entryAt('colors')
+                .split(';')
+                .map(color => HCColor[color as keyof typeof HCColor])
+            : [],
+        },
+        {
+          colors: cardIsMulti
+            ? pipMap.getColorsFromText(entryAt('mana_cost'))
+            : entryAt('colors')
+            ? entryAt('colors')
+                .split(';')
+                .map(color => HCColor[color as keyof typeof HCColor])
+            : [],
+          mana_cost: entryAt('mana_cost'),
+          supertypes: entryAt('supertypes').split(';'),
+          types: entryAt('types').split(';'),
+          subtypes: entryAt('subtypes').split(';'),
+          power: entryAt('power'),
+          toughness: entryAt('toughness'),
+          loyalty: !entryAt('types').toLowerCase().includes('battle') ? entryAt('loyalty') : '',
+          defense: entryAt('types').toLowerCase().includes('battle') ? entryAt('loyalty') : '',
+          oracle_text: entryAt('oracle_text'),
+          flavor_text: entryAt('flavor_text'),
+          image: entryAt('0image'),
+          image_status: entryAt('0image') ? HCImageStatus.HighRes : undefined,
+        }
+      );
+      const costColors = pipMap.getColorsFromText(entryAt('mana_cost'));
+      if (!costColors.length && card.colors.length && !cardIsMulti && card.set != 'NRM') {
+        addPropToFace(card, 'color_indicator', card.colors);
       }
-    );
-    const costColors = pipMap.getColorsFromText(entryAt('mana_cost'));
-    if (!costColors.length && card.colors.length && !cardIsMulti && card.set != 'NRM') {
-      addPropToFace(card, 'color_indicator', card.colors);
-    }
-    for (let i = 0; i < keys.length; i++) {
-      if (entry[i] && !skipKeys.includes(keys[i])) {
-        if ('123'.includes(keys[i][0])) {
-          const face = parseInt(keys[i][0]);
-          const key = keys[i].slice(1);
-          const entryList = face == 3 ? entry[i].split(' // ') : [entry[i]];
-          entryList.forEach((value, index) => {
-            if (!value) return;
-            if (['supertypes', 'types', 'subtypes'].includes(key)) {
-              addPropToFace(
-                card,
-                key as 'supertypes' | 'types' | 'subtypes',
-                value.split(';'),
-                face + index
-              );
-            } else if (key == 'loyalty' && frontIsBattle(card, face + index)) {
-              addPropToFace(card, 'defense', value, face + index);
-            } else {
-              addPropToFace(card, key as facePropType, value, face + index);
-            }
-            if (key == 'mana_cost') {
-              addPropToFace(card, 'colors', pipMap.getColorsFromText(value), face + index);
-            }
-            if (key == 'image') {
-              addPropToFace(card, 'image_status', HCImageStatus.HighRes, face + index);
-            }
-          });
-        } else {
-          if (keys[i] == 'legalities') {
-            const formats = entry[i].split(', ');
-            const legalities: HCLegalitiesField = {
-              standard: formats.includes('Not Legal')
-                ? HCLegality.NotLegal
-                : formats.includes('Banned')
-                ? card.set?.includes('HCV')
-                  ? HCLegality.NotLegal
-                  : HCLegality.Banned
-                : // : formats.includes('Legal') ?
-                  HCLegality.Legal,
-              // : HCLegality.NotLegal,
-              '4cb': formats.includes('Not Legal (4CB)')
-                ? HCLegality.NotLegal
-                : formats.includes('Banned (4CB)')
-                ? card.set?.includes('HCV')
-                  ? HCLegality.NotLegal
-                  : HCLegality.Banned
-                : // : formats.includes('Legal (4CB)') ?
-                  HCLegality.Legal,
-              // : HCLegality.NotLegal,
-              commander: formats.includes('Not Legal (Commander)')
-                ? HCLegality.NotLegal
-                : formats.includes('Banned (Commander)')
-                ? card.set?.includes('HCV')
-                  ? HCLegality.NotLegal
-                  : HCLegality.Banned
-                : // : formats.includes('Legal (Commander)') ?
-                  HCLegality.Legal,
-              // : HCLegality.NotLegal,
-            };
-            addPropToRoot(card, 'legalities', legalities);
-          } else if (keys[i] == 'related') {
-            entry[i].split(';').forEach(oldName => {
-              const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
-              const maker: HCRelatedCard = {
-                object: HCObject.ObjectType.RelatedCard,
-                id: '',
-                hcid: shouldUseBase ? name : '',
-                name: shouldUseBase ? base : name,
-                set: '' as SetCode,
-                image: '',
-                type_line: '',
-                component: 'token_maker',
-              };
-              if (count) {
-                maker.count = count.slice(1);
+      for (let i = 0; i < keys.length; i++) {
+        if (entry[i] && !skipKeys.includes(keys[i])) {
+          if ('123'.includes(keys[i][0])) {
+            const face = parseInt(keys[i][0]);
+            const key = keys[i].slice(1);
+            const entryList = face == 3 ? entry[i].split(' // ') : [entry[i]];
+            entryList.forEach((value, index) => {
+              if (!value) return;
+              if (['supertypes', 'types', 'subtypes'].includes(key)) {
+                addPropToFace(
+                  card,
+                  key as 'supertypes' | 'types' | 'subtypes',
+                  value.split(';'),
+                  face + index
+                );
+              } else if (key == 'loyalty' && frontIsBattle(card, face + index)) {
+                addPropToFace(card, 'defense', value, face + index);
+              } else {
+                addPropToFace(card, key as facePropType, value, face + index);
               }
-              pushPropToRoot(card, 'all_parts', maker);
+              if (key == 'mana_cost') {
+                addPropToFace(card, 'colors', pipMap.getColorsFromText(value), face + index);
+              }
+              if (key == 'image') {
+                addPropToFace(card, 'image_status', HCImageStatus.HighRes, face + index);
+              }
             });
           } else {
-            addPropToRoot(card, keys[i] as rootPropType, entry[i]);
+            if (keys[i] == 'legalities') {
+              const formats = entry[i].split(', ');
+              const legalities: HCLegalitiesField = {
+                standard: formats.includes('Not Legal')
+                  ? HCLegality.NotLegal
+                  : formats.includes('Banned')
+                  ? card.set?.includes('HCV')
+                    ? HCLegality.NotLegal
+                    : HCLegality.Banned
+                  : // : formats.includes('Legal') ?
+                    HCLegality.Legal,
+                // : HCLegality.NotLegal,
+                '4cb': formats.includes('Not Legal (4CB)')
+                  ? HCLegality.NotLegal
+                  : formats.includes('Banned (4CB)')
+                  ? card.set?.includes('HCV')
+                    ? HCLegality.NotLegal
+                    : HCLegality.Banned
+                  : // : formats.includes('Legal (4CB)') ?
+                    HCLegality.Legal,
+                // : HCLegality.NotLegal,
+                commander: formats.includes('Not Legal (Commander)')
+                  ? HCLegality.NotLegal
+                  : formats.includes('Banned (Commander)')
+                  ? card.set?.includes('HCV')
+                    ? HCLegality.NotLegal
+                    : HCLegality.Banned
+                  : // : formats.includes('Legal (Commander)') ?
+                    HCLegality.Legal,
+                // : HCLegality.NotLegal,
+              };
+              addPropToRoot(card, 'legalities', legalities);
+            } else if (keys[i] == 'related') {
+              entry[i].split(';').forEach(oldName => {
+                const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
+                const maker: HCRelatedCard = {
+                  object: HCObject.ObjectType.RelatedCard,
+                  id: '',
+                  hcid: shouldUseBase ? name : '',
+                  name: shouldUseBase ? base : name,
+                  set: '' as SetCode,
+                  image: '',
+                  type_line: '',
+                  component: 'token_maker',
+                };
+                if (count) {
+                  maker.count = count.slice(1);
+                }
+                pushPropToRoot(card, 'all_parts', maker);
+              });
+            } else {
+              addPropToRoot(card, keys[i] as rootPropType, entry[i]);
+            }
           }
         }
       }
-    }
 
-    const artistIndex = keys.indexOf('artists');
-    if (entry[artistIndex]) {
-      const artists = entry[artistIndex].split(';');
+      const artistIndex = keys.indexOf('artists');
+      if (entry[artistIndex]) {
+        const artists = entry[artistIndex].split(';');
 
-      card.artists = artists.map(fullArtist => {
-        const hasNote = fullArtist.includes('<') && fullArtist.endsWith('>');
-        const [artist, note] = [
-          hasNote ? fullArtist.split('<')[0] : fullArtist,
-          hasNote ? fullArtist.split('<')[1].slice(0, -1) : undefined,
-        ];
-        addArtist(card, artist, note);
-        return artist;
-      });
-      card.artists = Array.from(new Set(card.artists));
-    }
-    // TODO: move to derived props? or just remove?
-    if ('card_faces' in card && !entryAt('tags').includes('irregular-face-name')) {
-      card.name.split(' // ').forEach((name, i) => {
-        addPropToFace(card, 'name', name, i);
-      });
-    }
+        card.artists = artists.map(fullArtist => {
+          const hasNote = fullArtist.includes('<') && fullArtist.endsWith('>');
+          const [artist, note] = [
+            hasNote ? fullArtist.split('<')[0] : fullArtist,
+            hasNote ? fullArtist.split('<')[1].slice(0, -1) : undefined,
+          ];
+          addArtist(card, artist, note);
+          return artist;
+        });
+        card.artists = Array.from(new Set(card.artists));
+      }
+      // TODO: move to derived props? or just remove?
+      if ('card_faces' in card && !entryAt('tags').includes('irregular-face-name')) {
+        card.name.split(' // ').forEach((name, i) => {
+          addPropToFace(card, 'name', name, i);
+        });
+      }
 
-    setDerivedProps(card, entryAt('tags').split(';'));
-    card.tags?.forEach(tag => {
-      if (tag == 'draftpartner' && card.all_parts) {
-        card.all_parts[0].is_draft_partner = true;
-        if (card.all_parts[0].component == 'token_maker') {
-          // don't overwrite melds
-          card.all_parts[0].component = 'draft_partner';
-        }
-        if (!card.tags?.includes('draftpartner-with-self')) {
+      setDerivedProps(card, entryAt('tags').split(';'));
+      card.tags?.forEach(tag => {
+        if (tag == 'draftpartner' && card.all_parts) {
+          card.all_parts[0].is_draft_partner = true;
+          if (card.all_parts[0].component == 'token_maker') {
+            // don't overwrite melds
+            card.all_parts[0].component = 'draft_partner';
+          }
+          if (!card.tags?.includes('draftpartner-with-self')) {
+            card.not_directly_draftable = true;
+          }
+          card.has_draft_partners = true;
+        } else if (tag == 'meld' && card.all_parts) {
+          card.all_parts[0].component = 'meld_part';
+        } else if (tag == 'NotDirectlyDraftable') {
+          // for Prismatic Pardner
           card.not_directly_draftable = true;
         }
-        card.has_draft_partners = true;
-      } else if (tag == 'meld' && card.all_parts) {
-        card.all_parts[0].component = 'meld_part';
-      } else if (tag == 'NotDirectlyDraftable') {
-        // for Prismatic Pardner
-        card.not_directly_draftable = true;
-      }
+      });
+      return card;
     });
-    return card;
-  });
 
   return new HCIDMap(allCards);
 };

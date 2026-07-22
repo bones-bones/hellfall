@@ -269,7 +269,7 @@ export const HellfallCard = ({
               <Divider />
               <div>
                 <StyledHeading size="small">Rulings</StyledHeading>
-                {displayCard.rulings.split('\\n').map((e, i) => {
+                {displayCard.rulings.split('\n').map((e, i) => {
                   return <Ruling key={i}>{e}</Ruling>;
                 })}
               </div>

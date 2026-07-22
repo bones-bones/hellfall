@@ -324,12 +324,12 @@ export class PipMap {
   /**
    * Gets a random symbol from this PipMap
    */
-  getRandomSymbol = (): string => this.symbols()[Math.floor(Math.random() * this.size())];
+  getRandomSymbol = (): string => this.symbols()[Math.floor(Math.random() * this.size)];
 
   /**
    * Gets a random pip from this PipMap
    */
-  getRandomPip = (): HCCardSymbol => this.pips()[Math.floor(Math.random() * this.size())];
+  getRandomPip = (): HCCardSymbol => this.pips()[Math.floor(Math.random() * this.size)];
 
   /**
    * Determines whether all the pips in a PipMap satisfy the specified test.
@@ -622,5 +622,7 @@ export class PipMap {
   /**
    * @returns the number of pips in the PipMap.
    */
-  size = () => this.symbolMap.size;
+  get size(): number {
+    return this.symbolMap.size;
+  }
 }

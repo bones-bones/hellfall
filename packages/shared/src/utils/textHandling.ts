@@ -278,9 +278,9 @@ export const formatParens = (text: string) => {
         return parenText;
       } else {
         return parenText
-          .split('\\n')
+          .split('\n')
           .map(line => '*' + line + '*')
-          .join('\\n');
+          .join('\n');
       }
     })
     .join('')

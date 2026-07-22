@@ -325,11 +325,11 @@ export class CardMap {
   /**
    * Gets a random id from this CardMap
    */
-  getRandomId = () => this.ids()[Math.floor(Math.random() * this.size())];
+  getRandomId = () => this.ids()[Math.floor(Math.random() * this.size)];
   /**
    * Gets a random card from this CardMap
    */
-  getRandomCard = () => this.cards()[Math.floor(Math.random() * this.size())];
+  getRandomCard = () => this.cards()[Math.floor(Math.random() * this.size)];
 
   /**
    * Determines whether all the cards in a CardMap satisfy the specified test.
@@ -904,7 +904,9 @@ export class CardMap {
   /**
    * @returns the number of cards in the CardMap.
    */
-  size = () => this.idMap.size;
+  get size(): number {
+    return this.idMap.size;
+  }
 }
 
 /**

@@ -10669,7 +10669,7 @@
 			],
 			"type_line": "Basic Land",
 			"oracle_text": "{T}: Add {C}.",
-			"flavor_text": "\"Sometimes the ends can't justify themselves.\"\\n—Jace, to Vraska",
+			"flavor_text": "\"Sometimes the ends can't justify themselves.\"\n—Jace, to Vraska",
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
@@ -11033,7 +11033,7 @@
 			],
 			"type_line": "Basic Land — Island",
 			"oracle_text": "({T}: Add {U}.)",
-			"flavor_text": "As you stare over the moonlit sea, a whisper on the wind seems to say...\\n**SHIP IT**",
+			"flavor_text": "As you stare over the moonlit sea, a whisper on the wind seems to say...\n**SHIP IT**",
 			"colors": [],
 			"color_identity": [
 				"U"

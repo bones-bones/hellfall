@@ -171,7 +171,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
         } else if (prop == 'mana_cost') {
           addPropToFace(card, prop, fromImportMana(value), i);
         } else if (italicsReplaceKeys.includes(prop)) {
-          addPropToFace(card, prop, fromImportMana((value as string).replaceAll('\n', '\\n')), i);
+          addPropToFace(card, prop, fromImportMana(value as string), i);
         }
         if (prop == 'type_line') {
           const supertypes: string[] = [];
@@ -211,11 +211,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     if (prop == 'mana_cost') {
       addPropToRoot(card, prop, fromImportMana(value));
     } else if (italicsReplaceKeys.includes(prop as facePropType)) {
-      addPropToRoot(
-        card,
-        prop as rootPropType,
-        fromImportMana((value as string).replaceAll('\n', '\\n'))
-      );
+      addPropToRoot(card, prop as rootPropType, fromImportMana(value as string));
     } else if (prop == 'type_line' && !('card_faces' in card)) {
       const supertypes: string[] = [];
       const types: string[] = [];

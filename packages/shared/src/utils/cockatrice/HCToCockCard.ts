@@ -92,7 +92,7 @@ const getMainType = (face: faceType): string => {
 const hcFaceToCockProps = (face: faceType): CockFaceProps => {
   const cockFace: CockFaceProps = {
     name: face.export_name || face.name,
-    text: face.oracle_text.replaceAll(/\\n/g, '\n').replaceAll(/\{(.)\}/g, '$1'),
+    text: face.oracle_text.replaceAll(/\{(.)\}/g, '$1'),
     layout: hcToCockLayout[face.layout],
     type: face.type_line,
     maintype: getMainType(face),

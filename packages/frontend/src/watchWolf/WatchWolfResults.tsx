@@ -80,7 +80,7 @@ export const Watchwolfresults = () => {
             <span>W/L</span>
           </HeaderRow>
 
-          {wrGroupedStandings?.slice(0, cards.size()).map(entry => {
+          {wrGroupedStandings?.slice(0, cards.size).map(entry => {
             const card = cards.get(entry.Id);
             if (!card) return null;
 

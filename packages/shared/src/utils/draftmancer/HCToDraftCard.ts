@@ -18,7 +18,7 @@ const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard =
     image: card.rotated_image || card.image,
     colors: orderColors(card.colors.filter(color => validColors.includes(color))),
     set: card.set,
-    oracle_text: toExportMana(card.oracle_text.replaceAll('\\n', '\n')),
+    oracle_text: toExportMana(card.oracle_text),
   };
   if (card.tags?.includes('rotate-left')) {
     draftCard.layout = 'split-left';
@@ -50,7 +50,7 @@ const HCFaceToDraftFace = (face: HCCardFace.MultiFaced): DraftmancerCardFace => 
     mana_cost: toExportMana(face.mana_cost, true),
     type: face.type_line,
     image: face.rotated_image || face.image,
-    oracle_text: toExportMana(face.oracle_text.replaceAll('\\n', '\n')),
+    oracle_text: toExportMana(face.oracle_text),
   };
   if (face.layout == 'aftermath') {
     draftFace.layout = 'split-left';
@@ -85,7 +85,7 @@ const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => 
     image: face.rotated_image || face.image || card.rotated_image || card.image,
     colors: orderColors(face.colors.filter(color => validColors.includes(color))),
     set: card.set,
-    oracle_text: toExportMana(face.oracle_text.replaceAll('\\n', '\n')),
+    oracle_text: toExportMana(face.oracle_text),
   };
   if (card.tags?.includes('rotate-left') || face.layout == 'aftermath') {
     draftCard.layout = 'split-left';
