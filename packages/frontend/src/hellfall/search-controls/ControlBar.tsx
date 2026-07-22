@@ -35,7 +35,7 @@ import { listsAreExactlyEqual } from '@hellfall/shared/utils';
 
 const UNIQUE_OPTIONS: SelectItems<uniqueType> = [
   { label: 'Cards', value: 'cards' },
-  { label: 'All prints', value: 'cards' },
+  { label: 'All prints', value: 'prints' },
   // {label: 'Unique art', label:'arts'}
 ];
 
