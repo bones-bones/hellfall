@@ -713,6 +713,19 @@ const subKeywords: Record<string, string | string[]> = {
   pipverge: 'converge',
   'commander suspend': 'suspend',
   'annihilate voters': 'annihilator',
+  milllink: 'link',
+  cheesetouch: 'touch',
+  'manifest dreads': 'manifest dread',
+  'manifest destiny': 'manifest',
+  crewquip: ['crew', 'equip'],
+  'split-ish second': 'split second',
+  escapejutsu: ['escape', 'ninjutsu'],
+  'firstest strike': 'first strike',
+  'menace to society': 'menace',
+  junklink: 'link',
+  'drink annihilator': 'annihilator',
+  'trenchcoat armor': 'umbra armor',
+  orbiting: 'flying',
 };
 
 const keywordTags = [
@@ -733,6 +746,10 @@ const tagsToKeywords: Record<string, string | string[]> = {
   'mutate-layout': 'mutate',
   'partner-mechanic': 'partner',
   'unprinted-partner': 'partner',
+  spidertouch: 'touch',
+  spiderlink: 'link',
+  connivelink: ['connive', 'link'],
+  'planeswalker-deathtouch': 'deathtouch',
 };
 
 export const fillSubKeywords = (keywords: string[]) => {

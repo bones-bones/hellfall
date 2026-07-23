@@ -324,12 +324,11 @@ export class PropFilter extends FilterObject<string[], string> {
     }
     ({ props: this.props, location: this.location } = queryNameToValue(queryName));
   }
-  toSummary = () =>
-    `the ${this.summaryStart ?? queryNameToSummary(this.queryName)} ${this.summary(
-      this.getOp(),
-      stripQuotes(this.value),
-      this.inverted
-    )}`;
+  toSummary = () => {
+    const summary = this.summary(this.getOp(), stripQuotes(this.value), this.inverted);
+    if (summary.startsWith('!')) return summary;
+    return `the ${this.summaryStart ?? queryNameToSummary(this.queryName)} ${summary}`;
+  };
   cardPassesFilter = (card: HCCard.Any) =>
     xor(
       this.regex

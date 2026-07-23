@@ -5,7 +5,7 @@ import { orderColors } from './orderColors';
 
 const fixPip = (text: string) => unescapeText(text, true).replaceAll(' ', '');
 
-const escapeRegex = (text: string) => text.replaceAll(/[.-/?$]/g, '\\$1');
+const escapeRegex = (text: string) => text.replaceAll(/([./?$-])/g, '\\$1');
 const doubleable = ['W', 'U', 'P', 'B', 'R', 'G'];
 const getDevotionOfPip = (pip: HCCardSymbol, search: HCCardSymbol) => {
   const splitPip = pip.symbol.split('/');
@@ -21,6 +21,23 @@ const getDevotionOfPip = (pip: HCCardSymbol, search: HCCardSymbol) => {
   }
   return 0;
 };
+
+const hybridBaseRegex =
+  /[WUBRGPC∞?TE]|[WUBRG]{2}|Yellow|Brown|Orange|Pink|Gold|Beige|Grey|Bear|\d+/;
+
+const hybridSymbolRegex = new RegExp(
+  `^(H/)?(${hybridBaseRegex.source})(/(${hybridBaseRegex.source}))+$`
+);
+
+const manaBaseRegex = /(H\/)?([WUBRGPCS∞?]|Yellow|Brown|Orange|Pink|\d+|Rad\/[WUBRGPC])/;
+
+const manaSymbolRegex = new RegExp(`^${manaBaseRegex.source}(/(${hybridBaseRegex.source}))*$`);
+
+const coloredBaseRegex = /[WUBRGP]|[WUBRG]{2}|Yellow|Brown|Orange|Pink|Gold|Beige|Grey/;
+
+const coloredSymbolRegex = new RegExp(
+  `^(${manaBaseRegex.source}/)*${coloredBaseRegex.source}(/(${hybridBaseRegex.source}))*$`
+);
 
 /**
  * Checks if two pip symbols are loosely equal
@@ -84,10 +101,12 @@ export class PipMap {
    */
   get manaSymbolRegex(): RegExp {
     if (!this._manaSymbolRegex) {
-      const symbols = this.filter(pip => pip.represents_mana).mapToArray(pip =>
-        escapeRegex(pip.symbol)
+      const symbols = this.filter(
+        pip => pip.represents_mana && !manaSymbolRegex.test(pip.symbol)
+      ).mapToArray(pip => escapeRegex(pip.symbol));
+      this._manaSymbolRegex = new RegExp(
+        `{((${manaSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`
       );
-      this._manaSymbolRegex = new RegExp(`{(${symbols.join('|')})}`);
     }
     return this._manaSymbolRegex;
   }
@@ -97,10 +116,12 @@ export class PipMap {
    */
   get coloredSymbolRegex(): RegExp {
     if (!this._coloredSymbolRegex) {
-      const symbols = this.filter(pip => pip.colors?.some(c => c != 'C')).mapToArray(pip =>
-        escapeRegex(pip.symbol)
+      const symbols = this.filter(
+        pip => !coloredSymbolRegex.test(pip.symbol) && pip.colors?.some(c => c != 'C')
+      ).mapToArray(pip => escapeRegex(pip.symbol));
+      this._coloredSymbolRegex = new RegExp(
+        `{((${coloredSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`
       );
-      this._coloredSymbolRegex = new RegExp(`{(${symbols.join('|')})}`);
     }
     return this._coloredSymbolRegex;
   }
@@ -114,13 +135,12 @@ export class PipMap {
   private _repeatedSymbolRegex: RegExp | null = null;
   /**
    * A regex that matches two of the same mana symbol in a row
+   * 
+   * Note: this only matches one symbol. To match two in a row, use backreferences or named groups
    */
   get repeatedSymbolRegex(): RegExp {
     if (!this._repeatedSymbolRegex) {
-      const symbols = this.filter(pip => pip.colors?.some(c => c != 'C')).mapToArray(pip =>
-        escapeRegex(pip.symbol)
-      );
-      this._repeatedSymbolRegex = new RegExp(`({(${symbols.join('|')})}){2}`);
+      this._repeatedSymbolRegex = new RegExp(`(${this.manaSymbolRegex.source})`);
     }
     return this._repeatedSymbolRegex;
   }
@@ -130,20 +150,20 @@ export class PipMap {
    */
   get hybridSymbolRegex(): RegExp {
     if (!this._hybridSymbolRegex) {
-      const symbols = this.filter(pip => pip.hybrid).mapToArray(pip => escapeRegex(pip.symbol));
-      this._hybridSymbolRegex = new RegExp(`{(${symbols.join('|')})}`);
+      const symbols = this.filter(
+        pip => pip.hybrid && !hybridSymbolRegex.test(pip.symbol)
+      ).mapToArray(pip => escapeRegex(pip.symbol));
+      this._hybridSymbolRegex = new RegExp(
+        `{((${hybridSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`
+      );
     }
     return this._hybridSymbolRegex;
   }
-  private _phyrexianSymbolRegex: RegExp | null = null;
+  private _phyrexianSymbolRegex: RegExp = /{H\/[^}]+}/;
   /**
    * A regex that matches a phyrexian symbol
    */
   get phyrexianSymbolRegex(): RegExp {
-    if (!this._phyrexianSymbolRegex) {
-      const symbols = this.filter(pip => pip.phyrexian).mapToArray(pip => escapeRegex(pip.symbol));
-      this._phyrexianSymbolRegex = new RegExp(`{(${symbols.join('|')})}`);
-    }
     return this._phyrexianSymbolRegex;
   }
   clearRegexes(): void {
@@ -151,7 +171,6 @@ export class PipMap {
     this._coloredSymbolRegex = null;
     this._repeatedSymbolRegex = null;
     this._hybridSymbolRegex = null;
-    this._phyrexianSymbolRegex = null;
   }
   /**
    * Adds a new pip to the PipMap. If a pip with the same symbol already exists, the pip will be updated.

@@ -96,7 +96,7 @@ export const opToNot = (op: looseOpType) => (opIsNegative(op) ? 'not' : '');
  * @param inver whether the filter is inverted
  */
 export const opToDont = (op: looseOpType, invert?: boolean) =>
-  opXorInvert(op, invert) ? "don't" : '';
+  opXorInvert(op, invert) ? '': "don't";
 /**
  * Given an op, returns `"n't"` if it's negative and `''` otherwise
  * @param op op to use
@@ -150,7 +150,7 @@ const opToTaggedRecord: Record<opType, string> = {
   '!=': 'not tagged exactly',
 };
 const opToDoesnt = (operator: opType, invert?: boolean) =>
-  opXorInvert(operator, invert) ? "doesn't" : '';
+  opXorInvert(operator, invert) ? '' : "doesn't";
 /**
  * Gives a chunk of a singular regex summary
  * @param operator operator to use
@@ -163,13 +163,14 @@ export const regexSummarySingular: summaryFunction<string> = (
   invert?: boolean
 ) => {
   const errorMessage = regexErrorMessage(value);
-  if (value) {
+  if (errorMessage) {
     return `!Invalid regular expression: ${errorMessage}`;
   }
   return `${opToDoesnt(operator, invert)} match${
-    opXorInvert(operator, invert) ? '' : 'es'
-  } the regex ${value}`;
+    opXorInvert(operator, invert) ? 'es' : ''
+  } the regex /${value}/`;
 };
+
 /**
  * Gives a chunk of a plural regex summary
  * @param operator operator to use
@@ -182,10 +183,10 @@ export const regexSummaryPlural: summaryFunction<string> = (
   invert?: boolean
 ) => {
   const errorMessage = regexErrorMessage(value);
-  if (value) {
+  if (errorMessage) {
     return `!Invalid regular expression: ${errorMessage}`;
   }
-  return `${opToDont(operator, invert)} match the regex ${value}`;
+  return `${opToDont(operator, invert)} match the regex /${value}/`;
 };
 
 /**
