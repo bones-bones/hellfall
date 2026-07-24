@@ -10,7 +10,7 @@ import {
 } from '../filters';
 import { makeHasRelatedFilter, makeIsRelatedFilter } from './makerRelated';
 import { looseOpType } from '../types';
-import { StateFilter, stateFilterMaker } from '../utils';
+import { StateFilter, stateFilterMaker } from '../makerLib';
 import {
   makeCardFrameFilter,
   makeCardLayoutFilter,

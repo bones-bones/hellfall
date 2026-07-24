@@ -156,6 +156,14 @@ export interface regexFilterFunction extends cardFilterFunction<string, RegExp> 
  */
 export interface regexListFilterFunction extends cardFilterFunction<string[], RegExp> {}
 /**
+ * Any filter that compares costs from a card with a number and regexes from a search
+ */
+export interface devotionRegexFilterFunction extends cardFilterFunction<string[], RegExp> {
+  (value1: string[], operator: opType, value2: RegExp, value3: string, value4?: RegExp):
+    | boolean
+    | undefined;
+}
+/**
  * Any filter that compares two numbers
  */
 export interface numFilterFunction extends cardFilterFunction<number, number> {}

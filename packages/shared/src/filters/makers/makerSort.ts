@@ -1,5 +1,5 @@
 import { sortType, dirType } from '../types';
-import { sortMaker, SortObject } from '../utils';
+import { sortMaker, SortObject } from '../makerLib';
 
 /**
  * Makes a {@linkcode SortObject}

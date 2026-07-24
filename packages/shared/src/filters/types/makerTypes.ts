@@ -9,12 +9,7 @@ import {
   sortType,
   summaryFunction,
 } from './filterTypes';
-import {
-  anyFilterNameType,
-  colorFilterNameType,
-  filterNameType,
-  printsFilterNameType,
-} from './parseTypes';
+import { anyFilterNameType } from './parseTypes';
 
 /**
  * A filter node

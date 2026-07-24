@@ -51,7 +51,7 @@ import {
   legalityFilterMaker,
   stateFilterMaker,
   maybeNumberPropFilterMaker,
-} from '../utils';
+} from '../makerLib';
 
 /**
  * Makes an oracle id filter

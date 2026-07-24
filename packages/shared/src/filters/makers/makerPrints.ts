@@ -1,13 +1,11 @@
 import {
   setsNumberSummary,
   printsNumberSummary,
-  inSummary,
   getSetNumber,
   isUniqueSummary,
-  toIn,
 } from '../filters';
 import { looseOpType, allPrintsGetterType } from '../types';
-import { printsFilterMaker, InFilter, PrintsNumberFilter } from '../utils';
+import { printsFilterMaker, InFilter, PrintsNumberFilter } from '../makerLib';
 /**
  * Makes an {@linkcode InFilter}
  * @param value the value from the search
@@ -19,7 +17,7 @@ export const makeInFilter: printsFilterMaker = (
   op: looseOpType,
   getAllPrints: allPrintsGetterType
 ) => {
-  return new InFilter('in', inSummary, value, op, getAllPrints, toIn);
+  return new InFilter(value, op, getAllPrints);
 };
 
 /**

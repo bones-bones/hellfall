@@ -7,7 +7,6 @@ import {
   comparisonSummaryFunction,
   summaryFunction,
 } from '../types';
-import { numFilter, opAsBool, opIsNegative, opToNot } from '../utils';
 import {
   colorMiscReduce,
   getColorsFromFaces,
@@ -19,6 +18,8 @@ import {
   toNumber,
   unescapeText,
 } from '@hellfall/shared/utils';
+import { opAsBool, opIsNegative, opToNot } from '../utils';
+import { numFilter } from './filterBase';
 
 /**
  * The list of props that can be compared with a comparison filter

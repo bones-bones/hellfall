@@ -1,7 +1,6 @@
 import {
   textEquals,
   textContains,
-  isNumber,
   textListContains,
   textListIncludes,
   isValidV4UUID,
@@ -9,7 +8,6 @@ import {
   wrapArray,
   getSetAndDirectChildSets,
   xor,
-  xnor,
   fixValue,
 } from '@hellfall/shared/utils';
 import {
@@ -20,19 +18,12 @@ import {
   noteSummaryFunction,
 } from '../types';
 import {
-  includeSummarySingular,
-  taggedSummary,
   includeEqualsOp,
   opIsNegative,
-  includeSummaryPlural,
   opAsBool,
   opToNot,
   prepTag,
-  numSearchFilter,
-  baseNumSummary,
   opToDont,
-  textFilter,
-  textListFilter,
   createCorrectedSummary,
   createSummary,
   createCorrectedDoubleSummary,
@@ -59,6 +50,12 @@ import {
   toFrameEffectRecord,
   toShowcaseFrameRecord,
 } from './filterRecords';
+import {
+  includeSummaryPlural,
+  includeSummarySingular,
+  taggedSummary,
+  textListFilter,
+} from './filterBase';
 
 /**
  * Compares an oracle id from a card with an oracle id from a search

@@ -15,6 +15,8 @@ const customEscapeList = [
   '\\smr',
   '\\smh',
   '\\smp',
+  '\\smg',
+  '\\sml',
   '\\spt',
   '\\spp',
   '\\smm',
@@ -30,6 +32,8 @@ const customRegexes: Record<customEscape, RegExp> = {
   '\\smr': pipMap.repeatedSymbolRegex,
   '\\smh': pipMap.hybridSymbolRegex,
   '\\smp': pipMap.phyrexianSymbolRegex,
+  '\\smg': pipMap.genericSymbolRegex,
+  '\\sml': pipMap.colorlessSymbolRegex,
   '\\spt': ptRegex,
   '\\spp': ppRegex,
   '\\smm': mmRegex,
@@ -57,13 +61,13 @@ const replaceCustomRegexes = (text: string): string | undefined => {
         // If the custom escape matches two in a row, use a named group to match it
         textArr[i] = `(?<rep_${replaceNum}>${customRegexes[esc4].source})\\k<rep_${replaceNum}>`;
       } else {
-        // otherwise just pull the source directly 
+        // otherwise just pull the source directly
         textArr[i] = customRegexes[esc4].source;
       }
       // blank out the other characters of the escape to preserve order for slicing
       textArr[i + 1] = '';
       textArr[i + 2] = '';
-      // If `esc4.length == 3`, it's still fine to do this, since that only happens when 
+      // If `esc4.length == 3`, it's still fine to do this, since that only happens when
       // `i + 3 == textArr.length`, so it just inserts an extra empty string at the end of the array
       textArr[i + 3] = '';
       continue;
@@ -72,7 +76,7 @@ const replaceCustomRegexes = (text: string): string | undefined => {
     const esc3 = text.slice(i, i + 3);
     if (isCustomEscape(esc3)) {
       replaceNum++;
-      // pull the source directly 
+      // pull the source directly
       textArr[i] = customRegexes[esc3].source;
       // blank out the other characters of the escape to preserve order for slicing
       textArr[i + 1] = '';
@@ -82,7 +86,7 @@ const replaceCustomRegexes = (text: string): string | undefined => {
     const first = textArr[i + 1];
     // if the next character is `u`, make sure that it's a valid unicode escape
     if (first == 'u' && unicodeTest.test(text.slice(i + 2, i + 6))) continue;
-    // if the escape is at the end of the string or if the escape is invalid, return undefined 
+    // if the escape is at the end of the string or if the escape is invalid, return undefined
     if (first == undefined || !validEscapes.includes(first)) {
       return undefined;
     }
@@ -99,7 +103,7 @@ const replaceCustomRegexes = (text: string): string | undefined => {
  */
 export const regexErrorMessage = (text: string) => {
   try {
-    const expanded = replaceCustomRegexes(text.slice(1,-1));
+    const expanded = replaceCustomRegexes(text.slice(1, -1));
     /**
      * Since `new RegExp` doesn't throw an error on invalid escapes,
      * {@linkcode replaceCustomRegexes} handles that instead.
@@ -131,4 +135,5 @@ export const regexErrorMessage = (text: string) => {
  * Creates a regex based on a user's search
  * @param text text to use
  */
-export const searchToRegex = (text: string) => new RegExp(replaceCustomRegexes(text.slice(1,-1)) ?? '', 'im');
+export const searchToRegex = (text: string) =>
+  new RegExp(replaceCustomRegexes(text.slice(1, -1)) ?? '', 'im');

@@ -3,3 +3,4 @@ export * from './makers';
 export * from './parse';
 export * from './types';
 export * from './utils';
+export * from './makerLib';

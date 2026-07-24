@@ -1,4 +1,4 @@
-import { preferType, preferTypeList } from '../../utils';
+import { preferType, preferTypeList } from '@hellfall/shared/utils';
 import { displayType, displayTypeList, uniqueType, uniqueTypeList } from '../types';
 import { splitOnFirstOp } from '../utils';
 

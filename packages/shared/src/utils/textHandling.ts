@@ -572,3 +572,24 @@ export const fixValue = <T>(value: T, option: 'upper' | 'lower' | 'fix' | 'keep'
   }
   return value;
 };
+
+/**
+ * Gets the number of matches to a regex in text. Can handle undefined regexes and multiples (adds them together)
+ * @param text text to use
+ * @param regex regex to use (make sure to use the global flag)
+ */
+export const matchCount = (text: string, regex: RegExp, ...args: (RegExp | undefined)[]) => {
+  if (!regex.flags.includes('g')) {
+    console.error(`You forgot the global flag on regex ${regex}`);
+  }
+  let total = regex ? text.match(regex)?.length ?? 0 : 0;
+  for (const reg of args) {
+    if (reg) {
+      if (!reg.flags.includes('g')) {
+        console.error(`You forgot the global flag on regex ${reg}`);
+      }
+      total += text.match(reg)?.length ?? 0;
+    }
+  }
+  return total;
+};

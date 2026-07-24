@@ -14,6 +14,7 @@ import {
   NoteFilter,
   PipFilter,
   InvalidFilter,
+  DevotionFilter,
 } from './makerObject';
 import { dirType, looseOpType, sortType, allPrintsGetterType, summaryFunction } from '../types';
 import { colorSearch, pipSearch } from '@hellfall/shared/utils';
@@ -68,6 +69,17 @@ export type comparisonFilterMaker = (
   op: looseOpType,
   value2?: string
 ) => ComparisonFilter;
+/**
+ * A function that creates a {@linkcode DevotionFilter}
+ * @param value1 the first value from the search
+ * @param op the operator from the search
+ * @param value2 the second value from the search
+ */
+export type devotionFilterMaker = (
+  value1: string,
+  op: looseOpType,
+  value2?: string
+) => DevotionFilter;
 /**
  * A function that creates a {@linkcode LegalityFilter}
  * @param value the value from the search

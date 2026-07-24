@@ -19,10 +19,11 @@ import {
   toDevotionFilterName,
   devotionKeywordFilterNames,
 } from '../types';
-import { splitOnFirstOp, FilterObject } from '../utils';
+import { splitOnFirstOp } from '../utils';
 import { parseColorText } from './parseColors';
 import { colorFilters, filters, printsFilters } from './parseMaps';
 import { parseDevotion } from './parseDevotion';
+import { FilterObject } from '../makerLib';
 
 // make sure the thing doesn't strip quotes when passing text in to this from start and end of string when
 /**

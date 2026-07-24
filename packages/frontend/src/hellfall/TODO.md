@@ -174,3 +174,4 @@ Write a script to transform the database
 - strip masterpiece/reprint names on fetch?
 - add artists.json file
 - allow multiple notes on an artist and/or separate out the `Not on card` notes
+- add readmes to the filter folders
