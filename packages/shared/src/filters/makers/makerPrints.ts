@@ -1,9 +1,4 @@
-import {
-  setsNumberSummary,
-  printsNumberSummary,
-  getSetNumber,
-  isUniqueSummary,
-} from '../filters';
+import { setsNumberSummary, printsNumberSummary, getSetNumber, isUniqueSummary } from '../filters';
 import { looseOpType, allPrintsGetterType } from '../types';
 import { printsFilterMaker, InFilter, PrintsNumberFilter } from '../makerLib';
 /**
