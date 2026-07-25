@@ -74,6 +74,7 @@ export const anyFrameEffectTags: Record<string, HCFrameEffect> = {
   'miracle-frame': HCFrameEffect.Miracle,
   'nyx-frame': HCFrameEffect.Enchantment,
   'draft-frame': HCFrameEffect.Draft,
+  'sand-frame': HCFrameEffect.Sand,
   'devoid-frame': HCFrameEffect.Devoid,
   tombstone: HCFrameEffect.Tombstone,
   'colorshifted-frame': HCFrameEffect.Colorshifted,
@@ -417,6 +418,7 @@ export const savedOracleIds: Record<string, string> = {
   'goblin shaman': '4ece8767-a2e0-42fc-aadf-86a4ae863343',
   'undead servant': '5bf9f397-0216-4ec9-a57b-406758dcc233',
   baby: 'a0101448-b5ca-47ce-aefe-a7a795c5e005',
+  'wet treasure': '9f84cca3-ed45-4878-bd6e-33d2ea570169',
 };
 const tagCanHaveFaces = (tag: string, card?: HCCard.Any): boolean => {
   if (tag.slice(tag.lastIndexOf('-') + 1) == 'watermark') {
