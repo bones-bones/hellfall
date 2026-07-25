@@ -22463,7 +22463,7 @@
 			],
 			"base_tags": [
 				"hc1.1<31>",
-				"keyword<mutate|trample|annihilater>",
+				"keyword<mutate|trample|annihilator>",
 				"mse"
 			]
 		},
@@ -70044,7 +70044,7 @@
 			"base_tags": [
 				"foil",
 				"hc2.0<225>",
-				"keyword<fying|rampage|trample|tldr>"
+				"keyword<flying|rampage|trample|tldr>"
 			]
 		},
 		{
@@ -79449,6 +79449,9 @@
 			},
 			"creators": [
 				"Victor"
+			],
+			"artists": [
+				"Jerome Peabody"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -118713,7 +118716,7 @@
 				"Gerrit"
 			],
 			"artists": [
-				"Gerbit"
+				"Gerrit"
 			],
 			"rulings": "If ? has not yet been defined, Grunch does not die to toughness-related SBAs (is immune to 208.5). This also means that no amount of damage marked will cause a Grunch with undefined ? to die due to SBAs.- mweepigeon 2025-10-24",
 			"finish": "nonfoil",
@@ -152099,7 +152102,7 @@
 			],
 			"base_tags": [
 				"hc3.1<281>",
-				"keyword<annihiator|protection>"
+				"keyword<annihilator|protection>"
 			]
 		},
 		{
@@ -172497,7 +172500,8 @@
 			"keywords": [
 				"annhilator",
 				"protection",
-				"flying"
+				"flying",
+				"annihilator"
 			],
 			"legalities": {
 				"standard": "banned",
@@ -172533,7 +172537,7 @@
 				"2003-frame",
 				"ransomnote",
 				"ransom-over-real-card<Emrakul, the Aeons Torn>",
-				"keyword<flying|protection|annhilator>"
+				"keyword<flying|protection|annihilator>"
 			]
 		},
 		{
@@ -257890,7 +257894,7 @@
 				"Noble"
 			],
 			"type_line": "Legendary Creature — Human Noble",
-			"oracle_text": "Milllink\nA creature card being put into your graveyard also counts as that creature entering the battlefield.\n{3}: Another target creature gains millink until end of turn.",
+			"oracle_text": "Milllink\nA creature card being put into your graveyard also counts as that creature entering the battlefield.\n{3}: Another target creature gains milllink until end of turn.",
 			"power": "4",
 			"toughness": "4",
 			"colors": [
@@ -268745,7 +268749,7 @@
 			"base_tags": [
 				"hc6.1<171>",
 				"mse",
-				"keyword<cascase|cipher>"
+				"keyword<cascade|cipher>"
 			]
 		},
 		{
@@ -317229,8 +317233,7 @@
 			],
 			"keywords": [
 				"offspring",
-				"multioffspring",
-				""
+				"multioffspring"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -438471,7 +438474,7 @@
 				"Legend"
 			],
 			"type_line": "Creature — Man Myth Legend",
-			"oracle_text": "*Where has he been?* — Plainswalk, islandwalk, swampwalk, mountainwalk, forestwalk, desertwalk, snow landwalk, legendary landwalk, nonbasic landwalk, artifact landwalk, trombonewalk, dryadwalk, gatewalk, locuswalk, Urza'swalk, cloudwalk, Island of Wak-Wakwalk, denimwalk, protection from Hammerheim.",
+			"oracle_text": "*Where has he been?* — Plainswalk, islandwalk, swampwalk, mountainwalk, forestwalk, desertwalk, snow landwalk, legendary landwalk, non-basic landwalk, artifact landwalk, trombonewalk, dryadwalk, gatewalk, locuswalk, Urza'swalk, cloudwalk, Island of Wak-Wakwalk, denimwalk, protection from Hammerheim.",
 			"power": "2",
 			"toughness": "1",
 			"colors": [
@@ -438501,9 +438504,9 @@
 				"dryadwalk",
 				"gatewalk",
 				"locuswalk",
-				"Urza'swalk",
+				"urza'swalk",
 				"cloudwalk",
-				"Island of Wak-Wakwalk",
+				"island of wak-wakwalk",
 				"denimwalk",
 				"walk",
 				"protection"
@@ -461188,9 +461191,7 @@
 					"W"
 				]
 			],
-			"keywords": [
-				""
-			],
+			"keywords": [],
 			"legalities": {
 				"standard": "legal",
 				"4cb": "legal",
@@ -463958,7 +463959,7 @@
 					"U"
 				]
 			],
-      "keywords": [],
+			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -545448,9 +545449,9 @@
 			],
 			"artists": [
 				"Andrew Mar",
-				"Cole Slaw",
 				"Flypaper",
-				"Daren Bader"
+				"Daren Bader",
+				"ColeSlawIsCool"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -545597,8 +545598,8 @@
 				"MunkeGutz",
 				"astard_with_a_b",
 				"Goldcrackle",
-				"Goem",
-				"Enragedmukamuka1"
+				"Enragedmukamuka1",
+				"goem"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -550284,7 +550285,7 @@
 			"artists": [
 				"Adam Paquette",
 				"Brian Valeza",
-				"Goem"
+				"goem"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -551145,7 +551146,7 @@
 			],
 			"artists": [
 				"Fanatic-Studio",
-				"Goem"
+				"goem"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -552754,7 +552755,7 @@
 			],
 			"artists": [
 				"Minecraft",
-				"Goem"
+				"goem"
 			],
 			"rulings": "\"[cube is a] type. final answer.\" -goem, 6/12/26",
 			"finish": "nonfoil",
@@ -562131,7 +562132,7 @@
 				"coleslawiscool"
 			],
 			"artists": [
-				"Coleslaw"
+				"ColeSlawIsCool"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -573993,7 +573994,7 @@
 				"coleslawiscool"
 			],
 			"artists": [
-				"@coleslawiscool"
+				"ColeSlawIsCool"
 			],
 			"rulings": "",
 			"finish": "nonfoil",

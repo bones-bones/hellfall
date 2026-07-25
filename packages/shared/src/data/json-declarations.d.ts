@@ -33,6 +33,16 @@ declare module './sets.json' {
   export default value;
 }
 
+declare module './keywords.json' {
+  const value: { data: string[] };
+  export default value;
+}
+
+declare module './artists.json' {
+  const value: { data: string[] };
+  export default value;
+}
+
 declare module './creators.json' {
   const value: { data: string[] };
   export default value;
