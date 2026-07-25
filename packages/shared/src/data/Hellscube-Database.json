@@ -867,10 +867,10 @@
 				"u/Taprus"
 			],
 			"artists": [
-				"D. J. Dleland-Hura"
+				"D. J. Cleland-Hura"
 			],
 			"artist_notes": {
-				"D. J. Dleland-Hura": "Not on card"
+				"D. J. Cleland-Hura": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -4659,7 +4659,7 @@
 				"u/PIZZ_PAZZ"
 			],
 			"artists": [
-				"Jason Matson"
+				"John Matson"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -5227,17 +5227,17 @@
 			],
 			"artists": [
 				"Ben Thompson",
-				"Dan Muramaya Scott",
 				"Craig J Spearing",
 				"Svetlin Velinov",
-				"David Rapoza"
+				"David Rapoza",
+				"Dan Murayama Scott"
 			],
 			"artist_notes": {
 				"Ben Thompson": "Not on card",
-				"Dan Muramaya Scott": "Not on card",
 				"Craig J Spearing": "Not on card",
 				"Svetlin Velinov": "Not on card",
-				"David Rapoza": "Not on card"
+				"David Rapoza": "Not on card",
+				"Dan Murayama Scott": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -7246,8 +7246,11 @@
 				"u/ZaetaOfDiamonds"
 			],
 			"artists": [
-				"Quinton Hoover :)"
+				"Quinton Hoover"
 			],
+			"artist_notes": {
+				"Quinton Hoover": ":)"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -14735,9 +14738,11 @@
 				"Em9500"
 			],
 			"artists": [
-				"Alamy Stock Images",
 				"Stock-Image"
 			],
+			"artist_notes": {
+				"Stock-Image": "Alamy"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -14947,9 +14952,11 @@
 				"Exalted"
 			],
 			"artists": [
-				"iStock",
 				"Stock-Image"
 			],
+			"artist_notes": {
+				"Stock-Image": "iStock"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -17016,8 +17023,7 @@
 			"keywords": [
 				"deathtouch",
 				"trample",
-				"transform",
-				"tranple"
+				"transform"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -17054,7 +17060,7 @@
 				"transform",
 				"hc1.0<334>",
 				"type-transform-marks",
-				"keyword<deathtouch|tranple>",
+				"keyword<deathtouch|trample>",
 				"mse"
 			],
 			"card_faces": [
@@ -18500,12 +18506,8 @@
 				"batterymilker"
 			],
 			"artists": [
-				"Staples",
 				"Greg Staples"
 			],
-			"artist_notes": {
-				"Greg Staples": "Not on card"
-			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -18635,21 +18637,18 @@
 				"desertwalk",
 				"snow landwalk",
 				"legendary landwalk",
-				"non-basic landwalk",
+				"nonbasic landwalk",
 				"artifact landwalk",
 				"trombonewalk",
 				"dryadwalk",
 				"gatewalk",
 				"locuswalk",
-				"Urza'swalk",
 				"cloudwalk",
-				"Island of Wak-Wakwalk",
 				"denimwalk",
 				"walk",
 				"protection",
 				"island of wak-wakwalk",
-				"urza'swalk",
-				"nonbasic landwalk"
+				"urza'swalk"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -20586,8 +20585,7 @@
 				]
 			],
 			"keywords": [
-				"scry",
-				"scrt"
+				"scry"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -20611,7 +20609,7 @@
 			],
 			"base_tags": [
 				"hc1.1<5>",
-				"keyword<scrt>",
+				"keyword<scry>",
 				"cardsmith"
 			]
 		},
@@ -21024,7 +21022,7 @@
 				"batterymilker"
 			],
 			"artists": [
-				"Lee Setiawan"
+				"Lie Setiawan"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -23175,11 +23173,11 @@
 			],
 			"artists": [
 				"Stock-Image",
-				"Vokan Baga"
+				"Volkan Baga"
 			],
 			"artist_notes": {
 				"Stock-Image": "Not on card",
-				"Vokan Baga": "Not on card"
+				"Volkan Baga": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -25218,11 +25216,10 @@
 				"u/PIZZ_PAZZ"
 			],
 			"artists": [
-				"Federico Lacelli",
-				""
+				"Federico Lacelli"
 			],
 			"artist_notes": {
-				"": "Not on card"
+				"Federico Lacelli": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -25386,7 +25383,7 @@
 			],
 			"artists": [
 				"Matt Cavotta",
-				"Anthony Waters"
+				"Anthony S. Waters"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -26651,7 +26648,7 @@
 			],
 			"artists": [
 				"Chris Rahn",
-				"Anna Steninbauer"
+				"Anna Steinbauer"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -27456,11 +27453,11 @@
 			],
 			"artists": [
 				"Brad Rigney",
-				"Steve Belledin"
+				"Steven Belledin"
 			],
 			"artist_notes": {
 				"Brad Rigney": "Not on card",
-				"Steve Belledin": "Not on card"
+				"Steven Belledin": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -28365,16 +28362,16 @@
 			"artists": [
 				"Sung Choi",
 				"Donato Giancola",
-				"Vokan Baga",
 				"Steven Belledin",
-				"Dan Frazier"
+				"Dan Frazier",
+				"Volkan Baga"
 			],
 			"artist_notes": {
 				"Sung Choi": "Not on card",
 				"Donato Giancola": "Not on card",
-				"Vokan Baga": "Not on card",
 				"Steven Belledin": "Not on card",
-				"Dan Frazier": "Not on card"
+				"Dan Frazier": "Not on card",
+				"Volkan Baga": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -28765,7 +28762,7 @@
 				"u/Dorfbewohner"
 			],
 			"artists": [
-				"Douglas Schuler"
+				"Douglas Shuler"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -30597,12 +30594,12 @@
 			"artists": [
 				"Zoltan Boros",
 				"Gabor Szikszai",
-				" Ron Spears"
+				"Ron Spears"
 			],
 			"artist_notes": {
 				"Zoltan Boros": "Not on card",
 				"Gabor Szikszai": "Not on card",
-				" Ron Spears": "Not on card"
+				"Ron Spears": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -34774,7 +34771,7 @@
 				"u/ColdlifeOracle"
 			],
 			"artists": [
-				"Kekai Kotari"
+				"Kekai Kotaki"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -41499,7 +41496,7 @@
 				"dRafterDemon"
 			],
 			"artists": [
-				"Michael Suffin"
+				"Michael Sutfin"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -41963,7 +41960,7 @@
 				"jdogz"
 			],
 			"artists": [
-				"Antonio J. Manzanedo"
+				"Antonio José Manzanedo"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -45676,8 +45673,7 @@
 				]
 			],
 			"keywords": [
-				"trample",
-				"trarmple"
+				"trample"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -45713,7 +45709,7 @@
 				"misframe<the adventure>",
 				"hc1.2<131>",
 				"inset",
-				"keyword<trarmple>",
+				"keyword<trample>",
 				"dreadmaw-in-art"
 			],
 			"card_faces": [
@@ -47105,7 +47101,7 @@
 			"artists": [
 				"JackalofTrades",
 				"Tomigon",
-				"Eric Shoemaker"
+				"Erik Shoemaker"
 			],
 			"rulings": "To cast N random spells, generate all the random spells first, then put them on the stack in the order of your choice. Once you have put all the spells on the stack, you can begin resolving as usual.- mweepigeon 2026-05-10",
 			"finish": "nonfoil",
@@ -51452,7 +51448,7 @@
 				"u/TheGreatMagicJohn"
 			],
 			"artists": [
-				"Pascal Ouidalt"
+				"Pascal Quidault"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -58460,9 +58456,9 @@
 				"SirQuixano"
 			],
 			"artists": [
-				"John Foster",
 				"John Matson",
-				"Magali Villeneuve"
+				"Magali Villeneuve",
+				"Jon Foster"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -59358,8 +59354,8 @@
 				"u/GrouchyGerald"
 			],
 			"artists": [
-				"Greg Hildebrant",
-				"Allan Pollack"
+				"Allan Pollack",
+				"Greg Hildebrandt"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -63932,7 +63928,7 @@
 				"u/NautilusMain"
 			],
 			"artists": [
-				"Virtal"
+				"Vitral"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -64499,8 +64495,8 @@
 				"Em9500"
 			],
 			"artists": [
-				"Virtal",
-				"Kev Walker"
+				"Kev Walker",
+				"Vitral"
 			],
 			"artist_notes": {
 				"Kev Walker": "Not on card"
@@ -64698,7 +64694,7 @@
 				"batterymilker"
 			],
 			"artists": [
-				"Alanya Danner"
+				"Alayna Danner"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -70023,8 +70019,7 @@
 				"flying",
 				"rampage",
 				"trample",
-				"tldr",
-				"fying"
+				"tldr"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -74060,7 +74055,7 @@
 				"saxboy4242"
 			],
 			"artists": [
-				"Ken Meyer Jr."
+				"Ken Meyer, Jr."
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -79238,8 +79233,8 @@
 				"u/NautilusMain"
 			],
 			"artists": [
-				"Alekxsi Briclot",
-				"Jung Park"
+				"Jung Park",
+				"Aleksi Briclot"
 			],
 			"artist_notes": {
 				"Jung Park": "Not on card"
@@ -79446,9 +79441,7 @@
 					"R"
 				]
 			],
-			"keywords": [
-				"jerome peabody"
-			],
+			"keywords": [],
 			"legalities": {
 				"standard": "legal",
 				"4cb": "legal",
@@ -79470,8 +79463,7 @@
 			"base_tags": [
 				"hc2.0<349>",
 				"Victor",
-				"mse",
-				"keyword<Jerome Peabody>"
+				"mse"
 			]
 		},
 		{
@@ -80314,12 +80306,12 @@
 				"hightrolla"
 			],
 			"artists": [
-				"Donato Diancola",
 				"Tyler Jacobson",
 				"Todd Lockwood",
 				"D. J. Cleland-Hura",
-				"Gred Hildebrandt",
-				"Tim Hildebrandt"
+				"Tim Hildebrandt",
+				"Donato Giancola",
+				"Greg Hildebrandt"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -88878,7 +88870,7 @@
 				"vantheman_"
 			],
 			"artists": [
-				"Asson Maddocks"
+				"Anson Maddocks"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -91149,7 +91141,7 @@
 				"Victor"
 			],
 			"artists": [
-				"Michael Kormarck"
+				"Michael Komarck"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -93336,9 +93328,9 @@
 			],
 			"artists": [
 				"Howard Lyon",
-				"Steven Belleding",
 				"Sam Burley",
-				"Dan Murayama Scott"
+				"Dan Murayama Scott",
+				"Steven Belledin"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -94497,7 +94489,7 @@
 				"Glassbass"
 			],
 			"artists": [
-				"David Burroughs Mattingly"
+				"David B. Mattingly"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -94734,12 +94726,13 @@
 			"artists": [
 				"John Avon",
 				"Scott Murphy",
-				"Willian Mura<Not on card>i",
-				"Victor Adame Minguez"
+				"Victor Adame Minguez",
+				"Willian Murai"
 			],
 			"artist_notes": {
 				"Scott Murphy": "Not on card",
-				"Victor Adame Minguez": "Not on card"
+				"Victor Adame Minguez": "Not on card",
+				"Willian Murai": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -96682,7 +96675,7 @@
 				"u/NautilusMain"
 			],
 			"artists": [
-				"Michael Suttin"
+				"Michael Sutfin"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -97069,7 +97062,7 @@
 				"AceGamer"
 			],
 			"artists": [
-				"Joeseph Meehan"
+				"Joseph Meehan"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -105637,10 +105630,10 @@
 				"u/therealredguy"
 			],
 			"artists": [
-				"Michael Suttin"
+				"Michael Sutfin"
 			],
 			"artist_notes": {
-				"Michael Suttin": "Not on card"
+				"Michael Sutfin": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -110981,11 +110974,11 @@
 			],
 			"artists": [
 				"Edward P. Beard, Jr.",
-				" Tomas Giorello"
+				"Tomas Giorello"
 			],
 			"artist_notes": {
 				"Edward P. Beard, Jr.": "Not on card",
-				" Tomas Giorello": "Not on card"
+				"Tomas Giorello": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -115569,7 +115562,7 @@
 			"artists": [
 				"Austin Hsu",
 				"Zoltan Boros",
-				"Gabor Skikszai"
+				"Gabor Szikszai"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -115855,7 +115848,7 @@
 				"Draner"
 			],
 			"artists": [
-				"Ken Sugiomori"
+				"Ken Sugimori"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -119374,7 +119367,7 @@
 				"lettuce_turtle"
 			],
 			"artists": [
-				"Christi Banalescu"
+				"Cristi Balanescu"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -124745,10 +124738,10 @@
 				"BaconBasedGod"
 			],
 			"artists": [
-				"Raymond Swanl"
+				"Raymond Swanland"
 			],
 			"artist_notes": {
-				"Raymond Swanl": "Not on card"
+				"Raymond Swanland": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -126591,7 +126584,7 @@
 				"jumberlack."
 			],
 			"artists": [
-				"Vokan Baga"
+				"Volkan Baga"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -135380,11 +135373,10 @@
 				"Draner"
 			],
 			"artists": [
-				"Yigit Koroglu",
-				""
+				"Yigit Koroglu"
 			],
 			"artist_notes": {
-				"": "Not on card"
+				"Yigit Koroglu": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -136814,8 +136806,8 @@
 				"chaisohex"
 			],
 			"artists": [
-				"Sidharth Charturvedi",
-				"Jaime Jones"
+				"Jaime Jones",
+				"Sidharth Chaturvedi"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -142804,7 +142796,7 @@
 				"Gerrit"
 			],
 			"artists": [
-				"Steve Belledin"
+				"Steven Belledin"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -143010,7 +143002,7 @@
 				"MrMirari"
 			],
 			"artists": [
-				"Yonjae Choi"
+				"Yongjae Choi"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -145412,7 +145404,7 @@
 				"cascadelink",
 				"amasslink",
 				"hyperlink",
-				"millink",
+				"milllink",
 				"lootlink",
 				"scrylink",
 				"squirrellink",
@@ -145445,7 +145437,7 @@
 			"base_tags": [
 				"hc3.0<253>",
 				"reminder-on-back",
-				"keyword<lifelink|detainlink|foodlink|treasurelink|bloodlink|squirrellink|scrylink|lootlink|millink|hyperlink|amasslink|cascadelink>"
+				"keyword<lifelink|detainlink|foodlink|treasurelink|bloodlink|squirrellink|scrylink|lootlink|milllink|hyperlink|amasslink|cascadelink>"
 			],
 			"card_faces": [
 				{
@@ -146285,9 +146277,9 @@
 				"Gerrit"
 			],
 			"artists": [
-				"Alexi Briclot",
 				"Mark Tedin",
-				"Véronique Meignaud"
+				"Véronique Meignaud",
+				"Aleksi Briclot"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -153491,7 +153483,7 @@
 			],
 			"artists": [
 				"Volkan Baga",
-				"Xavier Ribiero"
+				"Xavier Ribeiro"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -154793,7 +154785,7 @@
 			"artists": [
 				"Seb McKinnon",
 				"Jokubas Uogintas",
-				"Erik Peterson"
+				"Eric Peterson"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -163651,7 +163643,7 @@
 				"moundsofmayhem"
 			],
 			"artists": [
-				"Tony Szczudio"
+				"Tony Szczudlo"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -166425,8 +166417,8 @@
 				"chaisohex"
 			],
 			"artists": [
-				"Richard Kane-Ferguson",
-				"Matthew D. Wilson"
+				"Matthew D. Wilson",
+				"Richard Kane Ferguson"
 			],
 			"artist_notes": {
 				"Matthew D. Wilson": "Not on card"
@@ -169123,10 +169115,10 @@
 			],
 			"artists": [
 				"Adam Paquette",
-				"Heonhwa Choe"
+				"Heonhwa"
 			],
 			"artist_notes": {
-				"Heonhwa Choe": "Not on card"
+				"Heonhwa": "Not on card"
 			},
 			"rulings": "This uses the Mite from ONE, just in case others are created",
 			"finish": "nonfoil",
@@ -169442,7 +169434,6 @@
 				]
 			],
 			"keywords": [
-				"split",
 				"scry"
 			],
 			"legalities": {
@@ -180928,8 +180919,8 @@
 				"fallapede"
 			],
 			"artists": [
-				"Bastien L. DeHarme",
-				"Kev Walker"
+				"Kev Walker",
+				"Bastien L. Deharme"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -181310,8 +181301,8 @@
 				"fallapede"
 			],
 			"artists": [
-				"Harold McNeil",
-				"Wayne Reynolds"
+				"Wayne Reynolds",
+				"Harold McNeill"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -182709,7 +182700,7 @@
 				"fishladdie"
 			],
 			"artists": [
-				"Nelson deCastro"
+				"Nelson DeCastro"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -183845,7 +183836,7 @@
 			],
 			"artists": [
 				"Richard Wright",
-				"Martin Hanford"
+				"Martin Handford"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -183975,8 +183966,8 @@
 				"Gorm"
 			],
 			"artists": [
-				"Dandiel Ljunggren",
-				"Raymond Swanland"
+				"Raymond Swanland",
+				"Daniel Ljunggren"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -188518,7 +188509,7 @@
 				"JuanDM"
 			],
 			"artists": [
-				"Christi Balanescu"
+				"Cristi Balanescu"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -189352,8 +189343,8 @@
 				"Gerrit"
 			],
 			"artists": [
-				"Andew Goldhawk",
-				"Jeremy Enecio"
+				"Jeremy Enecio",
+				"Andrew Goldhawk"
 			],
 			"artist_notes": {
 				"Jeremy Enecio": "Not on card"
@@ -190091,8 +190082,8 @@
 				"MunkeGutz"
 			],
 			"artists": [
-				"Lee Setiawan",
-				"Chris Rahn"
+				"Chris Rahn",
+				"Lie Setiawan"
 			],
 			"artist_notes": {
 				"Chris Rahn": "Not on card"
@@ -192464,7 +192455,7 @@
 			],
 			"artists": [
 				"Piotr Dura",
-				"Josu Hernatz"
+				"Josu Hernaiz"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -194288,7 +194279,7 @@
 			],
 			"artists": [
 				"Betock",
-				"Dmitry Burmack"
+				"Dmitry Burmak"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -198216,10 +198207,10 @@
 				"aprilmai"
 			],
 			"artists": [
-				"Vokan Baga"
+				"Volkan Baga"
 			],
 			"artist_notes": {
-				"Vokan Baga": "Not on card"
+				"Volkan Baga": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -198694,7 +198685,7 @@
 			],
 			"artists": [
 				"Don Hazeltine",
-				"Martin De Diego Sádaba"
+				"Martin de Diego Sádaba"
 			],
 			"rulings": "The Dross Pitss are \"conjured\" onto the battlefield under your control.",
 			"finish": "nonfoil",
@@ -200073,8 +200064,7 @@
 				"Li Tie",
 				"Trevor Claxton",
 				"April Lee",
-				"Chippy",
-				""
+				"Chippy"
 			],
 			"artist_notes": {
 				"April Lee": "Not on card",
@@ -202233,7 +202223,7 @@
 				"enragedmukamuka1"
 			],
 			"artists": [
-				"Michah Epstein"
+				"Micha Epstein"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -202991,7 +202981,7 @@
 			],
 			"artists": [
 				"Mark Tedin",
-				"Alex Horley"
+				"Alex Horley-Orlandelli"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -204522,8 +204512,8 @@
 				"chaisohex"
 			],
 			"artists": [
-				"Dominic Mayer",
-				"Randy Gallegos"
+				"Randy Gallegos",
+				"Dominik Mayer"
 			],
 			"artist_notes": {
 				"Randy Gallegos": "Not on card"
@@ -205340,10 +205330,10 @@
 			],
 			"artists": [
 				"Tyler Jacobson",
-				"Nisl Hamm"
+				"Nils Hamm"
 			],
 			"artist_notes": {
-				"Nisl Hamm": "Not on card"
+				"Nils Hamm": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -212645,7 +212635,7 @@
 				"chaisohex"
 			],
 			"artists": [
-				"Paulo Parente"
+				"Paolo Parente"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -216025,7 +216015,7 @@
 				"scathainn"
 			],
 			"artists": [
-				"Matthew Wilson"
+				"Matthew D. Wilson"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -216319,11 +216309,10 @@
 				"jumberlack."
 			],
 			"artists": [
-				"Franz Vohwinkel",
-				""
+				"Franz Vohwinkel"
 			],
 			"artist_notes": {
-				"": "Not on card"
+				"Franz Vohwinkel": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -220497,9 +220486,9 @@
 				"Conceptopolis",
 				"Cory Trego-Erdner",
 				"Ilya Shkipin",
-				"E.M. Gist",
 				"Brynn Metheney",
-				"Lars Grant-West"
+				"Lars Grant-West",
+				"E. M. Gist"
 			],
 			"artist_notes": {
 				"Daniel Ljunggren": "Not on card",
@@ -220507,9 +220496,9 @@
 				"Conceptopolis": "Not on card",
 				"Cory Trego-Erdner": "Not on card",
 				"Ilya Shkipin": "Not on card",
-				"E.M. Gist": "Not on card",
 				"Brynn Metheney": "Not on card",
-				"Lars Grant-West": "Not on card"
+				"Lars Grant-West": "Not on card",
+				"E. M. Gist": "Not on card"
 			},
 			"rulings": "\"its a book\" -Doomclaw9, 5/1/26",
 			"finish": "nonfoil",
@@ -220583,10 +220572,10 @@
 				"Gorm"
 			],
 			"artists": [
-				"Kekei Kotaki",
 				"Daniel Ljunggren",
 				"Jaques-Louis David",
-				"Graham Sutherland"
+				"Graham Sutherland",
+				"Kekai Kotaki"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -220658,9 +220647,9 @@
 			],
 			"artists": [
 				"Chase Stone",
-				"Mark Romoski",
 				"Ilse Gort",
-				"Howard Lyon"
+				"Howard Lyon",
+				"Mark Romanoski"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -225012,9 +225001,9 @@
 				"Gorm"
 			],
 			"artists": [
-				"Marina Pilcerova",
 				"Piotr Dura",
-				"Chris Seaman"
+				"Chris Seaman",
+				"Martina Pilcerova"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -225902,7 +225891,7 @@
 				"enragedmukamuka1"
 			],
 			"artists": [
-				"Matthew Wilson"
+				"Matthew D. Wilson"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -228489,7 +228478,7 @@
 				"JuanDM"
 			],
 			"artists": [
-				"Martina Fačová"
+				"Martina Fačlová"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -230178,7 +230167,7 @@
 			],
 			"artists": [
 				"Jeff Miracola",
-				"Jumg Park"
+				"Jung Park"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -230809,7 +230798,7 @@
 				"Exalted"
 			],
 			"artists": [
-				"Quinton Hooker"
+				"Quinton Hoover"
 			],
 			"rulings": "Back in my day your commander was refered to as your general, and we didn't have any of your newfangled WoTC support. -Elder Highland Wurm",
 			"finish": "nonfoil",
@@ -233211,14 +233200,14 @@
 				"Draner"
 			],
 			"artists": [
-				"Christi Balanescu",
 				"Lius Lasahido",
-				"Jason A. Engle"
+				"Jason A. Engle",
+				"Cristi Balanescu"
 			],
 			"artist_notes": {
-				"Christi Balanescu": "Not on card",
 				"Lius Lasahido": "Not on card",
-				"Jason A. Engle": "Not on card"
+				"Jason A. Engle": "Not on card",
+				"Cristi Balanescu": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -235320,10 +235309,10 @@
 				"loins"
 			],
 			"artists": [
-				"Cambell White"
+				"Campbell White"
 			],
 			"artist_notes": {
-				"Cambell White": "Not on card"
+				"Campbell White": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -241661,7 +241650,7 @@
 				"Gorm"
 			],
 			"artists": [
-				"Lucas Zontini"
+				"Luca Zontini"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -241737,7 +241726,7 @@
 			"artists": [
 				"Mike Burns",
 				"Scott Okumura",
-				"Mark Romanosk"
+				"Mark Romanoski"
 			],
 			"rulings": "When you activate an ability of your commander, Adrix and Niv attempts to activate it again without paying costs, putting a second instance of the ability on the stack. It does not copy the original activated ability. If the ability can only be activated once (such as a GX or Exhaust ability), the attempted second activation fails and you only get the original- mweepigeon 2025-10-28",
 			"finish": "nonfoil",
@@ -241844,7 +241833,7 @@
 				"platyposeidon"
 			],
 			"artists": [
-				"Nichalas Gregory"
+				"Nicholas Gregory"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -244719,7 +244708,7 @@
 				"enchantmen"
 			],
 			"artists": [
-				"Alayna danner"
+				"Alayna Danner"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -245369,8 +245358,8 @@
 				"JuanDM"
 			],
 			"artists": [
-				"Willian Burai",
-				"Zoltan Boros"
+				"Zoltan Boros",
+				"Willian Murai"
 			],
 			"rulings": "\"Flush is an additional cost\" -Juanqu",
 			"finish": "nonfoil",
@@ -245930,17 +245919,17 @@
 			"artists": [
 				"Speedbus",
 				"Wesley Burt",
-				"Victor Titov",
 				"Yongjae Choi",
 				"Clint Cearley",
-				"Unsourceable"
+				"Unsourceable",
+				"Viktor Titov"
 			],
 			"artist_notes": {
 				"Wesley Burt": "Not on card",
-				"Victor Titov": "Not on card",
 				"Yongjae Choi": "Not on card",
 				"Clint Cearley": "Not on card",
-				"Unsourceable": "the figure in the top left and the background"
+				"Unsourceable": "the figure in the top left and the background",
+				"Viktor Titov": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -249247,7 +249236,7 @@
 			],
 			"artists": [
 				"Matt Cavotta",
-				"Millian Murai"
+				"Willian Murai"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -249302,8 +249291,7 @@
 			"keywords": [
 				"flying",
 				"first strike",
-				"hexproof",
-				"fyling"
+				"hexproof"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -249328,7 +249316,7 @@
 			"base_tags": [
 				"removal",
 				"hc6.0<324>",
-				"keyword<fyling|first strike|hexproof>"
+				"keyword<flying|first strike|hexproof>"
 			]
 		},
 		{
@@ -262764,9 +262752,9 @@
 				"talkfishgetcrit"
 			],
 			"artists": [
-				"Josh Hash",
 				"Eric Deschamps",
-				"Scott M. Fischer"
+				"Scott M. Fischer",
+				"Josh Hass"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -262871,8 +262859,7 @@
 			"keywords": [
 				"drone strike",
 				"manifest",
-				"manifest destiny",
-				"manifset destiny"
+				"manifest destiny"
 			],
 			"legalities": {
 				"standard": "banned",
@@ -262900,7 +262887,7 @@
 			"base_tags": [
 				"america",
 				"hcc<54>",
-				"keyword<drone strike|manifset destiny>"
+				"keyword<drone strike|manifest destiny>"
 			],
 			"all_parts": [
 				{
@@ -265635,7 +265622,7 @@
 				"cassofsass"
 			],
 			"artists": [
-				"Brandou Kitkouski"
+				"Brandon Kitkouski"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -266041,8 +266028,7 @@
 				]
 			],
 			"keywords": [
-				"replicate",
-				"replicat"
+				"replicate"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -266062,7 +266048,7 @@
 			],
 			"base_tags": [
 				"hc6.1<150>",
-				"keyword<replicat>"
+				"keyword<replicate>"
 			],
 			"all_parts": [
 				{
@@ -266432,7 +266418,7 @@
 			],
 			"artists": [
 				"Randy Vargas",
-				"Victor A. Minguez"
+				"Victor Adame Minguez"
 			],
 			"rulings": "\"In online, the spellbook would be infinite. However for gameplay in paper, just play it as drafting the conjured cards and no duplicates.\" -Doomclaw9, 1/27/26",
 			"finish": "nonfoil",
@@ -270595,7 +270581,6 @@
 				"doomclaw9"
 			],
 			"artists": [
-				"Trevon Claxton",
 				"Una Fricker",
 				"Jeff A. Menges",
 				"Jesper Ejsing",
@@ -270603,10 +270588,10 @@
 				"Anson Maddocks",
 				"Mike Bierek",
 				"Carl Critchlow",
-				"Kim Sokol"
+				"Kim Sokol",
+				"Trevor Claxton"
 			],
 			"artist_notes": {
-				"Trevon Claxton": "Not on card",
 				"Una Fricker": "Not on card",
 				"Jeff A. Menges": "Not on card",
 				"Jesper Ejsing": "Not on card",
@@ -270614,7 +270599,8 @@
 				"Anson Maddocks": "Not on card",
 				"Mike Bierek": "Not on card",
 				"Carl Critchlow": "Not on card",
-				"Kim Sokol": "Not on card"
+				"Kim Sokol": "Not on card",
+				"Trevor Claxton": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -272500,10 +272486,10 @@
 			],
 			"artists": [
 				"Sean Murray",
-				"Brad Williams"
+				"Bradley Williams"
 			],
 			"artist_notes": {
-				"Brad Williams": "Not on card"
+				"Bradley Williams": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -272769,10 +272755,10 @@
 				"Leslie"
 			],
 			"artists": [
-				"Isle Gort"
+				"Ilse Gort"
 			],
 			"artist_notes": {
-				"Isle Gort": "Not on card"
+				"Ilse Gort": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -273564,7 +273550,7 @@
 			],
 			"artists": [
 				"Micah Epstein",
-				"Artur Nakhodin"
+				"Artur Nakhodkin"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -275106,12 +275092,12 @@
 				"insertnamehere23"
 			],
 			"artists": [
-				"Ran Pancoast",
-				"Dan Frazier"
+				"Dan Frazier",
+				"Ryan Pancoast"
 			],
 			"artist_notes": {
-				"Ran Pancoast": "Not on card",
-				"Dan Frazier": "Not on card"
+				"Dan Frazier": "Not on card",
+				"Ryan Pancoast": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -275742,7 +275728,7 @@
 				"MunkeGutz"
 			],
 			"artists": [
-				"Steve Precott"
+				"Steve Prescott"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -275820,7 +275806,7 @@
 				"enchantmen"
 			],
 			"artists": [
-				"Crag J Spearing"
+				"Craig J Spearing"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -278902,7 +278888,7 @@
 				"fishsubstance"
 			],
 			"artists": [
-				"Teriese Nielsen"
+				"Terese Nielsen"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -281590,7 +281576,7 @@
 				"gyatthew"
 			],
 			"artists": [
-				"Ken Meyer Jr."
+				"Ken Meyer, Jr."
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -282119,7 +282105,7 @@
 				"insertnamehere23"
 			],
 			"artists": [
-				"Greg Staplea"
+				"Greg Staples"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -283816,6 +283802,12 @@
 			"creators": [
 				"insertnamehere23"
 			],
+			"artists": [
+				"Lius Lasahido"
+			],
+			"artist_notes": {
+				"Lius Lasahido": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -283825,11 +283817,15 @@
 			],
 			"tags": [
 				"nyx-frame",
-				"hc6.1"
+				"hc6.1",
+				"mse",
+				"keyword"
 			],
 			"base_tags": [
 				"nyx-frame",
-				"hc6.1<316>"
+				"hc6.1<316>",
+				"mse",
+				"keyword<cascade|lifelink>"
 			]
 		},
 		{
@@ -283881,6 +283877,9 @@
 			"creators": [
 				"enchantmen"
 			],
+			"artists": [
+				"Dan Murayama Scott"
+			],
 			"rulings": "\"A creature with standing can be blocked. A creature with standing can block usually.\" -Doomclaw9, 12/29/25\n\"To gift a fish to yourself, create a 1/1 blue Fish creature token.\" -Doomclaw9, 12/29/25",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -283888,7 +283887,8 @@
 			"tags": [
 				"hc6.1",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"keyword"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Kor Skyfisher"
@@ -283896,7 +283896,8 @@
 			"base_tags": [
 				"hc6.1<317>",
 				"ransomnote",
-				"ransom-over-real-card<Kor Skyfisher>"
+				"ransom-over-real-card<Kor Skyfisher>",
+				"keyword<standing>"
 			],
 			"all_parts": [
 				{
@@ -283950,10 +283951,26 @@
 			"creators": [
 				"insertnamehere23"
 			],
+			"artists": [
+				"Anastasia Ovchinnikova",
+				"Carlos Palma Cruchaga"
+			],
+			"artist_notes": {
+				"Anastasia Ovchinnikova": "Not on card",
+				"Carlos Palma Cruchaga": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"mse",
+				"keyword"
+			],
+			"base_tags": [
+				"mse",
+				"keyword<surveil|evoke>"
+			]
 		},
 		{
 			"object": "card",
@@ -438454,7 +438471,7 @@
 				"Legend"
 			],
 			"type_line": "Creature — Man Myth Legend",
-			"oracle_text": "*Where has he been?* — Plainswalk, islandwalk, swampwalk, mountainwalk, forestwalk, desertwalk, snow landwalk, legendary landwalk, non-basic landwalk, artifact landwalk, trombonewalk, dryadwalk, gatewalk, locuswalk, Urza'swalk, cloudwalk, Island of Wak-Wakwalk, denimwalk, protection from Hammerheim.",
+			"oracle_text": "*Where has he been?* — Plainswalk, islandwalk, swampwalk, mountainwalk, forestwalk, desertwalk, snow landwalk, legendary landwalk, nonbasic landwalk, artifact landwalk, trombonewalk, dryadwalk, gatewalk, locuswalk, Urza'swalk, cloudwalk, Island of Wak-Wakwalk, denimwalk, protection from Hammerheim.",
 			"power": "2",
 			"toughness": "1",
 			"colors": [
@@ -438478,7 +438495,7 @@
 				"desertwalk",
 				"snow landwalk",
 				"legendary landwalk",
-				"non-basic landwalk",
+				"nonbasic landwalk",
 				"artifact landwalk",
 				"trombonewalk",
 				"dryadwalk",
@@ -463941,9 +463958,7 @@
 					"U"
 				]
 			],
-			"keywords": [
-				"split"
-			],
+      "keywords": [],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -540633,10 +540648,10 @@
 			],
 			"artists": [
 				"Anson Maddocks",
-				"Carlos. S"
+				"Carlos S."
 			],
 			"artist_notes": {
-				"Carlos. S": "Not on card"
+				"Carlos S.": "Not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -542445,8 +542460,11 @@
 				"ravensrun"
 			],
 			"artists": [
-				"Ravensrun91 :)"
+				"Ravensrun"
 			],
+			"artist_notes": {
+				"Ravensrun": ":)"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -543666,7 +543684,7 @@
 			],
 			"type_line": "Creature — Human Monster",
 			"oracle_text": "Randomly close half of the windows when Rashomonster enters the battlefield. Each opponent closes a window at the beginning of their upkeep. You open a window for each player at the beginning of your upkeep.\n*\"I heard that he had* **Viligance**!\"\n*\"Do you think that Rashomonster has* **Haste**?\"\n*\"The story says that he always* **strikes first**.\"\n*\"I hope he doesn't* **Trample** *all over us!!\"*\n*\"If you* **Sacrifice Rashomonster**:, *you probably* **Gain 5 life.**\"\n*\"According to legend, Rashomonster has* **Ward — Pay 3 life.**\"\n*\"I'm pretty sure Rashomonster is a* **5/5** *and not a 3/3.\"*\n*\"They say that Rashomonster has* **lifelink**, *but I'm not so sure.\"*",
-			"flavor_text": "\"Was this really illustrated by **u/factorialite**?\"",
+			"flavor_text": "Unpredictable as the Decanter of Even Endless Water itself.",
 			"power": "3",
 			"toughness": "3",
 			"colors": [],
@@ -543740,10 +543758,10 @@
 				"arthropod_queen"
 			],
 			"artists": [
-				"Arthropod_queen"
+				"Arthropod Queen"
 			],
 			"artist_notes": {
-				"Arthropod_queen": "not on card"
+				"Arthropod Queen": "not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -544046,8 +544064,7 @@
 				"goem"
 			],
 			"artists": [
-				"goem",
-				"noncard"
+				"goem"
 			],
 			"artist_notes": {
 				"goem": "Not on card"
@@ -544475,8 +544492,8 @@
 				"8ofswords"
 			],
 			"artists": [
-				"Christoper Rush",
-				"Kris Lord, the Lawn Man"
+				"Kris Lord, the Lawn Man",
+				"Christopher Rush"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -545430,10 +545447,10 @@
 				"flypaper6"
 			],
 			"artists": [
-				"Darien Bader",
 				"Andrew Mar",
 				"Cole Slaw",
-				"Flypaper"
+				"Flypaper",
+				"Daren Bader"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -547337,7 +547354,7 @@
 			],
 			"artists": [
 				"Shelly Wan",
-				"Jesper Myfors"
+				"Jesper Myrfors"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -548301,8 +548318,8 @@
 				"eldoradonights"
 			],
 			"artists": [
-				"David Mattingly",
-				"Fred Fields"
+				"Fred Fields",
+				"David B. Mattingly"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -549442,9 +549459,9 @@
 				"andrea52"
 			],
 			"artists": [
-				"Ken Meyer Jr",
 				"Mark Zug",
-				"Austin Hsu"
+				"Austin Hsu",
+				"Ken Meyer, Jr."
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -549590,8 +549607,7 @@
 				"Ravensrun",
 				"Kev Walker",
 				"Papa-Murphy's",
-				"Jesper Ejsing",
-				""
+				"Jesper Ejsing"
 			],
 			"artist_notes": {
 				"Jesper Ejsing": "Not on card"
@@ -549836,9 +549852,9 @@
 				"semanari"
 			],
 			"artists": [
-				"Jesper Ejsin",
 				"Chippy",
-				"Daren Bader"
+				"Daren Bader",
+				"Jesper Ejsing"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -549899,8 +549915,8 @@
 				"andrea52"
 			],
 			"artists": [
-				"Douglas Schuler",
-				" Christi Balanescu"
+				"Douglas Shuler",
+				"Cristi Balanescu"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -550099,7 +550115,7 @@
 				"naszfluckah"
 			],
 			"artists": [
-				"DiTierlizzi"
+				"DiTerlizzi"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -550516,7 +550532,7 @@
 			],
 			"artists": [
 				"Dan Frazier",
-				"Paulo Parente"
+				"Paolo Parente"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -551186,7 +551202,8 @@
 				"mimp"
 			],
 			"artists": [
-				"James Zapata, Gabor Szikszai"
+				"James Zapata",
+				"Gabor Szikszai"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -551780,7 +551797,7 @@
 				"justsomedude1004"
 			],
 			"artists": [
-				"Brian Snoddy"
+				"Brian Snõddy"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -553415,8 +553432,8 @@
 			],
 			"artists": [
 				"Alexander Forssberg",
-				"Tituan Lunter",
-				"Flypaper"
+				"Flypaper",
+				"Titus Lunter"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -553813,7 +553830,7 @@
 				"oddvio"
 			],
 			"artists": [
-				"Mimp"
+				"mimp"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -554061,8 +554078,8 @@
 			],
 			"artists": [
 				"Matt Stewart",
-				" Aurore Folny",
-				" Fajareka Setiawan"
+				"Aurore Folny",
+				"Fajareka Setiawan"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -555111,7 +555128,8 @@
 				"kittensmittens0919"
 			],
 			"artists": [
-				"Fred Fields, Brad Rigney"
+				"Fred Fields",
+				"Brad Rigney"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -555579,8 +555597,8 @@
 				"leafbladefighter"
 			],
 			"artists": [
-				"Stephen Danielle",
-				"DC-Comics"
+				"DC-Comics",
+				"Stephen Daniele"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -555635,8 +555653,8 @@
 			],
 			"artists": [
 				"Daren Bader",
-				" Christopher Moeller",
-				" Melissa A. Benson"
+				"Christopher Moeller",
+				"Melissa A. Benson"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -556203,9 +556221,8 @@
 				"coleslawiscool"
 			],
 			"artists": [
-				"萩谷薫",
-				"KAORU HAGIYA",
-				"Valera Lutfullina"
+				"Valera Lutfullina",
+				"Hagiya Kaoru"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -557249,7 +557266,8 @@
 				"meepmeerp"
 			],
 			"artists": [
-				"Matthew D. Wilson, Corn"
+				"Matthew D. Wilson",
+				"Corn"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -558449,7 +558467,7 @@
 				"mimp"
 			],
 			"artists": [
-				"Mimp"
+				"mimp"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -558525,8 +558543,8 @@
 				"leafbladefighter"
 			],
 			"artists": [
-				"DiTerlizi",
-				"Brad Rigney"
+				"Brad Rigney",
+				"DiTerlizzi"
 			],
 			"rulings": "Verdant Force's effect will happen as if it were a turn-based action during the upkeep step, before day/night and phasing. Any abilities that trigger as a result will wait to go onto the stack until the upkeep step- mweepigeon 2026-07-09",
 			"finish": "nonfoil",
@@ -558733,7 +558751,7 @@
 				"Kevin Sidharta",
 				"Daarken",
 				"Igor Kieryluk",
-				"Brent Hollower"
+				"Brent Hollowell"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -561848,8 +561866,8 @@
 			],
 			"artists": [
 				"The-Uncredited-Artists-at-Konami",
-				"Titus Lunted",
-				"Volkan Baga"
+				"Volkan Baga",
+				"Titus Lunter"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -562563,7 +562581,7 @@
 				"jawesome_"
 			],
 			"artists": [
-				"Dr.-Seuss"
+				"Dr. Seuss"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -562986,7 +563004,7 @@
 				"Igor Kieryluk",
 				"Jarel Threat",
 				"John Stanko",
-				"William Murai"
+				"Willian Murai"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -563860,7 +563878,11 @@
 				"_.plushie._"
 			],
 			"artists": [
-				"Jeff Laubenstein, Jim Nelson, Gerrit, Daniel Gelon, Amy Weber"
+				"Jeff Laubenstein",
+				"Jim Nelson",
+				"Gerrit",
+				"Daniel Gelon",
+				"Amy Weber"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -564154,7 +564176,7 @@
 			],
 			"artists": [
 				"Warren Mahy",
-				"Johv Avon"
+				"John Avon"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -564214,8 +564236,8 @@
 				"hightrolla"
 			],
 			"artists": [
-				"Burce Brenneise",
-				"Douglas Shuler"
+				"Douglas Shuler",
+				"Bruce Brenneise"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -564422,10 +564444,10 @@
 			],
 			"artists": [
 				"Scott Altmann",
-				"Mimp"
+				"mimp"
 			],
 			"artist_notes": {
-				"Mimp": "for some reason"
+				"mimp": "for some reason"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -565177,7 +565199,7 @@
 			],
 			"artists": [
 				"Mark Poole",
-				"Jesper Myfors"
+				"Jesper Myrfors"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -569782,8 +569804,8 @@
 			],
 			"artists": [
 				"Kazuki Takahashi",
-				"Robbie Tevino",
-				"Hercules"
+				"Hercules",
+				"Robbie Trevino"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -571180,12 +571202,12 @@
 			"artists": [
 				"LauraMakesMagic",
 				"Douglas Shuler",
-				"Pascal Ouidault"
+				"Pascal Quidault"
 			],
 			"artist_notes": {
 				"LauraMakesMagic": "not on card",
 				"Douglas Shuler": "not on card",
-				"Pascal Ouidault": "not on card"
+				"Pascal Quidault": "not on card"
 			},
 			"rulings": "",
 			"finish": "nonfoil",
@@ -571995,7 +572017,7 @@
 				"doomclaw9"
 			],
 			"artists": [
-				"A.J. Nazzaro"
+				"AJ Nazzaro"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -573211,7 +573233,7 @@
 			],
 			"artists": [
 				"Karl Kopinski",
-				"Ravenrun"
+				"Ravensrun"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -574774,7 +574796,7 @@
 				"goem"
 			],
 			"artists": [
-				"Sergey Glushaklov"
+				"Sergey Glushakov"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -577757,9 +577779,9 @@
 			],
 			"artists": [
 				"Josu Solano",
-				"Kirsten Zirngibi",
 				"Brian Yuen",
-				"Dmirty Burmak"
+				"Kirsten Zirngibl",
+				"Dmitry Burmak"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -584515,8 +584537,8 @@
 				"mimp"
 			],
 			"artists": [
-				"Douglas Schuler",
-				"Howard Lyon"
+				"Howard Lyon",
+				"Douglas Shuler"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -584593,8 +584615,8 @@
 				"JuanDM"
 			],
 			"artists": [
-				"Byran Lee O'Malley",
-				"Paul Robertson"
+				"Paul Robertson",
+				"Bryan Lee O'Malley"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -584678,7 +584700,7 @@
 				"multiloquent"
 			],
 			"artists": [
-				"@LauraMakesMagic"
+				"LauraMakesMagic"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -585239,7 +585261,7 @@
 				"eldoradonights"
 			],
 			"artists": [
-				"DragonballZ"
+				"Dragon Ball Z"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -585312,10 +585334,10 @@
 				"Shelly Wan",
 				"Filip Burburan",
 				"Jonathan Kuo",
-				"Randy Varga",
 				"Néstor Ossandón Leal",
 				"Yeong-Hao Han",
-				"Daren Bader"
+				"Daren Bader",
+				"Randy Vargas"
 			],
 			"rulings": "When Polyamorus Raptor enters, you may pair it with any number of unpaired creatures you control. When another unpaired creature enters, you may pair Polyamorus Raptor with it, even if it is already paired- mweepigeon 2025-10-12",
 			"finish": "nonfoil",
@@ -726663,7 +726685,7 @@
 				"mimp"
 			],
 			"artists": [
-				"Camille Alouier"
+				"Camille Alquier"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -729758,7 +729780,7 @@
 				"goem"
 			],
 			"artists": [
-				"Magali Villenueve"
+				"Magali Villeneuve"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -730843,7 +730865,7 @@
 				"Rob Alexander",
 				"Jason Chan",
 				"Chris Rahn",
-				"Sebastian Giancobino"
+				"Sebastian Giacobino"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -733436,7 +733458,7 @@
 			],
 			"artists": [
 				"Christina Kraus",
-				"Etyan Zana"
+				"Eytan Zana"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -734315,7 +734337,7 @@
 				"leafbladefighter"
 			],
 			"artists": [
-				"Lazytown"
+				"Lazy Town"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
