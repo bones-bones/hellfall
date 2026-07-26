@@ -101,7 +101,7 @@ export const DeckBuilder = () => {
   };
 
   const updateCards = (cards: string[]) => {
-    // if (!cardMap.size()) {
+    // if (!cardMap.size) {
     //   return;
     // }
     const newMultMap = new Map<string, number>();

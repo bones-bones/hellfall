@@ -3,11 +3,12 @@ import {
   ensurePips,
   getCostsFromHistoricPermanentFaces,
   getCostsFromPermanentFaces,
-  isNumber,
+  matchCount,
   pipMap,
   pipsContainPipsGeneric,
   pipSearch,
-  pipsEqualPipsNongeneric,
+  splitCostIntoPips,
+  // pipsEqualPipsNongeneric,
   textContains,
   textListIncludes,
   textListsShare,
@@ -17,6 +18,7 @@ import {
 import {
   comparisonFilterFunction,
   comparisonSummaryFunction,
+  devotionRegexFilterFunction,
   devotionFilterNameType,
   devotionNumberFilterNames,
   opType,
@@ -25,14 +27,8 @@ import {
   summaryFunction,
   toDevotionFilterName,
 } from '../types';
-import {
-  containsOp,
-  createNumSummary,
-  numFilter,
-  numSearchListFilter,
-  opAsBool,
-  opToDont,
-} from '../utils';
+import { containsOp, createNumSummary, opAsBool, opToDont } from '../utils';
+import { numFilter, numSearchListFilter } from './filterBase';
 
 /**
  * Compares a set of pips with a pip search
@@ -90,7 +86,7 @@ export const manaSummary: summaryFunction<pipSearch> = (
     invert
   );
 };
-
+const genericRegex = /{(\d+|X|Y|Z|∞|XIV|TREEX|1.99)}/g;
 const faceDevotionToDreadmaw = (face: faceType): number => {
   let devotion = 0;
   if (face.mana_value == 6) {
@@ -105,7 +101,10 @@ const faceDevotionToDreadmaw = (face: faceType): number => {
   if (toNumber(face.toughness) == 6) {
     devotion++;
   }
-  if (pipsEqualPipsNongeneric(pipMap.getPipsFromText(face.mana_cost), 'gg')) {
+  if (
+    matchCount(face.mana_cost, /{G}/g) == 2 &&
+    splitCostIntoPips(face.mana_cost).length - matchCount(face.mana_cost, genericRegex) == 2
+  ) {
     devotion++;
   }
   return devotion;
@@ -120,11 +119,13 @@ const devotionToDreadmaw = (card: HCCard.Any, dropFaces?: boolean): number[] => 
   }
   return nums;
 };
-const textIsGray = (text: string) =>
-  (isNumber(text) && text != '0') ||
-  ['C', 'X', 'Y', '1/2', '∞', 'XIV', 'TREEX', 'HC'].includes(text);
-const pipIsGray = (pip: HCCardSymbol) => pip.symbol.split('/').every(textIsGray);
-const pipIsColored = (pip: HCCardSymbol) => pip.colors?.some(c => c != 'C');
+const pipIsGray = (pip: string) =>
+  pipMap.colorlessSymbolRegex.test(pip) || pipMap.genericSymbolRegex.test(pip);
+// const textIsGray = (text: string) =>
+//   (isNumber(text) && text != '0') ||
+//   ['C', 'X', 'Y', '1/2', '∞', 'XIV', 'TREEX', 'HC'].includes(text);
+// const pipIsGray = (pip: HCCardSymbol) => pip.symbol.split('/').every(textIsGray);
+// const pipIsColored = (pip: HCCardSymbol) => pip.colors?.some(c => c != 'C');
 
 const isFatAss = (face: faceType) => {
   const pow = toNumber(face.power);
@@ -132,8 +133,8 @@ const isFatAss = (face: faceType) => {
   if (pow == undefined || tou == undefined) return false;
   return tou - pow >= 2;
 };
-const textIsHybrid = (text: string) => /^(?!H\/)[^/]+\//.test(text) || /^H\/[^/]+\//.test(text);
-const pipIsHybrid = (pip: HCCardSymbol) => textIsHybrid(pip.symbol);
+// const textIsHybrid = (text: string) => /^(?!H\/)[^/]+\//.test(text) || /^H\/[^/]+\//.test(text);
+// const pipIsHybrid = (pip: HCCardSymbol) => textIsHybrid(pip.symbol);
 
 const getDevotionFromCard = (
   card: HCCard.Any,
@@ -149,15 +150,15 @@ const getDevotionFromCard = (
       return devotionToDreadmaw(card, dropFaces);
     case 'gray':
       return getCostsFromPermanentFaces(card, dropFaces).map(
-        cost => pipMap.getPipsFromText(cost).filter(pipIsGray).length
+        cost => splitCostIntoPips(cost).filter(pipIsGray).length
       );
     case 'hybrid':
-      return getCostsFromPermanentFaces(card, dropFaces).map(
-        cost => pipMap.getPipsFromText(cost).filter(pipIsHybrid).length
+      return getCostsFromPermanentFaces(card, dropFaces).map(cost =>
+        matchCount(cost, pipMap.hybridSymbolRegex)
       );
     case 'history':
-      return getCostsFromHistoricPermanentFaces(card, dropFaces).map(
-        cost => pipMap.getPipsFromText(cost).filter(pipIsColored).length
+      return getCostsFromHistoricPermanentFaces(card, dropFaces).map(cost =>
+        matchCount(cost, pipMap.coloredSymbolRegex)
       );
     case 'god':
     case 'locus':
@@ -180,23 +181,15 @@ const getDevotionFromCard = (
  * @param value1 the card to use
  * @param operator operator to use
  * @param value2 the first value from the search
- * @param value3 the second value from the search, if any
- * @param dropFaces whether to exclude faces with `drop_face: true` where appropriate
+ * @param value3 the regex from the search, if any
  */
-export const devotionFilter: comparisonFilterFunction = (
+export const devotionStateFilter: comparisonFilterFunction = (
   value1: HCCard.Any,
   operator: opType,
   value2: string,
-  value3?: string,
-  dropFaces?: boolean
+  value3?: string
 ) => {
   const num = toNumber(value3);
-  const pip = pipMap.get(value2);
-  if (pip && !pip.filename.includes('emoji')) {
-    return getCostsFromPermanentFaces(value1, dropFaces).some(cost =>
-      numFilter(pipMap.getDevotionFromText(cost, pip), operator, num)
-    );
-  }
   const devotion = toDevotionFilterName(value2);
   if (!devotion) {
     return true;
@@ -207,6 +200,26 @@ export const devotionFilter: comparisonFilterFunction = (
   }
   return numSearchListFilter(value, operator, num ?? 1);
 };
+/**
+ * Compares costs from a card with a number and with up to two regexes from a search
+ * @param value1 the costs to use
+ * @param operator operator to use
+ * @param value3 the first regex from the search
+ * @param value2 the number from the search
+ * @param value4 the second regex from the search, if any
+ */
+export const devotionRegexFilter: devotionRegexFilterFunction = (
+  value1: string[],
+  operator: opType,
+  value2: RegExp,
+  value3: string,
+  value4?: RegExp
+) =>
+  numSearchListFilter(
+    value1.map(v => matchCount(v, value2, value4)),
+    operator,
+    value3
+  );
 
 const devotionToSummary: Partial<Record<devotionFilterNameType, string>> = {
   fatass: 'fat asses',

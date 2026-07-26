@@ -28,7 +28,7 @@ const concatProps = [
   'hand_modifier',
   'life_modifier',
 ];
-// these props are concatenated, separated by '\\n\\n---\\n\\n'
+// these props are concatenated, separated by '\n\n---\n\n'
 const multiLineConcatProps = ['oracle_text', 'flavor_text'];
 // these props are combined in some other way
 const combineProps = ['mana_value', 'colors', 'types'];
@@ -97,12 +97,11 @@ export const mergeHCCardFaces = (faces: HCCardFace.MultiFaced[]): HCCardFace.Mul
               const needed =
                 i +
                 1 -
-                ((faces[0][key as keyof HCCardFace.MultiFaced] as string)?.match(
-                  /\\\\n\\\\n---\\\\n\\\\n/g
-                )?.length || 0);
-              (faces[0] as any)[key] += '\\n\\n---\\n\\n'.repeat(needed > 0 ? needed : 1) + value;
+                ((faces[0][key as keyof HCCardFace.MultiFaced] as string)?.match(/\\n\\n---\\n\\n/g)
+                  ?.length || 0);
+              (faces[0] as any)[key] += '\n\n---\n\n'.repeat(needed > 0 ? needed : 1) + value;
             } else {
-              (faces[0] as any)[key] = '\\n\\n---\\n\\n'.repeat(i + 1) + value;
+              (faces[0] as any)[key] = '\n\n---\n\n'.repeat(i + 1) + value;
             }
           }
         }

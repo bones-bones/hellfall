@@ -300,9 +300,7 @@ export const formatDiscordMarkdown = (
 ): ReactNode => {
   if (!text) return null;
 
-  const lines = textModifier
-    ? text.split('\\n').map(text => textModifier(text))
-    : text.split('\\n');
+  const lines = textModifier ? text.split('\n').map(text => textModifier(text)) : text.split('\n');
 
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, false, setDangerously, useItalicFont);
@@ -324,7 +322,7 @@ export const formatDiscordMarkdown = (
 export const formatDiscordMarkdownInline = (text: string): ReactNode => {
   if (!text) return null;
 
-  const firstLine = text.split('\\n')[0];
+  const firstLine = text.split('\n')[0];
   return formatLine(firstLine, false);
 };
 
@@ -338,7 +336,7 @@ export const formatDiscordMarkdownInline = (text: string): ReactNode => {
 export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode => {
   if (!text) return null;
 
-  const lines = text.split('\\n');
+  const lines = text.split('\n');
 
   return lines.map((line, index) => {
     const formattedLine = formatLine(line, true);
@@ -360,7 +358,7 @@ export const formatDiscordMarkdownInvertedItalics = (text: string): ReactNode =>
 export const formatDiscordMarkdownInvertedItalicsInline = (text: string): ReactNode => {
   if (!text) return null;
 
-  const firstLine = text.split('\\n')[0];
+  const firstLine = text.split('\n')[0];
   return formatLine(firstLine, true);
 };
 const mediumTextStyles = createStyles({

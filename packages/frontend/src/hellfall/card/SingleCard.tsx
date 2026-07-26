@@ -33,7 +33,7 @@ export const SingleCard = () => {
 
   return (
     <div>
-      {!cards.size() ? (
+      {!cards.size ? (
         <></>
       ) : !entryToRender ? (
         <h2>Nothing was found...</h2>

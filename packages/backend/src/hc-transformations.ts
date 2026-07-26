@@ -37,7 +37,9 @@ import { fetchLands } from './fetchLands.ts';
 
 const usingApproved = false;
 const typeSet = new Set<string>();
+const keywordSet = new Set<string>();
 const creatorSet = new Set<string>();
+const artistSet = new Set<string>();
 const tagSet = new Set<string>();
 const NO_SCRYFALL = process.argv.includes('--noscryfall');
 const movedIds: Record<string, string> = {
@@ -462,6 +464,7 @@ const main = async () => {
       );
     });
 
+    entry.keywords.forEach(e => keywordSet.add(e.replaceAll('"', '')));
     entry.creators = entry.creators.map(creator => {
       if (creator in usernameMappings) {
         creatorSet.add(usernameMappings[creator]);
@@ -471,9 +474,8 @@ const main = async () => {
       return creator;
     });
 
-    if ('tags' in entry) {
-      entry.tags?.forEach(e => tagSet.add(e.replaceAll('"', '')));
-    }
+    entry.artists?.forEach(e => artistSet.add(e.replaceAll('"', '')));
+    entry.tags?.forEach(e => tagSet.add(e.replaceAll('"', '')));
   });
 
   const types = Array.from(typeSet).sort((a, b) => {
@@ -497,7 +499,9 @@ const main = async () => {
       reducedTypes.push(type);
     }
   });
+  const keywords = Array.from(keywordSet);
   const creators = Array.from(creatorSet);
+  const artists = Array.from(artistSet);
   const tags = Array.from(tagSet);
 
   fs.writeFileSync(
@@ -521,21 +525,15 @@ const main = async () => {
     JSON.stringify({ data: finalCards.filter(card => card.kind == 'land').cards() }, null, '\t')
   );
   fs.writeFileSync(
-    '../shared/src/data/tags.json',
+    '../shared/src/data/keywords.json',
     JSON.stringify(
       {
-        data: tags.sort((a, b) => {
-          if (a > b) {
-            return 1;
-          }
-          return -1;
-        }),
+        data: keywords.sort(),
       },
       null,
       '\t'
     )
   );
-
   fs.writeFileSync(
     '../shared/src/data/creators.json',
     JSON.stringify(
@@ -546,6 +544,26 @@ const main = async () => {
           }
           return -1;
         }),
+      },
+      null,
+      '\t'
+    )
+  );
+  fs.writeFileSync(
+    '../shared/src/data/artists.json',
+    JSON.stringify(
+      {
+        data: artists.sort(),
+      },
+      null,
+      '\t'
+    )
+  );
+  fs.writeFileSync(
+    '../shared/src/data/tags.json',
+    JSON.stringify(
+      {
+        data: tags.sort(),
       },
       null,
       '\t'

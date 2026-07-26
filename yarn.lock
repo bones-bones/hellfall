@@ -2919,6 +2919,7 @@ __metadata:
     "@google-cloud/firestore": "npm:^7.1.0"
     "@types/node": "npm:^20"
     "@types/xmldom": "npm:^0.1.34"
+    redos-detector: "npm:^6.1.4"
     typescript: "npm:^5"
     xmldom: "npm:^0.6.0"
   languageName: unknown
@@ -14719,6 +14720,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"redos-detector@npm:^6.1.4":
+  version: 6.1.4
+  resolution: "redos-detector@npm:6.1.4"
+  dependencies:
+    regjsparser: "npm:0.13.0"
+  bin:
+    redos-detector: bin.js
+  checksum: 10c0/5119a875985da41a83883f533cd5117048ba2f418a0f4f00aa8825489ee3bdc391c47ead0d1936e64edc584c47a4997fe85d671037a539ee926f883a67a44c60
+  languageName: node
+  linkType: hard
+
 "refa@npm:^0.12.0, refa@npm:^0.12.1":
   version: 0.12.1
   resolution: "refa@npm:0.12.1"
@@ -14833,6 +14845,17 @@ __metadata:
   version: 0.8.0
   resolution: "regjsgen@npm:0.8.0"
   checksum: 10c0/44f526c4fdbf0b29286101a282189e4dbb303f4013cf3fea058668d96d113b9180d3d03d1e13f6d4cbde38b7728bf951aecd9dc199938c080093a9a6f0d7a6bd
+  languageName: node
+  linkType: hard
+
+"regjsparser@npm:0.13.0":
+  version: 0.13.0
+  resolution: "regjsparser@npm:0.13.0"
+  dependencies:
+    jsesc: "npm:~3.1.0"
+  bin:
+    regjsparser: bin/parser
+  checksum: 10c0/4702f85cda09f67747c1b2fb673a0f0e5d1ba39d55f177632265a0be471ba59e3f320623f411649141f752b126b8126eac3ff4c62d317921e430b0472bfc6071
   languageName: node
   linkType: hard
 

@@ -20,7 +20,7 @@ import {
   miscHybridIdentitySummary,
 } from '../filters';
 import { looseOpType } from '../types';
-import { colorFilterMaker, ColorFilter } from '../utils';
+import { colorFilterMaker, ColorFilter } from '../makerLib';
 
 /**
  * Makes a color filter

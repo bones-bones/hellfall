@@ -102,7 +102,7 @@ export const CardFace = ({
             {formatDiscordMarkdown(formatParens(face.oracle_text), undefined, false, true)}
           </MediumText>
         ) : (
-          <MediumText key="rules">{renderText(face.oracle_text.split('\\n'))}</MediumText>
+          <MediumText key="rules">{renderText(face.oracle_text.split('\n'))}</MediumText>
         ))}
       {face.flavor_text &&
         (['*', '_', '~'].some(e => face.flavor_text?.includes(e)) ? (
@@ -110,7 +110,7 @@ export const CardFace = ({
             {formatDiscordMarkdownInvertedItalics(formatParens(face.flavor_text))}
           </FlavorText>
         ) : (
-          <FlavorItalics key="flavor">{renderText(face.flavor_text.split('\\n'))}</FlavorItalics>
+          <FlavorItalics key="flavor">{renderText(face.flavor_text.split('\n'))}</FlavorItalics>
         ))}
       {(face.power || face.toughness) && (
         <>

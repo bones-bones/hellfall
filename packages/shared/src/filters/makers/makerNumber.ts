@@ -1,11 +1,10 @@
-import { comparisonFilter, comparisonSummary } from '../filters';
 import { looseOpType } from '../types';
 import {
   ComparisonFilter,
   NumberPropFilter,
   comparisonFilterMaker,
   numberPropFilterMaker,
-} from '../utils';
+} from '../makerLib';
 
 /**
  * Makes a {@linkcode ComparisonFilter}
@@ -18,7 +17,7 @@ export const makeCompFilter: comparisonFilterMaker = (
   op: looseOpType,
   value2?: string
 ) => {
-  return new ComparisonFilter('comp', comparisonFilter, comparisonSummary, value1, op, value2);
+  return new ComparisonFilter(value1, op, value2);
 };
 
 /**

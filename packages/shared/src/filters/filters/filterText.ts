@@ -1,7 +1,6 @@
 import {
   textEquals,
   textContains,
-  isNumber,
   textListContains,
   textListIncludes,
   isValidV4UUID,
@@ -9,7 +8,6 @@ import {
   wrapArray,
   getSetAndDirectChildSets,
   xor,
-  xnor,
   fixValue,
 } from '@hellfall/shared/utils';
 import {
@@ -20,19 +18,12 @@ import {
   noteSummaryFunction,
 } from '../types';
 import {
-  includeSummarySingular,
-  taggedSummary,
   includeEqualsOp,
   opIsNegative,
-  includeSummaryPlural,
   opAsBool,
   opToNot,
   prepTag,
-  numSearchFilter,
-  baseNumSummary,
   opToDont,
-  textFilter,
-  textListFilter,
   createCorrectedSummary,
   createSummary,
   createCorrectedDoubleSummary,
@@ -59,6 +50,12 @@ import {
   toFrameEffectRecord,
   toShowcaseFrameRecord,
 } from './filterRecords';
+import {
+  includeSummaryPlural,
+  includeSummarySingular,
+  taggedSummary,
+  textListFilter,
+} from './filterBase';
 
 /**
  * Compares an oracle id from a card with an oracle id from a search
@@ -82,29 +79,6 @@ export const oracleIdSummary: summaryFunction<string> = (operator: opType, value
   }
   return `!You must provide a valid v4 UUID.`;
 };
-
-/**
- * Compares an hcid from a card with an hcid from a search
- * @param value1 hcid from the card
- * @param operator operator to use
- * @param value2 hcid from the search
- */
-export const idFilter: textFilterFunction = (value1: string, operator: opType, value2: string) =>
-  (isNumber(value2) ? numSearchFilter : textFilter)(value1, operator, value2);
-/**
- * The summary for an hcid filter
- * @param operator the operator to use
- * @param value the search hcid to use
- * @param invert whether the search is inverted
- */
-export const idSummary: summaryFunction<string> = (
-  operator: opType,
-  value: string,
-  invert?: boolean
-) =>
-  `the id ${isNumber(value) ? 'is ' : ''}${(isNumber(value)
-    ? baseNumSummary
-    : includeSummarySingular)(operator, value, invert)}`;
 
 /**
  * Checks a card to see if its artists include an artist from a search, and possibly also checks against artist notes

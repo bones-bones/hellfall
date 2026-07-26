@@ -19,10 +19,11 @@ import {
   toDevotionFilterName,
   devotionKeywordFilterNames,
 } from '../types';
-import { splitOnFirstOp, FilterObject } from '../utils';
+import { splitOnFirstOp } from '../utils';
 import { parseColorText } from './parseColors';
 import { colorFilters, filters, printsFilters } from './parseMaps';
 import { parseDevotion } from './parseDevotion';
+import { FilterObject } from '../makerLib';
 
 // make sure the thing doesn't strip quotes when passing text in to this from start and end of string when
 /**
@@ -49,7 +50,7 @@ export const parseFilter = (
   if (text[0] == '-') {
     return parseFilter(text.slice(1), !invert, getAllPrints);
   }
-  if (text[0] == '"' || text[0] == "'" || !looseOpList.some(op => text.includes(op))) {
+  if (/^['"/]/.test(text) || !looseOpList.some(op => text.includes(op))) {
     return correctOp(makeNameFilter(text, ':'));
   }
   const { keyword, op, term } = splitOnFirstOp(text);

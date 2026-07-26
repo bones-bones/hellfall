@@ -9,8 +9,6 @@ import {
   noteFilterFunction,
   summaryFunction,
   invertOptionType,
-  comparisonFilterFunction,
-  comparisonSummaryFunction,
   numSearch,
   noteSummaryFunction,
   allPrintsGetterType,
@@ -24,17 +22,37 @@ import {
 import {
   createInvalidSummary,
   createNumSummary,
-  emptyFilter,
   getActualOp,
   invertOp,
+  createCorrectedSummary, // used for a link
+  createLegalitySummary,
+  queryPropType,
+  getValuesFromProp,
+  queryNameToValue,
+  queryNameToSummary,
+  regexErrorMessage,
+  searchToRegex,
+} from '../utils';
+import {
+  emptyFilter,
   shareFilter,
   textListFilter,
-  createCorrectedSummary, // used for a link
   textEqualsFilter,
-  createLegalitySummary,
   numSearchListFilter,
   numSearchFilter,
-} from './filterUtils';
+  propSummary,
+  regexListFilter,
+  filterSort,
+  includeFilter,
+  includeSummary,
+  inSummary,
+  toIn,
+  comparisonFilter,
+  comparisonSummary,
+  devotionRegexFilter,
+  devotionStateFilter,
+  devotionSummary,
+} from '../filters';
 import {
   ensureArray,
   colorSearch,
@@ -43,15 +61,10 @@ import {
   pipSearch,
   fixValue,
   unescapeText,
+  isRegexText,
+  pipMap,
+  getCostsFromPermanentFaces,
 } from '@hellfall/shared/utils';
-import { filterSort } from './sortRule';
-import {
-  queryPropType,
-  getValuesFromProp,
-  queryNameToValue,
-  queryNameToSummary,
-} from './makerUtils';
-import { includeFilter, includeSummary } from './filterInclude';
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
     return { name: text.slice(0, -1), note: true };
@@ -237,9 +250,6 @@ export class PipFilter<T extends HCCardSymbol[] | HCCardSymbol[][]> extends Filt
  */
 export class ComparisonFilter extends FilterObject<HCCard.Any, string> {
   constructor(
-    queryName: filterNameType | 'comp' | 'devotion',
-    filter: comparisonFilterFunction,
-    summary: comparisonSummaryFunction,
     value: string,
     op: looseOpType,
     /**
@@ -249,7 +259,16 @@ export class ComparisonFilter extends FilterObject<HCCard.Any, string> {
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
-    super(queryName, filter, summary, value, op, card => card, defaultOp, invertOption);
+    super(
+      'comp',
+      comparisonFilter,
+      comparisonSummary,
+      value,
+      op,
+      card => card,
+      defaultOp,
+      invertOption
+    );
   }
   toSummary = () => this.summary(this.getOp(), this.value, this.inverted, this.value2);
   cardPassesFilter = (card: HCCard.Any) =>
@@ -268,6 +287,66 @@ export class ComparisonFilter extends FilterObject<HCCard.Any, string> {
 /**
  * A filter object that gets props from a card
  */
+export class DevotionFilter extends FilterObject<HCCard.Any, string> {
+  /**
+   * The regex to use, if any
+   */
+  regex?: RegExp;
+  /**
+   * The double regex to use, if any
+   */
+  doubleRegex?: RegExp;
+  constructor(
+    value: string,
+    op: looseOpType,
+    /**
+     * The second value to filter against
+     */
+    public value2?: string,
+    defaultOp: opType = '>=',
+    invertOption: invertOptionType = 'flip'
+  ) {
+    super(
+      'devotion',
+      devotionStateFilter,
+      devotionSummary,
+      value,
+      op,
+      card => card,
+      defaultOp,
+      invertOption
+    );
+    const pip = pipMap.get(value);
+    if (pip && !pip.filename.includes('emoji')) {
+      this.regex = pipMap.getDevotionRegex(pip);
+      this.doubleRegex = pipMap.getDevotionDoubleRegex(pip);
+    }
+  }
+  toSummary = () => this.summary(this.getOp(), this.value, this.inverted, this.value2);
+  cardPassesFilter = (card: HCCard.Any) =>
+    xor(
+      this.regex
+        ? devotionRegexFilter(
+            getCostsFromPermanentFaces(card, this.dropFaces),
+            this.getOp(),
+            this.regex,
+            this.value2,
+            this.doubleRegex,
+            this.dropFaces
+          )
+        : this.filter(
+            this.getValueToCompare(card),
+            this.getOp(),
+            this.value,
+            this.value2,
+            this.dropFaces
+          ),
+      this.inverted
+    );
+}
+/**
+ * A filter object that gets props from a card
+ */
 export class PropFilter extends FilterObject<string[], string> {
   /**
    * The prop(s) that this filter needs to get from a card
@@ -277,9 +356,12 @@ export class PropFilter extends FilterObject<string[], string> {
    * The location on a card that this filter needs to get props from, if any
    */
   location: 'any' | 'face' | 'root';
+  /**
+   * The regex to use, if any
+   */
+  regex?: RegExp;
   constructor(
     queryName: filterNameType,
-    summary: summaryFunction<string>,
     value: string,
     op: looseOpType,
     /**
@@ -287,16 +369,21 @@ export class PropFilter extends FilterObject<string[], string> {
      */
     public summaryStart?: string,
     /**
+     * Whether this filter needs a plural summary
+     */
+    isPlural?: boolean,
+    /**
      * Whether to drop dashes in text
      */
     public dropDashes?: boolean,
     defaultOp: opType = '>=',
     invertOption: invertOptionType = 'negate'
   ) {
+    const shouldUseRegex = isRegexText(value);
     super(
       queryName,
       textListFilter,
-      summary,
+      propSummary(isPlural, shouldUseRegex),
       value,
       op,
       card =>
@@ -307,14 +394,28 @@ export class PropFilter extends FilterObject<string[], string> {
       defaultOp,
       invertOption
     );
+    if (shouldUseRegex && !regexErrorMessage(value)) {
+      this.regex = searchToRegex(value);
+    }
     ({ props: this.props, location: this.location } = queryNameToValue(queryName));
   }
-  toSummary = () =>
-    `the ${this.summaryStart ?? queryNameToSummary(this.queryName)} ${this.summary(
-      this.getOp(),
-      stripQuotes(this.value),
+  toSummary = () => {
+    const summary = this.summary(this.getOp(), stripQuotes(this.value), this.inverted);
+    if (summary.startsWith('!')) return summary;
+    return `the ${this.summaryStart ?? queryNameToSummary(this.queryName)} ${summary}`;
+  };
+  cardPassesFilter = (card: HCCard.Any) =>
+    xor(
+      this.regex
+        ? regexListFilter(this.getValueToCompare(card), this.getOp(), this.regex)
+        : this.filter(
+            this.getValueToCompare(card),
+            this.getOp(),
+            fixValue(this.value),
+            this.dropFaces
+          ),
       this.inverted
-    )}`;
+    );
 }
 /**
  * A filter object that gets props from a card and that converts a value from a search into an array
@@ -402,20 +503,12 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
  */
 export class InFilter extends PropConvertFilter<string> {
   constructor(
-    queryName: printsFilterNameType,
-    summary: summaryFunction<string>,
     value: string,
     op: looseOpType,
     /**
      * A function that gets all prints of a card
      */
     public getAllPrints: allPrintsGetterType,
-    /**
-     * A function that converts the value from the search into a value that can actually be used.
-     * Should return `undefined` if the value is invalid.
-     * This object calls {@linkcode ensureArray} on the output before setting `this.value` to it.
-     */
-    toValue: (value: string) => string[] | string | undefined = value => value,
     /**
      * Whether to keep dashes in text
      */
@@ -424,17 +517,17 @@ export class InFilter extends PropConvertFilter<string> {
     invertOption: invertOptionType = 'flip'
   ) {
     super(
-      queryName,
-      summary as summaryFunction<any>,
+      'in',
+      inSummary as summaryFunction<any>,
       value,
       op,
-      toValue,
+      toIn,
       keepDashes,
       defaultOp,
       invertOption
     );
     this.summaryValue = value;
-    ({ props: this.props, location: this.location } = queryNameToValue(queryName));
+    ({ props: this.props, location: this.location } = queryNameToValue('in'));
   }
   getValueToCompare = (card: HCCard.Any): string[] =>
     this.getAllPrints(card).flatMap(c =>

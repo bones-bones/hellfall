@@ -55,7 +55,7 @@ export const useSearchResults = (asRandom?: boolean) => {
       paginationModel.events.goTo(1);
       setPageAtom(0);
     }
-  }, [query, sortRules, page, cards.size(), inputUnique /*, user */]);
+  }, [query, sortRules, page, cards.size, inputUnique /*, user */]);
 
   return { resultSet, paginationModel };
 };

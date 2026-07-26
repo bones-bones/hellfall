@@ -1,5 +1,5 @@
 import { summaryFunction } from '../types';
-import { InvalidFilter, invalidMaker } from '../utils';
+import { InvalidFilter, invalidMaker } from '../makerLib';
 
 /**
  * Makes an invalid filter

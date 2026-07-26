@@ -21,7 +21,9 @@ import {
   textListIncludesEvery,
   cardIsPermanent,
   cardIsHistoric,
+  pipMap,
 } from '@hellfall/shared/utils';
+import { regexListFilter } from './filterBase';
 
 const stateList = [
   'ruling',
@@ -78,9 +80,9 @@ const stateResolutions: Record<
   nonfoil: (value: HCCard.Any) => value.finish == 'nonfoil',
   commander: canBeACommander,
   phyrexian: (value: HCCard.Any, dropFaces?: boolean) =>
-    getFromFaces(value, 'mana_cost', dropFaces).some(cost => /\{H\//.test(cost)),
+    regexListFilter(getFromFaces(value, 'mana_cost', dropFaces), '=', pipMap.phyrexianSymbolRegex),
   hybrid: (value: HCCard.Any, dropFaces?: boolean) =>
-    getFromFaces(value, 'mana_cost', dropFaces).some(cost => /(?<!\{H)\//.test(cost)),
+    regexListFilter(getFromFaces(value, 'mana_cost', dropFaces), '=', pipMap.hybridSymbolRegex),
   spell: (value: HCCard.Any, dropFaces?: boolean) =>
     value.tags?.includes('spell-land') ||
     toFaces(value, dropFaces).some(

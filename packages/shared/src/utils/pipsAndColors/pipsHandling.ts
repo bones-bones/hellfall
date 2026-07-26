@@ -3,11 +3,7 @@ import { listContainsList, listsAreLooselyEqual } from '../listHandling';
 import { pipsData } from '@hellfall/shared/data';
 import { PipMap, pipsAreEqual } from './pipMap';
 import { isInteger, isNumber } from '../numHandling';
-
-/**
- * A union of the types that can be the value for a pip filter
- */
-export type pipSearch = string | number | HCCardSymbol[];
+import { matchCount } from '../textHandling';
 
 const transformPipsData = (data: any[]): HCCardSymbol[] => {
   return data.map(item => {
@@ -96,20 +92,40 @@ export const pipsContainPipsGeneric = (
   const g2 = extractGenerics(pips2);
   return listContainsList(pips1, pips2, pipsAreEqual) && g1 >= g2;
 };
+// /**
+//  * Checks whether two lists of pips are equal once generic pips are removed
+//  *
+//  * The inputs can either be lists of pips, or can be search strings
+//  * @param value1 first list of pips
+//  * @param value2 second list of pips
+//  */
+// export const pipsEqualPipsNongeneric = (
+//   value1: string | HCCardSymbol[],
+//   value2: string | HCCardSymbol[]
+// ) => {
+//   const pips1 = [...ensurePips(value1)];
+//   const pips2 = [...ensurePips(value2)];
+//   extractGenerics(pips1);
+//   extractGenerics(pips2);
+//   return listsAreLooselyEqual(pips1, pips2, pipsAreEqual);
+// };
+
 /**
- * Checks whether two lists of pips are equal once generic pips are removed
- *
- * The inputs can either be lists of pips, or can be search strings
- * @param value1 first list of pips
- * @param value2 second list of pips
+ * Splits a cost into its pip strings
+ * @param cost cost to split
  */
-export const pipsEqualPipsNongeneric = (
-  value1: string | HCCardSymbol[],
-  value2: string | HCCardSymbol[]
-) => {
-  const pips1 = [...ensurePips(value1)];
-  const pips2 = [...ensurePips(value2)];
-  extractGenerics(pips1);
-  extractGenerics(pips2);
-  return listsAreLooselyEqual(pips1, pips2, pipsAreEqual);
-};
+export const splitCostIntoPips = (cost: string) => cost.split(/{([^}]+)}/g);
+
+/**
+ * Gets the devotion to something from a mana cost
+ * @param cost cost to get the devotion from
+ * @param devRegex the regex for devotion to the pip
+ * @param doubleRegex the regex for double devotion to the pip, if any
+ */
+export const getDevotionFromCost = (cost: string, devRegex: RegExp, doubleRegex?: RegExp): number =>
+  matchCount(cost, devRegex, doubleRegex);
+
+/**
+ * A union of the types that can be the value for a pip filter
+ */
+export type pipSearch = string | number | HCCardSymbol[];

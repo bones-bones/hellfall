@@ -1,5 +1,5 @@
 import { looseOpType } from '../types';
-import { IncludeFilter, includeFilterMaker } from '../utils';
+import { IncludeFilter, includeFilterMaker } from '../makerLib';
 
 /**
  * Makes an {@linkcode IncludeFilter}

@@ -109,7 +109,7 @@ export const searchCardsFromCollection = async (
   );
 
   const passed =
-    autoFilterExtras && !usingClusion && newCardsWithoutExtras.size()
+    autoFilterExtras && !usingClusion && newCardsWithoutExtras.size
       ? newCardsWithoutExtras
       : newCardsWithExtras;
   if (uMode == 'cards') {

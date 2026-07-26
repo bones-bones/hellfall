@@ -218,8 +218,35 @@ export const Syntax = () => {
           When using <code>~</code> on parentheses <code>( )</code>, the search will look for cards
           with related cards that match the entirety of the contents of the parentheses.
         </div>
+        <h2>Regular Expressions</h2>
+        <div>
+          Regex is almost fully implemented. Almost everything from{' '}
+          <Link to={'https://scryfall.com/docs/syntax#regex'}>Regular Expressions</Link> works.
+        </div>
         <br />
-        <div>Regex hasn't been implemented yet.</div>
+        <div>
+          Regex search on Hellfall is heavily based on Scryfall's{' '}
+          <Link to={'https://scryfall.com/docs/regular-expressions'}>version</Link> and has the same
+          features and restrictions, with two key changes: using <code>~</code> as a placeholder for
+          a card referring to itself doesn't work yet, and you can use <code>\smg</code> to match
+          generic mana symbols and <code>\sml</code> to match colorless mana symbols.
+        </div>
+        <br />
+        <div>
+          You can use regex search for a wider variety of keywords than on Scryfall. In addition to
+          all the ones that work on Scryfall, it also works with the{' '}
+          {mapListToCodeAnd([
+            'manatext:',
+            'mt:',
+            'id:',
+            'lore:',
+            'printed:',
+            'ruling:',
+            'tagnote:',
+            'artistnote:',
+          ])}{' '}
+          keywords, as well as the keywords for parts of the type line.
+        </div>
         <h2>Sets and Blocks</h2>
         <div>
           {mapListToCodeAnd(['set:', 'block:', 'group:', 'settype:'])} work. You can also use{' '}

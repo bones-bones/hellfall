@@ -278,9 +278,9 @@ export const formatParens = (text: string) => {
         return parenText;
       } else {
         return parenText
-          .split('\\n')
+          .split('\n')
           .map(line => '*' + line + '*')
-          .join('\\n');
+          .join('\n');
       }
     })
     .join('')
@@ -512,11 +512,10 @@ export const unescapeBase64 = (text: string) =>
   text.replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));
 
 /**
- * Checks if text is a quoted string (i.e. starts and ends with quotation marks)
+ * Checks if text is a quoted string (i.e. starts and ends with quotation marks or slashes)
  * @param text text to check
  */
-export const textIsQuote = (text: string) =>
-  text.length > 1 && text[0] == text.at(-1) && ['"', "'"].includes(text[0]) && text.at(-2) != '\\';
+export const textIsQuote = (text: string) => /^(['"/]).*\1$/.test(text) && text.at(-2) != '\\';
 
 /**
  * Strips quotes from start and end of text if it's a quoted string (i.e. starts and ends with quotation marks)
@@ -524,12 +523,21 @@ export const textIsQuote = (text: string) =>
  */
 export const stripQuotes = (text: string) => (textIsQuote(text) ? text.slice(1, -1) : text);
 
+const regexTest = /^\/.*\/$/;
+/**
+ * Checks whether a string can be used as a regex, regardless of validity
+ * @param text test to check
+ */
+export const isRegexText = (text: string) => regexTest.test(text);
 /**
  * Unescapes and strips text so that it can be used in comparisons
  * @param text text to unescape
  * @param keepDashes whether to keep dashes (for correct handling of text fields)
  */
 export const unescapeText = (text: string, keepDashes?: boolean) => {
+  if (isRegexText(text)) {
+    return text;
+  }
   const strippedText =
     textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
   return strippedText
@@ -563,4 +571,25 @@ export const fixValue = <T>(value: T, option: 'upper' | 'lower' | 'fix' | 'keep'
     return value.map(e => fixValue(e, option)) as T;
   }
   return value;
+};
+
+/**
+ * Gets the number of matches to a regex in text. Can handle undefined regexes and multiples (adds them together)
+ * @param text text to use
+ * @param regex regex to use (make sure to use the global flag)
+ */
+export const matchCount = (text: string, regex: RegExp, ...args: (RegExp | undefined)[]) => {
+  if (!regex.flags.includes('g')) {
+    console.error(`You forgot the global flag on regex ${regex}`);
+  }
+  let total = regex ? text.match(regex)?.length ?? 0 : 0;
+  for (const reg of args) {
+    if (reg) {
+      if (!reg.flags.includes('g')) {
+        console.error(`You forgot the global flag on regex ${reg}`);
+      }
+      total += text.match(reg)?.length ?? 0;
+    }
+  }
+  return total;
 };

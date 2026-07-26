@@ -5,21 +5,37 @@ import { orderColors } from './orderColors';
 
 const fixPip = (text: string) => unescapeText(text, true).replaceAll(' ', '');
 
+const escapeRegex = (text: string) => text.replaceAll(/([./?$-])/g, '\\$1');
 const doubleable = ['W', 'U', 'P', 'B', 'R', 'G'];
-const getDevotionOfPip = (pip: HCCardSymbol, search: HCCardSymbol) => {
-  const splitPip = pip.symbol.split('/');
-  const doubles = splitPip
-    .filter(text => text.length == 2 && text[0] == text[1] && doubleable.includes(text[0]))
-    .map(t => t[0]);
-  const splitSearch = search.symbol.split('/');
-  if (listsShare(doubles, splitSearch)) {
-    return 2;
-  }
-  if (listsShare(splitPip, splitSearch)) {
-    return 1;
-  }
-  return 0;
-};
+
+const hybridBaseRegex =
+  /[WUBRGPC∞?TE]|[WUBRG]{2}|Yellow|Brown|Orange|Pink|Gold|Beige|Grey|Bear|\d+/;
+
+const hybridSymbolRegex = new RegExp(
+  `^(H/)?(${hybridBaseRegex.source})(/(${hybridBaseRegex.source}))+$`
+);
+
+const manaBaseRegex = /(H\/)?([WUBRGPCS∞?]|Yellow|Brown|Orange|Pink|\d+|Rad\/[WUBRGPC])/;
+
+const manaSymbolRegex = new RegExp(`^${manaBaseRegex.source}(/(${hybridBaseRegex.source}))*$`);
+
+const coloredBaseRegex =
+  /[WUBRGP]|[WUBRG]{2}|Yellow|Brown|Orange|Pink|Gold|Beige|Grey|Rad\/[WUBRGP]/;
+
+const coloredSymbolRegex = new RegExp(
+  `^(${manaBaseRegex.source}/)*(${coloredBaseRegex.source})(/(${hybridBaseRegex.source}))*$`
+);
+
+const colorlessBaseRegex = /(H\/)?([CS∞?]|\d+|Rad\/C)/;
+const colorlessSymbolRegex = new RegExp(
+  `^(${colorlessBaseRegex.source})(/(${colorlessBaseRegex.source}))?$`
+);
+const genericBaseRegex = /(\d+)/;
+const genericSymbolRegex = new RegExp(
+  `^((${manaBaseRegex.source}/)?(${genericBaseRegex.source})(/(${hybridBaseRegex.source}))?)|X|Y|Z|∞|XIV|TREEX|1.99$`
+);
+
+const devotionBaseRegex = /([^}/]+\/)/;
 
 /**
  * Checks if two pip symbols are loosely equal
@@ -77,7 +93,113 @@ const getOtherLooseValues = (symbol: string): string[] => {
 export class PipMap {
   protected symbolMap = new Map<string, HCCardSymbol>();
   protected indicatorMap = new Map<string, HCCardSymbol>();
-
+  private _manaSymbolRegex: RegExp | null = null;
+  /**
+   * A regex that matches a mana symbol
+   */
+  get manaSymbolRegex(): RegExp {
+    if (!this._manaSymbolRegex) {
+      const symbols = this.filter(
+        pip => pip.represents_mana && !manaSymbolRegex.test(pip.symbol)
+      ).mapToArray(pip => escapeRegex(pip.symbol));
+      this._manaSymbolRegex = new RegExp(
+        `{((${manaSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`,
+        'g'
+      );
+    }
+    return this._manaSymbolRegex;
+  }
+  private _coloredSymbolRegex: RegExp | null = null;
+  /**
+   * A regex that matches a colored mana symbol
+   */
+  get coloredSymbolRegex(): RegExp {
+    if (!this._coloredSymbolRegex) {
+      const symbols = this.filter(
+        pip => !coloredSymbolRegex.test(pip.symbol) && pip.colors?.some(c => c != 'C')
+      ).mapToArray(pip => escapeRegex(pip.symbol));
+      this._coloredSymbolRegex = new RegExp(
+        `{((${coloredSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`,
+        'g'
+      );
+    }
+    return this._coloredSymbolRegex;
+  }
+  private _colorlessSymbolRegex: RegExp | null = null;
+  /**
+   * A regex that matches a colorless mana symbol
+   */
+  get colorlessSymbolRegex(): RegExp {
+    if (!this._colorlessSymbolRegex) {
+      const symbols = this.filter(
+        pip => !colorlessSymbolRegex.test(pip.symbol) && pip.colors?.every(c => c == 'C')
+      ).mapToArray(pip => escapeRegex(pip.symbol));
+      this._colorlessSymbolRegex = new RegExp(
+        `{((${colorlessSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`,
+        'g'
+      );
+    }
+    return this._colorlessSymbolRegex;
+  }
+  private _anySymbolRegex: RegExp = /{[^}]+}/g;
+  /**
+   * A regex that matches any symbol
+   */
+  get anySymbolRegex(): RegExp {
+    return this._anySymbolRegex;
+  }
+  private _repeatedSymbolRegex: RegExp | null = null;
+  /**
+   * A regex that matches two of the same mana symbol in a row
+   *
+   * Note: this only matches one symbol. To match two in a row, use backreferences or named groups
+   */
+  get repeatedSymbolRegex(): RegExp {
+    if (!this._repeatedSymbolRegex) {
+      this._repeatedSymbolRegex = new RegExp(`(${this.manaSymbolRegex.source})`, 'g');
+    }
+    return this._repeatedSymbolRegex;
+  }
+  private _hybridSymbolRegex: RegExp | null = null;
+  /**
+   * A regex that matches a hybrid mana symbol
+   */
+  get hybridSymbolRegex(): RegExp {
+    if (!this._hybridSymbolRegex) {
+      const symbols = this.filter(
+        pip => pip.hybrid && !hybridSymbolRegex.test(pip.symbol)
+      ).mapToArray(pip => escapeRegex(pip.symbol));
+      this._hybridSymbolRegex = new RegExp(
+        `{((${hybridSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`,
+        'g'
+      );
+    }
+    return this._hybridSymbolRegex;
+  }
+  private _phyrexianSymbolRegex: RegExp = /{H\/[^}]+}/g;
+  /**
+   * A regex that matches a phyrexian symbol
+   */
+  get phyrexianSymbolRegex(): RegExp {
+    return this._phyrexianSymbolRegex;
+  }
+  private _genericSymbolRegex: RegExp = new RegExp(
+    `{(${genericSymbolRegex.source.slice(1, -1)})}`,
+    'g'
+  );
+  /**
+   * A regex that matches a generic symbol
+   */
+  get genericSymbolRegex(): RegExp {
+    return this._genericSymbolRegex;
+  }
+  clearRegexes(): void {
+    this._manaSymbolRegex = null;
+    this._coloredSymbolRegex = null;
+    this._colorlessSymbolRegex = null;
+    this._repeatedSymbolRegex = null;
+    this._hybridSymbolRegex = null;
+  }
   /**
    * Adds a new pip to the PipMap. If a pip with the same symbol already exists, the pip will be updated.
    * @param pip pip to set
@@ -87,6 +209,7 @@ export class PipMap {
     if (pip.symbol.startsWith('CI-')) {
       this.indicatorMap.set(fixPip(pip.symbol), pip);
     }
+    this.clearRegexes();
   };
 
   /**
@@ -109,6 +232,7 @@ export class PipMap {
     if (this.indicatorMap.has(fixPip(symbol))) {
       this.indicatorMap.delete(fixPip(symbol));
     }
+    this.clearRegexes();
     return true;
   };
 
@@ -288,15 +412,31 @@ export class PipMap {
     this.getPipsFromText(text).flatMap(pip => [pip.colors ?? []]);
 
   /**
-   * Gets the devotion to something from text
-   * @param text text to get the devotion from
-   * @param pip pip to get the devotion to
+   * Gets the regex for devotion to a pip
+   * @param pip pip to get the regex for devotion to
    */
-  getDevotionFromText = (text: string, pip: HCCardSymbol): number =>
-    this.getPipsFromText(text).reduce(
-      (total: number, p: HCCardSymbol) => total + getDevotionOfPip(p, pip),
-      0
+  getDevotionRegex = (pip: HCCardSymbol): RegExp => {
+    const symbol = escapeRegex(
+      pip.hybrid && !pip.phyrexian && pip.symbol.includes('/')
+        ? pip.symbol.replaceAll('/', '|')
+        : pip.symbol
     );
+    return new RegExp(
+      `{${devotionBaseRegex.source}*(${symbol}){1,2}${devotionBaseRegex.source}*}`,
+      'g'
+    );
+  };
+  /**
+   * Gets the regex for double devotion to a pip
+   * @param pip pip to get the regex for double devotion to
+   */
+  getDevotionDoubleRegex = (pip: HCCardSymbol): RegExp | undefined => {
+    const symbols = pip.symbol.split('/').filter(s => doubleable.includes(s));
+    if (!symbols.length) return;
+    return new RegExp(
+      `{${devotionBaseRegex.source}*(${symbols.join('|')}){2}${devotionBaseRegex.source}*}`
+    );
+  };
 
   /**
    * Gets the colors included among the pips in text
@@ -324,12 +464,12 @@ export class PipMap {
   /**
    * Gets a random symbol from this PipMap
    */
-  getRandomSymbol = (): string => this.symbols()[Math.floor(Math.random() * this.size())];
+  getRandomSymbol = (): string => this.symbols()[Math.floor(Math.random() * this.size)];
 
   /**
    * Gets a random pip from this PipMap
    */
-  getRandomPip = (): HCCardSymbol => this.pips()[Math.floor(Math.random() * this.size())];
+  getRandomPip = (): HCCardSymbol => this.pips()[Math.floor(Math.random() * this.size)];
 
   /**
    * Determines whether all the pips in a PipMap satisfy the specified test.
@@ -581,6 +721,7 @@ export class PipMap {
   clear = () => {
     this.symbolMap.clear();
     this.indicatorMap.clear();
+    this.clearRegexes();
   };
   /**
    * Checks if this PipMap is empty
@@ -622,5 +763,7 @@ export class PipMap {
   /**
    * @returns the number of pips in the PipMap.
    */
-  size = () => this.symbolMap.size;
+  get size(): number {
+    return this.symbolMap.size;
+  }
 }

@@ -7,7 +7,7 @@ import {
   opType,
   summaryFunction,
 } from '../types';
-import { createCorrectedSummary } from './filterUtils';
+import { createCorrectedSummary } from '../utils';
 
 const inclusionNicknames: Record<string, inclusionType> = {
   a: 'all',

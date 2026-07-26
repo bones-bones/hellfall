@@ -40,6 +40,8 @@ export enum HCFrameEffect {
   Miracle = 'miracle',
   /** The draft-matters frame effect */
   Draft = 'draft',
+  /** The sandy frame effect */
+  Sand = 'sand',
   /** The Devoid frame effect */
   Devoid = 'devoid',
   /** The cards have Spree asterisks */

@@ -309,7 +309,7 @@ const faceToPlainText = (face: faceType): string => {
     text += `\n${face.type_line}`;
   }
   if (face.oracle_text) {
-    text += `\n${face.oracle_text.replaceAll('\\n', '\n')}`;
+    text += `\n${face.oracle_text}`;
   }
   if (face.power || face.toughness) {
     text += `\n${face.power}/${face.toughness}`;

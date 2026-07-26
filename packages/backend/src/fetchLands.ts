@@ -68,93 +68,95 @@ export const fetchLands = async () => {
 
   type keyType = (typeof keys)[number];
 
-  const allLands = rest.map(entry => {
-    const entryAt = (key: keyType) => entry[keys.indexOf(key)];
-    const land = getDefaultCard(
-      HCKind.Land,
-      false,
-      {
-        object: HCObject.ObjectType.Card,
-        oracle_id:
-          Object.entries(landOracleIds).find(([name, id]) =>
-            entryAt('name').toLowerCase().startsWith(name)
-          )?.[1] ?? '',
-        hcid: entryAt('hcid'),
-        name: entryAt('name'),
-        set: (convertSet[entryAt('set')] ?? (entryAt('set') || 'HBB')) as SetCode,
-        collector_number: entryAt('collector_number'),
-        rarity: entryAt('rarity').toLowerCase().split(' ')[0] as HCRarity,
-        image: entryAt('image'),
-        image_status: HCImageStatus.HighRes,
-        legalities: {
-          standard: HCLegality.Legal,
-          '4cb': HCLegality.Legal,
-          commander: HCLegality.Legal,
+  const allLands = rest
+    .map(entry => entry.map(t => t.replaceAll('\\n', '\n')))
+    .map(entry => {
+      const entryAt = (key: keyType) => entry[keys.indexOf(key)];
+      const land = getDefaultCard(
+        HCKind.Land,
+        false,
+        {
+          object: HCObject.ObjectType.Card,
+          oracle_id:
+            Object.entries(landOracleIds).find(([name, id]) =>
+              entryAt('name').toLowerCase().startsWith(name)
+            )?.[1] ?? '',
+          hcid: entryAt('hcid'),
+          name: entryAt('name'),
+          set: (convertSet[entryAt('set')] ?? (entryAt('set') || 'HBB')) as SetCode,
+          collector_number: entryAt('collector_number'),
+          rarity: entryAt('rarity').toLowerCase().split(' ')[0] as HCRarity,
+          image: entryAt('image'),
+          image_status: HCImageStatus.HighRes,
+          legalities: {
+            standard: HCLegality.Legal,
+            '4cb': HCLegality.Legal,
+            commander: HCLegality.Legal,
+          },
+          creators: entryAt('creators').split(';'),
         },
-        creators: entryAt('creators').split(';'),
-      },
-      {
-        supertypes: ['Basic'],
-        types: ['Land'],
-        flavor_text: entryAt('flavor_text'),
+        {
+          supertypes: ['Basic'],
+          types: ['Land'],
+          flavor_text: entryAt('flavor_text'),
+        }
+      ) as HCCard.AnySingleFaced;
+
+      const splitName = land.name.split(' ');
+      if (splitName[0] == 'Snow-Covered') {
+        land.supertypes?.push('Snow');
+        splitName.shift();
+        land.legalities.standard = HCLegality.NotLegal;
+        land.legalities.commander = HCLegality.NotLegal;
       }
-    ) as HCCard.AnySingleFaced;
+      if (splitName[0] == 'Nebula') {
+        land.legalities.standard = HCLegality.NotLegal;
+      }
+      if (splitName[0] in landToColorMapping) {
+        land.subtypes = [splitName[0]];
+        land.oracle_text = `({T}: Add {${landToColorMapping[splitName[0]]}}.)`;
+      } else {
+        land.oracle_text = '{T}: Add {C}.';
+      }
+      if (entryAt('token_maker')) {
+        entryAt('token_maker')
+          .split(';')
+          .forEach(oldName => {
+            const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
+            const maker: HCRelatedCard = {
+              object: HCObject.ObjectType.RelatedCard,
+              id: '',
+              hcid: shouldUseBase ? name : '',
+              name: shouldUseBase ? base : name,
+              set: '' as SetCode,
+              image: '',
+              type_line: '',
+              component: 'token_maker',
+            };
+            if (count) {
+              maker.count = count.slice(1);
+            }
+            pushPropToRoot(land, 'all_parts', maker);
+          });
+      }
 
-    const splitName = land.name.split(' ');
-    if (splitName[0] == 'Snow-Covered') {
-      land.supertypes?.push('Snow');
-      splitName.shift();
-      land.legalities.standard = HCLegality.NotLegal;
-      land.legalities.commander = HCLegality.NotLegal;
-    }
-    if (splitName[0] == 'Nebula') {
-      land.legalities.standard = HCLegality.NotLegal;
-    }
-    if (splitName[0] in landToColorMapping) {
-      land.subtypes = [splitName[0]];
-      land.oracle_text = `({T}: Add {${landToColorMapping[splitName[0]]}}.)`;
-    } else {
-      land.oracle_text = '{T}: Add {C}.';
-    }
-    if (entryAt('token_maker')) {
-      entryAt('token_maker')
-        .split(';')
-        .forEach(oldName => {
-          const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
-          const maker: HCRelatedCard = {
-            object: HCObject.ObjectType.RelatedCard,
-            id: '',
-            hcid: shouldUseBase ? name : '',
-            name: shouldUseBase ? base : name,
-            set: '' as SetCode,
-            image: '',
-            type_line: '',
-            component: 'token_maker',
-          };
-          if (count) {
-            maker.count = count.slice(1);
-          }
-          pushPropToRoot(land, 'all_parts', maker);
+      const artistIndex = keys.indexOf('artists');
+      if (entry[artistIndex]) {
+        const artists = entry[artistIndex].split(';');
+
+        land.artists = artists.map(fullArtist => {
+          const hasNote = fullArtist.includes('<') && fullArtist.endsWith('>');
+          const [artist, note] = [
+            hasNote ? fullArtist.split('<')[0] : fullArtist,
+            hasNote ? fullArtist.split('<')[1].slice(0, -1) : undefined,
+          ];
+          addArtist(land, artist, note);
+          return artist;
         });
-    }
-
-    const artistIndex = keys.indexOf('artists');
-    if (entry[artistIndex]) {
-      const artists = entry[artistIndex].split(';');
-
-      land.artists = artists.map(fullArtist => {
-        const hasNote = fullArtist.includes('<') && fullArtist.endsWith('>');
-        const [artist, note] = [
-          hasNote ? fullArtist.split('<')[0] : fullArtist,
-          hasNote ? fullArtist.split('<')[1].slice(0, -1) : undefined,
-        ];
-        addArtist(land, artist, note);
-        return artist;
-      });
-      land.artists = Array.from(new Set(land.artists));
-    }
-    setDerivedProps(land, entryAt('tags').split(';'));
-    return land;
-  });
+        land.artists = Array.from(new Set(land.artists));
+      }
+      setDerivedProps(land, entryAt('tags').split(';'));
+      return land;
+    });
   return new HCIDMap(allLands);
 };

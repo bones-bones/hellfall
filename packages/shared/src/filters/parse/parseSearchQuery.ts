@@ -3,7 +3,7 @@ import { FilterNode, allPrintsGetterType, displayType, uniqueType } from '../typ
 import { parseFilter } from './parseFilter';
 import { CardMap, preferType, unescapeText } from '@hellfall/shared/utils';
 import { isSortFilter, parseSorts, sortIsValid, winnowSortObjects } from './parseSorts';
-import { splitOnFirstOp, IncludeFilter, SortObject } from '../utils';
+import { splitOnFirstOp } from '../utils';
 import { makeIncludeFilter } from '../makers';
 import {
   isDisplayMode,
@@ -13,6 +13,7 @@ import {
   toPrefer,
   toUnique,
 } from './parseModes';
+import { IncludeFilter, SortObject } from '../makerLib';
 
 const tokenList = ['(', ')', 'or', '-', '~'];
 const charBreakList = ['(', ' '];
