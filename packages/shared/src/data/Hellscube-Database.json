@@ -26581,7 +26581,7 @@
 			"artists": [
 				"Craig J Spearing",
 				"Franz Vohwinkel",
-				"Trever Hairsine"
+				"Trevor Hairsine"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -284012,6 +284012,14 @@
 			"creators": [
 				"jhambitheveryfestiveskeg"
 			],
+			"artists": [
+				"Mark Tedin",
+				"John Thacker"
+			],
+			"artist_notes": {
+				"Mark Tedin": "Not on card",
+				"John Thacker": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -284019,12 +284027,14 @@
 			"tags": [
 				"sideways",
 				"split",
-				"rotated-image"
+				"rotated-image",
+				"mse"
 			],
 			"base_tags": [
 				"sideways",
 				"split",
-				"rotated-image<1237ejPcDVlcu1eA78V8LS-JE7jaO-3mo>"
+				"rotated-image<1237ejPcDVlcu1eA78V8LS-JE7jaO-3mo>",
+				"mse"
 			],
 			"card_faces": [
 				{
@@ -284132,15 +284142,20 @@
 			"creators": [
 				"managarmr_"
 			],
+			"artists": [
+				"Jim Nelson"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"gx-ability"
+				"gx-ability",
+				"keyword"
 			],
 			"base_tags": [
-				"gx-ability"
+				"gx-ability",
+				"keyword<morph>"
 			],
 			"all_parts": [
 				{
@@ -284207,17 +284222,24 @@
 			"border_color": "gold",
 			"frame": "2015",
 			"frame_effects": [
-				"fullart"
+				"fullart",
+				"inverted"
 			],
 			"tags": [
 				"masterpiece",
 				"full-art",
-				"gold-border"
+				"gold-border",
+				"inverted-text",
+				"centered-text",
+				"keyword"
 			],
 			"base_tags": [
 				"masterpiece",
 				"full-art",
-				"gold-border"
+				"gold-border",
+				"inverted-text",
+				"centered-text",
+				"keyword<stevenlink>"
 			],
 			"all_parts": [
 				{
@@ -284284,6 +284306,13 @@
 			"creators": [
 				"insertnamehere23"
 			],
+			"artists": [
+				"Florey",
+				"Jesper Ejsing"
+			],
+			"artist_notes": {
+				"Jesper Ejsing": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -284294,7 +284323,8 @@
 			"tags": [
 				"ransomnote",
 				"ransom-over-real-card",
-				"showcase-frame"
+				"showcase-frame",
+				"keyword"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Skewer the Critics",
@@ -284303,7 +284333,8 @@
 			"base_tags": [
 				"ransomnote",
 				"ransom-over-real-card<Skewer the Critics>",
-				"showcase-frame<Newspaper>"
+				"showcase-frame<Newspaper>",
+				"keyword<spectacle>"
 			]
 		},
 		{
@@ -284354,15 +284385,20 @@
 			"creators": [
 				"managarmr_"
 			],
+			"artists": [
+				"Joel Thomas"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"3dreadmaw"
+				"3dreadmaw",
+				"keyword"
 			],
 			"base_tags": [
-				"3dreadmaw"
+				"3dreadmaw",
+				"keyword<last strike|trample>"
 			]
 		},
 		{
@@ -284419,7 +284455,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"keyword",
+				"low-quality"
+			],
+			"base_tags": [
+				"keyword<lifelink>",
+				"low-quality"
+			]
 		},
 		{
 			"object": "card",
@@ -284443,6 +284487,7 @@
 			],
 			"type_line": "Artifact — Vehicle",
 			"oracle_text": "Flying, blimprovise\nWard—Blimp's controller creates four Treasures.\nWhen Bigass Blimp enters, create a Pilot token (see insert.)\nWhenever Bigass Blimp attacks, pick a sponsor (choose a creature card in your graveyard or reveal one from your hand.) Bigass Blimp gains sponsorlink until end of turn.\nCrew 2",
+			"flavor_text": "it's almost as big as your m",
 			"power": "3",
 			"toughness": "7",
 			"colors": [],
@@ -284452,7 +284497,8 @@
 				"flying",
 				"blimprovise",
 				"ward",
-				"crew"
+				"crew",
+				"improvise"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -284462,6 +284508,14 @@
 			"creators": [
 				"Leslie"
 			],
+			"artists": [
+				"Sebastian Giacobino",
+				"Mila Pesic"
+			],
+			"artist_notes": {
+				"Sebastian Giacobino": "Not on card",
+				"Mila Pesic": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -284474,13 +284528,15 @@
 				"unusual-proportions",
 				"bits-sticking-out",
 				"hc6.1",
-				"extended-art"
+				"extended-art",
+				"keyword"
 			],
 			"base_tags": [
 				"unusual-proportions",
 				"bits-sticking-out",
 				"hc6.1<318>",
-				"extended-art"
+				"extended-art",
+				"keyword<flying|improvise|ward>"
 			],
 			"all_parts": [
 				{
@@ -284553,6 +284609,10 @@
 			"creators": [
 				"c4sdabomb"
 			],
+			"artists": [
+				"Daniel Ljunggren",
+				"Trevor Claxton"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -284611,7 +284671,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"equip"
+			],
 			"legalities": {
 				"standard": "legal",
 				"4cb": "legal",
@@ -284620,15 +284682,20 @@
 			"creators": [
 				"enchantmen"
 			],
+			"artists": [
+				"Chris Rahn"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"hc6.1"
+				"hc6.1",
+				"keyword"
 			],
 			"base_tags": [
-				"hc6.1<320>"
+				"hc6.1<320>",
+				"keyword<equip>"
 			]
 		},
 		{
@@ -284679,6 +284746,10 @@
 			"creators": [
 				"llllll"
 			],
+			"artists": [
+				"FISHER",
+				"Igor Kieryluk"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "unique",
@@ -284689,12 +284760,14 @@
 			"tags": [
 				"hc6.1",
 				"unique-border",
-				"extended-art"
+				"extended-art",
+				"keyword"
 			],
 			"base_tags": [
 				"hc6.1<321>",
 				"unique-border",
-				"extended-art"
+				"extended-art",
+				"keyword<flying|haste>"
 			]
 		},
 		{
@@ -284726,7 +284799,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"conjure"
+			],
 			"legalities": {
 				"standard": "legal",
 				"4cb": "legal",
@@ -284735,6 +284810,12 @@
 			"creators": [
 				"goldcrackle"
 			],
+			"artists": [
+				"Chris Rahn"
+			],
+			"artist_notes": {
+				"Chris Rahn": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -284743,7 +284824,8 @@
 				"persistent-tokens",
 				"ransomnote",
 				"ransom-over-real-card",
-				"hc6.1"
+				"hc6.1",
+				"keyword"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Karn, Living Legacy"
@@ -284752,7 +284834,8 @@
 				"persistent-tokens",
 				"ransomnote",
 				"ransom-over-real-card<Karn, Living Legacy>",
-				"hc6.1<322>"
+				"hc6.1<322>",
+				"keyword<conjure>"
 			],
 			"all_parts": [
 				{
@@ -284841,7 +284924,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"scry"
+			],
 			"legalities": {
 				"standard": "legal",
 				"4cb": "legal",
@@ -284850,6 +284935,10 @@
 			"creators": [
 				"enchantmen"
 			],
+			"artists": [
+				"Ryan Alexander Lee",
+				"James Paick"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -284857,7 +284946,8 @@
 			"tags": [
 				"hc6.1",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"keyword"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Commander's Sphere"
@@ -284865,7 +284955,8 @@
 			"base_tags": [
 				"hc6.1<323>",
 				"ransomnote",
-				"ransom-over-real-card<Commander's Sphere>"
+				"ransom-over-real-card<Commander's Sphere>",
+				"keyword<scry>"
 			]
 		},
 		{
@@ -284916,15 +285007,20 @@
 			"creators": [
 				"oatmeal42"
 			],
+			"artists": [
+				"Mila Pesic"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"hc6.1"
+				"hc6.1",
+				"keyword"
 			],
 			"base_tags": [
-				"hc6.1<324>"
+				"hc6.1<324>",
+				"keyword<flying>"
 			]
 		},
 		{
@@ -284979,17 +285075,23 @@
 			"creators": [
 				"zoomaplex"
 			],
+			"artists": [
+				"Leon Tukker",
+				"klunkerpunker"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
 				"hc6.1",
-				"ransomnote"
+				"ransomnote",
+				"keyword"
 			],
 			"base_tags": [
 				"hc6.1<325>",
-				"ransomnote"
+				"ransomnote",
+				"keyword<menace to society|hyperlink>"
 			],
 			"all_parts": [
 				{
@@ -285043,6 +285145,9 @@
 			},
 			"creators": [
 				"platyposeidon"
+			],
+			"artists": [
+				"Lucas Graciano"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -285099,6 +285204,13 @@
 			"creators": [
 				"insertnamehere23"
 			],
+			"artists": [
+				"Dan Murayama Scott",
+				"Dani Pendergast"
+			],
+			"artist_notes": {
+				"Dani Pendergast": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -285353,6 +285465,12 @@
 			"creators": [
 				"legallyabyssal"
 			],
+			"artists": [
+				"Evyn Fong"
+			],
+			"artist_notes": {
+				"Evyn Fong": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "borderless",
@@ -285441,12 +285559,14 @@
 			"tags": [
 				"unique-pip",
 				"missing-pip",
-				"hc6.1"
+				"hc6.1",
+				"mse"
 			],
 			"base_tags": [
 				"unique-pip",
 				"missing-pip",
-				"hc6.1<330>"
+				"hc6.1<330>",
+				"mse"
 			]
 		},
 		{
@@ -285498,6 +285618,9 @@
 			"creators": [
 				"enchantmen"
 			],
+			"artists": [
+				"Daneen Wilkerson"
+			],
 			"rulings": "Rise up is only from the graveyard to the battlefield",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -285509,7 +285632,8 @@
 				"extended-art",
 				"hc6.1",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"keyword"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "High-Society Hunter"
@@ -285518,7 +285642,8 @@
 				"extended-art",
 				"hc6.1<331>",
 				"ransomnote",
-				"ransom-over-real-card<High-Society Hunter>"
+				"ransom-over-real-card<High-Society Hunter>",
+				"keyword<flying>"
 			]
 		},
 		{
@@ -285618,6 +285743,9 @@
 			"creators": [
 				"Leslie"
 			],
+			"artists": [
+				"Trevor Hairsine"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -285662,7 +285790,9 @@
 			],
 			"print_image_status": "highres",
 			"print_image": "https://lh3.googleusercontent.com/d/16mn_8SrpLtXAdiIhdcqr8SNvD9ArC63P",
-			"keywords": [],
+			"keywords": [
+				"venture"
+			],
 			"legalities": {
 				"standard": "legal",
 				"4cb": "legal",
@@ -285683,14 +285813,16 @@
 				"dungeon-on-back",
 				"print-image",
 				"nyx-frame",
-				"hc6.1"
+				"hc6.1",
+				"keyword"
 			],
 			"base_tags": [
 				"dungeon",
 				"dungeon-on-back",
 				"print-image<16mn_8SrpLtXAdiIhdcqr8SNvD9ArC63P>",
 				"nyx-frame",
-				"hc6.1<333>"
+				"hc6.1<333>",
+				"keyword<venture>"
 			],
 			"card_faces": [
 				{
@@ -285836,7 +285968,8 @@
 			"color_identity": [],
 			"color_identity_hybrid": [],
 			"keywords": [
-				"horsemanship"
+				"horsemanship",
+				"scry"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -285846,6 +285979,12 @@
 			"creators": [
 				"llllll"
 			],
+			"artists": [
+				"Arnold Friberg"
+			],
+			"artist_notes": {
+				"Arnold Friberg": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "borderless",
@@ -285858,14 +285997,16 @@
 				"full-art",
 				"borderless",
 				"hc6.1",
-				"canada"
+				"canada",
+				"keyword"
 			],
 			"base_tags": [
 				"1997-frame",
 				"full-art",
 				"borderless",
 				"hc6.1<334>",
-				"canada"
+				"canada",
+				"keyword<horsemanship|scry>"
 			]
 		},
 		{
@@ -285964,7 +286105,9 @@
 					"G"
 				]
 			],
-			"keywords": [],
+			"keywords": [
+				"detain"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -285973,10 +286116,21 @@
 			"creators": [
 				"march10"
 			],
+			"artists": [
+				"Izzy",
+				"Zoltan Boros",
+				"Sam Burley"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"keyword"
+			],
+			"base_tags": [
+				"keyword<detain>"
+			]
 		},
 		{
 			"object": "card",
@@ -286027,12 +286181,26 @@
 			"creators": [
 				"jadedtrekkie"
 			],
+			"artists": [
+				"Chris Rahn",
+				"VAM",
+				"Mark Tedin",
+				"David Auden Nash"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"frame_effects": [
 				"vehicle"
+			],
+			"tags": [
+				"mse",
+				"keyword"
+			],
+			"base_tags": [
+				"mse",
+				"keyword<trample>"
 			]
 		},
 		{
@@ -286069,6 +286237,14 @@
 			"creators": [
 				"insertnamehere23"
 			],
+			"artists": [
+				"Howard Lyon",
+				"Matt Cavotta"
+			],
+			"artist_notes": {
+				"Howard Lyon": "Not on card",
+				"Matt Cavotta": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -286122,6 +286298,14 @@
 			"creators": [
 				"arthropod_queen"
 			],
+			"artists": [
+				"Daniel Ljunggren",
+				"Jesper Ejsing"
+			],
+			"artist_notes": {
+				"Daniel Ljunggren": "Not on card",
+				"Jesper Ejsing": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -286131,11 +286315,13 @@
 			],
 			"tags": [
 				"hc6.1",
-				"extended-art"
+				"extended-art",
+				"low-quality"
 			],
 			"base_tags": [
 				"hc6.1<336>",
-				"extended-art"
+				"extended-art",
+				"low-quality"
 			],
 			"all_parts": [
 				{
@@ -286275,7 +286461,9 @@
 					"W"
 				]
 			],
-			"keywords": [],
+			"keywords": [
+				"proliferate"
+			],
 			"legalities": {
 				"standard": "legal",
 				"4cb": "legal",
@@ -286284,6 +286472,18 @@
 			"creators": [
 				"frognarch"
 			],
+			"artists": [
+				"Daniel Gelon",
+				"Edward P. Beard, Jr.",
+				"Trevor Claxton",
+				"Ron Spencer"
+			],
+			"artist_notes": {
+				"Daniel Gelon": "Not on card",
+				"Edward P. Beard, Jr.": "Not on card",
+				"Trevor Claxton": "Not on card",
+				"Ron Spencer": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -286296,13 +286496,15 @@
 				"sideways",
 				"rotated-image",
 				"hc6.1",
-				"extended-art"
+				"extended-art",
+				"keyword"
 			],
 			"base_tags": [
 				"sideways",
 				"rotated-image<1nZc8E_Tg6SE25Dhg6sKP_GaNenpiqb9g>",
 				"hc6.1<338>",
-				"extended-art"
+				"extended-art",
+				"keyword<proliferate>"
 			],
 			"all_parts": [
 				{
@@ -286406,6 +286608,10 @@
 			"creators": [
 				"march10"
 			],
+			"artists": [
+				"Jeff Easley",
+				"Cynthia Sheppard"
+			],
 			"rulings": "\"604.3a A static ability is a characteristic-defining ability if it meets the following criteria: (1) It defines an object's colors, subtypes, power, or toughness... \"This is a land\" sets a type, not a subtype, so it isn't a characteristic defining ability and only applies from the battlefield, not from any other zone.\" - Doomclaw9, 12/13/25\nThis does trigger itself when it enters",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -286475,7 +286681,8 @@
 			],
 			"keywords": [
 				"fight",
-				"ward"
+				"ward",
+				"munch"
 			],
 			"legalities": {
 				"standard": "banned",
@@ -286485,6 +286692,9 @@
 			"creators": [
 				"jibbanerbs"
 			],
+			"artists": [
+				"Matt Dixon"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -286493,10 +286703,14 @@
 				"legendary"
 			],
 			"tags": [
-				"hcc"
+				"hcc",
+				"mse",
+				"keyword"
 			],
 			"base_tags": [
-				"hcc<78>"
+				"hcc<78>",
+				"mse",
+				"keyword<munch|fight|ward>"
 			]
 		},
 		{
@@ -286538,7 +286752,10 @@
 					"B"
 				]
 			],
-			"keywords": [],
+			"keywords": [
+				"lifelink",
+				"flying"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -286547,15 +286764,22 @@
 			"creators": [
 				"Victor"
 			],
+			"artists": [
+				"Igor Kieryluk"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"Victor"
+				"Victor",
+				"keyword",
+				"mse"
 			],
 			"base_tags": [
-				"Victor"
+				"Victor",
+				"keyword<flying|lifelink>",
+				"mse"
 			]
 		},
 		{
@@ -286608,15 +286832,21 @@
 			"creators": [
 				"Red"
 			],
+			"artists": [
+				"Babs Webb",
+				"Mikio Masuda"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"hc6.1"
+				"hc6.1",
+				"keyword"
 			],
 			"base_tags": [
-				"hc6.1<340>"
+				"hc6.1<340>",
+				"keyword<impending>"
 			]
 		},
 		{
@@ -286659,7 +286889,8 @@
 				]
 			],
 			"keywords": [
-				"partner"
+				"partner",
+				"discover"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -286669,6 +286900,12 @@
 			"creators": [
 				"localrodent"
 			],
+			"artists": [
+				"Viko Menezes"
+			],
+			"artist_notes": {
+				"Viko Menezes": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -286676,7 +286913,8 @@
 			"tags": [
 				"unprinted-partner",
 				"hc6.1",
-				"missing-legend-frame"
+				"missing-legend-frame",
+				"keyword"
 			],
 			"tag_notes": {
 				"unprinted-partner": "if she's mono-G"
@@ -286684,7 +286922,8 @@
 			"base_tags": [
 				"unprinted-partner<if she's mono-G>",
 				"hc6.1<341>",
-				"missing-legend-frame"
+				"missing-legend-frame",
+				"keyword<discover>"
 			]
 		},
 		{
@@ -286717,7 +286956,8 @@
 			"print_image": "https://lh3.googleusercontent.com/d/1Kf7dhAE5ermQJ_cjmyUlBPha-DVWI6an",
 			"keywords": [
 				"treasuretouch",
-				"touch"
+				"touch",
+				"venture"
 			],
 			"legalities": {
 				"standard": "legal",
@@ -286726,6 +286966,9 @@
 			},
 			"creators": [
 				"enchantmen"
+			],
+			"artists": [
+				"Filip Burburan"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -286737,7 +286980,8 @@
 				"print-image",
 				"hc6.1",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"keyword"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Deathmist Raptor"
@@ -286748,7 +286992,8 @@
 				"print-image<1Kf7dhAE5ermQJ_cjmyUlBPha-DVWI6an>",
 				"hc6.1<342>",
 				"ransomnote",
-				"ransom-over-real-card<Deathmist Raptor>"
+				"ransom-over-real-card<Deathmist Raptor>",
+				"keyword<treasuretouch|venture>"
 			],
 			"card_faces": [
 				{
@@ -286902,6 +287147,9 @@
 			"creators": [
 				"flamingseahorse"
 			],
+			"artists": [
+				"Mark Poole"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -286958,11 +287206,13 @@
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<1PfA3GuCdlemqKxfe_Q9lFgIcGQqnNlVi>",
-				"hcp<3>"
+				"hcp<3>",
+				"mse"
 			]
 		},
 		{
@@ -287214,7 +287464,8 @@
 			"color_identity": [],
 			"color_identity_hybrid": [],
 			"keywords": [
-				"transform"
+				"transform",
+				"clash"
 			],
 			"legalities": {
 				"standard": "not_legal",
@@ -287236,14 +287487,18 @@
 				"transform",
 				"rotated-image",
 				"hcp",
-				"sun-moon-transform"
+				"sun-moon-transform",
+				"keyword",
+				"mse"
 			],
 			"base_tags": [
 				"transform",
 				"rotated-image<0|1F5BWZ_k1Vc5VirUvy5n0VyInEkikrKi6>",
 				"rotated-image<1|1mRdMLVl4fx67MkBkMt2-uroAGyjIYGFK>",
 				"hcp<9>",
-				"sun-moon-transform"
+				"sun-moon-transform",
+				"keyword<clash>",
+				"mse"
 			],
 			"card_faces": [
 				{
@@ -287330,6 +287585,20 @@
 			"creators": [
 				"nobroam"
 			],
+			"artists": [
+				"Olivier Bernard",
+				"John Avon",
+				"Pete Venters",
+				"Ron Walotsky",
+				"Wayne Reynolds"
+			],
+			"artist_notes": {
+				"Olivier Bernard": "Not on card",
+				"John Avon": "Not on card",
+				"Pete Venters": "Not on card",
+				"Ron Walotsky": "Not on card",
+				"Wayne Reynolds": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -287389,6 +287658,9 @@
 			},
 			"creators": [
 				"radarvillage"
+			],
+			"artists": [
+				"Laurel D. Austin"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -287478,11 +287750,13 @@
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<14MCjizrN-aHAm76YxueBfYMXfwlh_BEZ>",
-				"hcp<13>"
+				"hcp<13>",
+				"mse"
 			],
 			"all_parts": [
 				{
@@ -287532,6 +287806,12 @@
 			"creators": [
 				"llllll"
 			],
+			"artists": [
+				"Daarken"
+			],
+			"artist_notes": {
+				"Daarken": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -287590,7 +287870,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"manifest dread"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -287599,17 +287881,22 @@
 			"creators": [
 				"goldcrackle"
 			],
+			"artists": [
+				"Anna Christenson"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"keyword"
 			],
 			"base_tags": [
 				"rotated-image<18GSzEKlNlkN091gbZGgmuglE45SFvq77>",
-				"hcp<16>"
+				"hcp<16>",
+				"keyword<manifest dread>"
 			],
 			"all_parts": [
 				{
@@ -287799,11 +288086,13 @@
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<13Q3VBAHmDGbLhXMkMIxKd_M2qH3AriHC>",
-				"hcp<19>"
+				"hcp<19>",
+				"mse"
 			],
 			"all_parts": [
 				{
@@ -287859,11 +288148,13 @@
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<12NcK6KTFAVagMI_HEVOf1vfmdn8J7lOJ>",
-				"hcp<21>"
+				"hcp<21>",
+				"mse"
 			]
 		},
 		{
@@ -287900,17 +288191,23 @@
 			"creators": [
 				"logan5123"
 			],
+			"artists": [
+				"Zoltan Boros",
+				"Gabor Szikszai"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<1gasiQU8mJ8zbT9d87pNGhE6Yg-9qmta->",
-				"hcp<22>"
+				"hcp<22>",
+				"mse"
 			]
 		},
 		{
@@ -287946,17 +288243,22 @@
 			"creators": [
 				"Aquonn"
 			],
+			"artists": [
+				"Svetlin Velinov"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<1YVA77WrAlv9y_dZJiV6QeLLq5m193QvD>",
-				"hcp<23>"
+				"hcp<23>",
+				"mse"
 			]
 		},
 		{
@@ -288000,11 +288302,13 @@
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<1M8LdsQtnj4A-gAXh3V_t0Q3s-TJYVozz>",
-				"hcp<25>"
+				"hcp<25>",
+				"mse"
 			],
 			"all_parts": [
 				{
@@ -288150,7 +288454,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"fight"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -288166,12 +288472,16 @@
 			"tags": [
 				"rotated-image",
 				"hcp",
-				"uses-scryfall-token"
+				"uses-scryfall-token",
+				"low-quality",
+				"keyword"
 			],
 			"base_tags": [
 				"rotated-image<1OGuneC9nsOA5xYU2b1VhT508Ce5TcZ8e>",
 				"hcp<30>",
-				"uses-scryfall-token"
+				"uses-scryfall-token",
+				"low-quality",
+				"keyword<fight>"
 			],
 			"all_parts": [
 				{
@@ -288220,6 +288530,9 @@
 			},
 			"creators": [
 				"MunkeGutz"
+			],
+			"artists": [
+				"Andrew Hussie"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -288279,13 +288592,15 @@
 				"rotated-image",
 				"hcp",
 				"deep-fried",
-				"ransomnote"
+				"ransomnote",
+				"intentional-low-quality"
 			],
 			"base_tags": [
 				"rotated-image<1U8Dk-AubYCSsdGTF2qd-tUIBVl9lbcaP>",
 				"hcp<32>",
 				"deep-fried",
-				"ransomnote"
+				"ransomnote",
+				"intentional-low-quality"
 			]
 		},
 		{
@@ -288314,7 +288629,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"venture"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -288333,12 +288650,14 @@
 			"tags": [
 				"dungeon",
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"keyword"
 			],
 			"base_tags": [
 				"dungeon",
 				"rotated-image<1pOzbB7KPvFQid4IcW6OsJIkyhw9L7CSn>",
-				"hcp<33>"
+				"hcp<33>",
+				"keyword<venture>"
 			]
 		},
 		{
@@ -288422,8 +288741,18 @@
 				"doomclaw9"
 			],
 			"artists": [
-				"Dan Murayama Scott"
+				"Dan Murayama Scott",
+				"Lorenzo Lanfranconi",
+				"Piotr Dura",
+				"Alexander Forssberg",
+				"Vincent Proce"
 			],
+			"artist_notes": {
+				"Lorenzo Lanfranconi": "Not on card",
+				"Piotr Dura": "Not on card",
+				"Alexander Forssberg": "Not on card",
+				"Vincent Proce": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -288561,7 +288890,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"conjure"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -288570,15 +288901,23 @@
 			"creators": [
 				"Insane Bad Idea Person"
 			],
+			"artists": [
+				"Grzegorz Rutkowski"
+			],
+			"artist_notes": {
+				"Grzegorz Rutkowski": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"rotated-image"
+				"rotated-image",
+				"keyword"
 			],
 			"base_tags": [
-				"rotated-image<1aWaXigcXSGZOO_w4knSC0CUdh3vSc-a4>"
+				"rotated-image<1aWaXigcXSGZOO_w4knSC0CUdh3vSc-a4>",
+				"keyword<conjure>"
 			]
 		},
 		{
@@ -288652,7 +288991,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"conjure"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -288661,6 +289002,12 @@
 			"creators": [
 				"_irregularjoe_"
 			],
+			"artists": [
+				"Raymond Swanland"
+			],
+			"artist_notes": {
+				"Raymond Swanland": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -288669,13 +289016,17 @@
 				"not-advertiser-friendly",
 				"no-control",
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"keyword",
+				"mse"
 			],
 			"base_tags": [
 				"not-advertiser-friendly",
 				"no-control",
 				"rotated-image<1sDj3s8kLv1cqX5i8YBLQy-EnKEzOorbW>",
-				"hcp<11>"
+				"hcp<11>",
+				"keyword<conjure>",
+				"mse"
 			],
 			"all_parts": [
 				{
@@ -288731,11 +289082,13 @@
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<15bEJ0ekdSWICV9j9ijgcaRAYvGi1hHMM>",
-				"hcp<15>"
+				"hcp<15>",
+				"mse"
 			],
 			"all_parts": [
 				{
@@ -288784,6 +289137,9 @@
 			},
 			"creators": [
 				"nobroam"
+			],
+			"artists": [
+				"Salomon Corodi"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -288884,6 +289240,12 @@
 			"creators": [
 				"llllll"
 			],
+			"artists": [
+				"Steve Argyle"
+			],
+			"artist_notes": {
+				"Steve Argyle": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -288934,6 +289296,10 @@
 			},
 			"creators": [
 				"upogsi"
+			],
+			"artists": [
+				"Andrew Mar",
+				"Julian Kok Joon Wen"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -288989,7 +289355,8 @@
 			"tags": [
 				"wrong-token",
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"tag_notes": {
 				"wrong-token": "Needs food token named Soup that costs {1}?"
@@ -288997,7 +289364,8 @@
 			"base_tags": [
 				"wrong-token<Needs food token named Soup that costs {1}?>",
 				"rotated-image<1aXhTPQHsHZbYjSWJBbHZVl-k7DmIyl_t>",
-				"hcp<35>"
+				"hcp<35>",
+				"mse"
 			],
 			"all_parts": [
 				{
@@ -289069,11 +289437,13 @@
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"low-quality"
 			],
 			"base_tags": [
 				"rotated-image<17Fc6SyN5kFavi4imjQk3inKXecNXq9Te>",
-				"hcp<36>"
+				"hcp<36>",
+				"low-quality"
 			]
 		},
 		{
@@ -289103,7 +289473,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"cascade"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -289112,17 +289484,28 @@
 			"creators": [
 				"logan5123"
 			],
+			"artists": [
+				"Aleksi Briclot",
+				"Stock-Image"
+			],
+			"artist_notes": {
+				"Stock-Image": "pngtree"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse",
+				"keyword"
 			],
 			"base_tags": [
 				"rotated-image<1RXpdzlm9iajMUo9zcoaRdHIWGjXrVSNs>",
-				"hcp<37>"
+				"hcp<37>",
+				"mse",
+				"keyword<cascade>"
 			]
 		},
 		{
@@ -289162,6 +289545,10 @@
 			"creators": [
 				"Aquonn"
 			],
+			"artists": [
+				"Peter Paul Rubens",
+				"Jan Brueghel"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -289169,12 +289556,14 @@
 			"tags": [
 				"print-image",
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"print-image<1Ex6fFp9uCN-W-R7k1YZODGlEGaLJapAl>",
 				"rotated-image<1tL4dErBDWvBg6OnLdzmpAaY8Po86g3JS>",
-				"hcp<38>"
+				"hcp<38>",
+				"mse"
 			],
 			"all_parts": [
 				{
@@ -289244,6 +289633,9 @@
 			"creators": [
 				"logan5123"
 			],
+			"artists": [
+				"Ravenna Tran"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -289252,13 +289644,15 @@
 				"upside-down",
 				"rotated-image",
 				"hcp",
-				"uses-scryfall-token"
+				"uses-scryfall-token",
+				"mse"
 			],
 			"base_tags": [
 				"upside-down",
 				"rotated-image<1reittWxO1alFdisQAuu6WAR7Sw0l4BlW>",
 				"hcp<39>",
-				"uses-scryfall-token"
+				"uses-scryfall-token",
+				"mse"
 			],
 			"all_parts": [
 				{
@@ -289489,11 +289883,13 @@
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<1YlftfV8bdMpp5Mp0H2fa-Es2A8T1_0Yk>",
-				"hcp<43>"
+				"hcp<43>",
+				"mse"
 			],
 			"all_parts": [
 				{
@@ -289553,6 +289949,15 @@
 			"creators": [
 				"pieceofplastic"
 			],
+			"artists": [
+				"Svetlin Velinov",
+				"Anthony Palumbo",
+				"Jonas De Ro"
+			],
+			"artist_notes": {
+				"Anthony Palumbo": "Not on card",
+				"Jonas De Ro": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -289620,6 +290025,12 @@
 			"creators": [
 				"goldcrackle"
 			],
+			"artists": [
+				"Chase Stone"
+			],
+			"artist_notes": {
+				"Chase Stone": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -289668,6 +290079,12 @@
 			"creators": [
 				"localrodent"
 			],
+			"artists": [
+				"Steve Prescott"
+			],
+			"artist_notes": {
+				"Steve Prescott": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -289730,17 +290147,25 @@
 			"creators": [
 				"doomclaw9"
 			],
+			"artists": [
+				"Yeong-Hao Han"
+			],
+			"artist_notes": {
+				"Yeong-Hao Han": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"keyword"
 			],
 			"base_tags": [
 				"rotated-image<1TRiTGGQHZanG_VtHYYZIMfR4qw77VeJH>",
-				"hcp<46>"
+				"hcp<46>",
+				"keyword<discover>"
 			]
 		},
 		{
@@ -289769,7 +290194,9 @@
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
-			"keywords": [],
+			"keywords": [
+				"fight"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -289778,17 +290205,35 @@
 			"creators": [
 				"jadedtrekkie"
 			],
+			"artists": [
+				"Unsourceable",
+				"Justin Sweet",
+				"Trevor Claxton",
+				"Kari Christensen",
+				"Carl Critchlow",
+				"Jarreau Wimberly"
+			],
+			"artist_notes": {
+				"Unsourceable": "the bottom left",
+				"Justin Sweet": "Not on card",
+				"Trevor Claxton": "Not on card",
+				"Kari Christensen": "Not on card",
+				"Carl Critchlow": "Not on card",
+				"Jarreau Wimberly": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"keyword"
 			],
 			"base_tags": [
 				"rotated-image<1xIGC3J7Vvv8PTjNUfSDzKmUGS1jBCH3h>",
-				"hcp<47>"
+				"hcp<47>",
+				"keyword<fight>"
 			]
 		},
 		{
@@ -289826,17 +290271,22 @@
 			"creators": [
 				"the_yodel"
 			],
+			"artists": [
+				"Noah Bradley"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<1HHPkP9wVW8jcxTBs93lkLFnpdyKsWpMS>",
-				"hcp<48>"
+				"hcp<48>",
+				"mse"
 			]
 		},
 		{
@@ -289919,6 +290369,9 @@
 			"creators": [
 				"doomclaw9"
 			],
+			"artists": [
+				"Piotr Dura"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -289967,6 +290420,12 @@
 			"creators": [
 				"insertnamehere23"
 			],
+			"artists": [
+				"Mark Tedin"
+			],
+			"artist_notes": {
+				"Mark Tedin": "Not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -290084,6 +290543,9 @@
 			"creators": [
 				"doomclaw9"
 			],
+			"artists": [
+				"Chris Rahn"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -290123,6 +290585,10 @@
 			},
 			"creators": [
 				"doomclaw9"
+			],
+			"artists": [
+				"Ryan Pancoast",
+				"Mark Poole"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -290173,17 +290639,22 @@
 			"creators": [
 				"thepixelferret"
 			],
+			"artists": [
+				"Zoltan Boros"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
 				"rotated-image",
-				"hcp"
+				"hcp",
+				"mse"
 			],
 			"base_tags": [
 				"rotated-image<1iYXPKaKFb5Gg9RzfnWm1mPPwpS0ZEKaY>",
-				"hcp<51>"
+				"hcp<51>",
+				"mse"
 			]
 		},
 		{
@@ -290220,6 +290691,9 @@
 			},
 			"creators": [
 				"radarvillage"
+			],
+			"artists": [
+				"Jim Nelson"
 			],
 			"rulings": "",
 			"finish": "nonfoil",

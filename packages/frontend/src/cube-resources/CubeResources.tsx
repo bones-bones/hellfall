@@ -226,7 +226,7 @@ export const CubeResources = () => {
                     onClick={() => {
                       const val = HCToTTSDeck(
                         cubeSetup.name,
-                        cardMap.getAllIdsInSet(cubeSetup.id),
+                        cardMap.getAllIdsInSetDirect(cubeSetup.id),
                         cardMap
                       );
                       const url =
