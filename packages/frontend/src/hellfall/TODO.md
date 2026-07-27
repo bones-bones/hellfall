@@ -175,3 +175,5 @@ Write a script to transform the database
 - add artists.json file
 - allow multiple notes on an artist and/or separate out the `Not on card` notes
 - add readmes to the filter folders
+- add flip buttons to card pages for flip/aftermath cards
+- when adding mse as flag tag, make sure it can apply to individual faces

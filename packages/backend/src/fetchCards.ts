@@ -85,6 +85,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '3oracle_text',
     '3flavor_text',
     '3image',
+    'id',
   ] as const;
 
   type keyType = (typeof keys)[number];
@@ -115,6 +116,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '0image',
     'artists',
     'tags',
+    'id'
   ];
 
   const allCards = rest
@@ -126,6 +128,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         HCKind.Card,
         cardIsMulti,
         {
+          id: entryAt('id'),
           hcid: entryAt('hcid'),
           image: entryAt('image'),
           image_status: HCImageStatus.HighRes,

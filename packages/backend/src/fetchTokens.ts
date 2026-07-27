@@ -39,6 +39,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'tags',
     'collector_number',
     'artists',
+    'id',
   ] as const;
 
   type keyType = (typeof keys)[number];
@@ -51,7 +52,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
 
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
   const splitKeys: keyType[] = ['name', 'types', 'power', 'toughness'];
-  const skipKeys: keyType[] = ['image', 'collector_number', 'creators', 'tags', 'artists'];
+  const skipKeys: keyType[] = ['image', 'collector_number', 'creators', 'tags', 'artists', 'id'];
 
   const HCTokens = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
@@ -59,6 +60,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       HCKind.Token,
       splitKeys.some(key => entry[keys.indexOf(key)].includes(' // ')),
       {
+        id: entryAt('id'),
         hcid: entryAt('name'),
         set: 'HCT',
         image: entryAt('image'),
