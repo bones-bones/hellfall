@@ -2,6 +2,24 @@ import { HCCard } from '@hellfall/shared/types';
 import { getCardEntries } from '../cardHandling';
 import { firestoreCard } from './firestoreTypes';
 
+/** Firestore field paths cannot contain empty segments; remap "" map keys. */
+const EMPTY_MAP_KEY = '(none)';
+
+const sanitizeForFirestore = (value: unknown): unknown => {
+  if (Array.isArray(value)) {
+    return value.map(sanitizeForFirestore);
+  }
+  if (value !== null && typeof value === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [key, nested] of Object.entries(value as Record<string, unknown>)) {
+      const safeKey = key === '' ? EMPTY_MAP_KEY : key;
+      out[safeKey] = sanitizeForFirestore(nested);
+    }
+    return out;
+  }
+  return value;
+};
+
 /**
  * Converts an {@linkcode HCCard.Any} to a {@linkcode firestoreCard}
  * by stringifying `color_identity_hybrid` and omitting `toJSON`
@@ -15,7 +33,7 @@ export const cardToFirestore = (card: HCCard.Any): firestoreCard => {
       fire[prop] = JSON.stringify(value);
       return;
     }
-    (fire as any)[prop] = value;
+    (fire as any)[prop] = sanitizeForFirestore(value);
   });
   return fire;
 };

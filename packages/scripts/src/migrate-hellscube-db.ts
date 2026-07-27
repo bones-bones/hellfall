@@ -537,6 +537,7 @@ async function main() {
   docMap.forEach((doc, docId) => {
     const docRef = collection.doc(docId);
     if (existingById.has(docId)) {
+      if (!Object.keys(doc).length) return;
       bulkWriter.update(docRef, doc);
     } else {
       bulkWriter.set(docRef, doc);
