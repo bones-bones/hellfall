@@ -92,9 +92,9 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
     enumValues: Object.values(HCImageStatus),
     explanation: 'Common values will be highres, medres, inset (for adventures), and jank.',
   },
-  { key: 'image', label: 'Image URL', type: 'string' },
-  { key: 'still_image', label: 'Still Image URL', type: 'string' },
-  { key: 'rotated_image', label: 'Rotated Image URL', type: 'string' },
+  { key: 'image', label: 'Image URL', type: 'string', readOnly: true },
+  { key: 'still_image', label: 'Still Image URL', type: 'string', readOnly: true },
+  { key: 'rotated_image', label: 'Rotated Image URL', type: 'string', readOnly: true },
 
   { section: 'Frame' },
 

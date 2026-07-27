@@ -9,7 +9,7 @@ export type TagAuthUser = {
   discord_access_token: string;
 };
 
-/** Verifies session and DATABASE_CONTRIBUTOR role. Returns user or sends error and returns null. */
+/** Verifies session and DATABASE_CONTRIBUTOR or admin role. Returns user or sends error and returns null. */
 export const requireDatabaseRoleAuth = async (
   req: HandlerRequest,
   res: HandlerResponse
@@ -46,8 +46,11 @@ export const requireDatabaseRoleAuth = async (
     return null;
   }
 
-  const candidateRoleId = env.DISCORD_TAG_ROLE_ID ?? roleId;
-  if (!guild.roles.includes(candidateRoleId)) {
+  const contributorRoleId = env.DISCORD_TAG_ROLE_ID ?? roleId;
+  const isContributor = guild.roles.includes(contributorRoleId);
+  const isAdmin =
+    Boolean(env.DISCORD_ADMIN_ROLE_ID) && guild.roles.includes(env.DISCORD_ADMIN_ROLE_ID);
+  if (!isContributor && !isAdmin) {
     res.statusCode = 403;
     res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
     return null;

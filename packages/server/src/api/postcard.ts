@@ -168,19 +168,18 @@ function validatePostcardBody(
   );
 }
 
-async function resolveImageUrl(body: PostcardBody): Promise<string> {
+async function resolveImageUrl(body: PostcardBody, cardId: string): Promise<string> {
   if (typeof body.imageBase64 === 'string' && body.imageBase64.trim()) {
-    const objectName = body.hcid?.trim() || body.name?.trim() || 'image';
+    const name = body.name?.trim() || 'image';
     try {
-      return await uploadImageBase64ToGcs(body.imageBase64, objectName);
+      return await uploadImageBase64ToGcs(body.imageBase64, cardId, name);
     } catch (err) {
       console.error(
         '[postcard] gcs image upload failed',
         {
-          objectName,
+          cardId,
+          name,
           bucket: env.IMAGE_GCS_CARD_IMAGE_BUCKET,
-          name: body.name,
-          hcid: body.hcid,
         },
         err
       );
@@ -200,14 +199,21 @@ async function upsertPostcard(body: PostcardBody) {
 
   const kind: PostcardKind = body.kind === 'token' ? 'token' : 'card';
   const setId = kind === 'token' ? 'HCT' : body.set;
-  const imageUrl = await resolveImageUrl(body);
-  const bodyWithImage = { ...body, image: imageUrl };
   const existing = await lookupDoc(body.hcid?.trim() || undefined, body.name, setId);
-  const stub = buildStubCard({ ...bodyWithImage, kind, set: setId });
 
+  let cardId: string;
+  let previous: firestoreCard | null = null;
   if (existing?.exists) {
-    const previous = existing.data() ?? {};
-    const cardId = resolveCardId(existing.id, previous);
+    previous = existing.data() ?? {};
+    cardId = resolveCardId(existing.id, previous);
+  } else {
+    cardId = newCardId();
+  }
+
+  const imageUrl = await resolveImageUrl(body, cardId);
+  const bodyWithImage = { ...body, image: imageUrl };
+
+  if (existing?.exists && previous) {
     const update: firestoreCard = {
       name: body.name,
       image: imageUrl,
@@ -219,16 +225,18 @@ async function upsertPostcard(body: PostcardBody) {
     if (cardId !== previous.id) update.id = cardId;
     await existing.ref.update(update);
     scheduleCatalogPublish();
-    return { docId: existing.id, cardId, wasCreate: false, previous, imageUrl };
+    return { docId: existing.id, id: cardId, wasCreate: false, previous, imageUrl };
   }
 
+  const stub = buildStubCard({ ...bodyWithImage, kind, set: setId });
+  stub.id = cardId;
   const fireDoc = cardToFirestore(stub);
   if (!fireDoc.id || !isValidV4UUID(String(fireDoc.id))) {
     throw new Error('failed_to_generate_card_id');
   }
   await cardsCol.doc(stub.id).set(fireDoc);
   scheduleCatalogPublish();
-  return { docId: stub.id, cardId: stub.id, wasCreate: true, previous: null, imageUrl };
+  return { docId: stub.id, id: stub.id, wasCreate: true, previous: null, imageUrl };
 }
 
 async function rollbackPostcard(body: RollbackBody) {
@@ -294,7 +302,7 @@ export const postcardHandler = async (
     console.log('[postcard] upsert ok', {
       ...postcardBodyContext(body, action),
       docId: result.docId,
-      cardId: result.cardId,
+      id: result.id,
       wasCreate: result.wasCreate,
       imageUrl: result.imageUrl,
     });

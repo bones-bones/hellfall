@@ -14,6 +14,8 @@ const deleteField = FieldValue.delete();
 export const getUpdateObject = (oldCard: firestoreCard, newCard: firestoreCard): cardUpdate => {
   const update: cardUpdate = {};
   getFireEntries(newCard).forEach(([prop, value]) => {
+    // Firestore field paths cannot be empty strings.
+    if (!prop) return;
     if (!arbAreEqual(value, oldCard[prop])) {
       if (value != undefined) {
         (update as any)[prop] = value;
@@ -22,7 +24,8 @@ export const getUpdateObject = (oldCard: firestoreCard, newCard: firestoreCard):
       }
     }
   });
-  getFireEntries(oldCard).forEach(([prop, value]) => {
+  getFireEntries(oldCard).forEach(([prop]) => {
+    if (!prop) return;
     if (!(prop in newCard)) {
       (update as any)[prop] = deleteField;
     }

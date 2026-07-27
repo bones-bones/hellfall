@@ -41,17 +41,19 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
   { key: 'layout', label: 'Layout', type: 'enum', enumValues: Object.values(HCLayout) },
   { key: 'mana_value', label: 'Mana Value', type: 'number' },
   { key: 'colors', label: 'Colors', type: 'semicolon-list' },
-  { key: 'image', label: 'Image URL', type: 'string' },
+  { key: 'image', label: 'Image URL', type: 'string', readOnly: true },
   {
     key: 'still_image',
     label: 'Still Image URL',
     type: 'string',
+    readOnly: true,
     explanation: 'Use this for animated cards.',
   },
   {
     key: 'rotated_image',
     label: 'Rotated Image URL',
     type: 'string',
+    readOnly: true,
     explanation: 'Use this for rotating cards into a draftable position (aka split cards).',
   },
   {
@@ -60,9 +62,9 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
     type: 'enum',
     enumValues: Object.values(HCImageStatus),
   },
-  { key: 'print_image', label: 'Print Image URL', type: 'string' },
-  { key: 'still_print_image', label: 'Still Print Image URL', type: 'string' },
-  { key: 'rotated_print_image', label: 'Rotated Print Image URL', type: 'string' },
+  { key: 'print_image', label: 'Print Image URL', type: 'string', readOnly: true },
+  { key: 'still_print_image', label: 'Still Print Image URL', type: 'string', readOnly: true },
+  { key: 'rotated_print_image', label: 'Rotated Print Image URL', type: 'string', readOnly: true },
   {
     key: 'print_image_status',
     label: 'Print Image Status',

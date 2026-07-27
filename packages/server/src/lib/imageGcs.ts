@@ -45,12 +45,20 @@ function parseImageBase64(imageBase64: string): ParsedImage {
   return { buffer, contentType: 'image/png', extension: '.png' };
 }
 
-function slugObjectName(name: string): string {
+function slugCardName(name: string): string {
   const base = name.trim() || 'image';
   return base
     .replace(/\//g, '|')
-    .replace(/[^\w\-.]+/g, '_')
+    .replace(/[^\w\-. ]+/g, '_')
+    .replace(/ +/g, ' ')
     .slice(0, 180);
+}
+
+/** Build `{id} - {card name}` without slugging or truncating the id. */
+function cardImageObjectKey(cardId: string, cardName: string, extension: string): string {
+  const id = cardId.trim();
+  if (!id) throw new Error('missing_card_id');
+  return `${id} - ${slugCardName(cardName)}${extension}`;
 }
 
 export function publicGcsUrl(bucketName: string, objectKey: string): string {
@@ -114,11 +122,12 @@ export async function replaceImageBase64AtGcsUrl(
 /** Upload base64 image bytes to GCS and return a public HTTPS URL. */
 export async function uploadImageBase64ToGcs(
   imageBase64: string,
-  objectName: string
+  cardId: string,
+  cardName: string
 ): Promise<string> {
   const bucketName = env.IMAGE_GCS_CARD_IMAGE_BUCKET;
   const { buffer, contentType, extension } = parseImageBase64(imageBase64);
-  const objectKey = `${slugObjectName(objectName)}${extension}`;
+  const objectKey = cardImageObjectKey(cardId, cardName, extension);
 
   const bucket = getStorage().bucket(bucketName);
   await bucket.file(objectKey).save(buffer, {
