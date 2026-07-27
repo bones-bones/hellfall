@@ -68,3 +68,13 @@ Run `yarn run transform-hc` (this updates all datasets)
 2. Branch > New Branch > Bring changes
 3. Push code
 4. Branch > Create Pull Request
+
+# General Concepts
+
+## Card ids
+
+`oracle_id` is the uuid for a card. aka every printing of lightning bolt has a single `oracle_id`
+
+`id` this is the printing id. aka every printing of lightning bolt will have a unique id
+
+`hcid` is the legacy HC id. Avoid using it these days
