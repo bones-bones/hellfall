@@ -180,3 +180,4 @@ Write a script to transform the database
 - make sure be there // be square's image worked
 - once oracle ids get fully integrated, remove duplicative code in fetchers and tag handling
 - add invariant handling for oracle text, add printed oracle text fields for the text printed on the card, and update all oracle texts
+- remove janky code from this pr (search for #jank)

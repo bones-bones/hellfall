@@ -127,8 +127,10 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     .map(entry => {
       const entryAt = (key: keyType) => entry[keys.indexOf(key)];
       const cardIsMulti = entry.slice(keys.indexOf('1mana_cost')).some(value => value);
+      // #jank
+      const cardIsLand = parseInt(entryAt('hcid')) >= 8065 && parseInt(entryAt('hcid')) <= 8250
       const card = getDefaultCard(
-        HCKind.Card,
+        cardIsLand ? HCKind.Land: HCKind.Card,
         cardIsMulti,
         {
           id: entryAt('id'),

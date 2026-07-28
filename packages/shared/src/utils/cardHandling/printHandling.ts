@@ -144,6 +144,6 @@ baseCardInvariantMap.forEach(invariant => {
 
 export const baseTokenInvariantMap = new InvariantMap(tokenOracleIdList)
 
-export const baseInvariantMap = structuredClone(baseTokenInvariantMap);
+export const baseInvariantMap = baseTokenInvariantMap.clone();
 
 baseCardInvariantMap.forEach(invariant => baseInvariantMap.set(structuredClone(invariant)))

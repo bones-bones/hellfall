@@ -498,6 +498,8 @@ export class InvariantMap {
    */
   isEmpty = () => this.nameMap.size === 0;
 
+  clone = () => new InvariantMap(this.map(structuredClone<printInput>));
+
   *[Symbol.iterator](): Iterator<[string, printInvariant, string]> {
     for (const [oracle_id, invariant] of this.oracleIDMap.entries()) {
       yield [oracle_id, invariant, invariant.name.toLowerCase()];

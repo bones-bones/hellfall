@@ -23,8 +23,6 @@ import {
   getAllRelatedPermissive,
   CardMap,
   HCIDMap,
-  getDirectChildSets,
-  getParentSet,
   mergeFromSheet,
   cleanParts,
   updateParts,
@@ -33,7 +31,6 @@ import {
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
-import { fetchLands } from './fetchLands.ts';
 
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -59,8 +56,6 @@ const mergeDatabases = (
   newCards: HCIDMap,
   existingTokens: HCIDMap,
   newTokens: HCIDMap,
-  existingLands: HCIDMap,
-  newLands: HCIDMap
 ): HCCard.Any[] => {
   // newCards.forEach((newCard: HCCard.Any, id: string) => {});
   const mergedCards = newCards.map((newCard: HCCard.Any, id: string) => {
@@ -97,21 +92,6 @@ const mergeDatabases = (
     existingTokens.getAllInSet('SFT').forEach(card => {
       setDerivedProps(card);
       mergedTokens.set(card);
-    });
-  }
-  const mergedLands = newLands.map((newCard: HCCard.Any, id: string) => {
-    const existingCard = existingLands.get(movedIds[id] ?? id);
-    if (existingCard) {
-      existingLands.delete(existingCard.hcid);
-      return mergeFromSheet(existingCard, newCard);
-    }
-    // setDerivedProps(newCard);
-    return newCard;
-  });
-  if (usingApproved) {
-    existingLands.forEach(card => {
-      setDerivedProps(card);
-      mergedLands.set(card);
     });
   }
   const collectorNumberAutofillSets: Record<string, number> = {
@@ -159,19 +139,7 @@ const mergeDatabases = (
       }
     }
   });
-  mergedLands.forEach(entry => {
-    if (!entry.collector_number) {
-      if (entry.set in collectorNumberAutofillSets) {
-        collectorNumberAutofillSets[entry.set] += 1;
-        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
-      } else {
-        throw new Error(
-          `Land missing collector_number and set "${entry.set}" is not in collectorNumberAutofillSets (hcid: ${entry.hcid}, name: ${entry.name})`
-        );
-      }
-    }
-  });
-  [mergedCards, mergedTokens, mergedLands].forEach(mergedList =>
+  [mergedCards, mergedTokens].forEach(mergedList =>
     mergedList.forEach(card => {
       if (!card.id) {
         card.id = crypto.randomUUID();
@@ -236,7 +204,6 @@ const mergeDatabases = (
         }
         return -1;
       }),
-      mergedLands.cards().sort((a, b) => parseInt(a.hcid.slice(1)) - parseInt(b.hcid.slice(1)))
     );
 };
 const dataToCards = <K extends anyPropType>(
@@ -336,8 +303,17 @@ const loadExistingData = () => {
     console.warn('Could not load lands, proceeding with undefined content:', error);
   }
 
-  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
-  return { existingCards, existingTokens, existingLands };
+  // #jank
+  const existingLandArray = dataToCards(landsContent?.data ?? []);
+  existingLandArray.forEach(land => {
+    if (land.hcid.startsWith('L')) {
+      land.hcid = `${parseInt(land.hcid.slice(1))+8064}`
+    }
+  })
+  const existingLands = new HCIDMap(existingLandArray);
+  existingCards.setMultiple(existingLands)
+
+  return { existingCards, existingTokens };
 };
 const ignoreDuplicateHCIDs: string[] = [
   '39',
@@ -375,48 +351,11 @@ const main = async () => {
   const usernameMappings = await fetchUsernameMappings();
   const newTokens = await fetchTokens(NO_SCRYFALL);
   newTokens.setMultiple(fetchHCJFronts());
-  newTokens.setMultiple(await fetchNotMagic());
-  const newLands = await fetchLands();
+  // newTokens.setMultiple(await fetchNotMagic());
   const collectorMap = new Map<SetCode, Set<number>>(
     newCards.sets().map(code => [code, new Set<number>()])
   );
 
-  newLands
-    .sets()
-    .filter(set => set.startsWith('SCL'))
-    .forEach(code => collectorMap.set(code, new Set<number>()));
-  collectorMap.set('SCL', new Set<number>());
-  getDirectChildSets('SCL')?.forEach(code => collectorMap.delete(code));
-  newCards.forEach(card => {
-    const num = parseInt(card.collector_number);
-    const cSet =
-      collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));
-    if (ignoreDuplicateHCIDs.includes(card.hcid)) {
-      return;
-    }
-    if (cSet?.has(num) || ignoreMissingNums[card.set]?.includes(num)) {
-      console.log(
-        `Set ${card.set} has a duplicate collector number at ${num} (hcid: ${card.hcid})`
-      );
-    } else if (num) {
-      cSet?.add(num);
-    }
-  });
-  newLands.forEach(card => {
-    const num = parseInt(card.collector_number);
-    const cSet =
-      collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));
-    if (ignoreDuplicateHCIDs.includes(card.hcid)) {
-      return;
-    }
-    if (cSet?.has(num) || ignoreMissingNums[card.set]?.includes(num)) {
-      console.log(
-        `Set ${card.set} has a duplicate collector number at ${num} (hcid: ${card.hcid})`
-      );
-    } else if (num) {
-      cSet?.add(num);
-    }
-  });
   for (const [code, nums] of collectorMap) {
     if (code == 'HCV.1' || code.startsWith('HLC')) continue;
     const max = Math.max(...Array.from(nums));
@@ -428,14 +367,12 @@ const main = async () => {
   }
 
   console.log('Running in update mode - merging with existing data...');
-  const { existingCards, existingTokens, existingLands } = loadExistingData();
+  const { existingCards, existingTokens } = loadExistingData();
   const merged = mergeDatabases(
     existingCards,
     newCards,
     existingTokens,
     newTokens,
-    existingLands,
-    newLands
   );
   const finalCards = new CardMap(addToJSONToCards(merged));
   finalCards.forEach(card => {
