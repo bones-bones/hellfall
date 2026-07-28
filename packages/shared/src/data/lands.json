@@ -6,9 +6,9 @@
 			"id": "5a4ead92-de4c-4695-9026-56d75e30d9ee",
 			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L1",
+			"hcid": "8065",
 			"name": "Snow-Covered Island",
-			"export_name": "Snow-Covered Island (L1)_",
+			"export_name": "Snow-Covered Island 8065",
 			"set": "HBB.0",
 			"collector_number": "1",
 			"layout": "normal",
@@ -40,7 +40,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -56,11 +56,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<1>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -69,9 +73,9 @@
 			"id": "11f79f69-2739-4f16-913b-701695219614",
 			"oracle_id": "ac8cc74d-e43b-4118-bba0-dfa8b9c04d45",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L2",
+			"hcid": "8066",
 			"name": "Snow-Covered Plains",
-			"export_name": "Snow-Covered Plains (L2)_",
+			"export_name": "Snow-Covered Plains 8066",
 			"set": "HBB.0",
 			"collector_number": "2",
 			"layout": "normal",
@@ -103,7 +107,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -122,13 +126,17 @@
 				"full-art",
 				"miracle-frame",
 				"missing-snow-frame",
-				"inverted-text"
+				"inverted-text",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
 				"miracle-frame",
 				"missing-snow-frame",
-				"inverted-text"
+				"inverted-text",
+				"hbb.0<2>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -137,9 +145,9 @@
 			"id": "8f4b193a-5a1d-4c83-8daf-e2cfbb206f7c",
 			"oracle_id": "5f0d3be8-e63e-4ade-ae58-6b0c14f2ce6d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L3",
+			"hcid": "8067",
 			"name": "Snow-Covered Forest",
-			"export_name": "Snow-Covered Forest (L3)_",
+			"export_name": "Snow-Covered Forest 8067",
 			"set": "HBB.0",
 			"collector_number": "3",
 			"layout": "normal",
@@ -171,7 +179,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -186,14 +194,18 @@
 			],
 			"tags": [
 				"missing-snow-frame",
-				"showcase-frame"
+				"showcase-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
 			"base_tags": [
 				"missing-snow-frame",
-				"showcase-frame<Parchment>"
+				"showcase-frame<Parchment>",
+				"hbb.0<3>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -202,9 +214,9 @@
 			"id": "299c8ee5-237f-4fb7-9d82-d3c8613065c7",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L4",
+			"hcid": "8068",
 			"name": "Snow-Covered Mountain",
-			"export_name": "Snow-Covered Mountain (L4)_",
+			"export_name": "Snow-Covered Mountain 8068",
 			"set": "HBB.0",
 			"collector_number": "4",
 			"layout": "normal",
@@ -236,7 +248,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -248,11 +260,15 @@
 			"frame": "1997",
 			"tags": [
 				"1997-frame",
-				"no-font"
+				"no-font",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1997-frame",
-				"no-font"
+				"no-font",
+				"hbb.0<4>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -261,9 +277,9 @@
 			"id": "7ebaec4e-7467-472c-adbf-084d54633d6d",
 			"oracle_id": "d8239a86-7184-4005-ba1e-2dddcd756c47",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L5",
+			"hcid": "8069",
 			"name": "Snow-Covered Swamp",
-			"export_name": "Snow-Covered Swamp (L5)_",
+			"export_name": "Snow-Covered Swamp 8069",
 			"set": "HBB.0",
 			"collector_number": "5",
 			"layout": "normal",
@@ -295,7 +311,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -308,11 +324,15 @@
 			"frame": "2015",
 			"tags": [
 				"white-watermark",
-				"missing-snow-frame"
+				"missing-snow-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"white-watermark",
-				"missing-snow-frame"
+				"missing-snow-frame",
+				"hbb.0<5>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -321,9 +341,9 @@
 			"id": "d30883ad-8bf9-47aa-9b12-afb811ab57f0",
 			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L6",
+			"hcid": "8070",
 			"name": "Snow-Covered Island",
-			"export_name": "Snow-Covered Island (L6)_",
+			"export_name": "Snow-Covered Island 8070",
 			"set": "HBB.0",
 			"collector_number": "6",
 			"layout": "normal",
@@ -355,7 +375,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -366,10 +386,14 @@
 			"border_color": "black",
 			"frame": "2003",
 			"tags": [
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<6>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -378,9 +402,9 @@
 			"id": "af48297c-b390-480b-aec1-b8f07127bbc0",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L7",
+			"hcid": "8071",
 			"name": "Nebula",
-			"export_name": "Nebula (L7)_",
+			"export_name": "Nebula 8071",
 			"set": "HBB.0",
 			"collector_number": "7",
 			"layout": "normal",
@@ -413,7 +437,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -428,11 +452,15 @@
 			],
 			"tags": [
 				"2003-frame",
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"2003-frame",
-				"full-art"
+				"full-art",
+				"hbb.0<7>",
+				"has-other-prints"
 			],
 			"all_parts": [
 				{
@@ -454,9 +482,9 @@
 			"id": "6c046347-9734-459f-9665-24d070504ff2",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L8",
+			"hcid": "8072",
 			"name": "Nebula",
-			"export_name": "Nebula (L8)_",
+			"export_name": "Nebula 8072",
 			"set": "HBB.0",
 			"collector_number": "8",
 			"layout": "normal",
@@ -487,7 +515,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -497,6 +525,14 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"has-other-prints"
+			],
+			"base_tags": [
+				"hbb.0<8>",
+				"has-other-prints"
+			],
 			"all_parts": [
 				{
 					"object": "related_card",
@@ -516,9 +552,9 @@
 			"id": "8930430d-8109-47de-bffb-965fec841979",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L9",
+			"hcid": "8073",
 			"name": "Nebula",
-			"export_name": "Nebula (L9)_",
+			"export_name": "Nebula 8073",
 			"set": "HBB.0",
 			"collector_number": "9",
 			"layout": "normal",
@@ -549,7 +585,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -564,11 +600,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<9>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -577,9 +617,9 @@
 			"id": "e537444d-ee74-4c9c-813b-f8773be58199",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L10",
+			"hcid": "8074",
 			"name": "Nebula",
-			"export_name": "Nebula (L10)_",
+			"export_name": "Nebula 8074",
 			"set": "HBB.0",
 			"collector_number": "10",
 			"layout": "normal",
@@ -610,7 +650,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -619,7 +659,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"has-other-prints"
+			],
+			"base_tags": [
+				"hbb.0<10>",
+				"has-other-prints"
+			]
 		},
 		{
 			"object": "card",
@@ -627,9 +675,9 @@
 			"id": "d2d5450e-6cc8-43f8-9810-30550b2a563f",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L11",
+			"hcid": "8075",
 			"name": "Plains",
-			"export_name": "Plains (L11)_",
+			"export_name": "Plains 8075",
 			"set": "HBB.0",
 			"collector_number": "11",
 			"layout": "normal",
@@ -675,11 +723,15 @@
 			],
 			"tags": [
 				"full-art",
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"future-frame"
+				"future-frame",
+				"hbb.0<11>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -688,9 +740,9 @@
 			"id": "e8c528e1-4cfb-40ab-aba6-c9c7645f2b09",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L12",
+			"hcid": "8076",
 			"name": "Island",
-			"export_name": "Island (L12)_",
+			"export_name": "Island 8076",
 			"set": "HBB.0",
 			"collector_number": "12",
 			"layout": "normal",
@@ -736,11 +788,15 @@
 			],
 			"tags": [
 				"no-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"no-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<12>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -749,9 +805,9 @@
 			"id": "11af1461-4dd0-4889-ba87-014ed524bfce",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L13",
+			"hcid": "8077",
 			"name": "Swamp",
-			"export_name": "Swamp (L13)_",
+			"export_name": "Swamp 8077",
 			"set": "HBB.0",
 			"collector_number": "13",
 			"layout": "normal",
@@ -797,11 +853,15 @@
 			],
 			"tags": [
 				"full-art",
-				"2015-token-frame"
+				"2015-token-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"2015-token-frame"
+				"2015-token-frame",
+				"hbb.0<13>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -810,9 +870,9 @@
 			"id": "191dd042-6f95-4b4d-9b2b-0c6e858fddf2",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L14",
+			"hcid": "8078",
 			"name": "Mountain",
-			"export_name": "Mountain (L14)_",
+			"export_name": "Mountain 8078",
 			"set": "HBB.0",
 			"collector_number": "14",
 			"layout": "normal",
@@ -855,11 +915,15 @@
 			"frame": "1993",
 			"tags": [
 				"1993-frame",
-				"double-border"
+				"double-border",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1993-frame",
-				"double-border"
+				"double-border",
+				"hbb.0<14>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -868,9 +932,9 @@
 			"id": "ca92d6f4-bb2d-4374-9bd6-3b6708569358",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L15",
+			"hcid": "8079",
 			"name": "Forest",
-			"export_name": "Forest (L15)_",
+			"export_name": "Forest 8079",
 			"set": "HBB.0",
 			"collector_number": "15",
 			"layout": "normal",
@@ -910,7 +974,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<15>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -918,9 +990,9 @@
 			"id": "aca98d96-6345-454e-a89c-23480917c112",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L16",
+			"hcid": "8080",
 			"name": "Forest",
-			"export_name": "Forest (L16)_",
+			"export_name": "Forest 8080",
 			"set": "HBB.0",
 			"collector_number": "16",
 			"layout": "normal",
@@ -967,7 +1039,9 @@
 			"tags": [
 				"full-art",
 				"jank-frame",
-				"no-border"
+				"no-border",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"jank-frame": "Physical Object"
@@ -975,7 +1049,9 @@
 			"base_tags": [
 				"full-art",
 				"jank-frame<Physical Object>",
-				"no-border"
+				"no-border",
+				"hbb.0<16>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -984,9 +1060,9 @@
 			"id": "3951dcb3-f0a6-47ac-a4bf-2162faa57825",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L17",
+			"hcid": "8081",
 			"name": "Plains",
-			"export_name": "Plains (L17)_",
+			"export_name": "Plains 8081",
 			"set": "HBB.0",
 			"collector_number": "17",
 			"layout": "normal",
@@ -1032,14 +1108,18 @@
 			],
 			"tags": [
 				"showcase-frame",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"showcase-frame": "Invocation"
 			},
 			"base_tags": [
 				"showcase-frame<Invocation>",
-				"borderless"
+				"borderless",
+				"hbb.0<17>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1048,9 +1128,9 @@
 			"id": "356dafdb-e116-40d6-bb0d-0467d3ae13d0",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L18",
+			"hcid": "8082",
 			"name": "Island",
-			"export_name": "Island (L18)_",
+			"export_name": "Island 8082",
 			"set": "HBB.0",
 			"collector_number": "18",
 			"layout": "normal",
@@ -1095,10 +1175,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<18>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1107,9 +1191,9 @@
 			"id": "414a897a-6851-4b42-a253-70dd9b5fd723",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L19",
+			"hcid": "8083",
 			"name": "Island",
-			"export_name": "Island (L19)_",
+			"export_name": "Island 8083",
 			"set": "HBB.0",
 			"collector_number": "19",
 			"layout": "normal",
@@ -1152,11 +1236,15 @@
 			"frame": "2003",
 			"tags": [
 				"2003-frame",
-				"uses-scryfall-image"
+				"uses-scryfall-image",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"2003-frame",
-				"uses-scryfall-image"
+				"uses-scryfall-image",
+				"hbb.0<19>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1165,9 +1253,9 @@
 			"id": "bd609c2b-27cd-43c6-b1ce-a4d03194d12a",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L20",
+			"hcid": "8084",
 			"name": "Island",
-			"export_name": "Island (L20)_",
+			"export_name": "Island 8084",
 			"set": "HBB.0",
 			"collector_number": "20",
 			"layout": "normal",
@@ -1210,11 +1298,15 @@
 			"frame": "hearthstone",
 			"tags": [
 				"hearthstone-frame",
-				"no-border"
+				"no-border",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"hearthstone-frame",
-				"no-border"
+				"no-border",
+				"hbb.0<20>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1223,9 +1315,9 @@
 			"id": "385da6a7-3993-4841-a1b5-eae8382ed8c7",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L21",
+			"hcid": "8085",
 			"name": "Island",
-			"export_name": "Island (L21)_",
+			"export_name": "Island 8085",
 			"set": "HBB.0",
 			"collector_number": "21",
 			"layout": "normal",
@@ -1271,11 +1363,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<21>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1284,9 +1380,9 @@
 			"id": "c81ab05d-86f3-4359-abb7-949ee72ab1cd",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L22",
+			"hcid": "8086",
 			"name": "Mountain",
-			"export_name": "Mountain (L22)_",
+			"export_name": "Mountain 8086",
 			"set": "HBB.0",
 			"collector_number": "22",
 			"layout": "normal",
@@ -1332,11 +1428,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<22>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1345,9 +1445,9 @@
 			"id": "c625dc9c-328d-4a00-89c1-0113c3f847c2",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L23",
+			"hcid": "8087",
 			"name": "Island",
-			"export_name": "Island (L23)_",
+			"export_name": "Island 8087",
 			"set": "HBB.0",
 			"collector_number": "23",
 			"layout": "normal",
@@ -1389,10 +1489,14 @@
 			"border_color": "black",
 			"frame": "future",
 			"tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0<23>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1401,9 +1505,9 @@
 			"id": "19f6c00d-c05a-47e7-88dc-68f86954cdde",
 			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L24",
+			"hcid": "8088",
 			"name": "Snow-Covered Island",
-			"export_name": "Snow-Covered Island (L24)_",
+			"export_name": "Snow-Covered Island 8088",
 			"set": "HBB.0",
 			"collector_number": "24",
 			"layout": "normal",
@@ -1435,7 +1539,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -1446,10 +1550,14 @@
 			"border_color": "black",
 			"frame": "future",
 			"tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0<24>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1458,9 +1566,9 @@
 			"id": "ef0636eb-a365-46f8-a9a2-005606a05abc",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L25",
+			"hcid": "8089",
 			"name": "Swamp",
-			"export_name": "Swamp (L25)_",
+			"export_name": "Swamp 8089",
 			"set": "HBB.0",
 			"collector_number": "25",
 			"layout": "normal",
@@ -1502,10 +1610,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"upside-down"
+				"upside-down",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"upside-down"
+				"upside-down",
+				"hbb.0<25>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1514,9 +1626,9 @@
 			"id": "7793474e-85fb-4628-9504-78d68e910161",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L26",
+			"hcid": "8090",
 			"name": "Island",
-			"export_name": "Island (L26)_",
+			"export_name": "Island 8090",
 			"set": "HBB.0",
 			"collector_number": "26",
 			"layout": "normal",
@@ -1561,12 +1673,16 @@
 			"tags": [
 				"black-watermark",
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"black-watermark",
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0<26>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1575,9 +1691,9 @@
 			"id": "d14a9c41-58bb-4862-bf5a-9dcd69c370cb",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L27",
+			"hcid": "8091",
 			"name": "Forest",
-			"export_name": "Forest (L27)_",
+			"export_name": "Forest 8091",
 			"set": "HBB.0",
 			"collector_number": "27",
 			"layout": "normal",
@@ -1619,10 +1735,14 @@
 			"border_color": "black",
 			"frame": "future",
 			"tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0<27>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1631,9 +1751,9 @@
 			"id": "4129b652-7650-473a-8b7b-0bbc61a3863b",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L28",
+			"hcid": "8092",
 			"name": "Mountain",
-			"export_name": "Mountain (L28)_",
+			"export_name": "Mountain 8092",
 			"set": "HBB.0",
 			"collector_number": "28",
 			"layout": "normal",
@@ -1679,11 +1799,15 @@
 			],
 			"tags": [
 				"full-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<28>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1692,9 +1816,9 @@
 			"id": "625ce0b9-d8fe-434e-b640-d675e6509211",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L29",
+			"hcid": "8093",
 			"name": "Forest",
-			"export_name": "Forest (L29)_",
+			"export_name": "Forest 8093",
 			"set": "HBB.0",
 			"collector_number": "29",
 			"layout": "normal",
@@ -1740,11 +1864,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<29>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1753,9 +1881,9 @@
 			"id": "c9f81834-7d19-47c1-8ca8-a714d8ac6ea2",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L30",
+			"hcid": "8094",
 			"name": "Nebula",
-			"export_name": "Nebula (L30)_",
+			"export_name": "Nebula 8094",
 			"set": "HBB.0",
 			"collector_number": "30",
 			"layout": "normal",
@@ -1786,7 +1914,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -1801,11 +1929,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<30>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -1814,9 +1946,9 @@
 			"id": "f82c8723-8a3c-4d94-bc3d-c240b48284d4",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L31",
+			"hcid": "8095",
 			"name": "Forest",
-			"export_name": "Forest (L31)_",
+			"export_name": "Forest 8095",
 			"set": "HBB.0",
 			"collector_number": "31",
 			"layout": "normal",
@@ -1859,11 +1991,15 @@
 			"frame": "future",
 			"tags": [
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0<31>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1872,9 +2008,9 @@
 			"id": "6e43a945-89e4-47c9-9ce7-f9ccf4ff9b05",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L32",
+			"hcid": "8096",
 			"name": "Plains",
-			"export_name": "Plains (L32)_",
+			"export_name": "Plains 8096",
 			"set": "HBB.0",
 			"collector_number": "32",
 			"layout": "normal",
@@ -1917,11 +2053,15 @@
 			"frame": "future",
 			"tags": [
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0<32>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1930,9 +2070,9 @@
 			"id": "ee6b014b-4cb7-41ba-82dd-06cab7a9667f",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L33",
+			"hcid": "8097",
 			"name": "Snow-Covered Mountain",
-			"export_name": "Snow-Covered Mountain (L33)_",
+			"export_name": "Snow-Covered Mountain 8097",
 			"set": "HBB.0",
 			"collector_number": "33",
 			"layout": "normal",
@@ -1964,7 +2104,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -1976,11 +2116,15 @@
 			"frame": "future",
 			"tags": [
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0<33>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -1989,9 +2133,9 @@
 			"id": "a21fb118-f54f-43ec-80df-823e9eca5de2",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L34",
+			"hcid": "8098",
 			"name": "Island",
-			"export_name": "Island (L34)_",
+			"export_name": "Island 8098",
 			"set": "HBB.0",
 			"collector_number": "34",
 			"layout": "normal",
@@ -2034,11 +2178,15 @@
 			"frame": "future",
 			"tags": [
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"mario",
-				"future-frame"
+				"future-frame",
+				"hbb.0<34>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2047,9 +2195,9 @@
 			"id": "d156bf4d-4f97-422c-8eeb-983212a315b2",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L35",
+			"hcid": "8099",
 			"name": "Snow-Covered Mountain",
-			"export_name": "Snow-Covered Mountain (L35)_",
+			"export_name": "Snow-Covered Mountain 8099",
 			"set": "HBB.0",
 			"collector_number": "35",
 			"layout": "normal",
@@ -2081,7 +2229,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -2095,10 +2243,14 @@
 				"snow"
 			],
 			"tags": [
-				"no-font"
+				"no-font",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"no-font"
+				"no-font",
+				"hbb.0<35>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2107,9 +2259,9 @@
 			"id": "e4a7dcdb-59af-4c64-9b5a-8a3e631481dc",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L36",
+			"hcid": "8100",
 			"name": "Mountain",
-			"export_name": "Mountain (L36)_",
+			"export_name": "Mountain 8100",
 			"set": "HBB.0",
 			"collector_number": "36",
 			"layout": "normal",
@@ -2152,11 +2304,15 @@
 			"frame": "future",
 			"tags": [
 				"misframe",
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"misframe",
-				"future-frame"
+				"future-frame",
+				"hbb.0<36>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2165,9 +2321,9 @@
 			"id": "41b376b4-ef6e-453e-b2a4-0a0a323a5dee",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L37",
+			"hcid": "8101",
 			"name": "Mountain",
-			"export_name": "Mountain (L37)_",
+			"export_name": "Mountain 8101",
 			"set": "HBB.0",
 			"collector_number": "37",
 			"layout": "normal",
@@ -2209,10 +2365,14 @@
 			"border_color": "black",
 			"frame": "future",
 			"tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0<37>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2221,9 +2381,9 @@
 			"id": "a0ba3be9-a107-42c4-9d9e-41ea199bfc27",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L38",
+			"hcid": "8102",
 			"name": "Swamp",
-			"export_name": "Swamp (L38)_",
+			"export_name": "Swamp 8102",
 			"set": "HBB.0",
 			"collector_number": "38",
 			"layout": "normal",
@@ -2269,11 +2429,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<38>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2282,9 +2446,9 @@
 			"id": "d620d75a-ddf3-402a-a32e-fafbeb12ca4c",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L39",
+			"hcid": "8103",
 			"name": "Island",
-			"export_name": "Island (L39)_",
+			"export_name": "Island 8103",
 			"set": "HBB.0",
 			"collector_number": "39",
 			"layout": "normal",
@@ -2326,10 +2490,14 @@
 			"border_color": "black",
 			"frame": "future",
 			"tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0<39>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2338,9 +2506,9 @@
 			"id": "75ea42db-2909-4795-9d93-01a12ac66aab",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L40",
+			"hcid": "8104",
 			"name": "Mountain",
-			"export_name": "Mountain (L40)_",
+			"export_name": "Mountain 8104",
 			"set": "HBB.0",
 			"collector_number": "40",
 			"layout": "normal",
@@ -2383,11 +2551,15 @@
 			"frame": "1993",
 			"tags": [
 				"1993-frame",
-				"uses-scryfall-image"
+				"uses-scryfall-image",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1993-frame",
-				"uses-scryfall-image"
+				"uses-scryfall-image",
+				"hbb.0<40>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2396,9 +2568,9 @@
 			"id": "17efa2be-ea9e-4d5e-b7f2-d0982080526f",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L41",
+			"hcid": "8105",
 			"name": "Plains",
-			"export_name": "Plains (L41)_",
+			"export_name": "Plains 8105",
 			"set": "HBB.0",
 			"collector_number": "41",
 			"layout": "normal",
@@ -2441,11 +2613,15 @@
 			"frame": "2003",
 			"tags": [
 				"intentional-low-quality",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"intentional-low-quality",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<41>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2454,9 +2630,9 @@
 			"id": "0af6bb35-3856-4107-9e5d-52f71d5a1b3d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L42",
+			"hcid": "8106",
 			"name": "Forest",
-			"export_name": "Forest (L42)_",
+			"export_name": "Forest 8106",
 			"set": "HBB.0",
 			"collector_number": "42",
 			"layout": "normal",
@@ -2503,12 +2679,16 @@
 			"tags": [
 				"low-quality",
 				"no-art",
-				"1997-frame"
+				"1997-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"low-quality",
 				"no-art",
-				"1997-frame"
+				"1997-frame",
+				"hbb.0<42>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2517,9 +2697,9 @@
 			"id": "019bf760-fe72-432b-82e5-b2454b7b301b",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L43",
+			"hcid": "8107",
 			"name": "Mountain",
-			"export_name": "Mountain (L43)_",
+			"export_name": "Mountain 8107",
 			"set": "HBB.0",
 			"collector_number": "43",
 			"layout": "normal",
@@ -2565,11 +2745,15 @@
 			],
 			"tags": [
 				"1997-frame",
-				"no-art"
+				"no-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1997-frame",
-				"no-art"
+				"no-art",
+				"hbb.0<43>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2578,9 +2762,9 @@
 			"id": "489d203f-5238-4377-9f4c-fa74e94d5325",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L44",
+			"hcid": "8108",
 			"name": "Swamp",
-			"export_name": "Swamp (L44)_",
+			"export_name": "Swamp 8108",
 			"set": "HBB.0",
 			"collector_number": "44",
 			"layout": "normal",
@@ -2626,11 +2810,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<44>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2639,9 +2827,9 @@
 			"id": "4ec8b07b-c607-4d43-b5ce-c21165ed86a8",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L45",
+			"hcid": "8109",
 			"name": "Plains",
-			"export_name": "Plains (L45)_",
+			"export_name": "Plains 8109",
 			"set": "HBB.0",
 			"collector_number": "45",
 			"layout": "normal",
@@ -2688,12 +2876,16 @@
 			"tags": [
 				"jank-frame",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"jank-frame",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<45>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2702,9 +2894,9 @@
 			"id": "c25d24f5-93c3-4e5a-9316-9dffb4550db5",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L46",
+			"hcid": "8110",
 			"name": "Mountain",
-			"export_name": "Mountain (L46)_",
+			"export_name": "Mountain 8110",
 			"set": "HBB.0",
 			"collector_number": "46",
 			"layout": "normal",
@@ -2751,12 +2943,16 @@
 			"tags": [
 				"jank-frame",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"jank-frame",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<46>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2765,9 +2961,9 @@
 			"id": "53a68a75-ab4a-47fe-bf60-1b51882554b3",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L47",
+			"hcid": "8111",
 			"name": "Forest",
-			"export_name": "Forest (L47)_",
+			"export_name": "Forest 8111",
 			"set": "HBB.0",
 			"collector_number": "47",
 			"layout": "normal",
@@ -2812,10 +3008,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<47>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2824,9 +3024,9 @@
 			"id": "c4a5f49f-aeb6-4015-9d0c-6d770d2c393c",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L48",
+			"hcid": "8112",
 			"name": "Island",
-			"export_name": "Island (L48)_",
+			"export_name": "Island 8112",
 			"set": "HBB.0",
 			"collector_number": "48",
 			"layout": "normal",
@@ -2872,11 +3072,15 @@
 			],
 			"tags": [
 				"no-art",
-				"jank-frame"
+				"jank-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"no-art",
-				"jank-frame"
+				"jank-frame",
+				"hbb.0<48>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2885,9 +3089,9 @@
 			"id": "72b1329b-aed6-4025-84af-3a05bc0de0e3",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L49",
+			"hcid": "8113",
 			"name": "Plains",
-			"export_name": "Plains (L49)_",
+			"export_name": "Plains 8113",
 			"set": "HBB.0",
 			"collector_number": "49",
 			"layout": "normal",
@@ -2933,11 +3137,15 @@
 			],
 			"tags": [
 				"no-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"no-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<49>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -2946,9 +3154,9 @@
 			"id": "7d79eab8-44e4-4872-b0b4-dac9f2497de9",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L50",
+			"hcid": "8114",
 			"name": "Forest",
-			"export_name": "Forest (L50)_",
+			"export_name": "Forest 8114",
 			"set": "HBB.0",
 			"collector_number": "50",
 			"layout": "normal",
@@ -2991,11 +3199,15 @@
 			"frame": "jank",
 			"tags": [
 				"comic-sans",
-				"jank-frame"
+				"jank-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"comic-sans",
-				"jank-frame"
+				"jank-frame",
+				"hbb.0<50>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3004,9 +3216,9 @@
 			"id": "8be3e3d7-c73f-4f18-a3f6-8896cfcfa623",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L51",
+			"hcid": "8115",
 			"name": "Nebula",
-			"export_name": "Nebula (L51)_",
+			"export_name": "Nebula 8115",
 			"set": "HBB.0",
 			"collector_number": "51",
 			"layout": "normal",
@@ -3037,7 +3249,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -3049,14 +3261,18 @@
 			"frame": "jank",
 			"tags": [
 				"jank-frame",
-				"no-border"
+				"no-border",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"tag_notes": {
 				"jank-frame": "Physical Object"
 			},
 			"base_tags": [
 				"jank-frame<Physical Object>",
-				"no-border"
+				"no-border",
+				"hbb.0<51>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -3065,9 +3281,9 @@
 			"id": "4c1b79c2-ab78-4610-94dd-30c66a089a91",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L52",
+			"hcid": "8116",
 			"name": "Mountain",
-			"export_name": "Mountain (L52)_",
+			"export_name": "Mountain 8116",
 			"set": "HBB.0",
 			"collector_number": "52",
 			"layout": "normal",
@@ -3111,12 +3327,16 @@
 			"tags": [
 				"pokemon-frame",
 				"sharpie",
-				"yellow-border"
+				"yellow-border",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"pokemon-frame",
 				"sharpie",
-				"yellow-border"
+				"yellow-border",
+				"hbb.0<52>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3125,9 +3345,9 @@
 			"id": "b8cc3359-a753-47fe-af82-42f06ecbe6f0",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L53",
+			"hcid": "8117",
 			"name": "Island",
-			"export_name": "Island (L53)_",
+			"export_name": "Island 8117",
 			"set": "HBB.0",
 			"collector_number": "53",
 			"layout": "normal",
@@ -3169,10 +3389,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"misframe"
+				"misframe",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"misframe"
+				"misframe",
+				"hbb.0<53>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3181,9 +3405,9 @@
 			"id": "f16e16f7-0b63-4336-88aa-4c29ce80ba6b",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L54",
+			"hcid": "8118",
 			"name": "Swamp",
-			"export_name": "Swamp (L54)_",
+			"export_name": "Swamp 8118",
 			"set": "HBB.0",
 			"collector_number": "54",
 			"layout": "normal",
@@ -3231,7 +3455,9 @@
 				"misframe",
 				"legend-frame",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Omnath, Locus of Creation"
@@ -3240,7 +3466,9 @@
 				"misframe",
 				"legend-frame",
 				"ransomnote",
-				"ransom-over-real-card<Omnath, Locus of Creation>"
+				"ransom-over-real-card<Omnath, Locus of Creation>",
+				"hbb.0<54>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3249,9 +3477,9 @@
 			"id": "bc5a6bfa-25ae-4f44-bafc-ea6cf0c23aba",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L55",
+			"hcid": "8119",
 			"name": "Plains",
-			"export_name": "Plains (L55)_",
+			"export_name": "Plains 8119",
 			"set": "HBB.0",
 			"collector_number": "55",
 			"layout": "normal",
@@ -3294,11 +3522,15 @@
 			"frame": "2003",
 			"tags": [
 				"2003-frame",
-				"upside-down"
+				"upside-down",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"2003-frame",
-				"upside-down"
+				"upside-down",
+				"hbb.0<55>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3307,9 +3539,9 @@
 			"id": "2deaa66a-9a2a-403a-bafb-c5a20a7339d4",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L56",
+			"hcid": "8120",
 			"name": "Plains",
-			"export_name": "Plains (L56)_",
+			"export_name": "Plains 8120",
 			"set": "HBB.0",
 			"collector_number": "56",
 			"layout": "normal",
@@ -3351,10 +3583,14 @@
 			"border_color": "black",
 			"frame": "yugioh",
 			"tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0<56>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3363,9 +3599,9 @@
 			"id": "ed0552ff-4018-4a13-8fe7-50417f9738da",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L57",
+			"hcid": "8121",
 			"name": "Island",
-			"export_name": "Island (L57)_",
+			"export_name": "Island 8121",
 			"set": "HBB.0",
 			"collector_number": "57",
 			"layout": "normal",
@@ -3407,10 +3643,14 @@
 			"border_color": "black",
 			"frame": "yugioh",
 			"tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0<57>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3419,9 +3659,9 @@
 			"id": "ed96dd45-d9ec-4906-ba5e-f51b7d4ae176",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L58",
+			"hcid": "8122",
 			"name": "Swamp",
-			"export_name": "Swamp (L58)_",
+			"export_name": "Swamp 8122",
 			"set": "HBB.0",
 			"collector_number": "58",
 			"layout": "normal",
@@ -3463,10 +3703,14 @@
 			"border_color": "black",
 			"frame": "yugioh",
 			"tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0<58>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3475,9 +3719,9 @@
 			"id": "43766609-829c-4188-ae63-a93e5a506007",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L59",
+			"hcid": "8123",
 			"name": "Mountain",
-			"export_name": "Mountain (L59)_",
+			"export_name": "Mountain 8123",
 			"set": "HBB.0",
 			"collector_number": "59",
 			"layout": "normal",
@@ -3519,10 +3763,14 @@
 			"border_color": "black",
 			"frame": "yugioh",
 			"tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0<59>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3531,9 +3779,9 @@
 			"id": "29d1f526-1614-4848-ab37-08dfd4cb529d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L60",
+			"hcid": "8124",
 			"name": "Forest",
-			"export_name": "Forest (L60)_",
+			"export_name": "Forest 8124",
 			"set": "HBB.0",
 			"collector_number": "60",
 			"layout": "normal",
@@ -3575,10 +3823,14 @@
 			"border_color": "black",
 			"frame": "yugioh",
 			"tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0<60>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3587,9 +3839,9 @@
 			"id": "90277cfb-0c8f-41ea-83ab-8e19f1332e96",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L61",
+			"hcid": "8125",
 			"name": "Wastes",
-			"export_name": "Wastes (L61)_",
+			"export_name": "Wastes 8125",
 			"set": "HBB.0",
 			"collector_number": "61",
 			"layout": "normal",
@@ -3622,10 +3874,14 @@
 			"border_color": "black",
 			"frame": "yugioh",
 			"tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0<61>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3634,9 +3890,9 @@
 			"id": "e9442059-eb2d-4786-9f1a-987a262838a2",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L62",
+			"hcid": "8126",
 			"name": "Plains",
-			"export_name": "Plains (L62)_",
+			"export_name": "Plains 8126",
 			"set": "HBB.0",
 			"collector_number": "62",
 			"layout": "normal",
@@ -3682,11 +3938,15 @@
 			],
 			"tags": [
 				"full-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<62>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3695,9 +3955,9 @@
 			"id": "cf5beecc-e436-4fe0-99cc-54e25933e524",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L63",
+			"hcid": "8127",
 			"name": "Mountain",
-			"export_name": "Mountain (L63)_",
+			"export_name": "Mountain 8127",
 			"set": "HBB.0",
 			"collector_number": "63",
 			"layout": "normal",
@@ -3743,11 +4003,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<63>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3756,9 +4020,9 @@
 			"id": "89324caf-d39b-4639-bb9e-ff50e49e5845",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L64",
+			"hcid": "8128",
 			"name": "Swamp",
-			"export_name": "Swamp (L64)_",
+			"export_name": "Swamp 8128",
 			"set": "HBB.0",
 			"collector_number": "64",
 			"layout": "normal",
@@ -3804,11 +4068,15 @@
 			],
 			"tags": [
 				"full-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<64>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3817,9 +4085,9 @@
 			"id": "262e61f8-f2b2-4c40-a23a-25aadce6449f",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L65",
+			"hcid": "8129",
 			"name": "Island",
-			"export_name": "Island (L65)_",
+			"export_name": "Island 8129",
 			"set": "HBB.0",
 			"collector_number": "65",
 			"layout": "normal",
@@ -3864,10 +4132,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<65>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3876,9 +4148,9 @@
 			"id": "b7259762-2e71-4a0a-9db7-ab5eeb69eb9d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L66",
+			"hcid": "8130",
 			"name": "Forest",
-			"export_name": "Forest (L66)_",
+			"export_name": "Forest 8130",
 			"set": "HBB.0",
 			"collector_number": "66",
 			"layout": "normal",
@@ -3925,7 +4197,9 @@
 			"tags": [
 				"full-art",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Forest #280 from ZNR"
@@ -3933,7 +4207,9 @@
 			"base_tags": [
 				"full-art",
 				"ransomnote",
-				"ransom-over-real-card<Forest #280 from ZNR>"
+				"ransom-over-real-card<Forest #280 from ZNR>",
+				"hbb.0<66>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -3942,9 +4218,9 @@
 			"id": "850fbeea-1229-4a68-955b-2284583c3d9f",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L67",
+			"hcid": "8131",
 			"name": "Nebula",
-			"export_name": "Nebula (L67)_",
+			"export_name": "Nebula 8131",
 			"set": "HBB.0",
 			"collector_number": "67",
 			"layout": "normal",
@@ -3975,7 +4251,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -3987,11 +4263,15 @@
 			"frame": "1997",
 			"tags": [
 				"low-quality",
-				"1997-frame"
+				"1997-frame",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"low-quality",
-				"1997-frame"
+				"1997-frame",
+				"hbb.0<67>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -4000,9 +4280,9 @@
 			"id": "3f0c8e2e-0d1d-46e6-b9c0-b12db6adcc45",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L68",
+			"hcid": "8132",
 			"name": "Plains",
-			"export_name": "Plains (L68)_",
+			"export_name": "Plains 8132",
 			"set": "HBB.0",
 			"collector_number": "68",
 			"layout": "normal",
@@ -4047,10 +4327,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<68>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4059,9 +4343,9 @@
 			"id": "685cdda3-dce1-48bd-a1f0-50cb82d3ca6c",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L69",
+			"hcid": "8133",
 			"name": "Island",
-			"export_name": "Island (L69)_",
+			"export_name": "Island 8133",
 			"set": "HBB.0",
 			"collector_number": "69",
 			"layout": "normal",
@@ -4106,10 +4390,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<69>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4118,9 +4406,9 @@
 			"id": "c24949f5-8364-448e-9eae-4ae1f357a187",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L70",
+			"hcid": "8134",
 			"name": "Swamp",
-			"export_name": "Swamp (L70)_",
+			"export_name": "Swamp 8134",
 			"set": "HBB.0",
 			"collector_number": "70",
 			"layout": "normal",
@@ -4165,10 +4453,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<70>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4177,9 +4469,9 @@
 			"id": "8302527f-baf7-46c0-877d-3263004d707d",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L71",
+			"hcid": "8135",
 			"name": "Mountain",
-			"export_name": "Mountain (L71)_",
+			"export_name": "Mountain 8135",
 			"set": "HBB.0",
 			"collector_number": "71",
 			"layout": "normal",
@@ -4224,10 +4516,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<71>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4236,9 +4532,9 @@
 			"id": "43b0085e-dcc8-4a01-baf9-8f127dea5f9a",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L72",
+			"hcid": "8136",
 			"name": "Forest",
-			"export_name": "Forest (L72)_",
+			"export_name": "Forest 8136",
 			"set": "HBB.0",
 			"collector_number": "72",
 			"layout": "normal",
@@ -4283,10 +4579,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<72>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4295,9 +4595,9 @@
 			"id": "26f592b8-bff2-46fe-9ad7-57d5d26c3dd0",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L73",
+			"hcid": "8137",
 			"name": "Nebula",
-			"export_name": "Nebula (L73)_",
+			"export_name": "Nebula 8137",
 			"set": "HBB.0",
 			"collector_number": "73",
 			"layout": "normal",
@@ -4328,7 +4628,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -4344,12 +4644,16 @@
 			"tags": [
 				"full-art",
 				"no-font",
-				"misframe"
+				"misframe",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"full-art",
 				"no-font",
-				"misframe"
+				"misframe",
+				"hbb.0<73>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -4358,9 +4662,9 @@
 			"id": "4667ed73-0458-4f30-9ec1-99c9b1746ab2",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L74",
+			"hcid": "8138",
 			"name": "Island",
-			"export_name": "Island (L74)_",
+			"export_name": "Island 8138",
 			"set": "HBB.0",
 			"collector_number": "74",
 			"layout": "normal",
@@ -4405,10 +4709,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<74>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4417,9 +4725,9 @@
 			"id": "d30af56e-e2ad-4576-92d1-cc81e4bb7812",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L75",
+			"hcid": "8139",
 			"name": "Forest",
-			"export_name": "Forest (L75)_",
+			"export_name": "Forest 8139",
 			"set": "HBB.0",
 			"collector_number": "75",
 			"layout": "normal",
@@ -4464,10 +4772,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<75>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4476,9 +4788,9 @@
 			"id": "0441c0e8-88f8-46b3-a580-b712dd4b8bde",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L76",
+			"hcid": "8140",
 			"name": "Nebula",
-			"export_name": "Nebula (L76)_",
+			"export_name": "Nebula 8140",
 			"set": "HBB.0",
 			"collector_number": "76",
 			"layout": "normal",
@@ -4509,7 +4821,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -4520,10 +4832,14 @@
 			"border_color": "black",
 			"frame": "yugioh",
 			"tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"base_tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.0<76>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -4532,9 +4848,9 @@
 			"id": "59d52e29-8632-4f69-a22b-5afa68e5a0be",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L77",
+			"hcid": "8141",
 			"name": "Mountain",
-			"export_name": "Mountain (L77)_",
+			"export_name": "Mountain 8141",
 			"set": "HBB.0",
 			"collector_number": "77",
 			"layout": "normal",
@@ -4576,10 +4892,14 @@
 			"border_color": "black",
 			"frame": "2003",
 			"tags": [
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<77>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4588,9 +4908,9 @@
 			"id": "0535026e-3ea1-4854-9619-2c9941df6c01",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L78",
+			"hcid": "8142",
 			"name": "Snow-Covered Mountain",
-			"export_name": "Snow-Covered Mountain (L78)_",
+			"export_name": "Snow-Covered Mountain 8142",
 			"set": "HBB.0",
 			"collector_number": "78",
 			"layout": "normal",
@@ -4622,7 +4942,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -4637,11 +4957,15 @@
 			],
 			"tags": [
 				"full-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<78>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4650,9 +4974,9 @@
 			"id": "12210f39-904e-4124-8c50-2279fd0745e0",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L79",
+			"hcid": "8143",
 			"name": "Nebula",
-			"export_name": "Nebula (L79)_",
+			"export_name": "Nebula 8143",
 			"set": "HBB.0",
 			"collector_number": "79",
 			"layout": "normal",
@@ -4683,7 +5007,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -4699,12 +5023,16 @@
 			"tags": [
 				"2015-token-frame",
 				"legend-frame",
-				"misframe"
+				"misframe",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"2015-token-frame",
 				"legend-frame",
-				"misframe"
+				"misframe",
+				"hbb.0<79>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -4713,9 +5041,9 @@
 			"id": "5e8e6670-1ce1-4ab2-af14-1b695c55fe88",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L80",
+			"hcid": "8144",
 			"name": "Forest",
-			"export_name": "Forest (L80)_",
+			"export_name": "Forest 8144",
 			"set": "HBB.0",
 			"collector_number": "80",
 			"layout": "normal",
@@ -4760,10 +5088,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<80>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4772,9 +5104,9 @@
 			"id": "0f2486a2-bc98-4519-a1a0-772d0fdfb077",
 			"oracle_id": "46a07b53-ff58-4bd6-80dd-ded2eb0e29a3",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L81",
+			"hcid": "8145",
 			"name": "Snow-Covered Wastes",
-			"export_name": "Snow-Covered Wastes (L81)_",
+			"export_name": "Snow-Covered Wastes 8145",
 			"set": "HBB.0",
 			"collector_number": "81",
 			"layout": "normal",
@@ -4797,7 +5129,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -4809,11 +5141,15 @@
 			"frame": "2003",
 			"tags": [
 				"misframe",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"misframe",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<81>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4822,9 +5158,9 @@
 			"id": "f6382e79-6d13-4ea1-a799-f0d5079648e3",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L82",
+			"hcid": "8146",
 			"name": "Mountain",
-			"export_name": "Mountain (L82)_",
+			"export_name": "Mountain 8146",
 			"set": "HBB.0",
 			"collector_number": "82",
 			"layout": "normal",
@@ -4866,10 +5202,14 @@
 			"border_color": "black",
 			"frame": "1997",
 			"tags": [
-				"1997-frame"
+				"1997-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"1997-frame"
+				"1997-frame",
+				"hbb.0<82>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4878,9 +5218,9 @@
 			"id": "814a53ae-14c5-4c98-8f39-f995bd4e15dc",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L83",
+			"hcid": "8147",
 			"name": "Swamp",
-			"export_name": "Swamp (L83)_",
+			"export_name": "Swamp 8147",
 			"set": "HBB.0",
 			"collector_number": "83",
 			"layout": "normal",
@@ -4923,11 +5263,15 @@
 			"frame": "2003",
 			"tags": [
 				"misframe",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"misframe",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<83>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4936,9 +5280,9 @@
 			"id": "38dadcd1-d455-48ce-85b7-04463a9b8836",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L84",
+			"hcid": "8148",
 			"name": "Plains",
-			"export_name": "Plains (L84)_",
+			"export_name": "Plains 8148",
 			"set": "HBB.0",
 			"collector_number": "84",
 			"layout": "normal",
@@ -4983,13 +5327,17 @@
 				"showcase"
 			],
 			"tags": [
-				"showcase-frame"
+				"showcase-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
 			"base_tags": [
-				"showcase-frame<Parchment>"
+				"showcase-frame<Parchment>",
+				"hbb.0<84>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -4998,9 +5346,9 @@
 			"id": "d97f9450-230e-49f6-a809-9983eee30f37",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L85",
+			"hcid": "8149",
 			"name": "Island",
-			"export_name": "Island (L85)_",
+			"export_name": "Island 8149",
 			"set": "HBB.0",
 			"collector_number": "85",
 			"layout": "normal",
@@ -5045,13 +5393,17 @@
 				"showcase"
 			],
 			"tags": [
-				"showcase-frame"
+				"showcase-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
 			"base_tags": [
-				"showcase-frame<Parchment>"
+				"showcase-frame<Parchment>",
+				"hbb.0<85>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5060,9 +5412,9 @@
 			"id": "e2de0f4d-66f4-46f1-8671-e32f49d25638",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L86",
+			"hcid": "8150",
 			"name": "Swamp",
-			"export_name": "Swamp (L86)_",
+			"export_name": "Swamp 8150",
 			"set": "HBB.0",
 			"collector_number": "86",
 			"layout": "normal",
@@ -5107,13 +5459,17 @@
 				"showcase"
 			],
 			"tags": [
-				"showcase-frame"
+				"showcase-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
 			"base_tags": [
-				"showcase-frame<Parchment>"
+				"showcase-frame<Parchment>",
+				"hbb.0<86>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5122,9 +5478,9 @@
 			"id": "6dea855c-1c71-45b9-8884-eb2efd40fa05",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L87",
+			"hcid": "8151",
 			"name": "Mountain",
-			"export_name": "Mountain (L87)_",
+			"export_name": "Mountain 8151",
 			"set": "HBB.0",
 			"collector_number": "87",
 			"layout": "normal",
@@ -5169,13 +5525,17 @@
 				"showcase"
 			],
 			"tags": [
-				"showcase-frame"
+				"showcase-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
 			"base_tags": [
-				"showcase-frame<Parchment>"
+				"showcase-frame<Parchment>",
+				"hbb.0<87>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5184,9 +5544,9 @@
 			"id": "d7374aaf-2e10-408b-84e2-9c96fefa351d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L88",
+			"hcid": "8152",
 			"name": "Forest",
-			"export_name": "Forest (L88)_",
+			"export_name": "Forest 8152",
 			"set": "HBB.0",
 			"collector_number": "88",
 			"layout": "normal",
@@ -5231,13 +5591,17 @@
 				"showcase"
 			],
 			"tags": [
-				"showcase-frame"
+				"showcase-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
 			"base_tags": [
-				"showcase-frame<Parchment>"
+				"showcase-frame<Parchment>",
+				"hbb.0<88>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5246,9 +5610,9 @@
 			"id": "3e1d420a-61ca-494a-855d-9280a137594f",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L89",
+			"hcid": "8153",
 			"name": "Wastes",
-			"export_name": "Wastes (L89)_",
+			"export_name": "Wastes 8153",
 			"set": "HBB.0",
 			"collector_number": "89",
 			"layout": "normal",
@@ -5284,13 +5648,17 @@
 				"showcase"
 			],
 			"tags": [
-				"showcase-frame"
+				"showcase-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
 			"base_tags": [
-				"showcase-frame<Parchment>"
+				"showcase-frame<Parchment>",
+				"hbb.0<89>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5299,9 +5667,9 @@
 			"id": "a56202fe-d694-4008-80c3-c58dc61fbb48",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L90",
+			"hcid": "8154",
 			"name": "Wastes",
-			"export_name": "Wastes (L90)_",
+			"export_name": "Wastes 8154",
 			"set": "HBB.0",
 			"collector_number": "90",
 			"layout": "normal",
@@ -5335,11 +5703,15 @@
 			"frame": "2003",
 			"tags": [
 				"misframe",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"misframe",
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<90>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5348,9 +5720,9 @@
 			"id": "3c341e3c-9349-4dbb-b132-b2bdb3fea4f5",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L91",
+			"hcid": "8155",
 			"name": "Island",
-			"export_name": "Island (L91)_",
+			"export_name": "Island 8155",
 			"set": "HBB.0",
 			"collector_number": "91",
 			"layout": "normal",
@@ -5390,7 +5762,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<91>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -5398,9 +5778,9 @@
 			"id": "4f0e6282-8ab5-4d80-bbca-6b4bf4c0801d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L92",
+			"hcid": "8156",
 			"name": "Forest",
-			"export_name": "Forest (L92)_",
+			"export_name": "Forest 8156",
 			"set": "HBB.0",
 			"collector_number": "92",
 			"layout": "normal",
@@ -5447,12 +5827,16 @@
 			"tags": [
 				"full-art",
 				"borderless",
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
 				"borderless",
-				"pokemon"
+				"pokemon",
+				"hbb.0<92>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5461,9 +5845,9 @@
 			"id": "857e5f7c-4357-43b9-9715-8a17ae3f94b0",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L93",
+			"hcid": "8157",
 			"name": "Forest",
-			"export_name": "Forest (L93)_",
+			"export_name": "Forest 8157",
 			"set": "HBB.0",
 			"collector_number": "93",
 			"layout": "normal",
@@ -5505,10 +5889,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0<93>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5517,9 +5905,9 @@
 			"id": "0bd69b9e-9160-4f07-919b-eae57fc6eda0",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L94",
+			"hcid": "8158",
 			"name": "Mountain",
-			"export_name": "Mountain (L94)_",
+			"export_name": "Mountain 8158",
 			"set": "HBB.0",
 			"collector_number": "94",
 			"layout": "normal",
@@ -5561,10 +5949,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0<94>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5573,9 +5965,9 @@
 			"id": "cf8b670b-bd79-4797-b050-da3833764b09",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L95",
+			"hcid": "8159",
 			"name": "Mountain",
-			"export_name": "Mountain (L95)_",
+			"export_name": "Mountain 8159",
 			"set": "HBB.0",
 			"collector_number": "95",
 			"layout": "normal",
@@ -5622,12 +6014,16 @@
 			"tags": [
 				"full-art",
 				"borderless",
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
 				"borderless",
-				"pokemon"
+				"pokemon",
+				"hbb.0<95>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5636,9 +6032,9 @@
 			"id": "67d46cf3-d402-4200-89d2-8eef59a00348",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L96",
+			"hcid": "8160",
 			"name": "Plains",
-			"export_name": "Plains (L96)_",
+			"export_name": "Plains 8160",
 			"set": "HBB.0",
 			"collector_number": "96",
 			"layout": "normal",
@@ -5680,10 +6076,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0<96>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5692,9 +6092,9 @@
 			"id": "1e59aac7-f6d2-4641-ab98-1685035feb68",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L97",
+			"hcid": "8161",
 			"name": "Plains",
-			"export_name": "Plains (L97)_",
+			"export_name": "Plains 8161",
 			"set": "HBB.0",
 			"collector_number": "97",
 			"layout": "normal",
@@ -5741,12 +6141,16 @@
 			"tags": [
 				"full-art",
 				"borderless",
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
 				"borderless",
-				"pokemon"
+				"pokemon",
+				"hbb.0<97>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5755,9 +6159,9 @@
 			"id": "3d910b1e-feff-434d-81e9-cd19070c3f12",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L98",
+			"hcid": "8162",
 			"name": "Island",
-			"export_name": "Island (L98)_",
+			"export_name": "Island 8162",
 			"set": "HBB.0",
 			"collector_number": "98",
 			"layout": "normal",
@@ -5799,10 +6203,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0<98>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5811,9 +6219,9 @@
 			"id": "d8b27751-8f86-44b9-bd99-4f68b85dfbb6",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L99",
+			"hcid": "8163",
 			"name": "Plains",
-			"export_name": "Plains (L99)_",
+			"export_name": "Plains 8163",
 			"set": "HBB.0",
 			"collector_number": "99",
 			"layout": "normal",
@@ -5855,10 +6263,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0<99>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5867,9 +6279,9 @@
 			"id": "8d76e128-373a-47a7-9d31-77b7c06f495e",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L100",
+			"hcid": "8164",
 			"name": "Island",
-			"export_name": "Island (L100)_",
+			"export_name": "Island 8164",
 			"set": "HBB.0",
 			"collector_number": "100",
 			"layout": "normal",
@@ -5911,10 +6323,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0<100>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5923,9 +6339,9 @@
 			"id": "8fc20b2b-83c3-4564-b54d-5530a58a6e82",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L101",
+			"hcid": "8165",
 			"name": "Mountain",
-			"export_name": "Mountain (L101)_",
+			"export_name": "Mountain 8165",
 			"set": "HBB.0",
 			"collector_number": "101",
 			"layout": "normal",
@@ -5967,10 +6383,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0<101>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -5979,9 +6399,9 @@
 			"id": "821bdbd1-0f29-4ca8-a018-f13fe8805c9b",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L102",
+			"hcid": "8166",
 			"name": "Forest",
-			"export_name": "Forest (L102)_",
+			"export_name": "Forest 8166",
 			"set": "HBB.0",
 			"collector_number": "102",
 			"layout": "normal",
@@ -6023,10 +6443,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0<102>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -6035,9 +6459,9 @@
 			"id": "89e139ba-aa4b-458b-8390-97f07f9464ba",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L103",
+			"hcid": "8167",
 			"name": "Swamp",
-			"export_name": "Swamp (L103)_",
+			"export_name": "Swamp 8167",
 			"set": "HBB.0",
 			"collector_number": "103",
 			"layout": "normal",
@@ -6079,10 +6503,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"pokemon"
+				"pokemon",
+				"hbb.0<103>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -6091,9 +6519,9 @@
 			"id": "eaaf065b-fdef-4b6b-af1d-42e5f5a43876",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L104",
+			"hcid": "8168",
 			"name": "Island",
-			"export_name": "Island (L104)_",
+			"export_name": "Island 8168",
 			"set": "HBB.0",
 			"collector_number": "104",
 			"layout": "normal",
@@ -6139,11 +6567,15 @@
 			],
 			"tags": [
 				"future-frame",
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"future-frame",
-				"full-art"
+				"full-art",
+				"hbb.0<104>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -6152,9 +6584,9 @@
 			"id": "dc6dd8f9-1706-4825-bd5d-7a6b47a171e3",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L105",
+			"hcid": "8169",
 			"name": "Mountain",
-			"export_name": "Mountain (L105)_",
+			"export_name": "Mountain 8169",
 			"set": "HBB.0",
 			"collector_number": "105",
 			"layout": "normal",
@@ -6200,11 +6632,15 @@
 			],
 			"tags": [
 				"future-frame",
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"future-frame",
-				"full-art"
+				"full-art",
+				"hbb.0<105>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -6213,9 +6649,9 @@
 			"id": "c789ac9b-5e31-4438-bf26-1af1040312d8",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L106",
+			"hcid": "8170",
 			"name": "Forest",
-			"export_name": "Forest (L106)_",
+			"export_name": "Forest 8170",
 			"set": "HBB.0",
 			"collector_number": "106",
 			"layout": "normal",
@@ -6257,10 +6693,14 @@
 			"border_color": "black",
 			"frame": "future",
 			"tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"future-frame"
+				"future-frame",
+				"hbb.0<106>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -6269,9 +6709,9 @@
 			"id": "9d3d6a3a-1362-4c11-9c14-1bf5adea559d",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L107",
+			"hcid": "8171",
 			"name": "Forest",
-			"export_name": "Forest (L107)_",
+			"export_name": "Forest 8171",
 			"set": "HBB.0",
 			"collector_number": "107",
 			"layout": "normal",
@@ -6311,7 +6751,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<107>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -6319,9 +6767,9 @@
 			"id": "5e1b1c20-cb9c-42ac-a02e-dc255a378db1",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L108",
+			"hcid": "8172",
 			"name": "Mountain",
-			"export_name": "Mountain (L108)_",
+			"export_name": "Mountain 8172",
 			"set": "HBB.0",
 			"collector_number": "108",
 			"layout": "normal",
@@ -6361,7 +6809,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<108>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -6369,9 +6825,9 @@
 			"id": "79735096-2bf9-4399-86e4-c263f1d5b5f4",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L109",
+			"hcid": "8173",
 			"name": "Island",
-			"export_name": "Island (L109)_",
+			"export_name": "Island 8173",
 			"set": "HBB.0",
 			"collector_number": "109",
 			"layout": "normal",
@@ -6411,7 +6867,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<109>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -6419,9 +6883,9 @@
 			"id": "5bea3048-dca5-4189-821b-9b213b5637d6",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L110",
+			"hcid": "8174",
 			"name": "Plains",
-			"export_name": "Plains (L110)_",
+			"export_name": "Plains 8174",
 			"set": "HBB.0",
 			"collector_number": "110",
 			"layout": "normal",
@@ -6461,7 +6925,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<110>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -6469,9 +6941,9 @@
 			"id": "05785814-bb42-45ce-a7bc-9977e4c8f34e",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L111",
+			"hcid": "8175",
 			"name": "Swamp",
-			"export_name": "Swamp (L111)_",
+			"export_name": "Swamp 8175",
 			"set": "HBB.0",
 			"collector_number": "111",
 			"layout": "normal",
@@ -6511,7 +6983,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<111>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -6519,9 +6999,9 @@
 			"id": "93c4691c-a820-4944-9d58-624d70e36e42",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L112",
+			"hcid": "8176",
 			"name": "Forest",
-			"export_name": "Forest (L112)_",
+			"export_name": "Forest 8176",
 			"set": "HBB.0",
 			"collector_number": "112",
 			"layout": "normal",
@@ -6561,7 +7041,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<112>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -6569,9 +7057,9 @@
 			"id": "1a2bab94-f655-4326-853a-ac2800b9cdd1",
 			"oracle_id": "5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L113",
+			"hcid": "8177",
 			"name": "Snow-Covered Island",
-			"export_name": "Snow-Covered Island (L113)_",
+			"export_name": "Snow-Covered Island 8177",
 			"set": "HBB.0",
 			"collector_number": "113",
 			"layout": "normal",
@@ -6603,7 +7091,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -6621,14 +7109,18 @@
 			],
 			"tags": [
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Snow-Covered Island #278 from KHM"
 			},
 			"base_tags": [
 				"ransomnote",
-				"ransom-over-real-card<Snow-Covered Island #278 from KHM>"
+				"ransom-over-real-card<Snow-Covered Island #278 from KHM>",
+				"hbb.0<113>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -6637,9 +7129,9 @@
 			"id": "f0f698e4-0bf6-4509-b2a7-657a47ee1a7e",
 			"oracle_id": "ca9f660b-e07d-4f42-a46e-abd0ca72510c",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L114",
+			"hcid": "8178",
 			"name": "Snow-Covered Mountain",
-			"export_name": "Snow-Covered Mountain (L114)_",
+			"export_name": "Snow-Covered Mountain 8178",
 			"set": "HBB.0",
 			"collector_number": "114",
 			"layout": "normal",
@@ -6671,7 +7163,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -6682,10 +7174,14 @@
 			"border_color": "black",
 			"frame": "2003",
 			"tags": [
-				"2003-frame"
+				"2003-frame",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"2003-frame"
+				"2003-frame",
+				"hbb.0<114>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -6694,9 +7190,9 @@
 			"id": "f207061c-f5ce-4004-a921-f2648bde05f7",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L115",
+			"hcid": "8179",
 			"name": "Swamp",
-			"export_name": "Swamp (L115)_",
+			"export_name": "Swamp 8179",
 			"set": "HBB.0",
 			"collector_number": "115",
 			"layout": "normal",
@@ -6736,7 +7232,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<115>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -6744,9 +7248,9 @@
 			"id": "4d92d95c-9597-4807-a5b5-8c2e5c175e93",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L116",
+			"hcid": "8180",
 			"name": "Mountain",
-			"export_name": "Mountain (L116)_",
+			"export_name": "Mountain 8180",
 			"set": "HBB.0",
 			"collector_number": "116",
 			"layout": "normal",
@@ -6791,10 +7295,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<116>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -6803,9 +7311,9 @@
 			"id": "ddd2331f-a903-4231-813c-d22b265ddadf",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L117",
+			"hcid": "8181",
 			"name": "Nebula",
-			"export_name": "Nebula (L117)_",
+			"export_name": "Nebula 8181",
 			"set": "HBB.0",
 			"collector_number": "117",
 			"layout": "normal",
@@ -6836,7 +7344,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -6851,11 +7359,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<117>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -6864,9 +7376,9 @@
 			"id": "57295125-85ee-41d5-bd26-e84587a654c1",
 			"oracle_id": "2c268e90-9bec-45c3-9c99-436761643f3c",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L118",
+			"hcid": "8182",
 			"name": "Snow-Covered Nebula",
-			"export_name": "Snow-Covered Nebula (L118)_",
+			"export_name": "Snow-Covered Nebula 8182",
 			"set": "HBB.0",
 			"collector_number": "118",
 			"layout": "normal",
@@ -6898,7 +7410,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -6913,13 +7425,17 @@
 				"snow"
 			],
 			"tags": [
-				"showcase-frame"
+				"showcase-frame",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"tag_notes": {
 				"showcase-frame": "Viking"
 			},
 			"base_tags": [
-				"showcase-frame<Viking>"
+				"showcase-frame<Viking>",
+				"hbb.0<118>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -6928,9 +7444,9 @@
 			"id": "054ce96e-44cd-44ed-8708-2248a9d7a37d",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L119",
+			"hcid": "8183",
 			"name": "Nebula",
-			"export_name": "Nebula (L119)_",
+			"export_name": "Nebula 8183",
 			"set": "HBB.0",
 			"collector_number": "119",
 			"layout": "normal",
@@ -6961,7 +7477,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -6976,11 +7492,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.0<119>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -6989,9 +7509,9 @@
 			"id": "415a5598-c430-4257-a4da-97dc2d0f57be",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L120",
+			"hcid": "8184",
 			"name": "Plains",
-			"export_name": "Plains (L120)_",
+			"export_name": "Plains 8184",
 			"set": "HBB.0",
 			"collector_number": "120",
 			"layout": "normal",
@@ -7032,7 +7552,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.0",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.0<120>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -7040,9 +7568,9 @@
 			"id": "eb1e6559-9fc3-4360-a35f-f800bc9f5bfd",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L121",
+			"hcid": "8185",
 			"name": "Forest",
-			"export_name": "Forest (L121)_",
+			"export_name": "Forest 8185",
 			"set": "HBB.0",
 			"collector_number": "121",
 			"layout": "normal",
@@ -7087,10 +7615,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<121>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7099,9 +7631,9 @@
 			"id": "0e4da2e8-6320-4b2d-86c7-d488e264395e",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L122",
+			"hcid": "8186",
 			"name": "Mountain",
-			"export_name": "Mountain (L122)_",
+			"export_name": "Mountain 8186",
 			"set": "HBB.0",
 			"collector_number": "122",
 			"layout": "normal",
@@ -7146,10 +7678,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.0",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.0<122>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7158,9 +7694,9 @@
 			"id": "3b9742ae-9219-491c-b5ee-3a6382c31c22",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L123",
+			"hcid": "8187",
 			"name": "Plains",
-			"export_name": "Plains (L123)_",
+			"export_name": "Plains 8187",
 			"set": "HBB.4",
 			"collector_number": "1",
 			"layout": "normal",
@@ -7207,12 +7743,16 @@
 			"tags": [
 				"sideways",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"sideways",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.4<1>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7221,9 +7761,9 @@
 			"id": "11f2e9d6-171b-429c-a9b3-3558de939731",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L124",
+			"hcid": "8188",
 			"name": "Plains",
-			"export_name": "Plains (L124)_",
+			"export_name": "Plains 8188",
 			"set": "HBB.4",
 			"collector_number": "2",
 			"rarity": "mythic",
@@ -7270,11 +7810,15 @@
 			],
 			"tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4<2>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7283,9 +7827,9 @@
 			"id": "43d7b23c-3f27-40ca-b941-e340af27066b",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L125",
+			"hcid": "8189",
 			"name": "Plains",
-			"export_name": "Plains (L125)_",
+			"export_name": "Plains 8189",
 			"set": "HBB.4",
 			"collector_number": "3",
 			"rarity": "uncommon",
@@ -7333,12 +7877,16 @@
 			"tags": [
 				"full-art",
 				"jank-frame",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
 				"jank-frame",
-				"borderless"
+				"borderless",
+				"hbb.4<3>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7347,9 +7895,9 @@
 			"id": "3b775d99-f288-416b-8a88-5741e3d274b9",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L126",
+			"hcid": "8190",
 			"name": "Plains",
-			"export_name": "Plains (L126)_",
+			"export_name": "Plains 8190",
 			"set": "HBB.4",
 			"collector_number": "4",
 			"rarity": "rare",
@@ -7393,11 +7941,15 @@
 			"frame": "website_app",
 			"tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4<4>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7406,9 +7958,9 @@
 			"id": "95678486-b11a-4c93-9145-c3d848ecd0ab",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L127",
+			"hcid": "8191",
 			"name": "Plains",
-			"export_name": "Plains (L127)_",
+			"export_name": "Plains 8191",
 			"set": "HBB.4",
 			"collector_number": "5",
 			"layout": "normal",
@@ -7455,12 +8007,16 @@
 			"tags": [
 				"full-art",
 				"jank-frame",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
 				"jank-frame",
-				"borderless"
+				"borderless",
+				"hbb.4<5>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7469,9 +8025,9 @@
 			"id": "ad1db88a-7544-4bba-9c4f-4dae00ad4a04",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L128",
+			"hcid": "8192",
 			"name": "Plains",
-			"export_name": "Plains (L128)_",
+			"export_name": "Plains 8192",
 			"set": "HBB.4",
 			"collector_number": "6",
 			"layout": "normal",
@@ -7514,11 +8070,15 @@
 			"frame": "website_app",
 			"tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4<6>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7527,9 +8087,9 @@
 			"id": "9c98b9bc-f88a-4b12-9987-808be909946d",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L129",
+			"hcid": "8193",
 			"name": "Plains",
-			"export_name": "Plains (L129)_",
+			"export_name": "Plains 8193",
 			"set": "HBB.4",
 			"collector_number": "7",
 			"layout": "normal",
@@ -7574,10 +8134,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.4<7>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7586,9 +8150,9 @@
 			"id": "67edd74c-24bf-4bdf-a696-1ddd93e0be7d",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L130",
+			"hcid": "8194",
 			"name": "Island",
-			"export_name": "Island (L130)_",
+			"export_name": "Island 8194",
 			"set": "HBB.4",
 			"collector_number": "8",
 			"layout": "normal",
@@ -7630,10 +8194,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"intentional-low-quality"
+				"intentional-low-quality",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"intentional-low-quality"
+				"intentional-low-quality",
+				"hbb.4<8>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7642,9 +8210,9 @@
 			"id": "faf33b6d-013d-4bbc-889e-d1f3e2ee52a4",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L131",
+			"hcid": "8195",
 			"name": "Island",
-			"export_name": "Island (L131)_",
+			"export_name": "Island 8195",
 			"set": "HBB.4",
 			"collector_number": "9",
 			"rarity": "uncommon",
@@ -7685,7 +8253,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.4",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.4<9>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -7693,9 +8269,9 @@
 			"id": "2839fdf5-487f-476f-bec4-515d4e8c2185",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L132",
+			"hcid": "8196",
 			"name": "Island",
-			"export_name": "Island (L132)_",
+			"export_name": "Island 8196",
 			"set": "HBB.4",
 			"collector_number": "10",
 			"rarity": "mythic",
@@ -7742,11 +8318,15 @@
 			],
 			"tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4<10>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7755,9 +8335,9 @@
 			"id": "a2772151-645e-4e10-a563-e0a139f8d26a",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L133",
+			"hcid": "8197",
 			"name": "Island",
-			"export_name": "Island (L133)_",
+			"export_name": "Island 8197",
 			"set": "HBB.4",
 			"collector_number": "11",
 			"layout": "normal",
@@ -7799,10 +8379,14 @@
 			"border_color": "black",
 			"frame": "jank",
 			"tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4<11>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7811,9 +8395,9 @@
 			"id": "939fe6ac-ca43-4f68-ae3b-26213e2f1cb4",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L134",
+			"hcid": "8198",
 			"name": "Island",
-			"export_name": "Island (L134)_",
+			"export_name": "Island 8198",
 			"set": "HBB.4",
 			"collector_number": "12",
 			"rarity": "rare",
@@ -7859,7 +8443,9 @@
 				"1993-frame",
 				"double-border",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Tropical Island"
@@ -7868,7 +8454,9 @@
 				"1993-frame",
 				"double-border",
 				"ransomnote",
-				"ransom-over-real-card<Tropical Island>"
+				"ransom-over-real-card<Tropical Island>",
+				"hbb.4<12>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7877,9 +8465,9 @@
 			"id": "910f4287-3274-4dba-b2b0-fa3cbbc5d7a9",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L135",
+			"hcid": "8199",
 			"name": "Island",
-			"export_name": "Island (L135)_",
+			"export_name": "Island 8199",
 			"set": "HBB.4",
 			"collector_number": "13",
 			"layout": "normal",
@@ -7921,10 +8509,14 @@
 			"border_color": "black",
 			"frame": "jank",
 			"tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4<13>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -7933,9 +8525,9 @@
 			"id": "6da1e169-0932-48d9-8efa-481dd0a44493",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L136",
+			"hcid": "8200",
 			"name": "Island",
-			"export_name": "Island (L136)_",
+			"export_name": "Island 8200",
 			"set": "HBB.4",
 			"collector_number": "14",
 			"layout": "normal",
@@ -7975,7 +8567,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.4",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.4<14>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -7983,9 +8583,9 @@
 			"id": "b2a08e54-013e-470b-9fc6-8e05cf78e265",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L137",
+			"hcid": "8201",
 			"name": "Island",
-			"export_name": "Island (L137)_",
+			"export_name": "Island 8201",
 			"set": "HBB.4",
 			"collector_number": "15",
 			"layout": "normal",
@@ -8027,10 +8627,14 @@
 			"border_color": "black",
 			"frame": "jank",
 			"tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4<15>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8039,9 +8643,9 @@
 			"id": "23c7fa88-3cd3-45f1-9a58-f58a59d6d647",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L138",
+			"hcid": "8202",
 			"name": "Island",
-			"export_name": "Island (L138)_",
+			"export_name": "Island 8202",
 			"set": "HBB.4",
 			"collector_number": "16",
 			"layout": "normal",
@@ -8086,10 +8690,14 @@
 				"fullart"
 			],
 			"tags": [
-				"full-art"
+				"full-art",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"full-art"
+				"full-art",
+				"hbb.4<16>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8098,9 +8706,9 @@
 			"id": "6ce24c5f-064e-4d32-aeeb-352369b92ea8",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L139",
+			"hcid": "8203",
 			"name": "Swamp",
-			"export_name": "Swamp (L139)_",
+			"export_name": "Swamp 8203",
 			"set": "HBB.4",
 			"collector_number": "17",
 			"layout": "normal",
@@ -8152,7 +8760,9 @@
 				"ub-frame",
 				"ransomnote",
 				"ransom-over-real-card",
-				"white-watermark"
+				"white-watermark",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Plains #306 from 40K"
@@ -8164,7 +8774,9 @@
 				"ub-frame",
 				"ransomnote",
 				"ransom-over-real-card<Plains #306 from 40K>",
-				"white-watermark"
+				"white-watermark",
+				"hbb.4<17>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8173,9 +8785,9 @@
 			"id": "834d3a76-0825-4980-8659-13e574af0c8c",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L140",
+			"hcid": "8204",
 			"name": "Swamp",
-			"export_name": "Swamp (L140)_",
+			"export_name": "Swamp 8204",
 			"set": "HBB.4",
 			"collector_number": "18",
 			"rarity": "uncommon",
@@ -8223,12 +8835,16 @@
 			"tags": [
 				"sideways",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"sideways",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.4<18>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8237,9 +8853,9 @@
 			"id": "58b69f0d-2687-43bb-acbf-c0ee5518ba4f",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L141",
+			"hcid": "8205",
 			"name": "Swamp",
-			"export_name": "Swamp (L141)_",
+			"export_name": "Swamp 8205",
 			"set": "HBB.4",
 			"collector_number": "19",
 			"layout": "normal",
@@ -8282,11 +8898,15 @@
 			"frame": "jank",
 			"tags": [
 				"intentional-low-quality",
-				"jank-frame"
+				"jank-frame",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"intentional-low-quality",
-				"jank-frame"
+				"jank-frame",
+				"hbb.4<19>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8295,9 +8915,9 @@
 			"id": "3f0ab793-c2ee-4ef4-baa9-ea231d9f9b12",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L142",
+			"hcid": "8206",
 			"name": "Swamp",
-			"export_name": "Swamp (L142)_",
+			"export_name": "Swamp 8206",
 			"set": "HBB.4",
 			"collector_number": "20",
 			"rarity": "mythic",
@@ -8344,11 +8964,15 @@
 			],
 			"tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4<20>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8357,9 +8981,9 @@
 			"id": "a15ee682-41e1-47fc-a1e1-e133046506f7",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L143",
+			"hcid": "8207",
 			"name": "Swamp",
-			"export_name": "Swamp (L143)_",
+			"export_name": "Swamp 8207",
 			"set": "HBB.4",
 			"collector_number": "21",
 			"rarity": "rare",
@@ -8403,11 +9027,15 @@
 			"frame": "2015",
 			"tags": [
 				"unusual-proportions",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"unusual-proportions",
-				"borderless"
+				"borderless",
+				"hbb.4<21>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8416,9 +9044,9 @@
 			"id": "14987e70-ef8e-4dfa-af91-1004e15949a4",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L144",
+			"hcid": "8208",
 			"name": "Swamp",
-			"export_name": "Swamp (L144)_",
+			"export_name": "Swamp 8208",
 			"set": "HBB.4",
 			"collector_number": "22",
 			"layout": "normal",
@@ -8464,7 +9092,9 @@
 				"double-border",
 				"ransomnote",
 				"ransom-over-real-card",
-				"sharpie"
+				"sharpie",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Black Lotus"
@@ -8474,7 +9104,9 @@
 				"double-border",
 				"ransomnote",
 				"ransom-over-real-card<Black Lotus>",
-				"sharpie"
+				"sharpie",
+				"hbb.4<22>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8483,9 +9115,9 @@
 			"id": "9ff80339-c41c-4f98-aa48-ea9c1711ab53",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L145",
+			"hcid": "8209",
 			"name": "Swamp",
-			"export_name": "Swamp (L145)_",
+			"export_name": "Swamp 8209",
 			"set": "HBB.4",
 			"collector_number": "23",
 			"layout": "normal",
@@ -8532,12 +9164,16 @@
 			"tags": [
 				"no-art",
 				"2003-frame",
-				"phyrexian-text"
+				"phyrexian-text",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"no-art",
 				"2003-frame",
-				"phyrexian-text"
+				"phyrexian-text",
+				"hbb.4<23>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8546,9 +9182,9 @@
 			"id": "7cbe71f7-6dfb-46d8-97f4-8dd6b9307974",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L146",
+			"hcid": "8210",
 			"name": "Swamp",
-			"export_name": "Swamp (L146)_",
+			"export_name": "Swamp 8210",
 			"set": "HBB.4",
 			"collector_number": "24",
 			"layout": "normal",
@@ -8594,11 +9230,15 @@
 			],
 			"tags": [
 				"full-art",
-				"unique-border"
+				"unique-border",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"unique-border"
+				"unique-border",
+				"hbb.4<24>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8607,9 +9247,9 @@
 			"id": "f17eb434-8eb8-4701-b5df-d56d19d7f28b",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L147",
+			"hcid": "8211",
 			"name": "Swamp",
-			"export_name": "Swamp (L147)_",
+			"export_name": "Swamp 8211",
 			"set": "HBB.4",
 			"collector_number": "25",
 			"layout": "normal",
@@ -8655,11 +9295,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.4<25>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8668,9 +9312,9 @@
 			"id": "99f87759-7c3e-4aea-971c-5ea7cbc6c108",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L148",
+			"hcid": "8212",
 			"name": "Mountain",
-			"export_name": "Mountain (L148)_",
+			"export_name": "Mountain 8212",
 			"set": "HBB.4",
 			"collector_number": "26",
 			"layout": "normal",
@@ -8716,7 +9360,9 @@
 				"2003-frame",
 				"misframe",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Blood Moon"
@@ -8725,7 +9371,9 @@
 				"2003-frame",
 				"misframe",
 				"ransomnote",
-				"ransom-over-real-card<Blood Moon>"
+				"ransom-over-real-card<Blood Moon>",
+				"hbb.4<26>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8734,9 +9382,9 @@
 			"id": "9df5f8d8-8346-42de-9a04-fcefe427f101",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L149",
+			"hcid": "8213",
 			"name": "Mountain",
-			"export_name": "Mountain (L149)_",
+			"export_name": "Mountain 8213",
 			"set": "HBB.4",
 			"collector_number": "27",
 			"layout": "normal",
@@ -8779,11 +9427,15 @@
 			"frame": "website_app",
 			"tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4<27>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8792,9 +9444,9 @@
 			"id": "19a49400-a514-4d23-a619-d8bdf02967cb",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L150",
+			"hcid": "8214",
 			"name": "Mountain",
-			"export_name": "Mountain (L150)_",
+			"export_name": "Mountain 8214",
 			"set": "HBB.4",
 			"collector_number": "28",
 			"layout": "normal",
@@ -8838,7 +9490,9 @@
 			"tags": [
 				"1993-frame",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Urza's Tower d from ATQ"
@@ -8846,7 +9500,9 @@
 			"base_tags": [
 				"1993-frame",
 				"ransomnote",
-				"ransom-over-real-card<Urza's Tower d from ATQ>"
+				"ransom-over-real-card<Urza's Tower d from ATQ>",
+				"hbb.4<28>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8855,9 +9511,9 @@
 			"id": "3decfcf9-80f5-47b4-8bac-a38306e8098f",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L151",
+			"hcid": "8215",
 			"name": "Mountain",
-			"export_name": "Mountain (L151)_",
+			"export_name": "Mountain 8215",
 			"set": "HBB.4",
 			"collector_number": "29",
 			"layout": "normal",
@@ -8899,10 +9555,14 @@
 			"border_color": "black",
 			"frame": "yugioh",
 			"tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"yugioh-frame"
+				"yugioh-frame",
+				"hbb.4<29>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8911,9 +9571,9 @@
 			"id": "023553e0-f21f-4f49-ac4c-2210acfa36f5",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L152",
+			"hcid": "8216",
 			"name": "Mountain",
-			"export_name": "Mountain (L152)_",
+			"export_name": "Mountain 8216",
 			"set": "HBB.4",
 			"collector_number": "30",
 			"rarity": "mythic",
@@ -8960,11 +9620,15 @@
 			],
 			"tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4<30>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -8973,9 +9637,9 @@
 			"id": "eae83c11-62bd-4b48-9bf2-cff5457119d4",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L153",
+			"hcid": "8217",
 			"name": "Mountain",
-			"export_name": "Mountain (L153)_",
+			"export_name": "Mountain 8217",
 			"set": "HBB.4",
 			"collector_number": "31",
 			"layout": "normal",
@@ -9018,11 +9682,15 @@
 			"frame": "website_app",
 			"tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4<31>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9031,9 +9699,9 @@
 			"id": "aac5a3a5-e475-48a9-b9fc-0f7e89aa8790",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L154",
+			"hcid": "8218",
 			"name": "Mountain",
-			"export_name": "Mountain (L154)_",
+			"export_name": "Mountain 8218",
 			"set": "HBB.4",
 			"collector_number": "32",
 			"layout": "normal",
@@ -9079,11 +9747,15 @@
 			],
 			"tags": [
 				"monochrome",
-				"no-art"
+				"no-art",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"monochrome",
-				"no-art"
+				"no-art",
+				"hbb.4<32>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9092,9 +9764,9 @@
 			"id": "06461afe-1798-4e10-aad3-e82b02d2e6e4",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L155",
+			"hcid": "8219",
 			"name": "Mountain",
-			"export_name": "Mountain (L155)_",
+			"export_name": "Mountain 8219",
 			"set": "HBB.4",
 			"collector_number": "33",
 			"rarity": "rare",
@@ -9137,10 +9809,14 @@
 			"border_color": "black",
 			"frame": "jank",
 			"tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4<33>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9149,9 +9825,9 @@
 			"id": "dcbfad75-e117-4cc1-822e-19d8f41c759b",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L156",
+			"hcid": "8220",
 			"name": "Mountain",
-			"export_name": "Mountain (L156)_",
+			"export_name": "Mountain 8220",
 			"set": "HBB.4",
 			"collector_number": "34",
 			"rarity": "uncommon",
@@ -9194,10 +9870,14 @@
 			"border_color": "black",
 			"frame": "jank",
 			"tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4<34>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9206,9 +9886,9 @@
 			"id": "897be83a-8cb7-42b9-9ed3-16e5a73f34b6",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L157",
+			"hcid": "8221",
 			"name": "Mountain",
-			"export_name": "Mountain (L157)_",
+			"export_name": "Mountain 8221",
 			"set": "HBB.4",
 			"collector_number": "35",
 			"layout": "normal",
@@ -9250,10 +9930,14 @@
 			"border_color": "black",
 			"frame": "jank",
 			"tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4<35>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9262,9 +9946,9 @@
 			"id": "bfe74d50-e3fa-44f7-9e0a-8f930176c27e",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L158",
+			"hcid": "8222",
 			"name": "Forest",
-			"export_name": "Forest (L158)_",
+			"export_name": "Forest 8222",
 			"set": "HBB.4",
 			"collector_number": "36",
 			"layout": "normal",
@@ -9307,11 +9991,15 @@
 			"frame": "website_app",
 			"tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4<36>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9320,9 +10008,9 @@
 			"id": "b99b4206-4ba4-4d16-96d3-b2714440f5d8",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L159",
+			"hcid": "8223",
 			"name": "Forest",
-			"export_name": "Forest (L159)_",
+			"export_name": "Forest 8223",
 			"set": "HBB.4",
 			"collector_number": "37",
 			"rarity": "uncommon",
@@ -9363,7 +10051,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.4",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.4<37>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -9371,9 +10067,9 @@
 			"id": "56a229c3-5a5b-4d17-9125-c58cde30cf88",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L160",
+			"hcid": "8224",
 			"name": "Forest",
-			"export_name": "Forest (L160)_",
+			"export_name": "Forest 8224",
 			"set": "HBB.4",
 			"collector_number": "38",
 			"rarity": "mythic",
@@ -9420,11 +10116,15 @@
 			],
 			"tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4<38>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9433,9 +10133,9 @@
 			"id": "8724d465-ee54-489f-8017-48a634da91cb",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L161",
+			"hcid": "8225",
 			"name": "Forest",
-			"export_name": "Forest (L161)_",
+			"export_name": "Forest 8225",
 			"set": "HBB.4",
 			"collector_number": "39",
 			"layout": "normal",
@@ -9478,11 +10178,15 @@
 			"frame": "jank",
 			"tags": [
 				"jank-frame",
-				"no-border"
+				"no-border",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"jank-frame",
-				"no-border"
+				"no-border",
+				"hbb.4<39>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9491,9 +10195,9 @@
 			"id": "674fc7d6-94bb-4fae-9ea2-63985a32ab96",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L162",
+			"hcid": "8226",
 			"name": "Forest",
-			"export_name": "Forest (L162)_",
+			"export_name": "Forest 8226",
 			"set": "HBB.4",
 			"collector_number": "40",
 			"layout": "normal",
@@ -9535,10 +10239,14 @@
 			"border_color": "black",
 			"frame": "jank",
 			"tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"jank-frame"
+				"jank-frame",
+				"hbb.4<40>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9547,9 +10255,9 @@
 			"id": "bc5786ed-6b5d-429c-918a-fb56f9cfb96c",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L163",
+			"hcid": "8227",
 			"name": "Forest",
-			"export_name": "Forest (L163)_",
+			"export_name": "Forest 8227",
 			"set": "HBB.4",
 			"collector_number": "41",
 			"rarity": "rare",
@@ -9593,11 +10301,15 @@
 			"frame": "website_app",
 			"tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"website-app-frame",
-				"borderless"
+				"borderless",
+				"hbb.4<41>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9606,9 +10318,9 @@
 			"id": "c32b03c4-b97c-4a54-8603-b6c361794d30",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L164",
+			"hcid": "8228",
 			"name": "Wastes",
-			"export_name": "Wastes (L164)_",
+			"export_name": "Wastes 8228",
 			"set": "HBB.4",
 			"collector_number": "42",
 			"rarity": "uncommon",
@@ -9640,7 +10352,15 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hbb.4",
+				"card-in-scryfall"
+			],
+			"base_tags": [
+				"hbb.4<42>",
+				"card-in-scryfall"
+			]
 		},
 		{
 			"object": "card",
@@ -9648,9 +10368,9 @@
 			"id": "61a07865-302b-488b-95c9-690013c4dbb8",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L165",
+			"hcid": "8229",
 			"name": "Wastes",
-			"export_name": "Wastes (L165)_",
+			"export_name": "Wastes 8229",
 			"set": "HBB.4",
 			"collector_number": "43",
 			"rarity": "rare",
@@ -9688,11 +10408,15 @@
 			],
 			"tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"1997-frame",
-				"full-art"
+				"full-art",
+				"hbb.4<43>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9701,9 +10425,9 @@
 			"id": "7d10085c-a7d7-40c5-ba09-a613c00a73e7",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L166",
+			"hcid": "8230",
 			"name": "Wastes",
-			"export_name": "Wastes (L166)_",
+			"export_name": "Wastes 8230",
 			"set": "HBB.4",
 			"collector_number": "44",
 			"layout": "normal",
@@ -9738,14 +10462,18 @@
 			"frame": "2015",
 			"tags": [
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Encroaching Wastes"
 			},
 			"base_tags": [
 				"ransomnote",
-				"ransom-over-real-card<Encroaching Wastes>"
+				"ransom-over-real-card<Encroaching Wastes>",
+				"hbb.4<44>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9754,9 +10482,9 @@
 			"id": "9ec12a01-3e95-44ee-9534-653823578157",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L167",
+			"hcid": "8231",
 			"name": "Wastes",
-			"export_name": "Wastes (L167)_",
+			"export_name": "Wastes 8231",
 			"set": "HBB.4",
 			"collector_number": "45",
 			"rarity": "mythic",
@@ -9794,11 +10522,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.4",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.4<45>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -9807,9 +10539,9 @@
 			"id": "f7159036-be27-4e72-b52b-af983077c558",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L168",
+			"hcid": "8232",
 			"name": "Nebula",
-			"export_name": "Nebula (L168)_",
+			"export_name": "Nebula 8232",
 			"set": "HBB.7",
 			"collector_number": "1",
 			"layout": "normal",
@@ -9842,7 +10574,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -9856,10 +10588,14 @@
 				"noart"
 			],
 			"tags": [
-				"no-art"
+				"no-art",
+				"hbb.7",
+				"has-other-prints"
 			],
 			"base_tags": [
-				"no-art"
+				"no-art",
+				"hbb.7<1>",
+				"has-other-prints"
 			],
 			"all_parts": [
 				{
@@ -9993,9 +10729,9 @@
 			"id": "65c93f00-8221-4eee-bebc-0454bd2d08e0",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L169",
+			"hcid": "8233",
 			"name": "Nebula",
-			"export_name": "Nebula (L169)_",
+			"export_name": "Nebula 8233",
 			"set": "HBB.L",
 			"collector_number": "1",
 			"layout": "normal",
@@ -10028,7 +10764,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -10040,11 +10776,15 @@
 			"frame": "1993",
 			"tags": [
 				"1993-frame",
-				"double-border"
+				"double-border",
+				"hbb.l",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"1993-frame",
-				"double-border"
+				"double-border",
+				"hbb.l<1>",
+				"has-other-prints"
 			],
 			"all_parts": [
 				{
@@ -10109,9 +10849,9 @@
 			"id": "2d836916-66a8-4096-96b3-e1b469cde363",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
 			"oracle_id_is_scryfall": true,
-			"hcid": "L170",
+			"hcid": "8234",
 			"name": "Nebula",
-			"export_name": "Nebula (L170)_",
+			"export_name": "Nebula 8234",
 			"set": "HBB.L",
 			"collector_number": "2",
 			"layout": "normal",
@@ -10144,7 +10884,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -10159,11 +10899,15 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.l",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.l<2>",
+				"has-other-prints"
 			],
 			"all_parts": [
 				{
@@ -10184,9 +10928,9 @@
 			"kind": "land",
 			"id": "49b95cd5-2301-4050-a250-7240674f6c24",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
-			"hcid": "L171",
+			"hcid": "8235",
 			"name": "Nebula",
-			"export_name": "Nebula (L171)_",
+			"export_name": "Nebula 8235",
 			"set": "HBB.9",
 			"collector_number": "1",
 			"layout": "normal",
@@ -10219,7 +10963,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -10235,11 +10979,15 @@
 			],
 			"tags": [
 				"full-art",
-				"universes-beyond-frame"
+				"universes-beyond-frame",
+				"hbb.9",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"full-art",
-				"universes-beyond-frame"
+				"universes-beyond-frame",
+				"hbb.9<1>",
+				"has-other-prints"
 			],
 			"all_parts": [
 				{
@@ -10271,9 +11019,10 @@
 			"kind": "land",
 			"id": "a3afdd28-a648-4264-8441-ae0a6c6f4ccb",
 			"oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
-			"hcid": "L172",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8236",
 			"name": "Plains",
-			"export_name": "Plains (L172)_",
+			"export_name": "Plains 8236",
 			"set": "SCL.4",
 			"collector_number": "16",
 			"layout": "normal",
@@ -10320,11 +11069,15 @@
 			"frame": "2015",
 			"tags": [
 				"scl4",
-				"jo-sesh"
+				"jo-sesh",
+				"card-in-scryfall",
+				"scl"
 			],
 			"base_tags": [
 				"scl4",
-				"jo-sesh"
+				"jo-sesh",
+				"card-in-scryfall",
+				"scl<16>"
 			]
 		},
 		{
@@ -10332,9 +11085,10 @@
 			"kind": "land",
 			"id": "d77ea838-848a-4e2f-8fd2-7cfdbf9d0a7f",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
-			"hcid": "L173",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8237",
 			"name": "Island",
-			"export_name": "Island (L173)_",
+			"export_name": "Island 8237",
 			"set": "SCL.4",
 			"collector_number": "17",
 			"layout": "normal",
@@ -10383,11 +11137,15 @@
 			],
 			"tags": [
 				"scl4",
-				"full-art"
+				"full-art",
+				"card-in-scryfall",
+				"scl"
 			],
 			"base_tags": [
 				"scl4",
-				"full-art"
+				"full-art",
+				"card-in-scryfall",
+				"scl<17>"
 			]
 		},
 		{
@@ -10395,9 +11153,9 @@
 			"kind": "land",
 			"id": "a90ac0a0-469d-435c-9439-1e475966fc87",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
-			"hcid": "L174",
+			"hcid": "8238",
 			"name": "Nebula",
-			"export_name": "Nebula (L174)_",
+			"export_name": "Nebula 8238",
 			"set": "SCL.4",
 			"collector_number": "18",
 			"layout": "normal",
@@ -10429,7 +11187,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -10452,7 +11210,9 @@
 				"borderless",
 				"showcase-frame",
 				"full-art",
-				"inverted-text"
+				"inverted-text",
+				"has-other-prints",
+				"scl"
 			],
 			"tag_notes": {
 				"showcase-frame": "Stellar Sights"
@@ -10462,7 +11222,9 @@
 				"borderless",
 				"showcase-frame<Stellar Sights>",
 				"full-art",
-				"inverted-text"
+				"inverted-text",
+				"has-other-prints",
+				"scl<18>"
 			]
 		},
 		{
@@ -10470,9 +11232,10 @@
 			"kind": "land",
 			"id": "02ec08d1-3c5a-4386-9d1f-bdcd4ac82af7",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
-			"hcid": "L175",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8239",
 			"name": "Swamp",
-			"export_name": "Swamp (L175)_",
+			"export_name": "Swamp 8239",
 			"set": "SCL.4",
 			"collector_number": "19",
 			"layout": "normal",
@@ -10518,10 +11281,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"scl4"
+				"scl4",
+				"card-in-scryfall",
+				"scl"
 			],
 			"base_tags": [
-				"scl4"
+				"scl4",
+				"card-in-scryfall",
+				"scl<19>"
 			]
 		},
 		{
@@ -10529,9 +11296,10 @@
 			"kind": "land",
 			"id": "e25f9f45-847c-4a7a-9fc6-2336c75f74ad",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
-			"hcid": "L176",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8240",
 			"name": "Mountain",
-			"export_name": "Mountain (L176)_",
+			"export_name": "Mountain 8240",
 			"set": "SCL.4",
 			"collector_number": "20",
 			"layout": "normal",
@@ -10579,12 +11347,16 @@
 			"tags": [
 				"scl4",
 				"1997-frame",
-				"white-border"
+				"white-border",
+				"card-in-scryfall",
+				"scl"
 			],
 			"base_tags": [
 				"scl4",
 				"1997-frame",
-				"white-border"
+				"white-border",
+				"card-in-scryfall",
+				"scl<20>"
 			]
 		},
 		{
@@ -10592,9 +11364,10 @@
 			"kind": "land",
 			"id": "5c5e6f50-8ee5-49f3-9ea2-2cd875138c40",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
-			"hcid": "L177",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8241",
 			"name": "Forest",
-			"export_name": "Forest (L177)_",
+			"export_name": "Forest 8241",
 			"set": "SCL.4",
 			"collector_number": "21",
 			"layout": "normal",
@@ -10640,10 +11413,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"scl4"
+				"scl4",
+				"card-in-scryfall",
+				"scl"
 			],
 			"base_tags": [
-				"scl4"
+				"scl4",
+				"card-in-scryfall",
+				"scl<21>"
 			]
 		},
 		{
@@ -10651,9 +11428,10 @@
 			"kind": "land",
 			"id": "0f949438-8d1c-4e54-8e92-dee960517374",
 			"oracle_id": "05d24b0c-904a-46b6-b42a-96a4d91a0dd4",
-			"hcid": "L178",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8242",
 			"name": "Wastes",
-			"export_name": "Wastes (L178)_",
+			"export_name": "Wastes 8242",
 			"set": "SCL.4",
 			"collector_number": "22",
 			"layout": "normal",
@@ -10693,10 +11471,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"scl4"
+				"scl4",
+				"card-in-scryfall",
+				"scl"
 			],
 			"base_tags": [
-				"scl4"
+				"scl4",
+				"card-in-scryfall",
+				"scl<22>"
 			]
 		},
 		{
@@ -10704,9 +11486,10 @@
 			"kind": "land",
 			"id": "b3af5d9e-d38e-4ab1-981f-72c317357da6",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
-			"hcid": "L179",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8243",
 			"name": "Mountain",
-			"export_name": "Mountain (L179)_",
+			"export_name": "Mountain 8243",
 			"set": "HBB.S",
 			"collector_number": "1",
 			"layout": "normal",
@@ -10754,12 +11537,16 @@
 			"tags": [
 				"scl4-veto",
 				"jank-frame",
-				"no-border"
+				"no-border",
+				"hbb.s",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"scl4-veto",
 				"jank-frame",
-				"no-border"
+				"no-border",
+				"hbb.s<1>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -10767,9 +11554,9 @@
 			"kind": "land",
 			"id": "afb7aabb-df9f-4b58-b326-1ba605b4b5a6",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
-			"hcid": "L180",
+			"hcid": "8244",
 			"name": "Nebula",
-			"export_name": "Nebula (L180)_",
+			"export_name": "Nebula 8244",
 			"set": "HBB.S",
 			"collector_number": "2",
 			"layout": "normal",
@@ -10800,7 +11587,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -10819,12 +11606,16 @@
 			"tags": [
 				"scl4-veto",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.s",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"scl4-veto",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.s<2>",
+				"has-other-prints"
 			]
 		},
 		{
@@ -10832,9 +11623,10 @@
 			"kind": "land",
 			"id": "99032f1f-0dee-45dc-8b81-88d4f77fb7c8",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
-			"hcid": "L181",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8245",
 			"name": "Forest",
-			"export_name": "Forest (L181)_",
+			"export_name": "Forest 8245",
 			"set": "HBB.S",
 			"collector_number": "3",
 			"layout": "normal",
@@ -10879,10 +11671,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"scl4-veto"
+				"scl4-veto",
+				"hbb.s",
+				"card-in-scryfall"
 			],
 			"base_tags": [
-				"scl4-veto"
+				"scl4-veto",
+				"hbb.s<3>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -10890,9 +11686,10 @@
 			"kind": "land",
 			"id": "5945902d-0acf-404c-97b3-01b6a24afb61",
 			"oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
-			"hcid": "L182",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8246",
 			"name": "Forest",
-			"export_name": "Forest (L182)_",
+			"export_name": "Forest 8246",
 			"set": "HBB.S",
 			"collector_number": "4",
 			"layout": "normal",
@@ -10935,11 +11732,15 @@
 			"frame": "jank",
 			"tags": [
 				"scl4-veto",
-				"jank-frame"
+				"jank-frame",
+				"hbb.s",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"scl4-veto",
-				"jank-frame"
+				"jank-frame",
+				"hbb.s<4>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -10947,9 +11748,10 @@
 			"kind": "land",
 			"id": "6ec1dab6-29f5-4415-bcd2-c2e98e4b7f9b",
 			"oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
-			"hcid": "L183",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8247",
 			"name": "Swamp",
-			"export_name": "Swamp (L183)_",
+			"export_name": "Swamp 8247",
 			"set": "HBB.S",
 			"collector_number": "5",
 			"layout": "normal",
@@ -10999,12 +11801,16 @@
 			"tags": [
 				"scl4-veto",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.s",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"scl4-veto",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.s<5>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -11012,9 +11818,10 @@
 			"kind": "land",
 			"id": "5557476d-255d-4079-85fe-03eb8163a2ce",
 			"oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
-			"hcid": "L184",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8248",
 			"name": "Island",
-			"export_name": "Island (L184)_",
+			"export_name": "Island 8248",
 			"set": "HBB.S",
 			"collector_number": "6",
 			"layout": "normal",
@@ -11062,11 +11869,15 @@
 			"frame": "1997",
 			"tags": [
 				"scl4-veto",
-				"1997-frame"
+				"1997-frame",
+				"hbb.s",
+				"card-in-scryfall"
 			],
 			"base_tags": [
 				"scl4-veto",
-				"1997-frame"
+				"1997-frame",
+				"hbb.s<6>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -11074,9 +11885,10 @@
 			"kind": "land",
 			"id": "cd8ae8a4-4dd9-46e4-bcba-415a8a6716d2",
 			"oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
-			"hcid": "L185",
+			"oracle_id_is_scryfall": true,
+			"hcid": "8249",
 			"name": "Mountain",
-			"export_name": "Mountain (L185)_",
+			"export_name": "Mountain 8249",
 			"set": "HBB.S",
 			"collector_number": "7",
 			"layout": "normal",
@@ -11129,7 +11941,9 @@
 				"movie-poster",
 				"showcase-frame",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.s",
+				"card-in-scryfall"
 			],
 			"tag_notes": {
 				"showcase-frame": "Movie Poster"
@@ -11139,7 +11953,9 @@
 				"movie-poster",
 				"showcase-frame<Movie Poster>",
 				"full-art",
-				"borderless"
+				"borderless",
+				"hbb.s<7>",
+				"card-in-scryfall"
 			]
 		},
 		{
@@ -11147,9 +11963,9 @@
 			"kind": "land",
 			"id": "7e449bf4-8408-4ec7-85e5-88214e072430",
 			"oracle_id": "fad3359c-6c3d-4a94-8d7c-4f833d82cb8d",
-			"hcid": "L186",
+			"hcid": "8250",
 			"name": "Nebula",
-			"export_name": "Nebula (L186)_",
+			"export_name": "Nebula 8250",
 			"set": "HBB.S",
 			"collector_number": "8",
 			"layout": "normal",
@@ -11180,7 +11996,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "legal",
+				"4cb": "not_legal",
 				"commander": "legal"
 			},
 			"creators": [
@@ -11195,11 +12011,15 @@
 			"frame": "1997",
 			"tags": [
 				"scl4-veto",
-				"1997-frame"
+				"1997-frame",
+				"hbb.s",
+				"has-other-prints"
 			],
 			"base_tags": [
 				"scl4-veto",
-				"1997-frame"
+				"1997-frame",
+				"hbb.s<8>",
+				"has-other-prints"
 			]
 		}
 	]

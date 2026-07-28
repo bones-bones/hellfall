@@ -737,17 +737,6 @@ export const splitTagComponents = (
       }
     }
     if (
-      tagCanHaveFaces(splitTag.tag, card) &&
-      ((card && 'card_faces' in card) || alsoAddingFaces) &&
-      isInteger(splitNote[i]) &&
-      !isDriveURLString(splitNote[i]) &&
-      !splitTag.face
-    ) {
-      const [num] = splitNote.splice(i, 1);
-      splitTag.face = parseInt(num);
-      continue;
-    }
-    if (
       tagCanUseURL(splitTag.tag) &&
       // (splitNote[i].startsWith('http') || isDriveURLString(splitNote[i])) &&
       !splitTag.url
@@ -761,6 +750,17 @@ export const splitTagComponents = (
       if (tagDefaultsToBack(splitTag.tag) && ((card && 'card_faces' in card) || alsoAddingFaces)) {
         splitTag.face = 1;
       }
+      continue;
+    }
+    if (
+      tagCanHaveFaces(splitTag.tag, card) &&
+      ((card && 'card_faces' in card) || alsoAddingFaces) &&
+      isInteger(splitNote[i]) &&
+      !isDriveURLString(splitNote[i]) &&
+      !splitTag.face
+    ) {
+      const [num] = splitNote.splice(i, 1);
+      splitTag.face = parseInt(num);
       continue;
     }
     if (

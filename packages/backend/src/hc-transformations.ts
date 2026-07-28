@@ -28,6 +28,8 @@ import {
   updateParts,
   addToJSONToCards,
   baseInvariantMap,
+  getDirectChildSets,
+  getParentSet,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -109,6 +111,7 @@ const mergeDatabases = (
     'HCV.CDC': 0,
     'HCV.S': 0,
     'HCV.H': 0,
+    'HCV.D': 0,
     NRM: 0,
     HCJ: 0,
     NMTG: 0,
@@ -304,13 +307,7 @@ const loadExistingData = () => {
   }
 
   // #jank
-  const existingLandArray = dataToCards(landsContent?.data ?? []);
-  existingLandArray.forEach(land => {
-    if (land.hcid.startsWith('L')) {
-      land.hcid = `${parseInt(land.hcid.slice(1))+8064}`
-    }
-  })
-  const existingLands = new HCIDMap(existingLandArray);
+  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
   existingCards.setMultiple(existingLands)
 
   return { existingCards, existingTokens };
@@ -355,6 +352,23 @@ const main = async () => {
   const collectorMap = new Map<SetCode, Set<number>>(
     newCards.sets().map(code => [code, new Set<number>()])
   );
+  collectorMap.set('SCL', new Set<number>());
+  getDirectChildSets('SCL')?.forEach(code => collectorMap.delete(code));
+  newCards.forEach(card => {
+    const num = parseInt(card.collector_number);
+    const cSet =
+      collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));
+    if (ignoreDuplicateHCIDs.includes(card.hcid)) {
+      return;
+    }
+    if (cSet?.has(num) || ignoreMissingNums[card.set]?.includes(num)) {
+      console.log(
+        `Set ${card.set} has a duplicate collector number at ${num} (hcid: ${card.hcid})`
+      );
+    } else if (num) {
+      cSet?.add(num);
+    }
+  });
 
   for (const [code, nums] of collectorMap) {
     if (code == 'HCV.1' || code.startsWith('HLC')) continue;

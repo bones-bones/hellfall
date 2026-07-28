@@ -126,7 +126,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     .map(entry => entry.map(t => t.replaceAll('\\n', '\n')))
     .map(entry => {
       const entryAt = (key: keyType) => entry[keys.indexOf(key)];
-      const cardIsMulti = entry.slice(keys.indexOf('1mana_cost')).some(value => value);
+      const cardIsMulti = entry.slice(keys.indexOf('1mana_cost'), keys.indexOf('id')).some(value => value);
       // #jank
       const cardIsLand = parseInt(entryAt('hcid')) >= 8065 && parseInt(entryAt('hcid')) <= 8250
       const card = getDefaultCard(
@@ -151,6 +151,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 .split(';')
                 .map(color => HCColor[color as keyof typeof HCColor])
             : [],
+          // name: cardIsLand ? `${entryAt('name')} (L${parseInt(entryAt('hcid'))-8064})`:'' // #jank
         },
         {
           colors: cardIsMulti
@@ -284,7 +285,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         card.artists = Array.from(new Set(card.artists));
       }
       // TODO: move to derived props? or just remove?
-      if ('card_faces' in card && !entryAt('tags').includes('irregular-face-name')) {
+      if ('card_faces' in card && !entryAt('tags').includes('irregular-face-name') /* && !cardIsLand */) { // #jank
         card.name.split(' // ').forEach((name, i) => {
           addPropToFace(card, 'name', name, i);
         });
