@@ -178,3 +178,5 @@ Write a script to transform the database
 - add flip buttons to card pages for flip/aftermath cards
 - when adding mse as flag tag, make sure it can apply to individual faces
 - make sure be there // be square's image worked
+- once oracle ids get fully integrated, remove duplicative code in fetchers and tag handling
+- add invariant handling for oracle text, add printed oracle text fields for the text printed on the card, and update all oracle texts

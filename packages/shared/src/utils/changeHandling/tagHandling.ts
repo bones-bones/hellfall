@@ -31,7 +31,7 @@ import {
 import { isValidV4UUID } from '../textHandling';
 import { isInteger } from '../numHandling';
 import { ensureArray, pushProp } from '../listHandling';
-import { savedOracleIds } from '../cardHandling';
+import { baseInvariantMap } from '../cardHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -709,13 +709,7 @@ export const splitTagComponents = (
   }
   if (!splitTag.note) {
     if (tagCanUseUUID(splitTag.tag)) {
-      const id =
-        Object.entries(savedOracleIds).find(
-          ([name, id]) => card?.name.toLowerCase() == name
-        )?.[1] ??
-        Object.entries(savedOracleIds).find(([name, id]) =>
-          card?.name.toLowerCase().startsWith(name)
-        )?.[1];
+      const id = baseInvariantMap.getOracleID(card?.name ?? '')
       if (id) {
         splitTag.uuid = id;
       }
@@ -736,9 +730,9 @@ export const splitTagComponents = (
         [splitTag.uuid] = splitNote.splice(i, 1);
         continue;
       }
-      if (splitNote[i].toLowerCase() in savedOracleIds) {
+      if (baseInvariantMap.hasName(splitNote[i])) {
         const [name] = splitNote.splice(i, 1);
-        splitTag.uuid = savedOracleIds[name.toLowerCase()];
+        splitTag.uuid = baseInvariantMap.getOracleID(name);
         continue;
       }
     }

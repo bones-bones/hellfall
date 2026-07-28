@@ -1,6 +1,6 @@
 import { Firestore } from '@google-cloud/firestore';
 import { HCCard, HCKind, HCImageStatus, SetCode } from '@hellfall/shared/types';
-import { getDefaultCard, getShorthandFromOracleID, isValidV4UUID, setDerivedProps, stripMasterpiece } from '@hellfall/shared/utils';
+import { baseInvariantMap, getDefaultCard, isValidV4UUID, setDerivedProps, stripMasterpiece } from '@hellfall/shared/utils';
 import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
@@ -232,7 +232,7 @@ async function upsertPostcard(body: PostcardBody) {
     if (oracle_id !== previous.oracle_id) update.oracle_id = oracle_id;
     await existing.ref.update(update);
     scheduleCatalogPublish();
-    const int_oracle_id = getShorthandFromOracleID(oracle_id) ?? oracle_id
+    const int_oracle_id = baseInvariantMap.getName(oracle_id) ?? oracle_id
     const oracle_id_to_use = int_oracle_id == body.name.toLowerCase() ? '':int_oracle_id
     return { docId: existing.id, id: cardId, oracle_id: oracle_id_to_use, wasCreate: false, previous, imageUrl };
   }

@@ -23,6 +23,8 @@ import {
   pushPropToRoot,
   pipMap,
   parseRelatedReferenceName,
+  isValidV4UUID,
+  baseCardInvariantMap,
 } from '@hellfall/shared/utils';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
@@ -86,6 +88,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '3flavor_text',
     '3image',
     'id',
+    'oracle_id'
   ] as const;
 
   type keyType = (typeof keys)[number];
@@ -116,7 +119,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '0image',
     'artists',
     'tags',
-    'id'
+    'id',
   ];
 
   const allCards = rest
@@ -251,6 +254,11 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 }
                 pushPropToRoot(card, 'all_parts', maker);
               });
+            } else if (keys[i] == 'oracle_id') {
+              const oracle_id = baseCardInvariantMap.getOracleID(entry[i]) ?? entry[i]
+              if (oracle_id && isValidV4UUID(oracle_id)) {
+                card.oracle_id = oracle_id;
+              }
             } else {
               addPropToRoot(card, keys[i] as rootPropType, entry[i]);
             }
@@ -299,6 +307,12 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           card.not_directly_draftable = true;
         }
       });
+      if (!card.oracle_id) {
+        const oracle_id = baseCardInvariantMap.getOracleID(card.name);
+        if (oracle_id) {
+          card.oracle_id = oracle_id;
+        }
+      }
       return card;
     });
 

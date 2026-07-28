@@ -23,13 +23,13 @@ import {
   getAllRelatedPermissive,
   CardMap,
   HCIDMap,
-  savedOracleIds,
   getDirectChildSets,
   getParentSet,
   mergeFromSheet,
   cleanParts,
   updateParts,
   addToJSONToCards,
+  baseInvariantMap,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -184,8 +184,8 @@ const mergeDatabases = (
             card.oracle_id = original.oracle_id;
             return;
           }
-          if (originalName.toLowerCase() in savedOracleIds) {
-            card.oracle_id = savedOracleIds[originalName.toLowerCase()];
+          if (baseInvariantMap.hasName(originalName)) {
+            card.oracle_id = baseInvariantMap.getOracleID(originalName)!;
             return;
           }
         } else if (card.tags?.includes('reprint')) {

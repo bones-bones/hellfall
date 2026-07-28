@@ -220,6 +220,13 @@ export const textContains = (cardText?: string, searchText?: string) => {
   );
 };
 /**
+ * Checks whether search text contains text from a card
+ * @param cardText text from the card
+ * @param searchText text to search for
+ * @returns whether there is a match
+ */
+export const textIsContainedBy = (cardText?: string, searchText?: string) => textContains(searchText, cardText);
+/**
  * Checks whether search text equals text from a card
  * @param cardText text from the card
  * @param searchText text to search for
