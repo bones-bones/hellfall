@@ -1,2 +1,8 @@
+#!/usr/bin/env sh
+
+# GitHub Desktop (and other GUI git clients) use a minimal PATH that
+# omits Homebrew bins like yarn and node.
+export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
+
 yarn pretty
 git add -u

@@ -1,4 +1,5 @@
 import fs from 'fs';
+import crypto from 'crypto';
 
 import { fetchTokens } from './fetchTokens.ts';
 import { fetchCards } from './fetchCards.ts';
@@ -129,6 +130,7 @@ const mergeDatabases = (
     'HCV.CDC': 0,
     'HCV.S': 0,
     'HCV.H': 0,
+    'HCV.D': 0,
     NRM: 0,
     HCJ: 0,
     NMTG: 0,

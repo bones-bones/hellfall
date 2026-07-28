@@ -104,7 +104,13 @@ export const applyChanges = (
         return;
       }
       if (applyingFromSheet) {
-        throw new Error(changeErrorMessage(card, change));
+        const msg = changeErrorMessage(card, change);
+        // No-ops become true after earlier changes in the same batch (e.g. toMultiFaced
+        // already sets layout to "multi" before a later root layout change runs).
+        if (msg?.startsWith('invalid change: value is equal to currentValue:')) {
+          return;
+        }
+        throw new Error(msg);
       } else {
         console.error(changeErrorMessage(card, change));
         return;
