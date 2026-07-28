@@ -4,5 +4,5 @@ export * from './cardMethods.ts';
 export * from './cardMap.ts';
 export * from './kindChecks.ts';
 export * from './propHandling.ts';
-export * from './printHandling.ts'
-export * from './invariantMap.ts'
+export * from './printHandling.ts';
+export * from './invariantMap.ts';

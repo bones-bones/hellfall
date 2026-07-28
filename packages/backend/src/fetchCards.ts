@@ -88,7 +88,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '3flavor_text',
     '3image',
     'id',
-    'oracle_id'
+    'oracle_id',
   ] as const;
 
   type keyType = (typeof keys)[number];
@@ -126,11 +126,13 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     .map(entry => entry.map(t => t.replaceAll('\\n', '\n')))
     .map(entry => {
       const entryAt = (key: keyType) => entry[keys.indexOf(key)];
-      const cardIsMulti = entry.slice(keys.indexOf('1mana_cost'), keys.indexOf('id')).some(value => value);
+      const cardIsMulti = entry
+        .slice(keys.indexOf('1mana_cost'), keys.indexOf('id'))
+        .some(value => value);
       // #jank
-      const cardIsLand = parseInt(entryAt('hcid')) >= 8065 && parseInt(entryAt('hcid')) <= 8250
+      const cardIsLand = parseInt(entryAt('hcid')) >= 8065 && parseInt(entryAt('hcid')) <= 8250;
       const card = getDefaultCard(
-        cardIsLand ? HCKind.Land: HCKind.Card,
+        cardIsLand ? HCKind.Land : HCKind.Card,
         cardIsMulti,
         {
           id: entryAt('id'),
@@ -258,7 +260,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 pushPropToRoot(card, 'all_parts', maker);
               });
             } else if (keys[i] == 'oracle_id') {
-              const oracle_id = baseCardInvariantMap.getOracleID(entry[i]) ?? entry[i]
+              const oracle_id = baseCardInvariantMap.getOracleID(entry[i]) ?? entry[i];
               if (oracle_id && isValidV4UUID(oracle_id)) {
                 card.oracle_id = oracle_id;
               }
@@ -285,7 +287,11 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         card.artists = Array.from(new Set(card.artists));
       }
       // TODO: move to derived props? or just remove?
-      if ('card_faces' in card && !entryAt('tags').includes('irregular-face-name') /* && !cardIsLand */) { // #jank
+      if (
+        'card_faces' in card &&
+        !entryAt('tags').includes('irregular-face-name') /* && !cardIsLand */
+      ) {
+        // #jank
         card.name.split(' // ').forEach((name, i) => {
           addPropToFace(card, 'name', name, i);
         });

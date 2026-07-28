@@ -166,9 +166,9 @@ export class PipMap {
    */
   get hybridSymbolRegex(): RegExp {
     if (!this._hybridSymbolRegex) {
-      const symbols = this.filter(
-        pip => pip.hybrid && !hybridSymbolRegex.test(pip.symbol)
-      ).map(pip => escapeRegex(pip.symbol));
+      const symbols = this.filter(pip => pip.hybrid && !hybridSymbolRegex.test(pip.symbol)).map(
+        pip => escapeRegex(pip.symbol)
+      );
       this._hybridSymbolRegex = new RegExp(
         `{((${hybridSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`,
         'g'

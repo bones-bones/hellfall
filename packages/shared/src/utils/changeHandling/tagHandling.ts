@@ -635,18 +635,16 @@ const subKeywords: Record<string, string | string[]> = {
   orbiting: 'flying',
   ponderlink: 'link',
   stackscade: 'cascade',
-  'start your fucking engines':'start your engines',
-  '2quip':'equip',
-  fliptouch:'touch',
-  'draft level up':'level up',
+  'start your fucking engines': 'start your engines',
+  '2quip': 'equip',
+  fliptouch: 'touch',
+  'draft level up': 'level up',
   scrample: ['conjure', 'trample'],
-  helltouch:'touch',
-  thrabenicate: ['investigate','conjure'],
-  'started engine':'start your engines',
-  'manifest dreadmaw':'manifest dread',
-  sunlink:'link',
-  
-
+  helltouch: 'touch',
+  thrabenicate: ['investigate', 'conjure'],
+  'started engine': 'start your engines',
+  'manifest dreadmaw': 'manifest dread',
+  sunlink: 'link',
 };
 
 const keywordTags = [
@@ -709,7 +707,7 @@ export const splitTagComponents = (
   }
   if (!splitTag.note) {
     if (tagCanUseUUID(splitTag.tag)) {
-      const id = baseInvariantMap.getOracleID(card?.name ?? '')
+      const id = baseInvariantMap.getOracleID(card?.name ?? '');
       if (id) {
         splitTag.uuid = id;
       }

@@ -3,53 +3,57 @@ import { isValidV4UUID } from '../textHandling';
 import { xor } from '../listHandling';
 
 export type invariantPart = {
-  oracle_id:string,
-  default_hcid:string
-}
+  oracle_id: string;
+  default_hcid: string;
+};
 
 /**
  * An object containing a card's invariant properties (i.e. those that don't change depending on the card print).
- * 
+ *
  * `name` and `oracle_id` are mandatory.
  */
-export type printInvariant = {name:string, oracle_id:string, parts?:invariantPart[]} & Pick<rootMappedType, 'keywords'|'rulings'|'oracle_id_is_scryfall'|'legalities'|'export_name'>
+export type printInvariant = { name: string; oracle_id: string; parts?: invariantPart[] } & Pick<
+  rootMappedType,
+  'keywords' | 'rulings' | 'oracle_id_is_scryfall' | 'legalities' | 'export_name'
+>;
 
 /**
  * The input for an {@linkcode InvariantMap}.
- * 
+ *
  * Must either be {@linkcode printInvariant} or of form `[name, oracle_id]`
  */
-export type printInput = [string,string]|printInvariant
+export type printInput = [string, string] | printInvariant;
 
 /**
  * Converts {@linkcode printInput} to {@linkcode printInvariant}
  * @param input input to convert
  */
-export const toPrintInvariant = (input:printInput) => Array.isArray(input) ? {name:input[0], oracle_id:input[1]}: input
+export const toPrintInvariant = (input: printInput) =>
+  Array.isArray(input) ? { name: input[0], oracle_id: input[1] } : input;
 
 /**
  * Gets the name from a {@linkcode printInput}.
  * For use when you don't want to bother with {@linkcode toPrintInvariant}.
  * @param input input to get the name from
  */
-export const getNameFromInput = (input:printInput) => {
+export const getNameFromInput = (input: printInput) => {
   if (Array.isArray(input)) {
     return input[0];
   }
-  return input.name
-}
+  return input.name;
+};
 
 /**
  * Gets the oracle id from a {@linkcode printInput}.
  * For use when you don't want to bother with {@linkcode toPrintInvariant}.
  * @param input input to get the oracle id from
  */
-export const getOracleIDFromInput = (input:printInput) => {
+export const getOracleIDFromInput = (input: printInput) => {
   if (Array.isArray(input)) {
     return input[1];
   }
-  return input.oracle_id
-}
+  return input.oracle_id;
+};
 
 /**
  * The class for mapping card names and oracle IDs to invariant properties
@@ -67,26 +71,26 @@ export class InvariantMap {
 
   /**
    * Adds a new input to the OracleIDMap.
-   * 
+   *
    * If either name or oracle id are already in, this will overwrite them.
-   * 
+   *
    * Will silently fail if the oracle id is invalid.
    * @param input {@linkcode printInput} to set
    */
-  set = (input: [string,string]|printInvariant) => {
-    const invariant = toPrintInvariant(input)
+  set = (input: [string, string] | printInvariant) => {
+    const invariant = toPrintInvariant(input);
     if (!isValidV4UUID(invariant.oracle_id)) return;
-    const oldName = this.oracleIDMap.get(invariant.oracle_id)?.name
-    const oldOracleID = this.nameMap.get(invariant.name.toLowerCase())
+    const oldName = this.oracleIDMap.get(invariant.oracle_id)?.name;
+    const oldOracleID = this.nameMap.get(invariant.name.toLowerCase());
     if (oldName && oldName.toLowerCase() != invariant.name.toLowerCase()) {
-      this.nameMap.delete(oldName)
+      this.nameMap.delete(oldName);
     }
     if (oldOracleID && oldOracleID != invariant.oracle_id) {
-      this.oracleIDMap.delete(oldOracleID)
+      this.oracleIDMap.delete(oldOracleID);
     }
     this.nameMap.set(invariant.name.toLowerCase(), invariant.oracle_id);
     this.oracleIDMap.set(invariant.oracle_id, invariant);
-  }
+  };
 
   /**
    * Adds multiple new {@linkcode printInput} objects to the OracleIDMap, skipping invalid oracle ids
@@ -105,8 +109,8 @@ export class InvariantMap {
    */
   delete = (input: printInput) => {
     if (this.has(input)) {
-      this.nameMap.delete(getNameFromInput(input).toLowerCase())
-      this.oracleIDMap.delete(getOracleIDFromInput(input))
+      this.nameMap.delete(getNameFromInput(input).toLowerCase());
+      this.oracleIDMap.delete(getOracleIDFromInput(input));
       return true;
     }
     return false;
@@ -122,12 +126,12 @@ export class InvariantMap {
       const name = getNameFromInput(input);
       const oracle_id = getOracleIDFromInput(input);
       if (this.nameMap.has(name)) {
-        this.oracleIDMap.delete(this.nameMap.get(name)!)
-        this.nameMap.delete(name)
+        this.oracleIDMap.delete(this.nameMap.get(name)!);
+        this.nameMap.delete(name);
       }
       if (this.oracleIDMap.has(oracle_id)) {
-        this.nameMap.delete(this.oracleIDMap.get(oracle_id)!.name)
-        this.oracleIDMap.delete(oracle_id)
+        this.nameMap.delete(this.oracleIDMap.get(oracle_id)!.name);
+        this.oracleIDMap.delete(oracle_id);
       }
       return true;
     }
@@ -141,9 +145,9 @@ export class InvariantMap {
    */
   deleteName = (name: string) => {
     if (this.nameMap.has(name.toLowerCase())) {
-      this.oracleIDMap.delete(this.nameMap.get(name.toLowerCase())!)
+      this.oracleIDMap.delete(this.nameMap.get(name.toLowerCase())!);
     }
-    return this.nameMap.delete(name.toLowerCase())
+    return this.nameMap.delete(name.toLowerCase());
   };
 
   /**
@@ -153,9 +157,9 @@ export class InvariantMap {
    */
   deleteOracleID = (oracle_id: string) => {
     if (this.oracleIDMap.has(oracle_id)) {
-      this.nameMap.delete(this.oracleIDMap.get(oracle_id)!.name.toLowerCase())
+      this.nameMap.delete(this.oracleIDMap.get(oracle_id)!.name.toLowerCase());
     }
-    return this.oracleIDMap.delete(oracle_id)
+    return this.oracleIDMap.delete(oracle_id);
   };
 
   /**
@@ -202,7 +206,10 @@ export class InvariantMap {
    * Returns a specified invariant from the OracleIDMap object.
    * @param input the input for the invariant to get
    */
-  get = (input: printInput) => this.hasName(getNameFromInput(input)) ? this.oracleIDMap.get(getOracleIDFromInput(input)) : undefined
+  get = (input: printInput) =>
+    this.hasName(getNameFromInput(input))
+      ? this.oracleIDMap.get(getOracleIDFromInput(input))
+      : undefined;
 
   /**
    * Returns a specified oracle id from the OracleIDMap object.
@@ -222,9 +229,8 @@ export class InvariantMap {
    */
   getFromName = (name: string) => {
     const oracle_id = this.getOracleID(name);
-    if (oracle_id)
-    return this.oracleIDMap.get(oracle_id);
-  }
+    if (oracle_id) return this.oracleIDMap.get(oracle_id);
+  };
 
   /**
    * Returns a specified {@linkcode printInvariant} from the OracleIDMap object.
@@ -240,7 +246,9 @@ export class InvariantMap {
    */
   every(predicate: (invariant: printInvariant) => unknown): boolean;
   every(predicate: (invariant: printInvariant, oracle_id: string) => unknown): boolean;
-  every(predicate: (invariant: printInvariant, oracle_id: string, name: string) => unknown): boolean;
+  every(
+    predicate: (invariant: printInvariant, oracle_id: string, name: string) => unknown
+  ): boolean;
   every(predicate: (...args: any[]) => unknown): boolean {
     for (const [oracle_id, invariant, name] of this) {
       switch (predicate.length) {
@@ -366,7 +374,9 @@ export class InvariantMap {
    */
   flatMap<T>(callback: (invariant: printInvariant) => T | ReadonlyArray<T>): T[];
   flatMap<T>(callback: (invariant: printInvariant, oracle_id: string) => T | ReadonlyArray<T>): T[];
-  flatMap<T>(callback: (invariant: printInvariant, oracle_id: string, name: string) => T | ReadonlyArray<T>): T[];
+  flatMap<T>(
+    callback: (invariant: printInvariant, oracle_id: string, name: string) => T | ReadonlyArray<T>
+  ): T[];
   flatMap<T>(callback: (...args: any[]) => T | ReadonlyArray<T>): T[] {
     return this.map(callback).flat() as T[];
   }
@@ -382,8 +392,12 @@ export class InvariantMap {
    * find immediately returns that invariant. Otherwise, find returns undefined.
    */
   find(predicate: (invariant: printInvariant) => any): printInvariant | undefined;
-  find(predicate: (invariant: printInvariant, oracle_id: string) => any): printInvariant | undefined;
-  find(predicate: (invariant: printInvariant, oracle_id: string, name: string) => any): printInvariant | undefined;
+  find(
+    predicate: (invariant: printInvariant, oracle_id: string) => any
+  ): printInvariant | undefined;
+  find(
+    predicate: (invariant: printInvariant, oracle_id: string, name: string) => any
+  ): printInvariant | undefined;
   find(predicate: (...args: any[]) => any): printInvariant | undefined {
     for (const [oracle_id, invariant, name] of this) {
       switch (predicate.length) {
@@ -415,7 +429,9 @@ export class InvariantMap {
    */
   filter(predicate: (invariant: printInvariant) => any): printInvariant[];
   filter(predicate: (invariant: printInvariant, oracle_id: string) => any): printInvariant[];
-  filter(predicate: (invariant: printInvariant, oracle_id: string, name: string) => any): printInvariant[];
+  filter(
+    predicate: (invariant: printInvariant, oracle_id: string, name: string) => any
+  ): printInvariant[];
   filter(predicate: (...args: any[]) => any): printInvariant[] {
     const ret: printInvariant[] = [];
     for (const [oracle_id, invariant, name] of this) {
@@ -464,15 +480,16 @@ export class InvariantMap {
    * (i.e. whether one has the same name and oracle id)
    * @param input the input to check for
    */
-  has = (input: printInput) => this.hasName(getNameFromInput(input)) && this.hasOracleId(getOracleIDFromInput(input));
+  has = (input: printInput) =>
+    this.hasName(getNameFromInput(input)) && this.hasOracleId(getOracleIDFromInput(input));
 
   /**
    * Checks if a invariant that overlaps with the specified input exists
    * (i.e. whether one has the same name or same oracle id, but not both)
    * @param input the input to check for
    */
-  hasOverlap = (input: printInput) => xor(this.hasName(getNameFromInput(input)), this.hasOracleId(getOracleIDFromInput(input)));
-
+  hasOverlap = (input: printInput) =>
+    xor(this.hasName(getNameFromInput(input)), this.hasOracleId(getOracleIDFromInput(input)));
 
   /**
    * Checks if a invariant with the specified name exists

@@ -57,7 +57,7 @@ const mergeDatabases = (
   existingCards: HCIDMap,
   newCards: HCIDMap,
   existingTokens: HCIDMap,
-  newTokens: HCIDMap,
+  newTokens: HCIDMap
 ): HCCard.Any[] => {
   // newCards.forEach((newCard: HCCard.Any, id: string) => {});
   const mergedCards = newCards.map((newCard: HCCard.Any, id: string) => {
@@ -206,7 +206,7 @@ const mergeDatabases = (
           return 1;
         }
         return -1;
-      }),
+      })
     );
 };
 const dataToCards = <K extends anyPropType>(
@@ -308,7 +308,7 @@ const loadExistingData = () => {
 
   // #jank
   const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
-  existingCards.setMultiple(existingLands)
+  existingCards.setMultiple(existingLands);
 
   return { existingCards, existingTokens };
 };
@@ -382,12 +382,7 @@ const main = async () => {
 
   console.log('Running in update mode - merging with existing data...');
   const { existingCards, existingTokens } = loadExistingData();
-  const merged = mergeDatabases(
-    existingCards,
-    newCards,
-    existingTokens,
-    newTokens,
-  );
+  const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
   const finalCards = new CardMap(addToJSONToCards(merged));
   finalCards.forEach(card => {
     if (card.all_parts) {

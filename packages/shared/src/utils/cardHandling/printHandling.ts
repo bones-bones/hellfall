@@ -2,7 +2,7 @@ import { HCLegalitiesField, HCLegality } from '@hellfall/shared/types';
 import { InvariantMap, printInput } from './invariantMap';
 import { textListContains, textListIsContainedBy } from '../listHandling';
 
-const cardIDList:printInput[] = [
+const cardIDList: printInput[] = [
   ['plains', 'bc71ebf6-2056-41f7-be35-b2e5c34afa99'],
   ['island', 'b2c6aa39-2d2a-459c-a555-fb48ba993373'],
   ['swamp', '56719f6a-1a6c-4c0a-8d21-18f7d7350b68'],
@@ -22,10 +22,10 @@ const cardIDList:printInput[] = [
   ['thriving moor', 'b7c7d0c0-ada6-4c89-b47b-977e35e67b39'],
   ['thriving bluff', '91fceb34-0f2d-4392-be27-00dcd765637f'],
   ['thriving grove', 'a8052556-8962-4130-86a8-6fb7b6a324f7'],
-  ['thriving galaxy', '626d5aaa-b808-434b-b7ae-bde93811d2df']
-]
+  ['thriving galaxy', '626d5aaa-b808-434b-b7ae-bde93811d2df'],
+];
 
-const tokenOracleIdList:printInput[] = [
+const tokenOracleIdList: printInput[] = [
   ['food', 'a468338f-635e-4206-89d6-72d723071d45'],
   ['treasure', '3c549374-6c37-42e0-8d88-a8555d46732d'],
   ['elephant', '079c46cc-feb0-4998-8593-c8b739afdb82'],
@@ -103,9 +103,9 @@ const tokenOracleIdList:printInput[] = [
   ['wet treasure', '9f84cca3-ed45-4878-bd6e-33d2ea570169'],
 ];
 
-export const baseCardInvariantMap = new InvariantMap(cardIDList)
+export const baseCardInvariantMap = new InvariantMap(cardIDList);
 
-const getLegalitiesFromLandName = (name:string):HCLegalitiesField => {
+const getLegalitiesFromLandName = (name: string): HCLegalitiesField => {
   const splitName = name.toLowerCase().split(' ');
   switch (splitName[0]) {
     case 'snow-covered':
@@ -113,37 +113,37 @@ const getLegalitiesFromLandName = (name:string):HCLegalitiesField => {
         standard: HCLegality.NotLegal,
         '4cb': HCLegality.NotLegal,
         commander: HCLegality.NotLegal,
-      }
+      };
     case 'thriving':
       return {
         standard: HCLegality.NotLegal,
         '4cb': HCLegality.NotLegal,
         commander: HCLegality.Legal,
-      }
+      };
     case 'nebula':
       return {
         standard: HCLegality.NotLegal,
         '4cb': HCLegality.Legal,
         commander: HCLegality.Legal,
-      }
+      };
     default:
       return {
         standard: HCLegality.Legal,
         '4cb': HCLegality.Legal,
         commander: HCLegality.Legal,
-      }
+      };
   }
-}
+};
 baseCardInvariantMap.forEach(invariant => {
-  invariant.export_name = `${invariant.name}_`
-  invariant.legalities = getLegalitiesFromLandName(invariant.name)
-  if (!textListIsContainedBy(['nebula','galaxy'])) {
+  invariant.export_name = `${invariant.name}_`;
+  invariant.legalities = getLegalitiesFromLandName(invariant.name);
+  if (!textListIsContainedBy(['nebula', 'galaxy'])) {
     invariant.oracle_id_is_scryfall = true;
   }
-})
+});
 
-export const baseTokenInvariantMap = new InvariantMap(tokenOracleIdList)
+export const baseTokenInvariantMap = new InvariantMap(tokenOracleIdList);
 
 export const baseInvariantMap = baseTokenInvariantMap.clone();
 
-baseCardInvariantMap.forEach(invariant => baseInvariantMap.set(structuredClone(invariant)))
+baseCardInvariantMap.forEach(invariant => baseInvariantMap.set(structuredClone(invariant)));
