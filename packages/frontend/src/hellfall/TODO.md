@@ -177,3 +177,4 @@ Write a script to transform the database
 - add readmes to the filter folders
 - add flip buttons to card pages for flip/aftermath cards
 - when adding mse as flag tag, make sure it can apply to individual faces
+- make sure be there // be square's image worked
