@@ -1,4 +1,4 @@
-import { HCCard, HCKind, SetCode } from '@hellfall/shared/types';
+import { HCCard, HCKind, SetCode, toKindIndex } from '@hellfall/shared/types';
 import { getChildSets, getDirectChildSets } from '../setHandling';
 
 /**
@@ -12,7 +12,7 @@ export type preferType = (typeof preferTypeList)[number];
 
 const newestSort = (value1: HCCard.Any, value2: HCCard.Any) => {
   if (value1.kind != value2.kind) {
-    return Object.values(HCKind).indexOf(value1.kind) - Object.values(HCKind).indexOf(value2.kind);
+    return toKindIndex(value1.kind) - toKindIndex(value2.kind);
   }
   switch (value1.kind) {
     case 'card':

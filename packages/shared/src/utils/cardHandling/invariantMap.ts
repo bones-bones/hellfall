@@ -1,6 +1,8 @@
-import { HCRelatedCard, rootMappedType } from '@hellfall/shared/types';
+import { HCCard, HCRelatedCard, rootMappedType, toKindIndex } from '@hellfall/shared/types';
 import { isValidV4UUID } from '../textHandling';
-import { xor } from '../listHandling';
+import { textListIncludes, xor } from '../listHandling';
+import { toFaces } from './cardMethods';
+import { CardMap } from './cardMap';
 
 /**
  * A related card that can be used for a {@linkcode printInvariant} object.
@@ -17,10 +19,89 @@ export type invariantRelatedCard = HCRelatedCard & {
  *
  * `name` and `oracle_id` are mandatory.
  */
-export type printInvariant = { name: string; oracle_id: string; parts?: invariantRelatedCard[] } & Pick<
+export type printInvariant = { name: string; oracle_id: string; all_parts?: invariantRelatedCard[] } & Pick<
   rootMappedType,
-  'keywords' | 'rulings' | 'oracle_id_is_scryfall' | 'legalities' | 'export_name'
+  'keywords' | 'rulings' | 'oracle_id_is_scryfall' | 'legalities' | 'export_name'|'kind'
 >;
+
+
+/**
+ * Converts a {@linkcode HCCard.Any} to {@linkcode printInvariant}
+ * @param card card to convert
+ */
+export const cardToInvariant = (card: HCCard.Any) => {
+  const invariant:printInvariant = {
+    kind:card.kind,
+    oracle_id:card.oracle_id,
+    name: card.name,
+    keywords:structuredClone(card.keywords),
+    legalities:structuredClone(card.legalities),
+    rulings:card.rulings,
+  }
+  if (card.oracle_id_is_scryfall) {
+    invariant.oracle_id_is_scryfall = true;
+  }
+  if (card.export_name) {
+    invariant.export_name = card.export_name;
+  }
+  if (card.all_parts) {
+    invariant.all_parts = card.all_parts.map(part => {
+      const newPart = structuredClone(part) as invariantRelatedCard;
+      newPart.default_id = card.id
+      return newPart
+    })
+  }
+  return invariant
+}
+
+/**
+ * Merges two invariants. Must have the same oracle id.
+ * @param oldInvariant old invariant to merge
+ * @param newInvariant new invariant to merge
+ */
+export const mergeInvariants = (oldInvariant: printInvariant, newInvariant:printInvariant) => {
+  if (!oldInvariant.kind) {
+    oldInvariant.kind = newInvariant.kind;
+    oldInvariant.name = newInvariant.name;
+    if (newInvariant.oracle_id_is_scryfall) {
+      oldInvariant.oracle_id_is_scryfall = true
+    } else {
+      delete oldInvariant.oracle_id_is_scryfall;
+    }
+    if (newInvariant.export_name) {
+      oldInvariant.export_name = newInvariant.export_name
+    } else {
+      delete oldInvariant.export_name;
+    }
+    if (newInvariant.legalities && !oldInvariant.legalities) {
+      oldInvariant.legalities = newInvariant.legalities
+    }
+  } else if (oldInvariant.kind != newInvariant.kind && newInvariant.kind) {
+    if (toKindIndex(newInvariant.kind) < toKindIndex(oldInvariant.kind)) {
+    oldInvariant.kind = newInvariant.kind;
+    }
+  }
+  if (!oldInvariant.rulings && newInvariant.rulings) {
+    oldInvariant.rulings = newInvariant.rulings;
+  }
+  if (!oldInvariant.keywords?.length && newInvariant.keywords) {
+    oldInvariant.keywords = newInvariant.keywords
+  } else if (newInvariant.keywords?.length) {
+    newInvariant.keywords.filter(keyword => !oldInvariant.keywords?.includes(keyword)).forEach(keyword => oldInvariant.keywords?.push(keyword))
+  }
+  if (!oldInvariant.all_parts?.length && newInvariant.all_parts?.length) {
+    oldInvariant.all_parts = newInvariant.all_parts
+  } else if (newInvariant.all_parts?.length) {
+    newInvariant.all_parts.forEach(part => oldInvariant.all_parts?.push(part))
+  }
+}
+
+// TODO: do I want duplicate handling?
+// const mergeParts = (oldParts: invariantRelatedCard[], newParts: invariantRelatedCard[]) => {
+//   newParts.forEach(part => {
+//     if (oldParts.some(old => ))
+//   })
+// }
 
 /**
  * The input for an {@linkcode InvariantMap}.
@@ -33,12 +114,12 @@ export type printInput = [string, string] | printInvariant;
  * Converts {@linkcode printInput} to {@linkcode printInvariant}
  * @param input input to convert
  */
-export const toPrintInvariant = (input: printInput) =>
+export const inputToInvariant = (input: printInput) =>
   Array.isArray(input) ? { name: input[0], oracle_id: input[1] } : input;
 
 /**
  * Gets the name from a {@linkcode printInput}.
- * For use when you don't want to bother with {@linkcode toPrintInvariant}.
+ * For use when you don't want to bother with {@linkcode inputToInvariant}.
  * @param input input to get the name from
  */
 export const getNameFromInput = (input: printInput) => {
@@ -50,7 +131,7 @@ export const getNameFromInput = (input: printInput) => {
 
 /**
  * Gets the oracle id from a {@linkcode printInput}.
- * For use when you don't want to bother with {@linkcode toPrintInvariant}.
+ * For use when you don't want to bother with {@linkcode inputToInvariant}.
  * @param input input to get the oracle id from
  */
 export const getOracleIDFromInput = (input: printInput) => {
@@ -75,7 +156,7 @@ export class InvariantMap {
   protected oracleIDMap = new Map<string, printInvariant>();
 
   /**
-   * Adds a new input to the OracleIDMap.
+   * Adds a new input to the InvariantMap.
    *
    * If either name or oracle id are already in, this will overwrite them.
    *
@@ -83,7 +164,7 @@ export class InvariantMap {
    * @param input {@linkcode printInput} to set
    */
   set = (input: [string, string] | printInvariant) => {
-    const invariant = toPrintInvariant(input);
+    const invariant = inputToInvariant(input);
     if (!isValidV4UUID(invariant.oracle_id)) return;
     const oldName = this.oracleIDMap.get(invariant.oracle_id)?.name;
     const oldOracleID = this.nameMap.get(invariant.name.toLowerCase());
@@ -98,7 +179,34 @@ export class InvariantMap {
   };
 
   /**
-   * Adds multiple new {@linkcode printInput} objects to the OracleIDMap, skipping invalid oracle ids
+   * Adds a new card to the InvariantMap.
+   * 
+   * Will silently fail if card's oracle id is invalid.
+   * @param card {@linkcode HCCard.Any} to set
+   */
+  setCard = (card: HCCard.Any) => {
+    if (!isValidV4UUID(card.oracle_id)) return;
+    const current = this.oracleIDMap.get(card.oracle_id)
+    const newInvariant = cardToInvariant(card);
+    if (!current) {
+      this.oracleIDMap.set(newInvariant.oracle_id,newInvariant);
+      if (this.nameMap.has(newInvariant.name.toLowerCase())) {
+        let name = newInvariant.name.toLowerCase()
+        if (card.kind == 'token' && textListIncludes(toFaces(card)[0].supertypes, 'token')) {
+          name += ' token';
+        }
+        while (this.nameMap.has(name)) name += '_';
+        this.nameMap.set(name, newInvariant.oracle_id)
+      } else {
+        this.nameMap.set(newInvariant.name.toLowerCase(), newInvariant.oracle_id)
+      }
+    } else {
+      mergeInvariants(current,newInvariant);
+    }
+  };
+
+  /**
+   * Adds multiple new {@linkcode printInput} objects to the InvariantMap, skipping invalid oracle ids
    * @param inputs the inputs to add
    */
   setMultiple(inputs: printInput[]): void;
@@ -108,8 +216,16 @@ export class InvariantMap {
   }
 
   /**
+   * Adds a CardMap to the InvariantMap, skipping invalid oracle ids
+   * @param cardMap the CardMap to add
+   */
+  setCardMap = (cardMap: CardMap) => {
+    cardMap.forEach(this.setCard);
+  }
+
+  /**
    * @param input the input to delete (only deletes exact matches)
-   * @returns true if an element in the OracleIDMap existed and has been removed,
+   * @returns true if an element in the InvariantMap existed and has been removed,
    * or false if the element does not exist.
    */
   delete = (input: printInput) => {
@@ -123,7 +239,7 @@ export class InvariantMap {
 
   /**
    * @param input the input to delete (only deletes overlaps, not exact matches)
-   * @returns true if an element in the OracleIDMap existed and has been removed,
+   * @returns true if an element in the InvariantMap existed and has been removed,
    * or false if the element does not exist.
    */
   deleteOverlap = (input: printInput) => {
@@ -145,7 +261,7 @@ export class InvariantMap {
 
   /**
    * @param name the name to delete
-   * @returns true if an element in the OracleIDMap existed and has been removed,
+   * @returns true if an element in the InvariantMap existed and has been removed,
    * or false if the element does not exist.
    */
   deleteName = (name: string) => {
@@ -157,7 +273,7 @@ export class InvariantMap {
 
   /**
    * @param oracle_id the oracle id to delete
-   * @returns true if an element in the OracleIDMap existed and has been removed,
+   * @returns true if an element in the InvariantMap existed and has been removed,
    * or false if the element does not exist.
    */
   deleteOracleID = (oracle_id: string) => {
@@ -168,47 +284,51 @@ export class InvariantMap {
   };
 
   /**
-   * Deletes multiple invariants from the OracleIDMap.
+   * Deletes multiple invariants from the InvariantMap.
    * @param inputs the inputs to delete
    */
   deleteMultiple = (inputs: printInput[]) => inputs.forEach(this.delete);
 
   /**
-   * Deletes multiple overlaps from the OracleIDMap.
+   * Deletes multiple overlaps from the InvariantMap.
    * @param inputs the inputs to delete
    */
   deleteMultipleOverlaps = (inputs: printInput[]) => inputs.forEach(this.deleteOverlap);
 
   /**
-   * Deletes multiple names from the OracleIDMap.
+   * Deletes multiple names from the InvariantMap.
    * @param names the names to delete
    */
   deleteMultipleNames = (names: string[]) => names.forEach(this.deleteName);
 
   /**
-   * Deletes multiple oracle ids from the OracleIDMap.
+   * Deletes multiple oracle ids from the InvariantMap.
    * @param oracle_ids the oracle ids to delete
    */
   deleteMultipleOracleIds = (oracle_ids: string[]) => oracle_ids.forEach(this.deleteOracleID);
 
   /**
-   * Creates a new OracleIDMap
+   * Creates a new InvariantMap
    */
   constructor();
   /**
-   * Creates a new OracleIDMap
+   * Creates a new InvariantMap
    * @param inputs The initial {@linkcode printInput} objects to set, if any
    */
+  /**
+   * Creates a new InvariantMap
+   * @param inputs The initial {@linkcode CardMap} to use, if any
+   */
   constructor(inputs: printInput[]);
-  constructor(entries?: printInput[]) {
+  constructor(inputs?: printInput[]) {
     this.nameMap = new Map();
     this.oracleIDMap = new Map();
-    if (!entries) return;
-    entries?.forEach(this.set);
+    if (!inputs) return;
+    inputs?.forEach(this.set);
   }
 
   /**
-   * Returns a specified invariant from the OracleIDMap object.
+   * Returns a specified invariant from the InvariantMap object.
    * @param input the input for the invariant to get
    */
   get = (input: printInput) =>
@@ -217,19 +337,19 @@ export class InvariantMap {
       : undefined;
 
   /**
-   * Returns a specified oracle id from the OracleIDMap object.
+   * Returns a specified oracle id from the InvariantMap object.
    * @param name the name of the oracle id to get
    */
   getOracleID = (name: string) => this.nameMap.get(name.toLowerCase());
 
   /**
-   * Returns a specified name from the OracleIDMap object.
+   * Returns a specified name from the InvariantMap object.
    * @param oracle_id the oracle id of the name to get
    */
   getName = (oracle_id: string) => this.oracleIDMap.get(oracle_id)?.name;
 
   /**
-   * Returns a specified {@linkcode printInvariant} from the OracleIDMap object.
+   * Returns a specified {@linkcode printInvariant} from the InvariantMap object.
    * @param name the name of the {@linkcode printInvariant} to get
    */
   getFromName = (name: string) => {
@@ -238,7 +358,7 @@ export class InvariantMap {
   };
 
   /**
-   * Returns a specified {@linkcode printInvariant} from the OracleIDMap object.
+   * Returns a specified {@linkcode printInvariant} from the InvariantMap object.
    * @param oracle_id the oracle id of the {@linkcode printInvariant} to get
    */
   getFromOracleID = (oracle_id: string) => this.oracleIDMap.get(oracle_id);
