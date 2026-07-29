@@ -157,6 +157,7 @@ export const facePropOrder: facePropType[] = Object.values(facePropRecord);
 const partPropRecord = {
   object: 'object',
   id: 'id',
+  oracle_id: 'oracle_id',
   hcid: 'hcid',
   name: 'name',
   set: 'set',

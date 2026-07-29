@@ -1,10 +1,15 @@
-import { rootMappedType } from '@hellfall/shared/types';
+import { HCRelatedCard, rootMappedType } from '@hellfall/shared/types';
 import { isValidV4UUID } from '../textHandling';
 import { xor } from '../listHandling';
 
-export type invariantPart = {
-  oracle_id: string;
-  default_hcid: string;
+/**
+ * A related card that can be used for a {@linkcode printInvariant} object.
+ */
+export type invariantRelatedCard = HCRelatedCard & {
+  /**
+   * The id for the default version of this card to use for the related card.
+   */
+  default_id: string;
 };
 
 /**
@@ -12,7 +17,7 @@ export type invariantPart = {
  *
  * `name` and `oracle_id` are mandatory.
  */
-export type printInvariant = { name: string; oracle_id: string; parts?: invariantPart[] } & Pick<
+export type printInvariant = { name: string; oracle_id: string; parts?: invariantRelatedCard[] } & Pick<
   rootMappedType,
   'keywords' | 'rulings' | 'oracle_id_is_scryfall' | 'legalities' | 'export_name'
 >;

@@ -33,6 +33,7 @@ export const updateParts = (
       const cardAsRelated: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: card.id,
+        oracle_id: card.oracle_id,
         hcid: card.hcid,
         name: card.name,
         set: card.set,
@@ -47,6 +48,7 @@ export const updateParts = (
         : {
             object: HCObject.ObjectType.RelatedCard,
             id: relatedCard.id,
+            oracle_id: relatedCard.oracle_id,
             hcid: relatedCard.hcid,
             name: relatedCard.name,
             set: relatedCard.set,
@@ -60,6 +62,7 @@ export const updateParts = (
       }
       if (alreadyHasPart) {
         part.id = relatedCard.id;
+        part.oracle_id = relatedCard.oracle_id;
         part.hcid = relatedCard.hcid;
         part.name = relatedCard.name;
         part.set = relatedCard.set;
@@ -105,6 +108,7 @@ export const updateParts = (
       const cardAsRelated: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: card.id,
+        oracle_id: card.oracle_id,
         hcid: card.hcid,
         name: card.name,
         set: card.set,
@@ -127,6 +131,7 @@ export const updateParts = (
         return;
       }
       part.id = relatedCard.id;
+      part.oracle_id = relatedCard.oracle_id;
       part.hcid = relatedCard.hcid;
       part.name = relatedCard.name;
       part.set = relatedCard.set;
@@ -166,6 +171,7 @@ export const updateParts = (
       const cardAsRelated: HCRelatedCard = {
         object: HCObject.ObjectType.RelatedCard,
         id: card.id,
+        oracle_id: card.oracle_id,
         hcid: card.hcid,
         name: card.name,
         set: card.set,
@@ -195,6 +201,7 @@ export const updateParts = (
       }
 
       part.id = relatedCard.id;
+      part.oracle_id = relatedCard.oracle_id;
       part.hcid = relatedCard.hcid;
       part.name = relatedCard.name;
       part.set = relatedCard.set;
@@ -225,6 +232,7 @@ export const updateParts = (
           );
         }
         part.id = relatedCard.id;
+        part.oracle_id = relatedCard.oracle_id;
         part.hcid = relatedCard.hcid;
         part.name = relatedCard.name;
         part.set = relatedCard.set;
@@ -241,6 +249,7 @@ export const updateParts = (
     const meldResult: HCRelatedCard = {
       object: HCObject.ObjectType.RelatedCard,
       id: card.id,
+      oracle_id: card.oracle_id,
       hcid: card.hcid,
       name: card.name,
       set: card.set,

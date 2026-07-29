@@ -64,6 +64,7 @@ export const fetchScryfallTokens = async () => {
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',
+                oracle_id: '',
                 hcid: shouldUseBase ? name : '',
                 component: 'token_maker',
                 name: shouldUseBase ? base : name,

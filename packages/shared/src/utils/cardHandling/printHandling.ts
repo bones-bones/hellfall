@@ -1,6 +1,6 @@
 import { HCLegalitiesField, HCLegality } from '@hellfall/shared/types';
 import { InvariantMap, printInput } from './invariantMap';
-import { textListContains, textListIsContainedBy } from '../listHandling';
+import { textListIsContainedBy } from '../listHandling';
 
 const cardIDList: printInput[] = [
   ['plains', 'bc71ebf6-2056-41f7-be35-b2e5c34afa99'],

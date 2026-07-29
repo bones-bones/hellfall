@@ -466,6 +466,7 @@
 				{
 					"object": "related_card",
 					"id": "306652ea-6275-4c52-958d-f5096ce80012",
+					"oracle_id": "20fefa07-7ad1-4a3e-b7d6-3f642b9e1029",
 					"hcid": "509",
 					"name": "Woah Lions",
 					"set": "HLC.2",
@@ -537,6 +538,7 @@
 				{
 					"object": "related_card",
 					"id": "0c5b1e3e-c93f-49bd-b6b9-fcdfc84ef9f1",
+					"oracle_id": "7a5ff58f-b9cc-4cdf-a2a9-efd5d69dc3ba",
 					"hcid": "1624",
 					"name": "Twisty Nipple Charm",
 					"set": "HC3.0",
@@ -10601,6 +10603,7 @@
 				{
 					"object": "related_card",
 					"id": "c0c6dac5-40b2-4fb5-8ddb-c8ae5003bc49",
+					"oracle_id": "de3853ea-eeab-4882-ae54-6b4c8781571a",
 					"hcid": "3871",
 					"name": "Dwardish Spirit Guide",
 					"set": "HC7.0",
@@ -10611,6 +10614,7 @@
 				{
 					"object": "related_card",
 					"id": "ced31bb3-908c-43f6-a603-5a8d076e44b8",
+					"oracle_id": "9f87cbc0-0eef-4905-8930-ccb90041843c",
 					"hcid": "4671",
 					"name": "Eldrazi from the Really Blind Eternities",
 					"set": "HC7.1",
@@ -10621,6 +10625,7 @@
 				{
 					"object": "related_card",
 					"id": "a9707596-804d-447e-bb24-ff575a45468c",
+					"oracle_id": "3a00b6d8-c49a-4617-9e39-55d52dcd42d6",
 					"hcid": "3877",
 					"name": "Black Hole (HC)",
 					"set": "HC7.0",
@@ -10631,6 +10636,7 @@
 				{
 					"object": "related_card",
 					"id": "cc87d890-fd02-4dbb-b30d-029588510e1a",
+					"oracle_id": "0b72ff7d-4a87-4c96-90e6-494e925ecb77",
 					"hcid": "4700",
 					"name": "The Final Frontier",
 					"set": "HC7.1",
@@ -10641,6 +10647,7 @@
 				{
 					"object": "related_card",
 					"id": "44e7db75-d1de-4926-90f9-2945b926fe53",
+					"oracle_id": "5c20a61e-a332-48c2-a0dd-7f1ca219a359",
 					"hcid": "4004",
 					"name": "Burning-Bush Emissary",
 					"set": "HC7.0",
@@ -10651,6 +10658,7 @@
 				{
 					"object": "related_card",
 					"id": "11130db4-d99e-4798-94f4-768c51507f34",
+					"oracle_id": "e00c83df-07db-48d5-90b0-b9f42593d253",
 					"hcid": "4800",
 					"name": "Arena Aggro Drafter",
 					"set": "HC7.1",
@@ -10661,6 +10669,7 @@
 				{
 					"object": "related_card",
 					"id": "169b6215-9a77-4c26-9c62-6e9ad8a0f089",
+					"oracle_id": "c1dd53d3-caf4-4e81-94f2-306351cc732b",
 					"hcid": "4816",
 					"name": "chance to have a 10 nebula for 1 pick in a booster",
 					"set": "HCV.7",
@@ -10673,6 +10682,7 @@
 				{
 					"object": "related_card",
 					"id": "d474ffab-d91b-48e3-8df7-c7bf2caf64e7",
+					"oracle_id": "a5356355-7fe3-4f5e-8d5a-f80aea13afb9",
 					"hcid": "4837",
 					"name": "Asteroid Mining Colony",
 					"set": "HC7.1",
@@ -10684,6 +10694,7 @@
 				{
 					"object": "related_card",
 					"id": "dd4e282f-3557-493d-a450-974878d47a2b",
+					"oracle_id": "c5a01c26-8e7d-487a-b355-c9d7d33817a7",
 					"hcid": "4852",
 					"name": "Fetch, Land",
 					"set": "HC7.1",
@@ -10694,6 +10705,7 @@
 				{
 					"object": "related_card",
 					"id": "793c0bab-bebe-4882-b5ba-a66d5c35ed6e",
+					"oracle_id": "54e061ac-6168-4527-85ec-76b59c045492",
 					"hcid": "4883",
 					"name": "LGS Cleaning Crew",
 					"set": "HC7.1",
@@ -10704,6 +10716,7 @@
 				{
 					"object": "related_card",
 					"id": "45b7c535-e3fc-4fab-9b39-abe884f4485b",
+					"oracle_id": "a94f4cfa-de85-4cbd-87f0-733e94ae10e6",
 					"hcid": "4994",
 					"name": "Slimefoot, The Fungus Attached to the ISS",
 					"set": "HC7.1",
@@ -10714,6 +10727,7 @@
 				{
 					"object": "related_card",
 					"id": "0df4aece-2477-473c-8fe9-e89a54e0b831",
+					"oracle_id": "3db967bc-6088-41c6-ba96-d6e7bc440eff",
 					"hcid": "1630",
 					"name": "POV: You Just Played Llanowar Elves for the First Time",
 					"set": "HC3.1",
@@ -10790,6 +10804,7 @@
 				{
 					"object": "related_card",
 					"id": "2a816133-c1f0-46d3-ae1f-99a4b34b41a1",
+					"oracle_id": "c6c07f29-bfd2-4982-9b81-01da17799faa",
 					"hcid": "7124",
 					"name": "Kobolds of Starbase Kher",
 					"set": "HKL",
@@ -10801,6 +10816,7 @@
 				{
 					"object": "related_card",
 					"id": "7fabdffd-9ee7-4c3c-8eb9-762d9493b46e",
+					"oracle_id": "ae19ea36-6cd1-4bc6-a637-df5be7dd5748",
 					"hcid": "7135",
 					"name": "Waxy Charm",
 					"set": "HKL",
@@ -10811,6 +10827,7 @@
 				{
 					"object": "related_card",
 					"id": "ac98f6fc-e954-4887-92e9-711d9a6e402d",
+					"oracle_id": "bbeaf189-eadf-4599-a89e-d3289ba8ce90",
 					"hcid": "7229",
 					"name": "PURPLE Lotus",
 					"set": "HCV.L",
@@ -10823,6 +10840,7 @@
 				{
 					"object": "related_card",
 					"id": "31856247-3e6a-44ba-8eaf-5cacd3a50d94",
+					"oracle_id": "387f47b7-87f8-4266-af59-3f1c35f4ed86",
 					"hcid": "7163",
 					"name": "Dagoth Ur",
 					"set": "HKL",
@@ -10834,6 +10852,7 @@
 				{
 					"object": "related_card",
 					"id": "e6a53102-b298-4bed-96af-4a881e11d7fe",
+					"oracle_id": "2c67345a-4670-40e9-8e19-7a5126cd8b67",
 					"hcid": "7309",
 					"name": "The Spider From Trade Caravan",
 					"set": "HCV.L",
@@ -10913,6 +10932,7 @@
 				{
 					"object": "related_card",
 					"id": "36e93eef-86c2-4718-bf1c-fff971abfde0",
+					"oracle_id": "20fefa07-7ad1-4a3e-b7d6-3f642b9e1029",
 					"hcid": "6912",
 					"name": "HKL: Woah Lions",
 					"set": "HKL",
@@ -10993,6 +11013,7 @@
 				{
 					"object": "related_card",
 					"id": "22dd41e6-d143-4fe3-831a-219525749e37",
+					"oracle_id": "5433ffe3-6efa-46b8-ad7d-a50fdaa33083",
 					"hcid": "7608",
 					"name": "Purple Draft Common",
 					"set": "HC9.0",
@@ -11004,6 +11025,7 @@
 				{
 					"object": "related_card",
 					"id": "d3ae4b0b-0c2f-4cf2-880d-05564afb2c7e",
+					"oracle_id": "c6c07f29-bfd2-4982-9b81-01da17799faa",
 					"hcid": "7685",
 					"name": "HC9: Kobolds of Starbase Kher",
 					"set": "HCV.9",

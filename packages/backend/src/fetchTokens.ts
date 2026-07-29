@@ -106,6 +106,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: '',
+              oracle_id: '',
               hcid: shouldUseBase ? name : '',
               name: shouldUseBase ? base : name,
               set: '' as SetCode,

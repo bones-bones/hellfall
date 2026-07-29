@@ -290,7 +290,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = new HCIDMap(
-    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [])
+    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [], 'oracle_id', '','parts')
   );
 
   try {
@@ -299,7 +299,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = new HCIDMap(dataToCards(tokensContent?.data ?? []));
+  const existingTokens = new HCIDMap(dataToCards(tokensContent?.data ?? [], 'oracle_id', '','parts'));
 
   try {
     landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
@@ -308,7 +308,7 @@ const loadExistingData = () => {
   }
 
   // #jank
-  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
+  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? [], 'oracle_id', '','parts'));
   existingCards.setMultiple(existingLands);
 
   return { existingCards, existingTokens };

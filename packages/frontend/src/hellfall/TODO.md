@@ -181,3 +181,6 @@ Write a script to transform the database
 - once oracle ids get fully integrated, remove duplicative code in fetchers and tag handling
 - add invariant handling for oracle text, add printed oracle text fields for the text printed on the card, and update all oracle texts
 - remove janky code from this pr (search for #jank)
+- add code that changes masterpiece prefix into a set group search
+- make collector nums fixed
+- sort out why the undercity // the initiative broke its types
