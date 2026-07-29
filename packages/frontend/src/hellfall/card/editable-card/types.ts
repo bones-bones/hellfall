@@ -50,7 +50,14 @@ export function groupFieldConfigs(entries: readonly FieldConfigEntry[]): FieldCo
   return groups;
 }
 
-export type FieldType = 'string' | 'textarea' | 'semicolon-list' | 'number' | 'boolean' | 'enum';
+export type FieldType =
+  | 'string'
+  | 'textarea'
+  | 'semicolon-list'
+  | 'multi-enum'
+  | 'number'
+  | 'boolean'
+  | 'enum';
 
 export type EditFormState = {
   root: Record<string, string>;

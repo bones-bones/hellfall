@@ -12,6 +12,7 @@ import {
   isImageStatus,
   isLayout,
   isLegalitiesField,
+  isManaCost,
   isRarity,
   isRelatedCard,
   partPropType,
@@ -313,6 +314,12 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
       return typeof value == 'number'
         ? undefined
         : `invalid change for mana value: ${value} is not a number`;
+    case 'mana_cost':
+      return isManaCost(value)
+        ? undefined
+        : `invalid change: ${JSON.stringify(
+            value
+          )} is not a valid mana cost (expected brace tokens like {2}{B}{B})`;
     case 'attraction_lights':
       return attractionLightsAreValid(value)
         ? undefined
