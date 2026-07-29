@@ -1,4 +1,5 @@
 import fs from 'fs';
+import crypto from 'crypto';
 
 import { fetchTokens } from './fetchTokens.ts';
 import { fetchCards } from './fetchCards.ts';

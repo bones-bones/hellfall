@@ -19,10 +19,13 @@ export function ImageUploadControl({
   cardId,
   target,
   onReplaced,
+  compact = false,
 }: {
   cardId: string;
   target: ImageTarget;
   onReplaced: (url: string) => void;
+  /** Shorter button label for use beside form fields. */
+  compact?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -74,7 +77,7 @@ export function ImageUploadControl({
         }}
       />
       <UploadButton type="button" disabled={uploading} onClick={() => inputRef.current?.click()}>
-        {uploading ? 'Uploading…' : `Upload new image for ${target.label}`}
+        {uploading ? 'Uploading…' : compact ? 'Upload' : `Upload new image for ${target.label}`}
       </UploadButton>
       {error && <ErrorText size="small">{error}</ErrorText>}
     </UploadRow>

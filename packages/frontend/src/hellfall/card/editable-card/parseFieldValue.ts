@@ -7,7 +7,7 @@ export function parseFieldValue(raw: string, type: FieldType): unknown {
     const n = Number(raw);
     return Number.isFinite(n) ? n : undefined;
   }
-  if (type === 'semicolon-list') {
+  if (type === 'semicolon-list' || type === 'multi-enum') {
     if (!raw.trim()) return [];
     return raw
       .split(';')

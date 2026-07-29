@@ -2,6 +2,7 @@ import {
   HCBorderColor,
   HCCard,
   HCCardFace,
+  HCColor,
   HCColors,
   HCFinish,
   HCFrame,
@@ -40,7 +41,13 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
   { key: 'rarity', label: 'Rarity', type: 'enum', enumValues: Object.values(HCRarity) },
   { key: 'layout', label: 'Layout', type: 'enum', enumValues: Object.values(HCLayout) },
   { key: 'mana_value', label: 'Mana Value', type: 'number' },
-  { key: 'colors', label: 'Colors', type: 'semicolon-list' },
+  {
+    key: 'colors',
+    label: 'Colors',
+    type: 'multi-enum',
+    enumValues: Object.values(HCColor),
+    explanation: 'Select color codes (W, U, B, R, G, P, C, or named misc colors).',
+  },
   { key: 'image', label: 'Image URL', type: 'string', readOnly: true },
   {
     key: 'still_image',
@@ -99,7 +106,7 @@ function serializeValue(value: unknown, type: FieldType): string {
   if (value == null || value === undefined) return '';
   if (type === 'boolean') return value === true ? 'true' : '';
   if (type === 'number') return value === '' || value == null ? '' : String(value);
-  if (type === 'semicolon-list') {
+  if (type === 'semicolon-list' || type === 'multi-enum') {
     return Array.isArray(value) ? value.join(';') : String(value);
   }
   return String(value);

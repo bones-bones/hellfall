@@ -9,6 +9,7 @@ import {
   createStenciledInput,
   createStenciledTextArea,
   createStenciledButton,
+  createStenciledDiv,
   createStyledButton,
   createStyledDiv,
   createStyledLabel,
@@ -21,7 +22,36 @@ import { useSyncPendingChangesets } from '../../hooks/usePendingChangesets.ts';
 import { EditFormState, FieldConfig, groupFieldConfigs } from './types.ts';
 import { addPendingFace } from './faces/addPendingFace.ts';
 import { FACE_FIELD_CONFIGS } from './constants.ts';
-import { getMissingRequiredFields, isFieldValueMissing } from './fieldValidation.ts';
+import { getInvalidFields, isFieldValueInvalid } from './fieldValidation.ts';
+import { ImageUploadControl, type ImageTarget } from './ImageUploadControl.tsx';
+
+const IMAGE_URL_KEYS = new Set<ImageTarget['imageProp']>([
+  'image',
+  'still_image',
+  'rotated_image',
+  'print_image',
+  'still_print_image',
+  'rotated_print_image',
+]);
+
+const COLLAPSED_NAME_KEYS = new Set(['flavor_name', 'export_name']);
+
+function isImageUrlKey(key: string): key is ImageTarget['imageProp'] {
+  return IMAGE_URL_KEYS.has(key as ImageTarget['imageProp']);
+}
+
+function partitionCollapsedNameFields(fields: FieldConfig[]): {
+  main: FieldConfig[];
+  collapsed: FieldConfig[];
+} {
+  const main: FieldConfig[] = [];
+  const collapsed: FieldConfig[] = [];
+  for (const cfg of fields) {
+    if (COLLAPSED_NAME_KEYS.has(cfg.key)) collapsed.push(cfg);
+    else main.push(cfg);
+  }
+  return { main, collapsed };
+}
 
 export const CardEditPanel = ({
   card,
@@ -47,11 +77,8 @@ export const CardEditPanel = ({
   const hasChanges = changes.length > 0;
   const faceCount = form.faces.length;
   const isMulti = 'card_faces' in card || form.faces.length > original.faces.length;
-  const missingRequired = useMemo(
-    () => getMissingRequiredFields(card, form, isMulti),
-    [card, form, isMulti]
-  );
-  const canSubmit = hasChanges && missingRequired.length === 0;
+  const invalidFields = useMemo(() => getInvalidFields(card, form, isMulti), [card, form, isMulti]);
+  const canSubmit = hasChanges && invalidFields.length === 0;
 
   const setRootField = useCallback((key: string, value: string) => {
     setForm(prev => ({ ...prev, root: { ...prev.root, [key]: value } }));
@@ -119,18 +146,12 @@ export const CardEditPanel = ({
           </PanelHeader>
 
           <SectionTitle>Card-level fields</SectionTitle>
-          <FieldsGrid>
-            {ROOT_FIELD_CONFIGS.map(cfg => (
-              <FieldEditor
-                key={cfg.key}
-                config={cfg}
-                value={form.root[cfg.key] ?? ''}
-                changed={(form.root[cfg.key] ?? '') !== (original.root[cfg.key] ?? '')}
-                invalid={isFieldValueMissing(cfg, form.root[cfg.key] ?? '')}
-                onChange={v => setRootField(cfg.key, v)}
-              />
-            ))}
-          </FieldsGrid>
+          <RootFields
+            cardId={card.id}
+            form={form}
+            original={original}
+            setRootField={setRootField}
+          />
 
           <SectionTitle>Face fields</SectionTitle>
           <FaceTabs>
@@ -169,11 +190,12 @@ export const CardEditPanel = ({
                   !cfg.shouldHide?.(card, activeFace, form.faces[activeFace] ?? {})
               );
               if (visibleFields.length === 0) return null;
+              const { main, collapsed } = partitionCollapsedNameFields(visibleFields);
               return (
                 <div key={group.label ?? 'default'}>
                   {group.label && <SubSectionTitle>{group.label}</SubSectionTitle>}
                   <FieldsGrid>
-                    {visibleFields.map(cfg => (
+                    {main.map(cfg => (
                       <FieldEditor
                         key={`${activeFace}-${cfg.key}`}
                         config={cfg}
@@ -182,22 +204,33 @@ export const CardEditPanel = ({
                           (form.faces[activeFace]?.[cfg.key] ?? '') !==
                           (original.faces[activeFace]?.[cfg.key] ?? '')
                         }
-                        invalid={isFieldValueMissing(cfg, form.faces[activeFace]?.[cfg.key] ?? '')}
+                        invalid={isFieldValueInvalid(cfg, form.faces[activeFace]?.[cfg.key] ?? '')}
+                        cardId={card.id}
+                        faceIndex={activeFace}
                         onChange={v => setFaceField(activeFace, cfg.key, v)}
                       />
                     ))}
+                    <CollapsibleNameFields
+                      fields={collapsed}
+                      values={form.faces[activeFace] ?? {}}
+                      originals={original.faces[activeFace] ?? {}}
+                      cardId={card.id}
+                      faceIndex={activeFace}
+                      onChange={(key, v) => setFaceField(activeFace, key, v)}
+                    />
                   </FieldsGrid>
                 </div>
               );
             })}
           </FacePanel>
 
-          {hasChanges && missingRequired.length > 0 && (
+          {hasChanges && invalidFields.length > 0 && (
             <ValidationSummary>
-              <SummaryTitle>Required fields missing</SummaryTitle>
-              {missingRequired.map(({ scope, faceIndex, config }) => (
+              <SummaryTitle>Fix before submitting</SummaryTitle>
+              {invalidFields.map(({ scope, faceIndex, config, message }) => (
                 <ValidationItem key={`${scope}-${faceIndex ?? 'root'}-${config.key}`}>
                   {scope === 'face' ? `Side ${faceIndex! + 1}: ${config.label}` : config.label}
+                  {message !== 'Required' ? ` — ${message}` : ' (required)'}
                 </ValidationItem>
               ))}
             </ValidationSummary>
@@ -230,22 +263,167 @@ export const CardEditPanel = ({
   );
 };
 
+function RootFields({
+  cardId,
+  form,
+  original,
+  setRootField,
+}: {
+  cardId: string;
+  form: EditFormState;
+  original: EditFormState;
+  setRootField: (key: string, value: string) => void;
+}) {
+  const { main, collapsed } = partitionCollapsedNameFields(ROOT_FIELD_CONFIGS);
+  return (
+    <FieldsGrid>
+      {main.map(cfg => (
+        <FieldEditor
+          key={cfg.key}
+          config={cfg}
+          value={form.root[cfg.key] ?? ''}
+          changed={(form.root[cfg.key] ?? '') !== (original.root[cfg.key] ?? '')}
+          invalid={isFieldValueInvalid(cfg, form.root[cfg.key] ?? '')}
+          cardId={cardId}
+          onChange={v => setRootField(cfg.key, v)}
+        />
+      ))}
+      <CollapsibleNameFields
+        fields={collapsed}
+        values={form.root}
+        originals={original.root}
+        cardId={cardId}
+        onChange={(key, v) => setRootField(key, v)}
+      />
+    </FieldsGrid>
+  );
+}
+
+function CollapsibleNameFields({
+  fields,
+  values,
+  originals,
+  cardId,
+  faceIndex,
+  onChange,
+}: {
+  fields: FieldConfig[];
+  values: Record<string, string>;
+  originals: Record<string, string>;
+  cardId: string;
+  faceIndex?: number;
+  onChange: (key: string, value: string) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  if (fields.length === 0) return null;
+  const hasValues = fields.some(cfg => (values[cfg.key] ?? '').trim() !== '');
+  return (
+    <CollapsedBlock>
+      <CollapseToggle
+        type="button"
+        aria-expanded={expanded}
+        onClick={() => setExpanded(open => !open)}
+      >
+        {expanded ? '▾' : '▸'} Flavor & Export name
+        {!expanded && hasValues ? ' (set)' : ''}
+      </CollapseToggle>
+      {expanded &&
+        fields.map(cfg => (
+          <FieldEditor
+            key={cfg.key}
+            config={cfg}
+            value={values[cfg.key] ?? ''}
+            changed={(values[cfg.key] ?? '') !== (originals[cfg.key] ?? '')}
+            invalid={isFieldValueInvalid(cfg, values[cfg.key] ?? '')}
+            cardId={cardId}
+            faceIndex={faceIndex}
+            onChange={v => onChange(cfg.key, v)}
+          />
+        ))}
+    </CollapsedBlock>
+  );
+}
+
+function MultiEnumEditor({
+  id,
+  options,
+  value,
+  changed,
+  invalid,
+  disabled,
+  onChange,
+}: {
+  id: string;
+  options: readonly string[];
+  value: string;
+  changed: boolean;
+  invalid: boolean;
+  disabled?: boolean;
+  onChange: (value: string) => void;
+}) {
+  const selected = useMemo(
+    () =>
+      value
+        .split(';')
+        .map(s => s.trim())
+        .filter(Boolean),
+    [value]
+  );
+  const selectedSet = useMemo(() => new Set(selected), [selected]);
+
+  const toggle = (option: string) => {
+    if (disabled) return;
+    const next = selectedSet.has(option)
+      ? selected.filter(v => v !== option)
+      : [...selected, option];
+    onChange(next.join(';'));
+  };
+
+  return (
+    <MultiEnumBox
+      id={id}
+      role="group"
+      changed={changed}
+      invalid={invalid}
+      aria-disabled={disabled || undefined}
+    >
+      {options.map(option => (
+        <MultiEnumOption key={option}>
+          <input
+            type="checkbox"
+            checked={selectedSet.has(option)}
+            disabled={disabled}
+            onChange={() => toggle(option)}
+          />
+          <span>{option}</span>
+        </MultiEnumOption>
+      ))}
+    </MultiEnumBox>
+  );
+}
+
 function FieldEditor({
   config,
   value,
   changed,
   invalid = false,
+  cardId,
+  faceIndex,
   onChange,
 }: {
   config: FieldConfig;
   value: string;
   changed: boolean;
   invalid?: boolean;
+  cardId?: string;
+  faceIndex?: number;
   onChange: (value: string) => void;
 }) {
   const [showExplanation, setShowExplanation] = useState(false);
   const fieldId = `field-${config.key}`;
   const isReadOnly = config.readOnly === true;
+  const canUpload =
+    !!cardId && isImageUrlKey(config.key) && value.includes('storage.googleapis.com');
   return (
     <FieldRow>
       <FormField orientation="vertical">
@@ -317,6 +495,16 @@ function FieldEditor({
               </option>
             ))}
           </StyledSelect>
+        ) : config.type === 'multi-enum' && config.enumValues ? (
+          <MultiEnumEditor
+            id={fieldId}
+            options={config.enumValues}
+            value={value}
+            changed={changed}
+            invalid={invalid}
+            disabled={isReadOnly}
+            onChange={onChange}
+          />
         ) : (
           <StyledInput
             changed={changed}
@@ -326,6 +514,20 @@ function FieldEditor({
             readOnly={isReadOnly}
             required={config.required}
             onChange={e => onChange(e.target.value)}
+          />
+        )}
+        {canUpload && isImageUrlKey(config.key) && (
+          <ImageUploadControl
+            cardId={cardId}
+            compact
+            target={{
+              label: config.label,
+              faceIndex,
+              imageProp: config.key,
+            }}
+            onReplaced={() => {
+              /* GCS object replaced in place; URL field stays read-only. */
+            }}
           />
         )}
       </FormField>
@@ -370,6 +572,26 @@ const fieldsGridStyles = createStyles({
   gap: 8,
 });
 const FieldsGrid = createStyledDiv(fieldsGridStyles, 'FieldsGrid');
+
+const collapsedBlockStyles = createStyles({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+});
+const CollapsedBlock = createStyledDiv(collapsedBlockStyles, 'CollapsedBlock');
+
+const collapseToggleStyles = createStyles({
+  alignSelf: 'flex-start',
+  padding: 0,
+  border: 'none',
+  background: 'transparent',
+  color: '#666',
+  fontSize: 12,
+  fontWeight: 600,
+  cursor: 'pointer',
+  '&:hover': { color: '#333' },
+});
+const CollapseToggle = createStyledButton(collapseToggleStyles, 'CollapseToggle');
 
 const fieldRowStyles = createStyles({ display: 'flex', flexDirection: 'column', gap: 2 });
 const FieldRow = createStyledDiv(fieldRowStyles, 'FieldRow');
@@ -453,6 +675,39 @@ interface TextAreaProps extends React.ComponentPropsWithoutRef<'textarea'> {
   invalid?: boolean;
 }
 const StyledTextarea = createStenciledTextArea<TextAreaProps>(textAreaStencil, 'StyledTextarea');
+
+const multiEnumBoxStencil = createStencil({
+  vars: {},
+  base: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '4px 10px',
+    padding: '6px 8px',
+    border: '1px solid #ccc',
+    borderRadius: 2,
+    background: '#fff',
+    width: '100%',
+    boxSizing: 'border-box' as const,
+  },
+  modifiers: {
+    changed: { true: { border: '1px solid #888', background: '#ffe' } },
+    invalid: { true: { border: '1px solid #c00' } },
+  },
+});
+interface MultiEnumBoxProps extends React.ComponentPropsWithoutRef<'div'> {
+  changed?: boolean;
+  invalid?: boolean;
+}
+const MultiEnumBox = createStenciledDiv<MultiEnumBoxProps>(multiEnumBoxStencil, 'MultiEnumBox');
+
+const multiEnumOptionStyles = createStyles({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 4,
+  fontSize: 13,
+  whiteSpace: 'nowrap',
+});
+const MultiEnumOption = createStyledLabel(multiEnumOptionStyles, 'MultiEnumOption');
 
 const changeSummaryStyles = createStyles({
   marginTop: 12,

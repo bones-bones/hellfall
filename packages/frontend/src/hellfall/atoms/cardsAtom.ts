@@ -4,6 +4,7 @@ import { CardMap } from '@hellfall/shared/utils';
 import { loadCardsData } from '@hellfall/shared/data';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
 import { getCardsCatalogUrl } from '../../auth/getCardsCatalogUrl';
+import { unescapeCardNewlines } from './unescapeCardNewlines';
 
 async function fetchCatalogData(): Promise<HCCard.Any[]> {
   const catalogUrl = getCardsCatalogUrl().replace(/\/$/, '');
@@ -21,7 +22,8 @@ async function fetchCatalogData(): Promise<HCCard.Any[]> {
   if (!Array.isArray(data)) {
     throw new Error('Invalid catalog response');
   }
-  return data;
+  // GCS catalog may store literal `\n` instead of real newlines.
+  return data.map(unescapeCardNewlines);
 }
 
 async function loadCards(): Promise<CardMap> {

@@ -1,5 +1,6 @@
 import {
   HCBorderColor,
+  HCColor,
   HCFinish,
   HCFrame,
   HCImageStatus,
@@ -38,8 +39,20 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
 
   { section: 'Mana Cost' },
   { key: 'mana_value', label: 'Mana Value', type: 'number' },
-  { key: 'colors', label: 'Colors', type: 'semicolon-list' },
-  { key: 'mana_cost', label: 'Mana Cost', type: 'string' },
+  {
+    key: 'colors',
+    label: 'Colors',
+    type: 'multi-enum',
+    enumValues: Object.values(HCColor),
+    explanation: 'Select color codes (W, U, B, R, G, P, C, or named misc colors).',
+  },
+  {
+    key: 'mana_cost',
+    label: 'Mana Cost',
+    type: 'string',
+    explanation:
+      'Brace-enclosed symbols only, e.g. {2}{B}{B}, {G/U}, {X}. Leave empty for lands. Use // between faces if needed.',
+  },
 
   { section: 'Types' },
   {
@@ -98,7 +111,13 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
 
   { section: 'Frame' },
 
-  { key: 'color_indicator', label: 'Color Indicator', type: 'semicolon-list' },
+  {
+    key: 'color_indicator',
+    label: 'Color Indicator',
+    type: 'multi-enum',
+    enumValues: Object.values(HCColor),
+    explanation: 'Select color codes (W, U, B, R, G, P, C, or named misc colors).',
+  },
   { key: 'finish', label: 'Finish', type: 'enum', enumValues: Object.values(HCFinish) },
   {
     key: 'border_color',
