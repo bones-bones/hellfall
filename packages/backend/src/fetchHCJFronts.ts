@@ -45,6 +45,7 @@ export const fetchHCJFronts = (): HCIDMap =>
         const part: HCRelatedCard = {
           object: HCObject.ObjectType.RelatedCard,
           id: '',
+          oracle_id: '',
           hcid: land.id || '',
           component: 'draft_partner',
           name: land.name || '',
@@ -61,6 +62,7 @@ export const fetchHCJFronts = (): HCIDMap =>
         front.all_parts.push({
           object: HCObject.ObjectType.RelatedCard,
           id: '',
+          oracle_id: '',
           hcid: pack.secondCopyOf,
           component: 'draft_partner',
           name: '',

@@ -101,7 +101,7 @@ export class PipMap {
     if (!this._manaSymbolRegex) {
       const symbols = this.filter(
         pip => pip.represents_mana && !manaSymbolRegex.test(pip.symbol)
-      ).mapToArray(pip => escapeRegex(pip.symbol));
+      ).map(pip => escapeRegex(pip.symbol));
       this._manaSymbolRegex = new RegExp(
         `{((${manaSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`,
         'g'
@@ -117,7 +117,7 @@ export class PipMap {
     if (!this._coloredSymbolRegex) {
       const symbols = this.filter(
         pip => !coloredSymbolRegex.test(pip.symbol) && pip.colors?.some(c => c != 'C')
-      ).mapToArray(pip => escapeRegex(pip.symbol));
+      ).map(pip => escapeRegex(pip.symbol));
       this._coloredSymbolRegex = new RegExp(
         `{((${coloredSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`,
         'g'
@@ -133,7 +133,7 @@ export class PipMap {
     if (!this._colorlessSymbolRegex) {
       const symbols = this.filter(
         pip => !colorlessSymbolRegex.test(pip.symbol) && pip.colors?.every(c => c == 'C')
-      ).mapToArray(pip => escapeRegex(pip.symbol));
+      ).map(pip => escapeRegex(pip.symbol));
       this._colorlessSymbolRegex = new RegExp(
         `{((${colorlessSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`,
         'g'
@@ -166,9 +166,9 @@ export class PipMap {
    */
   get hybridSymbolRegex(): RegExp {
     if (!this._hybridSymbolRegex) {
-      const symbols = this.filter(
-        pip => pip.hybrid && !hybridSymbolRegex.test(pip.symbol)
-      ).mapToArray(pip => escapeRegex(pip.symbol));
+      const symbols = this.filter(pip => pip.hybrid && !hybridSymbolRegex.test(pip.symbol)).map(
+        pip => escapeRegex(pip.symbol)
+      );
       this._hybridSymbolRegex = new RegExp(
         `{((${hybridSymbolRegex.source.slice(1, -1)})|${symbols.join('|')})}`,
         'g'
@@ -554,9 +554,9 @@ export class PipMap {
    * @param callbackfn A function that accepts up to two arguments.
    * The map method calls the callbackfn function one time for each pip.
    */
-  mapToArray<T>(callbackfn: (pip: HCCardSymbol) => T): T[];
-  mapToArray<T>(callbackfn: (pip: HCCardSymbol, symbol: string) => T): T[];
-  mapToArray<T>(callbackfn: (...args: any[]) => T): T[] {
+  map<T>(callbackfn: (pip: HCCardSymbol) => T): T[];
+  map<T>(callbackfn: (pip: HCCardSymbol, symbol: string) => T): T[];
+  map<T>(callbackfn: (...args: any[]) => T): T[] {
     const ret: T[] = [];
     for (const [symbol, pip] of this) {
       switch (callbackfn.length) {
@@ -571,52 +571,6 @@ export class PipMap {
     }
     return ret;
   }
-  /**
-   * Calls a defined callback function on each pip, and returns a map that contains the results.
-   * @template K the type of the key that `callbackfn` returns
-   * @template V the type of the value that `callbackfn` returns
-   * @param callbackfn A function that accepts up to two arguments.
-   * The map method calls the callbackfn function one time for each pip.
-   */
-  mapToMap<K, V>(callbackfn: (pip: HCCardSymbol) => [K, V]): Map<K, V>;
-  mapToMap<K, V>(callbackfn: (pip: HCCardSymbol, symbol: string) => [K, V]): Map<K, V>;
-  mapToMap<K, V>(callbackfn: (...args: any[]) => [K, V]): Map<K, V> {
-    const retMap = new Map<K, V>();
-    for (const [symbol, pip] of this) {
-      switch (callbackfn.length) {
-        case 2: {
-          retMap.set(...callbackfn(pip, symbol));
-          break;
-        }
-        default: {
-          retMap.set(...callbackfn(pip));
-        }
-      }
-    }
-    return retMap;
-  }
-  /**
-   * Calls a defined callback function on each pip, and returns a new PipMap.
-   * @param callbackfn A function that accepts up to two arguments.
-   * The map method calls the callbackfn function one time for each pip.
-   */
-  map(callbackfn: (pip: HCCardSymbol) => HCCardSymbol): this;
-  map(callbackfn: (pip: HCCardSymbol, symbol: string) => HCCardSymbol): this;
-  map(callbackfn: (...args: any[]) => HCCardSymbol): this {
-    const mapped = new (this.constructor as any)() as this;
-    for (const [symbol, pip] of this) {
-      switch (callbackfn.length) {
-        case 2: {
-          mapped.set(callbackfn(pip, symbol));
-          break;
-        }
-        default: {
-          mapped.set(callbackfn(pip));
-        }
-      }
-    }
-    return mapped;
-  }
 
   /**
    * Calls a defined callback function on each pip, then flattens the resulting array.
@@ -628,7 +582,7 @@ export class PipMap {
   flatMap<T>(callback: (pip: HCCardSymbol) => T | ReadonlyArray<T>): T[];
   flatMap<T>(callback: (pip: HCCardSymbol, symbol: string) => T | ReadonlyArray<T>): T[];
   flatMap<T>(callback: (...args: any[]) => T | ReadonlyArray<T>): T[] {
-    return this.mapToArray(callback).flat() as T[];
+    return this.map(callback).flat() as T[];
   }
 
   /**

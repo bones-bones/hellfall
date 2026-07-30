@@ -24,11 +24,18 @@ export const isComponent = (value: any): value is relatedComponent =>
  */
 export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
   /**
-   * An unique ID for this card in HC's database.
+   * A unique ID for this card in HC's database.
    *
    * @type UUID
    */
   id: string;
+  /**
+   * A unique ID for this card's oracle identity.
+   * This value is consistent across reprinted card editions, and unique among different cards with the same name (tokens, Unstable variants, etc).
+   *
+   * @type UUID
+   */
+  oracle_id: string;
   /**
    * the old unique ID for this card in HC's database.
    */

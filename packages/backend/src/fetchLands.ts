@@ -126,6 +126,7 @@ export const fetchLands = async () => {
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: '',
+              oracle_id: '',
               hcid: shouldUseBase ? name : '',
               name: shouldUseBase ? base : name,
               set: '' as SetCode,
