@@ -3,8 +3,8 @@
  */
 export enum HCKind {
   Card = 'card',
-  Token = 'token',
   Land = 'land', // lands from the land box
+  Token = 'token',
   Front = 'front', // jumpstart front cards
   Scryfall = 'scryfall', // scryfall tokens
   NotMagic = 'notmagic',
@@ -15,3 +15,9 @@ export enum HCKind {
  */
 export const isKind = (value: any): value is HCKind =>
   Object.values(HCKind).includes(value as HCKind);
+
+/**
+ * Finds the index of an {@linkcode HCKind} in the enum
+ * @param kind kind to get the index of
+ */
+export const toKindIndex = (kind:HCKind) => Object.values(HCKind).indexOf(kind)

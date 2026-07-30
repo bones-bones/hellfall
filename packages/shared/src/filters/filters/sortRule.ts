@@ -1,4 +1,4 @@
-import { HCCard, HCColor, HCKind, allSetsList } from '@hellfall/shared/types';
+import { HCCard, HCColor, HCKind, allSetsList, toKindIndex } from '@hellfall/shared/types';
 import { dirType, looseOpType, opType, sortFilterFunction, sortType } from '../types';
 
 const colorSortValue: Record<HCColor, number> = {
@@ -63,11 +63,7 @@ export const filterSort: sortFilterFunction = (
     }
     case 'id': {
       if (value1.kind != value2.kind) {
-        return (
-          (Object.values(HCKind).indexOf(value1.kind) -
-            Object.values(HCKind).indexOf(value2.kind)) *
-          dirMult
-        );
+        return (toKindIndex(value1.kind) - toKindIndex(value2.kind)) * dirMult ;
       }
       switch (value1.kind) {
         case 'card':

@@ -1,9 +1,14 @@
 import { Firestore } from '@google-cloud/firestore';
 import { HCCard, HCKind, HCImageStatus, SetCode } from '@hellfall/shared/types';
-import { getDefaultCard, isValidV4UUID, setDerivedProps } from '@hellfall/shared/utils';
+import {
+  baseInvariantMap,
+  getDefaultCard,
+  isValidV4UUID,
+  setDerivedProps,
+  stripMasterpiece,
+} from '@hellfall/shared/utils';
 import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
-import type {} from './lib/types.ts';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
 import { uploadImageBase64ToGcs } from '../lib/imageGcs.ts';
 
@@ -91,13 +96,20 @@ function parseCreators(creators: string): string[] {
 function newCardId(): string {
   return crypto.randomUUID();
 }
+const newUnlessValid = (id?: string) => (id && isValidV4UUID(id) ? id : newCardId());
 
-function resolveCardId(docId: string, data: firestoreCard): string {
-  const fromDoc = typeof data.id === 'string' ? data.id.trim() : '';
-  if (fromDoc && isValidV4UUID(fromDoc)) return fromDoc;
-  if (isValidV4UUID(docId)) return docId;
-  return newCardId();
-}
+// function resolveCardId(docId: string, data: firestoreCard): string {
+//   const fromDoc = data?.id?.trim();
+//   if (fromDoc && isValidV4UUID(fromDoc)) return fromDoc;
+//   if (isValidV4UUID(docId)) return docId;
+//   return newCardId();
+// }
+// function resolveOracleId(docId: string, data: firestoreCard, oracleId?: string): string {
+//   const fromDoc = data?.oracle_id?.trim();
+//   if (fromDoc && isValidV4UUID(fromDoc)) return fromDoc;
+//   if (isValidV4UUID(oracleId ?? '')) return oracleId!;
+//   return newCardId();
+// }
 
 function buildStubCard(
   body: Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> & PostcardBody
@@ -137,31 +149,40 @@ async function findByHcid(hcid: string) {
   return matches.docs[0] ?? null;
 }
 
-async function findByNameAndSet(name: string, setId: string) {
-  const matches = await cardsCol.where('name', '==', name).where('set', '==', setId).limit(2).get();
-  if (matches.size > 1) {
-    throw new Error(`multiple Firestore cards share name=${name} set=${setId}`);
-  }
-  return matches.docs[0] ?? null;
+async function findMasterpiece(name: string) {
+  const match = (
+    await cardsCol.where('name', '==', stripMasterpiece(name)).limit(2).get()
+  ).docs[0].data();
+  return match.oracle_id;
 }
 
-async function lookupDoc(hcid: string | undefined, name: string, setId: string) {
-  if (hcid) {
-    const byHcid = await findByHcid(hcid);
-    if (byHcid) return byHcid;
-  }
-  return findByNameAndSet(name, setId);
-}
+// async function findByNameAndSet(name: string, setId: string) {
+//   const matches = await cardsCol.where('name', '==', name).where('set', '==', setId).limit(2).get();
+//   if (matches.size > 1) {
+//     throw new Error(`multiple Firestore cards share name=${name} set=${setId}`);
+//   }
+//   return matches.docs[0] ?? null;
+// }
+
+// async function lookupDoc(hcid: string | undefined, name: string, setId: string) {
+//   if (hcid) {
+//     const byHcid = await findByHcid(hcid);
+//     if (byHcid) return byHcid;
+//   }
+//   return findByNameAndSet(name, setId);
+// }
 
 function validatePostcardBody(
   body: PostcardBody
-): body is Required<Pick<PostcardBody, 'name' | 'creators'>> &
+): body is Required<Pick<PostcardBody, 'name' | 'creators' | 'hcid'>> &
   PostcardBody & { set: string } & ({ image: string } | { imageBase64: string }) {
   const hasImageUrl = typeof body.image === 'string' && body.image.trim();
   const hasImageBase64 = typeof body.imageBase64 === 'string' && body.imageBase64.trim();
   return Boolean(
     typeof body.name === 'string' &&
       body.name.trim() &&
+      typeof body.hcid === 'string' &&
+      body.hcid.trim() &&
       (hasImageUrl || hasImageBase64) &&
       typeof body.creators === 'string' &&
       (body.kind === 'token' || (typeof body.set === 'string' && body.set.trim()))
@@ -199,23 +220,17 @@ async function upsertPostcard(body: PostcardBody) {
 
   const kind: PostcardKind = body.kind === 'token' ? 'token' : 'card';
   const setId = kind === 'token' ? 'HCT' : body.set;
-  const existing = await lookupDoc(body.hcid?.trim() || undefined, body.name, setId);
-
-  let cardId: string;
-  let previous: firestoreCard | null = null;
-  if (existing?.exists) {
-    previous = existing.data() ?? {};
-    cardId = resolveCardId(existing.id, previous);
-  } else {
-    cardId = newCardId();
-  }
+  const existing = await findByHcid(body.hcid.trim());
+  const previous: firestoreCard | null = existing?.data() ?? null;
+  const cardId = newUnlessValid(previous?.id);
+  const oracle_id = newUnlessValid(previous?.oracle_id ?? (await findMasterpiece(body.name)));
 
   const imageUrl = await resolveImageUrl(body, cardId);
   const bodyWithImage = { ...body, image: imageUrl };
 
   if (existing?.exists && previous) {
     const update: firestoreCard = {
-      name: body.name,
+      name: stripMasterpiece(body.name),
       image: imageUrl,
       image_status: HCImageStatus.HighRes,
       creators: parseCreators(body.creators),
@@ -223,20 +238,37 @@ async function upsertPostcard(body: PostcardBody) {
     };
     if (body.hcid?.trim()) update.hcid = body.hcid.trim();
     if (cardId !== previous.id) update.id = cardId;
+    if (oracle_id !== previous.oracle_id) update.oracle_id = oracle_id;
     await existing.ref.update(update);
     scheduleCatalogPublish();
-    return { docId: existing.id, id: cardId, wasCreate: false, previous, imageUrl };
+    const int_oracle_id = baseInvariantMap.getName(oracle_id) ?? oracle_id;
+    const oracle_id_to_use = int_oracle_id == body.name.toLowerCase() ? '' : int_oracle_id;
+    return {
+      docId: existing.id,
+      id: cardId,
+      oracle_id: oracle_id_to_use,
+      wasCreate: false,
+      previous,
+      imageUrl,
+    };
   }
 
   const stub = buildStubCard({ ...bodyWithImage, kind, set: setId });
   stub.id = cardId;
   const fireDoc = cardToFirestore(stub);
-  if (!fireDoc.id || !isValidV4UUID(String(fireDoc.id))) {
+  if (!isValidV4UUID(fireDoc.id ?? '')) {
     throw new Error('failed_to_generate_card_id');
   }
   await cardsCol.doc(stub.id).set(fireDoc);
   scheduleCatalogPublish();
-  return { docId: stub.id, id: stub.id, wasCreate: true, previous: null, imageUrl };
+  return {
+    docId: stub.id,
+    id: stub.id,
+    oracle_id: stub.oracle_id,
+    wasCreate: true,
+    previous: null,
+    imageUrl,
+  };
 }
 
 async function rollbackPostcard(body: RollbackBody) {
@@ -303,6 +335,7 @@ export const postcardHandler = async (
       ...postcardBodyContext(body, action),
       docId: result.docId,
       id: result.id,
+      oracle_id: result.oracle_id,
       wasCreate: result.wasCreate,
       imageUrl: result.imageUrl,
     });

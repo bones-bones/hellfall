@@ -3,7 +3,7 @@ import { Divider, Separator } from '../visual-components/Divider';
 import { StyledHeadingLink } from '../visual-components/StyledHeading';
 import { HellfallRelatedEntry } from '../../entry/HellfallRelatedEntry';
 import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv, createStyledHR } from '../../../styling';
+import { createStyledDiv } from '../../../styling';
 
 export const RelatedCards = ({
   relatedCards,

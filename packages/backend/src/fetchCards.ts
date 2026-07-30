@@ -23,6 +23,8 @@ import {
   pushPropToRoot,
   pipMap,
   parseRelatedReferenceName,
+  isValidV4UUID,
+  baseCardInvariantMap,
 } from '@hellfall/shared/utils';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
@@ -85,6 +87,8 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '3oracle_text',
     '3flavor_text',
     '3image',
+    'id',
+    'oracle_id',
   ] as const;
 
   type keyType = (typeof keys)[number];
@@ -115,17 +119,23 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '0image',
     'artists',
     'tags',
+    'id',
   ];
 
   const allCards = rest
     .map(entry => entry.map(t => t.replaceAll('\\n', '\n')))
     .map(entry => {
       const entryAt = (key: keyType) => entry[keys.indexOf(key)];
-      const cardIsMulti = entry.slice(keys.indexOf('1mana_cost')).some(value => value);
+      const cardIsMulti = entry
+        .slice(keys.indexOf('1mana_cost'), keys.indexOf('id'))
+        .some(value => value);
+      // #jank
+      const cardIsLand = parseInt(entryAt('hcid')) >= 8065 && parseInt(entryAt('hcid')) <= 8250;
       const card = getDefaultCard(
-        HCKind.Card,
+        cardIsLand ? HCKind.Land : HCKind.Card,
         cardIsMulti,
         {
+          id: entryAt('id'),
           hcid: entryAt('hcid'),
           image: entryAt('image'),
           image_status: HCImageStatus.HighRes,
@@ -143,6 +153,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 .split(';')
                 .map(color => HCColor[color as keyof typeof HCColor])
             : [],
+          // name: cardIsLand ? `${entryAt('name')} (L${parseInt(entryAt('hcid'))-8064})`:'' // #jank
         },
         {
           colors: cardIsMulti
@@ -236,6 +247,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 const maker: HCRelatedCard = {
                   object: HCObject.ObjectType.RelatedCard,
                   id: '',
+                  oracle_id: '',
                   hcid: shouldUseBase ? name : '',
                   name: shouldUseBase ? base : name,
                   set: '' as SetCode,
@@ -248,6 +260,11 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 }
                 pushPropToRoot(card, 'all_parts', maker);
               });
+            } else if (keys[i] == 'oracle_id') {
+              const oracle_id = baseCardInvariantMap.getOracleID(entry[i]) ?? entry[i];
+              if (oracle_id && isValidV4UUID(oracle_id)) {
+                card.oracle_id = oracle_id;
+              }
             } else {
               addPropToRoot(card, keys[i] as rootPropType, entry[i]);
             }
@@ -271,7 +288,11 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         card.artists = Array.from(new Set(card.artists));
       }
       // TODO: move to derived props? or just remove?
-      if ('card_faces' in card && !entryAt('tags').includes('irregular-face-name')) {
+      if (
+        'card_faces' in card &&
+        !entryAt('tags').includes('irregular-face-name') /* && !cardIsLand */
+      ) {
+        // #jank
         card.name.split(' // ').forEach((name, i) => {
           addPropToFace(card, 'name', name, i);
         });
@@ -296,6 +317,12 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           card.not_directly_draftable = true;
         }
       });
+      if (!card.oracle_id) {
+        const oracle_id = baseCardInvariantMap.getOracleID(card.name);
+        if (oracle_id) {
+          card.oracle_id = oracle_id;
+        }
+      }
       return card;
     });
 

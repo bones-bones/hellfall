@@ -22,6 +22,7 @@ import {
   listIncludesValueLower,
   listIncludesValueLowerEvery,
   listsShare,
+  textListIsContainedBy,
 } from '../listHandling';
 import { splitParens, textContains, toExportName } from '../textHandling';
 import { CardMap, getAllRelated, hasTokenHCID, toFaces } from '../cardHandling';
@@ -194,14 +195,14 @@ export const setDerivedProps = (
     if (
       listIncludesValueLower(face.types, 'artifact') &&
       listIncludesValueLower(face.subtypes, 'equipment') &&
-      ['equip {', 'equip—'].some(text => textContains(face.oracle_text, text))
+      textListIsContainedBy(['equip {', 'equip—'], face.oracle_text)
     ) {
       keywords.push('equip');
     }
     if (
       listIncludesValueLower(face.types, 'artifact') &&
       listIncludesValueLower(face.subtypes, 'fortification') &&
-      ['fortify {', 'fortify—'].some(text => textContains(face.oracle_text, text))
+      textListIsContainedBy(['fortify {', 'fortify—'], face.oracle_text)
     ) {
       keywords.push('equip');
     }
@@ -215,7 +216,7 @@ export const setDerivedProps = (
     if (
       listIncludesValueLowerEvery(face.types, ['artifact', 'creature']) &&
       listIncludesValueLower(face.subtypes, 'equipment') &&
-      ['reconfigure {', 'reconfigure—'].some(text => textContains(face.oracle_text, text))
+      textListIsContainedBy(['reconfigure {', 'reconfigure—'], face.oracle_text)
     ) {
       keywords.push('reconfigure');
     }
