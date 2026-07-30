@@ -52,7 +52,8 @@ class CardLookupObject {
 
   /**
    * Returns the correct id for a set code and a collector number
-   * @param 
+   * @param code the set code to use
+   * @param collector_number the collector number to use, if any
    */
   get = (code?: SetCode, collector_number?:string):string|undefined => {
     if (!code) {
@@ -230,6 +231,22 @@ export class CardLookupMap {
    * This maps a name to the preferred id to use
    */
   protected preferredMap = new DoubleMap();
+
+  /**
+   * Returns the correct id for a name, a set code, and a collector number
+   * @param name the name of the card to get
+   * @param code the set code to use, if any
+   * @param collector_number the collector number to use, if any
+   */
+  getBySetAndNumber = (name: string, code?:SetCode, collector_number?:string) => {
+    if (!code && this.preferredMap.has(name)) {
+      return this.preferredMap.get(name)
+    } 
+    const lookup = this.nameMap.get(name) ?? this.nameMap.get(this.aliasMap.get(name) ?? '');
+    if (!lookup) return;
+    return lookup.get(code,collector_number);
+  };
+  
   /**
    * Returns the correct id for a card name.
    * Can handle masterpiece prefixes, set suffixes, and collector numbers.
@@ -237,12 +254,7 @@ export class CardLookupMap {
    */
   get = (text: string) => {
     const {name, code, collector_number} = splitCardName(fixName(text));
-    if (!code && this.preferredMap.has(name)) {
-      return this.preferredMap.get(name)
-    } 
-    const lookup = this.nameMap.get(name) ?? this.nameMap.get(this.aliasMap.get(name) ?? '');
-    if (!lookup) return;
-    return lookup.get(code,collector_number);
+    return this.getBySetAndNumber(name, code, collector_number);
   };
 
   /**

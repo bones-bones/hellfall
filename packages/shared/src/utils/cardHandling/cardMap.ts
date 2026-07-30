@@ -162,6 +162,16 @@ export class CardMap {
   getFromName = (name: string) => this.idMap.get(this.getIDFromName(name));
 
   /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified name, undefined is returned
+   * @param name the name of the card to get
+   * @param code the set code to use, if any
+   * @param collector_number the collector number to use, if any
+   */
+  getFromNameSetAndNumber = (name: string, code?:SetCode, collector_number?:string) => this.idMap.get(this.lookupMap.getBySetAndNumber(name, code, collector_number) ?? name);
+
+  /**
    * Returns a subset of the CardMap object as a new CardMap, based on a provided list of names.
    * @param nameList the names to use
    */
