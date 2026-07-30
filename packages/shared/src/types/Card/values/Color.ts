@@ -4,10 +4,10 @@
 export enum HCColor {
   White = 'W',
   Blue = 'U',
+  Purple = 'P',
   Black = 'B',
   Red = 'R',
   Green = 'G',
-  Purple = 'P',
   Colorless = 'C',
   Orange = 'Orange',
   Brown = 'Brown',
@@ -22,6 +22,8 @@ export enum HCColor {
   Grey = 'Grey',
   Lime = 'Lime',
 }
+
+export const colorList:HCColors = Object.values(HCColor);
 /**
  * Checks if a value is a {@linkcode HCColor}
  * @param value the value to check

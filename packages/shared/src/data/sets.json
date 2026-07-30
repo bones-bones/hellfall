@@ -22,8 +22,11 @@
         "HLC.0",
         "HLC.1",
         "HLC.2",
-        "HCV.1"
+        "HCV.1",
+        "HCV.1.0",
+        "HCV.1.1"
       ],
+      "use_color_order": true,
       "filename": "hlc.svg"
     },
     {
@@ -32,7 +35,8 @@
       "name": "Hellscube 1.0",
       "description": "The first 360 Hellscube cards. A strange and unplayable mess.",
       "set_type": "main",
-      "parent_set_code": "HLC"
+      "parent_set_code": "HLC",
+      "child_set_codes": ["HCV.1.0"]
     },
     {
       "id": "2919c121-b8fb-4bb8-b524-21589c7ececf",
@@ -40,7 +44,8 @@
       "name": "Hellscube 1.1",
       "description": "A slightly more playable 360 card version of Hellscube 1.",
       "set_type": "main",
-      "parent_set_code": "HLC"
+      "parent_set_code": "HLC",
+      "child_set_codes": ["HCV.1.1"]
     },
     {
       "id": "91f87800-5363-4dd7-9e3a-5964f2ffa939",
@@ -56,7 +61,24 @@
       "name": "Hellscube V(eto).1",
       "description": "Cards originally from HLC that didn't make the cut for the final version.",
       "set_type": "veto",
-      "parent_set_code": "HCV"
+      "parent_set_code": "HCV",
+      "child_set_codes": ["HCV.1.0", "HCV.1.1"]
+    },
+    {
+      "id": "51f347fa-3857-4d7f-adcc-354670c37abc",
+      "code": "HCV.1.0",
+      "name": "Hellscube V(eto).1.0",
+      "description": "Cards originally from HLC that didn't make the cut for the final version.",
+      "set_type": "veto",
+      "parent_set_code": "HCV.1"
+    },
+    {
+      "id": "32ea2ae0-5716-44a9-869e-4271ceb28d6e",
+      "code": "HCV.1.1",
+      "name": "Hellscube V(eto).1.1",
+      "description": "Cards originally from HLC.1 that didn't make the cut for the final version.",
+      "set_type": "veto",
+      "parent_set_code": "HCV.1"
     },
     {
       "id": "22532957-d3da-4bfb-b420-f3aa2f67dd8f",
@@ -69,6 +91,7 @@
         "HC2.1",
         "HCV.2"
       ],
+      "use_color_order": true,
       "filename": ""
     },
     {
@@ -106,6 +129,7 @@
         "HC3.1",
         "HCV.3"
       ],
+      "use_color_order": true,
       "filename": ""
     },
     {
@@ -151,6 +175,7 @@
         "HC4.1",
         "HCV.4"
       ],
+      "use_color_order": true,
       "filename": ""
     },
     {
@@ -206,6 +231,7 @@
         "HCC",
         "HCV.6"
       ],
+      "use_color_order": true,
       "filename": "",
       "includeLands": true
     },
@@ -257,6 +283,7 @@
       "child_set_codes": [
         "HCV.P"
       ],
+      "use_color_order": true,
       "filename": ""
     },
     {
@@ -278,6 +305,7 @@
         "HC7.1",
         "HCV.7"
       ],
+      "use_color_order": true,
       "filename": "hc7.svg"
     },
     {
@@ -333,6 +361,7 @@
       "child_set_codes": [
         "HCV.K"
       ],
+      "use_color_order": true,
       "filename": "",
       "includeLands": true
     },
@@ -359,6 +388,7 @@
         "HC8.1",
         "HCV.8"
       ],
+      "use_color_order": true,
       "filename": "hc8.svg"
     },
     {
@@ -403,6 +433,7 @@
         "FHCJ",
         "HCV.J"
       ],
+      "use_color_order": true,
       "filename": "hcj.png"
     },
     {
@@ -434,6 +465,7 @@
       "child_set_codes": [
         "HCV.L"
       ],
+      "use_color_order": true,
       "filename": "hkl.svg",
       "includeLands": true
     },

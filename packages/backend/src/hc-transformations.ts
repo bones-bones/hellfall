@@ -13,7 +13,6 @@ import {
   anyPropType,
   anyValueType,
 } from '@hellfall/shared/types';
-import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
   stripMasterpiece,
   textEquals,
@@ -30,7 +29,7 @@ import {
   addToJSONToCards,
   baseInvariantMap,
   getDirectChildSets,
-  getParentSet,
+  getParentSetCode,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -290,7 +289,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = new HCIDMap(
-    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [], 'oracle_id', '','parts')
+    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [])
   );
 
   try {
@@ -299,7 +298,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = new HCIDMap(dataToCards(tokensContent?.data ?? [], 'oracle_id', '','parts'));
+  const existingTokens = new HCIDMap(dataToCards(tokensContent?.data ?? []));
 
   try {
     landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
@@ -308,7 +307,7 @@ const loadExistingData = () => {
   }
 
   // #jank
-  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? [], 'oracle_id', '','parts'));
+  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
   existingCards.setMultiple(existingLands);
 
   return { existingCards, existingTokens };
@@ -358,7 +357,7 @@ const main = async () => {
   newCards.forEach(card => {
     const num = parseInt(card.collector_number);
     const cSet =
-      collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));
+      collectorMap.get(card.set) ?? collectorMap.get(getParentSetCode(card.set) ?? ('' as SetCode));
     if (ignoreDuplicateHCIDs.includes(card.hcid)) {
       return;
     }
@@ -372,7 +371,7 @@ const main = async () => {
   });
 
   for (const [code, nums] of collectorMap) {
-    if (code == 'HCV.1' || code.startsWith('HLC')) continue;
+    if (code.startsWith('HCV.1') || code.startsWith('HLC')) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i) && !ignoreMissingNums[code]?.includes(i)) {

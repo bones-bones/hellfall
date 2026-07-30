@@ -457,6 +457,10 @@ export namespace HCCardFields.Print {
      * This card's collector number within the set.
      */
     collector_number: string;
+    /**
+     * This card's accepted order within the set.
+     */
+    accepted_order: string;
   };
 
   /**

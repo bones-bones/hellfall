@@ -53,10 +53,16 @@ export const setToSrc = (set?: HCSet) => {
 export const getSetSrc = (code: SetCode) => setToSrc(getSet(code));
 
 /**
+ * Gets the set code that is the parent of another set
+ * @param code Set code to get the parent of
+ */
+export const getParentSetCode = (code: SetCode): SetCode | undefined => getSet(code)?.parent_set_code;
+
+/**
  * Gets the set that is the parent of another set
  * @param code Set code to get the parent of
  */
-export const getParentSet = (code: SetCode): SetCode | undefined => getSet(code)?.parent_set_code;
+export const getParentSet = (code: SetCode): HCSet | undefined => getSet(getParentSetCode(code) ?? '' as SetCode);
 
 /**
  * Gets the sets that are the children of another set
@@ -96,6 +102,13 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
     )
     .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
 ];
+
+/**
+ * Gets the sets that share collector numbers with another set, including that set itself
+ * @param code Set code to get the sets that share its collector numbers
+ */
+export const getCollectorNumSets = (code: SetCode): SetCode[] => (getSet(code)?.use_color_order || getParentSet(code)?.use_color_order || getSet(code)?.set_type == 'lair') ? getBlockSets(code) : [code.toUpperCase() as SetCode]
+
 
 /**
  * Gets the sets that are in the same group as another set (i.e. are its children or its parent)

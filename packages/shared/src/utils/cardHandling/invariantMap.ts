@@ -156,6 +156,56 @@ export class InvariantMap {
   protected oracleIDMap = new Map<string, printInvariant>();
 
   /**
+   * Creates a new InvariantMap
+   */
+  constructor();
+  /**
+   * Creates a new InvariantMap
+   * @param inputs The initial {@linkcode printInput} objects to set, if any
+   */
+  constructor(inputs: printInput[]);
+  constructor(inputs?: printInput[]) {
+    if (!inputs) return;
+    inputs?.forEach(this.set);
+  }
+
+  /**
+   * Returns a specified invariant from the InvariantMap object.
+   * @param input the input for the invariant to get
+   */
+  get = (input: printInput) =>
+    this.hasName(getNameFromInput(input))
+      ? this.oracleIDMap.get(getOracleIDFromInput(input))
+      : undefined;
+
+  /**
+   * Returns a specified oracle id from the InvariantMap object.
+   * @param name the name of the oracle id to get
+   */
+  getOracleID = (name: string) => this.nameMap.get(name.toLowerCase());
+
+  /**
+   * Returns a specified name from the InvariantMap object.
+   * @param oracle_id the oracle id of the name to get
+   */
+  getName = (oracle_id: string) => this.oracleIDMap.get(oracle_id)?.name;
+
+  /**
+   * Returns a specified {@linkcode printInvariant} from the InvariantMap object.
+   * @param name the name of the {@linkcode printInvariant} to get
+   */
+  getFromName = (name: string) => {
+    const oracle_id = this.getOracleID(name);
+    if (oracle_id) return this.oracleIDMap.get(oracle_id);
+  };
+
+  /**
+   * Returns a specified {@linkcode printInvariant} from the InvariantMap object.
+   * @param oracle_id the oracle id of the {@linkcode printInvariant} to get
+   */
+  getFromOracleID = (oracle_id: string) => this.oracleIDMap.get(oracle_id);
+
+  /**
    * Adds a new input to the InvariantMap.
    *
    * If either name or oracle id are already in, this will overwrite them.
@@ -308,61 +358,97 @@ export class InvariantMap {
   deleteMultipleOracleIds = (oracle_ids: string[]) => oracle_ids.forEach(this.deleteOracleID);
 
   /**
-   * Creates a new InvariantMap
+   * Checks if a invariant with the specified input exists
+   * (i.e. whether one has the same name and oracle id)
+   * @param input the input to check for
    */
-  constructor();
+  has = (input: printInput) =>
+    this.hasName(getNameFromInput(input)) && this.hasOracleId(getOracleIDFromInput(input));
+
   /**
-   * Creates a new InvariantMap
-   * @param inputs The initial {@linkcode printInput} objects to set, if any
+   * Checks if a invariant that overlaps with the specified input exists
+   * (i.e. whether one has the same name or same oracle id, but not both)
+   * @param input the input to check for
    */
+  hasOverlap = (input: printInput) =>
+    xor(this.hasName(getNameFromInput(input)), this.hasOracleId(getOracleIDFromInput(input)));
+
   /**
-   * Creates a new InvariantMap
-   * @param inputs The initial {@linkcode CardMap} to use, if any
+   * Checks if a invariant with the specified name exists
+   * @param name the name to check for
    */
-  constructor(inputs: printInput[]);
-  constructor(inputs?: printInput[]) {
-    this.nameMap = new Map();
-    this.oracleIDMap = new Map();
-    if (!inputs) return;
-    inputs?.forEach(this.set);
+  hasName = (name: string) => this.nameMap.has(name.toLowerCase());
+
+  /**
+   * Checks if a invariant with the specified oracle_id exists
+   * @param oracle_id the oracle id to check for
+   */
+  hasOracleId = (oracle_id: string) => this.oracleIDMap.has(oracle_id);
+
+  /**
+   * Removes all elements from the InvariantMap.
+   */
+  clear = () => {
+    this.nameMap.clear();
+    this.oracleIDMap.clear();
+  };
+  /**
+   * Checks if this InvariantMap is empty
+   */
+  isEmpty = () => this.nameMap.size === 0;
+
+  /**
+   * Use this rather than {@linkcode structuredClone} on this object.
+   */
+  clone = () => new InvariantMap(this.map(invariant => structuredClone(invariant)));
+
+  *[Symbol.iterator](): Iterator<[string, printInvariant, string]> {
+    for (const [oracle_id, invariant] of this.oracleIDMap.entries()) {
+      yield [oracle_id, invariant, invariant.name.toLowerCase()];
+    }
+  }
+  *keys(): IterableIterator<string> {
+    for (const id of this.oracleIDMap.keys()) {
+      yield id;
+    }
+  }
+  *values(): IterableIterator<printInvariant> {
+    for (const invariant of this.oracleIDMap.values()) {
+      yield invariant;
+    }
+  }
+  *entries(): IterableIterator<[string, printInvariant, string]> {
+    for (const [oracle_id, invariant, name] of this) {
+      yield [oracle_id, invariant, name];
+    }
+  }
+  /**
+   * Returns an array of the invariants in the InvariantMap. This is identical to `Array.from(InvariantMap.values())`
+   */
+  invariants(): printInvariant[] {
+    return Array.from(this.oracleIDMap.values());
+  }
+  /**
+   * Returns an array of the names in the InvariantMap. This is identical to `Array.from(InvariantMap.keys())`
+   */
+  names(): string[] {
+    return Array.from(this.nameMap.keys());
+  }
+  /**
+   * Returns an array of the oracle ids in the InvariantMap.`
+   */
+  oracle_ids(): string[] {
+    return Array.from(this.oracleIDMap.keys());
   }
 
   /**
-   * Returns a specified invariant from the InvariantMap object.
-   * @param input the input for the invariant to get
+   * @returns the number of invariants in the InvariantMap.
    */
-  get = (input: printInput) =>
-    this.hasName(getNameFromInput(input))
-      ? this.oracleIDMap.get(getOracleIDFromInput(input))
-      : undefined;
+  get size(): number {
+    return this.oracleIDMap.size;
+  }
 
-  /**
-   * Returns a specified oracle id from the InvariantMap object.
-   * @param name the name of the oracle id to get
-   */
-  getOracleID = (name: string) => this.nameMap.get(name.toLowerCase());
-
-  /**
-   * Returns a specified name from the InvariantMap object.
-   * @param oracle_id the oracle id of the name to get
-   */
-  getName = (oracle_id: string) => this.oracleIDMap.get(oracle_id)?.name;
-
-  /**
-   * Returns a specified {@linkcode printInvariant} from the InvariantMap object.
-   * @param name the name of the {@linkcode printInvariant} to get
-   */
-  getFromName = (name: string) => {
-    const oracle_id = this.getOracleID(name);
-    if (oracle_id) return this.oracleIDMap.get(oracle_id);
-  };
-
-  /**
-   * Returns a specified {@linkcode printInvariant} from the InvariantMap object.
-   * @param oracle_id the oracle id of the {@linkcode printInvariant} to get
-   */
-  getFromOracleID = (oracle_id: string) => this.oracleIDMap.get(oracle_id);
-
+  // #ITERATOR METHODS
   /**
    * Determines whether all the invariants in a InvariantMap satisfy the specified test.
    * @param predicate A function that accepts up to three arguments.
@@ -598,93 +684,5 @@ export class InvariantMap {
       accumulator = callbackfn(accumulator, invariant);
     }
     return accumulator;
-  }
-
-  /**
-   * Checks if a invariant with the specified input exists
-   * (i.e. whether one has the same name and oracle id)
-   * @param input the input to check for
-   */
-  has = (input: printInput) =>
-    this.hasName(getNameFromInput(input)) && this.hasOracleId(getOracleIDFromInput(input));
-
-  /**
-   * Checks if a invariant that overlaps with the specified input exists
-   * (i.e. whether one has the same name or same oracle id, but not both)
-   * @param input the input to check for
-   */
-  hasOverlap = (input: printInput) =>
-    xor(this.hasName(getNameFromInput(input)), this.hasOracleId(getOracleIDFromInput(input)));
-
-  /**
-   * Checks if a invariant with the specified name exists
-   * @param name the name to check for
-   */
-  hasName = (name: string) => this.nameMap.has(name.toLowerCase());
-
-  /**
-   * Checks if a invariant with the specified oracle_id exists
-   * @param oracle_id the oracle id to check for
-   */
-  hasOracleId = (oracle_id: string) => this.oracleIDMap.has(oracle_id);
-
-  /**
-   * Removes all elements from the InvariantMap.
-   */
-  clear = () => {
-    this.nameMap.clear();
-    this.oracleIDMap.clear();
-  };
-  /**
-   * Checks if this InvariantMap is empty
-   */
-  isEmpty = () => this.nameMap.size === 0;
-
-  clone = () => new InvariantMap(this.map(invariant => structuredClone(invariant)));
-
-  *[Symbol.iterator](): Iterator<[string, printInvariant, string]> {
-    for (const [oracle_id, invariant] of this.oracleIDMap.entries()) {
-      yield [oracle_id, invariant, invariant.name.toLowerCase()];
-    }
-  }
-  *keys(): IterableIterator<string> {
-    for (const id of this.oracleIDMap.keys()) {
-      yield id;
-    }
-  }
-  *values(): IterableIterator<printInvariant> {
-    for (const invariant of this.oracleIDMap.values()) {
-      yield invariant;
-    }
-  }
-  *entries(): IterableIterator<[string, printInvariant, string]> {
-    for (const [oracle_id, invariant, name] of this) {
-      yield [oracle_id, invariant, name];
-    }
-  }
-  /**
-   * Returns an array of the invariants in the InvariantMap. This is identical to `Array.from(InvariantMap.values())`
-   */
-  invariants(): printInvariant[] {
-    return Array.from(this.oracleIDMap.values());
-  }
-  /**
-   * Returns an array of the names in the InvariantMap. This is identical to `Array.from(InvariantMap.keys())`
-   */
-  names(): string[] {
-    return Array.from(this.nameMap.keys());
-  }
-  /**
-   * Returns an array of the oracle ids in the InvariantMap.`
-   */
-  oracle_ids(): string[] {
-    return Array.from(this.oracleIDMap.keys());
-  }
-
-  /**
-   * @returns the number of invariants in the InvariantMap.
-   */
-  get size(): number {
-    return this.oracleIDMap.size;
   }
 }

@@ -93,6 +93,316 @@ const getOtherLooseValues = (symbol: string): string[] => {
 export class PipMap {
   protected symbolMap = new Map<string, HCCardSymbol>();
   protected indicatorMap = new Map<string, HCCardSymbol>();
+
+  /**
+   * Creates a new PipMap
+   */
+  constructor();
+  /**
+   * Creates a new PipMap
+   * @param pips The initial pips to set, if any
+   */
+  constructor(pips: HCCardSymbol[]);
+  constructor(pips?: HCCardSymbol[]) {
+    if (!pips) return;
+    this.setMultiple(pips);
+  }
+
+  /**
+   * Returns a specified pip from the PipMap object.
+   * If no pip has the specified symbol, undefined is returned
+   * @param symbol the symbol of the pip to get (can be either with or without braces)
+   */
+  get = (symbol: string) => this.symbolMap.get(stripBraces(fixPip(symbol)));
+
+  /**
+   * Returns a specified pip from the PipMap object based on a loose value.
+   * If no pip has the specified symbol, undefined is returned
+   * @param symbol the symbol of the pip to get (can be either with or without braces)
+   */
+  getLoose = (symbol: string) => {
+    const exact = this.symbolMap.get(stripBraces(fixPip(symbol)));
+    if (exact) {
+      return exact;
+    }
+    for (const loose of getOtherLooseValues(stripBraces(fixPip(symbol)))) {
+      const pip = this.symbolMap.get(loose);
+      if (pip) {
+        return pip;
+      }
+    }
+  };
+
+  /**
+   * Gets the pip for a color indicator from its colors
+   * @param colors the colors of the indicator to get
+   */
+  getIndicator = (colors: string[]) => {
+    const exact = this.get(`CI-${colors.join('')}`);
+    if (exact) {
+      return exact;
+    }
+    for (const [symbol, pip] of this.indicatorMap) {
+      if (listsAreLooselyEqual(pip.colors, colors)) {
+        return pip;
+      }
+    }
+  };
+
+  /**
+   * Returns a subset of the PipMap object as a new PipMap, based on the provided list of symbols.
+   * @param symbolList the list of symbols to get
+   * @returns Returns the subset of the PipMap with the given symbols.
+   */
+  getSubset(symbolList: string[] | Set<string>): this {
+    const subMap = new (this.constructor as any)() as this;
+    symbolList.forEach(symbol => {
+      const pip = this.get(symbol);
+      if (pip) {
+        subMap.set(pip);
+      }
+    });
+    return subMap;
+  }
+
+  /**
+   * Adds a new pip to the PipMap. If a pip with the same symbol already exists, the pip will be updated.
+   * @param pip pip to set
+   */
+  set = (pip: HCCardSymbol) => {
+    this.symbolMap.set(fixPip(pip.symbol), pip);
+    if (pip.symbol.startsWith('CI-')) {
+      this.indicatorMap.set(fixPip(pip.symbol), pip);
+    }
+    this.clearRegexes();
+  };
+
+  /**
+   * Adds multiple new pips to the PipMap. If a pip with the same symbol already exists, the pip will be updated.
+   * @param pips the pips to add. Can be either a list of pips or a PipMap
+   */
+  setMultiple(pips: HCCardSymbol[]): void;
+  setMultiple(pips: this): void;
+  setMultiple(pips: HCCardSymbol[] | this): void {
+    pips.forEach(this.set);
+  }
+
+  /**
+   * @param symbol the symbol to delete
+   * @returns true if an element in the PipMap existed and has been removed, or false if the element does not exist.
+   */
+  delete = (symbol: string) => {
+    const value = this.get(symbol);
+    if (!value) return false;
+    this.symbolMap.delete(fixPip(symbol));
+    if (this.indicatorMap.has(fixPip(symbol))) {
+      this.indicatorMap.delete(fixPip(symbol));
+    }
+    this.clearRegexes();
+    return true;
+  };
+
+  /**
+   * Deletes multiple pips from the PipMap.
+   * @param symbols the symbols to delete
+   */
+  deleteMultiple = (symbols: string[]) => symbols.forEach(this.delete);
+
+
+  /**
+   * Checks if a pip with the specified symbol exists
+   * @param symbol the symbol to check for
+   */
+  has = (symbol: string) => this.symbolMap.has(fixPip(symbol));
+
+  /**
+   * Removes all elements from the PipMap.
+   */
+  clear = () => {
+    this.symbolMap.clear();
+    this.indicatorMap.clear();
+    this.clearRegexes();
+  };
+  /**
+   * Checks if this PipMap is empty
+   */
+  isEmpty = () => this.symbolMap.size === 0;
+
+  *[Symbol.iterator](): Iterator<[string, HCCardSymbol]> {
+    for (const [symbol, pip] of this.symbolMap.entries()) {
+      yield [symbol, pip];
+    }
+  }
+  *keys(): IterableIterator<string> {
+    for (const symbol of this.symbolMap.keys()) {
+      yield symbol;
+    }
+  }
+  *values(): IterableIterator<HCCardSymbol> {
+    for (const pip of this.symbolMap.values()) {
+      yield pip;
+    }
+  }
+  *entries(): IterableIterator<[string, HCCardSymbol]> {
+    for (const [symbol, pip] of this.symbolMap.entries()) {
+      yield [symbol, pip];
+    }
+  }
+  /**
+   * Returns an array of the pips in the PipMap. This is symbolentical to `Array.from(PipMap.values())`
+   */
+  pips(): HCCardSymbol[] {
+    return Array.from(this.symbolMap.values());
+  }
+  /**
+   * Returns an array of the symbols in the PipMap. This is symbolentical to `Array.from(PipMap.keys())`
+   */
+  symbols(): string[] {
+    return Array.from(this.symbolMap.keys());
+  }
+  /**
+   * @returns the number of pips in the PipMap.
+   */
+  get size(): number {
+    return this.symbolMap.size;
+  }
+  
+  // #CUSTOM GETTERS
+
+  /**
+   * Returns an array of all the pips in some text from a card
+   * @param text text to get the pips from
+   */
+  getPipsFromText = (text: string) =>
+    text.match(/{([^}]+)}/g)?.flatMap(match => this.get(match) ?? []) ?? [];
+
+  /**
+   * Returns an array of all the pips in some text from a search
+   * @param text text to get the pips from
+   */
+  getPipsFromSearch = (text: string): HCCardSymbol[] =>
+    fixPip(text)
+      .split(/({[^}]+})/g)
+      .filter(Boolean)
+      .map(stripBraces)
+      .flatMap(p => {
+        // If this text is just a symbol, return it
+        const pip = this.getLoose(p);
+        if (pip) {
+          return pip;
+        }
+        // If this text isn't a symbol and has a slash, then it's invalid
+        if (p.includes('/')) return [];
+
+        const pips: HCCardSymbol[] = [];
+        let currText = p;
+
+        // Loop until all text is matched, or until the rest can't be matched
+        while (currText.length > 0) {
+          let matched = false;
+          // Try to match as much as possible of the string, starting at the front
+          for (let i = currText.length; i > 0; i--) {
+            const currPip = this.get(currText.slice(0, i));
+            if (currPip) {
+              pips.push(currPip);
+              currText = currText.slice(i);
+              matched = true;
+              break;
+            }
+          }
+          if (!matched) {
+            // If no match, return to prevent infinite loop
+            return pips;
+          }
+        }
+        // If everything matched, return
+        return pips;
+      });
+
+  /**
+   * Returns an array of all the invalid pip text in some text from a search
+   * @param text text to get the invalid pips text from
+   */
+  getNonPipsFromSearch = (text: string): string[] =>
+    fixPip(text)
+      .split(/({[^}]+})/g)
+      .filter(Boolean)
+      .map(stripBraces)
+      .flatMap(p => {
+        // This is essentially the inverse of the previous one
+        const pip = this.getLoose(p);
+        if (pip) {
+          return [];
+        }
+        // If this text isn't a symbol and has a slash, then it's invalid
+        if (p.includes('/')) return p;
+
+        let currText = p;
+
+        // Loop until all text is matched, or until the rest can't be matched
+        while (currText.length > 0) {
+          let matched = false;
+          // Try to match as much as possible of the string, starting at the front
+          for (let i = currText.length; i > 0; i--) {
+            const currPip = this.get(currText.slice(0, i));
+            if (currPip) {
+              currText = currText.slice(i);
+              matched = true;
+              break;
+            }
+          }
+          if (!matched) {
+            // If no match, return to prevent infinite loop
+            return currText;
+          }
+        }
+        // If everything matched, return
+        return [];
+      });
+
+  /**
+   * Gets all the pips from text, then converts each pip into its colors, if any
+   * @param text text to get the pip colors from
+   */
+  getPipColorsFromText = (text: string): HCColors[] =>
+    this.getPipsFromText(text).flatMap(pip => [pip.colors ?? []]);
+
+
+  /**
+   * Gets the colors included among the pips in text
+   * @param text text to get the pip colors from
+   */
+  getColorsFromText = (text: string): HCColors =>
+    orderColors(
+      this.getPipColorsFromText(text)
+        .flatMap(c => c)
+        .filter(c => c != 'C')
+    );
+
+  /**
+   * Gets the total mana value of a cost string
+   */
+  getMVFromCost = (cost: string): number =>
+    this.getPipsFromText(cost).reduce((totalMV, pip) => totalMV + (pip.mana_value ?? 0), 0);
+
+  /**
+   * gets the file src for a pip name
+   * @param name name of the pip to get the src for
+   */
+  getPipSrc = (name: string) => `/pips/${this.get(name)?.filename}`;
+
+  /**
+   * Gets a random symbol from this PipMap
+   */
+  getRandomSymbol = (): string => this.symbols()[Math.floor(Math.random() * this.size)];
+
+  /**
+   * Gets a random pip from this PipMap
+   */
+  getRandomPip = (): HCCardSymbol => this.pips()[Math.floor(Math.random() * this.size)];
+
+  // #REGEXES
+
   private _manaSymbolRegex: RegExp | null = null;
   /**
    * A regex that matches a mana symbol
@@ -193,6 +503,7 @@ export class PipMap {
   get genericSymbolRegex(): RegExp {
     return this._genericSymbolRegex;
   }
+
   clearRegexes(): void {
     this._manaSymbolRegex = null;
     this._coloredSymbolRegex = null;
@@ -200,216 +511,6 @@ export class PipMap {
     this._repeatedSymbolRegex = null;
     this._hybridSymbolRegex = null;
   }
-  /**
-   * Adds a new pip to the PipMap. If a pip with the same symbol already exists, the pip will be updated.
-   * @param pip pip to set
-   */
-  set = (pip: HCCardSymbol) => {
-    this.symbolMap.set(fixPip(pip.symbol), pip);
-    if (pip.symbol.startsWith('CI-')) {
-      this.indicatorMap.set(fixPip(pip.symbol), pip);
-    }
-    this.clearRegexes();
-  };
-
-  /**
-   * Adds multiple new pips to the PipMap. If a pip with the same symbol already exists, the pip will be updated.
-   * @param pips the pips to add. Can be either a list of pips or a PipMap
-   */
-  setMultiple(pips: HCCardSymbol[]): void;
-  setMultiple(pips: this): void;
-  setMultiple(pips: HCCardSymbol[] | this): void {
-    pips.forEach(this.set);
-  }
-  /**
-   * @param symbol the symbol to delete
-   * @returns true if an element in the PipMap existed and has been removed, or false if the element does not exist.
-   */
-  delete = (symbol: string) => {
-    const value = this.get(symbol);
-    if (!value) return false;
-    this.symbolMap.delete(fixPip(symbol));
-    if (this.indicatorMap.has(fixPip(symbol))) {
-      this.indicatorMap.delete(fixPip(symbol));
-    }
-    this.clearRegexes();
-    return true;
-  };
-
-  /**
-   * Deletes multiple pips from the PipMap.
-   * @param symbols the symbols to delete
-   */
-  deleteMultiple = (symbols: string[]) => symbols.forEach(this.delete);
-
-  /**
-   * Creates a new PipMap
-   */
-  constructor();
-  /**
-   * Creates a new PipMap
-   * @param pips The initial pips to set, if any
-   */
-  constructor(pips: HCCardSymbol[]);
-  constructor(pips?: HCCardSymbol[]) {
-    this.symbolMap = new Map();
-    if (!pips) return;
-    pips?.forEach(pip => this.set(pip));
-  }
-
-  /**
-   * Returns a specified pip from the PipMap object.
-   * If no pip has the specified symbol, undefined is returned
-   * @param symbol the symbol of the pip to get (can be either with or without braces)
-   */
-  get = (symbol: string) => this.symbolMap.get(stripBraces(fixPip(symbol)));
-
-  /**
-   * Returns a specified pip from the PipMap object based on a loose value.
-   * If no pip has the specified symbol, undefined is returned
-   * @param symbol the symbol of the pip to get (can be either with or without braces)
-   */
-  getLoose = (symbol: string) => {
-    const exact = this.symbolMap.get(stripBraces(fixPip(symbol)));
-    if (exact) {
-      return exact;
-    }
-    for (const loose of getOtherLooseValues(stripBraces(fixPip(symbol)))) {
-      const pip = this.symbolMap.get(loose);
-      if (pip) {
-        return pip;
-      }
-    }
-  };
-  /**
-   * Gets the pip for a color indicator from its colors
-   * @param colors the colors of the indicator to get
-   */
-  getIndicator = (colors: string[]) => {
-    const exact = this.get(`CI-${colors.join('')}`);
-    if (exact) {
-      return exact;
-    }
-    for (const [symbol, pip] of this.indicatorMap) {
-      if (listsAreLooselyEqual(pip.colors, colors)) {
-        return pip;
-      }
-    }
-  };
-
-  /**
-   * Returns a subset of the PipMap object as a new PipMap, based on the provided list of symbols.
-   * @param symbolList the list of symbols to get
-   * @returns Returns the subset of the PipMap with the given symbols.
-   */
-  getSubset(symbolList: string[] | Set<string>): this {
-    const subMap = new (this.constructor as any)() as this;
-    symbolList.forEach(symbol => {
-      const pip = this.get(symbol);
-      if (pip) {
-        subMap.set(pip);
-      }
-    });
-    return subMap;
-  }
-
-  /**
-   * Returns an array of all the pips in some text from a card
-   * @param text text to get the pips from
-   */
-  getPipsFromText = (text: string) =>
-    text.match(/{([^}]+)}/g)?.flatMap(match => this.get(match) ?? []) ?? [];
-
-  /**
-   * Returns an array of all the pips in some text from a search
-   * @param text text to get the pips from
-   */
-  getPipsFromSearch = (text: string): HCCardSymbol[] =>
-    fixPip(text)
-      .split(/({[^}]+})/g)
-      .filter(Boolean)
-      .map(stripBraces)
-      .flatMap(p => {
-        // If this text is just a symbol, return it
-        const pip = this.getLoose(p);
-        if (pip) {
-          return pip;
-        }
-        // If this text isn't a symbol and has a slash, then it's invalid
-        if (p.includes('/')) return [];
-
-        const pips: HCCardSymbol[] = [];
-        let currText = p;
-
-        // Loop until all text is matched, or until the rest can't be matched
-        while (currText.length > 0) {
-          let matched = false;
-          // Try to match as much as possible of the string, starting at the front
-          for (let i = currText.length; i > 0; i--) {
-            const currPip = this.get(currText.slice(0, i));
-            if (currPip) {
-              pips.push(currPip);
-              currText = currText.slice(i);
-              matched = true;
-              break;
-            }
-          }
-          if (!matched) {
-            // If no match, return to prevent infinite loop
-            return pips;
-          }
-        }
-        // If everything matched, return
-        return pips;
-      });
-
-  /**
-   * Returns an array of all the invalid pip text in some text from a search
-   * @param text text to get the invalid pips text from
-   */
-  getNonPipsFromSearch = (text: string): string[] =>
-    fixPip(text)
-      .split(/({[^}]+})/g)
-      .filter(Boolean)
-      .map(stripBraces)
-      .flatMap(p => {
-        // This is essentially the inverse of the previous one
-        const pip = this.getLoose(p);
-        if (pip) {
-          return [];
-        }
-        // If this text isn't a symbol and has a slash, then it's invalid
-        if (p.includes('/')) return p;
-
-        let currText = p;
-
-        // Loop until all text is matched, or until the rest can't be matched
-        while (currText.length > 0) {
-          let matched = false;
-          // Try to match as much as possible of the string, starting at the front
-          for (let i = currText.length; i > 0; i--) {
-            const currPip = this.get(currText.slice(0, i));
-            if (currPip) {
-              currText = currText.slice(i);
-              matched = true;
-              break;
-            }
-          }
-          if (!matched) {
-            // If no match, return to prevent infinite loop
-            return currText;
-          }
-        }
-        // If everything matched, return
-        return [];
-      });
-
-  /**
-   * Gets all the pips from text, then converts each pip into its colors, if any
-   * @param text text to get the pip colors from
-   */
-  getPipColorsFromText = (text: string): HCColors[] =>
-    this.getPipsFromText(text).flatMap(pip => [pip.colors ?? []]);
 
   /**
    * Gets the regex for devotion to a pip
@@ -426,6 +527,7 @@ export class PipMap {
       'g'
     );
   };
+
   /**
    * Gets the regex for double devotion to a pip
    * @param pip pip to get the regex for double devotion to
@@ -438,39 +540,7 @@ export class PipMap {
     );
   };
 
-  /**
-   * Gets the colors included among the pips in text
-   * @param text text to get the pip colors from
-   */
-  getColorsFromText = (text: string): HCColors =>
-    orderColors(
-      this.getPipColorsFromText(text)
-        .flatMap(c => c)
-        .filter(c => c != 'C')
-    );
-
-  /**
-   * Gets the total mana value of a cost string
-   */
-  getMVFromCost = (cost: string): number =>
-    this.getPipsFromText(cost).reduce((totalMV, pip) => totalMV + (pip.mana_value ?? 0), 0);
-
-  /**
-   * gets the file src for a pip name
-   * @param name name of the pip to get the src for
-   */
-  getPipSrc = (name: string) => `/pips/${this.get(name)?.filename}`;
-
-  /**
-   * Gets a random symbol from this PipMap
-   */
-  getRandomSymbol = (): string => this.symbols()[Math.floor(Math.random() * this.size)];
-
-  /**
-   * Gets a random pip from this PipMap
-   */
-  getRandomPip = (): HCCardSymbol => this.pips()[Math.floor(Math.random() * this.size)];
-
+  // #ITERATION METHODS
   /**
    * Determines whether all the pips in a PipMap satisfy the specified test.
    * @param predicate A function that accepts up to two arguments.
@@ -661,63 +731,5 @@ export class PipMap {
       accumulator = callbackfn(accumulator, pip);
     }
     return accumulator;
-  }
-
-  /**
-   * Checks if a pip with the specified symbol exists
-   * @param symbol the symbol to check for
-   */
-  has = (symbol: string) => this.symbolMap.has(fixPip(symbol));
-
-  /**
-   * Removes all elements from the PipMap.
-   */
-  clear = () => {
-    this.symbolMap.clear();
-    this.indicatorMap.clear();
-    this.clearRegexes();
-  };
-  /**
-   * Checks if this PipMap is empty
-   */
-  isEmpty = () => this.symbolMap.size === 0;
-
-  *[Symbol.iterator](): Iterator<[string, HCCardSymbol]> {
-    for (const [symbol, pip] of this.symbolMap.entries()) {
-      yield [symbol, pip];
-    }
-  }
-  *keys(): IterableIterator<string> {
-    for (const symbol of this.symbolMap.keys()) {
-      yield symbol;
-    }
-  }
-  *values(): IterableIterator<HCCardSymbol> {
-    for (const pip of this.symbolMap.values()) {
-      yield pip;
-    }
-  }
-  *entries(): IterableIterator<[string, HCCardSymbol]> {
-    for (const [symbol, pip] of this.symbolMap.entries()) {
-      yield [symbol, pip];
-    }
-  }
-  /**
-   * Returns an array of the pips in the PipMap. This is symbolentical to `Array.from(PipMap.values())`
-   */
-  pips(): HCCardSymbol[] {
-    return Array.from(this.symbolMap.values());
-  }
-  /**
-   * Returns an array of the symbols in the PipMap. This is symbolentical to `Array.from(PipMap.keys())`
-   */
-  symbols(): string[] {
-    return Array.from(this.symbolMap.keys());
-  }
-  /**
-   * @returns the number of pips in the PipMap.
-   */
-  get size(): number {
-    return this.symbolMap.size;
   }
 }

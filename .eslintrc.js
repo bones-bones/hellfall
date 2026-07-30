@@ -27,6 +27,7 @@ module.exports = {
     // '@typescript-eslint/no-use-before-define': 0,
     // '@typescript-eslint/no-inferrable-types': 0,
     '@typescript-eslint/no-explicit-any': 0,
+    "@typescript-eslint/unbound-method": "error",
     // 'no-cond-assign': 0,
     // 'react/prop-types': 0,
     'no-dupe-class-members': 0,

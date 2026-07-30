@@ -1,30 +1,19 @@
-import { HCCard, HCColor, HCKind, allSetsList, toKindIndex } from '@hellfall/shared/types';
+import { HCCard, HCColor, HCKind, allSetsList, colorList, toKindIndex } from '@hellfall/shared/types';
 import { dirType, looseOpType, opType, sortFilterFunction, sortType } from '../types';
+import { textListIncludes, toFaces } from '@hellfall/shared/utils';
 
-const colorSortValue: Record<HCColor, number> = {
-  W: 1,
-  U: 10,
-  B: 100,
-  R: 1000,
-  G: 10_000,
-  P: 100_000,
-  C: 1_000_000,
-  Yellow: 10_000_000,
-  Brown: 10_000_000,
-  Pink: 10_000_000,
-  Teal: 10_000_000,
-  Orange: 10_000_000,
-  TEMU: 10_000_000,
-  Cyan: 10_000_000,
-  Ultraviolet: 10_000_000,
-  Gold: 10_000_000,
-  Beige: 10_000_000,
-  Grey: 10_000_000,
-  Lime: 10_000_000,
+const toColorNumber = (card: HCCard.Any) => {
+  if (textListIncludes(toFaces(card)[0].types,'land')) {
+    return colorList.length+2
+  }
+  switch (card.colors.length) {
+    case 0:
+      return textListIncludes(toFaces(card)[0].types,'artifact') ? colorList.length+1:-1;
+    case 1: 
+      return colorList.indexOf(card.colors[0])
+  }
+  return colorList.length
 };
-const toColorNumber = (card: HCCard.Any) =>
-  card.colors.map(color => colorSortValue[color]).reduce((total, curr) => total + curr, 0) ||
-  colorSortValue['C'];
 
 const toTokenNumber = (card: HCCard.Any) => parseInt(card.hcid.replace(card.name, ''));
 
@@ -77,10 +66,10 @@ export const filterSort: sortFilterFunction = (
       return value1.hcid < value2.hcid ? -dirMult : dirMult;
     }
     case 'name': {
-      if (value1.name == value2.name) {
+      if (value1.name.toLowerCase() == value2.name.toLowerCase()) {
         return 0;
       }
-      return value1.name < value2.name ? -dirMult : dirMult;
+      return value1.name.toLowerCase() < value2.name.toLowerCase() ? -dirMult : dirMult;
     }
     case 'set':
       return (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;

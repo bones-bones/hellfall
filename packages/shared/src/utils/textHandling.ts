@@ -1,4 +1,4 @@
-import { allSetsList } from '@hellfall/shared/types';
+import { allSetsList, isSetCode, SetCode } from '@hellfall/shared/types';
 
 /**
  * Normalize text (remove accents and replace smart quotes with normal quotes)
@@ -11,6 +11,12 @@ export const normalizeText = (text: string): string =>
     .replaceAll(/[‘’]/g, "'")
     .replaceAll(/[“”]/g, '"')
     .replaceAll(/ {2,}/g, ' ');
+
+/**
+ * Fixes a name by normalizing it, making it lowercase, and trimming it
+ * @param text text to fix
+ */
+export const fixName = (text:string) => normalizeText(text.toLowerCase().trim())
 
 /**
  * Format smart quotes
@@ -296,43 +302,36 @@ export const formatParens = (text: string) => {
     .replaceAll('\\)', ')');
 };
 
+const fix = (t: string[]) => (t.length >1 && typeof t[1] == 'string') ? [t[0],t[1].toUpperCase()]:t
 /**
- * Gets the non-masterpiece version of a masterpiece name.
- * @param name Name to strip
- * @returns stripped name
+ * Splits a name that starts with a masterpiece code into the name and the set code.
+ * Can handle lowercase set codes.
+ * @param text text to split
  */
-export const stripMasterpiece = (name: string) => {
-  const start = allSetsList.find(set => name.startsWith(`${set}: `));
-  return start ? name.slice(start.length + 2) : name;
+export const splitMasterpiece = (text: string):{name: string, code?:SetCode} => {
+  const [code, name] = fix(text.match(/^([^:]+): (.*)$/)?.slice(1) ?? [text])
+  if (!code) {
+    return {name};
+  }
+  if (isSetCode(code)) {
+    return {name, code};
+  }
+  return {name:text};
 };
 /**
- * Gets the masterpiece set code of a masterpiece name.
- * @param name Name to get masterpiece from
- * @returns masterpiece code
+ * Splits a name that ends with a set code into the name and the set code.
+ * Can handle lowercase set codes.
+ * @param text text to split
  */
-export const getMasterpiece = (name: string) => {
-  const start = allSetsList.find(set => name.startsWith(`${set}: `));
-  return `${start}: `;
-};
-
-/**
- * Gets the bare version of a name that ends with a set code.
- * @param name Name to strip
- * @returns stripped name
- */
-export const stripSetCode = (name: string) => {
-  const ending = [...allSetsList, 'HC'].find(set => name.endsWith(` (${set})`));
-  return ending ? name.slice(0, -ending.length - 3) : name;
-};
-
-/**
- * Gets the set code from a name that ends with a set code.
- * @param name Name to strip
- * @returns stripped name
- */
-export const getSetCode = (name: string) => {
-  const ending = [...allSetsList, 'HC'].find(set => name.endsWith(` (${set})`));
-  return ending ? ` (${ending})` : undefined;
+export const splitSetCode = (text: string):{name: string, code?:string} => {
+  const [name, code] = fix(text.match(/^(.*) <([^>]+)>$/)?.slice(1) ?? [text])
+  if (!code) {
+    return {name};
+  }
+  if (code == 'HC' || isSetCode(code)) {
+    return {name, code};
+  }
+  return {name:text};
 };
 
 const hardCardNames: string[] = [

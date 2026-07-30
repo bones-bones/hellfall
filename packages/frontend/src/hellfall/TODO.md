@@ -129,7 +129,6 @@ Write a script to transform the database
 - refactor away from className
 - cut down on boilerplate for stencils if possible (though prioritizing not causing lag)
 - fix card display on deck pages
-- deal with duplicate HCV.1 collector numbers
 - add missing artist credits
 - fix id for plateau
 - prevent use of semicolons in submissions for list fields?
@@ -183,4 +182,6 @@ Write a script to transform the database
 - remove janky code from this pr (search for #jank)
 - add code that changes masterpiece prefix into a set group search
 - make collector nums fixed
-- sort out why the undercity // the initiative broke its types
+- sort out why the undercity // the initiative broke its types (oh. the type got deleted)
+- clear all all_parts stuff before starting the new methods?
+- can I simplify the export name stuff? (especially the paren handling) (I think so, but not sure)

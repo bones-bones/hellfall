@@ -382,7 +382,7 @@ const tagIsSetTag = (tag: string, card?: HCCard.Any): boolean => {
   }
   if (
     ['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
-    (!card || card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1')
+    (!card || card.set.startsWith('HLC') || card.set.startsWith('HCV.1'))
   ) {
     return true;
   }

@@ -6,8 +6,11 @@ import { SetType } from './values';
 export const allSetsList = [
   'HLC',
   'HLC.0',
+  'HCV.1.0',
   'HLC.1',
+  'HCV.1.1',
   'HLC.2',
+  'HCV.1.2',
   'HCV.1',
   'HC2',
   'HC2.0',
@@ -159,7 +162,8 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    */
   parent_set_code?: SetCode;
   /**
-   * The set codes for the daughter sets, if any. These sets will also be fetched when searching for/downloading from this set.
+   * The set codes for the daughter sets, if any. These sets will also be fetched
+   * when searching for/downloading from this set.
    */
   child_set_codes?: SetCode[];
   /**
@@ -168,6 +172,10 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    * @type Integer
    */
   // card_count: number;
+  /**
+   * Whether to order collector numbers by color (if not, defaults to using AO)
+   */
+  use_color_order?: boolean;
   /**
    * A URI to an SVG file for this set's icon.
    *

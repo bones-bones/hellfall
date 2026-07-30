@@ -487875,7 +487875,7 @@
 			"id": "74693610-460e-4c64-94cf-3cbeb80cde2f",
 			"oracle_id": "f67ffe38-a76c-4284-a2ea-8daf5b48794b",
 			"hcid": "6505",
-			"name": "HC8: Average Izzet Mage Turn",
+			"name": "HC8: Puzzle Box of Yogg-Saron",
 			"set": "HC8.1",
 			"collector_number": "177",
 			"layout": "reminder_on_back",
@@ -487926,14 +487926,14 @@
 				"uses-command",
 				"hc1-watermark",
 				"reminder-on-back",
-				"flavor-name<0|Puzzle Box of Yogg-Saron>",
+				"flavor-name<0|Average Izzet Mage Turn>",
 				"hc8.1<177>"
 			],
 			"card_faces": [
 				{
 					"object": "card_face",
-					"name": "HC8: Average Izzet Mage Turn",
-					"flavor_name": "Puzzle Box of Yogg-Saron",
+					"name": "HC8: Puzzle Box of Yogg-Saron",
+					"flavor_name": "Average Izzet Mage Turn",
 					"layout": "normal",
 					"image_status": "front",
 					"mana_cost": "{4}{U}{R}",

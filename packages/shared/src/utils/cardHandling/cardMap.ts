@@ -1,5 +1,6 @@
 import { HCCard, HCKind, SetCode, toKindIndex } from '@hellfall/shared/types';
 import { getChildSets, getDirectChildSets } from '../setHandling';
+import { CardLookupMap } from './cardLookupMap';
 
 /**
  * the list of preference options
@@ -34,79 +35,22 @@ export const getPreference = (cards: HCCard.Any[], prefer: preferType): HCCard.A
  * The class for a map of cards.
  */
 export class CardMap {
+  /**
+   * Maps card ids to their cards
+   */
   protected idMap = new Map<string, HCCard.Any>();
+  /**
+   * Maps oracle ids to the card ids they are associated with
+   */
   protected oracleMap = new Map<string, Set<string>>();
+  /**
+   * Maps set codes to the card ids they are associated with
+   */
   protected setMap = new Map<SetCode, Set<string>>();
-
   /**
-   * Adds a new card to the CardMap. If a card with the same id already exists, the card will be updated.
-   * @param card card to set
+   * Maps names to the card ids they are associated with
    */
-  set = (card: HCCard.Any) => {
-    this.idMap.set(card.id, card);
-    if (!this.oracleMap.has(card.oracle_id)) {
-      this.oracleMap.set(card.oracle_id, new Set());
-    }
-    this.oracleMap.get(card.oracle_id)!.add(card.id);
-    if (!this.setMap.has(card.set)) {
-      this.setMap.set(card.set, new Set());
-    }
-    this.setMap.get(card.set)!.add(card.id);
-  };
-
-  /**
-   * Adds a new card to the CardMap with its id. If a card with the same id already exists, the card will be updated.
-   * @param id id to use
-   * @param card card to add
-   */
-  protected setWithId = (id: string, card: HCCard.Any) => {
-    this.idMap.set(id, card);
-    if (!this.oracleMap.has(card.oracle_id)) {
-      this.oracleMap.set(card.oracle_id, new Set());
-    }
-    this.oracleMap.get(card.oracle_id)!.add(id);
-    if (!this.setMap.has(card.set)) {
-      this.setMap.set(card.set, new Set());
-    }
-    this.setMap.get(card.set)!.add(id);
-  };
-  /**
-   * Adds multiple new cards to the CardMap. If a card with the same id already exists, the card will be updated.
-   * @param cards the cards to add. Can be either a list of cards or a CardMap
-   */
-  setMultiple(cards: HCCard.Any[]): void;
-  setMultiple(cards: this): void;
-  setMultiple(cards: HCCard.Any[] | this): void {
-    cards.forEach(this.set);
-  }
-  /**
-   * @param id the id to delete
-   * @returns true if an element in the CardMap existed and has been removed, or false if the element does not exist.
-   */
-  delete = (id: string) => {
-    const value = this.idMap.get(id);
-    if (!value) return false;
-    const oracle = this.oracleMap.get(value.oracle_id);
-    oracle?.delete(id);
-    if (oracle?.size == 0) {
-      this.oracleMap.delete(value.oracle_id);
-    }
-    const set = this.setMap.get(value.set);
-    set?.delete(id);
-    if (set?.size == 0) {
-      this.setMap.delete(value.set);
-    }
-    this.idMap.delete(id);
-    return true;
-  };
-
-  /**
-   * Deletes multiple cards from the CardMap.
-   * @param ids the ids to delete
-   */
-  deleteMultiple(ids: string[]): void {
-    ids.forEach(this.delete);
-  }
+  protected lookupMap = new CardLookupMap();
 
   /**
    * Creates a new CardMap
@@ -117,21 +61,19 @@ export class CardMap {
    * @param cards The initial cards to set, if any
    */
   constructor(cards: HCCard.Any[]);
-  /**
-   * Creates a new CardMap
-   * @param cards The initial cards to set, if any
-   * @param useHCIDs Whether to use the cards' hcids. This should only be used on the backend
-   */
-  constructor(cards: HCCard.Any[], useHCIDs: boolean);
-  constructor(cards?: HCCard.Any[], useHCIDs?: boolean) {
-    this.idMap = new Map();
-    this.setMap = new Map();
+  // /**
+  //  * Creates a new CardMap
+  //  * @param cards The initial cards to set, if any
+  //  * @param useHCIDs Whether to use the cards' hcids. This should only be used on the backend
+  //  */
+  // constructor(cards: HCCard.Any[], useHCIDs: boolean);
+  constructor(cards?: HCCard.Any[]/* , useHCIDs?: boolean */) {
     if (!cards) return;
-    if (useHCIDs) {
-      cards?.forEach(card => this.setWithId(card.hcid.toLowerCase(), card));
-    } else {
-      cards?.forEach(card => this.set(card));
-    }
+    cards.forEach(this.set);
+    // if (useHCIDs) {
+    //   cards.forEach(card => this.setWithId(card.hcid.toLowerCase(), card));
+    // } else {
+    // }
   }
 
   /**
@@ -203,6 +145,27 @@ export class CardMap {
     });
     return subMap;
   }
+
+  /**
+   * Returns a specified id from the CardMap object.
+   * If no card has the specified id, the name is returned
+   * @param name the name of the card to get
+   */
+  getIDFromName = (name: string) => this.lookupMap.get(name) ?? name;
+
+  /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified name, undefined is returned
+   * @param name the name of the card to get
+   */
+  getFromName = (name: string) => this.idMap.get(this.getIDFromName(name));
+
+  /**
+   * Returns a subset of the CardMap object as a new CardMap, based on a provided list of names.
+   * @param nameList the names to use
+   */
+  getCardsByNames = (nameList: string[]) => this.getSubset(nameList.map(this.getIDFromName))
 
   /**
    * Returns the subset of the CardMap object in the given set as a new CardMap.
@@ -330,6 +293,193 @@ export class CardMap {
    * Gets a random card from this CardMap
    */
   getRandomCard = () => this.cards()[Math.floor(Math.random() * this.size)];
+
+  /**
+   * Adds a new card to the CardMap. If a card with the same id already exists, the card will be updated.
+   * @param card card to set
+   */
+  set = (card: HCCard.Any) => {
+    this.idMap.set(card.id, card);
+    if (!this.oracleMap.has(card.oracle_id)) {
+      this.oracleMap.set(card.oracle_id, new Set());
+    }
+    this.oracleMap.get(card.oracle_id)!.add(card.id);
+    if (!this.setMap.has(card.set)) {
+      this.setMap.set(card.set, new Set());
+    }
+    this.setMap.get(card.set)!.add(card.id);
+    this.lookupMap.set(card);
+  };
+
+  // /**
+  //  * Adds a new card to the CardMap with its id. If a card with the same id already exists, the card will be updated.
+  //  * @param id id to use
+  //  * @param card card to add
+  //  */
+  // protected setWithId = (id: string, card: HCCard.Any) => {
+  //   this.idMap.set(id, card);
+  //   if (!this.oracleMap.has(card.oracle_id)) {
+  //     this.oracleMap.set(card.oracle_id, new Set());
+  //   }
+  //   this.oracleMap.get(card.oracle_id)!.add(id);
+  //   if (!this.setMap.has(card.set)) {
+  //     this.setMap.set(card.set, new Set());
+  //   }
+  //   this.setMap.get(card.set)!.add(id);
+  //   this.lookupMap.set(card)
+  // };
+  /**
+   * Adds multiple new cards to the CardMap. If a card with the same id already exists, the card will be updated.
+   * @param cards the cards to add. Can be either a list of cards or a CardMap
+   */
+  setMultiple(cards: HCCard.Any[]): void;
+  setMultiple(cards: this): void;
+  setMultiple(cards: HCCard.Any[] | this): void {
+    cards.forEach(this.set);
+  }
+  /**
+   * @param id the id to delete
+   * @returns true if an element in the CardMap existed and has been removed, or false if the element does not exist.
+   */
+  delete = (id: string) => {
+    const value = this.idMap.get(id);
+    if (!value) return false;
+    const oracle = this.oracleMap.get(value.oracle_id);
+    oracle?.delete(id);
+    if (oracle?.size == 0) {
+      this.oracleMap.delete(value.oracle_id);
+    }
+    const set = this.setMap.get(value.set);
+    set?.delete(id);
+    if (set?.size == 0) {
+      this.setMap.delete(value.set);
+    }
+    this.idMap.delete(id);
+    this.lookupMap.delete(value);
+    return true;
+  };
+
+  /**
+   * Deletes multiple cards from the CardMap.
+   * @param ids the ids to delete
+   */
+  deleteMultiple = (ids: string[]) => ids.forEach(this.delete);
+
+  /**
+   * Checks if a card with the specified id exists, and if it is in the specified set, if any.
+   * @param id the id to check for
+   * @param set the set to look inside, if any
+   */
+  has = (id: string, set?: SetCode) => {
+    if (set) {
+      return Boolean(
+        this.setMap.get(set)?.has(id) ||
+          getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.has(id))
+      );
+    }
+    return this.idMap.has(id);
+  };
+
+  /**
+   * Checks if a card with the specified id exists in the specified exact set.
+   * @param id the id to check for
+   * @param set the exact set to look inside
+   */
+  hasExact = (id: string, set: SetCode) => Boolean(this.setMap.get(set)?.has(id));
+
+  /**
+   * Checks if the specified set exists in this CardMap.
+   * @param set the set to check for
+   */
+  hasSet = (set: SetCode) =>
+    Boolean(
+      this.setMap.get(set)?.size || getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.size)
+    );
+
+  /**
+   * Checks if the specified exact set exists in this CardMap.
+   * @param set the exact set to check for
+   */
+  hasSetExact = (set: SetCode) => Boolean(this.setMap.get(set)?.size);
+
+  /**
+   * Checks if a card with the specified oracle id exists
+   * @param oracle_id the oracle id to check for
+   */
+  hasOracleId = (oracle_id: string) => this.oracleMap.has(oracle_id);
+
+  /**
+   * Checks if a card with the specified name exists
+   * @param name the name to check for
+   */
+  hasName = (name: string) => this.lookupMap.has(name);
+
+  /**
+   * Removes all elements from the CardMap.
+   */
+  clear = () => {
+    this.idMap.clear();
+    this.setMap.clear();
+    this.oracleMap.clear();
+    this.lookupMap.clear();
+  };
+  
+  /**
+   * Checks if this CardMap is empty
+   */
+  isEmpty = () => this.idMap.size === 0;
+
+  *[Symbol.iterator](): Iterator<[string, HCCard.Any]> {
+    for (const [id, card] of this.idMap.entries()) {
+      yield [id, card];
+    }
+  }
+  *keys(): IterableIterator<string> {
+    for (const id of this.idMap.keys()) {
+      yield id;
+    }
+  }
+  *values(): IterableIterator<HCCard.Any> {
+    for (const card of this.idMap.values()) {
+      yield card;
+    }
+  }
+  *entries(): IterableIterator<[string, HCCard.Any]> {
+    for (const [id, card] of this.idMap.entries()) {
+      yield [id, card];
+    }
+  }
+  /**
+   * Returns an array of the cards in the CardMap. This is identical to `Array.from(CardMap.values())`
+   */
+  cards(): HCCard.Any[] {
+    return Array.from(this.idMap.values());
+  }
+  /**
+   * Returns an array of the ids in the CardMap. This is identical to `Array.from(CardMap.keys())`
+   */
+  ids(): string[] {
+    return Array.from(this.idMap.keys());
+  }
+  /**
+   * Returns an array of the oracle ids in the CardMap.`
+   */
+  oracle_ids(): string[] {
+    return Array.from(this.oracleMap.keys());
+  }
+  /**
+   * Returns an array of the sets in the CardMap.
+   */
+  sets(): SetCode[] {
+    return Array.from(this.setMap.keys());
+  }
+
+  /**
+   * @returns the number of cards in the CardMap.
+   */
+  get size(): number {
+    return this.idMap.size;
+  }
 
   /**
    * Determines whether all the cards in a CardMap satisfy the specified test.
@@ -800,173 +950,66 @@ export class CardMap {
     }
     return accumulator;
   }
-
-  /**
-   * Checks if a card with the specified id exists, and if it is in the specified set, if any.
-   * @param id the id to check for
-   * @param set the set to look inside, if any
-   */
-  has = (id: string, set?: SetCode) => {
-    if (set) {
-      return Boolean(
-        this.setMap.get(set)?.has(id) ||
-          getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.has(id))
-      );
-    }
-    return this.idMap.has(id);
-  };
-
-  /**
-   * Checks if a card with the specified id exists in the specified exact set.
-   * @param id the id to check for
-   * @param set the exact set to look inside
-   */
-  hasExact = (id: string, set: SetCode) => Boolean(this.setMap.get(set)?.has(id));
-
-  /**
-   * Checks if the specified set exists in this CardMap.
-   * @param set the set to check for
-   */
-  hasSet = (set: SetCode) =>
-    Boolean(
-      this.setMap.get(set)?.size || getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.size)
-    );
-
-  /**
-   * Checks if the specified exact set exists in this CardMap.
-   * @param set the exact set to check for
-   */
-  hasSetExact = (set: SetCode) => Boolean(this.setMap.get(set)?.size);
-
-  /**
-   * Checks if a card with the specified oracle id exists
-   * @param oracle_id the oracle id to check for
-   */
-  hasOracleId = (oracle_id: string) => this.oracleMap.has(oracle_id);
-
-  /**
-   * Removes all elements from the CardMap.
-   */
-  clear = () => {
-    this.idMap.clear();
-    this.setMap.clear();
-  };
-  /**
-   * Checks if this CardMap is empty
-   */
-  isEmpty = () => this.idMap.size === 0;
-
-  *[Symbol.iterator](): Iterator<[string, HCCard.Any]> {
-    for (const [id, card] of this.idMap.entries()) {
-      yield [id, card];
-    }
-  }
-  *keys(): IterableIterator<string> {
-    for (const id of this.idMap.keys()) {
-      yield id;
-    }
-  }
-  *values(): IterableIterator<HCCard.Any> {
-    for (const card of this.idMap.values()) {
-      yield card;
-    }
-  }
-  *entries(): IterableIterator<[string, HCCard.Any]> {
-    for (const [id, card] of this.idMap.entries()) {
-      yield [id, card];
-    }
-  }
-  /**
-   * Returns an array of the cards in the CardMap. This is identical to `Array.from(CardMap.values())`
-   */
-  cards(): HCCard.Any[] {
-    return Array.from(this.idMap.values());
-  }
-  /**
-   * Returns an array of the ids in the CardMap. This is identical to `Array.from(CardMap.keys())`
-   */
-  ids(): string[] {
-    return Array.from(this.idMap.keys());
-  }
-  /**
-   * Returns an array of the oracle ids in the CardMap.`
-   */
-  oracle_ids(): string[] {
-    return Array.from(this.oracleMap.keys());
-  }
-  /**
-   * Returns an array of the sets in the CardMap.
-   */
-  sets(): SetCode[] {
-    return Array.from(this.setMap.keys());
-  }
-
-  /**
-   * @returns the number of cards in the CardMap.
-   */
-  get size(): number {
-    return this.idMap.size;
-  }
 }
 
-/**
- * The class for a map of cards where hcids are used instead of normal ids. Only for use in the backend.
- */
-export class HCIDMap extends CardMap {
-  constructor();
-  constructor(cards: HCCard.Any[]);
-  constructor(cards?: HCCard.Any[]) {
-    if (!cards) {
-      super();
-      return;
-    }
-    super(cards, true);
-  }
-  /**
-   * Returns a specified card from the CardMap object. Any change made to that card will effectively modify it inside the CardMap.
-   * @returns Returns the card with the specified id. If no card has the specified id, undefined is returned.
-   */
-  get = (id: string) => this.idMap.get(id.toLowerCase());
+// /**
+//  * The class for a map of cards where hcids are used instead of normal ids. Only for use in the backend.
+//  */
+// export class HCIDMap extends CardMap {
+//   constructor();
+//   constructor(cards: HCCard.Any[]);
+//   constructor(cards?: HCCard.Any[]) {
+//     if (!cards) {
+//       super();
+//       return;
+//     }
+//     super(cards, true);
+//   }
+//   /**
+//    * Returns a specified card from the CardMap object. Any change made to that card will effectively modify it inside the CardMap.
+//    * @returns Returns the card with the specified id. If no card has the specified id, undefined is returned.
+//    */
+//   get = (id: string) => this.idMap.get(id.toLowerCase());
 
-  /**
-   * Adds a new card to the CardMap. If a card with the same id already exists, the card will be updated.
-   */
-  set = (card: HCCard.Any) => {
-    this.idMap.set(card.hcid.toLowerCase(), card);
-    if (!this.setMap.has(card.set)) {
-      this.setMap.set(card.set, new Set());
-    }
-    this.setMap.get(card.set)!.add(card.hcid.toLowerCase());
-  };
-  /**
-   * @returns true if an element in the CardMap existed and has been removed, or false if the element does not exist.
-   */
-  delete = (id: string) => {
-    const value = this.idMap.get(id.toLowerCase());
-    if (!value) return false;
-    const set = this.setMap.get(value.set);
-    set?.delete(id.toLowerCase());
-    if (set?.size == 0) {
-      this.setMap.delete(value.set);
-    }
-    this.idMap.delete(id.toLowerCase());
-    return true;
-  };
-  /**
-   * @returns boolean indicating whether a card with the specified id exists or not, and possibly whether it is in the specified set or not.
-   */
-  has = (id: string, set?: SetCode) => {
-    if (set) {
-      return Boolean(
-        this.setMap.get(set)?.has(id.toLowerCase()) ||
-          getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.has(id.toLowerCase()))
-      );
-    }
-    return this.idMap.has(id.toLowerCase());
-  };
+//   /**
+//    * Adds a new card to the CardMap. If a card with the same id already exists, the card will be updated.
+//    */
+//   set = (card: HCCard.Any) => {
+//     this.idMap.set(card.hcid.toLowerCase(), card);
+//     if (!this.setMap.has(card.set)) {
+//       this.setMap.set(card.set, new Set());
+//     }
+//     this.setMap.get(card.set)!.add(card.hcid.toLowerCase());
+//   };
+//   /**
+//    * @returns true if an element in the CardMap existed and has been removed, or false if the element does not exist.
+//    */
+//   delete = (id: string) => {
+//     const value = this.idMap.get(id.toLowerCase());
+//     if (!value) return false;
+//     const set = this.setMap.get(value.set);
+//     set?.delete(id.toLowerCase());
+//     if (set?.size == 0) {
+//       this.setMap.delete(value.set);
+//     }
+//     this.idMap.delete(id.toLowerCase());
+//     return true;
+//   };
+//   /**
+//    * @returns boolean indicating whether a card with the specified id exists or not, and possibly whether it is in the specified set or not.
+//    */
+//   has = (id: string, set?: SetCode) => {
+//     if (set) {
+//       return Boolean(
+//         this.setMap.get(set)?.has(id.toLowerCase()) ||
+//           getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.has(id.toLowerCase()))
+//       );
+//     }
+//     return this.idMap.has(id.toLowerCase());
+//   };
 
-  /**
-   * @returns boolean indicating whether a card with the specified id exists or not in the specified exact set.
-   */
-  hasExact = (id: string, set: SetCode) => Boolean(this.setMap.get(set)?.has(id.toLowerCase()));
-}
+//   /**
+//    * @returns boolean indicating whether a card with the specified id exists or not in the specified exact set.
+//    */
+//   hasExact = (id: string, set: SetCode) => Boolean(this.setMap.get(set)?.has(id.toLowerCase()));
+// }

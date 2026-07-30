@@ -565,6 +565,36 @@ export const pushToRecord = (record: Record<string, string[]>, key: string, valu
 };
 
 /**
+ * Correctly deals with pushing a value to a `Map<string,Set<string>>` by creating the value of the prop first if necessary
+ * @param map map
+ * @param key key to push to
+ * @param value value to push
+ */
+export const pushToMap = (map: Map<string,Set<string>>, key: string, value: string) => {
+  if (map.has(key)) {
+    map.get(key)?.add(value);
+  } else {
+    map.set(key, new Set([value]))
+  }
+};
+
+/**
+ * Correctly deals with deleting a value from a `Map<string,Set<string>>`.
+ * Returns true only if the last element of the set was deleted.
+ * @param map map
+ * @param key key to delete from
+ * @param value value to delete
+ */
+export const deleteFromMap = (map: Map<string,Set<string>>, key: string, value: string) => {
+  map.get(key)?.delete(value)
+  if (!map.get(key)?.size) {
+    map.delete(key)
+    return true;
+  }
+  return false;
+};
+
+/**
  * Ensures that a value is an array or undefined. If it's not an array or undefined, wraps value in an array before returning it
  * @template T The type of the value
  * @param value the value to ensure is an array
