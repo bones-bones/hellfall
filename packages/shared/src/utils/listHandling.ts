@@ -1,4 +1,4 @@
-import { textEquals, textContains, textIsContainedBy } from './textHandling';
+import { textEquals, textContains } from './textHandling';
 
 /**
  * Performs a logical XOR on two values after converting them to booleans
@@ -351,32 +351,6 @@ export const textListContainsSome = (value1?: string[], value2?: string[]) =>
  */
 export const textListContainsEvery = (value1?: string[], value2?: string[]) =>
   value2?.every(value => textListContains(value1, value));
-
-/**
- * Checks whether a text list is contained by a string
- * (i.e. whether the list includes a string that the string to check {@link textContains contains})
- * @param value1 list to check
- * @param value2 string to check
- */
-export const textListIsContainedBy = (value1?: string[], value2?: string) =>
-  listIncludesValue(value1, value2, textIsContainedBy);
-
-/**
- * Checks whether a text list is contained by some member of a list of strings
- * (i.e. whether the list includes a string that the string to check {@link textContains contains})
- * @param value1 list to check
- * @param value2 list of strings to check
- */
-export const textListIsContainedBySome = (value1?: string[], value2?: string[]) =>
-  value2?.some(value => textListIsContainedBy(value1, value));
-/**
- * Checks whether a text list is contained by all members of a list of strings
- * (i.e. whether the list includes a string that the string to check {@link textContains contains})
- * @param value1 list to check
- * @param value2 list of strings to check
- */
-export const textListIsContainedByEvery = (value1?: string[], value2?: string[]) =>
-  value2?.every(value => textListIsContainedBy(value1, value));
 
 /**
  * Checks whether a text list includes a string (using {@linkcode textEquals})

@@ -33,12 +33,12 @@ export const isRelatedCard = (value: any): value is HCRelatedCard => {
         case 'count':
           return typeof value == 'string' && (isInteger(value) || value == 'x');
       }
-      return ['id', 'oracle_id', 'hcid', 'name', 'type_line'].includes(prop) && typeof value == 'string';
+      return ['id', 'hcid', 'name', 'type_line'].includes(prop) && typeof value == 'string';
     })
   ) {
     return false;
   }
-  return ['object', 'id', 'oracle_id', 'hcid', 'image', 'name', 'set', 'type_line', 'component'].every(
+  return ['object', 'id', 'hcid', 'image', 'name', 'set', 'type_line', 'component'].every(
     prop => part[prop as partPropType] != undefined
   );
 };

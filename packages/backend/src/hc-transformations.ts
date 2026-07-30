@@ -24,16 +24,17 @@ import {
   getAllRelatedPermissive,
   CardMap,
   HCIDMap,
+  savedOracleIds,
+  getDirectChildSets,
+  getParentSet,
   mergeFromSheet,
   cleanParts,
   updateParts,
   addToJSONToCards,
-  baseInvariantMap,
-  getDirectChildSets,
-  getParentSet,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
+import { fetchLands } from './fetchLands.ts';
 
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -58,7 +59,9 @@ const mergeDatabases = (
   existingCards: HCIDMap,
   newCards: HCIDMap,
   existingTokens: HCIDMap,
-  newTokens: HCIDMap
+  newTokens: HCIDMap,
+  existingLands: HCIDMap,
+  newLands: HCIDMap
 ): HCCard.Any[] => {
   // newCards.forEach((newCard: HCCard.Any, id: string) => {});
   const mergedCards = newCards.map((newCard: HCCard.Any, id: string) => {
@@ -95,6 +98,21 @@ const mergeDatabases = (
     existingTokens.getAllInSet('SFT').forEach(card => {
       setDerivedProps(card);
       mergedTokens.set(card);
+    });
+  }
+  const mergedLands = newLands.map((newCard: HCCard.Any, id: string) => {
+    const existingCard = existingLands.get(movedIds[id] ?? id);
+    if (existingCard) {
+      existingLands.delete(existingCard.hcid);
+      return mergeFromSheet(existingCard, newCard);
+    }
+    // setDerivedProps(newCard);
+    return newCard;
+  });
+  if (usingApproved) {
+    existingLands.forEach(card => {
+      setDerivedProps(card);
+      mergedLands.set(card);
     });
   }
   const collectorNumberAutofillSets: Record<string, number> = {
@@ -143,7 +161,19 @@ const mergeDatabases = (
       }
     }
   });
-  [mergedCards, mergedTokens].forEach(mergedList =>
+  mergedLands.forEach(entry => {
+    if (!entry.collector_number) {
+      if (entry.set in collectorNumberAutofillSets) {
+        collectorNumberAutofillSets[entry.set] += 1;
+        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
+      } else {
+        throw new Error(
+          `Land missing collector_number and set "${entry.set}" is not in collectorNumberAutofillSets (hcid: ${entry.hcid}, name: ${entry.name})`
+        );
+      }
+    }
+  });
+  [mergedCards, mergedTokens, mergedLands].forEach(mergedList =>
     mergedList.forEach(card => {
       if (!card.id) {
         card.id = crypto.randomUUID();
@@ -156,8 +186,8 @@ const mergeDatabases = (
             card.oracle_id = original.oracle_id;
             return;
           }
-          if (baseInvariantMap.hasName(originalName)) {
-            card.oracle_id = baseInvariantMap.getOracleID(originalName)!;
+          if (originalName.toLowerCase() in savedOracleIds) {
+            card.oracle_id = savedOracleIds[originalName.toLowerCase()];
             return;
           }
         } else if (card.tags?.includes('reprint')) {
@@ -207,7 +237,8 @@ const mergeDatabases = (
           return 1;
         }
         return -1;
-      })
+      }),
+      mergedLands.cards().sort((a, b) => parseInt(a.hcid.slice(1)) - parseInt(b.hcid.slice(1)))
     );
 };
 const dataToCards = <K extends anyPropType>(
@@ -290,7 +321,7 @@ const loadExistingData = () => {
   }
 
   const existingCards = new HCIDMap(
-    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [], 'oracle_id', '','parts')
+    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [])
   );
 
   try {
@@ -299,7 +330,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = new HCIDMap(dataToCards(tokensContent?.data ?? [], 'oracle_id', '','parts'));
+  const existingTokens = new HCIDMap(dataToCards(tokensContent?.data ?? []));
 
   try {
     landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
@@ -307,11 +338,8 @@ const loadExistingData = () => {
     console.warn('Could not load lands, proceeding with undefined content:', error);
   }
 
-  // #jank
-  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? [], 'oracle_id', '','parts'));
-  existingCards.setMultiple(existingLands);
-
-  return { existingCards, existingTokens };
+  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
+  return { existingCards, existingTokens, existingLands };
 };
 const ignoreDuplicateHCIDs: string[] = [
   '39',
@@ -349,10 +377,16 @@ const main = async () => {
   const usernameMappings = await fetchUsernameMappings();
   const newTokens = await fetchTokens(NO_SCRYFALL);
   newTokens.setMultiple(fetchHCJFronts());
-  // newTokens.setMultiple(await fetchNotMagic());
+  newTokens.setMultiple(await fetchNotMagic());
+  const newLands = await fetchLands();
   const collectorMap = new Map<SetCode, Set<number>>(
     newCards.sets().map(code => [code, new Set<number>()])
   );
+
+  newLands
+    .sets()
+    .filter(set => set.startsWith('SCL'))
+    .forEach(code => collectorMap.set(code, new Set<number>()));
   collectorMap.set('SCL', new Set<number>());
   getDirectChildSets('SCL')?.forEach(code => collectorMap.delete(code));
   newCards.forEach(card => {
@@ -370,7 +404,21 @@ const main = async () => {
       cSet?.add(num);
     }
   });
-
+  newLands.forEach(card => {
+    const num = parseInt(card.collector_number);
+    const cSet =
+      collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));
+    if (ignoreDuplicateHCIDs.includes(card.hcid)) {
+      return;
+    }
+    if (cSet?.has(num) || ignoreMissingNums[card.set]?.includes(num)) {
+      console.log(
+        `Set ${card.set} has a duplicate collector number at ${num} (hcid: ${card.hcid})`
+      );
+    } else if (num) {
+      cSet?.add(num);
+    }
+  });
   for (const [code, nums] of collectorMap) {
     if (code == 'HCV.1' || code.startsWith('HLC')) continue;
     const max = Math.max(...Array.from(nums));
@@ -382,8 +430,15 @@ const main = async () => {
   }
 
   console.log('Running in update mode - merging with existing data...');
-  const { existingCards, existingTokens } = loadExistingData();
-  const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
+  const { existingCards, existingTokens, existingLands } = loadExistingData();
+  const merged = mergeDatabases(
+    existingCards,
+    newCards,
+    existingTokens,
+    newTokens,
+    existingLands,
+    newLands
+  );
   const finalCards = new CardMap(addToJSONToCards(merged));
   finalCards.forEach(card => {
     if (card.all_parts) {
