@@ -63,7 +63,7 @@ export const filterSort: sortFilterFunction = (
     }
     case 'id': {
       if (value1.kind != value2.kind) {
-        return (toKindIndex(value1.kind) - toKindIndex(value2.kind)) * dirMult ;
+        return (toKindIndex(value1.kind) - toKindIndex(value2.kind)) * dirMult;
       }
       switch (value1.kind) {
         case 'card':

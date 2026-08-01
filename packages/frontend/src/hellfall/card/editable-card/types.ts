@@ -57,7 +57,8 @@ export type FieldType =
   | 'multi-enum'
   | 'number'
   | 'boolean'
-  | 'enum';
+  | 'enum'
+  | 'legalities';
 
 export type EditFormState = {
   root: Record<string, string>;
