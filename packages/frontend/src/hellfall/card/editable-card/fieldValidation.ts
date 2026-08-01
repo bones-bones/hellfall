@@ -30,6 +30,13 @@ export function getFieldFormatError(config: FieldConfig, value: string): string 
       return `Invalid color(s): ${invalid.join(', ')}`;
     }
   }
+  if (
+    config.type === 'legalities' &&
+    value.trim() &&
+    parseFieldValue(value, 'legalities') === undefined
+  ) {
+    return 'Must set legal / not_legal / banned for each format';
+  }
   return undefined;
 }
 

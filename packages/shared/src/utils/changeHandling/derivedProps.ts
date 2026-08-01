@@ -410,7 +410,6 @@ export const setDerivedProps = (
   if (card.kind == 'token') {
     if ('card_faces' in card) {
       card.mana_value = 0;
-      const colors: HCColors = [];
       card.card_faces.forEach((face, i) => {
         if (
           !(
@@ -419,15 +418,8 @@ export const setDerivedProps = (
           !(FrontManaValueFaceLayouts.includes(face.layout) && i)
         ) {
           card.mana_value += face.mana_value;
-          colors.push(
-            ...(face.color_indicator ??
-              (face.mana_cost && !baseIncludesFlag(card, 'generic', i)
-                ? pipMap.getColorsFromText(face.mana_cost)
-                : face.colors))
-          );
         }
       });
-      card.colors = orderColors(colors);
     } else if (card.mana_cost) {
       card.mana_value = pipMap.getMVFromCost(card.mana_cost);
       if (!card.tags?.includes('generic') && !card.keywords.includes('devoid')) {
@@ -436,6 +428,24 @@ export const setDerivedProps = (
     } else if (card.color_indicator) {
       card.colors = card.color_indicator;
     }
+  }
+  if ('card_faces' in card) {
+    const colors: HCColors = [];
+    card.card_faces.forEach((face, i) => {
+      if (NoManaValueFaceLayouts.includes(face.layout) && `multi_${face.layout}` != card.layout) {
+        return;
+      }
+      if (FrontManaValueFaceLayouts.includes(face.layout) && i) {
+        return;
+      }
+      colors.push(
+        ...(face.color_indicator ??
+          (card.kind == 'token' && face.mana_cost && !baseIncludesFlag(card, 'generic', i)
+            ? pipMap.getColorsFromText(face.mana_cost)
+            : face.colors))
+      );
+    });
+    card.colors = orderColors(colors);
   }
   if (card.tags?.includes('italic-typeline')) {
     card.type_line = '*' + card.type_line + '*';
