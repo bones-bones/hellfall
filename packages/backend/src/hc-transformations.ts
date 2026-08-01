@@ -309,6 +309,9 @@ const ignoreMissingNums: Partial<Record<SetCode, number[]>> = {
   'HC4.1': [146, 204, 261],
   'HC8.0': [259],
 };
+const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
+  'HLC.0': ['65b'],
+};
 const main = async () => {
   const newCards = await fetchCards();
   const usernameMappings = await fetchUsernameMappings();
@@ -344,14 +347,14 @@ const main = async () => {
     // }
     if (cSet?.has(cn) /* || ignoreMissingNums[card.set]?.includes(num) */) {
       console.log(
-        `Set ${card.set} has a duplicate collector number at ${cn} (hcid: ${card.hcid}, raw: ${card.collector_number})`
+        `Set ${getCollectorOrderSet(card.set)} has a duplicate collector number at ${cn} (hcid: ${card.hcid}, raw: ${card.collector_number})`
       );
     } else if (cn) {
       cSet?.add(cn);
     }
-    if (aSet?.has(ao) /* || ignoreMissingNums[card.set]?.includes(num) */) {
+    if (aSet?.has(ao) && !ignoreDuplicateOrders[card.set]?.includes(card.accepted_order)) {
       console.log(
-        `Set ${card.set} has a duplicate accepted order at ${ao} (hcid: ${card.hcid}, raw: ${card.accepted_order})`
+        `Set ${getAcceptedOrderSet(card.set)} has a duplicate accepted order at ${ao} (hcid: ${card.hcid}, raw: ${card.accepted_order})`
       );
     } else if (ao) {
       aSet?.add(ao);
@@ -363,7 +366,7 @@ const main = async () => {
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i) /*  && !ignoreMissingNums[code]?.includes(i) */) {
-        console.log(`Set ${code} has a missing collector number at ${i}`);
+        console.log(`Set ${getCollectorOrderSet(code)} has a missing collector number at ${i}`);
       }
     }
   }
@@ -373,7 +376,7 @@ const main = async () => {
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i) /*  && !ignoreMissingNums[code]?.includes(i) */) {
-        console.log(`Set ${code} has a missing accepted number at ${i}`);
+        console.log(`Set ${getAcceptedOrderSet(code)} has a missing accepted number at ${i}`);
       }
     }
   }
@@ -382,19 +385,20 @@ const main = async () => {
   const { existingCards, existingTokens } = loadExistingData();
   const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
   const finalCards = new CardMap(addToJSONToCards(merged));
-  finalCards.forEach(card => {
-    if (card.all_parts) {
-      if (card.layout == 'front') {
-        updateParts(
-          card,
-          finalCards.filterFromSetExact('HCJ', value => value.tags?.includes(card.tags![0]))
-        );
-      } else {
-        updateParts(card, getAllRelatedPermissive(card, finalCards));
-      }
-    }
-  });
-  finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
+  // #temp
+  // finalCards.forEach(card => {
+  //   if (card.all_parts) {
+  //     if (card.layout == 'front') {
+  //       updateParts(
+  //         card,
+  //         finalCards.filterFromSetExact('HCJ', value => value.tags?.includes(card.tags![0]))
+  //       );
+  //     } else {
+  //       updateParts(card, getAllRelatedPermissive(card, finalCards));
+  //     }
+  //   }
+  // });
+  // finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
 
   // const takenNames = namesRawData.data;
   // finalCards.forEach(entry => setExportProps(entry, takenNames));

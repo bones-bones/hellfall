@@ -85,7 +85,7 @@ export const getAllNames = (card: HCCard.Any, dropFaces?: boolean): string[] => 
     }
   }
   if (code) {
-    const ending = ` <${code}>`;
+    const ending = ` <${code.toLowerCase()}>`;
     nameSet.forEach(name => {
       if (!name.endsWith(ending)) {
         addName(`${name}${ending}`);

@@ -216,7 +216,7 @@ export const getChangesFromDifferences = (
     });
   });
   // if ('card_faces' in existingCard != 'card_faces' in newCard) {
-  //   throw console.error(
+  //   console.error(
   //     "You really shouldn't try to use this to compare between single cards and multiface cards."
   //   );
   // }

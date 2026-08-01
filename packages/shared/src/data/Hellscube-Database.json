@@ -45366,7 +45366,6 @@
 			"creators": [
 				"Em9500"
 			],
-			"artists": [],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -242124,7 +242123,6 @@
 			"creators": [
 				"liuliu"
 			],
-			"artists": [],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -266542,7 +266540,6 @@
 			"creators": [
 				"localrodent"
 			],
-			"artists": [],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -289046,7 +289043,6 @@
 			"creators": [
 				"arthropod_queen"
 			],
-			"artists": [],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -586621,8 +586617,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"tags": [],
-			"base_tags": [],
 			"all_parts": [
 				{
 					"object": "related_card",
