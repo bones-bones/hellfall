@@ -177,7 +177,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
           const supertypes: string[] = [];
           const types: string[] = [];
           const subtypes: string[] = [];
-          const [before, after] = value ? value.split(' — '):['Card'];
+          const [before, after] = value ? value.split(' — ') : ['Card'];
           before.split(' ').forEach(word => {
             if (supers.includes(word)) {
               supertypes.push(word);

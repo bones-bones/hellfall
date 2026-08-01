@@ -6,9 +6,11 @@ import {
   HCRelatedCard,
   SetCode,
 } from '@hellfall/shared/types';
-import { addToJSONToCard, getDefaultCard, HCIDMap, setDerivedProps } from '@hellfall/shared/utils';
+import { addToJSONToCard, CardMap, getDefaultCard, setDerivedProps } from '@hellfall/shared/utils';
 
 export type HCJPackInfo = {
+  id: string;
+  oracle_id: string;
   name: string;
   url: string;
   tag: string;
@@ -23,6 +25,8 @@ export const packInfoToCard = (entry: HCJPackInfo): HCCard.Front =>
       HCKind.Front,
       false,
       {
+        id: entry.id,
+        oracle_id: entry.oracle_id,
         hcid: `fhcj-${entry.tag}`,
         name: `${entry.name} - ${entry.tag}`,
         set: 'FHCJ',
@@ -36,8 +40,8 @@ export const packInfoToCard = (entry: HCJPackInfo): HCCard.Front =>
     )
   ) as HCCard.Front;
 
-export const fetchHCJFronts = (): HCIDMap =>
-  new HCIDMap(
+export const fetchHCJFronts = (): CardMap =>
+  new CardMap(
     hcjFrontCards.map((pack, i) => {
       const front = packInfoToCard(pack);
       front.collector_number = `${i + 1}`;
@@ -46,11 +50,11 @@ export const fetchHCJFronts = (): HCIDMap =>
           object: HCObject.ObjectType.RelatedCard,
           id: '',
           oracle_id: '',
-          hcid: land.id || '',
-          component: 'draft_partner',
-          name: land.name || '',
-          type_line: '',
+          hcid: land.id ?? '',
+          name: land.name ?? '',
           set: '' as SetCode,
+          type_line: '',
+          component: 'draft_partner',
           is_draft_partner: true,
         };
         if (land.count > 1) {
@@ -64,10 +68,10 @@ export const fetchHCJFronts = (): HCIDMap =>
           id: '',
           oracle_id: '',
           hcid: pack.secondCopyOf,
-          component: 'draft_partner',
           name: '',
-          type_line: '',
           set: 'HCJ',
+          type_line: '',
+          component: 'draft_partner',
           is_draft_partner: true,
           count: '2',
         });
@@ -79,6 +83,8 @@ export const fetchHCJFronts = (): HCIDMap =>
 
 export const hcjFrontCards: HCJPackInfo[] = [
   {
+    id: '3fe031a1-95e7-4c9f-92d5-4c7a6ba1db5e',
+    oracle_id: '3e3f594d-a780-4220-ac8e-8ac8073d8afc',
     name: 'Adventures',
     url: 'https://lh3.googleusercontent.com/d/1hyM35n3DdwWA9rW_5b2pacCx9-zPxMZo',
     tag: 'adventures-pack',
@@ -89,6 +95,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '8d27844b-e1e8-4d26-8d1e-8ea611cf65af',
+    oracle_id: '2e078baa-8435-41c3-b115-8d0f13af20cf',
     name: 'Lockdown in Space',
     url: 'https://lh3.googleusercontent.com/d/1gwxgcVVkazey7NXuaVnVs9EtSN89Fc-i',
     tag: 'lockdown-control-in-space-pack',
@@ -100,6 +108,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'acf0c436-075e-4573-838c-2d3b2bf6178f',
+    oracle_id: '51ecf607-646d-44c8-a37f-c8b1d3ce5bf7',
     name: 'Garfield',
     url: 'https://lh3.googleusercontent.com/d/1FQVqg2G4q6EUr8XeD1MgW2gv1HqRwD_N',
     tag: 'garfield-pack',
@@ -107,12 +117,16 @@ export const hcjFrontCards: HCJPackInfo[] = [
     lands: [{ count: 6, name: 'Plains' }],
   },
   {
+    id: '89a67d33-25bc-454b-bd4a-8f2ea195a5cd',
+    oracle_id: 'a6b2592a-2071-4aa5-be56-31ad850a524e',
     name: 'Steven',
     url: 'https://lh3.googleusercontent.com/d/1eiCoNtc0VVxpiwWEVL3goTZBN97sGMPz',
     tag: 'steven-pack',
     lands: [{ count: 6, id: '5934' }],
   },
   {
+    id: 'a8b14819-a62e-4591-a11b-98cbddbd5048',
+    oracle_id: 'f3b83655-b097-4bcc-8055-1eca279a36e5',
     name: 'Vehicles',
     url: 'https://lh3.googleusercontent.com/d/1s3zmrLhrWshArA_AUU1j2YfYKhFTXzjF',
     tag: 'vehicles-pack',
@@ -124,6 +138,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '1f5288d0-5c61-4f7d-a6f0-0f280d3b36a3',
+    oracle_id: '25b602e8-34c7-4eab-85a3-176ae903d198',
     name: 'Storm Spellslinger',
     url: 'https://lh3.googleusercontent.com/d/18N8NkqPrhuY5Kynyyl8TX4hnif7OMY6V',
     tag: 'storm-spellslinger-pack',
@@ -134,6 +150,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '715149dc-7d52-436c-a06a-a43533a646bc',
+    oracle_id: '491a4207-3e41-4e0e-8150-f270d34146e3',
     name: 'Clues',
     url: 'https://lh3.googleusercontent.com/d/1x1-wy-nGrqhGInssxrMdYi2MSoGo-u4L',
     tag: 'clues-pack',
@@ -144,6 +162,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '4ce3bf7b-f576-4702-aaaa-7b7599bd8b34',
+    oracle_id: 'e6b99ac8-205a-4747-869c-2f12095f3c3b',
     name: 'Time Travel',
     url: 'https://lh3.googleusercontent.com/d/1vtd2o1_HsKg-arIOmBRTipG32q7ga0oe',
     tag: 'time-travel-pack',
@@ -154,6 +174,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '8d4bbf2e-9f04-491d-9cd6-b6075a3afc41',
+    oracle_id: '09155580-d771-4cdf-81c1-4a69a2f8a547',
     name: 'Zones',
     url: 'https://lh3.googleusercontent.com/d/142lGsUITRtfyfiXNCGK3M_52SSk0sXmL',
     tag: 'zones-pack',
@@ -164,6 +186,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'e0623ea0-e8e2-4830-b47e-fa70e2350bbb',
+    oracle_id: '5bd08c36-6063-4dcb-822c-91f0afbf0474',
     name: 'Mill Crabs',
     url: 'https://lh3.googleusercontent.com/d/12cTVO9f3NGEE-Wb9C0jw2Ukyozm55YkB',
     tag: 'mill-crabs-pack',
@@ -171,6 +195,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     lands: [{ count: 6, id: '7328' }],
   },
   {
+    id: 'f8fe9e44-44ed-4ba3-bbf2-defa67f278bc',
+    oracle_id: '01699d1e-c3ce-4696-8cae-145ac8728864',
     name: 'HELL',
     url: 'https://lh3.googleusercontent.com/d/1-ciDmLhErAlhT_0BP7bsDNO6iKkyjZNA',
     tag: 'HELL-pack',
@@ -182,6 +208,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'a4b6d9e1-3bb0-4bfe-a02d-45d107788be3',
+    oracle_id: '0c8f5ca5-4f87-4802-90a6-92d18df6835a',
     name: 'Facedown',
     url: 'https://lh3.googleusercontent.com/d/1SH7FZcwZWR9BkSpAASaRnauDfSuAsKLW',
     tag: 'face-down-pack',
@@ -192,6 +220,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '647792b4-983d-4b52-bbb5-28337f5e06e5',
+    oracle_id: '13ca6f36-ebb6-4c53-9c38-b0ddf8bcf3f9',
     name: 'Crime',
     url: 'https://lh3.googleusercontent.com/d/1mDRKD_QRi7wGhzd8_qBSaU7PAVcGrdMN',
     tag: 'crime-pack',
@@ -202,6 +232,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '4307daf7-d354-4d5f-b5f2-0aafb90315f8',
+    oracle_id: '1de14f1c-d233-404d-b0a9-4e47fce2f513',
     name: 'Aristocrats',
     url: 'https://lh3.googleusercontent.com/d/1WnyJ4Zt5XDf1xaaTogynJClaqLkGO_66',
     tag: 'aristocrats-pack',
@@ -212,6 +244,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '5a916cac-c29c-408a-b5b4-decaa52130f0',
+    oracle_id: '6beabaa9-8d21-42f6-985a-a647c6291d63',
     name: 'Contraptions',
     url: 'https://lh3.googleusercontent.com/d/18HE_D6hsP91OvkjsnYqM3vXtFZhzcPpu',
     tag: 'contraptions-pack',
@@ -222,6 +256,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'd327473d-bce8-4b85-96d9-b189f3ef9610',
+    oracle_id: 'f1eca054-f107-4db0-9bbc-6880bf540f71',
     name: 'Red Deck Wins',
     url: 'https://lh3.googleusercontent.com/d/14I7o5Ixapn8nsYg8KuZTCb2WmEp0jzjC',
     tag: 'red-deck-wins-pack',
@@ -233,6 +269,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '272c7384-4969-4d7b-979d-9c3a361a4459',
+    oracle_id: 'fe713447-cffc-43cb-ad7b-7b1618824de4',
     name: 'Gambling',
     url: 'https://lh3.googleusercontent.com/d/1JPbWDgfvF5ly39PaF6GVg0NWf_eIjsBE',
     tag: 'gambling-pack',
@@ -240,6 +278,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     lands: [{ count: 6, id: '6216' }],
   },
   {
+    id: 'eaec6e3c-cb27-40b7-ae92-1d8677a37736',
+    oracle_id: '31daecc4-c821-4164-a460-393abe40005f',
     name: 'Blitz',
     url: 'https://lh3.googleusercontent.com/d/1KgJoBpj64xqPX1IbCFZ7cOIVHig_jFpJ',
     tag: 'blitz-pack',
@@ -250,6 +290,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '2cb9cc18-ee69-40db-a99e-440a973b35f5',
+    oracle_id: 'c54f4bb6-601a-4ca2-935c-351b7499f3c5',
     name: 'Fling',
     url: 'https://lh3.googleusercontent.com/d/1luuDW4lrwASivn-iWMrl7k8XaYdhpd2W',
     tag: 'fling-pack',
@@ -259,6 +301,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'e85b0300-a8cc-4208-8003-e49d6b170b75',
+    oracle_id: 'bc93f1d8-a1b6-4644-a47e-d39cd6593e2e',
     name: 'Haste',
     url: 'https://lh3.googleusercontent.com/d/1qRBtdNIXYqoXfh2ZGUxFCssLL9RCEhDu',
     tag: 'haste-pack',
@@ -269,6 +313,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '7476bb63-ec9f-4485-bb12-22483043b4ef',
+    oracle_id: 'ba18ce6d-5cf0-4843-9b56-ee15240db210',
     name: 'Grunch',
     url: 'https://lh3.googleusercontent.com/d/1quD1u2xm3vJeuYRGzCadqsNKWxgOexA9',
     tag: 'grunch-pack',
@@ -279,6 +325,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '8d486396-eca7-42e0-ac10-5643c1042d28',
+    oracle_id: '23fa3e3b-2baf-4b8c-b4ba-35c4ef275a63',
     name: 'Self-Discard',
     url: 'https://lh3.googleusercontent.com/d/13e0fZCdItnKvdrdAxmCIh7_QcQRiTuGv',
     tag: 'self-discard-pack',
@@ -289,6 +337,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '03a9c752-6e1d-4857-a608-554375b0e5e2',
+    oracle_id: '352d1330-198e-4c9b-a410-40f55322449f',
     name: '🐴',
     url: 'https://lh3.googleusercontent.com/d/1d6dmP9gGIpJz9ePg4pdtdS_dY_wgMP0T',
     tag: '🐴-pack',
@@ -299,6 +349,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'ad19f18d-64d4-40ba-9cdf-5f09752dda5e',
+    oracle_id: '4600bdea-acb4-4a2f-81ed-614a70283fcb',
     name: 'Goyftext',
     url: 'https://lh3.googleusercontent.com/d/1f-_EBV-iFUYO-0WTt3iWu-Xupgvp5HxI',
     tag: 'goyftext-pack',
@@ -309,6 +361,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'a873a87a-3d4e-4ab9-bfe0-4e8d1c4ac7d7',
+    oracle_id: 'daba6610-6ce3-49cf-a90e-ea215dd3deaf',
     name: 'Stompy',
     url: 'https://lh3.googleusercontent.com/d/14KUBGP6j8AVIiOYhHARZ-fHcWOBMn1Nd',
     tag: 'stompy-pack',
@@ -319,6 +373,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'f8ae78cb-e370-4320-bb17-04d13d4ec865',
+    oracle_id: '8b9d8b57-7a05-4259-bf78-064013392b64',
     name: '"Bant" Thopters',
     url: 'https://lh3.googleusercontent.com/d/145LwYy2eeCLDcw5Io3Wz_D2oaNWn17y4',
     tag: '"bant"-thopters-pack',
@@ -331,6 +387,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '99de711e-1017-4a4e-a507-50b29b72758e',
+    oracle_id: '21e69784-9bf4-4088-b987-8dfeee0bb5db',
     name: 'Stealing',
     url: 'https://lh3.googleusercontent.com/d/1qy5MB3i1xite8BIzTCUvXMVqspb6NWlO',
     tag: 'stealing-pack',
@@ -343,6 +401,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '8cdc44f6-8ae2-480c-8c6e-6589f727353b',
+    oracle_id: '7ec179e8-9837-431a-a720-88ffdb3ddb49',
     name: 'Minigames',
     url: 'https://lh3.googleusercontent.com/d/1iAV3jrlzIqE-5OX6vzxc1Q1SFzybgLTS',
     tag: 'minigames-pack',
@@ -355,6 +415,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '712f7bcb-4716-4f98-87d5-b8019c4ca375',
+    oracle_id: 'c4857850-783f-4d05-be0d-6601b97ae4a4',
     name: 'Junkfood',
     url: 'https://lh3.googleusercontent.com/d/1JgpJdvsytqqVvj9kMsysso9LTzb0cG68',
     tag: 'junk-food-pack',
@@ -367,6 +429,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'd4194fec-980a-406a-85df-08685bc3411d',
+    oracle_id: '5592a6c0-b5ff-4ec8-9390-f0ea430f8e75',
     name: 'Timepiecewolves',
     url: 'https://lh3.googleusercontent.com/d/13eppx14uJ_tj2hXRGDpwXl41WQ8-WzdL',
     tag: 'timepiecewolves-pack',
@@ -378,6 +442,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'f3626a39-b8f3-4ec0-89cc-909ddbd3fe3b',
+    oracle_id: '99473d68-3aba-4c98-abf6-4b0ba16efdd1',
     name: 'GX',
     url: 'https://lh3.googleusercontent.com/d/16w50A6KJZFKa6UvlnnqOmkd0v7TlH9KE',
     tag: 'GX-pack',
@@ -388,6 +454,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: 'aaeb8204-aed0-4f92-a91c-1578e17eff04',
+    oracle_id: '0a9c40d6-db45-4713-ae9a-a38072cd41da',
     name: 'It That',
     url: 'https://lh3.googleusercontent.com/d/1troxStiHBNLbX8q54xKz6N9nJuVC1VkO',
     tag: 'it-that-pack',
@@ -400,6 +468,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '7a9e0711-fb71-4316-8169-4749a7c7cc14',
+    oracle_id: '9b91d790-0a93-4792-9e9b-b8e9bc95d775',
     name: 'Posts',
     url: 'https://lh3.googleusercontent.com/d/1YCMm4MxXIsX_DUdlYQsPslVlf6ePjxUH',
     tag: 'posts-pack',
@@ -413,6 +483,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '3b220e96-ce56-4265-87cf-7ddb86122038',
+    oracle_id: '66d9b7f5-cfd4-4b83-8e0b-345600820d74',
     name: 'Toxic Yaoi',
     url: 'https://lh3.googleusercontent.com/d/151a01MZ54j3nx_Cxgso2ez3myFMLXv0a',
     tag: 'toxic-yaoi-pack',
@@ -425,6 +497,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '6c91f032-5789-47c0-9993-357e6d4bb9d6',
+    oracle_id: '19928553-8b60-413d-b840-2de3b1b92f4a',
     name: 'Hand Tokens',
     url: 'https://lh3.googleusercontent.com/d/18DzEmctgfQ3Jjgcy9hv3WABbrHhnRZdE',
     tag: 'hand-tokens-pack',
@@ -437,6 +511,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     ],
   },
   {
+    id: '330f82b9-b224-4f39-89fe-4b7472e97edd',
+    oracle_id: 'aca440d3-8c2e-4e1d-8597-0f108458ca9f',
     name: 'Phases',
     url: 'https://lh3.googleusercontent.com/d/1I5EbiJTSgpe9ZSXWwz0Izi6v9saQqGo0',
     tag: 'phases-pack',
@@ -445,6 +521,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     lands: [{ count: 6, id: '6160' }],
   },
   {
+    id: 'c8daca69-6eb9-46d8-8481-29ee2090de75',
+    oracle_id: '62b6681d-1211-4d79-8be4-121978821039',
     name: 'Urzatron',
     url: 'https://lh3.googleusercontent.com/d/1RCywujUvML1StyynlHAd6d8sRsM-lYAf',
     tag: 'urzatron-pack',
@@ -452,6 +530,8 @@ export const hcjFrontCards: HCJPackInfo[] = [
     lands: [{ count: 3, id: '6236' }],
   },
   {
+    id: '1c45fac0-c26e-4cc9-ab48-72e80f01e10a',
+    oracle_id: '5fae4433-8d4e-4b95-a044-f4aeb61c8958',
     name: `e̶̬͋̾ ̸͖̏͛c̵͈̞̒ọ̸̉l̶̨̡̍ ̵̥̾f̴̹͚̔̌i̴̖͇̅̊v̷̳̣̿v̴̨̄ͅv̷͈͌̊v̷̡̅̇v̷͕́ỏ̴̫͖̓r̴̪̄`,
     url: 'https://lh3.googleusercontent.com/d/1qjtclWmaMbhuMrf3IR7LV6dCkd2-xD5a',
     tag: '5-color-pack',

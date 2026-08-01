@@ -184,4 +184,9 @@ Write a script to transform the database
 - make collector nums fixed
 - sort out why the undercity // the initiative broke its types (oh. the type got deleted)
 - clear all all_parts stuff before starting the new methods?
-- can I simplify the export name stuff? (especially the paren handling) (I think so, but not sure)
+- can I simplify the export name stuff? (especially the paren handling) (I think so, but not sure) (look for `#test`)
+- fully clean up after the removal of land and notmagic kinds and notmagic set
+- split set/number into one that groups sets by the ones that share collector numbers and then one that goes purely by acceptance order
+- remove collector num tag handling
+- remove temp change filter once possible
+- note the differences between set/number and set/accepted (grouping)

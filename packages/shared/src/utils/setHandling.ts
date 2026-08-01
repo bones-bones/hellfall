@@ -4,6 +4,10 @@ import { wrapArray } from './listHandling';
 
 const sets = setsData.data;
 
+export const colorOrderSetList = sets.filter(set => set.use_color_order).map(set => set.code);
+
+export const toSetNumber = (code: SetCode) => allSetsList.indexOf(code);
+
 /**
  * The list of sets that should only be included if include:extras is used
  */
@@ -56,13 +60,15 @@ export const getSetSrc = (code: SetCode) => setToSrc(getSet(code));
  * Gets the set code that is the parent of another set
  * @param code Set code to get the parent of
  */
-export const getParentSetCode = (code: SetCode): SetCode | undefined => getSet(code)?.parent_set_code;
+export const getParentSetCode = (code: SetCode): SetCode | undefined =>
+  getSet(code)?.parent_set_code;
 
 /**
  * Gets the set that is the parent of another set
  * @param code Set code to get the parent of
  */
-export const getParentSet = (code: SetCode): HCSet | undefined => getSet(getParentSetCode(code) ?? '' as SetCode);
+export const getParentSet = (code: SetCode): HCSet | undefined =>
+  getSet(getParentSetCode(code) ?? ('' as SetCode));
 
 /**
  * Gets the sets that are the children of another set
@@ -107,8 +113,31 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
  * Gets the sets that share collector numbers with another set, including that set itself
  * @param code Set code to get the sets that share its collector numbers
  */
-export const getCollectorNumSets = (code: SetCode): SetCode[] => (getSet(code)?.use_color_order || getParentSet(code)?.use_color_order || getSet(code)?.set_type == 'lair') ? getBlockSets(code) : [code.toUpperCase() as SetCode]
+export const getCollectorNumSets = (code: SetCode): SetCode[] =>
+  getSet(code)?.use_color_order ||
+  getParentSet(code)?.use_color_order ||
+  getSet(code)?.set_type == 'lair'
+    ? getBlockSets(code)
+    : [code.toUpperCase() as SetCode];
 
+/**
+ * Gets the set that a set uses for collector number sorting
+ * @param code Set code to get the collector order set for
+ */
+export const getCollectorOrderSet = (code: SetCode): SetCode => {
+  const parent = getParentSet(code);
+  return parent?.use_color_order || parent?.set_type == 'lair'
+    ? parent.code
+    : (code.toUpperCase() as SetCode);
+};
+/**
+ * Gets the set that a set uses for accepted order sorting
+ * @param code Set code to get the accepted order set for
+ */
+export const getAcceptedOrderSet = (code: SetCode): SetCode => {
+  const parent = getParentSet(code);
+  return parent?.set_type == 'lair' ? parent.code : (code.toUpperCase() as SetCode);
+};
 
 /**
  * Gets the sets that are in the same group as another set (i.e. are its children or its parent)

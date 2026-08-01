@@ -208,7 +208,6 @@ export class PipMap {
    */
   deleteMultiple = (symbols: string[]) => symbols.forEach(this.delete);
 
-
   /**
    * Checks if a pip with the specified symbol exists
    * @param symbol the symbol to check for
@@ -266,7 +265,7 @@ export class PipMap {
   get size(): number {
     return this.symbolMap.size;
   }
-  
+
   // #CUSTOM GETTERS
 
   /**
@@ -366,7 +365,6 @@ export class PipMap {
    */
   getPipColorsFromText = (text: string): HCColors[] =>
     this.getPipsFromText(text).flatMap(pip => [pip.colors ?? []]);
-
 
   /**
    * Gets the colors included among the pips in text

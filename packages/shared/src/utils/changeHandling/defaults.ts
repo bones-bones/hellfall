@@ -40,6 +40,7 @@ const defaultRootProps: rootMappedType = {
   name: '',
   set: '' as SetCode,
   collector_number: '',
+  accepted_order: '',
   image_status: HCImageStatus.Inapplicable,
   mana_cost: '',
   mana_value: 0,
@@ -87,27 +88,21 @@ const defaultPartProps: partMappedType = {
 export const kindToFaceLayout: Record<HCKind, BothLayoutType> = {
   card: HCLayout.Normal,
   token: HCLayout.Token,
-  land: HCLayout.Normal,
   front: HCLayout.Front,
   scryfall: HCLayout.Normal,
-  notmagic: HCLayout.NotMagic,
 };
 export const kindToMultiLayout: Record<HCKind, HCLayoutGroup.MultiFacedType> = {
   card: HCLayout.Multi,
   token: HCLayout.MultiToken,
-  land: HCLayout.Multi,
   front: HCLayout.Multi,
   scryfall: HCLayout.Multi,
-  notmagic: HCLayout.MultiNotMagic,
 };
 
 export const kindToDefaultFrame: Record<HCKind, HCFrame> = {
   card: HCFrame.Stamp,
   token: HCFrame.FullToken,
-  land: HCFrame.Stamp,
   front: HCFrame.Stamp,
   scryfall: HCFrame.Stamp,
-  notmagic: HCFrame.NotMagic,
 };
 
 const tokenTypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {

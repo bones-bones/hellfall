@@ -27,9 +27,7 @@ import {
   textListIncludes,
   textListsShare,
 } from '../listHandling';
-import {
-  textEquals,
-} from '../textHandling';
+import { textEquals } from '../textHandling';
 import { CardMap } from './cardMap';
 import { pipMap } from '../pipsAndColors';
 
@@ -334,7 +332,6 @@ export const toPlainText = (card: HCCard.Any) =>
     .map(face => faceToPlainText(face))
     .join('\n---\n');
 
-
 /**
  * Checks whether a card can be a commander.
  * @param card card to check
@@ -354,8 +351,8 @@ const PLACEHOLDER_CARD: HCCard.Normal = {
   object: HCObject.ObjectType.Card,
   id: '55555555-5555-4555-a555-555555555555',
   oracle_id: '55555555-5555-4555-a555-555555555555',
-  accepted_order: '555',
   collector_number: '555',
+  accepted_order: '555',
   hcid: 'hc5-placeholder',
   kind: HCKind.Card,
   layout: HCLayout.Normal,

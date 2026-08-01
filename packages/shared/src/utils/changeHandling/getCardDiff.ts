@@ -36,12 +36,10 @@ import { baseIncludesFlag, getBaseDiffs, getChangesFromTag } from './tagHandling
 // can add even if empty
 const rootBlankableProps: Partial<Record<HCKind, rootPropType[]>> = {
   card: ['mana_cost', 'mana_value', 'rulings', 'collector_number'],
-  notmagic: ['mana_cost', 'mana_value'],
 };
 
 const faceBlankableProps: Partial<Record<HCKind, facePropType[]>> = {
   card: ['mana_cost', 'mana_value', 'oracle_text'],
-  notmagic: ['mana_cost', 'mana_value', 'oracle_text'],
 };
 
 // can delete
@@ -54,7 +52,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'oracle_id_is_scryfall',
     'flavor_name',
     'export_name',
-    'collector_number',
+    // 'collector_number',
     // 'image',
     // 'rotated_image',
     // 'still_image',
@@ -78,53 +76,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'oracle_id_is_scryfall',
     'flavor_name',
     'export_name',
-    'collector_number',
-    // 'image',
-    // 'rotated_image',
-    // 'still_image',
-    'print_image_status',
-    // 'print_image',
-    // 'rotated_print_image',
-    // 'still_print_image',
-    'not_directly_draftable',
-    'has_draft_partners',
-    'creators',
-    'artists',
-    'artist_notes',
-    'frame_effects',
-    'tags',
-    'tag_notes',
-    'base_tags',
-    'all_parts',
-  ],
-  land: [
-    // 'id_is_scryfall',
-    // 'oracle_id_is_scryfall',
-    'flavor_name',
-    'export_name',
-    'collector_number',
-    // 'image',
-    // 'rotated_image',
-    // 'still_image',
-    'print_image_status',
-    // 'print_image',
-    // 'rotated_print_image',
-    // 'still_print_image',
-    'not_directly_draftable',
-    'has_draft_partners',
-    'creators',
-    'artists',
-    'artist_notes',
-    'frame_effects',
-    'tags',
-    'tag_notes',
-    'base_tags',
-    'all_parts',
-  ],
-  notmagic: [
-    'flavor_name',
-    'export_name',
-    'collector_number',
+    // 'collector_number',
     // 'image',
     // 'rotated_image',
     // 'still_image',
@@ -179,52 +131,13 @@ const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
     'frame',
     'frame_effects',
   ],
-  land: [
-    'flavor_name',
-    'export_name',
-    // 'image',
-    // 'rotated_image',
-    // 'still_image',
-    'supertypes',
-    'types',
-    'subtypes',
-    'flavor_text',
-    'power',
-    'toughness',
-    'loyalty',
-    'defense',
-    'watermark',
-    'frame',
-    'frame_effects',
-  ],
-  notmagic: [
-    'flavor_name',
-    'export_name',
-    // 'image',
-    // 'rotated_image',
-    // 'still_image',
-    'supertypes',
-    'types',
-    'subtypes',
-    'flavor_text',
-    'power',
-    'toughness',
-    'loyalty',
-    'defense',
-    'color_indicator',
-    'watermark',
-    'frame',
-    'frame_effects',
-  ],
 };
 
 const rootIgnoreProps: Record<HCKind, rootPropType[]> = {
   card: ['image_status', 'print_image_status'],
   token: ['mana_cost', 'mana_value', 'colors', 'rulings', 'image_status', 'print_image_status'],
-  land: ['image_status', 'print_image_status'],
   front: ['image_status', 'print_image_status'],
   scryfall: [],
-  notmagic: ['image_status', 'print_image_status'],
 };
 const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
   // card: ['colors'],
@@ -235,6 +148,13 @@ const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
   // notmagic: ['colors'],
 };
 type add = faceChangeablePropType<'add'>;
+
+const tempChangeFilter = (change: anyChange) => {
+  if (change.location == 'tag') return true;
+  if (change.location != 'root') return;
+  if (change.prop != 'collector_number' && change.prop != 'accepted_order') return;
+  return true;
+};
 
 /**
  * Gets a list of changes from the differences between existing and new versions of a card
@@ -437,5 +357,5 @@ export const getChangesFromDifferences = (
       tag => getChangesFromTag(existingCard, 'delete', tag, alsoAddingFaces)[0] ?? []
     )
   );
-  return changeList.sort(sortChanges);
+  return changeList.sort(sortChanges).filter(tempChangeFilter);
 };

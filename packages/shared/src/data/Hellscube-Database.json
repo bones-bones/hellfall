@@ -7048,16 +7048,12 @@
 			"name": "Puzzle Box of Yogg-Saron",
 			"set": "HLC.0",
 			"collector_number": "149",
-			"layout": "normal",
+			"layout": "reminder_on_back",
 			"image_status": "medres",
 			"image": "https://lh3.googleusercontent.com/d/1Ysgf162fNcZ9ikc_eReDPmkZze_kRdHq",
 			"mana_cost": "{4}{U}{R}",
 			"mana_value": 6,
-			"types": [
-				"Sorcery"
-			],
 			"type_line": "Sorcery",
-			"oracle_text": "Cast 10 random instants or sorceries without paying their mana costs. Choose targets randomly. Exile Puzzle Box of Yogg-Saron.",
 			"colors": [
 				"U",
 				"R"
@@ -7107,6 +7103,40 @@
 				"hc1.0<149>",
 				"2003-frame",
 				"mse"
+			],
+			"card_faces": [
+				{
+					"object": "card_face",
+					"name": "Puzzle Box of Yogg-Saron",
+					"layout": "normal",
+					"image_status": "front",
+					"mana_cost": "{4}{U}{R}",
+					"mana_value": 6,
+					"types": [
+						"Sorcery"
+					],
+					"type_line": "Sorcery",
+			    "oracle_text": "Cast 10 random instants or sorceries without paying their mana costs. Choose targets randomly. Exile Puzzle Box of Yogg-Saron.",
+					"flavor_text": "And they still don't win after all that.",
+					"colors": [
+						"U",
+						"R"
+					]
+				},
+				{
+					"object": "card_face",
+					"name": "QR Code",
+					"layout": "reminder",
+					"image_status": "reminder",
+					"mana_cost": "",
+					"mana_value": 0,
+					"types": [
+						"QR Code"
+					],
+					"type_line": "QR Code",
+					"oracle_text": "https://tinyurl.com/HellsRandomBullshit",
+					"colors": []
+				}
 			]
 		},
 		{

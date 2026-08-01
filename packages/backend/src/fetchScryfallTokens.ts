@@ -60,17 +60,17 @@ export const fetchScryfallTokens = async () => {
             token.hcid = entry[i];
           } else if (keys[i] == 'token_maker') {
             token.all_parts = entry[i].split(';').map(oldName => {
-              const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
+              const { name, hcid, code, count } = parseRelatedReferenceName(oldName);
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',
                 oracle_id: '',
-                hcid: shouldUseBase ? name : '',
-                component: 'token_maker',
-                name: shouldUseBase ? base : name,
-                type_line: '',
-                set: '' as SetCode,
+                hcid: hcid,
+                name: name,
+                set: code ?? ('' as SetCode),
                 image: '',
+                type_line: '',
+                component: 'token_maker',
               };
               if (count) {
                 maker.count = count.slice(1);

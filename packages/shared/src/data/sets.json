@@ -713,14 +713,6 @@
       "parent_set_code": "HBB"
     },
     {
-      "id": "2b238325-ba98-4d84-8c92-248eb61c50c6",
-      "code": "NMTG",
-      "name": "NotMagic",
-      "description": "Non-Magic cards for use with !notmagic",
-      "set_type": "token",
-      "filename": ""
-    },
-    {
       "id": "f650b918-dfec-47ab-a571-bc1890a727ec",
       "code": "SFT",
       "name": "Scryfall Tokens",

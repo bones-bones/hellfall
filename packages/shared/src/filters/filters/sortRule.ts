@@ -1,18 +1,30 @@
-import { HCCard, HCColor, HCKind, allSetsList, colorList, toKindIndex } from '@hellfall/shared/types';
-import { dirType, looseOpType, opType, sortFilterFunction, sortType } from '../types';
-import { textListIncludes, toFaces } from '@hellfall/shared/utils';
+import {
+  HCCard,
+  HCColor,
+  HCKind,
+  allSetsList,
+  colorList,
+  toKindIndex,
+} from '@hellfall/shared/types';
+import { dirType, sortFilterFunction, sortType } from '../types';
+import {
+  getCollectorOrderSet,
+  textListIncludes,
+  toFaces,
+  toSetNumber,
+} from '@hellfall/shared/utils';
 
 const toColorNumber = (card: HCCard.Any) => {
-  if (textListIncludes(toFaces(card)[0].types,'land')) {
-    return colorList.length+2
+  if (textListIncludes(toFaces(card)[0].types, 'land')) {
+    return colorList.length + 2;
   }
   switch (card.colors.length) {
     case 0:
-      return textListIncludes(toFaces(card)[0].types,'artifact') ? colorList.length+1:-1;
-    case 1: 
-      return colorList.indexOf(card.colors[0])
+      return textListIncludes(toFaces(card)[0].types, 'artifact') ? colorList.length + 1 : -1;
+    case 1:
+      return colorList.indexOf(card.colors[0]);
   }
-  return colorList.length
+  return colorList.length;
 };
 
 const toTokenNumber = (card: HCCard.Any) => parseInt(card.hcid.replace(card.name, ''));
@@ -20,7 +32,6 @@ const toTokenNumber = (card: HCCard.Any) => parseInt(card.hcid.replace(card.name
 /**
  * A function that sorts two cards
  * @param value1 the first card to sort
- * @param operator dummy
  * @param value2 the second card to sort
  * @param sort the sort option to use
  * @param dir the sort direction to use
@@ -28,7 +39,6 @@ const toTokenNumber = (card: HCCard.Any) => parseInt(card.hcid.replace(card.name
  */
 export const filterSort: sortFilterFunction = (
   value1: HCCard.Any,
-  operator: opType,
   value2: HCCard.Any,
   sort: sortType,
   dir: dirType
@@ -50,15 +60,15 @@ export const filterSort: sortFilterFunction = (
     case 'number': {
       return (parseInt(value1.collector_number) - parseInt(value2.collector_number)) * dirMult;
     }
+    case 'accepted': {
+      return (parseInt(value1.accepted_order) - parseInt(value2.accepted_order)) * dirMult;
+    }
     case 'id': {
       if (value1.kind != value2.kind) {
-        return (toKindIndex(value1.kind) - toKindIndex(value2.kind)) * dirMult ;
+        return (toKindIndex(value1.kind) - toKindIndex(value2.kind)) * dirMult;
       }
-      switch (value1.kind) {
-        case 'card':
-          return (parseInt(value1.hcid) - parseInt(value2.hcid)) * dirMult;
-        case 'land':
-          return (parseInt(value1.hcid.slice(1)) - parseInt(value2.hcid.slice(1))) * dirMult;
+      if (value1.kind == 'card') {
+        return (parseInt(value1.hcid) - parseInt(value2.hcid)) * dirMult;
       }
       if (value1.name == value2.name) {
         return (toTokenNumber(value1) - toTokenNumber(value2)) * dirMult;
@@ -72,11 +82,18 @@ export const filterSort: sortFilterFunction = (
       return value1.name.toLowerCase() < value2.name.toLowerCase() ? -dirMult : dirMult;
     }
     case 'set':
-      return (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set)) * dirMult;
+      return (toSetNumber(value1.set) - toSetNumber(value2.set)) * dirMult;
     case 'setnumber': {
       return (
-        (allSetsList.indexOf(value1.set) - allSetsList.indexOf(value2.set) ||
-          parseInt(value1.collector_number!) - parseInt(value2.collector_number!)) * dirMult
+        (toSetNumber(value1.set) - toSetNumber(value2.set) ||
+          parseInt(value1.collector_number) - parseInt(value2.collector_number)) * dirMult
+      );
+    }
+    case 'setaccepted': {
+      return (
+        (toSetNumber(getCollectorOrderSet(value1.set)) -
+          toSetNumber(getCollectorOrderSet(value2.set)) ||
+          parseInt(value1.accepted_order) - parseInt(value2.accepted_order)) * dirMult
       );
     }
   }

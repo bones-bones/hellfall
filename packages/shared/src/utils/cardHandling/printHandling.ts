@@ -1,6 +1,7 @@
 import { HCLegalitiesField, HCLegality } from '@hellfall/shared/types';
 import { InvariantMap, printInput } from './invariantMap';
 import { textListIsContainedBy } from '../listHandling';
+import { CardMap } from './cardMap';
 
 const cardIDList: printInput[] = [
   ['plains', 'bc71ebf6-2056-41f7-be35-b2e5c34afa99'],
@@ -103,7 +104,40 @@ const tokenOracleIdList: printInput[] = [
   ['wet treasure', '9f84cca3-ed45-4878-bd6e-33d2ea570169'],
 ];
 
+export const landNames = [
+  'plains',
+  'island',
+  'swamp',
+  'mountain',
+  'forest',
+  'nebula',
+  'wastes',
+  'snow-covered plains',
+  'snow-covered island',
+  'snow-covered swamp',
+  'snow-covered mountain',
+  'snow-covered forest',
+  'snow-covered nebula',
+  'snow-covered wastes',
+];
+
 export const baseCardInvariantMap = new InvariantMap(cardIDList);
+
+/**
+ * Checks if a card name is the name of a land that can be used with {@linkcode getRandomLand}.
+ * @param name name to check
+ */
+export const isLandName = (name: string) => baseCardInvariantMap.hasName(name);
+
+/**
+ * Gets a random land given a land name.
+ * @param name name of the land to get
+ * @param cardMap CardMap to get the land from
+ */
+export const getRandomLand = (name: string, cardMap: CardMap) =>
+  isLandName(name)
+    ? cardMap.getAllPrints(baseCardInvariantMap.getOracleID(name)!).getRandomCard()
+    : undefined;
 
 const getLegalitiesFromLandName = (name: string): HCLegalitiesField => {
   const splitName = name.toLowerCase().split(' ');

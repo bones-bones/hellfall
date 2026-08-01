@@ -16,7 +16,7 @@ export const normalizeText = (text: string): string =>
  * Fixes a name by normalizing it, making it lowercase, and trimming it
  * @param text text to fix
  */
-export const fixName = (text:string) => normalizeText(text.toLowerCase().trim())
+export const fixName = (text: string) => normalizeText(text.toLowerCase().trim());
 
 /**
  * Format smart quotes
@@ -302,36 +302,68 @@ export const formatParens = (text: string) => {
     .replaceAll('\\)', ')');
 };
 
-const fix = (t: string[]) => (t.length >1 && typeof t[1] == 'string') ? [t[0],t[1].toUpperCase()]:t
+const fix = (t: string[]) =>
+  t.length > 1 && typeof t[1] == 'string' ? [t[0], t[1].toUpperCase()] : t;
 /**
  * Splits a name that starts with a masterpiece code into the name and the set code.
  * Can handle lowercase set codes.
  * @param text text to split
  */
-export const splitMasterpiece = (text: string):{name: string, code?:SetCode} => {
-  const [code, name] = fix(text.match(/^([^:]+): (.*)$/)?.slice(1) ?? [text])
+export const splitMasterpiece = (text: string): { name: string; code?: SetCode } => {
+  const [code, name] = fix(text.match(/^([^:]+): (.*)$/)?.slice(1) ?? [text]);
   if (!code) {
-    return {name};
+    return { name };
   }
   if (isSetCode(code)) {
-    return {name, code};
+    return { name, code };
   }
-  return {name:text};
+  return { name: text };
 };
 /**
  * Splits a name that ends with a set code into the name and the set code.
  * Can handle lowercase set codes.
  * @param text text to split
  */
-export const splitSetCode = (text: string):{name: string, code?:string} => {
-  const [name, code] = fix(text.match(/^(.*) <([^>]+)>$/)?.slice(1) ?? [text])
+export const splitSetCode = (text: string): { name: string; code?: string } => {
+  const [name, code] = fix(text.match(/^(.*) <([^>]+)>$/)?.slice(1) ?? [text]);
   if (!code) {
-    return {name};
+    return { name };
   }
   if (code == 'HC' || isSetCode(code)) {
-    return {name, code};
+    return { name, code };
   }
-  return {name:text};
+  return { name: text };
+};
+
+const stripParens = (text: string) =>
+  text.startsWith('(') && text.endsWith(')') ? text.slice(1, -1) : text;
+
+/**
+ * Splits a name of a card from input into the card's name, set (if any), and collector num (if any)
+ * @param text text to split
+ */
+export const splitCardName = (
+  text: string
+): { name: string; code?: SetCode; collector_number?: string } => {
+  const { name, code } = splitMasterpiece(text);
+  if (code) {
+    return { name, code };
+  }
+  const splitText = text.split(' ');
+  if (splitText.length > 2 && isSetCode(stripParens(splitText.at(-2)!))) {
+    return {
+      name: splitText.slice(0, -2).join(''),
+      code: stripParens(splitText.at(-2)!).toUpperCase() as SetCode,
+      collector_number: splitText.at(-1)?.toLowerCase(),
+    };
+  }
+  if (splitText.length > 1 && isSetCode(stripParens(splitText.at(-1)!))) {
+    return {
+      name: splitText.slice(0, -1).join(''),
+      code: stripParens(splitText.at(-1)!).toUpperCase() as SetCode,
+    };
+  }
+  return { name: text };
 };
 
 const hardCardNames: string[] = [
@@ -356,23 +388,26 @@ export const hardTokenIds: string[] = [
 ];
 
 /**
- * Parses the name, count, and base for a related card
+ * Parses the parameters for a related card
  * @param oldName name from the google sheet
  */
 export const parseRelatedReferenceName = (
   oldName: string
-): { name: string; count?: string; base: string; shouldUseBase: boolean } => {
-  const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-  const name = match?.groups?.name ?? oldName;
-  const count = match?.groups?.count;
-  const base = hardTokenIds.includes(name) ? name.slice(0, -1) : name.replace(/\d+$/, '');
+): { name: string; hcid: string; code?: SetCode; count?: string } => {
+  const { name: intName, code } = splitCardName(oldName);
+  const groups = intName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+  const match = groups?.groups?.name ?? oldName;
+  const count = groups?.groups?.count ?? ('' as SetCode);
+  const base = hardTokenIds.includes(match) ? match.slice(0, -1) : match.replace(/\d+$/, '');
   const shouldUseBase =
-    hardTokenIds.includes(name) ||
-    (/\d/.test(name.at(-1)!) &&
-      !hardCardNames.includes(name) &&
+    hardTokenIds.includes(match) ||
+    (/\d/.test(match.at(-1)!) &&
+      !hardCardNames.includes(match) &&
       base.length > 0 &&
       ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!));
-  return { name, count, base, shouldUseBase };
+  const name = shouldUseBase ? base : match;
+  const hcid = shouldUseBase ? match : '';
+  return { name, hcid, code, count };
 };
 
 /**
@@ -387,7 +422,7 @@ export const toExportName = (name: string) => {
     .replaceAll(/\\/g, '')
     // .replaceAll(/[\\.]/g, '')
     .replaceAll(/\((\d+)\)/g, '$1');
-  return retName.slice(0, 2) == '  ' ? retName.trimStart() : retName;
+  return retName.startsWith('  ') ? retName.trimStart() : retName;
 };
 
 /**

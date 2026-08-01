@@ -96,6 +96,8 @@ export const sortTypeList = [
   'id',
   'number',
   'setnumber',
+  'accepted',
+  'setaccepted',
   'colormanavalue',
   'auto',
 ] as const;
@@ -107,16 +109,8 @@ export type sortType = (typeof sortTypeList)[number];
 /**
  * A function that sorts two cards
  */
-export interface sortFilterFunction extends anyFilterFunction<HCCard.Any, HCCard.Any> {
-  (value1: HCCard.Any, operator: opType, value2: HCCard.Any, sort: sortType, dir: dirType): number;
-  // /**
-  //  * The sort option to use
-  //  */
-  // sort: sortType;
-  // /**
-  //  * The direction to sort the cards
-  //  */
-  // dir: dirType;
+export interface sortFilterFunction {
+  (value1: HCCard.Any, value2: HCCard.Any, sort: sortType, dir: dirType): number;
 }
 
 /**

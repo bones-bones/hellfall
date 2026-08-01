@@ -1,5 +1,4 @@
 import fs from 'fs';
-import crypto from 'crypto';
 
 import { fetchTokens } from './fetchTokens.ts';
 import { fetchCards } from './fetchCards.ts';
@@ -14,25 +13,23 @@ import {
   anyValueType,
 } from '@hellfall/shared/types';
 import {
-  stripMasterpiece,
-  textEquals,
   textPrep,
   setDerivedProps,
-  setExportProps,
-  stripSetCode,
   getAllRelatedPermissive,
   CardMap,
-  HCIDMap,
   mergeFromSheet,
   cleanParts,
   updateParts,
   addToJSONToCards,
-  baseInvariantMap,
   getDirectChildSets,
   getParentSetCode,
+  colorOrderSetList,
+  getCollectorOrderSet,
+  getAcceptedOrderSet,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
+import { makeSort } from '@hellfall/shared/filters';
 
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -54,10 +51,10 @@ const movedIds: Record<string, string> = {
 };
 
 const mergeDatabases = (
-  existingCards: HCIDMap,
-  newCards: HCIDMap,
-  existingTokens: HCIDMap,
-  newTokens: HCIDMap
+  existingCards: CardMap,
+  newCards: CardMap,
+  existingTokens: CardMap,
+  newTokens: CardMap
 ): HCCard.Any[] => {
   // newCards.forEach((newCard: HCCard.Any, id: string) => {});
   const mergedCards = newCards.map((newCard: HCCard.Any, id: string) => {
@@ -96,81 +93,46 @@ const mergeDatabases = (
       mergedTokens.set(card);
     });
   }
-  const collectorNumberAutofillSets: Record<string, number> = {
-    'HCV.2': 0,
-    'HCV.3': 0,
-    'HCV.4': 0,
-    'HCV.6': 0,
-    'HCV.7': 0,
-    'HCV.8': 0,
-    'HCV.9': 0,
-    'HCV.J': 0,
-    'HCV.K': 0,
-    'HCV.L': 0,
-    'HCV.P': 0,
-    'HCV.CDC': 0,
-    'HCV.S': 0,
-    'HCV.H': 0,
-    'HCV.D': 0,
-    NRM: 0,
-    HCJ: 0,
-    NMTG: 0,
-    SFT: 0,
-    HCT: 0,
-  };
   mergedCards.forEach(entry => {
     if (!entry.collector_number) {
-      if (entry.set in collectorNumberAutofillSets) {
-        collectorNumberAutofillSets[entry.set] += 1;
-        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
-      } else {
-        throw new Error(
-          `Card missing collector_number and set "${entry.set}" is not in collectorNumberAutofillSets (hcid: ${entry.hcid}, name: ${entry.name})`
-        );
-      }
+      throw new Error(`Card missing accepted_order (hcid: ${entry.hcid}, name: ${entry.name})`);
     }
   });
   mergedTokens.forEach(entry => {
     if (!entry.collector_number) {
-      if (entry.set in collectorNumberAutofillSets) {
-        collectorNumberAutofillSets[entry.set] += 1;
-        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
-      } else {
-        throw new Error(
-          `Token missing collector_number and set "${entry.set}" is not in collectorNumberAutofillSets (hcid: ${entry.hcid}, name: ${entry.name})`
-        );
-      }
+      throw new Error(`Token missing accepted_order (hcid: ${entry.hcid}, name: ${entry.name})`);
     }
   });
-  [mergedCards, mergedTokens].forEach(mergedList =>
-    mergedList.forEach(card => {
-      if (!card.id) {
-        card.id = crypto.randomUUID();
-      }
-      if (!card.oracle_id) {
-        if (card.tags?.includes('masterpiece')) {
-          const originalName = stripMasterpiece(card.name);
-          const original = mergedList.find(c => textEquals(c.name, originalName));
-          if (original?.oracle_id) {
-            card.oracle_id = original.oracle_id;
-            return;
-          }
-          if (baseInvariantMap.hasName(originalName)) {
-            card.oracle_id = baseInvariantMap.getOracleID(originalName)!;
-            return;
-          }
-        } else if (card.tags?.includes('reprint')) {
-          const originalName = stripSetCode(card.name);
-          const original = mergedList.find(c => textEquals(c.name, originalName));
-          if (original?.oracle_id) {
-            card.oracle_id = original.oracle_id;
-            return;
-          }
-        }
-        card.oracle_id = crypto.randomUUID();
-      }
-    })
-  );
+
+  // [mergedCards, mergedTokens].forEach(mergedList =>
+  //   mergedList.forEach(card => {
+  //     if (!card.id) {
+  //       card.id = crypto.randomUUID();
+  //     }
+  //     if (!card.oracle_id) {
+  //       if (card.tags?.includes('masterpiece')) {
+  //         const originalName = stripMasterpiece(card.name);
+  //         const original = mergedList.find(c => textEquals(c.name, originalName));
+  //         if (original?.oracle_id) {
+  //           card.oracle_id = original.oracle_id;
+  //           return;
+  //         }
+  //         if (baseInvariantMap.hasName(originalName)) {
+  //           card.oracle_id = baseInvariantMap.getOracleID(originalName)!;
+  //           return;
+  //         }
+  //       } else if (card.tags?.includes('reprint')) {
+  //         const originalName = stripSetCode(card.name);
+  //         const original = mergedList.find(c => textEquals(c.name, originalName));
+  //         if (original?.oracle_id) {
+  //           card.oracle_id = original.oracle_id;
+  //           return;
+  //         }
+  //       }
+  //       card.oracle_id = crypto.randomUUID();
+  //     }
+  //   })
+  // );
 
   return mergedCards
     .cards()
@@ -276,11 +238,11 @@ const dataToCards = <K extends anyPropType>(
 const loadExistingData = () => {
   const databasePath = '../shared/src/data/Hellscube-Database.json';
   const tokensPath = '../shared/src/data/tokens.json';
-  const landsPath = '../shared/src/data/lands.json';
+  // const landsPath = '../shared/src/data/lands.json';
 
   let databaseContent = undefined;
   let tokensContent = undefined;
-  let landsContent = undefined;
+  // let landsContent = undefined;
 
   try {
     databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
@@ -288,8 +250,12 @@ const loadExistingData = () => {
     console.warn('Could not load cards, proceeding with undefined content:', error);
   }
 
-  const existingCards = new HCIDMap(
-    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [])
+  const existingCards = new CardMap(
+    dataToCards(
+      databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [],
+      'accepted_order',
+      ''
+    )
   );
 
   try {
@@ -298,17 +264,17 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = new HCIDMap(dataToCards(tokensContent?.data ?? []));
+  const existingTokens = new CardMap(dataToCards(tokensContent?.data ?? [], 'accepted_order', ''));
 
-  try {
-    landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
-  } catch (error) {
-    console.warn('Could not load lands, proceeding with undefined content:', error);
-  }
+  // try {
+  //   landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
+  // } catch (error) {
+  //   console.warn('Could not load lands, proceeding with undefined content:', error);
+  // }
 
-  // #jank
-  const existingLands = new HCIDMap(dataToCards(landsContent?.data ?? []));
-  existingCards.setMultiple(existingLands);
+  // // #jank
+  // const existingLands = new CardMap(dataToCards(landsContent?.data ?? [], 'accepted_order', ''));
+  // existingCards.setMultiple(existingLands);
 
   return { existingCards, existingTokens };
 };
@@ -349,24 +315,46 @@ const main = async () => {
   const newTokens = await fetchTokens(NO_SCRYFALL);
   newTokens.setMultiple(fetchHCJFronts());
   // newTokens.setMultiple(await fetchNotMagic());
-  const collectorMap = new Map<SetCode, Set<number>>(
-    newCards.sets().map(code => [code, new Set<number>()])
+  const nameSort = makeSort('name', 'asc');
+  const colorSort = makeSort('color', 'asc');
+  colorOrderSetList.forEach(set =>
+    newCards
+      .getAllInSetDirect(set)
+      .cards()
+      .sort(nameSort.filter)
+      .sort(colorSort.filter)
+      .forEach((card, i) => {
+        card.collector_number = `${i + 1}`;
+      })
   );
-  collectorMap.set('SCL', new Set<number>());
-  getDirectChildSets('SCL')?.forEach(code => collectorMap.delete(code));
+
+  const collectorMap = new Map<SetCode, Set<number>>(
+    newCards.sets().map(code => [getCollectorOrderSet(code), new Set<number>()])
+  );
+  const acceptedMap = new Map<SetCode, Set<number>>(
+    newCards.sets().map(code => [getAcceptedOrderSet(code), new Set<number>()])
+  );
   newCards.forEach(card => {
-    const num = parseInt(card.collector_number);
-    const cSet =
-      collectorMap.get(card.set) ?? collectorMap.get(getParentSetCode(card.set) ?? ('' as SetCode));
-    if (ignoreDuplicateHCIDs.includes(card.hcid)) {
-      return;
-    }
-    if (cSet?.has(num) || ignoreMissingNums[card.set]?.includes(num)) {
+    const cn = parseInt(card.collector_number);
+    const ao = parseInt(card.accepted_order);
+    const cSet = collectorMap.get(getCollectorOrderSet(card.set));
+    const aSet = acceptedMap.get(getAcceptedOrderSet(card.set));
+    // if (ignoreDuplicateHCIDs.includes(card.hcid)) {
+    //   return;
+    // }
+    if (cSet?.has(cn) /* || ignoreMissingNums[card.set]?.includes(num) */) {
       console.log(
-        `Set ${card.set} has a duplicate collector number at ${num} (hcid: ${card.hcid})`
+        `Set ${card.set} has a duplicate collector number at ${cn} (hcid: ${card.hcid}, raw: ${card.collector_number})`
       );
-    } else if (num) {
-      cSet?.add(num);
+    } else if (cn) {
+      cSet?.add(cn);
+    }
+    if (aSet?.has(ao) /* || ignoreMissingNums[card.set]?.includes(num) */) {
+      console.log(
+        `Set ${card.set} has a duplicate accepted order at ${ao} (hcid: ${card.hcid}, raw: ${card.accepted_order})`
+      );
+    } else if (ao) {
+      aSet?.add(ao);
     }
   });
 
@@ -374,8 +362,18 @@ const main = async () => {
     if (code.startsWith('HCV.1') || code.startsWith('HLC')) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
-      if (!nums.has(i) && !ignoreMissingNums[code]?.includes(i)) {
+      if (!nums.has(i) /*  && !ignoreMissingNums[code]?.includes(i) */) {
         console.log(`Set ${code} has a missing collector number at ${i}`);
+      }
+    }
+  }
+
+  for (const [code, nums] of acceptedMap) {
+    if (code.startsWith('HCV.1') || code.startsWith('HLC')) continue;
+    const max = Math.max(...Array.from(nums));
+    for (let i = 1; i < max; i++) {
+      if (!nums.has(i) /*  && !ignoreMissingNums[code]?.includes(i) */) {
+        console.log(`Set ${code} has a missing accepted number at ${i}`);
       }
     }
   }
@@ -398,8 +396,8 @@ const main = async () => {
   });
   finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
 
-  const takenNames = namesRawData.data;
-  finalCards.forEach(entry => setExportProps(entry, takenNames));
+  // const takenNames = namesRawData.data;
+  // finalCards.forEach(entry => setExportProps(entry, takenNames));
 
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
@@ -466,10 +464,10 @@ const main = async () => {
       '\t'
     )
   );
-  fs.writeFileSync(
-    '../shared/src/data/lands.json',
-    JSON.stringify({ data: finalCards.filter(card => card.kind == 'land').cards() }, null, '\t')
-  );
+  // fs.writeFileSync(
+  //   '../shared/src/data/lands.json',
+  //   JSON.stringify({ data: finalCards.filter(card => card.kind == 'land').cards() }, null, '\t')
+  // );
   fs.writeFileSync(
     '../shared/src/data/keywords.json',
     JSON.stringify(

@@ -6,6 +6,7 @@ import {
   invertOptionType,
   looseOpType,
   opType,
+  sortFilterFunction,
   sortType,
   summaryFunction,
 } from './filterTypes';
@@ -30,7 +31,7 @@ export type allPrintsGetterType = (card: HCCard.Any) => HCCard.Any[];
  * An interface for any filter
  */
 export interface anyFilterInterface<T = any, S = any> {
-  queryName: anyFilterNameType | 'sort';
+  queryName: anyFilterNameType;
   /**
    * The filter method to use
    */
@@ -40,7 +41,7 @@ export interface anyFilterInterface<T = any, S = any> {
 /**
  * An interface for a SortObject
  */
-export interface sortInterface extends anyFilterInterface {
+export interface sortInterface {
   /**
    * The query name
    */
@@ -48,7 +49,7 @@ export interface sortInterface extends anyFilterInterface {
   /**
    * The filter function to use
    */
-  filter: anyFilterFunction;
+  filter: sortFilterFunction;
   /**
    * The sort option
    */

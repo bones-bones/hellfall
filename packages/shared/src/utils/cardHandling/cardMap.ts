@@ -1,6 +1,7 @@
 import { HCCard, HCKind, SetCode, toKindIndex } from '@hellfall/shared/types';
 import { getChildSets, getDirectChildSets } from '../setHandling';
 import { CardLookupMap } from './cardLookupMap';
+import { fixName } from '../textHandling';
 
 /**
  * the list of preference options
@@ -18,8 +19,6 @@ const newestSort = (value1: HCCard.Any, value2: HCCard.Any) => {
   switch (value1.kind) {
     case 'card':
       return parseInt(value1.hcid) - parseInt(value2.hcid);
-    case 'land':
-      return parseInt(value1.hcid.slice(1)) - parseInt(value2.hcid.slice(1));
   }
   return parseInt(value1.collector_number) - parseInt(value2.collector_number);
 };
@@ -51,7 +50,6 @@ export class CardMap {
    * Maps names to the card ids they are associated with
    */
   protected lookupMap = new CardLookupMap();
-
   /**
    * Creates a new CardMap
    */
@@ -67,7 +65,7 @@ export class CardMap {
   //  * @param useHCIDs Whether to use the cards' hcids. This should only be used on the backend
   //  */
   // constructor(cards: HCCard.Any[], useHCIDs: boolean);
-  constructor(cards?: HCCard.Any[]/* , useHCIDs?: boolean */) {
+  constructor(cards?: HCCard.Any[] /* , useHCIDs?: boolean */) {
     if (!cards) return;
     cards.forEach(this.set);
     // if (useHCIDs) {
@@ -169,13 +167,27 @@ export class CardMap {
    * @param code the set code to use, if any
    * @param collector_number the collector number to use, if any
    */
-  getFromNameSetAndNumber = (name: string, code?:SetCode, collector_number?:string) => this.idMap.get(this.lookupMap.getBySetAndNumber(name, code, collector_number) ?? name);
+  getFromNameSetAndNumber = (name: string, code?: SetCode, collector_number?: string) =>
+    this.idMap.get(
+      this.lookupMap.getBySetAndNumber(
+        name,
+        code?.toUpperCase() as SetCode,
+        collector_number && fixName(collector_number)
+      ) ?? name
+    );
+  /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified hcid, undefined is returned
+   * @param hcid the hcid of the card to get
+   */
+  getFromHCID = (hcid: string) => this.idMap.get(this.lookupMap.getFromHCID(hcid) ?? '');
 
   /**
    * Returns a subset of the CardMap object as a new CardMap, based on a provided list of names.
    * @param nameList the names to use
    */
-  getCardsByNames = (nameList: string[]) => this.getSubset(nameList.map(this.getIDFromName))
+  getCardsByNames = (nameList: string[]) => this.getSubset(nameList.map(this.getIDFromName));
 
   /**
    * Returns the subset of the CardMap object in the given set as a new CardMap.
@@ -433,7 +445,16 @@ export class CardMap {
     this.oracleMap.clear();
     this.lookupMap.clear();
   };
-  
+  /**
+   * Removes all elements from the {@linkcode CardLookupMap} and rebuilds it.
+   *
+   * Use this after applying invariants.
+   */
+  rebuildLookupMap = () => {
+    this.lookupMap.clear();
+    this.forEach(card => this.lookupMap.set(card));
+  };
+
   /**
    * Checks if this CardMap is empty
    */

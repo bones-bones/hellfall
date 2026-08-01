@@ -35,6 +35,7 @@ const rootAddProps = [
   'export_name',
   'set',
   'collector_number',
+  'accepted_order',
   'rarity',
   'layout',
   'image_status',

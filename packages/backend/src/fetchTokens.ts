@@ -12,12 +12,12 @@ import {
   addArtist,
   setDerivedProps,
   getDefaultCard,
-  HCIDMap,
   addPropToFace,
   addPropToRoot,
   pushPropToRoot,
   parseRelatedReferenceName,
   hardTokenIds,
+  CardMap,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -37,9 +37,10 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'rulings',
     'creators',
     'tags',
-    'collector_number',
+    'accepted_order',
     'artists',
     'id',
+    'oracle_id',
   ] as const;
 
   type keyType = (typeof keys)[number];
@@ -52,7 +53,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
 
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
   const splitKeys: keyType[] = ['name', 'types', 'power', 'toughness'];
-  const skipKeys: keyType[] = ['image', 'collector_number', 'creators', 'tags', 'artists', 'id'];
+  const skipKeys: keyType[] = ['image', 'accepted_order', 'creators', 'tags', 'artists', 'id'];
 
   const HCTokens = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
@@ -66,7 +67,8 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         image: entryAt('image'),
         image_status: HCImageStatus.HighRes,
         creators: entryAt('creators').split(';'),
-        collector_number: entryAt('collector_number'),
+        collector_number: entryAt('accepted_order'),
+        accepted_order: entryAt('accepted_order'),
       },
       {}
     );
@@ -102,14 +104,14 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           });
         } else if (keys[i] == 'token_maker') {
           entry[i].split(';').forEach(oldName => {
-            const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
+            const { name, hcid, code, count } = parseRelatedReferenceName(oldName);
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: '',
               oracle_id: '',
-              hcid: shouldUseBase ? name : '',
-              name: shouldUseBase ? base : name,
-              set: '' as SetCode,
+              hcid: hcid,
+              name: name,
+              set: code ?? ('' as SetCode),
               image: '',
               type_line: '',
               component: 'token_maker',
@@ -159,9 +161,9 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     return token;
   });
   if (NO_SCRYFALL) {
-    return new HCIDMap(HCTokens);
+    return new CardMap(HCTokens);
   } else {
     const ScryfallTokens = await fetchScryfallTokens();
-    return new HCIDMap(HCTokens.concat(ScryfallTokens));
+    return new CardMap(HCTokens.concat(ScryfallTokens));
   }
 };

@@ -7,4 +7,4 @@ export * from './propHandling.ts';
 export * from './printHandling.ts';
 export * from './invariantMap.ts';
 export * from './nameHandling.ts';
-export * from './cardLookupMap.ts'
+export * from './cardLookupMap.ts';

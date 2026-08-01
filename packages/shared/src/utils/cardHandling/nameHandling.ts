@@ -25,22 +25,20 @@ export const getOtherNames = (card: HCCard.Any): string[] | undefined => {
 };
 
 const combineFaceNames = (faceNames: string[][]): string[] => {
-  let combinations:string[] = [...faceNames[0]];
-  
+  let combinations: string[] = [...faceNames[0]];
+
   // Combine with each subsequent face
   for (let i = 1; i < faceNames.length; i++) {
     const newCombinations: string[] = [];
     const currentFace = faceNames[i];
-    
+
     for (const prefix of combinations) {
       for (const name of currentFace) {
         newCombinations.push(`${prefix} // ${name}`);
       }
     }
-    
     combinations = newCombinations;
   }
-  
   return combinations;
 };
 /**
@@ -49,11 +47,11 @@ const combineFaceNames = (faceNames: string[][]): string[] => {
  * @param dropFaces whether to exclude faces with `drop_face: true`
  */
 export const getAllNames = (card: HCCard.Any, dropFaces?: boolean): string[] => {
-  const fixed = fixName(card.name)
-  const names: string[] = [fixed]
-  const {name, code} = splitSetCode(fixed);
+  const fixed = fixName(card.name);
+  const names: string[] = [fixed];
+  const { name, code } = splitSetCode(fixed);
   if (name != fixed) {
-    names.push(name)
+    names.push(name);
   }
   while (names.at(-1)?.endsWith(' <hc>')) {
     names.push(splitSetCode(names.at(-1)!).name);
@@ -65,13 +63,13 @@ export const getAllNames = (card: HCCard.Any, dropFaces?: boolean): string[] => 
     names.push(fixName(card.export_name));
   }
   if (!('card_faces' in card) && !code) {
-    return names
+    return names;
   }
   const nameSet = new Set<string>(names);
   const addName = (name: string) => nameSet.add(fixName(name));
   if ('card_faces' in card) {
-    const faceNames:string[][] = toFaces(card, dropFaces).map(face => {
-      const ns = [face.name]
+    const faceNames: string[][] = toFaces(card, dropFaces).map(face => {
+      const ns = [face.name];
       if (face.flavor_name) {
         ns.push(face.flavor_name);
       }
@@ -80,19 +78,19 @@ export const getAllNames = (card: HCCard.Any, dropFaces?: boolean): string[] => 
       }
       return ns;
     });
-    for (let i = 0;i<card.card_faces.length;i++) {
-      for (let j = i+1;j<card.card_faces.length;j++) {
-        combineFaceNames(faceNames.slice(i,j)).forEach(addName)
+    for (let i = 0; i < card.card_faces.length; i++) {
+      for (let j = i + 1; j < card.card_faces.length; j++) {
+        combineFaceNames(faceNames.slice(i, j)).forEach(addName);
       }
     }
   }
   if (code) {
-    const ending = ` <${code}>`
+    const ending = ` <${code}>`;
     nameSet.forEach(name => {
       if (!name.endsWith(ending)) {
-        addName(`${name}${ending}`)
+        addName(`${name}${ending}`);
       }
-    })
+    });
   }
   return Array.from(nameSet);
 };

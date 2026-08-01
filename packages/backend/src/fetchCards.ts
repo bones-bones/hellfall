@@ -17,7 +17,6 @@ import {
   addArtist,
   addPropToFace,
   getDefaultCard,
-  HCIDMap,
   frontIsBattle,
   addPropToRoot,
   pushPropToRoot,
@@ -25,6 +24,7 @@ import {
   parseRelatedReferenceName,
   isValidV4UUID,
   baseCardInvariantMap,
+  CardMap,
 } from '@hellfall/shared/utils';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
@@ -57,6 +57,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '0image',
     'artists',
     'tags',
+    'accepted_order',
     '1mana_cost',
     '1supertypes',
     '1types',
@@ -119,6 +120,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '0image',
     'artists',
     'tags',
+    'accepted_order',
     'id',
   ];
 
@@ -129,10 +131,8 @@ export const fetchCards = async (usingApproved: boolean = false) => {
       const cardIsMulti = entry
         .slice(keys.indexOf('1mana_cost'), keys.indexOf('id'))
         .some(value => value);
-      // #jank
-      const cardIsLand = parseInt(entryAt('hcid')) >= 8065 && parseInt(entryAt('hcid')) <= 8250;
       const card = getDefaultCard(
-        cardIsLand ? HCKind.Land : HCKind.Card,
+        HCKind.Card,
         cardIsMulti,
         {
           id: entryAt('id'),
@@ -141,6 +141,8 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           image_status: HCImageStatus.HighRes,
           creators: entryAt('creators').split(';'),
           set: entryAt('set') as SetCode,
+          collector_number: entryAt('accepted_order'),
+          accepted_order: entryAt('accepted_order'),
           rulings: entryAt('rulings'),
           mana_value:
             entryAt('mana_value') != '∞'
@@ -243,14 +245,14 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               addPropToRoot(card, 'legalities', legalities);
             } else if (keys[i] == 'related') {
               entry[i].split(';').forEach(oldName => {
-                const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
+                const { name, hcid, count, code } = parseRelatedReferenceName(oldName);
                 const maker: HCRelatedCard = {
                   object: HCObject.ObjectType.RelatedCard,
                   id: '',
                   oracle_id: '',
-                  hcid: shouldUseBase ? name : '',
-                  name: shouldUseBase ? base : name,
-                  set: '' as SetCode,
+                  hcid: hcid,
+                  name: name,
+                  set: code ?? ('' as SetCode),
                   image: '',
                   type_line: '',
                   component: 'token_maker',
@@ -288,11 +290,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         card.artists = Array.from(new Set(card.artists));
       }
       // TODO: move to derived props? or just remove?
-      if (
-        'card_faces' in card &&
-        !entryAt('tags').includes('irregular-face-name') /* && !cardIsLand */
-      ) {
-        // #jank
+      if ('card_faces' in card && !entryAt('tags').includes('irregular-face-name')) {
         card.name.split(' // ').forEach((name, i) => {
           addPropToFace(card, 'name', name, i);
         });
@@ -321,10 +319,12 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         const oracle_id = baseCardInvariantMap.getOracleID(card.name);
         if (oracle_id) {
           card.oracle_id = oracle_id;
+        } else {
+          throw new Error(`Missing oracle id on card: ${card}`);
         }
       }
       return card;
     });
 
-  return new HCIDMap(allCards);
+  return new CardMap(allCards);
 };

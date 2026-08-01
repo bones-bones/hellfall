@@ -570,11 +570,11 @@ export const pushToRecord = (record: Record<string, string[]>, key: string, valu
  * @param key key to push to
  * @param value value to push
  */
-export const pushToMap = (map: Map<string,Set<string>>, key: string, value: string) => {
+export const pushToMap = (map: Map<string, Set<string>>, key: string, value: string) => {
   if (map.has(key)) {
     map.get(key)?.add(value);
   } else {
-    map.set(key, new Set([value]))
+    map.set(key, new Set([value]));
   }
 };
 
@@ -585,10 +585,10 @@ export const pushToMap = (map: Map<string,Set<string>>, key: string, value: stri
  * @param key key to delete from
  * @param value value to delete
  */
-export const deleteFromMap = (map: Map<string,Set<string>>, key: string, value: string) => {
-  map.get(key)?.delete(value)
+export const deleteFromMap = (map: Map<string, Set<string>>, key: string, value: string) => {
+  map.get(key)?.delete(value);
   if (!map.get(key)?.size) {
-    map.delete(key)
+    map.delete(key);
     return true;
   }
   return false;

@@ -23,7 +23,7 @@ export enum HCColor {
   Lime = 'Lime',
 }
 
-export const colorList:HCColors = Object.values(HCColor);
+export const colorList: HCColors = Object.values(HCColor);
 /**
  * Checks if a value is a {@linkcode HCColor}
  * @param value the value to check

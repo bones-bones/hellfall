@@ -88,12 +88,11 @@ export class SortObject implements sortInterface {
   /**
    * A function that sorts two cards
    * @param value1 the first card to sort
-   * @param operator dummy
    * @param value2 the second card to sort
    * @returns a number for `.sort()`
    */
-  filter = (value1: HCCard.Any, operator: opType, value2: HCCard.Any) =>
-    filterSort(value1, operator, value2, this.sort, this.dir);
+  filter = (value1: HCCard.Any, value2: HCCard.Any) =>
+    filterSort(value1, value2, this.sort, this.dir);
 }
 
 /**
