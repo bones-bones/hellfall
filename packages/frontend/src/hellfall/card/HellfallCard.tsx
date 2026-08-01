@@ -186,16 +186,13 @@ export const HellfallCard = ({
           style={{ maxHeight: '500px', maxWidth: maxWidth + 'px' }}
           referrerPolicy="no-referrer"
         />
-        {canEditCard &&
-          activeEntry &&
-          activeEntry.label !== 'side 1' &&
-          activeEntry.url.includes('storage.googleapis.com') && (
-            <ImageUploadControl
-              cardId={displayCard.id}
-              target={activeEntry.target}
-              onReplaced={url => setImageOverrides(prev => ({ ...prev, [activeImageSide]: url }))}
-            />
-          )}
+        {canEditCard && activeEntry?.url.includes('storage.googleapis.com') && (
+          <ImageUploadControl
+            cardId={displayCard.id}
+            target={activeEntry.target}
+            onReplaced={url => setImageOverrides(prev => ({ ...prev, [activeImageSide]: url }))}
+          />
+        )}
       </ImageContainer>
       <ButtonContainer>
         {imageEntries.length > 1 &&

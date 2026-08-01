@@ -8,12 +8,8 @@ import {
   HCFrame,
   HCImageStatus,
   HCLayout,
-  HCLegality,
-  HCLegalitiesField,
   HCRarity,
   HCObject,
-  formatList,
-  isLegalitiesField,
 } from '@hellfall/shared/types';
 import {
   anyChange,
@@ -25,7 +21,6 @@ import {
   getDefaultFaceLayout,
   isFaceArrayPropType,
   isRootArrayPropType,
-  orderColors,
   rootChangeablePropType,
   rootChangeableProps,
   toFaces,
@@ -51,8 +46,7 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
     label: 'Colors',
     type: 'multi-enum',
     enumValues: Object.values(HCColor),
-    readOnly: true,
-    explanation: 'Sum of side colors (edit colors on each face).',
+    explanation: 'Select color codes (W, U, B, R, G, P, C, or named misc colors).',
   },
   { key: 'image', label: 'Image URL', type: 'string', readOnly: true },
   {
@@ -103,37 +97,12 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
   { key: 'keywords', label: 'Keywords', type: 'semicolon-list' },
   { key: 'creators', label: 'Creators', type: 'semicolon-list' },
   { key: 'artists', label: 'Artists', type: 'semicolon-list' },
-  {
-    key: 'legalities',
-    label: 'Legality',
-    type: 'legalities',
-    enumValues: Object.values(HCLegality),
-  },
   { key: 'rulings', label: 'Rulings', type: 'textarea' },
   { key: 'not_directly_draftable', label: 'Not Directly Draftable', type: 'boolean' },
   { key: 'has_draft_partners', label: 'Has Draft Partners', type: 'boolean' },
 ];
 
-export const LEGALITY_FORMAT_LABELS: Record<(typeof formatList)[number], string> = {
-  standard: 'Constructed',
-  '4cb': '4CB',
-  commander: 'Hellsmander',
-};
-
-export const DEFAULT_LEGALITIES: HCLegalitiesField = {
-  standard: HCLegality.NotLegal,
-  '4cb': HCLegality.NotLegal,
-  commander: HCLegality.NotLegal,
-};
-
 function serializeValue(value: unknown, type: FieldType): string {
-  if (type === 'legalities') {
-    const source = isLegalitiesField(value) ? value : DEFAULT_LEGALITIES;
-    const legalities = Object.fromEntries(
-      formatList.map(format => [format, source[format]])
-    ) as HCLegalitiesField;
-    return JSON.stringify(legalities);
-  }
   if (value == null || value === undefined) return '';
   if (type === 'boolean') return value === true ? 'true' : '';
   if (type === 'number') return value === '' || value == null ? '' : String(value);
@@ -141,16 +110,6 @@ function serializeValue(value: unknown, type: FieldType): string {
     return Array.isArray(value) ? value.join(';') : String(value);
   }
   return String(value);
-}
-
-/** Ordered union of face `colors` fields (semicolon-serialized). */
-export function sumFaceColors(faces: Record<string, string>[]): string {
-  const combined: HCColors = [];
-  for (const face of faces) {
-    const colors = parseFieldValue(face.colors ?? '', 'multi-enum') as string[];
-    combined.push(...(colors as HCColors));
-  }
-  return serializeValue(orderColors(combined), 'multi-enum');
 }
 
 function readRootValue(card: HCCard.Any, key: string, type: FieldType): string {
@@ -314,14 +273,6 @@ export function buildChangesFromForm(
       }
       pushFaceScalarChange(changes, cfg, i, before, after);
     }
-  }
-
-  // Card-level colors = ordered union of side colors
-  const derivedRootColors = sumFaceColors(current.faces);
-  const originalRootColors = original.root.colors ?? '';
-  if (derivedRootColors !== originalRootColors) {
-    const value = parseFieldValue(derivedRootColors, 'multi-enum');
-    changes.push(createRootChange('add', 'colors', value as never));
   }
 
   return changes;
