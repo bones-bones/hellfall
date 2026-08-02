@@ -26,6 +26,9 @@ import {
   colorOrderSetList,
   getCollectorOrderSet,
   getAcceptedOrderSet,
+  InvariantMap,
+  resetFaceExportProps,
+  buildInvariant,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -382,8 +385,17 @@ const main = async () => {
   });
   finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
 
-  // const takenNames = namesRawData.data;
-  // finalCards.forEach(entry => setExportProps(entry, takenNames));
+  const invariantMap = new InvariantMap();
+
+  const takenNames = namesRawData.data;
+  finalCards.forEach(card => {
+    resetFaceExportProps(card);
+    if (!invariantMap.hasOracleId(card.oracle_id)) {
+      invariantMap.set(buildInvariant(card,takenNames))
+    }
+  })
+  finalCards.forEach(invariantMap.setCard);
+  finalCards.forEach(invariantMap.applyInvariant);
 
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {

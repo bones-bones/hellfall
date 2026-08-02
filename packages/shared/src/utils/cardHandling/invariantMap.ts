@@ -114,6 +114,27 @@ export const mergeInvariants = (oldInvariant: printInvariant, newInvariant: prin
   } else if (newInvariant.all_parts?.length) {
     newInvariant.all_parts.forEach(part => oldInvariant.all_parts?.push(part));
   }
+    if (newInvariant.card_faces) {
+      if (oldInvariant.card_faces) {
+        if (newInvariant.card_faces.length != oldInvariant.card_faces.length) {
+          console.error(
+            `error: card ${JSON.stringify(oldInvariant,null,'\t')} and invariant ${JSON.stringify(newInvariant,null,'\t')} have mismatched face lengths`
+          );
+          return;
+        }
+        oldInvariant.card_faces.forEach((face, i) => {
+          if (!face.name && newInvariant.card_faces![i].name) {
+            face.name = newInvariant.card_faces![i].name; // why is this not inferring?
+          }
+        });
+      } else {
+        console.error(`error: card ${JSON.stringify(oldInvariant,null,'\t')} doesn't have faces but invariant ${JSON.stringify(newInvariant,null,'\t')} does`);
+        return;
+      }
+    } else if (oldInvariant.card_faces) {
+      console.error(`error: card ${JSON.stringify(oldInvariant,null,'\t')} has faces but invariant ${JSON.stringify(newInvariant,null,'\t')} doesn't`);
+      return;
+    }
 };
 
 // TODO: do I want duplicate handling?
@@ -716,7 +737,7 @@ export class InvariantMap {
       if ('card_faces' in card) {
         if (invariant.card_faces.length != card.card_faces.length) {
           console.error(
-            `error: card ${card} and invariant ${invariant} have mismatched face lengths`
+            `error: card ${JSON.stringify(card,null,'\t')} and invariant ${JSON.stringify(invariant,null,'\t')} have mismatched face lengths`
           );
           return;
         }
@@ -729,11 +750,11 @@ export class InvariantMap {
           }
         });
       } else {
-        console.error(`error: card ${card} doesn't have faces but invariant ${invariant} does`);
+        console.error(`error: card ${JSON.stringify(card,null,'\t')} doesn't have faces but invariant ${JSON.stringify(invariant,null,'\t')} does`);
         return;
       }
     } else if ('card_faces' in card) {
-      console.error(`error: card ${card} has faces but invariant ${invariant} doesn't`);
+      console.error(`error: card ${JSON.stringify(card,null,'\t')} has faces but invariant ${JSON.stringify(invariant,null,'\t')} doesn't`);
       return;
     }
     card.name = invariant.name;
@@ -751,5 +772,8 @@ export class InvariantMap {
     if (invariant.legalities) {
       card.legalities = invariant.legalities;
     }
+    // if (invariant.all_parts) {
+
+    // }
   };
 }

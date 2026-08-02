@@ -541,6 +541,7 @@ export const resetFaceExportProps = (card: HCCard.Any) => {
     }
   }
 };
+
 /**
  * Builds an invariant for a card. Note: should only be used on backend if
  * {@linkcode resetFaceExportProps} has been called first
@@ -575,7 +576,6 @@ export const buildInvariant = (card: HCCard.Any, takenNames: string[]): printInv
     return exportName;
   };
   if ('card_faces' in card) {
-    card.card_faces.forEach(face => pushProp(invariant, 'card_faces', { name: face.name }));
     if (card.layout == HCLayout.Cube) {
       return invariant;
     }

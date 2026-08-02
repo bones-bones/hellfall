@@ -292809,23 +292809,6 @@
 						"G"
 					],
 					"drop_face": true
-				},
-				{
-					"object": "card_face",
-					"name": "See Its Teeth",
-					"layout": "draft_partner",
-					"image_status": "draft_partner",
-					"mana_cost": "{G}",
-					"mana_value": 1,
-					"types": [
-						"Sorcery"
-					],
-					"type_line": "Sorcery",
-					"oracle_text": "Look at the top five cards of your library. You may reveal a creature or sorcery card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.\nYour Dreadmaw gets +1/+1. (Wherever it is.)",
-					"colors": [
-						"G"
-					],
-					"drop_face": true
 				}
 			],
 			"all_parts": [
