@@ -423,7 +423,7 @@ export const toExportName = (name: string) => {
     .replaceAll(/[\]}]/g, ')')
     .replaceAll(/\\/g, '')
     // .replaceAll(/[\\.]/g, '')
-    .replaceAll(/\((\d+)\)/g, '$1');
+    // .replaceAll(/\((\d+)\)/g, '$1'); #test
   return retName.startsWith('  ') ? retName.trimStart() : retName;
 };
 

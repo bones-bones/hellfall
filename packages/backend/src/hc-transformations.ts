@@ -6,6 +6,8 @@ import { fetchUsernameMappings } from './fetchUsernameMapping.ts';
 import {
   HCCard,
   HCCardFace,
+  HCLegalitiesField,
+  HCLegality,
   HCRelatedCard,
   SetCode,
   allSetsList,
@@ -29,8 +31,9 @@ import {
   InvariantMap,
   resetFaceExportProps,
   buildInvariant,
-  baseCardInvariantMap,
-  baseTokenInvariantMap,
+  landInvariantMap,
+  tokenInvariantMap,
+  textListIsContainedBy,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -297,6 +300,36 @@ const nontokenTokenNames = ['Force of Will', 'Radiation', 'Poison Counter','Indi
 
 const tokenNames = ['Storm Crow']
 
+const getLegalitiesFromLandName = (name: string): HCLegalitiesField => {
+  const splitName = name.toLowerCase().split(' ');
+  switch (splitName[0]) {
+    case 'snow-covered':
+      return {
+        standard: HCLegality.NotLegal,
+        '4cb': HCLegality.NotLegal,
+        commander: HCLegality.NotLegal,
+      };
+    case 'thriving':
+      return {
+        standard: HCLegality.NotLegal,
+        '4cb': HCLegality.NotLegal,
+        commander: HCLegality.Legal,
+      };
+    case 'nebula':
+      return {
+        standard: HCLegality.NotLegal,
+        '4cb': HCLegality.Legal,
+        commander: HCLegality.Legal,
+      };
+    default:
+      return {
+        standard: HCLegality.Legal,
+        '4cb': HCLegality.Legal,
+        commander: HCLegality.Legal,
+      };
+  }
+};
+
 
 const main = async () => {
   const newCards = await fetchCards();
@@ -394,9 +427,18 @@ const main = async () => {
 
   const takenNames = new Set(namesRawData.data);
 
-  const invariantMap = baseCardInvariantMap.clone();
+  const invariantMap = new InvariantMap();
+  landInvariantMap.forEach(invariant => {
+    const newInvariant = structuredClone(invariant);
+    newInvariant.legalities = getLegalitiesFromLandName(newInvariant.name);
+    if (!textListIsContainedBy(['Nebula', 'Galaxy'],newInvariant.name)) {
+      newInvariant.oracle_id_is_scryfall = true;
+      newInvariant.export_name = `${invariant.name}_`;
+    }
+    invariantMap.set(newInvariant);
+  });
 
-  baseTokenInvariantMap.forEach(invariant => {
+  tokenInvariantMap.forEach(invariant => {
     const newInvariant = structuredClone(invariant);
     if (nontokenTokenNames.includes(newInvariant.name)) {
       if (takenNames.has(newInvariant.name.toLowerCase())) {
@@ -410,7 +452,7 @@ const main = async () => {
       if (splitName.at(-1)?.length == 1 || splitName.at(-1) == 'Token') {
         newInvariant.name = splitName[0];
       }
-      let exportName = `${newInvariant.name} Token`
+      let exportName = `${newInvariant.name} ${tokenNames.includes(newInvariant.name) ? '(Token)': 'Token'}`
       while (takenNames.has(exportName.toLowerCase())) {
         // #test
         exportName += '_';
@@ -418,16 +460,16 @@ const main = async () => {
       newInvariant.export_name = exportName;
       takenNames.add(newInvariant.export_name.toLowerCase())
     }
-
+    invariantMap.set(newInvariant);
   });
 
   finalCards.forEach(card => {
     resetFaceExportProps(card);
-    if (!invariantMap.hasOracleId(card.oracle_id)) {
+    if (!invariantMap.has(card.oracle_id)) {
       invariantMap.set(buildInvariant(card,takenNames))
     }
   })
-  finalCards.forEach(invariantMap.setCard);
+  finalCards.forEach(invariantMap.set);
   finalCards.forEach(invariantMap.applyInvariant);
 
   finalCards.forEach(entry => {

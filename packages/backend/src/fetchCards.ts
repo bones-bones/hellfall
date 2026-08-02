@@ -23,7 +23,7 @@ import {
   pipMap,
   parseRelatedReferenceName,
   isValidV4UUID,
-  baseCardInvariantMap,
+  landInvariantMap,
   CardMap,
 } from '@hellfall/shared/utils';
 
@@ -122,6 +122,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     'tags',
     'accepted_order',
     'id',
+    'oracle_id',
   ];
 
   const allCards = rest
@@ -131,11 +132,19 @@ export const fetchCards = async (usingApproved: boolean = false) => {
       const cardIsMulti = entry
         .slice(keys.indexOf('1mana_cost'), keys.indexOf('id'))
         .some(value => value);
+      const oracle_id = landInvariantMap.getOracleID(entryAt('oracle_id') || entryAt('name')) ?? entryAt('oracle_id');
+      if (!oracle_id) {
+        throw new Error(`Missing oracle id on card with hcid: ${entryAt('hcid')}`);
+      }
+      if (!isValidV4UUID(oracle_id)) {
+        throw new Error(`Invalid oracle id: ${oracle_id} on card with hcid: ${entryAt('hcid')}`);
+      }
       const card = getDefaultCard(
         HCKind.Card,
         cardIsMulti,
         {
           id: entryAt('id'),
+          oracle_id: oracle_id,
           hcid: entryAt('hcid'),
           image: entryAt('image'),
           image_status: HCImageStatus.HighRes,
@@ -262,11 +271,6 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 }
                 pushPropToRoot(card, 'all_parts', maker);
               });
-            } else if (keys[i] == 'oracle_id') {
-              const oracle_id = baseCardInvariantMap.getOracleID(entry[i]) ?? entry[i];
-              if (oracle_id && isValidV4UUID(oracle_id)) {
-                card.oracle_id = oracle_id;
-              }
             } else {
               addPropToRoot(card, keys[i] as rootPropType, entry[i]);
             }
@@ -315,14 +319,6 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           card.not_directly_draftable = true;
         }
       });
-      if (!card.oracle_id) {
-        const oracle_id = baseCardInvariantMap.getOracleID(card.name);
-        if (oracle_id) {
-          card.oracle_id = oracle_id;
-        } else {
-          throw new Error(`Missing oracle id on card: ${card}`);
-        }
-      }
       return card;
     });
 

@@ -1,5 +1,5 @@
 import { HCLegalitiesField, HCLegality } from '@hellfall/shared/types';
-import { InvariantMap, printInput, printInvariant } from './invariantMap';
+import { DefaultInvariantMap, InvariantMap, printInput, printInvariant } from './invariantMap';
 import { textListIsContainedBy } from '../listHandling';
 import { CardMap } from './cardMap';
 
@@ -101,6 +101,7 @@ const tokenOracleIdList: printInput[] = [
   ['Undead Servant', '5bf9f397-0216-4ec9-a57b-406758dcc233'],
   ['Baby', 'a0101448-b5ca-47ce-aefe-a7a795c5e005'],
   ['WET Treasure', '9f84cca3-ed45-4878-bd6e-33d2ea570169'],
+  ['Weed', '932666fb-45d9-46c2-afeb-b68cabcce864']
 ];
 
 export const landNames = [
@@ -120,13 +121,13 @@ export const landNames = [
   'snow-covered wastes',
 ];
 
-export const baseCardInvariantMap = new InvariantMap(cardIDList);
+export const landInvariantMap = new DefaultInvariantMap(cardIDList);
 
 /**
  * Checks if a card name is the name of a land that can be used with {@linkcode getRandomLand}.
  * @param name name to check
  */
-export const isLandName = (name: string) => baseCardInvariantMap.hasName(name);
+export const isLandName = (name: string) => landInvariantMap.hasName(name);
 
 /**
  * Gets a random land given a land name.
@@ -135,45 +136,8 @@ export const isLandName = (name: string) => baseCardInvariantMap.hasName(name);
  */
 export const getRandomLand = (name: string, cardMap: CardMap) =>
   isLandName(name)
-    ? cardMap.getAllPrints(baseCardInvariantMap.getOracleID(name)!).getRandomCard()
+    ? cardMap.getAllPrints(landInvariantMap.getOracleID(name)!).getRandomCard()
     : undefined;
 
-const getLegalitiesFromLandName = (name: string): HCLegalitiesField => {
-  const splitName = name.toLowerCase().split(' ');
-  switch (splitName[0]) {
-    case 'snow-covered':
-      return {
-        standard: HCLegality.NotLegal,
-        '4cb': HCLegality.NotLegal,
-        commander: HCLegality.NotLegal,
-      };
-    case 'thriving':
-      return {
-        standard: HCLegality.NotLegal,
-        '4cb': HCLegality.NotLegal,
-        commander: HCLegality.Legal,
-      };
-    case 'nebula':
-      return {
-        standard: HCLegality.NotLegal,
-        '4cb': HCLegality.Legal,
-        commander: HCLegality.Legal,
-      };
-    default:
-      return {
-        standard: HCLegality.Legal,
-        '4cb': HCLegality.Legal,
-        commander: HCLegality.Legal,
-      };
-  }
-};
-baseCardInvariantMap.forEach(invariant => {
-  invariant.export_name = `${invariant.name}_`;
-  invariant.legalities = getLegalitiesFromLandName(invariant.name);
-  if (!textListIsContainedBy(['Nebula', 'galaxy'])) {
-    invariant.oracle_id_is_scryfall = true;
-  }
-});
-
-export const baseTokenInvariantMap = new InvariantMap(tokenOracleIdList);
+export const tokenInvariantMap = new DefaultInvariantMap(tokenOracleIdList);
 

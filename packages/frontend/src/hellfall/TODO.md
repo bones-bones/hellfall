@@ -191,3 +191,7 @@ Write a script to transform the database
 - remove temp change filter once possible
 - note the differences between set/number and set/accepted (grouping)
 - make sure that removing a base tag with no notes doesn't affect duplicates with notes
+- deal with NRM invariants
+- find a way to allow old names for bold plagiarist?
+- figure out why the split tokens aren't compressing
+- clean up id tags

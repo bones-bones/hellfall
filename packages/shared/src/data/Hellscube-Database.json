@@ -220747,8 +220747,7 @@
 			"color_identity_hybrid": [],
 			"keywords": [
 				"flying",
-				"deathtouch",
-				"partner"
+				"deathtouch"
 			],
 			"legalities": {
 				"standard": "banned",
@@ -220772,8 +220771,7 @@
 				"masterpiece-frame",
 				"square",
 				"no-border",
-				"keyword",
-				"unprinted-partner"
+				"keyword"
 			],
 			"base_tags": [
 				"masterpiece",
@@ -220781,8 +220779,7 @@
 				"masterpiece-frame",
 				"square",
 				"no-border",
-				"keyword<flying|deathtouch>",
-				"unprinted-partner"
+				"keyword<flying|deathtouch>"
 			]
 		},
 		{
@@ -221698,7 +221695,7 @@
 			"id": "57f5d2e6-d38c-463b-b49d-0a79ad8e1d8c",
 			"oracle_id": "8d30dace-b4d3-4eed-b22c-648d684e2ecd",
 			"hcid": "2973",
-			"name": "// Do",
+			"name": " // Do",
 			"set": "HC6.0",
 			"collector_number": "510",
 			"accepted_order": "49",
@@ -221707,12 +221704,7 @@
 			"image": "https://lh3.googleusercontent.com/d/1sxVX8xvsKEthhYB12Yp0zwL9eP0-KvSW",
 			"mana_cost": "{U/B}{U/B}{U/B}",
 			"mana_value": 3,
-			"types": [
-				"Sorcery"
-			],
-			"type_line": "Sorcery",
-			"oracle_text": "Aftermath\nCast target card from a graveyard without paying its costs.",
-			"flavor_text": "\"...Unfortunately, your mother.\"",
+			"type_line": " // Sorcery",
 			"colors": [
 				"U",
 				"B"
@@ -221745,9 +221737,6 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
-			"frame_effects": [
-				"slab"
-			],
 			"tags": [
 				"your-mom",
 				"unusual-proportions",
@@ -221763,6 +221752,38 @@
 				"masterpiece",
 				"slab-frame",
 				"keyword<aftermath>"
+      ],
+			"card_faces": [
+				{
+					"object": "card_face",
+					"name": "",
+					"layout": "multi",
+					"image_status": "inapplicable",
+					"mana_cost": "",
+					"mana_value": 0,
+					"type_line": "",
+					"oracle_text": "",
+					"colors": []
+				},
+				{
+					"object": "card_face",
+					"name": "Do",
+					"layout": "aftermath",
+					"image_status": "aftermath",
+					"mana_cost": "{U/B}{U/B}{U/B}",
+					"mana_value": 3,
+					"types": [
+						"Sorcery"
+					],
+					"type_line": "Sorcery",
+					"oracle_text": "Aftermath\nCast target card from a graveyard without paying its costs.",
+					"flavor_text": "\"...Unfortunately, your mother.\"",
+					"colors": [
+						"U",
+						"B"
+					],
+					"compress_face": true
+				}
 			]
 		},
 		{
@@ -608142,7 +608163,7 @@
 			"creators": [
 				"Cirion02"
 			],
-			"rulings": "Token is named Car, even though card says token is named Vehicle",
+			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "token_2003",
@@ -624303,7 +624324,7 @@
 			"creators": [
 				"SirSkidMark"
 			],
-			"rulings": "Both are spongebob references wow",
+			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "token_2020",
@@ -676879,9 +676900,7 @@
 			],
 			"not_directly_draftable": true,
 			"has_draft_partners": true,
-			"keywords": [
-				"draftpartner"
-			],
+			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -705000,7 +705019,10 @@
 			"types": [
 				"Creature"
 			],
-			"type_line": "Token Creature",
+			"subtypes": [
+				"Lego"
+			],
+			"type_line": "Token Creature — Lego",
 			"oracle_text": "Bands with other Lego\nVigilance if the {W} kicker cost was paid, and the same with {U} and flying, {B} and menace, {R} and haste, and {G} and hexproof.",
 			"power": "1",
 			"toughness": "1",

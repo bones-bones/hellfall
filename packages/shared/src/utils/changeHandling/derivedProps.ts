@@ -25,6 +25,7 @@ import {
   pushProp,
   textListIncludes,
   textListIsContainedBy,
+  textListsShare,
 } from '../listHandling';
 import { splitParens, textContains, toExportName } from '../textHandling';
 import {
@@ -477,6 +478,7 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
  * @returns the invariant, or undefined if taken_names is omitted
  */
 export const resetFaceExportProps = (card: HCCard.Any) => {
+  if (card.set == 'NRM') return;
   if (card.export_name) {
     delete card.export_name;
   }
@@ -508,7 +510,7 @@ export const resetFaceExportProps = (card: HCCard.Any) => {
 
     // compress/drop layouts that should always be compressed or should be dropped
     card.card_faces.slice(1).forEach(face => {
-      if (alwaysDropLayouts.includes(face.layout)) {
+      if (alwaysDropLayouts.includes(face.layout) || card.tags?.includes('drop-faces')) {
         face.drop_face = true;
       } else if (conditionalDropLayouts.includes(face.layout)) {
         if (
@@ -542,6 +544,8 @@ export const resetFaceExportProps = (card: HCCard.Any) => {
   }
 };
 
+
+const useTokenList = ['Food and Drug', 'EVIL Combat']
 /**
  * Builds an invariant for a card. Note: should only be used on backend if
  * {@linkcode resetFaceExportProps} has been called first
@@ -554,22 +558,32 @@ export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): print
   const toFinalExportName = (name: string, face?: faceType) => {
     let exportName = toExportName(name);
     if (['token', 'scryfall'].includes(card.kind) && textListIncludes(face?.supertypes, 'token')) {
-      if (card.tags?.includes('real-card')) {
+      if (textListsShare(card.tags, ['real-card','token-version-of-card'])) {
         // TODO: better handling for this
         exportName += ' (Token)';
-      } else if (exportName == face?.subtypes?.join(' ')) {
+      } else if (name.toLowerCase().includes('copy') || useTokenList.includes(name) || (face?.subtypes && textListIncludes([face.subtypes.join(' '), ...face.subtypes],face?.name ?? card.name))) {
         exportName += ' Token';
+      } else {
+        const x = 1;
       }
     }
-    if (exportName.startsWith('(') || /^\d/.test(exportName)) {
+    // if (exportName.startsWith('(')) {
+    //   // #test
+    //   exportName = '_' + exportName;
+    // }
+    // if (/^\d/.test(exportName)) {
+    //   // #test
+    //   exportName = '_' + exportName;
+    // }
+    // if (exportName.endsWith(')')) {
+    //   // #test
+    //   exportName += '_';
+    // }
+    if (isInteger(exportName)) {
       // #test
       exportName = '_' + exportName;
     }
-    if (exportName.endsWith(')')) {
-      // #test
-      exportName += '_';
-    }
-    while (takenNames.has(exportName.toLowerCase()) || isInteger(exportName)) {
+    while (takenNames.has(exportName.toLowerCase())) {
       // #test
       exportName += '_';
     }
@@ -642,7 +656,7 @@ export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): print
         exportName = toFinalExportName(exportName);
 
         if (exportName != face.name && exportName != card.name && exportName != faceName) {
-          face.export_name = exportName;
+          invariant.card_faces![index].export_name = exportName;
         }
         takenNames.add(exportName.toLowerCase());
       }
@@ -665,7 +679,7 @@ export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): print
 export const buildInvariantMap = (cardMap: CardMap, takenNames: string[]) => {
   const invariantMap = new InvariantMap();
   cardMap.forEach(card => {
-    if (invariantMap.hasOracleId(card.oracle_id)) {
+    if (invariantMap.has(card.oracle_id)) {
     }
   });
 };

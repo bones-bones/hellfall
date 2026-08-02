@@ -18,6 +18,8 @@ import {
   parseRelatedReferenceName,
   hardTokenIds,
   CardMap,
+  tokenInvariantMap,
+  isValidV4UUID,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -53,15 +55,24 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
 
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
   const splitKeys: keyType[] = ['name', 'types', 'power', 'toughness'];
-  const skipKeys: keyType[] = ['image', 'accepted_order', 'creators', 'tags', 'artists', 'id'];
+  const skipKeys: keyType[] = ['image', 'accepted_order', 'creators', 'tags', 'artists', 'id', 'oracle_id'];
 
   const HCTokens = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
+    const oracle_id = tokenInvariantMap.getOracleID(entryAt('oracle_id') || entryAt('name')) ?? entryAt('oracle_id');
+    if (!oracle_id) {
+      throw new Error(`Missing oracle id on token with hcid: ${entryAt('name')}`);
+    }
+    if (!isValidV4UUID(oracle_id)) {
+      throw new Error(`Invalid oracle id: ${oracle_id} on token with hcid: ${entryAt('name')}`);
+    }
+
     const token = getDefaultCard(
       HCKind.Token,
       splitKeys.some(key => entry[keys.indexOf(key)].includes(' // ')),
       {
         id: entryAt('id'),
+        oracle_id: oracle_id,
         hcid: entryAt('name'),
         set: 'HCT',
         image: entryAt('image'),
@@ -123,6 +134,11 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           });
         } else if (keys[i] == 'tags' || keys[i] == 'artists') {
           // now handling this at the end
+        } else if (keys[i] == 'oracle_id') {
+          const oracle_id = tokenInvariantMap.getOracleID(entry[i] || token.name) ?? entry[i];
+          if (oracle_id && isValidV4UUID(oracle_id)) {
+            token.oracle_id = oracle_id;
+          }
         } else {
           addPropToRoot(token, keys[i] as rootPropType, entry[i]);
         }
@@ -158,6 +174,9 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         token.all_parts?.forEach(part => (part.component = 'meld_part'));
       }
     });
+      if (!token.oracle_id) {
+        throw new Error(`Missing oracle id on token: ${JSON.stringify(token)}`);
+      }
     return token;
   });
   if (NO_SCRYFALL) {
