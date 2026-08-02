@@ -49,8 +49,8 @@ const rootAddProps = [
   'print_image',
   'rotated_print_image',
   'still_print_image',
-  // 'not_directly_draftable', #temp
-  // 'has_draft_partners', #temp
+  'not_directly_draftable',
+  'has_draft_partners',
   'legalities',
   'rulings',
   'finish',
@@ -77,8 +77,8 @@ const rootDeleteProps = [
   'print_image',
   'rotated_print_image',
   'still_print_image',
-  // 'not_directly_draftable', #temp
-  // 'has_draft_partners', #temp
+  'not_directly_draftable',
+  'has_draft_partners',
   // 'keywords',
   'creators',
   'artists',

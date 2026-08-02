@@ -11,6 +11,19 @@ import { CardMap, toFaces } from '../cardHandling';
 export const hasPartWithComp = (card: HCCard.Any, comp: relatedComponent): boolean =>
   card.all_parts?.some(part => part.component == comp) ?? false;
 
+
+export const findMatchingPartIndex = (card:HCCard.Any, part:HCRelatedCard) => {
+  const allParts = card.all_parts;
+  if (!allParts) return;
+  const idIndex = allParts.findIndex(e => e.id == part.id);
+  if (idIndex != -1) return idIndex;
+  const hcidIndex = allParts.findIndex(e => e.hcid == part.hcid);
+  if (hcidIndex != -1) return hcidIndex;
+  const setIndex = allParts.findIndex(e => textEquals(e.name,part.name) && e.set == part.set);
+  if (setIndex != -1) return setIndex;
+  const nameIndex = allParts.findIndex(e => textEquals(e.name,part.name));
+  if (nameIndex != -1) return nameIndex;
+}
 /**
  * Updates a card and its related cards
  * @param card card to update
@@ -119,10 +132,7 @@ export const updateParts = (
       if (part.count) {
         cardAsRelated.count = part.count;
       }
-      const relatedCard =
-        relateds.get(part.id) ??
-        relateds.find(related => textEquals(part.hcid, related.hcid)) ??
-        relateds.find(related => textEquals(part.name, related.name));
+      const relatedCard = relateds.getFromPart(part);
       if (!relatedCard) {
         const partIndex = card.all_parts!.indexOf(part);
         if (partIndex !== -1) {
@@ -183,10 +193,7 @@ export const updateParts = (
       if (part.count) {
         cardAsRelated.count = part.count;
       }
-      const relatedCard =
-        relateds.get(part.id) ??
-        relateds.find(related => textEquals(part.hcid, related.hcid)) ??
-        relateds.find(related => textEquals(part.name, related.name));
+      const relatedCard = relateds.getFromPart(part);
       if (!relatedCard) {
         throw new Error(
           `updateParts: draft_partner part not found for card "${card.name}" ` +
@@ -221,10 +228,7 @@ export const updateParts = (
     card.all_parts
       .filter(e => e.component == 'meld_part')
       .forEach(part => {
-        const relatedCard =
-          relateds.get(part.id) ??
-          relateds.find(related => textEquals(part.hcid, related.hcid)) ??
-          relateds.find(related => textEquals(part.name, related.name));
+        const relatedCard = relateds.getFromPart(part);
         if (!relatedCard) {
           throw new Error(
             `updateParts: meld_part not found for token "${card.name}" ` +
@@ -243,6 +247,9 @@ export const updateParts = (
         }
         if (relatedCard.tags?.includes('draftpartner')) {
           part.is_draft_partner = true;
+          if (!relatedCard.has_draft_partners) {
+            relatedCard.has_draft_partners = true;
+          }
         }
         meldParts.set(part.id, part);
       });
@@ -259,6 +266,7 @@ export const updateParts = (
     };
     meldParts.set(card.id, meldResult);
     relateds.set(card);
+
     for (const id of meldParts.keys()) {
       const relatedCard = relateds.get(id);
       if (!relatedCard) {
@@ -268,7 +276,7 @@ export const updateParts = (
       }
       meldParts.forEach((part, partid) => {
         if (id != partid) {
-          const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == partid);
+          const relatedIndex = findMatchingPartIndex(relatedCard,part);
           if (relatedIndex == -1 || relatedIndex == undefined || !relatedCard.all_parts) {
             pushProp(relatedCard, 'all_parts', part);
           } else {

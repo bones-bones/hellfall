@@ -1,4 +1,4 @@
-import { HCCard, HCKind, SetCode, toKindIndex } from '@hellfall/shared/types';
+import { HCCard, HCKind, HCRelatedCard, SetCode, toKindIndex } from '@hellfall/shared/types';
 import { getChildSets, getDirectChildSets } from '../setHandling';
 import { CardLookupMap } from './cardLookupMap';
 import { fixName } from '../textHandling';
@@ -170,10 +170,10 @@ export class CardMap {
   getFromNameSetAndNumber = (name: string, code?: SetCode, collector_number?: string) =>
     this.idMap.get(
       this.lookupMap.getBySetAndNumber(
-        name,
+        fixName(name),
         code?.toUpperCase() as SetCode,
         collector_number && fixName(collector_number)
-      ) ?? name
+      ) ?? fixName(name)
     );
   /**
    * Returns a specified card from the CardMap object.
@@ -182,6 +182,14 @@ export class CardMap {
    * @param hcid the hcid of the card to get
    */
   getFromHCID = (hcid: string) => this.idMap.get(this.lookupMap.getFromHCID(hcid) ?? '');
+
+  /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified hcid, undefined is returned
+   * @param part the related card for the card to get
+   */
+  getFromPart = (part: HCRelatedCard) => this.get(part.id) ?? this.getFromHCID(part.hcid) ?? this.getFromNameSetAndNumber(part.name, part.set);
 
   /**
    * Returns a subset of the CardMap object as a new CardMap, based on a provided list of names.

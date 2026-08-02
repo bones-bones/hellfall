@@ -16,7 +16,7 @@ export const normalizeText = (text: string): string =>
  * Fixes a name by normalizing it, making it lowercase, and trimming it
  * @param text text to fix
  */
-export const fixName = (text: string) => normalizeText(text.toLowerCase().trim());
+export const fixName = (text: string) => textPrep(text.toLowerCase().trim());
 
 /**
  * Format smart quotes
@@ -302,15 +302,15 @@ export const formatParens = (text: string) => {
     .replaceAll('\\)', ')');
 };
 
-const fix = (t: string[]) =>
-  t.length > 1 && typeof t[1] == 'string' ? [t[0], t[1].toUpperCase()] : t;
+const fixMaster = (t: string[]) =>
+  t.length > 1 && typeof t[1] == 'string' ? [t[0].toUpperCase(), t[1]] : t;
 /**
  * Splits a name that starts with a masterpiece code into the name and the set code.
  * Can handle lowercase set codes.
  * @param text text to split
  */
 export const splitMasterpiece = (text: string): { name: string; code?: SetCode } => {
-  const [code, name] = fix(text.match(/^([^:]+): (.*)$/)?.slice(1) ?? [text]);
+  const [code, name] = fixMaster(text.match(/^([^:]+): (.*)$/)?.slice(1) ?? ['', text]);
   if (!code) {
     return { name };
   }
@@ -319,13 +319,15 @@ export const splitMasterpiece = (text: string): { name: string; code?: SetCode }
   }
   return { name: text };
 };
+const fixCode = (t: string[]) =>
+  t.length > 1 && typeof t[1] == 'string' ? [t[0], t[1].toUpperCase()] : t;
 /**
  * Splits a name that ends with a set code into the name and the set code.
  * Can handle lowercase set codes.
  * @param text text to split
  */
 export const splitSetCode = (text: string): { name: string; code?: string } => {
-  const [name, code] = fix(text.match(/^(.*) <([^>]+)>$/)?.slice(1) ?? [text]);
+  const [name, code] = fixCode(text.match(/^(.*) <([^>]+)>$/)?.slice(1) ?? [text]);
   if (!code) {
     return { name };
   }
@@ -352,14 +354,14 @@ export const splitCardName = (
   const splitText = text.split(' ');
   if (splitText.length > 2 && isSetCode(stripParens(splitText.at(-2)!))) {
     return {
-      name: splitText.slice(0, -2).join(''),
+      name: splitText.slice(0, -2).join(' '),
       code: stripParens(splitText.at(-2)!).toUpperCase() as SetCode,
       collector_number: splitText.at(-1)?.toLowerCase(),
     };
   }
   if (splitText.length > 1 && isSetCode(stripParens(splitText.at(-1)!))) {
     return {
-      name: splitText.slice(0, -1).join(''),
+      name: splitText.slice(0, -1).join(' '),
       code: stripParens(splitText.at(-1)!).toUpperCase() as SetCode,
     };
   }
@@ -396,7 +398,7 @@ export const parseRelatedReferenceName = (
 ): { name: string; hcid: string; code?: SetCode; count?: string } => {
   const { name: intName, code } = splitCardName(oldName);
   const groups = intName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-  const match = groups?.groups?.name ?? oldName;
+  const match = groups?.groups?.name ?? intName;
   const count = groups?.groups?.count ?? ('' as SetCode);
   const base = hardTokenIds.includes(match) ? match.slice(0, -1) : match.replace(/\d+$/, '');
   const shouldUseBase =

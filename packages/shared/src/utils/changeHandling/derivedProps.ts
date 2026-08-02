@@ -715,8 +715,8 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
     return newCard;
   }
   
-  newCard.all_parts = existingCard.all_parts;
-  // existingCard.all_parts = newCard.all_parts; #part
+  existingCard.all_parts = newCard.all_parts;
+  // newCard.all_parts = existingCard.all_parts;
   const changeList = getChangesFromDifferences(existingCard, newCard, true);
 
   applyChanges(existingCard, changeList, true);

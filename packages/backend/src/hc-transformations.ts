@@ -316,9 +316,6 @@ const main = async () => {
     const ao = parseInt(card.accepted_order);
     const cSet = collectorMap.get(getCollectorOrderSet(card.set));
     const aSet = acceptedMap.get(getAcceptedOrderSet(card.set));
-    // if (ignoreDuplicateHCIDs.includes(card.hcid)) {
-    //   return;
-    // }
     if (cSet?.has(cn) && !ignoreDuplicateNumbers[getCollectorOrderSet(card.set)]?.includes(card.collector_number)) {
       console.log(
         `Set ${getCollectorOrderSet(card.set)} has a duplicate collector number at ${cn} (hcid: ${card.hcid}, raw: ${card.collector_number})`
@@ -339,7 +336,7 @@ const main = async () => {
     if (/^HCV\.[1-4]\.[01]$/.test(code)) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
-      if (!nums.has(i) /*  && !ignoreMissingNums[code]?.includes(i) */) {
+      if (!nums.has(i)) {
         console.log(`Set ${getCollectorOrderSet(code)} has a missing collector number at ${i}`);
       }
     }
@@ -349,7 +346,7 @@ const main = async () => {
     if (code.startsWith('HCV.1') || code.startsWith('HLC')) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
-      if (!nums.has(i) /*  && !ignoreMissingNums[code]?.includes(i) */) {
+      if (!nums.has(i)) {
         console.log(`Set ${getAcceptedOrderSet(code)} has a missing accepted number at ${i}`);
       }
     }
@@ -359,20 +356,19 @@ const main = async () => {
   const { existingCards, existingTokens } = loadExistingData();
   const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
   const finalCards = new CardMap(addToJSONToCards(merged));
-  // #temp
-  // finalCards.forEach(card => {
-  //   if (card.all_parts) {
-  //     if (card.layout == 'front') {
-  //       updateParts(
-  //         card,
-  //         finalCards.filterFromSetExact('HCJ', value => value.tags?.includes(card.tags![0]))
-  //       );
-  //     } else {
-  //       updateParts(card, getAllRelatedPermissive(card, finalCards));
-  //     }
-  //   }
-  // });
-  // finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
+  finalCards.forEach(card => {
+    if (card.all_parts) {
+      if (card.layout == 'front') {
+        updateParts(
+          card,
+          finalCards.filterFromSetExact('HCJ', value => value.tags?.includes(card.tags![0]))
+        );
+      } else {
+        updateParts(card, getAllRelatedPermissive(card, finalCards));
+      }
+    }
+  });
+  finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
 
   // const takenNames = namesRawData.data;
   // finalCards.forEach(entry => setExportProps(entry, takenNames));

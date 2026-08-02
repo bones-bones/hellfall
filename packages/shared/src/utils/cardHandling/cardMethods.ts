@@ -406,16 +406,8 @@ export const getHc5 = (): CardMap =>
  *
  * For a fast version, use {@linkcode getAllRelated}
  */
-export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap =>
-  new CardMap(
-    card.all_parts?.flatMap(
-      part =>
-        cardMap.get(part.id) ??
-        cardMap.find(related => textEquals(part.hcid, related.hcid)) ??
-        cardMap.find(related => textEquals(part.name, related.name)) ??
-        []
-    ) ?? []
-  );
+export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap => 
+  new CardMap(card.all_parts?.flatMap(part =>cardMap.getFromPart(part) ??[]) ?? []);
 
 /**
  * Gets all related cards to a given card

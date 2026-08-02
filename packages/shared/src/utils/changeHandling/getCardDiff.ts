@@ -300,46 +300,46 @@ export const getChangesFromDifferences = (
     });
   }
 
-  const foundIndices: number[] = [];
-  newCard.all_parts?.forEach(newPart => {
-    const change: allPartsChange = {
-      location: 'all_parts',
-      change_type: 'add',
-      related: newPart,
-    };
-    if (pullingFromSheet) {
-      change.no_blank = true;
-    }
-    const index = getPartChangeIndex(existingCard, change);
-    if (index != undefined) {
-      foundIndices.push(index);
-      if (allPartsChangeIsValid(existingCard, change, index)) {
-        changeList.push(change);
-      }
-    } else {
-      changeList.push(change);
-    }
-  });
-  existingCard.all_parts
-    ?.filter((part, i) => !foundIndices.includes(i))
-    .forEach(part => {
-      const change: allPartsChange = {
-        location: 'all_parts',
-        change_type: 'delete',
-      };
-      if (part.id) {
-        change.id = part.id;
-      } else if (part.hcid) {
-        change.id = part.hcid;
-        change.part_prop = 'hcid';
-      } else if (part.name) {
-        change.id = part.name;
-        change.part_prop = 'name';
-      } else {
-        return;
-      }
-      changeList.push(change);
-    });
+  // const foundIndices: number[] = [];
+  // newCard.all_parts?.forEach(newPart => {
+  //   const change: allPartsChange = {
+  //     location: 'all_parts',
+  //     change_type: 'add',
+  //     related: newPart,
+  //   };
+  //   if (pullingFromSheet) {
+  //     change.no_blank = true;
+  //   }
+  //   const index = getPartChangeIndex(existingCard, change);
+  //   if (index != undefined) {
+  //     foundIndices.push(index);
+  //     if (allPartsChangeIsValid(existingCard, change, index)) {
+  //       changeList.push(change);
+  //     }
+  //   } else {
+  //     changeList.push(change);
+  //   }
+  // });
+  // existingCard.all_parts
+  //   ?.filter((part, i) => !foundIndices.includes(i))
+  //   .forEach(part => {
+  //     const change: allPartsChange = {
+  //       location: 'all_parts',
+  //       change_type: 'delete',
+  //     };
+  //     if (part.id) {
+  //       change.id = part.id;
+  //     } else if (part.hcid) {
+  //       change.id = part.hcid;
+  //       change.part_prop = 'hcid';
+  //     } else if (part.name) {
+  //       change.id = part.name;
+  //       change.part_prop = 'name';
+  //     } else {
+  //       return;
+  //     }
+  //     changeList.push(change);
+  //   });
   const { added, deleted } = getBaseDiffs(existingCard.base_tags ?? [], newCard.base_tags ?? []);
   const alsoAddingFaces = changeList.some(
     change => change.location == 'card_faces' && change.change_type == 'add'

@@ -216,6 +216,7 @@ export class CardLookupMap {
    * @param collector_number the collector number to use, if any
    */
   getBySetAndNumber = (name: string, code?: SetCode, collector_number?: string) => {
+    if (!name) return;
     if (!code && this.hcidMap.has(name) && name != '3' && name != '1984') {
       return this.hcidMap.get(name);
     }
@@ -238,7 +239,7 @@ export class CardLookupMap {
    * Returns the correct id for a card hcid.
    * @param hcid the hcid of the card to get
    */
-  getFromHCID = (hcid: string) => this.hcidMap.get(hcid);
+  getFromHCID = (hcid: string) => this.hcidMap.get(fixName(hcid));
 
   /**
    * Adds a new card to the CardLookupMap.
@@ -285,6 +286,7 @@ export class CardLookupMap {
    */
   has = (text: string) => {
     const { name, code, collector_number } = splitCardName(fixName(text));
+    if (!name) return false;
     return this.nameMap.has(name) || this.aliasMap.has(name);
   };
   /**
