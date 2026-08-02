@@ -1505,10 +1505,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"mana-dork"
+				"mana-dork",
+				"planeswalkerified-dork-minicycle",
+				"legendaryified-character"
 			],
 			"base_tags": [
-				"mana-dork"
+				"mana-dork",
+				"planeswalkerified-dork-minicycle",
+				"legendaryified-character"
 			]
 		},
 		{
@@ -2724,12 +2728,14 @@
 			"tags": [
 				"discord-reference",
 				"2003-frame",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"discord-reference",
 				"2003-frame",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			]
 		},
 		{
@@ -2905,12 +2911,14 @@
 			"tags": [
 				"2003-frame",
 				"mse",
-				"keyword"
+				"keyword",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"2003-frame",
 				"mse",
-				"keyword<menace>"
+				"keyword<menace>",
+				"hellscube-original-character"
 			]
 		},
 		{
@@ -3124,10 +3132,12 @@
 				"legendary"
 			],
 			"tags": [
-				"gambling"
+				"gambling",
+				"hellscube-original-character"
 			],
 			"base_tags": [
-				"gambling"
+				"gambling",
+				"hellscube-original-character"
 			]
 		},
 		{
@@ -3563,10 +3573,14 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"keyword"
+				"keyword",
+				"planeswalkerified-dork-minicycle",
+				"legendaryified-character"
 			],
 			"base_tags": [
-				"keyword<haste>"
+				"keyword<haste>",
+				"planeswalkerified-dork-minicycle",
+				"legendaryified-character"
 			]
 		},
 		{
@@ -6956,13 +6970,15 @@
 				"hearthstone",
 				"uses-command",
 				"2003-frame",
-				"mse"
+				"mse",
+				"reminder-on-back"
 			],
 			"base_tags": [
 				"hearthstone",
 				"uses-command",
 				"2003-frame",
-				"mse"
+				"mse",
+				"reminder-on-back"
 			],
 			"card_faces": [
 				{
@@ -6977,7 +6993,7 @@
 					],
 					"type_line": "Sorcery",
 					"oracle_text": "Cast 10 random instants or sorceries without paying their mana costs. Choose targets randomly. Exile Puzzle Box of Yogg-Saron.",
-					"flavor_text": "And they still don't win after all that.",
+					"flavor_text": "Go to Scryfall, enter \"(t:instant or t:sorcery)\" and then replace \"search\" from the resulting url with \"random\". Or type !puzzleBox in the discord. Anyways that was another tutorial, subscribe to BallsJr123 for epic tutorials and let's plays.",
 					"colors": [
 						"U",
 						"R"
@@ -7125,10 +7141,12 @@
 				"legendary"
 			],
 			"tags": [
-				"keyword"
+				"keyword",
+				"hellscube-original-character"
 			],
 			"base_tags": [
-				"keyword<extort|exploit|emerge|evoke|explore>"
+				"keyword<extort|exploit|emerge|evoke|explore>",
+				"hellscube-original-character"
 			]
 		},
 		{
@@ -10686,7 +10704,13 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"legendaryified-character"
+			],
+			"base_tags": [
+				"legendaryified-character"
+			]
 		},
 		{
 			"object": "card",
@@ -13937,11 +13961,13 @@
 			],
 			"tags": [
 				"keyword",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"keyword<shadow|raid>",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			],
 			"all_parts": [
 				{
@@ -15296,7 +15322,8 @@
 				"sun-moon-transform",
 				"keyword",
 				"unnecessary-color-indicator",
-				"mse"
+				"mse",
+				"sesame-street"
 			],
 			"base_tags": [
 				"transform",
@@ -15304,7 +15331,8 @@
 				"sun-moon-transform",
 				"keyword<flying|lifelink>",
 				"unnecessary-color-indicator<1>",
-				"mse"
+				"mse",
+				"sesame-street"
 			],
 			"card_faces": [
 				{
@@ -18504,14 +18532,16 @@
 			"frame": "2015",
 			"tags": [
 				"real-life-matters",
-				"keyword"
+				"keyword",
+				"hellscube-original-character"
 			],
 			"tag_notes": {
 				"real-life-matters": "denimwalk"
 			},
 			"base_tags": [
 				"real-life-matters<denimwalk>",
-				"keyword<plainswalk|islandwalk|swampwalk|mountainwalk|forestwalk|desertwalk|snow landwalk|legendary landwalk|nonbasic landwalk|artifact landwalk|trombonewalk|dryadwalk|gatewalk|locuswalk|urza'swalk|cloudwalk|island of wak-wakwalk|denimwalk|protection>"
+				"keyword<plainswalk|islandwalk|swampwalk|mountainwalk|forestwalk|desertwalk|snow landwalk|legendary landwalk|nonbasic landwalk|artifact landwalk|trombonewalk|dryadwalk|gatewalk|locuswalk|urza'swalk|cloudwalk|island of wak-wakwalk|denimwalk|protection>",
+				"hellscube-original-character"
 			]
 		},
 		{
@@ -19441,12 +19471,14 @@
 			"tags": [
 				"pregame",
 				"keyword",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"pregame",
 				"keyword<companion>",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			]
 		},
 		{
@@ -27705,11 +27737,13 @@
 			],
 			"tags": [
 				"keyword",
-				"mse"
+				"mse",
+				"childhood-friend"
 			],
 			"base_tags": [
 				"keyword<fight>",
-				"mse"
+				"mse",
+				"childhood-friend"
 			]
 		},
 		{
@@ -31551,13 +31585,15 @@
 				"no-font",
 				"x-cost",
 				"Victor",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"no-font",
 				"x-cost",
 				"Victor",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			],
 			"all_parts": [
 				{
@@ -42039,13 +42075,15 @@
 				"no-font",
 				"Victor",
 				"keyword",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"no-font",
 				"Victor",
 				"keyword<planeswalker monstrosity>",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			]
 		},
 		{
@@ -43410,13 +43448,15 @@
 				"removal",
 				"silver-border",
 				"keyword",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"removal",
 				"silver-border",
 				"keyword<murderlink>",
-				"mse"
+				"mse",
+				"hellscube-original-character"
 			],
 			"all_parts": [
 				{
@@ -46569,10 +46609,12 @@
 				"legendary"
 			],
 			"tags": [
-				"not-advertiser-friendly"
+				"not-advertiser-friendly",
+				"pbs-kids"
 			],
 			"base_tags": [
-				"not-advertiser-friendly"
+				"not-advertiser-friendly",
+				"pbs-kids"
 			]
 		},
 		{
@@ -58732,11 +58774,13 @@
 			],
 			"tags": [
 				"persistent-tokens",
-				"mse"
+				"mse",
+				"legendaryified-character"
 			],
 			"base_tags": [
 				"persistent-tokens",
-				"mse"
+				"mse",
+				"legendaryified-character"
 			],
 			"all_parts": [
 				{
@@ -91914,10 +91958,12 @@
 				"legendary"
 			],
 			"tags": [
-				"mse"
+				"mse",
+				"legendaryified-character"
 			],
 			"base_tags": [
-				"mse"
+				"mse",
+				"legendaryified-character"
 			]
 		},
 		{
@@ -100724,12 +100770,14 @@
 			"tags": [
 				"means-end",
 				"transform",
-				"type-transform-marks"
+				"type-transform-marks",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"means-end",
 				"transform",
-				"type-transform-marks"
+				"type-transform-marks",
+				"hellscube-original-character"
 			],
 			"card_faces": [
 				{
@@ -103888,11 +103936,13 @@
 			"frame": "2015",
 			"tags": [
 				"Victor",
-				"mse"
+				"mse",
+				"first-person"
 			],
 			"base_tags": [
 				"Victor",
-				"mse"
+				"mse",
+				"first-person"
 			]
 		},
 		{
@@ -117784,13 +117834,15 @@
 				"silly-little-guy",
 				"uses-command",
 				"grunch",
-				"iconic"
+				"iconic",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"silly-little-guy",
 				"uses-command",
 				"grunch",
-				"iconic"
+				"iconic",
+				"hellscube-original-character"
 			]
 		},
 		{
@@ -143217,7 +143269,13 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"first-person"
+			],
+			"base_tags": [
+				"first-person"
+			]
 		},
 		{
 			"object": "card",
@@ -167112,11 +167170,13 @@
 			"frame": "2015",
 			"tags": [
 				"missing-legend-frame",
-				"mse"
+				"mse",
+				"legendaryified-character"
 			],
 			"base_tags": [
 				"missing-legend-frame",
-				"mse"
+				"mse",
+				"legendaryified-character"
 			]
 		},
 		{
@@ -169216,12 +169276,14 @@
 			"tags": [
 				"unusual-proportions",
 				"bits-sticking-out",
-				"mse"
+				"mse",
+				"childhood-friend"
 			],
 			"base_tags": [
 				"unusual-proportions",
 				"bits-sticking-out",
-				"mse"
+				"mse",
+				"childhood-friend"
 			]
 		},
 		{
@@ -184930,12 +184992,14 @@
 			"tags": [
 				"iconic",
 				"1997-frame",
-				"legend"
+				"legend",
+				"hellscube-original-character"
 			],
 			"base_tags": [
 				"iconic",
 				"1997-frame",
-				"legend"
+				"legend",
+				"hellscube-original-character"
 			],
 			"all_parts": [
 				{
@@ -199687,13 +199751,15 @@
 				"persistent-tokens",
 				"uses-scryfall-token",
 				"Victor",
-				"mse"
+				"mse",
+				"two-explores"
 			],
 			"base_tags": [
 				"persistent-tokens",
 				"uses-scryfall-token",
 				"Victor",
-				"mse"
+				"mse",
+				"two-explores"
 			],
 			"all_parts": [
 				{
@@ -200012,10 +200078,12 @@
 			"border_color": "black",
 			"frame": "future",
 			"tags": [
-				"future-frame"
+				"future-frame",
+				"first-person"
 			],
 			"base_tags": [
-				"future-frame"
+				"future-frame",
+				"first-person"
 			]
 		},
 		{
@@ -205470,10 +205538,12 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"mse"
+				"mse",
+				"two-explores"
 			],
 			"base_tags": [
-				"mse"
+				"mse",
+				"two-explores"
 			]
 		},
 		{
@@ -218768,9 +218838,9 @@
 				"game-cover",
 				"full-art",
 				"showcase-frame",
-				"keyword",
 				"summon",
-				"legend"
+				"legend",
+				"keyword"
 			],
 			"tag_notes": {
 				"showcase-frame": "Game Cover"
@@ -218780,10 +218850,9 @@
 				"game-cover",
 				"full-art",
 				"showcase-frame<Game Cover>",
-				"keyword<cascade>",
 				"summon",
 				"legend",
-				"keyword<proliferate>"
+				"keyword<cascade|proliferate>"
 			],
 			"all_parts": [
 				{
@@ -228108,10 +228177,12 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"removal"
+				"removal",
+				"two-explores"
 			],
 			"base_tags": [
-				"removal"
+				"removal",
+				"two-explores"
 			]
 		},
 		{
@@ -244257,14 +244328,16 @@
 				"masterpiece",
 				"full-art",
 				"borderless",
-				"inverted-text"
+				"inverted-text",
+				"shiny-acceptance"
 			],
 			"base_tags": [
 				"board-wipe",
 				"masterpiece",
 				"full-art",
 				"borderless",
-				"inverted-text"
+				"inverted-text",
+				"shiny-acceptance"
 			],
 			"all_parts": [
 				{
@@ -266747,12 +266820,14 @@
 			"tags": [
 				"sac-with-no-result",
 				"keyword",
-				"mse"
+				"mse",
+				"childhood-friend"
 			],
 			"base_tags": [
 				"sac-with-no-result",
 				"keyword<vigilance>",
-				"mse"
+				"mse",
+				"childhood-friend"
 			],
 			"all_parts": [
 				{
@@ -294697,14 +294772,16 @@
 				"masterpiece",
 				"full-art",
 				"inverted-text",
-				"borderless"
+				"borderless",
+				"first-person"
 			],
 			"base_tags": [
 				"hc3-watermark",
 				"masterpiece",
 				"full-art",
 				"inverted-text",
-				"borderless"
+				"borderless",
+				"first-person"
 			]
 		},
 		{
@@ -310626,7 +310703,7 @@
 			"oracle_id": "dac9e5a7-2110-4888-a050-26cd5b2a46e2",
 			"hcid": "4117",
 			"name": "Five Ancestral Recalls Painted Green",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "364",
 			"accepted_order": "364",
 			"layout": "normal",
@@ -369403,7 +369480,7 @@
 			"oracle_id": "261e1ef6-d44a-4c4d-88d3-323346bd7fc1",
 			"hcid": "4967",
 			"name": "the first pick",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "6",
 			"accepted_order": "6",
 			"layout": "normal",
@@ -370952,7 +371029,7 @@
 			"oracle_id": "45d62b42-23fe-44c4-8508-794f6aa4ed89",
 			"hcid": "4986",
 			"name": "Four-Dimensional Lore Seeker",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "68",
 			"accepted_order": "68",
 			"layout": "normal",
@@ -379873,13 +379950,15 @@
 				"summon",
 				"masterpiece",
 				"1997-frame",
-				"legend"
+				"legend",
+				"childhood-friend"
 			],
 			"base_tags": [
 				"summon",
 				"masterpiece",
 				"1997-frame",
-				"legend"
+				"legend",
+				"childhood-friend"
 			]
 		},
 		{
@@ -413564,7 +413643,7 @@
 			"hcid": "5623",
 			"name": ":hypermaro:",
 			"flavor_name": "{hypermaro}",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "351",
 			"accepted_order": "351",
 			"layout": "normal",
@@ -416771,13 +416850,15 @@
 				"yugioh",
 				"big-number",
 				"full-art",
-				"borderless"
+				"borderless",
+				"first-person"
 			],
 			"base_tags": [
 				"yugioh",
 				"big-number",
 				"full-art",
-				"borderless"
+				"borderless",
+				"first-person"
 			],
 			"all_parts": [
 				{
@@ -430859,13 +430940,15 @@
 				"hand-tokens-pack",
 				"persistent-tokens",
 				"uses-scryfall-token",
-				"colorshifted-frame"
+				"colorshifted-frame",
+				"legendaryified-character"
 			],
 			"base_tags": [
 				"hand-tokens-pack",
 				"persistent-tokens",
 				"uses-scryfall-token",
-				"colorshifted-frame"
+				"colorshifted-frame",
+				"legendaryified-character"
 			],
 			"all_parts": [
 				{
@@ -443553,13 +443636,15 @@
 				"HELL-pack",
 				"full-art",
 				"borderless",
-				"card-in-scryfall"
+				"card-in-scryfall",
+				"flavor-name"
 			],
 			"base_tags": [
 				"HELL-pack",
 				"full-art",
 				"borderless",
-				"card-in-scryfall"
+				"card-in-scryfall",
+				"flavor-name<From HELL>"
 			],
 			"all_parts": [
 				{
@@ -445571,7 +445656,8 @@
 				"silksong",
 				"full-art",
 				"borderless",
-				"card-in-scryfall"
+				"card-in-scryfall",
+				"flavor-name"
 			],
 			"base_tags": [
 				"HELL-pack",
@@ -445579,7 +445665,8 @@
 				"silksong",
 				"full-art",
 				"borderless",
-				"card-in-scryfall"
+				"card-in-scryfall",
+				"flavor-name<From HELL>"
 			],
 			"all_parts": [
 				{
@@ -447962,7 +448049,8 @@
 				"thriving-land",
 				"showcase-frame",
 				"borderless",
-				"card-in-scryfall"
+				"card-in-scryfall",
+				"flavor-name"
 			],
 			"tag_notes": {
 				"showcase-frame": "Comic"
@@ -447972,7 +448060,8 @@
 				"thriving-land",
 				"showcase-frame<Comic>",
 				"borderless",
-				"card-in-scryfall"
+				"card-in-scryfall",
+				"flavor-name<Thriving Heath(Cliff)>"
 			],
 			"all_parts": [
 				{
@@ -459875,13 +459964,15 @@
 				"storm-spellslinger-pack",
 				"long-cardname",
 				"gx-ability",
-				"companion-frame"
+				"companion-frame",
+				"legendaryified-character"
 			],
 			"base_tags": [
 				"storm-spellslinger-pack",
 				"long-cardname",
 				"gx-ability",
-				"companion-frame"
+				"companion-frame",
+				"legendaryified-character"
 			],
 			"all_parts": [
 				{
@@ -462069,7 +462160,7 @@
 			"oracle_id": "c076a767-a850-4e21-8006-805c074edc39",
 			"hcid": "6206",
 			"name": "Babymake",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "242",
 			"accepted_order": "242",
 			"layout": "normal",
@@ -479401,14 +479492,16 @@
 			"frame": "website_app",
 			"tags": [
 				"website-app-frame",
-				"no-border"
+				"no-border",
+				"first-person"
 			],
 			"tag_notes": {
 				"website-app-frame": "YouTube"
 			},
 			"base_tags": [
 				"website-app-frame<YouTube>",
-				"no-border"
+				"no-border",
+				"first-person"
 			]
 		},
 		{
@@ -500149,7 +500242,7 @@
 			"oracle_id": "24731c3a-7a8e-41e3-96fa-c72c2716d236",
 			"hcid": "6740",
 			"name": "You // The Guy She Tells You Not to Worry About",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "307",
 			"accepted_order": "307",
 			"layout": "modal",
@@ -504967,7 +505060,7 @@
 			"oracle_id": "d2bb94f2-f802-4a14-9619-4bcb33ead38e",
 			"hcid": "6798",
 			"name": "Judge Call",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "5",
 			"accepted_order": "5",
 			"layout": "normal",
@@ -505024,7 +505117,7 @@
 			"oracle_id": "83ac97f3-3589-4bb4-92f7-9d7cc2b7504a",
 			"hcid": "6799",
 			"name": "The Neheb God",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "8a",
 			"accepted_order": "8a",
 			"layout": "normal",
@@ -505088,7 +505181,7 @@
 			"oracle_id": "c405af5c-acff-496c-8c5c-d5740f67a048",
 			"hcid": "6800",
 			"name": "Insane RNG",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "14",
 			"accepted_order": "14",
 			"layout": "normal",
@@ -505143,7 +505236,7 @@
 			"oracle_id": "27fbcd84-ede6-4d6f-ba59-16d92aa90b6c",
 			"hcid": "6801",
 			"name": "Recount",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "18",
 			"accepted_order": "18",
 			"layout": "normal",
@@ -505206,7 +505299,7 @@
 			"oracle_id": "9e406f3f-a317-4ad5-9480-b93caf6cd6fa",
 			"hcid": "6802",
 			"name": "Zero with Nothing",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "19",
 			"accepted_order": "19",
 			"layout": "normal",
@@ -505264,7 +505357,7 @@
 			"oracle_id": "ecb72e5c-c35d-4576-960c-3dfa23f5b36e",
 			"hcid": "6803",
 			"name": "What's This?",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "20",
 			"accepted_order": "20",
 			"layout": "normal",
@@ -505332,7 +505425,7 @@
 			"oracle_id": "2664df15-51b5-436d-8109-f2a51e1538b7",
 			"hcid": "6804",
 			"name": "Siege Rhino, but Legendary",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "21",
 			"accepted_order": "21",
 			"layout": "normal",
@@ -505415,7 +505508,7 @@
 			"oracle_id": "9cc12700-6cb0-4485-8578-556c3542c5eb",
 			"hcid": "6805",
 			"name": "a cat",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "23",
 			"accepted_order": "23",
 			"layout": "normal",
@@ -505473,7 +505566,7 @@
 			"oracle_id": "73c31d09-e5ba-4873-88f7-d9231574b528",
 			"hcid": "6806",
 			"name": "CBT",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "24",
 			"accepted_order": "24",
 			"layout": "normal",
@@ -505540,7 +505633,7 @@
 			"oracle_id": "6231ebe2-4fcc-4050-bdc5-c7b2ac5754ee",
 			"hcid": "6807",
 			"name": "The Astral Plane",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "26",
 			"accepted_order": "26",
 			"layout": "normal",
@@ -505613,7 +505706,7 @@
 			"oracle_id": "4c70c66c-d9a3-43cc-bd30-65e5af9d9eb7",
 			"hcid": "6808",
 			"name": "Spike Test",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "28",
 			"accepted_order": "28",
 			"layout": "normal",
@@ -505668,7 +505761,7 @@
 			"oracle_id": "d6fa8d84-a724-4737-a69f-576b0c19fb4b",
 			"hcid": "6809",
 			"name": "Mr. Worldwide",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "31",
 			"accepted_order": "31",
 			"layout": "normal",
@@ -505757,7 +505850,7 @@
 			"hcid": "6810",
 			"name": "Camel <HC>",
 			"export_name": "Camel (HC)_",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "33",
 			"accepted_order": "33",
 			"layout": "normal",
@@ -505821,7 +505914,7 @@
 			"oracle_id": "39dd8818-f118-420e-9c93-e5f84f63b8e2",
 			"hcid": "6811",
 			"name": "Noob's leyline of damage",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "34",
 			"accepted_order": "34",
 			"layout": "normal",
@@ -505867,7 +505960,7 @@
 			"oracle_id": "05aae840-3b02-4866-aac1-ee6a647e2004",
 			"hcid": "6812",
 			"name": "Stock exchange",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "37",
 			"accepted_order": "37",
 			"layout": "normal",
@@ -505928,7 +506021,7 @@
 			"oracle_id": "103baf27-70c2-42c9-b15a-52ee0ffbb96f",
 			"hcid": "6813",
 			"name": "Greatest Morphling",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "39",
 			"accepted_order": "39",
 			"layout": "reminder_on_back",
@@ -506051,7 +506144,7 @@
 			"oracle_id": "c98fed8b-189e-4f92-b3ca-fa3a09ab40d7",
 			"hcid": "6814",
 			"name": "Plane Drain",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "41",
 			"accepted_order": "41",
 			"layout": "normal",
@@ -506096,7 +506189,7 @@
 			"oracle_id": "2dc0d116-6337-4d93-a328-64bf52807f5d",
 			"hcid": "6815",
 			"name": "The Worm Army",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "42",
 			"accepted_order": "42",
 			"layout": "normal",
@@ -506149,7 +506242,7 @@
 			"oracle_id": "d1a2cca1-9b97-4e29-bf04-fb4997fb7e3e",
 			"hcid": "6816",
 			"name": "Very Ancient Brontodon",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "44",
 			"accepted_order": "44",
 			"layout": "normal",
@@ -506205,7 +506298,7 @@
 			"oracle_id": "a0b96d7a-cbb5-4a1e-86dd-0be95aa0cde7",
 			"hcid": "6817",
 			"name": "Animate Stack",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "48",
 			"accepted_order": "48",
 			"layout": "normal",
@@ -506267,7 +506360,7 @@
 			"oracle_id": "57ab6b7a-a152-4ae1-beb5-a7785dfea968",
 			"hcid": "6818",
 			"name": "Pioneer",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "49",
 			"accepted_order": "49",
 			"layout": "normal",
@@ -506321,7 +506414,7 @@
 			"oracle_id": "1cf28fa1-af2e-4337-b175-c0b14ceb5a6b",
 			"hcid": "6819",
 			"name": "Demonic Blackmail",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "54",
 			"accepted_order": "54",
 			"layout": "normal",
@@ -506375,7 +506468,7 @@
 			"hcid": "6820",
 			"name": "Wheel of Misfortune <HC>",
 			"export_name": "Wheel of Misfortune (HC)_",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "58",
 			"accepted_order": "58",
 			"layout": "normal",
@@ -506438,7 +506531,7 @@
 			"oracle_id": "2ee15052-f91b-4040-9405-0d5a9d0b31a6",
 			"hcid": "6821",
 			"name": "MTG Cardsmith",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "62",
 			"accepted_order": "62",
 			"layout": "normal",
@@ -506521,7 +506614,7 @@
 			"oracle_id": "aa6c9e92-c312-4b35-82e5-2d32a992bfb6",
 			"hcid": "6822",
 			"name": "Amazon Delivery Man",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "66",
 			"accepted_order": "66",
 			"layout": "normal",
@@ -506583,7 +506676,7 @@
 			"oracle_id": "8c3af630-fe25-4129-965b-e45f163b26a1",
 			"hcid": "6823",
 			"name": "Sultai Dude Mc Guy",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "72",
 			"accepted_order": "72",
 			"layout": "normal",
@@ -506654,7 +506747,7 @@
 			"oracle_id": "78d693d5-3574-45f9-a176-5b499f40d380",
 			"hcid": "6824",
 			"name": "Epic Games",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "74",
 			"accepted_order": "74",
 			"layout": "normal",
@@ -506710,7 +506803,7 @@
 			"oracle_id": "f0ed65ba-470f-48d3-ac34-25bbb6e2c585",
 			"hcid": "6825",
 			"name": "Perfect Information",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "77",
 			"accepted_order": "77",
 			"layout": "normal",
@@ -506766,7 +506859,7 @@
 			"oracle_id": "803bd968-141e-4743-9497-bfbfa757169a",
 			"hcid": "6826",
 			"name": "Keyword Blast",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "80",
 			"accepted_order": "80",
 			"layout": "normal",
@@ -506827,7 +506920,7 @@
 			"oracle_id": "facaba46-2988-45b7-ae3c-934990713f0f",
 			"hcid": "6827",
 			"name": "Water Bear",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "83",
 			"accepted_order": "83",
 			"layout": "normal",
@@ -506883,7 +506976,7 @@
 			"oracle_id": "b304c756-7c76-4b3f-8428-c0939e13de78",
 			"hcid": "6828",
 			"name": "Spell Yeeter",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "90",
 			"accepted_order": "90",
 			"layout": "normal",
@@ -506948,7 +507041,7 @@
 			"oracle_id": "7e390dd2-e4c4-451b-88c0-8962ecdb13eb",
 			"hcid": "6829",
 			"name": "Deck-Sterity",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "123",
 			"accepted_order": "123",
 			"layout": "normal",
@@ -507000,7 +507093,7 @@
 			"oracle_id": "b7bd214d-c1c3-4795-9ba4-39d6c771f322",
 			"hcid": "6830",
 			"name": "Aristocraper",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "125",
 			"accepted_order": "125",
 			"layout": "normal",
@@ -507054,7 +507147,7 @@
 			"oracle_id": "1d8ad03d-02c4-4dc7-8b36-524191430a4a",
 			"hcid": "6831",
 			"name": "Bolt // Bird",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "8b",
 			"accepted_order": "8b",
 			"layout": "split",
@@ -507166,7 +507259,7 @@
 			"oracle_id": "9191bf03-2a49-41a9-9bb5-a544879d8f85",
 			"hcid": "6832",
 			"name": "Rockandah Ardplace, Tourturer",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "128",
 			"accepted_order": "128",
 			"layout": "normal",
@@ -507258,7 +507351,7 @@
 			"oracle_id": "30ae8d94-39d0-4ced-9625-55f05e2085d5",
 			"hcid": "6833",
 			"name": "Haha Gottem",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "130",
 			"accepted_order": "130",
 			"layout": "normal",
@@ -507325,7 +507418,7 @@
 			"oracle_id": "ac5bd925-35a5-456c-a908-b8b84361060f",
 			"hcid": "6834",
 			"name": "Joe Biden, Hand of Obama",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "133",
 			"accepted_order": "133",
 			"layout": "normal",
@@ -507400,7 +507493,7 @@
 			"oracle_id": "5dacde3f-3ece-4be6-9c10-05d715816d39",
 			"hcid": "6835",
 			"name": "Swolbama",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "136",
 			"accepted_order": "136",
 			"layout": "normal",
@@ -507459,7 +507552,7 @@
 			"oracle_id": "263a7930-870f-4dcf-8208-ea2395b3c76d",
 			"hcid": "6836",
 			"name": "Serum Grey Goose Martini",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "137",
 			"accepted_order": "137",
 			"layout": "normal",
@@ -507523,7 +507616,7 @@
 			"oracle_id": "268d20d3-7890-4a8f-a2c8-4e174f1ab01b",
 			"hcid": "6837",
 			"name": "Obamamind's Acquisition",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "138",
 			"accepted_order": "138",
 			"layout": "normal",
@@ -507581,7 +507674,7 @@
 			"oracle_id": "a515a4a6-b17e-4b0c-a367-26df1909bebd",
 			"hcid": "6838",
 			"name": "Blind Fuck",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "139",
 			"accepted_order": "139",
 			"layout": "normal",
@@ -507644,7 +507737,7 @@
 			"oracle_id": "3167c065-0f83-4c22-86b8-e349979f0057",
 			"hcid": "6839",
 			"name": "Monday",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "150",
 			"accepted_order": "150",
 			"layout": "normal",
@@ -507702,7 +507795,7 @@
 			"oracle_id": "3c002c20-973b-4f34-9dc6-f12e0565a142",
 			"hcid": "6840",
 			"name": "Volcanic Digging",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "151",
 			"accepted_order": "151",
 			"layout": "normal",
@@ -507756,7 +507849,7 @@
 			"oracle_id": "42007a4b-828d-4642-86ea-7e76f0feaecb",
 			"hcid": "6841",
 			"name": "Inquisition of Obama",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "154",
 			"accepted_order": "154",
 			"layout": "normal",
@@ -507823,7 +507916,7 @@
 			"oracle_id": "2ebbdfd5-a731-4c3d-ad6b-5ac22d1de0bb",
 			"hcid": "6842",
 			"name": "\"My Final Push\"",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "162",
 			"accepted_order": "162",
 			"layout": "normal",
@@ -507876,7 +507969,7 @@
 			"oracle_id": "09e643f0-a15e-4480-a481-cdbfd98b344b",
 			"hcid": "6843",
 			"name": "Forbiddenest Ritual",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "163",
 			"accepted_order": "163",
 			"layout": "normal",
@@ -507935,7 +508028,7 @@
 			"oracle_id": "506b01ff-5f62-49b6-9882-866ce6529384",
 			"hcid": "6844",
 			"name": "Michelle, the Antehero",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "165",
 			"accepted_order": "165",
 			"layout": "normal",
@@ -508008,7 +508101,7 @@
 			"oracle_id": "fb184e9d-3f0a-403d-b9b7-ef7b9a7f1345",
 			"hcid": "6845",
 			"name": "Obama's Requirement",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "166",
 			"accepted_order": "166",
 			"layout": "normal",
@@ -508070,7 +508163,7 @@
 			"oracle_id": "5f3413a2-736f-480a-9fe1-eb8bedb3cea3",
 			"hcid": "6846",
 			"name": "Misthollow Angel",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "175",
 			"accepted_order": "175",
 			"layout": "normal",
@@ -508130,7 +508223,7 @@
 			"oracle_id": "b38daf62-f920-490a-afaf-22a02b15de78",
 			"hcid": "6847",
 			"name": "Wrath of Pod",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "185",
 			"accepted_order": "185",
 			"layout": "normal",
@@ -508184,7 +508277,7 @@
 			"oracle_id": "471d3ca3-2979-4c19-8e47-6154cad1bf06",
 			"hcid": "6848",
 			"name": "Magus of the Game",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "186",
 			"accepted_order": "186",
 			"layout": "normal",
@@ -508255,7 +508348,7 @@
 			"oracle_id": "ad59d95c-2ca9-47c7-a540-fd8ce39e3d6e",
 			"hcid": "6849",
 			"name": "All // Nought",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "188",
 			"accepted_order": "188",
 			"layout": "transform",
@@ -508358,7 +508451,7 @@
 			"oracle_id": "d5f9b3ab-22c3-4a69-bee8-030bed9e0908",
 			"hcid": "6850",
 			"name": "Sole Ring",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "189",
 			"accepted_order": "189",
 			"layout": "normal",
@@ -508418,7 +508511,7 @@
 			"oracle_id": "b14e4ee6-5b29-464a-b48c-54f43900c8ca",
 			"hcid": "6851",
 			"name": "Prismatic Spray",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "195",
 			"accepted_order": "195",
 			"layout": "normal",
@@ -508492,7 +508585,7 @@
 			"oracle_id": "169e94f6-1060-4f9c-b731-a34013ff868c",
 			"hcid": "6852",
 			"name": "Rosewater's Final Solution",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "196",
 			"accepted_order": "196",
 			"layout": "normal",
@@ -508541,7 +508634,7 @@
 			"oracle_id": "9dc96b89-9cc1-4e66-865d-412db3dbbbc6",
 			"hcid": "6853",
 			"name": "Chase The Planes",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "199",
 			"accepted_order": "199",
 			"layout": "normal",
@@ -508594,7 +508687,7 @@
 			"oracle_id": "f7695eae-bf3e-4a84-a6cd-ec8340d7abcd",
 			"hcid": "6854",
 			"name": "Blue Cheese",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "201",
 			"accepted_order": "201",
 			"layout": "normal",
@@ -508649,7 +508742,7 @@
 			"oracle_id": "d18d64a1-f5e9-443e-b6c6-efd93e2a4d7a",
 			"hcid": "6855",
 			"name": "Temple of u/C9_Arcane",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "231",
 			"accepted_order": "231",
 			"layout": "normal",
@@ -508705,7 +508798,7 @@
 			"oracle_id": "6130fbb0-8585-453c-81b4-1c5b5558e6e6",
 			"hcid": "6856",
 			"name": "Temple of u/cirion02",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "232",
 			"accepted_order": "232",
 			"layout": "normal",
@@ -508761,7 +508854,7 @@
 			"oracle_id": "0e143651-183f-4dcd-bf6c-acb6ff180165",
 			"hcid": "6857",
 			"name": "Temple of u/coincidentalacci",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "233",
 			"accepted_order": "233",
 			"layout": "normal",
@@ -508817,7 +508910,7 @@
 			"oracle_id": "632bd68c-2377-4bd7-85ee-d3ff4493fe29",
 			"hcid": "6858",
 			"name": "Temple of u/Em9500",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "234",
 			"accepted_order": "234",
 			"layout": "normal",
@@ -508873,7 +508966,7 @@
 			"oracle_id": "e4659567-11c6-41ea-9bc5-58379e01f2db",
 			"hcid": "6859",
 			"name": "Temple of u/EmmettChan",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "235",
 			"accepted_order": "235",
 			"layout": "normal",
@@ -508930,7 +509023,7 @@
 			"hcid": "6860",
 			"name": "Temple of u/Hairy\\_S\\_TrueMan",
 			"export_name": "Temple of u/Hairy_S_TrueMan",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "236",
 			"accepted_order": "236",
 			"layout": "normal",
@@ -508986,7 +509079,7 @@
 			"oracle_id": "225054b5-4f9c-41ca-ae3a-ca495667a3e6",
 			"hcid": "6861",
 			"name": "Temple of u/Karif_Wins",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "237",
 			"accepted_order": "237",
 			"layout": "normal",
@@ -509042,7 +509135,7 @@
 			"oracle_id": "45a9f144-520e-4509-8c28-e09cf6db9b5b",
 			"hcid": "6862",
 			"name": "Temple of u/Taprus",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "238",
 			"accepted_order": "238",
 			"layout": "normal",
@@ -509098,7 +509191,7 @@
 			"oracle_id": "4d0f5e28-e1cb-4d3e-8bf2-385b2bd5c006",
 			"hcid": "6863",
 			"name": "Temple of u/TemporalFuzz",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "239",
 			"accepted_order": "239",
 			"layout": "normal",
@@ -509154,7 +509247,7 @@
 			"oracle_id": "44a6d391-ed92-4121-b069-fcdf817d5320",
 			"hcid": "6864",
 			"name": "Temple of u/Therealredguy",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "240",
 			"accepted_order": "240",
 			"layout": "normal",
@@ -509210,7 +509303,7 @@
 			"oracle_id": "26420359-69a9-4b72-9a98-f125ee30b9fa",
 			"hcid": "6865",
 			"name": "Level Up!",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "260",
 			"accepted_order": "260",
 			"layout": "normal",
@@ -509258,7 +509351,7 @@
 			"oracle_id": "d83932e7-5bd2-4dbc-a897-5f57478e78d1",
 			"hcid": "6866",
 			"name": "\"And Now a Word from Our Sponsor...\"",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "263",
 			"accepted_order": "263",
 			"layout": "normal",
@@ -509315,7 +509408,7 @@
 			"oracle_id": "6be77739-74da-44d0-bbea-c002fa7fd6db",
 			"hcid": "6867",
 			"name": "Redwinconfire",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "266",
 			"accepted_order": "266",
 			"layout": "normal",
@@ -509367,7 +509460,7 @@
 			"oracle_id": "6d3272f9-1d4d-4e1c-8591-cb3c23014246",
 			"hcid": "6868",
 			"name": "Viscera, the Seer",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "269",
 			"accepted_order": "269",
 			"layout": "normal",
@@ -509421,7 +509514,7 @@
 			"oracle_id": "b691f3e1-c3a0-49e5-9d3a-fe80b473ed09",
 			"hcid": "6869",
 			"name": "Crowogoyf",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "287",
 			"accepted_order": "287",
 			"layout": "normal",
@@ -509481,7 +509574,7 @@
 			"oracle_id": "1f7d9b71-0540-4de7-8520-e43fa2e4fb4c",
 			"hcid": "6870",
 			"name": "Island?",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "288",
 			"accepted_order": "288",
 			"layout": "normal",
@@ -509549,7 +509642,7 @@
 			"oracle_id": "ce09e75e-9314-4157-b109-821b3aa3db01",
 			"hcid": "6871",
 			"name": "Decidedly Male // Destory Lesbians",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "290",
 			"accepted_order": "290",
 			"layout": "inset",
@@ -509647,7 +509740,7 @@
 			"oracle_id": "6d2ba8bf-f162-4e87-85c4-c7e05c31bb8c",
 			"hcid": "6872",
 			"name": "Nonexistent White Finisher",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "291",
 			"accepted_order": "291",
 			"layout": "normal",
@@ -509703,7 +509796,7 @@
 			"oracle_id": "bb78e1ca-2939-4fc0-b540-157be245d24b",
 			"hcid": "6873",
 			"name": "Hackerman",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "119",
 			"accepted_order": "119",
 			"layout": "normal",
@@ -509754,7 +509847,7 @@
 			"oracle_id": "62e34e98-7619-4f6e-a6ab-822f2dadf366",
 			"hcid": "6874",
 			"name": "Vibe Check",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "94",
 			"accepted_order": "94",
 			"layout": "normal",
@@ -509809,7 +509902,7 @@
 			"hcid": "6875",
 			"name": "Library <HC>",
 			"export_name": "Library (HC)_",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "120",
 			"accepted_order": "120",
 			"layout": "normal",
@@ -509868,7 +509961,7 @@
 			"oracle_id": "0abd753c-d8df-47fc-abb2-20fdf9566328",
 			"hcid": "6876",
 			"name": "Realistic Moon",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "110",
 			"accepted_order": "110",
 			"layout": "normal",
@@ -509937,7 +510030,7 @@
 			"oracle_id": "bb437934-cdee-4147-9e85-6b2a60021674",
 			"hcid": "6877",
 			"name": "Noble Hierarchy",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "98",
 			"accepted_order": "98",
 			"layout": "normal",
@@ -509999,7 +510092,7 @@
 			"oracle_id": "93d1cd14-bb20-4e53-bbb2-534f4541c610",
 			"hcid": "6878",
 			"name": "Obama's Legacy",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "118",
 			"accepted_order": "118",
 			"layout": "normal",
@@ -510056,7 +510149,7 @@
 			"oracle_id": "182483ca-c61b-4b06-946d-3f71157b14ff",
 			"hcid": "6879",
 			"name": "Ulamog's Ceaseless Hunger",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "107",
 			"accepted_order": "107",
 			"layout": "normal",
@@ -510098,7 +510191,7 @@
 			"oracle_id": "62209c7f-538f-42a7-b31c-8d359a03746b",
 			"hcid": "6880",
 			"name": "Remand'nt",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "99",
 			"accepted_order": "99",
 			"layout": "normal",
@@ -510154,7 +510247,7 @@
 			"oracle_id": "9cf9e99c-c671-4860-aeec-313e96f8cac9",
 			"hcid": "6881",
 			"name": "indicate Mistake",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "27",
 			"accepted_order": "27",
 			"layout": "normal",
@@ -510219,7 +510312,7 @@
 			"oracle_id": "8a919c65-1161-4ae6-9545-35630f49bcd7",
 			"hcid": "6882",
 			"name": "Nimbus Maze but It's Fucking Stupid",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "30",
 			"accepted_order": "30",
 			"layout": "normal",
@@ -510272,7 +510365,7 @@
 			"oracle_id": "6cea1c45-0252-4eaf-8066-4404853eb9b3",
 			"hcid": "6883",
 			"name": "Noah Get The Boat",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "97",
 			"accepted_order": "97",
 			"layout": "normal",
@@ -510332,7 +510425,7 @@
 			"oracle_id": "33c00bd4-1dd0-49bc-87f8-4fea21efc3c3",
 			"hcid": "6884",
 			"name": "Symbol Overload",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "103",
 			"accepted_order": "103",
 			"layout": "normal",
@@ -510392,7 +510485,7 @@
 			"oracle_id": "1e1fc293-4fa2-4ca3-8cf3-f36f14a8dec7",
 			"hcid": "6885",
 			"name": "Dad",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "96",
 			"accepted_order": "96",
 			"layout": "normal",
@@ -510457,7 +510550,7 @@
 			"oracle_id": "2293fe09-df30-4ff5-b6c3-5e954bc37089",
 			"hcid": "6886",
 			"name": "\"Roll With Adventage\"",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "153",
 			"accepted_order": "153",
 			"layout": "normal",
@@ -510512,7 +510605,7 @@
 			"oracle_id": "7685dcb9-7e20-44fc-a6e5-35065a1f0539",
 			"hcid": "6887",
 			"name": "Irencrag Feet",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "247",
 			"accepted_order": "247",
 			"layout": "normal",
@@ -510568,7 +510661,7 @@
 			"oracle_id": "f3fe0cb3-f8d9-4bb5-919e-8a6263885110",
 			"hcid": "6888",
 			"name": "Song of the Dreadmaw",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "256",
 			"accepted_order": "256",
 			"layout": "normal",
@@ -510629,7 +510722,7 @@
 			"oracle_id": "db9d7e34-add8-492b-8afb-b21ed2869e82",
 			"hcid": "6889",
 			"name": "Distraction",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "294",
 			"accepted_order": "294",
 			"layout": "normal",
@@ -510684,7 +510777,7 @@
 			"oracle_id": "55e488d4-a656-4b39-9659-4de5b53bb8d6",
 			"hcid": "6890",
 			"name": "irefeT's Text Twist",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "302",
 			"accepted_order": "302",
 			"layout": "normal",
@@ -510737,7 +510830,7 @@
 			"oracle_id": "0938d34d-84eb-4138-a783-e882b7d8c6f0",
 			"hcid": "6891",
 			"name": "Weird Looking Moon",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "310",
 			"accepted_order": "310",
 			"layout": "normal",
@@ -510793,7 +510886,7 @@
 			"oracle_id": "fd2c84e7-31cf-4721-a32e-11743aa07991",
 			"hcid": "6892",
 			"name": "Dogeferi, Destroyer of Karen",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "320",
 			"accepted_order": "320",
 			"layout": "normal",
@@ -510884,7 +510977,7 @@
 			"hcid": "6893",
 			"name": "Color Pie <HC>",
 			"export_name": "Color Pie (HC)_",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "321",
 			"accepted_order": "321",
 			"layout": "normal",
@@ -510946,7 +511039,7 @@
 			"oracle_id": "8f534778-1c3f-4e96-a501-57739d641ddc",
 			"hcid": "6894",
 			"name": "Erratic Jumbler",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "328",
 			"accepted_order": "328",
 			"layout": "normal",
@@ -511016,7 +511109,7 @@
 			"oracle_id": "3f4fb0d6-092e-49db-bb5a-5f0982e78f8a",
 			"hcid": "6895",
 			"name": "Don't Miss The Forest // The Trees",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "347",
 			"accepted_order": "347",
 			"layout": "transform",
@@ -511113,7 +511206,7 @@
 			"oracle_id": "b838f838-89ed-4f10-a9cd-d70897af0e4d",
 			"hcid": "6896",
 			"name": "Hatebear with useful abilities",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "359",
 			"accepted_order": "359",
 			"layout": "normal",
@@ -511164,7 +511257,7 @@
 			"oracle_id": "d71e74ed-3339-49c8-a23c-221ee0d69e44",
 			"hcid": "6897",
 			"name": "Godzilla's Divining Top",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "365",
 			"accepted_order": "365",
 			"layout": "normal",
@@ -511218,7 +511311,7 @@
 			"oracle_id": "834ff222-cb22-4cc7-a475-8da2e9eda4c5",
 			"hcid": "6898",
 			"name": "Slot Filler",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "371",
 			"accepted_order": "371",
 			"layout": "normal",
@@ -519920,7 +520013,7 @@
 			"oracle_id": "b91bb2b0-4a09-4560-91af-33cfe975186a",
 			"hcid": "7036",
 			"name": "Vedalken Doing Important Stuff",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "206",
 			"accepted_order": "206",
 			"layout": "normal",
@@ -519980,7 +520073,7 @@
 			"oracle_id": "89a193ab-d28f-46ef-8fd2-e96e5eb83858",
 			"hcid": "7037",
 			"name": "Call of the Clockwolf",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "201",
 			"accepted_order": "201",
 			"layout": "normal",
@@ -520041,7 +520134,7 @@
 			"oracle_id": "25a6067e-2412-4d90-b476-154f619beb66",
 			"hcid": "7038",
 			"name": "Prickly Porcusaur",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "190",
 			"accepted_order": "190",
 			"layout": "normal",
@@ -520096,7 +520189,7 @@
 			"oracle_id": "80699516-d13f-4649-a48b-b454946783a8",
 			"hcid": "7039",
 			"name": "Rakar, Duaghter of Krark",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "138",
 			"accepted_order": "138",
 			"layout": "normal",
@@ -520181,7 +520274,7 @@
 			"oracle_id": "dd504114-b29b-4600-bdae-cbbecb792c34",
 			"hcid": "7040",
 			"name": "Karak, Son of Krark",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "138b",
 			"accepted_order": "138b",
 			"layout": "normal",
@@ -520263,7 +520356,7 @@
 			"oracle_id": "21e32d0e-e072-4d2a-a27c-8866ee688843",
 			"hcid": "7041",
 			"name": "Terminator 2 From Terminator 2",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "104",
 			"accepted_order": "104",
 			"layout": "normal",
@@ -520332,7 +520425,7 @@
 			"oracle_id": "77e5696f-b0a5-42b9-9b67-ca823e5876cb",
 			"hcid": "7042",
 			"name": "Mork Beats the Shit Out of Brian",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "103",
 			"accepted_order": "103",
 			"layout": "saga",
@@ -520413,7 +520506,7 @@
 			"oracle_id": "0581fbb9-c949-4bb1-afd6-dd4892f95378",
 			"hcid": "7043",
 			"name": "War of the Scube",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "93",
 			"accepted_order": "93",
 			"layout": "saga",
@@ -520484,7 +520577,7 @@
 			"oracle_id": "360d2368-ef84-4c18-b1d0-e9db8e123c1d",
 			"hcid": "7044",
 			"name": "Extremely Lost Giant",
-			"set": "HCV.2",
+			"set": "HCV.2.1",
 			"collector_number": "58",
 			"accepted_order": "58",
 			"layout": "normal",
@@ -520551,7 +520644,7 @@
 			"oracle_id": "4c9bb9fa-54a2-473d-b0d3-ec7a4fe59e16",
 			"hcid": "7045",
 			"name": "Chump Master",
-			"set": "HCV.2",
+			"set": "HCV.2.0",
 			"collector_number": "228",
 			"accepted_order": "228",
 			"layout": "normal",
@@ -520603,7 +520696,7 @@
 			"oracle_id": "121eb4b7-1e6a-4ac1-bc9f-d8a77f2cb755",
 			"hcid": "7046",
 			"name": "Spellsmith",
-			"set": "HCV.2",
+			"set": "HCV.2.0",
 			"collector_number": "214",
 			"accepted_order": "214",
 			"layout": "normal",
@@ -520673,7 +520766,7 @@
 			"oracle_id": "8c8f9ed2-bd41-4b98-bca2-80f23d34bca3",
 			"hcid": "7047",
 			"name": "Thopterpack Legionnaire",
-			"set": "HCV.2",
+			"set": "HCV.2.0",
 			"collector_number": "187",
 			"accepted_order": "187",
 			"layout": "normal",
@@ -520746,7 +520839,7 @@
 			"oracle_id": "dc400cdb-78f7-473f-afd5-67bf94b32151",
 			"hcid": "7048",
 			"name": "Nature's Bant",
-			"set": "HCV.2",
+			"set": "HCV.2.0",
 			"collector_number": "160",
 			"accepted_order": "160",
 			"layout": "normal",
@@ -520806,7 +520899,7 @@
 			"oracle_id": "60e61753-6054-43b5-b5bd-5671880816fd",
 			"hcid": "7049",
 			"name": "Hatedraft Hater",
-			"set": "HCV.2",
+			"set": "HCV.2.0",
 			"collector_number": "154",
 			"accepted_order": "154",
 			"layout": "normal",
@@ -520857,7 +520950,7 @@
 			"oracle_id": "868dd209-ca88-49de-9eca-247842af5c8a",
 			"hcid": "7050",
 			"name": "Ground That Stomps",
-			"set": "HCV.2",
+			"set": "HCV.2.0",
 			"collector_number": "141",
 			"accepted_order": "141",
 			"layout": "normal",
@@ -520912,7 +521005,7 @@
 			"oracle_id": "3a5e207f-64c5-43bf-9f8d-81f18365ceb7",
 			"hcid": "7051",
 			"name": "Sudden Stop",
-			"set": "HCV.2",
+			"set": "HCV.2.0",
 			"collector_number": "93",
 			"accepted_order": "93",
 			"layout": "normal",
@@ -520964,7 +521057,7 @@
 			"oracle_id": "21f57fb1-2802-44d4-8790-9f8863935045",
 			"hcid": "7052",
 			"name": "Electro Eel",
-			"set": "HCV.3",
+			"set": "HCV.3.0",
 			"collector_number": "337",
 			"accepted_order": "337",
 			"layout": "normal",
@@ -521019,7 +521112,7 @@
 			"oracle_id": "91ea1048-ff90-4ffc-b1ea-cd590c3fc4f8",
 			"hcid": "7053",
 			"name": "Thad Fistpuncher, Muscle Wizard",
-			"set": "HCV.3",
+			"set": "HCV.3.0",
 			"collector_number": "305",
 			"accepted_order": "305",
 			"layout": "normal",
@@ -521078,7 +521171,7 @@
 			"oracle_id": "f640ebad-aa63-4dc6-a1b3-66a037d9d538",
 			"hcid": "7054",
 			"name": "Münchausen by Proxy",
-			"set": "HCV.3",
+			"set": "HCV.3.0",
 			"collector_number": "271",
 			"accepted_order": "271",
 			"layout": "normal",
@@ -521130,7 +521223,7 @@
 			"oracle_id": "9aa683e5-53f0-414b-9524-87d6d444d410",
 			"hcid": "7055",
 			"name": "Clam the Firstborn",
-			"set": "HCV.3",
+			"set": "HCV.3.0",
 			"collector_number": "230",
 			"accepted_order": "230",
 			"layout": "normal",
@@ -521175,7 +521268,7 @@
 			"oracle_id": "d5f46411-56ac-46a7-b3dc-48d805a045ba",
 			"hcid": "7056",
 			"name": "MrMirari's Wake",
-			"set": "HCV.3",
+			"set": "HCV.3.0",
 			"collector_number": "96",
 			"accepted_order": "96",
 			"layout": "normal",
@@ -521234,7 +521327,7 @@
 			"oracle_id": "a5a8975b-b0dc-4d5e-a1d7-eadec4053dd4",
 			"hcid": "7057",
 			"name": "Bing // Bong",
-			"set": "HCV.3",
+			"set": "HCV.3.0",
 			"collector_number": "204",
 			"accepted_order": "204",
 			"layout": "modal",
@@ -521331,7 +521424,7 @@
 			"oracle_id": "98eade7d-863e-41e1-b403-e7816d0eb491",
 			"hcid": "7058",
 			"name": "Awakened Loot Crate",
-			"set": "HCV.3",
+			"set": "HCV.3.0",
 			"collector_number": "68",
 			"accepted_order": "68",
 			"layout": "normal",
@@ -521470,7 +521563,7 @@
 			"oracle_id": "c8350b85-14fa-4fb8-9ec7-8dc948cd5399",
 			"hcid": "7059",
 			"name": "Smelt, But Actually",
-			"set": "HCV.3",
+			"set": "HCV.3.0",
 			"collector_number": "72",
 			"accepted_order": "72",
 			"layout": "normal",
@@ -521550,7 +521643,7 @@
 			"oracle_id": "d01dbe40-eebc-4e93-9033-bed3d32a96a8",
 			"hcid": "7060",
 			"name": "Robert of the Rich",
-			"set": "HCV.3",
+			"set": "HCV.3.1",
 			"collector_number": "372",
 			"accepted_order": "372",
 			"layout": "normal",
@@ -521611,7 +521704,7 @@
 			"oracle_id": "6b2b7de6-12a7-4bfb-b697-9906546c43c6",
 			"hcid": "7061",
 			"name": "Neo-Nebuchadnezzar 1.0",
-			"set": "HCV.3",
+			"set": "HCV.3.1",
 			"collector_number": "175",
 			"accepted_order": "175",
 			"layout": "normal",
@@ -521675,7 +521768,7 @@
 			"oracle_id": "d6515e6c-7bb2-4ce8-af0b-a693386b7ec7",
 			"hcid": "7062",
 			"name": "Ardent P ea",
-			"set": "HCV.3",
+			"set": "HCV.3.1",
 			"collector_number": "97",
 			"accepted_order": "97",
 			"layout": "normal",
@@ -521744,7 +521837,7 @@
 			"oracle_id": "18677af6-786b-4cdf-acfe-7aff29fab7a5",
 			"hcid": "7063",
 			"name": "Detroit Urban Survival Training",
-			"set": "HCV.3",
+			"set": "HCV.3.1",
 			"collector_number": "56",
 			"accepted_order": "56",
 			"layout": "normal",
@@ -521805,7 +521898,7 @@
 			"oracle_id": "22d45e1e-0c0e-45f7-89e0-cc72a3fa59d9",
 			"hcid": "7064",
 			"name": "Fortification But It Actually Fucking Works",
-			"set": "HCV.3",
+			"set": "HCV.3.1",
 			"collector_number": "62",
 			"accepted_order": "62",
 			"layout": "normal",
@@ -521854,7 +521947,7 @@
 			"oracle_id": "3bc18842-b2f2-440c-afc9-e2006d39d2af",
 			"hcid": "7065",
 			"name": "Nimble Pilferer // Nimble Pilferer",
-			"set": "HCV.3",
+			"set": "HCV.3.1",
 			"collector_number": "45",
 			"accepted_order": "45",
 			"layout": "modal",
@@ -521977,7 +522070,7 @@
 			"oracle_id": "841f93ff-babc-4ed4-8b69-fd3c7198aa4a",
 			"hcid": "7066",
 			"name": "Classic Car",
-			"set": "HCV.3",
+			"set": "HCV.3.1",
 			"collector_number": "40",
 			"accepted_order": "40",
 			"layout": "normal",
@@ -522034,7 +522127,7 @@
 			"oracle_id": "76f157c8-bcf0-4f0c-bd94-a2fedf292104",
 			"hcid": "7067",
 			"name": "Jump // Plummet",
-			"set": "HCV.4",
+			"set": "HCV.4.0",
 			"collector_number": "263",
 			"accepted_order": "263",
 			"layout": "split",
@@ -522125,7 +522218,7 @@
 			"oracle_id": "2d7c9c0d-4fcd-40e9-a0e9-c42eb92b41bd",
 			"hcid": "7068",
 			"name": "Screep",
-			"set": "HCV.4",
+			"set": "HCV.4.0",
 			"collector_number": "364",
 			"accepted_order": "364",
 			"layout": "normal",
@@ -522184,7 +522277,7 @@
 			"oracle_id": "e5c6db3f-8614-4d98-99fe-84a4317c0d75",
 			"hcid": "7069",
 			"name": "Cultiv8",
-			"set": "HCV.4",
+			"set": "HCV.4.0",
 			"collector_number": "129",
 			"accepted_order": "129",
 			"layout": "normal",
@@ -522230,7 +522323,7 @@
 			"oracle_id": "9b05b834-b5c1-435c-9ffd-c170e553b65b",
 			"hcid": "7070",
 			"name": "VoidfRend",
-			"set": "HCV.4",
+			"set": "HCV.4.0",
 			"collector_number": "93",
 			"accepted_order": "93",
 			"layout": "normal",
@@ -522301,8 +522394,8 @@
 			"hcid": "7071",
 			"name": "Hot Babe",
 			"set": "HCV.4",
-			"collector_number": "9",
-			"accepted_order": "9",
+			"collector_number": "5",
+			"accepted_order": "5",
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://lh3.googleusercontent.com/d/1fJo2EULTnwJn0NsoYSCB5BpwTyBlxaN8",
@@ -522379,7 +522472,7 @@
 			"oracle_id": "1b883bf7-9d55-4428-9bbc-6b1dd5ea2c5d",
 			"hcid": "7072",
 			"name": "Journey to Gingerbrute",
-			"set": "HCV.4",
+			"set": "HCV.4.1",
 			"collector_number": "146",
 			"accepted_order": "146",
 			"layout": "normal",
@@ -522453,7 +522546,7 @@
 			"hcid": "7073",
 			"name": "Frog <HC4>",
 			"export_name": "Frog (HC4)_",
-			"set": "HCV.4",
+			"set": "HCV.4.1",
 			"collector_number": "204",
 			"accepted_order": "204",
 			"layout": "normal",
@@ -522514,7 +522607,7 @@
 			"oracle_id": "a723ddf3-9445-45fe-a110-7453d9c98687",
 			"hcid": "7074",
 			"name": "Spell Checker",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "342",
 			"accepted_order": "342",
 			"layout": "normal",
@@ -522583,7 +522676,7 @@
 			"oracle_id": "8370a809-b7b4-4fbd-a6d5-421600a0344e",
 			"hcid": "7075",
 			"name": "Lightning McQueen Greaves",
-			"set": "HCV.1",
+			"set": "HCV.1.1",
 			"collector_number": "16",
 			"accepted_order": "16",
 			"layout": "normal",
@@ -522633,7 +522726,7 @@
 			"oracle_id": "f1fcdf2d-d10f-4460-92fb-0e7a3d3ac755",
 			"hcid": "7076",
 			"name": "Heel's Cube",
-			"set": "HCV.1",
+			"set": "HCV.1.1",
 			"collector_number": "49",
 			"accepted_order": "49",
 			"layout": "normal",
@@ -522682,7 +522775,7 @@
 			"oracle_id": "93111aaa-10ba-4d14-a0ac-f8e6abc404f0",
 			"hcid": "7078",
 			"name": "Netflix",
-			"set": "HCV.1",
+			"set": "HCV.1.1",
 			"collector_number": "53",
 			"accepted_order": "53",
 			"layout": "normal",
@@ -522734,7 +522827,7 @@
 			"oracle_id": "1671c92d-3b0c-4ae0-97ed-5e5662cbd62a",
 			"hcid": "7079",
 			"name": "Maracaibo",
-			"set": "HCV.1",
+			"set": "HCV.1.0",
 			"collector_number": "226",
 			"accepted_order": "226",
 			"layout": "normal",
@@ -522794,7 +522887,7 @@
 			"oracle_id": "dfd1f946-60aa-4054-9924-a59a7a4ee468",
 			"hcid": "7080",
 			"name": "Slippery Google",
-			"set": "HCV.1",
+			"set": "HCV.1.1",
 			"collector_number": "175",
 			"accepted_order": "175",
 			"layout": "normal",
@@ -522856,7 +522949,7 @@
 			"oracle_id": "91ce90f6-97b7-4c4f-ab4b-9940243ab9fc",
 			"hcid": "7081",
 			"name": "Deadname Nemesis",
-			"set": "HCV.1",
+			"set": "HCV.1.1",
 			"collector_number": "198",
 			"accepted_order": "198",
 			"layout": "normal",
@@ -529542,12 +529635,14 @@
 			"tags": [
 				"french-vanilla",
 				"ransomnote",
-				"notmagic-frame"
+				"notmagic-frame",
+				"first-person"
 			],
 			"base_tags": [
 				"french-vanilla",
 				"ransomnote",
-				"notmagic-frame"
+				"notmagic-frame",
+				"first-person"
 			]
 		},
 		{
@@ -537584,7 +537679,7 @@
 			"oracle_id": "f64f4b64-213e-4d13-bfd1-1b9ed87632f4",
 			"hcid": "7310",
 			"name": "Goblin Egg Raider",
-			"set": "HCV.4",
+			"set": "HCV.4.0",
 			"collector_number": "311",
 			"accepted_order": "311",
 			"layout": "normal",
@@ -543870,7 +543965,7 @@
 			"oracle_id": "c29d8a83-8af3-428c-981e-d36f9e6c5911",
 			"hcid": "7404",
 			"name": "Doodling in Class Elemental",
-			"set": "HCV.4",
+			"set": "HCV.4.1",
 			"collector_number": "261",
 			"accepted_order": "261",
 			"layout": "normal",
@@ -545199,10 +545294,12 @@
 			"border_color": "black",
 			"frame": "1997",
 			"tags": [
-				"1997-frame"
+				"1997-frame",
+				"shiny-acceptance"
 			],
 			"base_tags": [
-				"1997-frame"
+				"1997-frame",
+				"shiny-acceptance"
 			]
 		},
 		{
@@ -569538,10 +569635,12 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"missing-token"
+				"missing-token",
+				"first-person"
 			],
 			"base_tags": [
-				"missing-token"
+				"missing-token",
+				"first-person"
 			]
 		},
 		{
@@ -587543,7 +587642,7 @@
 				"Sorcery"
 			],
 			"type_line": "Sorcery",
-			"oracle_text": "Turn all creatures face down. They become Islands",
+			"oracle_text": "Turn all creatures face down. They become Islands.",
 			"colors": [
 				"U"
 			],
@@ -589850,14 +589949,16 @@
 				"full-art",
 				"borderless",
 				"centered-text",
-				"inverted-text"
+				"inverted-text",
+				"masterpiece"
 			],
 			"base_tags": [
 				"scl5-veto",
 				"full-art",
 				"borderless",
 				"centered-text",
-				"inverted-text"
+				"inverted-text",
+				"masterpiece"
 			]
 		},
 		{
@@ -589933,14 +590034,16 @@
 				"full-art",
 				"borderless",
 				"centered-text",
-				"inverted-text"
+				"inverted-text",
+				"masterpiece"
 			],
 			"base_tags": [
 				"scl5-veto",
 				"full-art",
 				"borderless",
 				"centered-text",
-				"inverted-text"
+				"inverted-text",
+				"masterpiece"
 			]
 		},
 		{
@@ -590003,7 +590106,8 @@
 				"scl5-veto",
 				"extended-art",
 				"ransomnote",
-				"ransom-over-real-card"
+				"ransom-over-real-card",
+				"masterpiece"
 			],
 			"tag_notes": {
 				"ransom-over-real-card": "Monastery Mentor"
@@ -590012,7 +590116,8 @@
 				"scl5-veto",
 				"extended-art",
 				"ransomnote",
-				"ransom-over-real-card<Monastery Mentor>"
+				"ransom-over-real-card<Monastery Mentor>",
+				"masterpiece"
 			]
 		},
 		{
@@ -590068,12 +590173,14 @@
 			"tags": [
 				"scl5-veto",
 				"full-art",
-				"borderless"
+				"borderless",
+				"masterpiece"
 			],
 			"base_tags": [
 				"scl5-veto",
 				"full-art",
-				"borderless"
+				"borderless",
+				"masterpiece"
 			]
 		},
 		{
@@ -590128,11 +590235,13 @@
 			],
 			"tags": [
 				"inverted-text",
-				"borderless"
+				"borderless",
+				"masterpiece"
 			],
 			"base_tags": [
 				"inverted-text",
-				"borderless"
+				"borderless",
+				"masterpiece"
 			]
 		},
 		{
@@ -590189,13 +590298,15 @@
 				"scl5-veto",
 				"full-art",
 				"centered-text",
-				"borderless"
+				"borderless",
+				"masterpiece"
 			],
 			"base_tags": [
 				"scl5-veto",
 				"full-art",
 				"centered-text",
-				"borderless"
+				"borderless",
+				"masterpiece"
 			]
 		},
 		{
@@ -590261,7 +590372,8 @@
 			"tags": [
 				"scl5-veto",
 				"showcase-frame",
-				"flavor-name"
+				"flavor-name",
+				"masterpiece"
 			],
 			"tag_notes": {
 				"showcase-frame": "Wanted Poster"
@@ -590269,7 +590381,8 @@
 			"base_tags": [
 				"scl5-veto",
 				"showcase-frame<Wanted Poster>",
-				"flavor-name<Tax Evader>"
+				"flavor-name<Tax Evader>",
+				"masterpiece"
 			]
 		},
 		{
@@ -590341,13 +590454,15 @@
 				"inverted-text",
 				"full-art",
 				"borderless",
-				"flavor-name"
+				"flavor-name",
+				"masterpiece"
 			],
 			"base_tags": [
 				"inverted-text",
 				"full-art",
 				"borderless",
-				"flavor-name<Layer Understander Understander>"
+				"flavor-name<Layer Understander Understander>",
+				"masterpiece"
 			]
 		},
 		{
@@ -590401,12 +590516,14 @@
 			"tags": [
 				"centered-text",
 				"inverted-text",
-				"full-art"
+				"full-art",
+				"masterpiece"
 			],
 			"base_tags": [
 				"centered-text",
 				"inverted-text",
-				"full-art"
+				"full-art",
+				"masterpiece"
 			]
 		},
 		{
@@ -590464,14 +590581,16 @@
 				"gif",
 				"unusual-proportions",
 				"small",
-				"still-image"
+				"still-image",
+				"masterpiece"
 			],
 			"base_tags": [
 				"animated",
 				"gif",
 				"unusual-proportions",
 				"small",
-				"still-image<1_TAND-0il-14VWWRbo_et92Q-Uw8fpg2>"
+				"still-image<1_TAND-0il-14VWWRbo_et92Q-Uw8fpg2>",
+				"masterpiece"
 			]
 		},
 		{
@@ -590535,11 +590654,13 @@
 			],
 			"tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"masterpiece"
 			],
 			"base_tags": [
 				"full-art",
-				"borderless"
+				"borderless",
+				"masterpiece"
 			]
 		},
 		{
@@ -590601,14 +590722,16 @@
 			],
 			"tags": [
 				"scl5-veto",
-				"showcase-frame"
+				"showcase-frame",
+				"masterpiece"
 			],
 			"tag_notes": {
 				"showcase-frame": "Parchment"
 			},
 			"base_tags": [
 				"scl5-veto",
-				"showcase-frame<Parchment>"
+				"showcase-frame<Parchment>",
+				"masterpiece"
 			]
 		},
 		{
@@ -590666,11 +590789,13 @@
 			],
 			"tags": [
 				"scl5-veto",
-				"no-art"
+				"no-art",
+				"masterpiece"
 			],
 			"base_tags": [
 				"scl5-veto",
-				"no-art"
+				"no-art",
+				"masterpiece"
 			]
 		},
 		{
@@ -673299,7 +673424,7 @@
 			"object": "card",
 			"kind": "token",
 			"id": "64f85328-cd85-4d2f-99af-d0fcd6e3af5c",
-			"oracle_id": " 05f02c3e-15e1-4648-9be6-e59ecbdae552",
+			"oracle_id": "05f02c3e-15e1-4648-9be6-e59ecbdae552",
 			"hcid": "Scuttletide1",
 			"name": "Scuttletide",
 			"set": "HCT",

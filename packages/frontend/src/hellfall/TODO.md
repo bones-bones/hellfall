@@ -190,3 +190,4 @@ Write a script to transform the database
 - remove collector num tag handling
 - remove temp change filter once possible
 - note the differences between set/number and set/accepted (grouping)
+- make sure that removing a base tag with no notes doesn't affect duplicates with notes

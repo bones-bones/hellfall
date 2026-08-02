@@ -32,7 +32,7 @@ const rootAddProps = [
   'oracle_id_is_scryfall',
   'name',
   'flavor_name',
-  'export_name',
+  // 'export_name', #temp
   'set',
   'collector_number',
   'accepted_order',
@@ -49,8 +49,8 @@ const rootAddProps = [
   'print_image',
   'rotated_print_image',
   'still_print_image',
-  'not_directly_draftable',
-  'has_draft_partners',
+  // 'not_directly_draftable', #temp
+  // 'has_draft_partners', #temp
   'legalities',
   'rulings',
   'finish',
@@ -69,7 +69,7 @@ const rootDeleteProps = [
   'id_is_scryfall',
   'oracle_id_is_scryfall',
   'flavor_name',
-  'export_name',
+  // 'export_name', #temp
   'rarity',
   'rotated_image',
   'still_image',
@@ -77,8 +77,8 @@ const rootDeleteProps = [
   'print_image',
   'rotated_print_image',
   'still_print_image',
-  'not_directly_draftable',
-  'has_draft_partners',
+  // 'not_directly_draftable', #temp
+  // 'has_draft_partners', #temp
   // 'keywords',
   'creators',
   'artists',
@@ -201,7 +201,7 @@ const faceAddProps = [
   'name',
   'layout',
   'flavor_name',
-  'export_name',
+  // 'export_name', #temp
   'image_status',
   'image',
   'rotated_image',
@@ -227,13 +227,13 @@ const faceAddProps = [
   'watermark',
   'border_color',
   'frame',
-  'compress_face',
-  'drop_face',
+  // 'compress_face', #temp
+  // 'drop_face', #temp
   'frame_effects',
 ] as const satisfies facePropType[];
 const faceDeleteProps = [
   'flavor_name',
-  'export_name',
+  // 'export_name', #temp
   'image',
   'rotated_image',
   'still_image',
@@ -251,8 +251,8 @@ const faceDeleteProps = [
   'color_indicator',
   'watermark',
   'frame',
-  'compress_face',
-  'drop_face',
+  // 'compress_face', #temp
+  // 'drop_face', #temp
   'frame_effects',
 ] as const satisfies facePropType[];
 

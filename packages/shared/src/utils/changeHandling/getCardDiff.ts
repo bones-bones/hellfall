@@ -150,12 +150,6 @@ const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
 };
 type add = faceChangeablePropType<'add'>;
 
-const tempChangeFilter = (change: anyChange) => {
-  if (change.location == 'tag') return (isSetCode(change.tag ?? change.full_tag) || /^hc1\.\d$/.test(change.tag ?? change.full_tag));
-  if (change.location != 'root' && change.location != 'face') return;
-  if (change.prop != 'collector_number' && change.prop != 'accepted_order' && change.prop != 'name' && change.prop != 'flavor_name') return;
-  return true;
-};
 
 /**
  * Gets a list of changes from the differences between existing and new versions of a card
@@ -358,5 +352,5 @@ export const getChangesFromDifferences = (
       tag => getChangesFromTag(existingCard, 'delete', tag, alsoAddingFaces)[0] ?? []
     )
   );
-  return changeList.sort(sortChanges).filter(tempChangeFilter);
+  return changeList.sort(sortChanges);
 };

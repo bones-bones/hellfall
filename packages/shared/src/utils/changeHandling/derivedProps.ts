@@ -714,11 +714,11 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
     setDerivedProps(newCard);
     return newCard;
   }
-
+  
+  newCard.all_parts = existingCard.all_parts;
+  // existingCard.all_parts = newCard.all_parts; #part
   const changeList = getChangesFromDifferences(existingCard, newCard, true);
 
-  // existingCard.all_parts = newCard.all_parts; #part
-  newCard.all_parts = existingCard.all_parts;
   applyChanges(existingCard, changeList, true);
   setDerivedProps(existingCard);
   return existingCard;

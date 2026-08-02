@@ -250,13 +250,7 @@ const loadExistingData = () => {
     console.warn('Could not load cards, proceeding with undefined content:', error);
   }
 
-  const existingCards = new CardMap(
-    dataToCards(
-      databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [],
-      'accepted_order',
-      ''
-    )
-  );
+  const existingCards = new CardMap(dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? []));
 
   try {
     tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
@@ -264,7 +258,7 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = new CardMap(dataToCards(tokensContent?.data ?? [], 'accepted_order', ''));
+  const existingTokens = new CardMap(dataToCards(tokensContent?.data ?? []));
 
   // try {
   //   landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
@@ -278,28 +272,6 @@ const loadExistingData = () => {
 
   return { existingCards, existingTokens };
 };
-const ignoreDuplicateHCIDs: string[] = [
-  '39',
-  '6730',
-  '6731',
-  '6732',
-  '6733',
-  '2101',
-  '2102',
-  '2103',
-  '6791',
-  '6792',
-  '6793',
-  '6794',
-  '6795',
-  '6796',
-  '6797',
-  '6735',
-  '7240',
-  '7241',
-  '7772',
-  '7801',
-];
 const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
   'HCV.1.0': ['8b'],
   'HCV.2.1': ['138b'],
