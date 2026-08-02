@@ -549,7 +549,7 @@ export const resetFaceExportProps = (card: HCCard.Any) => {
  * @param takenNames list of names that are already taken (for the purposes of setting `export_name`)
  * @returns the invariant
  */
-export const buildInvariant = (card: HCCard.Any, takenNames: string[]): printInvariant => {
+export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): printInvariant => {
   const invariant = cardToInvariant(card);
   const toFinalExportName = (name: string, face?: faceType) => {
     let exportName = toExportName(name);
@@ -569,7 +569,7 @@ export const buildInvariant = (card: HCCard.Any, takenNames: string[]): printInv
       // #test
       exportName += '_';
     }
-    while (takenNames?.includes(exportName) || isInteger(exportName)) {
+    while (takenNames.has(exportName.toLowerCase()) || isInteger(exportName)) {
       // #test
       exportName += '_';
     }
@@ -594,14 +594,14 @@ export const buildInvariant = (card: HCCard.Any, takenNames: string[]): printInv
         if (exportName != face.name && exportName != card.name) {
           invariant.card_faces![index].export_name = exportName;
         }
-        takenNames.push(exportName);
+        takenNames.add(exportName.toLowerCase());
         return exportName;
       });
       const exportName = toFinalExportName(fullName[0] + ' // ' + fullName[1]);
       if (exportName != card.name) {
         invariant.export_name = exportName;
       }
-      takenNames.push(exportName);
+      takenNames.add(exportName.toLowerCase());
       return invariant;
     }
 
@@ -644,7 +644,7 @@ export const buildInvariant = (card: HCCard.Any, takenNames: string[]): printInv
         if (exportName != face.name && exportName != card.name && exportName != faceName) {
           face.export_name = exportName;
         }
-        takenNames.push(exportName);
+        takenNames.add(exportName.toLowerCase());
       }
     });
   } else {
@@ -652,7 +652,7 @@ export const buildInvariant = (card: HCCard.Any, takenNames: string[]): printInv
     if (exportName != card.name) {
       invariant.export_name = exportName;
     }
-    takenNames.push(exportName);
+    takenNames.add(exportName.toLowerCase());
   }
   return invariant;
 };

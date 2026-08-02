@@ -86,11 +86,6 @@ export const mergeInvariants = (oldInvariant: printInvariant, newInvariant: prin
     } else {
       delete oldInvariant.oracle_id_is_scryfall;
     }
-    if (newInvariant.export_name) {
-      oldInvariant.export_name = newInvariant.export_name;
-    } else {
-      delete oldInvariant.export_name;
-    }
     if (newInvariant.legalities && !oldInvariant.legalities) {
       oldInvariant.legalities = newInvariant.legalities;
     }

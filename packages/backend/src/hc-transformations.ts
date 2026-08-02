@@ -29,6 +29,8 @@ import {
   InvariantMap,
   resetFaceExportProps,
   buildInvariant,
+  baseCardInvariantMap,
+  baseTokenInvariantMap,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -291,6 +293,11 @@ const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   'HC8.1': ['31b'],
   'HC9.0': ['137b', '324b'],
 };
+const nontokenTokenNames = ['Force of Will', 'Radiation', 'Poison Counter','Indicate', 'Manifest', 'Undead Servant']
+
+const tokenNames = ['Storm Crow']
+
+
 const main = async () => {
   const newCards = await fetchCards();
   const usernameMappings = await fetchUsernameMappings();
@@ -385,9 +392,35 @@ const main = async () => {
   });
   finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
 
-  const invariantMap = new InvariantMap();
+  const takenNames = new Set(namesRawData.data);
 
-  const takenNames = namesRawData.data;
+  const invariantMap = baseCardInvariantMap.clone();
+
+  baseTokenInvariantMap.forEach(invariant => {
+    const newInvariant = structuredClone(invariant);
+    if (nontokenTokenNames.includes(newInvariant.name)) {
+      if (takenNames.has(newInvariant.name.toLowerCase())) {
+        newInvariant.export_name = `${newInvariant.name}_`;
+        takenNames.add(newInvariant.export_name.toLowerCase())
+      } else {
+        takenNames.add(newInvariant.name.toLowerCase());
+      }
+    } else {
+      const splitName = newInvariant.name.split(' ');
+      if (splitName.at(-1)?.length == 1 || splitName.at(-1) == 'Token') {
+        newInvariant.name = splitName[0];
+      }
+      let exportName = `${newInvariant.name} Token`
+      while (takenNames.has(exportName.toLowerCase())) {
+        // #test
+        exportName += '_';
+      }
+      newInvariant.export_name = exportName;
+      takenNames.add(newInvariant.export_name.toLowerCase())
+    }
+
+  });
+
   finalCards.forEach(card => {
     resetFaceExportProps(card);
     if (!invariantMap.hasOracleId(card.oracle_id)) {
