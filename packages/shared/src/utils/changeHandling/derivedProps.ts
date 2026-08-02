@@ -545,7 +545,7 @@ export const resetFaceExportProps = (card: HCCard.Any) => {
 };
 
 
-const useTokenList = ['Food and Drug', 'EVIL Combat']
+const useTokenList = ['Food and Drug', 'EVIL Combat', 'Dawizard']
 /**
  * Builds an invariant for a card. Note: should only be used on backend if
  * {@linkcode resetFaceExportProps} has been called first
@@ -563,8 +563,6 @@ export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): print
         exportName += ' (Token)';
       } else if (name.toLowerCase().includes('copy') || useTokenList.includes(name) || (face?.subtypes && textListIncludes([face.subtypes.join(' '), ...face.subtypes],face?.name ?? card.name))) {
         exportName += ' Token';
-      } else {
-        const x = 1;
       }
     }
     // if (exportName.startsWith('(')) {
