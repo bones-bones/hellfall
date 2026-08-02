@@ -1176,20 +1176,20 @@ export const getChangesFromTag = (
       HCImageStatus.HighRes
     );
     changes.push(change);
-  // } else if (tag == 'card-in-scryfall') {
-  //   const change: rootChange<typeof change_type, 'oracle_id_is_scryfall'> = createRootChange(
-  //     change_type,
-  //     'oracle_id_is_scryfall',
-  //     true
-  //   );
-  //   changes.push(change);
-  //   // } else if (tag == 'exact-card-in-scryfall') {
-  //   //   const change: rootChange<'id_is_scryfall'> = createRootChange(
-  //   //     change_type,
-  //   //     'id_is_scryfall',
-  //   //     true
-  //   //   );
-  //   //   changes.push(change);
+    // } else if (tag == 'card-in-scryfall') {
+    //   const change: rootChange<typeof change_type, 'oracle_id_is_scryfall'> = createRootChange(
+    //     change_type,
+    //     'oracle_id_is_scryfall',
+    //     true
+    //   );
+    //   changes.push(change);
+    //   // } else if (tag == 'exact-card-in-scryfall') {
+    //   //   const change: rootChange<'id_is_scryfall'> = createRootChange(
+    //   //     change_type,
+    //   //     'id_is_scryfall',
+    //   //     true
+    //   //   );
+    //   //   changes.push(change);
   }
   return changes.sort(sortChanges);
   // return changes.filter(change=>changeIsValid(card,change))

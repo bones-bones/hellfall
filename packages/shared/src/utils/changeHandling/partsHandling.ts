@@ -11,19 +11,18 @@ import { CardMap, toFaces } from '../cardHandling';
 export const hasPartWithComp = (card: HCCard.Any, comp: relatedComponent): boolean =>
   card.all_parts?.some(part => part.component == comp) ?? false;
 
-
-export const findMatchingPartIndex = (card:HCCard.Any, part:HCRelatedCard) => {
+export const findMatchingPartIndex = (card: HCCard.Any, part: HCRelatedCard) => {
   const allParts = card.all_parts;
   if (!allParts) return;
   const idIndex = allParts.findIndex(e => e.id == part.id);
   if (idIndex != -1) return idIndex;
   const hcidIndex = allParts.findIndex(e => e.hcid == part.hcid);
   if (hcidIndex != -1) return hcidIndex;
-  const setIndex = allParts.findIndex(e => textEquals(e.name,part.name) && e.set == part.set);
+  const setIndex = allParts.findIndex(e => textEquals(e.name, part.name) && e.set == part.set);
   if (setIndex != -1) return setIndex;
-  const nameIndex = allParts.findIndex(e => textEquals(e.name,part.name));
+  const nameIndex = allParts.findIndex(e => textEquals(e.name, part.name));
   if (nameIndex != -1) return nameIndex;
-}
+};
 /**
  * Updates a card and its related cards
  * @param card card to update
@@ -276,7 +275,7 @@ export const updateParts = (
       }
       meldParts.forEach((part, partid) => {
         if (id != partid) {
-          const relatedIndex = findMatchingPartIndex(relatedCard,part);
+          const relatedIndex = findMatchingPartIndex(relatedCard, part);
           if (relatedIndex == -1 || relatedIndex == undefined || !relatedCard.all_parts) {
             pushProp(relatedCard, 'all_parts', part);
           } else {

@@ -150,7 +150,6 @@ const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
 };
 type add = faceChangeablePropType<'add'>;
 
-
 /**
  * Gets a list of changes from the differences between existing and new versions of a card
  * @param existingCard existing version of the card

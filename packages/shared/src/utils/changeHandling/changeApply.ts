@@ -63,7 +63,7 @@ export const applyRootChange = (
       }
     } else {
       popPropFromRoot(card, change.prop, change.value!);
-      if (['frame_effects','artists'].includes(change.prop) && !card[change.prop]?.length) {
+      if (['frame_effects', 'artists'].includes(change.prop) && !card[change.prop]?.length) {
         deletePropFromRoot(card, change.prop);
       }
     }

@@ -250,7 +250,9 @@ const loadExistingData = () => {
     console.warn('Could not load cards, proceeding with undefined content:', error);
   }
 
-  const existingCards = new CardMap(dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? []));
+  const existingCards = new CardMap(
+    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [])
+  );
 
   try {
     tokensContent = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
@@ -275,16 +277,16 @@ const loadExistingData = () => {
 const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
   'HCV.1.0': ['8b'],
   'HCV.2.1': ['138b'],
-  'HC9.0': ['137b','324b'],
+  'HC9.0': ['137b', '324b'],
 };
 const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   'HLC.0': ['8b', '65b'],
-  'HC2.1': ['114b','114c','114d','114e', '138b', '114f','217b','217c','217d','217e'],
-  'HC3.1': ['248b','346b','346c','346d'],
+  'HC2.1': ['114b', '114c', '114d', '114e', '138b', '114f', '217b', '217c', '217d', '217e'],
+  'HC3.1': ['248b', '346b', '346c', '346d'],
   'HC6.0': ['10b'],
-  'HC8.0': ['292b','292c'],
+  'HC8.0': ['292b', '292c'],
   'HC8.1': ['31b'],
-  'HC9.0': ['137b','324b'],
+  'HC9.0': ['137b', '324b'],
 };
 const main = async () => {
   const newCards = await fetchCards();
@@ -316,16 +318,26 @@ const main = async () => {
     const ao = parseInt(card.accepted_order);
     const cSet = collectorMap.get(getCollectorOrderSet(card.set));
     const aSet = acceptedMap.get(getAcceptedOrderSet(card.set));
-    if (cSet?.has(cn) && !ignoreDuplicateNumbers[getCollectorOrderSet(card.set)]?.includes(card.collector_number)) {
+    if (
+      cSet?.has(cn) &&
+      !ignoreDuplicateNumbers[getCollectorOrderSet(card.set)]?.includes(card.collector_number)
+    ) {
       console.log(
-        `Set ${getCollectorOrderSet(card.set)} has a duplicate collector number at ${cn} (hcid: ${card.hcid}, raw: ${card.collector_number})`
+        `Set ${getCollectorOrderSet(card.set)} has a duplicate collector number at ${cn} (hcid: ${
+          card.hcid
+        }, raw: ${card.collector_number})`
       );
     } else if (cn) {
       cSet?.add(cn);
     }
-    if (aSet?.has(ao) && !ignoreDuplicateOrders[getAcceptedOrderSet(card.set)]?.includes(card.accepted_order)) {
+    if (
+      aSet?.has(ao) &&
+      !ignoreDuplicateOrders[getAcceptedOrderSet(card.set)]?.includes(card.accepted_order)
+    ) {
       console.log(
-        `Set ${getAcceptedOrderSet(card.set)} has a duplicate accepted order at ${ao} (hcid: ${card.hcid}, raw: ${card.accepted_order})`
+        `Set ${getAcceptedOrderSet(card.set)} has a duplicate accepted order at ${ao} (hcid: ${
+          card.hcid
+        }, raw: ${card.accepted_order})`
       );
     } else if (ao) {
       aSet?.add(ao);

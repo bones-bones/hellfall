@@ -189,7 +189,10 @@ export class CardMap {
    * If no card has the specified hcid, undefined is returned
    * @param part the related card for the card to get
    */
-  getFromPart = (part: HCRelatedCard) => this.get(part.id) ?? this.getFromHCID(part.hcid) ?? this.getFromNameSetAndNumber(part.name, part.set);
+  getFromPart = (part: HCRelatedCard) =>
+    this.get(part.id) ??
+    this.getFromHCID(part.hcid) ??
+    this.getFromNameSetAndNumber(part.name, part.set);
 
   /**
    * Returns a subset of the CardMap object as a new CardMap, based on a provided list of names.

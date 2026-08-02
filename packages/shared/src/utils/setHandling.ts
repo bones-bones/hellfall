@@ -138,12 +138,12 @@ export const getCollectorOrderSet = (code: SetCode): SetCode => {
 export const getAcceptedOrderSet = (code: SetCode): SetCode => {
   const parent = getParentSet(code);
   if (parent?.code == 'SCL') {
-    return parent.code
+    return parent.code;
   }
   if (parent?.code.startsWith('HCV.')) {
     const [set, subset] = code.toUpperCase().split('.').slice(1);
-    const acceptedSet = `${set == '1' ? 'HLC': `HC${set}`}.${subset}`;
-    return isSetCode(acceptedSet) ? acceptedSet : (code.toUpperCase() as SetCode)
+    const acceptedSet = `${set == '1' ? 'HLC' : `HC${set}`}.${subset}`;
+    return isSetCode(acceptedSet) ? acceptedSet : (code.toUpperCase() as SetCode);
   }
   return code.toUpperCase() as SetCode;
 };
