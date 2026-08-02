@@ -300,17 +300,19 @@ const ignoreDuplicateHCIDs: string[] = [
   '7772',
   '7801',
 ];
-const ignoreMissingNums: Partial<Record<SetCode, number[]>> = {
-  'HC2.0': [93, 141, 154, 160, 187, 214, 228],
-  'HC2.1': [58, 93, 103, 104, 138, 190, 201, 206, 307],
-  'HC3.0': [68, 72, 96, 204, 230, 271, 305, 337],
-  'HC3.1': [40, 45, 56, 62, 97, 175, 372],
-  'HC4.0': [76, 93, 129, 263, 311, 364],
-  'HC4.1': [146, 204, 261],
-  'HC8.0': [259],
+const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
+  'HCV.1.0': ['8b'],
+  'HCV.2.1': ['138b'],
+  'HC9.0': ['137b','324b'],
 };
 const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
-  'HLC.0': ['65b'],
+  'HLC.0': ['8b', '65b'],
+  'HC2.1': ['114b','114c','114d','114e', '138b', '114f','217b','217c','217d','217e'],
+  'HC3.1': ['248b','346b','346c','346d'],
+  'HC6.0': ['10b'],
+  'HC8.0': ['292b','292c'],
+  'HC8.1': ['31b'],
+  'HC9.0': ['137b','324b'],
 };
 const main = async () => {
   const newCards = await fetchCards();
@@ -345,14 +347,14 @@ const main = async () => {
     // if (ignoreDuplicateHCIDs.includes(card.hcid)) {
     //   return;
     // }
-    if (cSet?.has(cn) /* || ignoreMissingNums[card.set]?.includes(num) */) {
+    if (cSet?.has(cn) && !ignoreDuplicateNumbers[getCollectorOrderSet(card.set)]?.includes(card.collector_number)) {
       console.log(
         `Set ${getCollectorOrderSet(card.set)} has a duplicate collector number at ${cn} (hcid: ${card.hcid}, raw: ${card.collector_number})`
       );
     } else if (cn) {
       cSet?.add(cn);
     }
-    if (aSet?.has(ao) && !ignoreDuplicateOrders[card.set]?.includes(card.accepted_order)) {
+    if (aSet?.has(ao) && !ignoreDuplicateOrders[getAcceptedOrderSet(card.set)]?.includes(card.accepted_order)) {
       console.log(
         `Set ${getAcceptedOrderSet(card.set)} has a duplicate accepted order at ${ao} (hcid: ${card.hcid}, raw: ${card.accepted_order})`
       );
@@ -362,7 +364,7 @@ const main = async () => {
   });
 
   for (const [code, nums] of collectorMap) {
-    if (code.startsWith('HCV.1') || code.startsWith('HLC')) continue;
+    if (/^HCV\.[1-4]\.[01]$/.test(code)) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i) /*  && !ignoreMissingNums[code]?.includes(i) */) {

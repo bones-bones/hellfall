@@ -68,7 +68,7 @@
       "id": "51f347fa-3857-4d7f-adcc-354670c37abc",
       "code": "HCV.1.0",
       "name": "Hellscube V(eto).1.0",
-      "description": "Cards originally from HLC that didn't make the cut for the final version.",
+      "description": "Cards originally from HLC.0 that didn't make the cut for the final version.",
       "set_type": "veto",
       "parent_set_code": "HCV.1"
     },
@@ -89,7 +89,9 @@
       "child_set_codes": [
         "HC2.0",
         "HC2.1",
-        "HCV.2"
+        "HCV.2",
+        "HCV.2.0",
+        "HCV.2.1"
       ],
       "use_color_order": true,
       "filename": ""
@@ -116,7 +118,24 @@
       "name": "Hellscube V(eto).2",
       "description": "Cards cut from HC2.",
       "set_type": "veto",
-      "parent_set_code": "HCV"
+      "parent_set_code": "HCV",
+      "child_set_codes": ["HCV.2.0", "HCV.2.1"]
+    },
+    {
+      "id": "36a4348f-169d-4cf0-b1c8-70285b91bcae",
+      "code": "HCV.2.0",
+      "name": "Hellscube V(eto).2.0",
+      "description": "Cards cut from HC2.0.",
+      "set_type": "veto",
+      "parent_set_code": "HCV.2"
+    },
+    {
+      "id": "31169da1-43f3-4946-aeb7-efbc07f34234",
+      "code": "HCV.2.1",
+      "name": "Hellscube V(eto).2.1",
+      "description": "Cards cut from HC2.1.",
+      "set_type": "veto",
+      "parent_set_code": "HCV.2"
     },
     {
       "id": "1f7be3a9-e063-4b39-9c8e-481bfe594366",
@@ -127,7 +146,9 @@
       "child_set_codes": [
         "HC3.0",
         "HC3.1",
-        "HCV.3"
+        "HCV.3",
+        "HCV.3.0",
+        "HCV.3.1"
       ],
       "use_color_order": true,
       "filename": ""
@@ -162,7 +183,24 @@
       "name": "Hellscube V(eto).3",
       "description": "Cards cut from HC3.",
       "set_type": "veto",
-      "parent_set_code": "HCV"
+      "parent_set_code": "HCV",
+      "child_set_codes": ["HCV.3.0", "HCV.3.1"]
+    },
+    {
+      "id": "709db4b1-11cd-494f-9fc8-da1e328948c4",
+      "code": "HCV.3.0",
+      "name": "Hellscube V(eto).3.0",
+      "description": "Cards cut from HC3.0.",
+      "set_type": "veto",
+      "parent_set_code": "HCV.3"
+    },
+    {
+      "id": "770b2fe9-e02a-4668-a9ef-e5102e1d4dfc",
+      "code": "HCV.3.1",
+      "name": "Hellscube V(eto).3.1",
+      "description": "Cards cut from HC3.1.",
+      "set_type": "veto",
+      "parent_set_code": "HCV.3"
     },
     {
       "id": "127f6366-1903-44db-b35e-95d6614ead50",
@@ -173,10 +211,13 @@
       "child_set_codes": [
         "HC4.0",
         "HC4.1",
-        "HCV.4"
+        "HCV.4",
+        "HCV.4.0",
+        "HCV.4.1"
       ],
       "use_color_order": true,
-      "filename": ""
+      "filename": "",
+      "includeLands": true
     },
     {
       "id": "834db0a8-2549-43ac-9a7b-308fc02aeb69",
@@ -205,7 +246,23 @@
       "description": "Cards cut from HC4.",
       "set_type": "veto",
       "parent_set_code": "HCV",
-      "includeLands": true
+      "child_set_codes": ["HCV.4.0", "HCV.4.1"]
+    },
+    {
+      "id": "944d6d53-6be4-4f14-b78b-30ec40030c4f",
+      "code": "HCV.4.0",
+      "name": "Hellscube V(eto).4.0",
+      "description": "Cards cut from HC4.0.",
+      "set_type": "veto",
+      "parent_set_code": "HCV.4"
+    },
+    {
+      "id": "18c7067b-37e1-47a6-8046-0d2cd74fd0ee",
+      "code": "HCV.4.1",
+      "name": "Hellscube V(eto).4.1",
+      "description": "Cards cut from HC4.1.",
+      "set_type": "veto",
+      "parent_set_code": "HCV.4"
     },
     {
       "id": "9bb49589-6642-4a7a-a874-fbf2bde38877",

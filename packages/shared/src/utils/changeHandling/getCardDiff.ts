@@ -5,6 +5,7 @@ import {
   HCCardFace,
   HCFrameEffect,
   HCKind,
+  isSetCode,
   rootPropType,
 } from '@hellfall/shared/types';
 import {
@@ -150,7 +151,7 @@ const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
 type add = faceChangeablePropType<'add'>;
 
 const tempChangeFilter = (change: anyChange) => {
-  if (change.location == 'tag') return true;
+  if (change.location == 'tag') return (isSetCode(change.tag ?? change.full_tag) || /^hc1\.\d$/.test(change.tag ?? change.full_tag));
   if (change.location != 'root') return;
   if (change.prop != 'collector_number' && change.prop != 'accepted_order') return;
   return true;
