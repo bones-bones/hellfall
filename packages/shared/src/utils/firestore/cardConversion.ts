@@ -44,7 +44,8 @@ export const cardToFirestore = (card: HCCard.Any): firestoreCard => {
  * @param fire firestore card to convert
  */
 export const firestoreToCard = (fire: firestoreCard): HCCard.Any => {
-  const card = { ...fire } as unknown as HCCard.Any;
+  const { last_modified: _, ...rest } = fire;
+  const card = { ...rest } as unknown as HCCard.Any;
   card.color_identity_hybrid = JSON.parse(fire.color_identity_hybrid ?? '');
   return card;
 };
