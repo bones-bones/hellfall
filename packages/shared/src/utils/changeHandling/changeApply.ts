@@ -74,6 +74,7 @@ export const applyRootChange = (
 const faceDeriveProps: facePropType[] = [
   'mana_cost',
   'oracle_text',
+  'colors',
   'color_indicator',
   'supertypes',
   'types',

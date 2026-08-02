@@ -1,4 +1,4 @@
-import type { CollectionReference } from '@google-cloud/firestore';
+import { FieldValue, type CollectionReference } from '@google-cloud/firestore';
 import { HCCard } from '@hellfall/shared/types';
 import { CardMap } from '../cardHandling';
 import {
@@ -39,6 +39,11 @@ export const applyFromCollection = async (
   cleanParts(card, oldRelatedMap);
 
   await Promise.all(
-    allRelatedMap.cards().map(related => cardsCol.doc(related.id).set(cardToFirestore(related)))
+    allRelatedMap.cards().map(related =>
+      cardsCol.doc(related.id).set({
+        ...cardToFirestore(related),
+        last_modified: FieldValue.serverTimestamp(),
+      })
+    )
   );
 };

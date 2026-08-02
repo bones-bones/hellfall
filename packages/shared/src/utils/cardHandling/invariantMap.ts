@@ -19,25 +19,28 @@ export type invariantRelatedCard = HCRelatedCard & {
  *
  * `name` and `oracle_id` are mandatory.
  */
-export type printInvariant = { name: string; oracle_id: string; all_parts?: invariantRelatedCard[] } & Pick<
+export type printInvariant = {
+  name: string;
+  oracle_id: string;
+  all_parts?: invariantRelatedCard[];
+} & Pick<
   rootMappedType,
-  'keywords' | 'rulings' | 'oracle_id_is_scryfall' | 'legalities' | 'export_name'|'kind'
+  'keywords' | 'rulings' | 'oracle_id_is_scryfall' | 'legalities' | 'export_name' | 'kind'
 >;
-
 
 /**
  * Converts a {@linkcode HCCard.Any} to {@linkcode printInvariant}
  * @param card card to convert
  */
 export const cardToInvariant = (card: HCCard.Any) => {
-  const invariant:printInvariant = {
-    kind:card.kind,
-    oracle_id:card.oracle_id,
+  const invariant: printInvariant = {
+    kind: card.kind,
+    oracle_id: card.oracle_id,
     name: card.name,
-    keywords:structuredClone(card.keywords),
-    legalities:structuredClone(card.legalities),
-    rulings:card.rulings,
-  }
+    keywords: structuredClone(card.keywords),
+    legalities: structuredClone(card.legalities),
+    rulings: card.rulings,
+  };
   if (card.oracle_id_is_scryfall) {
     invariant.oracle_id_is_scryfall = true;
   }
@@ -47,54 +50,56 @@ export const cardToInvariant = (card: HCCard.Any) => {
   if (card.all_parts) {
     invariant.all_parts = card.all_parts.map(part => {
       const newPart = structuredClone(part) as invariantRelatedCard;
-      newPart.default_id = card.id
-      return newPart
-    })
+      newPart.default_id = card.id;
+      return newPart;
+    });
   }
-  return invariant
-}
+  return invariant;
+};
 
 /**
  * Merges two invariants. Must have the same oracle id.
  * @param oldInvariant old invariant to merge
  * @param newInvariant new invariant to merge
  */
-export const mergeInvariants = (oldInvariant: printInvariant, newInvariant:printInvariant) => {
+export const mergeInvariants = (oldInvariant: printInvariant, newInvariant: printInvariant) => {
   if (!oldInvariant.kind) {
     oldInvariant.kind = newInvariant.kind;
     oldInvariant.name = newInvariant.name;
     if (newInvariant.oracle_id_is_scryfall) {
-      oldInvariant.oracle_id_is_scryfall = true
+      oldInvariant.oracle_id_is_scryfall = true;
     } else {
       delete oldInvariant.oracle_id_is_scryfall;
     }
     if (newInvariant.export_name) {
-      oldInvariant.export_name = newInvariant.export_name
+      oldInvariant.export_name = newInvariant.export_name;
     } else {
       delete oldInvariant.export_name;
     }
     if (newInvariant.legalities && !oldInvariant.legalities) {
-      oldInvariant.legalities = newInvariant.legalities
+      oldInvariant.legalities = newInvariant.legalities;
     }
   } else if (oldInvariant.kind != newInvariant.kind && newInvariant.kind) {
     if (toKindIndex(newInvariant.kind) < toKindIndex(oldInvariant.kind)) {
-    oldInvariant.kind = newInvariant.kind;
+      oldInvariant.kind = newInvariant.kind;
     }
   }
   if (!oldInvariant.rulings && newInvariant.rulings) {
     oldInvariant.rulings = newInvariant.rulings;
   }
   if (!oldInvariant.keywords?.length && newInvariant.keywords) {
-    oldInvariant.keywords = newInvariant.keywords
+    oldInvariant.keywords = newInvariant.keywords;
   } else if (newInvariant.keywords?.length) {
-    newInvariant.keywords.filter(keyword => !oldInvariant.keywords?.includes(keyword)).forEach(keyword => oldInvariant.keywords?.push(keyword))
+    newInvariant.keywords
+      .filter(keyword => !oldInvariant.keywords?.includes(keyword))
+      .forEach(keyword => oldInvariant.keywords?.push(keyword));
   }
   if (!oldInvariant.all_parts?.length && newInvariant.all_parts?.length) {
-    oldInvariant.all_parts = newInvariant.all_parts
+    oldInvariant.all_parts = newInvariant.all_parts;
   } else if (newInvariant.all_parts?.length) {
-    newInvariant.all_parts.forEach(part => oldInvariant.all_parts?.push(part))
+    newInvariant.all_parts.forEach(part => oldInvariant.all_parts?.push(part));
   }
-}
+};
 
 // TODO: do I want duplicate handling?
 // const mergeParts = (oldParts: invariantRelatedCard[], newParts: invariantRelatedCard[]) => {
@@ -180,28 +185,28 @@ export class InvariantMap {
 
   /**
    * Adds a new card to the InvariantMap.
-   * 
+   *
    * Will silently fail if card's oracle id is invalid.
    * @param card {@linkcode HCCard.Any} to set
    */
   setCard = (card: HCCard.Any) => {
     if (!isValidV4UUID(card.oracle_id)) return;
-    const current = this.oracleIDMap.get(card.oracle_id)
+    const current = this.oracleIDMap.get(card.oracle_id);
     const newInvariant = cardToInvariant(card);
     if (!current) {
-      this.oracleIDMap.set(newInvariant.oracle_id,newInvariant);
+      this.oracleIDMap.set(newInvariant.oracle_id, newInvariant);
       if (this.nameMap.has(newInvariant.name.toLowerCase())) {
-        let name = newInvariant.name.toLowerCase()
+        let name = newInvariant.name.toLowerCase();
         if (card.kind == 'token' && textListIncludes(toFaces(card)[0].supertypes, 'token')) {
           name += ' token';
         }
         while (this.nameMap.has(name)) name += '_';
-        this.nameMap.set(name, newInvariant.oracle_id)
+        this.nameMap.set(name, newInvariant.oracle_id);
       } else {
-        this.nameMap.set(newInvariant.name.toLowerCase(), newInvariant.oracle_id)
+        this.nameMap.set(newInvariant.name.toLowerCase(), newInvariant.oracle_id);
       }
     } else {
-      mergeInvariants(current,newInvariant);
+      mergeInvariants(current, newInvariant);
     }
   };
 
@@ -221,7 +226,7 @@ export class InvariantMap {
    */
   setCardMap = (cardMap: CardMap) => {
     cardMap.forEach(this.setCard);
-  }
+  };
 
   /**
    * @param input the input to delete (only deletes exact matches)

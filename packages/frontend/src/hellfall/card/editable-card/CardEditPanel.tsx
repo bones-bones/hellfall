@@ -1,7 +1,14 @@
 import { useState, useCallback, useMemo } from 'react';
 import { Card } from '@workday/canvas-kit-react/card';
 import { FormField } from '@workday/canvas-kit-react/form-field';
-import { HCCard } from '@hellfall/shared/types';
+import {
+  HCCard,
+  HCFormat,
+  HCLegality,
+  HCLegalitiesField,
+  formatList,
+  isLegalitiesField,
+} from '@hellfall/shared/types';
 import { useAuth } from '../../../auth/index.ts';
 import { getAuthApiUrl } from '../../../auth/getAuthApiUrl.ts';
 import { createStyles, createStencil } from '@workday/canvas-kit-styling';
@@ -17,13 +24,21 @@ import {
   createStyledSpan,
   createStyledSubtext,
 } from '../../../styling';
-import { ROOT_FIELD_CONFIGS, buildEditFormState, buildChangesFromForm } from './cardEditFields.ts';
+import {
+  DEFAULT_LEGALITIES,
+  LEGALITY_FORMAT_LABELS,
+  ROOT_FIELD_CONFIGS,
+  buildEditFormState,
+  buildChangesFromForm,
+  sumFaceColors,
+} from './cardEditFields.ts';
 import { useSyncPendingChangesets } from '../../hooks/usePendingChangesets.ts';
 import { EditFormState, FieldConfig, groupFieldConfigs } from './types.ts';
 import { addPendingFace } from './faces/addPendingFace.ts';
 import { FACE_FIELD_CONFIGS } from './constants.ts';
 import { getInvalidFields, isFieldValueInvalid } from './fieldValidation.ts';
 import { ImageUploadControl, type ImageTarget } from './ImageUploadControl.tsx';
+import { parseFieldValue } from './parseFieldValue.ts';
 
 const IMAGE_URL_KEYS = new Set<ImageTarget['imageProp']>([
   'image',
@@ -207,6 +222,7 @@ export const CardEditPanel = ({
                         invalid={isFieldValueInvalid(cfg, form.faces[activeFace]?.[cfg.key] ?? '')}
                         cardId={card.id}
                         faceIndex={activeFace}
+                        rootImageUrl={form.root.image ?? ''}
                         onChange={v => setFaceField(activeFace, cfg.key, v)}
                       />
                     ))}
@@ -216,6 +232,7 @@ export const CardEditPanel = ({
                       originals={original.faces[activeFace] ?? {}}
                       cardId={card.id}
                       faceIndex={activeFace}
+                      rootImageUrl={form.root.image ?? ''}
                       onChange={(key, v) => setFaceField(activeFace, key, v)}
                     />
                   </FieldsGrid>
@@ -275,19 +292,25 @@ function RootFields({
   setRootField: (key: string, value: string) => void;
 }) {
   const { main, collapsed } = partitionCollapsedNameFields(ROOT_FIELD_CONFIGS);
+  const derivedColors = sumFaceColors(form.faces);
   return (
     <FieldsGrid>
-      {main.map(cfg => (
-        <FieldEditor
-          key={cfg.key}
-          config={cfg}
-          value={form.root[cfg.key] ?? ''}
-          changed={(form.root[cfg.key] ?? '') !== (original.root[cfg.key] ?? '')}
-          invalid={isFieldValueInvalid(cfg, form.root[cfg.key] ?? '')}
-          cardId={cardId}
-          onChange={v => setRootField(cfg.key, v)}
-        />
-      ))}
+      {main.map(cfg => {
+        const value = cfg.key === 'colors' ? derivedColors : form.root[cfg.key] ?? '';
+        const originalValue = original.root[cfg.key] ?? '';
+        const changed = value !== originalValue;
+        return (
+          <FieldEditor
+            key={cfg.key}
+            config={cfg}
+            value={value}
+            changed={changed}
+            invalid={isFieldValueInvalid(cfg, value)}
+            cardId={cardId}
+            onChange={v => setRootField(cfg.key, v)}
+          />
+        );
+      })}
       <CollapsibleNameFields
         fields={collapsed}
         values={form.root}
@@ -305,6 +328,7 @@ function CollapsibleNameFields({
   originals,
   cardId,
   faceIndex,
+  rootImageUrl,
   onChange,
 }: {
   fields: FieldConfig[];
@@ -312,6 +336,7 @@ function CollapsibleNameFields({
   originals: Record<string, string>;
   cardId: string;
   faceIndex?: number;
+  rootImageUrl?: string;
   onChange: (key: string, value: string) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -337,6 +362,7 @@ function CollapsibleNameFields({
             invalid={isFieldValueInvalid(cfg, values[cfg.key] ?? '')}
             cardId={cardId}
             faceIndex={faceIndex}
+            rootImageUrl={rootImageUrl}
             onChange={v => onChange(cfg.key, v)}
           />
         ))}
@@ -402,6 +428,67 @@ function MultiEnumEditor({
   );
 }
 
+function LegalitiesEditor({
+  id,
+  value,
+  changed,
+  invalid,
+  disabled,
+  legalityValues,
+  onChange,
+}: {
+  id: string;
+  value: string;
+  changed: boolean;
+  invalid: boolean;
+  disabled?: boolean;
+  legalityValues: readonly string[];
+  onChange: (value: string) => void;
+}) {
+  const legalities = useMemo((): HCLegalitiesField => {
+    const parsed = parseFieldValue(value, 'legalities');
+    return isLegalitiesField(parsed) ? parsed : DEFAULT_LEGALITIES;
+  }, [value]);
+
+  const setFormat = (format: HCFormat, legality: HCLegality) => {
+    if (disabled) return;
+    const next = Object.fromEntries(
+      formatList.map(f => [f, f === format ? legality : legalities[f]])
+    ) as HCLegalitiesField;
+    onChange(JSON.stringify(next));
+  };
+
+  return (
+    <LegalitiesBox
+      id={id}
+      role="group"
+      changed={changed}
+      invalid={invalid}
+      aria-disabled={disabled || undefined}
+    >
+      {formatList.map(format => (
+        <LegalityRow key={format}>
+          <LegalityLabel htmlFor={`${id}-${format}`}>
+            {LEGALITY_FORMAT_LABELS[format]}
+          </LegalityLabel>
+          <StyledSelect
+            id={`${id}-${format}`}
+            value={legalities[format]}
+            disabled={disabled}
+            onChange={e => setFormat(format, e.target.value as HCLegality)}
+          >
+            {legalityValues.map(v => (
+              <option key={v} value={v}>
+                {v}
+              </option>
+            ))}
+          </StyledSelect>
+        </LegalityRow>
+      ))}
+    </LegalitiesBox>
+  );
+}
+
 function FieldEditor({
   config,
   value,
@@ -409,6 +496,7 @@ function FieldEditor({
   invalid = false,
   cardId,
   faceIndex,
+  rootImageUrl,
   onChange,
 }: {
   config: FieldConfig;
@@ -417,13 +505,21 @@ function FieldEditor({
   invalid?: boolean;
   cardId?: string;
   faceIndex?: number;
+  /** Card-level image URL; used to lock side-1 image when it matches. */
+  rootImageUrl?: string;
   onChange: (value: string) => void;
 }) {
   const [showExplanation, setShowExplanation] = useState(false);
   const fieldId = `field-${config.key}`;
   const isReadOnly = config.readOnly === true;
+  // Side 1 image sharing the card URL is managed via the card-level Image URL upload.
+  const side1SharesCardImage =
+    faceIndex === 0 && config.key === 'image' && !!rootImageUrl && value === rootImageUrl;
   const canUpload =
-    !!cardId && isImageUrlKey(config.key) && value.includes('storage.googleapis.com');
+    !!cardId &&
+    isImageUrlKey(config.key) &&
+    value.includes('storage.googleapis.com') &&
+    !side1SharesCardImage;
   return (
     <FieldRow>
       <FormField orientation="vertical">
@@ -503,6 +599,16 @@ function FieldEditor({
             changed={changed}
             invalid={invalid}
             disabled={isReadOnly}
+            onChange={onChange}
+          />
+        ) : config.type === 'legalities' && config.enumValues ? (
+          <LegalitiesEditor
+            id={fieldId}
+            value={value}
+            changed={changed}
+            invalid={invalid}
+            disabled={isReadOnly}
+            legalityValues={config.enumValues}
             onChange={onChange}
           />
         ) : (
@@ -708,6 +814,46 @@ const multiEnumOptionStyles = createStyles({
   whiteSpace: 'nowrap',
 });
 const MultiEnumOption = createStyledLabel(multiEnumOptionStyles, 'MultiEnumOption');
+
+const legalitiesBoxStencil = createStencil({
+  vars: {},
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 6,
+    padding: '6px 8px',
+    border: '1px solid #ccc',
+    borderRadius: 2,
+    background: '#fff',
+    width: '100%',
+    boxSizing: 'border-box' as const,
+  },
+  modifiers: {
+    changed: { true: { border: '1px solid #888', background: '#ffe' } },
+    invalid: { true: { border: '1px solid #c00' } },
+  },
+});
+interface LegalitiesBoxProps extends React.ComponentPropsWithoutRef<'div'> {
+  changed?: boolean;
+  invalid?: boolean;
+}
+const LegalitiesBox = createStenciledDiv<LegalitiesBoxProps>(legalitiesBoxStencil, 'LegalitiesBox');
+
+const legalityRowStyles = createStyles({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
+});
+const LegalityRow = createStyledDiv(legalityRowStyles, 'LegalityRow');
+
+const legalityLabelStyles = createStyles({
+  fontSize: 12,
+  fontWeight: 600,
+  color: '#555',
+  minWidth: 96,
+  flexShrink: 0,
+});
+const LegalityLabel = createStyledLabel(legalityLabelStyles, 'LegalityLabel');
 
 const changeSummaryStyles = createStyles({
   marginTop: 12,
