@@ -467,10 +467,11 @@ const main = async () => {
     resetFaceExportProps(card);
     if (!invariantMap.has(card.oracle_id)) {
       invariantMap.set(buildInvariant(card,takenNames))
+    } else {
+      invariantMap.set(card);
     }
   })
-  finalCards.forEach(invariantMap.set);
-  finalCards.forEach(invariantMap.applyInvariant);
+  invariantMap.applyAllInvariants(finalCards)
 
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {

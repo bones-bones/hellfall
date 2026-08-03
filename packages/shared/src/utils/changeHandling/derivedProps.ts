@@ -37,6 +37,7 @@ import {
   InvariantMap,
   printInvariant,
   toFaces,
+  cleanParts, updateParts
 } from '../cardHandling';
 import { orderColors, orderHybrid, pipMap } from '../pipsAndColors';
 import { isInteger } from '../numHandling';
@@ -45,7 +46,6 @@ import { baseIncludesFlag, fillSubKeywords, getBaseDiffs, getChangesFromTag } fr
 import { anyChange, createFaceChange, sortChanges } from './changeTypes';
 import { applyChanges, removeDuplicateChanges } from './changeHandling';
 import { getChangesFromDifferences } from './getCardDiff';
-import { cleanParts, updateParts } from './partsHandling';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,

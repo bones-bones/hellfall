@@ -1,18 +1,10 @@
 import { HCCard, HCRelatedCard, rootMappedType, toKindIndex } from '@hellfall/shared/types';
 import { isValidV4UUID } from '../textHandling';
-import { pushProp, textListIncludes, xor } from '../listHandling';
-import { toFaces } from './cardMethods';
+import { pushProp, xor } from '../listHandling';
 import { CardMap } from './cardMap';
+import { cardToRelatedCard } from './partsHandling';
 
-/**
- * A related card that can be used for a {@linkcode printInvariant} object.
- */
-export type invariantRelatedCard = HCRelatedCard & {
-  /**
-   * The id for the default version of this card to use for the related card.
-   */
-  default_id: string;
-};
+
 export type faceInvariant = { name: string; export_name?: string };
 
 /**
@@ -23,12 +15,13 @@ export type faceInvariant = { name: string; export_name?: string };
 export type printInvariant = {
   name: string;
   oracle_id: string;
-  all_parts?: invariantRelatedCard[];
+  token_makers?: HCRelatedCard[];
   card_faces?: faceInvariant[];
 } & Pick<
   rootMappedType,
   'keywords' | 'rulings' | 'oracle_id_is_scryfall' | 'legalities' | 'export_name' | 'kind'
 >;
+
 
 /**
  * Converts a {@linkcode HCCard.Any} to {@linkcode printInvariant}
@@ -59,18 +52,14 @@ export const cardToInvariant = (card: HCCard.Any) => {
     });
   }
   if (card.all_parts) {
-    invariant.all_parts = card.all_parts.map(part => {
-      const newPart = structuredClone(part) as invariantRelatedCard;
-      newPart.default_id = card.id;
+    invariant.token_makers = card.all_parts.filter(part => part.component == 'token_maker').map(part => {
+      const newPart = structuredClone(part);
       return newPart;
     });
   }
   return invariant;
 };
 
-/**
- * @todo FINISH THE PARTS HANDLING PART OF INVARIANTS
- */
 /**
  * Merges two invariants. Must have the same oracle id.
  * @param oldInvariant old invariant to merge
@@ -106,10 +95,10 @@ export const mergeInvariants = (oldInvariant: printInvariant, newInvariant: prin
       .filter(keyword => !oldInvariant.keywords?.includes(keyword))
       .forEach(keyword => oldInvariant.keywords?.push(keyword));
   }
-  if (!oldInvariant.all_parts?.length && newInvariant.all_parts?.length) {
-    oldInvariant.all_parts = newInvariant.all_parts;
-  } else if (newInvariant.all_parts?.length) {
-    newInvariant.all_parts.forEach(part => oldInvariant.all_parts?.push(part));
+  if (!oldInvariant.token_makers?.length && newInvariant.token_makers?.length) {
+    oldInvariant.token_makers = newInvariant.token_makers;
+  } else if (newInvariant.token_makers?.length) {
+    newInvariant.token_makers.forEach(part => oldInvariant.token_makers?.push(part));
   }
     if (newInvariant.card_faces) {
       if (oldInvariant.card_faces) {
@@ -134,12 +123,46 @@ export const mergeInvariants = (oldInvariant: printInvariant, newInvariant: prin
     }
 };
 
-// TODO: do I want duplicate handling?
-// const mergeParts = (oldParts: invariantRelatedCard[], newParts: invariantRelatedCard[]) => {
-//   newParts.forEach(part => {
-//     if (oldParts.some(old => ))
-//   })
-// }
+  /**
+   * Updates all parts of an invariant and its related cards
+   * @param invariant invariant to use
+   * @param cardMap CardMap to use
+   */
+  const mergeParts = (invariant:printInvariant, cardMap:CardMap) => {
+    const tokensToUpdate = cardMap.getAllPrints(invariant.oracle_id);
+    const newParts = invariant.token_makers
+    if (!newParts) {
+      return;
+    }
+    const defaultToken = cardToRelatedCard(tokensToUpdate.cards()[0]);
+    const oracleSet = new Set(newParts.map(part=>part.oracle_id));
+    oracleSet.forEach(oracle_id => {
+      const makersToUpdate = cardMap.getAllPrints(oracle_id);
+      makersToUpdate.forEach(maker => {
+        if (!maker.all_parts) {
+          maker.all_parts = [];
+        }
+        const makerParts = maker.all_parts;
+        if (makerParts.some(part => part.oracle_id == invariant.oracle_id)) {
+          return;
+        }
+        makerParts.push(defaultToken);
+      })
+      const defaultMaker = cardToRelatedCard(makersToUpdate.cards()[0], 'token_maker')
+
+      tokensToUpdate.forEach(token => {
+        if (!token.all_parts) {
+          token.all_parts = [];
+        }
+        const tokenParts = token.all_parts;
+        if (tokenParts.some(part => part.oracle_id == oracle_id)) {
+          return;
+        }
+        tokenParts.push(defaultMaker);
+      })
+    })
+  }
+
 
 /**
  * The input for an {@linkcode InvariantMap}.
@@ -562,11 +585,13 @@ export class InvariantMap {
     return accumulator;
   }
   /**
-   * Applies the corresponding invariant to a card.
-   * @param card the card to apply the invariant to
+   * Applies the corresponding invariant to all prints of a card.
+   * @param oracle_id the oracle id to apply the invariant to
+   * @param cardMap the CardMap to use to get the prints
    */
-  applyInvariant = (card: HCCard.Any) => {
-    const invariant = this.get(card.oracle_id);
+  applyInvariant = (oracle_id: string, cardMap:CardMap) => {
+    const invariant = this.get(oracle_id);
+    cardMap.getAllPrints(oracle_id).forEach(card => {
     if (card.set == 'NRM') return;
     if (!invariant) return;
     if (invariant.card_faces) {
@@ -600,6 +625,9 @@ export class InvariantMap {
     } else if (card.export_name) {
       delete card.export_name;
     }
+    if (invariant.oracle_id_is_scryfall) {
+      card.oracle_id_is_scryfall = true;
+    }
     if (invariant.rulings) {
       card.rulings = invariant.rulings;
     }
@@ -609,10 +637,14 @@ export class InvariantMap {
     if (invariant.legalities) {
       card.legalities = invariant.legalities;
     }
-    // if (invariant.all_parts) {
-
-    // }
-  };
+    mergeParts(invariant,cardMap);
+    })
+  }
+  /**
+   * Applies the corresponding invariants to all prints of all cards.
+   * @param cardMap the CardMap to use to get the prints
+   */
+  applyAllInvariants = (cardMap: CardMap) => this.oracle_ids().forEach(oracle_id => this.applyInvariant(oracle_id,cardMap))
 }
 
 /**

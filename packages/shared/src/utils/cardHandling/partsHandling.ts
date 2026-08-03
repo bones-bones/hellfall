@@ -1,7 +1,9 @@
 import { HCCard, HCObject, HCRelatedCard, relatedComponent } from '@hellfall/shared/types';
 import { textEquals } from '../textHandling';
 import { pushProp } from '../listHandling';
-import { CardMap, toFaces } from '../cardHandling';
+import { CardMap, } from './cardMap';
+import { toFaces } from './cardMethods';
+
 
 /**
  * Checks whether a card has any related card with a given component
@@ -23,6 +25,46 @@ export const findMatchingPartIndex = (card: HCCard.Any, part: HCRelatedCard) => 
   const nameIndex = allParts.findIndex(e => textEquals(e.name, part.name));
   if (nameIndex != -1) return nameIndex;
 };
+
+/**
+ * Converts a card to a related card version of itself
+ * @param card card to convert
+ * @param component component to use; defaults to `token`
+ * @param is_draft_partner whether to set `is_draft_partner` to `true`
+ */
+export const cardToRelatedCard = (card:HCCard.Any, component:relatedComponent='token', is_draft_partner?:boolean):HCRelatedCard => {
+  const related:HCRelatedCard = {
+        object: HCObject.ObjectType.RelatedCard,
+        id: card.id,
+        oracle_id: card.oracle_id,
+        hcid: card.hcid,
+        name: card.name,
+        set: card.set,
+        image: card.image,
+        type_line: card.type_line,
+        component,
+  }
+  if (is_draft_partner) {
+    related.is_draft_partner = true;
+  }
+  return related;
+}
+
+/**
+ * Updates the props of a related card based on the card version of itself
+ * @param part part to update
+ * @param card card to use
+ */
+export const updatePartFromCard = (part:HCRelatedCard,card:HCCard.Any) => {
+  part.id = card.id;
+  part.oracle_id = card.oracle_id;
+  part.hcid = card.hcid;
+  part.name = card.name;
+  part.set = card.set;
+  part.image = card.image;
+  part.type_line = card.type_line;
+}
+
 /**
  * Updates a card and its related cards
  * @param card card to update
@@ -42,44 +84,15 @@ export const updateParts = (
     const thriving: HCRelatedCard[] = [];
     const basics: HCRelatedCard[] = [];
     relateds.forEach(relatedCard => {
-      const cardAsRelated: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: card.id,
-        oracle_id: card.oracle_id,
-        hcid: card.hcid,
-        name: card.name,
-        set: card.set,
-        image: card.image,
-        type_line: card.type_line,
-        component: 'draft_partner',
-      };
+      const cardAsRelated = cardToRelatedCard(card,'draft_partner');
       const frontIndex = card.all_parts?.findIndex(e => e.hcid == relatedCard.hcid);
       const alreadyHasPart = frontIndex != -1 && frontIndex != undefined;
-      const part: HCRelatedCard = alreadyHasPart
-        ? card.all_parts![frontIndex]
-        : {
-            object: HCObject.ObjectType.RelatedCard,
-            id: relatedCard.id,
-            oracle_id: relatedCard.oracle_id,
-            hcid: relatedCard.hcid,
-            name: relatedCard.name,
-            set: relatedCard.set,
-            image: relatedCard.image,
-            type_line: relatedCard.type_line,
-            component: 'draft_partner',
-            is_draft_partner: true,
-          };
+      const part: HCRelatedCard = alreadyHasPart ? card.all_parts![frontIndex] : cardToRelatedCard(relatedCard, 'draft_partner', true)
       if (part.count) {
         cardAsRelated.count = part.count;
       }
       if (alreadyHasPart) {
-        part.id = relatedCard.id;
-        part.oracle_id = relatedCard.oracle_id;
-        part.hcid = relatedCard.hcid;
-        part.name = relatedCard.name;
-        part.set = relatedCard.set;
-        part.image = relatedCard.image;
-        part.type_line = relatedCard.type_line;
+        updatePartFromCard(part,relatedCard)
       }
       const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
       if (relatedIndex == -1 || relatedIndex == undefined || !card.all_parts) {
@@ -117,17 +130,7 @@ export const updateParts = (
   card.all_parts
     .filter(e => e.component == 'token_maker')
     .forEach(part => {
-      const cardAsRelated: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: card.id,
-        oracle_id: card.oracle_id,
-        hcid: card.hcid,
-        name: card.name,
-        set: card.set,
-        image: card.image,
-        type_line: card.type_line,
-        component: 'token',
-      };
+      const cardAsRelated = cardToRelatedCard(card);
       if (part.count) {
         cardAsRelated.count = part.count;
       }
@@ -139,19 +142,11 @@ export const updateParts = (
         }
         return;
       }
-      part.id = relatedCard.id;
-      part.oracle_id = relatedCard.oracle_id;
-      part.hcid = relatedCard.hcid;
-      part.name = relatedCard.name;
-      part.set = relatedCard.set;
-      part.image = relatedCard.image;
-      part.type_line = relatedCard.type_line;
+      updatePartFromCard(part,relatedCard)
       if (relatedCard.tags?.includes('persistent-tokens')) {
         part.persistent = true;
         cardAsRelated.persistent = true;
       }
-      // update relatedCard.all_parts
-
       const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
       if (relatedIndex == -1 || relatedIndex == undefined || !relatedCard.all_parts) {
         pushProp(relatedCard, 'all_parts', cardAsRelated);
@@ -177,18 +172,7 @@ export const updateParts = (
   card.all_parts
     .filter(e => e.component == 'draft_partner' && e.set != 'FHCJ')
     .forEach(part => {
-      const cardAsRelated: HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: card.id,
-        oracle_id: card.oracle_id,
-        hcid: card.hcid,
-        name: card.name,
-        set: card.set,
-        image: card.image,
-        type_line: card.type_line,
-        component: 'draft_partner',
-        is_draft_partner: true,
-      };
+      const cardAsRelated = cardToRelatedCard(card, 'draft_partner', true);
       if (part.count) {
         cardAsRelated.count = part.count;
       }
@@ -205,14 +189,8 @@ export const updateParts = (
       if (!card.has_draft_partners) {
         card.has_draft_partners = true;
       }
+      updatePartFromCard(part,relatedCard)
 
-      part.id = relatedCard.id;
-      part.oracle_id = relatedCard.oracle_id;
-      part.hcid = relatedCard.hcid;
-      part.name = relatedCard.name;
-      part.set = relatedCard.set;
-      part.image = relatedCard.image;
-      part.type_line = relatedCard.type_line;
       part.is_draft_partner = true;
 
       const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
@@ -234,13 +212,7 @@ export const updateParts = (
               `(${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
           );
         }
-        part.id = relatedCard.id;
-        part.oracle_id = relatedCard.oracle_id;
-        part.hcid = relatedCard.hcid;
-        part.name = relatedCard.name;
-        part.set = relatedCard.set;
-        part.image = relatedCard.image;
-        part.type_line = relatedCard.type_line;
+        updatePartFromCard(part,relatedCard)
         if (part.count) {
           delete part.count;
         }
@@ -252,17 +224,7 @@ export const updateParts = (
         }
         meldParts.set(part.id, part);
       });
-    const meldResult: HCRelatedCard = {
-      object: HCObject.ObjectType.RelatedCard,
-      id: card.id,
-      oracle_id: card.oracle_id,
-      hcid: card.hcid,
-      name: card.name,
-      set: card.set,
-      image: card.image,
-      type_line: card.type_line,
-      component: 'meld_result',
-    };
+    const meldResult = cardToRelatedCard(card, 'meld_result');
     meldParts.set(card.id, meldResult);
     relateds.set(card);
 
