@@ -1,7 +1,7 @@
 import { faceType, HCCard, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
-import { CockCardProps, CockFaceProps, CockRelatedProps } from './cockTypes';
+import { CockCardProps, CockFaceProps, CockPrintProps, CockRelatedProps } from './cockTypes';
 import { orderColors } from '../pipsAndColors';
-import { canBeInDecks, hasTokenHCID, mergeHCCardFaces } from '../cardHandling';
+import { CardMap, mergeHCCardFaces, printInvariant, toFaces } from '../cardHandling';
 import { listIncludesValueLower } from '../listHandling';
 
 const hcToCockLayout: Record<HCLayout, string> = {
@@ -91,7 +91,7 @@ const getMainType = (face: faceType): string => {
  */
 const hcFaceToCockProps = (face: faceType): CockFaceProps => {
   const cockFace: CockFaceProps = {
-    name: face.export_name || face.name,
+    name: face.export_name ?? face.name,
     text: face.oracle_text.replaceAll(/\{(.)\}/g, '$1'),
     layout: hcToCockLayout[face.layout],
     type: face.type_line,
@@ -101,9 +101,6 @@ const hcFaceToCockProps = (face: faceType): CockFaceProps => {
   };
   if (face.colors.length) {
     cockFace.colors = orderColors(face.colors);
-  }
-  if (face.image) {
-    cockFace.picurl = face.image;
   }
   if (face.power || face.toughness) {
     const [powers, toughnesses] = [face.power?.split(' // '), face.toughness?.split(' // ')];
@@ -136,63 +133,31 @@ const hcFaceToCockProps = (face: faceType): CockFaceProps => {
 };
 
 /**
- * Convert an hc all_parts array to a cockatrice related props array
- * @param all_parts hc all_parts array
- * @returns cockatrice related props array
+ * Convert an hc related card to cockatrice related props (only use on `meld_result` and `token_maker`)
+ * @param all_parts hc related card
+ * @returns cockatrice related props
  */
-const hcAllPartsToCockRelated = (all_parts: HCRelatedCard[]): CockRelatedProps[] => {
-  const cockRelateds: CockRelatedProps[] = [];
-  all_parts.forEach(part => {
-    switch (part.component) {
-      case 'meld_result': {
-        const related: CockRelatedProps = {
-          id: part.id,
-          reverse: '',
-          attach: 'transform',
-        };
-        cockRelateds.push(related);
-        break;
-      }
-      // case 'meld_part': {
-      //   const related: CockRelatedProps = {
-      //     id: part.id,
-      //     reverse: 'reverse-',
-      //     attach: 'transform',
-      //   };
-      //   cockRelateds.push(related);
-      //   break;
-      // }
-      // case 'token': {
-      //   const related: CockRelatedProps = {
-      //     id: part.id,
-      //     reverse: '',
-      //   };
-      //   if (part.persistent) {
-      //     related.persistent = 'persistent';
-      //   }
-      //   if (part.count) {
-      //     related.count = part.count;
-      //   }
-      //   cockRelateds.push(related);
-      //   break;
-      // }
-      case 'token_maker': {
-        const related: CockRelatedProps = {
-          id: part.id,
-          reverse: 'reverse-',
-        };
-        if (part.persistent) {
-          related.persistent = 'persistent';
-        }
-        if (part.count) {
-          related.count = part.count;
-        }
-        cockRelateds.push(related);
-        break;
-      }
+const hcRelatedToCockRelated = (part: HCRelatedCard): CockRelatedProps => {
+  if (part.component == 'meld_result') {
+    const related: CockRelatedProps = {
+      oracle_id: part.oracle_id,
+      reverse: '',
+      attach: 'transform',
+    };
+    return related;
+  } else {
+    const related: CockRelatedProps = {
+      oracle_id: part.oracle_id,
+      reverse: 'reverse-',
+    };
+    if (part.persistent) {
+      related.persistent = 'persistent';
     }
-  });
-  return cockRelateds;
+    if (part.count) {
+      related.count = part.count;
+    }
+    return related;
+  }
 };
 
 /**
@@ -239,43 +204,51 @@ const compressHCCardFaces = (card: HCCard.Any): HCCard.Any => {
   return newCard;
 };
 /**
- * Convert an hc card to cockatrice props
- * @param card card to convert
+ * Convert an hc invariant to cockatrice props
+ * @param invariant invariant to convert
+ * @param cardMap the CardMap to use
  * @returns cockatrice props
  */
-export const hcCardToCockProps = (uncompressedCard: HCCard.Any): CockCardProps => {
-  const card = compressHCCardFaces(uncompressedCard);
+export const invariantToCockProps = (
+  invariant: printInvariant,
+  cardMap: CardMap
+): CockCardProps => {
+  const prints = cardMap.getAllPrints(invariant.oracle_id);
+  const compressedPrints = prints.map(compressHCCardFaces);
+  const defaultPrint = compressedPrints.cards()[0];
   const cockCard: CockCardProps = {
-    coloridentity: card.color_identity.join(''),
-    uuid: card.id,
-    hcid: card.hcid,
+    coloridentity: defaultPrint.color_identity.join(''),
     props: [],
-    set: card.set,
+    prints: [],
   };
-  if (card.collector_number) {
-    cockCard.collector_number = card.collector_number;
-  }
-  if (!canBeInDecks(card)) {
+  cockCard.prints = compressedPrints.mapToArray(print => {
+    const cockPrint: CockPrintProps = {
+      hcid: print.hcid,
+      uuid: print.id,
+      picurl: toFaces(print)[0].image!,
+      set: print.set,
+      collector_number: print.collector_number,
+    };
+    const backPicurl = toFaces(print)[1]?.image;
+    if (backPicurl) {
+      cockPrint.backPicurl = backPicurl;
+    }
+    return cockPrint;
+  });
+  if (invariant.kind != 'card' && !defaultPrint.tags?.includes('draftpartner')) {
     cockCard.token = '1';
   }
-  Object.entries(card.legalities).forEach(([key, value]) => {
+  Object.entries(invariant.legalities!).forEach(([key, value]) => {
     if (value == 'legal') {
       cockCard['format-' + key] = 'legal';
     }
   });
-  if ('card_faces' in card) {
-    card.card_faces.forEach(face => cockCard.props.push(hcFaceToCockProps(face)));
-    if (hasTokenHCID(card) && card.card_faces.length == 1 && !card.card_faces[0].export_name) {
-      cockCard.props[0].name = card.hcid;
-    }
-  } else {
-    cockCard.props.push(hcFaceToCockProps(card));
-    if (hasTokenHCID(card) && !card.export_name) {
-      cockCard.props[0].name = card.hcid;
-    }
-  }
-  if (card.all_parts) {
-    cockCard.related = hcAllPartsToCockRelated(card.all_parts);
+  toFaces(defaultPrint).forEach(face => cockCard.props.push(hcFaceToCockProps(face)));
+  if (invariant.token_makers || invariant.meld_results) {
+    cockCard.related = [
+      ...(invariant.token_makers?.map(hcRelatedToCockRelated) ?? []),
+      ...(invariant.meld_results?.map(hcRelatedToCockRelated) ?? []),
+    ];
   }
   return cockCard;
 };

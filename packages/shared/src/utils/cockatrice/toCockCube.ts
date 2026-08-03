@@ -2,8 +2,8 @@
 import { DOMParser, XMLSerializer } from 'xmldom';
 import { SetCode } from '@hellfall/shared/types';
 import { CockCardProps } from './cockTypes';
-import { CardMap, getRelatedsFromCards, getRelatedsFromSet } from '../cardHandling';
-import { hcCardToCockProps } from './HCToCockCard';
+import { CardMap, getRelatedsFromCards, getRelatedsFromSet, InvariantMap } from '../cardHandling';
+import { invariantToCockProps } from './HCToCockCard';
 import { prettifyXml } from './prettifyXml';
 
 type RecursiveChild = (Node | RecursiveChild)[];
@@ -40,13 +40,22 @@ export const toCockCubeJSON = (
       : idList?.length
       ? getRelatedsFromCards(idList, cardMap)
       : { cards: cardMap, tokens: new CardMap() };
-  const cockCards = HCCards.mapToIdMap(card => hcCardToCockProps(card));
-  const cockTokens = HCTokens.mapToIdMap(token => hcCardToCockProps(token));
+  const invariantCards = new InvariantMap(HCCards.cards());
+  const invariantTokens = new InvariantMap(HCTokens.cards());
+  const cockCards = new Map(
+    invariantCards.map(invariant => [invariant.oracle_id, invariantToCockProps(invariant, HCCards)])
+  );
+  const cockTokens = new Map(
+    invariantTokens.map(invariant => [
+      invariant.oracle_id,
+      invariantToCockProps(invariant, HCTokens),
+    ])
+  );
   const addRelatedNames = (card: CockCardProps) => {
     card.related?.forEach(relatedCard => {
       relatedCard.name =
-        cockCards.get(relatedCard.id)?.props[0].name ??
-        cockTokens.get(relatedCard.id)?.props[0].name;
+        cockCards.get(relatedCard.oracle_id)?.props[0].name ??
+        cockTokens.get(relatedCard.oracle_id)?.props[0].name;
     });
   };
   cockCards.forEach(card => addRelatedNames(card));
@@ -114,16 +123,15 @@ export const toCockCube = ({
 
       const text = xmlDoc.createElement('text');
       text.textContent = face.text;
-
-      const setElement = xmlDoc.createElement('set');
-      setElement.setAttribute('rarity', 'common');
-      setElement.setAttribute('picURL', face.picurl || entry.props[0].picurl || '');
-      setElement.setAttribute('uuid', entry.uuid);
-      setElement.setAttribute('muid', 'hc' + entry.hcid + (i ? 'b' : ''));
-      if (entry.collector_number) {
-        setElement.setAttribute('num', entry.collector_number);
-      }
-      setElement.textContent = entry.set;
+      entry.prints.forEach(print => {
+        const setElement = xmlDoc.createElement('set');
+        setElement.setAttribute('rarity', 'common');
+        setElement.setAttribute('picURL', i ? print.backPicurl ?? print.picurl : print.picurl);
+        setElement.setAttribute('uuid', print.uuid);
+        setElement.setAttribute('muid', `hc${print.hcid}${i ? 'b' : ''}`);
+        setElement.setAttribute('num', print.collector_number);
+        setElement.textContent = print.set;
+      });
 
       const prop = xmlDoc.createElement('prop');
 

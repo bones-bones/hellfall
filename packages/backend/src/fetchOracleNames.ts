@@ -4,13 +4,15 @@ type CardAtomic = {
   faceName?: string;
 };
 
-
 /**
  * Extracts ALL card names that Cockatrice would create as separate entries
  * - Normal cards: one entry per card
  * - DFCs/modal cards: separate entry for EACH face
  */
-const extractCockatriceCardNames = (cardsData: Record<string, CardAtomic[]>, tokensData:string): Set<string> => {
+const extractCockatriceCardNames = (
+  cardsData: Record<string, CardAtomic[]>,
+  tokensData: string
+): Set<string> => {
   const names = new Set<string>();
   Object.entries(cardsData).forEach(([name, faces]) => {
     names.add(name.toLowerCase());
@@ -18,16 +20,16 @@ const extractCockatriceCardNames = (cardsData: Record<string, CardAtomic[]>, tok
       faces.filter(face => face.faceName).forEach(face => names.add(face.faceName!.toLowerCase()));
     }
   });
-  console.log('card names added')
+  console.log('card names added');
   const parser = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: '_',
     parseAttributeValue: true,
-    trimValues: true
-  })
+    trimValues: true,
+  });
   const tokenDB = parser.parse(tokensData)['cockatrice_carddatabase']?.cards?.card;
-  tokenDB?.forEach((card:any) => names.add(card.name.toLowerCase()))
-  console.log('token names added')
+  tokenDB?.forEach((card: any) => names.add(card.name.toLowerCase()));
+  console.log('token names added');
   return names;
 };
 
@@ -38,13 +40,15 @@ const extractCockatriceCardNames = (cardsData: Record<string, CardAtomic[]>, tok
 export const fetchAllCardNames = async (): Promise<Set<string>> => {
   const requestedData = await fetch('https://mtgjson.com/api/v5/AtomicCards.json');
   const asJson = (await requestedData.json()) as any;
-  console.log('cards fetched')
-  const response = await fetch('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml');
+  console.log('cards fetched');
+  const response = await fetch(
+    'https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml'
+  );
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   const xmlString = await response.text();
-  console.log('tokens fetched')
+  console.log('tokens fetched');
   const cardNames = extractCockatriceCardNames(asJson.data, xmlString);
   return cardNames;
 };

@@ -55,11 +55,21 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
 
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
   const splitKeys: keyType[] = ['name', 'types', 'power', 'toughness'];
-  const skipKeys: keyType[] = ['image', 'accepted_order', 'creators', 'tags', 'artists', 'id', 'oracle_id'];
+  const skipKeys: keyType[] = [
+    'image',
+    'accepted_order',
+    'creators',
+    'tags',
+    'artists',
+    'id',
+    'oracle_id',
+  ];
 
   const HCTokens = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
-    const oracle_id = tokenInvariantMap.getOracleID(entryAt('oracle_id') || entryAt('name')) ?? entryAt('oracle_id');
+    const oracle_id =
+      tokenInvariantMap.getOracleID(entryAt('oracle_id') || entryAt('name')) ??
+      entryAt('oracle_id');
     if (!oracle_id) {
       throw new Error(`Missing oracle id on token with hcid: ${entryAt('name')}`);
     }
@@ -174,9 +184,9 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         token.all_parts?.forEach(part => (part.component = 'meld_part'));
       }
     });
-      if (!token.oracle_id) {
-        throw new Error(`Missing oracle id on token: ${JSON.stringify(token)}`);
-      }
+    if (!token.oracle_id) {
+      throw new Error(`Missing oracle id on token: ${JSON.stringify(token)}`);
+    }
     return token;
   });
   if (NO_SCRYFALL) {

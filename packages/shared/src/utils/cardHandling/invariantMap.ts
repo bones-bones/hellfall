@@ -4,7 +4,6 @@ import { pushProp, xor } from '../listHandling';
 import { CardMap } from './cardMap';
 import { cardToRelatedCard } from './partsHandling';
 
-
 export type faceInvariant = { name: string; export_name?: string };
 
 /**
@@ -16,12 +15,12 @@ export type printInvariant = {
   name: string;
   oracle_id: string;
   token_makers?: HCRelatedCard[];
+  meld_results?: HCRelatedCard[];
   card_faces?: faceInvariant[];
 } & Pick<
   rootMappedType,
   'keywords' | 'rulings' | 'oracle_id_is_scryfall' | 'legalities' | 'export_name' | 'kind'
 >;
-
 
 /**
  * Converts a {@linkcode HCCard.Any} to {@linkcode printInvariant}
@@ -52,10 +51,24 @@ export const cardToInvariant = (card: HCCard.Any) => {
     });
   }
   if (card.all_parts) {
-    invariant.token_makers = card.all_parts.filter(part => part.component == 'token_maker').map(part => {
-      const newPart = structuredClone(part);
-      return newPart;
-    });
+    const token_makers = card.all_parts
+      .filter(part => part.component == 'token_maker')
+      .map(part => {
+        const newPart = structuredClone(part);
+        return newPart;
+      });
+    if (token_makers.length) {
+      invariant.token_makers = token_makers;
+    }
+    const meld_results = card.all_parts
+      .filter(part => part.component == 'meld_result')
+      .map(part => {
+        const newPart = structuredClone(part);
+        return newPart;
+      });
+    if (meld_results.length) {
+      invariant.meld_results = meld_results;
+    }
   }
   return invariant;
 };
@@ -100,69 +113,84 @@ export const mergeInvariants = (oldInvariant: printInvariant, newInvariant: prin
   } else if (newInvariant.token_makers?.length) {
     newInvariant.token_makers.forEach(part => oldInvariant.token_makers?.push(part));
   }
-    if (newInvariant.card_faces) {
-      if (oldInvariant.card_faces) {
-        if (newInvariant.card_faces.length != oldInvariant.card_faces.length) {
-          console.error(
-            `error: card ${JSON.stringify(oldInvariant,null,'\t')} and invariant ${JSON.stringify(newInvariant,null,'\t')} have mismatched face lengths`
-          );
-          return;
-        }
-        oldInvariant.card_faces.forEach((face, i) => {
-          if (!face.name && newInvariant.card_faces![i].name) {
-            face.name = newInvariant.card_faces![i].name; // why is this not inferring?
-          }
-        });
-      } else {
-        console.error(`error: card ${JSON.stringify(oldInvariant,null,'\t')} doesn't have faces but invariant ${JSON.stringify(newInvariant,null,'\t')} does`);
+  if (newInvariant.card_faces) {
+    if (oldInvariant.card_faces) {
+      if (newInvariant.card_faces.length != oldInvariant.card_faces.length) {
+        console.error(
+          `error: card ${JSON.stringify(oldInvariant, null, '\t')} and invariant ${JSON.stringify(
+            newInvariant,
+            null,
+            '\t'
+          )} have mismatched face lengths`
+        );
         return;
       }
-    } else if (oldInvariant.card_faces) {
-      console.error(`error: card ${JSON.stringify(oldInvariant,null,'\t')} has faces but invariant ${JSON.stringify(newInvariant,null,'\t')} doesn't`);
+      oldInvariant.card_faces.forEach((face, i) => {
+        if (!face.name && newInvariant.card_faces![i].name) {
+          face.name = newInvariant.card_faces![i].name; // why is this not inferring?
+        }
+      });
+    } else {
+      console.error(
+        `error: card ${JSON.stringify(
+          oldInvariant,
+          null,
+          '\t'
+        )} doesn't have faces but invariant ${JSON.stringify(newInvariant, null, '\t')} does`
+      );
       return;
     }
+  } else if (oldInvariant.card_faces) {
+    console.error(
+      `error: card ${JSON.stringify(
+        oldInvariant,
+        null,
+        '\t'
+      )} has faces but invariant ${JSON.stringify(newInvariant, null, '\t')} doesn't`
+    );
+    return;
+  }
 };
 
-  /**
-   * Updates all parts of an invariant and its related cards
-   * @param invariant invariant to use
-   * @param cardMap CardMap to use
-   */
-  const mergeParts = (invariant:printInvariant, cardMap:CardMap) => {
-    const tokensToUpdate = cardMap.getAllPrints(invariant.oracle_id);
-    const newParts = invariant.token_makers
-    if (!newParts) {
-      return;
-    }
-    const defaultToken = cardToRelatedCard(tokensToUpdate.cards()[0]);
-    const oracleSet = new Set(newParts.map(part=>part.oracle_id));
-    oracleSet.forEach(oracle_id => {
-      const makersToUpdate = cardMap.getAllPrints(oracle_id);
-      makersToUpdate.forEach(maker => {
-        if (!maker.all_parts) {
-          maker.all_parts = [];
-        }
-        const makerParts = maker.all_parts;
-        if (makerParts.some(part => part.oracle_id == invariant.oracle_id)) {
-          return;
-        }
-        makerParts.push(defaultToken);
-      })
-      const defaultMaker = cardToRelatedCard(makersToUpdate.cards()[0], 'token_maker')
-
-      tokensToUpdate.forEach(token => {
-        if (!token.all_parts) {
-          token.all_parts = [];
-        }
-        const tokenParts = token.all_parts;
-        if (tokenParts.some(part => part.oracle_id == oracle_id)) {
-          return;
-        }
-        tokenParts.push(defaultMaker);
-      })
-    })
+/**
+ * Updates all parts of an invariant and its related cards
+ * @param invariant invariant to use
+ * @param cardMap CardMap to use
+ */
+const mergeParts = (invariant: printInvariant, cardMap: CardMap) => {
+  const tokensToUpdate = cardMap.getAllPrints(invariant.oracle_id);
+  const newParts = invariant.token_makers;
+  if (!newParts) {
+    return;
   }
+  const defaultToken = cardToRelatedCard(tokensToUpdate.cards()[0]);
+  const oracleSet = new Set(newParts.map(part => part.oracle_id));
+  oracleSet.forEach(oracle_id => {
+    const makersToUpdate = cardMap.getAllPrints(oracle_id);
+    makersToUpdate.forEach(maker => {
+      if (!maker.all_parts) {
+        maker.all_parts = [];
+      }
+      const makerParts = maker.all_parts;
+      if (makerParts.some(part => part.oracle_id == invariant.oracle_id)) {
+        return;
+      }
+      makerParts.push(defaultToken);
+    });
+    const defaultMaker = cardToRelatedCard(makersToUpdate.cards()[0], 'token_maker');
 
+    tokensToUpdate.forEach(token => {
+      if (!token.all_parts) {
+        token.all_parts = [];
+      }
+      const tokenParts = token.all_parts;
+      if (tokenParts.some(part => part.oracle_id == oracle_id)) {
+        return;
+      }
+      tokenParts.push(defaultMaker);
+    });
+  });
+};
 
 /**
  * The input for an {@linkcode InvariantMap}.
@@ -220,8 +248,8 @@ export class InvariantMap {
    * Creates a new InvariantMap
    * @param inputs The initial {@linkcode printInput} objects to set, if any
    */
-  constructor(inputs: printInput[]);
-  constructor(inputs?: printInput[]) {
+  constructor(inputs: (printInput | HCCard.Any)[]);
+  constructor(inputs?: (printInput | HCCard.Any)[]) {
     if (!inputs) return;
     inputs?.forEach(this.set);
   }
@@ -240,8 +268,8 @@ export class InvariantMap {
    * Will silently fail if the oracle id is invalid.
    * @param input {@linkcode printInput} or {@linkcode HCCard.Any} to set
    */
-  set = (input: [string, string] | printInvariant | HCCard.Any) => {
-    const invariant = 'object' in input ?cardToInvariant(input): inputToInvariant(input);
+  set = (input: printInput | HCCard.Any) => {
+    const invariant = 'object' in input ? cardToInvariant(input) : inputToInvariant(input);
     if (!isValidV4UUID(invariant.oracle_id)) return;
     const current = this.oracleIDMap.get(invariant.oracle_id);
     if (!current) {
@@ -250,7 +278,6 @@ export class InvariantMap {
       mergeInvariants(current, invariant);
     }
   };
-
 
   /**
    * Adds multiple new {@linkcode printInput} objects to the InvariantMap, skipping invalid oracle ids
@@ -305,7 +332,8 @@ export class InvariantMap {
   /**
    * Use this rather than {@linkcode structuredClone} on this object.
    */
-  clone = () => new (this.constructor as any)(this.map(invariant => structuredClone(invariant))) as this;
+  clone = () =>
+    new (this.constructor as any)(this.map(invariant => structuredClone(invariant))) as this;
 
   *[Symbol.iterator](): Iterator<[string, printInvariant, string]> {
     for (const [oracle_id, invariant] of this.oracleIDMap.entries()) {
@@ -589,62 +617,78 @@ export class InvariantMap {
    * @param oracle_id the oracle id to apply the invariant to
    * @param cardMap the CardMap to use to get the prints
    */
-  applyInvariant = (oracle_id: string, cardMap:CardMap) => {
+  applyInvariant = (oracle_id: string, cardMap: CardMap) => {
     const invariant = this.get(oracle_id);
     cardMap.getAllPrints(oracle_id).forEach(card => {
-    if (card.set == 'NRM') return;
-    if (!invariant) return;
-    if (invariant.card_faces) {
-      if ('card_faces' in card) {
-        if (invariant.card_faces.length != card.card_faces.length) {
+      if (card.set == 'NRM') return;
+      if (!invariant) return;
+      if (invariant.card_faces) {
+        if ('card_faces' in card) {
+          if (invariant.card_faces.length != card.card_faces.length) {
+            console.error(
+              `error: card ${JSON.stringify(card, null, '\t')} and invariant ${JSON.stringify(
+                invariant,
+                null,
+                '\t'
+              )} have mismatched face lengths`
+            );
+            return;
+          }
+          card.card_faces.forEach((face, i) => {
+            face.name = invariant.card_faces![i].name; // why is this not inferring?
+            if (invariant.card_faces![i].export_name) {
+              face.export_name = invariant.card_faces![i].export_name;
+            } else if (face.export_name) {
+              delete face.export_name;
+            }
+          });
+        } else {
           console.error(
-            `error: card ${JSON.stringify(card,null,'\t')} and invariant ${JSON.stringify(invariant,null,'\t')} have mismatched face lengths`
+            `error: card ${JSON.stringify(
+              card,
+              null,
+              '\t'
+            )} doesn't have faces but invariant ${JSON.stringify(invariant, null, '\t')} does`
           );
           return;
         }
-        card.card_faces.forEach((face, i) => {
-          face.name = invariant.card_faces![i].name; // why is this not inferring?
-          if (invariant.card_faces![i].export_name) {
-            face.export_name = invariant.card_faces![i].export_name;
-          } else if (face.export_name) {
-            delete face.export_name;
-          }
-        });
-      } else {
-        console.error(`error: card ${JSON.stringify(card,null,'\t')} doesn't have faces but invariant ${JSON.stringify(invariant,null,'\t')} does`);
+      } else if ('card_faces' in card) {
+        console.error(
+          `error: card ${JSON.stringify(card, null, '\t')} has faces but invariant ${JSON.stringify(
+            invariant,
+            null,
+            '\t'
+          )} doesn't`
+        );
         return;
       }
-    } else if ('card_faces' in card) {
-      console.error(`error: card ${JSON.stringify(card,null,'\t')} has faces but invariant ${JSON.stringify(invariant,null,'\t')} doesn't`);
-      return;
-    }
-    if (card.name.toLowerCase() != invariant.name.toLowerCase())
-    card.name = invariant.name;
-    if (invariant.export_name) {
-      card.export_name = invariant.export_name;
-    } else if (card.export_name) {
-      delete card.export_name;
-    }
-    if (invariant.oracle_id_is_scryfall) {
-      card.oracle_id_is_scryfall = true;
-    }
-    if (invariant.rulings) {
-      card.rulings = invariant.rulings;
-    }
-    if (invariant.keywords?.length) {
-      card.keywords = invariant.keywords;
-    }
-    if (invariant.legalities) {
-      card.legalities = invariant.legalities;
-    }
-    mergeParts(invariant,cardMap);
-    })
-  }
+      if (card.name.toLowerCase() != invariant.name.toLowerCase()) card.name = invariant.name;
+      if (invariant.export_name) {
+        card.export_name = invariant.export_name;
+      } else if (card.export_name) {
+        delete card.export_name;
+      }
+      if (invariant.oracle_id_is_scryfall) {
+        card.oracle_id_is_scryfall = true;
+      }
+      if (invariant.rulings) {
+        card.rulings = invariant.rulings;
+      }
+      if (invariant.keywords?.length) {
+        card.keywords = invariant.keywords;
+      }
+      if (invariant.legalities) {
+        card.legalities = invariant.legalities;
+      }
+      mergeParts(invariant, cardMap);
+    });
+  };
   /**
    * Applies the corresponding invariants to all prints of all cards.
    * @param cardMap the CardMap to use to get the prints
    */
-  applyAllInvariants = (cardMap: CardMap) => this.oracle_ids().forEach(oracle_id => this.applyInvariant(oracle_id,cardMap))
+  applyAllInvariants = (cardMap: CardMap) =>
+    this.oracle_ids().forEach(oracle_id => this.applyInvariant(oracle_id, cardMap));
 }
 
 /**
@@ -711,7 +755,7 @@ export class DefaultInvariantMap extends InvariantMap {
    * @param input {@linkcode printInput} or {@linkcode HCCard.Any} to set
    */
   set = (input: [string, string] | printInvariant | HCCard.Any) => {
-    const invariant = 'object' in input ?cardToInvariant(input): inputToInvariant(input);
+    const invariant = 'object' in input ? cardToInvariant(input) : inputToInvariant(input);
     if (!isValidV4UUID(invariant.oracle_id)) return;
     const oldName = this.oracleIDMap.get(invariant.oracle_id)?.name;
     const oldOracleID = this.nameMap.get(invariant.name.toLowerCase());
@@ -728,11 +772,10 @@ export class DefaultInvariantMap extends InvariantMap {
     } else {
       mergeInvariants(current, invariant);
     }
-    
+
     this.nameMap.set(invariant.name.toLowerCase(), invariant.oracle_id);
     this.oracleIDMap.set(invariant.oracle_id, invariant);
   };
-
 
   /**
    * Adds multiple new {@linkcode printInput} objects to the InvariantMap, skipping invalid oracle ids

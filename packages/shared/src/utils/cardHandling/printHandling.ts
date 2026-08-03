@@ -101,7 +101,7 @@ const tokenOracleIdList: printInput[] = [
   ['Undead Servant', '5bf9f397-0216-4ec9-a57b-406758dcc233'],
   ['Baby', 'a0101448-b5ca-47ce-aefe-a7a795c5e005'],
   ['WET Treasure', '9f84cca3-ed45-4878-bd6e-33d2ea570169'],
-  ['Weed', '932666fb-45d9-46c2-afeb-b68cabcce864']
+  ['Weed', '932666fb-45d9-46c2-afeb-b68cabcce864'],
 ];
 
 export const landNames = [
@@ -140,4 +140,3 @@ export const getRandomLand = (name: string, cardMap: CardMap) =>
     : undefined;
 
 export const tokenInvariantMap = new DefaultInvariantMap(tokenOracleIdList);
-

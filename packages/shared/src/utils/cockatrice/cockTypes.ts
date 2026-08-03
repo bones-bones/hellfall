@@ -2,7 +2,6 @@ import { HCColors } from '@hellfall/shared/types';
 
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 
-// TODO: implement better reprint handling
 /**
  * An object for the props on a cockatrice card face
  */
@@ -47,19 +46,9 @@ export type CockFaceProps = Record<string, string | number | HCColors> & {
    * The loyalty/defense
    */
   loyalty?: string;
-  /**
-   * The url for the image
-   */
-  picurl?: string;
 };
-/**
- * An object for the props on a cockatrice card
- */
-export type CockCardProps = Record<string, string | CockFaceProps[]> & {
-  /**
-   * The color identity
-   */
-  coloridentity?: string;
+
+export type CockPrintProps = {
   /**
    * The hcid of the card
    */
@@ -68,6 +57,32 @@ export type CockCardProps = Record<string, string | CockFaceProps[]> & {
    * The uuid of the card
    */
   uuid: string;
+  /**
+   * The url for the image
+   */
+  picurl: string;
+  /**
+   * The url for the image of the back side, if any
+   */
+  backPicurl?: string;
+  /**
+   * The set to use
+   */
+  set: string;
+  /**
+   * The collector number to use
+   */
+  collector_number: string;
+};
+
+/**
+ * An object for the props on a cockatrice card
+ */
+export type CockCardProps = Record<string, string | CockFaceProps[]> & {
+  /**
+   * The color identity
+   */
+  coloridentity?: string;
   /**
    * Whether the card is legal in standard
    */
@@ -95,20 +110,16 @@ export type CockCardProps = Record<string, string | CockFaceProps[]> & {
   /**
    * The set to use
    */
-  set: string;
-  /**
-   * The collector number to use
-   */
-  collector_number?: string;
+  prints: CockPrintProps[];
 };
 /**
  * An object for the props on a cockatrice related card
  */
 export type CockRelatedProps = Record<string, string> & {
   /**
-   * The uuid of the related card
+   * The oracle_id of the related card
    */
-  id: string;
+  oracle_id: string;
   /**
    * The name of the related card
    */

@@ -37,7 +37,8 @@ import {
   InvariantMap,
   printInvariant,
   toFaces,
-  cleanParts, updateParts
+  cleanParts,
+  updateParts,
 } from '../cardHandling';
 import { orderColors, orderHybrid, pipMap } from '../pipsAndColors';
 import { isInteger } from '../numHandling';
@@ -544,8 +545,7 @@ export const resetFaceExportProps = (card: HCCard.Any) => {
   }
 };
 
-
-const useTokenList = ['Food and Drug', 'EVIL Combat', 'Dawizard']
+const useTokenList = ['Food and Drug', 'EVIL Combat', 'Dawizard'];
 /**
  * Builds an invariant for a card. Note: should only be used on backend if
  * {@linkcode resetFaceExportProps} has been called first
@@ -558,10 +558,15 @@ export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): print
   const toFinalExportName = (name: string, face?: faceType) => {
     let exportName = toExportName(name);
     if (['token', 'scryfall'].includes(card.kind) && textListIncludes(face?.supertypes, 'token')) {
-      if (textListsShare(card.tags, ['real-card','token-version-of-card'])) {
+      if (textListsShare(card.tags, ['real-card', 'token-version-of-card'])) {
         // TODO: better handling for this
         exportName += ' (Token)';
-      } else if (name.toLowerCase().includes('copy') || useTokenList.includes(name) || (face?.subtypes && textListIncludes([face.subtypes.join(' '), ...face.subtypes],face?.name ?? card.name))) {
+      } else if (
+        name.toLowerCase().includes('copy') ||
+        useTokenList.includes(name) ||
+        (face?.subtypes &&
+          textListIncludes([face.subtypes.join(' '), ...face.subtypes], face?.name ?? card.name))
+      ) {
         exportName += ' Token';
       }
     }

@@ -12,4 +12,4 @@ export const hasTokenHCID = (card: HCCard.Any): boolean =>
  * @param card card to check
  */
 export const canBeInDecks = (card: HCCard.Any) =>
-  ['card', 'land'].includes(card.kind) || card.tags?.includes('draftpartner');
+  ['card'].includes(card.kind) || card.tags?.includes('draftpartner');

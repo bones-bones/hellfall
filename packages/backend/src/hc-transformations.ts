@@ -296,9 +296,16 @@ const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   'HC8.1': ['31b'],
   'HC9.0': ['137b', '324b'],
 };
-const nontokenTokenNames = ['Force of Will', 'Radiation', 'Poison Counter','Indicate', 'Manifest', 'Undead Servant']
+const nontokenTokenNames = [
+  'Force of Will',
+  'Radiation',
+  'Poison Counter',
+  'Indicate',
+  'Manifest',
+  'Undead Servant',
+];
 
-const tokenNames = ['Storm Crow']
+const tokenNames = ['Storm Crow'];
 
 const getLegalitiesFromLandName = (name: string): HCLegalitiesField => {
   const splitName = name.toLowerCase().split(' ');
@@ -329,7 +336,6 @@ const getLegalitiesFromLandName = (name: string): HCLegalitiesField => {
       };
   }
 };
-
 
 const main = async () => {
   const newCards = await fetchCards();
@@ -431,7 +437,7 @@ const main = async () => {
   landInvariantMap.forEach(invariant => {
     const newInvariant = structuredClone(invariant);
     newInvariant.legalities = getLegalitiesFromLandName(newInvariant.name);
-    if (!textListIsContainedBy(['Nebula', 'Galaxy'],newInvariant.name)) {
+    if (!textListIsContainedBy(['Nebula', 'Galaxy'], newInvariant.name)) {
       newInvariant.oracle_id_is_scryfall = true;
       newInvariant.export_name = `${invariant.name}_`;
     }
@@ -443,7 +449,7 @@ const main = async () => {
     if (nontokenTokenNames.includes(newInvariant.name)) {
       if (takenNames.has(newInvariant.name.toLowerCase())) {
         newInvariant.export_name = `${newInvariant.name}_`;
-        takenNames.add(newInvariant.export_name.toLowerCase())
+        takenNames.add(newInvariant.export_name.toLowerCase());
       } else {
         takenNames.add(newInvariant.name.toLowerCase());
       }
@@ -452,13 +458,15 @@ const main = async () => {
       if (splitName.at(-1)?.length == 1 || splitName.at(-1) == 'Token') {
         newInvariant.name = splitName[0];
       }
-      let exportName = `${newInvariant.name} ${tokenNames.includes(newInvariant.name) ? '(Token)': 'Token'}`
+      let exportName = `${newInvariant.name} ${
+        tokenNames.includes(newInvariant.name) ? '(Token)' : 'Token'
+      }`;
       while (takenNames.has(exportName.toLowerCase())) {
         // #test
         exportName += '_';
       }
       newInvariant.export_name = exportName;
-      takenNames.add(newInvariant.export_name.toLowerCase())
+      takenNames.add(newInvariant.export_name.toLowerCase());
     }
     invariantMap.set(newInvariant);
   });
@@ -466,12 +474,12 @@ const main = async () => {
   finalCards.forEach(card => {
     resetFaceExportProps(card);
     if (!invariantMap.has(card.oracle_id)) {
-      invariantMap.set(buildInvariant(card,takenNames))
+      invariantMap.set(buildInvariant(card, takenNames));
     } else {
       invariantMap.set(card);
     }
-  })
-  invariantMap.applyAllInvariants(finalCards)
+  });
+  invariantMap.applyAllInvariants(finalCards);
 
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {

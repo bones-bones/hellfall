@@ -418,12 +418,9 @@ export const parseRelatedReferenceName = (
  * @returns prepped name
  */
 export const toExportName = (name: string) => {
-  const retName = name
-    .replaceAll(/[[{]/g, '(')
-    .replaceAll(/[\]}]/g, ')')
-    .replaceAll(/\\/g, '')
-    // .replaceAll(/[\\.]/g, '')
-    // .replaceAll(/\((\d+)\)/g, '$1'); #test
+  const retName = name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll(/\\/g, '');
+  // .replaceAll(/[\\.]/g, '')
+  // .replaceAll(/\((\d+)\)/g, '$1'); #test
   return retName.startsWith('  ') ? retName.trimStart() : retName;
 };
 

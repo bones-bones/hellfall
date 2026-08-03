@@ -195,3 +195,4 @@ Write a script to transform the database
 - find a way to allow old names for bold plagiarist?
 - figure out why the split tokens aren't compressing
 - clean up id tags
+- interpret e.g. 'SOH:' as a group search

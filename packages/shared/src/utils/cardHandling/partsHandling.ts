@@ -1,9 +1,8 @@
 import { HCCard, HCObject, HCRelatedCard, relatedComponent } from '@hellfall/shared/types';
 import { textEquals } from '../textHandling';
 import { pushProp } from '../listHandling';
-import { CardMap, } from './cardMap';
+import { CardMap } from './cardMap';
 import { toFaces } from './cardMethods';
-
 
 /**
  * Checks whether a card has any related card with a given component
@@ -32,30 +31,34 @@ export const findMatchingPartIndex = (card: HCCard.Any, part: HCRelatedCard) => 
  * @param component component to use; defaults to `token`
  * @param is_draft_partner whether to set `is_draft_partner` to `true`
  */
-export const cardToRelatedCard = (card:HCCard.Any, component:relatedComponent='token', is_draft_partner?:boolean):HCRelatedCard => {
-  const related:HCRelatedCard = {
-        object: HCObject.ObjectType.RelatedCard,
-        id: card.id,
-        oracle_id: card.oracle_id,
-        hcid: card.hcid,
-        name: card.name,
-        set: card.set,
-        image: card.image,
-        type_line: card.type_line,
-        component,
-  }
+export const cardToRelatedCard = (
+  card: HCCard.Any,
+  component: relatedComponent = 'token',
+  is_draft_partner?: boolean
+): HCRelatedCard => {
+  const related: HCRelatedCard = {
+    object: HCObject.ObjectType.RelatedCard,
+    id: card.id,
+    oracle_id: card.oracle_id,
+    hcid: card.hcid,
+    name: card.name,
+    set: card.set,
+    image: card.image,
+    type_line: card.type_line,
+    component,
+  };
   if (is_draft_partner) {
     related.is_draft_partner = true;
   }
   return related;
-}
+};
 
 /**
  * Updates the props of a related card based on the card version of itself
  * @param part part to update
  * @param card card to use
  */
-export const updatePartFromCard = (part:HCRelatedCard,card:HCCard.Any) => {
+export const updatePartFromCard = (part: HCRelatedCard, card: HCCard.Any) => {
   part.id = card.id;
   part.oracle_id = card.oracle_id;
   part.hcid = card.hcid;
@@ -63,7 +66,7 @@ export const updatePartFromCard = (part:HCRelatedCard,card:HCCard.Any) => {
   part.set = card.set;
   part.image = card.image;
   part.type_line = card.type_line;
-}
+};
 
 /**
  * Updates a card and its related cards
@@ -84,15 +87,17 @@ export const updateParts = (
     const thriving: HCRelatedCard[] = [];
     const basics: HCRelatedCard[] = [];
     relateds.forEach(relatedCard => {
-      const cardAsRelated = cardToRelatedCard(card,'draft_partner');
+      const cardAsRelated = cardToRelatedCard(card, 'draft_partner');
       const frontIndex = card.all_parts?.findIndex(e => e.hcid == relatedCard.hcid);
       const alreadyHasPart = frontIndex != -1 && frontIndex != undefined;
-      const part: HCRelatedCard = alreadyHasPart ? card.all_parts![frontIndex] : cardToRelatedCard(relatedCard, 'draft_partner', true)
+      const part: HCRelatedCard = alreadyHasPart
+        ? card.all_parts![frontIndex]
+        : cardToRelatedCard(relatedCard, 'draft_partner', true);
       if (part.count) {
         cardAsRelated.count = part.count;
       }
       if (alreadyHasPart) {
-        updatePartFromCard(part,relatedCard)
+        updatePartFromCard(part, relatedCard);
       }
       const relatedIndex = relatedCard.all_parts?.findIndex(e => e.id == card.id);
       if (relatedIndex == -1 || relatedIndex == undefined || !card.all_parts) {
@@ -142,7 +147,7 @@ export const updateParts = (
         }
         return;
       }
-      updatePartFromCard(part,relatedCard)
+      updatePartFromCard(part, relatedCard);
       if (relatedCard.tags?.includes('persistent-tokens')) {
         part.persistent = true;
         cardAsRelated.persistent = true;
@@ -189,7 +194,7 @@ export const updateParts = (
       if (!card.has_draft_partners) {
         card.has_draft_partners = true;
       }
-      updatePartFromCard(part,relatedCard)
+      updatePartFromCard(part, relatedCard);
 
       part.is_draft_partner = true;
 
@@ -212,7 +217,7 @@ export const updateParts = (
               `(${card.hcid}): part id=${part.id}, hcid=${part.hcid}, name=${part.name}`
           );
         }
-        updatePartFromCard(part,relatedCard)
+        updatePartFromCard(part, relatedCard);
         if (part.count) {
           delete part.count;
         }
