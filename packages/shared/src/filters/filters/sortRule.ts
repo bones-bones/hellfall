@@ -1,18 +1,6 @@
-import {
-  HCCard,
-  HCColor,
-  HCKind,
-  allSetsList,
-  colorList,
-  toKindIndex,
-} from '@hellfall/shared/types';
+import { HCCard, colorList, toKindIndex } from '@hellfall/shared/types';
 import { dirType, sortFilterFunction, sortType } from '../types';
-import {
-  getCollectorOrderSet,
-  textListIncludes,
-  toFaces,
-  toSetNumber,
-} from '@hellfall/shared/utils';
+import { dateSort, textListIncludes, toFaces, toSetNumber } from '@hellfall/shared/utils';
 
 const toColorNumber = (card: HCCard.Any) => {
   if (textListIncludes(toFaces(card)[0].types, 'land')) {
@@ -90,11 +78,7 @@ export const filterSort: sortFilterFunction = (
       );
     }
     case 'setaccepted': {
-      return (
-        (toSetNumber(getCollectorOrderSet(value1.set)) -
-          toSetNumber(getCollectorOrderSet(value2.set)) ||
-          parseInt(value1.accepted_order) - parseInt(value2.accepted_order)) * dirMult
-      );
+      return dateSort(value1, value2, dirMult);
     }
   }
   return 0; // just in case

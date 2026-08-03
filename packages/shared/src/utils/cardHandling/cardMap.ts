@@ -1,5 +1,10 @@
 import { HCCard, HCKind, HCRelatedCard, SetCode, toKindIndex } from '@hellfall/shared/types';
-import { getChildSets, getDirectChildSets } from '../setHandling';
+import {
+  getChildSets,
+  getCollectorOrderSet,
+  getDirectChildSets,
+  toSetNumber,
+} from '../setHandling';
 import { CardLookupMap } from './cardLookupMap';
 import { fixName } from '../textHandling';
 
@@ -12,20 +17,14 @@ export const preferTypeList = ['newest', 'oldest'] as const;
  */
 export type preferType = (typeof preferTypeList)[number];
 
-const newestSort = (value1: HCCard.Any, value2: HCCard.Any) => {
-  if (value1.kind != value2.kind) {
-    return toKindIndex(value1.kind) - toKindIndex(value2.kind);
-  }
-  switch (value1.kind) {
-    case 'card':
-      return parseInt(value1.hcid) - parseInt(value2.hcid);
-  }
-  return parseInt(value1.collector_number) - parseInt(value2.collector_number);
-};
-const oldestSort = (value1: HCCard.Any, value2: HCCard.Any) => -1 * newestSort(value1, value2);
+export const dateSort = (value1: HCCard.Any, value2: HCCard.Any, dirMult: 1 | -1 = 1) =>
+  (toSetNumber(getCollectorOrderSet(value1.set)) - toSetNumber(getCollectorOrderSet(value2.set)) ||
+    parseInt(value1.accepted_order) - parseInt(value2.accepted_order)) * dirMult;
+const reverseDateSort = (value1: HCCard.Any, value2: HCCard.Any) => dateSort(value1, value2, -1);
+
 const preferToSort: Record<preferType, (value1: HCCard.Any, value2: HCCard.Any) => number> = {
-  newest: newestSort,
-  oldest: oldestSort,
+  newest: reverseDateSort,
+  oldest: dateSort,
 };
 
 export const getPreference = (cards: HCCard.Any[], prefer: preferType): HCCard.Any =>

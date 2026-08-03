@@ -9,8 +9,16 @@ const sortRedirects: Record<string, sortType> = {
   cmc: 'manavalue',
   cn: 'number',
   num: 'number',
+  ao: 'accepted',
+  accept: 'accepted',
+  acceptorder: 'accepted',
+  acceptedorder: 'accepted',
   setcn: 'setnumber',
   setnum: 'setnumber',
+  setao: 'setaccepted',
+  setaccept: 'setaccepted',
+  setacceptorder: 'setaccepted',
+  setacceptedorder: 'setaccepted',
   colormv: 'colormanavalue',
   colorcmc: 'colormanavalue',
   setreview: 'colormanavalue',
@@ -133,12 +141,14 @@ export const winnowSortObjects = (
       if (other == 'auto') {
         continue;
       }
+      // if the other has a conflict, winnow it
       if (
-        sort == other ||
-        sort.slice(0, 3) == other.slice(0, 3) ||
-        sort.slice(0, 5) == other.slice(0, 5) ||
-        sort.slice(-6) == other.slice(-6) ||
-        sort.slice(-9) == other.slice(-9)
+        sort == other || // if they are the same
+        sort.slice(0, 3) == other.slice(0, 3) || // if they are both set
+        sort.slice(0, 5) == other.slice(0, 5) || // if they are both color
+        sort.slice(-6) == other.slice(-6) || // if they are both number
+        sort.slice(-8) == other.slice(-8) || // if they are both accepted
+        sort.slice(-9) == other.slice(-9) // if they are both manavalue
       ) {
         return true;
       }
@@ -164,12 +174,14 @@ export const winnowSortObjects = (
 export const getWinnowedSortOptions = (sortList: SortObject[]): sortType[] => {
   const options = [...sortTypeList];
   const hasConflict = (sort: string, other: string) => {
+    // if the other has a conflict, winnow it
     if (
-      sort == other ||
-      sort.slice(0, 3) == other.slice(0, 3) ||
-      sort.slice(0, 5) == other.slice(0, 5) ||
-      sort.slice(-6) == other.slice(-6) ||
-      sort.slice(-9) == other.slice(-9)
+      sort == other || // if they are the same
+      sort.slice(0, 3) == other.slice(0, 3) || // if they are both set
+      sort.slice(0, 5) == other.slice(0, 5) || // if they are both color
+      sort.slice(-6) == other.slice(-6) || // if they are both number
+      sort.slice(-8) == other.slice(-8) || // if they are both accepted
+      sort.slice(-9) == other.slice(-9) // if they are both manavalue
     ) {
       return true;
     }
@@ -240,12 +252,14 @@ export const combineAndWinnowSorts = (
     }
     for (let i = index - 1; i >= 0; i--) {
       const other = sortList[i].sort;
+      // if the other has a conflict, winnow it
       if (
-        sort == other ||
-        sort.slice(0, 3) == other.slice(0, 3) ||
-        sort.slice(0, 5) == other.slice(0, 5) ||
-        sort.slice(-6) == other.slice(-6) ||
-        sort.slice(-9) == other.slice(-9)
+        sort == other || // if they are the same
+        sort.slice(0, 3) == other.slice(0, 3) || // if they are both set
+        sort.slice(0, 5) == other.slice(0, 5) || // if they are both color
+        sort.slice(-6) == other.slice(-6) || // if they are both number
+        sort.slice(-8) == other.slice(-8) || // if they are both accepted
+        sort.slice(-9) == other.slice(-9) // if they are both manavalue
       ) {
         return true;
       }

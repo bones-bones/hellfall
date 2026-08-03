@@ -17,8 +17,6 @@ const hcToCockLayout: Record<HCLayout, string> = {
   meld_part: 'meld',
   meld_result: 'meld',
   multi_token: 'token',
-  not_magic: 'token',
-  multi_not_magic: 'token',
   emblem: 'token',
   reminder: 'token',
   reminder_on_back: 'normal',
