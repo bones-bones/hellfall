@@ -143,11 +143,11 @@ export type DraftmancerCustomCard = {
   /**
    * The card set
    */
-  set?: string;
+  set: string;
   /**
    * The collector number
    */
-  collector_number?: string;
+  collector_number: string;
   /**
    * The card back
    */

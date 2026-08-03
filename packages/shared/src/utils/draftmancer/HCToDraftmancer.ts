@@ -5,7 +5,6 @@ import {
   compressHCCardFaces,
   getRelatedsFromCards,
   getRelatedsFromSet,
-  hasTokenHCID,
   toFaces,
 } from '../cardHandling';
 import { HCCardToDraftmancerCard, StickerSheetScryfallIds } from './HCToDraftCard';
@@ -37,10 +36,9 @@ export const HCToDraftmancer = (
     if (!id) return;
     const related = draftCards.get(id) ?? draftTokens.get(id);
     if (related) {
-      return stripSingleSlashes(
-        toFaces(related)[0].export_name ??
-          (hasTokenHCID(related) ? related.hcid : toFaces(related)[0].name)
-      );
+      return `${stripSingleSlashes(toFaces(related)[0].export_name ?? toFaces(related)[0].name)} (${
+        related.set
+      }) ${related.collector_number}`;
     }
   };
   const getDraftEffects = (card: HCCard.Any): DraftEffect[] | undefined => {

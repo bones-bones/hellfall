@@ -55,10 +55,10 @@ export const toDraftmancerCube = ({
       null,
       '\t'
     )}\n[CommanderSlot(2)]\n${commanderCards
-      .map(e => `${multMap?.get(e.id) ?? 1} ${e.name}`)
+      .map(e => `${multMap?.get(e.id) ?? 1} ${e.name} (${e.set}) ${e.collector_number}`)
       .join('\n')}\n[OtherSlot(18)]\n${nonCommanderCards
       .map(e => {
-        return `${multMap?.get(e.id) ?? 1} ${e.name}`;
+        return `${multMap?.get(e.id) ?? 1} ${e.name} (${e.set}) ${e.collector_number}`;
       })
       .join('\n')}`;
 
@@ -81,7 +81,7 @@ export const toDraftmancerCube = ({
     ]
 }
 [CustomCards]\n${JSON.stringify([...cards, ...tokens], null, '\t')}\n[MainSlot(4)]\n${cards
-      .map(e => `1 ${e.name}`)
+      .map(e => `1 ${e.name} (${e.set}) ${e.collector_number}`)
       .join('\n')}`;
 
     return formatted;
@@ -94,7 +94,7 @@ export const toDraftmancerCube = ({
     "cardBack": "https://lh3.googleusercontent.com/d/1p6BQ9NAWpVMY8vPDJjhU2kvC98-P9joA"
 }
 [CustomCards]\n${JSON.stringify([...cards, ...tokens], null, '\t')}\n[MainSlot]\n${cards
-      .map(e => `${multMap?.get(e.id) ?? 1} ${e.name}`)
+      .map(e => `${multMap?.get(e.id) ?? 1} ${e.name} (${e.set}) ${e.collector_number}`)
       .join('\n')}`;
 
     return formatted;
