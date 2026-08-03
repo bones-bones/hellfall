@@ -1,4 +1,4 @@
-import { CollectionReference, FieldValue } from '@google-cloud/firestore';
+import { CollectionReference, FieldValue, Timestamp } from '@google-cloud/firestore';
 import { anyValueType, anyPropType, getAnyEntries, anyMappedType } from '@hellfall/shared/types';
 import { Changeset } from '../changeHandling';
 
@@ -14,12 +14,16 @@ export type fireValueType<K extends anyPropType> = K extends 'color_identity_hyb
 /**
  * A card update object
  */
-export type cardUpdate = { [K in anyPropType]?: fireValueType<K> | FieldValue };
+export type cardUpdate = { [K in anyPropType]?: fireValueType<K> | FieldValue } & {
+  last_modified?: FieldValue;
+};
 
 /**
  * A firestore card
  */
-export type firestoreCard = { [K in anyPropType]?: fireValueType<K> };
+export type firestoreCard = { [K in anyPropType]?: fireValueType<K> } & {
+  last_modified?: Timestamp;
+};
 
 /**
  * A collection of firestore cards

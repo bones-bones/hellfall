@@ -278,9 +278,8 @@ async function acceptChangeset(
   }
   await applyFromCollection(newCard, cs.changes, cardsCol);
   const update = getUpdateObject(fire!, cardToFirestore(newCard));
-  if (Object.keys(update).length) {
-    await cardRef.update(update);
-  }
+  update.last_modified = FieldValue.serverTimestamp();
+  await cardRef.update(update);
 
   await recardCardChangeset({
     cardId: cs.cardId,
