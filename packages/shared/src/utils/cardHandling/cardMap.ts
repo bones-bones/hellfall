@@ -6,8 +6,48 @@ import {
   toSetNumber,
 } from '../setHandling';
 import { CardLookupMap } from './cardLookupMap';
-import { fixName } from '../textHandling';
+import { fixName, splitCardName } from '../textHandling';
+import { isInteger } from '../numHandling';
 
+export const landIdList:[string,string][] = [
+  ['Plains', 'bc71ebf6-2056-41f7-be35-b2e5c34afa99'],
+  ['Island', 'b2c6aa39-2d2a-459c-a555-fb48ba993373'],
+  ['Swamp', '56719f6a-1a6c-4c0a-8d21-18f7d7350b68'],
+  ['Mountain', 'a3fb7228-e76b-4e96-a40e-20b5fed75685'],
+  ['Forest', 'b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6'],
+  ['Nebula', 'fad3359c-6c3d-4a94-8d7c-4f833d82cb8d'],
+  ['Wastes', '05d24b0c-904a-46b6-b42a-96a4d91a0dd4'],
+  ['Snow-Covered Plains', 'ac8cc74d-e43b-4118-bba0-dfa8b9c04d45'],
+  ['Snow-Covered Island', '5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0'],
+  ['Snow-Covered Swamp', 'd8239a86-7184-4005-ba1e-2dddcd756c47'],
+  ['Snow-Covered Mountain', 'ca9f660b-e07d-4f42-a46e-abd0ca72510c'],
+  ['Snow-Covered Forest', '5f0d3be8-e63e-4ade-ae58-6b0c14f2ce6d'],
+  ['Snow-Covered Nebula', '2c268e90-9bec-45c3-9c99-436761643f3c'],
+  ['Snow-Covered Wastes', '46a07b53-ff58-4bd6-80dd-ded2eb0e29a3'],
+  ['Thriving Heath', 'd1946630-e224-40db-8f0d-388b09622288'],
+  ['Thriving Isle', '69fc70b8-b143-4662-ac95-e2743037239d'],
+  ['Thriving Moor', 'b7c7d0c0-ada6-4c89-b47b-977e35e67b39'],
+  ['Thriving Bluff', '91fceb34-0f2d-4392-be27-00dcd765637f'],
+  ['Thriving Grove', 'a8052556-8962-4130-86a8-6fb7b6a324f7'],
+  ['Thriving Galaxy', '626d5aaa-b808-434b-b7ae-bde93811d2df'],
+];
+
+const landIdMap = new Map<string,string>(landIdList.map(l=>[l[0].toLowerCase(),l[1]]));
+
+/**
+ * Checks if a card name is the name of a land that can be used with {@linkcode getRandomLand}.
+ * @param name name to check
+ */
+const isLandName = (name: string) => landIdMap.has(name);
+
+
+
+const getRandom = (list:any[]|Set<any>) => {
+  if (Array.isArray(list)) {
+    return list[Math.floor(Math.random() * list.length)]
+  }
+    return Array.from(list)[Math.floor(Math.random() * list.size)]
+}
 /**
  * the list of preference options
  */
@@ -29,6 +69,7 @@ const preferToSort: Record<preferType, (value1: HCCard.Any, value2: HCCard.Any) 
 
 export const getPreference = (cards: HCCard.Any[], prefer: preferType): HCCard.Any =>
   cards.sort(preferToSort[prefer])[0];
+
 /**
  * The class for a map of cards.
  */
@@ -183,6 +224,35 @@ export class CardMap {
   getFromHCID = (hcid: string) => this.idMap.get(this.lookupMap.getFromHCID(hcid) ?? '');
 
   /**
+   * Returns the correct card for a card name and a number of prints, if any.
+   * 
+   * Suitable for use in the deckbuilder.
+   * @param text the name of the card to get
+   */
+  getForDeck = (text: string):{card?:HCCard.Any; count?: number} => {
+    const fixed = fixName(text);
+    const first = fixed.split(' ')[0];
+    const count = parseInt(first)
+    if (isInteger(first) && count > 0 && first.length != fixed.length) {
+      const card = this.getForDeck(fixed.slice(first.length+1))?.card;
+      if (card) {
+        return {card, count}
+      }
+    }
+    const { name, code, collector_number } = splitCardName(fixed);
+    const isLand = isLandName(name)
+    const id = this.lookupMap.getBySetAndNumber(name, code, collector_number, isLandName(name))
+    if (id) {
+      const card = this.get(id)!;
+      return {card};
+    } else if (isLand) {
+      return {card: this.getRandomCard(landIdMap.get(name))}
+    }
+    return {}
+  };
+
+
+  /**
    * Returns a specified card from the CardMap object.
    * Any change made to that card will effectively modify it inside the CardMap.
    * If no card has the specified hcid, undefined is returned
@@ -319,12 +389,14 @@ export class CardMap {
 
   /**
    * Gets a random id from this CardMap
+   * @param oracle_id oracle id to get from, if any
    */
-  getRandomId = () => this.ids()[Math.floor(Math.random() * this.size)];
+  getRandomId = (oracle_id?:string) => oracle_id && this.hasOracleId(oracle_id) ? getRandom(this.getIdsOfPrints(oracle_id)!): getRandom(this.ids())
   /**
    * Gets a random card from this CardMap
+   * @param oracle_id oracle id to get from, if any
    */
-  getRandomCard = () => this.cards()[Math.floor(Math.random() * this.size)];
+  getRandomCard = (oracle_id?:string) => this.get(this.getRandomId(oracle_id))!;
 
   /**
    * Adds a new card to the CardMap. If a card with the same id already exists, the card will be updated.
@@ -439,6 +511,12 @@ export class CardMap {
    * @param oracle_id the oracle id to check for
    */
   hasOracleId = (oracle_id: string) => this.oracleMap.has(oracle_id);
+
+  /**
+   * Checks if a card with the specified hcid exists
+   * @param hcid the hcid to check for
+   */
+  hasHCID = (hcid: string) => this.lookupMap.hasHCID(hcid);
 
   /**
    * Checks if a card with the specified name exists

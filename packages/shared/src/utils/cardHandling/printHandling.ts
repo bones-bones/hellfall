@@ -1,30 +1,5 @@
-import { HCLegalitiesField, HCLegality } from '@hellfall/shared/types';
-import { DefaultInvariantMap, InvariantMap, printInput, printInvariant } from './invariantMap';
-import { textListIsContainedBy } from '../listHandling';
-import { CardMap } from './cardMap';
-
-const cardIDList: printInput[] = [
-  ['Plains', 'bc71ebf6-2056-41f7-be35-b2e5c34afa99'],
-  ['Island', 'b2c6aa39-2d2a-459c-a555-fb48ba993373'],
-  ['Swamp', '56719f6a-1a6c-4c0a-8d21-18f7d7350b68'],
-  ['Mountain', 'a3fb7228-e76b-4e96-a40e-20b5fed75685'],
-  ['Forest', 'b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6'],
-  ['Nebula', 'fad3359c-6c3d-4a94-8d7c-4f833d82cb8d'],
-  ['Wastes', '05d24b0c-904a-46b6-b42a-96a4d91a0dd4'],
-  ['Snow-Covered Plains', 'ac8cc74d-e43b-4118-bba0-dfa8b9c04d45'],
-  ['Snow-Covered Island', '5b2460a5-6ae5-4cad-ba94-1a9e98e6e4c0'],
-  ['Snow-Covered Swamp', 'd8239a86-7184-4005-ba1e-2dddcd756c47'],
-  ['Snow-Covered Mountain', 'ca9f660b-e07d-4f42-a46e-abd0ca72510c'],
-  ['Snow-Covered Forest', '5f0d3be8-e63e-4ade-ae58-6b0c14f2ce6d'],
-  ['Snow-Covered Nebula', '2c268e90-9bec-45c3-9c99-436761643f3c'],
-  ['Snow-Covered Wastes', '46a07b53-ff58-4bd6-80dd-ded2eb0e29a3'],
-  ['Thriving Heath', 'd1946630-e224-40db-8f0d-388b09622288'],
-  ['Thriving Isle', '69fc70b8-b143-4662-ac95-e2743037239d'],
-  ['Thriving Moor', 'b7c7d0c0-ada6-4c89-b47b-977e35e67b39'],
-  ['Thriving Bluff', '91fceb34-0f2d-4392-be27-00dcd765637f'],
-  ['Thriving Grove', 'a8052556-8962-4130-86a8-6fb7b6a324f7'],
-  ['Thriving Galaxy', '626d5aaa-b808-434b-b7ae-bde93811d2df'],
-];
+import { DefaultInvariantMap, printInput } from './invariantMap';
+import { CardMap, landIdList } from './cardMap';
 
 const tokenOracleIdList: printInput[] = [
   ['Food', 'a468338f-635e-4206-89d6-72d723071d45'],
@@ -121,7 +96,7 @@ export const landNames = [
   'snow-covered wastes',
 ];
 
-export const landInvariantMap = new DefaultInvariantMap(cardIDList);
+export const landInvariantMap = new DefaultInvariantMap(landIdList);
 
 /**
  * Checks if a card name is the name of a land that can be used with {@linkcode getRandomLand}.
@@ -136,7 +111,7 @@ export const isLandName = (name: string) => landInvariantMap.hasName(name);
  */
 export const getRandomLand = (name: string, cardMap: CardMap) =>
   isLandName(name)
-    ? cardMap.getAllPrints(landInvariantMap.getOracleID(name)!).getRandomCard()
+    ? cardMap.getAllPrints(landInvariantMap.getOracleId(name)!).getRandomCard()
     : undefined;
 
 export const tokenInvariantMap = new DefaultInvariantMap(tokenOracleIdList);

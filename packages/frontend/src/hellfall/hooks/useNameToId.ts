@@ -10,6 +10,10 @@ import {
 } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 
+/**
+ * Only for use with redirects.
+ * @param name 
+ */
 export const useNameToHCID = (name: string): string | undefined => {
   const cards = useAtomValue(cardsAtom);
   return (
@@ -37,126 +41,126 @@ export const useNameToHCID = (name: string): string | undefined => {
   );
 };
 
-const getFrontExportName = (card: HCCard.Any) => {
-  if (card.export_name) {
-    return card.export_name;
-  }
-  if ('card_faces' in card) {
-    if (card.card_faces[0].export_name) {
-      return card.card_faces[0].export_name;
-    }
-    if (!card.card_faces[1].compress_face && !card.card_faces[1].drop_face) {
-      return card.card_faces[0].name;
-    }
-    let faceName = card.card_faces[0].name;
-    for (
-      let i = 1;
-      i < card.card_faces.length &&
-      (card.card_faces[i].compress_face || card.card_faces[i].drop_face);
-      i++
-    ) {
-      if (card.card_faces[i].compress_face) {
-        faceName += ' // ' + card.card_faces[i].name;
-      }
-    }
-    return faceName;
-  }
-  return card.name;
-};
+// const getFrontExportName = (card: HCCard.Any) => {
+//   if (card.export_name) {
+//     return card.export_name;
+//   }
+//   if ('card_faces' in card) {
+//     if (card.card_faces[0].export_name) {
+//       return card.card_faces[0].export_name;
+//     }
+//     if (!card.card_faces[1].compress_face && !card.card_faces[1].drop_face) {
+//       return card.card_faces[0].name;
+//     }
+//     let faceName = card.card_faces[0].name;
+//     for (
+//       let i = 1;
+//       i < card.card_faces.length &&
+//       (card.card_faces[i].compress_face || card.card_faces[i].drop_face);
+//       i++
+//     ) {
+//       if (card.card_faces[i].compress_face) {
+//         faceName += ' // ' + card.card_faces[i].name;
+//       }
+//     }
+//     return faceName;
+//   }
+//   return card.name;
+// };
 
-const addNameAlias = (map: Map<string, string>, alias: string | undefined, id: string) => {
-  if (!alias) {
-    return;
-  }
-  const key = textPrep(alias);
-  if (!map.has(key)) {
-    map.set(key, id);
-  }
-};
+// const addNameAlias = (map: Map<string, string>, alias: string | undefined, id: string) => {
+//   if (!alias) {
+//     return;
+//   }
+//   const key = textPrep(alias);
+//   if (!map.has(key)) {
+//     map.set(key, id);
+//   }
+// };
 
-export const buildNameToIdMap = (cards: CardMap): Map<string, string> => {
-  const map = new Map<string, string>();
-  cards.forEach(card => {
-    const id = card.id;
-    addNameAlias(map, card.export_name, id);
-    addNameAlias(map, card.hcid, id);
-    addNameAlias(map, card.name, id);
-    addNameAlias(map, card.flavor_name, id);
-    if ('card_faces' in card) {
-      addNameAlias(map, card.card_faces[0].export_name, id);
-      addNameAlias(map, getFrontExportName(card), id);
-      addNameAlias(map, card.card_faces[0].name, id);
-      for (const face of card.card_faces) {
-        addNameAlias(map, face.name, id);
-        addNameAlias(map, face.flavor_name, id);
-      }
-    }
-    if (card.export_name) {
-      addNameAlias(map, `${card.name} ${card.id}`, id);
-      addNameAlias(map, unescapeText(card.export_name), id);
-    }
-  });
-  return map;
-};
+// export const buildNameToIdMap = (cards: CardMap): Map<string, string> => {
+//   const map = new Map<string, string>();
+//   cards.forEach(card => {
+//     const id = card.id;
+//     addNameAlias(map, card.export_name, id);
+//     addNameAlias(map, card.hcid, id);
+//     addNameAlias(map, card.name, id);
+//     addNameAlias(map, card.flavor_name, id);
+//     if ('card_faces' in card) {
+//       addNameAlias(map, card.card_faces[0].export_name, id);
+//       addNameAlias(map, getFrontExportName(card), id);
+//       addNameAlias(map, card.card_faces[0].name, id);
+//       for (const face of card.card_faces) {
+//         addNameAlias(map, face.name, id);
+//         addNameAlias(map, face.flavor_name, id);
+//       }
+//     }
+//     if (card.export_name) {
+//       addNameAlias(map, `${card.name} ${card.id}`, id);
+//       addNameAlias(map, unescapeText(card.export_name), id);
+//     }
+//   });
+//   return map;
+// };
 
-export const lookupNameToId = (
-  name: string,
-  nameToIdMap: Map<string, string>,
-  cards: CardMap
-): string | undefined => {
-  if (textListIncludes(landNames, name)) {
-    return cards
-      .getAllInSet('HBB')
-      .filter(card => textEquals(name, card.name))
-      .getRandomId();
-  }
-  return cards.get(name)?.id ?? nameToIdMap.get(textPrep(name));
-};
+// export const lookupNameToId = (
+//   name: string,
+//   nameToIdMap: Map<string, string>,
+//   cards: CardMap
+// ): string | undefined => {
+//   if (textListIncludes(landNames, name)) {
+//     return cards
+//       .getAllInSet('HBB')
+//       .filter(card => textEquals(name, card.name))
+//       .getRandomId();
+//   }
+//   return cards.get(name)?.id ?? nameToIdMap.get(textPrep(name));
+// };
 
-export const nameToId = (name: string, cards: CardMap): string | undefined => {
-  if (textListIncludes(landNames, name)) {
-    return cards
-      .getAllInSet('HBB')
-      .filter(card => textEquals(name, card.name))
-      .getRandomId();
-  }
-  return (
-    cards.get(name)?.id ??
-    cards.find(card => card.export_name && textEquals(card.export_name, name))?.id ??
-    cards.find(card => textEquals(card.hcid, name))?.id ??
-    cards.find(card => textEquals(card.name, name))?.id ??
-    cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
-    cards.find(
-      card =>
-        'card_faces' in card &&
-        card.card_faces[0].export_name &&
-        textEquals(card.card_faces[0].export_name, name)
-    )?.id ??
-    cards.find(card => 'card_faces' in card && textEquals(getFrontExportName(card), name))?.id ??
-    cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
-    cards.find(
-      card =>
-        'card_faces' in card &&
-        textListIncludes(
-          card.card_faces.map(e => e.name),
-          name
-        )
-    )?.id ??
-    cards.find(
-      card =>
-        'card_faces' in card &&
-        textListIncludes(
-          card.card_faces.flatMap(e => e.flavor_name ?? []),
-          name
-        )
-    )?.id ??
-    cards.find(card => card.export_name && textEquals(`${card.name} ${card.id}`, name))?.id ??
-    cards.find(
-      card => card.export_name && textEquals(unescapeText(card.export_name), unescapeText(name))
-    )?.id
-  );
-};
-export const useIsHCID = (id: string): boolean => {
-  const cards = useAtomValue(cardsAtom);
-  return cards.some(card => card.hcid == id);
-};
+// export const nameToId = (name: string, cards: CardMap): string | undefined => {
+//   if (textListIncludes(landNames, name)) {
+//     return cards
+//       .getAllInSet('HBB')
+//       .filter(card => textEquals(name, card.name))
+//       .getRandomId();
+//   }
+//   return (
+//     cards.get(name)?.id ??
+//     cards.find(card => card.export_name && textEquals(card.export_name, name))?.id ??
+//     cards.find(card => textEquals(card.hcid, name))?.id ??
+//     cards.find(card => textEquals(card.name, name))?.id ??
+//     cards.find(card => card.flavor_name && textEquals(card.flavor_name, name))?.id ??
+//     cards.find(
+//       card =>
+//         'card_faces' in card &&
+//         card.card_faces[0].export_name &&
+//         textEquals(card.card_faces[0].export_name, name)
+//     )?.id ??
+//     cards.find(card => 'card_faces' in card && textEquals(getFrontExportName(card), name))?.id ??
+//     cards.find(card => 'card_faces' in card && textEquals(card.card_faces[0].name, name))?.id ??
+//     cards.find(
+//       card =>
+//         'card_faces' in card &&
+//         textListIncludes(
+//           card.card_faces.map(e => e.name),
+//           name
+//         )
+//     )?.id ??
+//     cards.find(
+//       card =>
+//         'card_faces' in card &&
+//         textListIncludes(
+//           card.card_faces.flatMap(e => e.flavor_name ?? []),
+//           name
+//         )
+//     )?.id ??
+//     cards.find(card => card.export_name && textEquals(`${card.name} ${card.id}`, name))?.id ??
+//     cards.find(
+//       card => card.export_name && textEquals(unescapeText(card.export_name), unescapeText(name))
+//     )?.id
+//   );
+// };
+// export const useIsHCID = (id: string): boolean => {
+//   const cards = useAtomValue(cardsAtom);
+//   return cards.some(card => card.hcid == id);
+// };

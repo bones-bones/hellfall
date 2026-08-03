@@ -196,3 +196,11 @@ Write a script to transform the database
 - figure out why the split tokens aren't compressing
 - clean up id tags
 - interpret e.g. 'SOH:' as a group search
+- test:
+  - deckbuilder
+  - cockatrice
+  - draftmancer
+  - deck pages
+  - search
+  - land box
+  

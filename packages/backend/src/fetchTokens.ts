@@ -68,7 +68,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
   const HCTokens = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
     const oracle_id =
-      tokenInvariantMap.getOracleID(entryAt('oracle_id') || entryAt('name')) ??
+      tokenInvariantMap.getOracleId(entryAt('oracle_id') || entryAt('name')) ??
       entryAt('oracle_id');
     if (!oracle_id) {
       throw new Error(`Missing oracle id on token with hcid: ${entryAt('name')}`);
@@ -145,7 +145,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         } else if (keys[i] == 'tags' || keys[i] == 'artists') {
           // now handling this at the end
         } else if (keys[i] == 'oracle_id') {
-          const oracle_id = tokenInvariantMap.getOracleID(entry[i] || token.name) ?? entry[i];
+          const oracle_id = tokenInvariantMap.getOracleId(entry[i] || token.name) ?? entry[i];
           if (oracle_id && isValidV4UUID(oracle_id)) {
             token.oracle_id = oracle_id;
           }

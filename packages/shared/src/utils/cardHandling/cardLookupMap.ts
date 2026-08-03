@@ -32,10 +32,11 @@ class CardLookupObject {
    * Returns the correct id for a set code and a collector number
    * @param code the set code to use
    * @param collector_number the collector number to use, if any
+   * @param noDefault whether to return undefined if the set isn't specified (used for random land handling)
    */
-  get = (code?: SetCode, collector_number?: string): string | undefined => {
+  get = (code?: SetCode, collector_number?: string, noDefault?:boolean): string | undefined => {
     if (!code) {
-      return this.defaultId;
+      return noDefault ? undefined: this.defaultId;
     }
     if (!collector_number) {
       const numIds = this.setNumMap.get(code)?.values();
@@ -47,7 +48,7 @@ class CardLookupObject {
       if (ids?.size) {
         return Array.from(ids.values())[0];
       }
-      return this.defaultId;
+      return noDefault ? undefined: this.defaultId;
     }
     const numMap = this.setNumMap.get(code);
     if (numMap) {
@@ -60,7 +61,7 @@ class CardLookupObject {
     if (ids?.size) {
       return Array.from(ids.values())[0];
     }
-    return this.defaultId;
+    return noDefault ? undefined: this.defaultId;
   };
 
   /**
@@ -214,15 +215,16 @@ export class CardLookupMap {
    * @param name the name of the card to get
    * @param code the set code to use, if any
    * @param collector_number the collector number to use, if any
+   * @param noDefault whether to return undefined if the set isn't specified (used for random land handling)
    */
-  getBySetAndNumber = (name: string, code?: SetCode, collector_number?: string) => {
+  getBySetAndNumber = (name: string, code?: SetCode, collector_number?: string, noDefault?:boolean) => {
     if (!name) return;
     if (!code && this.hcidMap.has(name) && name != '3' && name != '1984') {
       return this.hcidMap.get(name);
     }
     const lookup = this.nameMap.get(name) ?? this.nameMap.get(this.aliasMap.get(name) ?? '');
     if (!lookup) return;
-    return lookup.get(code, collector_number);
+    return lookup.get(code, collector_number, noDefault);
   };
 
   /**
@@ -289,6 +291,11 @@ export class CardLookupMap {
     if (!name) return false;
     return this.nameMap.has(name) || this.aliasMap.has(name);
   };
+  /**
+   * Checks if a card with the specified hcid exists.
+   * @param hcid the hcid of the card to check
+   */
+  hasHCID = (hcid: string) => this.hcidMap.has(fixName(hcid));
   /**
    * Removes all elements from the CardLookupMap.
    */

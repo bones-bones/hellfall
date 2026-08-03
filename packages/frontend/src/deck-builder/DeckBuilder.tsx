@@ -5,21 +5,13 @@ import { HCCard, SetCode } from '@hellfall/shared/types';
 import { TextInput, Box, FormField } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
-import { buildNameToIdMap, lookupNameToId } from '../hellfall/hooks/useNameToId.ts';
 import { downloadDraftmancer } from '../cube-resources/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledImg, createStyledTextArea } from '../styling';
-import { CardMap, HCToTTSDeck, textPrep, unescapeBase64 } from '@hellfall/shared/utils';
+import { CardMap, HCToTTSDeck, unescapeBase64 } from '@hellfall/shared/utils';
 import { loadCardsData } from '@hellfall/shared/data';
 
-// const basics: Record<string, string> = {
-//   forest: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn0/forest.jpeg',
-//   swamp: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmZ/swamp.jpeg',
-//   island: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/n/fwxn1/island.jpeg',
-//   plains: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmY/plains.jpeg',
-//   mountain: 'https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/w/x/m/fwxmX/mountain.jpeg',
-// };
 export const DeckBuilder = () => {
   const ref = useRef(null);
   const location = useLocation();
@@ -35,7 +27,6 @@ export const DeckBuilder = () => {
   useEffect(() => {
     loadCardsData().then(data => setCardMap(new CardMap(data.data)));
   }, []);
-  const nameToIdMap = useMemo(() => buildNameToIdMap(cardMap), [cardMap]);
   const [multMap, setMultMap] = useState<Map<string, number>>(new Map());
   // const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
@@ -73,61 +64,21 @@ export const DeckBuilder = () => {
     }
   }, [textAreaValue, deckName, cardMap]);
 
-  const toCardArr = (value: string): [number, string] => {
-    const index = /^(?!0+\s)\d+\s/.test(value) ? value.indexOf(' ') : 0;
-    const count = index ? parseInt(value.slice(0, index)) : 1;
-    const rest = index ? value.slice(index + 1) : value;
-    if (!count) {
-      return [1, ''];
-    }
-    if (!rest) {
-      return [count, ''];
-    }
-
-    if (rest[0] == '%') {
-      const hcid = rest.slice(1);
-      return nameToIdMap.has(textPrep(hcid)) ? [count, hcid] : [count, ''];
-    }
-    if (/^\d+$/.test(rest)) {
-      const id = nameToIdMap.get(textPrep(rest));
-      return id ? [count, id] : [count, ''];
-    }
-    // if (rest.toLowerCase() in basics) {
-    //   // handle basics
-    //   return [count, rest.toLowerCase()];
-    // }
-
-    return [count, rest];
-  };
-
   const updateCards = (cards: string[]) => {
-    // if (!cardMap.size) {
-    //   return;
-    // }
     const newMultMap = new Map<string, number>();
     const images: HCCard.Any[] = (cards || [])
       .filter(entry => entry != '' && !entry.startsWith('# '))
       .flatMap(name => {
-        const [count, rest] = toCardArr(name);
-        // if (rest in basics) {
-        //   const card = {
-        //     image: basics[rest],
-        //     name: rest,
-        //   } as unknown as HCCard.Any;
-        //   return Array(count).fill(card);
-        // } else {
-        const id = lookupNameToId(rest, nameToIdMap, cardMap);
-        const card = id
-          ? cardMap.get(id)
-          : ({
+        const {card, count} = cardMap.getForDeck(name);
+
+        if (count && card && count > 1) {
+          newMultMap.set(card.id, count);
+        }
+        return Array(count).fill(card ?? ({
               image:
                 'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
               name: name + ' - not found',
-            } as unknown as HCCard.Any);
-        if (count > 1 && id != undefined) {
-          newMultMap.set(id, count);
-        }
-        return Array(count).fill(card);
+            } as unknown as HCCard.Any));
         // }
       });
     setMultMap(newMultMap);

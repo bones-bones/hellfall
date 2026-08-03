@@ -1,7 +1,6 @@
-import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useParams } from 'react-router-dom';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
-import { HellfallCard } from '../hellfall/card';
 import { stringToMana } from '../hellfall/stringToMana.tsx';
 import {
   compareCubeListCards,
@@ -11,7 +10,7 @@ import {
   groupCubeCards,
   isPlayableCubeCard,
 } from '@hellfall/shared/utils';
-import { HCCard, SetCode } from '@hellfall/shared/types';
+import { SetCode } from '@hellfall/shared/types';
 import { useEffect, useMemo } from 'react';
 import { BoxProps } from '@workday/canvas-kit-react';
 import {
@@ -106,7 +105,7 @@ export const CubeList = () => {
                   {sectionCards.map(card => (
                     <CardRow key={card.id}>
                       <NameCell
-                        to={`/card/${card.name}`}
+                        to={`/card/${card.hcid}`}
                         onMouseEnter={() => setActiveCard(card.id)}
                       >
                         {card.name}

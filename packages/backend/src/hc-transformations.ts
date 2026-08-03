@@ -23,8 +23,6 @@ import {
   cleanParts,
   updateParts,
   addToJSONToCards,
-  getDirectChildSets,
-  getParentSetCode,
   colorOrderSetList,
   getCollectorOrderSet,
   getAcceptedOrderSet,
@@ -112,35 +110,6 @@ const mergeDatabases = (
     }
   });
 
-  // [mergedCards, mergedTokens].forEach(mergedList =>
-  //   mergedList.forEach(card => {
-  //     if (!card.id) {
-  //       card.id = crypto.randomUUID();
-  //     }
-  //     if (!card.oracle_id) {
-  //       if (card.tags?.includes('masterpiece')) {
-  //         const originalName = stripMasterpiece(card.name);
-  //         const original = mergedList.find(c => textEquals(c.name, originalName));
-  //         if (original?.oracle_id) {
-  //           card.oracle_id = original.oracle_id;
-  //           return;
-  //         }
-  //         if (baseInvariantMap.hasName(originalName)) {
-  //           card.oracle_id = baseInvariantMap.getOracleID(originalName)!;
-  //           return;
-  //         }
-  //       } else if (card.tags?.includes('reprint')) {
-  //         const originalName = stripSetCode(card.name);
-  //         const original = mergedList.find(c => textEquals(c.name, originalName));
-  //         if (original?.oracle_id) {
-  //           card.oracle_id = original.oracle_id;
-  //           return;
-  //         }
-  //       }
-  //       card.oracle_id = crypto.randomUUID();
-  //     }
-  //   })
-  // );
 
   return mergedCards
     .cards()
@@ -246,11 +215,9 @@ const dataToCards = <K extends anyPropType>(
 const loadExistingData = () => {
   const databasePath = '../shared/src/data/Hellscube-Database.json';
   const tokensPath = '../shared/src/data/tokens.json';
-  // const landsPath = '../shared/src/data/lands.json';
 
   let databaseContent = undefined;
   let tokensContent = undefined;
-  // let landsContent = undefined;
 
   try {
     databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
@@ -269,16 +236,6 @@ const loadExistingData = () => {
   }
 
   const existingTokens = new CardMap(dataToCards(tokensContent?.data ?? []));
-
-  // try {
-  //   landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
-  // } catch (error) {
-  //   console.warn('Could not load lands, proceeding with undefined content:', error);
-  // }
-
-  // // #jank
-  // const existingLands = new CardMap(dataToCards(landsContent?.data ?? [], 'accepted_order', ''));
-  // existingCards.setMultiple(existingLands);
 
   return { existingCards, existingTokens };
 };
@@ -546,10 +503,6 @@ const main = async () => {
       '\t'
     )
   );
-  // fs.writeFileSync(
-  //   '../shared/src/data/lands.json',
-  //   JSON.stringify({ data: finalCards.filter(card => card.kind == 'land').cards() }, null, '\t')
-  // );
   fs.writeFileSync(
     '../shared/src/data/keywords.json',
     JSON.stringify(

@@ -143,10 +143,8 @@ const rootIgnoreProps: Record<HCKind, rootPropType[]> = {
 const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
   // card: ['colors'],
   token: ['mana_cost', 'mana_value', 'subtypes', 'oracle_text', 'colors'],
-  // land: ['colors'],
   // front: ['colors'],
   // scryfall: ['colors'],
-  // notmagic: ['colors'],
 };
 type add = faceChangeablePropType<'add'>;
 

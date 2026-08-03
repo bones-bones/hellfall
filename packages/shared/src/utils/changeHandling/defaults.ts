@@ -79,10 +79,8 @@ const defaultPartProps: partMappedType = {
 // const kindToSet:Record<HCKind,string> = {
 //   card:'',
 //   token:'HCT',
-//   land:'HBB',
 //   front:'FHCJ',
 //   scryfall:'SFT',
-//   notmagic:'NotMagic'
 // }
 
 export const kindToFaceLayout: Record<HCKind, BothLayoutType> = {

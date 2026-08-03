@@ -133,7 +133,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         .slice(keys.indexOf('1mana_cost'), keys.indexOf('id'))
         .some(value => value);
       const oracle_id =
-        landInvariantMap.getOracleID(entryAt('oracle_id') || entryAt('name')) ??
+        landInvariantMap.getOracleId(entryAt('oracle_id') || entryAt('name')) ??
         entryAt('oracle_id');
       if (!oracle_id) {
         throw new Error(`Missing oracle id on card with hcid: ${entryAt('hcid')}`);

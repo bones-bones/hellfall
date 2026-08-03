@@ -44,7 +44,6 @@ export async function loadCardsData(): Promise<JsonDataWrapper<HCCard.Any>> {
 }
 
 export const cardsDataAsync = loadCardsData();
-// export const landsDataAsync = Promise.resolve(loadJsonFileSync<HCCard.Any>('lands.json'));
 export const tokensDataAsync = Promise.resolve(loadJsonFileSync<HCCard.Any>('tokens.json'));
 export const pipsDataAsync = Promise.resolve(loadJsonFileSync<HCCardSymbol>('pips.json'));
 export const setsDataAsync = Promise.resolve(loadJsonFileSync<HCSet>('sets.json'));
@@ -57,7 +56,6 @@ export const typesDataAsync = Promise.resolve(loadJsonFileSync<string>('types.js
 
 // Individual exports (bundled JSON at startup; live catalog via /api/cards/load)
 export const cardsData = await cardsDataAsync;
-// export const landsData = loadJsonFileSync<HCCard.Any>('lands.json');
 export const tokensData = loadJsonFileSync<HCCard.Any>('tokens.json');
 export const pipsData = loadJsonFileSync<HCCardSymbol>('pips.json');
 export const setsData = loadJsonFileSync<HCSet>('sets.json');

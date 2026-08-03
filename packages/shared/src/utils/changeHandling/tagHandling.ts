@@ -28,10 +28,8 @@ import {
   tagChange,
   sortChanges,
 } from './changeTypes';
-// import { isValidV4UUID } from '../textHandling';
 import { isInteger } from '../numHandling';
 import { ensureArray, pushProp } from '../listHandling';
-// import { baseInvariantMap } from '../cardHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -368,14 +366,6 @@ const tagCanUseURL = (tag: string): boolean => {
   }
   return false;
 };
-// const tagCanUseUUID = (tag: string): boolean => {
-//   if (tag == 'card-in-scryfall') {
-//     return true;
-//   } else if (tag == 'has-other-prints') {
-//     return true;
-//   }
-//   return false;
-// };
 const tagIsSetTag = (tag: string, card?: HCCard.Any): boolean => {
   if (card ? tag.toUpperCase() == card.set : getSet(tag.toUpperCase() as SetCode)) {
     return true;
@@ -425,10 +415,6 @@ type splitTagReturn = {
    * The face to apply the tag's effects to
    */
   face?: number;
-  // /**
-  //  * The uuid to use for the tag's effects
-  //  */
-  // uuid?: string;
   /**
    * The url to use for the tag's effects
    */
@@ -706,12 +692,6 @@ export const splitTagComponents = (
     fillSubKeywords(splitTag.keywords);
   }
   if (!splitTag.note) {
-    // if (tagCanUseUUID(splitTag.tag)) {
-    //   const id = baseInvariantMap.getOracleID(card?.name ?? '');
-    //   if (id) {
-    //     splitTag.uuid = id;
-    //   }
-    // }
     return splitTag;
   }
   const splitNote = splitTag.note.split('|');
@@ -723,17 +703,6 @@ export const splitTagComponents = (
       }
       continue;
     }
-    // if (tagCanUseUUID(splitTag.tag) && !splitTag.uuid) {
-    //   if (isValidV4UUID(splitNote[i])) {
-    //     [splitTag.uuid] = splitNote.splice(i, 1);
-    //     continue;
-    //   }
-    //   if (baseInvariantMap.hasName(splitNote[i])) {
-    //     const [name] = splitNote.splice(i, 1);
-    //     splitTag.uuid = baseInvariantMap.getOracleID(name);
-    //     continue;
-    //   }
-    // }
     if (
       tagCanUseURL(splitTag.tag) &&
       // (splitNote[i].startsWith('http') || isDriveURLString(splitNote[i])) &&
@@ -1176,20 +1145,6 @@ export const getChangesFromTag = (
       HCImageStatus.HighRes
     );
     changes.push(change);
-    // } else if (tag == 'card-in-scryfall') {
-    //   const change: rootChange<typeof change_type, 'oracle_id_is_scryfall'> = createRootChange(
-    //     change_type,
-    //     'oracle_id_is_scryfall',
-    //     true
-    //   );
-    //   changes.push(change);
-    //   // } else if (tag == 'exact-card-in-scryfall') {
-    //   //   const change: rootChange<'id_is_scryfall'> = createRootChange(
-    //   //     change_type,
-    //   //     'id_is_scryfall',
-    //   //     true
-    //   //   );
-    //   //   changes.push(change);
   }
   return changes.sort(sortChanges);
   // return changes.filter(change=>changeIsValid(card,change))

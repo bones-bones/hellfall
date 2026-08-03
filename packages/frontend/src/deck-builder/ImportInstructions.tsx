@@ -5,15 +5,14 @@ export const ImportInstructions = () => {
       <ol>
         <li>Enter a deck/cube name</li>
         <li>
-          Fill out the box below. Use # followed by a space to hide a card. Use % followed by a card
-          ID to specify the version.
+          Fill out the box below. Use # followed by a space to hide a card. Use <code>CardName (SET) Number</code> syntax to specify a printing.
         </li>
         <li>
-          Basics are drawn randomly from the Land Box, or you can specify a land ID to choose one.
+          Basics are drawn randomly from the Land Box, or you can specify a land's printing to choose one.
         </li>
         <li>
           You can also paste a cardlist directly from Cockatrice (
-          {'Use Deck Editor > Save deck to clipboard > Not Annotated (No set info)'}).
+          {'Use Deck Editor > Save deck to clipboard > Not Annotated'}).
         </li>
         <li>Click Generate Deck Image or Set Deck</li>
       </ol>
