@@ -1,8 +1,8 @@
 import { sheetsKey } from './env.ts';
-import { HCRelatedCard, HCObject, SetCode } from '@hellfall/shared/types';
+import { HCRelatedCard, HCObject, SetCode, rootPropType } from '@hellfall/shared/types';
 import pLimit from 'p-limit';
 import { fixedScryfall, ScryfallToHC } from './scryfallToHC.ts';
-import { parseRelatedReferenceName, setDerivedProps } from '@hellfall/shared/utils';
+import { addPropToRoot, parseRelatedReferenceName, setDerivedProps } from '@hellfall/shared/utils';
 
 const REQUEST_DELAY_MS = 125;
 const limiter = pLimit(1);
@@ -42,8 +42,9 @@ export const fetchScryfallTokens = async () => {
   const asJson = (await requestedData.json()) as any;
 
   const [_oldkeys, ...rest] = asJson.values as string[][];
-  const keys = ['hcid', 'id', 'token_maker', 'notes', 'tags'] as const;
+  const keys = ['hcid', 'id', 'token_maker', 'notes', 'accepted_order'] as const;
   type keyType = (typeof keys)[number];
+  const skipKeys: keyType[] = ['id', 'notes'];
   rest.forEach(row => {
     while (row.length < keys.length) {
       row.push('');
@@ -55,10 +56,8 @@ export const fetchScryfallTokens = async () => {
       const entryAt = (key: keyType) => entry[keys.indexOf(key)];
       const token = ScryfallToHC(await fetchCardById(entry[1]));
       for (let i = 0; i < keys.length; i++) {
-        if (entry[i]) {
-          if (keys[i] == 'hcid') {
-            token.hcid = entry[i];
-          } else if (keys[i] == 'token_maker') {
+        if (entry[i] && !skipKeys.includes(keys[i])) {
+          if (keys[i] == 'token_maker') {
             token.all_parts = entry[i].split(';').map(oldName => {
               const { name, hcid, code, count } = parseRelatedReferenceName(oldName);
               const maker: HCRelatedCard = {
@@ -77,10 +76,15 @@ export const fetchScryfallTokens = async () => {
               }
               return maker;
             });
+          } else {
+            addPropToRoot(token, keys[i] as rootPropType, entry[i]);
+            if (keys[i] == 'accepted_order') {
+              addPropToRoot(token, 'collector_number', entry[i]);
+            }
           }
         }
       }
-      setDerivedProps(token, entryAt('tags').split(';'));
+      setDerivedProps(token, []);
 
       return token;
     })
