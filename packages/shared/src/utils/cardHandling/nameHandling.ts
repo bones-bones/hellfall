@@ -1,6 +1,18 @@
-import { HCCard } from '@hellfall/shared/types';
-import { fixName, splitSetCode } from '../textHandling';
-import { toFaces } from './cardMethods';
+import { faceType, HCCard } from '@hellfall/shared/types';
+import { fixName } from '../textHandling';
+import { splitSetCode } from '../setHandling';
+
+
+// breaks circular
+const toFaces = (card: HCCard.Any, dropFaces?: boolean): faceType[] => {
+  if ('card_faces' in card) {
+    if (dropFaces) {
+      return card.card_faces.filter(face => !face.drop_face);
+    }
+    return card.card_faces;
+  }
+  return [card];
+};
 
 /**
  * Gets all names for a card other than its normal name (for accessibility)

@@ -1,6 +1,3 @@
-import { allSetsList, isSetCode, SetCode } from '@hellfall/shared/types';
-import { fixSetCode } from './setHandling';
-
 /**
  * Normalize text (remove accents and replace smart quotes with normal quotes)
  * @param text text to normalize
@@ -303,115 +300,6 @@ export const formatParens = (text: string) => {
     .replaceAll('\\)', ')');
 };
 
-const fixMaster = (t: string[]) =>
-  t.length > 1 && typeof t[1] == 'string' ? [t[0].toUpperCase(), t[1]] : t;
-/**
- * Splits a name that starts with a masterpiece code into the name and the set code.
- * Can handle lowercase set codes.
- * @param text text to split
- */
-export const splitMasterpiece = (text: string): { name: string; code?: SetCode } => {
-  const [code, name] = fixMaster(text.match(/^([^:]+): (.*)$/)?.slice(1) ?? ['', text]);
-  if (!code) {
-    return { name };
-  }
-  if (isSetCode(code)) {
-    return { name, code };
-  }
-  return { name: text };
-};
-const fixCode = (t: string[]) =>
-  t.length > 1 && typeof t[1] == 'string' ? [t[0], fixSetCode(t[1])] : t;
-/**
- * Splits a name that ends with a set code into the name and the set code.
- * Can handle lowercase set codes.
- * @param text text to split
- */
-export const splitSetCode = (text: string): { name: string; code?: string } => {
-  const [name, code] = fixCode(text.match(/^(.*) <([^>]+)>$/)?.slice(1) ?? [text]);
-  if (!code) {
-    return { name };
-  }
-  if (code == 'HC' || isSetCode(code)) {
-    return { name, code };
-  }
-  return { name: text };
-};
-
-const stripParens = (text: string) =>
-  text.startsWith('(') && text.endsWith(')') ? text.slice(1, -1) : text;
-
-/**
- * Splits a name of a card from input into the card's name, set (if any), and collector num (if any)
- * @param text text to split
- */
-export const splitCardName = (
-  text: string
-): { name: string; code?: SetCode; collector_number?: string } => {
-  const { name, code } = splitMasterpiece(text);
-  if (code) {
-    return { name, code };
-  }
-  const splitText = text.split(' ');
-  if (splitText.length > 2 && isSetCode(stripParens(splitText.at(-2)!))) {
-    return {
-      name: splitText.slice(0, -2).join(' '),
-      code: fixSetCode(stripParens(splitText.at(-2)!) as SetCode),
-      collector_number: splitText.at(-1)?.toLowerCase(),
-    };
-  }
-  if (splitText.length > 1 && isSetCode(stripParens(splitText.at(-1)!))) {
-    return {
-      name: splitText.slice(0, -1).join(' '),
-      code: fixSetCode(stripParens(splitText.at(-1)!) as SetCode),
-    };
-  }
-  return { name: text };
-};
-
-const hardCardNames: string[] = [
-  'Crypt of u/Em9500',
-  '1d6',
-  'Avatar of BallsJr123',
-  'Sekiro for the PS4',
-  'Avatar of Discord v2',
-  'That One Time in WW1',
-  'Plagiarism by doomclaw9',
-  'Carrion Feeder from MH8',
-];
-
-export const hardTokenIds: string[] = [
-  'Clue© 19861',
-  '+21',
-  '+41',
-  'AKKI-471',
-  'Bolt M41',
-  'Rock 191',
-  "Baldur's Gate 31",
-];
-
-/**
- * Parses the parameters for a related card
- * @param oldName name from the google sheet
- */
-export const parseRelatedReferenceName = (
-  oldName: string
-): { name: string; hcid: string; code?: SetCode; count?: string } => {
-  const { name: intName, code } = splitCardName(oldName);
-  const groups = intName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-  const match = groups?.groups?.name ?? intName;
-  const count = groups?.groups?.count ?? ('' as SetCode);
-  const base = hardTokenIds.includes(match) ? match.slice(0, -1) : match.replace(/\d+$/, '');
-  const shouldUseBase =
-    hardTokenIds.includes(match) ||
-    (/\d/.test(match.at(-1)!) &&
-      !hardCardNames.includes(match) &&
-      base.length > 0 &&
-      ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!));
-  const name = shouldUseBase ? base : match;
-  const hcid = shouldUseBase ? match : '';
-  return { name, hcid, code, count };
-};
 
 /**
  * Preps a name for export to draftmancer/cockatrice
@@ -581,7 +469,7 @@ export const unescapeText = (text: string, isSet?: boolean) => {
     return text;
   }
   if (isSet) {
-    return fixSetCode(text)
+    return text.toUpperCase().replaceAll('.', '_')
       .replaceAll(/^['"]/g, '')
       .replaceAll(/(?<!\\)['"]/g, '')
       .replaceAll(/\\(['"])/g, '$1');
