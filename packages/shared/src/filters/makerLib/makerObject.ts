@@ -473,7 +473,7 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       queryName,
       shareFilter,
       summary as summaryFunction<any>,
-      ensureArray(toValue(unescapeText(value, isSet) as T)).map(v => unescapeText(v, this.isSet)),
+      ensureArray(toValue(unescapeText(value, isSet) as T)).map(v => unescapeText(v, isSet)),
       op,
       card =>
         this.props.flatMap(
