@@ -14,7 +14,7 @@ const toColorNumber = (card: HCCard.Any, useTypes?:boolean) => {
   }
   switch (card.colors.length) {
     case 0:
-      return (useTypes || textListIncludes(toFaces(card)[0].types, 'artifact')) ? colorList.length + 1 : -1;
+      return (!useTypes || textListIncludes(toFaces(card)[0].types, 'artifact')) ? colorList.length + 1 : -1;
     case 1:
       return colorList.indexOf(card.colors[0]);
   }

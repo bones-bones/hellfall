@@ -109,7 +109,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
     } else if (format == 'json') {
       const results = resultMap.cards();
       for (let i = sortList.length - 1; i >= 0; i--) {
-        results.sort((a: HCCard.Any, b: HCCard.Any) => sortList[i].filter(a, '=', b));
+        results.sort(sortList[i].filter);
       }
       const response: any = {
         object: 'list',

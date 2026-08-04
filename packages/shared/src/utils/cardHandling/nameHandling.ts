@@ -25,6 +25,9 @@ export const getOtherNames = (card: HCCard.Any): string[] | undefined => {
 };
 
 const combineFaceNames = (faceNames: string[][]): string[] => {
+  if (!faceNames.length) {
+    return [];
+  }
   let combinations: string[] = [...faceNames[0]];
 
   // Combine with each subsequent face
