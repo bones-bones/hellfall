@@ -58,6 +58,10 @@ export interface sortInterface {
    * The sort direction option
    */
   dir: dirType;
+  /**
+   * whether to use card types for color sort
+   */
+  useTypes?: boolean;
 }
 
 /**

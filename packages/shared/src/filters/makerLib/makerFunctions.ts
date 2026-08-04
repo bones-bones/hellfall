@@ -152,5 +152,6 @@ export type stringOrNumFilterMaker = (
  * A function that creates a {@linkcode SortObject}
  * @param sort the sort option from the search
  * @param dir the sort direction option from the search
+ * @param useTypes whether to use card types for color sort
  */
-export type sortMaker = (sort: sortType, dir: dirType) => SortObject;
+export type sortMaker = (sort: sortType, dir: dirType, useTypes?:boolean) => SortObject;

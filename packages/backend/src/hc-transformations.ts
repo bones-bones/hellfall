@@ -300,7 +300,7 @@ const main = async () => {
   newTokens.setMultiple(fetchHCJFronts());
   // newTokens.setMultiple(await fetchNotMagic());
   const nameSort = makeSort('name', 'asc');
-  const colorSort = makeSort('color', 'asc');
+  const colorSort = makeSort('color', 'asc', true);
   colorOrderSetList.forEach(set =>
     newCards
       .getAllInSetDirect(set)
