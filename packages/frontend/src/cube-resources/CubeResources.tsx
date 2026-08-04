@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import {
+  displaySetCode,
   getRelatedsFromSet,
   HCToTTSDeck,
   toCockCube,
@@ -182,7 +183,7 @@ export const CubeResources = () => {
     },
     {
       name: 'Hellscube 9',
-      id: 'HC9.0',
+      id: 'HC9_0',
       description: 'The first 360 cards of the vintage cube with purple.',
     },
     {
@@ -213,7 +214,7 @@ export const CubeResources = () => {
           return (
             <StyledRow key={cubeSetup.id}>
               <StyledTD>{cubeSetup.name}</StyledTD>
-              <StyledTD>{cubeSetup.id}</StyledTD>
+              <StyledTD>{displaySetCode(cubeSetup.id)}</StyledTD>
               <StyledTD>{cubeSetup.description}</StyledTD>
               <StyledTD>
                 {cubeSetup.quickLink}

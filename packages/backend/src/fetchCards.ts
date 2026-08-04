@@ -25,6 +25,7 @@ import {
   isValidV4UUID,
   landInvariantMap,
   CardMap,
+  fixSetCode,
 } from '@hellfall/shared/utils';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
@@ -151,7 +152,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           image: entryAt('image'),
           image_status: HCImageStatus.HighRes,
           creators: entryAt('creators').split(';'),
-          set: entryAt('set') as SetCode,
+          set: fixSetCode(entryAt('set')) as SetCode,
           collector_number: entryAt('accepted_order'),
           accepted_order: entryAt('accepted_order'),
           rulings: entryAt('rulings'),

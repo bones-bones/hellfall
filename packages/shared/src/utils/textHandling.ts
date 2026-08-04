@@ -1,4 +1,5 @@
 import { allSetsList, isSetCode, SetCode } from '@hellfall/shared/types';
+import { fixSetCode } from './setHandling';
 
 /**
  * Normalize text (remove accents and replace smart quotes with normal quotes)
@@ -320,7 +321,7 @@ export const splitMasterpiece = (text: string): { name: string; code?: SetCode }
   return { name: text };
 };
 const fixCode = (t: string[]) =>
-  t.length > 1 && typeof t[1] == 'string' ? [t[0], t[1].toUpperCase()] : t;
+  t.length > 1 && typeof t[1] == 'string' ? [t[0], fixSetCode(t[1])] : t;
 /**
  * Splits a name that ends with a set code into the name and the set code.
  * Can handle lowercase set codes.
@@ -355,14 +356,14 @@ export const splitCardName = (
   if (splitText.length > 2 && isSetCode(stripParens(splitText.at(-2)!))) {
     return {
       name: splitText.slice(0, -2).join(' '),
-      code: stripParens(splitText.at(-2)!).toUpperCase() as SetCode,
+      code: fixSetCode(stripParens(splitText.at(-2)!) as SetCode),
       collector_number: splitText.at(-1)?.toLowerCase(),
     };
   }
   if (splitText.length > 1 && isSetCode(stripParens(splitText.at(-1)!))) {
     return {
       name: splitText.slice(0, -1).join(' '),
-      code: stripParens(splitText.at(-1)!).toUpperCase() as SetCode,
+      code: fixSetCode(stripParens(splitText.at(-1)!) as SetCode),
     };
   }
   return { name: text };
@@ -573,14 +574,18 @@ export const isRegexText = (text: string) => regexTest.test(text);
 /**
  * Unescapes and strips text so that it can be used in comparisons
  * @param text text to unescape
- * @param keepDashes whether to keep dashes (for correct handling of text fields)
+ * @param isSet whether this filter is a set filter
  */
-export const unescapeText = (text: string, keepDashes?: boolean) => {
+export const unescapeText = (text: string, isSet?: boolean) => {
   if (isRegexText(text)) {
     return text;
   }
+  if (isSet) {
+    return fixSetCode(text).replaceAll(/^['"]/g, '').replaceAll(/(?<!\\)['"]/g, '')
+    .replaceAll(/\\(['"])/g, '$1');
+  }
   const strippedText =
-    textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
+    textIsQuote(text) ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
   return strippedText
     .toLowerCase()
     .replaceAll(/^['"]/g, '')

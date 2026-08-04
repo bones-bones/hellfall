@@ -571,10 +571,10 @@ export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): print
     //   // #test
     //   exportName = '_' + exportName;
     // }
-    // if (/^\d/.test(exportName)) {
-    //   // #test
-    //   exportName = '_' + exportName;
-    // }
+    if (/^[\d/]+ /.test(exportName)) {
+      // #test
+      exportName = '_' + exportName;
+    }
     // if (exportName.endsWith(')')) {
     //   // #test
     //   exportName += '_';

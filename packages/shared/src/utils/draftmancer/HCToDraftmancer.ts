@@ -46,7 +46,7 @@ export const HCToDraftmancer = (
       card.tags?.includes(effect)
     );
     const draftpartnerNameList = [];
-    if (card.all_parts) {
+    if (card.all_parts && !card.not_directly_draftable) {
       card.all_parts
         .filter(part => part.is_draft_partner)
         .forEach(part => {

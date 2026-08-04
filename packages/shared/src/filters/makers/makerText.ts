@@ -327,7 +327,7 @@ export const makeAnyLayoutFilter: propConvertFilterMaker = (value: string, op: l
  * @param op the operator from the search
  */
 export const makeSetFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
-  return new PropConvertFilter('set', setSummary, value, op, getSetAndDirectChildSets);
+  return new PropConvertFilter('set', setSummary, value, op, getSetAndDirectChildSets, true);
 };
 /**
  * Makes a block filter
@@ -335,7 +335,7 @@ export const makeSetFilter: propConvertFilterMaker = (value: string, op: looseOp
  * @param op the operator from the search
  */
 export const makeBlockFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
-  return new PropConvertFilter('block', blockSummary, value, op, getBlockSets);
+  return new PropConvertFilter('block', blockSummary, value, op, getBlockSets, true);
 };
 /**
  * Makes a group filter
@@ -343,7 +343,7 @@ export const makeBlockFilter: propConvertFilterMaker = (value: string, op: loose
  * @param op the operator from the search
  */
 export const makeGroupFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
-  return new PropConvertFilter('group', groupSummary, value, op, getGroupSets);
+  return new PropConvertFilter('group', groupSummary, value, op, getGroupSets, true);
 };
 /**
  * Makes a set type filter

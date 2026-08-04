@@ -1,5 +1,5 @@
 import { HCCard, HCRelatedCard, SetCode } from '@hellfall/shared/types';
-import { getAcceptedOrderSet, getChildSets, getDirectChildSets, toSetNumber } from '../setHandling';
+import { fixSetCodeMaybe, getAcceptedOrderSet, getChildSets, getDirectChildSets, toSetNumber } from '../setHandling';
 import { CardLookupMap } from './cardLookupMap';
 import { fixName, splitCardName } from '../textHandling';
 import { isInteger } from '../numHandling';
@@ -204,7 +204,7 @@ export class CardMap {
     this.idMap.get(
       this.lookupMap.getBySetAndNumber(
         fixName(name),
-        code?.toUpperCase() as SetCode,
+        fixSetCodeMaybe(code),
         collector_number && fixName(collector_number)
       ) ?? fixName(name)
     );

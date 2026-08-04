@@ -206,3 +206,4 @@ Write a script to transform the database
 - fetch scryfall tokens
 - rework related cards/other prints display to look more like scryfall
 - incorporate map getters into filters
+- add map for sets?

@@ -149,9 +149,6 @@ export const tagChangesVisibleProps = (fullTag: string): boolean => {
   if (tag == 'back-image') {
     return true;
   }
-  if (tagIsSetTag(tag)) {
-    return true;
-  }
   return false;
 };
 
@@ -366,25 +363,8 @@ const tagCanUseURL = (tag: string): boolean => {
   }
   return false;
 };
-const tagIsSetTag = (tag: string, card?: HCCard.Any): boolean => {
-  if (card ? tag.toUpperCase() == card.set : getSet(tag.toUpperCase() as SetCode)) {
-    return true;
-  }
-  if (
-    ['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
-    (!card || card.set.startsWith('HLC') || card.set.startsWith('HCV.1'))
-  ) {
-    return true;
-  }
-  if (tag == 'scl' && (!card || card.set?.slice(0, 3) == 'SCL')) {
-    return true;
-  }
-  return false;
-};
 const tagUsesNoteAsValue = (tag: string, card?: HCCard.Any): boolean => {
   if (tag == 'flavor-name') {
-    return true;
-  } else if (tagIsSetTag(tag, card)) {
     return true;
   } else if (flagTags.includes(tag)) {
     return true;
@@ -1107,9 +1087,6 @@ const inputForTag = (
     location = 'root';
   } else if (tag == 'flavor-name') {
     addPropToInput(input, 'flavor_name', splitTag.value);
-  } else if (tagIsSetTag(tag, card)) {
-    addPropToInput(input, 'collector_number', splitTag.value);
-    location = 'root';
   }
   return { input, location };
 };

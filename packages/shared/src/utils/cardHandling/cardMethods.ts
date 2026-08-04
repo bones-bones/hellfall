@@ -27,7 +27,6 @@ import {
   textListIncludes,
   textListsShare,
 } from '../listHandling';
-import { textEquals } from '../textHandling';
 import { CardMap } from './cardMap';
 import { pipMap } from '../pipsAndColors';
 

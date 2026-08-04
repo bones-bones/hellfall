@@ -9,6 +9,22 @@ export const colorOrderSetList = sets.filter(set => set.use_color_order).map(set
 export const toSetNumber = (code: SetCode) => allSetsList.indexOf(code);
 
 /**
+ * Fixes valid set code input to actually work
+ * @param code input to fix
+ */
+export const fixSetCode = <T extends string>(code:T) => code.toUpperCase().replaceAll('.','_') as T;
+/**
+ * Gets the display version of a set code
+ * @param code input to fix
+ */
+export const displaySetCode = <T extends string>(code:T) => code.toUpperCase().replaceAll('_','.') as T;
+/**
+ * Fixes valid set code input to actually work
+ * @param code input to fix
+ */
+export const fixSetCodeMaybe = <T extends string>(code?:T) => code ? code.toUpperCase().replaceAll('.','_') as T:code;
+
+/**
  * The list of sets that should only be included if include:extras is used
  */
 export const extraSetList = sets
@@ -32,7 +48,7 @@ export const allExceptNormal = allSetsList.filter(set => set != 'NRM');
  * @param code the set code to get the set for
  */
 export const getSet = (code: SetCode): HCSet | undefined =>
-  sets.find(set => set.code == code.toUpperCase());
+  sets.find(set => set.code == fixSetCode(code));
 
 /**
  * Gets the src of a set symbol image
@@ -89,21 +105,21 @@ export const getDirectChildSets = (code: SetCode): SetCode[] | undefined =>
  * @param code Set code to get the direct children of
  */
 export const getSetAndDirectChildSets = (code: SetCode): SetCode[] =>
-  isSetCode(code) ? [code.toUpperCase() as SetCode, ...(getDirectChildSets(code) ?? [])] : [];
+  isSetCode(code) ? [fixSetCode(code), ...(getDirectChildSets(code) ?? [])] : [];
 
 /**
  * Gets the sets that are in the same block as another set (i.e. are its group and have the same set type)
  * @param code Set code to get the block sets of
  */
 export const getBlockSets = (code: SetCode): SetCode[] => [
-  code.toUpperCase() as SetCode,
+  fixSetCode(code),
   ...(getSet(code)?.child_set_codes?.filter(
     child => getSet(child)?.set_type == getSet(code)?.set_type
   ) ?? []),
   ...sets
     .filter(
       set =>
-        set.child_set_codes?.includes(code.toUpperCase() as SetCode) &&
+        set.child_set_codes?.includes(fixSetCode(code)) &&
         set.set_type == getSet(code)?.set_type
     )
     .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
@@ -118,7 +134,7 @@ export const getCollectorNumSets = (code: SetCode): SetCode[] =>
   getParentSet(code)?.use_color_order ||
   getSet(code)?.set_type == 'lair'
     ? getBlockSets(code)
-    : [code.toUpperCase() as SetCode];
+    : [fixSetCode(code)];
 
 /**
  * Gets the set that a set uses for collector number sorting
@@ -128,7 +144,7 @@ export const getCollectorOrderSet = (code: SetCode): SetCode => {
   const parent = getParentSet(code);
   return parent?.use_color_order || parent?.set_type == 'lair'
     ? parent.code
-    : (code.toUpperCase() as SetCode);
+    : (fixSetCode(code));
 };
 
 /**
@@ -140,12 +156,12 @@ export const getAcceptedOrderSet = (code: SetCode): SetCode => {
   if (parent?.code == 'SCL') {
     return parent.code;
   }
-  if (parent?.code.startsWith('HCV.')) {
-    const [set, subset] = code.toUpperCase().split('.').slice(1);
-    const acceptedSet = `${set == '1' ? 'HLC' : `HC${set}`}.${subset}`;
-    return isSetCode(acceptedSet) ? acceptedSet : (code.toUpperCase() as SetCode);
+  if (parent?.code.startsWith('HCV_')) {
+    const [set, subset] = fixSetCode(code).split('_').slice(1);
+    const acceptedSet = `${set == '1' ? 'HLC' : `HC${set}`}_${subset}`;
+    return isSetCode(acceptedSet) ? acceptedSet : (fixSetCode(code));
   }
-  return code.toUpperCase() as SetCode;
+  return fixSetCode(code);
 };
 
 /**
@@ -153,10 +169,10 @@ export const getAcceptedOrderSet = (code: SetCode): SetCode => {
  * @param code Set code to get the group sets of
  */
 export const getGroupSets = (code: SetCode): SetCode[] => [
-  code.toUpperCase() as SetCode,
+  fixSetCode(code),
   ...(getSet(code)?.child_set_codes ?? []),
   ...sets
-    .filter(set => set.child_set_codes?.includes(code.toUpperCase() as SetCode))
+    .filter(set => set.child_set_codes?.includes(fixSetCode(code)))
     .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
 ];
 
@@ -166,7 +182,7 @@ export const getGroupSets = (code: SetCode): SetCode[] => [
  * @param value2 the set in whose direct children to look
  */
 export const inDirectChildSets = (value1: SetCode, value2: SetCode) =>
-  getDirectChildSets(value2)?.some(code => code == value1.toUpperCase()) ?? false;
+  getDirectChildSets(value2)?.some(code => code == fixSetCode(value1)) ?? false;
 
 /**
  * Checks if one set is equal to another set or is included in that set's direct children
@@ -174,7 +190,7 @@ export const inDirectChildSets = (value1: SetCode, value2: SetCode) =>
  * @param value2 the set in whose direct children to look
  */
 export const inSetOrDirectChildren = (value1: SetCode, value2: SetCode) =>
-  getSetAndDirectChildSets(value2).some(code => code == value1.toUpperCase());
+  getSetAndDirectChildSets(value2).some(code => code == fixSetCode(value1));
 
 /**
  * Checks if one set is included in another set's block
@@ -182,7 +198,7 @@ export const inSetOrDirectChildren = (value1: SetCode, value2: SetCode) =>
  * @param value2 the set in whose block to look
  */
 export const inSetBlock = (value1: SetCode, value2: SetCode) =>
-  getBlockSets(value2).some(code => code == value1.toUpperCase());
+  getBlockSets(value2).some(code => code == fixSetCode(value1));
 
 /**
  * Checks if one set is included in another set's group
@@ -190,4 +206,4 @@ export const inSetBlock = (value1: SetCode, value2: SetCode) =>
  * @param value2 the set in whose group to look
  */
 export const inSetGroup = (value1: SetCode, value2: SetCode) =>
-  getGroupSets(value2).some(code => code == value1.toUpperCase());
+  getGroupSets(value2).some(code => code == fixSetCode(value1));

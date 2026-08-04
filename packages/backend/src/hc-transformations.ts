@@ -239,18 +239,18 @@ const loadExistingData = () => {
   return { existingCards, existingTokens };
 };
 const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
-  'HCV.1.0': ['8b'],
-  'HCV.2.1': ['138b'],
-  'HC9.0': ['137b', '324b'],
+  'HCV_1_0': ['8b'],
+  'HCV_2_1': ['138b'],
+  'HC9_0': ['137b', '324b'],
 };
 const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
-  'HLC.0': ['8b', '65b'],
-  'HC2.1': ['114b', '114c', '114d', '114e', '138b', '114f', '217b', '217c', '217d', '217e'],
-  'HC3.1': ['248b', '346b', '346c', '346d'],
-  'HC6.0': ['10b'],
-  'HC8.0': ['292b', '292c'],
-  'HC8.1': ['31b'],
-  'HC9.0': ['137b', '324b'],
+  'HLC_0': ['8b', '65b'],
+  'HC2_1': ['114b', '114c', '114d', '114e', '138b', '114f', '217b', '217c', '217d', '217e'],
+  'HC3_1': ['248b', '346b', '346c', '346d'],
+  'HC6_0': ['10b'],
+  'HC8_0': ['292b', '292c'],
+  'HC8_1': ['31b'],
+  'HC9_0': ['137b', '324b'],
 };
 const nontokenTokenNames = [
   'Force of Will',
@@ -360,7 +360,7 @@ const main = async () => {
   }
 
   for (const [code, nums] of acceptedMap) {
-    if (code.startsWith('HCV.1') || code.startsWith('HLC')) continue;
+    if (code.startsWith('HCV_1') || code.startsWith('HLC')) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {

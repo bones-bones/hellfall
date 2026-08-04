@@ -463,9 +463,9 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
      */
     toValue: (value: T) => T[] | T | undefined = value => value,
     /**
-     * Whether to keep dashes in text
+     * Whether to treat this as a set filter
      */
-    public keepDashes?: boolean,
+    public isSet?: boolean,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
@@ -473,14 +473,14 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       queryName,
       shareFilter,
       summary as summaryFunction<any>,
-      ensureArray(toValue(unescapeText(value, keepDashes) as T)).map(v =>
-        unescapeText(v, keepDashes)
+      ensureArray(toValue(unescapeText(value, isSet) as T)).map(v =>
+        unescapeText(v, this.isSet)
       ),
       op,
       card =>
         this.props.flatMap(
           p =>
-            getValuesFromProp(card, p, this.location, this.dropFaces, this.keepDashes) as string[]
+            getValuesFromProp(card, p, this.location, this.dropFaces, this.isSet) as string[]
         ),
       defaultOp,
       invertOption
@@ -509,9 +509,9 @@ export class InFilter extends PropConvertFilter<string> {
      */
     public getAllPrints: allPrintsGetterType,
     /**
-     * Whether to keep dashes in text
+     * Whether this is a set filter
      */
-    keepDashes?: boolean,
+    isSet?: boolean,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
@@ -521,7 +521,7 @@ export class InFilter extends PropConvertFilter<string> {
       value,
       op,
       toIn,
-      keepDashes,
+      isSet,
       defaultOp,
       invertOption
     );
