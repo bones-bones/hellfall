@@ -350,7 +350,7 @@ const main = async () => {
   });
 
   for (const [code, nums] of collectorMap) {
-    if (/^HCV\.[1-4]\.[01]$/.test(code)) continue;
+    if (/^HCV_[1-4]_[01]$/.test(code)) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {
