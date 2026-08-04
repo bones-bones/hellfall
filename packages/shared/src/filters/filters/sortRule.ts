@@ -8,13 +8,15 @@ import {
   toSetNumber,
 } from '@hellfall/shared/utils';
 
-const toColorNumber = (card: HCCard.Any, useTypes?:boolean) => {
+const toColorNumber = (card: HCCard.Any, useTypes?: boolean) => {
   if (useTypes && textListIncludes(toFaces(card)[0].types, 'land')) {
     return colorList.length + 2;
   }
   switch (card.colors.length) {
     case 0:
-      return (!useTypes || textListIncludes(toFaces(card)[0].types, 'artifact')) ? colorList.length + 1 : -1;
+      return !useTypes || textListIncludes(toFaces(card)[0].types, 'artifact')
+        ? colorList.length + 1
+        : -1;
     case 1:
       return colorList.indexOf(card.colors[0]);
   }
@@ -36,7 +38,7 @@ export const filterSort: sortFilterFunction = (
   value2: HCCard.Any,
   sort: sortType,
   dir: dirType,
-  useTypes?:boolean
+  useTypes?: boolean
 ) => {
   const dirMult = dir == 'desc' ? -1 : 1;
   switch (sort) {

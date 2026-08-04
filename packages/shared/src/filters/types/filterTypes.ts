@@ -110,7 +110,13 @@ export type sortType = (typeof sortTypeList)[number];
  * A function that sorts two cards
  */
 export interface sortFilterFunction {
-  (value1: HCCard.Any, value2: HCCard.Any, sort: sortType, dir: dirType, useTypes?:boolean): number;
+  (
+    value1: HCCard.Any,
+    value2: HCCard.Any,
+    sort: sortType,
+    dir: dirType,
+    useTypes?: boolean
+  ): number;
 }
 
 /**

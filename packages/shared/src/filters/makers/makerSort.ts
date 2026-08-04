@@ -7,6 +7,6 @@ import { sortMaker, SortObject } from '../makerLib';
  * @param dir the sort direction option from the search
  * @param useTypes whether to use card types for color sort
  */
-export const makeSort: sortMaker = (sort: sortType, dir: dirType, useTypes?:boolean) => {
+export const makeSort: sortMaker = (sort: sortType, dir: dirType, useTypes?: boolean) => {
   return new SortObject(sort, dir, useTypes);
 };

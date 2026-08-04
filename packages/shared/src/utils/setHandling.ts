@@ -12,17 +12,20 @@ export const toSetNumber = (code: SetCode) => allSetsList.indexOf(code);
  * Fixes valid set code input to actually work
  * @param code input to fix
  */
-export const fixSetCode = <T extends string>(code:T) => code.toUpperCase().replaceAll('.','_') as T;
+export const fixSetCode = <T extends string>(code: T) =>
+  code.toUpperCase().replaceAll('.', '_') as T;
 /**
  * Gets the display version of a set code
  * @param code input to fix
  */
-export const displaySetCode = <T extends string>(code:T) => code.toUpperCase().replaceAll('_','.') as T;
+export const displaySetCode = <T extends string>(code: T) =>
+  code.toUpperCase().replaceAll('_', '.') as T;
 /**
  * Fixes valid set code input to actually work
  * @param code input to fix
  */
-export const fixSetCodeMaybe = <T extends string>(code?:T) => code ? code.toUpperCase().replaceAll('.','_') as T:code;
+export const fixSetCodeMaybe = <T extends string>(code?: T) =>
+  code ? (code.toUpperCase().replaceAll('.', '_') as T) : code;
 
 /**
  * The list of sets that should only be included if include:extras is used
@@ -119,8 +122,7 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
   ...sets
     .filter(
       set =>
-        set.child_set_codes?.includes(fixSetCode(code)) &&
-        set.set_type == getSet(code)?.set_type
+        set.child_set_codes?.includes(fixSetCode(code)) && set.set_type == getSet(code)?.set_type
     )
     .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
 ];
@@ -142,9 +144,7 @@ export const getCollectorNumSets = (code: SetCode): SetCode[] =>
  */
 export const getCollectorOrderSet = (code: SetCode): SetCode => {
   const parent = getParentSet(code);
-  return parent?.use_color_order || parent?.set_type == 'lair'
-    ? parent.code
-    : (fixSetCode(code));
+  return parent?.use_color_order || parent?.set_type == 'lair' ? parent.code : fixSetCode(code);
 };
 
 /**
@@ -159,7 +159,7 @@ export const getAcceptedOrderSet = (code: SetCode): SetCode => {
   if (parent?.code.startsWith('HCV_')) {
     const [set, subset] = fixSetCode(code).split('_').slice(1);
     const acceptedSet = `${set == '1' ? 'HLC' : `HC${set}`}_${subset}`;
-    return isSetCode(acceptedSet) ? acceptedSet : (fixSetCode(code));
+    return isSetCode(acceptedSet) ? acceptedSet : fixSetCode(code);
   }
   return fixSetCode(code);
 };

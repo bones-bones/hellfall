@@ -581,11 +581,14 @@ export const unescapeText = (text: string, isSet?: boolean) => {
     return text;
   }
   if (isSet) {
-    return fixSetCode(text).replaceAll(/^['"]/g, '').replaceAll(/(?<!\\)['"]/g, '')
-    .replaceAll(/\\(['"])/g, '$1');
+    return fixSetCode(text)
+      .replaceAll(/^['"]/g, '')
+      .replaceAll(/(?<!\\)['"]/g, '')
+      .replaceAll(/\\(['"])/g, '$1');
   }
-  const strippedText =
-    textIsQuote(text) ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
+  const strippedText = textIsQuote(text)
+    ? text.replaceAll('–', '-')
+    : text.replaceAll(/[_\-–]/g, '');
   return strippedText
     .toLowerCase()
     .replaceAll(/^['"]/g, '')
@@ -639,3 +642,5 @@ export const matchCount = (text: string, regex: RegExp, ...args: (RegExp | undef
   }
   return total;
 };
+export const toTitleCase = (text: string) =>
+  `${text[0]?.toUpperCase() ?? ''}${text.slice(1).toLowerCase()}`;

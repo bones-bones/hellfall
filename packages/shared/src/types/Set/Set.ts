@@ -90,7 +90,8 @@ export type SetCode = (typeof allSetsList)[number];
  * @param value the value to check
  */
 export const isSetCode = (value: any): value is SetCode =>
-  typeof value == 'string' && allSetsList.includes(value.toUpperCase().replaceAll('.','_') as SetCode);
+  typeof value == 'string' &&
+  allSetsList.includes(value.toUpperCase().replaceAll('.', '_') as SetCode);
 
 /**
  * A stored link.

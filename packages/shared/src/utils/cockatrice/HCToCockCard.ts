@@ -3,6 +3,7 @@ import { CockCardProps, CockFaceProps, CockPrintProps, CockRelatedProps } from '
 import { orderColors } from '../pipsAndColors';
 import { CardMap, mergeHCCardFaces, printInvariant, toFaces } from '../cardHandling';
 import { listIncludesValueLower } from '../listHandling';
+import { toTitleCase } from '../textHandling';
 
 const hcToCockLayout: Record<HCLayout, string> = {
   normal: 'normal',
@@ -51,9 +52,6 @@ const hcToCockLayout: Record<HCLayout, string> = {
 };
 const otherPermanentTypes = ['planeswalker', 'enchantment', 'artifact'];
 const nonPermanentTypes = ['instant', 'sorcery', 'gleeporzob', 'interrupt'];
-
-const toTitleCase = (text: string) =>
-  `${text[0]?.toUpperCase() ?? ''}${text.slice(1).toLowerCase()}`;
 
 /**
  * Gets the main type for a face

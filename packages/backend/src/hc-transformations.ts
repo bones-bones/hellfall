@@ -239,18 +239,18 @@ const loadExistingData = () => {
   return { existingCards, existingTokens };
 };
 const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
-  'HCV_1_0': ['8b'],
-  'HCV_2_1': ['138b'],
-  'HC9_0': ['137b', '324b'],
+  HCV_1_0: ['8b'],
+  HCV_2_1: ['138b'],
+  HC9_0: ['137b', '324b'],
 };
 const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
-  'HLC_0': ['8b', '65b'],
-  'HC2_1': ['114b', '114c', '114d', '114e', '138b', '114f', '217b', '217c', '217d', '217e'],
-  'HC3_1': ['248b', '346b', '346c', '346d'],
-  'HC6_0': ['10b'],
-  'HC8_0': ['292b', '292c'],
-  'HC8_1': ['31b'],
-  'HC9_0': ['137b', '324b'],
+  HLC_0: ['8b', '65b'],
+  HC2_1: ['114b', '114c', '114d', '114e', '138b', '114f', '217b', '217c', '217d', '217e'],
+  HC3_1: ['248b', '346b', '346c', '346d'],
+  HC6_0: ['10b'],
+  HC8_0: ['292b', '292c'],
+  HC8_1: ['31b'],
+  HC9_0: ['137b', '324b'],
 };
 const nontokenTokenNames = [
   'Force of Will',

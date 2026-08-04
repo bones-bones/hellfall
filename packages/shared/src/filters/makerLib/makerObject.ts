@@ -84,7 +84,7 @@ const parseNote = (text: string): { name: string; note?: boolean | string } => {
  */
 export class SortObject implements sortInterface {
   queryName: 'sort' = 'sort';
-  constructor(public sort: sortType, public dir: dirType, public useTypes?:boolean) {}
+  constructor(public sort: sortType, public dir: dirType, public useTypes?: boolean) {}
   /**
    * A function that sorts two cards
    * @param value1 the first card to sort
@@ -473,14 +473,11 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       queryName,
       shareFilter,
       summary as summaryFunction<any>,
-      ensureArray(toValue(unescapeText(value, isSet) as T)).map(v =>
-        unescapeText(v, this.isSet)
-      ),
+      ensureArray(toValue(unescapeText(value, isSet) as T)).map(v => unescapeText(v, this.isSet)),
       op,
       card =>
         this.props.flatMap(
-          p =>
-            getValuesFromProp(card, p, this.location, this.dropFaces, this.isSet) as string[]
+          p => getValuesFromProp(card, p, this.location, this.dropFaces, this.isSet) as string[]
         ),
       defaultOp,
       invertOption
@@ -515,16 +512,7 @@ export class InFilter extends PropConvertFilter<string> {
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
-    super(
-      'in',
-      inSummary as summaryFunction<any>,
-      value,
-      op,
-      toIn,
-      isSet,
-      defaultOp,
-      invertOption
-    );
+    super('in', inSummary as summaryFunction<any>, value, op, toIn, isSet, defaultOp, invertOption);
     this.summaryValue = value;
     ({ props: this.props, location: this.location } = queryNameToValue('in'));
   }
