@@ -4,10 +4,11 @@ import {
   getAcceptedOrderSet,
   getChildSets,
   getDirectChildSets,
+  splitCardName,
   toSetNumber,
 } from '../setHandling';
 import { CardLookupMap } from './cardLookupMap';
-import { fixName, splitCardName } from '../textHandling';
+import { fixName } from '../textHandling';
 import { isInteger } from '../numHandling';
 
 export const landIdList: [string, string][] = [
