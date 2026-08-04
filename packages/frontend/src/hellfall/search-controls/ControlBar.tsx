@@ -25,7 +25,6 @@ import {
   createStenciledSpan,
   createStyledDiv,
   createStyledSecondaryButton,
-  createStyledSpan,
 } from '../../styling';
 import { SelectItems, StyledSelect } from './StyledSelect.tsx';
 // @circular-ignore Used only for links
@@ -51,8 +50,10 @@ const ALL_SORT_OPTIONS: SelectItems<sortType> = [
   { label: 'Name', value: 'name' },
   { label: 'Id', value: 'id' },
   { label: 'Set/Number', value: 'setnumber' },
+  { label: 'Set/Accepted', value: 'setaccepted' },
   { label: 'Set', value: 'set' },
   { label: 'Number', value: 'number' },
+  { label: 'Accepted', value: 'accepted' },
   { label: 'Color/MV', value: 'colormanavalue' },
   { label: 'Color', value: 'color' },
   { label: 'Mana Value', value: 'manavalue' },

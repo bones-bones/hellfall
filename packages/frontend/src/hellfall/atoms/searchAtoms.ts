@@ -44,5 +44,3 @@ export const activeCardAtom = atom<string>('');
 export const summaryAtom = atom<string>(parsedQuery.summary);
 
 export const invalidAtom = atom<[string, string][]>(parsedQuery.invalids);
-
-// export const shouldPushHistoryAtom = atom(true);

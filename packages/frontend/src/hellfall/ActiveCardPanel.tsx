@@ -3,13 +3,7 @@ import { useKeyPress } from '../hooks';
 import { useAtom, useAtomValue } from 'jotai';
 import { activeCardAtom } from './atoms/searchAtoms';
 import { cardsAtom } from './atoms/cardsAtom';
-import {
-  Box,
-  Card,
-  ToolbarIconButton,
-  SidePanel,
-  useSidePanelModel,
-} from '@workday/canvas-kit-react';
+import { Card, ToolbarIconButton, SidePanel, useSidePanelModel } from '@workday/canvas-kit-react';
 import { externalLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';

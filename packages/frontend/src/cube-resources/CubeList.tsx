@@ -105,7 +105,7 @@ export const CubeList = () => {
                   {sectionCards.map(card => (
                     <CardRow key={card.id}>
                       <NameCell
-                        to={`/card/${card.hcid}`}
+                        to={`/card/${encodeURIComponent(card.hcid)}`}
                         onMouseEnter={() => setActiveCard(card.id)}
                       >
                         {card.name}

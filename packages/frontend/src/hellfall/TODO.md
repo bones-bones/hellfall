@@ -203,4 +203,6 @@ Write a script to transform the database
   - deck pages
   - search
   - land box
-  
+- fetch scryfall tokens
+- rework related cards/other prints display to look more like scryfall
+- incorporate map getters into filters

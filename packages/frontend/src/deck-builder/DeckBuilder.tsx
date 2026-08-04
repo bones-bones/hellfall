@@ -69,16 +69,19 @@ export const DeckBuilder = () => {
     const images: HCCard.Any[] = (cards || [])
       .filter(entry => entry != '' && !entry.startsWith('# '))
       .flatMap(name => {
-        const {card, count} = cardMap.getForDeck(name);
+        const { card, count } = cardMap.getForDeck(name);
 
         if (count && card && count > 1) {
           newMultMap.set(card.id, count);
         }
-        return Array(count).fill(card ?? ({
+        return Array(count).fill(
+          card ??
+            ({
               image:
                 'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
               name: name + ' - not found',
-            } as unknown as HCCard.Any));
+            } as unknown as HCCard.Any)
+        );
         // }
       });
     setMultMap(newMultMap);

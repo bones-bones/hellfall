@@ -1,5 +1,6 @@
 import { unescapeText } from '@hellfall/shared/utils';
 import { looseOpList, looseOpType, FilterNode } from '../types';
+import { isSetCode } from '../../types';
 
 /**
  * Splits a search term on its first operator
@@ -40,6 +41,10 @@ export const splitOnFirstOp = (
     if (text.at(i) == '"' || text.at(i) == "'") {
       break;
     }
+  }
+  if (text.endsWith(':') && isSetCode(text.slice(0, -1))) {
+    // masterpiece redirect
+    return { keyword: 'group', op: ':', term: text.slice(0, -1) };
   }
   return { keyword: 'name', op: ':', term: text };
 };

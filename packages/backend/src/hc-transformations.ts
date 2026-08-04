@@ -110,7 +110,6 @@ const mergeDatabases = (
     }
   });
 
-
   return mergedCards
     .cards()
     .sort((a, b) => {

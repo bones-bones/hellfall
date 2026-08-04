@@ -389,6 +389,20 @@ export const Syntax = () => {
           ones only being used to break ties. Because of this, any that can't have any effect or
           that are duplicates are ignored.
         </div>
+        <br />
+        <div>
+          One important note is that <code>sort:set</code>, <code>sort:setnumber</code>, and
+          <code>sort:setaccepted</code> all group sets differently. This is due to a combination of
+          historical happenstance and how Hellscube works. In Hellfall, main cubes are broken into
+          two parts that have their own accepted order, but since both halves are meant to be played
+          together, each main cube has collector numbers ranging from 1 to around 720 across both
+          halves. This means that <code>setnumber</code> treats main cubes as a single set. Also,
+          before HC6, HCV didn't exist. Almost all the cards in HCV.1-4 were added later and consist
+          of cards that were cut from those cubes after being accepted. To preserve accepted order,
+          they are sorted with the half that they were cut from when using
+          <code>setaccepted</code>. Also, both <code>setnumber</code> and <code>setaccepted</code>
+          treat SCL as a single set.
+        </div>
         <h2>Miscellaneous</h2>
         <div>
           All the <Link to={'https://scryfall.com/docs/syntax#shortcuts'}>shorthands</Link> that

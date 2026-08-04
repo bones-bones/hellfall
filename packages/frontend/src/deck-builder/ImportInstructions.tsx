@@ -5,10 +5,12 @@ export const ImportInstructions = () => {
       <ol>
         <li>Enter a deck/cube name</li>
         <li>
-          Fill out the box below. Use # followed by a space to hide a card. Use <code>CardName (SET) Number</code> syntax to specify a printing.
+          Fill out the box below. Use # followed by a space to hide a card. Use{' '}
+          <code>CardName (SET) Number</code> syntax to specify a printing.
         </li>
         <li>
-          Basics are drawn randomly from the Land Box, or you can specify a land's printing to choose one.
+          Basics are drawn randomly from the Land Box, or you can specify a land's printing to
+          choose one.
         </li>
         <li>
           You can also paste a cardlist directly from Cockatrice (

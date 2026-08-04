@@ -73,6 +73,10 @@ export const AdvancedSearch = () => {
     undefined,
     ':',
   ]);
+  const [acceptedOrder, setAcceptedOrder] = useState<[number | undefined, looseOpType]>([
+    undefined,
+    ':',
+  ]);
   const [manaValue, setManaValue] = useState<[number | undefined, looseOpType]>([undefined, ':']);
   const [power, setPower] = useState<[number | undefined, looseOpType]>([undefined, ':']);
   const [toughness, setToughness] = useState<[number | undefined, looseOpType]>([undefined, ':']);
@@ -187,6 +191,9 @@ export const AdvancedSearch = () => {
     if (collectorNumber[0] != undefined) {
       filters.push(`number${collectorNumber[1]}${collectorNumber[0]}`);
     }
+    if (acceptedOrder[0] != undefined) {
+      filters.push(`accepted${acceptedOrder[1]}${acceptedOrder[0]}`);
+    }
     if (manaValue[0] != undefined) {
       filters.push(`manavalue${manaValue[1]}${manaValue[0]}`);
     }
@@ -279,6 +286,7 @@ export const AdvancedSearch = () => {
     fourcbLegality,
     commanderLegality,
     collectorNumber,
+    acceptedOrder,
     manaValue,
     power,
     toughness,
@@ -566,6 +574,11 @@ export const AdvancedSearch = () => {
             label={'Collector number'}
             onChange={setCollectorNumber}
             value={collectorNumber}
+          />
+          <NumberSelector
+            label={'Accepted order'}
+            onChange={setAcceptedOrder}
+            value={acceptedOrder}
           />
           <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />
           <NumberSelector label={'Power'} onChange={setPower} value={power} />

@@ -1,15 +1,10 @@
-import { HCCard, HCKind, HCRelatedCard, SetCode, toKindIndex } from '@hellfall/shared/types';
-import {
-  getChildSets,
-  getCollectorOrderSet,
-  getDirectChildSets,
-  toSetNumber,
-} from '../setHandling';
+import { HCCard, HCRelatedCard, SetCode } from '@hellfall/shared/types';
+import { getAcceptedOrderSet, getChildSets, getDirectChildSets, toSetNumber } from '../setHandling';
 import { CardLookupMap } from './cardLookupMap';
 import { fixName, splitCardName } from '../textHandling';
 import { isInteger } from '../numHandling';
 
-export const landIdList:[string,string][] = [
+export const landIdList: [string, string][] = [
   ['Plains', 'bc71ebf6-2056-41f7-be35-b2e5c34afa99'],
   ['Island', 'b2c6aa39-2d2a-459c-a555-fb48ba993373'],
   ['Swamp', '56719f6a-1a6c-4c0a-8d21-18f7d7350b68'],
@@ -32,7 +27,7 @@ export const landIdList:[string,string][] = [
   ['Thriving Galaxy', '626d5aaa-b808-434b-b7ae-bde93811d2df'],
 ];
 
-const landIdMap = new Map<string,string>(landIdList.map(l=>[l[0].toLowerCase(),l[1]]));
+const landIdMap = new Map<string, string>(landIdList.map(l => [l[0].toLowerCase(), l[1]]));
 
 /**
  * Checks if a card name is the name of a land that can be used with {@linkcode getRandomLand}.
@@ -40,14 +35,12 @@ const landIdMap = new Map<string,string>(landIdList.map(l=>[l[0].toLowerCase(),l
  */
 const isLandName = (name: string) => landIdMap.has(name);
 
-
-
-const getRandom = (list:any[]|Set<any>) => {
+const getRandom = (list: any[] | Set<any>) => {
   if (Array.isArray(list)) {
-    return list[Math.floor(Math.random() * list.length)]
+    return list[Math.floor(Math.random() * list.length)];
   }
-    return Array.from(list)[Math.floor(Math.random() * list.size)]
-}
+  return Array.from(list)[Math.floor(Math.random() * list.size)];
+};
 /**
  * the list of preference options
  */
@@ -58,7 +51,7 @@ export const preferTypeList = ['newest', 'oldest'] as const;
 export type preferType = (typeof preferTypeList)[number];
 
 export const dateSort = (value1: HCCard.Any, value2: HCCard.Any, dirMult: 1 | -1 = 1) =>
-  (toSetNumber(getCollectorOrderSet(value1.set)) - toSetNumber(getCollectorOrderSet(value2.set)) ||
+  (toSetNumber(getAcceptedOrderSet(value1.set)) - toSetNumber(getAcceptedOrderSet(value2.set)) ||
     parseInt(value1.accepted_order) - parseInt(value2.accepted_order)) * dirMult;
 const reverseDateSort = (value1: HCCard.Any, value2: HCCard.Any) => dateSort(value1, value2, -1);
 
@@ -225,32 +218,31 @@ export class CardMap {
 
   /**
    * Returns the correct card for a card name and a number of prints, if any.
-   * 
+   *
    * Suitable for use in the deckbuilder.
    * @param text the name of the card to get
    */
-  getForDeck = (text: string):{card?:HCCard.Any; count?: number} => {
+  getForDeck = (text: string): { card?: HCCard.Any; count?: number } => {
     const fixed = fixName(text);
     const first = fixed.split(' ')[0];
-    const count = parseInt(first)
+    const count = parseInt(first);
     if (isInteger(first) && count > 0 && first.length != fixed.length) {
-      const card = this.getForDeck(fixed.slice(first.length+1))?.card;
+      const card = this.getForDeck(fixed.slice(first.length + 1))?.card;
       if (card) {
-        return {card, count}
+        return { card, count };
       }
     }
     const { name, code, collector_number } = splitCardName(fixed);
-    const isLand = isLandName(name)
-    const id = this.lookupMap.getBySetAndNumber(name, code, collector_number, isLandName(name))
+    const isLand = isLandName(name);
+    const id = this.lookupMap.getBySetAndNumber(name, code, collector_number, isLandName(name));
     if (id) {
       const card = this.get(id)!;
-      return {card};
+      return { card };
     } else if (isLand) {
-      return {card: this.getRandomCard(landIdMap.get(name))}
+      return { card: this.getRandomCard(landIdMap.get(name)) };
     }
-    return {}
+    return {};
   };
-
 
   /**
    * Returns a specified card from the CardMap object.
@@ -391,12 +383,15 @@ export class CardMap {
    * Gets a random id from this CardMap
    * @param oracle_id oracle id to get from, if any
    */
-  getRandomId = (oracle_id?:string) => oracle_id && this.hasOracleId(oracle_id) ? getRandom(this.getIdsOfPrints(oracle_id)!): getRandom(this.ids())
+  getRandomId = (oracle_id?: string) =>
+    oracle_id && this.hasOracleId(oracle_id)
+      ? getRandom(this.getIdsOfPrints(oracle_id)!)
+      : getRandom(this.ids());
   /**
    * Gets a random card from this CardMap
    * @param oracle_id oracle id to get from, if any
    */
-  getRandomCard = (oracle_id?:string) => this.get(this.getRandomId(oracle_id))!;
+  getRandomCard = (oracle_id?: string) => this.get(this.getRandomId(oracle_id))!;
 
   /**
    * Adds a new card to the CardMap. If a card with the same id already exists, the card will be updated.

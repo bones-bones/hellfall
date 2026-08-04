@@ -34,9 +34,9 @@ class CardLookupObject {
    * @param collector_number the collector number to use, if any
    * @param noDefault whether to return undefined if the set isn't specified (used for random land handling)
    */
-  get = (code?: SetCode, collector_number?: string, noDefault?:boolean): string | undefined => {
+  get = (code?: SetCode, collector_number?: string, noDefault?: boolean): string | undefined => {
     if (!code) {
-      return noDefault ? undefined: this.defaultId;
+      return noDefault ? undefined : this.defaultId;
     }
     if (!collector_number) {
       const numIds = this.setNumMap.get(code)?.values();
@@ -48,7 +48,7 @@ class CardLookupObject {
       if (ids?.size) {
         return Array.from(ids.values())[0];
       }
-      return noDefault ? undefined: this.defaultId;
+      return noDefault ? undefined : this.defaultId;
     }
     const numMap = this.setNumMap.get(code);
     if (numMap) {
@@ -61,7 +61,7 @@ class CardLookupObject {
     if (ids?.size) {
       return Array.from(ids.values())[0];
     }
-    return noDefault ? undefined: this.defaultId;
+    return noDefault ? undefined : this.defaultId;
   };
 
   /**
@@ -217,7 +217,12 @@ export class CardLookupMap {
    * @param collector_number the collector number to use, if any
    * @param noDefault whether to return undefined if the set isn't specified (used for random land handling)
    */
-  getBySetAndNumber = (name: string, code?: SetCode, collector_number?: string, noDefault?:boolean) => {
+  getBySetAndNumber = (
+    name: string,
+    code?: SetCode,
+    collector_number?: string,
+    noDefault?: boolean
+  ) => {
     if (!name) return;
     if (!code && this.hcidMap.has(name) && name != '3' && name != '1984') {
       return this.hcidMap.get(name);

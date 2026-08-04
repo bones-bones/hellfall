@@ -165,7 +165,7 @@ export const Checklist = ({ cards }: { cards: HCCard.Any[] }) => {
             <NameCell key={`${card.id}-name`}>
               <NameCellLink
                 key={`${card.id}-name-link`}
-                to={`/card/${card.hcid}`}
+                to={`/card/${encodeURIComponent(card.hcid)}`}
                 onClick={(event: React.MouseEvent<any>) => {
                   event.preventDefault();
                   if (event.button === 1 || event.metaKey || event.ctrlKey) {

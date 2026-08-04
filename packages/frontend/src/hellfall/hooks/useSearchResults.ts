@@ -40,9 +40,9 @@ export const useSearchResults = (asRandom?: boolean) => {
       return;
     }
     const defaultSort = makeSort('name', 'auto');
-    tempResults.sort((a: HCCard.Any, b: HCCard.Any) => defaultSort.filter(a, '=', b));
+    tempResults.sort(defaultSort.filter);
     for (let i = sortRules.length - 1; i >= 0; i--) {
-      tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortRules[i].filter(a, '=', b));
+      tempResults.sort(sortRules[i].filter);
     }
     setResultSet(tempResults);
 

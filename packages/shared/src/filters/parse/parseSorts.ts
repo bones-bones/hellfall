@@ -15,12 +15,14 @@ const sortRedirects: Record<string, sortType> = {
   acceptedorder: 'accepted',
   setcn: 'setnumber',
   setnum: 'setnumber',
+  date: 'setaccepted',
   setao: 'setaccepted',
   setaccept: 'setaccepted',
   setacceptorder: 'setaccepted',
   setacceptedorder: 'setaccepted',
   colormv: 'colormanavalue',
   colorcmc: 'colormanavalue',
+  review: 'colormanavalue',
   setreview: 'colormanavalue',
 };
 const dirRedirects: Record<string, dirType> = {
